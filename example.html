@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/react/react-with-addons.js"></script>
+		<script src="bower_components/react/JSXTransformer.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/stylesheets/style.css">
+  </head>
+  <body>
+    <h1>ReactJS DatePicker Example</h1>
+
+    <div id="calendar"></div>
+
+    <script type="text/jsx" src="src/day.jsx"></script>
+    <script type="text/jsx" src="src/week.jsx"></script>
+    <script type="text/jsx" src="src/month.jsx"></script>
+    <script type="text/jsx" src="src/calendar.jsx"></script>
+
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      React.renderComponent(<Calendar />, document.querySelector('#calendar'));
+    </script>
+  </body>
+</html>

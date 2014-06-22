@@ -1,0 +1,9 @@
+{
+  "name": "react-date-picker",
+  "version": "0.0.0",
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "react": "~0.10.0",
+    "moment": "~2.7.0"
+  }
+}
