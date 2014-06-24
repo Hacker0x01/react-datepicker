@@ -6,10 +6,10 @@
 
 .day {
   display: inline-block;
-  width: 22px;
+  width: 28px;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  line-height: 22px;
+  line-height: 28px;
   text-align: center;
   color: #ccc;
   cursor: pointer;
@@ -25,8 +25,8 @@
 
 .calendar-month-navigation-left,
 .calendar-month-navigation-right {
-  width: 22px;
-  line-height: 22px;
+  width: 28px;
+  line-height: 28px;
   text-align: center;
   cursor: pointer;
   border-right: 1px solid black;
