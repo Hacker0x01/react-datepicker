@@ -8,7 +8,7 @@ window.Week = React.createClass({
   },
 
   endsInMonth: function() {
-    var lastDayInWeek = this.props.week.clone().day(6);
+    var lastDayInWeek = this.props.week.clone().isoWeekday(7);
 
     return lastDayInWeek.isSame(this.props.month, 'month');
   },
