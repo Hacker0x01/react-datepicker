@@ -33,7 +33,7 @@ window.Calendar = React.createClass({
             &raquo;
           </a>
         </div>
-        <Month month={this.state.date} />
+        <Month date={this.state.date} />
       </div>
     );
   }

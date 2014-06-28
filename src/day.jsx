@@ -4,7 +4,7 @@ window.Day = React.createClass({
   render: function() {
     classes = React.addons.classSet({
       'day': true,
-      'this-month': this.props.day.isSame(this.props.month, 'month'),
+      'this-month': this.props.day.isSame(this.props.date, 'month'),
       'today': moment().isSame(this.props.day, 'day')
     });
 

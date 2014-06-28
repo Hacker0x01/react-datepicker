@@ -4,13 +4,13 @@ window.Week = React.createClass({
   startsInMonth: function() {
     var firstDayInWeek = this.props.week.clone();
 
-    return firstDayInWeek.isSame(this.props.month, 'month');
+    return firstDayInWeek.isSame(this.props.date, 'month');
   },
 
   endsInMonth: function() {
     var lastDayInWeek = this.props.week.clone().isoWeekday(7);
 
-    return lastDayInWeek.isSame(this.props.month, 'month');
+    return lastDayInWeek.isSame(this.props.date, 'month');
   },
 
   days: function() {
@@ -20,9 +20,12 @@ window.Week = React.createClass({
 
     var days = [];
 
-    for(var day = 0; day < 7; day++) {
-      var date = this.props.week.clone().add('days', day);
-      days[day] = <Day day={date} month={this.props.month} />;
+    for(var day_number = 0; day_number < 7; day_number++) {
+      var day = this.props.week.clone().add('days', day_number);
+
+      days[day_number] = (
+        <Day key={day_number} day={day} date={this.props.date} />
+      );
     }
 
     return days;
