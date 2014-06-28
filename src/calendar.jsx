@@ -3,7 +3,7 @@
 window.Calendar = React.createClass({
   getInitialState: function() {
     return {
-      date: moment().startOf('month')
+      date: moment()
     };
   },
 
