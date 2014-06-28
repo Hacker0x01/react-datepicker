@@ -1,25 +1,6 @@
 /** @jsx React.DOM */
 
 window.Month = React.createClass({
-  firstDayOfMonth: function() {
-    return this.props.date.clone().startOf('month');
-  },
-
-  weeks: function() {
-    var firstDayToShow = this.firstDayOfMonth().startOf('isoWeek');
-    var weeks = [];
-
-    for(var week = 0; week < 6; week++) {
-      var firstDayInWeek = firstDayToShow.clone().add('weeks', week);
-
-      weeks[week] = (
-        <Week key={week} week={firstDayInWeek} date={this.props.date} />
-      );
-    }
-
-    return weeks;
-  },
-
   render: function() {
     return (
       <div className="month">
@@ -32,7 +13,13 @@ window.Month = React.createClass({
           <div className="day head">SA</div>
           <div className="day head">SU</div>
         </div>
-        {this.weeks()}
+        {
+          this.props.date.mapWeeksInMonth(function(weekStart, key) {
+            return (
+              <Week key={key} week={weekStart} date={this.props.date} />
+            );
+          }, this)
+        }
       </div>
     );
   }

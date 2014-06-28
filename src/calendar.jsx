@@ -3,19 +3,19 @@
 window.Calendar = React.createClass({
   getInitialState: function() {
     return {
-      date: moment()
+      date: new DateUtil(moment())
     };
   },
 
   increaseMonth: function() {
     this.setState({
-      date: this.state.date.add('month', 1)
+      date: this.state.date.addMonth()
     });
   },
 
   decreaseMonth: function() {
     this.setState({
-      date: this.state.date.subtract('month', 1)
+      date: this.state.date.subtractMonth()
     });
   },
 
