@@ -10,7 +10,9 @@ window.Day = React.createClass({
     });
 
     return (
-      <div className={classes}>{this.props.day.day()}</div>
+      <div className={classes} onClick={this.props.onSelect}>
+        {this.props.day.day()}
+      </div>
     );
   }
 });

@@ -19,6 +19,16 @@ window.Calendar = React.createClass({
     });
   },
 
+  setDate: function(date) {
+    var _this = this;
+
+    return function() {
+      _this.setState({
+        date: date
+      });
+    };
+  },
+
   render: function() {
     return (
       <div className="calendar">
@@ -56,7 +66,8 @@ window.Calendar = React.createClass({
                   {
                     weekStart.mapDaysInWeek(function(day, key) {
                       return (
-                        <Day key={key} day={day} date={this.state.date} />
+                        <Day key={key} day={day} date={this.state.date}
+                           onSelect={this.setDate(day)} />
                       );
                     }, this)
                   }
