@@ -46,9 +46,21 @@ window.Calendar = React.createClass({
             <div className="day head">SU</div>
           </div>
           {
-            this.props.date.mapWeeksInMonth(function(weekStart, key) {
+            this.state.date.mapWeeksInMonth(function(weekStart, key) {
+              if(! weekStart.weekInMonth(this.state.date)) {
+                return;
+              }
+
               return (
-                <Week key={key} week={weekStart} date={this.props.date} />
+                <div className="week">
+                  {
+                    weekStart.mapDaysInWeek(function(day, key) {
+                      return (
+                        <Day key={key} day={day} date={this.state.date} />
+                      );
+                    }, this)
+                  }
+                </div>
               );
             }, this)
           }
