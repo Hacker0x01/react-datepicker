@@ -30,6 +30,33 @@ window.Calendar = React.createClass({
     };
   },
 
+  weeks: function() {
+    return this.state.date.mapWeeksInMonth(function(weekStart, key) {
+      if(! weekStart.weekInMonth(this.state.date)) {
+        return;
+      }
+
+      return (
+        <div className="week">
+          {this.days(weekStart)}
+        </div>
+      );
+    }, this);
+  },
+
+  days: function(weekStart) {
+    return weekStart.mapDaysInWeek(function(day, key) {
+      return (
+        <Day
+          key={key}
+          day={day}
+          date={this.state.date}
+          onSelect={this.setDate(day)}
+          selected={this.state.selected} />
+      );
+    }, this);
+  },
+
   render: function() {
     return (
       <div className="calendar">
@@ -56,30 +83,7 @@ window.Calendar = React.createClass({
             <div className="day head">SA</div>
             <div className="day head">SU</div>
           </div>
-          {
-            this.state.date.mapWeeksInMonth(function(weekStart, key) {
-              if(! weekStart.weekInMonth(this.state.date)) {
-                return;
-              }
-
-              return (
-                <div className="week">
-                  {
-                    weekStart.mapDaysInWeek(function(day, key) {
-                      return (
-                        <Day
-                          key={key}
-                          day={day}
-                          date={this.state.date}
-                          onSelect={this.setDate(day)}
-                          selected={this.state.selected} />
-                      );
-                    }, this)
-                  }
-                </div>
-              );
-            }, this)
-          }
+          {this.weeks()}
         </div>
       </div>
     );
