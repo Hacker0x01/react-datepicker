@@ -4,7 +4,7 @@ window.Day = React.createClass({
   render: function() {
     classes = React.addons.classSet({
       'day': true,
-      'selected': this.props.day.sameDay(this.props.date),
+      'selected': this.props.day.sameDay(this.props.selected),
       'this-month': this.props.day.sameMonth(this.props.date),
       'today': this.props.day.sameDay(moment())
     });
