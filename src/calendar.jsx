@@ -3,8 +3,7 @@
 window.Calendar = React.createClass({
   getInitialState: function() {
     return {
-      date: new DateUtil(moment()),
-      selected: new DateUtil(moment())
+      date: this.props.selected.clone()
     };
   },
 
@@ -20,16 +19,6 @@ window.Calendar = React.createClass({
     });
   },
 
-  setDate: function(date) {
-    var _this = this;
-
-    return function() {
-      _this.setState({
-        selected: date
-      });
-    };
-  },
-
   weeks: function() {
     return this.state.date.mapWeeksInMonth(this.renderWeek);
   },
@@ -40,7 +29,7 @@ window.Calendar = React.createClass({
     }
 
     return (
-      <div className="week">
+      <div key={key} className="week">
         {this.days(weekStart)}
       </div>
     );
@@ -52,8 +41,8 @@ window.Calendar = React.createClass({
         key={key}
         day={day}
         date={this.state.date}
-        onSelect={this.setDate(day)}
-        selected={this.state.selected} />
+        onSelect={this.props.onSelect}
+        selected={this.props.selected} />
     );
   },
 

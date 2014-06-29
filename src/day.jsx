@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
 
 window.Day = React.createClass({
+  handleClick: function(event) {
+    this.props.onSelect(this.props.day);
+  },
+
   render: function() {
     classes = React.addons.classSet({
       'day': true,
@@ -10,7 +14,7 @@ window.Day = React.createClass({
     });
 
     return (
-      <div className={classes} onClick={this.props.onSelect}>
+      <div className={classes} onClick={this.handleClick}>
         {this.props.day.day()}
       </div>
     );
