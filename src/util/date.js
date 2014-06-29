@@ -14,27 +14,27 @@ DateUtil.prototype.day = function() {
   return this._date.date();
 };
 
-DateUtil.prototype.mapDaysInWeek = function(callback, context) {
+DateUtil.prototype.mapDaysInWeek = function(callback) {
   var week = [];
   var firstDay = this._date.clone().startOf('isoWeek');
 
   for(var i = 0; i < 7; i++) {
     var day = new DateUtil(firstDay.clone().add('days', i));
 
-    week[i] = callback.call(context, day, i);
+    week[i] = callback(day, i);
   }
 
   return week;
 };
 
-DateUtil.prototype.mapWeeksInMonth = function(callback, context) {
+DateUtil.prototype.mapWeeksInMonth = function(callback) {
   var month = [];
   var firstDay = this._date.clone().startOf('month').startOf('isoWeek');
 
   for(var i = 0; i < 6; i++) {
     var weekStart = new DateUtil(firstDay.clone().add('weeks', i));
 
-    month[i] = callback.call(context, weekStart, i);
+    month[i] = callback(weekStart, i);
   }
 
   return month;

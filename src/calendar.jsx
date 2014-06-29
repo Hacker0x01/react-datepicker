@@ -31,30 +31,34 @@ window.Calendar = React.createClass({
   },
 
   weeks: function() {
-    return this.state.date.mapWeeksInMonth(function(weekStart, key) {
-      if(! weekStart.weekInMonth(this.state.date)) {
-        return;
-      }
+    return this.state.date.mapWeeksInMonth(this.renderWeek);
+  },
 
-      return (
-        <div className="week">
-          {this.days(weekStart)}
-        </div>
-      );
-    }, this);
+  renderWeek: function(weekStart, key) {
+    if(! weekStart.weekInMonth(this.state.date)) {
+      return;
+    }
+
+    return (
+      <div className="week">
+        {this.days(weekStart)}
+      </div>
+    );
+  },
+
+  renderDay: function(day, key) {
+    return (
+      <Day
+        key={key}
+        day={day}
+        date={this.state.date}
+        onSelect={this.setDate(day)}
+        selected={this.state.selected} />
+    );
   },
 
   days: function(weekStart) {
-    return weekStart.mapDaysInWeek(function(day, key) {
-      return (
-        <Day
-          key={key}
-          day={day}
-          date={this.state.date}
-          onSelect={this.setDate(day)}
-          selected={this.state.selected} />
-      );
-    }, this);
+    return weekStart.mapDaysInWeek(this.renderDay);
   },
 
   render: function() {
