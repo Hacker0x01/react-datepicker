@@ -38,16 +38,16 @@ $calendar-margin: 5px;
   color: black;
   font-weight: bold;
   font-size: 13px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .calendar-header-navigation-left {
   @extend %calendar-navigation;
-  float: left;
 }
 
 .calendar-header-navigation-right {
   @extend %calendar-navigation;
-  float: right;
 }
 
 .calendar-header-days {
