@@ -65,17 +65,17 @@ window.Calendar = React.createClass({
               onClick={this.increaseMonth}>
             &raquo;
           </a>
-        </div>
-        <div className="month">
-          <div>
-            <div className="day head">MO</div>
-            <div className="day head">TU</div>
-            <div className="day head">WE</div>
-            <div className="day head">TH</div>
-            <div className="day head">FR</div>
-            <div className="day head">SA</div>
-            <div className="day head">SU</div>
+          <div className="calendar-header-days">
+            <div className="item">MO</div>
+            <div className="item">TU</div>
+            <div className="item">WE</div>
+            <div className="item">TH</div>
+            <div className="item">FR</div>
+            <div className="item">SA</div>
+            <div className="item">SU</div>
           </div>
+        </div>
+        <div className="calendar-month">
           {this.weeks()}
         </div>
       </div>

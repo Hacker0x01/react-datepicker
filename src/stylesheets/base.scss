@@ -20,6 +20,7 @@ $item-size: 28px;
 .calendar {
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
+  color: #ccc;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   display: inline-block;
@@ -29,6 +30,7 @@ $item-size: 28px;
   position: relative;
   text-align: center;
   background-color: $background-color;
+  border-bottom: 1px solid $border-color;
 }
 
 .calendar-header-month {
@@ -47,24 +49,28 @@ $item-size: 28px;
   float: right;
 }
 
-.month {
-  display: inline-block;
+.calendar-header-days {
+  width: 252px;
+
+  > .item {
+    display: inline-block;
     width: $item-size;
     line-height: $item-size;
+  }
 }
 
-.day {
+.calendar-month {
+  display: block;
+  margin: 5px;
+  text-align: center;
+}
+
+.calendar-day {
   display: inline-block;
   width: $item-size;
   line-height: $item-size;
   text-align: center;
-  color: #ccc;
   cursor: pointer;
-
-  &.head {
-    border-bottom: 1px solid $border-color;
-    background-color: $background-color;
-  }
 
   &:hover {
     background-color: $background-color;
