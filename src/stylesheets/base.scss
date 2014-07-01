@@ -3,6 +3,12 @@ $background-color: #f0f0f0;
 $selected-color: #216ba5;
 
 $border-radius: 4px;
+%calendar-navigation {
+  width: $item-size;
+  line-height: $item-size;
+  text-align: center;
+  cursor: pointer;
+}
 
 .calendar {
   font-family: 'Open Sans', sans-serif;
@@ -24,19 +30,13 @@ $border-radius: 4px;
   font-size: 13px;
 }
 
-.calendar-header-navigation-left,
-.calendar-header-navigation-right {
-  width: 28px;
-  line-height: 28px;
-  text-align: center;
-  cursor: pointer;
-}
-
 .calendar-header-navigation-left {
+  @extend %calendar-navigation;
   float: left;
 }
 
 .calendar-header-navigation-right {
+  @extend %calendar-navigation;
   float: right;
 }
 
