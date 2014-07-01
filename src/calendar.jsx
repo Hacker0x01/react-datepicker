@@ -54,14 +54,14 @@ window.Calendar = React.createClass({
     return (
       <div className="calendar">
         <div className="calendar-header">
-          <a className="calendar-month-navigation-left"
+          <a className="calendar-header-navigation-left"
               onClick={this.decreaseMonth}>
             &laquo;
           </a>
-          <span className="calendar-current-month">
+          <span className="calendar-header-month">
             {this.state.date.format("MMMM YYYY")}
           </span>
-          <a className="calendar-month-navigation-right"
+          <a className="calendar-header-navigation-right"
               onClick={this.increaseMonth}>
             &raquo;
           </a>
