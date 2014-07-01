@@ -1,0 +1,56 @@
+.month {
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  display: inline-block;
+}
+
+.day {
+  display: inline-block;
+  width: 28px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  line-height: 28px;
+  text-align: center;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.this-month {
+  color: black;
+}
+
+.selected {
+  color: blue;
+}
+
+.today {
+  color: red;
+}
+
+.calendar-month-navigation-left,
+.calendar-month-navigation-right {
+  width: 28px;
+  line-height: 28px;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.calendar-month-navigation-left {
+  float: left;
+}
+
+.calendar-month-navigation-right {
+  float: right;
+}
+
+.calendar-header {
+  position: relative;
+  text-align: center;
+  border-top: 1px solid black;
+}
+
+.calendar {
+  display: inline-block;
+}

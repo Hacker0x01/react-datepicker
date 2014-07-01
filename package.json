@@ -1,0 +1,10 @@
+{
+  "author": "HackerOne",
+  "name": "react-datapicker",
+
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-sass": "~0.6.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
