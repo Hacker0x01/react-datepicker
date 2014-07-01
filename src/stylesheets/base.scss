@@ -4,6 +4,7 @@ $selected-color: #216ba5;
 
 $border-radius: 4px;
 $item-size: 28px;
+$calendar-margin: 5px;
 
 %calendar-navigation {
   width: $item-size;
@@ -50,7 +51,7 @@ $item-size: 28px;
 }
 
 .calendar-header-days {
-  width: 252px;
+  width: (7 * $item-size) + (2 * $calendar-margin);
 
   > .item {
     display: inline-block;
@@ -61,7 +62,7 @@ $item-size: 28px;
 
 .calendar-month {
   display: block;
-  margin: 5px;
+  margin: $calendar-margin;
   text-align: center;
 }
 
@@ -70,6 +71,10 @@ $item-size: 28px;
   width: $item-size;
   line-height: $item-size;
   text-align: center;
+}
+
+.this-month {
+  color: black;
   cursor: pointer;
 
   &:hover {
@@ -77,10 +82,6 @@ $item-size: 28px;
     @extend %transparant-rounded-border;
     color: black;
   }
-}
-
-.this-month {
-  color: black;
 }
 
 .today {
