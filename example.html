@@ -9,7 +9,7 @@
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
-    <div id="calendar"></div>
+    <div id="calendar-container"></div>
 
     <script type="text/javascript" src="src/util/date.js"></script>
     <script type="text/jsx" src="src/day.jsx"></script>
@@ -18,7 +18,7 @@
 
     <script type="text/jsx">
       /** @jsx React.DOM */
-      React.renderComponent(<DatePicker />, document.querySelector('#calendar'));
+      React.renderComponent(<DatePicker />, document.querySelector('#calendar-container'));
     </script>
   </body>
 </html>
