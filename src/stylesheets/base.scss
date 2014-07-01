@@ -3,6 +3,8 @@ $background-color: #f0f0f0;
 $selected-color: #216ba5;
 
 $border-radius: 4px;
+$item-size: 28px;
+
 %calendar-navigation {
   width: $item-size;
   line-height: $item-size;
@@ -47,12 +49,14 @@ $border-radius: 4px;
 
 .month {
   display: inline-block;
+    width: $item-size;
+    line-height: $item-size;
 }
 
 .day {
   display: inline-block;
-  width: 28px;
-  line-height: 28px;
+  width: $item-size;
+  line-height: $item-size;
   text-align: center;
   color: #ccc;
   cursor: pointer;
