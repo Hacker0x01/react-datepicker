@@ -3,6 +3,11 @@
 @import 'open-sans';
 @import 'fontello';
 
+.calendar-container {
+  padding-top: 10px;
+  display: inline-block;
+}
+
 .calendar {
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;

@@ -9,16 +9,17 @@
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
-    <div id="calendar-container"></div>
+    <div id="datepicker-container"></div>
 
     <script type="text/javascript" src="src/util/date.js"></script>
+    <script type="text/jsx" src="src/util/react-popover.jsx"></script>
     <script type="text/jsx" src="src/day.jsx"></script>
     <script type="text/jsx" src="src/calendar.jsx"></script>
     <script type="text/jsx" src="src/datepicker.jsx"></script>
 
     <script type="text/jsx">
       /** @jsx React.DOM */
-      React.renderComponent(<DatePicker />, document.querySelector('#calendar-container'));
+      React.renderComponent(<DatePicker />, document.querySelector('#datepicker-container'));
     </script>
   </body>
 </html>
