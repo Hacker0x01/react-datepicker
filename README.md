@@ -1,4 +1,5 @@
 # React Date Picker
+A simple and reusable datepicker component for React
 
 ## Installation
 
