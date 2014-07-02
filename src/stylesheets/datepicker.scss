@@ -12,30 +12,29 @@
 }
 
 .calendar-header {
-  position: relative;
   text-align: center;
   background-color: $background-color;
   border-bottom: 1px solid $border-color;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  padding-top: 5px;
+  position: relative;
 }
 
 .calendar-header-month {
   color: black;
   font-weight: bold;
   font-size: 13px;
-  margin-left: 30px;
-  margin-right: 30px;
 }
 
 .calendar-header-navigation-left {
   @extend %calendar-navigation;
+  left: 10px;
 }
 
 .calendar-header-navigation-right {
   @extend %calendar-navigation;
-}
-
-.calendar-header-day-container {
-  width: (7 * $item-size) + (2 * $calendar-margin);
+  right: 10px;
 }
 
 .calendar-header-day {
@@ -45,7 +44,6 @@
 }
 
 .calendar-month {
-  display: block;
   margin: $calendar-margin;
   text-align: center;
 }
@@ -55,30 +53,31 @@
   width: $item-size;
   line-height: $item-size;
   text-align: center;
-}
+  margin: 2px;
 
-.this-month {
-  color: black;
-  cursor: pointer;
+  &.this-month {
+    color: black;
+    cursor: pointer;
+  }
 
   &:hover {
-    background-color: $background-color;
     @extend %transparant-rounded-border;
+    background-color: $background-color;
     color: black;
   }
-}
 
-.today {
-  font-weight: bold;
-}
+  &.today {
+    font-weight: bold;
+  }
 
-.selected {
-  background-color: $selected-color;
-  @extend %transparant-rounded-border;
-  color: white;
-
-  &:hover {
-    background-color: darken($selected-color, 5%);
+  &.selected {
+    @extend %transparant-rounded-border;
+    background-color: $selected-color;
     color: white;
+
+    &:hover {
+      background-color: darken($selected-color, 5%);
+      color: white;
+    }
   }
 }
