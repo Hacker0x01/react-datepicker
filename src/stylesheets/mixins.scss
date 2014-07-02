@@ -31,6 +31,10 @@
   cursor: pointer;
   position: absolute;
   top: 5px;
+
+  &:hover {
+    color: darken(#ccc, 10%)
+  }
 }
 
 %transparant-rounded-border {
