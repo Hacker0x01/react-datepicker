@@ -7,17 +7,17 @@ window.Popover = React.createClass({
     popoverContainer = document.createElement('span');
     popoverContainer.className = 'calendar-container';
 
-    this._tooltipElement = popoverContainer;
+    this._popoverElement = popoverContainer;
 
-    document.querySelector('body').appendChild(this._tooltipElement);
+    document.querySelector('body').appendChild(this._popoverElement);
   },
 
   componentDidMount: function() {
-    this._renderTooltip();
+    this._renderPopover();
   },
 
   componentDidUpdate: function() {
-    this._renderTooltip();
+    this._renderPopover();
   },
 
   _popoverComponent: function() {
@@ -33,7 +33,7 @@ window.Popover = React.createClass({
 
   _tetherOptions: function() {
     return {
-      element: this._tooltipElement,
+      element: this._popoverElement,
       target: this.getDOMNode().parentElement,
       attachment: 'bottom',
       optimizations: {
@@ -48,8 +48,8 @@ window.Popover = React.createClass({
     };
   },
 
-  _renderTooltip: function() {
-    React.renderComponent(this._popoverComponent(), this._tooltipElement);
+  _renderPopover: function() {
+    React.renderComponent(this._popoverComponent(), this._popoverElement);
     if (this._tether != null) {
       this._tether.setOptions(this._tetherOptions());
     } else {
@@ -59,9 +59,9 @@ window.Popover = React.createClass({
 
   componentWillUnmount: function() {
     this._tether.destroy();
-    React.unmountComponentAtNode(this._tooltipElement);
-    if (this._tooltipElement.parentNode) {
-      this._tooltipElement.parentNode.removeChild(this._tooltipElement);
+    React.unmountComponentAtNode(this._popoverElement);
+    if (this._popoverElement.parentNode) {
+      this._popoverElement.parentNode.removeChild(this._popoverElement);
     }
   },
 
