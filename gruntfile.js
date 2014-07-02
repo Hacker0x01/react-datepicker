@@ -3,8 +3,11 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     sass: {
       dist: {
+        options: {
+          style: 'compressed'
+        },
         files: {
-          'src/stylesheets/style.css' : 'src/stylesheets/base.scss'
+          'src/stylesheets/style.css' : 'src/stylesheets/datepicker.scss'
         }
       }
     },
