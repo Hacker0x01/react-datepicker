@@ -34,7 +34,7 @@ window.Popover = React.createClass({
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: 'input',  //this.getDOMNode().parentElement,
+      target: 'input',
       attachment: 'bottom center',
       optimizations: {
         moveElement: false
