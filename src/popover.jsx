@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-window.ReactPopover = React.createClass({
+window.Popover = React.createClass({
   displayName: 'ReactPopover',
 
   componentWillMount: function() {
