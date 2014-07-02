@@ -1,24 +1,6 @@
+@import 'variables';
+@import 'mixins';
 @import 'fontello';
-
-$border-color: #aeaeae;
-$background-color: #f0f0f0;
-$selected-color: #216ba5;
-
-$border-radius: 4px;
-$item-size: 28px;
-$calendar-margin: 5px;
-
-%calendar-navigation {
-  width: $item-size;
-  line-height: $item-size;
-  text-align: center;
-  cursor: pointer;
-}
-
-%transparant-rounded-border {
-  border: 1px solid transparant;
-  border-radius: $border-radius;
-}
 
 .calendar {
   font-family: 'Open Sans', sans-serif;

@@ -1,0 +1,11 @@
+%calendar-navigation {
+  width: $item-size;
+  line-height: $item-size;
+  text-align: center;
+  cursor: pointer;
+}
+
+%transparant-rounded-border {
+  border: 1px solid transparant;
+  border-radius: $border-radius;
+}
