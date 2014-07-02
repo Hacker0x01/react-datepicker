@@ -35,7 +35,7 @@ window.Popover = React.createClass({
     return {
       element: this._popoverElement,
       target: this.getDOMNode().parentElement,
-      attachment: 'bottom',
+      attachment: 'bottom center',
       optimizations: {
         moveElement: false
       },
