@@ -67,13 +67,13 @@ window.Calendar = React.createClass({
             <i className="icon-forward"></i>
           </a>
           <div>
-            <div className="calendar-header-day">MO</div>
-            <div className="calendar-header-day">TU</div>
-            <div className="calendar-header-day">WE</div>
-            <div className="calendar-header-day">TH</div>
-            <div className="calendar-header-day">FR</div>
-            <div className="calendar-header-day">SA</div>
-            <div className="calendar-header-day">SU</div>
+            <div className="calendar-header-day">Mo</div>
+            <div className="calendar-header-day">Tu</div>
+            <div className="calendar-header-day">We</div>
+            <div className="calendar-header-day">Th</div>
+            <div className="calendar-header-day">Fr</div>
+            <div className="calendar-header-day">Sa</div>
+            <div className="calendar-header-day">Su</div>
           </div>
         </div>
         <div className="calendar-month">
