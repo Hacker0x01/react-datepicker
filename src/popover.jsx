@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 window.Popover = React.createClass({
-  displayName: 'ReactPopover',
+  displayName: 'Popover',
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
