@@ -45,7 +45,7 @@ window.DatePicker = React.createClass({
   },
 
   inputValue: function() {
-    return this.state.selected.format("YYYY-MM-DD")
+    return this.state.selected.format("YYYY-MM-DD");
   },
 
   calendar: function() {
@@ -56,8 +56,8 @@ window.DatePicker = React.createClass({
     }
   },
 
-  handleChange: function(event) {
-    date = moment(event.target.value, "YYYY-MM-DD")
+  handleInputChange: function(event) {
+    var date = moment(event.target.value, "YYYY-MM-DD");
 
     this.setState({
       value: event.target.value
@@ -75,10 +75,10 @@ window.DatePicker = React.createClass({
       <div>
         <input
           type="text"
-          onChange={this.handleChange}
           value={this.state.value}
+          onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur} />
+          onChange={this.handleInputChange} />
         {this.calendar()}
       </div>
     );
