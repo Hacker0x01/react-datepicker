@@ -53,29 +53,30 @@ window.Calendar = React.createClass({
   render: function() {
     return (
       <div className="calendar">
+        <div className="calendar-triangle"></div>
         <div className="calendar-header">
-          <a className="calendar-month-navigation-left"
+          <a className="calendar-header-navigation-left"
               onClick={this.decreaseMonth}>
-            &laquo;
+            <i className="icon-backward"></i>
           </a>
-          <span className="calendar-current-month">
+          <span className="calendar-header-month">
             {this.state.date.format("MMMM YYYY")}
           </span>
-          <a className="calendar-month-navigation-right"
+          <a className="calendar-header-navigation-right"
               onClick={this.increaseMonth}>
-            &raquo;
+            <i className="icon-forward"></i>
           </a>
-        </div>
-        <div className="month">
           <div>
-            <div className="day head">MO</div>
-            <div className="day head">TU</div>
-            <div className="day head">WE</div>
-            <div className="day head">TH</div>
-            <div className="day head">FR</div>
-            <div className="day head">SA</div>
-            <div className="day head">SU</div>
+            <div className="calendar-header-day">MO</div>
+            <div className="calendar-header-day">TU</div>
+            <div className="calendar-header-day">WE</div>
+            <div className="calendar-header-day">TH</div>
+            <div className="calendar-header-day">FR</div>
+            <div className="calendar-header-day">SA</div>
+            <div className="calendar-header-day">SU</div>
           </div>
+        </div>
+        <div className="calendar-month">
           {this.weeks()}
         </div>
       </div>

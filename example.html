@@ -4,12 +4,12 @@
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/react/react-with-addons.js"></script>
 		<script src="bower_components/react/JSXTransformer.js"></script>
-    <link rel="stylesheet" type="text/css" href="src/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="src/stylesheets/style.min.css">
   </head>
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
-    <div id="calendar"></div>
+    <div id="calendar-container"></div>
 
     <script type="text/javascript" src="src/util/date.js"></script>
     <script type="text/jsx" src="src/day.jsx"></script>
@@ -18,7 +18,7 @@
 
     <script type="text/jsx">
       /** @jsx React.DOM */
-      React.renderComponent(<DatePicker />, document.querySelector('#calendar'));
+      React.renderComponent(<DatePicker />, document.querySelector('#calendar-container'));
     </script>
   </body>
 </html>

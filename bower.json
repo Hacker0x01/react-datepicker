@@ -2,7 +2,8 @@
   "name": "react-date-picker",
   "version": "0.0.0",
   "authors": [
-    "Remon Oldenbeuving <remon@hackerone.com>"
+    "Remon Oldenbeuving <remon@hackerone.com>",
+    "Martijn Russchen <martijn@hackerone.com"
   ],
   "description": "A simple and reusable datepicker component for React",
   "dependencies": {

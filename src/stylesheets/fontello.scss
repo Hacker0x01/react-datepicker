@@ -1,0 +1,41 @@
+// ATTENTION:
+// Generate the font using fontello.com, upload fontello-config.json.
+// Then replace the font (woff) and manually update this file with the added icons.
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../fonts/fontello.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+ .icon-forward,
+ .icon-backward {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+}
+
+
+// Formally icon-play, but renamed for readability
+.icon-forward:before { content: '\e800'; }
+
+.icon-backward {
+  transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+
+  &:before {
+    content: '\e800';
+  }
+}

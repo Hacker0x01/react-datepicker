@@ -7,7 +7,7 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         files: {
-          'src/stylesheets/style.css' : 'src/stylesheets/datepicker.scss'
+          'src/stylesheets/style.min.css' : 'src/stylesheets/datepicker.scss'
         }
       }
     },

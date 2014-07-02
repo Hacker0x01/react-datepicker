@@ -1,56 +1,91 @@
-.month {
-  border-left: 1px solid black;
-  border-top: 1px solid black;
-  display: inline-block;
-}
+@import 'variables';
+@import 'mixins';
+@import 'open-sans';
+@import 'fontello';
 
-.day {
-  display: inline-block;
-  width: 28px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  line-height: 28px;
-  text-align: center;
+.calendar {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
   color: #ccc;
-  cursor: pointer;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  display: inline-block;
+  position: relative;
 }
 
-.this-month {
-  color: black;
-}
-
-.selected {
-  color: blue;
-}
-
-.today {
-  color: red;
-}
-
-.calendar-month-navigation-left,
-.calendar-month-navigation-right {
-  width: 28px;
-  line-height: 28px;
-  text-align: center;
-  cursor: pointer;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
-}
-
-.calendar-month-navigation-left {
-  float: left;
-}
-
-.calendar-month-navigation-right {
-  float: right;
+.calendar-triangle {
+  @extend %triangle-arrow-up;
+  position: absolute;
+  left: 50px;
 }
 
 .calendar-header {
-  position: relative;
   text-align: center;
-  border-top: 1px solid black;
+  background-color: $background-color;
+  border-bottom: 1px solid $border-color;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  padding-top: 5px;
+  position: relative;
 }
 
-.calendar {
+.calendar-header-month {
+  color: black;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.calendar-header-navigation-left {
+  @extend %calendar-navigation;
+  left: 10px;
+}
+
+.calendar-header-navigation-right {
+  @extend %calendar-navigation;
+  right: 10px;
+}
+
+.calendar-header-day {
   display: inline-block;
+  width: $item-size;
+  line-height: $item-size;
+}
+
+.calendar-month {
+  margin: $calendar-margin;
+  text-align: center;
+}
+
+.calendar-day {
+  display: inline-block;
+  width: $item-size;
+  line-height: $item-size;
+  text-align: center;
+  margin: 2px;
+
+  &.this-month {
+    color: black;
+    cursor: pointer;
+  }
+
+  &:hover {
+    @extend %transparant-rounded-border;
+    background-color: $background-color;
+    color: black;
+  }
+
+  &.today {
+    font-weight: bold;
+  }
+
+  &.selected {
+    @extend %transparant-rounded-border;
+    background-color: $selected-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($selected-color, 5%);
+      color: white;
+    }
+  }
 }
