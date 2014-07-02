@@ -53,6 +53,7 @@ window.Calendar = React.createClass({
   render: function() {
     return (
       <div className="calendar">
+        <div className="calendar-triangle"></div>
         <div className="calendar-header">
           <a className="calendar-header-navigation-left"
               onClick={this.decreaseMonth}>

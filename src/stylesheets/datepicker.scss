@@ -9,6 +9,13 @@
   border: 1px solid $border-color;
   border-radius: $border-radius;
   display: inline-block;
+  position: relative;
+}
+
+.calendar-triangle {
+  @include triangle-arrow-up;
+  position: absolute;
+  left: 50px;
 }
 
 .calendar-header {

@@ -1,8 +1,47 @@
+$triangleSize: 8px;
+$blockBorderSize: 1px;
+
+@mixin triangle-arrow($borderExtraWidth) {
+  &, &:before {
+    box-sizing: content-box;
+    position: absolute;
+    border: $triangleSize solid transparent;
+  }
+
+  &:before {
+    content: '';
+    z-index: -1;
+    border-width: $triangleSize + $borderExtraWidth;
+  }
+}
+
+@mixin triangle-arrow-up($color: $border-color, $arrow-fill-color: $background-color, $borderExtraWidth: 0) {
+  @include triangle-arrow($borderExtraWidth);
+  margin-top: -$triangleSize;
+  margin-left: -$triangleSize;
+
+  &, &:before {
+    height: 0;
+    width: 1px;
+    border-top: none;
+    border-bottom-color: $arrow-fill-color;
+  }
+
+  &:before {
+    top: -$blockBorderSize - $borderExtraWidth;
+    left: -$triangleSize - $borderExtraWidth;
+    border-bottom-color: $color;
+  }
+}
+
+
 %calendar-navigation {
   width: $item-size;
   line-height: $item-size;
   text-align: center;
   cursor: pointer;
+  position: absolute;
+  top: 5px;
 }
 
 %transparant-rounded-border {
