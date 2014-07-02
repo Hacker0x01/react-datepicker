@@ -52,14 +52,14 @@ $calendar-margin: 5px;
   @extend %calendar-navigation;
 }
 
-.calendar-header-days {
+.calendar-header-day-container {
   width: (7 * $item-size) + (2 * $calendar-margin);
+}
 
-  > .item {
-    display: inline-block;
-    width: $item-size;
-    line-height: $item-size;
-  }
+.calender-header-day {
+  display: inline-block;
+  width: $item-size;
+  line-height: $item-size;
 }
 
 .calendar-month {

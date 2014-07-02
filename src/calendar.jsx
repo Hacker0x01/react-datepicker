@@ -65,14 +65,14 @@ window.Calendar = React.createClass({
               onClick={this.increaseMonth}>
             <i className="icon-forward"></i>
           </a>
-          <div className="calendar-header-days">
-            <div className="item">MO</div>
-            <div className="item">TU</div>
-            <div className="item">WE</div>
-            <div className="item">TH</div>
-            <div className="item">FR</div>
-            <div className="item">SA</div>
-            <div className="item">SU</div>
+          <div className="calendar-header-day-container">
+            <div className="calendar-header-day">MO</div>
+            <div className="calendar-header-day">TU</div>
+            <div className="calendar-header-day">WE</div>
+            <div className="calendar-header-day">TH</div>
+            <div className="calendar-header-day">FR</div>
+            <div className="calendar-header-day">SA</div>
+            <div className="calendar-header-day">SU</div>
           </div>
         </div>
         <div className="calendar-month">
