@@ -47,7 +47,7 @@
 
 .calendar-header-day {
   display: inline-block;
-  width: $item-size;
+  width: $item-size + (2 * $day-margin);
   line-height: $item-size;
 }
 
@@ -61,7 +61,7 @@
   width: $item-size;
   line-height: $item-size;
   text-align: center;
-  margin: 2px;
+  margin: $day-margin;
 
   &.this-month {
     color: black;
