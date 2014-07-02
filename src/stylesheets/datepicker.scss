@@ -13,7 +13,7 @@
 }
 
 .calendar-triangle {
-  @include triangle-arrow-up;
+  @extend %triangle-arrow-up;
   position: absolute;
   left: 50px;
 }
