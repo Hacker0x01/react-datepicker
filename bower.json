@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "authors": [
     "Remon Oldenbeuving <remon@hackerone.com>",
     "Martijn Russchen <martijn@hackerone.com"
@@ -12,7 +12,7 @@
     "src/stylesheets/style.min.css",
     "src/fonts/fontello.woff",
     "src/fonts/OpenSans-bold.ttf",
-    "src/fonts/OpenSans-Regular.ttf",
+    "src/fonts/OpenSans-Regular.ttf"
   ],
   "dependencies": {
     "react": "0.10.0",
