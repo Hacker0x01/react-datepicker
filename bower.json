@@ -7,9 +7,9 @@
   ],
   "description": "A simple and reusable datepicker component for React",
   "dependencies": {
-    "react": "~0.10.0",
-    "moment": "~2.7.0",
-    "tether": "~0.6.5"
+    "react": "0.10.0",
+    "moment": "2.7.0",
+    "tether": "0.6.5"
   },
   "ignore": [
     "**/.*",
