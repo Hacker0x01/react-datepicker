@@ -9,7 +9,7 @@ var Day = React.createClass({
 
   render: function() {
     classes = React.addons.classSet({
-      'calendar-day': true,
+      'datepicker-calendar-day': true,
       'selected': this.props.day.sameDay(this.props.selected),
       'this-month': this.props.day.sameMonth(this.props.date),
       'today': this.props.day.sameDay(moment())

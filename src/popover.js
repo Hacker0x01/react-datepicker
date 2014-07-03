@@ -5,7 +5,7 @@ var Popover = React.createClass({
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
-    popoverContainer.className = 'calendar-container';
+    popoverContainer.className = 'datepicker-calendar-container';
 
     this._popoverElement = popoverContainer;
 
@@ -24,7 +24,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       <div className={className}>
-        <div className="calendar-popover-content">
+        <div className="datepicker-calendar-popover-content">
           {this.props.children}
         </div>
       </div>
@@ -35,14 +35,17 @@ var Popover = React.createClass({
     return {
       element: this._popoverElement,
       target: 'input',
-      attachment: 'bottom center',
+      attachment: 'top left',
+      targetAttachment: 'bottom left',
+      targetOffset: '10px 0',
       optimizations: {
-        moveElement: false
+        moveElement: false // always moves to <body> anyway!
       },
       constraints: [
         {
           to: 'scrollParent',
-          attachment: 'together'
+          attachment: 'together',
+          pin: true
         }
       ]
     };

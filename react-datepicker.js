@@ -55,29 +55,29 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"calendar", onClick:this.props.onClick}, 
-        React.DOM.div( {className:"calendar-triangle"}),
-        React.DOM.div( {className:"calendar-header"}, 
-          React.DOM.a( {className:"calendar-header-navigation-left",
+      React.DOM.div( {className:"datepicker-calendar", onClick:this.props.onClick}, 
+        React.DOM.div( {className:"datepicker-calendar-triangle"}),
+        React.DOM.div( {className:"datepicker-calendar-header"}, 
+          React.DOM.a( {className:"datepicker-calendar-header-navigation-left",
               onClick:this.decreaseMonth}
           ),
-          React.DOM.span( {className:"calendar-header-month"}, 
+          React.DOM.span( {className:"datepicker-calendar-header-month"}, 
             this.state.date.format("MMMM YYYY")
           ),
-          React.DOM.a( {className:"calendar-header-navigation-right",
+          React.DOM.a( {className:"datepicker-calendar-header-navigation-right",
               onClick:this.increaseMonth}
           ),
           React.DOM.div(null, 
-            React.DOM.div( {className:"calendar-header-day"}, "Mo"),
-            React.DOM.div( {className:"calendar-header-day"}, "Tu"),
-            React.DOM.div( {className:"calendar-header-day"}, "We"),
-            React.DOM.div( {className:"calendar-header-day"}, "Th"),
-            React.DOM.div( {className:"calendar-header-day"}, "Fr"),
-            React.DOM.div( {className:"calendar-header-day"}, "Sa"),
-            React.DOM.div( {className:"calendar-header-day"}, "Su")
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Mo"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Tu"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "We"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Th"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Fr"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Sa"),
+            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Su")
           )
         ),
-        React.DOM.div( {className:"calendar-month"}, 
+        React.DOM.div( {className:"datepicker-calendar-month"}, 
           this.weeks()
         )
       )
@@ -206,7 +206,8 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
           value:this.state.value,
           onBlur:this.handleBlur,
           onFocus:this.handleFocus,
-          onChange:this.handleInputChange} ),
+          onChange:this.handleInputChange,
+          className:"datepicker-input"} ),
         this.calendar()
       )
     );
@@ -227,7 +228,7 @@ var Day = React.createClass({displayName: 'Day',
 
   render: function() {
     classes = React.addons.classSet({
-      'calendar-day': true,
+      'datepicker-calendar-day': true,
       'selected': this.props.day.sameDay(this.props.selected),
       'this-month': this.props.day.sameMonth(this.props.date),
       'today': this.props.day.sameDay(moment())
@@ -251,7 +252,7 @@ var Popover = React.createClass({
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
-    popoverContainer.className = 'calendar-container';
+    popoverContainer.className = 'datepicker-calendar-container';
 
     this._popoverElement = popoverContainer;
 
@@ -270,7 +271,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       React.DOM.div( {className:className}, 
-        React.DOM.div( {className:"calendar-popover-content"}, 
+        React.DOM.div( {className:"datepicker-calendar-popover-content"}, 
           this.props.children
         )
       )
@@ -281,14 +282,17 @@ var Popover = React.createClass({
     return {
       element: this._popoverElement,
       target: 'input',
-      attachment: 'bottom center',
+      attachment: 'top left',
+      targetAttachment: 'bottom left',
+      targetOffset: '10px 0',
       optimizations: {
-        moveElement: false
+        moveElement: false // always moves to <body> anyway!
       },
       constraints: [
         {
           to: 'scrollParent',
-          attachment: 'together'
+          attachment: 'together',
+          pin: true
         }
       ]
     };
