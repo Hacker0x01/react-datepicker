@@ -55,7 +55,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"calendar"}, 
+      React.DOM.div( {className:"calendar", onClick:this.props.onClick}, 
         React.DOM.div( {className:"calendar-triangle"}),
         React.DOM.div( {className:"calendar-header"}, 
           React.DOM.a( {className:"calendar-header-navigation-left",
@@ -120,17 +120,40 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
   },
 
   handleBlur: function() {
-    this._blurTimeout = setTimeout(this.hideCalendar, 20);
+    // Reset the value of this._dontBlur to it's default
+    this._dontBlur = false;
+
+    // If state.focus is still true, ignore the browser's blur
+    if (this.state.focus) {
+      this.refs.input.getDOMNode().focus();
+    }
+
+    // Give the browser some time to execute the possible click handlers
+    //   (for when the user clicks inside of the calendar)
+    setTimeout(function() {
+      // If no handler set the value of this._dontBlur to true, we can safely
+      //   assume that it's time to blur
+      if (! this._dontBlur) {
+        this.setState({
+          focus: false
+        });
+      }
+    }.bind(this), 50);
+  },
+
+  handleCalendarClick: function() {
+    this._dontBlur = true;
+
+    this.setState({
+      focus: true
+    });
   },
 
   handleSelect: function(date) {
-    window.clearTimeout(this._blurTimeout);
+    this._dontBlur = true;
 
     this.setSelected(date);
-
-    this.setState({
-      focus: false
-    });
+    this.hideCalendar();
   },
 
   setSelected: function(date) {
@@ -150,7 +173,8 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
         Popover(null, 
           Calendar(
             {selected:this.state.selected,
-            onSelect:this.handleSelect})
+            onSelect:this.handleSelect,
+            onClick:this.handleCalendarClick} )
         )
       );
     }
@@ -170,11 +194,20 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     }
   },
 
+  componentDidUpdate: function() {
+    if (this.state.focus) {
+      this.refs.input.getDOMNode().focus();
+    } else {
+      this.refs.input.getDOMNode().blur();
+    }
+  },
+
   render: function() {
     return (
       React.DOM.div(null, 
         React.DOM.input(
-          {type:"text",
+          {ref:"input",
+          type:"text",
           value:this.state.value,
           onBlur:this.handleBlur,
           onFocus:this.handleFocus,
@@ -193,6 +226,8 @@ module.exports = DatePicker;
 var Day = React.createClass({displayName: 'Day',
   handleClick: function(event) {
     this.props.onSelect(this.props.day);
+
+    event.stopPropagation();
   },
 
   render: function() {
