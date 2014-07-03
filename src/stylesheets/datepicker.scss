@@ -72,12 +72,11 @@
   &.this-month {
     color: black;
     cursor: pointer;
-  }
 
-  &:hover {
-    @extend %transparant-rounded-border;
-    background-color: $background-color;
-    color: black;
+    &:hover {
+      @extend %transparant-rounded-border;
+      background-color: $background-color;
+    }
   }
 
   &.today {
@@ -91,7 +90,6 @@
 
     &:hover {
       background-color: darken($selected-color, 5%);
-      color: white;
     }
   }
 }
