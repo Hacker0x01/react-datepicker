@@ -24,7 +24,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       <div className={className}>
-        <div className="popover-content">
+        <div className="calendar-popover-content">
           {this.props.children}
         </div>
       </div>
