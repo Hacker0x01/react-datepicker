@@ -55,7 +55,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"calendar", onClick:this.props.handleCalendarClick}, 
+      React.DOM.div( {className:"calendar", onClick:this.props.onClick}, 
         React.DOM.div( {className:"calendar-triangle"}),
         React.DOM.div( {className:"calendar-header"}, 
           React.DOM.a( {className:"calendar-header-navigation-left",
