@@ -31,10 +31,8 @@
   cursor: pointer;
   position: absolute;
   top: 5px;
-
-  &:hover {
-    color: darken(#ccc, 10%)
-  }
+  width: 0;
+  border: 6px solid transparent;
 }
 
 %transparant-rounded-border {

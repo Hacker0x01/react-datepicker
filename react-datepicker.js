@@ -59,15 +59,13 @@ var Calendar = React.createClass({displayName: 'Calendar',
         React.DOM.div( {className:"calendar-triangle"}),
         React.DOM.div( {className:"calendar-header"}, 
           React.DOM.a( {className:"calendar-header-navigation-left",
-              onClick:this.decreaseMonth}, 
-            React.DOM.i( {className:"icon-backward"})
+              onClick:this.decreaseMonth}
           ),
           React.DOM.span( {className:"calendar-header-month"}, 
             this.state.date.format("MMMM YYYY")
           ),
           React.DOM.a( {className:"calendar-header-navigation-right",
-              onClick:this.increaseMonth}, 
-            React.DOM.i( {className:"icon-forward"})
+              onClick:this.increaseMonth}
           ),
           React.DOM.div(null, 
             React.DOM.div( {className:"calendar-header-day"}, "Mo"),

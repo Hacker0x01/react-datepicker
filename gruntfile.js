@@ -3,11 +3,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     sass: {
       dist: {
-        options: {
-          style: 'compressed'
-        },
         files: {
-          'src/stylesheets/style.min.css' : 'src/stylesheets/datepicker.scss'
+          'react-datepicker.css' : 'src/stylesheets/datepicker.scss'
         }
       }
     },
@@ -19,7 +16,7 @@ module.exports = function(grunt) {
       },
 
       browserify: {
-        files: ['src/**/*.jsx', 'src/**/*.js'],
+        files: ['src/**/*.js'],
         tasks: ['browserify']
       }
     },

@@ -1,7 +1,5 @@
 @import 'variables';
 @import 'mixins';
-@import 'open-sans';
-@import 'fontello';
 
 .calendar-container {
   padding-top: 10px;
@@ -11,10 +9,10 @@
 }
 
 .calendar {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
-  background-color: white;
-  color: #ccc;
+  background-color: #fff;
+  color: $text-color;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   display: inline-block;
@@ -46,14 +44,25 @@
 .calendar-header-navigation-left {
   @extend %calendar-navigation;
   left: 10px;
+  border-right-color: $muted-color;
+
+  &:hover {
+    border-right-color: darken($muted-color, 10%);
+  }
 }
 
 .calendar-header-navigation-right {
   @extend %calendar-navigation;
   right: 10px;
+  border-left-color: $muted-color;
+
+  &:hover {
+    border-left-color: darken($muted-color, 10%);
+  }
 }
 
 .calendar-header-day {
+  color: $muted-color;
   display: inline-block;
   width: $item-size + (2 * $day-margin);
   line-height: $item-size;
@@ -65,6 +74,7 @@
 }
 
 .calendar-day {
+  color: $muted-color;
   display: inline-block;
   width: $item-size;
   line-height: $item-size;
@@ -72,7 +82,7 @@
   margin: $day-margin;
 
   &.this-month {
-    color: black;
+    color: $text-color;
     cursor: pointer;
 
     &:hover {
@@ -88,7 +98,7 @@
   &.selected {
     @extend %transparant-rounded-border;
     background-color: $selected-color;
-    color: white;
+    color: #fff;
 
     &:hover {
       background-color: darken($selected-color, 5%);
