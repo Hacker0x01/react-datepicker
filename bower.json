@@ -1,16 +1,22 @@
 {
   "name": "react-date-picker",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "authors": [
     "Remon Oldenbeuving <remon@hackerone.com>",
     "Martijn Russchen <martijn@hackerone.com"
   ],
   "description": "A simple and reusable datepicker component for React",
+  "main": [
+    "react-datepicker.js",
+    "src/stylesheets/style.min.css",
+    "src/fonts/fontello.woff",
+    "src/fonts/OpenSans-bold.ttf",
+    "src/fonts/OpenSans-Regular.ttf",
+  ],
   "dependencies": {
-    "underscore": "~1.6.0",
-    "react": "~0.10.0",
-    "moment": "~2.7.0",
-    "tether": "~0.6.5"
+    "react": "0.10.0",
+    "moment": "2.7.0",
+    "tether": "0.6.5"
   },
   "ignore": [
     "**/.*",

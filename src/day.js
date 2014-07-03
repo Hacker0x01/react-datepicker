@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-window.Day = React.createClass({
+var Day = React.createClass({
   handleClick: function(event) {
     this.props.onSelect(this.props.day);
 
@@ -22,3 +22,5 @@ window.Day = React.createClass({
     );
   }
 });
+
+module.exports = Day;

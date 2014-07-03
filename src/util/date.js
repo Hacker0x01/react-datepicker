@@ -63,3 +63,5 @@ DateUtil.prototype.subtractMonth = function() {
 DateUtil.prototype.clone = function() {
   return new DateUtil(this._date.clone());
 };
+
+module.exports = DateUtil;

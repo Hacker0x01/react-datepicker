@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-window.Popover = React.createClass({
+var Popover = React.createClass({
   displayName: 'Popover',
 
   componentWillMount: function() {
@@ -69,3 +69,5 @@ window.Popover = React.createClass({
     return <span/>;
   }
 });
+
+module.exports = Popover;
