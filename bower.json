@@ -9,10 +9,7 @@
   "license": "MIT",
   "main": [
     "react-datepicker.js",
-    "src/stylesheets/style.min.css",
-    "src/fonts/fontello.woff",
-    "src/fonts/OpenSans-bold.ttf",
-    "src/fonts/OpenSans-Regular.ttf"
+    "react-datepicker.css"
   ],
   "dependencies": {
     "react": "0.10.0",
