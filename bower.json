@@ -6,6 +6,7 @@
     "Martijn Russchen <martijn@hackerone.com"
   ],
   "description": "A simple and reusable datepicker component for React",
+  "license": "MIT",
   "main": [
     "react-datepicker.js",
     "src/stylesheets/style.min.css",
