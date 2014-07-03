@@ -272,7 +272,7 @@ var Popover = React.createClass({
   },
 
   _popoverComponent: function() {
-    var className = this.props.className || 'translucent-popover';
+    var className = this.props.className;
     return (
       React.DOM.div( {className:className}, 
         React.DOM.div( {className:"popover-content"}, 
