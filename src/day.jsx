@@ -3,6 +3,8 @@
 window.Day = React.createClass({
   handleClick: function(event) {
     this.props.onSelect(this.props.day);
+
+    event.stopPropagation();
   },
 
   render: function() {
