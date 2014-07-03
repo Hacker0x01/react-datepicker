@@ -1,10 +1,9 @@
 <html>
   <head>
-    <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/react/react-with-addons.js"></script>
-		<script src="bower_components/react/JSXTransformer.js"></script>
     <script src="bower_components/tether/tether.js"></script>
+    <script type="text/javascript" src="react-datepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="src/stylesheets/style.min.css">
   </head>
   <body>
@@ -12,15 +11,8 @@
 
     <div id="datepicker-container"></div>
 
-    <script type="text/javascript" src="src/util/date.js"></script>
-    <script type="text/jsx" src="src/popover.jsx"></script>
-    <script type="text/jsx" src="src/day.jsx"></script>
-    <script type="text/jsx" src="src/calendar.jsx"></script>
-    <script type="text/jsx" src="src/datepicker.jsx"></script>
-
-    <script type="text/jsx">
-      /** @jsx React.DOM */
-      React.renderComponent(<DatePicker />, document.querySelector('#datepicker-container'));
+    <script type="text/javascript">
+      React.renderComponent(DatePicker(), document.querySelector('#datepicker-container'));
     </script>
   </body>
 </html>

@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
 
-window.DatePicker = React.createClass({
+var DateUtil = require('./util/date');
+var Popover  = require('./popover');
+var Calendar = require('./calendar');
+
+var DatePicker = React.createClass({
   getInitialState: function() {
     var selected = new DateUtil(moment());
 
@@ -8,7 +12,7 @@ window.DatePicker = React.createClass({
       focus: false,
       selected: selected,
       value: selected.format("YYYY-MM-DD")
-    }
+    };
   },
 
   handleFocus: function() {
@@ -88,3 +92,5 @@ window.DatePicker = React.createClass({
     );
   }
 });
+
+module.exports = DatePicker;

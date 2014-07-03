@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-window.Calendar = React.createClass({
+var Day = require('./day');
+
+var Calendar = React.createClass({
   getInitialState: function() {
     return {
       date: this.props.selected.clone()
@@ -83,3 +85,5 @@ window.Calendar = React.createClass({
     );
   }
 });
+
+module.exports = Calendar;
