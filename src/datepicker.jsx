@@ -24,17 +24,40 @@ window.DatePicker = React.createClass({
   },
 
   handleBlur: function() {
-    this._blurTimeout = setTimeout(this.hideCalendar, 20);
+    // Reset the value of this._dontBlur to it's default
+    this._dontBlur = false;
+
+    // If state.focus is still true, ignore the browser's blur
+    if (this.state.focus) {
+      this.refs.input.getDOMNode().focus();
+    }
+
+    // Give the browser some time to execute the possible click handlers
+    //   (for when the user clicks inside of the calendar)
+    setTimeout(function() {
+      // If no handler set the value of this._dontBlur to true, we can safely
+      //   assume that it's time to blur
+      if (! this._dontBlur) {
+        this.setState({
+          focus: false
+        });
+      }
+    }.bind(this), 50);
+  },
+
+  handleCalendarClick: function() {
+    this._dontBlur = true;
+
+    this.setState({
+      focus: true
+    });
   },
 
   handleSelect: function(date) {
-    window.clearTimeout(this._blurTimeout);
+    this._dontBlur = true;
 
     this.setSelected(date);
-
-    this.setState({
-      focus: false
-    });
+    this.hideCalendar();
   },
 
   setSelected: function(date) {
@@ -54,7 +77,8 @@ window.DatePicker = React.createClass({
         <Popover>
           <Calendar
             selected={this.state.selected}
-            onSelect={this.handleSelect}/>
+            onSelect={this.handleSelect}
+            onClick={this.handleCalendarClick} />
         </Popover>
       );
     }
@@ -74,10 +98,19 @@ window.DatePicker = React.createClass({
     }
   },
 
+  componentDidUpdate: function() {
+    if (this.state.focus) {
+      this.refs.input.getDOMNode().focus();
+    } else {
+      this.refs.input.getDOMNode().blur();
+    }
+  },
+
   render: function() {
     return (
       <div>
         <input
+          ref="input"
           type="text"
           value={this.state.value}
           onBlur={this.handleBlur}
