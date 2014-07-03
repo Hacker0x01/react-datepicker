@@ -11,4 +11,4 @@ A simple and reusable datepicker component for React
 
 ## License
 
-Copyright (c) 2014 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE.txt](LICENSE.txt) for the full license.
+Copyright (c) 2014 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
