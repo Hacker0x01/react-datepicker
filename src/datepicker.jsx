@@ -50,9 +50,13 @@ window.DatePicker = React.createClass({
 
   calendar: function() {
     if (this.state.focus) {
-      return <Calendar
-        selected={this.state.selected}
-        onSelect={this.handleSelect} />;
+      return (
+        <Popover>
+          <Calendar
+            selected={this.state.selected}
+            onSelect={this.handleSelect}/>
+        </Popover>
+      );
     }
   },
 
