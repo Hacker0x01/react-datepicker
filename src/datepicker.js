@@ -116,7 +116,8 @@ var DatePicker = React.createClass({
           value={this.state.value}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          onChange={this.handleInputChange} />
+          onChange={this.handleInputChange}
+          className="datepicker-input" />
         {this.calendar()}
       </div>
     );

@@ -1,14 +1,13 @@
 @import 'variables';
 @import 'mixins';
 
-.calendar-container {
-  padding-top: 10px;
-  margin-left: 40px;
+.datepicker-calendar-container {
+  position: absolute;
   display: inline-block;
   z-index: 2147483647;
 }
 
-.calendar {
+.datepicker-calendar {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
   background-color: #fff;
@@ -19,13 +18,13 @@
   position: relative;
 }
 
-.calendar-triangle {
+.datepicker-calendar-triangle {
   @extend %triangle-arrow-up;
   position: absolute;
   left: 50px;
 }
 
-.calendar-header {
+.datepicker-calendar-header {
   text-align: center;
   background-color: $background-color;
   border-bottom: 1px solid $border-color;
@@ -35,14 +34,14 @@
   position: relative;
 }
 
-.calendar-header-month {
+.datepicker-calendar-header-month {
   color: black;
   font-weight: bold;
   font-size: 13px;
 }
 
-.calendar-header-navigation-left {
-  @extend %calendar-navigation;
+.datepicker-calendar-header-navigation-left {
+  @extend %datepicker-calendar-navigation;
   left: 10px;
   border-right-color: $muted-color;
 
@@ -51,8 +50,8 @@
   }
 }
 
-.calendar-header-navigation-right {
-  @extend %calendar-navigation;
+.datepicker-calendar-header-navigation-right {
+  @extend %datepicker-calendar-navigation;
   right: 10px;
   border-left-color: $muted-color;
 
@@ -61,19 +60,19 @@
   }
 }
 
-.calendar-header-day {
+.datepicker-calendar-header-day {
   color: $muted-color;
   display: inline-block;
   width: $item-size + (2 * $day-margin);
   line-height: $item-size;
 }
 
-.calendar-month {
-  margin: $calendar-margin;
+.datepicker-calendar-month {
+  margin: $datepicker-calendar-margin;
   text-align: center;
 }
 
-.calendar-day {
+.datepicker-calendar-day {
   color: $muted-color;
   display: inline-block;
   width: $item-size;
@@ -103,5 +102,21 @@
     &:hover {
       background-color: darken($selected-color, 5%);
     }
+  }
+}
+
+.datepicker-input {
+  position: relative;
+  font-size: 13px;
+  border-radius: $border-radius;
+  box-shadow: inset 0 2px 2px #e9e9e9;
+  border: 1px solid $border-color;
+  line-height: 16px;
+  padding: 6px 10px 5px;
+
+  &:focus {
+    outline: none;
+    border-color: $border-color;
+    box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
   }
 }

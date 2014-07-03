@@ -54,29 +54,29 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div className="calendar" onClick={this.props.onClick}>
-        <div className="calendar-triangle"></div>
-        <div className="calendar-header">
-          <a className="calendar-header-navigation-left"
+      <div className="datepicker-calendar" onClick={this.props.onClick}>
+        <div className="datepicker-calendar-triangle"></div>
+        <div className="datepicker-calendar-header">
+          <a className="datepicker-calendar-header-navigation-left"
               onClick={this.decreaseMonth}>
           </a>
-          <span className="calendar-header-month">
+          <span className="datepicker-calendar-header-month">
             {this.state.date.format("MMMM YYYY")}
           </span>
-          <a className="calendar-header-navigation-right"
+          <a className="datepicker-calendar-header-navigation-right"
               onClick={this.increaseMonth}>
           </a>
           <div>
-            <div className="calendar-header-day">Mo</div>
-            <div className="calendar-header-day">Tu</div>
-            <div className="calendar-header-day">We</div>
-            <div className="calendar-header-day">Th</div>
-            <div className="calendar-header-day">Fr</div>
-            <div className="calendar-header-day">Sa</div>
-            <div className="calendar-header-day">Su</div>
+            <div className="datepicker-calendar-header-day">Mo</div>
+            <div className="datepicker-calendar-header-day">Tu</div>
+            <div className="datepicker-calendar-header-day">We</div>
+            <div className="datepicker-calendar-header-day">Th</div>
+            <div className="datepicker-calendar-header-day">Fr</div>
+            <div className="datepicker-calendar-header-day">Sa</div>
+            <div className="datepicker-calendar-header-day">Su</div>
           </div>
         </div>
-        <div className="calendar-month">
+        <div className="datepicker-calendar-month">
           {this.weeks()}
         </div>
       </div>
