@@ -2,10 +2,10 @@
   "author": "HackerOne",
   "name": "react-datapicker",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-sass": "~0.7.3",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-browserify": "^2.1.2",
-    "reactify": "^0.13.1"
+    "grunt": "0.4.5",
+    "grunt-contrib-sass": "0.7.3",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-browserify": "2.1.2",
+    "reactify": "0.13.1"
   }
 }
