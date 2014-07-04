@@ -48,4 +48,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsxhint');
 
   grunt.registerTask('default', ['watch']);
+  grunt.registerTask('travis', ['jshint']);
 };
