@@ -35,7 +35,10 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['src/**/*.js']
+      all: ['src/**/*.js'],
+      options: {
+        eqnull: true
+      }
     }
   });
 

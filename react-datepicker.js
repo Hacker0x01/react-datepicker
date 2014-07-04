@@ -300,7 +300,7 @@ var Popover = React.createClass({
 
   _renderPopover: function() {
     React.renderComponent(this._popoverComponent(), this._popoverElement);
-    if (this._tether !== null) {
+    if (this._tether != null) {
       this._tether.setOptions(this._tetherOptions());
     } else {
       this._tether = new Tether(this._tetherOptions());
