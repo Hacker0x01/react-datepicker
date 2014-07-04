@@ -32,12 +32,17 @@ module.exports = function(grunt) {
           }
         }
       }
+    },
+
+    jshint: {
+      all: ['src/**/*.js']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-jsxhint');
 
   grunt.registerTask('default', ['watch']);
 };
