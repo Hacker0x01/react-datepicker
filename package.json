@@ -8,5 +8,8 @@
     "grunt-browserify": "2.1.2",
     "reactify": "0.13.1",
     "grunt-jsxhint": "0.0.2"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
   }
 }
