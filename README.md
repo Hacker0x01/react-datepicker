@@ -1,4 +1,6 @@
 # React Date Picker
+[![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg)](https://travis-ci.org/Hacker0x01/react-datepicker)
+
 A simple and reusable datepicker component for React
 
 ## Installation
