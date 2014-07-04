@@ -9,6 +9,12 @@ var Calendar = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      date: nextProps.selected.clone()
+    });
+  },
+
   increaseMonth: function() {
     this.setState({
       date: this.state.date.addMonth()
