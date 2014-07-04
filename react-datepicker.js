@@ -102,7 +102,8 @@ var Calendar = _dereq_('./calendar');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
-    var selected = new DateUtil(moment());
+    var date_start = this.props.date_start;
+    var selected = new DateUtil(moment(date_start)); // If date_start is undefined moment defaults to today
 
     return {
       focus: false,
