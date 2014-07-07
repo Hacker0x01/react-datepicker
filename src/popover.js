@@ -34,7 +34,7 @@ var Popover = React.createClass({
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: 'input',
+      target: this.getDOMNode().parentElement,
       attachment: 'top left',
       targetAttachment: 'bottom left',
       targetOffset: '10px 0',
