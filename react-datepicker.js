@@ -11,9 +11,12 @@ var Calendar = React.createClass({displayName: 'Calendar',
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.setState({
-      date: nextProps.selected.clone()
-    });
+    // When the selected date changed
+    if (nextProps.selected !== this.props.selected) {
+      this.setState({
+        date: nextProps.selected.clone()
+      });
+    }
   },
 
   increaseMonth: function() {
