@@ -44,7 +44,7 @@ var DatePicker = React.createClass({
       this.setState({
         focus: this._shouldBeFocussed
       });
-    }.bind(this), 50);
+    }.bind(this), 100);
   },
 
   handleCalendarClick: function() {
