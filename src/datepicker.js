@@ -67,6 +67,8 @@ var DatePicker = React.createClass({
       selected: date,
       value: date.format("YYYY-MM-DD")
     });
+
+    this.props.onChange(date.moment());
   },
 
   inputValue: function() {
@@ -93,10 +95,8 @@ var DatePicker = React.createClass({
       value: event.target.value
     });
 
-    if(date.isValid()) {
-      this.setState({
-        selected: new DateUtil(date)
-      });
+    if (date.isValid()) {
+      this.setSelected(new DateUtil(date));
     }
   },
 

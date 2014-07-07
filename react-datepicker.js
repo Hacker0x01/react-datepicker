@@ -163,6 +163,8 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
       selected: date,
       value: date.format("YYYY-MM-DD")
     });
+
+    this.props.onChange(date.moment());
   },
 
   inputValue: function() {
@@ -189,10 +191,8 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
       value: event.target.value
     });
 
-    if(date.isValid()) {
-      this.setState({
-        selected: new DateUtil(date)
-      });
+    if (date.isValid()) {
+      this.setSelected(new DateUtil(date));
     }
   },
 
@@ -394,6 +394,10 @@ DateUtil.prototype.subtractMonth = function() {
 
 DateUtil.prototype.clone = function() {
   return new DateUtil(this._date.clone());
+};
+
+DateUtil.prototype.moment = function() {
+  return this._date;
 };
 
 module.exports = DateUtil;

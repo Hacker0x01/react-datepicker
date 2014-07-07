@@ -9,10 +9,20 @@
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
+    <pre id="log"></pre>
+
     <div id="datepicker-container"></div>
 
     <script type="text/javascript">
-      React.renderComponent(DatePicker(), document.querySelector('#datepicker-container'));
+      var container = document.querySelector('#datepicker-container');
+      var log = document.querySelector('#log');
+      var component = DatePicker({
+        onChange: function(date) {
+          log.innerText = "You've selected: " + date.format();
+        }
+      });
+
+      React.renderComponent(component, container);
     </script>
   </body>
 </html>
