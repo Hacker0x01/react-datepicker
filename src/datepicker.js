@@ -6,8 +6,8 @@ var Calendar = require('./calendar');
 
 var DatePicker = React.createClass({
   getInitialState: function() {
-    var date_start = this.props.date_start;
-    var selected = new DateUtil(moment(date_start)); // If date_start is undefined moment defaults to today
+    var value = this.props.value;
+    var selected = new DateUtil(moment(value)); // If value is undefined moment defaults to today
 
     return {
       focus: false,
