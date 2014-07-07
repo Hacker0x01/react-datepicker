@@ -155,7 +155,10 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     this._shouldBeFocussed = true;
 
     this.setSelected(date);
-    this.hideCalendar();
+
+    setTimeout(function(){
+      this.hideCalendar();
+    }.bind(this), 200);
   },
 
   setSelected: function(date) {
