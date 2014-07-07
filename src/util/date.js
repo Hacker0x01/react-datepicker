@@ -64,4 +64,8 @@ DateUtil.prototype.clone = function() {
   return new DateUtil(this._date.clone());
 };
 
+DateUtil.prototype.moment = function() {
+  return this._date;
+};
+
 module.exports = DateUtil;
