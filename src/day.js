@@ -1,12 +1,6 @@
 /** @jsx React.DOM */
 
 var Day = React.createClass({
-  handleClick: function(event) {
-    this.props.onSelect(this.props.day);
-
-    event.stopPropagation();
-  },
-
   render: function() {
     classes = React.addons.classSet({
       'datepicker-calendar-day': true,
@@ -16,7 +10,7 @@ var Day = React.createClass({
     });
 
     return (
-      <div className={classes} onClick={this.handleClick}>
+      <div className={classes} onClick={this.props.onClick}>
         {this.props.day.day()}
       </div>
     );

@@ -11,33 +11,41 @@
 
     <div id="datepicker-container"></div>
 
-    <pre id="log"></pre>
-
     <script type="text/javascript">
       var container = document.querySelector('#datepicker-container');
-      var log = document.querySelector('#log');
       var exampleComponent = React.createClass({
         displayName: 'exampleComponent',
 
         getInitialState: function() {
           return {
-            date: moment()
+            start_date: moment(),
+            end_date: moment()
           };
         },
 
-        handleChange: function(date) {
+        handleStartDateChange: function(date) {
           this.setState({
-            date: date
+            start_date: date
           });
+        },
 
-          log.innerText = "You've selected: " + date.format();
+        handleEndDateChange: function(date) {
+          this.setState({
+            end_date: date
+          });
         },
 
         render: function() {
-          return DatePicker({
-            selected: this.state.date,
-            onChange: this.handleChange
-          });
+          return React.DOM.div({}, [
+            DatePicker({
+              selected: this.state.start_date,
+              onChange: this.handleStartDateChange
+            }),
+            DatePicker({
+              selected: this.state.end_date,
+              onChange: this.handleEndDateChange
+            })
+          ]);
         }
       })
 

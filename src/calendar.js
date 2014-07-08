@@ -35,6 +35,10 @@ var Calendar = React.createClass({
     return this.state.date.mapWeeksInMonth(this.renderWeek);
   },
 
+  handleDayClick: function(day) {
+    this.props.onSelect(day);
+  },
+
   renderWeek: function(weekStart, key) {
     if(! weekStart.weekInMonth(this.state.date)) {
       return;
@@ -53,7 +57,7 @@ var Calendar = React.createClass({
         key={key}
         day={day}
         date={this.state.date}
-        onSelect={this.props.onSelect}
+        onClick={this.handleDayClick.bind(this, day)}
         selected={new DateUtil(this.props.selected)} />
     );
   },
@@ -64,7 +68,7 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div className="datepicker-calendar" onClick={this.props.onClick}>
+      <div className="datepicker-calendar" onMouseDown={this.props.onMouseDown}>
         <div className="datepicker-calendar-triangle"></div>
         <div className="datepicker-calendar-header">
           <a className="datepicker-calendar-header-navigation-left"
