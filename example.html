@@ -16,13 +16,32 @@
     <script type="text/javascript">
       var container = document.querySelector('#datepicker-container');
       var log = document.querySelector('#log');
-      var component = DatePicker({
-        onChange: function(date) {
-          log.innerText = "You've selected: " + date.format();
-        }
-      });
+      var exampleComponent = React.createClass({
+        displayName: 'exampleComponent',
 
-      React.renderComponent(component, container);
+        getInitialState: function() {
+          return {
+            date: moment()
+          };
+        },
+
+        handleChange: function(date) {
+          this.setState({
+            date: date
+          });
+
+          log.innerText = "You've selected: " + date.format();
+        },
+
+        render: function() {
+          return DatePicker({
+            selected: this.state.date,
+            onChange: this.handleChange
+          });
+        }
+      })
+
+      React.renderComponent(exampleComponent(), container);
     </script>
   </body>
 </html>
