@@ -79,7 +79,7 @@ var DatePicker = React.createClass({
   },
 
   handleInputChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD");
+    var date = moment(event.target.value, "YYYY-MM-DD", true);
 
     this.setState({
       value: event.target.value
