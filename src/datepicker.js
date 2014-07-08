@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var Popover  = require('./popover');
+var DateUtil = require('./util/date');
 var Calendar = require('./calendar');
 
 var DatePicker = React.createClass({

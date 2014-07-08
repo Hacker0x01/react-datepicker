@@ -101,6 +101,7 @@ module.exports = Calendar;
 /** @jsx React.DOM */
 
 var Popover  = _dereq_('./popover');
+var DateUtil = _dereq_('./util/date');
 var Calendar = _dereq_('./calendar');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
@@ -216,7 +217,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
 module.exports = DatePicker;
 
-},{"./calendar":1,"./popover":4}],3:[function(_dereq_,module,exports){
+},{"./calendar":1,"./popover":4,"./util/date":5}],3:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',
