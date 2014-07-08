@@ -36,6 +36,10 @@ var Calendar = React.createClass({displayName: 'Calendar',
     return this.state.date.mapWeeksInMonth(this.renderWeek);
   },
 
+  handleDayClick: function(day) {
+    this.props.onSelect(day);
+  },
+
   renderWeek: function(weekStart, key) {
     if(! weekStart.weekInMonth(this.state.date)) {
       return;
@@ -54,7 +58,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
         {key:key,
         day:day,
         date:this.state.date,
-        onSelect:this.props.onSelect,
+        onClick:this.handleDayClick.bind(this, day),
         selected:new DateUtil(this.props.selected)} )
     );
   },
@@ -65,7 +69,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"datepicker-calendar", onClick:this.props.onClick}, 
+      React.DOM.div( {className:"datepicker-calendar", onMouseDown:this.props.onMouseDown}, 
         React.DOM.div( {className:"datepicker-calendar-triangle"}),
         React.DOM.div( {className:"datepicker-calendar-header"}, 
           React.DOM.a( {className:"datepicker-calendar-header-navigation-left",
@@ -125,31 +129,26 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
   },
 
   handleBlur: function() {
-    // Reset the value of this._shouldBeFocussed to it's default
-    this._shouldBeFocussed = false;
+    this.setState({
+      focus: !! this._shouldBeFocussed
+    });
 
-    // If state.focus is still true, ignore the browser's blur
-    if (this.state.focus) {
-      this.refs.input.getDOMNode().focus();
+    if (!! this._shouldBeFocussed) {
+      // Firefox doesn't support immediately focussing inside of blur
+      setTimeout(function() {
+        this.refs.input.getDOMNode().focus();
+      }.bind(this), 0);
     }
 
-    // Give the browser some time to execute the possible click handlers
-    //   (for when the user clicks inside of the calendar)
-    setTimeout(function() {
-      // Set the correct value for state.focus
-      this.setState({
-        focus: this._shouldBeFocussed
-      });
-    }.bind(this), 100);
+    // Reset the value of this._shouldBeFocussed to it's default
+    this._shouldBeFocussed = false;
   },
 
-  handleCalendarClick: function() {
+  handleCalendarMouseDown: function() {
     this._shouldBeFocussed = true;
   },
 
   handleSelect: function(date) {
-    this._shouldBeFocussed = true;
-
     this.setSelected(date);
 
     setTimeout(function(){
@@ -172,7 +171,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
           Calendar(
             {selected:this.props.selected,
             onSelect:this.handleSelect,
-            onClick:this.handleCalendarClick} )
+            onMouseDown:this.handleCalendarMouseDown} )
         )
       );
     }
@@ -221,12 +220,6 @@ module.exports = DatePicker;
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',
-  handleClick: function(event) {
-    this.props.onSelect(this.props.day);
-
-    event.stopPropagation();
-  },
-
   render: function() {
     classes = React.addons.classSet({
       'datepicker-calendar-day': true,
@@ -236,7 +229,7 @@ var Day = React.createClass({displayName: 'Day',
     });
 
     return (
-      React.DOM.div( {className:classes, onClick:this.handleClick}, 
+      React.DOM.div( {className:classes, onClick:this.props.onClick}, 
         this.props.day.day()
       )
     );
