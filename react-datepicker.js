@@ -2,11 +2,12 @@
 /** @jsx React.DOM */
 
 var Day = _dereq_('./day');
+var DateUtil = _dereq_('./util/date');
 
 var Calendar = React.createClass({displayName: 'Calendar',
   getInitialState: function() {
     return {
-      date: this.props.selected.clone()
+      date: new DateUtil(this.props.selected).clone()
     };
   },
 
@@ -14,7 +15,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
       this.setState({
-        date: nextProps.selected.clone()
+        date: new DateUtil(nextProps.selected).clone()
       });
     }
   },
@@ -54,7 +55,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
         day:day,
         date:this.state.date,
         onSelect:this.props.onSelect,
-        selected:this.props.selected} )
+        selected:new DateUtil(this.props.selected)} )
     );
   },
 
@@ -96,22 +97,17 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
 module.exports = Calendar;
 
-},{"./day":3}],2:[function(_dereq_,module,exports){
+},{"./day":3,"./util/date":5}],2:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
-var DateUtil = _dereq_('./util/date');
 var Popover  = _dereq_('./popover');
 var Calendar = _dereq_('./calendar');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
-    var value = this.props.value;
-    var selected = new DateUtil(moment(value)); // If value is undefined moment defaults to today
-
     return {
       focus: false,
-      selected: selected,
-      value: selected.format("YYYY-MM-DD")
+      value: this.props.selected.format("YYYY-MM-DD")
     };
   },
 
@@ -162,15 +158,10 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
   setSelected: function(date) {
     this.setState({
-      selected: date,
       value: date.format("YYYY-MM-DD")
     });
 
     this.props.onChange(date.moment());
-  },
-
-  inputValue: function() {
-    return this.state.selected.format("YYYY-MM-DD");
   },
 
   calendar: function() {
@@ -178,7 +169,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
       return (
         Popover(null, 
           Calendar(
-            {selected:this.state.selected,
+            {selected:this.props.selected,
             onSelect:this.handleSelect,
             onClick:this.handleCalendarClick} )
         )
@@ -225,7 +216,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
 module.exports = DatePicker;
 
-},{"./calendar":1,"./popover":4,"./util/date":5}],3:[function(_dereq_,module,exports){
+},{"./calendar":1,"./popover":4}],3:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',

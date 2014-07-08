@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 
 var Day = require('./day');
+var DateUtil = require('./util/date');
 
 var Calendar = React.createClass({
   getInitialState: function() {
     return {
-      date: this.props.selected.clone()
+      date: new DateUtil(this.props.selected).clone()
     };
   },
 
@@ -13,7 +14,7 @@ var Calendar = React.createClass({
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
       this.setState({
-        date: nextProps.selected.clone()
+        date: new DateUtil(nextProps.selected).clone()
       });
     }
   },
@@ -53,7 +54,7 @@ var Calendar = React.createClass({
         day={day}
         date={this.state.date}
         onSelect={this.props.onSelect}
-        selected={this.props.selected} />
+        selected={new DateUtil(this.props.selected)} />
     );
   },
 

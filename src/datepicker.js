@@ -1,18 +1,13 @@
 /** @jsx React.DOM */
 
-var DateUtil = require('./util/date');
 var Popover  = require('./popover');
 var Calendar = require('./calendar');
 
 var DatePicker = React.createClass({
   getInitialState: function() {
-    var value = this.props.value;
-    var selected = new DateUtil(moment(value)); // If value is undefined moment defaults to today
-
     return {
       focus: false,
-      selected: selected,
-      value: selected.format("YYYY-MM-DD")
+      value: this.props.selected.format("YYYY-MM-DD")
     };
   },
 
@@ -63,15 +58,10 @@ var DatePicker = React.createClass({
 
   setSelected: function(date) {
     this.setState({
-      selected: date,
       value: date.format("YYYY-MM-DD")
     });
 
     this.props.onChange(date.moment());
-  },
-
-  inputValue: function() {
-    return this.state.selected.format("YYYY-MM-DD");
   },
 
   calendar: function() {
@@ -79,7 +69,7 @@ var DatePicker = React.createClass({
       return (
         <Popover>
           <Calendar
-            selected={this.state.selected}
+            selected={this.props.selected}
             onSelect={this.handleSelect}
             onClick={this.handleCalendarClick} />
         </Popover>
