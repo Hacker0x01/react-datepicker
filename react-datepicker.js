@@ -101,18 +101,141 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
 module.exports = Calendar;
 
-},{"./day":3,"./util/date":5}],2:[function(_dereq_,module,exports){
+},{"./day":4,"./util/date":6}],2:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
-var Popover  = _dereq_('./popover');
 var DateUtil = _dereq_('./util/date');
-var Calendar = _dereq_('./calendar');
+
+var DateInput = React.createClass({displayName: 'DateInput',
+  getInitialState: function() {
+    return {
+      value: this.props.date.format("YYYY-MM-DD")
+    };
+  },
+
+  componentDidMount: function() {
+    this.toggleFocus(this.props.focus);
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.toggleFocus(newProps.focus);
+
+    this.setState({
+      value: newProps.date.format("YYYY-MM-DD")
+    });
+  },
+
+  componentDidUpdate: function() {
+    var el = this.refs.input.getDOMNode();
+
+    if (this.props.focus) {
+      if (typeof this.state.selectionStart == "number")
+        el.selectionStart = this.state.selectionStart;
+
+      if (typeof this.state.selectionEnd == "number")
+        el.selectionEnd = this.state.selectionEnd;
+    }
+  },
+
+  toggleFocus: function(focus) {
+    if (focus) {
+      this.refs.input.getDOMNode().focus();
+    } else {
+      this.refs.input.getDOMNode().blur();
+    }
+  },
+
+  handleChange: function(event) {
+    var date = moment(event.target.value, "YYYY-MM-DD", true);
+
+    this.setState({
+      value: event.target.value
+    });
+
+    if (this.isValueAValidDate()) {
+      this.props.setSelected(new DateUtil(date));
+    }
+  },
+
+  isValueAValidDate: function() {
+    var date = moment(event.target.value, "YYYY-MM-DD", true);
+
+    return date.isValid();
+  },
+
+  handleKeyDown: function(event) {
+    switch(event.key) {
+    case "Enter":
+      event.preventDefault();
+      this.props.handleEnter();
+      break;
+    case "ArrowUp":
+    case "ArrowDown":
+      event.preventDefault();
+      this.handleArrowUpDown(event.key);
+      break;
+    };
+  },
+
+  handleArrowUpDown: function(key) {
+    if (! this.isValueAValidDate())
+      return;
+
+    var selectedDatePart, incrementer;
+    var clonedDate = this.props.date.clone();
+    var el = this.refs.input.getDOMNode();
+
+    if (key == "ArrowUp") {
+      incrementer = 1;
+    } else {
+      incrementer = -1;
+    }
+
+    if (el.selectionStart >= 0 && el.selectionEnd <= 4) {
+      selectedDatePart = "year";
+    } else if (el.selectionStart >= 5 && el.selectionEnd <= 7) {
+      selectedDatePart = "month";
+    } else if (el.selectionStart >= 8 && el.selectionEnd <= 10) {
+      selectedDatePart = "day";
+    }
+
+    this.setState({
+      selectionStart: el.selectionStart,
+      selectionEnd: el.selectionEnd
+    });
+
+    clonedDate.add(selectedDatePart, incrementer);
+
+    this.props.setSelected(new DateUtil(clonedDate));
+  },
+
+  render: function() {
+    return React.DOM.input(
+      {ref:"input",
+      type:"text",
+      value:this.state.value,
+      onBlur:this.props.onBlur,
+      onKeyDown:this.handleKeyDown,
+      onFocus:this.props.onFocus,
+      onChange:this.handleChange,
+      className:"datepicker-input"} );
+  }
+});
+
+module.exports = DateInput;
+
+},{"./util/date":6}],3:[function(_dereq_,module,exports){
+/** @jsx React.DOM */
+
+var Popover   = _dereq_('./popover');
+var DateUtil  = _dereq_('./util/date');
+var Calendar  = _dereq_('./calendar');
+var DateInput = _dereq_('./date_input');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
     return {
-      focus: false,
-      value: this.props.selected.format("YYYY-MM-DD")
+      focus: false
     };
   },
 
@@ -136,7 +259,9 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     if (!! this._shouldBeFocussed) {
       // Firefox doesn't support immediately focussing inside of blur
       setTimeout(function() {
-        this.refs.input.getDOMNode().focus();
+        this.setState({
+          focus: true
+        });
       }.bind(this), 0);
     }
 
@@ -157,10 +282,6 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
   },
 
   setSelected: function(date) {
-    this.setState({
-      value: date.format("YYYY-MM-DD")
-    });
-
     this.props.onChange(date.moment());
   },
 
@@ -177,37 +298,16 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     }
   },
 
-  handleInputChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
-
-    this.setState({
-      value: event.target.value
-    });
-
-    if (date.isValid()) {
-      this.setSelected(new DateUtil(date));
-    }
-  },
-
-  componentDidUpdate: function() {
-    if (this.state.focus) {
-      this.refs.input.getDOMNode().focus();
-    } else {
-      this.refs.input.getDOMNode().blur();
-    }
-  },
-
   render: function() {
     return (
       React.DOM.div(null, 
-        React.DOM.input(
-          {ref:"input",
-          type:"text",
-          value:this.state.value,
+        DateInput(
+          {date:this.props.selected,
+          focus:this.state.focus,
           onBlur:this.handleBlur,
           onFocus:this.handleFocus,
-          onChange:this.handleInputChange,
-          className:"datepicker-input"} ),
+          handleEnter:this.hideCalendar,
+          setSelected:this.setSelected} ),
         this.calendar()
       )
     );
@@ -216,7 +316,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
 module.exports = DatePicker;
 
-},{"./calendar":1,"./popover":4,"./util/date":5}],3:[function(_dereq_,module,exports){
+},{"./calendar":1,"./date_input":2,"./popover":5,"./util/date":6}],4:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',
@@ -238,7 +338,7 @@ var Day = React.createClass({displayName: 'Day',
 
 module.exports = Day;
 
-},{}],4:[function(_dereq_,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Popover = React.createClass({
@@ -316,7 +416,7 @@ var Popover = React.createClass({
 
 module.exports = Popover;
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],6:[function(_dereq_,module,exports){
 function DateUtil(date) {
   this._date = date;
 }
@@ -389,6 +489,6 @@ DateUtil.prototype.moment = function() {
 
 module.exports = DateUtil;
 
-},{}]},{},[2])
-(2)
+},{}]},{},[3])
+(3)
 });

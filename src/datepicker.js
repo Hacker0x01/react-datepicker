@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
-var Popover  = require('./popover');
-var DateUtil = require('./util/date');
-var Calendar = require('./calendar');
+var Popover   = require('./popover');
+var DateUtil  = require('./util/date');
+var Calendar  = require('./calendar');
+var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({
   getInitialState: function() {
     return {
-      focus: false,
-      value: this.props.selected.format("YYYY-MM-DD")
+      focus: false
     };
   },
 
@@ -32,7 +32,9 @@ var DatePicker = React.createClass({
     if (!! this._shouldBeFocussed) {
       // Firefox doesn't support immediately focussing inside of blur
       setTimeout(function() {
-        this.refs.input.getDOMNode().focus();
+        this.setState({
+          focus: true
+        });
       }.bind(this), 0);
     }
 
@@ -53,10 +55,6 @@ var DatePicker = React.createClass({
   },
 
   setSelected: function(date) {
-    this.setState({
-      value: date.format("YYYY-MM-DD")
-    });
-
     this.props.onChange(date.moment());
   },
 
@@ -73,37 +71,16 @@ var DatePicker = React.createClass({
     }
   },
 
-  handleInputChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
-
-    this.setState({
-      value: event.target.value
-    });
-
-    if (date.isValid()) {
-      this.setSelected(new DateUtil(date));
-    }
-  },
-
-  componentDidUpdate: function() {
-    if (this.state.focus) {
-      this.refs.input.getDOMNode().focus();
-    } else {
-      this.refs.input.getDOMNode().blur();
-    }
-  },
-
   render: function() {
     return (
       <div>
-        <input
-          ref="input"
-          type="text"
-          value={this.state.value}
+        <DateInput
+          date={this.props.selected}
+          focus={this.state.focus}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          onChange={this.handleInputChange}
-          className="datepicker-input" />
+          handleEnter={this.hideCalendar}
+          setSelected={this.setSelected} />
         {this.calendar()}
       </div>
     );
