@@ -70,7 +70,7 @@ var DateInput = React.createClass({
       event.preventDefault();
       this.handleArrowUpDown(event.key);
       break;
-    };
+    }
   },
 
   handleArrowUpDown: function(key) {
