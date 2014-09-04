@@ -46,7 +46,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
     }
 
     return (
-      React.DOM.div( {key:key, className:"week"}, 
+      React.DOM.div({key: key, className: "week"}, 
         this.days(weekStart)
       )
     );
@@ -54,12 +54,12 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   renderDay: function(day, key) {
     return (
-      Day(
-        {key:key,
-        day:day,
-        date:this.state.date,
-        onClick:this.handleDayClick.bind(this, day),
-        selected:new DateUtil(this.props.selected)} )
+      Day({
+        key: key, 
+        day: day, 
+        date: this.state.date, 
+        onClick: this.handleDayClick.bind(this, day), 
+        selected: new DateUtil(this.props.selected)})
     );
   },
 
@@ -69,29 +69,29 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"datepicker-calendar", onMouseDown:this.props.onMouseDown}, 
-        React.DOM.div( {className:"datepicker-calendar-triangle"}),
-        React.DOM.div( {className:"datepicker-calendar-header"}, 
-          React.DOM.a( {className:"datepicker-calendar-header-navigation-left",
-              onClick:this.decreaseMonth}
-          ),
-          React.DOM.span( {className:"datepicker-calendar-header-month"}, 
+      React.DOM.div({className: "datepicker-calendar", onMouseDown: this.props.onMouseDown}, 
+        React.DOM.div({className: "datepicker-calendar-triangle"}), 
+        React.DOM.div({className: "datepicker-calendar-header"}, 
+          React.DOM.a({className: "datepicker-calendar-header-navigation-left", 
+              onClick: this.decreaseMonth}
+          ), 
+          React.DOM.span({className: "datepicker-calendar-header-month"}, 
             this.state.date.format("MMMM YYYY")
-          ),
-          React.DOM.a( {className:"datepicker-calendar-header-navigation-right",
-              onClick:this.increaseMonth}
-          ),
+          ), 
+          React.DOM.a({className: "datepicker-calendar-header-navigation-right", 
+              onClick: this.increaseMonth}
+          ), 
           React.DOM.div(null, 
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Mo"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Tu"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "We"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Th"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Fr"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Sa"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Su")
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Mo"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Tu"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "We"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Th"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Fr"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Sa"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Su")
           )
-        ),
-        React.DOM.div( {className:"datepicker-calendar-month"}, 
+        ), 
+        React.DOM.div({className: "datepicker-calendar-month"}, 
           this.weeks()
         )
       )
@@ -126,9 +126,9 @@ var DateInput = React.createClass({displayName: 'DateInput',
   },
 
   componentDidUpdate: function() {
-    var el = this.refs.input.getDOMNode();
-
     if (this.props.focus) {
+      var el = this.refs.input.getDOMNode();
+
       if (typeof this.state.selectionStart == "number")
         el.selectionStart = this.state.selectionStart;
 
@@ -174,51 +174,54 @@ var DateInput = React.createClass({displayName: 'DateInput',
       event.preventDefault();
       this.handleArrowUpDown(event.key);
       break;
-    };
+    }
   },
 
   handleArrowUpDown: function(key) {
     if (! this.isValueAValidDate())
       return;
 
-    var selectedDatePart, incrementer;
-    var clonedDate = this.props.date.clone();
     var el = this.refs.input.getDOMNode();
-
-    if (key == "ArrowUp") {
-      incrementer = 1;
-    } else {
-      incrementer = -1;
-    }
-
-    if (el.selectionStart >= 0 && el.selectionEnd <= 4) {
-      selectedDatePart = "year";
-    } else if (el.selectionStart >= 5 && el.selectionEnd <= 7) {
-      selectedDatePart = "month";
-    } else if (el.selectionStart >= 8 && el.selectionEnd <= 10) {
-      selectedDatePart = "day";
-    }
 
     this.setState({
       selectionStart: el.selectionStart,
       selectionEnd: el.selectionEnd
     });
 
-    clonedDate.add(selectedDatePart, incrementer);
+    var step = key === "ArrowUp" ? 1 : -1;
 
-    this.props.setSelected(new DateUtil(clonedDate));
+    var selectedDatePart = this.getSelectedDatePart(el.selectionStart, el.selectionEnd);
+    var newDate = this.stepSelectedDatePart(selectedDatePart, step);
+
+    this.props.setSelected(newDate);
+  },
+
+  stepSelectedDatePart: function(selectedDatePart, step) {
+    var clonedDate = this.props.date.clone();
+
+    return new DateUtil(clonedDate.add(selectedDatePart, step));
+  },
+
+  getSelectedDatePart: function(selectionStart, selectionEnd) {
+    if (selectionStart >= 0 && selectionEnd <= 4) {
+      return "year";
+    } else if (selectionStart >= 5 && selectionEnd <= 7) {
+      return "month";
+    } else if (selectionStart >= 8 && selectionEnd <= 10) {
+      return "day";
+    }
   },
 
   render: function() {
-    return React.DOM.input(
-      {ref:"input",
-      type:"text",
-      value:this.state.value,
-      onBlur:this.props.onBlur,
-      onKeyDown:this.handleKeyDown,
-      onFocus:this.props.onFocus,
-      onChange:this.handleChange,
-      className:"datepicker-input"} );
+    return React.DOM.input({
+      ref: "input", 
+      type: "text", 
+      value: this.state.value, 
+      onBlur: this.props.onBlur, 
+      onKeyDown: this.handleKeyDown, 
+      onFocus: this.props.onFocus, 
+      onChange: this.handleChange, 
+      className: "datepicker-input"});
   }
 });
 
@@ -289,10 +292,10 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     if (this.state.focus) {
       return (
         Popover(null, 
-          Calendar(
-            {selected:this.props.selected,
-            onSelect:this.handleSelect,
-            onMouseDown:this.handleCalendarMouseDown} )
+          Calendar({
+            selected: this.props.selected, 
+            onSelect: this.handleSelect, 
+            onMouseDown: this.handleCalendarMouseDown})
         )
       );
     }
@@ -301,13 +304,13 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
   render: function() {
     return (
       React.DOM.div(null, 
-        DateInput(
-          {date:this.props.selected,
-          focus:this.state.focus,
-          onBlur:this.handleBlur,
-          onFocus:this.handleFocus,
-          handleEnter:this.hideCalendar,
-          setSelected:this.setSelected} ),
+        DateInput({
+          date: this.props.selected, 
+          focus: this.state.focus, 
+          onBlur: this.handleBlur, 
+          onFocus: this.handleFocus, 
+          handleEnter: this.hideCalendar, 
+          setSelected: this.setSelected}), 
         this.calendar()
       )
     );
@@ -329,7 +332,7 @@ var Day = React.createClass({displayName: 'Day',
     });
 
     return (
-      React.DOM.div( {className:classes, onClick:this.props.onClick}, 
+      React.DOM.div({className: classes, onClick: this.props.onClick}, 
         this.props.day.day()
       )
     );
@@ -364,8 +367,8 @@ var Popover = React.createClass({
   _popoverComponent: function() {
     var className = this.props.className;
     return (
-      React.DOM.div( {className:className}, 
-        React.DOM.div( {className:"datepicker-calendar-popover-content"}, 
+      React.DOM.div({className: className}, 
+        React.DOM.div({className: "datepicker-calendar-popover-content"}, 
           this.props.children
         )
       )

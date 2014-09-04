@@ -22,9 +22,9 @@ var DateInput = React.createClass({
   },
 
   componentDidUpdate: function() {
-    var el = this.refs.input.getDOMNode();
-
     if (this.props.focus) {
+      var el = this.refs.input.getDOMNode();
+
       if (typeof this.state.selectionStart == "number")
         el.selectionStart = this.state.selectionStart;
 
@@ -77,32 +77,35 @@ var DateInput = React.createClass({
     if (! this.isValueAValidDate())
       return;
 
-    var selectedDatePart, incrementer;
-    var clonedDate = this.props.date.clone();
     var el = this.refs.input.getDOMNode();
-
-    if (key == "ArrowUp") {
-      incrementer = 1;
-    } else {
-      incrementer = -1;
-    }
-
-    if (el.selectionStart >= 0 && el.selectionEnd <= 4) {
-      selectedDatePart = "year";
-    } else if (el.selectionStart >= 5 && el.selectionEnd <= 7) {
-      selectedDatePart = "month";
-    } else if (el.selectionStart >= 8 && el.selectionEnd <= 10) {
-      selectedDatePart = "day";
-    }
 
     this.setState({
       selectionStart: el.selectionStart,
       selectionEnd: el.selectionEnd
     });
 
-    clonedDate.add(selectedDatePart, incrementer);
+    var step = key === "ArrowUp" ? 1 : -1;
 
-    this.props.setSelected(new DateUtil(clonedDate));
+    var selectedDatePart = this.getSelectedDatePart(el.selectionStart, el.selectionEnd);
+    var newDate = this.stepSelectedDatePart(selectedDatePart, step);
+
+    this.props.setSelected(newDate);
+  },
+
+  stepSelectedDatePart: function(selectedDatePart, step) {
+    var clonedDate = this.props.date.clone();
+
+    return new DateUtil(clonedDate.add(selectedDatePart, step));
+  },
+
+  getSelectedDatePart: function(selectionStart, selectionEnd) {
+    if (selectionStart >= 0 && selectionEnd <= 4) {
+      return "year";
+    } else if (selectionStart >= 5 && selectionEnd <= 7) {
+      return "month";
+    } else if (selectionStart >= 8 && selectionEnd <= 10) {
+      return "day";
+    }
   },
 
   render: function() {
