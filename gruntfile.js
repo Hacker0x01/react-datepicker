@@ -10,6 +10,11 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      jshint: {
+        files: 'src/**/*.js',
+        tasks: ['jshint']
+      },
+
       css: {
         files: '**/*.scss',
         tasks: ['sass']
