@@ -46,7 +46,7 @@ var Calendar = React.createClass({displayName: 'Calendar',
     }
 
     return (
-      React.DOM.div( {key:key, className:"week"}, 
+      React.DOM.div({key: key, className: "week"}, 
         this.days(weekStart)
       )
     );
@@ -54,12 +54,12 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   renderDay: function(day, key) {
     return (
-      Day(
-        {key:key,
-        day:day,
-        date:this.state.date,
-        onClick:this.handleDayClick.bind(this, day),
-        selected:new DateUtil(this.props.selected)} )
+      Day({
+        key: key, 
+        day: day, 
+        date: this.state.date, 
+        onClick: this.handleDayClick.bind(this, day), 
+        selected: new DateUtil(this.props.selected)})
     );
   },
 
@@ -69,29 +69,29 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div( {className:"datepicker-calendar", onMouseDown:this.props.onMouseDown}, 
-        React.DOM.div( {className:"datepicker-calendar-triangle"}),
-        React.DOM.div( {className:"datepicker-calendar-header"}, 
-          React.DOM.a( {className:"datepicker-calendar-header-navigation-left",
-              onClick:this.decreaseMonth}
-          ),
-          React.DOM.span( {className:"datepicker-calendar-header-month"}, 
+      React.DOM.div({className: "datepicker-calendar", onMouseDown: this.props.onMouseDown}, 
+        React.DOM.div({className: "datepicker-calendar-triangle"}), 
+        React.DOM.div({className: "datepicker-calendar-header"}, 
+          React.DOM.a({className: "datepicker-calendar-header-navigation-left", 
+              onClick: this.decreaseMonth}
+          ), 
+          React.DOM.span({className: "datepicker-calendar-header-month"}, 
             this.state.date.format("MMMM YYYY")
-          ),
-          React.DOM.a( {className:"datepicker-calendar-header-navigation-right",
-              onClick:this.increaseMonth}
-          ),
+          ), 
+          React.DOM.a({className: "datepicker-calendar-header-navigation-right", 
+              onClick: this.increaseMonth}
+          ), 
           React.DOM.div(null, 
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Mo"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Tu"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "We"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Th"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Fr"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Sa"),
-            React.DOM.div( {className:"datepicker-calendar-header-day"}, "Su")
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Mo"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Tu"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "We"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Th"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Fr"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Sa"), 
+            React.DOM.div({className: "datepicker-calendar-header-day"}, "Su")
           )
-        ),
-        React.DOM.div( {className:"datepicker-calendar-month"}, 
+        ), 
+        React.DOM.div({className: "datepicker-calendar-month"}, 
           this.weeks()
         )
       )
@@ -101,18 +101,144 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
 module.exports = Calendar;
 
-},{"./day":3,"./util/date":5}],2:[function(_dereq_,module,exports){
+},{"./day":4,"./util/date":6}],2:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
-var Popover  = _dereq_('./popover');
 var DateUtil = _dereq_('./util/date');
-var Calendar = _dereq_('./calendar');
+
+var DateInput = React.createClass({displayName: 'DateInput',
+  getInitialState: function() {
+    return {
+      value: this.props.date.format("YYYY-MM-DD")
+    };
+  },
+
+  componentDidMount: function() {
+    this.toggleFocus(this.props.focus);
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.toggleFocus(newProps.focus);
+
+    this.setState({
+      value: newProps.date.format("YYYY-MM-DD")
+    });
+  },
+
+  componentDidUpdate: function() {
+    if (this.props.focus) {
+      var el = this.refs.input.getDOMNode();
+
+      if (typeof this.state.selectionStart == "number")
+        el.selectionStart = this.state.selectionStart;
+
+      if (typeof this.state.selectionEnd == "number")
+        el.selectionEnd = this.state.selectionEnd;
+    }
+  },
+
+  toggleFocus: function(focus) {
+    if (focus) {
+      this.refs.input.getDOMNode().focus();
+    } else {
+      this.refs.input.getDOMNode().blur();
+    }
+  },
+
+  handleChange: function(event) {
+    var date = moment(event.target.value, "YYYY-MM-DD", true);
+
+    this.setState({
+      value: event.target.value
+    });
+
+    if (this.isValueAValidDate()) {
+      this.props.setSelected(new DateUtil(date));
+    }
+  },
+
+  isValueAValidDate: function() {
+    var date = moment(event.target.value, "YYYY-MM-DD", true);
+
+    return date.isValid();
+  },
+
+  handleKeyDown: function(event) {
+    switch(event.key) {
+    case "Enter":
+      event.preventDefault();
+      this.props.handleEnter();
+      break;
+    case "ArrowUp":
+    case "ArrowDown":
+      event.preventDefault();
+      this.handleArrowUpDown(event.key);
+      break;
+    }
+  },
+
+  handleArrowUpDown: function(key) {
+    if (! this.isValueAValidDate())
+      return;
+
+    var el = this.refs.input.getDOMNode();
+
+    this.setState({
+      selectionStart: el.selectionStart,
+      selectionEnd: el.selectionEnd
+    });
+
+    var step = key === "ArrowUp" ? 1 : -1;
+
+    var selectedDatePart = this.getSelectedDatePart(el.selectionStart, el.selectionEnd);
+    var newDate = this.stepSelectedDatePart(selectedDatePart, step);
+
+    this.props.setSelected(newDate);
+  },
+
+  stepSelectedDatePart: function(selectedDatePart, step) {
+    var clonedDate = this.props.date.clone();
+
+    return new DateUtil(clonedDate.add(selectedDatePart, step));
+  },
+
+  getSelectedDatePart: function(selectionStart, selectionEnd) {
+    if (selectionStart >= 0 && selectionEnd <= 4) {
+      return "year";
+    } else if (selectionStart >= 5 && selectionEnd <= 7) {
+      return "month";
+    } else if (selectionStart >= 8 && selectionEnd <= 10) {
+      return "day";
+    }
+  },
+
+  render: function() {
+    return React.DOM.input({
+      ref: "input", 
+      type: "text", 
+      value: this.state.value, 
+      onBlur: this.props.onBlur, 
+      onKeyDown: this.handleKeyDown, 
+      onFocus: this.props.onFocus, 
+      onChange: this.handleChange, 
+      className: "datepicker-input"});
+  }
+});
+
+module.exports = DateInput;
+
+},{"./util/date":6}],3:[function(_dereq_,module,exports){
+/** @jsx React.DOM */
+
+var Popover   = _dereq_('./popover');
+var DateUtil  = _dereq_('./util/date');
+var Calendar  = _dereq_('./calendar');
+var DateInput = _dereq_('./date_input');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
     return {
-      focus: false,
-      value: this.props.selected.format("YYYY-MM-DD")
+      focus: false
     };
   },
 
@@ -136,7 +262,9 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     if (!! this._shouldBeFocussed) {
       // Firefox doesn't support immediately focussing inside of blur
       setTimeout(function() {
-        this.refs.input.getDOMNode().focus();
+        this.setState({
+          focus: true
+        });
       }.bind(this), 0);
     }
 
@@ -157,10 +285,6 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
   },
 
   setSelected: function(date) {
-    this.setState({
-      value: date.format("YYYY-MM-DD")
-    });
-
     this.props.onChange(date.moment());
   },
 
@@ -168,46 +292,25 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     if (this.state.focus) {
       return (
         Popover(null, 
-          Calendar(
-            {selected:this.props.selected,
-            onSelect:this.handleSelect,
-            onMouseDown:this.handleCalendarMouseDown} )
+          Calendar({
+            selected: this.props.selected, 
+            onSelect: this.handleSelect, 
+            onMouseDown: this.handleCalendarMouseDown})
         )
       );
-    }
-  },
-
-  handleInputChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
-
-    this.setState({
-      value: event.target.value
-    });
-
-    if (date.isValid()) {
-      this.setSelected(new DateUtil(date));
-    }
-  },
-
-  componentDidUpdate: function() {
-    if (this.state.focus) {
-      this.refs.input.getDOMNode().focus();
-    } else {
-      this.refs.input.getDOMNode().blur();
     }
   },
 
   render: function() {
     return (
       React.DOM.div(null, 
-        React.DOM.input(
-          {ref:"input",
-          type:"text",
-          value:this.state.value,
-          onBlur:this.handleBlur,
-          onFocus:this.handleFocus,
-          onChange:this.handleInputChange,
-          className:"datepicker-input"} ),
+        DateInput({
+          date: this.props.selected, 
+          focus: this.state.focus, 
+          onBlur: this.handleBlur, 
+          onFocus: this.handleFocus, 
+          handleEnter: this.hideCalendar, 
+          setSelected: this.setSelected}), 
         this.calendar()
       )
     );
@@ -216,7 +319,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
 module.exports = DatePicker;
 
-},{"./calendar":1,"./popover":4,"./util/date":5}],3:[function(_dereq_,module,exports){
+},{"./calendar":1,"./date_input":2,"./popover":5,"./util/date":6}],4:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',
@@ -229,7 +332,7 @@ var Day = React.createClass({displayName: 'Day',
     });
 
     return (
-      React.DOM.div( {className:classes, onClick:this.props.onClick}, 
+      React.DOM.div({className: classes, onClick: this.props.onClick}, 
         this.props.day.day()
       )
     );
@@ -238,7 +341,7 @@ var Day = React.createClass({displayName: 'Day',
 
 module.exports = Day;
 
-},{}],4:[function(_dereq_,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 /** @jsx React.DOM */
 
 var Popover = React.createClass({
@@ -264,8 +367,8 @@ var Popover = React.createClass({
   _popoverComponent: function() {
     var className = this.props.className;
     return (
-      React.DOM.div( {className:className}, 
-        React.DOM.div( {className:"datepicker-calendar-popover-content"}, 
+      React.DOM.div({className: className}, 
+        React.DOM.div({className: "datepicker-calendar-popover-content"}, 
           this.props.children
         )
       )
@@ -316,7 +419,7 @@ var Popover = React.createClass({
 
 module.exports = Popover;
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],6:[function(_dereq_,module,exports){
 function DateUtil(date) {
   this._date = date;
 }
@@ -389,6 +492,6 @@ DateUtil.prototype.moment = function() {
 
 module.exports = DateUtil;
 
-},{}]},{},[2])
-(2)
+},{}]},{},[3])
+(3)
 });
