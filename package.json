@@ -9,6 +9,13 @@
     "react-datepicker.js",
     "react-datepicker.css"
   ],
+  "keywords": [
+    "react",
+    "datepicker",
+    "calendar",
+    "date",
+    "react-component"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
