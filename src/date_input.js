@@ -77,13 +77,9 @@ var DateInput = React.createClass({
     if (! this.isValueAValidDate())
       return;
 
+    this.updateSelectionState();
+
     var el = this.refs.input.getDOMNode();
-
-    this.setState({
-      selectionStart: el.selectionStart,
-      selectionEnd: el.selectionEnd
-    });
-
     var step = key === "ArrowUp" ? 1 : -1;
 
     var selectedDatePart = this.getSelectedDatePart(el.selectionStart, el.selectionEnd);
@@ -108,12 +104,28 @@ var DateInput = React.createClass({
     }
   },
 
+  updateSelectionState: function() {
+    var el = this.refs.input.getDOMNode();
+
+    this.setState({
+      selectionStart: el.selectionStart,
+      selectionEnd: el.selectionEnd
+    });
+  },
+
+  handleClick: function(event) {
+    this.updateSelectionState();
+
+    this.props.handleClick(event);
+  },
+
   render: function() {
     return <input
       ref="input"
       type="text"
       value={this.state.value}
       onBlur={this.props.onBlur}
+      onClick={this.handleClick}
       onKeyDown={this.handleKeyDown}
       onFocus={this.props.onFocus}
       onChange={this.handleChange}

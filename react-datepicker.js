@@ -181,13 +181,9 @@ var DateInput = React.createClass({displayName: 'DateInput',
     if (! this.isValueAValidDate())
       return;
 
+    this.updateSelectionState();
+
     var el = this.refs.input.getDOMNode();
-
-    this.setState({
-      selectionStart: el.selectionStart,
-      selectionEnd: el.selectionEnd
-    });
-
     var step = key === "ArrowUp" ? 1 : -1;
 
     var selectedDatePart = this.getSelectedDatePart(el.selectionStart, el.selectionEnd);
@@ -212,12 +208,28 @@ var DateInput = React.createClass({displayName: 'DateInput',
     }
   },
 
+  updateSelectionState: function() {
+    var el = this.refs.input.getDOMNode();
+
+    this.setState({
+      selectionStart: el.selectionStart,
+      selectionEnd: el.selectionEnd
+    });
+  },
+
+  handleClick: function(event) {
+    this.updateSelectionState();
+
+    this.props.handleClick(event);
+  },
+
   render: function() {
     return React.DOM.input({
       ref: "input", 
       type: "text", 
       value: this.state.value, 
       onBlur: this.props.onBlur, 
+      onClick: this.handleClick, 
       onKeyDown: this.handleKeyDown, 
       onFocus: this.props.onFocus, 
       onChange: this.handleChange, 
@@ -288,6 +300,12 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
     this.props.onChange(date.moment());
   },
 
+  onInputClick: function() {
+    this.setState({
+      focus: true
+    });
+  },
+
   calendar: function() {
     if (this.state.focus) {
       return (
@@ -309,6 +327,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
           focus: this.state.focus, 
           onBlur: this.handleBlur, 
           onFocus: this.handleFocus, 
+          handleClick: this.onInputClick, 
           handleEnter: this.hideCalendar, 
           setSelected: this.setSelected}), 
         this.calendar()
