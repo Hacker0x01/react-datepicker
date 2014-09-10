@@ -27,7 +27,7 @@
     "grunt": "0.4.5",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-browserify": "2.1.2",
+    "grunt-browserify": "3.0.1",
     "reactify": "0.14.0",
     "grunt-jsxhint": "0.3.0"
   },
