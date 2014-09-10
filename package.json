@@ -1,6 +1,21 @@
 {
   "author": "HackerOne",
   "name": "react-datapicker",
+  "description": "A simple and reusable datepicker component for React",
+  "version": "0.2.4",
+  "license": "MIT",
+  "homepage": "https://github.com/Hacker0x01/react-datepicker",
+  "main": [
+    "react-datepicker.js",
+    "react-datepicker.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hacker0x01/react-datepicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hacker0x01/react-datepicker/issues"
+  },
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-contrib-sass": "0.7.3",
