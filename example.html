@@ -38,10 +38,12 @@
         render: function() {
           return React.DOM.div({}, [
             DatePicker({
+              key: 'example1',
               selected: this.state.start_date,
               onChange: this.handleStartDateChange
             }),
             DatePicker({
+              key: 'example2',
               selected: this.state.end_date,
               onChange: this.handleEndDateChange
             })
