@@ -25,11 +25,11 @@
   },
   "devDependencies": {
     "grunt": "0.4.5",
-    "grunt-contrib-sass": "0.7.3",
+    "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
     "grunt-browserify": "2.1.2",
-    "reactify": "0.13.1",
-    "grunt-jsxhint": "0.0.2"
+    "reactify": "0.14.0",
+    "grunt-jsxhint": "0.3.0"
   },
   "scripts": {
     "test": "grunt travis --verbose"
