@@ -1,15 +1,30 @@
 {
   "author": "HackerOne",
   "name": "react-datapicker",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hacker0x01/react-datepicker"
+  },
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-contrib-sass": "0.7.3",
     "grunt-contrib-watch": "0.6.1",
     "grunt-browserify": "2.1.2",
+    "grunt-jest": "^0.1.1",
+    "jest-cli": "^0.1.17",
     "reactify": "0.13.1",
-    "grunt-jsxhint": "0.0.2"
+    "grunt-jsxhint": "0.0.2",
+    "react": "0.11.1",
+    "react-tools": "0.11.1"
   },
   "scripts": {
     "test": "grunt travis --verbose"
+  },
+  "jest": {
+    "testDirectoryName": "test",
+    "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }
