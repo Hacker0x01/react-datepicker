@@ -1,8 +1,8 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.DatePicker=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.DatePicker=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var Day = _dereq_('./day');
-var DateUtil = _dereq_('./util/date');
+var Day = require('./day');
+var DateUtil = require('./util/date');
 
 var Calendar = React.createClass({displayName: 'Calendar',
   getInitialState: function() {
@@ -101,10 +101,10 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
 module.exports = Calendar;
 
-},{"./day":4,"./util/date":6}],2:[function(_dereq_,module,exports){
+},{"./day":4,"./util/date":6}],2:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var DateUtil = _dereq_('./util/date');
+var DateUtil = require('./util/date');
 
 var DateInput = React.createClass({displayName: 'DateInput',
   getInitialState: function() {
@@ -227,13 +227,13 @@ var DateInput = React.createClass({displayName: 'DateInput',
 
 module.exports = DateInput;
 
-},{"./util/date":6}],3:[function(_dereq_,module,exports){
+},{"./util/date":6}],3:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var Popover   = _dereq_('./popover');
-var DateUtil  = _dereq_('./util/date');
-var Calendar  = _dereq_('./calendar');
-var DateInput = _dereq_('./date_input');
+var Popover   = require('./popover');
+var DateUtil  = require('./util/date');
+var Calendar  = require('./calendar');
+var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
@@ -319,7 +319,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
 
 module.exports = DatePicker;
 
-},{"./calendar":1,"./date_input":2,"./popover":5,"./util/date":6}],4:[function(_dereq_,module,exports){
+},{"./calendar":1,"./date_input":2,"./popover":5,"./util/date":6}],4:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: 'Day',
@@ -341,7 +341,7 @@ var Day = React.createClass({displayName: 'Day',
 
 module.exports = Day;
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var Popover = React.createClass({
@@ -419,7 +419,7 @@ var Popover = React.createClass({
 
 module.exports = Popover;
 
-},{}],6:[function(_dereq_,module,exports){
+},{}],6:[function(require,module,exports){
 function DateUtil(date) {
   this._date = date;
 }
@@ -492,6 +492,5 @@ DateUtil.prototype.moment = function() {
 
 module.exports = DateUtil;
 
-},{}]},{},[3])
-(3)
+},{}]},{},[3])(3)
 });

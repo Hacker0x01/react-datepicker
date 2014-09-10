@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         dest: 'react-datepicker.js',
         options: {
           transform: ['reactify'],
-          bundleOptions: {
+          browserifyOptions: {
             standalone: 'DatePicker',
           }
         }
