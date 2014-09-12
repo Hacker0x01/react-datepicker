@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": [
@@ -30,9 +30,8 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-jest": "^0.1.1",
     "grunt-jsxhint": "0.3.0",
-    "react-tools": "^0.11.1",
-    "reactify": "0.14.0",
     "react-tools": "0.11.1",
+    "reactify": "0.14.0",
     "jest-cli": "^0.1.17"
   },
   "dependencies": {
