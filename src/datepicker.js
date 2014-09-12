@@ -58,6 +58,12 @@ var DatePicker = React.createClass({
     this.props.onChange(date.moment());
   },
 
+  onInputClick: function() {
+    this.setState({
+      focus: true
+    });
+  },
+
   calendar: function() {
     if (this.state.focus) {
       return (
@@ -79,6 +85,7 @@ var DatePicker = React.createClass({
           focus={this.state.focus}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
+          handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
           setSelected={this.setSelected} />
         {this.calendar()}
