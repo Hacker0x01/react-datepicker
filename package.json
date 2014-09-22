@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "src/datepicker.js",
@@ -40,7 +40,9 @@
     "test": "grunt travis --verbose"
   },
   "browserify": {
-    "transform": ["reactify"]
+    "transform": [
+      "reactify"
+    ]
   },
   "jest": {
     "testDirectoryName": "test",
