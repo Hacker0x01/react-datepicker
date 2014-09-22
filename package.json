@@ -5,10 +5,7 @@
   "version": "0.2.7",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
-  "main": [
-    "react-datepicker.js",
-    "react-datepicker.css"
-  ],
+  "main": "src/datepicker.js",
   "keywords": [
     "react",
     "datepicker",
@@ -31,16 +28,19 @@
     "grunt-jest": "^0.1.1",
     "grunt-jsxhint": "0.3.0",
     "react-tools": "0.11.1",
-    "reactify": "0.14.0",
     "jest-cli": "^0.1.17"
   },
   "dependencies": {
-    "react": "0.11.1",
-    "moment": "2.8.2",
-    "tether": "0.6.5"
+    "react": "^0.11",
+    "moment": "^2.8",
+    "tether": "^0.6",
+    "reactify": "^0.14"
   },
   "scripts": {
     "test": "grunt travis --verbose"
+  },
+  "browserify": {
+    "transform": ["reactify"]
   },
   "jest": {
     "testDirectoryName": "test",
