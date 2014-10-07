@@ -13,7 +13,8 @@
   "license": "MIT",
   "main": [
     "react-datepicker.js",
-    "react-datepicker.css"
+    "react-datepicker.css",
+    "react-datepicker.css.map"
   ],
   "keywords": [
     "react",
