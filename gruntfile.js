@@ -6,6 +6,9 @@ module.exports = function(grunt) {
         files: {
           'react-datepicker.css' : 'src/stylesheets/datepicker.scss'
         }
+      },
+      options: {
+        sourcemap: 'none'
       }
     },
 
