@@ -109,7 +109,8 @@ var DateUtil = require('./util/date');
 var DateInput = React.createClass({displayName: 'DateInput',
   getInitialState: function() {
     return {
-      value: this.props.date.format("YYYY-MM-DD")
+      dateFormat: this.props.dateFormat,
+      value: this.props.date.format(this.props.dateFormat)
     };
   },
 
@@ -121,7 +122,7 @@ var DateInput = React.createClass({displayName: 'DateInput',
     this.toggleFocus(newProps.focus);
 
     this.setState({
-      value: newProps.date.format("YYYY-MM-DD")
+      value: newProps.date.format(this.state.dateFormat)
     });
   },
 
@@ -146,7 +147,7 @@ var DateInput = React.createClass({displayName: 'DateInput',
   },
 
   handleChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
+    var date = moment(event.target.value, this.state.dateFormat, true);
 
     this.setState({
       value: event.target.value
@@ -158,7 +159,7 @@ var DateInput = React.createClass({displayName: 'DateInput',
   },
 
   isValueAValidDate: function() {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
+    var date = moment(event.target.value, this.state.dateFormat, true);
 
     return date.isValid();
   },
@@ -324,6 +325,7 @@ var DatePicker = React.createClass({displayName: 'DatePicker',
       React.DOM.div(null, 
         DateInput({
           date: this.props.selected, 
+          dateFormat: this.props.dateFormat || 'YYYY-MM-DD', 
           focus: this.state.focus, 
           onBlur: this.handleBlur, 
           onFocus: this.handleFocus, 

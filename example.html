@@ -40,11 +40,13 @@
             DatePicker({
               key: 'example1',
               selected: this.state.start_date,
+              dateFormat: 'MM-DD-YYYY',
               onChange: this.handleStartDateChange
             }),
             DatePicker({
               key: 'example2',
               selected: this.state.end_date,
+              dateFormat: 'MM-DD-YYYY',
               onChange: this.handleEndDateChange
             })
           ]);
