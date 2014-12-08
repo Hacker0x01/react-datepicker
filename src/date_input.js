@@ -5,7 +5,7 @@ var DateUtil = require('./util/date');
 var DateInput = React.createClass({
   getInitialState: function() {
     return {
-      value: this.props.date.format("YYYY-MM-DD")
+      value: this.props.date.format(this.props.dateFormat)
     };
   },
 
@@ -17,7 +17,7 @@ var DateInput = React.createClass({
     this.toggleFocus(newProps.focus);
 
     this.setState({
-      value: newProps.date.format("YYYY-MM-DD")
+      value: newProps.date.format(this.props.dateFormat)
     });
   },
 
@@ -42,7 +42,7 @@ var DateInput = React.createClass({
   },
 
   handleChange: function(event) {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
+    var date = moment(event.target.value, this.props.dateFormat, true);
 
     this.setState({
       value: event.target.value
@@ -54,7 +54,7 @@ var DateInput = React.createClass({
   },
 
   isValueAValidDate: function() {
-    var date = moment(event.target.value, "YYYY-MM-DD", true);
+    var date = moment(event.target.value, this.props.dateFormat, true);
 
     return date.isValid();
   },
