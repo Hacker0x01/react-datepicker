@@ -82,6 +82,7 @@ var DatePicker = React.createClass({
       <div>
         <DateInput
           date={this.props.selected}
+          dateFormat={this.props.dateFormat}
           focus={this.state.focus}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
