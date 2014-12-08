@@ -5,6 +5,9 @@
 
 A simple and reusable datepicker component for React
 
+![](https://cloud.githubusercontent.com/assets/1412392/5339491/c40de124-7ee1-11e4-9f07-9276e2545f27.png)
+
+
 ## Installation
 
 Installing is really simple and can be done in two different ways:
