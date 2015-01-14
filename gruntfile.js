@@ -35,6 +35,14 @@ module.exports = function(grunt) {
       }
     },
 
+    scsslint: {
+      files: 'src/stylesheets/*.scss',
+      options: {
+        config: '.scss-lint.yml',
+        colorizeOutput: true
+      },
+    },
+
     browserify: {
       all: {
         src: ['src/datepicker.js'],
@@ -57,11 +65,12 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-jsxhint');
   grunt.loadNpmTasks('grunt-jest');
 
-  grunt.registerTask('default', ['watch']);
-  grunt.registerTask('travis', ['jshint', 'jest']);
+  grunt.registerTask('default', ['watch', 'scsslint']);
+  grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
 };
