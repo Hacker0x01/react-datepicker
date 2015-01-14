@@ -77,7 +77,7 @@ var DateInput = React.createClass({
       onKeyDown={this.handleKeyDown}
       onFocus={this.props.onFocus}
       onChange={this.handleChange}
-      className="datepicker-input" />;
+      className="datepicker__input" />;
   }
 });
 

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       options: {
         sourcemap: 'none',
-        style: 'expanded'
+        style: 'compressed'
       }
     },
 
