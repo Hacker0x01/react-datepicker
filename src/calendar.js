@@ -45,7 +45,7 @@ var Calendar = React.createClass({
     }
 
     return (
-      <div key={key} className="week">
+      <div key={key}>
         {this.days(weekStart)}
       </div>
     );
