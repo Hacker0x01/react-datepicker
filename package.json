@@ -25,10 +25,10 @@
     "grunt-browserify": "3.0.1",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-jest": "^0.1.1",
+    "grunt-jest": "0.1.1",
     "grunt-jsxhint": "0.3.0",
     "react-tools": "0.11.1",
-    "jest-cli": "^0.1.17"
+    "jest-cli": "0.1.18"
   },
   "dependencies": {
     "react": "^0.11",
