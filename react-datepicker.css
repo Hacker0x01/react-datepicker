@@ -10,7 +10,7 @@
     border-top: none;
     border-bottom-color: #f0f0f0; }
   .datepicker__triangle:before {
-    content: '';
+    content: "";
     z-index: -1;
     border-width: 8px;
     top: -1px;
@@ -55,7 +55,6 @@
   font-size: 13px; }
 
 .datepicker__navigation {
-  width: 24px;
   line-height: 24px;
   text-align: center;
   cursor: pointer;
