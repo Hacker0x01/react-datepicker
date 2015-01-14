@@ -6,6 +6,16 @@
     <script type="text/javascript" src="react-datepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="react-datepicker.css">
   </head>
+
+  <style>
+    # this fixed an conflict with the height of the datepicker:
+      https://github.com/Hacker0x01/react-datepicker/issues/30
+
+    body {
+      min-height: 500px;
+    }
+  </style>
+
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
