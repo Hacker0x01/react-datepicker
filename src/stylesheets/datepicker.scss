@@ -89,15 +89,15 @@
   line-height: $item-size;
   text-align: center;
   margin: $day-margin;
+  cursor: pointer;
+
+  &:hover {
+    @extend %transparant-rounded-border;
+    background-color: $background-color;
+  }
 
   &--this-month {
     color: $text-color;
-    cursor: pointer;
-
-    &:hover {
-      @extend %transparant-rounded-border;
-      background-color: $background-color;
-    }
   }
 
   &--today {
