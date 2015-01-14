@@ -1,4 +1,8 @@
 language: node_js
 node_js:
   - "0.10"
-before_install: npm install -g grunt-cli
+rvm:
+  - 2.1.5
+before_install:
+  - npm install -g grunt-cli
+  - gem update --system && gem install scss-lint
