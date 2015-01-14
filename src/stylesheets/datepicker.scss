@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
 .datepicker-calendar-container {
   position: absolute;
@@ -117,6 +117,6 @@
   &:focus {
     outline: none;
     border-color: $border-color;
-    box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
+    box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, .3);
   }
 }
