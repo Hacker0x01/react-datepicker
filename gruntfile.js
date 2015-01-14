@@ -71,5 +71,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jest');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
-  grunt.registerTask('travis', ['jshint', 'jest']);
+  grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
 };
