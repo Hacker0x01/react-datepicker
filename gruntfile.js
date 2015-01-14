@@ -8,7 +8,8 @@ module.exports = function(grunt) {
         }
       },
       options: {
-        sourcemap: 'none'
+        sourcemap: 'none',
+        style: 'expanded'
       }
     },
 
