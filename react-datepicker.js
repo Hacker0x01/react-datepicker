@@ -69,29 +69,29 @@ var Calendar = React.createClass({displayName: 'Calendar',
 
   render: function() {
     return (
-      React.DOM.div({className: "datepicker-calendar", onMouseDown: this.props.onMouseDown}, 
-        React.DOM.div({className: "datepicker-calendar-triangle"}), 
-        React.DOM.div({className: "datepicker-calendar-header"}, 
-          React.DOM.a({className: "datepicker-calendar-header-navigation-left", 
+      React.DOM.div({className: "datepicker", onMouseDown: this.props.onMouseDown}, 
+        React.DOM.div({className: "datepicker__triangle"}), 
+        React.DOM.div({className: "datepicker__header"}, 
+          React.DOM.a({className: "datepicker__navigation datepicker__navigation--previous", 
               onClick: this.decreaseMonth}
           ), 
-          React.DOM.span({className: "datepicker-calendar-header-month"}, 
+          React.DOM.span({className: "datepicker__current-month"}, 
             this.state.date.format("MMMM YYYY")
           ), 
-          React.DOM.a({className: "datepicker-calendar-header-navigation-right", 
+          React.DOM.a({className: "datepicker__navigation datepicker__navigation--next", 
               onClick: this.increaseMonth}
           ), 
           React.DOM.div(null, 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Mo"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Tu"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "We"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Th"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Fr"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Sa"), 
-            React.DOM.div({className: "datepicker-calendar-header-day"}, "Su")
+            React.DOM.div({className: "datepicker__day"}, "Mo"), 
+            React.DOM.div({className: "datepicker__day"}, "Tu"), 
+            React.DOM.div({className: "datepicker__day"}, "We"), 
+            React.DOM.div({className: "datepicker__day"}, "Th"), 
+            React.DOM.div({className: "datepicker__day"}, "Fr"), 
+            React.DOM.div({className: "datepicker__day"}, "Sa"), 
+            React.DOM.div({className: "datepicker__day"}, "Su")
           )
         ), 
-        React.DOM.div({className: "datepicker-calendar-month"}, 
+        React.DOM.div({className: "datepicker__month"}, 
           this.weeks()
         )
       )
@@ -181,7 +181,7 @@ var DateInput = React.createClass({displayName: 'DateInput',
       onKeyDown: this.handleKeyDown, 
       onFocus: this.props.onFocus, 
       onChange: this.handleChange, 
-      className: "datepicker-input"});
+      className: "datepicker__input"});
   }
 });
 
@@ -293,10 +293,10 @@ module.exports = DatePicker;
 var Day = React.createClass({displayName: 'Day',
   render: function() {
     classes = React.addons.classSet({
-      'datepicker-calendar-day': true,
-      'selected': this.props.day.sameDay(this.props.selected),
-      'this-month': this.props.day.sameMonth(this.props.date),
-      'today': this.props.day.sameDay(moment())
+      'datepicker__day': true,
+      'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
+      'datepicker__day--this-month': this.props.day.sameMonth(this.props.date),
+      'datepicker__day--today': this.props.day.sameDay(moment())
     });
 
     return (
@@ -317,7 +317,7 @@ var Popover = React.createClass({
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
-    popoverContainer.className = 'datepicker-calendar-container';
+    popoverContainer.className = 'datepicker-container';
 
     this._popoverElement = popoverContainer;
 
@@ -336,7 +336,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       React.DOM.div({className: className}, 
-        React.DOM.div({className: "datepicker-calendar-popover-content"}, 
+        React.DOM.div({className: "datepicker-popover-content"}, 
           this.props.children
         )
       )
@@ -409,7 +409,7 @@ DateUtil.prototype.mapDaysInWeek = function(callback) {
   var firstDay = this._date.clone().startOf('isoWeek');
 
   for(var i = 0; i < 7; i++) {
-    var day = new DateUtil(firstDay.clone().add('days', i));
+    var day = new DateUtil(firstDay.clone().add(i, 'days'));
 
     week[i] = callback(day, i);
   }
@@ -422,7 +422,7 @@ DateUtil.prototype.mapWeeksInMonth = function(callback) {
   var firstDay = this._date.clone().startOf('month').startOf('isoWeek');
 
   for(var i = 0; i < 6; i++) {
-    var weekStart = new DateUtil(firstDay.clone().add('weeks', i));
+    var weekStart = new DateUtil(firstDay.clone().add(i, 'weeks'));
 
     month[i] = callback(weekStart, i);
   }
@@ -443,11 +443,11 @@ DateUtil.prototype.format = function() {
 };
 
 DateUtil.prototype.addMonth = function() {
-  return new DateUtil(this._date.clone().add('month', 1));
+  return new DateUtil(this._date.clone().add(1, 'month'));
 };
 
 DateUtil.prototype.subtractMonth = function() {
-  return new DateUtil(this._date.clone().subtract('month', 1));
+  return new DateUtil(this._date.clone().subtract(1, 'month'));
 };
 
 DateUtil.prototype.clone = function() {

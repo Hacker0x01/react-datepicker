@@ -25,16 +25,6 @@
   }
 }
 
-%datepicker-calendar-navigation {
-  line-height: $item-size;
-  text-align: center;
-  cursor: pointer;
-  position: absolute;
-  top: 5px;
-  width: 0;
-  border: 6px solid transparent;
-}
-
 %transparant-rounded-border {
   border: 1px solid transparant;
   border-radius: $border-radius;

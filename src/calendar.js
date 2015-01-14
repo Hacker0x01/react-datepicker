@@ -68,29 +68,29 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div className="datepicker-calendar" onMouseDown={this.props.onMouseDown}>
-        <div className="datepicker-calendar-triangle"></div>
-        <div className="datepicker-calendar-header">
-          <a className="datepicker-calendar-header-navigation-left"
+      <div className="datepicker" onMouseDown={this.props.onMouseDown}>
+        <div className="datepicker__triangle"></div>
+        <div className="datepicker__header">
+          <a className="datepicker__navigation datepicker__navigation--previous"
               onClick={this.decreaseMonth}>
           </a>
-          <span className="datepicker-calendar-header-month">
+          <span className="datepicker__current-month">
             {this.state.date.format("MMMM YYYY")}
           </span>
-          <a className="datepicker-calendar-header-navigation-right"
+          <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>
           </a>
           <div>
-            <div className="datepicker-calendar-header-day">Mo</div>
-            <div className="datepicker-calendar-header-day">Tu</div>
-            <div className="datepicker-calendar-header-day">We</div>
-            <div className="datepicker-calendar-header-day">Th</div>
-            <div className="datepicker-calendar-header-day">Fr</div>
-            <div className="datepicker-calendar-header-day">Sa</div>
-            <div className="datepicker-calendar-header-day">Su</div>
+            <div className="datepicker__day">Mo</div>
+            <div className="datepicker__day">Tu</div>
+            <div className="datepicker__day">We</div>
+            <div className="datepicker__day">Th</div>
+            <div className="datepicker__day">Fr</div>
+            <div className="datepicker__day">Sa</div>
+            <div className="datepicker__day">Su</div>
           </div>
         </div>
-        <div className="datepicker-calendar-month">
+        <div className="datepicker__month">
           {this.weeks()}
         </div>
       </div>
