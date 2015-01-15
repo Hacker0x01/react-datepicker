@@ -20,7 +20,7 @@
   border-bottom-color: #aeaeae;
 }
 
-.datepicker__day--this-month:hover, .datepicker__day--selected {
+.datepicker__day:hover, .datepicker__day--selected {
   border: 1px solid transparant;
   border-radius: 4px;
 }
@@ -53,7 +53,7 @@
   border-bottom: 1px solid #aeaeae;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  padding-top: 5px;
+  padding-top: 8px;
   position: relative;
 }
 
@@ -68,7 +68,7 @@
   text-align: center;
   cursor: pointer;
   position: absolute;
-  top: 5px;
+  top: 10px;
   width: 0;
   border: 6px solid transparent;
 }
@@ -106,13 +106,13 @@
   line-height: 24px;
   text-align: center;
   margin: 2px;
+  cursor: pointer;
+}
+.datepicker__day:hover {
+  background-color: #f0f0f0;
 }
 .datepicker__day--this-month {
   color: #000;
-  cursor: pointer;
-}
-.datepicker__day--this-month:hover {
-  background-color: #f0f0f0;
 }
 .datepicker__day--today {
   font-weight: bold;

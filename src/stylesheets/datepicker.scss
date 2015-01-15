@@ -30,7 +30,7 @@
   border-bottom: 1px solid $border-color;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
-  padding-top: 5px;
+  padding-top: 8px;
   position: relative;
 }
 
@@ -45,7 +45,7 @@
   text-align: center;
   cursor: pointer;
   position: absolute;
-  top: 5px;
+  top: 10px;
   width: 0;
   border: 6px solid transparent;
 
@@ -88,15 +88,15 @@
   line-height: $item-size;
   text-align: center;
   margin: $day-margin;
+  cursor: pointer;
+
+  &:hover {
+    @extend %transparant-rounded-border;
+    background-color: $background-color;
+  }
 
   &--this-month {
     color: $text-color;
-    cursor: pointer;
-
-    &:hover {
-      @extend %transparant-rounded-border;
-      background-color: $background-color;
-    }
   }
 
   &--today {
