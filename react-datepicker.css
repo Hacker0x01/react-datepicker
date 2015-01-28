@@ -17,10 +17,6 @@
     left: -8px;
     border-bottom-color: #aeaeae; }
 
-.datepicker__day:hover, .datepicker__day--selected {
-  border: 1px solid transparant;
-  border-radius: 4px; }
-
 .datepicker {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
@@ -92,12 +88,14 @@
   margin: 2px;
   cursor: pointer; }
   .datepicker__day:hover {
+    border-radius: 4px;
     background-color: #f0f0f0; }
   .datepicker__day--this-month {
     color: #000; }
   .datepicker__day--today {
     font-weight: bold; }
   .datepicker__day--selected {
+    border-radius: 4px;
     background-color: #216ba5;
     color: #fff; }
     .datepicker__day--selected:hover {
