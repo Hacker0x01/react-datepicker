@@ -50,7 +50,8 @@ var DatePicker = React.createClass({
         <Popover>
           <Calendar
             selected={this.props.selected}
-            onSelect={this.handleSelect} />
+            onSelect={this.handleSelect}
+            hideCalendar={this.hideCalendar} />
         </Popover>
       );
     }
