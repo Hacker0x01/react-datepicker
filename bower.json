@@ -22,7 +22,7 @@
     "calendar"
   ],
   "dependencies": {
-    "react": "0.11.1",
+    "react": "< 0.12",
     "moment": "2.8.2",
     "tether": "0.6.5"
   },
