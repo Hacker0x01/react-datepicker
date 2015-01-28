@@ -24,9 +24,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       <div className={className}>
-        <div className="datepicker-popover-content">
-          {this.props.children}
-        </div>
+        {this.props.children}
       </div>
     );
   },
