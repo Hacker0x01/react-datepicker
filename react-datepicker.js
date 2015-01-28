@@ -383,7 +383,7 @@ var Popover = React.createClass({
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
-    popoverContainer.className = 'datepicker-container';
+    popoverContainer.className = 'datepicker__container';
 
     this._popoverElement = popoverContainer;
 
@@ -402,9 +402,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       React.DOM.div({className: className}, 
-        React.DOM.div({className: "datepicker-popover-content"}, 
-          this.props.children
-        )
+        this.props.children
       )
     );
   },
