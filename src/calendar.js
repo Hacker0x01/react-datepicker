@@ -4,6 +4,12 @@ var Day = require('./day');
 var DateUtil = require('./util/date');
 
 var Calendar = React.createClass({
+  mixins: [require('react-onclickoutside')],
+
+  handleClickOutside: function() {
+    this.props.hideCalendar();
+  },
+
   getInitialState: function() {
     return {
       date: new DateUtil(this.props.selected).clone()
@@ -68,7 +74,7 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div className="datepicker" onMouseDown={this.props.onMouseDown}>
+      <div className="datepicker">
         <div className="datepicker__triangle"></div>
         <div className="datepicker__header">
           <a className="datepicker__navigation datepicker__navigation--previous"

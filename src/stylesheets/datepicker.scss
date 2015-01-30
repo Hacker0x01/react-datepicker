@@ -91,7 +91,7 @@
   cursor: pointer;
 
   &:hover {
-    @extend %transparant-rounded-border;
+    border-radius: $border-radius;
     background-color: $background-color;
   }
 
@@ -104,7 +104,7 @@
   }
 
   &--selected {
-    @extend %transparant-rounded-border;
+    border-radius: $border-radius;
     background-color: $selected-color;
     color: #fff;
 
