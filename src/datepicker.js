@@ -19,31 +19,11 @@ var DatePicker = React.createClass({
   },
 
   hideCalendar: function() {
-    this.setState({
-      focus: false
-    });
-  },
-
-  handleBlur: function() {
-    this.setState({
-      focus: !! this._shouldBeFocussed
-    });
-
-    if (!! this._shouldBeFocussed) {
-      // Firefox doesn't support immediately focussing inside of blur
-      setTimeout(function() {
-        this.setState({
-          focus: true
-        });
-      }.bind(this), 0);
-    }
-
-    // Reset the value of this._shouldBeFocussed to it's default
-    this._shouldBeFocussed = false;
-  },
-
-  handleCalendarMouseDown: function() {
-    this._shouldBeFocussed = true;
+    setTimeout(function() {
+      this.setState({
+        focus: false
+      });
+    }.bind(this), 0);
   },
 
   handleSelect: function(date) {
@@ -71,7 +51,7 @@ var DatePicker = React.createClass({
           <Calendar
             selected={this.props.selected}
             onSelect={this.handleSelect}
-            onMouseDown={this.handleCalendarMouseDown} />
+            hideCalendar={this.hideCalendar} />
         </Popover>
       );
     }
@@ -82,12 +62,13 @@ var DatePicker = React.createClass({
       <div>
         <DateInput
           date={this.props.selected}
+          dateFormat={this.props.dateFormat}
           focus={this.state.focus}
-          onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
-          setSelected={this.setSelected} />
+          setSelected={this.setSelected}
+          hideCalendar={this.hideCalendar} />
         {this.calendar()}
       </div>
     );

@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "0.2.9",
+  "version": "0.4.3",
   "authors": [
     "Remon Oldenbeuving <remon@hackerone.com>",
     "Martijn Russchen <martijn@hackerone.com>"
@@ -22,9 +22,10 @@
     "calendar"
   ],
   "dependencies": {
-    "react": "0.11.1",
+    "react": "< 0.13",
     "moment": "2.8.2",
-    "tether": "0.6.5"
+    "tether": "0.6.5",
+    "react-onclickoutside": "0.2.1"
   },
   "ignore": [
     "**/.*",

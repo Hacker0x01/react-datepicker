@@ -1,18 +1,29 @@
 <html>
   <head>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/react/react-with-addons.js"></script>
-    <script src="bower_components/tether/tether.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/react/0.12.2/react-with-addons.js"></script>
+    <script src="https://cdn.jsdelivr.net/tether/0.6.5/tether.min.js"></script>
     <script type="text/javascript" src="react-datepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="react-datepicker.css">
   </head>
+
+  <style>
+    # this fixed an conflict with the height of the datepicker:
+      https://github.com/Hacker0x01/react-datepicker/issues/30
+
+    body {
+      min-height: 500px;
+    }
+  </style>
+
   <body>
     <h1>ReactJS DatePicker Example</h1>
 
-    <div id="datepicker-container"></div>
+    <div id="datepicker-region"></div>
 
     <script type="text/javascript">
-      var container = document.querySelector('#datepicker-container');
+      var container = document.querySelector('#datepicker-region');
+      var DatePickerFactory = React.createFactory(DatePicker);
       var exampleComponent = React.createClass({
         displayName: 'exampleComponent',
 
@@ -37,21 +48,23 @@
 
         render: function() {
           return React.DOM.div({}, [
-            DatePicker({
+            DatePickerFactory({
               key: 'example1',
               selected: this.state.start_date,
               onChange: this.handleStartDateChange
             }),
-            DatePicker({
+            DatePickerFactory({
               key: 'example2',
               selected: this.state.end_date,
+              dateFormat: "YYYY/MM/DD",
               onChange: this.handleEndDateChange
             })
           ]);
         }
-      })
+      });
+      var exampleComponentFactory = React.createFactory(exampleComponent);
 
-      React.renderComponent(exampleComponent(), container);
+      React.render(exampleComponentFactory(), container);
     </script>
   </body>
 </html>
