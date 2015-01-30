@@ -30,7 +30,8 @@
         getInitialState: function() {
           return {
             start_date: moment(),
-            end_date: moment()
+            end_date: moment(),
+            new_date: null
           };
         },
 
@@ -46,6 +47,12 @@
           });
         },
 
+        handleNewDateChange: function(date) {
+          this.setState({
+            new_date: date
+          });
+        },
+
         render: function() {
           return React.DOM.div({}, [
             DatePickerFactory({
@@ -58,6 +65,12 @@
               selected: this.state.end_date,
               dateFormat: "YYYY/MM/DD",
               onChange: this.handleEndDateChange
+            }),
+            DatePickerFactory({
+              key: 'example3',
+              selected: this.state.new_date,
+              onChange: this.handleNewDateChange,
+              placeholderText: 'Click to select a date'
             })
           ]);
         }

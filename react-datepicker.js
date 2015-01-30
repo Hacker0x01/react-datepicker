@@ -85,7 +85,7 @@
 var Day = require('./day');
 var DateUtil = require('./util/date');
 
-var Calendar = React.createClass({displayName: "Calendar",
+var Calendar = React.createClass({displayName: 'Calendar',
   mixins: [require('react-onclickoutside')],
 
   handleClickOutside: function() {
@@ -94,7 +94,7 @@ var Calendar = React.createClass({displayName: "Calendar",
 
   getInitialState: function() {
     return {
-      date: new DateUtil(this.props.selected).clone()
+      date: !! this.props.selected ? new DateUtil(this.props.selected).clone() : new DateUtil(moment())
     };
   },
 
@@ -133,7 +133,7 @@ var Calendar = React.createClass({displayName: "Calendar",
     }
 
     return (
-      React.createElement("div", {key: key}, 
+      React.DOM.div({key: key}, 
         this.days(weekStart)
       )
     );
@@ -141,7 +141,7 @@ var Calendar = React.createClass({displayName: "Calendar",
 
   renderDay: function(day, key) {
     return (
-      React.createElement(Day, {
+      Day({
         key: key, 
         day: day, 
         date: this.state.date, 
@@ -156,29 +156,29 @@ var Calendar = React.createClass({displayName: "Calendar",
 
   render: function() {
     return (
-      React.createElement("div", {className: "datepicker"}, 
-        React.createElement("div", {className: "datepicker__triangle"}), 
-        React.createElement("div", {className: "datepicker__header"}, 
-          React.createElement("a", {className: "datepicker__navigation datepicker__navigation--previous", 
+      React.DOM.div({className: "datepicker"}, 
+        React.DOM.div({className: "datepicker__triangle"}), 
+        React.DOM.div({className: "datepicker__header"}, 
+          React.DOM.a({className: "datepicker__navigation datepicker__navigation--previous", 
               onClick: this.decreaseMonth}
           ), 
-          React.createElement("span", {className: "datepicker__current-month"}, 
+          React.DOM.span({className: "datepicker__current-month"}, 
             this.state.date.format("MMMM YYYY")
           ), 
-          React.createElement("a", {className: "datepicker__navigation datepicker__navigation--next", 
+          React.DOM.a({className: "datepicker__navigation datepicker__navigation--next", 
               onClick: this.increaseMonth}
           ), 
-          React.createElement("div", null, 
-            React.createElement("div", {className: "datepicker__day"}, "Mo"), 
-            React.createElement("div", {className: "datepicker__day"}, "Tu"), 
-            React.createElement("div", {className: "datepicker__day"}, "We"), 
-            React.createElement("div", {className: "datepicker__day"}, "Th"), 
-            React.createElement("div", {className: "datepicker__day"}, "Fr"), 
-            React.createElement("div", {className: "datepicker__day"}, "Sa"), 
-            React.createElement("div", {className: "datepicker__day"}, "Su")
+          React.DOM.div(null, 
+            React.DOM.div({className: "datepicker__day"}, "Mo"), 
+            React.DOM.div({className: "datepicker__day"}, "Tu"), 
+            React.DOM.div({className: "datepicker__day"}, "We"), 
+            React.DOM.div({className: "datepicker__day"}, "Th"), 
+            React.DOM.div({className: "datepicker__day"}, "Fr"), 
+            React.DOM.div({className: "datepicker__day"}, "Sa"), 
+            React.DOM.div({className: "datepicker__day"}, "Su")
           )
         ), 
-        React.createElement("div", {className: "datepicker__month"}, 
+        React.DOM.div({className: "datepicker__month"}, 
           this.weeks()
         )
       )
@@ -188,14 +188,12 @@ var Calendar = React.createClass({displayName: "Calendar",
 
 module.exports = Calendar;
 
-
-
 },{"./day":5,"./util/date":7,"react-onclickoutside":1}],3:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var DateUtil = require('./util/date');
 
-var DateInput = React.createClass({displayName: "DateInput",
+var DateInput = React.createClass({displayName: 'DateInput',
 
   getDefaultProps: function() {
     return {
@@ -205,7 +203,7 @@ var DateInput = React.createClass({displayName: "DateInput",
 
   getInitialState: function() {
     return {
-      value: this.props.date.format(this.props.dateFormat)
+      value: !! this.props.date ? this.props.date.format(this.props.dateFormat) : null
     };
   },
 
@@ -216,9 +214,11 @@ var DateInput = React.createClass({displayName: "DateInput",
   componentWillReceiveProps: function(newProps) {
     this.toggleFocus(newProps.focus);
 
-    this.setState({
-      value: newProps.date.format(this.props.dateFormat)
-    });
+    if (!! newProps.date) {
+      this.setState({
+        value: newProps.date.format(this.props.dateFormat)
+      });
+    }
   },
 
   toggleFocus: function(focus) {
@@ -261,7 +261,7 @@ var DateInput = React.createClass({displayName: "DateInput",
   },
 
   render: function() {
-    return React.createElement("input", {
+    return React.DOM.input({
       ref: "input", 
       type: "text", 
       value: this.state.value, 
@@ -269,13 +269,12 @@ var DateInput = React.createClass({displayName: "DateInput",
       onKeyDown: this.handleKeyDown, 
       onFocus: this.props.onFocus, 
       onChange: this.handleChange, 
-      className: "datepicker__input"});
+      className: "datepicker__input", 
+      placeholder: this.props.placeholderText});
   }
 });
 
 module.exports = DateInput;
-
-
 
 },{"./util/date":7}],4:[function(require,module,exports){
 /** @jsx React.DOM */
@@ -285,7 +284,7 @@ var DateUtil  = require('./util/date');
 var Calendar  = require('./calendar');
 var DateInput = require('./date_input');
 
-var DatePicker = React.createClass({displayName: "DatePicker",
+var DatePicker = React.createClass({displayName: 'DatePicker',
   getInitialState: function() {
     return {
       focus: false
@@ -327,8 +326,8 @@ var DatePicker = React.createClass({displayName: "DatePicker",
   calendar: function() {
     if (this.state.focus) {
       return (
-        React.createElement(Popover, null, 
-          React.createElement(Calendar, {
+        Popover(null, 
+          Calendar({
             selected: this.props.selected, 
             onSelect: this.handleSelect, 
             hideCalendar: this.hideCalendar})
@@ -339,8 +338,8 @@ var DatePicker = React.createClass({displayName: "DatePicker",
 
   render: function() {
     return (
-      React.createElement("div", null, 
-        React.createElement(DateInput, {
+      React.DOM.div(null, 
+        DateInput({
           date: this.props.selected, 
           dateFormat: this.props.dateFormat, 
           focus: this.state.focus, 
@@ -348,7 +347,8 @@ var DatePicker = React.createClass({displayName: "DatePicker",
           handleClick: this.onInputClick, 
           handleEnter: this.hideCalendar, 
           setSelected: this.setSelected, 
-          hideCalendar: this.hideCalendar}), 
+          hideCalendar: this.hideCalendar, 
+          placeholderText: this.props.placeholderText}), 
         this.calendar()
       )
     );
@@ -357,12 +357,10 @@ var DatePicker = React.createClass({displayName: "DatePicker",
 
 module.exports = DatePicker;
 
-
-
 },{"./calendar":2,"./date_input":3,"./popover":6,"./util/date":7}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var Day = React.createClass({displayName: "Day",
+var Day = React.createClass({displayName: 'Day',
   render: function() {
     classes = React.addons.classSet({
       'datepicker__day': true,
@@ -372,7 +370,7 @@ var Day = React.createClass({displayName: "Day",
     });
 
     return (
-      React.createElement("div", {className: classes, onClick: this.props.onClick}, 
+      React.DOM.div({className: classes, onClick: this.props.onClick}, 
         this.props.day.day()
       )
     );
@@ -380,8 +378,6 @@ var Day = React.createClass({displayName: "Day",
 });
 
 module.exports = Day;
-
-
 
 },{}],6:[function(require,module,exports){
 /** @jsx React.DOM */
@@ -409,7 +405,7 @@ var Popover = React.createClass({
   _popoverComponent: function() {
     var className = this.props.className;
     return (
-      React.createElement("div", {className: className}, 
+      React.DOM.div({className: className}, 
         this.props.children
       )
     );
@@ -454,13 +450,11 @@ var Popover = React.createClass({
   },
 
   render: function() {
-    return React.createElement("span", null);
+    return React.DOM.span(null);
   }
 });
 
 module.exports = Popover;
-
-
 
 },{}],7:[function(require,module,exports){
 function DateUtil(date) {
@@ -534,8 +528,6 @@ DateUtil.prototype.moment = function() {
 };
 
 module.exports = DateUtil;
-
-
 
 },{}]},{},[4])(4)
 });
