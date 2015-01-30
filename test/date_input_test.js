@@ -2,7 +2,7 @@
 
 jest.dontMock('../src/date_input');
 
-React = require('react/addons');
+var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var DateInput = require('../src/date_input');
 

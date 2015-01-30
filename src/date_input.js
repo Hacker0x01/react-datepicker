@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
+var React = require('react');
 var DateUtil = require('./util/date');
+var moment = require('moment');
 
 var DateInput = React.createClass({
 
@@ -11,8 +13,10 @@ var DateInput = React.createClass({
   },
 
   getInitialState: function() {
+    var value = this.props.date ? this.props.date.format(this.props.dateFormat) :
+                                  '';
     return {
-      value: this.props.date.format(this.props.dateFormat)
+      value: value
     };
   },
 
@@ -21,10 +25,13 @@ var DateInput = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
+    var value = this.props.date ? this.props.date.format(this.props.dateFormat) :
+                                  '';
+
     this.toggleFocus(newProps.focus);
 
     this.setState({
-      value: newProps.date.format(this.props.dateFormat)
+      value: value
     });
   },
 

@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
+var React = require('react');
+var moment = require('moment');
 
 var Day = React.createClass({
   render: function() {
-    classes = React.addons.classSet({
+    var classes = React.addons.classSet({
       'datepicker__day': true,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
       'datepicker__day--this-month': this.props.day.sameMonth(this.props.date),

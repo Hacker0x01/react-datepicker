@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
+var React = require('react');
 var Day = require('./day');
 var DateUtil = require('./util/date');
+var moment = require('moment');
 
 var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],
@@ -11,8 +13,10 @@ var Calendar = React.createClass({
   },
 
   getInitialState: function() {
+    var date = this.props.selected || moment();
+
     return {
-      date: new DateUtil(this.props.selected).clone()
+      date: new DateUtil(date).clone()
     };
   },
 
