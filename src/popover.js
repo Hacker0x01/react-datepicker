@@ -5,7 +5,7 @@ var Popover = React.createClass({
 
   componentWillMount: function() {
     popoverContainer = document.createElement('span');
-    popoverContainer.className = 'datepicker-calendar-container';
+    popoverContainer.className = 'datepicker__container';
 
     this._popoverElement = popoverContainer;
 
@@ -24,9 +24,7 @@ var Popover = React.createClass({
     var className = this.props.className;
     return (
       <div className={className}>
-        <div className="datepicker-calendar-popover-content">
-          {this.props.children}
-        </div>
+        {this.props.children}
       </div>
     );
   },
@@ -52,7 +50,8 @@ var Popover = React.createClass({
   },
 
   _renderPopover: function() {
-    React.renderComponent(this._popoverComponent(), this._popoverElement);
+    React.render(this._popoverComponent(), this._popoverElement);
+
     if (this._tether != null) {
       this._tether.setOptions(this._tetherOptions());
     } else {

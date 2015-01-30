@@ -72,12 +72,11 @@ var DateInput = React.createClass({
       ref="input"
       type="text"
       value={this.state.value}
-      onBlur={this.props.onBlur}
       onClick={this.handleClick}
       onKeyDown={this.handleKeyDown}
       onFocus={this.props.onFocus}
       onChange={this.handleChange}
-      className="datepicker-input" />;
+      className="datepicker__input" />;
   }
 });
 
