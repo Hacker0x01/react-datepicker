@@ -23,7 +23,7 @@ var DatePicker = React.createClass({
       this.setState({
         focus: false
       });
-    }.bind(this), 0);
+    }.bind(this), 2000);
   },
 
   handleSelect: function(date) {
@@ -49,8 +49,10 @@ var DatePicker = React.createClass({
       return (
         <Popover>
           <Calendar
+            startSelected={this.props.startSelected}
             selected={this.props.selected}
             onSelect={this.handleSelect}
+            whatDo={this.props.whatDo}
             hideCalendar={this.hideCalendar} />
         </Popover>
       );
@@ -59,7 +61,7 @@ var DatePicker = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="formy">
         <DateInput
           date={this.props.selected}
           dateFormat={this.props.dateFormat}

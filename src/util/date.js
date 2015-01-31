@@ -6,6 +6,14 @@ DateUtil.prototype.sameDay = function(other) {
   return this._date.isSame(other._date, 'day');
 };
 
+DateUtil.prototype.isAfter = function(other) {
+  return this._date.isAfter(other._date, 'day');
+};
+
+DateUtil.prototype.isBefore = function(other) {
+  return this._date.isBefore(other._date, 'day');
+};
+
 DateUtil.prototype.sameMonth = function(other) {
   return this._date.isSame(other._date, 'month');
 };

@@ -34,10 +34,22 @@
           };
         },
 
+        componentWillReceiveProps: function(newProps) {
+          console.log('hello');
+        },
+
         handleStartDateChange: function(date) {
           this.setState({
             start_date: date
           });
+
+          setTimeout(function() {
+            this.refs.endDatePicker.handleFocus();
+          }.bind(this), 100);
+        },
+
+        whatDo: function() {
+          console.log('abc');
         },
 
         handleEndDateChange: function(date) {
@@ -49,15 +61,19 @@
         render: function() {
           return React.DOM.div({}, [
             DatePickerFactory({
-              key: 'example1',
+              ref: "startDatePicker",
+              key: 'startDate',
               selected: this.state.start_date,
-              onChange: this.handleStartDateChange
+              onChange: this.handleStartDateChange,
+              whatDo: this.whatDo
             }),
             DatePickerFactory({
-              key: 'example2',
+              ref: "endDatePicker",
+              key: 'endDate',
               selected: this.state.end_date,
-              dateFormat: "YYYY/MM/DD",
-              onChange: this.handleEndDateChange
+              startSelected: this.state.start_date,
+              onChange: this.handleEndDateChange,
+              whatDo: this.whatDo
             })
           ]);
         }

@@ -106,7 +106,7 @@
   &--selected {
     border-radius: $border-radius;
     background-color: $selected-color;
-    color: #fff;
+    color: #fff !important;
 
     &:hover {
       background-color: darken($selected-color, 5%);
@@ -128,4 +128,37 @@
     border-color: $border-color;
     box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, .3);
   }
+}
+
+.currentMonth, .nextMonth {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.currentMonth .datepicker__day--after {
+  color: orange;
+}
+
+.datepicker__day--between {
+  color: orange;
+}
+
+.datepicker__day--previouslyselected {
+  color: green;
+}
+
+.currentMonth .week:last-child .datepicker__day--other-month {
+  visibility: hidden;
+}
+
+.nextMonth .week:first-child .datepicker__day--this-month {
+  visibility: hidden;
+}
+
+.nextMonth .datepicker__day--other-month {
+  color: $text-color;
+}
+
+.formy {
+  display: inline-block;
 }
