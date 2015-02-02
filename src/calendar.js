@@ -1,11 +1,11 @@
-/** @jsx React.DOM */
+'use strict';
 
 var React = require('react');
 var Day = require('./day');
 var DateUtil = require('./util/date');
 var moment = require('moment');
 
-var Calendar = React.createClass({
+var Calendar = React.createClass({displayName: "Calendar",
   mixins: [require('react-onclickoutside')],
 
   handleClickOutside: function() {
@@ -55,20 +55,20 @@ var Calendar = React.createClass({
     }
 
     return (
-      <div key={key}>
-        {this.days(weekStart)}
-      </div>
+      React.createElement("div", {key: key},
+        this.days(weekStart)
+      )
     );
   },
 
   renderDay: function(day, key) {
     return (
-      <Day
-        key={key}
-        day={day}
-        date={this.state.date}
-        onClick={this.handleDayClick.bind(this, day)}
-        selected={new DateUtil(this.props.selected)} />
+      React.createElement(Day, {
+        key: key,
+        day: day,
+        date: this.state.date,
+        onClick: this.handleDayClick.bind(this, day),
+        selected: new DateUtil(this.props.selected)})
     );
   },
 
@@ -78,32 +78,32 @@ var Calendar = React.createClass({
 
   render: function() {
     return (
-      <div className="datepicker">
-        <div className="datepicker__triangle"></div>
-        <div className="datepicker__header">
-          <a className="datepicker__navigation datepicker__navigation--previous"
-              onClick={this.decreaseMonth}>
-          </a>
-          <span className="datepicker__current-month">
-            {this.state.date.format("MMMM YYYY")}
-          </span>
-          <a className="datepicker__navigation datepicker__navigation--next"
-              onClick={this.increaseMonth}>
-          </a>
-          <div>
-            <div className="datepicker__day">Mo</div>
-            <div className="datepicker__day">Tu</div>
-            <div className="datepicker__day">We</div>
-            <div className="datepicker__day">Th</div>
-            <div className="datepicker__day">Fr</div>
-            <div className="datepicker__day">Sa</div>
-            <div className="datepicker__day">Su</div>
-          </div>
-        </div>
-        <div className="datepicker__month">
-          {this.weeks()}
-        </div>
-      </div>
+      React.createElement("div", {className: "datepicker"},
+        React.createElement("div", {className: "datepicker__triangle"}),
+        React.createElement("div", {className: "datepicker__header"},
+          React.createElement("a", {className: "datepicker__navigation datepicker__navigation--previous",
+              onClick: this.decreaseMonth}
+          ),
+          React.createElement("span", {className: "datepicker__current-month"},
+            this.state.date.format("MMMM YYYY")
+          ),
+          React.createElement("a", {className: "datepicker__navigation datepicker__navigation--next",
+              onClick: this.increaseMonth}
+          ),
+          React.createElement("div", null,
+            React.createElement("div", {className: "datepicker__day"}, "Mo"),
+            React.createElement("div", {className: "datepicker__day"}, "Tu"),
+            React.createElement("div", {className: "datepicker__day"}, "We"),
+            React.createElement("div", {className: "datepicker__day"}, "Th"),
+            React.createElement("div", {className: "datepicker__day"}, "Fr"),
+            React.createElement("div", {className: "datepicker__day"}, "Sa"),
+            React.createElement("div", {className: "datepicker__day"}, "Su")
+          )
+        ),
+        React.createElement("div", {className: "datepicker__month"},
+          this.weeks()
+        )
+      )
     );
   }
 });

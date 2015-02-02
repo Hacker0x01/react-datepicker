@@ -1,10 +1,10 @@
-/** @jsx React.DOM */
+'use strict';
 
 var React = require('react');
 var DateUtil = require('./util/date');
 var moment = require('moment');
 
-var DateInput = React.createClass({
+var DateInput = React.createClass({displayName: "DateInput",
 
   getDefaultProps: function() {
     return {
@@ -75,15 +75,15 @@ var DateInput = React.createClass({
   },
 
   render: function() {
-    return <input
-      ref="input"
-      type="text"
-      value={this.state.value}
-      onClick={this.handleClick}
-      onKeyDown={this.handleKeyDown}
-      onFocus={this.props.onFocus}
-      onChange={this.handleChange}
-      className="datepicker__input" />;
+    return React.createElement("input", {
+      ref: "input",
+      type: "text",
+      value: this.state.value,
+      onClick: this.handleClick,
+      onKeyDown: this.handleKeyDown,
+      onFocus: this.props.onFocus,
+      onChange: this.handleChange,
+      className: "datepicker__input"});
   }
 });
 

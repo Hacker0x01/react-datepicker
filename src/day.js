@@ -1,8 +1,9 @@
-/** @jsx React.DOM */
+'use strict';
+
 var React = require('react');
 var moment = require('moment');
 
-var Day = React.createClass({
+var Day = React.createClass({displayName: "Day",
   render: function() {
     var classes = React.addons.classSet({
       'datepicker__day': true,
@@ -12,9 +13,9 @@ var Day = React.createClass({
     });
 
     return (
-      <div className={classes} onClick={this.props.onClick}>
-        {this.props.day.day()}
-      </div>
+      React.createElement("div", {className: classes, onClick: this.props.onClick},
+        this.props.day.day()
+      )
     );
   }
 });

@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+'use strict';
 
 var React = require('react');
 var Tether = require('tether');
@@ -26,9 +26,9 @@ var Popover = React.createClass({
   _popoverComponent: function() {
     var className = this.props.className;
     return (
-      <div className={className}>
-        {this.props.children}
-      </div>
+      React.createElement("div", {className: className},
+        this.props.children
+      )
     );
   },
 
@@ -70,7 +70,7 @@ var Popover = React.createClass({
   },
 
   render: function() {
-    return <span/>;
+    return React.createElement("span", null);
   }
 });
 

@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+'use strict';
 
 var React     = require('react')
 var Popover   = require('./popover');
@@ -6,7 +6,7 @@ var DateUtil  = require('./util/date');
 var Calendar  = require('./calendar');
 var DateInput = require('./date_input');
 
-var DatePicker = React.createClass({
+var DatePicker = React.createClass({displayName: "DatePicker",
   getInitialState: function() {
     return {
       focus: false
@@ -48,31 +48,31 @@ var DatePicker = React.createClass({
   calendar: function() {
     if (this.state.focus) {
       return (
-        <Popover>
-          <Calendar
-            selected={this.props.selected}
-            onSelect={this.handleSelect}
-            hideCalendar={this.hideCalendar} />
-        </Popover>
+        React.createElement(Popover, null,
+          React.createElement(Calendar, {
+            selected: this.props.selected,
+            onSelect: this.handleSelect,
+            hideCalendar: this.hideCalendar})
+        )
       );
     }
   },
 
   render: function() {
     return (
-      <div>
-        <DateInput
-          ref="dateInput"
-          date={this.props.selected}
-          dateFormat={this.props.dateFormat}
-          focus={this.state.focus}
-          onFocus={this.handleFocus}
-          handleClick={this.onInputClick}
-          handleEnter={this.hideCalendar}
-          setSelected={this.setSelected}
-          hideCalendar={this.hideCalendar} />
-        {this.calendar()}
-      </div>
+      React.createElement("div", null,
+        React.createElement(DateInput, {
+          ref: "dateInput",
+          date: this.props.selected,
+          dateFormat: this.props.dateFormat,
+          focus: this.state.focus,
+          onFocus: this.handleFocus,
+          handleClick: this.onInputClick,
+          handleEnter: this.hideCalendar,
+          setSelected: this.setSelected,
+          hideCalendar: this.hideCalendar}),
+        this.calendar()
+      )
     );
   }
 });
