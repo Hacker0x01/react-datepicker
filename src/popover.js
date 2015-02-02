@@ -7,7 +7,7 @@ var Popover = React.createClass({
   displayName: 'Popover',
 
   componentWillMount: function() {
-    popoverContainer = document.createElement('span');
+    var popoverContainer = document.createElement('span');
     popoverContainer.className = 'datepicker__container';
 
     this._popoverElement = popoverContainer;
