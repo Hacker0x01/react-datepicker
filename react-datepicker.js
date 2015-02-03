@@ -140,13 +140,18 @@ var Calendar = React.createClass({displayName: "Calendar",
   },
 
   renderDay: function(day, key) {
+    var minDate = new DateUtil(this.props.minDate).safeClone(),
+        maxDate = new DateUtil(this.props.maxDate).safeClone(),
+        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+
     return (
       React.createElement(Day, {
         key: key, 
         day: day, 
         date: this.state.date, 
         onClick: this.handleDayClick.bind(this, day), 
-        selected: new DateUtil(this.props.selected)})
+        selected: new DateUtil(this.props.selected), 
+        disabled: disabled})
     );
   },
 
@@ -336,7 +341,9 @@ var DatePicker = React.createClass({displayName: "DatePicker",
           React.createElement(Calendar, {
             selected: this.props.selected, 
             onSelect: this.handleSelect, 
-            hideCalendar: this.hideCalendar})
+            hideCalendar: this.hideCalendar, 
+            minDate: this.props.minDate, 
+            maxDate: this.props.maxDate})
         )
       );
     }
@@ -369,16 +376,23 @@ module.exports = DatePicker;
 /** @jsx React.DOM */
 
 var Day = React.createClass({displayName: "Day",
+  handleClick: function(event) {
+    if (this.props.disabled) return;
+
+    this.props.onClick(event);
+  },
+
   render: function() {
     classes = React.addons.classSet({
       'datepicker__day': true,
+      'datepicker__day--disabled': this.props.disabled,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
       'datepicker__day--this-month': this.props.day.sameMonth(this.props.date),
       'datepicker__day--today': this.props.day.sameDay(moment())
     });
 
     return (
-      React.createElement("div", {className: classes, onClick: this.props.onClick}, 
+      React.createElement("div", {className: classes, onClick: this.handleClick}, 
         this.props.day.day()
       )
     );
@@ -472,6 +486,14 @@ module.exports = Popover;
 function DateUtil(date) {
   this._date = date;
 }
+
+DateUtil.prototype.isBefore = function(other) {
+  return this._date.isBefore(other._date, 'day');
+};
+
+DateUtil.prototype.isAfter = function(other) {
+  return this._date.isAfter(other._date, 'day');
+};
 
 DateUtil.prototype.sameDay = function(other) {
   return this._date.isSame(other._date, 'day');

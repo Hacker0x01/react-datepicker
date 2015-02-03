@@ -14,6 +14,10 @@
     body {
       min-height: 500px;
     }
+
+    input {
+      width: 350px;
+    }
   </style>
 
   <body>
@@ -31,7 +35,8 @@
           return {
             start_date: moment(),
             end_date: moment(),
-            new_date: null
+            new_date: null,
+            bound_date: null
           };
         },
 
@@ -53,6 +58,12 @@
           });
         },
 
+        handleBoundDateChange: function(date) {
+          this.setState({
+            bound_date: date
+          });
+        },
+
         render: function() {
           return React.DOM.div({}, [
             DatePickerFactory({
@@ -71,6 +82,14 @@
               selected: this.state.new_date,
               onChange: this.handleNewDateChange,
               placeholderText: 'Click to select a date'
+            }),
+            DatePickerFactory({
+              key: 'example4',
+              selected: this.state.bound_date,
+              onChange: this.handleBoundDateChange,
+              minDate: moment(),
+              maxDate: moment().add(5, 'days'),
+              placeholderText: 'Select a date between today and 5 days in the future'
             })
           ]);
         }

@@ -121,6 +121,13 @@
 .datepicker__day--selected:hover {
   background-color: #1d5d90;
 }
+.datepicker__day--disabled {
+  cursor: default;
+  color: #ccc;
+}
+.datepicker__day--disabled:hover {
+  background-color: transparent;
+}
 
 .datepicker__input {
   position: relative;
