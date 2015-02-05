@@ -94,7 +94,7 @@ var Calendar = React.createClass({displayName: "Calendar",
 
   getInitialState: function() {
     return {
-      date: new DateUtil(this.props.selected).clone()
+      date: new DateUtil(this.props.selected).safeClone(moment())
     };
   },
 
@@ -205,7 +205,7 @@ var DateInput = React.createClass({displayName: "DateInput",
 
   getInitialState: function() {
     return {
-      value: this.props.date.format(this.props.dateFormat)
+      value: this.safeDateFormat(this.props.date)
     };
   },
 
@@ -217,7 +217,7 @@ var DateInput = React.createClass({displayName: "DateInput",
     this.toggleFocus(newProps.focus);
 
     this.setState({
-      value: newProps.date.format(this.props.dateFormat)
+      value: this.safeDateFormat(newProps.date)
     });
   },
 
@@ -239,6 +239,10 @@ var DateInput = React.createClass({displayName: "DateInput",
     if (this.isValueAValidDate()) {
       this.props.setSelected(new DateUtil(date));
     }
+  },
+
+  safeDateFormat: function(date) {
+    return !! date ? date.format(this.props.dateFormat) : null;
   },
 
   isValueAValidDate: function() {
@@ -269,7 +273,8 @@ var DateInput = React.createClass({displayName: "DateInput",
       onKeyDown: this.handleKeyDown, 
       onFocus: this.props.onFocus, 
       onChange: this.handleChange, 
-      className: "datepicker__input"});
+      className: "datepicker__input", 
+      placeholder: this.props.placeholderText});
   }
 });
 
@@ -348,7 +353,8 @@ var DatePicker = React.createClass({displayName: "DatePicker",
           handleClick: this.onInputClick, 
           handleEnter: this.hideCalendar, 
           setSelected: this.setSelected, 
-          hideCalendar: this.hideCalendar}), 
+          hideCalendar: this.hideCalendar, 
+          placeholderText: this.props.placeholderText}), 
         this.calendar()
       )
     );
@@ -527,6 +533,13 @@ DateUtil.prototype.subtractMonth = function() {
 
 DateUtil.prototype.clone = function() {
   return new DateUtil(this._date.clone());
+};
+
+DateUtil.prototype.safeClone = function(alternative) {
+  if (!! this._date) return this.clone();
+
+  if (alternative === undefined) alternative = null;
+  return new DateUtil(alternative);
 };
 
 DateUtil.prototype.moment = function() {

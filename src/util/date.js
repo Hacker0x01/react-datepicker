@@ -64,6 +64,13 @@ DateUtil.prototype.clone = function() {
   return new DateUtil(this._date.clone());
 };
 
+DateUtil.prototype.safeClone = function(alternative) {
+  if (!! this._date) return this.clone();
+
+  if (alternative === undefined) alternative = null;
+  return new DateUtil(alternative);
+};
+
 DateUtil.prototype.moment = function() {
   return this._date;
 };
