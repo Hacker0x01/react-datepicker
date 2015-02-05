@@ -12,7 +12,7 @@ var Calendar = React.createClass({
 
   getInitialState: function() {
     return {
-      date: !! this.props.selected ? new DateUtil(this.props.selected).clone() : new DateUtil(moment())
+      date: new DateUtil(this.props.selected).safeClone(moment())
     };
   },
 

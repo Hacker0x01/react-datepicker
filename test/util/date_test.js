@@ -102,4 +102,29 @@ describe('DateUtil', function() {
       });
     });
   });
+
+  describe('#safeClone', function() {
+    it('should return a cloned version of _date if date is a valid moment object', function() {
+      var date = moment('2014-02-08');
+      var clonedDate = new DateUtil(date).safeClone();
+
+      expect(clonedDate._date).toNotBe(date);
+      expect(clonedDate._date._i).toBe(date._i);
+    });
+
+    it('should return a null _date if original date is undefined and no alternative is provided', function() {
+      var date = undefined;
+      var clonedDate = new DateUtil(date).safeClone();
+
+      expect(clonedDate._date).toBe(null);
+    });
+
+    it('should return an alternative _date if original date is undefined and an alternative is provided', function() {
+      var date = undefined;
+      var alternative = moment();
+      var clonedDate = new DateUtil(date).safeClone(alternative);
+
+      expect(clonedDate._date).toBe(alternative);
+    });
+  });
 });

@@ -12,7 +12,7 @@ var DateInput = React.createClass({
 
   getInitialState: function() {
     return {
-      value: !! this.props.date ? this.props.date.format(this.props.dateFormat) : null
+      value: this.safeDateFormat(this.props.date)
     };
   },
 
@@ -23,11 +23,9 @@ var DateInput = React.createClass({
   componentWillReceiveProps: function(newProps) {
     this.toggleFocus(newProps.focus);
 
-    if (!! newProps.date) {
-      this.setState({
-        value: newProps.date.format(this.props.dateFormat)
-      });
-    }
+    this.setState({
+      value: this.safeDateFormat(newProps.date)
+    });
   },
 
   toggleFocus: function(focus) {
@@ -48,6 +46,10 @@ var DateInput = React.createClass({
     if (this.isValueAValidDate()) {
       this.props.setSelected(new DateUtil(date));
     }
+  },
+
+  safeDateFormat: function(date) {
+    return !! date ? date.format(this.props.dateFormat) : null;
   },
 
   isValueAValidDate: function() {
