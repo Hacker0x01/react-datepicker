@@ -8,6 +8,10 @@ A simple and reusable datepicker component for React ([Demo](http://cdn.rawgit.c
 
 ![](https://cloud.githubusercontent.com/assets/1412392/5339491/c40de124-7ee1-11e4-9f07-9276e2545f27.png)
 
+## Configuration
+
+- Change date format by passing a different date format in the props: `dateFormat: "YYYY/MM/DD"`
+- Add placeholder text: `placeholderText: 'Click to select a date'` (Defaults to the selected date when no placeholder text is added)
 
 ## Installation
 
