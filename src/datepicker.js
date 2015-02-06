@@ -53,7 +53,8 @@ var DatePicker = React.createClass({
             onSelect={this.handleSelect}
             hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
-            maxDate={this.props.maxDate} />
+            maxDate={this.props.maxDate}
+            weekStart={this.props.weekStart} />
         </Popover>
       );
     }
