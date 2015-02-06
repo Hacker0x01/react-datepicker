@@ -51,7 +51,9 @@ var DatePicker = React.createClass({
           <Calendar
             selected={this.props.selected}
             onSelect={this.handleSelect}
-            hideCalendar={this.hideCalendar} />
+            hideCalendar={this.hideCalendar}
+            minDate={this.props.minDate}
+            maxDate={this.props.maxDate} />
         </Popover>
       );
     }

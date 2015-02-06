@@ -112,6 +112,15 @@
       background-color: darken($selected-color, 5%);
     }
   }
+
+  &--disabled {
+    cursor: default;
+    color: $muted-color;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 .datepicker__input {
