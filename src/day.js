@@ -12,7 +12,6 @@ var Day = React.createClass({
       'datepicker__day': true,
       'datepicker__day--disabled': this.props.disabled,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
-      'datepicker__day--this-month': this.props.day.sameMonth(this.props.date),
       'datepicker__day--today': this.props.day.sameDay(moment())
     });
 

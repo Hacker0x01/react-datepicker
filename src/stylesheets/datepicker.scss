@@ -82,7 +82,7 @@
 }
 
 .datepicker__day {
-  color: $muted-color;
+  color: $text-color;
   display: inline-block;
   width: $item-size;
   line-height: $item-size;
@@ -94,11 +94,7 @@
     border-radius: $border-radius;
     background-color: $background-color;
   }
-
-  &--this-month {
-    color: $text-color;
-  }
-
+  
   &--today {
     font-weight: bold;
   }
