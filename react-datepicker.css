@@ -95,7 +95,7 @@
 }
 
 .datepicker__day {
-  color: #ccc;
+  color: #000;
   display: inline-block;
   width: 24px;
   line-height: 24px;
@@ -106,9 +106,6 @@
 .datepicker__day:hover {
   border-radius: 4px;
   background-color: #f0f0f0;
-}
-.datepicker__day--this-month {
-  color: #000;
 }
 .datepicker__day--today {
   font-weight: bold;
