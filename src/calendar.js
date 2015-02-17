@@ -58,9 +58,16 @@ var Calendar = React.createClass({
   },
 
   renderDay: function(day, key) {
+    // Initiatie variables for disabling days
     var minDate = new DateUtil(this.props.minDate).safeClone(),
         maxDate = new DateUtil(this.props.maxDate).safeClone(),
         disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+
+    // Initiatie variables for displaying days in range
+    var startDate = moment(this.props.startDate).startOf('day').subtract(1, 'seconds'),
+        endDate = moment(this.props.endDate.startOf('day')).add(1, 'seconds'),
+        range = moment().range(startDate, endDate),
+        inRange = range.contains(day.moment());
 
     return (
       <Day
@@ -69,6 +76,7 @@ var Calendar = React.createClass({
         date={this.state.date}
         onClick={this.handleDayClick.bind(this, day)}
         selected={new DateUtil(this.props.selected)}
+        inRange={inRange}
         disabled={disabled} />
     );
   },

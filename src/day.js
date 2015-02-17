@@ -11,6 +11,7 @@ var Day = React.createClass({
     classes = React.addons.classSet({
       'datepicker__day': true,
       'datepicker__day--disabled': this.props.disabled,
+      'datepicker__day--in-range': this.props.inRange,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
       'datepicker__day--today': this.props.day.sameDay(moment())
     });

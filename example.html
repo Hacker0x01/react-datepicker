@@ -3,6 +3,7 @@
     <script src="https://cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/react/0.12.2/react-with-addons.js"></script>
     <script src="https://cdn.jsdelivr.net/tether/0.6.5/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/1.0.5/moment-range.min.js"></script>
     <script type="text/javascript" src="react-datepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="react-datepicker.css">
   </head>
@@ -33,7 +34,7 @@
 
         getInitialState: function() {
           return {
-            start_date: moment(),
+            start_date: moment().subtract(10, 'days'),
             end_date: moment(),
             new_date: null,
             bound_date: null
@@ -71,18 +72,21 @@
               selected: this.state.start_date,
               onChange: this.handleStartDateChange
             }),
+
             DatePickerFactory({
               key: 'example2',
               selected: this.state.end_date,
               dateFormat: "YYYY/MM/DD",
               onChange: this.handleEndDateChange
             }),
+
             DatePickerFactory({
               key: 'example3',
               selected: this.state.new_date,
               onChange: this.handleNewDateChange,
               placeholderText: 'Click to select a date'
             }),
+
             DatePickerFactory({
               key: 'example4',
               selected: this.state.bound_date,
@@ -90,6 +94,21 @@
               minDate: moment(),
               maxDate: moment().add(5, 'days'),
               placeholderText: 'Select a date between today and 5 days in the future'
+            }),
+
+            DatePickerFactory({
+              key: 'example5',
+              selected: this.state.start_date,
+              onChange: this.handleStartDateChange,
+              startDate: this.state.start_date,
+              endDate: this.state.end_date
+            }),
+            DatePickerFactory({
+              key: 'example6',
+              selected: this.state.end_date,
+              onChange: this.handleEndDateChange,
+              startDate: this.state.start_date,
+              endDate: this.state.end_date
             })
           ]);
         }

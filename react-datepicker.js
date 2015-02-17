@@ -140,9 +140,16 @@ var Calendar = React.createClass({displayName: "Calendar",
   },
 
   renderDay: function(day, key) {
+    // Initiatie variables for disabling days
     var minDate = new DateUtil(this.props.minDate).safeClone(),
         maxDate = new DateUtil(this.props.maxDate).safeClone(),
         disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+
+    // Initiatie variables for displaying days in range
+    var startDate = moment(this.props.startDate).startOf('day').subtract(1, 'seconds'),
+        endDate = moment(this.props.endDate.startOf('day')).add(1, 'seconds'),
+        range = moment().range(startDate, endDate),
+        inRange = range.contains(day.moment());
 
     return (
       React.createElement(Day, {
@@ -151,6 +158,7 @@ var Calendar = React.createClass({displayName: "Calendar",
         date: this.state.date, 
         onClick: this.handleDayClick.bind(this, day), 
         selected: new DateUtil(this.props.selected), 
+        inRange: inRange, 
         disabled: disabled})
     );
   },
@@ -343,7 +351,9 @@ var DatePicker = React.createClass({displayName: "DatePicker",
             onSelect: this.handleSelect, 
             hideCalendar: this.hideCalendar, 
             minDate: this.props.minDate, 
-            maxDate: this.props.maxDate})
+            maxDate: this.props.maxDate, 
+            startDate: this.props.startDate, 
+            endDate: this.props.endDate})
         )
       );
     }
@@ -386,6 +396,7 @@ var Day = React.createClass({displayName: "Day",
     classes = React.addons.classSet({
       'datepicker__day': true,
       'datepicker__day--disabled': this.props.disabled,
+      'datepicker__day--in-range': this.props.inRange,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
       'datepicker__day--this-month': this.props.day.sameMonth(this.props.date),
       'datepicker__day--today': this.props.day.sameDay(moment())
