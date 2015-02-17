@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 
+var React = require('react/addons');
 var Day = require('./day');
 var DateUtil = require('./util/date');
+var moment = require('moment');
 
 var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],

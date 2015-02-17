@@ -53,6 +53,13 @@ module.exports = function(grunt) {
             standalone: 'DatePicker',
           }
         }
+      },
+      example : {
+        src: ['example/boot.jsx'],
+        dest: 'example/bundle.js',
+        options: {
+          transform: ['reactify']
+        }
       }
     },
 
