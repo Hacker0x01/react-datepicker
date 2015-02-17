@@ -98,6 +98,16 @@ var Calendar = React.createClass({displayName: "Calendar",
     };
   },
 
+  getDefaultProps: function() {
+    return {
+      weekStart: 1
+    };
+  },
+
+  componentWillMount: function() {
+    this.initializeMomentLocale();
+  },
+
   componentWillReceiveProps: function(nextProps) {
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
@@ -105,6 +115,18 @@ var Calendar = React.createClass({displayName: "Calendar",
         date: new DateUtil(nextProps.selected).clone()
       });
     }
+  },
+
+  initializeMomentLocale: function() {
+    var weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
+
+    moment.locale('en', {
+      week: {
+        dow: this.props.weekStart
+      },
+      weekdaysMin : weekdays
+    });
   },
 
   increaseMonth: function() {
@@ -159,6 +181,12 @@ var Calendar = React.createClass({displayName: "Calendar",
     return weekStart.mapDaysInWeek(this.renderDay);
   },
 
+  header: function() {
+    return moment.weekdaysMin().map(function(day, key) {
+      return React.createElement("div", {className: "datepicker__day", key: key}, day);
+    });
+  },
+
   render: function() {
     return (
       React.createElement("div", {className: "datepicker"}, 
@@ -174,13 +202,7 @@ var Calendar = React.createClass({displayName: "Calendar",
               onClick: this.increaseMonth}
           ), 
           React.createElement("div", null, 
-            React.createElement("div", {className: "datepicker__day"}, "Mo"), 
-            React.createElement("div", {className: "datepicker__day"}, "Tu"), 
-            React.createElement("div", {className: "datepicker__day"}, "We"), 
-            React.createElement("div", {className: "datepicker__day"}, "Th"), 
-            React.createElement("div", {className: "datepicker__day"}, "Fr"), 
-            React.createElement("div", {className: "datepicker__day"}, "Sa"), 
-            React.createElement("div", {className: "datepicker__day"}, "Su")
+            this.header()
           )
         ), 
         React.createElement("div", {className: "datepicker__month"}, 
@@ -343,7 +365,8 @@ var DatePicker = React.createClass({displayName: "DatePicker",
             onSelect: this.handleSelect, 
             hideCalendar: this.hideCalendar, 
             minDate: this.props.minDate, 
-            maxDate: this.props.maxDate})
+            maxDate: this.props.maxDate, 
+            weekStart: this.props.weekStart})
         )
       );
     }
@@ -509,7 +532,7 @@ DateUtil.prototype.day = function() {
 
 DateUtil.prototype.mapDaysInWeek = function(callback) {
   var week = [];
-  var firstDay = this._date.clone().startOf('isoWeek');
+  var firstDay = this._date.clone();
 
   for(var i = 0; i < 7; i++) {
     var day = new DateUtil(firstDay.clone().add(i, 'days'));
@@ -522,7 +545,7 @@ DateUtil.prototype.mapDaysInWeek = function(callback) {
 
 DateUtil.prototype.mapWeeksInMonth = function(callback) {
   var month = [];
-  var firstDay = this._date.clone().startOf('month').startOf('isoWeek');
+  var firstDay = this._date.clone().startOf('month').startOf('week');
 
   for(var i = 0; i < 6; i++) {
     var weekStart = new DateUtil(firstDay.clone().add(i, 'weeks'));
@@ -535,7 +558,7 @@ DateUtil.prototype.mapWeeksInMonth = function(callback) {
 
 DateUtil.prototype.weekInMonth = function(other) {
   var firstDayInWeek = this._date.clone();
-  var lastDayInWeek = this._date.clone().isoWeekday(7);
+  var lastDayInWeek = this._date.clone().weekday(7);
 
   return firstDayInWeek.isSame(other._date, 'month') ||
     lastDayInWeek.isSame(other._date, 'month');

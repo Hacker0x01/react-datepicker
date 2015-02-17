@@ -24,7 +24,7 @@ DateUtil.prototype.day = function() {
 
 DateUtil.prototype.mapDaysInWeek = function(callback) {
   var week = [];
-  var firstDay = this._date.clone().startOf('isoWeek');
+  var firstDay = this._date.clone();
 
   for(var i = 0; i < 7; i++) {
     var day = new DateUtil(firstDay.clone().add(i, 'days'));
@@ -37,7 +37,7 @@ DateUtil.prototype.mapDaysInWeek = function(callback) {
 
 DateUtil.prototype.mapWeeksInMonth = function(callback) {
   var month = [];
-  var firstDay = this._date.clone().startOf('month').startOf('isoWeek');
+  var firstDay = this._date.clone().startOf('month').startOf('week');
 
   for(var i = 0; i < 6; i++) {
     var weekStart = new DateUtil(firstDay.clone().add(i, 'weeks'));
@@ -50,7 +50,7 @@ DateUtil.prototype.mapWeeksInMonth = function(callback) {
 
 DateUtil.prototype.weekInMonth = function(other) {
   var firstDayInWeek = this._date.clone();
-  var lastDayInWeek = this._date.clone().isoWeekday(7);
+  var lastDayInWeek = this._date.clone().weekday(7);
 
   return firstDayInWeek.isSame(other._date, 'month') ||
     lastDayInWeek.isSame(other._date, 'month');

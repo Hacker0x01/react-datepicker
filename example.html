@@ -36,7 +36,8 @@
             start_date: moment(),
             end_date: moment(),
             new_date: null,
-            bound_date: null
+            bound_date: null,
+            sunday_start_date: null
           };
         },
 
@@ -61,6 +62,12 @@
         handleBoundDateChange: function(date) {
           this.setState({
             bound_date: date
+          });
+        },
+
+        handleSundayStartDateChange: function(date) {
+          this.setState({
+            sunday_start_date: date
           });
         },
 
@@ -90,6 +97,13 @@
               minDate: moment(),
               maxDate: moment().add(5, 'days'),
               placeholderText: 'Select a date between today and 5 days in the future'
+            }),
+            DatePickerFactory({
+              key: 'example5',
+              selected: this.state.sunday_start_date,
+              onChange: this.handleSundayStartDateChange,
+              placeholderText: 'I start on Sunday!',
+              weekStart: 0
             })
           ]);
         }

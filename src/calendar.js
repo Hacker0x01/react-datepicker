@@ -16,6 +16,16 @@ var Calendar = React.createClass({
     };
   },
 
+  getDefaultProps: function() {
+    return {
+      weekStart: 1
+    };
+  },
+
+  componentWillMount: function() {
+    this.initializeMomentLocale();
+  },
+
   componentWillReceiveProps: function(nextProps) {
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
@@ -23,6 +33,18 @@ var Calendar = React.createClass({
         date: new DateUtil(nextProps.selected).clone()
       });
     }
+  },
+
+  initializeMomentLocale: function() {
+    var weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
+
+    moment.locale('en', {
+      week: {
+        dow: this.props.weekStart
+      },
+      weekdaysMin : weekdays
+    });
   },
 
   increaseMonth: function() {
@@ -77,6 +99,12 @@ var Calendar = React.createClass({
     return weekStart.mapDaysInWeek(this.renderDay);
   },
 
+  header: function() {
+    return moment.weekdaysMin().map(function(day, key) {
+      return <div className="datepicker__day" key={key}>{day}</div>;
+    });
+  },
+
   render: function() {
     return (
       <div className="datepicker">
@@ -92,13 +120,7 @@ var Calendar = React.createClass({
               onClick={this.increaseMonth}>
           </a>
           <div>
-            <div className="datepicker__day">Mo</div>
-            <div className="datepicker__day">Tu</div>
-            <div className="datepicker__day">We</div>
-            <div className="datepicker__day">Th</div>
-            <div className="datepicker__day">Fr</div>
-            <div className="datepicker__day">Sa</div>
-            <div className="datepicker__day">Su</div>
+            {this.header()}
           </div>
         </div>
         <div className="datepicker__month">
