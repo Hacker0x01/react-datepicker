@@ -29,13 +29,16 @@
     "grunt-jsxhint": "0.4.0",
     "grunt-scss-lint": "^0.3.4",
     "jest-cli": "0.1.18",
-    "react-tools": "0.11.1"
+    "react-tools": "0.11.1",
+    "reactify": "^1.0",
+    "react": "^0.12"
+  },
+  "peerDependencies" : {
+    "react": "^0.12"
   },
   "dependencies": {
-    "react": "^0.12",
     "moment": "^2.8",
     "tether": "^0.6",
-    "reactify": "^1.0",
     "react-onclickoutside": "0.2.1"
   },
   "scripts": {
