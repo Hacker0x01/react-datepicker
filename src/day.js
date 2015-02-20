@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+var React = require('react/addons');
+var moment = require('moment');
+
 var Day = React.createClass({
   handleClick: function(event) {
     if (this.props.disabled) return;

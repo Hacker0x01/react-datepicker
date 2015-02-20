@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+var React = require('react/addons');
 var Popover   = require('./popover');
 var DateUtil  = require('./util/date');
 var Calendar  = require('./calendar');
@@ -60,6 +61,7 @@ var DatePicker = React.createClass({
   },
 
   render: function() {
+
     return (
       <div>
         <DateInput

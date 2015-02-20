@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
+var React = require('react/addons');
 var DateUtil = require('./util/date');
+var moment = require('moment');
 
 var DateInput = React.createClass({
 
