@@ -45,15 +45,17 @@ module.exports = function(grunt) {
 
     browserify: {
       all: {
-        src: ['src/datepicker.js'],
+        src: 'src/datepicker.js',
         dest: 'react-datepicker.js',
         options: {
-          transform: ['reactify'],
+          transform: ['reactify', 'browserify-shim'],
           browserifyOptions: {
             standalone: 'DatePicker',
+            bundleExternal: false
           }
         }
       },
+
       example : {
         src: ['example/boot.jsx'],
         dest: 'example/bundle.js',

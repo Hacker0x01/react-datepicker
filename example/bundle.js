@@ -23464,9 +23464,9 @@ module.exports = DateInput;
 /** @jsx React.DOM */
 
 var React = require('react/addons');
-var Popover   = require('./popover');
-var DateUtil  = require('./util/date');
-var Calendar  = require('./calendar');
+var Popover = require('./popover');
+var DateUtil = require('./util/date');
+var Calendar = require('./calendar');
 var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({displayName: "DatePicker",
