@@ -24,13 +24,12 @@ Installing is really simple and can be done in two different ways:
 ## Local Development
 
 - Install Bower `npm install -g bower`
-- Install Grunt CLI `npm install -g grunt-cli`
 - Install Bower Packages `bower install`
 - Install packages `npm install`
 - Start a static webserver `python -m SimpleHTTPServer`
 - And visit `localhost:8000/example.html` to see the example.
 
-To run tests, simply run `grunt jest`.
+To run tests, simply run `npm test`.
 
 ## License
 
