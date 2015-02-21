@@ -58,10 +58,7 @@ module.exports = function(grunt) {
 
       example : {
         src: ['example/boot.jsx'],
-        dest: 'example/bundle.js',
-        options: {
-          transform: ['reactify']
-        }
+        dest: 'example/bundle.js'
       }
     },
 

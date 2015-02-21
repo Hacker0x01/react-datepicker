@@ -76,14 +76,12 @@ var exampleComponent = React.createClass({
 
 module.exports = exampleComponent;
 
-
 },{"../src/datepicker":170,"moment":4,"react":167}],2:[function(require,module,exports){
 var React = require('react');
 var App = require('./app.jsx');
 
 
 React.render(React.createElement(App, null), document.getElementById('datepicker-region'));
-
 
 },{"./app.jsx":1,"react":167}],3:[function(require,module,exports){
 // shim for using process in browser
@@ -23365,7 +23363,6 @@ var Calendar = React.createClass({displayName: "Calendar",
 module.exports = Calendar;
 
 
-
 },{"./day":171,"./util/date":173,"moment":4,"react-onclickoutside":5,"react/addons":6}],169:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -23459,7 +23456,6 @@ var DateInput = React.createClass({displayName: "DateInput",
 module.exports = DateInput;
 
 
-
 },{"./util/date":173,"moment":4,"react/addons":6}],170:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -23546,7 +23542,6 @@ var DatePicker = React.createClass({displayName: "DatePicker",
 module.exports = DatePicker;
 
 
-
 },{"./calendar":168,"./date_input":169,"./popover":172,"./util/date":173,"react/addons":6}],171:[function(require,module,exports){
 /** @jsx React.DOM */
 
@@ -23577,7 +23572,6 @@ var Day = React.createClass({displayName: "Day",
 });
 
 module.exports = Day;
-
 
 
 },{"moment":4,"react/addons":6}],172:[function(require,module,exports){
@@ -23658,7 +23652,6 @@ var Popover = React.createClass({
 });
 
 module.exports = Popover;
-
 
 
 },{"react/addons":6}],173:[function(require,module,exports){
@@ -23748,7 +23741,6 @@ DateUtil.prototype.moment = function() {
 };
 
 module.exports = DateUtil;
-
 
 
 },{}]},{},[2]);
