@@ -10,6 +10,9 @@ linters:
   ColorKeyword:
     enabled: false
 
+  ColorVariable:
+    enabled: false
+
   Comment:
     enabled: false
 
@@ -24,45 +27,54 @@ linters:
 
   ElsePlacement:
     enabled: true
+    style: same_line
 
   EmptyLineBetweenBlocks:
     enabled: true
+    ignore_single_line_blocks: true
 
   EmptyRule:
     enabled: true
 
   FinalNewline:
     enabled: true
+    present: true
 
   HexLength:
     enaled: true
+    style: short
 
   HexNotation:
     enabled: true
+    style: lowercase
 
   HexValidation:
     enabled: true
-
-  HexValidation:
-    enabled: false
 
   IdSelector:
     enabled: true
 
+  ImportantRule:
+    enabled: true
+
   ImportPath:
     enabled: true
+    leading_underscore: false
+    filename_extension: false
 
   Indentation:
     enabled: true
+    allow_non_nested_indentation: false
+    character: space # or 'tab'
     width: 2
 
   LeadingZero:
     enabled: true
+    style: exclude_zero
 
   MergeableSelector:
     enabled: true
-    exclude:
-      - 'app/assets/stylesheets/email/client-fixes.scss'
+    force_nesting: true
 
   NameFormat:
     enabled: true
@@ -73,6 +85,9 @@ linters:
 
   PlaceholderInExtend:
     enabled: true
+
+  PropertyCount:
+    enabled: false
 
   PropertySortOrder:
     enabled: false
@@ -104,15 +119,19 @@ linters:
 
   SpaceAfterPropertyColon:
     enabled: true
+    style: one_space
 
   SpaceAfterPropertyName:
     enabled: true
 
   SpaceBeforeBrace:
     enabled: true
+    style: space
+    allow_single_line_padding: false
 
   SpaceBetweenParens:
     enabled: true
+    spaces: 0
 
   StringQuotes:
     enabled: true
@@ -136,8 +155,14 @@ linters:
   UrlQuotes:
     enabled: true
 
+  VariableForProperty:
+    enabled: false
+
   VendorPrefixes:
     enabled: true
 
   ZeroUnit:
     enabled: true
+
+  Compass::*:
+    enabled: false
