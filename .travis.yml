@@ -6,4 +6,4 @@ rvm:
   - 2.1.5
 before_install:
   - npm install -g grunt-cli
-  - gem update --system && gem install scss-lint
+  - gem update --system && gem install scss-lint -v 0.34.0
