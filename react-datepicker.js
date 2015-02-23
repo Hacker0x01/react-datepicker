@@ -1,7 +1,8 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.DatePicker = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
 /** @jsx React.DOM */
 
-var React = require('react/addons');
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
 var Popover = require('./popover');
 var DateUtil = require('./util/date');
 var Calendar = require('./calendar');
@@ -84,16 +85,19 @@ var DatePicker = React.createClass({displayName: "DatePicker",
 module.exports = DatePicker;
 
 
-},{"./calendar":2,"./date_input":3,"./popover":5,"./util/date":6,"react/addons":undefined}],2:[function(require,module,exports){
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./calendar":2,"./date_input":3,"./popover":5,"./util/date":6}],2:[function(require,module,exports){
+(function (global){
 /** @jsx React.DOM */
 
-var React = require('react/addons');
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
 var Day = require('./day');
 var DateUtil = require('./util/date');
-var moment = require('moment');
+var moment = (typeof window !== "undefined" ? window.moment : typeof global !== "undefined" ? global.moment : null);
 
 var Calendar = React.createClass({displayName: "Calendar",
-  mixins: [require('react-onclickoutside')],
+  mixins: [(typeof window !== "undefined" ? window.OnClickOutside : typeof global !== "undefined" ? global.OnClickOutside : null)],
 
   handleClickOutside: function() {
     this.props.hideCalendar();
@@ -201,12 +205,15 @@ var Calendar = React.createClass({displayName: "Calendar",
 module.exports = Calendar;
 
 
-},{"./day":4,"./util/date":6,"moment":undefined,"react-onclickoutside":undefined,"react/addons":undefined}],3:[function(require,module,exports){
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./day":4,"./util/date":6}],3:[function(require,module,exports){
+(function (global){
 /** @jsx React.DOM */
 
-var React = require('react/addons');
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
 var DateUtil = require('./util/date');
-var moment = require('moment');
+var moment = (typeof window !== "undefined" ? window.moment : typeof global !== "undefined" ? global.moment : null);
 
 var DateInput = React.createClass({displayName: "DateInput",
 
@@ -294,11 +301,14 @@ var DateInput = React.createClass({displayName: "DateInput",
 module.exports = DateInput;
 
 
-},{"./util/date":6,"moment":undefined,"react/addons":undefined}],4:[function(require,module,exports){
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./util/date":6}],4:[function(require,module,exports){
+(function (global){
 /** @jsx React.DOM */
 
-var React = require('react/addons');
-var moment = require('moment');
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
+var moment = (typeof window !== "undefined" ? window.moment : typeof global !== "undefined" ? global.moment : null);
 
 var Day = React.createClass({displayName: "Day",
   handleClick: function(event) {
@@ -326,10 +336,13 @@ var Day = React.createClass({displayName: "Day",
 module.exports = Day;
 
 
-},{"moment":undefined,"react/addons":undefined}],5:[function(require,module,exports){
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],5:[function(require,module,exports){
+(function (global){
 /** @jsx React.DOM */
 
-var React = require('react/addons');
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
 
 var Popover = React.createClass({
   displayName: 'Popover',
@@ -406,7 +419,9 @@ var Popover = React.createClass({
 module.exports = Popover;
 
 
-},{"react/addons":undefined}],6:[function(require,module,exports){
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],6:[function(require,module,exports){
 function DateUtil(date) {
   this._date = date;
 }
@@ -493,6 +508,7 @@ DateUtil.prototype.moment = function() {
 };
 
 module.exports = DateUtil;
+
 
 
 },{}]},{},[1])(1)
