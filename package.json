@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "grunt": "0.4.5",
-    "grunt-browserify": "3.2.1",
-    "browserify-shim": "3.8.2",
+    "grunt-browserify": "3.4.0",
+    "browserify-shim": "3.8.3",
     "grunt-cli": "0.1.13",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
