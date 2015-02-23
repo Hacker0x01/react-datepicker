@@ -45,20 +45,23 @@ module.exports = function(grunt) {
 
     browserify: {
       all: {
-        src: 'src/datepicker.js',
         dest: 'react-datepicker.js',
-        options: {
-          transform: ['reactify', 'browserify-shim'],
-          browserifyOptions: {
-            standalone: 'DatePicker',
-            bundleExternal: false
-          }
+        transform: [
+          'reactify',
+          'browserify-shim'
+        ],
+        browserifyOptions: {
+          entries: './src/datepicker.js',
+          standalone: 'DatePicker',
+          bundleExternal: false
         }
       },
 
       example : {
-        src: ['example/boot.jsx'],
-        dest: 'example/bundle.js'
+        dest: 'example/bundle.js',
+        browserifyOptions: {
+          entries: './example/boot.jsx'
+        }
       }
     },
 
@@ -73,10 +76,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-jsxhint');
   grunt.loadNpmTasks('grunt-jest');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
   grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
+
+  grunt.registerMultiTask('browserify', require('./grunt/tasks/browserify'));
 };

@@ -21,9 +21,9 @@
     "url": "https://github.com/Hacker0x01/react-datepicker/issues"
   },
   "devDependencies": {
+    "browserify": "9.0.3",
+    "browserify-shim": "3.8.3",
     "grunt": "0.4.5",
-    "grunt-browserify": "3.2.1",
-    "browserify-shim": "3.8.2",
     "grunt-cli": "0.1.13",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
@@ -31,11 +31,12 @@
     "grunt-jsxhint": "0.4.0",
     "grunt-scss-lint": "^0.3.4",
     "jest-cli": "0.1.18",
+    "lodash": "^3.3.0",
+    "react": "^0.12",
     "react-tools": "0.11.1",
-    "reactify": "^1.0",
-    "react": "^0.12"
+    "reactify": "^1.0"
   },
-  "peerDependencies" : {
+  "peerDependencies": {
     "react": "^0.12"
   },
   "dependencies": {
