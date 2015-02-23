@@ -3,6 +3,95 @@
 /** @jsx React.DOM */
 
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
+var Popover = require('./popover');
+var DateUtil = require('./util/date');
+var Calendar = require('./calendar');
+var DateInput = require('./date_input');
+
+var DatePicker = React.createClass({displayName: "DatePicker",
+  getInitialState: function() {
+    return {
+      focus: false
+    };
+  },
+
+  handleFocus: function() {
+    this.setState({
+      focus: true
+    });
+  },
+
+  hideCalendar: function() {
+    setTimeout(function() {
+      this.setState({
+        focus: false
+      });
+    }.bind(this), 0);
+  },
+
+  handleSelect: function(date) {
+    this.setSelected(date);
+
+    setTimeout(function(){
+      this.hideCalendar();
+    }.bind(this), 200);
+  },
+
+  setSelected: function(date) {
+    this.props.onChange(date.moment());
+  },
+
+  onInputClick: function() {
+    this.setState({
+      focus: true
+    });
+  },
+
+  calendar: function() {
+    if (this.state.focus) {
+      return (
+        React.createElement(Popover, null, 
+          React.createElement(Calendar, {
+            selected: this.props.selected, 
+            onSelect: this.handleSelect, 
+            hideCalendar: this.hideCalendar, 
+            minDate: this.props.minDate, 
+            maxDate: this.props.maxDate})
+        )
+      );
+    }
+  },
+
+  render: function() {
+
+    return (
+      React.createElement("div", null, 
+        React.createElement(DateInput, {
+          date: this.props.selected, 
+          dateFormat: this.props.dateFormat, 
+          focus: this.state.focus, 
+          onFocus: this.handleFocus, 
+          handleClick: this.onInputClick, 
+          handleEnter: this.hideCalendar, 
+          setSelected: this.setSelected, 
+          hideCalendar: this.hideCalendar, 
+          placeholderText: this.props.placeholderText}), 
+        this.calendar()
+      )
+    );
+  }
+});
+
+module.exports = DatePicker;
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./calendar":2,"./date_input":3,"./popover":5,"./util/date":6}],2:[function(require,module,exports){
+(function (global){
+/** @jsx React.DOM */
+
+var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
 var Day = require('./day');
 var DateUtil = require('./util/date');
 var moment = (typeof window !== "undefined" ? window.moment : typeof global !== "undefined" ? global.moment : null);
@@ -118,7 +207,7 @@ module.exports = Calendar;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./day":4,"./util/date":6}],2:[function(require,module,exports){
+},{"./day":4,"./util/date":6}],3:[function(require,module,exports){
 (function (global){
 /** @jsx React.DOM */
 
@@ -214,96 +303,7 @@ module.exports = DateInput;
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./util/date":6}],3:[function(require,module,exports){
-(function (global){
-/** @jsx React.DOM */
-
-var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null);
-var Popover = require('./popover');
-var DateUtil = require('./util/date');
-var Calendar = require('./calendar');
-var DateInput = require('./date_input');
-
-var DatePicker = React.createClass({displayName: "DatePicker",
-  getInitialState: function() {
-    return {
-      focus: false
-    };
-  },
-
-  handleFocus: function() {
-    this.setState({
-      focus: true
-    });
-  },
-
-  hideCalendar: function() {
-    setTimeout(function() {
-      this.setState({
-        focus: false
-      });
-    }.bind(this), 0);
-  },
-
-  handleSelect: function(date) {
-    this.setSelected(date);
-
-    setTimeout(function(){
-      this.hideCalendar();
-    }.bind(this), 200);
-  },
-
-  setSelected: function(date) {
-    this.props.onChange(date.moment());
-  },
-
-  onInputClick: function() {
-    this.setState({
-      focus: true
-    });
-  },
-
-  calendar: function() {
-    if (this.state.focus) {
-      return (
-        React.createElement(Popover, null, 
-          React.createElement(Calendar, {
-            selected: this.props.selected, 
-            onSelect: this.handleSelect, 
-            hideCalendar: this.hideCalendar, 
-            minDate: this.props.minDate, 
-            maxDate: this.props.maxDate})
-        )
-      );
-    }
-  },
-
-  render: function() {
-
-    return (
-      React.createElement("div", null, 
-        React.createElement(DateInput, {
-          date: this.props.selected, 
-          dateFormat: this.props.dateFormat, 
-          focus: this.state.focus, 
-          onFocus: this.handleFocus, 
-          handleClick: this.onInputClick, 
-          handleEnter: this.hideCalendar, 
-          setSelected: this.setSelected, 
-          hideCalendar: this.hideCalendar, 
-          placeholderText: this.props.placeholderText}), 
-        this.calendar()
-      )
-    );
-  }
-});
-
-module.exports = DatePicker;
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./calendar":1,"./date_input":2,"./popover":5,"./util/date":6}],4:[function(require,module,exports){
+},{"./util/date":6}],4:[function(require,module,exports){
 (function (global){
 /** @jsx React.DOM */
 
@@ -511,5 +511,5 @@ module.exports = DateUtil;
 
 
 
-},{}]},{},[3])(3)
+},{}]},{},[1])(1)
 });
