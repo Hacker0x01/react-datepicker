@@ -4,7 +4,7 @@
 [![devDependency Status](https://david-dm.org/Hacker0x01/react-datepicker/dev-status.svg)](https://david-dm.org/Hacker0x01/react-datepicker#info=devDependencies)
 [![Downloads](http://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
 
-A simple and reusable datepicker component for React ([Demo](http://cdn.rawgit.com/Hacker0x01/react-datepicker/master/example.html))
+A simple and reusable datepicker component for React ([Demo](http://cdn.rawgit.com/Hacker0x01/react-datepicker/master/example/index.html))
 
 ![](https://cloud.githubusercontent.com/assets/1412392/5339491/c40de124-7ee1-11e4-9f07-9276e2545f27.png)
 
