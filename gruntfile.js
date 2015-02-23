@@ -77,10 +77,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jsxhint');
-  grunt.loadNpmTasks('grunt-jest');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
   grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
 
   grunt.registerMultiTask('browserify', require('./grunt/tasks/browserify'));
+  grunt.registerTask('jest', require('./grunt/tasks/jest'));
 };
