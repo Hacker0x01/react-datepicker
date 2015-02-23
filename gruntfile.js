@@ -66,7 +66,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['src/**/*.js'],
+      all: ['src/**/*.jsx', 'src/**/*.js'],
       options: {
         eqnull: true
       }
