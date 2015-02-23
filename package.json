@@ -31,7 +31,7 @@
     "grunt-jsxhint": "0.4.0",
     "grunt-scss-lint": "^0.3.4",
     "jest-cli": "0.1.18",
-    "react-tools": "0.11.1",
+    "react-tools": "0.12.2",
     "reactify": "^1.0",
     "react": "^0.12"
   },
