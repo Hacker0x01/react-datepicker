@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-jest.dontMock('../src/date_input');
+jest.dontMock('../src/date_input.jsx');
 
 React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
