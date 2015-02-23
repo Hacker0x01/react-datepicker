@@ -4,7 +4,7 @@ jest.dontMock('../src/date_input.jsx');
 
 React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var DateInput = require('../src/date_input');
+var DateInput = require('../src/date_input.jsx');
 
 describe('DateInput', function() {
   it('triggers an event handler when the Enter key is pressed', function() {
