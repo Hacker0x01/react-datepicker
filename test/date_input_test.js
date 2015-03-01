@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 jest.dontMock('../src/date_input.jsx');
 
 describe('DateInput', function() {
