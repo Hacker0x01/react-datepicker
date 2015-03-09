@@ -4,7 +4,8 @@ module.exports = {
   entry: './src/datepicker',
   output: {
     libraryTarget: 'umd',
-    library: 'DatePicker'
+    library: 'DatePicker',
+    path: './dist/'
   },
   module: {
     loaders: [
@@ -29,6 +30,22 @@ module.exports = {
         commonjs2: 'react',
         commonjs: 'react',
         amd: 'react'
+      }
+    },
+    {
+      'moment': {
+        root: 'moment',
+        commonjs2: 'moment',
+        commonjs: 'moment',
+        amd: 'moment'
+      }
+    },
+    {
+      'react-onclickoutside': {
+          root: 'OnClickOutside',
+          commonjs2: 'react-onclickoutside',
+          commonjs: 'react-onclickoutside',
+          amd: 'react-onclickoutside'
       }
     }
   ],
