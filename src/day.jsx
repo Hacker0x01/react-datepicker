@@ -9,7 +9,7 @@ var Day = React.createClass({
   },
 
   render: function() {
-    classes = React.addons.classSet({
+    var classes = React.addons.classSet({
       'datepicker__day': true,
       'datepicker__day--disabled': this.props.disabled,
       'datepicker__day--selected': this.props.day.sameDay(this.props.selected),
