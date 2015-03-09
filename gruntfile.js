@@ -19,14 +19,23 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     sass: {
-      dist: {
+      min: {
         files: {
-          'react-datepicker.css' : 'src/stylesheets/datepicker.scss'
+          'dist/react-datepicker.css': 'src/stylesheets/datepicker.scss'
+        },
+        options: {
+          sourcemap: 'none',
+          style: 'expanded'
         }
       },
-      options: {
-        sourcemap: 'none',
-        style: 'expanded'
+      unmin: {
+        files: {
+          'dist/react-datepicker.min.css': 'src/stylesheets/datepicker.scss'
+        },
+        options: {
+          sourcemap: 'none',
+          style: 'compressed'
+        }
       }
     },
 
@@ -118,6 +127,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['watch', 'scsslint']);
   grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
+  grunt.registerTask('build', ['jshint', 'scsslint', 'webpack', 'sass']);
 
   grunt.registerMultiTask('browserify', require('./grunt/tasks/browserify'));
   grunt.registerTask('jest', require('./grunt/tasks/jest'));
