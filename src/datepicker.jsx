@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react/addons');
 var Popover = require('./popover');
 var DateUtil = require('./util/date');
