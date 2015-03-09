@@ -256,7 +256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: "Popover",
 
 	  componentWillMount: function componentWillMount() {
-	    popoverContainer = document.createElement("span");
+	    var popoverContainer = document.createElement("span");
 	    popoverContainer.className = "datepicker__container";
 
 	    this._popoverElement = popoverContainer;
@@ -690,7 +690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    classes = React.addons.classSet({
+	    var classes = React.addons.classSet({
 	      datepicker__day: true,
 	      "datepicker__day--disabled": this.props.disabled,
 	      "datepicker__day--selected": this.props.day.sameDay(this.props.selected),
