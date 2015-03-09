@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "babel-core": "^4.7.3",
+    "babel-jest": "^4.0.0",
     "babel-loader": "^4.1.0",
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",
@@ -49,7 +50,7 @@
   },
   "jest": {
     "testDirectoryName": "test",
-    "scriptPreprocessor": "<rootDir>/jestPreprocessor.js",
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
     ]
