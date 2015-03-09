@@ -6,6 +6,9 @@
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/datepicker.min.js",
+  "engines": {
+    "node": ">= 0.10 < 0.12"
+  },
   "keywords": [
     "react",
     "datepicker",
