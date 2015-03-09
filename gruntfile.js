@@ -46,7 +46,7 @@ module.exports = function(grunt) {
       },
 
       jest: {
-        files: ['src/**/*.js', 'test/**/*.js'],
+        files: ['src/**/*.jsx', 'src/**/*.js', 'test/**/*.js'],
         tasks: ['jest']
       },
 
