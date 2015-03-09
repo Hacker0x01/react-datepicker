@@ -3,12 +3,11 @@
 var _ = require('lodash');
 var webpack = require('webpack');
 
-var mergeWebpackConfig = function (destination) {
+var mergeWebpackConfig = function (config) {
   // Load webpackConfig only when using `grunt:webpack`
   // load of grunt tasks is faster
   var webpackConfig = require('./webpack.config');
-
-  return _.merge(destination, webpackConfig, function (a, b) {
+  return _.merge({}, webpackConfig, config, function (a, b) {
     if (_.isArray(a)) {
       return a.concat(b);
     }
@@ -77,6 +76,14 @@ module.exports = function(grunt) {
     },
 
     webpack: {
+      example: mergeWebpackConfig({
+        entry: './example/boot',
+        output: {
+          filename: 'example.js',
+          library: 'ExampleApp',
+          path: './example/'
+        }
+      }),
       unmin: mergeWebpackConfig({
         output: {
           filename: 'react-datepicker.js'
