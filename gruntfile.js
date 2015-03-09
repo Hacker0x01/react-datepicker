@@ -1,3 +1,20 @@
+'use strict';
+
+var _ = require('lodash');
+var webpack = require('webpack');
+
+var mergeWebpackConfig = function (destination) {
+  // Load webpackConfig only when using `grunt:webpack`
+  // load of grunt tasks is faster
+  var webpackConfig = require('./webpack.config');
+
+  return _.merge(destination, webpackConfig, function (a, b) {
+    if (_.isArray(a)) {
+      return a.concat(b);
+    }
+  });
+};
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -70,6 +87,26 @@ module.exports = function(grunt) {
       options: {
         eqnull: true
       }
+    },
+
+    webpack: {
+      unmin: mergeWebpackConfig({
+        output: {
+          filename: 'react-datepicker.js'
+        }
+      }),
+      min: mergeWebpackConfig({
+        output: {
+          filename: 'react-datepicker.min.js'
+        },
+        plugins: [
+          new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+              warnings: false
+            }
+          })
+        ]
+      })
     }
   });
 
@@ -77,6 +114,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jsxhint');
+  grunt.loadNpmTasks('grunt-webpack');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
   grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
