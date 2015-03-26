@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 
       webpack: {
         files: ['src/**/*.js', 'src/**/*.jsx'],
-        tasks: ['browserify']
+        tasks: ['webpack']
       }
     },
 
