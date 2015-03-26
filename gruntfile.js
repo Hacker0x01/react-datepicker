@@ -1,26 +1,51 @@
+'use strict';
+
+var _ = require('lodash');
+var webpack = require('webpack');
+
+var mergeWebpackConfig = function (config) {
+  // Load webpackConfig only when using `grunt:webpack`
+  // load of grunt tasks is faster
+  var webpackConfig = require('./webpack.config');
+  return _.merge({}, webpackConfig, config, function (a, b) {
+    if (_.isArray(a)) {
+      return a.concat(b);
+    }
+  });
+};
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     sass: {
-      dist: {
+      min: {
         files: {
-          'react-datepicker.css' : 'src/stylesheets/datepicker.scss'
+          'dist/react-datepicker.css': 'src/stylesheets/datepicker.scss'
+        },
+        options: {
+          sourcemap: 'none',
+          style: 'expanded'
         }
       },
-      options: {
-        sourcemap: 'none',
-        style: 'expanded'
+      unmin: {
+        files: {
+          'dist/react-datepicker.min.css': 'src/stylesheets/datepicker.scss'
+        },
+        options: {
+          sourcemap: 'none',
+          style: 'compressed'
+        }
       }
     },
 
     watch: {
       jshint: {
-        files: 'src/**/*.js',
+        files: ['src/**/*.js', 'src/**/*.jsx'],
         tasks: ['jshint']
       },
 
       jest: {
-        files: ['src/**/*.js', 'test/**/*.js'],
+        files: ['src/**/*.jsx', 'src/**/*.js', 'test/**/*.js'],
         tasks: ['jest']
       },
 
@@ -29,9 +54,9 @@ module.exports = function(grunt) {
         tasks: ['sass']
       },
 
-      browserify: {
-        files: ['src/**/*.js'],
-        tasks: ['browserify']
+      webpack: {
+        files: ['src/**/*.js', 'src/**/*.jsx'],
+        tasks: ['webpack']
       }
     },
 
@@ -40,28 +65,6 @@ module.exports = function(grunt) {
       options: {
         config: '.scss-lint.yml',
         colorizeOutput: true
-      },
-    },
-
-    browserify: {
-      all: {
-        dest: 'react-datepicker.js',
-        transform: [
-          'reactify',
-          'browserify-shim'
-        ],
-        browserifyOptions: {
-          entries: './src/datepicker.js',
-          standalone: 'DatePicker',
-          bundleExternal: false
-        }
-      },
-
-      example : {
-        dest: 'example/bundle.js',
-        browserifyOptions: {
-          entries: './example/boot.jsx'
-        }
       }
     },
 
@@ -70,6 +73,34 @@ module.exports = function(grunt) {
       options: {
         eqnull: true
       }
+    },
+
+    webpack: {
+      example: mergeWebpackConfig({
+        entry: './example/boot',
+        output: {
+          filename: 'example.js',
+          library: 'ExampleApp',
+          path: './example/'
+        }
+      }),
+      unmin: mergeWebpackConfig({
+        output: {
+          filename: 'react-datepicker.js'
+        }
+      }),
+      min: mergeWebpackConfig({
+        output: {
+          filename: 'react-datepicker.min.js'
+        },
+        plugins: [
+          new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+              warnings: false
+            }
+          })
+        ]
+      })
     }
   });
 
@@ -77,10 +108,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jsxhint');
+  grunt.loadNpmTasks('grunt-webpack');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
   grunt.registerTask('travis', ['jshint', 'jest', 'scsslint']);
+  grunt.registerTask('build', ['jshint', 'scsslint', 'webpack', 'sass']);
 
-  grunt.registerMultiTask('browserify', require('./grunt/tasks/browserify'));
   grunt.registerTask('jest', require('./grunt/tasks/jest'));
 };
