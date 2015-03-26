@@ -113,7 +113,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onSelect: this.handleSelect,
 	          hideCalendar: this.hideCalendar,
 	          minDate: this.props.minDate,
-	          maxDate: this.props.maxDate })
+	          maxDate: this.props.maxDate,
+	          weekStart: this.props.weekStart })
 	      );
 	    }
 	  },
@@ -193,12 +194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      targetOffset: "10px 0",
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
-	      },
-	      constraints: [{
-	        to: "scrollParent",
-	        attachment: "together",
-	        pin: true
-	      }]
+	      }
 	    };
 	  },
 
@@ -259,7 +255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateUtil.prototype.mapDaysInWeek = function (callback) {
 	  var week = [];
-	  var firstDay = this._date.clone().startOf("isoWeek");
+	  var firstDay = this._date.clone();
 
 	  for (var i = 0; i < 7; i++) {
 	    var day = new DateUtil(firstDay.clone().add(i, "days"));
@@ -272,7 +268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateUtil.prototype.mapWeeksInMonth = function (callback) {
 	  var month = [];
-	  var firstDay = this._date.clone().startOf("month").startOf("isoWeek");
+	  var firstDay = this._date.clone().startOf("month").startOf("week");
 
 	  for (var i = 0; i < 6; i++) {
 	    var weekStart = new DateUtil(firstDay.clone().add(i, "weeks"));
@@ -285,7 +281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateUtil.prototype.weekInMonth = function (other) {
 	  var firstDayInWeek = this._date.clone();
-	  var lastDayInWeek = this._date.clone().isoWeekday(7);
+	  var lastDayInWeek = this._date.clone().weekday(7);
 
 	  return firstDayInWeek.isSame(other._date, "month") || lastDayInWeek.isSame(other._date, "month");
 	};
@@ -345,6 +341,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      weekStart: 1
+	    };
+	  },
+
+	  componentWillMount: function componentWillMount() {
+	    this.initializeMomentLocale();
+	  },
+
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    // When the selected date changed
 	    if (nextProps.selected !== this.props.selected) {
@@ -352,6 +358,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        date: new DateUtil(nextProps.selected).clone()
 	      });
 	    }
+	  },
+
+	  initializeMomentLocale: function initializeMomentLocale() {
+	    var weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+	    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
+
+	    moment.locale("en", {
+	      week: {
+	        dow: this.props.weekStart
+	      },
+	      weekdaysMin: weekdays
+	    });
 	  },
 
 	  increaseMonth: function increaseMonth() {
@@ -404,6 +422,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return weekStart.mapDaysInWeek(this.renderDay);
 	  },
 
+	  header: function header() {
+	    return moment.weekdaysMin().map(function (day, key) {
+	      return React.createElement(
+	        "div",
+	        { className: "datepicker__day", key: key },
+	        day
+	      );
+	    });
+	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      "div",
@@ -424,41 +452,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        React.createElement(
 	          "div",
 	          null,
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Mo"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Tu"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "We"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Th"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Fr"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Sa"
-	          ),
-	          React.createElement(
-	            "div",
-	            { className: "datepicker__day" },
-	            "Su"
-	          )
+	          this.header()
 	        )
 	      ),
 	      React.createElement(

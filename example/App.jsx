@@ -10,7 +10,8 @@ var exampleComponent = React.createClass({
       start_date: moment(),
       end_date: moment(),
       new_date: null,
-      bound_date: null
+      bound_date: null,
+      example5Selected: null
     };
   },
 
@@ -35,6 +36,12 @@ var exampleComponent = React.createClass({
   handleBoundDateChange: function(date) {
     this.setState({
       bound_date: date
+    });
+  },
+
+  handleExample5Change: function(date) {
+    this.setState({
+      example5Selected: date
     });
   },
 
@@ -65,10 +72,14 @@ var exampleComponent = React.createClass({
         maxDate={moment().add(5, 'days')}
         placeholderText="Select a date between today and 5 days in the future"
       />
+      <DatePicker
+        key="example5"
+        selected={this.state.example5Selected}
+        onChange={this.handleExample5Change}
+        weekStart="0"
+        placeholderText="I start on Sunday!"
+      />
     </div>;
-
-
-
   }
 });
 
