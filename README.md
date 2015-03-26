@@ -26,6 +26,7 @@ Installing is really simple and can be done in two different ways:
 - Install Bower `npm install -g bower`
 - Install Bower Packages `bower install`
 - Install packages `npm install`
+- Run `grunt watch` in order to watch for local changes and run tests/build the code.
 - Start a static webserver `python -m SimpleHTTPServer`
 - And visit `localhost:8000/example` to see the example.
 
