@@ -36,13 +36,13 @@
     "grunt-webpack": "^1.0.8",
     "jest-cli": "0.4.0",
     "lodash": "^3.3.0",
-    "react": "^0.12",
-    "react-tools": "^0.12.2",
+    "react": ">=0.12 <0.14",
+    "react-tools": ">=0.12 <0.14",
     "webpack": "^1.7.2",
     "webpack-dev-server": "^1.7.0"
   },
   "peerDependencies": {
-    "react": "^0.12"
+    "react": ">=0.12 <0.14"
   },
   "dependencies": {
     "moment": "^2.8",
