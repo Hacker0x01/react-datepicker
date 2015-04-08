@@ -593,16 +593,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    var classes = React.addons.classSet({
-	      datepicker__day: true,
-	      "datepicker__day--disabled": this.props.disabled,
-	      "datepicker__day--selected": this.props.day.sameDay(this.props.selected),
-	      "datepicker__day--today": this.props.day.sameDay(moment())
-	    });
+	    var classes = ["datepicker__day"];
+
+	    if (this.props.disabled) classes.push("datepicker__day--disabled");
+
+	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
+
+	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
 
 	    return React.createElement(
 	      "div",
-	      { className: classes, onClick: this.handleClick },
+	      { className: classes.join(" "), onClick: this.handleClick },
 	      this.props.day.day()
 	    );
 	  }
