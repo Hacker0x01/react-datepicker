@@ -27,6 +27,8 @@ var Calendar = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
+    if (nextProps.selected === null) { return; }
+
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
       this.setState({
