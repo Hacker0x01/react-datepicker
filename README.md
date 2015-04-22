@@ -19,7 +19,7 @@ A simple and reusable datepicker component for React ([Demo](http://cdn.rawgit.c
 Installing is really simple and can be done in two different ways:
 
 - Install with Bower: `bower install react-date-picker`
-- Install with npm: `npm i react-datepicker --save`
+- Install with npm: `npm install react-datepicker --save`
 - Install with Bundler: `bundle install rails-assets-react-date-picker`
 
 ## Local Development
