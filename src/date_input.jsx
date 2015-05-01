@@ -43,19 +43,13 @@ var DateInput = React.createClass({
       value: event.target.value
     });
 
-    if (this.isValueAValidDate()) {
+    if (date.isValid()) {
       this.props.setSelected(new DateUtil(date));
     }
   },
 
   safeDateFormat: function(date) {
     return !! date ? date.format(this.props.dateFormat) : null;
-  },
-
-  isValueAValidDate: function() {
-    var date = moment(event.target.value, this.props.dateFormat, true);
-
-    return date.isValid();
   },
 
   handleKeyDown: function(event) {

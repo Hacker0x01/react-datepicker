@@ -518,19 +518,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value: event.target.value
 	    });
 
-	    if (this.isValueAValidDate()) {
+	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
 	    }
 	  },
 
 	  safeDateFormat: function safeDateFormat(date) {
 	    return !!date ? date.format(this.props.dateFormat) : null;
-	  },
-
-	  isValueAValidDate: function isValueAValidDate() {
-	    var date = moment(event.target.value, this.props.dateFormat, true);
-
-	    return date.isValid();
 	  },
 
 	  handleKeyDown: function handleKeyDown(event) {
