@@ -45,6 +45,8 @@ var DateInput = React.createClass({
 
     if (date.isValid()) {
       this.props.setSelected(new DateUtil(date));
+    } else if (event.target.value === '') {
+      this.props.clearSelected();
     }
   },
 
