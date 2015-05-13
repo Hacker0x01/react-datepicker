@@ -97,6 +97,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.props.onChange(date.moment());
 	  },
 
+	  clearSelected: function clearSelected() {
+	    this.props.onChange(null);
+	  },
+
 	  onInputClick: function onInputClick() {
 	    this.setState({
 	      focus: true
@@ -132,6 +136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
+	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText }),
 	      this.calendar()
@@ -352,6 +357,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.selected === null) {
+	      return;
+	    }
+
 	    // When the selected date changed
 	    if (nextProps.selected !== this.props.selected) {
 	      this.setState({
@@ -520,6 +529,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
+	    } else if (event.target.value === "") {
+	      this.props.clearSelected();
 	    }
 	  },
 
