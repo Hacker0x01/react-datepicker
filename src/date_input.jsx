@@ -71,6 +71,7 @@ var DateInput = React.createClass({
     return <input
       ref="input"
       type="text"
+      name={this.props.name}
       value={this.state.value}
       onClick={this.handleClick}
       onKeyDown={this.handleKeyDown}
