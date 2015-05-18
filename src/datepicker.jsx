@@ -77,6 +77,7 @@ var DatePicker = React.createClass({
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
+          className={this.props.className}
           placeholderText={this.props.placeholderText} />
         {this.calendar()}
       </div>

@@ -51,6 +51,7 @@ var exampleComponent = React.createClass({
         key="example1"
         selected={this.state.start_date}
         onChange={this.handleStartDateChange}
+        className="error"
       />
       <DatePicker
         key="example2"
