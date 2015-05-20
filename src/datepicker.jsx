@@ -68,6 +68,7 @@ var DatePicker = React.createClass({
     return (
       <div>
         <DateInput
+          name={this.props.name}
           date={this.props.selected}
           dateFormat={this.props.dateFormat}
           focus={this.state.focus}
