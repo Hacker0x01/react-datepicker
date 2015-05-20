@@ -31,6 +31,12 @@ Installing is really simple and can be done in multiple ways:
 - Start a static webserver `python -m SimpleHTTPServer`
 - And visit `localhost:8000/example` to see the example.
 
+You can also test server side rendering:
+
+- `$ node example/node-rendering.js`
+
+You should see the HTML returned.
+
 To run tests, simply run `npm test`.
 
 ## License
