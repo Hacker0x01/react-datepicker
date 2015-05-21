@@ -210,7 +210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  initializeMomentLocale: function initializeMomentLocale() {
-	    var weekdays = this.props.weekdays;
+	    var weekdays = this.props.weekdays.slice(0);
 	    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
 	    this.props.moment.locale(this.props.locale, {
