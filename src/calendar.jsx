@@ -81,11 +81,9 @@ var Calendar = React.createClass({
   },
 
   renderDay: function(day, key) {
-    var weekday = day.moment().weekday();
     var minDate = new DateUtil(this.props.minDate).safeClone(),
         maxDate = new DateUtil(this.props.maxDate).safeClone(),
-        disabled = day.isBefore(minDate) || day.isAfter(maxDate),
-        isWeekend = weekday === 5 || weekday === 6;
+        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
 
     return (
       <Day
@@ -94,7 +92,6 @@ var Calendar = React.createClass({
         date={this.state.date}
         onClick={this.handleDayClick.bind(this, day)}
         selected={new DateUtil(this.props.selected)}
-        weekend={isWeekend}
         disabled={disabled} />
     );
   },
