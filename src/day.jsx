@@ -2,6 +2,12 @@ var React = require('react');
 var moment = require('moment');
 
 var Day = React.createClass({
+  getDefaultProps: function() {
+      return {
+          weekend: false
+      };
+  },
+
   handleClick: function(event) {
     if (this.props.disabled) return;
 
@@ -19,6 +25,10 @@ var Day = React.createClass({
 
     if (this.props.day.sameDay(moment()))
       classes.push('datepicker__day--today');
+
+    if (this.props.weekend) {
+      classes.push('datepicker__day--weekend');
+    }
 
     return (
       <div className={classes.join(' ')} onClick={this.handleClick}>

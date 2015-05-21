@@ -254,9 +254,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  renderDay: function renderDay(day, key) {
+	    var weekday = day.moment().weekday();
 	    var minDate = new DateUtil(this.props.minDate).safeClone(),
 	        maxDate = new DateUtil(this.props.maxDate).safeClone(),
-	        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+	        disabled = day.isBefore(minDate) || day.isAfter(maxDate),
+	        isWeekend = weekday === 5 || weekday === 6;
 
 	    return React.createElement(Day, {
 	      key: key,
@@ -264,6 +266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      date: this.state.date,
 	      onClick: this.handleDayClick.bind(this, day),
 	      selected: new DateUtil(this.props.selected),
+	      weekend: isWeekend,
 	      disabled: disabled });
 	  },
 
@@ -333,6 +336,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Day = React.createClass({
 	  displayName: "Day",
 
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      weekend: false
+	    };
+	  },
+
 	  handleClick: function handleClick(event) {
 	    if (this.props.disabled) {
 	      return;
@@ -347,6 +356,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
 
 	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
+
+	    if (this.props.weekend) {
+	      classes.push("datepicker__day--weekend");
+	    }
 
 	    return React.createElement(
 	      "div",
