@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
 	      locale: "en",
-	      dateFormat: "MMMM YYYY",
+	      dateFormatCallendar: "MMMM YYYY",
 	      moment: moment
 	    };
 	  },
@@ -126,7 +126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
 	          moment: this.props.moment,
-	          dateFormat: this.props.dateFormat,
+	          dateFormat: this.props.dateFormatCallendar,
 	          selected: this.props.selected,
 	          onSelect: this.handleSelect,
 	          hideCalendar: this.hideCalendar,
