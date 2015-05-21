@@ -7,7 +7,7 @@
 		exports["DatePicker"] = factory(require("react"), require("moment"), require("react-onclickoutside"));
 	else
 		root["DatePicker"] = factory(root["React"], root["moment"], root["OnClickOutside"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_6__, __WEBPACK_EXTERNAL_MODULE_7__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -56,14 +56,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var React = __webpack_require__(1);
-	var Popover = __webpack_require__(2);
-	var DateUtil = __webpack_require__(3);
-	var Calendar = __webpack_require__(4);
-	var DateInput = __webpack_require__(5);
+	var React = __webpack_require__(2);
+	var Popover = __webpack_require__(7);
+	var DateUtil = __webpack_require__(5);
+	var Calendar = __webpack_require__(1);
+	var DateInput = __webpack_require__(9);
+	var moment = __webpack_require__(4);
 
 	var DatePicker = React.createClass({
 	  displayName: "DatePicker",
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+	      locale: "en",
+	      dateFormat: "MMMM YYYY",
+	      moment: moment
+	    };
+	  },
 
 	  getInitialState: function getInitialState() {
 	    return {
@@ -113,6 +123,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        Popover,
 	        null,
 	        React.createElement(Calendar, {
+	          weekdays: this.props.weekdays,
+	          locale: this.props.locale,
+	          moment: this.props.moment,
+	          dateFormat: this.props.dateFormat,
 	          selected: this.props.selected,
 	          onSelect: this.handleSelect,
 	          hideCalendar: this.hideCalendar,
@@ -129,6 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "div",
 	      null,
 	      React.createElement(DateInput, {
+	        name: this.props.name,
 	        date: this.props.selected,
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
@@ -150,16 +165,317 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+	"use strict";
+
+	var React = __webpack_require__(2);
+	var Day = __webpack_require__(3);
+	var DateUtil = __webpack_require__(5);
+
+	var Calendar = React.createClass({
+	  displayName: "Calendar",
+
+	  mixins: [__webpack_require__(6)],
+
+	  handleClickOutside: function handleClickOutside() {
+	    this.props.hideCalendar();
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      date: new DateUtil(this.props.selected).safeClone(this.props.moment())
+	    };
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      weekStart: 1
+	    };
+	  },
+
+	  componentWillMount: function componentWillMount() {
+	    this.initializeMomentLocale();
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.selected === null) {
+	      return;
+	    }
+
+	    // When the selected date changed
+	    if (nextProps.selected !== this.props.selected) {
+	      this.setState({
+	        date: new DateUtil(nextProps.selected).clone()
+	      });
+	    }
+	  },
+
+	  initializeMomentLocale: function initializeMomentLocale() {
+	    var weekdays = this.props.weekdays;
+	    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
+
+	    this.props.moment.locale(this.props.locale, {
+	      week: {
+	        dow: this.props.weekStart
+	      },
+	      weekdaysMin: weekdays
+	    });
+	  },
+
+	  increaseMonth: function increaseMonth() {
+	    this.setState({
+	      date: this.state.date.addMonth()
+	    });
+	  },
+
+	  decreaseMonth: function decreaseMonth() {
+	    this.setState({
+	      date: this.state.date.subtractMonth()
+	    });
+	  },
+
+	  weeks: function weeks() {
+	    return this.state.date.mapWeeksInMonth(this.renderWeek);
+	  },
+
+	  handleDayClick: function handleDayClick(day) {
+	    this.props.onSelect(day);
+	  },
+
+	  renderWeek: function renderWeek(weekStart, key) {
+	    if (!weekStart.weekInMonth(this.state.date)) {
+	      return;
+	    }
+
+	    return React.createElement(
+	      "div",
+	      { key: key },
+	      this.days(weekStart)
+	    );
+	  },
+
+	  renderDay: function renderDay(day, key) {
+	    var minDate = new DateUtil(this.props.minDate).safeClone(),
+	        maxDate = new DateUtil(this.props.maxDate).safeClone(),
+	        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+
+	    return React.createElement(Day, {
+	      key: key,
+	      day: day,
+	      date: this.state.date,
+	      onClick: this.handleDayClick.bind(this, day),
+	      selected: new DateUtil(this.props.selected),
+	      disabled: disabled });
+	  },
+
+	  days: function days(weekStart) {
+	    return weekStart.mapDaysInWeek(this.renderDay);
+	  },
+
+	  header: function header() {
+	    return this.props.moment.weekdaysMin().map(function (day, key) {
+	      return React.createElement(
+	        "div",
+	        { className: "datepicker__day", key: key },
+	        day
+	      );
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "datepicker" },
+	      React.createElement("div", { className: "datepicker__triangle" }),
+	      React.createElement(
+	        "div",
+	        { className: "datepicker__header" },
+	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
+	          onClick: this.decreaseMonth }),
+	        React.createElement(
+	          "span",
+	          { className: "datepicker__current-month" },
+	          this.state.date.localeFormat(this.props.locale, this.props.dateFormat)
+	        ),
+	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
+	          onClick: this.increaseMonth }),
+	        React.createElement(
+	          "div",
+	          null,
+	          this.header()
+	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "datepicker__month" },
+	        this.weeks()
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Calendar;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
-	var React = __webpack_require__(1);
-	var Tether = __webpack_require__(9);
+	var React = __webpack_require__(2);
+	var moment = __webpack_require__(4);
+
+	var Day = React.createClass({
+	  displayName: "Day",
+
+	  handleClick: function handleClick(event) {
+	    if (this.props.disabled) {
+	      return;
+	    }this.props.onClick(event);
+	  },
+
+	  render: function render() {
+	    var classes = ["datepicker__day"];
+
+	    if (this.props.disabled) classes.push("datepicker__day--disabled");
+
+	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
+
+	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
+
+	    return React.createElement(
+	      "div",
+	      { className: classes.join(" "), onClick: this.handleClick },
+	      this.props.day.day()
+	    );
+	  }
+	});
+
+	module.exports = Day;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	function DateUtil(date) {
+	  this._date = date;
+	}
+
+	DateUtil.prototype.isBefore = function (other) {
+	  return this._date.isBefore(other._date, "day");
+	};
+
+	DateUtil.prototype.isAfter = function (other) {
+	  return this._date.isAfter(other._date, "day");
+	};
+
+	DateUtil.prototype.sameDay = function (other) {
+	  return this._date.isSame(other._date, "day");
+	};
+
+	DateUtil.prototype.sameMonth = function (other) {
+	  return this._date.isSame(other._date, "month");
+	};
+
+	DateUtil.prototype.day = function () {
+	  return this._date.date();
+	};
+
+	DateUtil.prototype.mapDaysInWeek = function (callback) {
+	  var week = [];
+	  var firstDay = this._date.clone();
+
+	  for (var i = 0; i < 7; i++) {
+	    var day = new DateUtil(firstDay.clone().add(i, "days"));
+
+	    week[i] = callback(day, i);
+	  }
+
+	  return week;
+	};
+
+	DateUtil.prototype.mapWeeksInMonth = function (callback) {
+	  var month = [];
+	  var firstDay = this._date.clone().startOf("month").startOf("week");
+
+	  for (var i = 0; i < 6; i++) {
+	    var weekStart = new DateUtil(firstDay.clone().add(i, "weeks"));
+
+	    month[i] = callback(weekStart, i);
+	  }
+
+	  return month;
+	};
+
+	DateUtil.prototype.weekInMonth = function (other) {
+	  var firstDayInWeek = this._date.clone();
+	  var lastDayInWeek = this._date.clone().weekday(7);
+
+	  return firstDayInWeek.isSame(other._date, "month") || lastDayInWeek.isSame(other._date, "month");
+	};
+
+	DateUtil.prototype.format = function () {
+	  return this._date.format.apply(this._date, arguments);
+	};
+
+	DateUtil.prototype.localeFormat = function () {
+	  var args = Array.prototype.slice.call(arguments);
+	  var locale = args.shift();
+	  return this._date.locale(locale).format.apply(this._date, args);
+	};
+
+	DateUtil.prototype.addMonth = function () {
+	  return new DateUtil(this._date.clone().add(1, "month"));
+	};
+
+	DateUtil.prototype.subtractMonth = function () {
+	  return new DateUtil(this._date.clone().subtract(1, "month"));
+	};
+
+	DateUtil.prototype.clone = function () {
+	  return new DateUtil(this._date.clone());
+	};
+
+	DateUtil.prototype.safeClone = function (alternative) {
+	  if (!!this._date) return this.clone();
+
+	  if (alternative === undefined) alternative = null;
+	  return new DateUtil(alternative);
+	};
+
+	DateUtil.prototype.moment = function () {
+	  return this._date;
+	};
+
+	module.exports = DateUtil;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(2);
+	var Tether = __webpack_require__(8);
 
 	var Popover = React.createClass({
 	  displayName: "Popover",
@@ -229,395 +545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Popover;
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	function DateUtil(date) {
-	  this._date = date;
-	}
-
-	DateUtil.prototype.isBefore = function (other) {
-	  return this._date.isBefore(other._date, "day");
-	};
-
-	DateUtil.prototype.isAfter = function (other) {
-	  return this._date.isAfter(other._date, "day");
-	};
-
-	DateUtil.prototype.sameDay = function (other) {
-	  return this._date.isSame(other._date, "day");
-	};
-
-	DateUtil.prototype.sameMonth = function (other) {
-	  return this._date.isSame(other._date, "month");
-	};
-
-	DateUtil.prototype.day = function () {
-	  return this._date.date();
-	};
-
-	DateUtil.prototype.mapDaysInWeek = function (callback) {
-	  var week = [];
-	  var firstDay = this._date.clone();
-
-	  for (var i = 0; i < 7; i++) {
-	    var day = new DateUtil(firstDay.clone().add(i, "days"));
-
-	    week[i] = callback(day, i);
-	  }
-
-	  return week;
-	};
-
-	DateUtil.prototype.mapWeeksInMonth = function (callback) {
-	  var month = [];
-	  var firstDay = this._date.clone().startOf("month").startOf("week");
-
-	  for (var i = 0; i < 6; i++) {
-	    var weekStart = new DateUtil(firstDay.clone().add(i, "weeks"));
-
-	    month[i] = callback(weekStart, i);
-	  }
-
-	  return month;
-	};
-
-	DateUtil.prototype.weekInMonth = function (other) {
-	  var firstDayInWeek = this._date.clone();
-	  var lastDayInWeek = this._date.clone().weekday(7);
-
-	  return firstDayInWeek.isSame(other._date, "month") || lastDayInWeek.isSame(other._date, "month");
-	};
-
-	DateUtil.prototype.format = function () {
-	  return this._date.format.apply(this._date, arguments);
-	};
-
-	DateUtil.prototype.addMonth = function () {
-	  return new DateUtil(this._date.clone().add(1, "month"));
-	};
-
-	DateUtil.prototype.subtractMonth = function () {
-	  return new DateUtil(this._date.clone().subtract(1, "month"));
-	};
-
-	DateUtil.prototype.clone = function () {
-	  return new DateUtil(this._date.clone());
-	};
-
-	DateUtil.prototype.safeClone = function (alternative) {
-	  if (!!this._date) return this.clone();
-
-	  if (alternative === undefined) alternative = null;
-	  return new DateUtil(alternative);
-	};
-
-	DateUtil.prototype.moment = function () {
-	  return this._date;
-	};
-
-	module.exports = DateUtil;
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-	var Day = __webpack_require__(8);
-	var DateUtil = __webpack_require__(3);
-	var moment = __webpack_require__(6);
-
-	var Calendar = React.createClass({
-	  displayName: "Calendar",
-
-	  mixins: [__webpack_require__(7)],
-
-	  handleClickOutside: function handleClickOutside() {
-	    this.props.hideCalendar();
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      date: new DateUtil(this.props.selected).safeClone(moment())
-	    };
-	  },
-
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      weekStart: 1
-	    };
-	  },
-
-	  componentWillMount: function componentWillMount() {
-	    this.initializeMomentLocale();
-	  },
-
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.selected === null) {
-	      return;
-	    }
-
-	    // When the selected date changed
-	    if (nextProps.selected !== this.props.selected) {
-	      this.setState({
-	        date: new DateUtil(nextProps.selected).clone()
-	      });
-	    }
-	  },
-
-	  initializeMomentLocale: function initializeMomentLocale() {
-	    var weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-	    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
-
-	    moment.locale("en", {
-	      week: {
-	        dow: this.props.weekStart
-	      },
-	      weekdaysMin: weekdays
-	    });
-	  },
-
-	  increaseMonth: function increaseMonth() {
-	    this.setState({
-	      date: this.state.date.addMonth()
-	    });
-	  },
-
-	  decreaseMonth: function decreaseMonth() {
-	    this.setState({
-	      date: this.state.date.subtractMonth()
-	    });
-	  },
-
-	  weeks: function weeks() {
-	    return this.state.date.mapWeeksInMonth(this.renderWeek);
-	  },
-
-	  handleDayClick: function handleDayClick(day) {
-	    this.props.onSelect(day);
-	  },
-
-	  renderWeek: function renderWeek(weekStart, key) {
-	    if (!weekStart.weekInMonth(this.state.date)) {
-	      return;
-	    }
-
-	    return React.createElement(
-	      "div",
-	      { key: key },
-	      this.days(weekStart)
-	    );
-	  },
-
-	  renderDay: function renderDay(day, key) {
-	    var minDate = new DateUtil(this.props.minDate).safeClone(),
-	        maxDate = new DateUtil(this.props.maxDate).safeClone(),
-	        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
-
-	    return React.createElement(Day, {
-	      key: key,
-	      day: day,
-	      date: this.state.date,
-	      onClick: this.handleDayClick.bind(this, day),
-	      selected: new DateUtil(this.props.selected),
-	      disabled: disabled });
-	  },
-
-	  days: function days(weekStart) {
-	    return weekStart.mapDaysInWeek(this.renderDay);
-	  },
-
-	  header: function header() {
-	    return moment.weekdaysMin().map(function (day, key) {
-	      return React.createElement(
-	        "div",
-	        { className: "datepicker__day", key: key },
-	        day
-	      );
-	    });
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      "div",
-	      { className: "datepicker" },
-	      React.createElement("div", { className: "datepicker__triangle" }),
-	      React.createElement(
-	        "div",
-	        { className: "datepicker__header" },
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
-	          onClick: this.decreaseMonth }),
-	        React.createElement(
-	          "span",
-	          { className: "datepicker__current-month" },
-	          this.state.date.format("MMMM YYYY")
-	        ),
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
-	          onClick: this.increaseMonth }),
-	        React.createElement(
-	          "div",
-	          null,
-	          this.header()
-	        )
-	      ),
-	      React.createElement(
-	        "div",
-	        { className: "datepicker__month" },
-	        this.weeks()
-	      )
-	    );
-	  }
-	});
-
-	module.exports = Calendar;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-	var DateUtil = __webpack_require__(3);
-	var moment = __webpack_require__(6);
-
-	var DateInput = React.createClass({
-	  displayName: "DateInput",
-
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      dateFormat: "YYYY-MM-DD"
-	    };
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      value: this.safeDateFormat(this.props.date)
-	    };
-	  },
-
-	  componentDidMount: function componentDidMount() {
-	    this.toggleFocus(this.props.focus);
-	  },
-
-	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    this.toggleFocus(newProps.focus);
-
-	    this.setState({
-	      value: this.safeDateFormat(newProps.date)
-	    });
-	  },
-
-	  toggleFocus: function toggleFocus(focus) {
-	    if (focus) {
-	      React.findDOMNode(this.refs.input).focus();
-	    } else {
-	      React.findDOMNode(this.refs.input).blur();
-	    }
-	  },
-
-	  handleChange: function handleChange(event) {
-	    var date = moment(event.target.value, this.props.dateFormat, true);
-
-	    this.setState({
-	      value: event.target.value
-	    });
-
-	    if (date.isValid()) {
-	      this.props.setSelected(new DateUtil(date));
-	    } else if (event.target.value === "") {
-	      this.props.clearSelected();
-	    }
-	  },
-
-	  safeDateFormat: function safeDateFormat(date) {
-	    return !!date ? date.format(this.props.dateFormat) : null;
-	  },
-
-	  handleKeyDown: function handleKeyDown(event) {
-	    switch (event.key) {
-	      case "Enter":
-	        event.preventDefault();
-	        this.props.handleEnter();
-	        break;
-	    }
-	  },
-
-	  handleClick: function handleClick(event) {
-	    this.props.handleClick(event);
-	  },
-
-	  render: function render() {
-	    return React.createElement("input", {
-	      ref: "input",
-	      type: "text",
-	      value: this.state.value,
-	      onClick: this.handleClick,
-	      onKeyDown: this.handleKeyDown,
-	      onFocus: this.props.onFocus,
-	      onChange: this.handleChange,
-	      className: "datepicker__input",
-	      placeholder: this.props.placeholderText });
-	  }
-	});
-
-	module.exports = DateInput;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
-
-/***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-	var moment = __webpack_require__(6);
-
-	var Day = React.createClass({
-	  displayName: "Day",
-
-	  handleClick: function handleClick(event) {
-	    if (this.props.disabled) {
-	      return;
-	    }this.props.onClick(event);
-	  },
-
-	  render: function render() {
-	    var classes = ["datepicker__day"];
-
-	    if (this.props.disabled) classes.push("datepicker__day--disabled");
-
-	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
-
-	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
-
-	    return React.createElement(
-	      "div",
-	      { className: classes.join(" "), onClick: this.handleClick },
-	      this.props.day.day()
-	    );
-	  }
-	});
-
-	module.exports = Day;
-
-/***/ },
-/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 0.6.5 */
@@ -2078,6 +2006,99 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}));
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(2);
+	var DateUtil = __webpack_require__(5);
+	var moment = __webpack_require__(4);
+
+	var DateInput = React.createClass({
+	  displayName: "DateInput",
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      dateFormat: "YYYY-MM-DD"
+	    };
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      value: this.safeDateFormat(this.props.date)
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.toggleFocus(this.props.focus);
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.toggleFocus(newProps.focus);
+
+	    this.setState({
+	      value: this.safeDateFormat(newProps.date)
+	    });
+	  },
+
+	  toggleFocus: function toggleFocus(focus) {
+	    if (focus) {
+	      React.findDOMNode(this.refs.input).focus();
+	    } else {
+	      React.findDOMNode(this.refs.input).blur();
+	    }
+	  },
+
+	  handleChange: function handleChange(event) {
+	    var date = moment(event.target.value, this.props.dateFormat, true);
+
+	    this.setState({
+	      value: event.target.value
+	    });
+
+	    if (date.isValid()) {
+	      this.props.setSelected(new DateUtil(date));
+	    } else if (event.target.value === "") {
+	      this.props.clearSelected();
+	    }
+	  },
+
+	  safeDateFormat: function safeDateFormat(date) {
+	    return !!date ? date.format(this.props.dateFormat) : null;
+	  },
+
+	  handleKeyDown: function handleKeyDown(event) {
+	    switch (event.key) {
+	      case "Enter":
+	        event.preventDefault();
+	        this.props.handleEnter();
+	        break;
+	    }
+	  },
+
+	  handleClick: function handleClick(event) {
+	    this.props.handleClick(event);
+	  },
+
+	  render: function render() {
+	    return React.createElement("input", {
+	      ref: "input",
+	      type: "text",
+	      name: this.props.name,
+	      value: this.state.value,
+	      onClick: this.handleClick,
+	      onKeyDown: this.handleKeyDown,
+	      onFocus: this.props.onFocus,
+	      onChange: this.handleChange,
+	      className: "datepicker__input",
+	      placeholder: this.props.placeholderText });
+	  }
+	});
+
+	module.exports = DateInput;
 
 /***/ }
 /******/ ])
