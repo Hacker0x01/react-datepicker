@@ -1,5 +1,4 @@
 var React = require('react');
-var Tether = require('../node_modules/tether/tether.js');
 
 var Popover = React.createClass({
   displayName: 'Popover',
@@ -48,7 +47,9 @@ var Popover = React.createClass({
 
     if (this._tether != null) {
       this._tether.setOptions(this._tetherOptions());
-    } else {
+    }
+    else if (window && document) {
+      var Tether = require('../node_modules/tether/tether.js');
       this._tether = new Tether(this._tetherOptions());
     }
   },
