@@ -1,7 +1,6 @@
 var React = require('react');
 var Day = require('./day');
 var DateUtil = require('./util/date');
-var moment = require('moment');
 
 var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],
@@ -12,7 +11,7 @@ var Calendar = React.createClass({
 
   getInitialState: function() {
     return {
-      date: new DateUtil(this.props.selected).safeClone(moment())
+      date: new DateUtil(this.props.selected).safeClone(this.props.moment())
     };
   },
 
@@ -38,10 +37,10 @@ var Calendar = React.createClass({
   },
 
   initializeMomentLocale: function() {
-    var weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    var weekdays = this.props.weekdays.slice(0);
     weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
-    moment.locale('en', {
+    this.props.moment.locale(this.props.locale, {
       week: {
         dow: this.props.weekStart
       },
@@ -102,7 +101,7 @@ var Calendar = React.createClass({
   },
 
   header: function() {
-    return moment.weekdaysMin().map(function(day, key) {
+    return this.props.moment.weekdaysMin().map(function(day, key) {
       return <div className="datepicker__day" key={key}>{day}</div>;
     });
   },
@@ -116,7 +115,7 @@ var Calendar = React.createClass({
               onClick={this.decreaseMonth}>
           </a>
           <span className="datepicker__current-month">
-            {this.state.date.format("MMMM YYYY")}
+            {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
           </span>
           <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>

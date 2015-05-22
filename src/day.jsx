@@ -8,6 +8,11 @@ var Day = React.createClass({
     this.props.onClick(event);
   },
 
+  isWeekend: function() {
+    var weekday = this.props.day.moment().weekday();
+    return weekday === 5 || weekday === 6;
+  },
+
   render: function() {
     var classes = ['datepicker__day'];
 
@@ -19,6 +24,10 @@ var Day = React.createClass({
 
     if (this.props.day.sameDay(moment()))
       classes.push('datepicker__day--today');
+
+    if (this.isWeekend()) {
+      classes.push('datepicker__day--weekend');
+    }
 
     return (
       <div className={classes.join(' ')} onClick={this.handleClick}>

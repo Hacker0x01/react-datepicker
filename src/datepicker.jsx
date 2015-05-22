@@ -3,8 +3,18 @@ var Popover = require('./popover');
 var DateUtil = require('./util/date');
 var Calendar = require('./calendar');
 var DateInput = require('./date_input');
+var moment = require('moment');
 
 var DatePicker = React.createClass({
+  getDefaultProps: function() {
+    return {
+      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      locale: 'en',
+      dateFormatCallendar: "MMMM YYYY",
+      moment: moment
+    };
+  },
+
   getInitialState: function() {
     return {
       focus: false
@@ -52,6 +62,10 @@ var DatePicker = React.createClass({
       return (
         <Popover>
           <Calendar
+            weekdays={this.props.weekdays}
+            locale={this.props.locale}
+            moment={this.props.moment}
+            dateFormat={this.props.dateFormatCallendar}
             selected={this.props.selected}
             onSelect={this.handleSelect}
             hideCalendar={this.hideCalendar}

@@ -60,6 +60,12 @@ DateUtil.prototype.format = function() {
   return this._date.format.apply(this._date, arguments);
 };
 
+DateUtil.prototype.localeFormat = function() {
+  var args = Array.prototype.slice.call(arguments);
+  var locale = args.shift();
+  return this._date.locale(locale).format.apply(this._date, args);
+};
+
 DateUtil.prototype.addMonth = function() {
   return new DateUtil(this._date.clone().add(1, 'month'));
 };
