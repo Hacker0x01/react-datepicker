@@ -28,13 +28,13 @@ var DateInput = React.createClass({
     });
   },
 
-  toggleFocus: function(focus) {
-    if (focus) {
-      React.findDOMNode(this.refs.input).focus();
-    } else {
-      React.findDOMNode(this.refs.input).blur();
-    }
-  },
+toggleFocus: function(focus) {
+  if (focus) {
+    this.refs.input.getDOMNode().focus();
+  } else {
+    this.refs.input.getDOMNode().blur();
+  }
+},
 
   handleChange: function(event) {
     var date = moment(event.target.value, this.props.dateFormat, true);
