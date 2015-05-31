@@ -71,7 +71,8 @@ module.exports = function(grunt) {
     jshint: {
       all: ['src/**/*.jsx', 'src/**/*.js'],
       options: {
-        eqnull: true
+        eqnull: true,
+        esnext: true
       }
     },
 
@@ -88,7 +89,7 @@ module.exports = function(grunt) {
         },
         module: {
           loaders: [
-            {test: /\.js/, loaders: ['babel-loader'], exclude: /node_modules/}
+            {test: /\.js/, loaders: ['babel?stage=0'], exclude: /node_modules/}
           ]
         },
         node: {Buffer: false},

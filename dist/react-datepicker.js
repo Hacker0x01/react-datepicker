@@ -54,7 +54,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	var React = __webpack_require__(2);
 	var Popover = __webpack_require__(7);
@@ -64,15 +68,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	var moment = __webpack_require__(4);
 
 	var DatePicker = React.createClass({
-	  displayName: "DatePicker",
+	  displayName: 'DatePicker',
+
+	  propTypes: {
+	    onChange: React.PropTypes.func.isRequired
+	  },
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-	      locale: "en",
-	      dateFormatCallendar: "MMMM YYYY",
+	      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+	      locale: 'en',
+	      dateFormatCallendar: 'MMMM YYYY',
 	      moment: moment
 	    };
+	  },
+
+	  componentDidUpdate: function componentDidUpdate(props, previousState) {
+	    if (previousState.focus === true && this.state.focus === false) {
+	      if (typeof this.props.onBlur === 'function') {
+	        this.props.onBlur(this.state.value);
+	      }
+	    }
 	  },
 
 	  getInitialState: function getInitialState() {
@@ -104,11 +120,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  setSelected: function setSelected(date) {
+	    this.setState({ value: date.moment() });
 	    this.props.onChange(date.moment());
 	  },
 
 	  clearSelected: function clearSelected() {
-	    this.props.onChange(null);
+	    this.setState({ value: null });
+	    this.props.onChange(this.state.value);
 	  },
 
 	  onInputClick: function onInputClick() {
@@ -138,14 +156,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
+	    var _props = this.props;
+	    var onBlur = _props.onBlur;
+	    var name = _props.name;
+	    var selected = _props.selected;
+	    var dateFormat = _props.dateFormat;
+	    var weekdays = _props.weekdays;
+	    var locale = _props.locale;
+	    var dateFormatCallendar = _props.dateFormatCallendar;
+	    var moment = _props.moment;
+
+	    var props = _objectWithoutProperties(_props, ['onBlur', 'name', 'selected', 'dateFormat', 'weekdays', 'locale', 'dateFormatCallendar', 'moment']);
 
 	    return React.createElement(
-	      "div",
+	      'div',
 	      null,
-	      React.createElement(DateInput, {
-	        name: this.props.name,
-	        date: this.props.selected,
-	        dateFormat: this.props.dateFormat,
+	      React.createElement(DateInput, _extends({
+	        name: name,
+	        date: selected,
+	        dateFormat: dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
 	        handleClick: this.onInputClick,
@@ -153,7 +182,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        setSelected: this.setSelected,
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
-	        placeholderText: this.props.placeholderText }),
+	        placeholderText: this.props.placeholderText
+	      }, props)),
 	      this.calendar()
 	    );
 	  }
@@ -165,14 +195,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(2);
 	var Day = __webpack_require__(3);
 	var DateUtil = __webpack_require__(5);
 
 	var Calendar = React.createClass({
-	  displayName: "Calendar",
+	  displayName: 'Calendar',
 
 	  mixins: [__webpack_require__(6)],
 
@@ -247,7 +277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return React.createElement(
-	      "div",
+	      'div',
 	      { key: key },
 	      this.days(weekStart)
 	    );
@@ -274,8 +304,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  header: function header() {
 	    return this.props.moment.weekdaysMin().map(function (day, key) {
 	      return React.createElement(
-	        "div",
-	        { className: "datepicker__day", key: key },
+	        'div',
+	        { className: 'datepicker__day', key: key },
 	        day
 	      );
 	    });
@@ -283,30 +313,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "datepicker" },
-	      React.createElement("div", { className: "datepicker__triangle" }),
+	      'div',
+	      { className: 'datepicker' },
+	      React.createElement('div', { className: 'datepicker__triangle' }),
 	      React.createElement(
-	        "div",
-	        { className: "datepicker__header" },
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
+	        'div',
+	        { className: 'datepicker__header' },
+	        React.createElement('a', { className: 'datepicker__navigation datepicker__navigation--previous',
 	          onClick: this.decreaseMonth }),
 	        React.createElement(
-	          "span",
-	          { className: "datepicker__current-month" },
+	          'span',
+	          { className: 'datepicker__current-month' },
 	          this.state.date.localeFormat(this.props.locale, this.props.dateFormat)
 	        ),
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
+	        React.createElement('a', { className: 'datepicker__navigation datepicker__navigation--next',
 	          onClick: this.increaseMonth }),
 	        React.createElement(
-	          "div",
+	          'div',
 	          null,
 	          this.header()
 	        )
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "datepicker__month" },
+	        'div',
+	        { className: 'datepicker__month' },
 	        this.weeks()
 	      )
 	    );
@@ -325,18 +355,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(2);
 	var moment = __webpack_require__(4);
 
 	var Day = React.createClass({
-	  displayName: "Day",
+	  displayName: 'Day',
 
 	  handleClick: function handleClick(event) {
-	    if (this.props.disabled) {
-	      return;
-	    }this.props.onClick(event);
+	    if (this.props.disabled) return;
+
+	    this.props.onClick(event);
 	  },
 
 	  isWeekend: function isWeekend() {
@@ -345,21 +375,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    var classes = ["datepicker__day"];
+	    var classes = ['datepicker__day'];
 
-	    if (this.props.disabled) classes.push("datepicker__day--disabled");
+	    if (this.props.disabled) classes.push('datepicker__day--disabled');
 
-	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
+	    if (this.props.day.sameDay(this.props.selected)) classes.push('datepicker__day--selected');
 
-	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
+	    if (this.props.day.sameDay(moment())) classes.push('datepicker__day--today');
 
 	    if (this.isWeekend()) {
-	      classes.push("datepicker__day--weekend");
+	      classes.push('datepicker__day--weekend');
 	    }
 
 	    return React.createElement(
-	      "div",
-	      { className: classes.join(" "), onClick: this.handleClick },
+	      'div',
+	      { className: classes.join(' '), onClick: this.handleClick },
 	      this.props.day.day()
 	    );
 	  }
@@ -377,26 +407,26 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	function DateUtil(date) {
 	  this._date = date;
 	}
 
 	DateUtil.prototype.isBefore = function (other) {
-	  return this._date.isBefore(other._date, "day");
+	  return this._date.isBefore(other._date, 'day');
 	};
 
 	DateUtil.prototype.isAfter = function (other) {
-	  return this._date.isAfter(other._date, "day");
+	  return this._date.isAfter(other._date, 'day');
 	};
 
 	DateUtil.prototype.sameDay = function (other) {
-	  return this._date.isSame(other._date, "day");
+	  return this._date.isSame(other._date, 'day');
 	};
 
 	DateUtil.prototype.sameMonth = function (other) {
-	  return this._date.isSame(other._date, "month");
+	  return this._date.isSame(other._date, 'month');
 	};
 
 	DateUtil.prototype.day = function () {
@@ -408,7 +438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var firstDay = this._date.clone();
 
 	  for (var i = 0; i < 7; i++) {
-	    var day = new DateUtil(firstDay.clone().add(i, "days"));
+	    var day = new DateUtil(firstDay.clone().add(i, 'days'));
 
 	    week[i] = callback(day, i);
 	  }
@@ -418,10 +448,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateUtil.prototype.mapWeeksInMonth = function (callback) {
 	  var month = [];
-	  var firstDay = this._date.clone().startOf("month").startOf("week");
+	  var firstDay = this._date.clone().startOf('month').startOf('week');
 
 	  for (var i = 0; i < 6; i++) {
-	    var weekStart = new DateUtil(firstDay.clone().add(i, "weeks"));
+	    var weekStart = new DateUtil(firstDay.clone().add(i, 'weeks'));
 
 	    month[i] = callback(weekStart, i);
 	  }
@@ -433,7 +463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var firstDayInWeek = this._date.clone();
 	  var lastDayInWeek = this._date.clone().weekday(7);
 
-	  return firstDayInWeek.isSame(other._date, "month") || lastDayInWeek.isSame(other._date, "month");
+	  return firstDayInWeek.isSame(other._date, 'month') || lastDayInWeek.isSame(other._date, 'month');
 	};
 
 	DateUtil.prototype.format = function () {
@@ -447,11 +477,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	DateUtil.prototype.addMonth = function () {
-	  return new DateUtil(this._date.clone().add(1, "month"));
+	  return new DateUtil(this._date.clone().add(1, 'month'));
 	};
 
 	DateUtil.prototype.subtractMonth = function () {
-	  return new DateUtil(this._date.clone().subtract(1, "month"));
+	  return new DateUtil(this._date.clone().subtract(1, 'month'));
 	};
 
 	DateUtil.prototype.clone = function () {
@@ -481,20 +511,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(2);
 
 	var Popover = React.createClass({
-	  displayName: "Popover",
+	  displayName: 'Popover',
 
 	  componentWillMount: function componentWillMount() {
-	    var popoverContainer = document.createElement("span");
-	    popoverContainer.className = "datepicker__container";
+	    var popoverContainer = document.createElement('span');
+	    popoverContainer.className = 'datepicker__container';
 
 	    this._popoverElement = popoverContainer;
 
-	    document.querySelector("body").appendChild(this._popoverElement);
+	    document.querySelector('body').appendChild(this._popoverElement);
 	  },
 
 	  componentDidMount: function componentDidMount() {
@@ -508,7 +538,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _popoverComponent: function _popoverComponent() {
 	    var className = this.props.className;
 	    return React.createElement(
-	      "div",
+	      'div',
 	      { className: className },
 	      this.props.children
 	    );
@@ -518,9 +548,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      element: this._popoverElement,
 	      target: this.getDOMNode().parentElement,
-	      attachment: "top left",
-	      targetAttachment: "bottom left",
-	      targetOffset: "10px 0",
+	      attachment: 'top left',
+	      targetAttachment: 'bottom left',
+	      targetOffset: '10px 0',
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
 	      }
@@ -547,7 +577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    return React.createElement("span", null);
+	    return React.createElement('span', null);
 	  }
 	});
 
@@ -2020,18 +2050,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	var React = __webpack_require__(2);
 	var DateUtil = __webpack_require__(5);
 	var moment = __webpack_require__(4);
 
 	var DateInput = React.createClass({
-	  displayName: "DateInput",
+	  displayName: 'DateInput',
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: "YYYY-MM-DD"
+	      dateFormat: 'YYYY-MM-DD'
 	    };
 	  },
 
@@ -2070,7 +2104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
-	    } else if (event.target.value === "") {
+	    } else if (event.target.value === '') {
 	      this.props.clearSelected();
 	    }
 	  },
@@ -2081,7 +2115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  handleKeyDown: function handleKeyDown(event) {
 	    switch (event.key) {
-	      case "Enter":
+	      case 'Enter':
 	        event.preventDefault();
 	        this.props.handleEnter();
 	        break;
@@ -2093,17 +2127,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    return React.createElement("input", {
-	      ref: "input",
-	      type: "text",
-	      name: this.props.name,
+	    var _props = this.props;
+	    var name = _props.name;
+	    var onFocus = _props.onFocus;
+	    var placeholderText = _props.placeholderText;
+	    var dateFormat = _props.dateFormat;
+
+	    var props = _objectWithoutProperties(_props, ['name', 'onFocus', 'placeholderText', 'dateFormat']);
+
+	    return React.createElement('input', _extends({
+	      ref: 'input',
+	      type: 'text',
+	      name: name,
 	      value: this.state.value,
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
-	      onFocus: this.props.onFocus,
+	      onFocus: onFocus,
 	      onChange: this.handleChange,
-	      className: "datepicker__input",
-	      placeholder: this.props.placeholderText });
+	      className: 'datepicker__input',
+	      placeholder: placeholderText
+	    }, props));
 	  }
 	});
 

@@ -45,6 +45,17 @@ var exampleComponent = React.createClass({
     });
   },
 
+  handleExample6Change: function (date) {
+    console.log('change');
+    console.log(date);
+  },
+
+  handleExample6Blur: function(date) {
+    console.log('blur');
+    console.log(date);
+  },
+
+
   render: function() {
     return <div>
       <DatePicker
@@ -79,6 +90,12 @@ var exampleComponent = React.createClass({
         weekStart="0"
         placeholderText="I start on Sunday!"
       />
+      <DatePicker
+        key="example6"
+        onChange={this.handleExample6Change}
+        onBlur={this.handleExample6Blur}
+        placeholderText="Change and blur events - view in console"
+        />
     </div>;
   }
 });

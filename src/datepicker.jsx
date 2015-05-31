@@ -6,6 +6,11 @@ var DateInput = require('./date_input');
 var moment = require('moment');
 
 var DatePicker = React.createClass({
+
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+
   getDefaultProps: function() {
     return {
       weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -13,6 +18,14 @@ var DatePicker = React.createClass({
       dateFormatCallendar: "MMMM YYYY",
       moment: moment
     };
+  },
+
+  componentDidUpdate: function (props, previousState) {
+    if (previousState.focus === true && this.state.focus === false) {
+      if (typeof this.props.onBlur === 'function') {
+        this.props.onBlur(this.state.value);
+      }
+    }
   },
 
   getInitialState: function() {
@@ -44,11 +57,13 @@ var DatePicker = React.createClass({
   },
 
   setSelected: function(date) {
+    this.setState({ value: date.moment() });
     this.props.onChange(date.moment());
   },
 
   clearSelected: function() {
-    this.props.onChange(null);
+    this.setState({ value: null });
+    this.props.onChange(this.state.value);
   },  
 
   onInputClick: function() {
@@ -78,13 +93,14 @@ var DatePicker = React.createClass({
   },
 
   render: function() {
+    var { onBlur, name, selected, dateFormat, weekdays, locale, dateFormatCallendar, moment, ...props } = this.props;
 
     return (
       <div>
         <DateInput
-          name={this.props.name}
-          date={this.props.selected}
-          dateFormat={this.props.dateFormat}
+          name={name}
+          date={selected}
+          dateFormat={dateFormat}
           focus={this.state.focus}
           onFocus={this.handleFocus}
           handleClick={this.onInputClick}
@@ -92,7 +108,9 @@ var DatePicker = React.createClass({
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
-          placeholderText={this.props.placeholderText} />
+          placeholderText={this.props.placeholderText}
+          { ...props }
+            />
         {this.calendar()}
       </div>
     );
