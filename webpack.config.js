@@ -47,6 +47,14 @@ module.exports = {
         commonjs: 'tether',
         amd: 'tether'
       }
+    },
+    {
+      'lodash': {
+        root: '_',
+        commonjs2: 'lodash',
+        commonjs: 'lodash',
+        amd: 'lodash'
+      }
     }
   ],
   node: {Buffer: false},
