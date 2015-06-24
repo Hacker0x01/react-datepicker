@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "moment": "^2.8",
-    "tether": "^0.6",
+    "tether": "^1.0.1",
     "react-onclickoutside": "0.2.2"
   },
   "scripts": {

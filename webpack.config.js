@@ -39,6 +39,14 @@ module.exports = {
           commonjs: 'react-onclickoutside',
           amd: 'react-onclickoutside'
       }
+    },
+    {
+      'tether': {
+          root: 'Tether',
+          commonjs2: 'tether',
+          commonjs: 'tether',
+          amd: 'tether'
+      }
     }
   ],
   node: {Buffer: false},
