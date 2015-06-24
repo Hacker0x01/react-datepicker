@@ -20400,7 +20400,7 @@ var ExampleApp =
 	  propTypes: {
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
-	    dateFormatCallendar: React.PropTypes.string,
+	    dateFormatCalendar: React.PropTypes.string,
 	    onChange: React.PropTypes.func.isRequired
 	  },
 
@@ -20408,7 +20408,7 @@ var ExampleApp =
 	    return {
 	      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 	      locale: 'en',
-	      dateFormatCallendar: 'MMMM YYYY',
+	      dateFormatCalendar: 'MMMM YYYY',
 	      moment: moment,
 	      onChange: function onChange() {}
 	    };
@@ -20480,7 +20480,7 @@ var ExampleApp =
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
 	          moment: this.props.moment,
-	          dateFormat: this.props.dateFormatCallendar,
+	          dateFormat: this.props.dateFormatCalendar,
 	          selected: this.state.selected,
 	          onSelect: this.handleSelect,
 	          hideCalendar: this.hideCalendar,

@@ -16,7 +16,7 @@ A simple and reusable datepicker component for React ([Demo](http://cdn.rawgit.c
 - Exclude a set of dates from those that are selectable: `excludeDates: [ moment(), moment('2015-01-01') ]` (prevent users from selecting today or Jan 1st, 2015)
 - Set custom moment.js instance (could have defined custom locale settings): `moment: require('./foo/moment')`
 - Set custom locale settings for locale: `locale: "cs"`
-- Set date format for callendar: `dateFormatCallendar: "YYYY/MM/DD"`
+- Set date format for callendar: `dateFormatCalendar: "YYYY/MM/DD"`
 - Set custom weekdays (for locale days): `weekdays: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']`
 
 ## Installation
