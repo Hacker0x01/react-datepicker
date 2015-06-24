@@ -71,14 +71,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
 	      locale: "en",
 	      dateFormatCallendar: "MMMM YYYY",
-	      moment: moment
+	      moment: moment,
+	      onChange: function onChange() {}
 	    };
 	  },
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      focus: false
+	      focus: false,
+	      selected: this.props.selected
 	    };
+	  },
+
+	  getValue: function getValue() {
+	    return this.state.selected;
 	  },
 
 	  handleFocus: function handleFocus() {
@@ -104,11 +110,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  setSelected: function setSelected(date) {
-	    this.props.onChange(date.moment());
+	    var moment = date.moment();
+
+	    this.props.onChange(moment);
+
+	    this.setState({
+	      selected: moment
+	    });
 	  },
 
 	  clearSelected: function clearSelected() {
 	    this.props.onChange(null);
+
+	    this.setState({
+	      selected: null
+	    });
 	  },
 
 	  onInputClick: function onInputClick() {
@@ -127,7 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          locale: this.props.locale,
 	          moment: this.props.moment,
 	          dateFormat: this.props.dateFormatCallendar,
-	          selected: this.props.selected,
+	          selected: this.state.selected,
 	          onSelect: this.handleSelect,
 	          hideCalendar: this.hideCalendar,
 	          minDate: this.props.minDate,
@@ -145,7 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      null,
 	      React.createElement(DateInput, {
 	        name: this.props.name,
-	        date: this.props.selected,
+	        date: this.state.selected,
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
