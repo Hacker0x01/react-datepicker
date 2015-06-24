@@ -6,6 +6,13 @@ var DateInput = require('./date_input');
 var moment = require('moment');
 
 var DatePicker = React.createClass({
+  propTypes: {
+    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
+    locale: React.PropTypes.string,
+    dateFormatCallendar: React.PropTypes.string,
+    onChange: React.PropTypes.func.isRequired
+  },
+
   getDefaultProps: function() {
     return {
       weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],

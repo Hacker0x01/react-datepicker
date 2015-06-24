@@ -66,6 +66,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DatePicker = React.createClass({
 	  displayName: 'DatePicker',
 
+	  propTypes: {
+	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
+	    locale: React.PropTypes.string,
+	    dateFormatCallendar: React.PropTypes.string,
+	    onChange: React.PropTypes.func.isRequired
+	  },
+
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
