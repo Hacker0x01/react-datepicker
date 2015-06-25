@@ -79,7 +79,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      locale: 'en',
 	      dateFormatCalendar: 'MMMM YYYY',
 	      moment: moment,
-	      onChange: function onChange() {}
+	      onChange: function onChange() {},
+	      disabled: false
 	    };
 	  },
 
@@ -177,8 +178,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        setSelected: this.setSelected,
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
-	        placeholderText: this.props.placeholderText }),
-	      this.calendar()
+	        placeholderText: this.props.placeholderText,
+	        disabled: this.props.disabled }),
+	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
 	});
@@ -674,7 +676,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleClick: function handleClick(event) {
-	    this.props.handleClick(event);
+	    if (!this.props.disabled) {
+	      this.props.handleClick(event);
+	    }
 	  },
 
 	  render: function render() {
@@ -688,7 +692,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
 	      className: 'datepicker__input',
-	      placeholder: this.props.placeholderText });
+	      placeholder: this.props.placeholderText,
+	      disabled: this.props.disabled });
 	  }
 	});
 

@@ -19,7 +19,8 @@ var DatePicker = React.createClass({
       locale: 'en',
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
-      onChange: function() {}
+      onChange: function() {},
+      disabled: false
     };
   },
 
@@ -116,8 +117,9 @@ var DatePicker = React.createClass({
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
-          placeholderText={this.props.placeholderText} />
-        {this.calendar()}
+          placeholderText={this.props.placeholderText}
+          disabled={this.props.disabled} />
+        {this.props.disabled ? null : this.calendar()}
       </div>
     );
   }

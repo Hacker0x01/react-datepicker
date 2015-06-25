@@ -64,7 +64,9 @@ var DateInput = React.createClass({
   },
 
   handleClick: function(event) {
-    this.props.handleClick(event);
+    if(!this.props.disabled) {
+      this.props.handleClick(event);
+    }
   },
 
   render: function() {
@@ -78,7 +80,8 @@ var DateInput = React.createClass({
       onFocus={this.props.onFocus}
       onChange={this.handleChange}
       className="datepicker__input"
-      placeholder={this.props.placeholderText} />;
+      placeholder={this.props.placeholderText}
+      disabled={this.props.disabled} />;
   }
 });
 
