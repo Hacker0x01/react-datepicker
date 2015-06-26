@@ -6,11 +6,13 @@ var DateInput = require('./date_input');
 var moment = require('moment');
 
 var DatePicker = React.createClass({
+
   propTypes: {
     weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    onBlur: React.PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -23,9 +25,11 @@ var DatePicker = React.createClass({
     };
   },
 
+
   getInitialState: function() {
     return {
       focus: false,
+      virtualFocus: false,
       selected: this.props.selected
     };
   },
@@ -38,6 +42,16 @@ var DatePicker = React.createClass({
     this.setState({
       focus: true
     });
+  },
+
+  handleBlur: function () {
+    this.setState({ virtualFocus: false });
+    setTimeout(function(){
+      if (!this.state.virtualFocus && typeof this.props.onBlur === 'function') {
+        this.props.onBlur(this.state.selected);
+        this.hideCalendar();
+      }
+    }.bind(this), 200);
   },
 
   hideCalendar: function() {
@@ -62,7 +76,8 @@ var DatePicker = React.createClass({
     this.props.onChange(moment);
 
     this.setState({
-      selected: moment
+      selected: moment,
+      virtualFocus: true
     });
   },
 
@@ -76,7 +91,8 @@ var DatePicker = React.createClass({
 
   onInputClick: function() {
     this.setState({
-      focus: true
+      focus: true,
+      virtualFocus: true
     });
   },
 
@@ -111,6 +127,7 @@ var DatePicker = React.createClass({
           dateFormat={this.props.dateFormat}
           focus={this.state.focus}
           onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
           setSelected={this.setSelected}

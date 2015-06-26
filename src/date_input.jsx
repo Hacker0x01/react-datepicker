@@ -6,7 +6,8 @@ var DateInput = React.createClass({
 
   getDefaultProps: function() {
     return {
-      dateFormat: 'YYYY-MM-DD'
+      dateFormat: 'YYYY-MM-DD',
+      onBlur: function () {}
     };
   },
 
@@ -56,10 +57,10 @@ var DateInput = React.createClass({
 
   handleKeyDown: function(event) {
     switch(event.key) {
-    case "Enter":
-      event.preventDefault();
-      this.props.handleEnter();
-      break;
+      case "Enter":
+        event.preventDefault();
+        this.props.handleEnter();
+        break;
     }
   },
 
@@ -68,22 +69,20 @@ var DateInput = React.createClass({
   },
 
   render: function() {
-    var { name, onFocus, placeholderText, dateFormat, ...props } = this.props;
-
     return <input
-      ref="input"
-      type="text"
-      name={name}
-      value={this.state.value}
-      onClick={this.handleClick}
-      onKeyDown={this.handleKeyDown}
-      onFocus={onFocus}
-      onChange={this.handleChange}
-      className="datepicker__input"
-      placeholder={placeholderText}
-      {...props }
-      />;
+        ref="input"
+        type="text"
+        name={this.props.name}
+        value={this.state.value}
+        onClick={this.handleClick}
+        onKeyDown={this.handleKeyDown}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+        onChange={this.handleChange}
+        className="datepicker__input"
+        placeholder={this.props.placeholderText} />;
   }
 });
+
 
 module.exports = DateInput;
