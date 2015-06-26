@@ -9,7 +9,11 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js/, loaders: ['babel?stage=0'], exclude: /node_modules/}
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        exclude: /node_modules/
+      }
     ]
   },
   resolve: {
@@ -34,10 +38,26 @@ module.exports = {
     },
     {
       'react-onclickoutside': {
-          root: 'OnClickOutside',
-          commonjs2: 'react-onclickoutside',
-          commonjs: 'react-onclickoutside',
-          amd: 'react-onclickoutside'
+        root: 'OnClickOutside',
+        commonjs2: 'react-onclickoutside',
+        commonjs: 'react-onclickoutside',
+        amd: 'react-onclickoutside'
+      }
+    },
+    {
+      'tether': {
+        root: 'Tether',
+        commonjs2: 'tether',
+        commonjs: 'tether',
+        amd: 'tether'
+      }
+    },
+    {
+      'lodash': {
+        root: '_',
+        commonjs2: 'lodash',
+        commonjs: 'lodash',
+        amd: 'lodash'
       }
     }
   ],

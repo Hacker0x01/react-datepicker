@@ -6,8 +6,10 @@ var DateInput = require('./date_input');
 var moment = require('moment');
 
 var DatePicker = React.createClass({
-
   propTypes: {
+    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
+    locale: React.PropTypes.string,
+    dateFormatCalendar: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
@@ -15,23 +17,21 @@ var DatePicker = React.createClass({
     return {
       weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       locale: 'en',
-      dateFormatCallendar: "MMMM YYYY",
-      moment: moment
+      dateFormatCalendar: "MMMM YYYY",
+      moment: moment,
+      onChange: function() {}
     };
-  },
-
-  componentDidUpdate: function (props, previousState) {
-    if (previousState.focus === true && this.state.focus === false) {
-      if (typeof this.props.onBlur === 'function') {
-        this.props.onBlur(this.state.value);
-      }
-    }
   },
 
   getInitialState: function() {
     return {
-      focus: false
+      focus: false,
+      selected: this.props.selected
     };
+  },
+
+  getValue: function() {
+    return this.state.selected;
   },
 
   handleFocus: function() {
@@ -57,14 +57,22 @@ var DatePicker = React.createClass({
   },
 
   setSelected: function(date) {
-    this.setState({ value: date.moment() });
-    this.props.onChange(date.moment());
+    var moment = date.moment();
+
+    this.props.onChange(moment);
+
+    this.setState({
+      selected: moment
+    });
   },
 
   clearSelected: function() {
-    this.setState({ value: null });
-    this.props.onChange(this.state.value);
-  },  
+    this.props.onChange(null);
+
+    this.setState({
+      selected: null
+    });
+  },
 
   onInputClick: function() {
     this.setState({
@@ -80,12 +88,13 @@ var DatePicker = React.createClass({
             weekdays={this.props.weekdays}
             locale={this.props.locale}
             moment={this.props.moment}
-            dateFormat={this.props.dateFormatCallendar}
-            selected={this.props.selected}
+            dateFormat={this.props.dateFormatCalendar}
+            selected={this.state.selected}
             onSelect={this.handleSelect}
             hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
+            excludeDates={this.props.excludeDates}
             weekStart={this.props.weekStart} />
         </Popover>
       );
@@ -93,14 +102,13 @@ var DatePicker = React.createClass({
   },
 
   render: function() {
-    var { onBlur, name, selected, dateFormat, weekdays, locale, dateFormatCallendar, moment, ...props } = this.props;
 
     return (
       <div>
         <DateInput
-          name={name}
-          date={selected}
-          dateFormat={dateFormat}
+          name={this.props.name}
+          date={this.state.selected}
+          dateFormat={this.props.dateFormat}
           focus={this.state.focus}
           onFocus={this.handleFocus}
           handleClick={this.onInputClick}
@@ -108,9 +116,7 @@ var DatePicker = React.createClass({
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
-          placeholderText={this.props.placeholderText}
-          { ...props }
-            />
+          placeholderText={this.props.placeholderText} />
         {this.calendar()}
       </div>
     );

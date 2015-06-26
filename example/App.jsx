@@ -11,7 +11,8 @@ var exampleComponent = React.createClass({
       end_date: moment(),
       new_date: null,
       bound_date: null,
-      example5Selected: null
+      example5Selected: null,
+      example6Selected: null
     };
   },
 
@@ -45,16 +46,11 @@ var exampleComponent = React.createClass({
     });
   },
 
-  handleExample6Change: function (date) {
-    console.log('change');
-    console.log(date);
+   handleExample6Change: function(date) {
+    this.setState({
+      example6Selected: date
+    });
   },
-
-  handleExample6Blur: function(date) {
-    console.log('blur');
-    console.log(date);
-  },
-
 
   render: function() {
     return <div>
@@ -92,10 +88,11 @@ var exampleComponent = React.createClass({
       />
       <DatePicker
         key="example6"
+        selected={this.state.example6Selected}
         onChange={this.handleExample6Change}
-        onBlur={this.handleExample6Blur}
-        placeholderText="Change and blur events - view in console"
-        />
+        excludeDates={[moment(), moment().subtract(1, 'days')]}
+        placeholderText="Select a date other than today or yesterday"
+      />
     </div>;
   }
 });

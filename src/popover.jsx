@@ -49,7 +49,7 @@ var Popover = React.createClass({
       this._tether.setOptions(this._tetherOptions());
     }
     else if (window && document) {
-      var Tether = require('../node_modules/tether/tether.js');
+      var Tether = require('tether');
       this._tether = new Tether(this._tetherOptions());
     }
   },
