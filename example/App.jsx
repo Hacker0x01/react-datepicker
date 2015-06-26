@@ -93,6 +93,13 @@ var exampleComponent = React.createClass({
         excludeDates={[moment(), moment().subtract(1, 'days')]}
         placeholderText="Select a date other than today or yesterday"
       />
+      <DatePicker
+        key="example7"
+        selected={null}
+        onChange={this.handleStartDateChange}
+        disabled={true}
+        placeholderText="This is disabled"
+      />
     </div>;
   }
 });

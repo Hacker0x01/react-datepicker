@@ -20374,6 +20374,13 @@ var ExampleApp =
 	        onChange: this.handleExample6Change,
 	        excludeDates: [moment(), moment().subtract(1, 'days')],
 	        placeholderText: 'Select a date other than today or yesterday'
+	      }),
+	      React.createElement(DatePicker, {
+	        key: 'example7',
+	        selected: null,
+	        onChange: this.handleStartDateChange,
+	        disabled: true,
+	        placeholderText: 'This is disabled'
 	      })
 	    );
 	  }
@@ -20410,7 +20417,8 @@ var ExampleApp =
 	      locale: 'en',
 	      dateFormatCalendar: 'MMMM YYYY',
 	      moment: moment,
-	      onChange: function onChange() {}
+	      onChange: function onChange() {},
+	      disabled: false
 	    };
 	  },
 
@@ -20508,8 +20516,9 @@ var ExampleApp =
 	        setSelected: this.setSelected,
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
-	        placeholderText: this.props.placeholderText }),
-	      this.calendar()
+	        placeholderText: this.props.placeholderText,
+	        disabled: this.props.disabled }),
+	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
 	});
@@ -46192,7 +46201,9 @@ var ExampleApp =
 	  },
 
 	  handleClick: function handleClick(event) {
-	    this.props.handleClick(event);
+	    if (!this.props.disabled) {
+	      this.props.handleClick(event);
+	    }
 	  },
 
 	  render: function render() {
@@ -46206,7 +46217,8 @@ var ExampleApp =
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
 	      className: 'datepicker__input',
-	      placeholder: this.props.placeholderText });
+	      placeholder: this.props.placeholderText,
+	      disabled: this.props.disabled });
 	  }
 	});
 
