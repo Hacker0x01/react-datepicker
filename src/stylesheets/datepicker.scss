@@ -19,9 +19,14 @@
 }
 
 .datepicker__triangle {
-  @extend %triangle-arrow-up;
   position: absolute;
   left: 50px;
+}
+.tether-element-attached-top .datepicker__triangle {
+  @extend %triangle-arrow-up;
+}
+.tether-element-attached-bottom .datepicker__triangle {
+  @extend %triangle-arrow-down;
 }
 
 .datepicker__header {
@@ -94,7 +99,7 @@
     border-radius: $border-radius;
     background-color: $background-color;
   }
-  
+
   &--today {
     font-weight: bold;
   }
