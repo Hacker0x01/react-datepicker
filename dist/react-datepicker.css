@@ -1,23 +1,46 @@
-.datepicker__triangle {
-  margin-top: -8px;
+.tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle {
   margin-left: -8px;
+  position: absolute;
 }
-.datepicker__triangle, .datepicker__triangle:before {
+.tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle, .tether-element-attached-top .datepicker__triangle:before, .tether-element-attached-bottom .datepicker__triangle:before {
   box-sizing: content-box;
   position: absolute;
   border: 8px solid transparent;
   height: 0;
   width: 1px;
-  border-top: none;
-  border-bottom-color: #f0f0f0;
 }
-.datepicker__triangle:before {
+.tether-element-attached-top .datepicker__triangle:before, .tether-element-attached-bottom .datepicker__triangle:before {
   content: "";
   z-index: -1;
   border-width: 8px;
-  top: -1px;
   left: -8px;
   border-bottom-color: #aeaeae;
+}
+
+.tether-element-attached-top .datepicker__triangle {
+  top: 0;
+  margin-top: -8px;
+}
+.tether-element-attached-top .datepicker__triangle, .tether-element-attached-top .datepicker__triangle:before {
+  border-top: none;
+  border-bottom-color: #f0f0f0;
+}
+.tether-element-attached-top .datepicker__triangle:before {
+  top: -1px;
+  border-bottom-color: #aeaeae;
+}
+
+.tether-element-attached-bottom .datepicker__triangle {
+  bottom: 0;
+  margin-bottom: -8px;
+}
+.tether-element-attached-bottom .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle:before {
+  border-bottom: none;
+  border-top-color: #fff;
+}
+.tether-element-attached-bottom .datepicker__triangle:before {
+  bottom: -1px;
+  border-top-color: #aeaeae;
 }
 
 .datepicker {

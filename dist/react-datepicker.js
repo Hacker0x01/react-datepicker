@@ -179,7 +179,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
-	        disabled: this.props.disabled }),
+	        disabled: this.props.disabled,
+	        className: this.props.className }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -355,7 +356,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -407,13 +408,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -511,13 +512,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ },
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
@@ -567,7 +568,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      targetOffset: '10px 0',
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
-	      }
+	      },
+	      constraints: [{
+	        to: 'window',
+	        attachment: 'together'
+	      }]
 	    };
 	  },
 
@@ -599,7 +604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
@@ -618,7 +623,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: 'YYYY-MM-DD'
+	      dateFormat: 'YYYY-MM-DD',
+	      className: 'datepicker__input'
 	    };
 	  },
 
@@ -691,7 +697,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
-	      className: 'datepicker__input',
+	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled });
 	  }

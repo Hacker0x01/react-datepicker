@@ -38,7 +38,13 @@ var Popover = React.createClass({
       targetOffset: '10px 0',
       optimizations: {
         moveElement: false // always moves to <body> anyway!
-      }
+      },
+      constraints: [
+        {
+          to: 'window',
+          attachment: 'together'
+        }
+      ]
     };
   },
 

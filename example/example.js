@@ -553,7 +553,7 @@ var ExampleApp =
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -1838,7 +1838,7 @@ var ExampleApp =
 
 /***/ },
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -1956,7 +1956,7 @@ var ExampleApp =
 
 /***/ },
 /* 16 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -2035,7 +2035,7 @@ var ExampleApp =
 
 /***/ },
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -2328,7 +2328,7 @@ var ExampleApp =
 
 /***/ },
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -2833,7 +2833,7 @@ var ExampleApp =
 
 /***/ },
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2015, Facebook, Inc.
@@ -2874,7 +2874,7 @@ var ExampleApp =
 
 /***/ },
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -5559,7 +5559,7 @@ var ExampleApp =
 
 /***/ },
 /* 37 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -5595,7 +5595,7 @@ var ExampleApp =
 
 /***/ },
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -5816,7 +5816,7 @@ var ExampleApp =
 
 /***/ },
 /* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -6521,7 +6521,7 @@ var ExampleApp =
 
 /***/ },
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -6970,7 +6970,7 @@ var ExampleApp =
 
 /***/ },
 /* 49 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -7007,7 +7007,7 @@ var ExampleApp =
 
 /***/ },
 /* 50 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -7136,7 +7136,7 @@ var ExampleApp =
 
 /***/ },
 /* 51 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -7230,7 +7230,7 @@ var ExampleApp =
 
 /***/ },
 /* 53 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -7373,7 +7373,7 @@ var ExampleApp =
 
 /***/ },
 /* 56 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -10172,7 +10172,7 @@ var ExampleApp =
 
 /***/ },
 /* 71 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -10261,7 +10261,7 @@ var ExampleApp =
 
 /***/ },
 /* 73 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -10512,7 +10512,7 @@ var ExampleApp =
 
 /***/ },
 /* 77 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -10627,7 +10627,7 @@ var ExampleApp =
 
 /***/ },
 /* 80 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -10658,7 +10658,7 @@ var ExampleApp =
 
 /***/ },
 /* 81 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -14217,7 +14217,7 @@ var ExampleApp =
 
 /***/ },
 /* 97 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -14688,7 +14688,7 @@ var ExampleApp =
 
 /***/ },
 /* 100 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -14735,7 +14735,7 @@ var ExampleApp =
 
 /***/ },
 /* 101 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -15102,7 +15102,7 @@ var ExampleApp =
 
 /***/ },
 /* 106 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -15716,7 +15716,7 @@ var ExampleApp =
 
 /***/ },
 /* 114 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -17307,7 +17307,7 @@ var ExampleApp =
 
 /***/ },
 /* 127 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -17933,7 +17933,7 @@ var ExampleApp =
 
 /***/ },
 /* 132 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -18012,7 +18012,7 @@ var ExampleApp =
 
 /***/ },
 /* 133 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -18304,7 +18304,7 @@ var ExampleApp =
 
 /***/ },
 /* 136 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -18352,7 +18352,7 @@ var ExampleApp =
 
 /***/ },
 /* 137 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -19000,7 +19000,7 @@ var ExampleApp =
 
 /***/ },
 /* 142 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -20517,7 +20517,8 @@ var ExampleApp =
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
-	        disabled: this.props.disabled }),
+	        disabled: this.props.disabled,
+	        className: this.props.className }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -23856,7 +23857,7 @@ var ExampleApp =
 
 /***/ },
 /* 161 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = function(module) {
 		if(!module.webpackPolyfill) {
@@ -31926,7 +31927,7 @@ var ExampleApp =
 
 /***/ },
 /* 246 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -44399,7 +44400,11 @@ var ExampleApp =
 	      targetOffset: '10px 0',
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
-	      }
+	      },
+	      constraints: [{
+	        to: 'window',
+	        attachment: 'together'
+	      }]
 	    };
 	  },
 
@@ -46143,7 +46148,8 @@ var ExampleApp =
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: 'YYYY-MM-DD'
+	      dateFormat: 'YYYY-MM-DD',
+	      className: 'datepicker__input'
 	    };
 	  },
 
@@ -46216,7 +46222,7 @@ var ExampleApp =
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
-	      className: 'datepicker__input',
+	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled });
 	  }
