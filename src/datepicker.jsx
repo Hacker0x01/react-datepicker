@@ -96,8 +96,7 @@ var DatePicker = React.createClass({
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
-            weekStart={this.props.weekStart} 
-            className={this.props.className}/>
+            weekStart={this.props.weekStart} />
         </Popover>
       );
     }
@@ -119,7 +118,8 @@ var DatePicker = React.createClass({
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
           placeholderText={this.props.placeholderText}
-          disabled={this.props.disabled} />
+          disabled={this.props.disabled}  
+          className={this.props.className} />
         {this.props.disabled ? null : this.calendar()}
       </div>
     );
