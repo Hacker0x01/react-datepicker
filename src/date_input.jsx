@@ -7,7 +7,7 @@ var DateInput = React.createClass({
   getDefaultProps: function() {
     return {
       dateFormat: 'YYYY-MM-DD',
-      className: "datepicker__input"
+      className: 'datepicker__input'
     };
   },
 
