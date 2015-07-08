@@ -179,7 +179,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
-	        disabled: this.props.disabled }),
+	        disabled: this.props.disabled,
+	        className: this.props.className }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -622,7 +623,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: 'YYYY-MM-DD'
+	      dateFormat: 'YYYY-MM-DD',
+	      className: 'datepicker__input'
 	    };
 	  },
 
@@ -695,7 +697,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
-	      className: 'datepicker__input',
+	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled });
 	  }

@@ -20517,7 +20517,8 @@ var ExampleApp =
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
-	        disabled: this.props.disabled }),
+	        disabled: this.props.disabled,
+	        className: this.props.className }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -46147,7 +46148,8 @@ var ExampleApp =
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: 'YYYY-MM-DD'
+	      dateFormat: 'YYYY-MM-DD',
+	      className: 'datepicker__input'
 	    };
 	  },
 
@@ -46220,7 +46222,7 @@ var ExampleApp =
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
 	      onChange: this.handleChange,
-	      className: 'datepicker__input',
+	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled });
 	  }
