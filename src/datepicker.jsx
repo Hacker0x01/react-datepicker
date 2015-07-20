@@ -48,6 +48,11 @@ var DatePicker = React.createClass({
       });
     }.bind(this), 0);
   },
+  
+  cancelDateChange: function(){
+    this.hideCalendar();
+    return true;
+  },
 
   handleSelect: function(date) {
     this.setSelected(date);
@@ -114,12 +119,14 @@ var DatePicker = React.createClass({
           onFocus={this.handleFocus}
           handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
+          handleEscape={this.cancelDateChange}
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
           placeholderText={this.props.placeholderText}
           disabled={this.props.disabled}  
-          className={this.props.className} />
+          className={this.props.className}
+          title={this.props.title} />
         {this.props.disabled ? null : this.calendar()}
       </div>
     );

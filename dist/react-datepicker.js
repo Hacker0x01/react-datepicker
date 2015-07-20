@@ -109,6 +109,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this), 0);
 	  },
 
+	  cancelDateChange: function cancelDateChange() {
+	    this.hideCalendar();
+	    return true;
+	  },
+
 	  handleSelect: function handleSelect(date) {
 	    this.setSelected(date);
 
@@ -175,12 +180,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onFocus: this.handleFocus,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
+	        handleEscape: this.cancelDateChange,
 	        setSelected: this.setSelected,
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
 	        disabled: this.props.disabled,
-	        className: this.props.className }),
+	        className: this.props.className,
+	        title: this.props.title }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -356,7 +363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -408,13 +415,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -512,13 +519,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ },
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
@@ -604,7 +611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
@@ -678,6 +685,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        event.preventDefault();
 	        this.props.handleEnter();
 	        break;
+	      case 'Escape':
+	        event.preventDefault();
+	        if (this.props.handleEscape()) {
+	          this.setState({
+	            value: this.safeDateFormat(this.props.date)
+	          });
+	          this.props.setSelected(new DateUtil(this.props.date));
+	        }
+	        break;
 	    }
 	  },
 
@@ -699,7 +715,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onChange: this.handleChange,
 	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
-	      disabled: this.props.disabled });
+	      disabled: this.props.disabled,
+	      title: this.props.title
+	    });
 	  }
 	});
 
