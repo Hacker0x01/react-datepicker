@@ -91,6 +91,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    this.setState({
+	      selected: nextProps.selected
+	    });
+	  },
+
 	  getValue: function getValue() {
 	    return this.state.selected;
 	  },

@@ -12,7 +12,8 @@ var exampleComponent = React.createClass({
       new_date: null,
       bound_date: null,
       example5Selected: null,
-      example6Selected: null
+      example6Selected: null,
+      example8Selected: moment()
     };
   },
 
@@ -49,6 +50,12 @@ var exampleComponent = React.createClass({
    handleExample6Change: function(date) {
     this.setState({
       example6Selected: date
+    });
+  },
+
+  handleClearButtonClick: function() {
+    this.setState({
+      example8Selected: null
     });
   },
 
@@ -100,6 +107,11 @@ var exampleComponent = React.createClass({
         disabled={true}
         placeholderText="This is disabled"
       />
+      <DatePicker
+        key="example8"
+        selected={this.state.example8Selected}
+      />
+      <button onClick={this.handleClearButtonClick}>Clear</button>
     </div>;
   }
 });
