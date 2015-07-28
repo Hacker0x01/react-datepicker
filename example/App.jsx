@@ -62,7 +62,7 @@ var exampleComponent = React.createClass({
 
   handleExample9Change: function (date) {
     this.setState({
-      example7Selected: date
+      example9Selected: date
     })
   },
 

@@ -20342,7 +20342,7 @@ var ExampleApp =
 
 	  handleExample9Change: function handleExample9Change(date) {
 	    this.setState({
-	      example7Selected: date
+	      example9Selected: date
 	    });
 	  },
 
