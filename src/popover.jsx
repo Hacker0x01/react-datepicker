@@ -1,15 +1,15 @@
-var React = require('react');
+var React = require( "react" );
 
-var Popover = React.createClass({
-  displayName: 'Popover',
+var Popover = React.createClass( {
+  displayName: "Popover",
 
   componentWillMount: function() {
-    var popoverContainer = document.createElement('span');
-    popoverContainer.className = 'datepicker__container';
+    var popoverContainer = document.createElement( "span" );
+    popoverContainer.className = "datepicker__container";
 
     this._popoverElement = popoverContainer;
 
-    document.querySelector('body').appendChild(this._popoverElement);
+    document.querySelector( "body" ).appendChild( this._popoverElement );
   },
 
   componentDidMount: function() {
@@ -33,44 +33,43 @@ var Popover = React.createClass({
     return {
       element: this._popoverElement,
       target: this.getDOMNode().parentElement,
-      attachment: 'top left',
-      targetAttachment: 'bottom left',
-      targetOffset: '10px 0',
+      attachment: "top left",
+      targetAttachment: "bottom left",
+      targetOffset: "10px 0",
       optimizations: {
         moveElement: false // always moves to <body> anyway!
       },
       constraints: [
         {
-          to: 'window',
-          attachment: 'together'
+          to: "window",
+          attachment: "together"
         }
       ]
     };
   },
 
   _renderPopover: function() {
-    React.render(this._popoverComponent(), this._popoverElement);
+    React.render( this._popoverComponent(), this._popoverElement );
 
-    if (this._tether != null) {
-      this._tether.setOptions(this._tetherOptions());
-    }
-    else if (window && document) {
-      var Tether = require('tether');
-      this._tether = new Tether(this._tetherOptions());
+    if ( this._tether != null ) {
+      this._tether.setOptions( this._tetherOptions() );
+    } else if ( window && document ) {
+      var Tether = require( "tether" );
+      this._tether = new Tether( this._tetherOptions() );
     }
   },
 
   componentWillUnmount: function() {
     this._tether.destroy();
-    React.unmountComponentAtNode(this._popoverElement);
-    if (this._popoverElement.parentNode) {
-      this._popoverElement.parentNode.removeChild(this._popoverElement);
+    React.unmountComponentAtNode( this._popoverElement );
+    if ( this._popoverElement.parentNode ) {
+      this._popoverElement.parentNode.removeChild( this._popoverElement );
     }
   },
 
   render: function() {
     return <span/>;
   }
-});
+} );
 
 module.exports = Popover;
