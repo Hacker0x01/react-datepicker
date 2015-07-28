@@ -20292,7 +20292,8 @@ var ExampleApp =
 	      new_date: null,
 	      bound_date: null,
 	      example5Selected: null,
-	      example6Selected: null
+	      example6Selected: null,
+	      example8Selected: moment()
 	    };
 	  },
 
@@ -20329,6 +20330,12 @@ var ExampleApp =
 	  handleExample6Change: function handleExample6Change(date) {
 	    this.setState({
 	      example6Selected: date
+	    });
+	  },
+
+	  handleClearButtonClick: function handleClearButtonClick() {
+	    this.setState({
+	      example8Selected: null
 	    });
 	  },
 
@@ -20381,7 +20388,16 @@ var ExampleApp =
 	        onChange: this.handleStartDateChange,
 	        disabled: true,
 	        placeholderText: 'This is disabled'
-	      })
+	      }),
+	      React.createElement(DatePicker, {
+	        key: 'example8',
+	        selected: this.state.example8Selected
+	      }),
+	      React.createElement(
+	        'button',
+	        { onClick: this.handleClearButtonClick },
+	        'Clear'
+	      )
 	    );
 	  }
 	});
@@ -20427,6 +20443,12 @@ var ExampleApp =
 	      focus: false,
 	      selected: this.props.selected
 	    };
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    this.setState({
+	      selected: nextProps.selected
+	    });
 	  },
 
 	  getValue: function getValue() {

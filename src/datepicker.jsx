@@ -31,6 +31,12 @@ var DatePicker = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function (nextProps) {
+      this.setState({
+        selected: nextProps.selected
+      });
+  },
+
   getValue: function() {
     return this.state.selected;
   },
