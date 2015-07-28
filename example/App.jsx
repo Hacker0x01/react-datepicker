@@ -13,7 +13,8 @@ var exampleComponent = React.createClass({
       bound_date: null,
       example5Selected: null,
       example6Selected: null,
-      example8Selected: moment()
+      example8Selected: moment(),
+      example9Selected: null
     };
   },
 
@@ -47,7 +48,7 @@ var exampleComponent = React.createClass({
     });
   },
 
-   handleExample6Change: function(date) {
+  handleExample6Change: function(date) {
     this.setState({
       example6Selected: date
     });
@@ -57,6 +58,21 @@ var exampleComponent = React.createClass({
     this.setState({
       example8Selected: null
     });
+  },
+
+  handleExample9Change: function (date) {
+    this.setState({
+      example9Selected: date
+    })
+  },
+
+  handleExample9Blur: function (date) {
+    if (date === null) {
+      console.log('selected date: %s', date);
+    }
+    else {
+      console.log('selected date: %s', date.format('DD/MM/YYYY'));
+    }
   },
 
   render: function() {
@@ -112,9 +128,16 @@ var exampleComponent = React.createClass({
         selected={this.state.example8Selected}
       />
       <button onClick={this.handleClearButtonClick}>Clear</button>
+
+      <DatePicker
+        key="example9"
+        selected={this.state.example9Selected}
+        onChange={this.handleExample9Change}
+        onBlur={this.handleExample9Blur}
+        placeholderText="View blur callbacks in console"
+      />
     </div>;
   }
 });
-
 
 module.exports = exampleComponent;
