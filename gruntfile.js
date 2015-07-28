@@ -68,11 +68,10 @@ module.exports = function(grunt) {
       }
     },
 
-    jshint: {
-      all: ['src/**/*.jsx', 'src/**/*.js'],
-      options: {
-        eqnull: true,
-        esnext: true
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
       }
     },
 
@@ -123,10 +122,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-jsxhint');
   grunt.loadNpmTasks('grunt-webpack');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('default', ['watch', 'scsslint']);
-  grunt.registerTask('travis', ['jshint', 'scsslint']);
-  grunt.registerTask('build', ['jshint', 'scsslint', 'webpack', 'sass']);
+  grunt.registerTask('travis', ['karma', 'scsslint']);
+  grunt.registerTask('build', ['scsslint', 'webpack', 'sass']);
 };
