@@ -20518,7 +20518,8 @@ var ExampleApp =
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
 	        disabled: this.props.disabled,
-	        className: this.props.className }),
+	        className: this.props.className,
+	        title: this.props.title }),
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
@@ -46203,6 +46204,10 @@ var ExampleApp =
 	        event.preventDefault();
 	        this.props.handleEnter();
 	        break;
+	      case 'Escape':
+	        event.preventDefault();
+	        this.props.hideCalendar();
+	        break;
 	    }
 	  },
 
@@ -46224,7 +46229,9 @@ var ExampleApp =
 	      onChange: this.handleChange,
 	      className: this.props.className,
 	      placeholder: this.props.placeholderText,
-	      disabled: this.props.disabled });
+	      disabled: this.props.disabled,
+	      title: this.props.title
+	    });
 	  }
 	});
 

@@ -61,6 +61,10 @@ var DateInput = React.createClass({
       event.preventDefault();
       this.props.handleEnter();
       break;
+    case 'Escape':
+      event.preventDefault();
+      this.props.hideCalendar();
+      break;
     }
   },
 
@@ -82,7 +86,9 @@ var DateInput = React.createClass({
       onChange={this.handleChange}
       className={this.props.className}
       placeholder={this.props.placeholderText}
-      disabled={this.props.disabled} />;
+      disabled={this.props.disabled}
+      title={this.props.title}
+      />;
   }
 });
 
