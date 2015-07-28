@@ -1,6 +1,3 @@
-jest.dontMock('../../src/util/date');
-jest.dontMock('moment');
-
 var moment = require('moment');
 var DateUtil = require('../../src/util/date');
 
@@ -10,21 +7,21 @@ describe('DateUtil', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-09'));
 
-      expect(date.isBefore(other_date)).toBe(true);
+      expect(date.isBefore(other_date)).to.eq(true);
     });
 
     it('returns false when the date is after the passed date', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-05'));
 
-      expect(date.isBefore(other_date)).toBe(false);
+      expect(date.isBefore(other_date)).to.eq(false);
     });
 
     it('returns false when the passed date is the same day', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.isBefore(other_date)).toBe(false);
+      expect(date.isBefore(other_date)).to.eq(false);
     });
   });
 
@@ -33,21 +30,21 @@ describe('DateUtil', function() {
       var date = new DateUtil(moment('2014-02-09'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.isAfter(other_date)).toBe(true);
+      expect(date.isAfter(other_date)).to.eq(true);
     });
 
     it('returns false when the date is before the passed date', function() {
       var date = new DateUtil(moment('2014-02-05'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.isAfter(other_date)).toBe(false);
+      expect(date.isAfter(other_date)).to.eq(false);
     });
 
     it('returns false when the passed date is the same day', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.isAfter(other_date)).toBe(false);
+      expect(date.isAfter(other_date)).to.eq(false);
     });
   });
 
@@ -56,21 +53,21 @@ describe('DateUtil', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.sameDay(other_date)).toBe(true);
+      expect(date.sameDay(other_date)).to.eq(true);
     });
 
     it('returns true when the passed date is within the same day', function() {
       var date = new DateUtil(moment('2014-02-08 03:30'));
       var other_date = new DateUtil(moment('2014-02-08 09:30'));
 
-      expect(date.sameDay(other_date)).toBe(true);
+      expect(date.sameDay(other_date)).to.eq(true);
     });
 
     it('returns false when the passed date is not the same day', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-09'));
 
-      expect(date.sameDay(other_date)).toBe(false);
+      expect(date.sameDay(other_date)).to.eq(false);
     });
   });
 
@@ -79,21 +76,21 @@ describe('DateUtil', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.sameMonth(other_date)).toBe(true);
+      expect(date.sameMonth(other_date)).to.eq(true);
     });
 
     it('returns true when the passed date is within the same month', function() {
       var date = new DateUtil(moment('2014-02-08 03:30'));
       var other_date = new DateUtil(moment('2014-02-10 09:30'));
 
-      expect(date.sameMonth(other_date)).toBe(true);
+      expect(date.sameMonth(other_date)).to.eq(true);
     });
 
     it('returns false when the passed date is not the same day', function() {
       var date = new DateUtil(moment('2014-02-08'));
       var other_date = new DateUtil(moment('2014-03-08'));
 
-      expect(date.sameMonth(other_date)).toBe(false);
+      expect(date.sameMonth(other_date)).to.eq(false);
     });
   });
 
@@ -101,7 +98,7 @@ describe('DateUtil', function() {
     it('returns the day of the month', function() {
       var date = new DateUtil(moment('2014-02-08'));
 
-      expect(date.day()).toBe(8);
+      expect(date.day()).to.eq(8);
     });
   });
 
@@ -111,40 +108,36 @@ describe('DateUtil', function() {
         'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
       ];
 
-      it('when the date is a monday', function() {
+      it('when the date is a monday', function(done) {
         var date = new DateUtil(moment('2014-10-13'));
         var callbackCounter = 0;
         var callback = function(dayOfTheWeek) {
           expect(dayOfTheWeek.moment().format('ddd'))
-            .toBe(daysOfTheWeek[callbackCounter]);
+            .to.eq(daysOfTheWeek[callbackCounter]);
           callbackCounter++;
+
+          if (callbackCounter === 7) {
+            done();
+          }
         };
 
-        runs(function(){
-          date.mapDaysInWeek(callback);
-        });
-
-        waitsFor(function(){
-          return callbackCounter === 7;
-        }, 'Callback not called 7 times', 1000);
+        date.mapDaysInWeek(callback);
       });
 
-      it('when the date is a sunday', function() {
+      it('when the date is a sunday', function(done) {
         var date = new DateUtil(moment('2014-10-20'));
         var callbackCounter = 0;
         var callback = function(dayOfTheWeek) {
           expect(dayOfTheWeek.moment().format('ddd'))
-            .toBe(daysOfTheWeek[callbackCounter]);
+            .to.eq(daysOfTheWeek[callbackCounter]);
           callbackCounter++;
+
+          if (callbackCounter === 7) {
+            done();
+          }
         };
 
-        runs(function(){
-          date.mapDaysInWeek(callback);
-        });
-
-        waitsFor(function(){
-          return callbackCounter === 7;
-        }, 'Callback not called 7 times', 1000);
+        date.mapDaysInWeek(callback);
       });
     });
   });
@@ -154,15 +147,15 @@ describe('DateUtil', function() {
       var date = moment('2014-02-08');
       var clonedDate = new DateUtil(date).safeClone();
 
-      expect(clonedDate._date).toNotBe(date);
-      expect(clonedDate._date._i).toBe(date._i);
+      expect(clonedDate._date).to.not.eq(date);
+      expect(clonedDate._date._i).to.eq(date._i);
     });
 
     it('should return a null _date if original date is undefined and no alternative is provided', function() {
       var date = undefined;
       var clonedDate = new DateUtil(date).safeClone();
 
-      expect(clonedDate._date).toBe(null);
+      expect(clonedDate._date).to.eq(null);
     });
 
     it('should return an alternative _date if original date is undefined and an alternative is provided', function() {
@@ -170,7 +163,7 @@ describe('DateUtil', function() {
       var alternative = moment();
       var clonedDate = new DateUtil(date).safeClone(alternative);
 
-      expect(clonedDate._date).toBe(alternative);
+      expect(clonedDate._date).to.eq(alternative);
     });
   });
 });
