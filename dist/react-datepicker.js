@@ -109,11 +109,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this), 0);
 	  },
 
-	  cancelDateChange: function cancelDateChange() {
-	    this.hideCalendar();
-	    return true;
-	  },
-
 	  handleSelect: function handleSelect(date) {
 	    this.setSelected(date);
 
@@ -180,7 +175,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onFocus: this.handleFocus,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
-	        handleEscape: this.cancelDateChange,
 	        setSelected: this.setSelected,
 	        clearSelected: this.clearSelected,
 	        hideCalendar: this.hideCalendar,
@@ -363,7 +357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
@@ -415,13 +409,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_4__;
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -519,13 +513,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
 
 /***/ },
 /* 7 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
@@ -611,7 +605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 9 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
 
@@ -687,12 +681,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        break;
 	      case 'Escape':
 	        event.preventDefault();
-	        if (this.props.handleEscape()) {
-	          this.setState({
-	            value: this.safeDateFormat(this.props.date)
-	          });
-	          this.props.setSelected(new DateUtil(this.props.date));
-	        }
+	        this.props.hideCalendar();
 	        break;
 	    }
 	  },

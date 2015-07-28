@@ -63,12 +63,7 @@ var DateInput = React.createClass({
       break;
     case 'Escape':
       event.preventDefault();
-      if (this.props.handleEscape()){
-        this.setState({
-        value: this.safeDateFormat(this.props.date)
-        });
-        this.props.setSelected(new DateUtil(this.props.date));
-      }
+      this.props.hideCalendar();
       break;
     }
   },
