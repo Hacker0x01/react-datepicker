@@ -20293,8 +20293,8 @@ var ExampleApp =
 	      bound_date: null,
 	      example5Selected: null,
 	      example6Selected: null,
-	      example7Selected: null,
-	      example8Selected: moment()
+	      example8Selected: moment(),
+	      example9Selected: null
 	    };
 	  },
 
@@ -20334,24 +20334,24 @@ var ExampleApp =
 	    });
 	  },
 
-	  handleExample7Change: function handleExample7Change(date) {
+	  handleClearButtonClick: function handleClearButtonClick() {
+	    this.setState({
+	      example8Selected: null
+	    });
+	  },
+
+	  handleExample9Change: function handleExample9Change(date) {
 	    this.setState({
 	      example7Selected: date
 	    });
 	  },
 
-	  handleExample7Blur: function handleExample7Blur(date) {
+	  handleExample9Blur: function handleExample9Blur(date) {
 	    if (date === null) {
 	      console.log('selected date: %s', date);
 	    } else {
 	      console.log('selected date: %s', date.format('DD/MM/YYYY'));
 	    }
-	  },
-
-	  handleClearButtonClick: function handleClearButtonClick() {
-	    this.setState({
-	      example8Selected: null
-	    });
 	  },
 
 	  render: function render() {
@@ -20399,10 +20399,10 @@ var ExampleApp =
 	      }),
 	      React.createElement(DatePicker, {
 	        key: 'example7',
-	        selected: this.state.example7Selected,
-	        onChange: this.handleExample7Change,
-	        onBlur: this.handleExample7Blur,
-	        placeholderText: 'View blur callbacks in console'
+	        selected: null,
+	        onChange: this.handleStartDateChange,
+	        disabled: true,
+	        placeholderText: 'This is disabled'
 	      }),
 	      React.createElement(DatePicker, {
 	        key: 'example8',
@@ -20412,7 +20412,14 @@ var ExampleApp =
 	        'button',
 	        { onClick: this.handleClearButtonClick },
 	        'Clear'
-	      )
+	      ),
+	      React.createElement(DatePicker, {
+	        key: 'example9',
+	        selected: this.state.example9Selected,
+	        onChange: this.handleExample9Change,
+	        onBlur: this.handleExample9Blur,
+	        placeholderText: 'View blur callbacks in console'
+	      })
 	    );
 	  }
 	});
