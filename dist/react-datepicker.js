@@ -70,7 +70,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
 	    dateFormatCalendar: React.PropTypes.string,
-	    onChange: React.PropTypes.func.isRequired
+	    onChange: React.PropTypes.func.isRequired,
+	    onBlur: React.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -87,6 +88,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getInitialState: function getInitialState() {
 	    return {
 	      focus: false,
+	      virtualFocus: false,
 	      selected: this.props.selected
 	    };
 	  },
@@ -105,6 +107,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setState({
 	      focus: true
 	    });
+	  },
+
+	  handleBlur: function handleBlur() {
+	    this.setState({ virtualFocus: false });
+	    setTimeout((function () {
+	      if (!this.state.virtualFocus && typeof this.props.onBlur === 'function') {
+	        this.props.onBlur(this.state.selected);
+	        this.hideCalendar();
+	      }
+	    }).bind(this), 200);
 	  },
 
 	  hideCalendar: function hideCalendar() {
@@ -129,7 +141,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.props.onChange(moment);
 
 	    this.setState({
-	      selected: moment
+	      selected: moment,
+	      virtualFocus: true
 	    });
 	  },
 
@@ -143,7 +156,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  onInputClick: function onInputClick() {
 	    this.setState({
-	      focus: true
+	      focus: true,
+	      virtualFocus: true
 	    });
 	  },
 
@@ -179,6 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
@@ -631,7 +646,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      dateFormat: 'YYYY-MM-DD',
-	      className: 'datepicker__input'
+	      className: 'datepicker__input',
+	      onBlur: function onBlur() {}
 	    };
 	  },
 
@@ -707,12 +723,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
+	      onBlur: this.props.onBlur,
 	      onChange: this.handleChange,
-	      className: this.props.className,
-	      placeholder: this.props.placeholderText,
-	      disabled: this.props.disabled,
-	      title: this.props.title
-	    });
+	      className: 'datepicker__input',
+	      placeholder: this.props.placeholderText });
 	  }
 	});
 

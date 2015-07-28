@@ -20293,6 +20293,7 @@ var ExampleApp =
 	      bound_date: null,
 	      example5Selected: null,
 	      example6Selected: null,
+	      example7Selected: null,
 	      example8Selected: moment()
 	    };
 	  },
@@ -20331,6 +20332,20 @@ var ExampleApp =
 	    this.setState({
 	      example6Selected: date
 	    });
+	  },
+
+	  handleExample7Change: function handleExample7Change(date) {
+	    this.setState({
+	      example7Selected: date
+	    });
+	  },
+
+	  handleExample7Blur: function handleExample7Blur(date) {
+	    if (date === null) {
+	      console.log('selected date: %s', date);
+	    } else {
+	      console.log('selected date: %s', date.format('DD/MM/YYYY'));
+	    }
 	  },
 
 	  handleClearButtonClick: function handleClearButtonClick() {
@@ -20384,10 +20399,10 @@ var ExampleApp =
 	      }),
 	      React.createElement(DatePicker, {
 	        key: 'example7',
-	        selected: null,
-	        onChange: this.handleStartDateChange,
-	        disabled: true,
-	        placeholderText: 'This is disabled'
+	        selected: this.state.example7Selected,
+	        onChange: this.handleExample7Change,
+	        onBlur: this.handleExample7Blur,
+	        placeholderText: 'View blur callbacks in console'
 	      }),
 	      React.createElement(DatePicker, {
 	        key: 'example8',
@@ -20424,7 +20439,8 @@ var ExampleApp =
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
 	    dateFormatCalendar: React.PropTypes.string,
-	    onChange: React.PropTypes.func.isRequired
+	    onChange: React.PropTypes.func.isRequired,
+	    onBlur: React.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -20441,6 +20457,7 @@ var ExampleApp =
 	  getInitialState: function getInitialState() {
 	    return {
 	      focus: false,
+	      virtualFocus: false,
 	      selected: this.props.selected
 	    };
 	  },
@@ -20459,6 +20476,16 @@ var ExampleApp =
 	    this.setState({
 	      focus: true
 	    });
+	  },
+
+	  handleBlur: function handleBlur() {
+	    this.setState({ virtualFocus: false });
+	    setTimeout((function () {
+	      if (!this.state.virtualFocus && typeof this.props.onBlur === 'function') {
+	        this.props.onBlur(this.state.selected);
+	        this.hideCalendar();
+	      }
+	    }).bind(this), 200);
 	  },
 
 	  hideCalendar: function hideCalendar() {
@@ -20483,7 +20510,8 @@ var ExampleApp =
 	    this.props.onChange(moment);
 
 	    this.setState({
-	      selected: moment
+	      selected: moment,
+	      virtualFocus: true
 	    });
 	  },
 
@@ -20497,7 +20525,8 @@ var ExampleApp =
 
 	  onInputClick: function onInputClick() {
 	    this.setState({
-	      focus: true
+	      focus: true,
+	      virtualFocus: true
 	    });
 	  },
 
@@ -20533,6 +20562,7 @@ var ExampleApp =
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
@@ -46172,7 +46202,8 @@ var ExampleApp =
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      dateFormat: 'YYYY-MM-DD',
-	      className: 'datepicker__input'
+	      className: 'datepicker__input',
+	      onBlur: function onBlur() {}
 	    };
 	  },
 
@@ -46248,12 +46279,10 @@ var ExampleApp =
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
+	      onBlur: this.props.onBlur,
 	      onChange: this.handleChange,
-	      className: this.props.className,
-	      placeholder: this.props.placeholderText,
-	      disabled: this.props.disabled,
-	      title: this.props.title
-	    });
+	      className: 'datepicker__input',
+	      placeholder: this.props.placeholderText });
 	  }
 	});
 
