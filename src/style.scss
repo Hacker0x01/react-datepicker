@@ -15,7 +15,7 @@ html, body {
   line-height: 21px;
 
   input {
-    width: 350px;
+    width: 100%;
   }
 }
 
@@ -28,6 +28,7 @@ html, body {
 
 .example {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .column {
@@ -39,11 +40,5 @@ html, body {
 
   &:first-child {
     margin-right: 20px;
-  }
-}
-
-.documentation__example {
-  p {
-    margin-bottom: 1em;
   }
 }
