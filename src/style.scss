@@ -1,0 +1,72 @@
+@import 'reset';
+@import 'topbar';
+
+%container-styling {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@mixin clearfix {
+  zoom: 1;
+
+  &:before,
+  &:after {
+    content: " ";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+html, body {
+  height: 100%;
+  background: #f5f5f5;
+  font-family: "Open Sans", Arial, sans-serif;
+  color: #555;
+  font-size: 13px;
+  line-height: 21px;
+}
+
+.wrapper {
+  @extend %container-styling;
+  height: 100%;
+  position: relative;
+  padding-top: 100px;
+}
+
+.row {
+  @include clearfix;
+
+  .col {
+    float: left;
+  }
+}
+
+.row--20 {
+  margin-left: -20px;
+
+  .col {
+    padding-left: 20px;
+  }
+}
+
+.col--one-half {
+  width: percentage(1 / 2);
+}
+
+.col {
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #e4e4e4;
+  padding: 20px;
+}
+
+.documentation__example {
+  p {
+    margin-bottom: 1em;
+  }
+}
