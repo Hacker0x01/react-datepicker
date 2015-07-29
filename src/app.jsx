@@ -81,7 +81,9 @@ var exampleComponent = React.createClass({
     return <div>
       <h2 className="example__heading">Default</h2>
       <div className="example">
-        <div className="column"></div>
+        <div className="column">
+          Here comes the code
+        </div>
         <div className="column">
           <DatePicker
             key="example1"
