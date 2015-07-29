@@ -54,6 +54,13 @@ module.exports = function( grunt ) {
         tasks: [ "sass" ]
       },
 
+      karma: {
+        files: [
+          "{src,test}/**/*.{js,jsx}"
+        ],
+        tasks: [ "karma" ]
+      },
+
       webpack: {
         files: [ "src/**/*.js", "src/**/*.jsx" ],
         tasks: [ "webpack" ]
