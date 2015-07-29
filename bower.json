@@ -23,8 +23,8 @@
   "dependencies": {
     "react": "< 0.14",
     "moment": "2.8.2",
-    "tether": "0.6.5",
-    "react-onclickoutside": "0.2.1"
+    "tether": "1.0.1",
+    "react-onclickoutside": "0.2.2"
   },
   "ignore": [
     "**/.*",
