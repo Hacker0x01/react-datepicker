@@ -79,6 +79,7 @@ var exampleComponent = React.createClass({
 
   render: function() {
     return <div>
+      <h2 className="example__heading">Default</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -90,6 +91,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Custom dateFormat</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -102,6 +104,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Placeholder text</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -114,6 +117,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Specific date range</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -128,6 +132,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Custom start date</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -141,6 +146,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Exclude dates</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -154,6 +160,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Disable dates</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -167,6 +174,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">Clear from external component</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
@@ -178,6 +186,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
+      <h2 className="example__heading">onBlur callbacks in console</h2>
       <div className="example">
         <div className="column"></div>
         <div className="column">
