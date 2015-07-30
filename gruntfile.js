@@ -96,29 +96,6 @@ module.exports = function( grunt ) {
     },
 
     webpack: {
-      example: {
-        entry: "./example/boot",
-        output: {
-          filename: "example.js",
-          library: "ExampleApp",
-          path: "./example/"
-        },
-        resolve: {
-          extensions: [ "", ".js", ".jsx" ]
-        },
-        module: {
-          loaders: [
-            { test: /\.js/, loaders: [ "babel?stage=0" ], exclude: /node_modules/ }
-          ]
-        },
-        node: { Buffer: false },
-        plugins: [
-          new webpack.optimize.DedupePlugin(),
-          new webpack.DefinePlugin( {
-            "process.env.NODE_ENV": JSON.stringify( process.env.NODE_ENV )
-          } )
-        ]
-      },
       unmin: mergeWebpackConfig( {
         output: {
           filename: "react-datepicker.js"
