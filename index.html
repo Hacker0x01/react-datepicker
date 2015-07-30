@@ -1,25 +1,24 @@
 <html>
   <head>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <title>HackerOne ReactJS DatePicker</title>
   </head>
 
-  <style>
-    # this fixed an conflict with the height of the datepicker:
-      https://github.com/Hacker0x01/react-datepicker/issues/30
-    body {
-      min-height: 500px;
-    }
-    input {
-      width: 350px;
-    }
-  </style>
-
   <body>
-    <h1>ReactJS DatePicker Example</h1>
+    <div class="topbar">
+      <div class="topbar__wrapper">
+        <div class="topbar__logo">
+          HackerOne ReactJS DatePicker
+        </div>
+      </div>
+    </div>
 
-    <div id="datepicker-region"></div>
+    <div class="wrapper">
+      <div id="datepicker-region"></div>
+    </div>
+
     <!-- vendors -->
     <script src="bundle.js" type="text/javascript"></script>
-
   </body>
 </html>
