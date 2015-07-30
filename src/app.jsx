@@ -79,7 +79,7 @@ var exampleComponent = React.createClass({
 
   render: function() {
     return <div>
-      <h2 className="example__heading">Default</h2>
+      <h2 className="heading">Default</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -95,7 +95,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Custom dateFormat</h2>
+      <h2 className="heading">Custom dateFormat</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -113,7 +113,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Placeholder text</h2>
+      <h2 className="heading">Placeholder text</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -131,7 +131,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Specific date range</h2>
+      <h2 className="heading">Specific date range</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -153,7 +153,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Custom start date</h2>
+      <h2 className="heading">Custom start date</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -173,7 +173,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Exclude dates</h2>
+      <h2 className="heading">Exclude dates</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -193,7 +193,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Disable dates</h2>
+      <h2 className="heading">Disable dates</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -214,7 +214,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">Clear from external component</h2>
+      <h2 className="heading">Clear from external component</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -232,7 +232,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="example__heading">onBlur callbacks in console</h2>
+      <h2 className="heading">onBlur callbacks in console</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />

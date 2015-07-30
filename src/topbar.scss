@@ -1,4 +1,4 @@
-.topbar__wrapper {
+.topbar {
   position: fixed;
   z-index: 5;
   width: 100%;
@@ -6,7 +6,7 @@
   background-color: #216ba5;
 }
 
-.topbar {
+.topbar_wrapper {
   @extend %container-styling;
   color: #fff;
 }
