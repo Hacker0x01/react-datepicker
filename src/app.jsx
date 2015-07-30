@@ -193,7 +193,7 @@ var exampleComponent = React.createClass({
         </div>
       </div>
 
-      <h2 className="heading">Disable dates</h2>
+      <h2 className="heading">Disabled datepicker</h2>
       <div className="example">
         <div className="column">
           {"<DatePicker"} <br />
@@ -221,7 +221,7 @@ var exampleComponent = React.createClass({
           &nbsp; &nbsp; {"key='example8'"} <br />
           &nbsp; &nbsp; {"selected={this.state.example8Selected} />"}
           <br /><br />
-          {"<button onClick={this.handleClearButtonClick}>Clear</button>"}
+          {"<button onClick={this.handleClearButtonClick}>Clear date input</button>"}
         </div>
         <div className="column">
           <DatePicker
