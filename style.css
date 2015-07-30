@@ -163,3 +163,189 @@
   border-color: #aeaeae;
   box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
 }
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+html {
+  line-height: 1; }
+
+ol,
+ul {
+  list-style: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+q,
+blockquote {
+  quotes: none; }
+
+q:before,
+q:after,
+blockquote:before,
+blockquote:after {
+  content: "";
+  content: none; }
+
+a img {
+  border: none; }
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary {
+  display: block; }
+
+.topbar {
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+  height: 70px;
+  background-color: #216ba5; }
+
+.topbar__wrapper {
+  color: #fff; }
+
+.topbar__logo {
+  margin-top: 25px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75); }
+
+.topbar__wrapper, .wrapper {
+  max-width: 1100px;
+  margin: 0 auto; }
+
+html, body {
+  height: 100%;
+  background: #f5f5f5;
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  font-size: 13px;
+  line-height: 21px; }
+  html input, body input {
+    width: 100%; }
+
+.wrapper {
+  height: 100%;
+  position: relative;
+  padding-top: 100px; }
+
+.example {
+  display: flex;
+  margin-bottom: 20px; }
+
+.column {
+  width: 50%;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #e4e4e4;
+  padding: 20px; }
+  .column:first-child {
+    margin-right: 20px; }
+
+.heading {
+  color: #216ba5;
+  font-weight: 400;
+  font-size: 18px;
+  margin-bottom: 5px; }
