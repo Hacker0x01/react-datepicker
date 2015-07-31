@@ -18,5 +18,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline --no-info",
     "webpack": "webpack"
+  },
+  "dependencies": {
+    "highlight.js": "^8.7.0"
   }
 }

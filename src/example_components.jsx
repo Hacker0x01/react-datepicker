@@ -1,6 +1,7 @@
 var React = require('react');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
+var hljs = require('highlight.js')
 
 var Default = require('./examples/default');
 var CustomDateFormat = require('./examples/custom_date_format');
@@ -69,6 +70,10 @@ exampleComponents = React.createClass({
       component: <OnBlurCallbacks />,
     }
   ],
+
+  componentDidMount: function() {
+    hljs.initHighlightingOnLoad();
+  },
 
   renderExamples: function() {
     return this.examples.map(function(example, index) {
