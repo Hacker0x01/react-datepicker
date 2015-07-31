@@ -87,6 +87,7 @@ var DateInput = React.createClass( {
         onBlur={this.props.onBlur}
         onChange={this.handleChange}
         className="datepicker__input"
+        disabled={this.props.disabled}
         placeholder={this.props.placeholderText} />;
   }
 } );

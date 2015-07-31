@@ -13,4 +13,12 @@ describe( "DateInput", function() {
 
     TestUtils.Simulate.keyDown( dateInput.getDOMNode(), { key: "Enter" } );
   } );
+
+  it( "adds disabled attribute to input field when disabled is passed as prop", function() {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput disabled={true} />
+    );
+
+    expect( dateInput.disabled ).to.not.equal( null );
+  } );
 } );

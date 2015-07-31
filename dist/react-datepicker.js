@@ -730,6 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onBlur: this.props.onBlur,
 	      onChange: this.handleChange,
 	      className: "datepicker__input",
+	      disabled: this.props.disabled,
 	      placeholder: this.props.placeholderText });
 	  }
 	});
