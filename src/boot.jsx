@@ -1,4 +1,6 @@
 var React = require('react');
-var App = require('./app.jsx');
+var ExampleComponents = require('./example_components.jsx');
+var HeroExample = require('./hero_example.jsx');
 
-React.render(<App/>, document.getElementById('datepicker-region'));
+React.render(<ExampleComponents/>, document.getElementById('datepicker-region'));
+React.render(<HeroExample />, document.getElementById('js-hero-example'));
