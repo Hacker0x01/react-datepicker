@@ -72,7 +72,7 @@ exampleComponents = React.createClass({
 
   renderExamples: function() {
     return this.examples.map(function(example, index) {
-      return <CodeExampleComponent id={index} title={example.title}>
+      return <CodeExampleComponent key={"example-" + index} id={index} title={example.title}>
         {example.component}
       </CodeExampleComponent>
     });
@@ -82,7 +82,7 @@ exampleComponents = React.createClass({
     return this.examples.map(function(example, index) {
       var exampleID = "#example-" + index
 
-      return <li className="examples__navigation-item" index={index}>
+      return <li className="examples__navigation-item" key={"link-" + index}>
         <a href={exampleID}>
           {example.title}
         </a>
