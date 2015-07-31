@@ -1,13 +1,18 @@
 .examples__navigation {
-  width: 200px;
-  float: left;
-  list-style: none;
-  margin: 0;
-  border: 1px solid #e4e4e4;
-  background: white;
-  margin-right: 20px;
-  border-radius: 4px;
-  overflow: hidden;
+  display: none;
+
+  @include breakpoint(640px) {
+    width: 200px;
+    float: left;
+    display: block;
+    list-style: none;
+    margin: 0;
+    margin-right: 20px;
+    border: 1px solid #e4e4e4;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+  }
 }
 
 .examples__navigation-item {
@@ -41,6 +46,7 @@
   padding: 20px;
   margin-bottom: 20px;
 
+
   &__heading {
     color: #216ba5;
     font-weight: 400;
@@ -52,14 +58,18 @@
   }
 
   &__code {
+    @include breakpoint(768px) {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-right: 1px solid #d8e4ef;
+      margin-bottom: 0;
+    }
+
     background-color: #f5f8fb;
     padding: 20px;
-    margin: 0 -20px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    margin: 0 -20px 20px;
     border-top: 1px solid #d8e4ef;
     border-bottom: 1px solid #d8e4ef;
-    border-right: 1px solid #d8e4ef;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
