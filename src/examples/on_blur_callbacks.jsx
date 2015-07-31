@@ -29,7 +29,7 @@ var Disabled = React.createClass({
   render: function() {
     return <div className="row">
       <pre className="column example__code">
-        <code>
+        <code className="javascript">
           <strong>
             {"handleOnBlur: function (date) {"}<br />
             &nbsp; &nbsp; {"if (date === null) {"}<br />
