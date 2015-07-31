@@ -8,8 +8,8 @@ var PlaceholderText = React.createClass({
   render: function() {
     return <div className="row">
       <pre className="column example__code">
-        <code className="javascript">
-          {"<DatePicker placeholderText='Click to select a date' />"}
+        <code className="jsx">
+          {"<DatePicker placeholderText=\"Click to select a date\" />"}
         </code>
       </pre>
       <div className="column">

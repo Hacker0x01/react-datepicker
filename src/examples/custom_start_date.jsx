@@ -20,7 +20,7 @@ var CustomStartDate = React.createClass({
   render: function() {
     return <div className="row">
       <pre className="column example__code">
-        <code className="javascript">
+        <code className="jsx">
           {"<DatePicker"}<br />
           &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
           &nbsp; &nbsp; {"onChange={this.handleChange}"}<br />

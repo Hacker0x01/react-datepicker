@@ -20,12 +20,12 @@ var ExcludeDates = React.createClass({
   render: function() {
     return <div className="row">
       <pre className="column example__code">
-        <code className="javascript">
+        <code className="jsx">
           {"<DatePicker"}<br />
           &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
           &nbsp; &nbsp; {"onChange={this.handleChange}"}<br />
           <strong>&nbsp; &nbsp; {"excludeDates={[moment(), moment().subtract(1, 'days')]}"}</strong><br />
-          &nbsp; &nbsp; {"placeholderText='Select a date other than today or yesterday' />"}
+          &nbsp; &nbsp; {"placeholderText=\"Select a date other than today or yesterday\" />"}
         </code>
       </pre>
       <div className="column">

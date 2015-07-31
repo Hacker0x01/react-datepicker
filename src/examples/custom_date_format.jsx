@@ -20,9 +20,9 @@ var CustomDateFormat = React.createClass({
   render: function() {
     return <div className="row">
       <pre className="column example__code">
-        <code className="javascript">
+        <code className="jsx">
           {"<DatePicker"}<br />
-          <strong>&nbsp; &nbsp; {"dateFormat='YYYY/MM/DD'"}</strong><br />
+        <strong>&nbsp; &nbsp; {"dateFormat=\"YYYY/MM/DD\""}</strong><br />
           &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
           &nbsp; &nbsp; {"onChange={this.handleChange} />"}
         </code>
