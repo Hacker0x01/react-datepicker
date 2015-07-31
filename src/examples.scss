@@ -63,6 +63,10 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+    code {
+      background: none;
+      border: 0;
+    }
   }
 }

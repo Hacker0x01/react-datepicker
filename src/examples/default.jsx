@@ -19,11 +19,13 @@ var Default = React.createClass({
 
   render: function() {
     return <div className="row">
-      <div className="column example__code">
-        {"<DatePicker"}<br />
-        &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
-        &nbsp; &nbsp; {"onChange={this.handleChange} />"}
-      </div>
+      <pre className="column example__code">
+        <code className="jsx">
+          {"<DatePicker"}<br />
+          &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
+          &nbsp; &nbsp; {"onChange={this.handleChange} />"}
+        </code>
+      </pre>
       <div className="column">
         <DatePicker
           selected={this.state.startDate}

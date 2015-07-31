@@ -19,10 +19,14 @@ var Disabled = React.createClass({
 
   render: function() {
     return <div className="row">
-      <div className="column example__code">
-        {"<DatePicker selected={this.state.startDate} />"}<br />
-        {"<button onClick={this.handleClearButtonClick}>Clear date input</button>"}
-      </div>
+      <pre className="column example__code">
+        <code className="jsx">
+          {"<DatePicker selected={this.state.startDate} />"}<br />
+          {"<button onClick={this.handleClearButtonClick}>"}<br />
+          &nbsp; &nbsp; {"Clear date input"}<br />
+          {"</button>"}
+        </code>
+      </pre>
       <div className="column">
         <DatePicker selected={this.state.startDate} />
         <button onClick={this.handleClearButtonClick}>Clear</button>
