@@ -77,9 +77,11 @@
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var App = __webpack_require__(157);
+	var ExampleComponents = __webpack_require__(157);
+	var HeroExample = __webpack_require__(261);
 
-	React.render(React.createElement(App, null), document.getElementById('datepicker-region'));
+	React.render(React.createElement(ExampleComponents, null), document.getElementById('datepicker-region'));
+	React.render(React.createElement(HeroExample, null), document.getElementById('js-hero-example'));
 
 /***/ },
 /* 2 */
@@ -20308,81 +20310,96 @@
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var DatePicker = __webpack_require__(158);
-	var moment = __webpack_require__(159);
-	__webpack_require__(250);
-	__webpack_require__(251);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
 
-	var exampleComponent = React.createClass({
-	  displayName: 'exampleComponent',
+	var Default = __webpack_require__(251);
+	var CustomDateFormat = __webpack_require__(252);
+	var PlaceholderText = __webpack_require__(253);
+	var SpecificDateRange = __webpack_require__(254);
+	var CustomStartDate = __webpack_require__(158);
+	var ExcludeDates = __webpack_require__(255);
+	var Disabled = __webpack_require__(256);
+	var ClearInput = __webpack_require__(257);
+	var OnBlurCallbacks = __webpack_require__(258);
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      start_date: moment(),
-	      end_date: moment(),
-	      new_date: null,
-	      bound_date: null,
-	      example5Selected: null,
-	      example6Selected: null,
-	      example8Selected: moment(),
-	      example9Selected: null
-	    };
-	  },
+	__webpack_require__(259);
+	__webpack_require__(260);
 
-	  handleStartDateChange: function handleStartDateChange(date) {
-	    this.setState({
-	      start_date: date
+	var CodeExampleComponent = React.createClass({
+	  displayName: 'CodeExampleComponent',
+
+	  render: function render() {
+	    var exampleID = "example-" + this.props.id;
+
+	    return React.createElement(
+	      'div',
+	      { key: this.props.id, id: exampleID, className: "example" },
+	      React.createElement(
+	        'h2',
+	        { className: "example__heading" },
+	        this.props.title
+	      ),
+	      this.props.children
+	    );
+	  }
+	}),
+	    exampleComponents = React.createClass({
+	  displayName: 'exampleComponents',
+
+	  examples: [{
+	    title: 'Default',
+	    component: React.createElement(Default, null)
+	  }, {
+	    title: 'Custom date format',
+	    component: React.createElement(CustomDateFormat, null)
+	  }, {
+	    title: 'Placeholder text',
+	    component: React.createElement(PlaceholderText, null)
+	  }, {
+	    title: 'Specific date range',
+	    component: React.createElement(SpecificDateRange, null)
+	  }, {
+	    title: 'Custom start date',
+	    component: React.createElement(CustomStartDate, null)
+	  }, {
+	    title: 'Exclude dates',
+	    component: React.createElement(ExcludeDates, null)
+	  }, {
+	    title: 'Disable datepicker',
+	    component: React.createElement(Disabled, null)
+	  }, {
+	    title: 'Clear datepicker input',
+	    component: React.createElement(ClearInput, null)
+	  }, {
+	    title: 'onBlur callbacks in console',
+	    component: React.createElement(OnBlurCallbacks, null)
+	  }],
+
+	  renderExamples: function renderExamples() {
+	    return this.examples.map(function (example, index) {
+	      return React.createElement(
+	        CodeExampleComponent,
+	        { id: index, title: example.title },
+	        example.component
+	      );
 	    });
 	  },
 
-	  handleEndDateChange: function handleEndDateChange(date) {
-	    this.setState({
-	      end_date: date
-	    });
-	  },
+	  renderLeftColumn: function renderLeftColumn() {
+	    return this.examples.map(function (example, index) {
+	      var exampleID = "#example-" + index;
 
-	  handleNewDateChange: function handleNewDateChange(date) {
-	    this.setState({
-	      new_date: date
+	      return React.createElement(
+	        'li',
+	        { className: "examples__navigation-item", index: index },
+	        React.createElement(
+	          'a',
+	          { href: exampleID },
+	          example.title
+	        )
+	      );
 	    });
-	  },
-
-	  handleBoundDateChange: function handleBoundDateChange(date) {
-	    this.setState({
-	      bound_date: date
-	    });
-	  },
-
-	  handleExample5Change: function handleExample5Change(date) {
-	    this.setState({
-	      example5Selected: date
-	    });
-	  },
-
-	  handleExample6Change: function handleExample6Change(date) {
-	    this.setState({
-	      example6Selected: date
-	    });
-	  },
-
-	  handleClearButtonClick: function handleClearButtonClick() {
-	    this.setState({
-	      example8Selected: null
-	    });
-	  },
-
-	  handleExample9Change: function handleExample9Change(date) {
-	    this.setState({
-	      example9Selected: date
-	    });
-	  },
-
-	  handleExample9Blur: function handleExample9Blur(date) {
-	    if (date === null) {
-	      console.log('selected date: %s', date);
-	    } else {
-	      console.log('selected date: %s', date.format('DD/MM/YYYY'));
-	    }
 	  },
 
 	  render: function render() {
@@ -20390,395 +20407,99 @@
 	      'div',
 	      null,
 	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Default'
+	        'h1',
+	        null,
+	        'Examples'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: "examples__navigation" },
+	        this.renderLeftColumn()
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          " key='example1'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.start_date}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleStartDateChange} />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example1",
-	            selected: this.state.start_date,
-	            onChange: this.handleStartDateChange })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Custom dateFormat'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example2'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "dateFormat='YYYY/MM/DD'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.end_date}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleEndDateChange} />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example2",
-	            dateFormat: "YYYY/MM/DD",
-	            selected: this.state.end_date,
-	            onChange: this.handleEndDateChange })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Placeholder text'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example3'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.new_date}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleNewDateChange}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='Click to select a date'",
-	          ' />'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example3",
-	            selected: this.state.new_date,
-	            onChange: this.handleNewDateChange,
-	            placeholderText: "Click to select a date" })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Specific date range'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example4'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.bound_date}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleBoundDateChange}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "minDate={moment()}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "maxDate={moment().add(5, 'days')}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='Select a date between today and 5 days in the future' />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example4",
-	            selected: this.state.bound_date,
-	            onChange: this.handleBoundDateChange,
-	            minDate: moment(),
-	            maxDate: moment().add(5, 'days'),
-	            placeholderText: "Select a date between today and 5 days in the future" })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Custom start date'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example5'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.example5Selected}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleExample5Change}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "weekStart='0'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='I start on Sunday!' />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example5",
-	            selected: this.state.example5Selected,
-	            onChange: this.handleExample5Change,
-	            weekStart: "0",
-	            placeholderText: "I start on Sunday!" })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Exclude dates'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example6'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.example6Selected}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleExample6Change}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "excludeDates={[moment(), moment().subtract(1, 'days')]}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='Select a date other than today or yesterday' />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example6",
-	            selected: this.state.example6Selected,
-	            onChange: this.handleExample6Change,
-	            excludeDates: [moment(), moment().subtract(1, 'days')],
-	            placeholderText: "Select a date other than today or yesterday" })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Disable dates'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example7'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={null}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleStartDateChange}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "disabled={true}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='This is disabled'",
-	          '/>'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example7",
-	            selected: null,
-	            onChange: this.handleStartDateChange,
-	            disabled: true,
-	            placeholderText: "This is disabled" })
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'Clear from external component'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example8'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.example8Selected} />",
-	          React.createElement('br', null),
-	          React.createElement('br', null),
-	          "<button onClick={this.handleClearButtonClick}>Clear</button>"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example8",
-	            selected: this.state.example8Selected }),
-	          React.createElement(
-	            'button',
-	            { onClick: this.handleClearButtonClick },
-	            'Clear'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'h2',
-	        { className: "heading" },
-	        'onBlur callbacks in console'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: "example" },
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          "<DatePicker",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "key='example9'",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "selected={this.state.example9Selected}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onChange={this.handleExample9Change}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "onBlur={this.handleExample9Blur}",
-	          ' ',
-	          React.createElement('br', null),
-	          '    ',
-	          "placeholderText='View blur callbacks in console' />"
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: "column" },
-	          React.createElement(DatePicker, {
-	            key: "example9",
-	            selected: this.state.example9Selected,
-	            onChange: this.handleExample9Change,
-	            onBlur: this.handleExample9Blur,
-	            placeholderText: "View blur callbacks in console" })
-	        )
+	        { className: "examples" },
+	        this.renderExamples()
 	      )
 	    );
 	  }
 	});
 
-	module.exports = exampleComponent;
+	module.exports = exampleComponents;
 
 /***/ },
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(e,t){ true?module.exports=t(__webpack_require__(2),__webpack_require__(247),__webpack_require__(159),__webpack_require__(248),__webpack_require__(249)):"function"==typeof define&&define.amd?define(["react","tether","moment","lodash","react-onclickoutside"],t):"object"==typeof exports?exports.DatePicker=t(require("react"),require("tether"),require("moment"),require("lodash"),require("react-onclickoutside")):e.DatePicker=t(e.React,e.Tether,e.moment,e._,e.OnClickOutside)}(this,function(e,t,n,s,a){return function(e){function t(s){if(n[s])return n[s].exports;var a=n[s]={exports:{},id:s,loaded:!1};return e[s].call(a.exports,a,a.exports,t),a.loaded=!0,a.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){"use strict";var s=n(1),a=n(2),o=(n(4),n(5)),r=n(10),i=n(7),c=n(8),p=s.createClass({displayName:"DatePicker",propTypes:{weekdays:s.PropTypes.arrayOf(s.PropTypes.string),locale:s.PropTypes.string,dateFormatCalendar:s.PropTypes.string,onChange:s.PropTypes.func.isRequired,onBlur:s.PropTypes.func},getDefaultProps:function(){return{weekdays:["Su","Mo","Tu","We","Th","Fr","Sa"],locale:"en",dateFormatCalendar:"MMMM YYYY",moment:i,onChange:function(){},disabled:!1}},getInitialState:function(){return{focus:!1,virtualFocus:!1,selected:this.props.selected}},componentWillReceiveProps:function(e){this.setState({selected:e.selected})},shouldComponentUpdate:function(e,t){return!(c.isEqual(e,this.props)&&c.isEqual(t,this.state))},getValue:function(){return this.state.selected},handleFocus:function(){this.setState({focus:!0})},handleBlur:function(){this.setState({virtualFocus:!1}),setTimeout(function(){this.state.virtualFocus||"function"!=typeof this.props.onBlur||(this.props.onBlur(this.state.selected),this.hideCalendar())}.bind(this),200)},hideCalendar:function(){setTimeout(function(){this.setState({focus:!1})}.bind(this),0)},handleSelect:function(e){this.setSelected(e),setTimeout(function(){this.hideCalendar()}.bind(this),200)},setSelected:function(e){var t=e.moment();this.props.onChange(t),this.setState({selected:t,virtualFocus:!0})},clearSelected:function(){this.props.onChange(null),this.setState({selected:null})},onInputClick:function(){this.setState({focus:!0,virtualFocus:!0})},calendar:function(){return this.state.focus?s.createElement(a,null,s.createElement(o,{weekdays:this.props.weekdays,locale:this.props.locale,moment:this.props.moment,dateFormat:this.props.dateFormatCalendar,selected:this.state.selected,onSelect:this.handleSelect,hideCalendar:this.hideCalendar,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,weekStart:this.props.weekStart})):void 0},render:function(){return s.createElement("div",null,s.createElement(r,{name:this.props.name,date:this.state.selected,dateFormat:this.props.dateFormat,focus:this.state.focus,onFocus:this.handleFocus,onBlur:this.handleBlur,handleClick:this.onInputClick,handleEnter:this.hideCalendar,setSelected:this.setSelected,clearSelected:this.clearSelected,hideCalendar:this.hideCalendar,placeholderText:this.props.placeholderText,disabled:this.props.disabled,className:this.props.className,title:this.props.title}),this.props.disabled?null:this.calendar())}});e.exports=p},function(t,n){t.exports=e},function(e,t,n){"use strict";var s=n(1),a=s.createClass({displayName:"Popover",componentWillMount:function(){var e=document.createElement("span");e.className="datepicker__container",this._popoverElement=e,document.querySelector("body").appendChild(this._popoverElement)},componentDidMount:function(){this._renderPopover()},componentDidUpdate:function(){this._renderPopover()},_popoverComponent:function(){var e=this.props.className;return s.createElement("div",{className:e},this.props.children)},_tetherOptions:function(){return{element:this._popoverElement,target:this.getDOMNode().parentElement,attachment:"top left",targetAttachment:"bottom left",targetOffset:"10px 0",optimizations:{moveElement:!1},constraints:[{to:"window",attachment:"together"}]}},_renderPopover:function(){if(s.render(this._popoverComponent(),this._popoverElement),null!=this._tether)this._tether.setOptions(this._tetherOptions());else if(window&&document){var e=n(3);this._tether=new e(this._tetherOptions())}},componentWillUnmount:function(){this._tether.destroy(),s.unmountComponentAtNode(this._popoverElement),this._popoverElement.parentNode&&this._popoverElement.parentNode.removeChild(this._popoverElement)},render:function(){return s.createElement("span",null)}});e.exports=a},function(e,n){e.exports=t},function(e,t){"use strict";function n(e){this._date=e}n.prototype.isBefore=function(e){return this._date.isBefore(e._date,"day")},n.prototype.isAfter=function(e){return this._date.isAfter(e._date,"day")},n.prototype.sameDay=function(e){return this._date.isSame(e._date,"day")},n.prototype.sameMonth=function(e){return this._date.isSame(e._date,"month")},n.prototype.day=function(){return this._date.date()},n.prototype.mapDaysInWeek=function(e){for(var t=[],s=this._date.clone(),a=0;7>a;a++){var o=new n(s.clone().add(a,"days"));t[a]=e(o,a)}return t},n.prototype.mapWeeksInMonth=function(e){for(var t=[],s=this._date.clone().startOf("month").startOf("week"),a=0;6>a;a++){var o=new n(s.clone().add(a,"weeks"));t[a]=e(o,a)}return t},n.prototype.weekInMonth=function(e){var t=this._date.clone(),n=this._date.clone().weekday(7);return t.isSame(e._date,"month")||n.isSame(e._date,"month")},n.prototype.format=function(){return this._date.format.apply(this._date,arguments)},n.prototype.localeFormat=function(){var e=Array.prototype.slice.call(arguments),t=e.shift();return this._date.locale(t).format.apply(this._date,e)},n.prototype.addMonth=function(){return new n(this._date.clone().add(1,"month"))},n.prototype.subtractMonth=function(){return new n(this._date.clone().subtract(1,"month"))},n.prototype.clone=function(){return new n(this._date.clone())},n.prototype.safeClone=function(e){return this._date?this.clone():(void 0===e&&(e=null),new n(e))},n.prototype.moment=function(){return this._date},e.exports=n},function(e,t,n){"use strict";var s=n(1),a=n(6),o=n(4),r=n(8),i=s.createClass({displayName:"Calendar",mixins:[n(9)],handleClickOutside:function(){this.props.hideCalendar()},getInitialState:function(){return{date:new o(this.props.selected).safeClone(this.props.moment())}},getDefaultProps:function(){return{weekStart:1}},componentWillMount:function(){this.initializeMomentLocale()},componentWillReceiveProps:function(e){null!==e.selected&&e.selected!==this.props.selected&&this.setState({date:new o(e.selected).clone()})},initializeMomentLocale:function(){var e=this.props.weekdays.slice(0);e=e.concat(e.splice(0,this.props.weekStart)),this.props.moment.locale(this.props.locale,{week:{dow:this.props.weekStart},weekdaysMin:e})},increaseMonth:function(){this.setState({date:this.state.date.addMonth()})},decreaseMonth:function(){this.setState({date:this.state.date.subtractMonth()})},weeks:function(){return this.state.date.mapWeeksInMonth(this.renderWeek)},handleDayClick:function(e){this.props.onSelect(e)},renderWeek:function(e,t){return e.weekInMonth(this.state.date)?s.createElement("div",{key:t},this.days(e)):void 0},renderDay:function(e,t){var n,i,c=new o(this.props.minDate).safeClone(),p=new o(this.props.maxDate).safeClone();return this.props.excludeDates&&Array.isArray(this.props.excludeDates)&&(n=r(this.props.excludeDates).map(function(e){return new o(e).safeClone()})),i=e.isBefore(c)||e.isAfter(p)||r(n).some(function(t){return e.sameDay(t)}),s.createElement(a,{key:t,day:e,date:this.state.date,onClick:this.handleDayClick.bind(this,e),selected:new o(this.props.selected),disabled:i})},days:function(e){return e.mapDaysInWeek(this.renderDay)},header:function(){return this.props.moment.weekdaysMin().map(function(e,t){return s.createElement("div",{className:"datepicker__day",key:t},e)})},render:function(){return s.createElement("div",{className:"datepicker"},s.createElement("div",{className:"datepicker__triangle"}),s.createElement("div",{className:"datepicker__header"},s.createElement("a",{className:"datepicker__navigation datepicker__navigation--previous",onClick:this.decreaseMonth}),s.createElement("span",{className:"datepicker__current-month"},this.state.date.localeFormat(this.props.locale,this.props.dateFormat)),s.createElement("a",{className:"datepicker__navigation datepicker__navigation--next",onClick:this.increaseMonth}),s.createElement("div",null,this.header())),s.createElement("div",{className:"datepicker__month"},this.weeks()))}});e.exports=i},function(e,t,n){"use strict";var s=n(1),a=n(7),o=s.createClass({displayName:"Day",handleClick:function(e){this.props.disabled||this.props.onClick(e)},isWeekend:function(){var e=this.props.day.moment().weekday();return 5===e||6===e},render:function(){var e=["datepicker__day"];return this.props.disabled&&e.push("datepicker__day--disabled"),this.props.day.sameDay(this.props.selected)&&e.push("datepicker__day--selected"),this.props.day.sameDay(a())&&e.push("datepicker__day--today"),this.isWeekend()&&e.push("datepicker__day--weekend"),s.createElement("div",{className:e.join(" "),onClick:this.handleClick},this.props.day.day())}});e.exports=o},function(e,t){e.exports=n},function(e,t){e.exports=s},function(e,t){e.exports=a},function(e,t,n){"use strict";var s=n(1),a=n(4),o=n(7),r=s.createClass({displayName:"DateInput",getDefaultProps:function(){return{dateFormat:"YYYY-MM-DD",className:"datepicker__input",onBlur:function(){}}},getInitialState:function(){return{value:this.safeDateFormat(this.props.date)}},componentDidMount:function(){this.toggleFocus(this.props.focus)},componentWillReceiveProps:function(e){this.toggleFocus(e.focus),this.setState({value:this.safeDateFormat(e.date)})},toggleFocus:function(e){e?s.findDOMNode(this.refs.input).focus():s.findDOMNode(this.refs.input).blur()},handleChange:function(e){var t=o(e.target.value,this.props.dateFormat,!0);this.setState({value:e.target.value}),t.isValid()?this.props.setSelected(new a(t)):""===e.target.value&&this.props.clearSelected()},safeDateFormat:function(e){return e?e.format(this.props.dateFormat):null},handleKeyDown:function(e){switch(e.key){case"Enter":e.preventDefault(),this.props.handleEnter();break;case"Escape":e.preventDefault(),this.props.hideCalendar()}},handleClick:function(e){this.props.disabled||this.props.handleClick(e)},render:function(){return s.createElement("input",{ref:"input",type:"text",name:this.props.name,value:this.state.value,onClick:this.handleClick,onKeyDown:this.handleKeyDown,onFocus:this.props.onFocus,onBlur:this.props.onBlur,onChange:this.handleChange,className:"datepicker__input",placeholder:this.props.placeholderText})}});e.exports=r}])});
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var CustomStartDate = React.createClass({
+	  displayName: 'CustomStartDate',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange}",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "weekStart='0'"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "placeholderText='I start on Sunday!' />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          weekStart: "0",
+	          placeholderText: "I start on Sunday!" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = CustomStartDate;
 
 /***/ },
 /* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	!function(e,t){ true?module.exports=t(__webpack_require__(2),__webpack_require__(248),__webpack_require__(160),__webpack_require__(249),__webpack_require__(250)):"function"==typeof define&&define.amd?define(["react","tether","moment","lodash","react-onclickoutside"],t):"object"==typeof exports?exports.DatePicker=t(require("react"),require("tether"),require("moment"),require("lodash"),require("react-onclickoutside")):e.DatePicker=t(e.React,e.Tether,e.moment,e._,e.OnClickOutside)}(this,function(e,t,n,s,a){return function(e){function t(s){if(n[s])return n[s].exports;var a=n[s]={exports:{},id:s,loaded:!1};return e[s].call(a.exports,a,a.exports,t),a.loaded=!0,a.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){"use strict";var s=n(1),a=n(2),o=(n(4),n(5)),r=n(10),i=n(7),c=n(8),p=s.createClass({displayName:"DatePicker",propTypes:{weekdays:s.PropTypes.arrayOf(s.PropTypes.string),locale:s.PropTypes.string,dateFormatCalendar:s.PropTypes.string,onChange:s.PropTypes.func.isRequired,onBlur:s.PropTypes.func},getDefaultProps:function(){return{weekdays:["Su","Mo","Tu","We","Th","Fr","Sa"],locale:"en",dateFormatCalendar:"MMMM YYYY",moment:i,onChange:function(){},disabled:!1}},getInitialState:function(){return{focus:!1,virtualFocus:!1,selected:this.props.selected}},componentWillReceiveProps:function(e){this.setState({selected:e.selected})},shouldComponentUpdate:function(e,t){return!(c.isEqual(e,this.props)&&c.isEqual(t,this.state))},getValue:function(){return this.state.selected},handleFocus:function(){this.setState({focus:!0})},handleBlur:function(){this.setState({virtualFocus:!1}),setTimeout(function(){this.state.virtualFocus||"function"!=typeof this.props.onBlur||(this.props.onBlur(this.state.selected),this.hideCalendar())}.bind(this),200)},hideCalendar:function(){setTimeout(function(){this.setState({focus:!1})}.bind(this),0)},handleSelect:function(e){this.setSelected(e),setTimeout(function(){this.hideCalendar()}.bind(this),200)},setSelected:function(e){var t=e.moment();this.props.onChange(t),this.setState({selected:t,virtualFocus:!0})},clearSelected:function(){this.props.onChange(null),this.setState({selected:null})},onInputClick:function(){this.setState({focus:!0,virtualFocus:!0})},calendar:function(){return this.state.focus?s.createElement(a,null,s.createElement(o,{weekdays:this.props.weekdays,locale:this.props.locale,moment:this.props.moment,dateFormat:this.props.dateFormatCalendar,selected:this.state.selected,onSelect:this.handleSelect,hideCalendar:this.hideCalendar,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,weekStart:this.props.weekStart})):void 0},render:function(){return s.createElement("div",null,s.createElement(r,{name:this.props.name,date:this.state.selected,dateFormat:this.props.dateFormat,focus:this.state.focus,onFocus:this.handleFocus,onBlur:this.handleBlur,handleClick:this.onInputClick,handleEnter:this.hideCalendar,setSelected:this.setSelected,clearSelected:this.clearSelected,hideCalendar:this.hideCalendar,placeholderText:this.props.placeholderText,disabled:this.props.disabled,className:this.props.className,title:this.props.title}),this.props.disabled?null:this.calendar())}});e.exports=p},function(t,n){t.exports=e},function(e,t,n){"use strict";var s=n(1),a=s.createClass({displayName:"Popover",componentWillMount:function(){var e=document.createElement("span");e.className="datepicker__container",this._popoverElement=e,document.querySelector("body").appendChild(this._popoverElement)},componentDidMount:function(){this._renderPopover()},componentDidUpdate:function(){this._renderPopover()},_popoverComponent:function(){var e=this.props.className;return s.createElement("div",{className:e},this.props.children)},_tetherOptions:function(){return{element:this._popoverElement,target:this.getDOMNode().parentElement,attachment:"top left",targetAttachment:"bottom left",targetOffset:"10px 0",optimizations:{moveElement:!1},constraints:[{to:"window",attachment:"together"}]}},_renderPopover:function(){if(s.render(this._popoverComponent(),this._popoverElement),null!=this._tether)this._tether.setOptions(this._tetherOptions());else if(window&&document){var e=n(3);this._tether=new e(this._tetherOptions())}},componentWillUnmount:function(){this._tether.destroy(),s.unmountComponentAtNode(this._popoverElement),this._popoverElement.parentNode&&this._popoverElement.parentNode.removeChild(this._popoverElement)},render:function(){return s.createElement("span",null)}});e.exports=a},function(e,n){e.exports=t},function(e,t){"use strict";function n(e){this._date=e}n.prototype.isBefore=function(e){return this._date.isBefore(e._date,"day")},n.prototype.isAfter=function(e){return this._date.isAfter(e._date,"day")},n.prototype.sameDay=function(e){return this._date.isSame(e._date,"day")},n.prototype.sameMonth=function(e){return this._date.isSame(e._date,"month")},n.prototype.day=function(){return this._date.date()},n.prototype.mapDaysInWeek=function(e){for(var t=[],s=this._date.clone(),a=0;7>a;a++){var o=new n(s.clone().add(a,"days"));t[a]=e(o,a)}return t},n.prototype.mapWeeksInMonth=function(e){for(var t=[],s=this._date.clone().startOf("month").startOf("week"),a=0;6>a;a++){var o=new n(s.clone().add(a,"weeks"));t[a]=e(o,a)}return t},n.prototype.weekInMonth=function(e){var t=this._date.clone(),n=this._date.clone().weekday(7);return t.isSame(e._date,"month")||n.isSame(e._date,"month")},n.prototype.format=function(){return this._date.format.apply(this._date,arguments)},n.prototype.localeFormat=function(){var e=Array.prototype.slice.call(arguments),t=e.shift();return this._date.locale(t).format.apply(this._date,e)},n.prototype.addMonth=function(){return new n(this._date.clone().add(1,"month"))},n.prototype.subtractMonth=function(){return new n(this._date.clone().subtract(1,"month"))},n.prototype.clone=function(){return new n(this._date.clone())},n.prototype.safeClone=function(e){return this._date?this.clone():(void 0===e&&(e=null),new n(e))},n.prototype.moment=function(){return this._date},e.exports=n},function(e,t,n){"use strict";var s=n(1),a=n(6),o=n(4),r=n(8),i=s.createClass({displayName:"Calendar",mixins:[n(9)],handleClickOutside:function(){this.props.hideCalendar()},getInitialState:function(){return{date:new o(this.props.selected).safeClone(this.props.moment())}},getDefaultProps:function(){return{weekStart:1}},componentWillMount:function(){this.initializeMomentLocale()},componentWillReceiveProps:function(e){null!==e.selected&&e.selected!==this.props.selected&&this.setState({date:new o(e.selected).clone()})},initializeMomentLocale:function(){var e=this.props.weekdays.slice(0);e=e.concat(e.splice(0,this.props.weekStart)),this.props.moment.locale(this.props.locale,{week:{dow:this.props.weekStart},weekdaysMin:e})},increaseMonth:function(){this.setState({date:this.state.date.addMonth()})},decreaseMonth:function(){this.setState({date:this.state.date.subtractMonth()})},weeks:function(){return this.state.date.mapWeeksInMonth(this.renderWeek)},handleDayClick:function(e){this.props.onSelect(e)},renderWeek:function(e,t){return e.weekInMonth(this.state.date)?s.createElement("div",{key:t},this.days(e)):void 0},renderDay:function(e,t){var n,i,c=new o(this.props.minDate).safeClone(),p=new o(this.props.maxDate).safeClone();return this.props.excludeDates&&Array.isArray(this.props.excludeDates)&&(n=r(this.props.excludeDates).map(function(e){return new o(e).safeClone()})),i=e.isBefore(c)||e.isAfter(p)||r(n).some(function(t){return e.sameDay(t)}),s.createElement(a,{key:t,day:e,date:this.state.date,onClick:this.handleDayClick.bind(this,e),selected:new o(this.props.selected),disabled:i})},days:function(e){return e.mapDaysInWeek(this.renderDay)},header:function(){return this.props.moment.weekdaysMin().map(function(e,t){return s.createElement("div",{className:"datepicker__day",key:t},e)})},render:function(){return s.createElement("div",{className:"datepicker"},s.createElement("div",{className:"datepicker__triangle"}),s.createElement("div",{className:"datepicker__header"},s.createElement("a",{className:"datepicker__navigation datepicker__navigation--previous",onClick:this.decreaseMonth}),s.createElement("span",{className:"datepicker__current-month"},this.state.date.localeFormat(this.props.locale,this.props.dateFormat)),s.createElement("a",{className:"datepicker__navigation datepicker__navigation--next",onClick:this.increaseMonth}),s.createElement("div",null,this.header())),s.createElement("div",{className:"datepicker__month"},this.weeks()))}});e.exports=i},function(e,t,n){"use strict";var s=n(1),a=n(7),o=s.createClass({displayName:"Day",handleClick:function(e){this.props.disabled||this.props.onClick(e)},isWeekend:function(){var e=this.props.day.moment().weekday();return 5===e||6===e},render:function(){var e=["datepicker__day"];return this.props.disabled&&e.push("datepicker__day--disabled"),this.props.day.sameDay(this.props.selected)&&e.push("datepicker__day--selected"),this.props.day.sameDay(a())&&e.push("datepicker__day--today"),this.isWeekend()&&e.push("datepicker__day--weekend"),s.createElement("div",{className:e.join(" "),onClick:this.handleClick},this.props.day.day())}});e.exports=o},function(e,t){e.exports=n},function(e,t){e.exports=s},function(e,t){e.exports=a},function(e,t,n){"use strict";var s=n(1),a=n(4),o=n(7),r=s.createClass({displayName:"DateInput",getDefaultProps:function(){return{dateFormat:"YYYY-MM-DD",className:"datepicker__input",onBlur:function(){}}},getInitialState:function(){return{value:this.safeDateFormat(this.props.date)}},componentDidMount:function(){this.toggleFocus(this.props.focus)},componentWillReceiveProps:function(e){this.toggleFocus(e.focus),this.setState({value:this.safeDateFormat(e.date)})},toggleFocus:function(e){e?s.findDOMNode(this.refs.input).focus():s.findDOMNode(this.refs.input).blur()},handleChange:function(e){var t=o(e.target.value,this.props.dateFormat,!0);this.setState({value:e.target.value}),t.isValid()?this.props.setSelected(new a(t)):""===e.target.value&&this.props.clearSelected()},safeDateFormat:function(e){return e?e.format(this.props.dateFormat):null},handleKeyDown:function(e){switch(e.key){case"Enter":e.preventDefault(),this.props.handleEnter();break;case"Escape":e.preventDefault(),this.props.hideCalendar()}},handleClick:function(e){this.props.disabled||this.props.handleClick(e)},render:function(){return s.createElement("input",{ref:"input",type:"text",name:this.props.name,value:this.state.value,onClick:this.handleClick,onKeyDown:this.handleKeyDown,onFocus:this.props.onFocus,onBlur:this.props.onBlur,onChange:this.handleChange,className:"datepicker__input",placeholder:this.props.placeholderText})}});e.exports=r}])});
+
+/***/ },
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -21049,7 +20770,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(161)("./" + name);
+	                __webpack_require__(162)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -23976,10 +23697,10 @@
 	    return _moment;
 
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161)(module)))
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -23995,180 +23716,180 @@
 
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 162,
-		"./af.js": 162,
-		"./ar": 163,
-		"./ar-ma": 164,
-		"./ar-ma.js": 164,
-		"./ar-sa": 165,
-		"./ar-sa.js": 165,
-		"./ar-tn": 166,
-		"./ar-tn.js": 166,
-		"./ar.js": 163,
-		"./az": 167,
-		"./az.js": 167,
-		"./be": 168,
-		"./be.js": 168,
-		"./bg": 169,
-		"./bg.js": 169,
-		"./bn": 170,
-		"./bn.js": 170,
-		"./bo": 171,
-		"./bo.js": 171,
-		"./br": 172,
-		"./br.js": 172,
-		"./bs": 173,
-		"./bs.js": 173,
-		"./ca": 174,
-		"./ca.js": 174,
-		"./cs": 175,
-		"./cs.js": 175,
-		"./cv": 176,
-		"./cv.js": 176,
-		"./cy": 177,
-		"./cy.js": 177,
-		"./da": 178,
-		"./da.js": 178,
-		"./de": 179,
-		"./de-at": 180,
-		"./de-at.js": 180,
-		"./de.js": 179,
-		"./el": 181,
-		"./el.js": 181,
-		"./en-au": 182,
-		"./en-au.js": 182,
-		"./en-ca": 183,
-		"./en-ca.js": 183,
-		"./en-gb": 184,
-		"./en-gb.js": 184,
-		"./eo": 185,
-		"./eo.js": 185,
-		"./es": 186,
-		"./es.js": 186,
-		"./et": 187,
-		"./et.js": 187,
-		"./eu": 188,
-		"./eu.js": 188,
-		"./fa": 189,
-		"./fa.js": 189,
-		"./fi": 190,
-		"./fi.js": 190,
-		"./fo": 191,
-		"./fo.js": 191,
-		"./fr": 192,
-		"./fr-ca": 193,
-		"./fr-ca.js": 193,
-		"./fr.js": 192,
-		"./fy": 194,
-		"./fy.js": 194,
-		"./gl": 195,
-		"./gl.js": 195,
-		"./he": 196,
-		"./he.js": 196,
-		"./hi": 197,
-		"./hi.js": 197,
-		"./hr": 198,
-		"./hr.js": 198,
-		"./hu": 199,
-		"./hu.js": 199,
-		"./hy-am": 200,
-		"./hy-am.js": 200,
-		"./id": 201,
-		"./id.js": 201,
-		"./is": 202,
-		"./is.js": 202,
-		"./it": 203,
-		"./it.js": 203,
-		"./ja": 204,
-		"./ja.js": 204,
-		"./jv": 205,
-		"./jv.js": 205,
-		"./ka": 206,
-		"./ka.js": 206,
-		"./km": 207,
-		"./km.js": 207,
-		"./ko": 208,
-		"./ko.js": 208,
-		"./lb": 209,
-		"./lb.js": 209,
-		"./lt": 210,
-		"./lt.js": 210,
-		"./lv": 211,
-		"./lv.js": 211,
-		"./me": 212,
-		"./me.js": 212,
-		"./mk": 213,
-		"./mk.js": 213,
-		"./ml": 214,
-		"./ml.js": 214,
-		"./mr": 215,
-		"./mr.js": 215,
-		"./ms": 216,
-		"./ms-my": 217,
-		"./ms-my.js": 217,
-		"./ms.js": 216,
-		"./my": 218,
-		"./my.js": 218,
-		"./nb": 219,
-		"./nb.js": 219,
-		"./ne": 220,
-		"./ne.js": 220,
-		"./nl": 221,
-		"./nl.js": 221,
-		"./nn": 222,
-		"./nn.js": 222,
-		"./pl": 223,
-		"./pl.js": 223,
-		"./pt": 224,
-		"./pt-br": 225,
-		"./pt-br.js": 225,
-		"./pt.js": 224,
-		"./ro": 226,
-		"./ro.js": 226,
-		"./ru": 227,
-		"./ru.js": 227,
-		"./si": 228,
-		"./si.js": 228,
-		"./sk": 229,
-		"./sk.js": 229,
-		"./sl": 230,
-		"./sl.js": 230,
-		"./sq": 231,
-		"./sq.js": 231,
-		"./sr": 232,
-		"./sr-cyrl": 233,
-		"./sr-cyrl.js": 233,
-		"./sr.js": 232,
-		"./sv": 234,
-		"./sv.js": 234,
-		"./ta": 235,
-		"./ta.js": 235,
-		"./th": 236,
-		"./th.js": 236,
-		"./tl-ph": 237,
-		"./tl-ph.js": 237,
-		"./tr": 238,
-		"./tr.js": 238,
-		"./tzl": 239,
-		"./tzl.js": 239,
-		"./tzm": 240,
-		"./tzm-latn": 241,
-		"./tzm-latn.js": 241,
-		"./tzm.js": 240,
-		"./uk": 242,
-		"./uk.js": 242,
-		"./uz": 243,
-		"./uz.js": 243,
-		"./vi": 244,
-		"./vi.js": 244,
-		"./zh-cn": 245,
-		"./zh-cn.js": 245,
-		"./zh-tw": 246,
-		"./zh-tw.js": 246
+		"./af": 163,
+		"./af.js": 163,
+		"./ar": 164,
+		"./ar-ma": 165,
+		"./ar-ma.js": 165,
+		"./ar-sa": 166,
+		"./ar-sa.js": 166,
+		"./ar-tn": 167,
+		"./ar-tn.js": 167,
+		"./ar.js": 164,
+		"./az": 168,
+		"./az.js": 168,
+		"./be": 169,
+		"./be.js": 169,
+		"./bg": 170,
+		"./bg.js": 170,
+		"./bn": 171,
+		"./bn.js": 171,
+		"./bo": 172,
+		"./bo.js": 172,
+		"./br": 173,
+		"./br.js": 173,
+		"./bs": 174,
+		"./bs.js": 174,
+		"./ca": 175,
+		"./ca.js": 175,
+		"./cs": 176,
+		"./cs.js": 176,
+		"./cv": 177,
+		"./cv.js": 177,
+		"./cy": 178,
+		"./cy.js": 178,
+		"./da": 179,
+		"./da.js": 179,
+		"./de": 180,
+		"./de-at": 181,
+		"./de-at.js": 181,
+		"./de.js": 180,
+		"./el": 182,
+		"./el.js": 182,
+		"./en-au": 183,
+		"./en-au.js": 183,
+		"./en-ca": 184,
+		"./en-ca.js": 184,
+		"./en-gb": 185,
+		"./en-gb.js": 185,
+		"./eo": 186,
+		"./eo.js": 186,
+		"./es": 187,
+		"./es.js": 187,
+		"./et": 188,
+		"./et.js": 188,
+		"./eu": 189,
+		"./eu.js": 189,
+		"./fa": 190,
+		"./fa.js": 190,
+		"./fi": 191,
+		"./fi.js": 191,
+		"./fo": 192,
+		"./fo.js": 192,
+		"./fr": 193,
+		"./fr-ca": 194,
+		"./fr-ca.js": 194,
+		"./fr.js": 193,
+		"./fy": 195,
+		"./fy.js": 195,
+		"./gl": 196,
+		"./gl.js": 196,
+		"./he": 197,
+		"./he.js": 197,
+		"./hi": 198,
+		"./hi.js": 198,
+		"./hr": 199,
+		"./hr.js": 199,
+		"./hu": 200,
+		"./hu.js": 200,
+		"./hy-am": 201,
+		"./hy-am.js": 201,
+		"./id": 202,
+		"./id.js": 202,
+		"./is": 203,
+		"./is.js": 203,
+		"./it": 204,
+		"./it.js": 204,
+		"./ja": 205,
+		"./ja.js": 205,
+		"./jv": 206,
+		"./jv.js": 206,
+		"./ka": 207,
+		"./ka.js": 207,
+		"./km": 208,
+		"./km.js": 208,
+		"./ko": 209,
+		"./ko.js": 209,
+		"./lb": 210,
+		"./lb.js": 210,
+		"./lt": 211,
+		"./lt.js": 211,
+		"./lv": 212,
+		"./lv.js": 212,
+		"./me": 213,
+		"./me.js": 213,
+		"./mk": 214,
+		"./mk.js": 214,
+		"./ml": 215,
+		"./ml.js": 215,
+		"./mr": 216,
+		"./mr.js": 216,
+		"./ms": 217,
+		"./ms-my": 218,
+		"./ms-my.js": 218,
+		"./ms.js": 217,
+		"./my": 219,
+		"./my.js": 219,
+		"./nb": 220,
+		"./nb.js": 220,
+		"./ne": 221,
+		"./ne.js": 221,
+		"./nl": 222,
+		"./nl.js": 222,
+		"./nn": 223,
+		"./nn.js": 223,
+		"./pl": 224,
+		"./pl.js": 224,
+		"./pt": 225,
+		"./pt-br": 226,
+		"./pt-br.js": 226,
+		"./pt.js": 225,
+		"./ro": 227,
+		"./ro.js": 227,
+		"./ru": 228,
+		"./ru.js": 228,
+		"./si": 229,
+		"./si.js": 229,
+		"./sk": 230,
+		"./sk.js": 230,
+		"./sl": 231,
+		"./sl.js": 231,
+		"./sq": 232,
+		"./sq.js": 232,
+		"./sr": 233,
+		"./sr-cyrl": 234,
+		"./sr-cyrl.js": 234,
+		"./sr.js": 233,
+		"./sv": 235,
+		"./sv.js": 235,
+		"./ta": 236,
+		"./ta.js": 236,
+		"./th": 237,
+		"./th.js": 237,
+		"./tl-ph": 238,
+		"./tl-ph.js": 238,
+		"./tr": 239,
+		"./tr.js": 239,
+		"./tzl": 240,
+		"./tzl.js": 240,
+		"./tzm": 241,
+		"./tzm-latn": 242,
+		"./tzm-latn.js": 242,
+		"./tzm.js": 241,
+		"./uk": 243,
+		"./uk.js": 243,
+		"./uz": 244,
+		"./uz.js": 244,
+		"./vi": 245,
+		"./vi.js": 245,
+		"./zh-cn": 246,
+		"./zh-cn.js": 246,
+		"./zh-tw": 247,
+		"./zh-tw.js": 247
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -24181,11 +23902,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 161;
+	webpackContext.id = 162;
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24193,7 +23914,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24262,7 +23983,7 @@
 	}));
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24272,7 +23993,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24402,7 +24123,7 @@
 	}));
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24411,7 +24132,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24465,7 +24186,7 @@
 	}));
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24473,7 +24194,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24572,14 +24293,14 @@
 	}));
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24633,7 +24354,7 @@
 	}));
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24641,7 +24362,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24741,7 +24462,7 @@
 	}));
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24751,7 +24472,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24892,7 +24613,7 @@
 	}));
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24900,7 +24621,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24986,7 +24707,7 @@
 	}));
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24994,7 +24715,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25103,7 +24824,7 @@
 	}));
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25111,7 +24832,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25217,7 +24938,7 @@
 	}));
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25225,7 +24946,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25328,7 +25049,7 @@
 	}));
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25337,7 +25058,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25473,7 +25194,7 @@
 	}));
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25481,7 +25202,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25556,7 +25277,7 @@
 	}));
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25564,7 +25285,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25717,7 +25438,7 @@
 	}));
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25725,7 +25446,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25784,7 +25505,7 @@
 	}));
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25792,7 +25513,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25867,7 +25588,7 @@
 	}));
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25875,7 +25596,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -25931,7 +25652,7 @@
 	}));
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -25940,7 +25661,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26010,7 +25731,7 @@
 	}));
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26020,7 +25741,7 @@
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26090,7 +25811,7 @@
 	}));
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26098,7 +25819,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26188,14 +25909,14 @@
 	}));
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26258,7 +25979,7 @@
 	}));
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26266,7 +25987,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26325,7 +26046,7 @@
 	}));
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26333,7 +26054,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26396,7 +26117,7 @@
 	}));
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26406,7 +26127,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26473,7 +26194,7 @@
 	}));
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26481,7 +26202,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26556,7 +26277,7 @@
 	}));
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26565,7 +26286,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26640,7 +26361,7 @@
 	}));
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26648,7 +26369,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26708,7 +26429,7 @@
 	}));
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26716,7 +26437,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26817,7 +26538,7 @@
 	}));
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26825,7 +26546,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26928,7 +26649,7 @@
 	}));
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -26936,7 +26657,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -26992,7 +26713,7 @@
 	}));
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27000,7 +26721,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27058,7 +26779,7 @@
 	}));
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27066,7 +26787,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27120,7 +26841,7 @@
 	}));
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27128,7 +26849,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27195,7 +26916,7 @@
 	}));
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27203,7 +26924,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27274,7 +26995,7 @@
 	}));
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27284,7 +27005,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27360,7 +27081,7 @@
 	}));
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27368,7 +27089,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27487,7 +27208,7 @@
 	}));
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27495,7 +27216,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27631,7 +27352,7 @@
 	}));
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27639,7 +27360,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27744,7 +27465,7 @@
 	}));
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27752,7 +27473,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27859,7 +27580,7 @@
 	}));
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27868,7 +27589,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -27946,7 +27667,7 @@
 	}));
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -27954,7 +27675,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28077,7 +27798,7 @@
 	}));
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28086,7 +27807,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28151,7 +27872,7 @@
 	}));
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28159,7 +27880,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28220,7 +27941,7 @@
 	}));
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28229,7 +27950,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28307,7 +28028,7 @@
 	}));
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28315,7 +28036,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28414,7 +28135,7 @@
 	}));
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28422,7 +28143,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28476,7 +28197,7 @@
 	}));
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28488,7 +28209,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28548,7 +28269,7 @@
 	}));
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28556,7 +28277,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28686,7 +28407,7 @@
 	}));
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28694,7 +28415,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28815,7 +28536,7 @@
 	}));
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28824,7 +28545,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -28915,7 +28636,7 @@
 	}));
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -28923,7 +28644,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29028,7 +28749,7 @@
 	}));
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29036,7 +28757,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29122,7 +28843,7 @@
 	}));
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29130,7 +28851,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29197,7 +28918,7 @@
 	}));
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29205,7 +28926,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29322,7 +29043,7 @@
 	}));
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29330,7 +29051,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29408,7 +29129,7 @@
 	}));
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29416,7 +29137,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29494,7 +29215,7 @@
 	}));
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29502,7 +29223,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29591,7 +29312,7 @@
 	}));
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29600,7 +29321,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29656,7 +29377,7 @@
 	}));
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29664,7 +29385,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29783,7 +29504,7 @@
 	}));
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29791,7 +29512,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29858,7 +29579,7 @@
 	}));
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29866,7 +29587,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -29922,7 +29643,7 @@
 	}));
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -29930,7 +29651,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30031,7 +29752,7 @@
 	}));
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30039,7 +29760,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30099,7 +29820,7 @@
 	}));
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30107,7 +29828,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30163,7 +29884,7 @@
 	}));
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30172,7 +29893,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30241,7 +29962,7 @@
 	}));
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30250,7 +29971,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30409,7 +30130,7 @@
 	}));
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30417,7 +30138,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30478,7 +30199,7 @@
 	}));
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30487,7 +30208,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30640,7 +30361,7 @@
 	}));
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30648,7 +30369,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30804,7 +30525,7 @@
 	}));
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30814,7 +30535,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30877,7 +30598,7 @@
 	}));
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30885,7 +30606,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -30989,7 +30710,7 @@
 	}));
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -30997,7 +30718,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31101,7 +30822,7 @@
 	}));
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31109,7 +30830,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31172,7 +30893,7 @@
 	}));
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31180,7 +30901,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31271,7 +30992,7 @@
 	}));
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31279,7 +31000,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31340,7 +31061,7 @@
 	}));
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31348,7 +31069,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31406,7 +31127,7 @@
 	}));
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31415,7 +31136,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31500,7 +31221,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31508,7 +31229,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31589,7 +31310,7 @@
 	}));
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31597,7 +31318,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31651,7 +31372,7 @@
 	}));
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31659,7 +31380,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31713,7 +31434,7 @@
 	}));
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31722,7 +31443,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31870,7 +31591,7 @@
 	}));
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31878,7 +31599,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -31932,7 +31653,7 @@
 	}));
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -31940,7 +31661,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32002,7 +31723,7 @@
 	}));
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32011,7 +31732,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32133,7 +31854,7 @@
 	}));
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -32141,7 +31862,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(159)) :
+	    true ? factory(__webpack_require__(160)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -32238,7 +31959,7 @@
 	}));
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.1.0 */
@@ -33950,7 +33671,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -46305,10 +46026,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161)(module), (function() { return this; }())))
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -46397,12 +46118,553 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var Default = React.createClass({
+	  displayName: 'Default',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: moment()
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange} />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Default;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var CustomDateFormat = React.createClass({
+	  displayName: 'CustomDateFormat',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: moment()
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "dateFormat='YYYY/MM/DD'"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange} />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          dateFormat: "YYYY/MM/DD",
+	          selected: this.state.startDate,
+	          onChange: this.handleChange })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = CustomDateFormat;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var PlaceholderText = React.createClass({
+	  displayName: 'PlaceholderText',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker placeholderText='Click to select a date' />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, { placeholderText: "Click to select a date" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PlaceholderText;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var SpecificDateRange = React.createClass({
+	  displayName: 'SpecificDateRange',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange}",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "minDate={moment()}"
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "maxDate={moment().add(5, 'days')}"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "placeholderText='Select a date between today and 5 days in the future' />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          minDate: moment(),
+	          maxDate: moment().add(5, 'days'),
+	          placeholderText: "Select a date between today and 5 days in the future" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = SpecificDateRange;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var ExcludeDates = React.createClass({
+	  displayName: 'ExcludeDates',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange}",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "excludeDates={[moment(), moment().subtract(1, 'days')]}"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "placeholderText='Select a date other than today or yesterday' />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          excludeDates: [moment(), moment().subtract(1, 'days')],
+	          placeholderText: "Select a date other than today or yesterday" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ExcludeDates;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var Disabled = React.createClass({
+	  displayName: 'Disabled',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange}",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "disabled={true}"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "placeholderText='This is disabled'",
+	        '/>'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          disabled: true,
+	          placeholderText: "This is disabled" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Disabled;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var Disabled = React.createClass({
+	  displayName: 'Disabled',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: moment()
+	    };
+	  },
+
+	  handleClearButtonClick: function handleClearButtonClick() {
+	    this.setState({
+	      startDate: null
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        "<DatePicker selected={this.state.startDate} />",
+	        React.createElement('br', null),
+	        "<button onClick={this.handleClearButtonClick}>Clear date input</button>"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, { selected: this.state.startDate }),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleClearButtonClick },
+	          'Clear'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Disabled;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var Disabled = React.createClass({
+	  displayName: 'Disabled',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  handleOnBlur: function handleOnBlur(date) {
+	    if (date === null) {
+	      console.log('selected date: %s', date);
+	    } else {
+	      console.log('selected date: %s', date.format('DD/MM/YYYY'));
+	    }
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: "row" },
+	      React.createElement(
+	        'div',
+	        { className: "column example__code" },
+	        React.createElement(
+	          'strong',
+	          null,
+	          "handleOnBlur: function (date) {",
+	          React.createElement('br', null),
+	          '    ',
+	          "if (date === null) {",
+	          React.createElement('br', null),
+	          '        ',
+	          "console.log('selected date: %s', date);",
+	          React.createElement('br', null),
+	          '    ',
+	          "}",
+	          React.createElement('br', null),
+	          '    ',
+	          "else {",
+	          React.createElement('br', null),
+	          '        ',
+	          "console.log('selected date: %s', date.format('DD/MM/YYYY'));",
+	          React.createElement('br', null),
+	          '    ',
+	          "}",
+	          React.createElement('br', null),
+	          "};"
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        "<DatePicker",
+	        React.createElement('br', null),
+	        '    ',
+	        "key='example9'",
+	        React.createElement('br', null),
+	        '    ',
+	        "selected={this.state.startDate}",
+	        React.createElement('br', null),
+	        '    ',
+	        "onChange={this.handleChange}",
+	        React.createElement('br', null),
+	        React.createElement(
+	          'strong',
+	          null,
+	          '    ',
+	          "onBlur={this.handleOnBlur}"
+	        ),
+	        React.createElement('br', null),
+	        '    ',
+	        "placeholderText='View blur callbacks in console' />"
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: "column" },
+	        React.createElement(DatePicker, {
+	          key: "example9",
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          onBlur: this.handleOnBlur,
+	          placeholderText: "View blur callbacks in console" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Disabled;
+
+/***/ },
+/* 259 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 251 */
-250
+/* 260 */
+259,
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var DatePicker = __webpack_require__(159);
+	var moment = __webpack_require__(160);
+
+	var HeroExample = React.createClass({
+	  displayName: 'HeroExample',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: moment()
+	    };
+	  },
+
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement(DatePicker, {
+	      selected: this.state.startDate,
+	      onChange: this.handleChange });
+	  }
+	});
+
+	module.exports = HeroExample;
+
+/***/ }
 /******/ ])));
