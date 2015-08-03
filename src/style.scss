@@ -1,5 +1,6 @@
 @import 'reset';
 @import 'higlight';
+@import 'breakpoint';
 @import 'hero';
 @import 'examples';
 
@@ -72,19 +73,22 @@ strong {
 }
 
 .wrapper {
-  padding: 50px 0;
+  padding: 50px 20px;
   @extend %container-styling;
 }
 
 .row {
-  display: flex;
-  margin-bottom: 20px;
+  @include breakpoint(768px) {
+    display: flex;
+  }
 }
 
 .column {
-  width: 50%;
+  @include breakpoint(768px) {
+    width: 50%;
 
-  &:first-child {
-    margin-right: 20px;
+    &:first-child {
+      margin-right: 20px;
+    }
   }
 }
