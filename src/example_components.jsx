@@ -5,6 +5,7 @@ var hljs = require('highlight.js')
 
 var Default = require('./examples/default');
 var CustomDateFormat = require('./examples/custom_date_format');
+var CustomClassName = require('./examples/custom_class_name');
 var PlaceholderText = require('./examples/placeholder_text');
 var SpecificDateRange = require('./examples/specific_date_range');
 var CustomStartDate = require('./examples/custom_start_date');
@@ -40,6 +41,10 @@ exampleComponents = React.createClass({
     {
       title: 'Custom date format',
       component: <CustomDateFormat />,
+    },
+    {
+      title: 'Custom class name',
+      component: <CustomClassName />,
     },
     {
       title: 'Placeholder text',
