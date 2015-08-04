@@ -21,4 +21,12 @@ describe( "DateInput", function() {
 
     expect( dateInput.disabled ).to.not.equal( null );
   } );
+
+  it( "uses a custom className if provided", function() {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput className="datepicker__custom-input" />
+    );
+
+    expect( dateInput.getDOMNode().className ).to.equal( "datepicker__custom-input" );
+  } );
 } );
