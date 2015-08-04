@@ -729,7 +729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onFocus: this.props.onFocus,
 	      onBlur: this.props.onBlur,
 	      onChange: this.handleChange,
-	      className: "datepicker__input",
+	      className: this.props.className,
 	      disabled: this.props.disabled,
 	      placeholder: this.props.placeholderText });
 	  }
