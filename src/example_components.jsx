@@ -13,6 +13,7 @@ var ExcludeDates = require('./examples/exclude_dates');
 var Disabled = require('./examples/disabled');
 var ClearInput = require('./examples/clear_input');
 var OnBlurCallbacks = require('./examples/on_blur_callbacks');
+var Weekdays = require('./examples/weekdays');
 
 require('react-datepicker/dist/react-datepicker.css');
 require('./style.scss');
@@ -73,6 +74,10 @@ exampleComponents = React.createClass({
     {
       title: 'onBlur callbacks in console',
       component: <OnBlurCallbacks />,
+    },
+    {
+      title: 'Custom weekdays',
+      component: <Weekdays />,
     }
   ],
 
