@@ -17,6 +17,12 @@ var SAUCE_LABS_BROWSERS = {
     browserName: "internet explorer",
     platform: "Windows 8.1",
     version: "11"
+  },
+  sl_ie_10: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 7",
+    version: "10"
   }
 };
 
