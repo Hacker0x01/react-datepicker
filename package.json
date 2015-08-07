@@ -2,13 +2,10 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.9.0",
+  "version": "0.11.3",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/react-datepicker.min.js",
-  "engines": {
-    "node": ">= 0.10 < 0.12"
-  },
   "keywords": [
     "react",
     "datepicker",
@@ -27,18 +24,28 @@
     "babel": "^5.6.4",
     "babel-core": "^5.6.4",
     "babel-jest": "^5.3.0",
-    "babel-loader": "^5.1.4",
+    "babel-loader": "^5.3.2",
+    "chai": "^3.2.0",
     "grunt": "0.4.5",
-    "grunt-cli": "0.1.13",
     "grunt-contrib-sass": "0.9.2",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-jsxhint": "0.5.0",
+    "grunt-jscs": "^2.0.0",
+    "grunt-karma": "^0.12.0",
     "grunt-scss-lint": "^0.3.4",
     "grunt-webpack": "^1.0.8",
-    "jest-cli": "0.4.0",
-    "lodash": "^3.3.0",
+    "karma": "^0.13.3",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-sauce-launcher": "^0.2.14",
+    "karma-sinon": "^1.0.4",
+    "karma-sourcemap-loader": "^0.3.5",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.2.5",
+    "phantomjs": "^1.9.17",
     "react": ">=0.12 <0.14",
-    "react-tools": ">=0.12 <0.14",
+    "sinon": "^1.15.4",
     "webpack": "^1.7.2",
     "webpack-dev-server": "^1.7.0"
   },
@@ -46,18 +53,12 @@
     "react": ">=0.12 <0.14"
   },
   "dependencies": {
-    "moment": "^2.8",
-    "tether": "^1.0.1",
-    "react-onclickoutside": "0.2.2"
+    "moment": "^2.10",
+    "tether": "^1.1.0",
+    "react-onclickoutside": "0.3.0",
+    "lodash": "^3.10.0"
   },
   "scripts": {
-    "test": "grunt travis --verbose"
-  },
-  "jest": {
-    "testDirectoryName": "test",
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
-    ]
+    "test": "grunt travis"
   }
 }
