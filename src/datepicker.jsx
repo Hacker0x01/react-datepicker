@@ -1,25 +1,29 @@
-var React = require('react');
-var Popover = require('./popover');
-var DateUtil = require('./util/date');
-var Calendar = require('./calendar');
-var DateInput = require('./date_input');
-var moment = require('moment');
+var React = require( "react" );
+var Popover = require( "./popover" );
+var DateUtil = require( "./util/date" );
+var Calendar = require( "./calendar" );
+var DateInput = require( "./date_input" );
+var moment = require( "moment" );
+var _ = require( "lodash" );
 
-var DatePicker = React.createClass({
+var DatePicker = React.createClass( {
+
   propTypes: {
-    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
+    weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     popoverAttachment: React.PropTypes.string,
     popoverTargetAttachment: React.PropTypes.string,
     popoverTargetOffset: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    onBlur: React.PropTypes.func
+
   },
 
   getDefaultProps: function() {
     return {
-      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      locale: 'en',
+      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+      locale: "en",
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
@@ -30,8 +34,19 @@ var DatePicker = React.createClass({
   getInitialState: function() {
     return {
       focus: false,
+      virtualFocus: false,
       selected: this.props.selected
     };
+  },
+
+  componentWillReceiveProps: function( nextProps ) {
+    this.setState( {
+      selected: nextProps.selected
+    } );
+  },
+
+  shouldComponentUpdate: function( nextProps, nextState ) {
+    return !( _.isEqual( nextProps, this.props ) && _.isEqual( nextState, this.state ) );
   },
 
   getValue: function() {
@@ -39,53 +54,65 @@ var DatePicker = React.createClass({
   },
 
   handleFocus: function() {
-    this.setState({
+    this.setState( {
       focus: true
-    });
+    } );
+  },
+
+  handleBlur: function() {
+    this.setState( { virtualFocus: false } );
+    setTimeout( function() {
+      if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
+        this.props.onBlur( this.state.selected );
+        this.hideCalendar();
+      }
+    }.bind( this ), 200 );
   },
 
   hideCalendar: function() {
-    setTimeout(function() {
-      this.setState({
+    setTimeout( function() {
+      this.setState( {
         focus: false
-      });
-    }.bind(this), 0);
+      } );
+    }.bind( this ), 0 );
   },
 
-  handleSelect: function(date) {
-    this.setSelected(date);
+  handleSelect: function( date ) {
+    this.setSelected( date );
 
-    setTimeout(function(){
+    setTimeout( function() {
       this.hideCalendar();
-    }.bind(this), 200);
+    }.bind( this ), 200 );
   },
 
-  setSelected: function(date) {
+  setSelected: function( date ) {
     var moment = date.moment();
 
-    this.props.onChange(moment);
+    this.props.onChange( moment );
 
-    this.setState({
-      selected: moment
-    });
+    this.setState( {
+      selected: moment,
+      virtualFocus: true
+    } );
   },
 
   clearSelected: function() {
-    this.props.onChange(null);
+    this.props.onChange( null );
 
-    this.setState({
+    this.setState( {
       selected: null
-    });
+    } );
   },
 
   onInputClick: function() {
-    this.setState({
-      focus: true
-    });
+    this.setState( {
+      focus: true,
+      virtualFocus: true
+    } );
   },
 
   calendar: function() {
-    if (this.state.focus) {
+    if ( this.state.focus ) {
       return (
         <Popover
           attachment={this.props.popoverAttachment}
@@ -111,7 +138,6 @@ var DatePicker = React.createClass({
   },
 
   render: function() {
-
     return (
       <div>
         <DateInput
@@ -120,17 +146,20 @@ var DatePicker = React.createClass({
           dateFormat={this.props.dateFormat}
           focus={this.state.focus}
           onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
           setSelected={this.setSelected}
           clearSelected={this.clearSelected}
           hideCalendar={this.hideCalendar}
           placeholderText={this.props.placeholderText}
-          disabled={this.props.disabled} />
+          disabled={this.props.disabled}
+          className={this.props.className}
+          title={this.props.title} />
         {this.props.disabled ? null : this.calendar()}
       </div>
     );
   }
-});
+} );
 
 module.exports = DatePicker;
