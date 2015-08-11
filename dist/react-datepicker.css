@@ -177,7 +177,7 @@
   vertical-align: middle;
 }
 .close-icon:after {
-  content: "X";
+  content: "\00d7";
   display: block;
   width: 12px;
   height: 12px;
