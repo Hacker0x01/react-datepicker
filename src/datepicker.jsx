@@ -17,7 +17,6 @@ var DatePicker = React.createClass( {
     popoverTargetOffset: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func
-
   },
 
   getDefaultProps: function() {
