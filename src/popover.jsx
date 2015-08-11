@@ -11,9 +11,9 @@ var Popover = React.createClass( {
 
   getDefaultProps: function() {
     return {
-      attachment: 'top left',
-      targetAttachment: 'bottom left',
-      targetOffset: '10px 0'
+      attachment: "top left",
+      targetAttachment: "bottom left",
+      targetOffset: "10px 0"
     };
   },
 
@@ -46,7 +46,7 @@ var Popover = React.createClass( {
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: this.getDOMNode().parentElement.querySelector('input'),
+      target: this.getDOMNode().parentElement.querySelector( "input" ),
       attachment: this.props.attachment,
       targetAttachment: this.props.targetAttachment,
       targetOffset: this.props.targetOffset,
