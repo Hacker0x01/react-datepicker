@@ -3,6 +3,20 @@ var React = require('react');
 var Popover = React.createClass({
   displayName: 'Popover',
 
+  propTypes: {
+    attachment: React.PropTypes.string,
+    targetAttachment: React.PropTypes.string,
+    targetOffset: React.PropTypes.string
+  },
+
+  getDefaultProps: function() {
+    return {
+      attachment: 'top left',
+      targetAttachment: 'bottom left',
+      targetOffset: '10px 0'
+    };
+  },
+
   componentWillMount: function() {
     var popoverContainer = document.createElement('span');
     popoverContainer.className = 'datepicker__container';
@@ -32,10 +46,10 @@ var Popover = React.createClass({
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: this.getDOMNode().parentElement,
-      attachment: 'top left',
-      targetAttachment: 'bottom left',
-      targetOffset: '10px 0',
+      target: this.getDOMNode().parentElement.querySelector('input'),
+      attachment: this.props.attachment,
+      targetAttachment: this.props.targetAttachment,
+      targetOffset: this.props.targetOffset,
       optimizations: {
         moveElement: false // always moves to <body> anyway!
       }
