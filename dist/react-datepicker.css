@@ -163,3 +163,36 @@
   border-color: #aeaeae;
   box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
 }
+.datepicker__input:not(:valid) ~ .close-icon {
+  display: none;
+}
+
+.close-icon {
+  border: 1px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  display: inline-block;
+  outline: 0;
+  position: relative;
+  vertical-align: middle;
+}
+.close-icon:after {
+  content: "X";
+  display: block;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  background-color: #216ba5;
+  z-index: 1;
+  right: 20px;
+  top: -4px;
+  bottom: 0;
+  margin: auto;
+  padding: 2px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-size: 10px;
+  cursor: pointer;
+}

@@ -188,6 +188,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
+	    var closeButton = null;
+	    if (this.props.isClearable && this.state.selected != null) {
+	      closeButton = React.createElement("button", { className: "close-icon", onClick: this.clearSelected });
+	    }
+
 	    return React.createElement(
 	      "div",
 	      null,
@@ -207,6 +212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        disabled: this.props.disabled,
 	        className: this.props.className,
 	        title: this.props.title }),
+	      closeButton,
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }
