@@ -12,7 +12,8 @@ var exampleComponent = React.createClass({
       new_date: null,
       bound_date: null,
       example5Selected: null,
-      example6Selected: null
+      example6Selected: null,
+      custom_popover_date: moment()
     };
   },
 
@@ -49,6 +50,12 @@ var exampleComponent = React.createClass({
    handleExample6Change: function(date) {
     this.setState({
       example6Selected: date
+    });
+  },
+
+  handleCustomPopoverChange: function(date) {
+    this.setState({
+      custom_popover_date: date
     });
   },
 
@@ -99,6 +106,14 @@ var exampleComponent = React.createClass({
         onChange={this.handleStartDateChange}
         disabled={true}
         placeholderText="This is disabled"
+      />
+      <DatePicker
+        key="example8"
+        selected={this.state.custom_popover_date}
+        onChange={this.handleCustomPopoverChange}
+        popoverAttachment="bottom center"
+        popoverTargetAttachment="top center"
+        popoverTargetOffset="0px 0px"
       />
     </div>;
   }
