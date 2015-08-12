@@ -1,7 +1,7 @@
 var React = require('react');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
-var hljs = require('highlight.js')
+var hljs = require('highlight.js');
 
 var Default = require('./examples/default');
 var CustomDateFormat = require('./examples/custom_date_format');
