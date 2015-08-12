@@ -12,6 +12,9 @@ var DatePicker = React.createClass( {
     weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
+    popoverAttachment: React.PropTypes.string,
+    popoverTargetAttachment: React.PropTypes.string,
+    popoverTargetOffset: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func
   },
@@ -110,7 +113,11 @@ var DatePicker = React.createClass( {
   calendar: function() {
     if ( this.state.focus ) {
       return (
-        <Popover>
+        <Popover
+          attachment={this.props.popoverAttachment}
+          targetAttachment={this.props.popoverTargetAttachment}
+          targetOffset={this.props.popoverTargetOffset}>
+
           <Calendar
             weekdays={this.props.weekdays}
             locale={this.props.locale}
