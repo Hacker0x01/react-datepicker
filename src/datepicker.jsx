@@ -130,7 +130,6 @@ var DatePicker = React.createClass( {
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             weekStart={this.props.weekStart} />
-
         </Popover>
       );
     }
