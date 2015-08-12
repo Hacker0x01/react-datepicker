@@ -71,6 +71,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
 	    dateFormatCalendar: React.PropTypes.string,
+	    popoverAttachment: React.PropTypes.string,
+	    popoverTargetAttachment: React.PropTypes.string,
+	    popoverTargetOffset: React.PropTypes.string,
 	    onChange: React.PropTypes.func.isRequired,
 	    onBlur: React.PropTypes.func
 	  },
@@ -170,7 +173,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.state.focus) {
 	      return React.createElement(
 	        Popover,
-	        null,
+	        {
+	          attachment: this.props.popoverAttachment,
+	          targetAttachment: this.props.popoverTargetAttachment,
+	          targetOffset: this.props.popoverTargetOffset },
 	        React.createElement(Calendar, {
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
@@ -231,6 +237,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Popover = React.createClass({
 	  displayName: "Popover",
 
+	  propTypes: {
+	    attachment: React.PropTypes.string,
+	    targetAttachment: React.PropTypes.string,
+	    targetOffset: React.PropTypes.string
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      attachment: "top left",
+	      targetAttachment: "bottom left",
+	      targetOffset: "10px 0"
+	    };
+	  },
+
 	  componentWillMount: function componentWillMount() {
 	    var popoverContainer = document.createElement("span");
 	    popoverContainer.className = "datepicker__container";
@@ -260,10 +280,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _tetherOptions: function _tetherOptions() {
 	    return {
 	      element: this._popoverElement,
-	      target: this.getDOMNode().parentElement,
-	      attachment: "top left",
-	      targetAttachment: "bottom left",
-	      targetOffset: "10px 0",
+	      target: this.getDOMNode().parentElement.querySelector("input"),
+	      attachment: this.props.attachment,
+	      targetAttachment: this.props.targetAttachment,
+	      targetOffset: this.props.targetOffset,
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
 	      },
