@@ -14,6 +14,7 @@ var Disabled = require('./examples/disabled');
 var ClearInput = require('./examples/clear_input');
 var OnBlurCallbacks = require('./examples/on_blur_callbacks');
 var Weekdays = require('./examples/weekdays');
+var Placement = require('./examples/placement');
 
 require('react-datepicker/dist/react-datepicker.css');
 require('./style.scss');
@@ -78,7 +79,11 @@ exampleComponents = React.createClass({
     {
       title: 'Custom weekdays',
       component: <Weekdays />,
-    }
+    },
+    {
+      title: 'Configure Popover Placement',
+      component: <Placement />,
+    },
   ],
 
   componentDidMount: function() {
