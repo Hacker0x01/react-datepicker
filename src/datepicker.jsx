@@ -59,13 +59,14 @@ var DatePicker = React.createClass( {
   },
 
   handleBlur: function() {
-    this.setState( { virtualFocus: false } );
-    setTimeout( function() {
-      if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
-        this.props.onBlur( this.state.selected );
-        this.hideCalendar();
-      }
-    }.bind( this ), 200 );
+    this.setState( { virtualFocus: false }, function() {
+      setTimeout( function() {
+        if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
+          this.props.onBlur( this.state.selected );
+          this.hideCalendar();
+        }
+      }.bind( this ), 200 );
+    }.bind(this) );
   },
 
   hideCalendar: function() {
@@ -85,22 +86,23 @@ var DatePicker = React.createClass( {
   },
 
   setSelected: function( date ) {
-    var moment = date.moment();
-
-    this.props.onChange( moment );
-
     this.setState( {
-      selected: moment,
+      selected: date.moment(),
       virtualFocus: true
-    } );
+    }, function() {
+      this.props.onChange( this.state.selected );
+    }.bind(this) );
   },
 
   clearSelected: function() {
-    this.props.onChange( null );
+    //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+    if (this.state.selected === null) return;
 
     this.setState( {
       selected: null
-    } );
+    }, function() {
+      this.props.onChange( null );
+    }.bind(this) );
   },
 
   onInputClick: function() {

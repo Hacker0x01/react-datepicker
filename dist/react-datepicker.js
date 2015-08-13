@@ -155,11 +155,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  clearSelected: function clearSelected() {
-	    this.props.onChange(null);
+	    if (this.state.selected === null) return;
 
 	    this.setState({
 	      selected: null
-	    });
+	    }, (function () {
+	      this.props.onChange(null);
+	    }).bind(this));
 	  },
 
 	  onInputClick: function onInputClick() {
@@ -675,22 +677,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      value: this.safeDateFormat(this.props.date)
-	    };
-	  },
-
 	  componentDidMount: function componentDidMount() {
 	    this.toggleFocus(this.props.focus);
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.toggleFocus(newProps.focus);
-
-	    this.setState({
-	      value: this.safeDateFormat(newProps.date)
-	    });
 	  },
 
 	  toggleFocus: function toggleFocus(focus) {
@@ -702,15 +694,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleChange: function handleChange(event) {
-	    var date = moment(event.target.value, this.props.dateFormat, true);
-
-	    this.setState({
-	      value: event.target.value
-	    });
+	    var value = event.target.value;
+	    var date = moment(value, this.props.dateFormat, true);
 
 	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
-	    } else if (event.target.value === "") {
+	    } else if (value === "") {
 	      this.props.clearSelected();
 	    }
 	  },
@@ -743,7 +732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ref: "input",
 	      type: "text",
 	      name: this.props.name,
-	      value: this.state.value,
+	      value: this.safeDateFormat(this.props.date),
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
