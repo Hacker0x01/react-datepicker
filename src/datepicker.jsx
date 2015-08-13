@@ -66,7 +66,7 @@ var DatePicker = React.createClass( {
           this.hideCalendar();
         }
       }.bind( this ), 200 );
-    }.bind(this) );
+    }.bind( this ) );
   },
 
   hideCalendar: function() {
@@ -91,18 +91,17 @@ var DatePicker = React.createClass( {
       virtualFocus: true
     }, function() {
       this.props.onChange( this.state.selected );
-    }.bind(this) );
+    }.bind( this ) );
   },
 
   clearSelected: function() {
-    //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
-    if (this.state.selected === null) return;
+    if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
 
     this.setState( {
       selected: null
     }, function() {
       this.props.onChange( null );
-    }.bind(this) );
+    }.bind( this ) );
   },
 
   onInputClick: function() {
