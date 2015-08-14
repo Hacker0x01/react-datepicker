@@ -202,7 +202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return React.createElement(
 	      "div",
-	      { className: "datepicker__input-container", ref: "sup" },
+	      { className: "datepicker__input-container" },
 	      React.createElement(DateInput, {
 	        name: this.props.name,
 	        date: this.state.selected,
