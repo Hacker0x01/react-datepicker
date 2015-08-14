@@ -125,6 +125,10 @@
   }
 }
 
+.datepicker__input-container {
+  position: relative;
+}
+
 .datepicker__input {
   position: relative;
   font-size: 13px;
@@ -150,22 +154,23 @@
   background-color: transparent;
   cursor: pointer;
   display: inline-block;
+  height: 0;
   outline: 0;
-  position: relative;
+  padding: 0;
   vertical-align: middle;
 
   &:after {
     content: "\00d7";
     display: block;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     position: absolute;
     background-color: $selected-color;
     z-index: 1;
-    right: 20px;
-    top: -4px;
+    right: 4px;
+    top: 50%;
     bottom: 0;
-    margin: auto;
+    margin: -5px auto 0;
     padding: 2px;
     border-radius: 50%;
     text-align: center;
@@ -173,5 +178,6 @@
     font-weight: normal;
     font-size: 10px;
     cursor: pointer;
+    line-height: 0.8;
   }
 }

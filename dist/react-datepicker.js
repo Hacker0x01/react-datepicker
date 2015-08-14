@@ -188,14 +188,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
-	    var closeButton = null;
+	    var clearButton = null;
 	    if (this.props.isClearable && this.state.selected != null) {
-	      closeButton = React.createElement("button", { className: "close-icon", onClick: this.clearSelected });
+	      clearButton = React.createElement("button", { className: "close-icon", onClick: this.clearSelected });
 	    }
 
 	    return React.createElement(
 	      "div",
-	      null,
+	      { className: "datepicker__input-container", ref: "sup" },
 	      React.createElement(DateInput, {
 	        name: this.props.name,
 	        date: this.state.selected,
@@ -212,7 +212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        disabled: this.props.disabled,
 	        className: this.props.className,
 	        title: this.props.title }),
-	      closeButton,
+	      clearButton,
 	      this.props.disabled ? null : this.calendar()
 	    );
 	  }

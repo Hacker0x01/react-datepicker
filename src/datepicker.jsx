@@ -129,15 +129,15 @@ var DatePicker = React.createClass( {
   },
 
   render: function() {
-    var closeButton = null;
+    var clearButton = null;
     if ( this.props.isClearable && this.state.selected != null ) {
-      closeButton = (
+      clearButton = (
         <button className="close-icon" onClick={this.clearSelected}></button>
       );
     }
 
     return (
-      <div>
+      <div className="datepicker__input-container">
         <DateInput
           name={this.props.name}
           date={this.state.selected}
@@ -154,7 +154,7 @@ var DatePicker = React.createClass( {
           disabled={this.props.disabled}
           className={this.props.className}
           title={this.props.title} />
-        {closeButton}
+        {clearButton}
         {this.props.disabled ? null : this.calendar()}
       </div>
     );
