@@ -11,25 +11,21 @@ var Disabled = React.createClass({
     };
   },
 
-  handleClearButtonClick: function() {
-    this.setState({
-      startDate: null
-    });
-  },
-
   render: function() {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker selected={this.state.startDate} />"}<br />
-          {"<button onClick={this.handleClearButtonClick}>"}<br />
-          &nbsp; &nbsp; {"Clear date input"}<br />
-          {"</button>"}
+          {"<DatePicker"}<br />
+          &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
+          &nbsp; &nbsp; {"isClearable={true} />"}<br />
+          &nbsp; &nbsp; {"placeholderText='I have been cleared!' />"}
         </code>
       </pre>
       <div className="column">
-        <DatePicker selected={this.state.startDate} />
-        <button onClick={this.handleClearButtonClick}>Clear</button>
+        <DatePicker
+          selected={this.state.startDate}
+          isClearable={true}
+          placeholderText='I have been cleared!' />
       </div>
     </div>
   }
