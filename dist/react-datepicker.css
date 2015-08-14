@@ -172,8 +172,8 @@
 }
 
 .close-icon {
-  border: 1px solid transparent;
   background-color: transparent;
+  border: 0;
   cursor: pointer;
   display: inline-block;
   height: 0;
@@ -182,23 +182,24 @@
   vertical-align: middle;
 }
 .close-icon:after {
-  content: "\00d7";
-  display: block;
-  width: 10px;
-  height: 10px;
-  position: absolute;
   background-color: #216ba5;
-  z-index: 1;
-  right: 4px;
-  top: 50%;
-  bottom: 0;
-  margin: -5px auto 0;
-  padding: 2px;
   border-radius: 50%;
-  text-align: center;
+  bottom: 0;
+  box-sizing: border-box;
   color: white;
-  font-weight: normal;
-  font-size: 10px;
+  content: "\00d7";
   cursor: pointer;
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  height: 16px;
   line-height: 0.8;
+  margin: -8px auto 0;
+  padding: 2px;
+  position: absolute;
+  right: 7px;
+  text-align: center;
+  top: 50%;
+  width: 16px;
+  z-index: 1;
 }
