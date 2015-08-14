@@ -149,6 +149,10 @@
   background-color: transparent;
 }
 
+.datepicker__input-container {
+  position: relative;
+}
+
 .datepicker__input {
   position: relative;
   font-size: 13px;
@@ -162,4 +166,40 @@
   outline: none;
   border-color: #aeaeae;
   box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
+}
+.datepicker__input:not(:valid) ~ .close-icon {
+  display: none;
+}
+
+.close-icon {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  height: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+.close-icon:after {
+  background-color: #216ba5;
+  border-radius: 50%;
+  bottom: 0;
+  box-sizing: border-box;
+  color: white;
+  content: "\00d7";
+  cursor: pointer;
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  height: 16px;
+  line-height: 0.8;
+  margin: -8px auto 0;
+  padding: 2px;
+  position: absolute;
+  right: 7px;
+  text-align: center;
+  top: 50%;
+  width: 16px;
+  z-index: 1;
 }
