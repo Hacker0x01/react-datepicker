@@ -12,6 +12,9 @@ var DatePicker = React.createClass( {
     weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
+    popoverAttachment: React.PropTypes.string,
+    popoverTargetAttachment: React.PropTypes.string,
+    popoverTargetOffset: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func
   },
@@ -56,13 +59,14 @@ var DatePicker = React.createClass( {
   },
 
   handleBlur: function() {
-    this.setState( { virtualFocus: false } );
-    setTimeout( function() {
-      if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
-        this.props.onBlur( this.state.selected );
-        this.hideCalendar();
-      }
-    }.bind( this ), 200 );
+    this.setState( { virtualFocus: false }, function() {
+      setTimeout( function() {
+        if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
+          this.props.onBlur( this.state.selected );
+          this.hideCalendar();
+        }
+      }.bind( this ), 200 );
+    }.bind( this ) );
   },
 
   hideCalendar: function() {
@@ -82,22 +86,22 @@ var DatePicker = React.createClass( {
   },
 
   setSelected: function( date ) {
-    var moment = date.moment();
-
-    this.props.onChange( moment );
-
     this.setState( {
-      selected: moment,
+      selected: date.moment(),
       virtualFocus: true
-    } );
+    }, function() {
+      this.props.onChange( this.state.selected );
+    }.bind( this ) );
   },
 
   clearSelected: function() {
-    this.props.onChange( null );
+    if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
 
     this.setState( {
       selected: null
-    } );
+    }, function() {
+      this.props.onChange( null );
+    }.bind( this ) );
   },
 
   onInputClick: function() {
@@ -110,7 +114,11 @@ var DatePicker = React.createClass( {
   calendar: function() {
     if ( this.state.focus ) {
       return (
-        <Popover>
+        <Popover
+          attachment={this.props.popoverAttachment}
+          targetAttachment={this.props.popoverTargetAttachment}
+          targetOffset={this.props.popoverTargetOffset}>
+
           <Calendar
             weekdays={this.props.weekdays}
             locale={this.props.locale}

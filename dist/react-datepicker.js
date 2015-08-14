@@ -71,6 +71,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
 	    dateFormatCalendar: React.PropTypes.string,
+	    popoverAttachment: React.PropTypes.string,
+	    popoverTargetAttachment: React.PropTypes.string,
+	    popoverTargetOffset: React.PropTypes.string,
 	    onChange: React.PropTypes.func.isRequired,
 	    onBlur: React.PropTypes.func
 	  },
@@ -115,13 +118,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleBlur: function handleBlur() {
-	    this.setState({ virtualFocus: false });
-	    setTimeout((function () {
-	      if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
-	        this.props.onBlur(this.state.selected);
-	        this.hideCalendar();
-	      }
-	    }).bind(this), 200);
+	    this.setState({ virtualFocus: false }, (function () {
+	      setTimeout((function () {
+	        if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
+	          this.props.onBlur(this.state.selected);
+	          this.hideCalendar();
+	        }
+	      }).bind(this), 200);
+	    }).bind(this));
 	  },
 
 	  hideCalendar: function hideCalendar() {
@@ -141,22 +145,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  setSelected: function setSelected(date) {
-	    var moment = date.moment();
-
-	    this.props.onChange(moment);
-
 	    this.setState({
-	      selected: moment,
+	      selected: date.moment(),
 	      virtualFocus: true
-	    });
+	    }, (function () {
+	      this.props.onChange(this.state.selected);
+	    }).bind(this));
 	  },
 
 	  clearSelected: function clearSelected() {
-	    this.props.onChange(null);
+	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
 
 	    this.setState({
 	      selected: null
-	    });
+	    }, (function () {
+	      this.props.onChange(null);
+	    }).bind(this));
 	  },
 
 	  onInputClick: function onInputClick() {
@@ -170,7 +174,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.state.focus) {
 	      return React.createElement(
 	        Popover,
-	        null,
+	        {
+	          attachment: this.props.popoverAttachment,
+	          targetAttachment: this.props.popoverTargetAttachment,
+	          targetOffset: this.props.popoverTargetOffset },
 	        React.createElement(Calendar, {
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
@@ -237,6 +244,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Popover = React.createClass({
 	  displayName: "Popover",
 
+	  propTypes: {
+	    attachment: React.PropTypes.string,
+	    targetAttachment: React.PropTypes.string,
+	    targetOffset: React.PropTypes.string
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      attachment: "top left",
+	      targetAttachment: "bottom left",
+	      targetOffset: "10px 0"
+	    };
+	  },
+
 	  componentWillMount: function componentWillMount() {
 	    var popoverContainer = document.createElement("span");
 	    popoverContainer.className = "datepicker__container";
@@ -266,10 +287,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _tetherOptions: function _tetherOptions() {
 	    return {
 	      element: this._popoverElement,
-	      target: this.getDOMNode().parentElement,
-	      attachment: "top left",
-	      targetAttachment: "bottom left",
-	      targetOffset: "10px 0",
+	      target: this.getDOMNode().parentElement.querySelector("input"),
+	      attachment: this.props.attachment,
+	      targetAttachment: this.props.targetAttachment,
+	      targetOffset: this.props.targetOffset,
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
 	      },
@@ -661,22 +682,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      value: this.safeDateFormat(this.props.date)
-	    };
-	  },
-
 	  componentDidMount: function componentDidMount() {
 	    this.toggleFocus(this.props.focus);
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.toggleFocus(newProps.focus);
-
-	    this.setState({
-	      value: this.safeDateFormat(newProps.date)
-	    });
 	  },
 
 	  toggleFocus: function toggleFocus(focus) {
@@ -688,15 +699,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleChange: function handleChange(event) {
-	    var date = moment(event.target.value, this.props.dateFormat, true);
-
-	    this.setState({
-	      value: event.target.value
-	    });
+	    var value = event.target.value;
+	    var date = moment(value, this.props.dateFormat, true);
 
 	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
-	    } else if (event.target.value === "") {
+	    } else if (value === "") {
 	      this.props.clearSelected();
 	    }
 	  },
@@ -729,7 +737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ref: "input",
 	      type: "text",
 	      name: this.props.name,
-	      value: this.state.value,
+	      value: this.safeDateFormat(this.props.date),
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
