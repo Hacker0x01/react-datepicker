@@ -118,13 +118,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleBlur: function handleBlur() {
-	    this.setState({ virtualFocus: false });
-	    setTimeout((function () {
-	      if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
-	        this.props.onBlur(this.state.selected);
-	        this.hideCalendar();
-	      }
-	    }).bind(this), 200);
+	    this.setState({ virtualFocus: false }, (function () {
+	      setTimeout((function () {
+	        if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
+	          this.props.onBlur(this.state.selected);
+	          this.hideCalendar();
+	        }
+	      }).bind(this), 200);
+	    }).bind(this));
 	  },
 
 	  hideCalendar: function hideCalendar() {
@@ -144,18 +145,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  setSelected: function setSelected(date) {
-	    var moment = date.moment();
-
-	    this.props.onChange(moment);
-
 	    this.setState({
-	      selected: moment,
+	      selected: date.moment(),
 	      virtualFocus: true
-	    });
+	    }, (function () {
+	      this.props.onChange(this.state.selected);
+	    }).bind(this));
 	  },
 
 	  clearSelected: function clearSelected() {
-	    if (this.state.selected === null) return;
+	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
 
 	    this.setState({
 	      selected: null
