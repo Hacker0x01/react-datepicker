@@ -7,6 +7,20 @@ var some = require( "lodash/collection/some" );
 var Calendar = React.createClass( {
   mixins: [ require( "react-onclickoutside" ) ],
 
+  propTypes: {
+    weekdays: React.PropTypes.array.isRequired,
+    locale: React.PropTypes.string,
+    moment: React.PropTypes.func.isRequired,
+    dateFormat: React.PropTypes.string.isRequired,
+    selected: React.PropTypes.object.isRequired,
+    onSelect: React.PropTypes.func.isRequired,
+    hideCalendar: React.PropTypes.func.isRequired,
+    minDate: React.PropTypes.object,
+    maxDate: React.PropTypes.object,
+    excludeDates: React.PropTypes.array,
+    weekStart: React.PropTypes.string.isRequired
+  },
+
   handleClickOutside: function() {
     this.props.hideCalendar();
   },
@@ -19,7 +33,7 @@ var Calendar = React.createClass( {
 
   getDefaultProps: function() {
     return {
-      weekStart: 1
+      weekStart: "1"
     };
   },
 

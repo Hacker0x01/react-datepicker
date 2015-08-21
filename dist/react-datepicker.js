@@ -74,6 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    popoverAttachment: React.PropTypes.string,
 	    popoverTargetAttachment: React.PropTypes.string,
 	    popoverTargetOffset: React.PropTypes.string,
+	    weekStart: React.PropTypes.string,
 	    onChange: React.PropTypes.func.isRequired,
 	    onBlur: React.PropTypes.func
 	  },
@@ -448,6 +449,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  mixins: [__webpack_require__(59)],
 
+	  propTypes: {
+	    weekdays: React.PropTypes.array.isRequired,
+	    locale: React.PropTypes.string,
+	    moment: React.PropTypes.func.isRequired,
+	    dateFormat: React.PropTypes.string.isRequired,
+	    selected: React.PropTypes.object.isRequired,
+	    onSelect: React.PropTypes.func.isRequired,
+	    hideCalendar: React.PropTypes.func.isRequired,
+	    minDate: React.PropTypes.object,
+	    maxDate: React.PropTypes.object,
+	    excludeDates: React.PropTypes.array,
+	    weekStart: React.PropTypes.string.isRequired
+	  },
+
 	  handleClickOutside: function handleClickOutside() {
 	    this.props.hideCalendar();
 	  },
@@ -460,7 +475,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      weekStart: 1
+	      weekStart: "1"
 	    };
 	  },
 
