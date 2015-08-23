@@ -182,26 +182,26 @@
   vertical-align: middle;
 }
 .close-icon:after {
-  content: "\D7";
-  box-sizing: border-box;
-  display: block;
-  width: 16px;
-  height: 16px;
-  position: absolute;
   background-color: #216ba5;
-  z-index: 1;
-  right: 6px;
-  top: 50%;
+  border-radius: 50%;
   bottom: 0;
+  box-sizing: border-box;
+  color: white;
+  content: "\D7";
+  cursor: pointer;
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+  height: 16px;
+  line-height: .8;
   margin: -8px auto 0;
   padding: 2px;
-  border-radius: 50%;
+  position: absolute;
+  right: 7px;
   text-align: center;
-  color: white;
-  font-weight: normal;
-  font-size: 12px;
-  cursor: pointer;
-  line-height: 0.8;
+  top: 50%;
+  width: 16px;
+  z-index: 1;
 }
 html,
 body,
