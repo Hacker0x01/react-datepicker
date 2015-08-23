@@ -75,7 +75,8 @@ var DateInput = React.createClass( {
         onChange={this.handleChange}
         className={this.props.className}
         disabled={this.props.disabled}
-        placeholder={this.props.placeholderText} />;
+        placeholder={this.props.placeholderText}
+        readOnly={this.props.readOnly} />;
   }
 } );
 
