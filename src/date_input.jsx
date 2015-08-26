@@ -12,12 +12,26 @@ var DateInput = React.createClass( {
     };
   },
 
+  componentWillMount: function() {
+    this.setState({
+        maybeDate: this.safeDateFormat(this.props.date)
+    });
+  },
+  
   componentDidMount: function() {
     this.toggleFocus( this.props.focus );
   },
 
   componentWillReceiveProps: function( newProps ) {
     this.toggleFocus( newProps.focus );
+    // If we're receiving a different date then apply it.
+    // If we're receiving a null date continue displaying the
+    // value currently in the textbox.
+    if(newProps.date != null && newProps.date != this.props.date) {
+        this.setState({
+            maybeDate: this.safeDateFormat(newProps.date)
+        })
+    }
   },
 
   toggleFocus: function( focus ) {
@@ -34,9 +48,13 @@ var DateInput = React.createClass( {
 
     if ( date.isValid() ) {
       this.props.setSelected( new DateUtil( date ) );
-    } else if ( value === "" ) {
-      this.props.clearSelected();
+    } else {
+        this.props.invalidateSelected();
     }
+    
+    this.setState({
+        maybeDate: value
+    });
   },
 
   safeDateFormat: function( date ) {
@@ -67,7 +85,7 @@ var DateInput = React.createClass( {
         ref="input"
         type="text"
         name={this.props.name}
-        value={this.safeDateFormat( this.props.date )}
+        value={this.state.maybeDate}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         onFocus={this.props.onFocus}
