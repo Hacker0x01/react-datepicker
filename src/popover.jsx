@@ -12,6 +12,12 @@ var Popover = React.createClass( {
   getDefaultProps: function() {
     return {
       attachment: "top left",
+      constraints: [
+        {
+          to: "window",
+          attachment: "together"
+        }
+      ],
       targetAttachment: "bottom left",
       targetOffset: "10px 0"
     };
@@ -53,12 +59,7 @@ var Popover = React.createClass( {
       optimizations: {
         moveElement: false // always moves to <body> anyway!
       },
-      constraints: [
-        {
-          to: "window",
-          attachment: "together"
-        }
-      ]
+      constraints: this.props.constraints
     };
   },
 

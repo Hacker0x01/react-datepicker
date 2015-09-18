@@ -178,7 +178,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        {
 	          attachment: this.props.popoverAttachment,
 	          targetAttachment: this.props.popoverTargetAttachment,
-	          targetOffset: this.props.popoverTargetOffset },
+	          targetOffset: this.props.popoverTargetOffset,
+	          constraints: this.props.tetherConstraints },
 	        React.createElement(Calendar, {
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
@@ -256,6 +257,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      attachment: "top left",
+	      constraints: [{
+	        to: "window",
+	        attachment: "together"
+	      }],
 	      targetAttachment: "bottom left",
 	      targetOffset: "10px 0"
 	    };
@@ -297,10 +302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      optimizations: {
 	        moveElement: false // always moves to <body> anyway!
 	      },
-	      constraints: [{
-	        to: "window",
-	        attachment: "together"
-	      }]
+	      constraints: this.props.constraints
 	    };
 	  },
 
