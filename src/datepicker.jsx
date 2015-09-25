@@ -118,7 +118,8 @@ var DatePicker = React.createClass( {
         <Popover
           attachment={this.props.popoverAttachment}
           targetAttachment={this.props.popoverTargetAttachment}
-          targetOffset={this.props.popoverTargetOffset}>
+          targetOffset={this.props.popoverTargetOffset}
+          constraints={this.props.tetherConstraints}>
 
           <Calendar
             weekdays={this.props.weekdays}
