@@ -56,7 +56,10 @@ module.exports = function( grunt ) {
 
       karma: {
         files: [
-          "{src,test}/**/*.{js,jsx}"
+          "src/**/*.jsx",
+          "src/**/*.js",
+          "test/**/*.jsx",
+          "test/**/*.js"
         ],
         tasks: [ "karma" ]
       },
