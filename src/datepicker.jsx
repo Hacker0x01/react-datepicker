@@ -17,7 +17,8 @@ var DatePicker = React.createClass( {
     popoverTargetOffset: React.PropTypes.string,
     weekStart: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
-    onBlur: React.PropTypes.func
+    onBlur: React.PropTypes.func,
+    onFocus: React.PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -27,7 +28,8 @@ var DatePicker = React.createClass( {
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
-      disabled: false
+      disabled: false,
+      onFocus: function() {}
     };
   },
 
@@ -54,6 +56,7 @@ var DatePicker = React.createClass( {
   },
 
   handleFocus: function() {
+    this.props.onFocus();
     this.setState( {
       focus: true
     } );
