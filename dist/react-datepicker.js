@@ -76,7 +76,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    popoverTargetOffset: React.PropTypes.string,
 	    weekStart: React.PropTypes.string,
 	    onChange: React.PropTypes.func.isRequired,
-	    onBlur: React.PropTypes.func
+	    onBlur: React.PropTypes.func,
+	    onFocus: React.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -86,7 +87,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      dateFormatCalendar: "MMMM YYYY",
 	      moment: moment,
 	      onChange: function onChange() {},
-	      disabled: false
+	      disabled: false,
+	      onFocus: function onFocus() {}
 	    };
 	  },
 
@@ -113,6 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleFocus: function handleFocus() {
+	    this.props.onFocus();
 	    this.setState({
 	      focus: true
 	    });
