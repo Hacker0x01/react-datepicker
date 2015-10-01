@@ -12,7 +12,6 @@ var Calendar = React.createClass( {
     locale: React.PropTypes.string,
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
-    selected: React.PropTypes.object.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     hideCalendar: React.PropTypes.func.isRequired,
     minDate: React.PropTypes.object,
