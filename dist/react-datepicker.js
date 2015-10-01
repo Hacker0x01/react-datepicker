@@ -247,6 +247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(1);
+	var Tether = __webpack_require__(3);
 
 	var Popover = React.createClass({
 	  displayName: "Popover",
@@ -315,7 +316,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this._tether != null) {
 	      this._tether.setOptions(this._tetherOptions());
 	    } else if (window && document) {
-	      var Tether = __webpack_require__(3);
 	      this._tether = new Tether(this._tetherOptions());
 	    }
 	  },
