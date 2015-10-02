@@ -202,7 +202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  render: function render() {
 	    var clearButton = null;
 	    if (this.props.isClearable && this.state.selected != null) {
-	      clearButton = React.createElement("button", { className: "close-icon", onClick: this.clearSelected });
+	      clearButton = React.createElement("a", { className: "close-icon", href: "#", onClick: this.clearSelected });
 	    }
 
 	    return React.createElement(
@@ -461,7 +461,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    locale: React.PropTypes.string,
 	    moment: React.PropTypes.func.isRequired,
 	    dateFormat: React.PropTypes.string.isRequired,
-	    selected: React.PropTypes.object.isRequired,
 	    onSelect: React.PropTypes.func.isRequired,
 	    hideCalendar: React.PropTypes.func.isRequired,
 	    minDate: React.PropTypes.object,

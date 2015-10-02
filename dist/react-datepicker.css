@@ -189,17 +189,14 @@
   color: white;
   content: "\00d7";
   cursor: pointer;
-  display: block;
   font-size: 12px;
-  font-weight: normal;
   height: 16px;
-  line-height: .8;
+  width: 16px;
+  line-height: 1;
   margin: -8px auto 0;
   padding: 2px;
   position: absolute;
   right: 7px;
   text-align: center;
   top: 50%;
-  width: 16px;
-  z-index: 1;
 }
