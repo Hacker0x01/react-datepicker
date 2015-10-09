@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
 var hljs = require('highlight.js');
