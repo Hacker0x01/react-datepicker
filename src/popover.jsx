@@ -65,7 +65,7 @@ var Popover = React.createClass( {
   },
 
   _renderPopover: function() {
-    ReactDom.render( this._popoverComponent(), this._popoverElement );
+    ReactDOM.render( this._popoverComponent(), this._popoverElement );
 
     if ( this._tether != null ) {
       this._tether.setOptions( this._tetherOptions() );
