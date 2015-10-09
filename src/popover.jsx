@@ -1,4 +1,5 @@
 var React = require( "react" );
+var ReactDOM = require( "react-dom" );
 
 var Popover = React.createClass( {
   displayName: "Popover",
@@ -52,7 +53,7 @@ var Popover = React.createClass( {
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: this.getDOMNode().parentElement.querySelector( "input" ),
+      target: ReactDOM.findDOMNode( this ).parentElement.querySelector( "input" ),
       attachment: this.props.attachment,
       targetAttachment: this.props.targetAttachment,
       targetOffset: this.props.targetOffset,
@@ -76,7 +77,7 @@ var Popover = React.createClass( {
 
   componentWillUnmount: function() {
     this._tether.destroy();
-    React.unmountComponentAtNode( this._popoverElement );
+    ReactDOM.unmountComponentAtNode( this._popoverElement );
     if ( this._popoverElement.parentNode ) {
       this._popoverElement.parentNode.removeChild( this._popoverElement );
     }

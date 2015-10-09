@@ -1,7 +1,7 @@
 var React = require( "react" );
+var ReactDOM = require( "react-dom" );
 var DateUtil = require( "./util/date" );
 var moment = require( "moment" );
-
 var DateInput = React.createClass( {
 
   getDefaultProps: function() {
@@ -22,9 +22,9 @@ var DateInput = React.createClass( {
 
   toggleFocus: function( focus ) {
     if ( focus ) {
-      React.findDOMNode( this.refs.input ).focus();
+      ReactDOM.findDOMNode( this.refs.input ).focus();
     } else {
-      React.findDOMNode( this.refs.input ).blur();
+      ReactDOM.findDOMNode( this.refs.input ).blur();
     }
   },
 
