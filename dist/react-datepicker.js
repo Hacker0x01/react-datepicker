@@ -311,7 +311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  _renderPopover: function _renderPopover() {
-	    React.render(this._popoverComponent(), this._popoverElement);
+	    ReactDom.render(this._popoverComponent(), this._popoverElement);
 
 	    if (this._tether != null) {
 	      this._tether.setOptions(this._tetherOptions());
