@@ -32831,17 +32831,17 @@
 	(function (root, factory) {
 	  if (true) {
 	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(157)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports === 'object') {
 	    // Node. Note that this does not work with strict
 	    // CommonJS, but only CommonJS-like environments
 	    // that support module.exports
-	    module.exports = factory(require('react'));
+	    module.exports = factory(require('react-dom'));
 	  } else {
 	    // Browser globals (root is window)
-	    root.OnClickOutside = factory(React);
+	    root.OnClickOutside = factory(ReactDOM);
 	  }
-	}(this, function (React) {
+	}(this, function (ReactDOM) {
 	  "use strict";
 
 	  // Use a parallel array because we can't use
