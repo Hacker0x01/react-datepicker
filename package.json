@@ -58,7 +58,7 @@
   "dependencies": {
     "lodash": "^3.10.0",
     "moment": "^2.10",
-    "react-onclickoutside": "0.3.0",
+    "react-onclickoutside": "git+https://github.com/martijnrusschen/react-onclickoutside.git",
     "tether": "^1.1.0"
   },
   "scripts": {
