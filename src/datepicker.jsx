@@ -115,6 +115,11 @@ var DatePicker = React.createClass( {
     } );
   },
 
+  onClearClick: function( event ) {
+    event.preventDefault();
+    this.clearSelected();
+  },
+
   calendar: function() {
     if ( this.state.focus ) {
       return (
@@ -145,7 +150,7 @@ var DatePicker = React.createClass( {
     var clearButton = null;
     if ( this.props.isClearable && this.state.selected != null ) {
       clearButton = (
-        <a className="close-icon" href="#" onClick={this.clearSelected}></a>
+        <a className="close-icon" href="#" onClick={this.onClearClick}></a>
       );
     }
 
