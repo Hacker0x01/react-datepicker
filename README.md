@@ -12,7 +12,7 @@ A simple and reusable Datepicker component for React ([Demo](https://hacker0x01.
 
 The package has can be installed via:
 - Bower: `bower install react-date-picker`
-- NPM: `npm install react-datepicker —-save`
+- NPM: `npm install react-datepicker --save`
 - Bundler (rails gem): `bundle install rails-assets-react-date-picker`. This requires to include https://rails-assets.org/ as a source in your gemfile.
 
 You’ll need to install React and Moment.js separate since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view.
