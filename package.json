@@ -45,7 +45,6 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
-    "react": ">=0.12 <0.15",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
     "sinon": "^1.15.4",
@@ -53,12 +52,12 @@
     "webpack-dev-server": "^1.7.0"
   },
   "peerDependencies": {
-    "react": ">=0.12 <0.15"
+    "react": "^0.14.0"
   },
   "dependencies": {
     "lodash": "^3.10.0",
     "moment": "^2.10",
-    "react-onclickoutside": "git+https://github.com/martijnrusschen/react-onclickoutside.git",
+    "react-onclickoutside": "^4.0.1",
     "tether": "^1.1.0"
   },
   "scripts": {
