@@ -53,7 +53,7 @@ var Popover = React.createClass( {
   _tetherOptions: function() {
     return {
       element: this._popoverElement,
-      target: ReactDOM.findDOMNode( this ).parentElement.querySelector( "input" ),
+      target: this.refs.span.parentElement.querySelector( "input" ),
       attachment: this.props.attachment,
       targetAttachment: this.props.targetAttachment,
       targetOffset: this.props.targetOffset,
@@ -84,7 +84,7 @@ var Popover = React.createClass( {
   },
 
   render: function() {
-    return <span/>;
+    return <span ref="span"/>;
   }
 } );
 
