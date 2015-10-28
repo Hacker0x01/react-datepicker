@@ -17,6 +17,7 @@ var Calendar = React.createClass( {
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
+    availableDates: React.PropTypes.array,
     weekStart: React.PropTypes.string.isRequired
   },
 
@@ -99,6 +100,7 @@ var Calendar = React.createClass( {
     var minDate = new DateUtil( this.props.minDate ).safeClone(),
         maxDate = new DateUtil( this.props.maxDate ).safeClone(),
         excludeDates,
+        availableDates,
         disabled;
 
     if ( this.props.excludeDates && Array.isArray( this.props.excludeDates ) ) {
@@ -107,8 +109,16 @@ var Calendar = React.createClass( {
       } );
     }
 
+    if ( this.props.availableDates && Array.isArray( this.props.availableDates ) ) {
+      availableDates = map( this.props.availableDates, function( date ) {
+        return new DateUtil( date ).safeClone();
+      } );
+    }
+
     disabled = day.isBefore( minDate ) || day.isAfter( maxDate ) ||
-      some( excludeDates, function( xDay ) { return day.sameDay( xDay ); } );
+      some( excludeDates, function( xDay ) { return day.sameDay( xDay ); } ) ||
+      availableDates &&
+      !some( availableDates, function( xDay ) { return day.sameDay( xDay ); } );
 
     return (
       <Day
