@@ -10,7 +10,7 @@
     "node-sass": "^3.2.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "react-datepicker": "^0.14.5",
+    "react-datepicker": "^0.15.1",
     "sass-loader": "^1.0.3",
     "style-loader": "^0.12.3",
     "webpack": "^1.10.5",
