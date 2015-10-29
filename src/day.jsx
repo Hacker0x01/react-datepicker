@@ -22,12 +22,14 @@ var Day = React.createClass( {
     if ( this.props.day.sameDay( this.props.selected ) )
       classes.push( "datepicker__day--selected" );
 
+    if ( this.props.day.inRange )
+      classes.push( "datepicker__day--in-range" );
+
     if ( this.props.day.sameDay( moment() ) )
       classes.push( "datepicker__day--today" );
 
-    if ( this.isWeekend() ) {
+    if ( this.isWeekend() )
       classes.push( "datepicker__day--weekend" );
-    }
 
     return (
       <div className={classes.join( " " )} onClick={this.handleClick}>

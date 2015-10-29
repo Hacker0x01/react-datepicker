@@ -18,6 +18,12 @@ DateUtil.prototype.sameMonth = function( other ) {
   return this._date.isSame( other._date, "month" );
 };
 
+DateUtil.prototype.inRange = function( startDate, endDate ) {
+  var startDate = startDate._date.startOf( "day" ).subtract( 1, "seconds" );
+  var endDate = endDate._date.startOf( "day" ).add( 1, "seconds" );
+  return this._date.isBetween( startDate, endDate );
+};
+
 DateUtil.prototype.day = function() {
   return this._date.date();
 };
