@@ -99,7 +99,8 @@ var Calendar = React.createClass( {
     var minDate = new DateUtil( this.props.minDate ).safeClone(),
         maxDate = new DateUtil( this.props.maxDate ).safeClone(),
         excludeDates,
-        disabled;
+        disabled,
+        inRange = day.inRange( this.props.startDate, this.props.endDate );
 
     if ( this.props.excludeDates && Array.isArray( this.props.excludeDates ) ) {
       excludeDates = map( this.props.excludeDates, function( date ) {
@@ -117,6 +118,7 @@ var Calendar = React.createClass( {
         date={this.state.date}
         onClick={this.handleDayClick.bind( this, day )}
         selected={new DateUtil( this.props.selected )}
+        inRange={inRange}
         disabled={disabled} />
     );
   },

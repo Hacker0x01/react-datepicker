@@ -105,7 +105,8 @@
     font-weight: bold;
   }
 
-  &--selected {
+  &--selected,
+  &--in-range {
     border-radius: $border-radius;
     background-color: $selected-color;
     color: #fff;

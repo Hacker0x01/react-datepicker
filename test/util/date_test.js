@@ -94,6 +94,40 @@ describe( "DateUtil", function() {
     } );
   } );
 
+  describe( "#inRange", function() {
+    it( "returns true when the date is in range the passed date", function() {
+      var date = new DateUtil( moment( "2014-02-09" ) );
+      var start_date = new DateUtil( moment( "2014-02-08" ) );
+      var end_date = new DateUtil( moment( "2014-02-10" ) );
+
+      expect( date.inRange( start_date, end_date ) ).to.eq( true );
+    } );
+
+    it( "returns false when the date is not in range the passed date", function() {
+      var date = new DateUtil( moment( "2014-02-08" ) );
+      var start_date = new DateUtil( moment( "2014-02-09" ) );
+      var end_date = new DateUtil( moment( "2014-02-10" ) );
+
+      expect( date.inRange( start_date, end_date ) ).to.eq( false );
+    } );
+
+    it( "returns true when the passed date is the same day as start of range", function() {
+      var date = new DateUtil( moment( "2014-02-09" ) );
+      var start_date = new DateUtil( moment( "2014-02-09" ) );
+      var end_date = new DateUtil( moment( "2014-02-10" ) );
+
+      expect( date.inRange( start_date, end_date ) ).to.eq( true );
+    } );
+
+    it( "returns true when the passed date is the same day as end of range", function() {
+      var date = new DateUtil( moment( "2014-02-10" ) );
+      var start_date = new DateUtil( moment( "2014-02-09" ) );
+      var end_date = new DateUtil( moment( "2014-02-10" ) );
+
+      expect( date.inRange( start_date, end_date ) ).to.eq( true );
+    } );
+  } );
+
   describe( "#day", function() {
     it( "returns the day of the month", function() {
       var date = new DateUtil( moment( "2014-02-08" ) );
