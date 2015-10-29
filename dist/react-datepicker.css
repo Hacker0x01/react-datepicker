@@ -133,12 +133,12 @@
 .datepicker__day--today {
   font-weight: bold;
 }
-.datepicker__day--selected {
+.datepicker__day--selected, .datepicker__day--in-range {
   border-radius: 4px;
   background-color: #216ba5;
   color: #fff;
 }
-.datepicker__day--selected:hover {
+.datepicker__day--selected:hover, .datepicker__day--in-range:hover {
   background-color: #1d5d90;
 }
 .datepicker__day--disabled {

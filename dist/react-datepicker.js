@@ -198,6 +198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hideCalendar: this.hideCalendar,
 	          minDate: this.props.minDate,
 	          maxDate: this.props.maxDate,
+	          startDate: this.props.startDate,
+	          endDate: this.props.endDate,
 	          excludeDates: this.props.excludeDates,
 	          weekStart: this.props.weekStart })
 	      );
@@ -377,6 +379,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DateUtil.prototype.sameMonth = function (other) {
 	  return this._date.isSame(other._date, "month");
+	};
+
+	DateUtil.prototype.inRange = function (startDate, endDate) {
+	  var startDate = startDate._date.startOf("day").subtract(1, "seconds");
+	  var endDate = endDate._date.startOf("day").add(1, "seconds");
+	  return this._date.isBetween(startDate, endDate);
 	};
 
 	DateUtil.prototype.day = function () {
@@ -562,7 +570,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var minDate = new DateUtil(this.props.minDate).safeClone(),
 	        maxDate = new DateUtil(this.props.maxDate).safeClone(),
 	        excludeDates,
-	        disabled;
+	        disabled,
+	        inRange = day.inRange(this.props.startDate, this.props.endDate);
 
 	    if (this.props.excludeDates && Array.isArray(this.props.excludeDates)) {
 	      excludeDates = map(this.props.excludeDates, function (date) {
@@ -580,6 +589,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      date: this.state.date,
 	      onClick: this.handleDayClick.bind(this, day),
 	      selected: new DateUtil(this.props.selected),
+	      inRange: inRange,
 	      disabled: disabled });
 	  },
 
@@ -661,11 +671,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this.props.day.sameDay(this.props.selected)) classes.push("datepicker__day--selected");
 
+	    if (this.props.day.inRange) classes.push("datepicker__day--in-range");
+
 	    if (this.props.day.sameDay(moment())) classes.push("datepicker__day--today");
 
-	    if (this.isWeekend()) {
-	      classes.push("datepicker__day--weekend");
-	    }
+	    if (this.isWeekend()) classes.push("datepicker__day--weekend");
 
 	    return React.createElement(
 	      "div",
