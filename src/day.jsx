@@ -22,7 +22,7 @@ var Day = React.createClass( {
     if ( this.props.day.sameDay( this.props.selected ) )
       classes.push( "datepicker__day--selected" );
 
-    if ( this.props.day.inRange )
+    if ( this.props.inRange )
       classes.push( "datepicker__day--in-range" );
 
     if ( this.props.day.sameDay( moment() ) )
