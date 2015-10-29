@@ -382,9 +382,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	DateUtil.prototype.inRange = function (startDate, endDate) {
-	  var startDate = startDate._date.startOf("day").subtract(1, "seconds");
-	  var endDate = endDate._date.startOf("day").add(1, "seconds");
-	  return this._date.isBetween(startDate, endDate);
+	  if (!startDate || !endDate) return false;
+	  var before = startDate._date.startOf("day").subtract(1, "seconds");
+	  var after = endDate._date.startOf("day").add(1, "seconds");
+	  return this._date.isBetween(before, after);
 	};
 
 	DateUtil.prototype.day = function () {
@@ -485,6 +486,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hideCalendar: React.PropTypes.func.isRequired,
 	    minDate: React.PropTypes.object,
 	    maxDate: React.PropTypes.object,
+	    startDate: React.PropTypes.object,
+	    endDate: React.PropTypes.object,
 	    excludeDates: React.PropTypes.array,
 	    weekStart: React.PropTypes.string.isRequired
 	  },
