@@ -126,6 +126,20 @@ describe( "DateUtil", function() {
 
       expect( date.inRange( start_date, end_date ) ).to.eq( true );
     } );
+
+    it( "returns false when the start of range is missing", function() {
+      var date = new DateUtil( moment( "2014-02-09" ) );
+      var end_date = new DateUtil( moment( "2014-02-10" ) );
+
+      expect( date.inRange( null, end_date ) ).to.eq( false );
+    } );
+
+    it( "returns false when the end of range is missing", function() {
+      var date = new DateUtil( moment( "2014-02-09" ) );
+      var start_date = new DateUtil( moment( "2014-02-09" ) );
+
+      expect( date.inRange( start_date, null ) ).to.eq( false );
+    } );
   } );
 
   describe( "#day", function() {

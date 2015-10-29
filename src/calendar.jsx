@@ -16,6 +16,8 @@ var Calendar = React.createClass( {
     hideCalendar: React.PropTypes.func.isRequired,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
+    startDate: React.PropTypes.object,
+    endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     weekStart: React.PropTypes.string.isRequired
   },
