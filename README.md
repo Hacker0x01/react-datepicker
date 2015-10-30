@@ -15,12 +15,14 @@ The package has can be installed via:
 - NPM: `npm install react-datepicker --save`
 - Bundler (rails gem): `bundle install rails-assets-react-date-picker`. This requires to include https://rails-assets.org/ as a source in your gemfile.
 
-You’ll need to install React and Moment.js separate since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view.
+You’ll need to install React and Moment.js separate since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
 
 ```
 var React = require(‘react’);
 var DatePicker = require(‘react-datepicker’);
 var moment = require(‘moment’);
+
+require('react-datepicker/dist/react-datepicker.css');
 
 var Example = React.createClass({
   displayName: ‘Example’,
