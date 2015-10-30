@@ -17,7 +17,7 @@ var Disabled = React.createClass({
         <code className="jsx">
           {"<DatePicker"}<br />
           &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
-          &nbsp; &nbsp; {"isClearable={true} />"}<br />
+          &nbsp; &nbsp; {"isClearable={true}"}<br />
           &nbsp; &nbsp; {"placeholderText='I have been cleared!' />"}
         </code>
       </pre>
