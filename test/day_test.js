@@ -7,7 +7,7 @@ var Day = require( "../src/day.jsx" );
 
 describe( "Day", function() {
   it( "should apply the in-range class if in range", function() {
-    var day = new DateUtil(moment());
+    var day = new DateUtil( moment() );
     var dayComponent = TestUtils.renderIntoDocument(
       <Day
         day={day}
@@ -19,7 +19,7 @@ describe( "Day", function() {
   } );
 
   it( "should not apply the in-range class if not in range", function() {
-    var day = new DateUtil(moment());
+    var day = new DateUtil( moment() );
     var dayComponent = TestUtils.renderIntoDocument(
       <Day
         day={day}
