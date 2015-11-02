@@ -22,10 +22,9 @@
     "url": "https://github.com/Hacker0x01/react-datepicker/issues"
   },
   "devDependencies": {
-    "babel": "^5.6.4",
-    "babel-core": "^5.6.4",
-    "babel-jest": "^5.3.0",
-    "babel-loader": "^5.3.2",
+    "babel": "^6.0.15",
+    "babel-core": "^6.0.16",
+    "babel-loader": "^6.0.0",
     "chai": "^3.2.0",
     "grunt": "0.4.5",
     "grunt-contrib-sass": "0.9.2",
