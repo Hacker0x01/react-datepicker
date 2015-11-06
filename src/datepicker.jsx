@@ -123,11 +123,6 @@ var DatePicker = React.createClass( {
     this.clearSelected();
   },
 
-  onClearClick: function( event ) {
-    event.preventDefault();
-    this.clearSelected();
-  },
-
   calendar: function() {
     if ( this.state.focus ) {
       return (
