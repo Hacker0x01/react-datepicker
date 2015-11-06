@@ -2,3 +2,4 @@ bower_components
 node_modules
 .sass-cache
 npm-debug.log
+.idea
