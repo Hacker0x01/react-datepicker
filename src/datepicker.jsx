@@ -15,8 +15,10 @@ var DatePicker = React.createClass( {
     popoverAttachment: React.PropTypes.string,
     popoverTargetAttachment: React.PropTypes.string,
     popoverTargetOffset: React.PropTypes.string,
+    weekStart: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
-    onBlur: React.PropTypes.func
+    onBlur: React.PropTypes.func,
+    onFocus: React.PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -26,7 +28,8 @@ var DatePicker = React.createClass( {
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
-      disabled: false
+      disabled: false,
+      onFocus: function() {}
     };
   },
 
@@ -53,9 +56,7 @@ var DatePicker = React.createClass( {
   },
 
   handleFocus: function() {
-    this.setState( {
-      focus: true
-    } );
+    this.props.onFocus();
   },
 
   handleBlur: function() {
@@ -87,8 +88,7 @@ var DatePicker = React.createClass( {
 
   setSelected: function( date ) {
     this.setState( {
-      selected: date.moment(),
-      virtualFocus: true
+      selected: date.moment()
     }, function() {
       this.props.onChange( this.state.selected );
     }.bind( this ) );
@@ -105,10 +105,18 @@ var DatePicker = React.createClass( {
   },
 
   onInputClick: function() {
-    this.setState( {
-      focus: true,
-      virtualFocus: true
-    } );
+    if (!this.state.virtualFocus) {
+      return this.setState({
+        focus: true,
+        virtualFocus: true
+      });
+    }
+    this.setState({ virtualFocus: false });
+  },
+
+  onClearClick: function( event ) {
+    event.preventDefault();
+    this.clearSelected();
   },
 
   calendar: function() {
@@ -117,7 +125,8 @@ var DatePicker = React.createClass( {
         <Popover
           attachment={this.props.popoverAttachment}
           targetAttachment={this.props.popoverTargetAttachment}
-          targetOffset={this.props.popoverTargetOffset}>
+          targetOffset={this.props.popoverTargetOffset}
+          constraints={this.props.tetherConstraints}>
 
           <Calendar
             weekdays={this.props.weekdays}
@@ -140,7 +149,7 @@ var DatePicker = React.createClass( {
     var clearButton = null;
     if ( this.props.isClearable && this.state.selected != null ) {
       clearButton = (
-        <button className="close-icon" onClick={this.clearSelected}></button>
+        <a className="close-icon" href="#" onClick={this.onClearClick}></a>
       );
     }
 
@@ -162,7 +171,8 @@ var DatePicker = React.createClass( {
           disabled={this.props.disabled}
           className={this.props.className}
           title={this.props.title}
-          readOnly={this.props.readOnly} />
+          readOnly={this.props.readOnly}
+          required={this.props.required} />
         {clearButton}
         {this.props.disabled ? null : this.calendar()}
       </div>
