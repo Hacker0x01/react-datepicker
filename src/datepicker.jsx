@@ -12,6 +12,7 @@ var DatePicker = React.createClass( {
     weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
+    id: React.PropTypes.string,
     popoverAttachment: React.PropTypes.string,
     popoverTargetAttachment: React.PropTypes.string,
     popoverTargetOffset: React.PropTypes.string,
@@ -159,6 +160,7 @@ var DatePicker = React.createClass( {
     return (
       <div className="datepicker__input-container">
         <DateInput
+          id={this.props.id}
           name={this.props.name}
           date={this.state.selected}
           dateFormat={this.props.dateFormat}

@@ -66,6 +66,7 @@ var DateInput = React.createClass( {
     return <input
         ref="input"
         type="text"
+        id={this.props.id}
         name={this.props.name}
         value={this.safeDateFormat( this.props.date )}
         onClick={this.handleClick}

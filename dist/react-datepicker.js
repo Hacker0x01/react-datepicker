@@ -71,6 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    locale: React.PropTypes.string,
 	    dateFormatCalendar: React.PropTypes.string,
+	    id: React.PropTypes.string,
 	    popoverAttachment: React.PropTypes.string,
 	    popoverTargetAttachment: React.PropTypes.string,
 	    popoverTargetOffset: React.PropTypes.string,
@@ -216,6 +217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "div",
 	      { className: "datepicker__input-container" },
 	      React.createElement(DateInput, {
+	        id: this.props.id,
 	        name: this.props.name,
 	        date: this.state.selected,
 	        dateFormat: this.props.dateFormat,
@@ -2770,6 +2772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return React.createElement("input", {
 	      ref: "input",
 	      type: "text",
+	      id: this.props.id,
 	      name: this.props.name,
 	      value: this.safeDateFormat(this.props.date),
 	      onClick: this.handleClick,
