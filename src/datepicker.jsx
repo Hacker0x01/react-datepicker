@@ -92,8 +92,7 @@ var DatePicker = React.createClass( {
 
   setSelected: function( date ) {
     this.setState( {
-      selected: date.moment(),
-      virtualFocus: true
+      selected: date.moment()
     }, function() {
       this.props.onChange( this.state.selected );
     }.bind( this ) );
@@ -110,10 +109,13 @@ var DatePicker = React.createClass( {
   },
 
   onInputClick: function() {
-    this.setState( {
-      focus: true,
-      virtualFocus: true
-    } );
+    if (!this.state.virtualFocus) {
+      return this.setState({
+        focus: true,
+        virtualFocus: true
+      });
+    }
+    this.setState({ virtualFocus: false });
   },
 
   onClearClick: function( event ) {
