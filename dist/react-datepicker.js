@@ -84,8 +84,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-	      locale: "en",
 	      dateFormatCalendar: "MMMM YYYY",
 	      moment: moment,
 	      onChange: function onChange() {},
@@ -193,6 +191,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          targetOffset: this.props.popoverTargetOffset,
 	          constraints: this.props.tetherConstraints },
 	        React.createElement(Calendar, {
+	          ref: "calendar",
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
 	          moment: this.props.moment,
@@ -220,6 +219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "div",
 	      { className: "datepicker__input-container" },
 	      React.createElement(DateInput, {
+	        ref: "input",
 	        id: this.props.id,
 	        name: this.props.name,
 	        date: this.state.selected,
@@ -483,7 +483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  mixins: [__webpack_require__(60)],
 
 	  propTypes: {
-	    weekdays: React.PropTypes.array.isRequired,
+	    weekdays: React.PropTypes.array,
 	    locale: React.PropTypes.string,
 	    moment: React.PropTypes.func.isRequired,
 	    dateFormat: React.PropTypes.string.isRequired,
@@ -494,7 +494,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    startDate: React.PropTypes.object,
 	    endDate: React.PropTypes.object,
 	    excludeDates: React.PropTypes.array,
-	    weekStart: React.PropTypes.string.isRequired
+	    weekStart: React.PropTypes.string
 	  },
 
 	  handleClickOutside: function handleClickOutside() {
@@ -503,7 +503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      date: new DateUtil(this.props.selected).safeClone(this.props.moment())
+	      date: this.localizeDateUtil(new DateUtil(this.props.selected).safeClone(this.props.moment()))
 	    };
 	  },
 
@@ -511,10 +511,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      weekStart: "1"
 	    };
-	  },
-
-	  componentWillMount: function componentWillMount() {
-	    this.initializeMomentLocale();
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -525,21 +521,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // When the selected date changed
 	    if (nextProps.selected !== this.props.selected) {
 	      this.setState({
-	        date: new DateUtil(nextProps.selected).clone()
+	        date: this.localizeDateUtil(new DateUtil(nextProps.selected).clone())
 	      });
 	    }
 	  },
 
-	  initializeMomentLocale: function initializeMomentLocale() {
-	    var weekdays = this.props.weekdays.slice(0);
-	    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
-
-	    this.props.moment.locale(this.props.locale, {
-	      week: {
-	        dow: this.props.weekStart
-	      },
-	      weekdaysMin: weekdays
-	    });
+	  localizeDateUtil: function localizeDateUtil(dateUtil) {
+	    var thisMoment = dateUtil.moment();
+	    if (this.props.locale) thisMoment.locale(this.props.locale);
+	    if (this.props.weekStart) thisMoment._locale._week.dow = this.props.weekStart;
+	    return dateUtil;
 	  },
 
 	  increaseMonth: function increaseMonth() {
@@ -606,7 +597,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  header: function header() {
-	    return this.props.moment.weekdaysMin().map(function (day, key) {
+	    var localeData = this.state.date.moment().localeData();
+	    var weekdays = localeData._weekdaysMin.slice(0);
+	    weekdays = weekdays.concat(weekdays.splice(0, localeData._week.dow));
+	    return weekdays.map(function (day, key) {
 	      return React.createElement(
 	        "div",
 	        { className: "datepicker__day", key: key },
@@ -616,6 +610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  render: function render() {
+	    var locale = this.state.date.moment().locale();
 	    return React.createElement(
 	      "div",
 	      { className: "datepicker" },
@@ -628,7 +623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        React.createElement(
 	          "span",
 	          { className: "datepicker__current-month" },
-	          this.state.date.localeFormat(this.props.locale, this.props.dateFormat)
+	          this.state.date.localeFormat(locale, this.props.dateFormat)
 	        ),
 	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
 	          onClick: this.increaseMonth }),

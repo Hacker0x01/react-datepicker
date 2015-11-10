@@ -8,7 +8,7 @@ var Calendar = React.createClass( {
   mixins: [ require( "react-onclickoutside" ) ],
 
   propTypes: {
-    weekdays: React.PropTypes.array.isRequired,
+    weekdays: React.PropTypes.array,
     locale: React.PropTypes.string,
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ var Calendar = React.createClass( {
     startDate: React.PropTypes.object,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
-    weekStart: React.PropTypes.string.isRequired
+    weekStart: React.PropTypes.string
   },
 
   handleClickOutside: function() {
@@ -28,7 +28,7 @@ var Calendar = React.createClass( {
 
   getInitialState: function() {
     return {
-      date: new DateUtil( this.props.selected ).safeClone( this.props.moment() )
+      date: this.localizeDateUtil( new DateUtil( this.props.selected ).safeClone( this.props.moment() ) )
     };
   },
 
@@ -38,31 +38,22 @@ var Calendar = React.createClass( {
     };
   },
 
-  componentWillMount: function() {
-    this.initializeMomentLocale();
-  },
-
   componentWillReceiveProps: function( nextProps ) {
     if ( nextProps.selected === null ) { return; }
 
     // When the selected date changed
     if ( nextProps.selected !== this.props.selected ) {
       this.setState( {
-        date: new DateUtil( nextProps.selected ).clone()
+        date: this.localizeDateUtil( new DateUtil( nextProps.selected ).clone() )
       } );
     }
   },
 
-  initializeMomentLocale: function() {
-    var weekdays = this.props.weekdays.slice( 0 );
-    weekdays = weekdays.concat( weekdays.splice( 0, this.props.weekStart ) );
-
-    this.props.moment.locale( this.props.locale, {
-      week: {
-        dow: this.props.weekStart
-      },
-      weekdaysMin: weekdays
-    } );
+  localizeDateUtil: function( dateUtil ) {
+    var thisMoment = dateUtil.moment();
+    if ( this.props.locale ) thisMoment.locale( this.props.locale );
+    if ( this.props.weekStart ) thisMoment._locale._week.dow = this.props.weekStart;
+    return dateUtil;
   },
 
   increaseMonth: function() {
@@ -130,12 +121,16 @@ var Calendar = React.createClass( {
   },
 
   header: function() {
-    return this.props.moment.weekdaysMin().map( function( day, key ) {
+    var localeData = this.state.date.moment().localeData();
+    var weekdays = localeData._weekdaysMin.slice( 0 );
+    weekdays = weekdays.concat( weekdays.splice( 0, localeData._week.dow ) );
+    return weekdays.map( function( day, key ) {
       return <div className="datepicker__day" key={key}>{day}</div>;
     } );
   },
 
   render: function() {
+    var locale = this.state.date.moment().locale();
     return (
       <div className="datepicker">
         <div className="datepicker__triangle"></div>
@@ -144,7 +139,7 @@ var Calendar = React.createClass( {
               onClick={this.decreaseMonth}>
           </a>
           <span className="datepicker__current-month">
-            {this.state.date.localeFormat( this.props.locale, this.props.dateFormat )}
+            {this.state.date.localeFormat( locale, this.props.dateFormat )}
           </span>
           <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>
