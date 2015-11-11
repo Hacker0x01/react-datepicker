@@ -2715,7 +2715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      dateFormat: "YYYY-MM-DD",
+	      dateFormat: "YYYY/MM/DD",
 	      className: "datepicker__input",
 	      onBlur: function onBlur() {}
 	    };
