@@ -25,8 +25,6 @@ var DatePicker = React.createClass( {
 
   getDefaultProps: function() {
     return {
-      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
-      locale: "en",
       dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange: function() {},
