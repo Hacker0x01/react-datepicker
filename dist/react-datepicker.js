@@ -193,6 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          targetOffset: this.props.popoverTargetOffset,
 	          constraints: this.props.tetherConstraints },
 	        React.createElement(Calendar, {
+	          ref: "calendar",
 	          weekdays: this.props.weekdays,
 	          locale: this.props.locale,
 	          moment: this.props.moment,
@@ -220,6 +221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "div",
 	      { className: "datepicker__input-container" },
 	      React.createElement(DateInput, {
+	        ref: "input",
 	        id: this.props.id,
 	        name: this.props.name,
 	        date: this.state.selected,

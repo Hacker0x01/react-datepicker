@@ -134,7 +134,7 @@ var DatePicker = React.createClass( {
           constraints={this.props.tetherConstraints}>
 
           <Calendar
-            ref='calendar'
+            ref="calendar"
             weekdays={this.props.weekdays}
             locale={this.props.locale}
             moment={this.props.moment}
@@ -164,7 +164,7 @@ var DatePicker = React.createClass( {
     return (
       <div className="datepicker__input-container">
         <DateInput
-          ref='input'
+          ref="input"
           id={this.props.id}
           name={this.props.name}
           date={this.state.selected}
