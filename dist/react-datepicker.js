@@ -158,16 +158,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this));
 	  },
 
-	  clearSelected: function clearSelected() {
-	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
-
-	    this.setState({
-	      selected: null
-	    }, (function () {
-	      this.props.onChange(null);
-	    }).bind(this));
-	  },
-
 	  invalidateSelected: function invalidateSelected() {
 	    if (this.state.selected === null) return;
 	    this.props.onChange(null);
@@ -185,7 +175,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  onClearClick: function onClearClick(event) {
 	    event.preventDefault();
-	    this.clearSelected();
+
+	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+
+	    this.setState({
+	      selected: null
+	    }, (function () {
+	      this.props.onChange(null);
+	    }).bind(this));
 	  },
 
 	  calendar: function calendar() {
@@ -2740,6 +2737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.toggleFocus(newProps.focus);
+
 	    // If we're receiving a different date then apply it.
 	    // If we're receiving a null date continue displaying the
 	    // value currently in the textbox.
