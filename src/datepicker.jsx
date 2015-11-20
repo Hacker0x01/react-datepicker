@@ -99,16 +99,6 @@ var DatePicker = React.createClass( {
     }.bind( this ) );
   },
 
-  clearSelected: function() {
-    if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
-
-    this.setState( {
-      selected: null
-    }, function() {
-      this.props.onChange( null );
-    }.bind( this ) );
-  },
-  
   invalidateSelected: function() {
     if ( this.state.selected === null ) return;
     this.props.onChange( null );
@@ -126,7 +116,14 @@ var DatePicker = React.createClass( {
 
   onClearClick: function( event ) {
     event.preventDefault();
-    this.clearSelected();
+
+    if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+
+    this.setState( {
+      selected: null
+    }, function() {
+      this.props.onChange( null );
+    }.bind( this ) );
   },
 
   calendar: function() {
