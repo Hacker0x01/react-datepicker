@@ -108,6 +108,11 @@ var DatePicker = React.createClass( {
       this.props.onChange( null );
     }.bind( this ) );
   },
+  
+  invalidateSelected: function() {
+    if ( this.state.selected === null ) return;
+    this.props.onChange( null );
+  },
 
   onInputClick: function() {
     if ( !this.state.virtualFocus ) {
@@ -175,7 +180,7 @@ var DatePicker = React.createClass( {
           handleClick={this.onInputClick}
           handleEnter={this.hideCalendar}
           setSelected={this.setSelected}
-          clearSelected={this.clearSelected}
+          invalidateSelected={this.invalidateSelected}
           hideCalendar={this.hideCalendar}
           placeholderText={this.props.placeholderText}
           disabled={this.props.disabled}
