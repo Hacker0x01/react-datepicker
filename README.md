@@ -71,16 +71,25 @@ This included the Datepicker with its default functionality. To use more functio
 
 More information about the different ways of customisation can on https://hacker0x01.github.io/react-datepicker.
 
+## Compatibility
+
+We're always trying to stay compatible with the latest version of React. We can't support all older versions of React, since React is still < 1.0 and introducing breaking changes every release.
+
+
+Latest compatible versions:
+React 0.13: React-datepicker v0.13.0
+pre React 0.13: React-datepicker v0.6.2
+
 ## Local Development
 
 To help developing this Datepicker, there are two important branches. The `master` branch contains the latest version of the Datepicker component and the `gh-pages` branch contains the examples used on https://hacker0x01.github.io/react-datepicker.
 
-# The component
+### The component
 To help you developing the component we’ve set up some tests that covers the basic functionality (can be found in  `/tests`). Although, we’re a big fan of tests, this only covers a small piece of the component. We highly recommend you to add a tests when you’re adding new functionality.
 
 While developing, you can run `grunt watch` to compile your changes, run linters and tests.
 
-# The examples
+### The examples
 The example site is a simple app that uses the Datepicker by simply requiring the latest published version. This makes it the ideal real world example for every other website that wants to use the component.
 
 To extend the examples with a new example, you can simply duplicate one of the existing examples and change the unique properties of your example.

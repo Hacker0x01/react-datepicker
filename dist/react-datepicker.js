@@ -158,14 +158,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this));
 	  },
 
-	  clearSelected: function clearSelected() {
-	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
-
-	    this.setState({
-	      selected: null
-	    }, (function () {
-	      this.props.onChange(null);
-	    }).bind(this));
+	  invalidateSelected: function invalidateSelected() {
+	    if (this.state.selected === null) return;
+	    this.props.onChange(null);
 	  },
 
 	  onInputClick: function onInputClick() {
@@ -180,7 +175,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  onClearClick: function onClearClick(event) {
 	    event.preventDefault();
-	    this.clearSelected();
+
+	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+
+	    this.setState({
+	      selected: null
+	    }, (function () {
+	      this.props.onChange(null);
+	    }).bind(this));
 	  },
 
 	  calendar: function calendar() {
@@ -233,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
-	        clearSelected: this.clearSelected,
+	        invalidateSelected: this.invalidateSelected,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText,
 	        disabled: this.props.disabled,
@@ -2725,12 +2727,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 
+	  componentWillMount: function componentWillMount() {
+	    this.setState({
+	      maybeDate: this.safeDateFormat(this.props.date)
+	    });
+	  },
+
 	  componentDidMount: function componentDidMount() {
 	    this.toggleFocus(this.props.focus);
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.toggleFocus(newProps.focus);
+
+	    // If we're receiving a different date then apply it.
+	    // If we're receiving a null date continue displaying the
+	    // value currently in the textbox.
+	    if (newProps.date != null && newProps.date != this.props.date) {
+	      this.setState({
+	        maybeDate: this.safeDateFormat(newProps.date)
+	      });
+	    }
 	  },
 
 	  toggleFocus: function toggleFocus(focus) {
@@ -2747,9 +2764,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (date.isValid()) {
 	      this.props.setSelected(new DateUtil(date));
-	    } else if (value === "") {
-	      this.props.clearSelected();
+	    } else {
+	      this.props.invalidateSelected();
 	    }
+
+	    this.setState({
+	      maybeDate: value
+	    });
 	  },
 
 	  safeDateFormat: function safeDateFormat(date) {
@@ -2781,7 +2802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: "text",
 	      id: this.props.id,
 	      name: this.props.name,
-	      value: this.safeDateFormat(this.props.date),
+	      value: this.state.maybeDate,
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
