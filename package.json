@@ -56,7 +56,7 @@
   "dependencies": {
     "lodash": "^3.10.0",
     "moment": "^2.10",
-    "react-onclickoutside": "Pomax/react-onclickoutside#v4.4.0",
+    "react-onclickoutside": "^4.0.1",
     "tether": "^1.1.0"
   },
   "scripts": {
