@@ -18,14 +18,14 @@ The package has can be installed via:
 You’ll need to install React and Moment.js separate since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
 
 ```
-var React = require(‘react’);
-var DatePicker = require(‘react-datepicker’);
-var moment = require(‘moment’);
+var React = require('react');
+var DatePicker = require('react-datepicker');
+var moment = require('moment');
 
 require('react-datepicker/dist/react-datepicker.css');
 
 var Example = React.createClass({
-  displayName: ‘Example’,
+  displayName: 'Example',
 
   getInitialState: function() {
     return {
@@ -60,14 +60,14 @@ The default Datepicker can be initialised by:
 This included the Datepicker with its default functionality. To use more functionality you can pass extra props to the Datepicker to enable them.
 
 - Change date format by passing a different date format in the props: `dateFormat: “YYYY/MM/DD”`
-- Add placeholder text: `placeholderText: ‘Click to select a date’` (Defaults to the selected date when no placeholder text is added)
-- Give users a predefined date range: `minDate: moment()` & `maxDate: moment().add(5, ‘days’)` (this gives users the ability to select a date between today and 5 days in the future)
-- Exclude a set of dates from those that are selectable: `excludeDates: [ moment(), moment(‘2015-01-01’) ]` (prevent users from selecting today or Jan 1st, 2015)
-- Set custom moment.js instance (could have defined custom locale settings): `moment: require(‘./foo/moment’)`
-- Set custom locale settings for locale: `locale: “cs”`
-- Set date format for calendar: `dateFormatCalendar: “YYYY/MM/DD”`
-- Set custom weekdays (for locale days): `weekdays: [‘Ne’, ‘Po’, ‘Út’, ‘St’, ‘Čt’, ‘Pá’, ‘So’]`
-- Set custom calendar week start day: `weekStart: ‘0’` would start the week on Sunday
+- Add placeholder text: `placeholderText: 'Click to select a date'` (Defaults to the selected date when no placeholder text is added)
+- Give users a predefined date range: `minDate: moment()` & `maxDate: moment().add(5, 'days')` (this gives users the ability to select a date between today and 5 days in the future)
+- Exclude a set of dates from those that are selectable: `excludeDates: [ moment(), moment('2015-01-01') ]` (prevent users from selecting today or Jan 1st, 2015)
+- Set custom moment.js instance (could have defined custom locale settings): `moment: require('./foo/moment')`
+- Set custom locale settings for locale: `locale: 'cs'`
+- Set date format for calendar: `dateFormatCalendar: 'YYYY/MM/DD'`
+- Set custom weekdays (for locale days): `weekdays: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']`
+- Set custom calendar week start day: `weekStart: '0'` would start the week on Sunday
 
 More information about the different ways of customisation can on https://hacker0x01.github.io/react-datepicker.
 
