@@ -4,112 +4,102 @@ var DateUtil = require( "./util/date" );
 var moment = require( "moment" );
 
 var DateInput = React.createClass( {
-
-  // getDefaultProps: function() {
-  //   return {
-  //     dateFormat: "YYYY-MM-DD",
-  //     className: "datepicker__input",
-  //     onBlur: function() {}
-  //   };
-  // },
-  //
   getInitialState: function() {
+    function generateYears( year ) {
+      var list = [];
+      for ( var i = 0; i < 5; i++ ) {
+        list.push( year - i );
+      }
+      return list;
+    }
     return {
-      year: this.props.year
+      year: this.props.year,
+      yearsList: generateYears( this.props.year ),
+      dropdownVisible: false
     };
   },
 
-  //
-  // componentDidMount: function() {
-  //   this.toggleFocus( this.props.focus );
-  // },
-  //
-  // componentWillReceiveProps: function( newProps ) {
-  //   this.toggleFocus( newProps.focus );
+  renderReadView: function() {
+    return (
+      <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>{this.props.year}</div>
+    );
+  },
 
-    // If we're receiving a different date then apply it.
-    // If we're receiving a null date continue displaying the
-    // value currently in the textbox.
-  //   if ( newProps.date != null && newProps.date != this.props.date ) {
-  //       this.setState( {
-  //           maybeDate: this.safeDateFormat( newProps.date )
-  //       } );
-  //   }
-  // },
-  //
-  // toggleFocus: function( focus ) {
-  //   if ( focus ) {
-  //     this.refs.input.focus();
-  //   } else {
-  //     this.refs.input.blur();
-  //   }
-  // },
-  //
-  // handleChange: function( event ) {
-  //   var value = event.target.value;
-  //   var date = moment( value, this.props.dateFormat, true );
-  //
-  //   if ( date.isValid() ) {
-  //     this.props.setSelected( new DateUtil( date ) );
-  //   } else {
-  //       this.props.invalidateSelected();
-  //   }
-  //
-  //   this.setState( {
-  //       maybeDate: value
-  //   } );
-  // },
-  //
-  // safeDateFormat: function( date ) {
-  //   return !!date ? date.format( this.props.dateFormat ) : null;
-  // },
-  //
-  // handleKeyDown: function( event ) {
-  //   switch ( event.key ) {
-  //   case "Enter":
-  //     event.preventDefault();
-  //     this.props.handleEnter();
-  //     break;
-  //   case "Escape":
-  //     event.preventDefault();
-  //     this.props.hideCalendar();
-  //     break;
-  //   }
-  // },
-  //
-  // handleClick: function( event ) {
-  //   if ( !this.props.disabled ) {
-  //     this.props.handleClick( event );
-  //   }
-  // },
+  renderDropdown: function() {
+    return (
+      <div className="datepicker__year-dropdown"
+        value={this.props.year}
+        onChange={this.onChange}>
+        { this.renderOptions() }
+      </div>
+    );
+  },
 
   renderOptions: function() {
-    var options = [];
-    for ( var i = 0; i < 5; i++ ) {
-      options.push(
-        <option value={this.props.year - i} key={i}>
-          {this.props.year - i}
-        </option>
+    var selectedYear = this.props.year;
+    var options = this.state.yearsList.map( function( year ) {
+      return (
+        <div className="datepicker__year-option"
+          key={year}
+          onClick={this.onChange.bind(this, year)}>
+          { selectedYear === year ? <span className="datepicker__year-option--selected">&#10003;</span> : "" }
+          { year }
+        </div>
       );
-    };
+    }.bind( this ) );
+
+    options.unshift(
+      <div className="datepicker__year-option"
+        key={"upcoming"}
+        onClick={this.incrementYears}>
+        <a className="datepicker__navigation datepicker__navigation--years datepicker__navigation--years-upcoming"></a>
+      </div>
+    );
+    options.push(
+      <div className="datepicker__year-option"
+        key={"previous"}
+        onClick={this.decrementYears}>
+        <a className="datepicker__navigation datepicker__navigation--years datepicker__navigation--years-previous"></a>
+      </div>
+    );
     return options;
   },
 
-  handleScroll: function( event ) {
-    console.log( event );
+  onChange: function( year ) {
+    this.toggleDropdown();
+    if ( parseInt( year ) === this.props.year ) return;
+    this.props.onChange( year );
   },
 
-  onChange: function( event ) {
-    this.props.onChange( event.target.value );
+  toggleDropdown: function() {
+    this.setState( {
+      dropdownVisible: !this.state.dropdownVisible
+    } );
+  },
+
+  shiftYears: function( amount ) {
+    var years = this.state.yearsList.map( function( year ) {
+      return year + amount;
+    } );
+
+    this.setState( {
+      yearsList: years
+    } );
+  },
+
+  incrementYears: function() {
+    return this.shiftYears( 1 );
+  },
+
+  decrementYears: function() {
+    return this.shiftYears( -1 );
   },
 
   render: function() {
     return (
-      <select value={this.props.year}
-        onChange={this.onChange}
-        onScroll={this.handleScroll}>
-        {this.renderOptions()}
-      </select>
+      <div>
+        { this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView() }
+      </div>
     );
   }
 } );
