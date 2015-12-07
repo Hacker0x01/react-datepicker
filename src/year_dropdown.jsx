@@ -21,7 +21,10 @@ var DateInput = React.createClass( {
 
   renderReadView: function() {
     return (
-      <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>{this.props.year}</div>
+      <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>
+        <span className="datepicker__year-read-view--selected-year">{this.props.year}</span>
+        <span className="datepicker__year-read-view--down-arrow"></span>
+      </div>
     );
   },
 
@@ -41,7 +44,7 @@ var DateInput = React.createClass( {
       return (
         <div className="datepicker__year-option"
           key={year}
-          onClick={this.onChange.bind(this, year)}>
+          onClick={this.onChange.bind( this, year )}>
           { selectedYear === year ? <span className="datepicker__year-option--selected">&#10003;</span> : "" }
           { year }
         </div>
