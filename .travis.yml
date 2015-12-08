@@ -2,6 +2,7 @@ sudo: false
 language: node_js
 node_js:
   - "4.2.3"
+<<<<<<< HEAD
 env:
   - CXX=g++-4.8
 addons:
