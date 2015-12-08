@@ -150,6 +150,24 @@ describe( "DateUtil", function() {
     } );
   } );
 
+  describe( "#year", function() {
+    it( "returns the year", function() {
+      var date = new DateUtil( moment( "2014-02-08" ) );
+
+      expect( date.year() ).to.equal( 2014 );
+    } );
+  } );
+
+  describe( "#changeYear", function() {
+    it( "changes the year", function() {
+      var expectedDate = moment( "2020-02-08" );
+      var date = new DateUtil( moment( "2014-02-08" ) );
+      var newDate = date.changeYear( "2020" );
+
+      expect( newDate._date.isSame( expectedDate ) ).to.be.true;
+    } );
+  } );
+
   describe( "#mapDaysInWeek", function() {
     describe( "calls the callback method for every day in the week", function() {
       var daysOfTheWeek = [

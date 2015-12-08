@@ -42,6 +42,7 @@
 }
 
 .datepicker__current-month {
+  margin-top: 0;
   color: black;
   font-weight: bold;
   font-size: 13px;
@@ -54,7 +55,7 @@
   position: absolute;
   top: 10px;
   width: 0;
-  border: 6px solid transparent;
+  border: $navigation-size solid transparent;
 
   &--previous {
     left: 10px;
@@ -71,6 +72,32 @@
 
     &:hover {
       border-left-color: darken($muted-color, 10%);
+    }
+  }
+
+  &--years {
+    position: relative;
+    top: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    &-previous {
+      top: 4px;
+      border-top-color: $muted-color;
+
+      &:hover {
+        border-top-color: darken($muted-color, 10%);
+      }
+    }
+
+    &-upcoming {
+      top: -4px;
+      border-bottom-color: $muted-color;
+
+      &:hover {
+        border-bottom-color: darken($muted-color, 10%);
+      }
     }
   }
 }
@@ -147,6 +174,92 @@
 
   &:not(:valid) ~ .close-icon {
     display: none;
+  }
+}
+
+.datepicker__year-read-view {
+  width: 50%;
+  left: 25%;
+  position: absolute;
+  bottom: 25px;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+
+  &:hover {
+    cursor: pointer;
+
+    .datepicker__year-read-view--down-arrow {
+      border-top-color: darken($muted-color, 10%);
+    }
+  }
+
+  &--down-arrow {
+    border-top-color: $muted-color;
+    margin-bottom: 3px;
+    left: 5px;
+    top: 9px;
+    position: relative;
+    border-width: $navigation-size;
+    @extend %triangle-arrow-down;
+  }
+
+  &--selected-year {
+    right: $navigation-size;
+    position: relative;
+  }
+}
+
+.datepicker__year-dropdown {
+  background-color: $background-color;
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  top: 30px;
+  text-align: center;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.datepicker__year-option {
+  line-height: 20px;
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:first-of-type {
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+
+  &:last-of-type {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+
+  &:hover {
+    background-color: $muted-color;
+
+    .datepicker__navigation--years-upcoming {
+      border-bottom-color: darken($muted-color, 10%);
+    }
+
+    .datepicker__navigation--years-previous {
+      border-top-color: darken($muted-color, 10%);
+    }
+  }
+
+  &--selected {
+    position: absolute;
+    left: 30px;
   }
 }
 
