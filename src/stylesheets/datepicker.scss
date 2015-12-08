@@ -187,8 +187,6 @@
 
   &:hover {
     cursor: pointer;
-    // background-color: darken($background-color, 10%);
-    // border: 1px solid $border-color;
 
     .datepicker__year-read-view--down-arrow {
       border-top-color: darken($muted-color, 10%);
