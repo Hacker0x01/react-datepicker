@@ -29,6 +29,10 @@ DateUtil.prototype.day = function() {
   return this._date.date();
 };
 
+DateUtil.prototype.year = function() {
+  return this._date.clone().year();
+};
+
 DateUtil.prototype.mapDaysInWeek = function( callback ) {
   var week = [];
   var firstDay = this._date.clone();
@@ -79,6 +83,10 @@ DateUtil.prototype.addMonth = function() {
 
 DateUtil.prototype.subtractMonth = function() {
   return new DateUtil( this._date.clone().subtract( 1, "month" ) );
+};
+
+DateUtil.prototype.changeYear = function( year ) {
+  return new DateUtil( this._date.clone().set( "year", year ) );
 };
 
 DateUtil.prototype.clone = function() {

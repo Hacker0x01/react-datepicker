@@ -3,7 +3,7 @@
   position: absolute;
 
   &,
-  &:before {
+  &::before {
     box-sizing: content-box;
     position: absolute;
     border: $triangle-size solid transparent;
@@ -12,7 +12,7 @@
     width: 1px;
   }
 
-  &:before {
+  &::before {
     content: "";
     z-index: -1;
     border-width: $triangle-size;
@@ -29,12 +29,12 @@
   margin-top: -$triangle-size;
 
   &,
-  &:before {
+  &::before {
     border-top: none;
     border-bottom-color: $background-color;
   }
 
-  &:before {
+  &::before {
     top: -1px;
     border-bottom-color: $border-color;
   }
@@ -47,12 +47,12 @@
   margin-bottom: -$triangle-size;
 
   &,
-  &:before {
+  &::before {
     border-bottom: none;
     border-top-color: #fff;
   }
 
-  &:before {
+  &::before {
     bottom: -1px;
     border-top-color: $border-color;
   }
