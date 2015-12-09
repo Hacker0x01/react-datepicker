@@ -44,7 +44,7 @@ module.exports = function( config ) {
       "test/index.js": [ "webpack", "sourcemap" ]
     },
 
-    reporters: CONTINUOUS_INTEGRATION ? [ "dots", "saucelabs" ] : [ "dots" ],
+    reporters: [ "dots" ],
 
     sauceLabs: {
       testName: "React Date Picker JavaScript tests"
