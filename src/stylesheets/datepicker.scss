@@ -194,13 +194,13 @@
   }
 
   &--down-arrow {
+    @extend %triangle-arrow-down;
     border-top-color: $muted-color;
     margin-bottom: 3px;
     left: 5px;
     top: 9px;
     position: relative;
     border-width: $navigation-size;
-    @extend %triangle-arrow-down;
   }
 
   &--selected-year {
