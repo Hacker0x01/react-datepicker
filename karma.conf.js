@@ -3,28 +3,6 @@
 var webpack = require( "webpack" );
 
 var CONTINUOUS_INTEGRATION = process.env.CONTINUOUS_INTEGRATION === "true";
-var SAUCE_LABS_BROWSERS = {
-  sl_chrome: {
-    base: "SauceLabs",
-    browserName: "chrome"
-  },
-  sl_firefox: {
-    base: "SauceLabs",
-    browserName: "firefox"
-  },
-  sl_ie_11: {
-    base: "SauceLabs",
-    browserName: "internet explorer",
-    platform: "Windows 8.1",
-    version: "11"
-  },
-  sl_ie_10: {
-    base: "SauceLabs",
-    browserName: "internet explorer",
-    platform: "Windows 7",
-    version: "10"
-  }
-};
 
 module.exports = function( config ) {
   config.set( {
@@ -45,12 +23,6 @@ module.exports = function( config ) {
     },
 
     reporters: [ "dots" ],
-
-    sauceLabs: {
-      testName: "React Date Picker JavaScript tests"
-    },
-
-    captureTimeout: 120000,
 
     webpack: {
       devtool: "inline-source-map",
