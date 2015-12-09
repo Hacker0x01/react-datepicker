@@ -82,6 +82,7 @@ linters:
 
   NestingDepth:
     enabled: true
+    max_depth: 4
 
   PlaceholderInExtend:
     enabled: true
@@ -158,8 +159,8 @@ linters:
   VariableForProperty:
     enabled: false
 
-  VendorPrefixes:
-    enabled: true
+  VendorPrefix:
+    enabled: false
 
   ZeroUnit:
     enabled: true

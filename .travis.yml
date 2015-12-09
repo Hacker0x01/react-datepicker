@@ -17,6 +17,6 @@ cache:
     - node_modules
 before_install:
   - npm install -g grunt-cli
-  - gem update --system && gem install scss-lint -v 0.34.0
+  - gem update --system && gem install scss-lint -v 0.43.2
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start

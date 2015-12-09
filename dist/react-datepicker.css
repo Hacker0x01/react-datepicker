@@ -2,14 +2,14 @@
   margin-left: -8px;
   position: absolute;
 }
-.tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-top .datepicker__triangle:before, .tether-element-attached-bottom .datepicker__triangle:before, .datepicker__year-read-view--down-arrow:before {
+.tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-top .datepicker__triangle::before, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
   box-sizing: content-box;
   position: absolute;
   border: 8px solid transparent;
   height: 0;
   width: 1px;
 }
-.tether-element-attached-top .datepicker__triangle:before, .tether-element-attached-bottom .datepicker__triangle:before, .datepicker__year-read-view--down-arrow:before {
+.tether-element-attached-top .datepicker__triangle::before, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
   content: "";
   z-index: -1;
   border-width: 8px;
@@ -21,11 +21,11 @@
   top: 0;
   margin-top: -8px;
 }
-.tether-element-attached-top .datepicker__triangle, .tether-element-attached-top .datepicker__triangle:before {
+.tether-element-attached-top .datepicker__triangle, .tether-element-attached-top .datepicker__triangle::before {
   border-top: none;
   border-bottom-color: #f0f0f0;
 }
-.tether-element-attached-top .datepicker__triangle:before {
+.tether-element-attached-top .datepicker__triangle::before {
   top: -1px;
   border-bottom-color: #aeaeae;
 }
@@ -34,11 +34,11 @@
   bottom: 0;
   margin-bottom: -8px;
 }
-.tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-bottom .datepicker__triangle:before, .datepicker__year-read-view--down-arrow:before {
+.tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
   border-bottom: none;
   border-top-color: #fff;
 }
-.tether-element-attached-bottom .datepicker__triangle:before, .datepicker__year-read-view--down-arrow:before {
+.tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
   bottom: -1px;
   border-top-color: #aeaeae;
 }
@@ -277,7 +277,7 @@
   padding: 0;
   vertical-align: middle;
 }
-.close-icon:after {
+.close-icon::after {
   background-color: #216ba5;
   border-radius: 50%;
   bottom: 0;
