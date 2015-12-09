@@ -8,9 +8,7 @@ module.exports = function( config ) {
   config.set( {
     frameworks: [ "mocha", "sinon", "chai" ],
 
-    customLaunchers: CONTINUOUS_INTEGRATION ? SAUCE_LABS_BROWSERS : null,
-
-    browsers: CONTINUOUS_INTEGRATION ? Object.keys( SAUCE_LABS_BROWSERS ) : [ "Chrome" ],
+    browsers: [ CONTINUOUS_INTEGRATION ? "Firefox" : "Chrome" ],
 
     singleRun: CONTINUOUS_INTEGRATION,
 
