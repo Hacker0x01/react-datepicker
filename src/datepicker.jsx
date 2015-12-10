@@ -150,6 +150,7 @@ var DatePicker = React.createClass( {
             endDate={this.props.endDate}
             excludeDates={this.props.excludeDates}
             handleClick={this.onInputClick}
+            includeDates={this.props.includeDates}
             weekStart={this.props.weekStart} />
         </Popover>
       );
