@@ -208,6 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          startDate: this.props.startDate,
 	          endDate: this.props.endDate,
 	          excludeDates: this.props.excludeDates,
+	          handleClick: this.onInputClick,
 	          weekStart: this.props.weekStart })
 	      );
 	    }
@@ -501,6 +502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    moment: React.PropTypes.func.isRequired,
 	    dateFormat: React.PropTypes.string.isRequired,
 	    onSelect: React.PropTypes.func.isRequired,
+	    handleClick: React.PropTypes.func.isRequired,
 	    hideCalendar: React.PropTypes.func.isRequired,
 	    minDate: React.PropTypes.object,
 	    maxDate: React.PropTypes.object,
@@ -637,7 +639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  render: function render() {
 	    return React.createElement(
 	      "div",
-	      { className: "datepicker" },
+	      { className: "datepicker", onClick: this.props.handleClick },
 	      React.createElement("div", { className: "datepicker__triangle" }),
 	      React.createElement(
 	        "div",
