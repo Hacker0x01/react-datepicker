@@ -77,8 +77,9 @@ We're always trying to stay compatible with the latest version of React. We can'
 
 
 Latest compatible versions:
-React 0.13: React-datepicker v0.13.0
-pre React 0.13: React-datepicker v0.6.2
+- React 0.14 or newer: All above React-datepicker v0.13.0
+- React 0.13: React-datepicker v0.13.0
+- pre React 0.13: React-datepicker v0.6.2
 
 ## Local Development
 
