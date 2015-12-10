@@ -15,6 +15,7 @@ rvm:
 cache:
   directories:
     - node_modules
+    - vendor/bundle
 before_install:
   - npm install -g grunt-cli
   - gem update --system && gem install scss_lint -v 0.43.2
