@@ -124,38 +124,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleBlur: function handleBlur() {
-	    this.setState({ virtualFocus: false }, (function () {
-	      setTimeout((function () {
-	        if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
-	          this.props.onBlur(this.state.selected);
-	          this.hideCalendar();
+	    var _this = this;
+
+	    this.setState({ virtualFocus: false }, function () {
+	      setTimeout(function () {
+	        if (!_this.state.virtualFocus && typeof _this.props.onBlur === "function") {
+	          _this.props.onBlur(_this.state.selected);
+	          _this.hideCalendar();
 	        }
-	      }).bind(this), 200);
-	    }).bind(this));
+	      }, 200);
+	    });
 	  },
 
 	  hideCalendar: function hideCalendar() {
-	    setTimeout((function () {
-	      this.setState({
+	    var _this2 = this;
+
+	    setTimeout(function () {
+	      _this2.setState({
 	        focus: false
 	      });
-	    }).bind(this), 0);
+	    }, 0);
 	  },
 
 	  handleSelect: function handleSelect(date) {
+	    var _this3 = this;
+
 	    this.setSelected(date);
 
-	    setTimeout((function () {
-	      this.hideCalendar();
-	    }).bind(this), 200);
+	    setTimeout(function () {
+	      _this3.hideCalendar();
+	    }, 200);
 	  },
 
 	  setSelected: function setSelected(date) {
+	    var _this4 = this;
+
 	    this.setState({
 	      selected: date.moment()
-	    }, (function () {
-	      this.props.onChange(this.state.selected);
-	    }).bind(this));
+	    }, function () {
+	      _this4.props.onChange(_this4.state.selected);
+	    });
 	  },
 
 	  invalidateSelected: function invalidateSelected() {
@@ -174,15 +182,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  onClearClick: function onClearClick(event) {
+	    var _this5 = this;
+
 	    event.preventDefault();
 
 	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
 
 	    this.setState({
 	      selected: null
-	    }, (function () {
-	      this.props.onChange(null);
-	    }).bind(this));
+	    }, function () {
+	      _this5.props.onChange(null);
+	    });
 	  },
 
 	  calendar: function calendar() {
@@ -790,13 +800,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  renderOptions: function renderOptions() {
+	    var _this = this;
+
 	    var selectedYear = this.props.year;
-	    var options = this.state.yearsList.map((function (year) {
+	    var options = this.state.yearsList.map(function (year) {
 	      return React.createElement(
 	        "div",
 	        { className: "datepicker__year-option",
 	          key: year,
-	          onClick: this.onChange.bind(this, year) },
+	          onClick: _this.onChange.bind(_this, year) },
 	        selectedYear === year ? React.createElement(
 	          "span",
 	          { className: "datepicker__year-option--selected" },
@@ -804,7 +816,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ) : "",
 	        year
 	      );
-	    }).bind(this));
+	    });
 
 	    options.unshift(React.createElement(
 	      "div",

@@ -65,38 +65,38 @@ var DatePicker = React.createClass( {
   },
 
   handleBlur: function() {
-    this.setState( { virtualFocus: false }, function() {
-      setTimeout( function() {
+    this.setState( { virtualFocus: false }, () => {
+      setTimeout( () => {
         if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
           this.props.onBlur( this.state.selected );
           this.hideCalendar();
         }
-      }.bind( this ), 200 );
-    }.bind( this ) );
+      }, 200 );
+    } );
   },
 
   hideCalendar: function() {
-    setTimeout( function() {
+    setTimeout( () => {
       this.setState( {
         focus: false
       } );
-    }.bind( this ), 0 );
+    }, 0 );
   },
 
   handleSelect: function( date ) {
     this.setSelected( date );
 
-    setTimeout( function() {
+    setTimeout( () => {
       this.hideCalendar();
-    }.bind( this ), 200 );
+    }, 200 );
   },
 
   setSelected: function( date ) {
     this.setState( {
       selected: date.moment()
-    }, function() {
+    }, () => {
       this.props.onChange( this.state.selected );
-    }.bind( this ) );
+    } );
   },
 
   invalidateSelected: function() {
@@ -121,9 +121,9 @@ var DatePicker = React.createClass( {
 
     this.setState( {
       selected: null
-    }, function() {
+    }, () => {
       this.props.onChange( null );
-    }.bind( this ) );
+    } );
   },
 
   calendar: function() {

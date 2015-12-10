@@ -40,16 +40,14 @@ var DateInput = React.createClass( {
 
   renderOptions: function() {
     var selectedYear = this.props.year;
-    var options = this.state.yearsList.map( function( year ) {
-      return (
-        <div className="datepicker__year-option"
-          key={year}
-          onClick={this.onChange.bind( this, year )}>
-          { selectedYear === year ? <span className="datepicker__year-option--selected">&#10003;</span> : "" }
-          { year }
-        </div>
-      );
-    }.bind( this ) );
+    var options = this.state.yearsList.map( year =>
+      <div className="datepicker__year-option"
+        key={year}
+        onClick={this.onChange.bind( this, year )}>
+        { selectedYear === year ? <span className="datepicker__year-option--selected">&#10003;</span> : "" }
+        { year }
+      </div>
+    );
 
     options.unshift(
       <div className="datepicker__year-option"
