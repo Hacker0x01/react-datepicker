@@ -63,6 +63,7 @@ This included the Datepicker with its default functionality. To use more functio
 - Add placeholder text: `placeholderText: 'Click to select a date'` (Defaults to the selected date when no placeholder text is added)
 - Give users a predefined date range: `minDate: moment()` & `maxDate: moment().add(5, 'days')` (this gives users the ability to select a date between today and 5 days in the future)
 - Exclude a set of dates from those that are selectable: `excludeDates: [ moment(), moment('2015-01-01') ]` (prevent users from selecting today or Jan 1st, 2015)
+- Include a set of dates from those that are selectable: `includeDates: [ moment(), moment(‘2015-01-01’) ]` (allow users selecting only today or Jan 1st, 2015)
 - Set custom moment.js instance (could have defined custom locale settings): `moment: require('./foo/moment')`
 - Set custom locale settings for locale: `locale: 'cs'`
 - Set date format for calendar: `dateFormatCalendar: 'YYYY/MM/DD'`
