@@ -10,7 +10,7 @@ var Popover = React.createClass( {
     targetOffset: React.PropTypes.string
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       attachment: "top left",
       constraints: [
@@ -24,7 +24,7 @@ var Popover = React.createClass( {
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     var popoverContainer = document.createElement( "span" );
     popoverContainer.className = "datepicker__container";
 
@@ -33,15 +33,15 @@ var Popover = React.createClass( {
     document.querySelector( "body" ).appendChild( this._popoverElement );
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this._renderPopover();
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     this._renderPopover();
   },
 
-  _popoverComponent: function() {
+  _popoverComponent() {
     var className = this.props.className;
     return (
       <div className={className}>
@@ -50,7 +50,7 @@ var Popover = React.createClass( {
     );
   },
 
-  _tetherOptions: function() {
+  _tetherOptions() {
     return {
       element: this._popoverElement,
       target: this.refs.span.parentElement.querySelector( "input" ),
@@ -64,7 +64,7 @@ var Popover = React.createClass( {
     };
   },
 
-  _renderPopover: function() {
+  _renderPopover() {
     ReactDOM.render( this._popoverComponent(), this._popoverElement );
 
     if ( this._tether != null ) {
@@ -75,7 +75,7 @@ var Popover = React.createClass( {
     }
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this._tether.destroy();
     ReactDOM.unmountComponentAtNode( this._popoverElement );
     if ( this._popoverElement.parentNode ) {
@@ -83,7 +83,7 @@ var Popover = React.createClass( {
     }
   },
 
-  render: function() {
+  render() {
     return <span ref="span"/>;
   }
 } );

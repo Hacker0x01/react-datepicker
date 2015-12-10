@@ -4,7 +4,7 @@ var DateUtil = require( "./util/date" );
 var moment = require( "moment" );
 
 var DateInput = React.createClass( {
-  getInitialState: function() {
+  getInitialState() {
     function generateYears( year ) {
       var list = [];
       for ( var i = 0; i < 5; i++ ) {
@@ -19,7 +19,7 @@ var DateInput = React.createClass( {
     };
   },
 
-  renderReadView: function() {
+  renderReadView() {
     return (
       <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>
         <span className="datepicker__year-read-view--selected-year">{this.props.year}</span>
@@ -28,7 +28,7 @@ var DateInput = React.createClass( {
     );
   },
 
-  renderDropdown: function() {
+  renderDropdown() {
     return (
       <div className="datepicker__year-dropdown"
         value={this.props.year}
@@ -38,13 +38,13 @@ var DateInput = React.createClass( {
     );
   },
 
-  renderOptions: function() {
+  renderOptions() {
     var selectedYear = this.props.year;
     var options = this.state.yearsList.map( year =>
       <div className="datepicker__year-option"
         key={year}
         onClick={this.onChange.bind( this, year )}>
-        { selectedYear === year ? <span className="datepicker__year-option--selected">&#10003;</span> : "" }
+        { selectedYear === year ? <span className="datepicker__year-option--selected">✓</span> : "" }
         { year }
       </div>
     );
@@ -66,19 +66,19 @@ var DateInput = React.createClass( {
     return options;
   },
 
-  onChange: function( year ) {
+  onChange( year ) {
     this.toggleDropdown();
     if ( parseInt( year ) === this.props.year ) return;
     this.props.onChange( year );
   },
 
-  toggleDropdown: function() {
+  toggleDropdown() {
     this.setState( {
       dropdownVisible: !this.state.dropdownVisible
     } );
   },
 
-  shiftYears: function( amount ) {
+  shiftYears( amount ) {
     var years = this.state.yearsList.map( function( year ) {
       return year + amount;
     } );
@@ -88,15 +88,15 @@ var DateInput = React.createClass( {
     } );
   },
 
-  incrementYears: function() {
+  incrementYears() {
     return this.shiftYears( 1 );
   },
 
-  decrementYears: function() {
+  decrementYears() {
     return this.shiftYears( -1 );
   },
 
-  render: function() {
+  render() {
     return (
       <div>
         { this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView() }

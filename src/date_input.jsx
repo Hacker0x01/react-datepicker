@@ -4,25 +4,25 @@ var DateUtil = require( "./util/date" );
 var moment = require( "moment" );
 var DateInput = React.createClass( {
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       dateFormat: "YYYY-MM-DD",
       className: "datepicker__input",
-      onBlur: function() {}
+      onBlur() {}
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.setState( {
         maybeDate: this.safeDateFormat( this.props.date )
     } );
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.toggleFocus( this.props.focus );
   },
 
-  componentWillReceiveProps: function( newProps ) {
+  componentWillReceiveProps( newProps ) {
     this.toggleFocus( newProps.focus );
 
     // If we're receiving a different date then apply it.
@@ -35,7 +35,7 @@ var DateInput = React.createClass( {
     }
   },
 
-  toggleFocus: function( focus ) {
+  toggleFocus( focus ) {
     if ( focus ) {
       this.refs.input.focus();
     } else {
@@ -43,7 +43,7 @@ var DateInput = React.createClass( {
     }
   },
 
-  handleChange: function( event ) {
+  handleChange( event ) {
     var value = event.target.value;
     var date = moment( value, this.props.dateFormat, true );
 
@@ -58,11 +58,11 @@ var DateInput = React.createClass( {
     } );
   },
 
-  safeDateFormat: function( date ) {
+  safeDateFormat( date ) {
     return !!date ? date.format( this.props.dateFormat ) : null;
   },
 
-  handleKeyDown: function( event ) {
+  handleKeyDown( event ) {
     switch ( event.key ) {
     case "Enter":
       event.preventDefault();
@@ -75,13 +75,13 @@ var DateInput = React.createClass( {
     }
   },
 
-  handleClick: function( event ) {
+  handleClick( event ) {
     if ( !this.props.disabled ) {
       this.props.handleClick( event );
     }
   },
 
-  render: function() {
+  render() {
     return <input
         ref="input"
         type="text"

@@ -2,18 +2,18 @@ var React = require( "react" );
 var moment = require( "moment" );
 
 var Day = React.createClass( {
-  handleClick: function( event ) {
+  handleClick( event ) {
     if ( this.props.disabled ) return;
 
     this.props.onClick( event );
   },
 
-  isWeekend: function() {
+  isWeekend() {
     var weekday = this.props.day.moment().weekday();
     return weekday === 5 || weekday === 6;
   },
 
-  render: function() {
+  render() {
     var classes = [ "datepicker__day" ];
 
     if ( this.props.disabled )

@@ -23,19 +23,19 @@ var DatePicker = React.createClass( {
     onFocus: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
       locale: "en",
       dateFormatCalendar: "MMMM",
       moment: moment,
-      onChange: function() {},
+      onChange() {},
       disabled: false,
-      onFocus: function() {}
+      onFocus() {}
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       focus: false,
       virtualFocus: false,
@@ -43,28 +43,28 @@ var DatePicker = React.createClass( {
     };
   },
 
-  componentWillReceiveProps: function( nextProps ) {
+  componentWillReceiveProps( nextProps ) {
     this.setState( {
       selected: nextProps.selected
     } );
   },
 
-  shouldComponentUpdate: function( nextProps, nextState ) {
+  shouldComponentUpdate( nextProps, nextState ) {
     return !( isEqual( nextProps, this.props ) && isEqual( nextState, this.state ) );
   },
 
-  getValue: function() {
+  getValue() {
     return this.state.selected;
   },
 
-  handleFocus: function() {
+  handleFocus() {
     this.props.onFocus();
     this.setState( {
       focus: true
     } );
   },
 
-  handleBlur: function() {
+  handleBlur() {
     this.setState( { virtualFocus: false }, () => {
       setTimeout( () => {
         if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
@@ -75,7 +75,7 @@ var DatePicker = React.createClass( {
     } );
   },
 
-  hideCalendar: function() {
+  hideCalendar() {
     setTimeout( () => {
       this.setState( {
         focus: false
@@ -83,7 +83,7 @@ var DatePicker = React.createClass( {
     }, 0 );
   },
 
-  handleSelect: function( date ) {
+  handleSelect( date ) {
     this.setSelected( date );
 
     setTimeout( () => {
@@ -91,7 +91,7 @@ var DatePicker = React.createClass( {
     }, 200 );
   },
 
-  setSelected: function( date ) {
+  setSelected( date ) {
     this.setState( {
       selected: date.moment()
     }, () => {
@@ -99,12 +99,12 @@ var DatePicker = React.createClass( {
     } );
   },
 
-  invalidateSelected: function() {
+  invalidateSelected() {
     if ( this.state.selected === null ) return;
     this.props.onChange( null );
   },
 
-  onInputClick: function() {
+  onInputClick() {
     if ( !this.state.virtualFocus ) {
       return this.setState( {
         focus: true,
@@ -114,7 +114,7 @@ var DatePicker = React.createClass( {
     this.setState( { virtualFocus: false } );
   },
 
-  onClearClick: function( event ) {
+  onClearClick( event ) {
     event.preventDefault();
 
     if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
@@ -126,7 +126,7 @@ var DatePicker = React.createClass( {
     } );
   },
 
-  calendar: function() {
+  calendar() {
     if ( this.state.focus ) {
       return (
         <Popover
@@ -157,7 +157,7 @@ var DatePicker = React.createClass( {
     }
   },
 
-  render: function() {
+  render() {
     var clearButton = null;
     if ( this.props.isClearable && this.state.selected != null ) {
       clearButton = (

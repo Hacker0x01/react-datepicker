@@ -25,27 +25,27 @@ var Calendar = React.createClass( {
     weekStart: React.PropTypes.string.isRequired
   },
 
-  handleClickOutside: function() {
+  handleClickOutside() {
     this.props.hideCalendar();
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       date: new DateUtil( this.props.selected ).safeClone( this.props.moment() )
     };
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       weekStart: "1"
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.initializeMomentLocale();
   },
 
-  componentWillReceiveProps: function( nextProps ) {
+  componentWillReceiveProps( nextProps ) {
     if ( nextProps.selected === null ) { return; }
 
     // When the selected date changed
@@ -56,7 +56,7 @@ var Calendar = React.createClass( {
     }
   },
 
-  initializeMomentLocale: function() {
+  initializeMomentLocale() {
     var weekdays = this.props.weekdays.slice( 0 );
     weekdays = weekdays.concat( weekdays.splice( 0, this.props.weekStart ) );
 
@@ -68,33 +68,33 @@ var Calendar = React.createClass( {
     } );
   },
 
-  increaseMonth: function() {
+  increaseMonth() {
     this.setState( {
       date: this.state.date.addMonth()
     } );
   },
 
-  decreaseMonth: function() {
+  decreaseMonth() {
     this.setState( {
       date: this.state.date.subtractMonth()
     } );
   },
 
-  weeks: function() {
+  weeks() {
     return this.state.date.mapWeeksInMonth( this.renderWeek );
   },
 
-  handleDayClick: function( day ) {
+  handleDayClick( day ) {
     this.props.onSelect( day );
   },
 
-  changeYear: function( year ) {
+  changeYear( year ) {
     this.setState( {
       date: this.state.date.changeYear( year )
     } );
   },
 
-  renderWeek: function( weekStart, key ) {
+  renderWeek( weekStart, key ) {
     if ( !weekStart.weekInMonth( this.state.date ) ) {
       return;
     }
@@ -106,7 +106,7 @@ var Calendar = React.createClass( {
     );
   },
 
-  renderDay: function( day, key ) {
+  renderDay( day, key ) {
     var minDate = new DateUtil( this.props.minDate ).safeClone(),
         maxDate = new DateUtil( this.props.maxDate ).safeClone(),
         excludeDates,
@@ -142,17 +142,17 @@ var Calendar = React.createClass( {
     );
   },
 
-  days: function( weekStart ) {
+  days( weekStart ) {
     return weekStart.mapDaysInWeek( this.renderDay );
   },
 
-  header: function() {
+  header() {
     return this.props.moment.weekdaysMin().map( function( day, key ) {
       return <div className="datepicker__day" key={key}>{day}</div>;
     } );
   },
 
-  render: function() {
+  render() {
     return (
       <div className="datepicker" onClick={this.props.handleClick}>
         <div className="datepicker__triangle"></div>
