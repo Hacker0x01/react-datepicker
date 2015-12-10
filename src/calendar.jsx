@@ -1,5 +1,6 @@
 var React = require( "react" );
 var Day = require( "./day" );
+var YearDropdown = require( "./year_dropdown" );
 var DateUtil = require( "./util/date" );
 var map = require( "lodash/collection/map" );
 var some = require( "lodash/collection/some" );
@@ -86,6 +87,12 @@ var Calendar = React.createClass( {
     this.props.onSelect( day );
   },
 
+  changeYear: function( year ) {
+    this.setState( {
+      date: this.state.date.changeYear( year )
+    } );
+  },
+
   renderWeek: function( weekStart, key ) {
     if ( !weekStart.weekInMonth( this.state.date ) ) {
       return;
@@ -152,9 +159,13 @@ var Calendar = React.createClass( {
           <a className="datepicker__navigation datepicker__navigation--previous"
               onClick={this.decreaseMonth}>
           </a>
-          <span className="datepicker__current-month">
+          <h2 className="datepicker__current-month">
             {this.state.date.localeFormat( this.props.locale, this.props.dateFormat )}
-          </span>
+          </h2>
+          <YearDropdown
+              onChange={this.changeYear}
+              year={this.state.date.year()}
+          />
           <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>
           </a>
