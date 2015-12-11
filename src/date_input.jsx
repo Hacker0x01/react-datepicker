@@ -2,7 +2,7 @@ import moment from "moment";
 import DateUtil from "./util/date";
 import ReactDOM from "react-dom";
 import React from "react";
-var DateInput = React.createClass( {
+var DateInput = React.createClass({
 
   getDefaultProps() {
     return {
@@ -13,57 +13,57 @@ var DateInput = React.createClass( {
   },
 
   componentWillMount() {
-    this.setState( {
-        maybeDate: this.safeDateFormat( this.props.date )
-    } );
+    this.setState({
+        maybeDate: this.safeDateFormat(this.props.date)
+    });
   },
 
   componentDidMount() {
-    this.toggleFocus( this.props.focus );
+    this.toggleFocus(this.props.focus);
   },
 
-  componentWillReceiveProps( newProps ) {
-    this.toggleFocus( newProps.focus );
+  componentWillReceiveProps(newProps) {
+    this.toggleFocus(newProps.focus);
 
     // If we're receiving a different date then apply it.
     // If we're receiving a null date continue displaying the
     // value currently in the textbox.
-    if ( newProps.date != null && newProps.date != this.props.date ) {
-        this.setState( {
-            maybeDate: this.safeDateFormat( newProps.date )
-        } );
+    if (newProps.date != null && newProps.date != this.props.date) {
+        this.setState({
+            maybeDate: this.safeDateFormat(newProps.date)
+        });
     }
   },
 
-  toggleFocus( focus ) {
-    if ( focus ) {
+  toggleFocus(focus) {
+    if (focus) {
       this.refs.input.focus();
     } else {
       this.refs.input.blur();
     }
   },
 
-  handleChange( event ) {
+  handleChange(event) {
     var value = event.target.value;
-    var date = moment( value, this.props.dateFormat, true );
+    var date = moment(value, this.props.dateFormat, true);
 
-    if ( date.isValid() ) {
-      this.props.setSelected( new DateUtil( date ) );
+    if (date.isValid()) {
+      this.props.setSelected(new DateUtil(date));
     } else {
         this.props.invalidateSelected();
     }
 
-    this.setState( {
+    this.setState({
         maybeDate: value
-    } );
+    });
   },
 
-  safeDateFormat( date ) {
-    return !!date ? date.format( this.props.dateFormat ) : null;
+  safeDateFormat(date) {
+    return !!date ? date.format(this.props.dateFormat) : null;
   },
 
-  handleKeyDown( event ) {
-    switch ( event.key ) {
+  handleKeyDown(event) {
+    switch (event.key) {
     case "Enter":
       event.preventDefault();
       this.props.handleEnter();
@@ -75,9 +75,9 @@ var DateInput = React.createClass( {
     }
   },
 
-  handleClick( event ) {
-    if ( !this.props.disabled ) {
-      this.props.handleClick( event );
+  handleClick(event) {
+    if (!this.props.disabled) {
+      this.props.handleClick(event);
     }
   },
 
@@ -99,6 +99,6 @@ var DateInput = React.createClass( {
         readOnly={this.props.readOnly}
         required={this.props.required} />;
   }
-} );
+});
 
 module.exports = DateInput;

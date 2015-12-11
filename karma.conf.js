@@ -1,14 +1,14 @@
 // Karma configuration
 // Generated on Tue Jul 28 2015 16:29:51 GMT+0200 (CEST)
-var webpack = require( "webpack" );
+var webpack = require("webpack");
 
 var CONTINUOUS_INTEGRATION = process.env.CONTINUOUS_INTEGRATION === "true";
 
-module.exports = function( config ) {
-  config.set( {
-    frameworks: [ "mocha", "sinon", "chai" ],
+module.exports = function(config) {
+  config.set({
+    frameworks: ["mocha", "sinon", "chai"],
 
-    browsers: [ CONTINUOUS_INTEGRATION ? "Firefox" : "Chrome" ],
+    browsers: [CONTINUOUS_INTEGRATION ? "Firefox" : "Chrome"],
 
     singleRun: CONTINUOUS_INTEGRATION,
 
@@ -17,10 +17,10 @@ module.exports = function( config ) {
     ],
 
     preprocessors: {
-      "test/index.js": [ "webpack", "sourcemap" ]
+      "test/index.js": ["webpack", "sourcemap"]
     },
 
-    reporters: [ "dots" ],
+    reporters: ["dots"],
 
     webpack: {
       devtool: "inline-source-map",
@@ -34,14 +34,14 @@ module.exports = function( config ) {
         ]
       },
       plugins: [
-        new webpack.DefinePlugin( {
-          "process.env.NODE_ENV": JSON.stringify( "test" )
-        } )
+        new webpack.DefinePlugin({
+          "process.env.NODE_ENV": JSON.stringify("test")
+        })
       ]
     },
 
     webpackServer: {
       noInfo: true
     }
-  } );
+  });
 };

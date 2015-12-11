@@ -6,10 +6,10 @@ import DateUtil from "./util/date";
 import Popover from "./popover";
 import React from "react";
 
-var DatePicker = React.createClass( {
+var DatePicker = React.createClass({
 
   propTypes: {
-    weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
+    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -25,7 +25,7 @@ var DatePicker = React.createClass( {
 
   getDefaultProps() {
     return {
-      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       locale: "en",
       dateFormatCalendar: "MMMM",
       moment: moment,
@@ -43,14 +43,14 @@ var DatePicker = React.createClass( {
     };
   },
 
-  componentWillReceiveProps( nextProps ) {
-    this.setState( {
+  componentWillReceiveProps(nextProps) {
+    this.setState({
       selected: nextProps.selected
-    } );
+    });
   },
 
-  shouldComponentUpdate( nextProps, nextState ) {
-    return !( isEqual( nextProps, this.props ) && isEqual( nextState, this.state ) );
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
   },
 
   getValue() {
@@ -59,75 +59,76 @@ var DatePicker = React.createClass( {
 
   handleFocus() {
     this.props.onFocus();
-    this.setState( {
+    this.setState({
       focus: true
-    } );
+    });
   },
 
   handleBlur() {
-    this.setState( { virtualFocus: false }, () => {
-      setTimeout( () => {
-        if ( !this.state.virtualFocus && typeof this.props.onBlur === "function" ) {
-          this.props.onBlur( this.state.selected );
+    this.setState({ virtualFocus: false }, () => {
+      setTimeout(() => {
+        if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
+          this.props.onBlur(this.state.selected);
           this.hideCalendar();
         }
-      }, 200 );
-    } );
+      }, 200);
+    });
   },
 
   hideCalendar() {
-    setTimeout( () => {
-      this.setState( {
+    setTimeout(() => {
+      this.setState({
         focus: false
-      } );
-    }, 0 );
+      });
+    }, 0);
   },
 
-  handleSelect( date ) {
-    this.setSelected( date );
+  handleSelect(date) {
+    this.setSelected(date);
 
-    setTimeout( () => {
+    setTimeout(() => {
       this.hideCalendar();
-    }, 200 );
+    }, 200);
   },
 
-  setSelected( date ) {
-    this.setState( {
+  setSelected(date) {
+    this.setState({
       selected: date.moment()
     }, () => {
-      this.props.onChange( this.state.selected );
-    } );
+      this.props.onChange(this.state.selected);
+    });
   },
 
   invalidateSelected() {
-    if ( this.state.selected === null ) return;
-    this.props.onChange( null );
+    if (this.state.selected === null) return;
+    this.props.onChange(null);
   },
 
   onInputClick() {
-    if ( !this.state.virtualFocus ) {
-      return this.setState( {
+    if (!this.state.virtualFocus) {
+      return this.setState({
         focus: true,
         virtualFocus: true
-      } );
+      });
     }
-    this.setState( { virtualFocus: false } );
+    this.setState({ virtualFocus: false });
   },
 
-  onClearClick( event ) {
+  onClearClick(event) {
     event.preventDefault();
 
-    if ( this.state.selected === null ) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+    // Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+    if (this.state.selected === null) return;
 
-    this.setState( {
+    this.setState({
       selected: null
     }, () => {
-      this.props.onChange( null );
-    } );
+      this.props.onChange(null);
+    });
   },
 
   calendar() {
-    if ( this.state.focus ) {
+    if (this.state.focus) {
       return (
         <Popover
           attachment={this.props.popoverAttachment}
@@ -159,7 +160,7 @@ var DatePicker = React.createClass( {
 
   render() {
     var clearButton = null;
-    if ( this.props.isClearable && this.state.selected != null ) {
+    if (this.props.isClearable && this.state.selected != null) {
       clearButton = (
         <a className="close-icon" href="#" onClick={this.onClearClick}></a>
       );
@@ -192,6 +193,6 @@ var DatePicker = React.createClass( {
       </div>
     );
   }
-} );
+});
 
 module.exports = DatePicker;

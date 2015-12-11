@@ -208,7 +208,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    event.preventDefault();
 
-	    if (this.state.selected === null) return; //Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+	    // Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
+	    if (this.state.selected === null) return;
 
 	    this.setState({
 	      selected: null
@@ -3091,7 +3092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      targetAttachment: this.props.targetAttachment,
 	      targetOffset: this.props.targetOffset,
 	      optimizations: {
-	        moveElement: false // always moves to <body> anyway!
+	        moveElement: false // Always moves to <body> anyway!
 	      },
 	      constraints: this.props.constraints
 	    };

@@ -3,18 +3,18 @@ import DateUtil from "./util/date";
 import ReactDOM from "react-dom";
 import React from "react";
 
-var DateInput = React.createClass( {
+var DateInput = React.createClass({
   getInitialState() {
-    function generateYears( year ) {
+    function generateYears(year) {
       var list = [];
-      for ( var i = 0; i < 5; i++ ) {
-        list.push( year - i );
+      for (var i = 0; i < 5; i++) {
+        list.push(year - i);
       }
       return list;
     }
     return {
       year: this.props.year,
-      yearsList: generateYears( this.props.year ),
+      yearsList: generateYears(this.props.year),
       dropdownVisible: false
     };
   },
@@ -40,10 +40,10 @@ var DateInput = React.createClass( {
 
   renderOptions() {
     var selectedYear = this.props.year;
-    var options = this.state.yearsList.map( year =>
+    var options = this.state.yearsList.map(year =>
       <div className="datepicker__year-option"
         key={year}
-        onClick={this.onChange.bind( this, year )}>
+        onClick={this.onChange.bind(this, year)}>
         { selectedYear === year ? <span className="datepicker__year-option--selected">✓</span> : "" }
         { year }
       </div>
@@ -66,34 +66,34 @@ var DateInput = React.createClass( {
     return options;
   },
 
-  onChange( year ) {
+  onChange(year) {
     this.toggleDropdown();
-    if ( parseInt( year ) === this.props.year ) return;
-    this.props.onChange( year );
+    if (parseInt(year) === this.props.year) return;
+    this.props.onChange(year);
   },
 
   toggleDropdown() {
-    this.setState( {
+    this.setState({
       dropdownVisible: !this.state.dropdownVisible
-    } );
+    });
   },
 
-  shiftYears( amount ) {
-    var years = this.state.yearsList.map( function( year ) {
+  shiftYears(amount) {
+    var years = this.state.yearsList.map(function(year) {
       return year + amount;
-    } );
+    });
 
-    this.setState( {
+    this.setState({
       yearsList: years
-    } );
+    });
   },
 
   incrementYears() {
-    return this.shiftYears( 1 );
+    return this.shiftYears(1);
   },
 
   decrementYears() {
-    return this.shiftYears( -1 );
+    return this.shiftYears(-1);
   },
 
   render() {
@@ -103,6 +103,6 @@ var DateInput = React.createClass( {
       </div>
     );
   }
-} );
+});
 
 module.exports = DateInput;

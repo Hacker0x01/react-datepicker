@@ -1,23 +1,23 @@
 "use strict";
 
-var _ = require( "lodash" );
-var webpack = require( "webpack" );
+var _ = require("lodash");
+var webpack = require("webpack");
 
-var mergeWebpackConfig = function( config ) {
+var mergeWebpackConfig = function(config) {
 
   // Load webpackConfig only when using `grunt:webpack`
   // load of grunt tasks is faster
-  var webpackConfig = require( "./webpack.config" );
-  return _.merge( {}, webpackConfig, config, function( a, b ) {
-    if ( _.isArray( a ) ) {
-      return a.concat( b );
+  var webpackConfig = require("./webpack.config");
+  return _.merge({}, webpackConfig, config, function(a, b) {
+    if (_.isArray(a)) {
+      return a.concat(b);
     }
-  } );
+  });
 };
 
-module.exports = function( grunt ) {
-  grunt.initConfig( {
-    pkg: grunt.file.readJSON( "package.json" ),
+module.exports = function(grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON("package.json"),
     sass: {
       min: {
         files: {
@@ -46,12 +46,12 @@ module.exports = function( grunt ) {
           "gruntfile.js",
           "karma.conf.js"
         ],
-        tasks: [ "jscs" ]
+        tasks: ["jscs"]
       },
 
       css: {
         files: "**/*.scss",
-        tasks: [ "sass" ]
+        tasks: ["sass"]
       },
 
       karma: {
@@ -61,12 +61,12 @@ module.exports = function( grunt ) {
           "test/**/*.jsx",
           "test/**/*.js"
         ],
-        tasks: [ "karma" ]
+        tasks: ["karma"]
       },
 
       webpack: {
-        files: [ "src/**/*.js", "src/**/*.jsx" ],
-        tasks: [ "webpack" ]
+        files: ["src/**/*.js", "src/**/*.jsx"],
+        tasks: ["webpack"]
       }
     },
 
@@ -94,39 +94,39 @@ module.exports = function( grunt ) {
       options: {
         config: ".jscsrc",
         verbose: true,
-        fix: grunt.option( "fix" ) || false
+        fix: grunt.option("fix") || false
       }
     },
 
     webpack: {
-      unmin: mergeWebpackConfig( {
+      unmin: mergeWebpackConfig({
         output: {
           filename: "react-datepicker.js"
         }
-      } ),
-      min: mergeWebpackConfig( {
+      }),
+      min: mergeWebpackConfig({
         output: {
           filename: "react-datepicker.min.js"
         },
         plugins: [
-          new webpack.optimize.UglifyJsPlugin( {
+          new webpack.optimize.UglifyJsPlugin({
             compressor: {
               warnings: false
             }
-          } )
+          })
         ]
-      } )
+      })
     }
-  } );
+  });
 
-  grunt.loadNpmTasks( "grunt-contrib-sass" );
-  grunt.loadNpmTasks( "grunt-scss-lint" );
-  grunt.loadNpmTasks( "grunt-contrib-watch" );
-  grunt.loadNpmTasks( "grunt-webpack" );
-  grunt.loadNpmTasks( "grunt-karma" );
-  grunt.loadNpmTasks( "grunt-jscs" );
+  grunt.loadNpmTasks("grunt-contrib-sass");
+  grunt.loadNpmTasks("grunt-scss-lint");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-webpack");
+  grunt.loadNpmTasks("grunt-karma");
+  grunt.loadNpmTasks("grunt-jscs");
 
-  grunt.registerTask( "default", [ "watch", "scsslint" ] );
-  grunt.registerTask( "travis", [ "jscs", "karma", "scsslint" ] );
-  grunt.registerTask( "build", [ "scsslint", "webpack", "sass" ] );
+  grunt.registerTask("default", ["watch", "scsslint"]);
+  grunt.registerTask("travis", ["jscs", "karma", "scsslint"]);
+  grunt.registerTask("build", ["scsslint", "webpack", "sass"]);
 };

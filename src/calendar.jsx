@@ -5,8 +5,8 @@ import YearDropdown from "./year_dropdown";
 import Day from "./day";
 import React from "react";
 
-var Calendar = React.createClass( {
-  mixins: [ require( "react-onclickoutside" ) ],
+var Calendar = React.createClass({
+  mixins: [require("react-onclickoutside")],
 
   propTypes: {
     weekdays: React.PropTypes.array.isRequired,
@@ -31,7 +31,7 @@ var Calendar = React.createClass( {
 
   getInitialState() {
     return {
-      date: new DateUtil( this.props.selected ).safeClone( this.props.moment() )
+      date: new DateUtil(this.props.selected).safeClone(this.props.moment())
     };
   },
 
@@ -45,111 +45,111 @@ var Calendar = React.createClass( {
     this.initializeMomentLocale();
   },
 
-  componentWillReceiveProps( nextProps ) {
-    if ( nextProps.selected === null ) { return; }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selected === null) { return; }
 
     // When the selected date changed
-    if ( nextProps.selected !== this.props.selected ) {
-      this.setState( {
-        date: new DateUtil( nextProps.selected ).clone()
-      } );
+    if (nextProps.selected !== this.props.selected) {
+      this.setState({
+        date: new DateUtil(nextProps.selected).clone()
+      });
     }
   },
 
   initializeMomentLocale() {
-    var weekdays = this.props.weekdays.slice( 0 );
-    weekdays = weekdays.concat( weekdays.splice( 0, this.props.weekStart ) );
+    var weekdays = this.props.weekdays.slice(0);
+    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
-    this.props.moment.locale( this.props.locale, {
+    this.props.moment.locale(this.props.locale, {
       week: {
         dow: this.props.weekStart
       },
       weekdaysMin: weekdays
-    } );
+    });
   },
 
   increaseMonth() {
-    this.setState( {
+    this.setState({
       date: this.state.date.addMonth()
-    } );
+    });
   },
 
   decreaseMonth() {
-    this.setState( {
+    this.setState({
       date: this.state.date.subtractMonth()
-    } );
+    });
   },
 
   weeks() {
-    return this.state.date.mapWeeksInMonth( this.renderWeek );
+    return this.state.date.mapWeeksInMonth(this.renderWeek);
   },
 
-  handleDayClick( day ) {
-    this.props.onSelect( day );
+  handleDayClick(day) {
+    this.props.onSelect(day);
   },
 
-  changeYear( year ) {
-    this.setState( {
-      date: this.state.date.changeYear( year )
-    } );
+  changeYear(year) {
+    this.setState({
+      date: this.state.date.changeYear(year)
+    });
   },
 
-  renderWeek( weekStart, key ) {
-    if ( !weekStart.weekInMonth( this.state.date ) ) {
+  renderWeek(weekStart, key) {
+    if (!weekStart.weekInMonth(this.state.date)) {
       return;
     }
 
     return (
       <div key={key}>
-        {this.days( weekStart )}
+        {this.days(weekStart)}
       </div>
     );
   },
 
-  renderDay( day, key ) {
-    var minDate = new DateUtil( this.props.minDate ).safeClone(),
-        maxDate = new DateUtil( this.props.maxDate ).safeClone(),
+  renderDay(day, key) {
+    var minDate = new DateUtil(this.props.minDate).safeClone(),
+        maxDate = new DateUtil(this.props.maxDate).safeClone(),
         excludeDates,
         includeDates,
         disabled,
-        inRange = day.inRange( this.props.startDate, this.props.endDate );
+        inRange = day.inRange(this.props.startDate, this.props.endDate);
 
-    if ( this.props.excludeDates && Array.isArray( this.props.excludeDates ) ) {
-      excludeDates = map( this.props.excludeDates, function( date ) {
-        return new DateUtil( date ).safeClone();
-      } );
+    if (this.props.excludeDates && Array.isArray(this.props.excludeDates)) {
+      excludeDates = map(this.props.excludeDates, function(date) {
+        return new DateUtil(date).safeClone();
+      });
     }
 
-    if ( this.props.includeDates && Array.isArray( this.props.includeDates ) ) {
-      includeDates = map( this.props.includeDates, function( date ) {
-        return new DateUtil( date ).safeClone();
-      } );
+    if (this.props.includeDates && Array.isArray(this.props.includeDates)) {
+      includeDates = map(this.props.includeDates, function(date) {
+        return new DateUtil(date).safeClone();
+      });
     }
 
-    disabled = day.isBefore( minDate ) || day.isAfter( maxDate ) ||
-      some( excludeDates, function( xDay ) { return day.sameDay( xDay ); } ) ||
-      ( includeDates && !some( includeDates, function( xDay ) { return day.sameDay( xDay ); } ) );
+    disabled = day.isBefore(minDate) || day.isAfter(maxDate) ||
+      some(excludeDates, function(xDay) { return day.sameDay(xDay); }) ||
+      (includeDates && !some(includeDates, function(xDay) { return day.sameDay(xDay); }));
 
     return (
       <Day
         key={key}
         day={day}
         date={this.state.date}
-        onClick={this.handleDayClick.bind( this, day )}
-        selected={new DateUtil( this.props.selected )}
+        onClick={this.handleDayClick.bind(this, day)}
+        selected={new DateUtil(this.props.selected)}
         inRange={inRange}
         disabled={disabled} />
     );
   },
 
-  days( weekStart ) {
-    return weekStart.mapDaysInWeek( this.renderDay );
+  days(weekStart) {
+    return weekStart.mapDaysInWeek(this.renderDay);
   },
 
   header() {
-    return this.props.moment.weekdaysMin().map( function( day, key ) {
+    return this.props.moment.weekdaysMin().map(function(day, key) {
       return <div className="datepicker__day" key={key}>{day}</div>;
-    } );
+    });
   },
 
   render() {
@@ -161,7 +161,7 @@ var Calendar = React.createClass( {
               onClick={this.decreaseMonth}>
           </a>
           <h2 className="datepicker__current-month">
-            {this.state.date.localeFormat( this.props.locale, this.props.dateFormat )}
+            {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
           </h2>
           <YearDropdown
               onChange={this.changeYear}
@@ -180,6 +180,6 @@ var Calendar = React.createClass( {
       </div>
     );
   }
-} );
+});
 
 module.exports = Calendar;
