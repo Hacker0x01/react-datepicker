@@ -74,7 +74,7 @@
   "scripts": {
     "build": "NODE_ENV=production grunt build",
     "start": "node server.js",
-    "test": "grunt travis",
+    "test": "NODE_ENV=test grunt travis",
     "prepublish": "npm run build"
   }
 }
