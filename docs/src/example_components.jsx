@@ -15,6 +15,7 @@ import ClearInput from './examples/clear_input';
 import OnBlurCallbacks from './examples/on_blur_callbacks';
 import Weekdays from './examples/weekdays';
 import Placement from './examples/placement';
+import DateRange from "./examples/date_range";
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './style.scss';
@@ -60,7 +61,11 @@ export default React.createClass({
     },
     {
       title: 'Exclude dates',
-      component: <ExcludeDates />,
+      component: <ExcludeDates />
+    },
+    {
+      title: "Date Range",
+      component: <DateRange />
     },
     {
       title: 'Disable datepicker',
