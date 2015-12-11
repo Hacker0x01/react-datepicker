@@ -65,14 +65,12 @@ export default React.createClass({
       component: <ExcludeDates />
     },
     {
-      title: "Date Range",
-      component: <DateRange />
       title: "Include dates",
       component: <IncludeDates />
     },
     {
-      title: "Exclude dates",
-      component: <ExcludeDates />
+      title: "Date Range",
+      component: <DateRange />
     },
     {
       title: "Disable datepicker",
