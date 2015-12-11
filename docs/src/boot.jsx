@@ -1,7 +1,5 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ExampleComponents = require('./example_components.jsx');
-var HeroExample = require('./hero_example.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Root from './root';
 
-ReactDOM.render(<ExampleComponents/>, document.getElementById('datepicker-region'));
-ReactDOM.render(<HeroExample />, document.getElementById('js-hero-example'));
+ReactDOM.render(<Root />, document.getElementById('app'));
