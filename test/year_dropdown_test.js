@@ -1,7 +1,7 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-var YearDropdown = require("../src/year_dropdown.jsx");
+import React from "react";
+import ReactDOM from "react-dom";
+import TestUtils from "react-addons-test-utils";
+import YearDropdown from "../src/year_dropdown.jsx";
 
 describe("YearDropdown", function() {
   var yearDropdown,

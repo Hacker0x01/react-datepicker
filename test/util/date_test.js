@@ -1,5 +1,5 @@
-var moment = require("moment");
-var DateUtil = require("../../src/util/date");
+import moment from "moment";
+import DateUtil from "../../src/util/date";
 
 describe("DateUtil", function() {
   describe("#isBefore", function() {

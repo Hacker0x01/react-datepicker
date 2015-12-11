@@ -1,7 +1,7 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-var DateInput = require("../src/date_input.jsx");
+import React from "react";
+import ReactDOM from "react-dom";
+import TestUtils from "react-addons-test-utils";
+import DateInput from "../src/date_input.jsx";
 
 describe("DateInput", function() {
   it("triggers an event handler when the Enter key is pressed", function(done) {

@@ -1,9 +1,9 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-var moment = require("moment");
-var DateUtil = require("../src/util/date");
-var Day = require("../src/day.jsx");
+import React from "react";
+import ReactDOM from "react-dom";
+import TestUtils from "react-addons-test-utils";
+import moment from "moment";
+import DateUtil from "../src/util/date";
+import Day from "../src/day.jsx";
 
 describe("Day", function() {
   it("should apply the in-range class if in range", function() {
