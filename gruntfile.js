@@ -115,7 +115,8 @@ module.exports = function(grunt) {
             }
           })
         ]
-      })
+      }),
+      docs: require('./webpack.docs.config')
     }
   });
 

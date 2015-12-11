@@ -1,0 +1,33 @@
+.hero {
+  color: white;
+  background-color: #216ba5;
+
+  &__content {
+    text-align: center;
+    padding: 175px 0;
+    @extend %container-styling;
+  }
+
+  &__title {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0;
+    margin-bottom: 5px;
+  }
+
+  &__image {
+    height: 14px;
+  }
+
+  &__example {
+    width: 210px;
+    margin: 0 auto;
+  }
+
+  &__crafted-by {
+    margin-bottom: 30px;
+  }
+}
