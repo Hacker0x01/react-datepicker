@@ -1,11 +1,11 @@
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-var Disabled = React.createClass({
+export default React.createClass({
   displayName: 'Disabled',
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       startDate: null,
     };
@@ -26,7 +26,7 @@ var Disabled = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     return <div className="row">
       <pre className="column example__code">
         <code className="js">
@@ -60,5 +60,3 @@ var Disabled = React.createClass({
     </div>
   }
 });
-
-module.exports = Disabled;

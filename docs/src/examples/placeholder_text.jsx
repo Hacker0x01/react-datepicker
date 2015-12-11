@@ -1,11 +1,11 @@
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-var PlaceholderText = React.createClass({
+export default React.createClass({
   displayName: 'PlaceholderText',
 
-  render: function() {
+  render() {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -18,5 +18,3 @@ var PlaceholderText = React.createClass({
     </div>
   }
 });
-
-module.exports = PlaceholderText;

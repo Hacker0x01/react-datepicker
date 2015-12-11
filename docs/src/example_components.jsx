@@ -1,38 +1,36 @@
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
-var hljs = require('highlight.js');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import hljs from 'highlight.js';
 
-var Default = require('./examples/default');
-var CustomDateFormat = require('./examples/custom_date_format');
-var CustomClassName = require('./examples/custom_class_name');
-var PlaceholderText = require('./examples/placeholder_text');
-var SpecificDateRange = require('./examples/specific_date_range');
-var CustomStartDate = require('./examples/custom_start_date');
-var ExcludeDates = require('./examples/exclude_dates');
-var Disabled = require('./examples/disabled');
-var ClearInput = require('./examples/clear_input');
-var OnBlurCallbacks = require('./examples/on_blur_callbacks');
-var Weekdays = require('./examples/weekdays');
-var Placement = require('./examples/placement');
+import Default from './examples/default';
+import CustomDateFormat from './examples/custom_date_format';
+import CustomClassName from './examples/custom_class_name';
+import PlaceholderText from './examples/placeholder_text';
+import SpecificDateRange from './examples/specific_date_range';
+import CustomStartDate from './examples/custom_start_date';
+import ExcludeDates from './examples/exclude_dates';
+import Disabled from './examples/disabled';
+import ClearInput from './examples/clear_input';
+import OnBlurCallbacks from './examples/on_blur_callbacks';
+import Weekdays from './examples/weekdays';
+import Placement from './examples/placement';
 
-require('react-datepicker/dist/react-datepicker.css');
-require('./style.scss');
+import 'react-datepicker/dist/react-datepicker.css';
+import './style.scss';
 
-var CodeExampleComponent = React.createClass({
+const CodeExampleComponent = React.createClass({
   displayName: 'CodeExampleComponent',
 
-  render: function() {
-    var exampleID = "example-" + this.props.id
-
-    return <div key={this.props.id} id={exampleID} className="example">
+  render() {
+    return <div key={this.props.id} id={`#example-${this.props.id}`} className="example">
       <h2 className="example__heading">{this.props.title}</h2>
       {this.props.children}
     </div>
   },
-}),
+});
 
-exampleComponents = React.createClass({
+export default React.createClass({
   displayName: 'exampleComponents',
 
   examples: [
@@ -86,31 +84,29 @@ exampleComponents = React.createClass({
     },
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     hljs.initHighlightingOnLoad();
   },
 
-  renderExamples: function() {
-    return this.examples.map(function(example, index) {
-      return <CodeExampleComponent key={"example-" + index} id={index} title={example.title}>
+  renderExamples() {
+    return this.examples.map((example, index) =>
+      <CodeExampleComponent key={`example-${index}`} id={index} title={example.title}>
         {example.component}
       </CodeExampleComponent>
-    });
+    );
   },
 
-  renderLeftColumn: function() {
-    return this.examples.map(function(example, index) {
-      var exampleID = "#example-" + index
-
-      return <li className="examples__navigation-item" key={"link-" + index}>
-        <a href={exampleID}>
+  renderLeftColumn() {
+    return this.examples.map((example, index) =>
+      <li className="examples__navigation-item" key={`link-${index}`}>
+        <a href={`#example-${index}`}>
           {example.title}
         </a>
       </li>
-    });
+    );
   },
 
-  render: function() {
+  render() {
     return <div>
       <h1>Examples</h1>
       <ul className="examples__navigation">
@@ -122,5 +118,3 @@ exampleComponents = React.createClass({
     </div>;
   }
 });
-
-module.exports = exampleComponents;

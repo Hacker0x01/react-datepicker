@@ -1,23 +1,23 @@
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-var SpecificDateRange = React.createClass({
+export default React.createClass({
   displayName: 'SpecificDateRange',
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       startDate: null,
     };
   },
 
-  handleChange: function(date) {
+  handleChange(date) {
     this.setState({
       startDate: date
     });
   },
 
-  render: function() {
+  render() {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -40,5 +40,3 @@ var SpecificDateRange = React.createClass({
     </div>
   }
 });
-
-module.exports = SpecificDateRange;

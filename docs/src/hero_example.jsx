@@ -1,27 +1,25 @@
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-var HeroExample = React.createClass({
+export default React.createClass({
   displayName: 'HeroExample',
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       startDate: moment()
     };
   },
 
-  handleChange: function(date) {
+  handleChange(date) {
     this.setState({
       startDate: date
     });
   },
 
-  render: function() {
+  render() {
     return <DatePicker
         selected={this.state.startDate}
         onChange={this.handleChange} />;
   }
 });
-
-module.exports = HeroExample;
