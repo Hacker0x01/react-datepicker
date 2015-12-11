@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+npm run build
+
 mkdir -p tmp
 
 if [ ! -d "tmp/gh-pages" ]; then
