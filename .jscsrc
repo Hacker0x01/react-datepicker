@@ -14,6 +14,7 @@
   "requireDotNotation": {
     "allExcept": ["snake_case"]
   },
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
   "requireSpacesInForStatement": true,
   "requireSpaceBetweenArguments": true,
   "maximumLineLength": {

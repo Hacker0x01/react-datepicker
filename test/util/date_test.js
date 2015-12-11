@@ -5,140 +5,140 @@ describe("DateUtil", function() {
   describe("#isBefore", function() {
     it("returns true when the date is before the passed date", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-09"));
+      var otherDate = new DateUtil(moment("2014-02-09"));
 
-      expect(date.isBefore(other_date)).to.eq(true);
+      expect(date.isBefore(otherDate)).to.eq(true);
     });
 
     it("returns false when the date is after the passed date", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-05"));
+      var otherDate = new DateUtil(moment("2014-02-05"));
 
-      expect(date.isBefore(other_date)).to.eq(false);
+      expect(date.isBefore(otherDate)).to.eq(false);
     });
 
     it("returns false when the passed date is the same day", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.isBefore(other_date)).to.eq(false);
+      expect(date.isBefore(otherDate)).to.eq(false);
     });
   });
 
   describe("#isAfter", function() {
     it("returns true when the date is after the passed date", function() {
       var date = new DateUtil(moment("2014-02-09"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.isAfter(other_date)).to.eq(true);
+      expect(date.isAfter(otherDate)).to.eq(true);
     });
 
     it("returns false when the date is before the passed date", function() {
       var date = new DateUtil(moment("2014-02-05"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.isAfter(other_date)).to.eq(false);
+      expect(date.isAfter(otherDate)).to.eq(false);
     });
 
     it("returns false when the passed date is the same day", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.isAfter(other_date)).to.eq(false);
+      expect(date.isAfter(otherDate)).to.eq(false);
     });
   });
 
   describe("#sameDay", function() {
     it("returns true when the passed date is the same date", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.sameDay(other_date)).to.eq(true);
+      expect(date.sameDay(otherDate)).to.eq(true);
     });
 
     it("returns true when the passed date is within the same day", function() {
       var date = new DateUtil(moment("2014-02-08 03:30"));
-      var other_date = new DateUtil(moment("2014-02-08 09:30"));
+      var otherDate = new DateUtil(moment("2014-02-08 09:30"));
 
-      expect(date.sameDay(other_date)).to.eq(true);
+      expect(date.sameDay(otherDate)).to.eq(true);
     });
 
     it("returns false when the passed date is not the same day", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-09"));
+      var otherDate = new DateUtil(moment("2014-02-09"));
 
-      expect(date.sameDay(other_date)).to.eq(false);
+      expect(date.sameDay(otherDate)).to.eq(false);
     });
   });
 
   describe("#sameMonth", function() {
     it("returns true when the passed date is the same date", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-02-08"));
+      var otherDate = new DateUtil(moment("2014-02-08"));
 
-      expect(date.sameMonth(other_date)).to.eq(true);
+      expect(date.sameMonth(otherDate)).to.eq(true);
     });
 
     it("returns true when the passed date is within the same month", function() {
       var date = new DateUtil(moment("2014-02-08 03:30"));
-      var other_date = new DateUtil(moment("2014-02-10 09:30"));
+      var otherDate = new DateUtil(moment("2014-02-10 09:30"));
 
-      expect(date.sameMonth(other_date)).to.eq(true);
+      expect(date.sameMonth(otherDate)).to.eq(true);
     });
 
     it("returns false when the passed date is not the same day", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var other_date = new DateUtil(moment("2014-03-08"));
+      var otherDate = new DateUtil(moment("2014-03-08"));
 
-      expect(date.sameMonth(other_date)).to.eq(false);
+      expect(date.sameMonth(otherDate)).to.eq(false);
     });
   });
 
   describe("#inRange", function() {
     it("returns true when the date is in range the passed date", function() {
       var date = new DateUtil(moment("2014-02-09"));
-      var start_date = new DateUtil(moment("2014-02-08"));
-      var end_date = new DateUtil(moment("2014-02-10"));
+      var startDate = new DateUtil(moment("2014-02-08"));
+      var endDate = new DateUtil(moment("2014-02-10"));
 
-      expect(date.inRange(start_date, end_date)).to.eq(true);
+      expect(date.inRange(startDate, endDate)).to.eq(true);
     });
 
     it("returns false when the date is not in range the passed date", function() {
       var date = new DateUtil(moment("2014-02-08"));
-      var start_date = new DateUtil(moment("2014-02-09"));
-      var end_date = new DateUtil(moment("2014-02-10"));
+      var startDate = new DateUtil(moment("2014-02-09"));
+      var endDate = new DateUtil(moment("2014-02-10"));
 
-      expect(date.inRange(start_date, end_date)).to.eq(false);
+      expect(date.inRange(startDate, endDate)).to.eq(false);
     });
 
     it("returns true when the passed date is the same day as start of range", function() {
       var date = new DateUtil(moment("2014-02-09"));
-      var start_date = new DateUtil(moment("2014-02-09"));
-      var end_date = new DateUtil(moment("2014-02-10"));
+      var startDate = new DateUtil(moment("2014-02-09"));
+      var endDate = new DateUtil(moment("2014-02-10"));
 
-      expect(date.inRange(start_date, end_date)).to.eq(true);
+      expect(date.inRange(startDate, endDate)).to.eq(true);
     });
 
     it("returns true when the passed date is the same day as end of range", function() {
       var date = new DateUtil(moment("2014-02-10"));
-      var start_date = new DateUtil(moment("2014-02-09"));
-      var end_date = new DateUtil(moment("2014-02-10"));
+      var startDate = new DateUtil(moment("2014-02-09"));
+      var endDate = new DateUtil(moment("2014-02-10"));
 
-      expect(date.inRange(start_date, end_date)).to.eq(true);
+      expect(date.inRange(startDate, endDate)).to.eq(true);
     });
 
     it("returns false when the start of range is missing", function() {
       var date = new DateUtil(moment("2014-02-09"));
-      var end_date = new DateUtil(moment("2014-02-10"));
+      var endDate = new DateUtil(moment("2014-02-10"));
 
-      expect(date.inRange(null, end_date)).to.eq(false);
+      expect(date.inRange(null, endDate)).to.eq(false);
     });
 
     it("returns false when the end of range is missing", function() {
       var date = new DateUtil(moment("2014-02-09"));
-      var start_date = new DateUtil(moment("2014-02-09"));
+      var startDate = new DateUtil(moment("2014-02-09"));
 
-      expect(date.inRange(start_date, null)).to.eq(false);
+      expect(date.inRange(startDate, null)).to.eq(false);
     });
   });
 
