@@ -1,13 +1,13 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 export default React.createClass({
-  displayName: 'SpecificDateRange',
+  displayName: "SpecificDateRange",
 
   getInitialState() {
     return {
-      startDate: null,
+      startDate: null
     };
   },
 
@@ -22,11 +22,11 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-          &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
-          &nbsp; &nbsp; {"onChange={this.handleChange}"}<br />
-          <strong>&nbsp; &nbsp; {"minDate={moment()}"}</strong><br />
-          <strong>&nbsp; &nbsp; {"maxDate={moment().add(5, 'days')}"}</strong><br />
-          &nbsp; &nbsp; {"placeholderText=\"Select a date between today and 5 days in the future\" />"}
+              {"selected={this.state.startDate}"}<br />
+              {"onChange={this.handleChange}"}<br />
+          <strong>    {"minDate={moment()}"}</strong><br />
+          <strong>    {"maxDate={moment().add(5, 'days')}"}</strong><br />
+              {"placeholderText=\"Select a date between today and 5 days in the future\" />"}
         </code>
       </pre>
       <div className="column">
@@ -34,9 +34,9 @@ export default React.createClass({
           selected={this.state.startDate}
           onChange={this.handleChange}
           minDate={moment()}
-          maxDate={moment().add(5, 'days')}
+          maxDate={moment().add(5, "days")}
           placeholderText="Select a date between today and 5 days in the future" />
       </div>
-    </div>
+    </div>;
   }
 });

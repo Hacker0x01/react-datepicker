@@ -1,9 +1,9 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 export default React.createClass({
-  displayName: 'HeroExample',
+  displayName: "HeroExample",
 
   getInitialState() {
     return {

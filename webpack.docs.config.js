@@ -1,18 +1,19 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require("path");
+var webpack = require("webpack");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: [
     "./docs/src/boot"
   ],
   output: {
-    path: path.resolve('./docs/'),
+    path: path.resolve("./docs/"),
     filename: "bundle.js",
-    publicPath: '/'
+    publicPath: "/"
   },
   resolve: {
-    extensions: [ "", ".js", ".jsx" ],
+    extensions: ["", ".js", ".jsx"],
+
     // Needed to direct the docs to the local version of the datepicker, this is not needed for
     // normal setup.
     alias: {
@@ -31,8 +32,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new ExtractTextPlugin("style.css", { allChunks: true }),
-    new webpack.DefinePlugin( {
-      "process.env.NODE_ENV": JSON.stringify( process.env.NODE_ENV )
-    } )
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+    })
   ]
 };

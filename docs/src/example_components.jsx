@@ -1,7 +1,7 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import hljs from 'highlight.js';
+import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import hljs from "highlight.js";
 
 import Default from './examples/default';
 import CustomDateFormat from './examples/custom_date_format';
@@ -17,47 +17,47 @@ import Weekdays from './examples/weekdays';
 import Placement from './examples/placement';
 import DateRange from "./examples/date_range";
 
-import 'react-datepicker/dist/react-datepicker.css';
-import './style.scss';
+import "react-datepicker/dist/react-datepicker.css";
+import "./style.scss";
 
 const CodeExampleComponent = React.createClass({
-  displayName: 'CodeExampleComponent',
+  displayName: "CodeExampleComponent",
 
   render() {
     return <div key={this.props.id} id={`#example-${this.props.id}`} className="example">
       <h2 className="example__heading">{this.props.title}</h2>
       {this.props.children}
-    </div>
-  },
+    </div>;
+  }
 });
 
 export default React.createClass({
-  displayName: 'exampleComponents',
+  displayName: "exampleComponents",
 
   examples: [
     {
-      title: 'Default',
-      component: <Default />,
+      title: "Default",
+      component: <Default />
     },
     {
-      title: 'Custom date format',
-      component: <CustomDateFormat />,
+      title: "Custom date format",
+      component: <CustomDateFormat />
     },
     {
-      title: 'Custom class name',
-      component: <CustomClassName />,
+      title: "Custom class name",
+      component: <CustomClassName />
     },
     {
-      title: 'Placeholder text',
-      component: <PlaceholderText />,
+      title: "Placeholder text",
+      component: <PlaceholderText />
     },
     {
-      title: 'Specific date range',
-      component: <SpecificDateRange />,
+      title: "Specific date range",
+      component: <SpecificDateRange />
     },
     {
-      title: 'Custom start date',
-      component: <CustomStartDate />,
+      title: "Custom start date",
+      component: <CustomStartDate />
     },
     {
       title: 'Exclude dates',
@@ -68,25 +68,29 @@ export default React.createClass({
       component: <DateRange />
     },
     {
-      title: 'Disable datepicker',
-      component: <Disabled />,
+      title: "Exclude dates",
+      component: <ExcludeDates />
     },
     {
-      title: 'Clear datepicker input',
-      component: <ClearInput />,
+      title: "Disable datepicker",
+      component: <Disabled />
     },
     {
-      title: 'onBlur callbacks in console',
-      component: <OnBlurCallbacks />,
+      title: "Clear datepicker input",
+      component: <ClearInput />
     },
     {
-      title: 'Custom weekdays',
-      component: <Weekdays />,
+      title: "onBlur callbacks in console",
+      component: <OnBlurCallbacks />
     },
     {
-      title: 'Configure Popover Placement',
-      component: <Placement />,
+      title: "Custom weekdays",
+      component: <Weekdays />
     },
+    {
+      title: "Configure Popover Placement",
+      component: <Placement />
+    }
   ],
 
   componentDidMount() {

@@ -1,13 +1,13 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 export default React.createClass({
-  displayName: 'Disabled',
+  displayName: "Disabled",
 
   getInitialState() {
     return {
-      startDate: null,
+      startDate: null
     };
   },
 
@@ -22,10 +22,10 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-          &nbsp; &nbsp; {"selected={this.state.startDate}"}<br />
-          &nbsp; &nbsp; {"onChange={this.handleChange}"}<br />
-          <strong>&nbsp; &nbsp; {"disabled={true}"}</strong><br />
-          &nbsp; &nbsp; {"placeholderText='This is disabled'"} />
+              {"selected={this.state.startDate}"}<br />
+              {"onChange={this.handleChange}"}<br />
+          <strong>    {"disabled={true}"}</strong><br />
+              {"placeholderText='This is disabled'"} />
         </code>
       </pre>
       <div className="column">
@@ -35,6 +35,6 @@ export default React.createClass({
           disabled={true}
           placeholderText="This is disabled" />
       </div>
-    </div>
+    </div>;
   }
 });

@@ -42,9 +42,8 @@ module.exports = function(grunt) {
     watch: {
       jscs: {
         files: [
-          "{src,test}/**/*.{js,jsx}",
-          "gruntfile.js",
-          "karma.conf.js"
+          "{src,test,docs/src}/**/*.{js,jsx}",
+          "*.js"
         ],
         tasks: ["jscs"]
       },
@@ -87,9 +86,8 @@ module.exports = function(grunt) {
 
     jscs: {
       files: [
-        "{src,test}/**/*.{js,jsx}",
-        "gruntfile.js",
-        "karma.conf.js"
+        "{src,test,docs/src}/**/*.{js,jsx}",
+        "*.js"
       ],
       options: {
         config: ".jscsrc",
