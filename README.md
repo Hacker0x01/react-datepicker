@@ -76,7 +76,6 @@ More information about the different ways to customise available at https://hack
 
 We're always trying to stay compatible with the latest version of React. We can't support all older versions of React, since React is still < 1.0 and introducing breaking changes every release.
 
-
 Latest compatible versions:
 - React 0.14 or newer: All above React-datepicker v0.13.0
 - React 0.13: React-datepicker v0.13.0
@@ -84,21 +83,10 @@ Latest compatible versions:
 
 ## Local Development
 
-To help develop this Datepicker, there are two important branches. The `master` branch contains the latest version of the Datepicker component and the `gh-pages` branch contains the examples used on https://hacker0x01.github.io/react-datepicker.
-
-### The component
-To help you develop the component we’ve set up some tests that covers the basic functionality (can be found in  `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
-
-While developing, you can run `grunt watch` to compile your changes, run linters, and execute tests.
+The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `npm start`. This starts a simple webserver on http://localhost:8080. The server will automatically compile your changes, run tests and execute linters. To help you develop the component we’ve set up some tests that covers the basic functionality (can be found in  `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
 ### The examples
-The example site is a simple app that uses the Datepicker by simply requiring the latest published version. This makes it the ideal real world example for other websites that wants to use the component.
-
-To extend the examples with a new example, you can simply duplicate one of the existing examples and change the unique properties of your example.
-
-To start your example app, you can run `npm start`. This starts a simple webserver on http://localhost:8080. Your changes will be automatically reloaded in the browser.
-
-To compile your changes for the gh-pages branch you need to run `npm run webpack` when you’re done.
+The examples are hosted within the docs folder and are ran in the simple add that loads the Datepicker. To extend the examples with a new example, you can simply duplicate one of the existing examples and change the unique properties of your example.
 
 ## License
 
