@@ -59,6 +59,7 @@
     "tether": "^1.1.0"
   },
   "scripts": {
-    "test": "grunt travis"
+    "test": "grunt travis",
+    "prepublish": "grunt build"
   }
 }
