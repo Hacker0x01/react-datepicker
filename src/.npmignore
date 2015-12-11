@@ -1,0 +1,9 @@
+/src/
+/test/
+.gitignore
+.jscsrc
+.scss-lint.yml
+.travis.yml
+gruntfile.js
+karma.conf.js
+webpack.config.js
