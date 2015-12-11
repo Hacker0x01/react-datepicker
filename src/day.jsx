@@ -1,5 +1,5 @@
-var React = require( "react" );
-var moment = require( "moment" );
+import moment from "moment";
+import React from "react";
 
 var Day = React.createClass( {
   handleClick( event ) {

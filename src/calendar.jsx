@@ -1,9 +1,9 @@
-var React = require( "react" );
-var Day = require( "./day" );
-var YearDropdown = require( "./year_dropdown" );
-var DateUtil = require( "./util/date" );
-var map = require( "lodash/collection/map" );
-var some = require( "lodash/collection/some" );
+import some from "lodash/collection/some";
+import map from "lodash/collection/map";
+import DateUtil from "./util/date";
+import YearDropdown from "./year_dropdown";
+import Day from "./day";
+import React from "react";
 
 var Calendar = React.createClass( {
   mixins: [ require( "react-onclickoutside" ) ],
