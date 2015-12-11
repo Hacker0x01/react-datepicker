@@ -33,7 +33,6 @@ var DateRange = React.createClass({
           selected={this.state.startDate}
           startDate={this.state.startDate}
           endDate={this.state.endDate} />
-        {console.info(this.state.startDate)}
       </div>
     </div>
   }
