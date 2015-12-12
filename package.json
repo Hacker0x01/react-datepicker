@@ -68,7 +68,7 @@
   "dependencies": {
     "lodash": "^3.10.0",
     "moment": "^2.10",
-    "react-onclickoutside": "4.0.1 - 4.1.1",
+    "react-onclickoutside": "^4.5.0",
     "tether": "^1.1.0"
   },
   "scripts": {
