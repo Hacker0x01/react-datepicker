@@ -24,7 +24,7 @@ export default React.createClass({
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange}"}<br />
-        <strong>    {"includeDates={[moment(), moment().add('days', 1)]}"}</strong><br />
+        <strong>    {"includeDates={[moment(), moment().add(1, 'days')]}"}</strong><br />
               {"placeholderText=\"This only includes today and tomorrow\" />"}
         </code>
       </pre>
@@ -32,7 +32,7 @@ export default React.createClass({
         <DatePicker
           selected={this.state.startDate}
           onChange={this.handleChange}
-          includeDates={[moment(), moment().add("days", 1)]}
+          includeDates={[moment(), moment().add(1, "days")]}
           placeholderText="This only includes today and tomorrow" />
       </div>
     </div>;
