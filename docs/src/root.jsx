@@ -39,38 +39,7 @@ export default React.createClass({
             </a>
           </p>
           <p>A simple and reusable datepicker component for React.</p>
-          <h2>Configuration</h2>
-          <ul>
-            <li>
-              Change date format by passing a different date format in the props:
-              {" "}<code>dateFormat: "YYYY/MM/DD"</code>
-            </li>
-            <li>
-              Add placeholder text:
-              {" "}<code>placeholderText: 'Click to select a date'</code>
-              {" "}(Defaults to the selected date when no placeholder text is added)
-            </li>
-            <li>
-              Give users a predefined date range:
-              {" "}<code>minDate: moment() & maxDate: moment().add(5, 'days')</code>
-              {" "}(this gives users the ability to select a date between today and 5 days in the future)
-            </li>
-            <li>
-              Exclude a set of dates from those that are selectable:
-              {" "}<code>excludeDates: [ moment(), moment('2015-01-01') ]</code>
-              {" "}(prevent users from selecting today or Jan 1st, 2015)
-            </li>
-            <li>
-              Set custom moment.js instance (could have defined custom locale settings):
-              {" "}<code>moment: require('./foo/moment')</code>
-            </li>
-            <li>Set custom locale settings for locale: <code>locale: "cs"</code></li>
-            <li>Set date format for callendar: <code>dateFormatCalendar: "YYYY/MM/DD"</code></li>
-            <li>
-              Set custom weekdays (for locale days):
-              {" "}<code>weekdays: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']</code>
-            </li>
-          </ul>
+
           <h2>Installation</h2>
           <p>Installing is really simple and can be done in multiple ways:</p>
           <ul>
@@ -78,11 +47,6 @@ export default React.createClass({
             <li>Install with npm: <code>npm install react-datepicker --save</code></li>
             <li>Install with Bundler: <code>bundle install rails-assets-react-date-picker</code></li>
           </ul>
-          <h2>License</h2>
-          <p>
-            Copyright (c) 2015 HackerOne Inc. and individual contributors.
-            {" "}Licensed under MIT license, see LICENSE for the full license.
-          </p>
         </div>
         <div className="wrapper">
           <ExampleComponents />
