@@ -54,8 +54,10 @@ var Calendar = React.createClass({
 
   localizeDateUtil(dateUtil) {
     var thisMoment = dateUtil.moment();
-    if (this.props.locale) thisMoment.locale(this.props.locale);
-    if (this.props.weekStart) thisMoment._locale._week.dow = this.props.weekStart;
+
+    if (this.props.locale) { thisMoment.locale(this.props.locale); }
+    if (this.props.weekStart) { thisMoment._locale._week.dow = this.props.weekStart; }
+
     return dateUtil;
   },
 
