@@ -37,7 +37,10 @@ module.exports = function(config) {
         new webpack.DefinePlugin({
           "process.env.NODE_ENV": JSON.stringify("test")
         })
-      ]
+      ],
+      resolve: {
+        extensions: ["", ".jsx", ".js"]
+      }
     },
 
     webpackServer: {
