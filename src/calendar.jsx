@@ -10,7 +10,7 @@ var Calendar = React.createClass({
 
   propTypes: {
     weekdays: React.PropTypes.array.isRequired,
-    locale: React.PropTypes.string,
+    locale: React.PropTypes.string.isRequired,
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
