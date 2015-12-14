@@ -17,6 +17,7 @@ import OnBlurCallbacks from "./examples/on_blur_callbacks";
 import Weekdays from "./examples/weekdays";
 import Placement from "./examples/placement";
 import DateRange from "./examples/date_range";
+import TabIndex from "./examples/tab_index";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
@@ -91,6 +92,10 @@ export default React.createClass({
     {
       title: "Configure Popover Placement",
       component: <Placement />
+    },
+    {
+      title: "TabIndex",
+      component: <TabIndex />
     }
   ],
 
