@@ -12,7 +12,9 @@ export default React.createClass({
               ReactJS Datepicker
             </h1>
             <div className="hero__crafted-by">
-              Crafted by <img src="images/logo.png" className="hero__image" alt="HackerOne" title="HackerOne" />
+              <a href="https://hackerone.com" className="hero__crafted-by-link">
+                Crafted by <img src="images/logo.png" className="hero__image" alt="HackerOne" title="HackerOne" />
+              </a>
             </div>
             <div className="hero__example">
               <HeroExample />
