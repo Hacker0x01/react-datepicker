@@ -57,7 +57,7 @@ export default React.createClass({
       component: <SpecificDateRange />
     },
     {
-      title: "Custom start date",
+      title: "Custom week start day",
       component: <CustomStartDate />
     },
     {
