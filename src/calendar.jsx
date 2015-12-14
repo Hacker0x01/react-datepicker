@@ -5,12 +5,23 @@ import YearDropdown from "./year_dropdown";
 import Day from "./day";
 import React from "react";
 
+function getDateInView({ moment, minDate, maxDate }) {
+  var current = new DateUtil(moment());
+  if (minDate && new DateUtil(minDate).isAfter(current)) {
+    return minDate;
+  } else if (maxDate && new DateUtil(maxDate).isBefore(current)) {
+    return maxDate;
+  } else {
+    return current.moment();
+  }
+}
+
 var Calendar = React.createClass({
   mixins: [require("react-onclickoutside")],
 
   propTypes: {
     weekdays: React.PropTypes.array.isRequired,
-    locale: React.PropTypes.string,
+    locale: React.PropTypes.string.isRequired,
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
@@ -31,7 +42,7 @@ var Calendar = React.createClass({
 
   getInitialState() {
     return {
-      date: new DateUtil(this.props.selected).safeClone(this.props.moment())
+      date: new DateUtil(this.props.selected).safeClone(getDateInView(this.props))
     };
   },
 
