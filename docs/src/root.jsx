@@ -53,6 +53,10 @@ export default React.createClass({
         <div className="wrapper">
           <ExampleComponents />
         </div>
+
+        <a href="https://github.com/Hacker0x01/react-datepicker/">
+          <img className="github-ribbon" src="images/ribbon.png" alt="Fork me on GitHub" />
+        </a>
       </div>
     );
   }
