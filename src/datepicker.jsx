@@ -20,7 +20,8 @@ var DatePicker = React.createClass({
     weekStart: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func,
-    onFocus: React.PropTypes.func
+    onFocus: React.PropTypes.func,
+    tabIndex: React.PropTypes.number
   },
 
   getDefaultProps() {
@@ -187,7 +188,8 @@ var DatePicker = React.createClass({
           className={this.props.className}
           title={this.props.title}
           readOnly={this.props.readOnly}
-          required={this.props.required} />
+          required={this.props.required}
+          tabIndex={this.props.tabIndex} />
         {clearButton}
         {this.props.disabled ? null : this.calendar()}
       </div>

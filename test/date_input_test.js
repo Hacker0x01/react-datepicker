@@ -30,4 +30,12 @@ describe("DateInput", function() {
 
     expect(ReactDOM.findDOMNode(dateInput).className).to.equal("datepicker__custom-input");
   });
+
+  it("has a tabIndex if provided", function() {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput tabIndex={1} />
+    );
+
+    expect(ReactDOM.findDOMNode(dateInput).tabIndex).to.equal(1);
+  });
 });
