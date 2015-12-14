@@ -32,7 +32,8 @@ var DatePicker = React.createClass({
       moment: moment,
       onChange() {},
       disabled: false,
-      onFocus() {}
+      onFocus() {},
+      onBlur() {}
     };
   },
 
@@ -68,7 +69,7 @@ var DatePicker = React.createClass({
   handleBlur() {
     this.setState({ virtualFocus: false }, () => {
       setTimeout(() => {
-        if (!this.state.virtualFocus && typeof this.props.onBlur === "function") {
+        if (!this.state.virtualFocus) {
           this.props.onBlur(this.state.selected);
           this.hideCalendar();
         }
