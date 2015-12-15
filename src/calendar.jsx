@@ -169,6 +169,18 @@ var Calendar = React.createClass({
     });
   },
 
+  renderCurrentMonth() {
+    var classes = ["datepicker__current-month"];
+    if (this.props.showYearDropdown) {
+      classes.push("datepicker__current-month--hasYearDropdown");
+    }
+    return (
+      <div className={classes.join(" ")}>
+        {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
+      </div>
+    );
+  },
+
   renderYearDropdown() {
     if (!this.props.showYearDropdown) {
       return;
@@ -188,9 +200,7 @@ var Calendar = React.createClass({
           <a className="datepicker__navigation datepicker__navigation--previous"
               onClick={this.decreaseMonth}>
           </a>
-          <h2 className="datepicker__current-month">
-            {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
-          </h2>
+          {this.renderCurrentMonth()}
           {this.renderYearDropdown()}
           <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>
