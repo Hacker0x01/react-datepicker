@@ -10,9 +10,12 @@ describe("YearDropdownOptions", () => {
       handleChangeResult = changeInput;
   };
 
-  beforeEach(function() {
+  beforeEach(() => {
     yearDropdown = TestUtils.renderIntoDocument(
-      <YearDropdownOptions year={2015} onChange={mockHandleChange}/>
+      <YearDropdownOptions
+        year={2015}
+        onChange={mockHandleChange}
+        onCancel={() => {}} />
     );
   });
 

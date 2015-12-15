@@ -9,9 +9,12 @@ function generateYears(year) {
 }
 
 var YearDropdownOptions = React.createClass({
+  mixins: [require("react-onclickoutside")],
+
   propTypes: {
     year: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -60,6 +63,10 @@ var YearDropdownOptions = React.createClass({
 
   onChange(year) {
     this.props.onChange(year);
+  },
+
+  handleClickOutside() {
+    this.props.onCancel();
   },
 
   shiftYears(amount) {

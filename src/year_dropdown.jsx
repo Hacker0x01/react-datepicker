@@ -27,7 +27,8 @@ var YearDropdown = React.createClass({
       <YearDropdownOptions
         ref="options"
         year={this.props.year}
-        onChange={this.onChange} />
+        onChange={this.onChange}
+        onCancel={this.toggleDropdown} />
     );
   },
 
