@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import TestUtils from "react-addons-test-utils";
 import DatePicker from "../src/datepicker.jsx";
+import moment from "moment";
 
 describe("DatePicker", () => {
   it("should show the calendar when focusing on the date input", () => {
@@ -24,5 +25,15 @@ describe("DatePicker", () => {
       expect(datePicker.refs.calendar).to.not.exist;
       done();
     }, 300);
+  });
+
+  it("should allow clearing the date when isClearable is true", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker isClearable={true} selected={moment("2015-12-15")} />
+    );
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, "close-icon");
+    TestUtils.Simulate.click(clearButton);
+    var dateInput = datePicker.refs.input;
+    expect(ReactDOM.findDOMNode(dateInput).value).to.equal("");
   });
 });

@@ -28,7 +28,7 @@ var DateInput = React.createClass({
     // If we're receiving a different date then apply it.
     // If we're receiving a null date continue displaying the
     // value currently in the textbox.
-    if (newProps.date != null && newProps.date != this.props.date) {
+    if (newProps.date != this.props.date) {
         this.setState({
             maybeDate: this.safeDateFormat(newProps.date)
         });
