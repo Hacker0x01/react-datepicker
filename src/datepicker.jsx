@@ -18,6 +18,7 @@ var DatePicker = React.createClass({
     popoverTargetAttachment: React.PropTypes.string,
     popoverTargetOffset: React.PropTypes.string,
     weekStart: React.PropTypes.string,
+    showYearDropdown: React.PropTypes.bool,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
@@ -33,7 +34,8 @@ var DatePicker = React.createClass({
       onChange() {},
       disabled: false,
       onFocus() {},
-      onBlur() {}
+      onBlur() {},
+      showYearDropdown: true
     };
   },
 
@@ -154,7 +156,8 @@ var DatePicker = React.createClass({
             excludeDates={this.props.excludeDates}
             handleClick={this.onInputClick}
             includeDates={this.props.includeDates}
-            weekStart={this.props.weekStart} />
+            weekStart={this.props.weekStart}
+            showYearDropdown={this.props.showYearDropdown} />
         </Popover>
       );
     }

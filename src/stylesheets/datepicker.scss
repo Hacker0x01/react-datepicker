@@ -46,6 +46,10 @@
   color: #000;
   font-weight: bold;
   font-size: 13px;
+
+  &--hasYearDropdown {
+    margin-bottom: 16px;
+  }
 }
 
 .datepicker__navigation {

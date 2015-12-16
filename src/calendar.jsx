@@ -33,7 +33,8 @@ var Calendar = React.createClass({
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
-    weekStart: React.PropTypes.string.isRequired
+    weekStart: React.PropTypes.string.isRequired,
+    showYearDropdown: React.PropTypes.bool
   },
 
   handleClickOutside() {
@@ -48,7 +49,8 @@ var Calendar = React.createClass({
 
   getDefaultProps() {
     return {
-      weekStart: "1"
+      weekStart: "1",
+      showYearDropdown: true
     };
   },
 
@@ -167,6 +169,29 @@ var Calendar = React.createClass({
     });
   },
 
+  renderCurrentMonth() {
+    var classes = ["datepicker__current-month"];
+    if (this.props.showYearDropdown) {
+      classes.push("datepicker__current-month--hasYearDropdown");
+    }
+    return (
+      <div className={classes.join(" ")}>
+        {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
+      </div>
+    );
+  },
+
+  renderYearDropdown() {
+    if (!this.props.showYearDropdown) {
+      return;
+    }
+    return (
+      <YearDropdown
+        onChange={this.changeYear}
+        year={this.state.date.year()} />
+    );
+  },
+
   render() {
     return (
       <div className="datepicker" onClick={this.props.handleClick}>
@@ -175,13 +200,8 @@ var Calendar = React.createClass({
           <a className="datepicker__navigation datepicker__navigation--previous"
               onClick={this.decreaseMonth}>
           </a>
-          <h2 className="datepicker__current-month">
-            {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
-          </h2>
-          <YearDropdown
-              onChange={this.changeYear}
-              year={this.state.date.year()}
-          />
+          {this.renderCurrentMonth()}
+          {this.renderYearDropdown()}
           <a className="datepicker__navigation datepicker__navigation--next"
               onClick={this.increaseMonth}>
           </a>

@@ -3,6 +3,7 @@ import TestUtils from "react-addons-test-utils";
 import moment from "moment";
 import DateUtil from "../src/util/date";
 import Calendar from "../src/calendar";
+import YearDropdown from "../src/year_dropdown";
 
 describe("Calendar", function() {
   function getCalendar(extraProps) {
@@ -41,5 +42,17 @@ describe("Calendar", function() {
     var maxDate = moment().subtract(1, "year");
     var calendar = TestUtils.renderIntoDocument(getCalendar({ maxDate }));
     assert(calendar.state.date.sameDay(new DateUtil(maxDate)));
+  });
+
+  it("should show the year dropdown menu by default", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar());
+    var yearReadView = TestUtils.findRenderedComponentWithType(calendar, YearDropdown);
+    expect(yearReadView).to.exist;
+  });
+
+  it("should not show the year dropdown menu if toggled off", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ showYearDropdown: false }));
+    var yearReadView = TestUtils.scryRenderedComponentsWithType(calendar, YearDropdown);
+    expect(yearReadView).to.be.empty;
   });
 });
