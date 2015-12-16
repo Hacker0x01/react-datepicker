@@ -31,6 +31,10 @@
   @extend %triangle-arrow-down;
 }
 
+.tether-target-attached-top.datepicker__container {
+  margin-top: -20px;
+}
+
 .datepicker__header {
   text-align: center;
   background-color: $background-color;
