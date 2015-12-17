@@ -140,6 +140,18 @@ describe("DateUtil", function() {
 
       expect(date.inRange(startDate, null)).to.eq(false);
     });
+
+    it("does not modify the input dates", function() {
+      var startDate = new DateUtil(moment("2014-02-09"));
+      var endDate = new DateUtil(moment("2014-02-10"));
+      var startDateClone = startDate.clone();
+      var endDateClone = endDate.clone();
+      var date = new DateUtil(moment("2014-02-09"));
+      date.inRange(startDate, endDate);
+
+      expect(startDate.moment().isSame(startDateClone.moment())).to.eq(true);
+      expect(endDate.moment().isSame(endDateClone.moment())).to.eq(true);
+    });
   });
 
   describe("#day", function() {
