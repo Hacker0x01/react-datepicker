@@ -20,8 +20,8 @@ DateUtil.prototype.sameMonth = function(other) {
 
 DateUtil.prototype.inRange = function(startDate, endDate) {
   if (!startDate || !endDate) return false;
-  var before = startDate._date.startOf("day").subtract(1, "seconds");
-  var after = endDate._date.startOf("day").add(1, "seconds");
+  var before = startDate._date.clone().startOf("day").subtract(1, "seconds");
+  var after = endDate._date.clone().startOf("day").add(1, "seconds");
   return this._date.isBetween(before, after);
 };
 
