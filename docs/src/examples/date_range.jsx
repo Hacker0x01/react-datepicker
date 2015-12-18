@@ -12,10 +12,25 @@ var DateRange = React.createClass({
     };
   },
 
-  handleChange: function(date) {
-    this.setState({
-      startDate: date
-    });
+  handleChange: function({ startDate, endDate }) {
+    startDate = startDate || this.state.startDate;
+    endDate = endDate || this.state.endDate;
+
+    if (startDate.isAfter(endDate)) {
+      var temp = startDate;
+      startDate = endDate;
+      endDate = temp;
+    }
+
+    this.setState({ startDate, endDate });
+  },
+
+  handleChangeStart: function(startDate) {
+    this.handleChange({ startDate });
+  },
+
+  handleChangeEnd: function(endDate) {
+    this.handleChange({ endDate });
   },
 
   render: function() {
@@ -25,14 +40,26 @@ var DateRange = React.createClass({
           {"<DatePicker"}<br />
                 {"selected={this.state.startDate}"}<br />
                 {"startDate={this.state.startDate}"}<br />
-                {"endDate={this.state.endDate} />"}
+                {"endDate={this.state.endDate}"}<br />
+                {"onChange={this.handleChangeStart} />"}<br />
+          {"<DatePicker"}<br />
+                {"selected={this.state.endDate}"}<br />
+                {"startDate={this.state.startDate}"}<br />
+                {"endDate={this.state.endDate}"}<br />
+                {"onChange={this.handleChangeEnd} />"}<br />
         </code>
       </pre>
       <div className="column">
         <DatePicker
           selected={this.state.startDate}
           startDate={this.state.startDate}
-          endDate={this.state.endDate} />
+          endDate={this.state.endDate}
+          onChange={this.handleChangeStart} />
+        <DatePicker
+          selected={this.state.endDate}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          onChange={this.handleChangeEnd} />
       </div>
     </div>;
   }
