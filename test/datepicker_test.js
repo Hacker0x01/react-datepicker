@@ -10,7 +10,7 @@ describe("DatePicker", () => {
       <DatePicker />
     );
     var dateInput = datePicker.refs.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
     expect(datePicker.refs.calendar).to.exist;
   });
 
@@ -19,7 +19,7 @@ describe("DatePicker", () => {
       <DatePicker />
     );
     var dateInput = datePicker.refs.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
     setTimeout(() => {
       expect(datePicker.refs.calendar).to.not.exist;
@@ -35,5 +35,30 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(clearButton);
     var dateInput = datePicker.refs.input;
     expect(ReactDOM.findDOMNode(dateInput).value).to.equal("");
+  });
+
+  it("should not hide the calendar if multiple clicks are made in a short interval", done => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    );
+    var dateInput = datePicker.refs.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+
+    setTimeout(() => {
+      var calendar = datePicker.refs.calendar;
+      TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
+
+      setTimeout(() => {
+        TestUtils.Simulate.click(ReactDOM.findDOMNode(calendar));
+        TestUtils.Simulate.click(ReactDOM.findDOMNode(calendar));
+      }, 0);
+
+      TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
+    }, 0);
+
+    setTimeout(() => {
+      expect(datePicker.refs.calendar).to.exist;
+      done();
+    }, 300);
   });
 });

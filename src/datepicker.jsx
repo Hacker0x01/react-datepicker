@@ -5,6 +5,7 @@ import Calendar from "./calendar";
 import DateUtil from "./util/date";
 import Popover from "./popover";
 import React from "react";
+import ReactDOM from "react-dom";
 
 var DatePicker = React.createClass({
 
@@ -42,7 +43,7 @@ var DatePicker = React.createClass({
   getInitialState() {
     return {
       focus: false,
-      virtualFocus: false,
+      triggerUpdate: false,
       selected: this.props.selected
     };
   },
@@ -63,15 +64,12 @@ var DatePicker = React.createClass({
 
   handleFocus() {
     this.props.onFocus();
-    this.setState({
-      focus: true
-    });
   },
 
   handleBlur() {
-    this.setState({ virtualFocus: false }, () => {
+    this.setState({ triggerUpdate: true }, () => {
       setTimeout(() => {
-        if (!this.state.virtualFocus) {
+        if (!this.state.datePickerHasFocus) {
           this.props.onBlur(this.state.selected);
           this.hideCalendar();
         }
@@ -85,6 +83,14 @@ var DatePicker = React.createClass({
         focus: false
       });
     }, 0);
+  },
+
+  doesDatePickerContainElement(element) {
+    var datePicker = ReactDOM.findDOMNode(this.refs.calendar);
+    if (!datePicker) {
+      return false;
+    }
+    return datePicker.contains(element);
   },
 
   handleSelect(date) {
@@ -108,14 +114,18 @@ var DatePicker = React.createClass({
     this.props.onChange(null);
   },
 
-  onInputClick() {
-    if (!this.state.virtualFocus) {
-      return this.setState({
-        focus: true,
-        virtualFocus: true
-      });
-    }
-    this.setState({ virtualFocus: false });
+  onInputClick(event) {
+    var previousFocusState = this.state.focus;
+
+    this.setState({
+      focus: true,
+      triggerUpdate: false,
+      datePickerHasFocus: this.doesDatePickerContainElement(event.target)
+    }, () => {
+      if (previousFocusState && !this.state.datePickerHasFocus) {
+        this.hideCalendar();
+      }
+    });
   },
 
   onClearClick(event) {
