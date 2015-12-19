@@ -43,7 +43,6 @@ var DatePicker = React.createClass({
   getInitialState() {
     return {
       focus: false,
-      triggerUpdate: false,
       selected: this.props.selected
     };
   },
@@ -70,14 +69,13 @@ var DatePicker = React.createClass({
   },
 
   handleBlur() {
-    this.setState({ triggerUpdate: true }, () => {
-      setTimeout(() => {
-        if (!this.state.datePickerHasFocus) {
-          this.props.onBlur(this.state.selected);
-          this.hideCalendar();
-        }
-      }, 200);
-    });
+    this.forceUpdate();
+    setTimeout(() => {
+      if (!this.state.datePickerHasFocus) {
+        this.props.onBlur(this.state.selected);
+        this.hideCalendar();
+      }
+    }, 200);
   },
 
   hideCalendar() {
@@ -122,9 +120,9 @@ var DatePicker = React.createClass({
 
     this.setState({
       focus: (event.target === ReactDOM.findDOMNode(this.refs.input) ? !this.state.focus : true),
-      triggerUpdate: false,
       datePickerHasFocus: this.doesDatePickerContainElement(event.target)
     }, () => {
+      this.forceUpdate();
       if (previousFocusState && !this.state.datePickerHasFocus) {
         this.hideCalendar();
       }
