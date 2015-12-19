@@ -69,7 +69,6 @@ var DatePicker = React.createClass({
   },
 
   handleBlur() {
-    this.forceUpdate();
     setTimeout(() => {
       if (!this.state.datePickerHasFocus) {
         this.props.onBlur(this.state.selected);
