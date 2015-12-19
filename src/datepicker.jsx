@@ -118,7 +118,7 @@ var DatePicker = React.createClass({
     var previousFocusState = this.state.focus;
 
     this.setState({
-      focus: true,
+      focus: (event.target === ReactDOM.findDOMNode(this.refs.input) ? !this.state.focus : true),
       triggerUpdate: false,
       datePickerHasFocus: this.doesDatePickerContainElement(event.target)
     }, () => {
@@ -196,7 +196,6 @@ var DatePicker = React.createClass({
           handleEnter={this.hideCalendar}
           setSelected={this.setSelected}
           invalidateSelected={this.invalidateSelected}
-          hideCalendar={this.hideCalendar}
           placeholderText={this.props.placeholderText}
           disabled={this.props.disabled}
           className={this.props.className}
