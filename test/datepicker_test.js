@@ -5,13 +5,16 @@ import DatePicker from "../src/datepicker.jsx";
 import moment from "moment";
 
 describe("DatePicker", () => {
-  it("should show the calendar when focusing on the date input", () => {
+  it("should show the calendar when focusing on the date input", done => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     );
     var dateInput = datePicker.refs.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
-    expect(datePicker.refs.calendar).to.exist;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    setTimeout(() => {
+      expect(datePicker.refs.calendar).to.exist;
+      done();
+    }, 200);
   });
 
   it("should hide the calendar when blurring the date input", done => {
@@ -19,7 +22,7 @@ describe("DatePicker", () => {
       <DatePicker />
     );
     var dateInput = datePicker.refs.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
     setTimeout(() => {
       expect(datePicker.refs.calendar).to.not.exist;
