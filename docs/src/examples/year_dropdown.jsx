@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 export default React.createClass({
-  displayName: "Weekdays",
+  displayName: "YearDropdown",
 
   getInitialState() {
     return {
@@ -24,16 +24,16 @@ export default React.createClass({
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange}"} <br />
-              {"showYearDropdown={false}"} <br />
-              {"dateFormatCalendar=\"MMMM YYYY\" />"}
+              {"showYearDropdown"} <br />
+              {"dateFormatCalendar=\"MMMM\" />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
           selected={this.state.startDate}
           onChange={this.handleChange}
-          showYearDropdown={false}
-          dateFormatCalendar="MMMM YYYY" />
+          showYearDropdown
+          dateFormatCalendar="MMMM" />
       </div>
     </div>;
   }

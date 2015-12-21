@@ -18,7 +18,7 @@ import Weekdays from "./examples/weekdays";
 import Placement from "./examples/placement";
 import DateRange from "./examples/date_range";
 import TabIndex from "./examples/tab_index";
-import HideYearDropdown from "./examples/hide_year_dropdown";
+import YearDropdown from "./examples/year_dropdown";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
@@ -99,8 +99,8 @@ export default React.createClass({
       component: <TabIndex />
     },
     {
-      title: "Hide year dropdown",
-      component: <HideYearDropdown />
+      title: "Year dropdown",
+      component: <YearDropdown />
     }
   ],
 
