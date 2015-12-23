@@ -44,15 +44,15 @@ describe("Calendar", function() {
     assert(calendar.state.date.sameDay(new DateUtil(maxDate)));
   });
 
-  it("should show the year dropdown menu by default", function() {
+  it("should not show the year dropdown menu by default", function() {
     var calendar = TestUtils.renderIntoDocument(getCalendar());
-    var yearReadView = TestUtils.findRenderedComponentWithType(calendar, YearDropdown);
-    expect(yearReadView).to.exist;
-  });
-
-  it("should not show the year dropdown menu if toggled off", function() {
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ showYearDropdown: false }));
     var yearReadView = TestUtils.scryRenderedComponentsWithType(calendar, YearDropdown);
     expect(yearReadView).to.be.empty;
+  });
+
+  it("should show the year dropdown menu if toggled on", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ showYearDropdown: true }));
+    var yearReadView = TestUtils.findRenderedComponentWithType(calendar, YearDropdown);
+    expect(yearReadView).to.exist;
   });
 });

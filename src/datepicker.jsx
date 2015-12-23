@@ -29,13 +29,12 @@ var DatePicker = React.createClass({
     return {
       weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       locale: "en",
-      dateFormatCalendar: "MMMM",
+      dateFormatCalendar: "MMMM YYYY",
       moment: moment,
       onChange() {},
       disabled: false,
       onFocus() {},
-      onBlur() {},
-      showYearDropdown: true
+      onBlur() {}
     };
   },
 

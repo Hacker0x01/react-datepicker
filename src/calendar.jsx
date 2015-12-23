@@ -49,8 +49,7 @@ var Calendar = React.createClass({
 
   getDefaultProps() {
     return {
-      weekStart: "1",
-      showYearDropdown: true
+      weekStart: "1"
     };
   },
 
