@@ -1,39 +1,74 @@
 import moment from "moment";
 import React from "react";
+import classnames from "classnames";
+import some from "lodash/collection/some";
+
+function startOfDay(date) {
+  return date.clone().startOf("day");
+}
 
 var Day = React.createClass({
-  handleClick(event) {
-    if (this.props.disabled) return;
+  displayName: "Day",
 
-    this.props.onClick(event);
+  propTypes: {
+    day: React.PropTypes.object.isRequired,
+    onClick: React.PropTypes.func,
+    minDate: React.PropTypes.object,
+    maxDate: React.PropTypes.object,
+    excludeDates: React.PropTypes.array,
+    includeDates: React.PropTypes.array,
+    selected: React.PropTypes.object,
+    startDate: React.PropTypes.object,
+    endDate: React.PropTypes.object
+  },
+
+  handleClick(event) {
+    if (!this.isDisabled() && this.props.onClick) {
+      this.props.onClick(event);
+    }
+  },
+
+  isSameDay(other) {
+    return other && this.props.day.isSame(other, "day");
+  },
+
+  isDisabled() {
+    const { day, minDate, maxDate, excludeDates, includeDates } = this.props;
+
+    return (minDate && day.isBefore(minDate, "day")) ||
+      (maxDate && day.isAfter(maxDate, "day")) ||
+      some(excludeDates, excludeDate => this.isSameDay(excludeDate)) ||
+      (includeDates && !some(includeDates, includeDate => this.isSameDay(includeDate)));
+  },
+
+  isInRange() {
+    const { day, startDate, endDate } = this.props;
+    if (!startDate || !endDate) return false;
+
+    const before = startOfDay(startDate).subtract(1, "seconds");
+    const after = startOfDay(endDate).add(1, "seconds");
+    return startOfDay(day).isBetween(before, after);
   },
 
   isWeekend() {
-    var weekday = this.props.day.moment().weekday();
+    const weekday = this.props.day.weekday();
     return weekday === 5 || weekday === 6;
   },
 
+  getClassNames() {
+    return classnames("datepicker__day", {
+      "datepicker__day--disabled": this.isDisabled(),
+      "datepicker__day--selected": this.isSameDay(this.props.selected),
+      "datepicker__day--in-range": this.isInRange(),
+      "datepicker__day--today": this.isSameDay(moment()),
+      "datepicker__day--weekend": this.isWeekend()
+    });
+  },
+
   render() {
-    var classes = ["datepicker__day"];
-
-    if (this.props.disabled)
-      classes.push("datepicker__day--disabled");
-
-    if (this.props.day.sameDay(this.props.selected))
-      classes.push("datepicker__day--selected");
-
-    if (this.props.inRange)
-      classes.push("datepicker__day--in-range");
-
-    if (this.props.day.sameDay(moment()))
-      classes.push("datepicker__day--today");
-
-    if (this.isWeekend())
-      classes.push("datepicker__day--weekend");
-
     return (
-      <div className={classes.join(" ")} onClick={this.handleClick}>
-        {this.props.day.day()}
+      <div className={this.getClassNames()} onClick={this.handleClick}>
+        {this.props.day.date()}
       </div>
     );
   }

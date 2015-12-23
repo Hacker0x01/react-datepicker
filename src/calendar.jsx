@@ -1,5 +1,3 @@
-import some from "lodash/collection/some";
-import map from "lodash/collection/map";
 import DateUtil from "./util/date";
 import YearDropdown from "./year_dropdown";
 import Day from "./day";
@@ -119,43 +117,19 @@ var Calendar = React.createClass({
     );
   },
 
-  renderDay(day, key) {
-    var minDate = new DateUtil(this.props.minDate).safeClone(),
-        maxDate = new DateUtil(this.props.maxDate).safeClone(),
-        excludeDates,
-        includeDates,
-        disabled,
-        inRange;
-
-    if (this.props.excludeDates && Array.isArray(this.props.excludeDates)) {
-      excludeDates = map(this.props.excludeDates, function(date) {
-        return new DateUtil(date).safeClone();
-      });
-    }
-
-    if (this.props.includeDates && Array.isArray(this.props.includeDates)) {
-      includeDates = map(this.props.includeDates, function(date) {
-        return new DateUtil(date).safeClone();
-      });
-    }
-
-    disabled = day.isBefore(minDate) || day.isAfter(maxDate) ||
-      some(excludeDates, function(xDay) { return day.sameDay(xDay); }) ||
-      (includeDates && !some(includeDates, function(xDay) { return day.sameDay(xDay); }));
-
-    if (this.props.startDate && this.props.endDate) {
-      inRange = day.inRange(new DateUtil(this.props.startDate), new DateUtil(this.props.endDate));
-    }
-
+  renderDay(dayUtil, key) {
     return (
       <Day
         key={key}
-        day={day}
-        date={this.state.date}
-        onClick={this.handleDayClick.bind(this, day)}
-        selected={new DateUtil(this.props.selected)}
-        inRange={inRange}
-        disabled={disabled} />
+        day={dayUtil.moment()}
+        onClick={this.handleDayClick.bind(this, dayUtil)}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
+        excludeDates={this.props.excludeDates}
+        includeDates={this.props.includeDates}
+        selected={this.props.selected}
+        startDate={this.props.startDate}
+        endDate={this.props.endDate} />
     );
   },
 

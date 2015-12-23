@@ -66,6 +66,7 @@
     "react": "^0.14.0"
   },
   "dependencies": {
+    "classnames": "^2.2.1",
     "lodash": "^3.10.0",
     "moment": "^2.10",
     "react-onclickoutside": "^4.5.0",
