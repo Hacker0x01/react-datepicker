@@ -26,7 +26,6 @@ var Calendar = React.createClass({
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     handleClick: React.PropTypes.func.isRequired,
-    hideCalendar: React.PropTypes.func.isRequired,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
     startDate: React.PropTypes.object,
@@ -37,8 +36,8 @@ var Calendar = React.createClass({
     showYearDropdown: React.PropTypes.bool
   },
 
-  handleClickOutside() {
-    this.props.hideCalendar();
+  handleClickOutside(event) {
+    this.props.handleClick(event);
   },
 
   getInitialState() {

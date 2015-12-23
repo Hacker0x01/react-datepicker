@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import TestUtils from "react-addons-test-utils";
+import DatePicker from "../src/datepicker.jsx";
 import DateInput from "../src/date_input.jsx";
 
 describe("DateInput", function() {
@@ -28,7 +29,7 @@ describe("DateInput", function() {
       <DateInput className="datepicker__custom-input" />
     );
 
-    expect(ReactDOM.findDOMNode(dateInput).className).to.equal("datepicker__custom-input");
+    expect(ReactDOM.findDOMNode(dateInput).className).to.equal("ignore-react-onclickoutside datepicker__custom-input");
   });
 
   it("has a tabIndex if provided", function() {
@@ -37,5 +38,21 @@ describe("DateInput", function() {
     );
 
     expect(ReactDOM.findDOMNode(dateInput).tabIndex).to.equal(1);
+  });
+
+  it("toggles the calendar on and off when clicked", function(done) {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    );
+    var dateInput = datePicker.refs.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    setTimeout(() => {
+      expect(datePicker.refs.calendar).to.exist;
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    }, 300);
+    setTimeout(() => {
+      expect(datePicker.refs.calendar).to.not.exist;
+      done();
+    }, 300);
   });
 });
