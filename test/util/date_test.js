@@ -112,46 +112,6 @@ describe("DateUtil", function() {
     });
   });
 
-  describe("#mapDaysInWeek", function() {
-    describe("calls the callback method for every day in the week", function() {
-      var daysOfTheWeek = [
-        "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
-      ];
-
-      it("when the date is a monday", function(done) {
-        var date = new DateUtil(moment("2014-10-13"));
-        var callbackCounter = 0;
-        var callback = function(dayOfTheWeek) {
-          expect(dayOfTheWeek.moment().format("ddd"))
-            .to.eq(daysOfTheWeek[callbackCounter]);
-          callbackCounter++;
-
-          if (callbackCounter === 7) {
-            done();
-          }
-        };
-
-        date.mapDaysInWeek(callback);
-      });
-
-      it("when the date is a sunday", function(done) {
-        var date = new DateUtil(moment("2014-10-20"));
-        var callbackCounter = 0;
-        var callback = function(dayOfTheWeek) {
-          expect(dayOfTheWeek.moment().format("ddd"))
-            .to.eq(daysOfTheWeek[callbackCounter]);
-          callbackCounter++;
-
-          if (callbackCounter === 7) {
-            done();
-          }
-        };
-
-        date.mapDaysInWeek(callback);
-      });
-    });
-  });
-
   describe("#safeClone", function() {
     it("should return a cloned version of _date if date is a valid moment object", function() {
       var date = moment("2014-02-08");

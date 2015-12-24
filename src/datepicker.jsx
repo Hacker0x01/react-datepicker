@@ -106,7 +106,7 @@ var DatePicker = React.createClass({
 
   setSelected(date) {
     this.setState({
-      selected: date.moment()
+      selected: date
     }, () => {
       this.props.onChange(this.state.selected);
     });

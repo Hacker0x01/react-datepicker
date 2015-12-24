@@ -22,19 +22,6 @@ DateUtil.prototype.year = function() {
   return this._date.clone().year();
 };
 
-DateUtil.prototype.mapDaysInWeek = function(callback) {
-  var week = [];
-  var firstDay = this._date.clone();
-
-  for (var i = 0; i < 7; i++) {
-    var day = new DateUtil(firstDay.clone().add(i, "days"));
-
-    week[i] = callback(day, i);
-  }
-
-  return week;
-};
-
 DateUtil.prototype.mapWeeksInMonth = function(callback) {
   var month = [];
   var firstDay = this._date.clone().startOf("month").startOf("week");

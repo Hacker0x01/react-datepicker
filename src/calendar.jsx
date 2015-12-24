@@ -1,6 +1,6 @@
 import DateUtil from "./util/date";
 import YearDropdown from "./year_dropdown";
-import Day from "./day";
+import Week from "./week";
 import React from "react";
 
 function getDateInView({ moment, minDate, maxDate }) {
@@ -109,18 +109,10 @@ var Calendar = React.createClass({
     }
 
     return (
-      <div key={key}>
-        {this.days(weekStart)}
-      </div>
-    );
-  },
-
-  renderDay(dayUtil, key) {
-    return (
-      <Day
+      <Week
         key={key}
-        day={dayUtil.moment()}
-        onClick={this.handleDayClick.bind(this, dayUtil)}
+        day={weekStart.moment()}
+        onDayClick={this.handleDayClick}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         excludeDates={this.props.excludeDates}
@@ -129,10 +121,6 @@ var Calendar = React.createClass({
         startDate={this.props.startDate}
         endDate={this.props.endDate} />
     );
-  },
-
-  days(weekStart) {
-    return weekStart.mapDaysInWeek(this.renderDay);
   },
 
   header() {
