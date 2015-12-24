@@ -1,5 +1,4 @@
 import moment from "moment";
-import DateUtil from "./util/date";
 import ReactDOM from "react-dom";
 import React from "react";
 var DateInput = React.createClass({
@@ -58,7 +57,7 @@ var DateInput = React.createClass({
     var date = moment(value, this.props.dateFormat, true);
 
     if (date.isValid()) {
-        this.props.setSelected(new DateUtil(date));
+        this.props.setSelected(date);
     } else {
         this.props.invalidateSelected();
     }
