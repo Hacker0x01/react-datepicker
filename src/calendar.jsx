@@ -1,6 +1,6 @@
 import DateUtil from "./util/date";
 import YearDropdown from "./year_dropdown";
-import Week from "./week";
+import Month from "./month";
 import React from "react";
 
 function getDateInView({ moment, minDate, maxDate }) {
@@ -89,10 +89,6 @@ var Calendar = React.createClass({
     });
   },
 
-  weeks() {
-    return this.state.date.mapWeeksInMonth(this.renderWeek);
-  },
-
   handleDayClick(day) {
     this.props.onSelect(day);
   },
@@ -101,26 +97,6 @@ var Calendar = React.createClass({
     this.setState({
       date: this.state.date.changeYear(year)
     });
-  },
-
-  renderWeek(weekStart, key) {
-    if (!weekStart.weekInMonth(this.state.date)) {
-      return;
-    }
-
-    return (
-      <Week
-        key={key}
-        day={weekStart.moment()}
-        onDayClick={this.handleDayClick}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        excludeDates={this.props.excludeDates}
-        includeDates={this.props.includeDates}
-        selected={this.props.selected}
-        startDate={this.props.startDate}
-        endDate={this.props.endDate} />
-    );
   },
 
   header() {
@@ -169,9 +145,16 @@ var Calendar = React.createClass({
             {this.header()}
           </div>
         </div>
-        <div className="datepicker__month">
-          {this.weeks()}
-        </div>
+        <Month
+          day={this.state.date.moment()}
+          onDayClick={this.handleDayClick}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
+          excludeDates={this.props.excludeDates}
+          includeDates={this.props.includeDates}
+          selected={this.props.selected}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate} />
       </div>
     );
   }

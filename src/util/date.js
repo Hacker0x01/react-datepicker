@@ -22,27 +22,6 @@ DateUtil.prototype.year = function() {
   return this._date.clone().year();
 };
 
-DateUtil.prototype.mapWeeksInMonth = function(callback) {
-  var month = [];
-  var firstDay = this._date.clone().startOf("month").startOf("week");
-
-  for (var i = 0; i < 6; i++) {
-    var weekStart = new DateUtil(firstDay.clone().add(i, "weeks"));
-
-    month[i] = callback(weekStart, i);
-  }
-
-  return month;
-};
-
-DateUtil.prototype.weekInMonth = function(other) {
-  var firstDayInWeek = this._date.clone();
-  var lastDayInWeek = this._date.clone().weekday(7);
-
-  return firstDayInWeek.isSame(other._date, "month") ||
-    lastDayInWeek.isSame(other._date, "month");
-};
-
 DateUtil.prototype.format = function() {
   return this._date.format.apply(this._date, arguments);
 };
