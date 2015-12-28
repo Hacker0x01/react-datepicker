@@ -14,6 +14,7 @@ import IncludeDates from "./examples/include_dates";
 import Disabled from "./examples/disabled";
 import ClearInput from "./examples/clear_input";
 import OnBlurCallbacks from "./examples/on_blur_callbacks";
+import OnClearCallbacks from "./examples/on_clear_callbacks";
 import Weekdays from "./examples/weekdays";
 import Placement from "./examples/placement";
 import DateRange from "./examples/date_range";
@@ -85,6 +86,10 @@ export default React.createClass({
     {
       title: "onBlur callbacks in console",
       component: <OnBlurCallbacks />
+    },
+    {
+      title: "onClear callbacks in console",
+      component: <OnClearCallbacks />
     },
     {
       title: "Custom weekdays",

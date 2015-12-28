@@ -23,6 +23,7 @@ var DatePicker = React.createClass({
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
+    onClear: React.PropTypes.func,
     tabIndex: React.PropTypes.number
   },
 
@@ -35,7 +36,8 @@ var DatePicker = React.createClass({
       onChange() {},
       disabled: false,
       onFocus() {},
-      onBlur() {}
+      onBlur() {},
+      onClear(){}
     };
   },
 
@@ -136,6 +138,7 @@ var DatePicker = React.createClass({
     this.setState({
       selected: null
     }, () => {
+      this.props.onClear();
       this.props.onChange(null);
     });
   },
