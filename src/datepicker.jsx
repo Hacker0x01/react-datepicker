@@ -37,7 +37,7 @@ var DatePicker = React.createClass({
       disabled: false,
       onFocus() {},
       onBlur() {},
-      onClear(){}
+      onClear() {}
     };
   },
 
