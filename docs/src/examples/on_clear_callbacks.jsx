@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 export default React.createClass({
-  displayName: "Disabled",
+  displayName: "ClearCallbacks",
 
   getInitialState() {
     return {
@@ -26,12 +26,7 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="js">
           {"handleOnClear: function (date) {"}<br />
-              {"if (date === null) {"}<br />
-                  {"console.log('selected date: %s', date);"}<br />
-              {"}"}<br />
-              {"else {"}<br />
-                  {"console.log('selected date: %s', date.format('DD/MM/YYYY'));"}<br />
-              {"}"}<br />
+            {"console.log('Date has been cleared');"}<br />
           {"};"}
         </code>
         <br />
@@ -41,6 +36,7 @@ export default React.createClass({
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange}"}<br />
           <strong>    {"onClear={this.handleOnClear}"}</strong><br />
+              {"isClearable={true}"}<br />
               {"placeholderText=\"View clear callbacks in console\" />"}
         </code>
       </pre>
