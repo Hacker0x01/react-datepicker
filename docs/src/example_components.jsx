@@ -15,6 +15,7 @@ import Disabled from "./examples/disabled";
 import ClearInput from "./examples/clear_input";
 import OnBlurCallbacks from "./examples/on_blur_callbacks";
 import OnClearCallbacks from "./examples/on_clear_callbacks";
+import Typeable from "./examples/typeable.jsx";
 import Weekdays from "./examples/weekdays";
 import Placement from "./examples/placement";
 import DateRange from "./examples/date_range";
@@ -50,6 +51,10 @@ export default React.createClass({
     {
       title: "Custom class name",
       component: <CustomClassName />
+    },
+    {
+      title: "Editable by user input",
+      component: <Typeable />
     },
     {
       title: "Placeholder text",
