@@ -29,7 +29,8 @@ var DateInput = React.createClass({
     // we should skipp updating because it would clear date input.
     // In particular, it checks that we pass the typeable flag in datepicker props
     // and that input has focus
-    // and that new date is null (when input date is invalid the "this.props.invalidateSelected()" method sets state as null).
+    // and that new date is null (when input date is invalid the "this.props.invalidateSelected()"
+    // method sets state as null).
     // The main disadvantage of this approach is that it is imposible to clear date
     // while the input has focus.
     var doesUserType = newProps.isTypeable && newProps.focus && !newProps.date;

@@ -57,7 +57,7 @@ describe("DateInput", function() {
     }, 300);
   });
 
-  it("demonstrates that it is impossible to retype date without 'isTypeable' flag", function(done){
+  it("demonstrates that it is impossible to retype date without 'isTypeable' flag", function(done) {
     var DatePickerWrapper = React.createClass({
       getInitialState() {
         return {
@@ -72,7 +72,7 @@ describe("DateInput", function() {
       },
 
       render() {
-        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={'datePicker'} />
+        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={"datePicker"} />
       }
     });
 
@@ -84,15 +84,15 @@ describe("DateInput", function() {
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
 
     setTimeout(() => {
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: '2015-12-08' }});
-      expect(dateInput.state.maybeDate).to.be.equal('2015-12-08');
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: '2015-12-0' }});
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
       expect(dateInput.state.maybeDate).to.be.equal(null);
       done();
     }, 300);
   });
 
-  it("types custom date", function(done){
+  it("types custom date", function(done) {
     var DatePickerWrapper = React.createClass({
       getInitialState() {
         return {
@@ -123,10 +123,10 @@ describe("DateInput", function() {
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
 
     setTimeout(() => {
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: '2015-12-08' }});
-      expect(dateInput.state.maybeDate).to.be.equal('2015-12-08');
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: '2015-12-0' }});
-      expect(dateInput.state.maybeDate).to.be.equal('2015-12-0');
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-0");
       done();
     }, 300);
   });
