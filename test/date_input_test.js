@@ -72,7 +72,7 @@ describe("DateInput", function() {
       },
 
       render() {
-        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={"datePicker"} />
+        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={"datePicker"} />;
       }
     });
 
@@ -111,7 +111,7 @@ describe("DateInput", function() {
               selected={this.state.startDate}
               onChange={this.handleChange}
               isTypeable={true}
-              ref={'datePicker'} />
+              ref={"datePicker"} />;
       }
     });
 
