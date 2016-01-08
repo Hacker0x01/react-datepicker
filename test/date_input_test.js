@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import ReactDOM from "react-dom";
 import TestUtils from "react-addons-test-utils";
 import DatePicker from "../src/datepicker.jsx";
@@ -52,6 +53,80 @@ describe("DateInput", function() {
     }, 300);
     setTimeout(() => {
       expect(datePicker.refs.calendar).to.not.exist;
+      done();
+    }, 300);
+  });
+
+  it("demonstrates that it is impossible to retype date without 'isTypeable' flag", function(done) {
+    var DatePickerWrapper = React.createClass({
+      getInitialState() {
+        return {
+          startDate: moment()
+        };
+      },
+
+      handleChange(date) {
+        this.setState({
+          startDate: date
+        });
+      },
+
+      render() {
+        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={"datePicker"} />;
+      }
+    });
+
+    var datepicker = TestUtils.renderIntoDocument(
+      <DatePickerWrapper />
+    );
+
+    var dateInput = datepicker.refs.datePicker.refs.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    setTimeout(() => {
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
+      expect(dateInput.state.maybeDate).to.be.equal(null);
+      done();
+    }, 300);
+  });
+
+  it("types custom date", function(done) {
+    var DatePickerWrapper = React.createClass({
+      getInitialState() {
+        return {
+          startDate: moment()
+        };
+      },
+
+      handleChange(date) {
+        this.setState({
+          startDate: date
+        });
+      },
+
+      render() {
+        return <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleChange}
+              isTypeable={true}
+              ref={"datePicker"} />;
+      }
+    });
+
+    var datepicker = TestUtils.renderIntoDocument(
+      <DatePickerWrapper />
+    );
+
+    var dateInput = datepicker.refs.datePicker.refs.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    setTimeout(() => {
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
+      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
+      expect(dateInput.state.maybeDate).to.be.equal("2015-12-0");
       done();
     }, 300);
   });
