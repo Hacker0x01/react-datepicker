@@ -72,4 +72,35 @@ describe("DatePicker", () => {
       done();
     }, 300);
   });
+
+  describe("unmounting", () => {
+    var container;
+
+    beforeEach(() => {
+      container = document.createElement("div");
+    });
+
+    afterEach(() => {
+      container.remove();
+    });
+
+    it("should unmount successfully after a focus", done => {
+      var datePicker = ReactDOM.render(<DatePicker />, container);
+      var dateInput = datePicker.refs.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      ReactDOM.unmountComponentAtNode(container);
+      setTimeout(done, 300);
+    });
+
+    it("should unmount successfully after a focus and blur", done => {
+      var datePicker = ReactDOM.render(<DatePicker />, container);
+      var dateInput = datePicker.refs.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      setTimeout(() => {
+        TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
+        ReactDOM.unmountComponentAtNode(container);
+        setTimeout(done, 300);
+      }, 300);
+    });
+  });
 });

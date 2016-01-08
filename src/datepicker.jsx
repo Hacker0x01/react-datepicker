@@ -54,15 +54,22 @@ var DatePicker = React.createClass({
     return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
   },
 
+  componentWillUnmount() {
+    window.clearTimeout(this._focusTimeout);
+    window.clearTimeout(this._blurTimeout);
+    window.clearTimeout(this._hidecalendarTimeout);
+    window.clearTimeout(this._handleSelectTimeout);
+  },
+
   handleFocus() {
     this.props.onFocus();
-    setTimeout(() => {
+    this._focusTimeout = setTimeout(() => {
       this.setState({ focus: true });
     }, 200);
   },
 
   handleBlur() {
-    setTimeout(() => {
+    this._blurTimeout = setTimeout(() => {
       if (!this.state.datePickerHasFocus) {
         this.props.onBlur();
         this.hideCalendar();
@@ -71,7 +78,7 @@ var DatePicker = React.createClass({
   },
 
   hideCalendar() {
-    setTimeout(() => {
+    this._hidecalendarTimeout = setTimeout(() => {
       this.setState({
         focus: false
       });
@@ -89,7 +96,7 @@ var DatePicker = React.createClass({
   handleSelect(date) {
     this.setSelected(date);
 
-    setTimeout(() => {
+    this._handleSelectTimeout = setTimeout(() => {
       this.hideCalendar();
     }, 200);
   },
