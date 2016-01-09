@@ -1,6 +1,7 @@
 // Karma configuration
 // Generated on Tue Jul 28 2015 16:29:51 GMT+0200 (CEST)
 var webpack = require("webpack");
+var path = require("path");
 
 var CONTINUOUS_INTEGRATION = process.env.CONTINUOUS_INTEGRATION === "true";
 
@@ -20,7 +21,7 @@ module.exports = function(config) {
       "test/index.js": ["webpack", "sourcemap"]
     },
 
-    reporters: ["dots"],
+    reporters: ["dots", "coverage"],
 
     webpack: {
       devtool: "inline-source-map",
@@ -30,6 +31,11 @@ module.exports = function(config) {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
             loader: "babel"
+          },
+          {
+            test: /\.jsx?$/,
+            include: path.resolve(__dirname, "src"),
+            loader: "isparta"
           }
         ]
       },
@@ -41,6 +47,13 @@ module.exports = function(config) {
       resolve: {
         extensions: ["", ".jsx", ".js"]
       }
+    },
+
+    coverageReporter: {
+      reporters: [
+        { type: "text-summary" },
+        { type: "html", dir: "coverage/" }
+      ]
     },
 
     webpackServer: {

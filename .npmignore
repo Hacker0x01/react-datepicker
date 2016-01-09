@@ -7,3 +7,4 @@
 gruntfile.js
 karma.conf.js
 webpack.config.js
+coverage
