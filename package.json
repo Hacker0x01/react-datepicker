@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
+    "codecov.io": "^0.1.6",
     "lodash": "^3.10.0",
     "moment": "^2.10",
     "react-onclickoutside": "^4.5.0",
@@ -78,6 +79,7 @@
     "build": "NODE_ENV=production grunt build",
     "start": "node server.js",
     "test": "NODE_ENV=test grunt travis",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
   }
 }
