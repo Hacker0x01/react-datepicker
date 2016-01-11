@@ -56,6 +56,14 @@ var DatePicker = React.createClass({
     });
   },
 
+  componentDidMount() {
+    this._isMounted = true;
+  },
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  },
+
   shouldComponentUpdate(nextProps, nextState) {
     return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
   },
@@ -82,7 +90,7 @@ var DatePicker = React.createClass({
 
   hideCalendar() {
     setTimeout(() => {
-      this.setState({
+      this._isMounted && this.setState({
         focus: false
       });
     }, 0);

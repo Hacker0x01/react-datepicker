@@ -74,4 +74,18 @@ describe("DatePicker", () => {
       done();
     }, 300);
   });
+
+  it("should not modify state if component is unmounted", done => {
+    var datePicker = <DatePicker />;
+    var container = document.createElement('div');
+    ReactDOM.render(datePicker, container);
+
+    // check is mounted
+    console.log('this._isMounted', datePicker._isMounted);
+
+    ReactDOM.unmountComponentAtNode(container);
+
+    // check is unmounted
+    console.log('this._isMounted', datePicker._isMounted);
+  });
 });
