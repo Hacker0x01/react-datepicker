@@ -2,7 +2,6 @@ import isEqual from "lodash/lang/isEqual";
 import moment from "moment";
 import DateInput from "./date_input";
 import Calendar from "./calendar";
-import DateUtil from "./util/date";
 import Popover from "./popover";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -106,7 +105,7 @@ var DatePicker = React.createClass({
 
   setSelected(date) {
     this.setState({
-      selected: date.moment()
+      selected: date
     }, () => {
       this.props.onChange(this.state.selected);
     });

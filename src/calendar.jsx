@@ -1,16 +1,17 @@
-import DateUtil from "./util/date";
 import YearDropdown from "./year_dropdown";
-import Day from "./day";
+import Month from "./month";
 import React from "react";
 
-function getDateInView({ moment, minDate, maxDate }) {
-  var current = new DateUtil(moment());
-  if (minDate && new DateUtil(minDate).isAfter(current)) {
+function getDateInView({ moment, selected, minDate, maxDate }) {
+  var current = moment();
+  if (selected) {
+    return selected;
+  } else if (minDate && minDate.isAfter(current)) {
     return minDate;
-  } else if (maxDate && new DateUtil(maxDate).isBefore(current)) {
+  } else if (maxDate && maxDate.isBefore(current)) {
     return maxDate;
   } else {
-    return current.moment();
+    return current;
   }
 }
 
@@ -40,7 +41,7 @@ var Calendar = React.createClass({
 
   getInitialState() {
     return {
-      date: new DateUtil(this.props.selected).safeClone(getDateInView(this.props))
+      date: getDateInView(this.props)
     };
   },
 
@@ -60,7 +61,7 @@ var Calendar = React.createClass({
     // When the selected date changed
     if (nextProps.selected !== this.props.selected) {
       this.setState({
-        date: new DateUtil(nextProps.selected).clone()
+        date: nextProps.selected
       });
     }
   },
@@ -79,18 +80,14 @@ var Calendar = React.createClass({
 
   increaseMonth() {
     this.setState({
-      date: this.state.date.addMonth()
+      date: this.state.date.clone().add(1, "month")
     });
   },
 
   decreaseMonth() {
     this.setState({
-      date: this.state.date.subtractMonth()
+      date: this.state.date.clone().subtract(1, "month")
     });
-  },
-
-  weeks() {
-    return this.state.date.mapWeeksInMonth(this.renderWeek);
   },
 
   handleDayClick(day) {
@@ -99,40 +96,8 @@ var Calendar = React.createClass({
 
   changeYear(year) {
     this.setState({
-      date: this.state.date.changeYear(year)
+      date: this.state.date.clone().set("year", year)
     });
-  },
-
-  renderWeek(weekStart, key) {
-    if (!weekStart.weekInMonth(this.state.date)) {
-      return;
-    }
-
-    return (
-      <div key={key}>
-        {this.days(weekStart)}
-      </div>
-    );
-  },
-
-  renderDay(dayUtil, key) {
-    return (
-      <Day
-        key={key}
-        day={dayUtil.moment()}
-        onClick={this.handleDayClick.bind(this, dayUtil)}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        excludeDates={this.props.excludeDates}
-        includeDates={this.props.includeDates}
-        selected={this.props.selected}
-        startDate={this.props.startDate}
-        endDate={this.props.endDate} />
-    );
-  },
-
-  days(weekStart) {
-    return weekStart.mapDaysInWeek(this.renderDay);
   },
 
   header() {
@@ -148,7 +113,7 @@ var Calendar = React.createClass({
     }
     return (
       <div className={classes.join(" ")}>
-        {this.state.date.localeFormat(this.props.locale, this.props.dateFormat)}
+        {this.state.date.format(this.props.dateFormat)}
       </div>
     );
   },
@@ -181,9 +146,16 @@ var Calendar = React.createClass({
             {this.header()}
           </div>
         </div>
-        <div className="datepicker__month">
-          {this.weeks()}
-        </div>
+        <Month
+          day={this.state.date}
+          onDayClick={this.handleDayClick}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
+          excludeDates={this.props.excludeDates}
+          includeDates={this.props.includeDates}
+          selected={this.props.selected}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate} />
       </div>
     );
   }
