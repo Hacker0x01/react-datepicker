@@ -120,6 +120,22 @@ describe("Day", () => {
     });
   });
 
+  describe("outside month", () => {
+    const className = "datepicker__day--outside-month";
+
+    it("should not apply the outside-month class if in same month", () => {
+      const day = moment();
+      const dayDOM = renderDay(day, { month: day.month() });
+      expect(dayDOM.className).to.not.contain(className);
+    });
+
+    it("should apply the outside-month class if not in same month", () => {
+      const day = moment();
+      const dayDOM = renderDay(day, { month: day.month() + 1 });
+      expect(dayDOM.className).to.contain(className);
+    });
+  });
+
   describe("disabled", () => {
     const className = "datepicker__day--disabled";
 

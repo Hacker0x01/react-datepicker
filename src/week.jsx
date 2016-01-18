@@ -6,6 +6,7 @@ var Week = React.createClass({
 
   propTypes: {
     day: React.PropTypes.object.isRequired,
+    month: React.PropTypes.number,
     onDayClick: React.PropTypes.func,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
@@ -30,6 +31,7 @@ var Week = React.createClass({
         <Day
           key={offset}
           day={day}
+          month={this.props.month}
           onClick={this.handleDayClick.bind(this, day)}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}

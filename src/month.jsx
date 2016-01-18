@@ -37,6 +37,7 @@ var Month = React.createClass({
         <Week
           key={offset}
           day={startOfWeek}
+          month={this.props.day.month()}
           onDayClick={this.handleDayClick}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
