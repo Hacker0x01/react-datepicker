@@ -172,6 +172,31 @@ describe("Day", () => {
       const dayDOM = renderDay(day, { includeDates });
       expect(dayDOM.className).to.contain(className);
     });
+
+    it("should be enabled if date filter returns true", () => {
+      const day = moment();
+      const filterDate = d => d.isSame(day);
+      const dayDOM = renderDay(day, { filterDate });
+      expect(dayDOM.className).to.not.contain(className);
+    });
+
+    it("should be disabled if date filter returns false", () => {
+      const day = moment();
+      const filterDate = d => !d.isSame(day);
+      const dayDOM = renderDay(day, { filterDate });
+      expect(dayDOM.className).to.contain(className);
+    });
+
+    it("should not allow date filter to modify input date", () => {
+      const day = moment();
+      const dayClone = day.clone();
+      const filterDate = d => {
+        d.add(1, "day"); // jscs:disable momentImmutability
+        return true;
+      };
+      const dayDOM = renderDay(day, { filterDate });
+      expect(day.isSame(dayClone)).to.be.true;
+    });
   });
 
   describe("click", () => {

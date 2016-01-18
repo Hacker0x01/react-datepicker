@@ -11,6 +11,7 @@ import SpecificDateRange from "./examples/specific_date_range";
 import CustomStartDate from "./examples/custom_start_date";
 import ExcludeDates from "./examples/exclude_dates";
 import IncludeDates from "./examples/include_dates";
+import FilterDates from "./examples/filter_dates";
 import Disabled from "./examples/disabled";
 import ClearInput from "./examples/clear_input";
 import OnBlurCallbacks from "./examples/on_blur_callbacks";
@@ -75,6 +76,10 @@ export default React.createClass({
     {
       title: "Include dates",
       component: <IncludeDates />
+    },
+    {
+      title: "Filter dates",
+      component: <FilterDates />
     },
     {
       title: "Date Range",

@@ -24,7 +24,8 @@ var DatePicker = React.createClass({
     onFocus: React.PropTypes.func,
     onClear: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
-    isTypeable: React.PropTypes.bool
+    isTypeable: React.PropTypes.bool,
+    filterDate: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -167,6 +168,7 @@ var DatePicker = React.createClass({
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             excludeDates={this.props.excludeDates}
+            filterDate={this.props.filterDate}
             handleClick={this.onInputClick}
             includeDates={this.props.includeDates}
             weekStart={this.props.weekStart}

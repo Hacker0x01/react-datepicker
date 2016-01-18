@@ -13,6 +13,7 @@ var Day = React.createClass({
     maxDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
+    filterDate: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
     endDate: React.PropTypes.object
@@ -29,12 +30,13 @@ var Day = React.createClass({
   },
 
   isDisabled() {
-    const { day, minDate, maxDate, excludeDates, includeDates } = this.props;
+    const { day, minDate, maxDate, excludeDates, includeDates, filterDate } = this.props;
 
     return (minDate && day.isBefore(minDate, "day")) ||
       (maxDate && day.isAfter(maxDate, "day")) ||
       some(excludeDates, excludeDate => this.isSameDay(excludeDate)) ||
-      (includeDates && !some(includeDates, includeDate => this.isSameDay(includeDate)));
+      (includeDates && !some(includeDates, includeDate => this.isSameDay(includeDate))) ||
+      (filterDate && !filterDate(day.clone()));
   },
 
   isInRange() {
