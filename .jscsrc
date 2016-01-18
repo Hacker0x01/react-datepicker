@@ -80,5 +80,8 @@
   "disallowSpaceAfterPrefixUnaryOperators": true,
   "disallowSpaceBeforePostfixUnaryOperators": true,
   "disallowSpaceBeforeBinaryOperators": [ ",", ":" ],
-  "disallowMultipleLineBreaks": true
+  "disallowMultipleLineBreaks": true,
+
+  "additionalRules": ["moment-immutability"],
+  "momentImmutability": true
 }

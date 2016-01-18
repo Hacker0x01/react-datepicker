@@ -3,10 +3,6 @@ import React from "react";
 import classnames from "classnames";
 import some from "lodash/collection/some";
 
-function startOfDay(date) {
-  return date.clone().startOf("day");
-}
-
 var Day = React.createClass({
   displayName: "Day",
 
@@ -45,9 +41,9 @@ var Day = React.createClass({
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) return false;
 
-    const before = startOfDay(startDate).subtract(1, "seconds");
-    const after = startOfDay(endDate).add(1, "seconds");
-    return startOfDay(day).isBetween(before, after);
+    const before = startDate.clone().startOf("day").subtract(1, "seconds");
+    const after = endDate.clone().startOf("day").add(1, "seconds");
+    return day.clone().startOf("day").isBetween(before, after);
   },
 
   isWeekend() {
