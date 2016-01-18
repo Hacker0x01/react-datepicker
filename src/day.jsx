@@ -8,6 +8,7 @@ var Day = React.createClass({
 
   propTypes: {
     day: React.PropTypes.object.isRequired,
+    month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
@@ -51,13 +52,19 @@ var Day = React.createClass({
     return weekday === 5 || weekday === 6;
   },
 
+  isOutsideMonth() {
+    return this.props.month !== undefined &&
+      this.props.month !== this.props.day.month();
+  },
+
   getClassNames() {
     return classnames("datepicker__day", {
       "datepicker__day--disabled": this.isDisabled(),
       "datepicker__day--selected": this.isSameDay(this.props.selected),
       "datepicker__day--in-range": this.isInRange(),
       "datepicker__day--today": this.isSameDay(moment()),
-      "datepicker__day--weekend": this.isWeekend()
+      "datepicker__day--weekend": this.isWeekend(),
+      "datepicker__day--outside-month": this.isOutsideMonth()
     });
   },
 
