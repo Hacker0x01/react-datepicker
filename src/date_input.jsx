@@ -66,15 +66,9 @@ var DateInput = React.createClass({
   },
 
   handleKeyDown(event) {
-    switch (event.key) {
-    case "Enter":
-      event.preventDefault();
-      this.props.handleEnter();
-      break;
-    case "Escape":
+    if (event.key === "Enter" || event.key === "Escape") {
       event.preventDefault();
       this.props.hideCalendar();
-      break;
     }
   },
 
