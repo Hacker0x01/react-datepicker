@@ -1,13 +1,13 @@
 import moment from "moment";
 import ReactDOM from "react-dom";
 import React from "react";
+import classnames from "classnames";
+
 var DateInput = React.createClass({
 
   getDefaultProps() {
     return {
-      dateFormat: "YYYY-MM-DD",
-      className: "datepicker__input",
-      onBlur() {}
+      dateFormat: "YYYY-MM-DD"
     };
   },
 
@@ -78,6 +78,13 @@ var DateInput = React.createClass({
     }
   },
 
+  getClassNames() {
+    return classnames(
+      "datepicker__input",
+      "ignore-react-onclickoutside",
+      this.props.className);
+  },
+
   render() {
     return <input
         ref="input"
@@ -90,7 +97,7 @@ var DateInput = React.createClass({
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
         onChange={this.handleChange}
-        className={"ignore-react-onclickoutside " + this.props.className}
+        className={this.getClassNames()}
         disabled={this.props.disabled}
         placeholder={this.props.placeholderText}
         readOnly={this.props.readOnly}

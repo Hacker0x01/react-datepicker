@@ -45,11 +45,12 @@ describe("DateInput", function() {
   });
 
   it("uses a custom className if provided", function() {
+    const className = "custom-class-name";
     var dateInput = TestUtils.renderIntoDocument(
-      <DateInput className="datepicker__custom-input" />
+      <DateInput className={className} />
     );
 
-    expect(ReactDOM.findDOMNode(dateInput).className).to.equal("ignore-react-onclickoutside datepicker__custom-input");
+    expect(ReactDOM.findDOMNode(dateInput).className).to.contain(className);
   });
 
   it("has a tabIndex if provided", function() {

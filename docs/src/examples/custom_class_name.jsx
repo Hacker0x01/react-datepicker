@@ -24,14 +24,14 @@ export default React.createClass({
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange}"} <br />
-              {"className='datepicker__input red-border' />"}
+              {"className='red-border' />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
           selected={this.state.startDate}
           onChange={this.handleChange}
-          className="datepicker__input red-border" />
+          className="red-border" />
       </div>
     </div>;
   }
