@@ -21,7 +21,7 @@ before_install:
   - gem update --system && gem install scss_lint -v 0.43.2
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-after_script:
+after_success:
   - npm run codecov
 notifications:
   slack:
