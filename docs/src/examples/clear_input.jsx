@@ -3,12 +3,18 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 export default React.createClass({
-  displayName: "Disabled",
+  displayName: "ClearInput",
 
   getInitialState() {
     return {
       startDate: moment()
     };
+  },
+
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    });
   },
 
   render() {
@@ -17,6 +23,7 @@ export default React.createClass({
         <code className="jsx">
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
+              {"onChange={this.handleChange}"}<br />
               {"isClearable={true} />"}<br />
               {"placeholderText='I have been cleared!' />"}
         </code>
@@ -24,6 +31,7 @@ export default React.createClass({
       <div className="column">
         <DatePicker
           selected={this.state.startDate}
+          onChange={this.handleChange}
           isClearable={true}
           placeholderText="I have been cleared!" />
       </div>
