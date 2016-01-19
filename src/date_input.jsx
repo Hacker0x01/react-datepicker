@@ -55,15 +55,9 @@ var DateInput = React.createClass({
   handleChange(event) {
     var value = event.target.value;
     var date = moment(value, this.props.dateFormat, true);
-
-    if (date.isValid()) {
-        this.props.setSelected(date);
-    } else {
-        this.props.invalidateSelected();
-    }
-
+    this.props.setSelected(date.isValid() ? date : null);
     this.setState({
-        maybeDate: value
+      maybeDate: value
     });
   },
 
