@@ -79,12 +79,11 @@ var Calendar = React.createClass({
     var weekdays = this.props.weekdays.slice(0);
     weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
-    this.props.moment.locale(this.props.locale, {
-      week: {
-        dow: this.props.weekStart
-      },
-      weekdaysMin: weekdays
-    });
+    this.props.moment.locale(this.props.locale);
+
+    this.setState({
+      date: this.props.moment(this.state.date.toDate())
+    })
   },
 
   increaseMonth() {
