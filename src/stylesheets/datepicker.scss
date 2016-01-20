@@ -282,12 +282,11 @@
   vertical-align: middle;
 
   &::after {
-    background-color: $selected-color;
     border-radius: 50%;
     bottom: 0;
     box-sizing: border-box;
-    color: #fff;
-    content: "\00d7";
+    color: grey;
+    content: "╳";
     cursor: pointer;
     font-size: 12px;
     height: 16px;
@@ -300,4 +299,13 @@
     text-align: center;
     top: 50%;
   }
+}
+
+.datepicker__today-button {
+  background: $background-color;
+  border-top: 1px solid $border-color;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0px;
 }

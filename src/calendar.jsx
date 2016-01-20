@@ -2,6 +2,14 @@ import YearDropdown from "./year_dropdown";
 import Month from "./month";
 import React from "react";
 
+var todayTr = {
+  nl: "Vandaag",
+  fr: "Aujourd'hui",
+  pl: "Dzisiaj",
+  de: "Heute",
+  en: "Today",
+}
+
 function getDateInView({ moment, selected, minDate, maxDate }) {
   var current = moment();
   if (selected) {
@@ -71,12 +79,11 @@ var Calendar = React.createClass({
     var weekdays = this.props.weekdays.slice(0);
     weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
-    this.props.moment.locale(this.props.locale, {
-      week: {
-        dow: this.props.weekStart
-      },
-      weekdaysMin: weekdays
-    });
+    this.props.moment.locale(this.props.locale);
+
+    this.setState({
+      date: this.props.moment(this.state.date.toDate())
+    })
   },
 
   increaseMonth() {
@@ -130,6 +137,16 @@ var Calendar = React.createClass({
     );
   },
 
+  renderTodayButton() {
+    const {moment, onSelect, locale} = this.props
+
+    return (
+      <div className="datepicker__today-button" onClick={() => onSelect(moment())}>
+        {todayTr[locale]}
+      </div>
+    )
+  },
+
   render() {
     return (
       <div className="datepicker" onClick={this.props.handleClick}>
@@ -158,6 +175,9 @@ var Calendar = React.createClass({
           selected={this.props.selected}
           startDate={this.props.startDate}
           endDate={this.props.endDate} />
+        <div>
+          {this.renderTodayButton()}
+        </div>
       </div>
     );
   }
