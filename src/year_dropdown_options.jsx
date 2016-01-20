@@ -80,11 +80,11 @@ var YearDropdownOptions = React.createClass({
   },
 
   incrementYears() {
-    return this.shiftYears(1);
+    return this.shiftYears(4);
   },
 
   decrementYears() {
-    return this.shiftYears(-1);
+    return this.shiftYears(-4);
   }
 });
 
