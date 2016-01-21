@@ -6,15 +6,34 @@ import DatePicker from "../src/datepicker.jsx";
 import DateInput from "../src/date_input.jsx";
 
 describe("DateInput", function() {
-  it("triggers an event handler when the Enter key is pressed", function(done) {
-    var dateMock = { format: function() {} };
+  it("hides calendar when the Enter key is pressed", function() {
+    var date = moment();
     var handlerCalled = false;
+    function hideCalendar() {
+      handlerCalled = true;
+    }
 
     var dateInput = TestUtils.renderIntoDocument(
-      <DateInput date={dateMock} handleEnter={done} />
+      <DateInput date={date} hideCalendar={hideCalendar} />
     );
 
     TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: "Enter" });
+    expect(handlerCalled).to.be.true;
+  });
+
+  it("hides calendar when the Escape key is pressed", function() {
+    var date = moment();
+    var handlerCalled = false;
+    function hideCalendar() {
+      handlerCalled = true;
+    }
+
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={date} hideCalendar={hideCalendar} />
+    );
+
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: "Escape" });
+    expect(handlerCalled).to.be.true;
   });
 
   it("adds disabled attribute to input field when disabled is passed as prop", function() {
@@ -26,11 +45,12 @@ describe("DateInput", function() {
   });
 
   it("uses a custom className if provided", function() {
+    const className = "custom-class-name";
     var dateInput = TestUtils.renderIntoDocument(
-      <DateInput className="datepicker__custom-input" />
+      <DateInput className={className} />
     );
 
-    expect(ReactDOM.findDOMNode(dateInput).className).to.equal("ignore-react-onclickoutside datepicker__custom-input");
+    expect(ReactDOM.findDOMNode(dateInput).className).to.contain(className);
   });
 
   it("has a tabIndex if provided", function() {

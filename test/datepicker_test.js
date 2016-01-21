@@ -31,23 +31,21 @@ describe("DatePicker", () => {
   });
 
   it("should allow clearing the date when isClearable is true", () => {
+    var cleared = false;
+    function handleChange(d) {
+      if (d === null) {
+        cleared = true;
+      }
+    }
     var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker isClearable={true} selected={moment("2015-12-15")} />
+      <DatePicker
+        selected={moment("2015-12-15")}
+        isClearable={true}
+        onChange={handleChange} />
     );
     var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, "close-icon");
     TestUtils.Simulate.click(clearButton);
-    var dateInput = datePicker.refs.input;
-    expect(ReactDOM.findDOMNode(dateInput).value).to.equal("");
-  });
-
-  it("should allow clearing the date when isClearable is true and isTypeable is true", () => {
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker isClearable={true} selected={moment("2015-12-15")} isTypeable={true} />
-    );
-    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, "close-icon");
-    TestUtils.Simulate.click(clearButton);
-    var dateInput = datePicker.refs.input;
-    expect(ReactDOM.findDOMNode(dateInput).value).to.equal("");
+    expect(cleared).to.be.true;
   });
 
   it("should not hide the calendar if multiple clicks are made in a short interval", done => {

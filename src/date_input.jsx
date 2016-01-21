@@ -1,13 +1,13 @@
 import moment from "moment";
 import ReactDOM from "react-dom";
 import React from "react";
+import classnames from "classnames";
+
 var DateInput = React.createClass({
 
   getDefaultProps() {
     return {
-      dateFormat: "YYYY-MM-DD",
-      className: "datepicker__input",
-      onBlur() {}
+      dateFormat: "YYYY-MM-DD"
     };
   },
 
@@ -55,15 +55,9 @@ var DateInput = React.createClass({
   handleChange(event) {
     var value = event.target.value;
     var date = moment(value, this.props.dateFormat, true);
-
-    if (date.isValid()) {
-        this.props.setSelected(date);
-    } else {
-        this.props.invalidateSelected();
-    }
-
+    this.props.setSelected(date.isValid() ? date : null);
     this.setState({
-        maybeDate: value
+      maybeDate: value
     });
   },
 
@@ -72,15 +66,9 @@ var DateInput = React.createClass({
   },
 
   handleKeyDown(event) {
-    switch (event.key) {
-    case "Enter":
-      event.preventDefault();
-      this.props.handleEnter();
-      break;
-    case "Escape":
+    if (event.key === "Enter" || event.key === "Escape") {
       event.preventDefault();
       this.props.hideCalendar();
-      break;
     }
   },
 
@@ -88,6 +76,13 @@ var DateInput = React.createClass({
     if (!this.props.disabled) {
       this.props.handleClick(event);
     }
+  },
+
+  getClassNames() {
+    return classnames(
+      "datepicker__input",
+      "ignore-react-onclickoutside",
+      this.props.className);
   },
 
   render() {
@@ -102,7 +97,7 @@ var DateInput = React.createClass({
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
         onChange={this.handleChange}
-        className={"ignore-react-onclickoutside " + this.props.className}
+        className={this.getClassNames()}
         disabled={this.props.disabled}
         placeholder={this.props.placeholderText}
         readOnly={this.props.readOnly}

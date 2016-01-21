@@ -9,6 +9,7 @@ import ReactDOM from "react-dom";
 var DatePicker = React.createClass({
 
   propTypes: {
+    selected: React.PropTypes.object,
     weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
@@ -45,23 +46,12 @@ var DatePicker = React.createClass({
 
   getInitialState() {
     return {
-      focus: false,
-      selected: this.props.selected
+      focus: false
     };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      selected: nextProps.selected
-    });
   },
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
-  },
-
-  getValue() {
-    return this.state.selected;
   },
 
   handleFocus() {
@@ -74,7 +64,7 @@ var DatePicker = React.createClass({
   handleBlur() {
     setTimeout(() => {
       if (!this.state.datePickerHasFocus) {
-        this.props.onBlur(this.state.selected);
+        this.props.onBlur();
         this.hideCalendar();
       }
     }, 200);
@@ -105,16 +95,9 @@ var DatePicker = React.createClass({
   },
 
   setSelected(date) {
-    this.setState({
-      selected: date
-    }, () => {
-      this.props.onChange(this.state.selected);
-    });
-  },
-
-  invalidateSelected() {
-    if (this.state.selected === null) return;
-    this.props.onChange(null);
+    if (this.props.selected !== date) {
+      this.props.onChange(date);
+    }
   },
 
   onInputClick(event) {
@@ -133,16 +116,8 @@ var DatePicker = React.createClass({
 
   onClearClick(event) {
     event.preventDefault();
-
-    // Due to issues with IE onchange events sometimes this gets noisy, so skip if we've already cleared
-    if (this.state.selected === null) return;
-
-    this.setState({
-      selected: null
-    }, () => {
-      this.props.onClear();
-      this.props.onChange(null);
-    });
+    this.props.onClear();
+    this.props.onChange(null);
   },
 
   calendar() {
@@ -160,7 +135,7 @@ var DatePicker = React.createClass({
             locale={this.props.locale}
             moment={this.props.moment}
             dateFormat={this.props.dateFormatCalendar}
-            selected={this.state.selected}
+            selected={this.props.selected}
             onSelect={this.handleSelect}
             hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
@@ -178,29 +153,29 @@ var DatePicker = React.createClass({
     }
   },
 
-  render() {
-    var clearButton = null;
-    if (this.props.isClearable && this.state.selected != null) {
-      clearButton = (
-        <a className="close-icon" href="#" onClick={this.onClearClick}></a>
-      );
+  renderClearButton() {
+    if (this.props.isClearable && this.props.selected != null) {
+      return <a className="close-icon" href="#" onClick={this.onClearClick}></a>;
+    } else {
+      return null;
     }
+  },
 
+  render() {
     return (
       <div className="datepicker__input-container">
         <DateInput
           ref="input"
           id={this.props.id}
           name={this.props.name}
-          date={this.state.selected}
+          date={this.props.selected}
           dateFormat={this.props.dateFormat}
           focus={this.state.focus}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           handleClick={this.onInputClick}
-          handleEnter={this.hideCalendar}
+          hideCalendar={this.hideCalendar}
           setSelected={this.setSelected}
-          invalidateSelected={this.invalidateSelected}
           placeholderText={this.props.placeholderText}
           disabled={this.props.disabled}
           className={this.props.className}
@@ -209,7 +184,7 @@ var DatePicker = React.createClass({
           required={this.props.required}
           tabIndex={this.props.tabIndex}
           isTypeable={this.props.isTypeable} />
-        {clearButton}
+        {this.renderClearButton()}
         {this.props.disabled ? null : this.calendar()}
       </div>
     );
