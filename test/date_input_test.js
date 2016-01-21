@@ -77,77 +77,71 @@ describe("DateInput", function() {
     }, 300);
   });
 
-  it("demonstrates that it is impossible to retype date without 'isTypeable' flag", function(done) {
-    var DatePickerWrapper = React.createClass({
-      getInitialState() {
-        return {
-          startDate: moment()
-        };
-      },
-
-      handleChange(date) {
-        this.setState({
-          startDate: date
-        });
-      },
-
-      render() {
-        return <DatePicker selected={this.state.startDate} onChange={this.handleChange} ref={"datePicker"} />;
-      }
-    });
-
-    var datepicker = TestUtils.renderIntoDocument(
-      <DatePickerWrapper />
+  it("should call setSelected when changing from null to valid date", function() {
+    var date = moment();
+    var dateFormat = "YYYY-MM-DD";
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={null} dateFormat={dateFormat} setSelected={callback} />
     );
-
-    var dateInput = datepicker.refs.datePicker.refs.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-
-    setTimeout(() => {
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
-      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
-      expect(dateInput.state.maybeDate).to.be.equal(null);
-      done();
-    }, 300);
+    var inputNode = dateInput.refs.input;
+    inputNode.value = date.format(dateFormat);
+    TestUtils.Simulate.change(inputNode);
+    assert(callback.calledOnce, "must be called once");
+    assert(date.isSame(callback.getCall(0).args[0], "day"), "must be called with correct date");
   });
 
-  it("types custom date", function(done) {
-    var DatePickerWrapper = React.createClass({
-      getInitialState() {
-        return {
-          startDate: moment()
-        };
-      },
-
-      handleChange(date) {
-        this.setState({
-          startDate: date
-        });
-      },
-
-      render() {
-        return <DatePicker
-              selected={this.state.startDate}
-              onChange={this.handleChange}
-              isTypeable={true}
-              ref={"datePicker"} />;
-      }
-    });
-
-    var datepicker = TestUtils.renderIntoDocument(
-      <DatePickerWrapper />
+  it("should call setSelected when changing from valid date to another", function() {
+    var dateFrom = moment();
+    var dateTo = dateFrom.clone().add(1, "day");
+    var dateFormat = "YYYY-MM-DD";
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={dateFrom} dateFormat={dateFormat} setSelected={callback} />
     );
+    var inputNode = dateInput.refs.input;
+    inputNode.value = dateTo.format(dateFormat);
+    TestUtils.Simulate.change(inputNode);
+    assert(callback.calledOnce, "must be called once");
+    assert(dateTo.isSame(callback.getCall(0).args[0], "day"), "must be called with correct date");
+  });
 
-    var dateInput = datepicker.refs.datePicker.refs.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+  it("should call setSelected when changing from valid date to empty", function() {
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={moment()} setSelected={callback} />
+    );
+    var inputNode = dateInput.refs.input;
+    inputNode.value = "";
+    TestUtils.Simulate.change(inputNode);
+    assert(callback.withArgs(null).calledOnce, "must be called once with null");
+  });
 
-    setTimeout(() => {
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-08" } });
-      expect(dateInput.state.maybeDate).to.be.equal("2015-12-08");
-      TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput), { target: { value: "2015-12-0" } });
-      expect(dateInput.state.maybeDate).to.be.equal("2015-12-0");
-      done();
-    }, 300);
+  it("should not call setSelected when changing from valid date to invalid", function() {
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={moment()} setSelected={callback} />
+    );
+    var inputNode = dateInput.refs.input;
+    inputNode.value = "invalid";
+    TestUtils.Simulate.change(inputNode);
+    assert(!callback.called, "must not be called");
+  });
+
+  it("should call setSelected when changing from invalid date to valid", function() {
+    var dateFrom = moment();
+    var dateTo = dateFrom.clone().add(1, "day");
+    var dateFormat = "YYYY-MM-DD";
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={dateFrom} dateFormat={dateFormat} setSelected={callback} />
+    );
+    var inputNode = dateInput.refs.input;
+    inputNode.value = "invalid";
+    TestUtils.Simulate.change(inputNode);
+    inputNode.value = dateTo.format(dateFormat);
+    TestUtils.Simulate.change(inputNode);
+    assert(callback.calledOnce, "must be called once");
+    assert(dateTo.isSame(callback.getCall(0).args[0], "day"), "must be called with correct date");
   });
 });

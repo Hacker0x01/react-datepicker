@@ -24,20 +24,10 @@ var DateInput = React.createClass({
   componentWillReceiveProps(newProps) {
     this.toggleFocus(newProps.focus);
 
-    // It checks that user is typing some date and
-    // we should skipp updating because it would clear date input.
-    // In particular, it checks that we pass the typeable flag in datepicker props
-    // and that input has focus
-    // and that new date is null (when input date is invalid the "this.props.invalidateSelected()"
-    // method sets state as null).
-    // The main disadvantage of this approach is that it is imposible to clear date
-    // while the input has focus.
-    var doesUserType = newProps.isTypeable && newProps.focus && !newProps.date;
-
     // If we're receiving a different date then apply it.
     // If we're receiving a null date continue displaying the
     // value currently in the textbox.
-    if (newProps.date != this.props.date && !doesUserType) {
+    if (newProps.date != this.props.date) {
         this.setState({
             maybeDate: this.safeDateFormat(newProps.date)
         });
@@ -55,7 +45,11 @@ var DateInput = React.createClass({
   handleChange(event) {
     var value = event.target.value;
     var date = moment(value, this.props.dateFormat, true);
-    this.props.setSelected(date.isValid() ? date : null);
+    if (date.isValid()) {
+      this.props.setSelected(date);
+    } else if (value === "") {
+      this.props.setSelected(null);
+    }
     this.setState({
       maybeDate: value
     });

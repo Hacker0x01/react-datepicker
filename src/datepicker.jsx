@@ -23,9 +23,7 @@ var DatePicker = React.createClass({
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
-    onClear: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
-    isTypeable: React.PropTypes.bool,
     filterDate: React.PropTypes.func
   },
 
@@ -38,9 +36,7 @@ var DatePicker = React.createClass({
       onChange() {},
       disabled: false,
       onFocus() {},
-      onBlur() {},
-      onClear() {},
-      isTypeable: false
+      onBlur() {}
     };
   },
 
@@ -116,7 +112,6 @@ var DatePicker = React.createClass({
 
   onClearClick(event) {
     event.preventDefault();
-    this.props.onClear();
     this.props.onChange(null);
   },
 
@@ -182,8 +177,7 @@ var DatePicker = React.createClass({
           title={this.props.title}
           readOnly={this.props.readOnly}
           required={this.props.required}
-          tabIndex={this.props.tabIndex}
-          isTypeable={this.props.isTypeable} />
+          tabIndex={this.props.tabIndex} />
         {this.renderClearButton()}
         {this.props.disabled ? null : this.calendar()}
       </div>
