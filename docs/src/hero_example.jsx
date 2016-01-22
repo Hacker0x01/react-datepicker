@@ -21,6 +21,7 @@ export default React.createClass({
     return <DatePicker
         selected={this.state.startDate}
         onChange={this.handleChange}
+        showTodayButton
         isTypeable={true} />;
   }
 });
