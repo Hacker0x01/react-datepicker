@@ -12,7 +12,7 @@ describe("Calendar", function() {
       moment={moment}
       dateFormat="MMMM"
       onSelect={() => {}}
-      handleClick={() => {}}
+      onClickOutside={() => {}}
       hideCalendar={() => {}}
       {...extraProps} />;
   }
