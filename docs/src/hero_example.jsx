@@ -20,7 +20,6 @@ export default React.createClass({
   render() {
     return <DatePicker
         selected={this.state.startDate}
-        onChange={this.handleChange}
-        isTypeable={true} />;
+        onChange={this.handleChange} />;
   }
 });
