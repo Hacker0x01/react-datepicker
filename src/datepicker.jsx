@@ -108,6 +108,9 @@ var DatePicker = React.createClass({
         this.hideCalendar();
       }
     });
+
+    if (typeof this.props.onClick === "function")
+    this.props.onClick(event);
   },
 
   onClearClick(event) {
