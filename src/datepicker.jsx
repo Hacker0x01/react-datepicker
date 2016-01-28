@@ -154,7 +154,8 @@ var DatePicker = React.createClass({
           title={this.props.title}
           readOnly={this.props.readOnly}
           required={this.props.required}
-          tabIndex={this.props.tabIndex} />
+          tabIndex={this.props.tabIndex}
+          open={this.state.open} />
         {this.renderClearButton()}
         {this.props.disabled ? null : this.calendar()}
       </div>

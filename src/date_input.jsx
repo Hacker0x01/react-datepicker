@@ -5,6 +5,10 @@ import classnames from "classnames";
 
 var DateInput = React.createClass({
 
+  propTypes: {
+    open: React.PropTypes.bool
+  },
+
   getDefaultProps() {
     return {
       dateFormat: "YYYY-MM-DD"
@@ -64,7 +68,7 @@ var DateInput = React.createClass({
   getClassNames() {
     return classnames(
       "datepicker__input",
-      "ignore-react-onclickoutside",
+      { "ignore-react-onclickoutside": this.props.open },
       this.props.className);
   },
 
