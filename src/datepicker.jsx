@@ -4,7 +4,6 @@ import DateInput from "./date_input";
 import Calendar from "./calendar";
 import Popover from "./popover";
 import React from "react";
-import ReactDOM from "react-dom";
 
 var DatePicker = React.createClass({
 
@@ -42,7 +41,7 @@ var DatePicker = React.createClass({
 
   getInitialState() {
     return {
-      focus: false
+      open: false
     };
   },
 
@@ -50,44 +49,30 @@ var DatePicker = React.createClass({
     return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
   },
 
-  handleFocus() {
-    this.props.onFocus();
-    setTimeout(() => {
-      this.setState({ focus: true });
-    }, 200);
+  setOpen(open) {
+    this.setState({ open });
   },
 
-  handleBlur() {
-    setTimeout(() => {
-      if (!this.state.datePickerHasFocus) {
-        this.props.onBlur();
-        this.hideCalendar();
-      }
-    }, 200);
+  handleFocus(event) {
+    this.props.onFocus(event);
+    this.setOpen(true);
   },
 
-  hideCalendar() {
-    setTimeout(() => {
-      this.setState({
-        focus: false
-      });
-    }, 0);
-  },
-
-  doesDatePickerContainElement(element) {
-    var datePicker = ReactDOM.findDOMNode(this.refs.calendar);
-    if (!datePicker) {
-      return false;
+  handleBlur(event) {
+    if (this.state.open) {
+      this.refs.input.focus();
+    } else {
+      this.props.onBlur(event);
     }
-    return datePicker.contains(element);
+  },
+
+  handleCalendarClickOutside(event) {
+    this.setOpen(false);
   },
 
   handleSelect(date) {
     this.setSelected(date);
-
-    setTimeout(() => {
-      this.hideCalendar();
-    }, 200);
+    this.setOpen(false);
   },
 
   setSelected(date) {
@@ -96,18 +81,12 @@ var DatePicker = React.createClass({
     }
   },
 
-  onInputClick(event) {
-    var previousFocusState = this.state.focus;
+  onInputClick() {
+    this.setOpen(true);
+  },
 
-    this.setState({
-      focus: (event.target === ReactDOM.findDOMNode(this.refs.input) ? !this.state.focus : true),
-      datePickerHasFocus: this.doesDatePickerContainElement(event.target)
-    }, () => {
-      this.forceUpdate();
-      if (previousFocusState && !this.state.datePickerHasFocus) {
-        this.hideCalendar();
-      }
-    });
+  handleInputDone() {
+    this.setOpen(false);
   },
 
   onClearClick(event) {
@@ -116,7 +95,7 @@ var DatePicker = React.createClass({
   },
 
   calendar() {
-    if (this.state.focus) {
+    if (this.state.open) {
       return (
         <Popover
           attachment={this.props.popoverAttachment}
@@ -132,14 +111,13 @@ var DatePicker = React.createClass({
             dateFormat={this.props.dateFormatCalendar}
             selected={this.props.selected}
             onSelect={this.handleSelect}
-            hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             excludeDates={this.props.excludeDates}
             filterDate={this.props.filterDate}
-            handleClick={this.onInputClick}
+            onClickOutside={this.handleCalendarClickOutside}
             includeDates={this.props.includeDates}
             weekStart={this.props.weekStart}
             showYearDropdown={this.props.showYearDropdown} />
@@ -165,11 +143,10 @@ var DatePicker = React.createClass({
           name={this.props.name}
           date={this.props.selected}
           dateFormat={this.props.dateFormat}
-          focus={this.state.focus}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           handleClick={this.onInputClick}
-          hideCalendar={this.hideCalendar}
+          handleDone={this.handleInputDone}
           setSelected={this.setSelected}
           placeholderText={this.props.placeholderText}
           disabled={this.props.disabled}
@@ -177,7 +154,8 @@ var DatePicker = React.createClass({
           title={this.props.title}
           readOnly={this.props.readOnly}
           required={this.props.required}
-          tabIndex={this.props.tabIndex} />
+          tabIndex={this.props.tabIndex}
+          open={this.state.open} />
         {this.renderClearButton()}
         {this.props.disabled ? null : this.calendar()}
       </div>

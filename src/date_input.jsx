@@ -5,6 +5,10 @@ import classnames from "classnames";
 
 var DateInput = React.createClass({
 
+  propTypes: {
+    open: React.PropTypes.bool
+  },
+
   getDefaultProps() {
     return {
       dateFormat: "YYYY-MM-DD"
@@ -17,28 +21,11 @@ var DateInput = React.createClass({
     });
   },
 
-  componentDidMount() {
-    this.toggleFocus(this.props.focus);
-  },
-
   componentWillReceiveProps(newProps) {
-    this.toggleFocus(newProps.focus);
-
-    // If we're receiving a different date then apply it.
-    // If we're receiving a null date continue displaying the
-    // value currently in the textbox.
     if (newProps.date != this.props.date) {
         this.setState({
             maybeDate: this.safeDateFormat(newProps.date)
         });
-    }
-  },
-
-  toggleFocus(focus) {
-    if (focus) {
-      this.refs.input.focus();
-    } else {
-      this.refs.input.blur();
     }
   },
 
@@ -62,7 +49,9 @@ var DateInput = React.createClass({
   handleKeyDown(event) {
     if (event.key === "Enter" || event.key === "Escape") {
       event.preventDefault();
-      this.props.hideCalendar();
+      this.props.handleDone();
+    } else if (event.key === "Tab") {
+      this.props.handleDone();
     }
   },
 
@@ -72,10 +61,14 @@ var DateInput = React.createClass({
     }
   },
 
+  focus() {
+    this.refs.input.focus();
+  },
+
   getClassNames() {
     return classnames(
       "datepicker__input",
-      "ignore-react-onclickoutside",
+      { "ignore-react-onclickoutside": this.props.open },
       this.props.className);
   },
 

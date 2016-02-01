@@ -24,7 +24,7 @@ var Calendar = React.createClass({
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
-    handleClick: React.PropTypes.func.isRequired,
+    onClickOutside: React.PropTypes.func.isRequired,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
     startDate: React.PropTypes.object,
@@ -37,7 +37,7 @@ var Calendar = React.createClass({
   },
 
   handleClickOutside(event) {
-    this.props.handleClick(event);
+    this.props.onClickOutside(event);
   },
 
   getInitialState() {
@@ -132,7 +132,7 @@ var Calendar = React.createClass({
 
   render() {
     return (
-      <div className="datepicker" onClick={this.props.handleClick}>
+      <div className="datepicker">
         <div className="datepicker__triangle"></div>
         <div className="datepicker__header">
           <a className="datepicker__navigation datepicker__navigation--previous"

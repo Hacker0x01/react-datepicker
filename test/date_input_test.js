@@ -6,34 +6,21 @@ import DatePicker from "../src/datepicker.jsx";
 import DateInput from "../src/date_input.jsx";
 
 describe("DateInput", function() {
-  it("hides calendar when the Enter key is pressed", function() {
-    var date = moment();
-    var handlerCalled = false;
-    function hideCalendar() {
-      handlerCalled = true;
+  describe("handleDone", function() {
+    function testHandleDoneWithKey(key) {
+      it(`calls handleDone when the ${key} key is pressed`, function() {
+        var spy = sinon.spy();
+        var dateInput = TestUtils.renderIntoDocument(
+          <DateInput handleDone={spy} />
+        );
+        TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key });
+        expect(spy.calledOnce).to.be.true;
+      });
     }
 
-    var dateInput = TestUtils.renderIntoDocument(
-      <DateInput date={date} hideCalendar={hideCalendar} />
-    );
-
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: "Enter" });
-    expect(handlerCalled).to.be.true;
-  });
-
-  it("hides calendar when the Escape key is pressed", function() {
-    var date = moment();
-    var handlerCalled = false;
-    function hideCalendar() {
-      handlerCalled = true;
-    }
-
-    var dateInput = TestUtils.renderIntoDocument(
-      <DateInput date={date} hideCalendar={hideCalendar} />
-    );
-
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: "Escape" });
-    expect(handlerCalled).to.be.true;
+    testHandleDoneWithKey("Enter");
+    testHandleDoneWithKey("Escape");
+    testHandleDoneWithKey("Tab");
   });
 
   it("adds disabled attribute to input field when disabled is passed as prop", function() {
@@ -59,22 +46,6 @@ describe("DateInput", function() {
     );
 
     expect(ReactDOM.findDOMNode(dateInput).tabIndex).to.equal(1);
-  });
-
-  it("toggles the calendar on and off when clicked", function(done) {
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker />
-    );
-    var dateInput = datePicker.refs.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
-    setTimeout(() => {
-      expect(datePicker.refs.calendar).to.exist;
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
-    }, 300);
-    setTimeout(() => {
-      expect(datePicker.refs.calendar).to.not.exist;
-      done();
-    }, 300);
   });
 
   it("should call setSelected when changing from null to valid date", function() {
@@ -143,5 +114,19 @@ describe("DateInput", function() {
     TestUtils.Simulate.change(inputNode);
     assert(callback.calledOnce, "must be called once");
     assert(dateTo.isSame(callback.getCall(0).args[0], "day"), "must be called with correct date");
+  });
+
+  it("should not have the ignore-react-onclickoutside class when closed so other pickers will close", function() {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput />
+    );
+    expect(ReactDOM.findDOMNode(dateInput).className).to.not.contain("ignore-react-onclickoutside");
+  });
+
+  it("should have the ignore-react-onclickoutside class when open to prevent closing", function() {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput open />
+    );
+    expect(ReactDOM.findDOMNode(dateInput).className).to.contain("ignore-react-onclickoutside");
   });
 });
