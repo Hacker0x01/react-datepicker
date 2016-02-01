@@ -20,7 +20,6 @@ export default React.createClass({
   render() {
     return <DatePicker
         selected={this.state.startDate}
-        onChange={this.handleChange}
-        todayButton={"Vandaag"} />;
+        onChange={this.handleChange} />;
   }
 });
