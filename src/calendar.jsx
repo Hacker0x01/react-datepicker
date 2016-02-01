@@ -9,7 +9,7 @@ var todayTr = {
   de: "Heute",
   en: "Today",
   es: "Hoy"
-}
+};
 
 function getDateInView({ moment, selected, minDate, maxDate }) {
   var current = moment();
@@ -141,7 +141,7 @@ var Calendar = React.createClass({
   },
 
   renderTodayButton() {
-    const {moment, onSelect, locale, showTodayButton} = this.props
+    const { moment, onSelect, locale, showTodayButton } = this.props
 
     if (!showTodayButton) {
       return;
@@ -151,7 +151,7 @@ var Calendar = React.createClass({
       <div className="datepicker__today-button" onClick={() => onSelect(moment())}>
         {todayTr[locale] || todayTr.en}
       </div>
-    )
+    );
   },
 
   render() {
