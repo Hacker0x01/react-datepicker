@@ -141,7 +141,7 @@ var Calendar = React.createClass({
   },
 
   renderTodayButton() {
-    const { moment, onSelect, locale, showTodayButton } = this.props
+    const { moment, onSelect, locale, showTodayButton } = this.props;
 
     if (!showTodayButton) {
       return;
