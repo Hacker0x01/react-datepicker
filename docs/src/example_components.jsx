@@ -4,6 +4,7 @@ import moment from "moment";
 import hljs from "highlight.js";
 
 import Default from "./examples/default";
+import Today from "./examples/today";
 import CustomDateFormat from "./examples/custom_date_format";
 import CustomClassName from "./examples/custom_class_name";
 import PlaceholderText from "./examples/placeholder_text";
@@ -50,6 +51,10 @@ export default React.createClass({
     {
       title: "Custom class name",
       component: <CustomClassName />
+    },
+    {
+      title: "Today button",
+      component: <Today />
     },
     {
       title: "Placeholder text",

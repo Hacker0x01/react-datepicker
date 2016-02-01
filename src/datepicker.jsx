@@ -24,7 +24,8 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
-    filterDate: React.PropTypes.func
+    filterDate: React.PropTypes.func,
+    showTodayButton: React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -36,7 +37,9 @@ var DatePicker = React.createClass({
       onChange() {},
       disabled: false,
       onFocus() {},
-      onBlur() {}
+      onBlur() {},
+      onClear() {},
+      showTodayButton: false
     };
   },
 
@@ -142,7 +145,8 @@ var DatePicker = React.createClass({
             handleClick={this.onInputClick}
             includeDates={this.props.includeDates}
             weekStart={this.props.weekStart}
-            showYearDropdown={this.props.showYearDropdown} />
+            showYearDropdown={this.props.showYearDropdown}
+            showTodayButton={this.props.showTodayButton} />
         </Popover>
       );
     }
