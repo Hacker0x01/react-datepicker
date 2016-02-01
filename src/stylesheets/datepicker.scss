@@ -12,26 +12,20 @@
   position: relative;
 }
 
-.datepicker__container {
-  position: absolute;
-  display: inline-block;
-  z-index: 2147483647;
-}
-
 .datepicker__triangle {
   position: absolute;
   left: 50px;
 }
 
-.tether-element-attached-top .datepicker__triangle {
+.datepicker__tether-element-attached-top .datepicker__triangle {
   @extend %triangle-arrow-up;
 }
 
-.tether-element-attached-bottom .datepicker__triangle {
+.datepicker__tether-element-attached-bottom .datepicker__triangle {
   @extend %triangle-arrow-down;
 }
 
-.tether-target-attached-top.datepicker__container {
+.datepicker__tether-element-attached-bottom.datepicker__tether-element {
   margin-top: -20px;
 }
 
