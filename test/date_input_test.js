@@ -129,4 +129,53 @@ describe("DateInput", function() {
     );
     expect(ReactDOM.findDOMNode(dateInput).className).to.contain("ignore-react-onclickoutside");
   });
+
+  describe("blurring", function() {
+    it("should call onBlur when blurring the input", function() {
+      var spy = sinon.spy();
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput onBlur={spy} />
+      );
+      TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
+      assert(spy.calledOnce, "must be called once");
+    });
+
+    it("should keep showing the selected date if input is same date", function() {
+      var date = moment();
+      var dateFormat = "YYYY-MM-DD";
+      var formattedDate = date.format(dateFormat);
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} setSelected={() => {}} />
+      );
+      var inputNode = dateInput.refs.input;
+      inputNode.value = formattedDate;
+      TestUtils.Simulate.change(inputNode);
+      TestUtils.Simulate.blur(inputNode);
+      expect(inputNode.value).to.equal(formattedDate);
+    });
+
+    it("should show the selected date if input is invalid", function() {
+      var date = moment();
+      var dateFormat = "YYYY-MM-DD";
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} />
+      );
+      var inputNode = dateInput.refs.input;
+      inputNode.value = "invalid";
+      TestUtils.Simulate.change(inputNode);
+      TestUtils.Simulate.blur(inputNode);
+      expect(inputNode.value).to.equal(date.format(dateFormat));
+    });
+
+    it("should empty the input if no date selected and input is invalid", function() {
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput />
+      );
+      var inputNode = dateInput.refs.input;
+      inputNode.value = "invalid";
+      TestUtils.Simulate.change(inputNode);
+      TestUtils.Simulate.blur(inputNode);
+      expect(inputNode.value).to.equal("");
+    });
+  });
 });
