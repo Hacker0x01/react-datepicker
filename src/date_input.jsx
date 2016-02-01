@@ -61,6 +61,15 @@ var DateInput = React.createClass({
     }
   },
 
+  handleBlur(event) {
+    this.setState({
+      maybeDate: this.safeDateFormat(this.props.date)
+    });
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+  },
+
   focus() {
     this.refs.input.focus();
   },
@@ -82,7 +91,7 @@ var DateInput = React.createClass({
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
+        onBlur={this.handleBlur}
         onChange={this.handleChange}
         className={this.getClassNames()}
         disabled={this.props.disabled}
