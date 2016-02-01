@@ -121,7 +121,7 @@ var DatePicker = React.createClass({
             includeDates={this.props.includeDates}
             weekStart={this.props.weekStart}
             showYearDropdown={this.props.showYearDropdown}
-            showTodayButton={this.props.showTodayButton} />
+            todayButton={this.props.todayButton} />
         </Popover>
       );
     }
