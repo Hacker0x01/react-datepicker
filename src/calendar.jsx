@@ -2,15 +2,6 @@ import YearDropdown from "./year_dropdown";
 import Month from "./month";
 import React from "react";
 
-var todayTr = {
-  nl: "Vandaag",
-  fr: "Aujourd'hui",
-  pl: "Dzisiaj",
-  de: "Heute",
-  en: "Today",
-  es: "Hoy"
-};
-
 function getDateInView({ moment, selected, minDate, maxDate }) {
   var current = moment();
   if (selected) {
@@ -43,7 +34,7 @@ var Calendar = React.createClass({
     filterDate: React.PropTypes.func,
     weekStart: React.PropTypes.string.isRequired,
     showYearDropdown: React.PropTypes.bool,
-    showTodayButton: React.PropTypes.bool
+    todayButton: React.PropTypes.string
   },
 
   handleClickOutside(event) {
@@ -141,15 +132,15 @@ var Calendar = React.createClass({
   },
 
   renderTodayButton() {
-    const { moment, onSelect, locale, showTodayButton } = this.props;
+    const { moment, onSelect } = this.props;
 
-    if (!showTodayButton) {
+    if (!this.props.todayButton) {
       return;
     }
 
     return (
       <div className="datepicker__today-button" onClick={() => onSelect(moment())}>
-        {todayTr[locale] || todayTr.en}
+        {this.props.todayButton}
       </div>
     );
   },
