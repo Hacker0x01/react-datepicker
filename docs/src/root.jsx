@@ -24,8 +24,8 @@ export default React.createClass({
         <div className="wrapper">
           <h1>ReactJS Datepicker</h1>
           <p>
-            <a href="http://badge.fury.io/bo/react-date-picker">
-              <img src="https://badge.fury.io/bo/react-date-picker.svg" className="badge" />
+            <a href="https://npmjs.org/package/react-datepicker">
+              <img src="https://badge.fury.io/js/react-datepicker.svg" className="badge" />
             </a>
             <a href="https://travis-ci.org/Hacker0x01/react-datepicker">
               <img src="https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master" className="badge" />
@@ -43,12 +43,8 @@ export default React.createClass({
           <p>A simple and reusable datepicker component for React.</p>
 
           <h2>Installation</h2>
-          <p>Installing is really simple and can be done in multiple ways:</p>
-          <ul>
-            <li>Install with Bower: <code>bower install react-date-picker</code></li>
-            <li>Install with npm: <code>npm install react-datepicker --save</code></li>
-            <li>Install with Bundler: <code>bundle install rails-assets-react-date-picker</code></li>
-          </ul>
+          <p>The package can be installed via NPM:</p>
+          <p><code>npm install react-datepicker --save</code></p>
         </div>
         <div className="wrapper">
           <ExampleComponents />

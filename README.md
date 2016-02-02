@@ -1,6 +1,5 @@
 # React Date Picker
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
-[![Bower version](https://badge.fury.io/bo/react-date-picker.svg)](http://badge.fury.io/bo/react-date-picker)
 [![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master)](https://travis-ci.org/Hacker0x01/react-datepicker)
 [![devDependency Status](https://david-dm.org/Hacker0x01/react-datepicker/dev-status.svg)](https://david-dm.org/Hacker0x01/react-datepicker#info=devDependencies)
 [![codecov.io](https://codecov.io/github/Hacker0x01/react-datepicker/coverage.svg?branch=master)](https://codecov.io/github/Hacker0x01/react-datepicker?branch=master)
@@ -12,10 +11,11 @@ A simple and reusable Datepicker component for React ([Demo](https://hacker0x01.
 
 ## Installation
 
-The package has can be installed via:
-- Bower: `bower install react-date-picker`
-- NPM: `npm install react-datepicker --save`
-- Bundler (rails gem): `bundle install rails-assets-react-date-picker`. This requires to include https://rails-assets.org/ as a source in your gemfile.
+The package can be installed via NPM:
+
+```
+npm install react-datepicker --save
+```
 
 You’ll need to install React and Moment.js separately since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
 
