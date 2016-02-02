@@ -98,6 +98,7 @@ var DatePicker = React.createClass({
     if (this.state.open) {
       return (
         <Popover
+          target={this.refs.input.refs.input}
           attachment={this.props.popoverAttachment}
           targetAttachment={this.props.popoverTargetAttachment}
           targetOffset={this.props.popoverTargetOffset}
