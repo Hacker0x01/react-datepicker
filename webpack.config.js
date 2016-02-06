@@ -53,14 +53,6 @@ module.exports = {
       }
     },
     {
-      "tether": {
-        root: "Tether",
-        commonjs2: "tether",
-        commonjs: "tether",
-        amd: "tether"
-      }
-    },
-    {
       "lodash": {
         root: "_",
         commonjs2: "lodash",
