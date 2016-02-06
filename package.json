@@ -7,6 +7,10 @@
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
+  "files": [
+    "*.md",
+    "dist"
+  ],
   "keywords": [
     "react",
     "datepicker",
