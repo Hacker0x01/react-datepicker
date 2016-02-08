@@ -16,16 +16,16 @@ var Day = React.createClass({
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     selected: React.PropTypes.object,
-	  today: React.PropTypes.object,
+    today: React.PropTypes.object,
     startDate: React.PropTypes.object,
     endDate: React.PropTypes.object
   },
 
-	getDefaultProps: function() {
-		return {
-			today: moment()
-		};
-	},
+  getDefaultProps: function() {
+    return {
+      today: moment()
+    };
+  },
 
   handleClick(event) {
     if (!this.isDisabled() && this.props.onClick) {
