@@ -16,9 +16,16 @@ var Day = React.createClass({
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     selected: React.PropTypes.object,
+	  today: React.PropTypes.object,
     startDate: React.PropTypes.object,
     endDate: React.PropTypes.object
   },
+
+	getDefaultProps: function() {
+		return {
+			today: moment()
+		};
+	},
 
   handleClick(event) {
     if (!this.isDisabled() && this.props.onClick) {
@@ -64,7 +71,7 @@ var Day = React.createClass({
       "datepicker__day--disabled": this.isDisabled(),
       "datepicker__day--selected": this.isSameDay(this.props.selected),
       "datepicker__day--in-range": this.isInRange(),
-      "datepicker__day--today": this.isSameDay(moment()),
+      "datepicker__day--today": this.isSameDay(this.props.today),
       "datepicker__day--weekend": this.isWeekend(),
       "datepicker__day--outside-month": this.isOutsideMonth()
     });
