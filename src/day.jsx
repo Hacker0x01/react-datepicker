@@ -1,7 +1,6 @@
 import moment from "moment";
 import React from "react";
 import classnames from "classnames";
-import some from "lodash/collection/some";
 
 var Day = React.createClass({
   displayName: "Day",
@@ -35,8 +34,8 @@ var Day = React.createClass({
 
     return (minDate && day.isBefore(minDate, "day")) ||
       (maxDate && day.isAfter(maxDate, "day")) ||
-      some(excludeDates, excludeDate => this.isSameDay(excludeDate)) ||
-      (includeDates && !some(includeDates, includeDate => this.isSameDay(includeDate))) ||
+      (excludeDates && excludeDates.some(excludeDate => this.isSameDay(excludeDate))) ||
+      (includeDates && !includeDates.some(includeDate => this.isSameDay(includeDate))) ||
       (filterDate && !filterDate(day.clone()));
   },
 

@@ -1,4 +1,4 @@
-import isEqual from "lodash/lang/isEqual";
+import isEqual from "lodash/isEqual";
 import moment from "moment";
 import DateInput from "./date_input";
 import Calendar from "./calendar";

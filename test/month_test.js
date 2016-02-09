@@ -4,7 +4,7 @@ import TestUtils from "react-addons-test-utils";
 import moment from "moment";
 import Month from "../src/month";
 import Day from "../src/day";
-import range from "lodash/utility/range";
+import range from "lodash/range";
 
 describe("Month", () => {
   it("should have the month CSS class", () => {
