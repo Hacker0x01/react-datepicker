@@ -76,7 +76,7 @@
   "dependencies": {
     "classnames": "^2.2.1",
     "lodash": "^4.3.0",
-    "moment": "^2.10",
+    "moment": "^2.11.2",
     "react-onclickoutside": "^4.5.0",
     "react-tether": "^0.1.2"
   },
