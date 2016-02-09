@@ -1,4 +1,3 @@
-import isEqual from "lodash/isEqual";
 import moment from "moment";
 import DateInput from "./date_input";
 import Calendar from "./calendar";
@@ -43,10 +42,6 @@ var DatePicker = React.createClass({
     return {
       open: false
     };
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state));
   },
 
   setOpen(open) {
