@@ -101,6 +101,23 @@ describe("Day", () => {
     });
   });
 
+  describe("custom-today", () => {
+    const className = "datepicker__day--today";
+
+    it("should apply the today class if custom today", () => {
+      const day = moment("2016-01-01", "YYYY-MM-DD");
+      const dayDOM = renderDay(day, { today: day });
+      expect(dayDOM.className).to.contain(className);
+    });
+
+    it("should not apply the today class if not custom today", () => {
+      const day = moment("2016-01-01", "YYYY-MM-DD");
+      const other = day.clone().add(1, "day");
+      const dayDOM = renderDay(day, { today: other });
+      expect(dayDOM.className).to.not.contain(className);
+    });
+  });
+
   describe("weekend", () => {
     const className = "datepicker__day--weekend";
 
