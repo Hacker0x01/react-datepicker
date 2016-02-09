@@ -33,7 +33,8 @@ var Calendar = React.createClass({
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     weekStart: React.PropTypes.string.isRequired,
-    showYearDropdown: React.PropTypes.bool
+    showYearDropdown: React.PropTypes.bool,
+    todayButton: React.PropTypes.string
   },
 
   handleClickOutside(event) {
@@ -130,6 +131,20 @@ var Calendar = React.createClass({
     );
   },
 
+  renderTodayButton() {
+    const { moment, onSelect } = this.props;
+
+    if (!this.props.todayButton) {
+      return;
+    }
+
+    return (
+      <div className="datepicker__today-button" onClick={() => onSelect(moment())}>
+        {this.props.todayButton}
+      </div>
+    );
+  },
+
   render() {
     return (
       <div className="datepicker">
@@ -158,6 +173,7 @@ var Calendar = React.createClass({
           selected={this.props.selected}
           startDate={this.props.startDate}
           endDate={this.props.endDate} />
+        {this.renderTodayButton()}
       </div>
     );
   }
