@@ -55,6 +55,7 @@
     "karma-sinon": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
+    "lodash": "^4.3.0",
     "mocha": "^2.2.5",
     "node-sass": "^3.4.2",
     "phantomjs": "^1.9.17",
@@ -75,7 +76,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "lodash": "^4.3.0",
     "moment": "^2.11.2",
     "react-onclickoutside": "^4.5.0",
     "react-tether": "^0.1.2"

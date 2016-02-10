@@ -51,14 +51,6 @@ module.exports = {
         commonjs: "react-onclickoutside",
         amd: "react-onclickoutside"
       }
-    },
-    {
-      "lodash": {
-        root: "_",
-        commonjs2: "lodash",
-        commonjs: "lodash",
-        amd: "lodash"
-      }
     }
   ],
   node: { Buffer: false },
