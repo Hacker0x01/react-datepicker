@@ -3,6 +3,7 @@ import DateInput from "./date_input";
 import Calendar from "./calendar";
 import React from "react";
 import TetherComponent from "react-tether";
+import { isSameDay } from "./date_utils";
 
 var DatePicker = React.createClass({
 
@@ -81,7 +82,7 @@ var DatePicker = React.createClass({
   },
 
   setSelected(date) {
-    if (this.props.selected !== date) {
+    if (!isSameDay(this.props.selected, date)) {
       this.props.onChange(date);
     }
   },

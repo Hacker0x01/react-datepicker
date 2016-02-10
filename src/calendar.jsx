@@ -1,6 +1,7 @@
 import YearDropdown from "./year_dropdown";
 import Month from "./month";
 import React from "react";
+import { isSameDay } from "./date_utils";
 
 function getDateInView({ moment, selected, minDate, maxDate }) {
   var current = moment();
@@ -57,10 +58,7 @@ var Calendar = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selected === null) { return; }
-
-    // When the selected date changed
-    if (nextProps.selected !== this.props.selected) {
+    if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
       this.setState({
         date: nextProps.selected
       });

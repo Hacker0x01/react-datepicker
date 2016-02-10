@@ -2,6 +2,7 @@ import moment from "moment";
 import ReactDOM from "react-dom";
 import React from "react";
 import classnames from "classnames";
+import { isSameDay } from "./date_utils";
 
 var DateInput = React.createClass({
 
@@ -15,17 +16,17 @@ var DateInput = React.createClass({
     };
   },
 
-  componentWillMount() {
-    this.setState({
-        maybeDate: this.safeDateFormat(this.props.date)
-    });
+  getInitialState() {
+    return {
+      maybeDate: this.safeDateFormat(this.props.date)
+    };
   },
 
   componentWillReceiveProps(newProps) {
-    if (newProps.date != this.props.date) {
-        this.setState({
-            maybeDate: this.safeDateFormat(newProps.date)
-        });
+    if (!isSameDay(newProps.date, this.props.date)) {
+      this.setState({
+        maybeDate: this.safeDateFormat(newProps.date)
+      });
     }
   },
 

@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import classnames from "classnames";
+import { isSameDay } from "./date_utils";
 
 var Day = React.createClass({
   displayName: "Day",
@@ -26,7 +27,7 @@ var Day = React.createClass({
   },
 
   isSameDay(other) {
-    return other && this.props.day.isSame(other, "day");
+    return isSameDay(this.props.day, other);
   },
 
   isDisabled() {
