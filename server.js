@@ -1,7 +1,7 @@
 var path = require("path");
 var express = require("express");
 var webpack = require("webpack");
-var merge = require("lodash/object/merge");
+var merge = require("lodash/merge");
 var config = merge({}, require("./webpack.docs.config"));
 
 config.devtool = "cheap-module-eval-source-map";
