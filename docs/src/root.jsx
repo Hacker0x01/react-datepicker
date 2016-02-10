@@ -30,8 +30,8 @@ export default React.createClass({
             <a href="https://travis-ci.org/Hacker0x01/react-datepicker">
               <img src="https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master" className="badge" />
             </a>
-            <a href="https://david-dm.org/Hacker0x01/react-datepicker#info=devDependencies">
-              <img src="https://david-dm.org/Hacker0x01/react-datepicker/dev-status.svg" className="badge" />
+            <a href="https://david-dm.org/Hacker0x01/react-datepicker">
+              <img src="https://david-dm.org/Hacker0x01/react-datepicker.svg" className="badge" />
             </a>
             <a href={"https://npmjs.org/package/react-datepicker" +
               "?__hstc=72727564.ca821b01b5b29b1831f0936a681f0483.1428679773810.1435582678273.1438354735499.5" +
