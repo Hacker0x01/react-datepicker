@@ -139,79 +139,15 @@ describe("Day", () => {
   describe("disabled", () => {
     const className = "datepicker__day--disabled";
 
-    it("should be enabled by default", () => {
+    it("should be enabled if date is enabled", () => {
       const dayDOM = renderDay(moment());
       expect(dayDOM.className).to.not.contain(className);
     });
 
-    it("should be enabled if on the min date", () => {
-      const day = moment();
-      const dayDOM = renderDay(day, { minDate: day });
-      expect(dayDOM.className).to.not.contain(className);
-    });
-
-    it("should be disabled if before the min date", () => {
-      const day = moment();
-      const minDate = day.clone().add(1, "day");
-      const dayDOM = renderDay(day, { minDate });
-      expect(dayDOM.className).to.contain(className);
-    });
-
-    it("should be enabled if on the max date", () => {
-      const day = moment();
-      const dayDOM = renderDay(day, { maxDate: day });
-      expect(dayDOM.className).to.not.contain(className);
-    });
-
-    it("should be disabled if after the max date", () => {
-      const day = moment();
-      const maxDate = day.clone().subtract(1, "day");
-      const dayDOM = renderDay(day, { maxDate });
-      expect(dayDOM.className).to.contain(className);
-    });
-
-    it("should be disabled if in excluded dates", () => {
+    it("should be disabled if date is disabled", () => {
       const day = moment();
       const dayDOM = renderDay(day, { excludeDates: [day] });
       expect(dayDOM.className).to.contain(className);
-    });
-
-    it("should be enabled if in included dates", () => {
-      const day = moment();
-      const dayDOM = renderDay(day, { includeDates: [day] });
-      expect(dayDOM.className).to.not.contain(className);
-    });
-
-    it("should be disabled if not in included dates", () => {
-      const day = moment();
-      const includeDates = [day.clone().add(1, "day")];
-      const dayDOM = renderDay(day, { includeDates });
-      expect(dayDOM.className).to.contain(className);
-    });
-
-    it("should be enabled if date filter returns true", () => {
-      const day = moment();
-      const filterDate = d => d.isSame(day);
-      const dayDOM = renderDay(day, { filterDate });
-      expect(dayDOM.className).to.not.contain(className);
-    });
-
-    it("should be disabled if date filter returns false", () => {
-      const day = moment();
-      const filterDate = d => !d.isSame(day);
-      const dayDOM = renderDay(day, { filterDate });
-      expect(dayDOM.className).to.contain(className);
-    });
-
-    it("should not allow date filter to modify input date", () => {
-      const day = moment();
-      const dayClone = day.clone();
-      const filterDate = d => {
-        d.add(1, "day"); // jscs:disable momentImmutability
-        return true;
-      };
-      const dayDOM = renderDay(day, { filterDate });
-      expect(day.isSame(dayClone)).to.be.true;
     });
   });
 
