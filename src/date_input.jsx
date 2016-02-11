@@ -2,10 +2,17 @@ import moment from "moment";
 import ReactDOM from "react-dom";
 import React from "react";
 import classnames from "classnames";
+import { isSameDay, isDayDisabled } from "./date_utils";
 
 var DateInput = React.createClass({
 
   propTypes: {
+    date: React.PropTypes.object,
+    minDate: React.PropTypes.object,
+    maxDate: React.PropTypes.object,
+    excludeDates: React.PropTypes.array,
+    includeDates: React.PropTypes.array,
+    filterDate: React.PropTypes.func,
     open: React.PropTypes.bool
   },
 
@@ -15,24 +22,24 @@ var DateInput = React.createClass({
     };
   },
 
-  componentWillMount() {
-    this.setState({
-        maybeDate: this.safeDateFormat(this.props.date)
-    });
+  getInitialState() {
+    return {
+      maybeDate: this.safeDateFormat(this.props.date)
+    };
   },
 
   componentWillReceiveProps(newProps) {
-    if (newProps.date != this.props.date) {
-        this.setState({
-            maybeDate: this.safeDateFormat(newProps.date)
-        });
+    if (!isSameDay(newProps.date, this.props.date)) {
+      this.setState({
+        maybeDate: this.safeDateFormat(newProps.date)
+      });
     }
   },
 
   handleChange(event) {
     var value = event.target.value;
     var date = moment(value, this.props.dateFormat, true);
-    if (date.isValid()) {
+    if (date.isValid() && !isDayDisabled(date, this.props)) {
       this.props.setSelected(date);
     } else if (value === "") {
       this.props.setSelected(null);

@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import classnames from "classnames";
+import { isSameDay, isDayDisabled } from "./date_utils";
 
 var Day = React.createClass({
   displayName: "Day",
@@ -26,17 +27,11 @@ var Day = React.createClass({
   },
 
   isSameDay(other) {
-    return other && this.props.day.isSame(other, "day");
+    return isSameDay(this.props.day, other);
   },
 
   isDisabled() {
-    const { day, minDate, maxDate, excludeDates, includeDates, filterDate } = this.props;
-
-    return (minDate && day.isBefore(minDate, "day")) ||
-      (maxDate && day.isAfter(maxDate, "day")) ||
-      (excludeDates && excludeDates.some(excludeDate => this.isSameDay(excludeDate))) ||
-      (includeDates && !includeDates.some(includeDate => this.isSameDay(includeDate))) ||
-      (filterDate && !filterDate(day.clone()));
+    return isDayDisabled(this.props.day, this.props);
   },
 
   isInRange() {

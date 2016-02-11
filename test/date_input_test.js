@@ -116,6 +116,19 @@ describe("DateInput", function() {
     assert(dateTo.isSame(callback.getCall(0).args[0], "day"), "must be called with correct date");
   });
 
+  it("should not call setSelected when changing to a disabled date", function() {
+    var date = moment();
+    var dateFormat = "YYYY-MM-DD";
+    var callback = sinon.spy();
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={null} excludeDates={[date]} dateFormat={dateFormat} setSelected={callback} />
+    );
+    var inputNode = dateInput.refs.input;
+    inputNode.value = date.format(dateFormat);
+    TestUtils.Simulate.change(inputNode);
+    assert(!callback.called, "must not be called");
+  });
+
   it("should not have the ignore-react-onclickoutside class when closed so other pickers will close", function() {
     var dateInput = TestUtils.renderIntoDocument(
       <DateInput />
