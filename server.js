@@ -21,7 +21,7 @@ app.use(require("webpack-dev-middleware")(compiler, {
 
 app.use(require("webpack-hot-middleware")(compiler));
 
-app.use(express.static("docs"));
+app.use(express.static("docs-site"));
 
 app.listen(8080, "localhost", function(err) {
   if (err) {

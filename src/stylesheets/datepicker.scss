@@ -295,3 +295,12 @@
     top: 50%;
   }
 }
+
+.datepicker__today-button {
+  background: $background-color;
+  border-top: 1px solid $border-color;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0;
+}
