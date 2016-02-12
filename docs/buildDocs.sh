@@ -27,7 +27,7 @@ function buildDocs(api) {
   for (var filepath in api) {
     var name = getComponentName(filepath);
     var markdown = generateMarkdown(name, api[filepath]);
-    var outputLocation = 'docs/api/';
+    var outputLocation = 'docs/';
     fs.writeFileSync(outputLocation + name + '.md', markdown);
     process.stdout.write(filepath + ' -> ' + outputLocation + name + '.md\n');
   }
