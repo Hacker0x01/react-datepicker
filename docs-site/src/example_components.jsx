@@ -53,6 +53,10 @@ export default React.createClass({
       component: <CustomClassName />
     },
     {
+      title: "Today button",
+      component: <Today />
+    },
+    {
       title: "Placeholder text",
       component: <PlaceholderText />
     },
@@ -107,10 +111,6 @@ export default React.createClass({
     {
       title: "Year dropdown",
       component: <YearDropdown />
-    },
-    {
-      title: "Today button",
-      component: <Today />
     }
   ],
 

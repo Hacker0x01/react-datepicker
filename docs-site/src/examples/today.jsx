@@ -7,7 +7,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      startDate: null
+      startDate: moment()
     };
   },
 
