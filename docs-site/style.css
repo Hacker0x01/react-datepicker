@@ -1,36 +1,36 @@
-.tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow {
+.datepicker__tether-element-attached-top .datepicker__triangle, .datepicker__tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow {
   margin-left: -8px;
   position: absolute; }
-  .tether-element-attached-top .datepicker__triangle, .tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-top .datepicker__triangle::before, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
+  .datepicker__tether-element-attached-top .datepicker__triangle, .datepicker__tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .datepicker__tether-element-attached-top .datepicker__triangle::before, .datepicker__tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
     box-sizing: content-box;
     position: absolute;
     border: 8px solid transparent;
     height: 0;
     width: 1px; }
-  .tether-element-attached-top .datepicker__triangle::before, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
+  .datepicker__tether-element-attached-top .datepicker__triangle::before, .datepicker__tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
     content: "";
     z-index: -1;
     border-width: 8px;
     left: -8px;
     border-bottom-color: #aeaeae; }
 
-.tether-element-attached-top .datepicker__triangle {
+.datepicker__tether-element-attached-top .datepicker__triangle {
   top: 0;
   margin-top: -8px; }
-  .tether-element-attached-top .datepicker__triangle, .tether-element-attached-top .datepicker__triangle::before {
+  .datepicker__tether-element-attached-top .datepicker__triangle, .datepicker__tether-element-attached-top .datepicker__triangle::before {
     border-top: none;
     border-bottom-color: #f0f0f0; }
-  .tether-element-attached-top .datepicker__triangle::before {
+  .datepicker__tether-element-attached-top .datepicker__triangle::before {
     top: -1px;
     border-bottom-color: #aeaeae; }
 
-.tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow {
+.datepicker__tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow {
   bottom: 0;
   margin-bottom: -8px; }
-  .tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
+  .datepicker__tether-element-attached-bottom .datepicker__triangle, .datepicker__year-read-view--down-arrow, .datepicker__tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
     border-bottom: none;
     border-top-color: #fff; }
-  .tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
+  .datepicker__tether-element-attached-bottom .datepicker__triangle::before, .datepicker__year-read-view--down-arrow::before {
     bottom: -1px;
     border-top-color: #aeaeae; }
 
@@ -44,14 +44,12 @@
   display: inline-block;
   position: relative; }
 
-.datepicker__container {
-  position: absolute;
-  display: inline-block;
-  z-index: 2147483647; }
-
 .datepicker__triangle {
   position: absolute;
   left: 50px; }
+
+.datepicker__tether-element-attached-bottom.datepicker__tether-element {
+  margin-top: -20px; }
 
 .datepicker__header {
   text-align: center;
@@ -67,6 +65,8 @@
   color: #000;
   font-weight: bold;
   font-size: 13px; }
+  .datepicker__current-month--hasYearDropdown {
+    margin-bottom: 16px; }
 
 .datepicker__navigation {
   line-height: 24px;
@@ -243,6 +243,14 @@
     right: 7px;
     text-align: center;
     top: 50%; }
+
+.datepicker__today-button {
+  background: #f0f0f0;
+  border-top: 1px solid #aeaeae;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0; }
 html,
 body,
 div,
@@ -502,6 +510,14 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     margin: 0 auto; }
   .hero__crafted-by {
     margin-bottom: 30px; }
+  .hero__crafted-by-link {
+    color: #fff; }
+
+.github-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0; }
 
 .examples__navigation {
   display: none; }
