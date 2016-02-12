@@ -5,6 +5,10 @@ import React from "react";
 import TetherComponent from "react-tether";
 import { isSameDay } from "./date_utils";
 
+/**
+ * General datepicker component.
+ */
+
 var DatePicker = React.createClass({
 
   propTypes: {

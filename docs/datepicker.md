@@ -1,7 +1,7 @@
 `datepicker` (component)
 ========================
 
-
+General datepicker component.
 
 Props
 -----
