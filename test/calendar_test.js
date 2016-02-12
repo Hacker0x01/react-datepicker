@@ -62,9 +62,9 @@ describe("Calendar", function() {
   });
 
   it("should not show the today button by default", function() {
-  var calendar = TestUtils.renderIntoDocument(getCalendar());
-  var todayButton = TestUtils.scryRenderedDOMComponentsWithClass(calendar, "datepicker__today-button");
-  expect(todayButton.length).to.equal(0);
+    var calendar = TestUtils.renderIntoDocument(getCalendar());
+    var todayButton = TestUtils.scryRenderedDOMComponentsWithClass(calendar, "datepicker__today-button");
+    expect(todayButton.length).to.equal(0);
   });
 
   it("should show the today button if toggled on", function() {
