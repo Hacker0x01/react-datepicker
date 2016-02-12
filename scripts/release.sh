@@ -14,4 +14,4 @@ git push --tags
 
 npm publish
 
-./docs/publish.sh
+./docs-site/publish.sh

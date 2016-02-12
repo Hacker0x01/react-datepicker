@@ -42,7 +42,7 @@ module.exports = function(grunt) {
     watch: {
       jscs: {
         files: [
-          "{src,test,docs/src}/**/*.{js,jsx}",
+          "{src,test,docs-site/src}/**/*.{js,jsx}",
           "*.js"
         ],
         tasks: ["jscs"]
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
     jscs: {
       files: [
-        "{src,test,docs/src}/**/*.{js,jsx}",
+        "{src,test,docs-site/src}/**/*.{js,jsx}",
         "*.js"
       ],
       options: {
