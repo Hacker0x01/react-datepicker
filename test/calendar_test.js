@@ -60,4 +60,17 @@ describe("Calendar", function() {
     var yearReadView = TestUtils.findRenderedComponentWithType(calendar, YearDropdown);
     expect(yearReadView).to.exist;
   });
+
+  it("should not show the today button by default", function() {
+  var calendar = TestUtils.renderIntoDocument(getCalendar());
+  var todayButton = TestUtils.scryRenderedDOMComponentsWithClass(calendar, "datepicker__today-button");
+  expect(todayButton.length).to.equal(0);
+  });
+
+  it("should show the today button if toggled on", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: "Vandaag" }));
+    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, "datepicker__today-button");
+    expect(todayButton).to.exist;
+    expect(todayButton.textContent).to.equal("Vandaag");
+  });
 });
