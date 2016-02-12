@@ -2,7 +2,7 @@
 
 # npm version $1
 
-react-docgen ./src/*.jsx
+react-docgen ./src/*.jsx | ./scripts/buildDocs.sh
 
 git add .
 
