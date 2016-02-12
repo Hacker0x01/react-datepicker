@@ -32,7 +32,6 @@ var DatePicker = React.createClass({
       weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       locale: "en",
       dateFormatCalendar: "MMMM YYYY",
-      moment: moment,
       onChange() {},
       disabled: false,
       onFocus() {},
@@ -108,7 +107,7 @@ var DatePicker = React.createClass({
       ref="calendar"
       weekdays={this.props.weekdays}
       locale={this.props.locale}
-      moment={this.props.moment}
+      moment={moment}
       dateFormat={this.props.dateFormatCalendar}
       selected={this.props.selected}
       onSelect={this.handleSelect}
