@@ -96,6 +96,11 @@ defaultValue: `[
 ]`
 
 
+### `todayButton`
+
+type: `string`
+
+
 ### `weekStart`
 
 type: `string`
