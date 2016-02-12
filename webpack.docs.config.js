@@ -4,10 +4,10 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: [
-    "./docs/src/boot"
+    "./docs-site/src/boot"
   ],
   output: {
-    path: path.resolve("./docs/"),
+    path: path.resolve("./docs-site/"),
     filename: "bundle.js",
     publicPath: "/"
   },
