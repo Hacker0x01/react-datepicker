@@ -58,7 +58,7 @@
     "lodash": "^4.3.0",
     "mocha": "^2.2.5",
     "node-sass": "^3.4.2",
-    "phantomjs": "^1.9.17",
+    "phantomjs": "^2.1.3",
     "react-addons-test-utils": "^0.14.0",
     "react-docgen": "^2.7.0",
     "react-dom": "^0.14.0",
