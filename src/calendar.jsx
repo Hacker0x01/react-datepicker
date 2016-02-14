@@ -4,19 +4,6 @@ import Month from "./month";
 import React from "react";
 import { isSameDay } from "./date_utils";
 
-function getDateInView({ selected, minDate, maxDate }) {
-  var current = moment();
-  if (selected) {
-    return selected;
-  } else if (minDate && minDate.isAfter(current)) {
-    return minDate;
-  } else if (maxDate && maxDate.isBefore(current)) {
-    return maxDate;
-  } else {
-    return current;
-  }
-}
-
 var Calendar = React.createClass({
   mixins: [require("react-onclickoutside")],
 
@@ -41,8 +28,22 @@ var Calendar = React.createClass({
 
   getInitialState() {
     return {
-      date: this.localizeMoment(getDateInView(this.props))
+      date: this.localizeMoment(this.getDateInView())
     };
+  },
+
+  getDateInView() {
+    const { selected, minDate, maxDate } = this.props;
+    const current = moment();
+    if (selected) {
+      return selected;
+    } else if (minDate && minDate.isAfter(current)) {
+      return minDate;
+    } else if (maxDate && maxDate.isBefore(current)) {
+      return maxDate;
+    } else {
+      return current;
+    }
   },
 
   componentWillReceiveProps(nextProps) {
