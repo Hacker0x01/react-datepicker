@@ -5,12 +5,12 @@ import Calendar from "../src/calendar";
 import YearDropdown from "../src/year_dropdown";
 
 describe("Calendar", function() {
+  var dateFormat = "MMMM YYYY";
+
   function getCalendar(extraProps) {
     return <Calendar
-      weekdays={["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]}
-      locale="en"
       moment={moment}
-      dateFormat="MMMM"
+      dateFormat={dateFormat}
       onSelect={() => {}}
       onClickOutside={() => {}}
       hideCalendar={() => {}}
@@ -72,5 +72,45 @@ describe("Calendar", function() {
     var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, "datepicker__today-button");
     expect(todayButton).to.exist;
     expect(todayButton.textContent).to.equal("Vandaag");
+  });
+
+  describe("localization", function() {
+    function testLocale(calendar, selected, locale) {
+      var localized = selected.clone().locale(locale);
+
+      var calendarText = TestUtils.findRenderedDOMComponentWithClass(calendar, "datepicker__current-month");
+      expect(calendarText.textContent).to.equal(localized.format(dateFormat));
+
+      var firstDateOfWeek = localized.clone().startOf("week");
+      var firstWeekDayMin = firstDateOfWeek.localeData().weekdaysMin(firstDateOfWeek);
+      var firstHeader = TestUtils.scryRenderedDOMComponentsWithClass(calendar, "datepicker__day")[0];
+      expect(firstHeader.textContent).to.equal(firstWeekDayMin);
+    }
+
+    it("should use the globally-defined locale by default", function() {
+      var selected = moment();
+      var calendar = TestUtils.renderIntoDocument(getCalendar({ selected }));
+      testLocale(calendar, selected, moment.locale());
+    });
+
+    it("should use the locale specified as a prop", function() {
+      var locale = "fr";
+      var selected = moment().locale(locale);
+      var calendar = TestUtils.renderIntoDocument(getCalendar({ selected, locale }));
+      testLocale(calendar, selected, locale);
+    });
+
+    it("should override the locale of the date with the globally-defined locale", function() {
+      var selected = moment().locale("fr");
+      var calendar = TestUtils.renderIntoDocument(getCalendar({ selected }));
+      testLocale(calendar, selected, moment.locale());
+    });
+
+    it("should override the locale of the date with the locale prop", function() {
+      var locale = "fr";
+      var selected = moment();
+      var calendar = TestUtils.renderIntoDocument(getCalendar({ selected, locale }));
+      testLocale(calendar, selected, locale);
+    });
   });
 });

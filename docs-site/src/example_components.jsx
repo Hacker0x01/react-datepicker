@@ -8,14 +8,13 @@ import CustomDateFormat from "./examples/custom_date_format";
 import CustomClassName from "./examples/custom_class_name";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
-import CustomStartDate from "./examples/custom_start_date";
+import Locale from "./examples/locale";
 import ExcludeDates from "./examples/exclude_dates";
 import IncludeDates from "./examples/include_dates";
 import FilterDates from "./examples/filter_dates";
 import Disabled from "./examples/disabled";
 import ClearInput from "./examples/clear_input";
 import OnBlurCallbacks from "./examples/on_blur_callbacks";
-import Weekdays from "./examples/weekdays";
 import Placement from "./examples/placement";
 import DateRange from "./examples/date_range";
 import TabIndex from "./examples/tab_index";
@@ -65,8 +64,8 @@ export default React.createClass({
       component: <SpecificDateRange />
     },
     {
-      title: "Custom week start day",
-      component: <CustomStartDate />
+      title: "Locale",
+      component: <Locale />
     },
     {
       title: "Exclude dates",
@@ -95,10 +94,6 @@ export default React.createClass({
     {
       title: "onBlur callbacks in console",
       component: <OnBlurCallbacks />
-    },
-    {
-      title: "Custom weekdays",
-      component: <Weekdays />
     },
     {
       title: "Configure Popover Placement",

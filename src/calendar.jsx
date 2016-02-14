@@ -20,8 +20,7 @@ var Calendar = React.createClass({
   mixins: [require("react-onclickoutside")],
 
   propTypes: {
-    weekdays: React.PropTypes.array.isRequired,
-    locale: React.PropTypes.string.isRequired,
+    locale: React.PropTypes.string,
     moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
@@ -33,7 +32,6 @@ var Calendar = React.createClass({
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    weekStart: React.PropTypes.string.isRequired,
     showYearDropdown: React.PropTypes.bool
   },
 
@@ -43,38 +41,20 @@ var Calendar = React.createClass({
 
   getInitialState() {
     return {
-      date: getDateInView(this.props)
+      date: this.localizeMoment(getDateInView(this.props))
     };
-  },
-
-  getDefaultProps() {
-    return {
-      weekStart: "1"
-    };
-  },
-
-  componentWillMount() {
-    this.initializeMomentLocale();
   },
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
       this.setState({
-        date: nextProps.selected
+        date: this.localizeMoment(nextProps.selected)
       });
     }
   },
 
-  initializeMomentLocale() {
-    var weekdays = this.props.weekdays.slice(0);
-    weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
-
-    this.props.moment.locale(this.props.locale, {
-      week: {
-        dow: this.props.weekStart
-      },
-      weekdaysMin: weekdays
-    });
+  localizeMoment(date) {
+    return date.clone().locale(this.props.locale || this.props.moment.locale());
   },
 
   increaseMonth() {
@@ -100,8 +80,14 @@ var Calendar = React.createClass({
   },
 
   header() {
-    return this.props.moment.weekdaysMin().map(function(day, key) {
-      return <div className="datepicker__day" key={key}>{day}</div>;
+    const startOfWeek = this.state.date.clone().startOf("week");
+    return [0, 1, 2, 3, 4, 5, 6].map(offset => {
+      const day = startOfWeek.clone().add(offset, "days");
+      return (
+        <div key={offset} className="datepicker__day">
+          {day.localeData().weekdaysMin(day)}
+        </div>
+      );
     });
   },
 

@@ -8,6 +8,7 @@ var DateInput = React.createClass({
 
   propTypes: {
     date: React.PropTypes.object,
+    locale: React.PropTypes.string,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -50,7 +51,9 @@ var DateInput = React.createClass({
   },
 
   safeDateFormat(date) {
-    return !!date ? date.format(this.props.dateFormat) : null;
+    return date && date.clone()
+      .locale(this.props.locale || moment.locale())
+      .format(this.props.dateFormat);
   },
 
   handleKeyDown(event) {

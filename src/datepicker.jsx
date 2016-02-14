@@ -13,7 +13,6 @@ var DatePicker = React.createClass({
 
   propTypes: {
     selected: React.PropTypes.object,
-    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
     locale: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -22,7 +21,6 @@ var DatePicker = React.createClass({
     popoverTargetAttachment: React.PropTypes.string,
     popoverTargetOffset: React.PropTypes.string,
     tetherConstraints: React.PropTypes.array,
-    weekStart: React.PropTypes.string,
     showYearDropdown: React.PropTypes.bool,
     onChange: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func,
@@ -34,8 +32,6 @@ var DatePicker = React.createClass({
 
   getDefaultProps() {
     return {
-      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      locale: "en",
       dateFormatCalendar: "MMMM YYYY",
       onChange() {},
       disabled: false,
@@ -110,7 +106,6 @@ var DatePicker = React.createClass({
     }
     return <Calendar
       ref="calendar"
-      weekdays={this.props.weekdays}
       locale={this.props.locale}
       moment={moment}
       dateFormat={this.props.dateFormatCalendar}
@@ -124,7 +119,6 @@ var DatePicker = React.createClass({
       filterDate={this.props.filterDate}
       onClickOutside={this.handleCalendarClickOutside}
       includeDates={this.props.includeDates}
-      weekStart={this.props.weekStart}
       showYearDropdown={this.props.showYearDropdown}
       todayButton={this.props.todayButton} />;
   },
@@ -151,6 +145,7 @@ var DatePicker = React.createClass({
             id={this.props.id}
             name={this.props.name}
             date={this.props.selected}
+            locale={this.props.locale}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}

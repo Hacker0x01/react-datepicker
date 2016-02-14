@@ -3,11 +3,11 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 export default React.createClass({
-  displayName: "Weekdays",
+  displayName: "CustomStartDate",
 
   getInitialState() {
     return {
-      startDate: moment()
+      startDate: null
     };
   },
 
@@ -23,15 +23,17 @@ export default React.createClass({
         <code className="jsx">
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"} <br />
-              {"weekdays: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']"}
+              {"onChange={this.handleChange}"}<br />
+        <strong>    {"locale='en-gb'"}</strong><br />
+              {"placeholderText='Weeks start on Monday' />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
           selected={this.state.startDate}
           onChange={this.handleChange}
-          weekdays={["Ne", "Po", "Út", "St", "Čt", "Pá", "So"]} />
+          locale="en-gb"
+          placeholderText="Weeks start on Monday" />
       </div>
     </div>;
   }
