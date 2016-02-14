@@ -44,8 +44,8 @@ var Day = React.createClass({
   },
 
   isWeekend() {
-    const weekday = this.props.day.weekday();
-    return weekday === 5 || weekday === 6;
+    const weekday = this.props.day.day();
+    return weekday === 0 || weekday === 6;
   },
 
   isOutsideMonth() {
