@@ -1,4 +1,3 @@
-import moment from "moment";
 import DateInput from "./date_input";
 import Calendar from "./calendar";
 import React from "react";
@@ -107,7 +106,6 @@ var DatePicker = React.createClass({
     return <Calendar
       ref="calendar"
       locale={this.props.locale}
-      moment={moment}
       dateFormat={this.props.dateFormatCalendar}
       selected={this.props.selected}
       onSelect={this.handleSelect}
