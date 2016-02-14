@@ -51,28 +51,24 @@ var Example = React.createClass({
 
 ## Configuration
 
-The default Datepicker can be initialised by:
+The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange} />
+<DatePicker selected={this.state.date} onChange={this.handleChange} />
 ```
 
-This included the Datepicker with its default functionality. To use more functionality you can pass extra props to the Datepicker to enable them.
+See [here](https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
 
-- Change date format by passing a different date format in the props: `dateFormat: “YYYY/MM/DD”`
-- Add placeholder text: `placeholderText: 'Click to select a date'` (Defaults to the selected date when no placeholder text is added)
-- Give users a predefined date range: `minDate: moment()` & `maxDate: moment().add(5, 'days')` (this gives users the ability to select a date between today and 5 days in the future)
-- Exclude a set of dates from those that are selectable: `excludeDates: [ moment(), moment('2015-01-01') ]` (prevent users from selecting today or Jan 1st, 2015)
-- Include a set of dates from those that are selectable: `includeDates: [ moment(), moment(‘2015-01-01’) ]` (allow users selecting only today or Jan 1st, 2015)
-- Set custom moment.js instance (could have defined custom locale settings): `moment: require('./foo/moment')`
-- Set custom locale settings for locale: `locale: 'cs'`
-- Set date format for calendar: `dateFormatCalendar: 'YYYY/MM/DD'`
-- Set custom weekdays (for locale days): `weekdays: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']`
-- Set custom calendar week start day: `weekStart: '0'` would start the week on Sunday
+### Localization
 
-More information about the different ways to customise available at https://hacker0x01.github.io/react-datepicker.
+The date picker relies on [moment.js internationalization](http://momentjs.com/docs/#/i18n/) to localize its display components. By default, the date picker will use the locale globally set in moment, which is English. Locales can be changed in the following ways:
+
+- **Globally** by calling `moment.locale(lang)`
+- **Picker-specific** by providing the `locale` prop
+
+Locales can be further configured in moment with various [customization options](http://momentjs.com/docs/#/customization/).
+
+_As of version 0.23, the `weekdays` and `weekStart` DatePicker props have been removed. Instead, they can be configured with the `weekdaysMin` and `week.dow` moment locale customization options._
 
 ## Compatibility
 
