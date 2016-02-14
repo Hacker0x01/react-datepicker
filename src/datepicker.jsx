@@ -145,6 +145,7 @@ var DatePicker = React.createClass({
             id={this.props.id}
             name={this.props.name}
             date={this.props.selected}
+            locale={this.props.locale}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}

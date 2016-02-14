@@ -191,4 +191,48 @@ describe("DateInput", function() {
       expect(inputNode.value).to.equal("");
     });
   });
+
+  describe("localization", function() {
+    var dateFormat = "LL";
+
+    function testLocale(dateInput, date, locale) {
+      var localized = date.clone().locale(locale);
+      var inputNode = dateInput.refs.input;
+      expect(inputNode.value).to.equal(localized.format(dateFormat));
+    }
+
+    it("should use the globally-defined locale by default", function() {
+      var date = moment();
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} />
+      );
+      testLocale(dateInput, date, moment.locale());
+    });
+
+    it("should use the locale specified as a prop", function() {
+      var locale = "fr";
+      var date = moment().locale(locale);
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} locale={locale} />
+      );
+      testLocale(dateInput, date, locale);
+    });
+
+    it("should override the locale of the date with the globally-defined locale", function() {
+      var date = moment().locale("fr");
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} />
+      );
+      testLocale(dateInput, date, moment.locale());
+    });
+
+    it("should override the locale of the date with the locale prop", function() {
+      var locale = "fr";
+      var date = moment();
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} locale={locale} />
+      );
+      testLocale(dateInput, date, locale);
+    });
+  });
 });
