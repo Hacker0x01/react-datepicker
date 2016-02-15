@@ -31,7 +31,6 @@ type: `string`
 ### `locale`
 
 type: `string`
-defaultValue: `"en"`
 
 
 ### `onBlur`
@@ -99,15 +98,4 @@ defaultValue: `[
 ### `todayButton`
 
 type: `string`
-
-
-### `weekStart`
-
-type: `string`
-
-
-### `weekdays`
-
-type: `arrayOf[object Object]`
-defaultValue: `["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]`
 
