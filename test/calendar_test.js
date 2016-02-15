@@ -9,7 +9,6 @@ describe("Calendar", function() {
 
   function getCalendar(extraProps) {
     return <Calendar
-      moment={moment}
       dateFormat={dateFormat}
       onSelect={() => {}}
       onClickOutside={() => {}}

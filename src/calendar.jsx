@@ -1,27 +1,14 @@
+import moment from "moment";
 import YearDropdown from "./year_dropdown";
 import Month from "./month";
 import React from "react";
 import { isSameDay } from "./date_utils";
-
-function getDateInView({ moment, selected, minDate, maxDate }) {
-  var current = moment();
-  if (selected) {
-    return selected;
-  } else if (minDate && minDate.isAfter(current)) {
-    return minDate;
-  } else if (maxDate && maxDate.isBefore(current)) {
-    return maxDate;
-  } else {
-    return current;
-  }
-}
 
 var Calendar = React.createClass({
   mixins: [require("react-onclickoutside")],
 
   propTypes: {
     locale: React.PropTypes.string,
-    moment: React.PropTypes.func.isRequired,
     dateFormat: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     onClickOutside: React.PropTypes.func.isRequired,
@@ -41,8 +28,22 @@ var Calendar = React.createClass({
 
   getInitialState() {
     return {
-      date: this.localizeMoment(getDateInView(this.props))
+      date: this.localizeMoment(this.getDateInView())
     };
+  },
+
+  getDateInView() {
+    const { selected, minDate, maxDate } = this.props;
+    const current = moment();
+    if (selected) {
+      return selected;
+    } else if (minDate && minDate.isAfter(current)) {
+      return minDate;
+    } else if (maxDate && maxDate.isBefore(current)) {
+      return maxDate;
+    } else {
+      return current;
+    }
   },
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +55,7 @@ var Calendar = React.createClass({
   },
 
   localizeMoment(date) {
-    return date.clone().locale(this.props.locale || this.props.moment.locale());
+    return date.clone().locale(this.props.locale || moment.locale());
   },
 
   increaseMonth() {
@@ -115,14 +116,11 @@ var Calendar = React.createClass({
   },
 
   renderTodayButton() {
-    const { moment, onSelect } = this.props;
-
     if (!this.props.todayButton) {
       return;
     }
-
     return (
-      <div className="datepicker__today-button" onClick={() => onSelect(moment())}>
+      <div className="datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
         {this.props.todayButton}
       </div>
     );
