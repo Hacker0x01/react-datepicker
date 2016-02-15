@@ -79,7 +79,7 @@
     "classnames": "^2.2.1",
     "moment": "^2.11.2",
     "react-onclickoutside": "^4.5.0",
-    "react-tether": "^0.3.1"
+    "react-tether": "^0.3.3"
   },
   "scripts": {
     "build": "NODE_ENV=production grunt build",
