@@ -165,7 +165,9 @@ var DatePicker = React.createClass({
             open={this.state.open} />
           {this.renderClearButton()}
         </div>
-        {this.renderCalendar()}
+        <div>
+          {this.renderCalendar()}
+        </div>
       </TetherComponent>
     );
   }

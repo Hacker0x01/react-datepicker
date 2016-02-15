@@ -98,4 +98,17 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(clearButton);
     expect(cleared).to.be.true;
   });
+
+  it("should mount and unmount properly", done => {
+    var TestComponent = React.createClass({
+      getInitialState() {
+        return { mounted: true };
+      },
+      render() {
+        return this.state.mounted ? <DatePicker /> : null;
+      }
+    });
+    var element = TestUtils.renderIntoDocument(<TestComponent />);
+    element.setState({ mounted: false }, done);
+  });
 });
