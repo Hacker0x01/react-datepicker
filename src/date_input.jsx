@@ -67,12 +67,6 @@ var DateInput = React.createClass({
     }
   },
 
-  handleClick(event) {
-    if (!this.props.disabled) {
-      this.props.handleClick(event);
-    }
-  },
-
   handleBlur(event) {
     this.setState({
       maybeDate: this.safeDateFormat(this.props.date)
@@ -100,7 +94,7 @@ var DateInput = React.createClass({
         id={this.props.id}
         name={this.props.name}
         value={this.state.maybeDate}
-        onClick={this.handleClick}
+        onClick={this.props.onClick}
         onKeyDown={this.handleKeyDown}
         onFocus={this.props.onFocus}
         onBlur={this.handleBlur}
