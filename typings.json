@@ -3,7 +3,7 @@
   "main": "typigns/react-datepicker.d.ts",
   "author": "Andrey Balokha <abalekha@gmail.com>",
   "description": "The TypeScript definition dependency manager",
-  "dependencies": {
+  "ambientDependencies": {
     "react": "github:DefinitelyTyped/DefinitelyTyped/react/react.d.ts#5d0f2126c8dac8fce0ff020218aea06607213b0d"
   }
 }
