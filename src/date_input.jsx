@@ -14,12 +14,14 @@ var DateInput = React.createClass({
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    open: React.PropTypes.bool
+    open: React.PropTypes.bool,
+    onChange: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
     return {
-      dateFormat: "YYYY-MM-DD"
+      dateFormat: "YYYY-MM-DD",
+      onChange() {}
     };
   },
 
@@ -41,9 +43,9 @@ var DateInput = React.createClass({
     var value = event.target.value;
     var date = moment(value, this.props.dateFormat, true);
     if (date.isValid() && !isDayDisabled(date, this.props)) {
-      this.props.setSelected(date);
+      this.props.onChange(date);
     } else if (value === "") {
-      this.props.setSelected(null);
+      this.props.onChange(null);
     }
     this.setState({
       maybeDate: value

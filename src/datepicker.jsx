@@ -76,11 +76,11 @@ var DatePicker = React.createClass({
   },
 
   handleSelect(date) {
-    this.setSelected(date);
+    this.onChange(date);
     this.setOpen(false);
   },
 
-  setSelected(date) {
+  onChange(date) {
     if (!isSameDay(this.props.selected, date)) {
       this.props.onChange(date);
     }
@@ -96,7 +96,7 @@ var DatePicker = React.createClass({
 
   onClearClick(event) {
     event.preventDefault();
-    this.props.onChange(null);
+    this.onChange(null);
   },
 
   renderCalendar() {
@@ -154,7 +154,7 @@ var DatePicker = React.createClass({
             onBlur={this.handleBlur}
             handleClick={this.onInputClick}
             handleDone={this.handleInputDone}
-            setSelected={this.setSelected}
+            onChange={this.onChange}
             placeholderText={this.props.placeholderText}
             disabled={this.props.disabled}
             className={this.props.className}
