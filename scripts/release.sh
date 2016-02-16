@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+rm -rf ./node_modules
+npm install
+
 npm version $1
 
 react-docgen ./src/*.jsx | ./scripts/buildDocs.sh
