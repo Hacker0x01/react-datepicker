@@ -40,14 +40,6 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      jscs: {
-        files: [
-          "{src,test,docs-site/src}/**/*.{js,jsx}",
-          "*.js"
-        ],
-        tasks: ["jscs"]
-      },
-
       css: {
         files: "**/*.scss",
         tasks: ["sass"]
@@ -84,18 +76,6 @@ module.exports = function(grunt) {
       }
     },
 
-    jscs: {
-      files: [
-        "{src,test,docs-site/src}/**/*.{js,jsx}",
-        "*.js"
-      ],
-      options: {
-        config: ".jscsrc",
-        verbose: true,
-        fix: grunt.option("fix") || false
-      }
-    },
-
     webpack: {
       unmin: mergeWebpackConfig({
         output: {
@@ -123,9 +103,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-karma");
-  grunt.loadNpmTasks("grunt-jscs");
 
   grunt.registerTask("default", ["watch", "scsslint"]);
-  grunt.registerTask("travis", ["jscs", "karma", "scsslint"]);
+  grunt.registerTask("travis", ["karma", "scsslint"]);
   grunt.registerTask("build", ["scsslint", "webpack", "sass"]);
 };
