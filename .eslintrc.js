@@ -1,7 +1,6 @@
 module.exports = {
-  extends: "standard",
+  extends: ["standard", "plugin:react/recommended"],
   plugins: [
-    "standard",
-    "react",
+    "standard", "react"
   ]
 };
