@@ -89,7 +89,7 @@
     "build": "NODE_ENV=production grunt build",
     "start": "node server.js",
     "test": "NODE_ENV=test grunt travis",
-    "eslint": "eslint *.js *.jsx",
+    "eslint": "eslint --fix *.js *.jsx",
     "prepublish": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
   }
