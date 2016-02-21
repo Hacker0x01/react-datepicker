@@ -84,7 +84,10 @@ module.exports = function (grunt) {
     },
 
     eslint: {
-      target: ['**/*.js', '**.*.jsx']
+      target: [
+        '{src,test,docssite/src}/**/*.{js,jsx}',
+        '*.js'
+      ]
     },
 
     webpack: {
