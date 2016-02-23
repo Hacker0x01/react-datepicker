@@ -99,3 +99,6 @@ defaultValue: `[
 
 type: `string`
 
+### `className`
+
+type: `string`
