@@ -13,6 +13,7 @@ var DatePicker = React.createClass({
   propTypes: {
     selected: React.PropTypes.object,
     locale: React.PropTypes.string,
+    dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     id: React.PropTypes.string,
