@@ -25,7 +25,7 @@ describe("DatePicker", () => {
   });
 
   it("should render the calendar into a specified node", () => {
-    var node = document.createElement('div');
+    var node = document.createElement("div");
     document.body.appendChild(node);
     var datePicker = TestUtils.renderIntoDocument(
         <DatePicker renderCalendarTo={node} />
