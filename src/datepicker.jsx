@@ -40,6 +40,7 @@ var DatePicker = React.createClass({
       popoverAttachment: "top left",
       popoverTargetAttachment: "bottom left",
       popoverTargetOffset: "10px 0",
+	  renderCalendarTo: null,
       tetherConstraints: [
         {
           to: "window",
@@ -137,6 +138,7 @@ var DatePicker = React.createClass({
         attachment={this.props.popoverAttachment}
         targetAttachment={this.props.popoverTargetAttachment}
         targetOffset={this.props.popoverTargetOffset}
+		renderElementTo={this.props.renderCalendarTo}
         constraints={this.props.tetherConstraints}>
         <div className="datepicker__input-container">
           <DateInput
