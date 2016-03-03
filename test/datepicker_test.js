@@ -24,6 +24,20 @@ describe("DatePicker", () => {
     expect(datePicker.refs.calendar).to.exist;
   });
 
+  it("should render the calendar into a specified node", () => {
+    var node = document.createElement("div");
+    document.body.appendChild(node);
+    var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker renderCalendarTo={node} />
+    );
+    var dateInput = datePicker.refs.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.refs.calendar).to.exist;
+    var calendarNode = ReactDOM.findDOMNode(datePicker.refs.calendar);
+    expect(node.contains(calendarNode)).to.be.true;
+    document.body.removeChild(node);
+  });
+
   it("should keep the calendar shown when blurring the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
