@@ -235,4 +235,33 @@ describe("DateInput", function() {
       testLocale(dateInput, date, locale);
     });
   });
+
+  describe("dateFormat", function() {
+    it("should use the date format of the global locale by default", function() {
+      var date = moment();
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} />
+      );
+      expect(dateInput.refs.input.value).to.equal(date.format("L"));
+    });
+
+    it("should use the date format of the locale prop", function() {
+      var locale = "fr";
+      var date = moment().locale(locale);
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} locale={locale} />
+      );
+      expect(dateInput.refs.input.value).to.equal(date.format("L"));
+    });
+
+    it("should use the date format of the dateFormat prop", function() {
+      var locale = "fr";
+      var dateFormat = "LL";
+      var date = moment().locale(locale);
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormat} locale={locale} />
+      );
+      expect(dateInput.refs.input.value).to.equal(date.format(dateFormat));
+    });
+  });
 });

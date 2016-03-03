@@ -9,6 +9,7 @@ var DateInput = React.createClass({
   propTypes: {
     date: React.PropTypes.object,
     locale: React.PropTypes.string,
+    dateFormat: React.PropTypes.string,
     minDate: React.PropTypes.object,
     maxDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -19,7 +20,7 @@ var DateInput = React.createClass({
 
   getDefaultProps() {
     return {
-      dateFormat: "YYYY-MM-DD"
+      dateFormat: "L"
     };
   },
 
