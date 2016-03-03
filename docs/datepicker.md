@@ -28,6 +28,11 @@ type: `func`
 type: `string`
 
 
+### `inputClass`
+
+type: `string`
+
+
 ### `locale`
 
 type: `string`

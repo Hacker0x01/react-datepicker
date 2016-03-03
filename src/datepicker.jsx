@@ -27,7 +27,8 @@ var DatePicker = React.createClass({
     onFocus: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
     filterDate: React.PropTypes.func,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    inputClass: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -159,7 +160,7 @@ var DatePicker = React.createClass({
             setSelected={this.setSelected}
             placeholderText={this.props.placeholderText}
             disabled={this.props.disabled}
-            className={this.props.className}
+            className={this.props.inputClass}
             title={this.props.title}
             readOnly={this.props.readOnly}
             required={this.props.required}
