@@ -1,31 +1,30 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
 
 export default React.createClass({
-  displayName: "Disabled",
+  displayName: 'Disabled',
 
-  getInitialState() {
+  getInitialState () {
     return {
       startDate: null
-    };
+    }
   },
 
   handleChange: function (date) {
     this.setState({
       startDate: date
-    });
+    })
   },
 
   handleOnBlur: function (date) {
     if (date === null) {
-      console.log("selected date: %s", date);
+      console.log('selected date: %s', date)
     } else {
-      console.log("selected date: %s", date.format("DD/MM/YYYY"));
+      console.log('selected date: %s', date.format('DD/MM/YYYY'))
     }
   },
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="js">
@@ -50,12 +49,12 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          key="example9"
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          onBlur={this.handleOnBlur}
-          placeholderText="View blur callbacks in console" />
+            key="example9"
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            onBlur={this.handleOnBlur}
+            placeholderText="View blur callbacks in console" />
       </div>
-    </div>;
+    </div>
   }
-});
+})

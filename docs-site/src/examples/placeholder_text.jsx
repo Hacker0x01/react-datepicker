@@ -1,11 +1,10 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
 
 export default React.createClass({
-  displayName: "PlaceholderText",
+  displayName: 'PlaceholderText',
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -15,6 +14,6 @@ export default React.createClass({
       <div className="column">
         <DatePicker placeholderText="Click to select a date" />
       </div>
-    </div>;
+    </div>
   }
-});
+})

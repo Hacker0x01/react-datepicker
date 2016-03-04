@@ -1,23 +1,23 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 export default React.createClass({
-  displayName: "SpecificDateRange",
+  displayName: 'SpecificDateRange',
 
-  getInitialState() {
+  getInitialState () {
     return {
       startDate: null
-    };
+    }
   },
 
-  handleChange(date) {
+  handleChange (date) {
     this.setState({
       startDate: date
-    });
+    })
   },
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -31,12 +31,12 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          minDate={moment()}
-          maxDate={moment().add(5, "days")}
-          placeholderText="Select a date between today and 5 days in the future" />
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            minDate={moment()}
+            maxDate={moment().add(5, 'days')}
+            placeholderText="Select a date between today and 5 days in the future" />
       </div>
-    </div>;
+    </div>
   }
-});
+})

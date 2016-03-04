@@ -1,23 +1,23 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 export default React.createClass({
-  displayName: "CustomDateFormat",
+  displayName: 'CustomDateFormat',
 
-  getInitialState() {
+  getInitialState () {
     return {
       startDate: moment()
-    };
+    }
   },
 
-  handleChange(date) {
+  handleChange (date) {
     this.setState({
       startDate: date
-    });
+    })
   },
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -29,10 +29,10 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          dateFormat="YYYY/MM/DD"
-          selected={this.state.startDate}
-          onChange={this.handleChange} />
+            dateFormat="YYYY/MM/DD"
+            selected={this.state.startDate}
+            onChange={this.handleChange} />
       </div>
-    </div>;
+    </div>
   }
-});
+})

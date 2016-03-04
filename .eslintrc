@@ -30,6 +30,7 @@
 
   "parser": null,
   "rules": {
+    "no-irregular-whitespace": 0,
     "react/display-name": 2,
     "react/forbid-prop-types": 0,
     "react/jsx-boolean-value": 2,

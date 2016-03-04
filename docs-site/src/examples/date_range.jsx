@@ -1,39 +1,39 @@
-var React = require("react");
-var DatePicker = require("react-datepicker");
-var moment = require("moment");
+var React = require('react')
+var DatePicker = require('react-datepicker')
+var moment = require('moment')
 
 var DateRange = React.createClass({
-  displayName: "DateRange",
+  displayName: 'DateRange',
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
-      startDate: moment("2014-02-08"),
-      endDate: moment("2014-02-10")
-    };
+      startDate: moment('2014-02-08'),
+      endDate: moment('2014-02-10')
+    }
   },
 
-  handleChange: function({ startDate, endDate }) {
-    startDate = startDate || this.state.startDate;
-    endDate = endDate || this.state.endDate;
+  handleChange: function ({ startDate, endDate }) {
+    startDate = startDate || this.state.startDate
+    endDate = endDate || this.state.endDate
 
     if (startDate.isAfter(endDate)) {
-      var temp = startDate;
-      startDate = endDate;
-      endDate = temp;
+      var temp = startDate
+      startDate = endDate
+      endDate = temp
     }
 
-    this.setState({ startDate, endDate });
+    this.setState({ startDate, endDate })
   },
 
-  handleChangeStart: function(startDate) {
-    this.handleChange({ startDate });
+  handleChangeStart: function (startDate) {
+    this.handleChange({ startDate })
   },
 
-  handleChangeEnd: function(endDate) {
-    this.handleChange({ endDate });
+  handleChangeEnd: function (endDate) {
+    this.handleChange({ endDate })
   },
 
-  render: function() {
+  render: function () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -51,18 +51,18 @@ var DateRange = React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          selected={this.state.startDate}
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
-          onChange={this.handleChangeStart} />
+            selected={this.state.startDate}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onChange={this.handleChangeStart} />
         <DatePicker
-          selected={this.state.endDate}
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
-          onChange={this.handleChangeEnd} />
+            selected={this.state.endDate}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onChange={this.handleChangeEnd} />
       </div>
-    </div>;
+    </div>
   }
-});
+})
 
-module.exports = DateRange;
+module.exports = DateRange
