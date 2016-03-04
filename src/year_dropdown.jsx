@@ -1,5 +1,5 @@
-import React from "react";
-import YearDropdownOptions from "./year_dropdown_options.jsx";
+import React from "react"
+import YearDropdownOptions from "./year_dropdown_options.jsx"
 
 var YearDropdown = React.createClass({
   propTypes: {
@@ -7,50 +7,50 @@ var YearDropdown = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       dropdownVisible: false
-    };
+    }
   },
 
-  renderReadView() {
+  renderReadView () {
     return (
       <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>
         <span className="datepicker__year-read-view--selected-year">{this.props.year}</span>
         <span className="datepicker__year-read-view--down-arrow"></span>
       </div>
-    );
+    )
   },
 
-  renderDropdown() {
+  renderDropdown () {
     return (
       <YearDropdownOptions
         ref="options"
         year={this.props.year}
         onChange={this.onChange}
         onCancel={this.toggleDropdown} />
-    );
+    )
   },
 
-  onChange(year) {
-    this.toggleDropdown();
-    if (year === this.props.year) return;
-    this.props.onChange(year);
+  onChange (year) {
+    this.toggleDropdown()
+    if (year === this.props.year) return
+    this.props.onChange(year)
   },
 
-  toggleDropdown() {
+  toggleDropdown () {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
-    });
+    })
   },
 
-  render() {
+  render () {
     return (
       <div>
-        { this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView() }
+        {this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView()}
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = YearDropdown;
+module.exports = YearDropdown

@@ -1,11 +1,11 @@
-import moment from "moment";
-import YearDropdown from "./year_dropdown";
-import Month from "./month";
-import React from "react";
-import { isSameDay } from "./date_utils";
+import moment from "moment"
+import YearDropdown from "./year_dropdown"
+import Month from "./month"
+import React from "react"
+import { isSameDay } from "./date_utils"
 
 var Calendar = React.createClass({
-  mixins: [require("react-onclickoutside")],
+  mixins: [require('react-onclickoutside')],
 
   propTypes: {
     locale: React.PropTypes.string,
@@ -22,111 +22,111 @@ var Calendar = React.createClass({
     showYearDropdown: React.PropTypes.bool
   },
 
-  handleClickOutside(event) {
-    this.props.onClickOutside(event);
+  handleClickOutside (event) {
+    this.props.onClickOutside(event)
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       date: this.localizeMoment(this.getDateInView())
-    };
-  },
-
-  getDateInView() {
-    const { selected, minDate, maxDate } = this.props;
-    const current = moment();
-    if (selected) {
-      return selected;
-    } else if (minDate && minDate.isAfter(current)) {
-      return minDate;
-    } else if (maxDate && maxDate.isBefore(current)) {
-      return maxDate;
-    } else {
-      return current;
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  getDateInView () {
+    const { selected, minDate, maxDate } = this.props
+    const current = moment()
+    if (selected) {
+      return selected
+    } else if (minDate && minDate.isAfter(current)) {
+      return minDate
+    } else if (maxDate && maxDate.isBefore(current)) {
+      return maxDate
+    } else {
+      return current
+    }
+  },
+
+  componentWillReceiveProps (nextProps) {
     if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
       this.setState({
         date: this.localizeMoment(nextProps.selected)
-      });
+      })
     }
   },
 
-  localizeMoment(date) {
-    return date.clone().locale(this.props.locale || moment.locale());
+  localizeMoment (date) {
+    return date.clone().locale(this.props.locale || moment.locale())
   },
 
-  increaseMonth() {
+  increaseMonth () {
     this.setState({
-      date: this.state.date.clone().add(1, "month")
-    });
+      date: this.state.date.clone().add(1, 'month')
+    })
   },
 
-  decreaseMonth() {
+  decreaseMonth () {
     this.setState({
-      date: this.state.date.clone().subtract(1, "month")
-    });
+      date: this.state.date.clone().subtract(1, 'month')
+    })
   },
 
-  handleDayClick(day) {
-    this.props.onSelect(day);
+  handleDayClick (day) {
+    this.props.onSelect(day)
   },
 
-  changeYear(year) {
+  changeYear (year) {
     this.setState({
-      date: this.state.date.clone().set("year", year)
-    });
+      date: this.state.date.clone().set('year', year)
+    })
   },
 
-  header() {
-    const startOfWeek = this.state.date.clone().startOf("week");
+  header () {
+    const startOfWeek = this.state.date.clone().startOf('week')
     return [0, 1, 2, 3, 4, 5, 6].map(offset => {
-      const day = startOfWeek.clone().add(offset, "days");
+      const day = startOfWeek.clone().add(offset, 'days')
       return (
         <div key={offset} className="datepicker__day">
           {day.localeData().weekdaysMin(day)}
         </div>
-      );
-    });
+      )
+    })
   },
 
-  renderCurrentMonth() {
-    var classes = ["datepicker__current-month"];
+  renderCurrentMonth () {
+    var classes = ['datepicker__current-month']
     if (this.props.showYearDropdown) {
-      classes.push("datepicker__current-month--hasYearDropdown");
+      classes.push('datepicker__current-month--hasYearDropdown')
     }
     return (
-      <div className={classes.join(" ")}>
+      <div className={classes.join(' ')}>
         {this.state.date.format(this.props.dateFormat)}
       </div>
-    );
+    )
   },
 
-  renderYearDropdown() {
+  renderYearDropdown () {
     if (!this.props.showYearDropdown) {
-      return;
+      return
     }
     return (
       <YearDropdown
         onChange={this.changeYear}
         year={this.state.date.year()} />
-    );
+    )
   },
 
-  renderTodayButton() {
+  renderTodayButton () {
     if (!this.props.todayButton) {
-      return;
+      return
     }
     return (
       <div className="datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
         {this.props.todayButton}
       </div>
-    );
+    )
   },
 
-  render() {
+  render () {
     return (
       <div className="datepicker">
         <div className="datepicker__triangle"></div>
@@ -156,8 +156,8 @@ var Calendar = React.createClass({
           endDate={this.props.endDate} />
         {this.renderTodayButton()}
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = Calendar;
+module.exports = Calendar

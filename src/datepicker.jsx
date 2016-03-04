@@ -1,8 +1,8 @@
-import DateInput from "./date_input";
-import Calendar from "./calendar";
-import React from "react";
-import TetherComponent from "react-tether";
-import { isSameDay } from "./date_utils";
+import DateInput from "./date_input"
+import Calendar from "./calendar"
+import React from "react"
+import TetherComponent from "react-tether"
+import { isSameDay } from "./date_utils"
 
 /**
  * General datepicker component.
@@ -31,79 +31,79 @@ var DatePicker = React.createClass({
     className: React.PropTypes.string
   },
 
-  getDefaultProps() {
+  getDefaultProps () {
     return {
-      dateFormatCalendar: "MMMM YYYY",
-      onChange() {},
+      dateFormatCalendar: 'MMMM YYYY',
+      onChange () {},
       disabled: false,
-      onFocus() {},
-      onBlur() {},
-      popoverAttachment: "top left",
-      popoverTargetAttachment: "bottom left",
-      popoverTargetOffset: "10px 0",
+      onFocus () {},
+      onBlur () {},
+      popoverAttachment: 'top left',
+      popoverTargetAttachment: 'bottom left',
+      popoverTargetOffset: '10px 0',
       tetherConstraints: [
         {
-          to: "window",
-          attachment: "together"
+          to: 'window',
+          attachment: 'together'
         }
       ]
-    };
+    }
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       open: false
-    };
+    }
   },
 
-  setOpen(open) {
-    this.setState({ open });
+  setOpen (open) {
+    this.setState({ open })
   },
 
-  handleFocus(event) {
-    this.props.onFocus(event);
-    this.setOpen(true);
+  handleFocus (event) {
+    this.props.onFocus(event)
+    this.setOpen(true)
   },
 
-  handleBlur(event) {
+  handleBlur (event) {
     if (this.state.open) {
-      this.refs.input.focus();
+      this.refs.input.focus()
     } else {
-      this.props.onBlur(event);
+      this.props.onBlur(event)
     }
   },
 
-  handleCalendarClickOutside(event) {
-    this.setOpen(false);
+  handleCalendarClickOutside (event) {
+    this.setOpen(false)
   },
 
-  handleSelect(date) {
-    this.setSelected(date);
-    this.setOpen(false);
+  handleSelect (date) {
+    this.setSelected(date)
+    this.setOpen(false)
   },
 
-  setSelected(date) {
+  setSelected (date) {
     if (!isSameDay(this.props.selected, date)) {
-      this.props.onChange(date);
+      this.props.onChange(date)
     }
   },
 
-  onInputClick() {
-    this.setOpen(true);
+  onInputClick () {
+    this.setOpen(true)
   },
 
-  handleInputDone() {
-    this.setOpen(false);
+  handleInputDone () {
+    this.setOpen(false)
   },
 
-  onClearClick(event) {
-    event.preventDefault();
-    this.props.onChange(null);
+  onClearClick (event) {
+    event.preventDefault()
+    this.props.onChange(null)
   },
 
-  renderCalendar() {
+  renderCalendar () {
     if (!this.state.open || this.props.disabled) {
-      return null;
+      return null
     }
     return <Calendar
       ref="calendar"
@@ -120,18 +120,18 @@ var DatePicker = React.createClass({
       onClickOutside={this.handleCalendarClickOutside}
       includeDates={this.props.includeDates}
       showYearDropdown={this.props.showYearDropdown}
-      todayButton={this.props.todayButton} />;
+      todayButton={this.props.todayButton} />
   },
 
-  renderClearButton() {
+  renderClearButton () {
     if (this.props.isClearable && this.props.selected != null) {
-      return <a className="close-icon" href="#" onClick={this.onClearClick}></a>;
+      return <a className="close-icon" href="#" onClick={this.onClearClick}></a>
     } else {
-      return null;
+      return null
     }
   },
 
-  render() {
+  render () {
     return (
       <TetherComponent
         classPrefix={"datepicker__tether"}
@@ -170,8 +170,8 @@ var DatePicker = React.createClass({
         </div>
         {this.renderCalendar()}
       </TetherComponent>
-    );
+    )
   }
-});
+})
 
-module.exports = DatePicker;
+module.exports = DatePicker
