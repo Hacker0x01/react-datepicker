@@ -1,10 +1,10 @@
-import moment from "moment"
-import ReactDOM from "react-dom"
-import React from "react"
-import classnames from "classnames"
-import { isSameDay, isDayDisabled } from "./date_utils"
+import moment from 'moment'
+import React from 'react'
+import classnames from 'classnames'
+import { isSameDay, isDayDisabled } from './date_utils'
 
 var DateInput = React.createClass({
+  displayName: 'DateInput',
 
   propTypes: {
     date: React.PropTypes.object,

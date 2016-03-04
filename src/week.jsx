@@ -1,5 +1,5 @@
-import React from "react"
-import Day from "./day"
+import React from 'react'
+import Day from './day'
 
 var Week = React.createClass({
   displayName: 'Week',
@@ -30,18 +30,18 @@ var Week = React.createClass({
       const day = startOfWeek.clone().add(offset, 'days')
       return (
         <Day
-          key={offset}
-          day={day}
-          month={this.props.month}
-          onClick={this.handleDayClick.bind(this, day)}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          excludeDates={this.props.excludeDates}
-          includeDates={this.props.includeDates}
-          filterDate={this.props.filterDate}
-          selected={this.props.selected}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate} />
+            key={offset}
+            day={day}
+            month={this.props.month}
+            onClick={this.handleDayClick.bind(this, day)}
+            minDate={this.props.minDate}
+            maxDate={this.props.maxDate}
+            excludeDates={this.props.excludeDates}
+            includeDates={this.props.includeDates}
+            filterDate={this.props.filterDate}
+            selected={this.props.selected}
+            startDate={this.props.startDate}
+            endDate={this.props.endDate} />
       )
     })
   },

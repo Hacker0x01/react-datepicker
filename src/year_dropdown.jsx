@@ -1,7 +1,9 @@
-import React from "react"
-import YearDropdownOptions from "./year_dropdown_options.jsx"
+import React from 'react'
+import YearDropdownOptions from './year_dropdown_options.jsx'
 
 var YearDropdown = React.createClass({
+  displayName: 'YearDropdown',
+
   propTypes: {
     year: React.PropTypes.number.isRequired,
     onChange: React.PropTypes.func.isRequired
@@ -25,10 +27,10 @@ var YearDropdown = React.createClass({
   renderDropdown () {
     return (
       <YearDropdownOptions
-        ref="options"
-        year={this.props.year}
-        onChange={this.onChange}
-        onCancel={this.toggleDropdown} />
+          ref="options"
+          year={this.props.year}
+          onChange={this.onChange}
+          onCancel={this.toggleDropdown} />
     )
   },
 

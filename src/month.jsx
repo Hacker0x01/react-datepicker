@@ -1,5 +1,5 @@
-import React from "react"
-import Week from "./week"
+import React from 'react'
+import Week from './week'
 
 var Month = React.createClass({
   displayName: 'Month',
@@ -36,18 +36,18 @@ var Month = React.createClass({
       .filter(startOfWeek => this.isWeekInMonth(startOfWeek))
       .map((startOfWeek, offset) =>
         <Week
-          key={offset}
-          day={startOfWeek}
-          month={this.props.day.month()}
-          onDayClick={this.handleDayClick}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          excludeDates={this.props.excludeDates}
-          includeDates={this.props.includeDates}
-          filterDate={this.props.filterDate}
-          selected={this.props.selected}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate} />
+            key={offset}
+            day={startOfWeek}
+            month={this.props.day.month()}
+            onDayClick={this.handleDayClick}
+            minDate={this.props.minDate}
+            maxDate={this.props.maxDate}
+            excludeDates={this.props.excludeDates}
+            includeDates={this.props.includeDates}
+            filterDate={this.props.filterDate}
+            selected={this.props.selected}
+            startDate={this.props.startDate}
+            endDate={this.props.endDate} />
       )
   },
 

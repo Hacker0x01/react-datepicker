@@ -1,11 +1,11 @@
-import moment from "moment"
-import YearDropdown from "./year_dropdown"
-import Month from "./month"
-import React from "react"
-import { isSameDay } from "./date_utils"
+import moment from 'moment'
+import YearDropdown from './year_dropdown'
+import Month from './month'
+import React from 'react'
+import { isSameDay } from './date_utils'
 
 var Calendar = React.createClass({
-  mixins: [require('react-onclickoutside')],
+  displayName: 'Calendar',
 
   propTypes: {
     locale: React.PropTypes.string,
@@ -22,14 +22,24 @@ var Calendar = React.createClass({
     showYearDropdown: React.PropTypes.bool
   },
 
-  handleClickOutside (event) {
-    this.props.onClickOutside(event)
-  },
+  mixins: [require('react-onclickoutside')],
 
   getInitialState () {
     return {
       date: this.localizeMoment(this.getDateInView())
     }
+  },
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
+      this.setState({
+        date: this.localizeMoment(nextProps.selected)
+      })
+    }
+  },
+
+  handleClickOutside (event) {
+    this.props.onClickOutside(event)
   },
 
   getDateInView () {
@@ -43,14 +53,6 @@ var Calendar = React.createClass({
       return maxDate
     } else {
       return current
-    }
-  },
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
-      this.setState({
-        date: this.localizeMoment(nextProps.selected)
-      })
     }
   },
 
@@ -110,8 +112,8 @@ var Calendar = React.createClass({
     }
     return (
       <YearDropdown
-        onChange={this.changeYear}
-        year={this.state.date.year()} />
+          onChange={this.changeYear}
+          year={this.state.date.year()} />
     )
   },
 
@@ -144,16 +146,16 @@ var Calendar = React.createClass({
           </div>
         </div>
         <Month
-          day={this.state.date}
-          onDayClick={this.handleDayClick}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          excludeDates={this.props.excludeDates}
-          includeDates={this.props.includeDates}
-          filterDate={this.props.filterDate}
-          selected={this.props.selected}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate} />
+            day={this.state.date}
+            onDayClick={this.handleDayClick}
+            minDate={this.props.minDate}
+            maxDate={this.props.maxDate}
+            excludeDates={this.props.excludeDates}
+            includeDates={this.props.includeDates}
+            filterDate={this.props.filterDate}
+            selected={this.props.selected}
+            startDate={this.props.startDate}
+            endDate={this.props.endDate} />
         {this.renderTodayButton()}
       </div>
     )
