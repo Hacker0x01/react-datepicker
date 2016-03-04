@@ -38,7 +38,7 @@ var DatePicker = React.createClass({
     includeDates: React.PropTypes.array,
     name: React.PropTypes.string,
     isClearable: React.PropTypes.bool,
-    placeholderText: React.propTypes.string,
+    placeholderText: React.PropTypes.string,
     title: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
     required: React.PropTypes.bool,
