@@ -1,10 +1,10 @@
-import moment from "moment";
-import ReactDOM from "react-dom";
-import React from "react";
-import classnames from "classnames";
-import { isSameDay, isDayDisabled } from "./date_utils";
+import moment from 'moment'
+import React from 'react'
+import classnames from 'classnames'
+import { isSameDay, isDayDisabled } from './date_utils'
 
 var DateInput = React.createClass({
+  displayName: 'DateInput',
 
   propTypes: {
     date: React.PropTypes.object,
@@ -18,81 +18,81 @@ var DateInput = React.createClass({
     open: React.PropTypes.bool
   },
 
-  getDefaultProps() {
+  getDefaultProps () {
     return {
-      dateFormat: "L"
-    };
+      dateFormat: 'L'
+    }
   },
 
-  getInitialState() {
+  getInitialState () {
     return {
       maybeDate: this.safeDateFormat(this.props.date)
-    };
+    }
   },
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps (newProps) {
     if (!isSameDay(newProps.date, this.props.date)) {
       this.setState({
         maybeDate: this.safeDateFormat(newProps.date)
-      });
+      })
     }
   },
 
-  handleChange(event) {
-    var value = event.target.value;
-    var date = moment(value, this.props.dateFormat, true);
+  handleChange (event) {
+    var value = event.target.value
+    var date = moment(value, this.props.dateFormat, true)
     if (date.isValid() && !isDayDisabled(date, this.props)) {
-      this.props.setSelected(date);
-    } else if (value === "") {
-      this.props.setSelected(null);
+      this.props.setSelected(date)
+    } else if (value === '') {
+      this.props.setSelected(null)
     }
     this.setState({
       maybeDate: value
-    });
+    })
   },
 
-  safeDateFormat(date) {
+  safeDateFormat (date) {
     return date && date.clone()
       .locale(this.props.locale || moment.locale())
-      .format(this.props.dateFormat);
+      .format(this.props.dateFormat)
   },
 
-  handleKeyDown(event) {
-    if (event.key === "Enter" || event.key === "Escape") {
-      event.preventDefault();
-      this.props.handleDone();
-    } else if (event.key === "Tab") {
-      this.props.handleDone();
+  handleKeyDown (event) {
+    if (event.key === 'Enter' || event.key === 'Escape') {
+      event.preventDefault()
+      this.props.handleDone()
+    } else if (event.key === 'Tab') {
+      this.props.handleDone()
     }
   },
 
-  handleClick(event) {
+  handleClick (event) {
     if (!this.props.disabled) {
-      this.props.handleClick(event);
+      this.props.handleClick(event)
     }
   },
 
-  handleBlur(event) {
+  handleBlur (event) {
     this.setState({
       maybeDate: this.safeDateFormat(this.props.date)
-    });
+    })
     if (this.props.onBlur) {
-      this.props.onBlur(event);
+      this.props.onBlur(event)
     }
   },
 
-  focus() {
-    this.refs.input.focus();
+  focus () {
+    this.refs.input.focus()
   },
 
-  getClassNames() {
+  getClassNames () {
     return classnames(
-      "datepicker__input",
-      { "ignore-react-onclickoutside": this.props.open },
-      this.props.className);
+      'datepicker__input',
+      { 'ignore-react-onclickoutside': this.props.open },
+      this.props.className)
   },
 
-  render() {
+  render () {
     return <input
         ref="input"
         type="text"
@@ -109,8 +109,8 @@ var DateInput = React.createClass({
         placeholder={this.props.placeholderText}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex} />;
+        tabIndex={this.props.tabIndex} />
   }
-});
+})
 
-module.exports = DateInput;
+module.exports = DateInput

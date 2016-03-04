@@ -1,23 +1,23 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 export default React.createClass({
-  displayName: "ExcludeDates",
+  displayName: 'ExcludeDates',
 
-  getInitialState() {
+  getInitialState () {
     return {
       startDate: null
-    };
+    }
   },
 
-  handleChange(date) {
+  handleChange (date) {
     this.setState({
       startDate: date
-    });
+    })
   },
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -30,11 +30,11 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          excludeDates={[moment(), moment().subtract(1, "days")]}
-          placeholderText="Select a date other than today or yesterday" />
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            excludeDates={[moment(), moment().subtract(1, 'days')]}
+            placeholderText="Select a date other than today or yesterday" />
       </div>
-    </div>;
+    </div>
   }
-});
+})

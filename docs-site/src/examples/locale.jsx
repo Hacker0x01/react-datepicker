@@ -1,23 +1,22 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import React from 'react'
+import DatePicker from 'react-datepicker'
 
 export default React.createClass({
-  displayName: "CustomStartDate",
+  displayName: 'CustomStartDate',
 
-  getInitialState() {
+  getInitialState () {
     return {
       startDate: null
-    };
+    }
   },
 
-  handleChange(date) {
+  handleChange (date) {
     this.setState({
       startDate: date
-    });
+    })
   },
 
-  render() {
+  render () {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
@@ -30,11 +29,11 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          locale="en-gb"
-          placeholderText="Weeks start on Monday" />
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            locale="en-gb"
+            placeholderText="Weeks start on Monday" />
       </div>
-    </div>;
+    </div>
   }
-});
+})
