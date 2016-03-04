@@ -1,7 +1,7 @@
 import React from 'react'
 import hljs from 'highlight.js'
 import Default from './examples/default'
-import CodeExampleComponent from 'code_example_component'
+import CodeExampleComponent from './code_example_component'
 
 import CustomDateFormat from './examples/custom_date_format'
 import CustomClassName from './examples/custom_class_name'
