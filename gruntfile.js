@@ -40,12 +40,9 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      jscs: {
-        files: [
-          "{src,test,docs-site/src}/**/*.{js,jsx}",
-          "*.js"
-        ],
-        tasks: ["jscs"]
+      eslint: {
+        files: ["**/*.jsx"],
+        tasks: ["eslint"]
       },
 
       css: {
@@ -84,15 +81,10 @@ module.exports = function(grunt) {
       }
     },
 
-    jscs: {
-      files: [
-        "{src,test,docs-site/src}/**/*.{js,jsx}",
-        "*.js"
-      ],
+    eslint: {
+      files: ["**/*.jsx"],
       options: {
-        config: ".jscsrc",
-        verbose: true,
-        fix: grunt.option("fix") || false
+        configFile: ".eslintrc"
       }
     },
 
@@ -123,9 +115,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-karma");
-  grunt.loadNpmTasks("grunt-jscs");
+  grunt.loadNpmTasks("grunt-eslint");
 
   grunt.registerTask("default", ["watch", "scsslint"]);
-  grunt.registerTask("travis", ["jscs", "karma", "scsslint"]);
+  grunt.registerTask("travis", ["eslint", "karma", "scsslint"]);
   grunt.registerTask("build", ["scsslint", "webpack", "sass"]);
 };

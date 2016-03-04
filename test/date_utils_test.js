@@ -81,7 +81,7 @@ describe("date_utils", function() {
       const day = moment();
       const dayClone = day.clone();
       const filterDate = d => {
-        d.add(1, "day"); // jscs:disable momentImmutability
+        d.add(1, "day");
         return true;
       };
       isDayDisabled(day, { filterDate });
