@@ -15,7 +15,20 @@ var DateInput = React.createClass({
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    open: React.PropTypes.bool
+    open: React.PropTypes.bool,
+    setSelected: React.PropTypes.func,
+    handleDone: React.PropTypes.func,
+    disabled: React.PropTypes.bool,
+    handleClick: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    className: React.PropTypes.string,
+    id: React.PropTypes.string,
+    name: React.PropTypes.string,
+    onFocus: React.PropTypes.func,
+    placeholderText: React.PropTypes.string,
+    readOnly: React.PropTypes.bool,
+    required: React.PropTypes.bool,
+    tabIndex: React.PropTypes.number
   },
 
   getDefaultProps () {

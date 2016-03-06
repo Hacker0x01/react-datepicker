@@ -29,7 +29,20 @@ var DatePicker = React.createClass({
     tabIndex: React.PropTypes.number,
     filterDate: React.PropTypes.func,
     todayButton: React.PropTypes.string,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    minDate: React.PropTypes.object,
+    maxDate: React.PropTypes.object,
+    startDate: React.PropTypes.object,
+    endDate: React.PropTypes.object,
+    excludeDates: React.PropTypes.array,
+    includeDates: React.PropTypes.array,
+    name: React.PropTypes.string,
+    isClearable: React.PropTypes.bool,
+    placeholderText: React.PropTypes.string,
+    title: React.PropTypes.string,
+    readOnly: React.PropTypes.bool,
+    required: React.PropTypes.bool,
+    renderCalendarTo: React.PropTypes.any
   },
 
   getDefaultProps () {

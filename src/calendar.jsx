@@ -19,7 +19,9 @@ var Calendar = React.createClass({
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    showYearDropdown: React.PropTypes.bool
+    showYearDropdown: React.PropTypes.string,
+    selected: React.PropTypes.object,
+    todayButton: React.PropTypes.string
   },
 
   mixins: [require('react-onclickoutside')],
