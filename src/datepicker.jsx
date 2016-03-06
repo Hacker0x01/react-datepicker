@@ -42,7 +42,8 @@ var DatePicker = React.createClass({
     title: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
     required: React.PropTypes.bool,
-    renderCalendarTo: React.PropTypes.any
+    renderCalendarTo: React.PropTypes.any,
+    calendarClassName: React.PropTypes.string
   },
 
   getDefaultProps () {
@@ -134,7 +135,8 @@ var DatePicker = React.createClass({
         onClickOutside={this.handleCalendarClickOutside}
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
-        todayButton={this.props.todayButton} />
+        todayButton={this.props.todayButton}
+        className={this.props.calendarClassName} />
   },
 
   renderClearButton () {

@@ -73,6 +73,21 @@ describe("Calendar", function() {
     expect(todayButton.textContent).to.equal("Vandaag");
   });
 
+  it("should have a class by default", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar());
+    var calendarEl = TestUtils.findRenderedDOMComponentWithClass(calendar, "datepicker");
+    expect(calendarEl).to.exist;
+  });
+
+  it("should allow className to be overriden", function() {
+    var calendar = TestUtils.renderIntoDocument(getCalendar({className: 'datepicker__customClass'}));
+    var calendarEl = TestUtils.findRenderedDOMComponentWithClass(calendar, "datepicker__customClass");
+    expect(calendarEl).to.exist;
+
+    var calendarEls = TestUtils.scryRenderedDOMComponentsWithClass(calendar, "datepicker");
+    expect(calendarEls).to.be.empty;
+  });
+
   describe("localization", function() {
     function testLocale(calendar, selected, locale) {
       var localized = selected.clone().locale(locale);
