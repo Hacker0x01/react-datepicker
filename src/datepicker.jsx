@@ -42,7 +42,7 @@ var DatePicker = React.createClass({
     title: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
     required: React.PropTypes.bool,
-    renderCalendarTo: React.PropTypes.string
+    renderCalendarTo: React.PropTypes.any
   },
 
   getDefaultProps () {
