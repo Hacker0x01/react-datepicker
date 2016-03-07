@@ -5,8 +5,8 @@ var YearDropdown = React.createClass({
   displayName: 'YearDropdown',
 
   propTypes: {
-    year: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    year: React.PropTypes.number.isRequired
   },
 
   getInitialState () {

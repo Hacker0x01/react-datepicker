@@ -8,19 +8,19 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
-    locale: React.PropTypes.string,
     dateFormat: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    onClickOutside: React.PropTypes.func.isRequired,
-    minDate: React.PropTypes.object,
-    maxDate: React.PropTypes.object,
-    startDate: React.PropTypes.object,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
-    includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    showYearDropdown: React.PropTypes.bool,
+    includeDates: React.PropTypes.array,
+    locale: React.PropTypes.string,
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
+    onClickOutside: React.PropTypes.func.isRequired,
+    onSelect: React.PropTypes.func.isRequired,
     selected: React.PropTypes.object,
+    showYearDropdown: React.PropTypes.bool,
+    startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string
   },
 
