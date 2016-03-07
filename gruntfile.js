@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 
     watch: {
       eslint: {
-        files: ['**/*.jsx'],
+        files: ['{src,test,docs-site/src}/**/*.{js,jsx}', '*.js'],
         tasks: ['eslint']
       },
 
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
     },
 
     eslint: {
-      files: ['**/*.jsx'],
+      files: ['{src,test,docs-site/src}/**/*.{js,jsx}', '*.js'],
       options: {
         configFile: '.eslintrc'
       }

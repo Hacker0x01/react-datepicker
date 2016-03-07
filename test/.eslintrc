@@ -1,0 +1,15 @@
+{
+  "env": {
+    "mocha": true,
+  },
+
+  "globals": {
+    "assert": true,
+    "describe": true,
+    "expect": true
+  },
+
+  "rules": {
+    "react/display-name": 0,
+  }
+}
