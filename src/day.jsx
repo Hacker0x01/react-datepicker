@@ -8,16 +8,16 @@ var Day = React.createClass({
 
   propTypes: {
     day: React.PropTypes.object.isRequired,
+    endDate: React.PropTypes.object,
+    excludeDates: React.PropTypes.array,
+    filterDate: React.PropTypes.func,
+    includeDates: React.PropTypes.array,
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
-    minDate: React.PropTypes.object,
-    maxDate: React.PropTypes.object,
-    excludeDates: React.PropTypes.array,
-    includeDates: React.PropTypes.array,
-    filterDate: React.PropTypes.func,
     selected: React.PropTypes.object,
-    startDate: React.PropTypes.object,
-    endDate: React.PropTypes.object
+    startDate: React.PropTypes.object
   },
 
   handleClick (event) {

@@ -4,9 +4,9 @@ export default React.createClass({
   displayName: 'CodeExampleComponent',
 
   propTypes: {
+    children: React.PropTypes.element,
     id: React.PropTypes.number,
-    title: React.PropTypes.string,
-    children: React.PropTypes.element
+    title: React.PropTypes.string
   },
 
   render () {

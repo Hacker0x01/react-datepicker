@@ -12,9 +12,9 @@ var YearDropdownOptions = React.createClass({
   displayName: 'YearDropdownOptions',
 
   propTypes: {
-    year: React.PropTypes.number.isRequired,
+    onCancel: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired
+    year: React.PropTypes.number.isRequired
   },
 
   mixins: [require('react-onclickoutside')],
