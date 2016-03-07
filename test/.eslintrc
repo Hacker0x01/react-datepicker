@@ -6,10 +6,7 @@
   "globals": {
     "assert": true,
     "describe": true,
-    "expect": true
-  },
-
-  "rules": {
-    "react/display-name": 0,
+    "expect": true,
+    "sinon": true
   }
 }

@@ -7,7 +7,7 @@ import YearDropdown from '../src/year_dropdown'
 describe('Calendar', function () {
   var dateFormat = 'MMMM YYYY'
 
-  function getCalendar (extraProps) {
+  function getCalendar (extraProps) { // eslint-disable-line react/display-name
     return <Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}
