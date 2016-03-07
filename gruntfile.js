@@ -66,10 +66,11 @@ module.exports = function (grunt) {
     },
 
     scsslint: {
-      files: 'src/stylesheets/*.scss',
+      files: ['src/stylesheets/*.scss', 'docs-site/src/*.scss'],
       options: {
         config: '.scss-lint.yml',
-        colorizeOutput: true
+        colorizeOutput: true,
+        exclude: ['docs-site/src/higlight.scss', 'docs-site/src/reset.scss']
       }
     },
 
