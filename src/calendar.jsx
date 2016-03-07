@@ -132,7 +132,7 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="datepicker">
+      <div className="datepicker__calendar">
         <div className="datepicker__triangle"></div>
         <div className="datepicker__header">
           <a className="datepicker__navigation datepicker__navigation--previous"
