@@ -1,102 +1,101 @@
-"use strict";
+'use strict'
 
-var _ = require("lodash");
-var webpack = require("webpack");
+var _ = require('lodash')
+var webpack = require('webpack')
 
-var mergeWebpackConfig = function(config) {
-
+var mergeWebpackConfig = function (config) {
   // Load webpackConfig only when using `grunt:webpack`
   // load of grunt tasks is faster
-  var webpackConfig = require("./webpack.config");
-  return _.merge({}, webpackConfig, config, function(a, b) {
+  var webpackConfig = require('./webpack.config')
+  return _.merge({}, webpackConfig, config, function (a, b) {
     if (_.isArray(a)) {
-      return a.concat(b);
+      return a.concat(b)
     }
-  });
-};
+  })
+}
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
-    pkg: grunt.file.readJSON("package.json"),
+    pkg: grunt.file.readJSON('package.json'),
     sass: {
       min: {
         files: {
-          "dist/react-datepicker.css": "src/stylesheets/datepicker.scss"
+          'dist/react-datepicker.css': 'src/stylesheets/datepicker.scss'
         },
         options: {
-          sourcemap: "none",
-          style: "expanded"
+          sourcemap: 'none',
+          style: 'expanded'
         }
       },
       unmin: {
         files: {
-          "dist/react-datepicker.min.css": "src/stylesheets/datepicker.scss"
+          'dist/react-datepicker.min.css': 'src/stylesheets/datepicker.scss'
         },
         options: {
-          sourcemap: "none",
-          style: "compressed"
+          sourcemap: 'none',
+          style: 'compressed'
         }
       }
     },
 
     watch: {
       eslint: {
-        files: ["**/*.jsx"],
-        tasks: ["eslint"]
+        files: ['**/*.jsx'],
+        tasks: ['eslint']
       },
 
       css: {
-        files: "**/*.scss",
-        tasks: ["sass"]
+        files: '**/*.scss',
+        tasks: ['sass']
       },
 
       karma: {
         files: [
-          "src/**/*.jsx",
-          "src/**/*.js",
-          "test/**/*.jsx",
-          "test/**/*.js"
+          'src/**/*.jsx',
+          'src/**/*.js',
+          'test/**/*.jsx',
+          'test/**/*.js'
         ],
-        tasks: ["karma"]
+        tasks: ['karma']
       },
 
       webpack: {
-        files: ["src/**/*.js", "src/**/*.jsx"],
-        tasks: ["webpack"]
+        files: ['src/**/*.js', 'src/**/*.jsx'],
+        tasks: ['webpack']
       }
     },
 
     scsslint: {
-      files: "src/stylesheets/*.scss",
+      files: 'src/stylesheets/*.scss',
       options: {
-        config: ".scss-lint.yml",
+        config: '.scss-lint.yml',
         colorizeOutput: true
       }
     },
 
     karma: {
       unit: {
-        configFile: "karma.conf.js",
+        configFile: 'karma.conf.js',
         singleRun: true
       }
     },
 
     eslint: {
-      files: ["**/*.jsx"],
+      files: ['**/*.jsx'],
       options: {
-        configFile: ".eslintrc"
+        configFile: '.eslintrc'
       }
     },
 
     webpack: {
       unmin: mergeWebpackConfig({
         output: {
-          filename: "react-datepicker.js"
+          filename: 'react-datepicker.js'
         }
       }),
       min: mergeWebpackConfig({
         output: {
-          filename: "react-datepicker.min.js"
+          filename: 'react-datepicker.min.js'
         },
         plugins: [
           new webpack.optimize.UglifyJsPlugin({
@@ -106,18 +105,18 @@ module.exports = function(grunt) {
           })
         ]
       }),
-      docs: require("./webpack.docs.config")
+      docs: require('./webpack.docs.config')
     }
-  });
+  })
 
-  grunt.loadNpmTasks("grunt-contrib-sass");
-  grunt.loadNpmTasks("grunt-scss-lint");
-  grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-webpack");
-  grunt.loadNpmTasks("grunt-karma");
-  grunt.loadNpmTasks("grunt-eslint");
+  grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-scss-lint')
+  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-webpack')
+  grunt.loadNpmTasks('grunt-karma')
+  grunt.loadNpmTasks('grunt-eslint')
 
-  grunt.registerTask("default", ["watch", "scsslint"]);
-  grunt.registerTask("travis", ["eslint", "karma", "scsslint"]);
-  grunt.registerTask("build", ["scsslint", "webpack", "sass"]);
-};
+  grunt.registerTask('default', ['watch', 'scsslint'])
+  grunt.registerTask('travis', ['eslint', 'karma', 'scsslint'])
+  grunt.registerTask('build', ['scsslint', 'webpack', 'sass'])
+}
