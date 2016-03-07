@@ -21,10 +21,17 @@ var Calendar = React.createClass({
     filterDate: React.PropTypes.func,
     showYearDropdown: React.PropTypes.bool,
     selected: React.PropTypes.object,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    className: React.PropTypes.string
   },
 
   mixins: [require('react-onclickoutside')],
+
+  getDefaultProps () {
+    return {
+      className: 'datepicker'
+    }
+  },
 
   getInitialState () {
     return {
@@ -132,7 +139,7 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="datepicker">
+      <div className={this.props.className}>
         <div className="datepicker__triangle"></div>
         <div className="datepicker__header">
           <a className="datepicker__navigation datepicker__navigation--previous"
