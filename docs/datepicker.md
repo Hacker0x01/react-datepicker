@@ -6,16 +6,36 @@ General datepicker component.
 Props
 -----
 
+### `className`
+
+type: `string`
+
+
+### `dateFormat`
+
+type: `string`
+
+
 ### `dateFormatCalendar`
 
 type: `string`
-defaultValue: `"MMMM YYYY"`
+defaultValue: `'MMMM YYYY'`
 
 
 ### `disabled`
 
 type: `bool`
 defaultValue: `false`
+
+
+### `endDate`
+
+type: `object`
+
+
+### `excludeDates`
+
+type: `array`
 
 
 ### `filterDate`
@@ -28,7 +48,32 @@ type: `func`
 type: `string`
 
 
+### `includeDates`
+
+type: `array`
+
+
+### `isClearable`
+
+type: `bool`
+
+
 ### `locale`
+
+type: `string`
+
+
+### `maxDate`
+
+type: `object`
+
+
+### `minDate`
+
+type: `object`
+
+
+### `name`
 
 type: `string`
 
@@ -51,22 +96,42 @@ type: `func`
 defaultValue: `function() {}`
 
 
+### `placeholderText`
+
+type: `string`
+
+
 ### `popoverAttachment`
 
 type: `string`
-defaultValue: `"top left"`
+defaultValue: `'top left'`
 
 
 ### `popoverTargetAttachment`
 
 type: `string`
-defaultValue: `"bottom left"`
+defaultValue: `'bottom left'`
 
 
 ### `popoverTargetOffset`
 
 type: `string`
-defaultValue: `"10px 0"`
+defaultValue: `'10px 0'`
+
+
+### `readOnly`
+
+type: `bool`
+
+
+### `renderCalendarTo`
+
+type: `any`
+
+
+### `required`
+
+type: `bool`
 
 
 ### `selected`
@@ -79,6 +144,11 @@ type: `object`
 type: `bool`
 
 
+### `startDate`
+
+type: `object`
+
+
 ### `tabIndex`
 
 type: `number`
@@ -89,10 +159,15 @@ type: `number`
 type: `array`
 defaultValue: `[
   {
-    to: "window",
-    attachment: "together"
+    to: 'window',
+    attachment: 'together'
   }
 ]`
+
+
+### `title`
+
+type: `string`
 
 
 ### `todayButton`
