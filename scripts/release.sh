@@ -3,6 +3,8 @@
 rm -rf ./node_modules
 npm install
 
+git checkout .
+
 npm version $1
 
 react-docgen ./src/*.jsx | ./scripts/buildDocs.sh
