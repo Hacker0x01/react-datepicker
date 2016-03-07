@@ -19,7 +19,7 @@ var Calendar = React.createClass({
     excludeDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    showYearDropdown: React.PropTypes.string,
+    showYearDropdown: React.PropTypes.bool,
     selected: React.PropTypes.object,
     todayButton: React.PropTypes.string
   },
