@@ -1,11 +1,11 @@
 .hero {
-  color: white;
+  color: #fff;
   background-color: #216ba5;
 
   &__content {
+    @extend %container-styling;
     text-align: center;
     padding: 175px 0;
-    @extend %container-styling;
   }
 
   &__title {
