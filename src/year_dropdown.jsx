@@ -17,9 +17,9 @@ var YearDropdown = React.createClass({
 
   renderReadView () {
     return (
-      <div className="datepicker__year-read-view" onClick={this.toggleDropdown}>
-        <span className="datepicker__year-read-view--selected-year">{this.props.year}</span>
-        <span className="datepicker__year-read-view--down-arrow"></span>
+      <div className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
+        <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
+        <span className="react-datepicker__year-read-view--down-arrow"></span>
       </div>
     )
   },

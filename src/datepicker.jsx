@@ -139,7 +139,7 @@ var DatePicker = React.createClass({
 
   renderClearButton () {
     if (this.props.isClearable && this.props.selected != null) {
-      return <a className="close-icon" href="#" onClick={this.onClearClick}></a>
+      return <a className="react-datepicker__close-icon" href="#" onClick={this.onClearClick}></a>
     } else {
       return null
     }
@@ -148,7 +148,7 @@ var DatePicker = React.createClass({
   render () {
     return (
       <TetherComponent
-          classPrefix={"datepicker__tether"}
+          classPrefix={"react-datepicker__tether"}
           attachment={this.props.popoverAttachment}
           targetAttachment={this.props.popoverTargetAttachment}
           targetOffset={this.props.popoverTargetOffset}

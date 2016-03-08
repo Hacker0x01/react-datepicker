@@ -28,28 +28,28 @@ var YearDropdownOptions = React.createClass({
   renderOptions () {
     var selectedYear = this.props.year
     var options = this.state.yearsList.map(year =>
-      <div className="datepicker__year-option"
+      <div className="react-datepicker__year-option"
           key={year}
           onClick={this.onChange.bind(this, year)}>
-        {selectedYear === year ? <span className="datepicker__year-option--selected">✓</span> : ''}
+        {selectedYear === year ? <span className="react-datepicker__year-option--selected">✓</span> : ''}
         {year}
       </div>
     )
 
     options.unshift(
-      <div className="datepicker__year-option"
+      <div className="react-datepicker__year-option"
           ref={"upcoming"}
           key={"upcoming"}
           onClick={this.incrementYears}>
-        <a className="datepicker__navigation datepicker__navigation--years datepicker__navigation--years-upcoming"></a>
+        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"></a>
       </div>
     )
     options.push(
-      <div className="datepicker__year-option"
+      <div className="react-datepicker__year-option"
           ref={"previous"}
           key={"previous"}
           onClick={this.decrementYears}>
-        <a className="datepicker__navigation datepicker__navigation--years datepicker__navigation--years-previous"></a>
+        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"></a>
       </div>
     )
     return options
@@ -83,7 +83,7 @@ var YearDropdownOptions = React.createClass({
 
   render () {
     return (
-      <div className="datepicker__year-dropdown">
+      <div className="react-datepicker__year-dropdown">
         {this.renderOptions()}
       </div>
     )
