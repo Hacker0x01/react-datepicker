@@ -154,7 +154,7 @@ var DatePicker = React.createClass({
           targetOffset={this.props.popoverTargetOffset}
           renderElementTo={this.props.renderCalendarTo}
           constraints={this.props.tetherConstraints}>
-        <div className="datepicker__input-container">
+        <div className="react-datepicker-input__container">
           <DateInput
               ref="input"
               id={this.props.id}

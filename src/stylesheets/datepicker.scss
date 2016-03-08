@@ -155,11 +155,7 @@
   }
 }
 
-.datepicker__input-container {
-  position: relative;
-}
-
-.datepicker__input {
+.react-datepicker-input {
   position: relative;
   font-size: 13px;
   border-radius: $border-radius;
@@ -177,6 +173,10 @@
   &:not(:valid) ~ .close-icon {
     display: none;
   }
+}
+
+.react-datepicker-input__container {
+  position: relative;
 }
 
 .react-datepicker__year-read-view {

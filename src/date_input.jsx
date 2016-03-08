@@ -100,7 +100,7 @@ var DateInput = React.createClass({
 
   getClassNames () {
     return classnames(
-      'datepicker__input',
+      'react-datepicker-input',
       { 'ignore-react-onclickoutside': this.props.open },
       this.props.className)
   },
