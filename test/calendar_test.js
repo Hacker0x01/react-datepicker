@@ -62,13 +62,13 @@ describe('Calendar', function () {
 
   it('should not show the today button by default', function () {
     var calendar = TestUtils.renderIntoDocument(getCalendar())
-    var todayButton = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'datepicker__today-button')
+    var todayButton = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'react-datepicker__today-button')
     expect(todayButton.length).to.equal(0)
   })
 
   it('should show the today button if toggled on', function () {
     var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag' }))
-    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'datepicker__today-button')
+    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
     expect(todayButton).to.exist
     expect(todayButton.textContent).to.equal('Vandaag')
   })
@@ -77,12 +77,12 @@ describe('Calendar', function () {
     function testLocale (calendar, selected, locale) {
       var localized = selected.clone().locale(locale)
 
-      var calendarText = TestUtils.findRenderedDOMComponentWithClass(calendar, 'datepicker__current-month')
+      var calendarText = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__current-month')
       expect(calendarText.textContent).to.equal(localized.format(dateFormat))
 
       var firstDateOfWeek = localized.clone().startOf('week')
       var firstWeekDayMin = firstDateOfWeek.localeData().weekdaysMin(firstDateOfWeek)
-      var firstHeader = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'datepicker__day')[0]
+      var firstHeader = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'react-datepicker__day')[0]
       expect(firstHeader.textContent).to.equal(firstWeekDayMin)
     }
 

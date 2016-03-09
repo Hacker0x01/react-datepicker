@@ -15,7 +15,7 @@ describe('Day', () => {
   describe('rendering', () => {
     it('should render the specified day', () => {
       const dayDOM = renderDay(moment())
-      expect(dayDOM.className).to.contain('datepicker__day')
+      expect(dayDOM.className).to.contain('react-datepicker__day')
       expect(dayDOM.textContent).to.equal(moment().date() + '')
     })
   })
@@ -167,7 +167,7 @@ describe('Day', () => {
       const dayNode = TestUtils.renderIntoDocument(
         <Day day={day} onClick={onClick} />
       )
-      const dayDOM = TestUtils.findRenderedDOMComponentWithClass(dayNode, 'datepicker__day')
+      const dayDOM = TestUtils.findRenderedDOMComponentWithClass(dayNode, 'react-datepicker__day')
       TestUtils.Simulate.click(dayDOM)
       expect(onClickCalled).to.be.true
     })
@@ -177,7 +177,7 @@ describe('Day', () => {
       const dayNode = TestUtils.renderIntoDocument(
         <Day day={day} excludeDates={[day]} onClick={onClick} />
       )
-      const dayDOM = TestUtils.findRenderedDOMComponentWithClass(dayNode, 'datepicker__day')
+      const dayDOM = TestUtils.findRenderedDOMComponentWithClass(dayNode, 'react-datepicker__day')
       TestUtils.Simulate.click(dayDOM)
       expect(onClickCalled).to.be.false
     })
