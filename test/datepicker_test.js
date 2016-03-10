@@ -126,25 +126,4 @@ describe('DatePicker', () => {
     var element = TestUtils.renderIntoDocument(<TestComponent />)
     element.setState({ mounted: false }, done)
   })
-
-  it('should able to format date when typed in the date input field', function () {
-    var state = {}
-
-    function handleChange (date) {
-      state.date = date
-    }
-
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker
-          locale='fr'
-          dateFormat='ll'
-          onChange={handleChange}/>
-    )
-
-    var dateInput = datePicker.refs.input
-    dateInput.refs.input.value = '10 mars 2016'
-    TestUtils.Simulate.change(ReactDOM.findDOMNode(dateInput))
-
-    expect(state.date.format('ll')).to.equal('10 mars 2016')
-  })
 })
