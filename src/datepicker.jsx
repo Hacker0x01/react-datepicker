@@ -2,6 +2,7 @@ import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
 import TetherComponent from 'react-tether'
+import classnames from 'classnames'
 import { isSameDay } from './date_utils'
 
 /**
@@ -137,6 +138,36 @@ var DatePicker = React.createClass({
         todayButton={this.props.todayButton} />
   },
 
+  renderDateInput () {
+    var className = classnames(this.props.className, {
+      'ignore-react-onclickoutside': this.state.open
+    })
+    return <DateInput
+        ref='input'
+        id={this.props.id}
+        name={this.props.name}
+        date={this.props.selected}
+        locale={this.props.locale}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
+        excludeDates={this.props.excludeDates}
+        includeDates={this.props.includeDates}
+        filterDate={this.props.filterDate}
+        dateFormat={this.props.dateFormat}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        handleClick={this.onInputClick}
+        handleDone={this.handleInputDone}
+        setSelected={this.setSelected}
+        placeholder={this.props.placeholderText}
+        disabled={this.props.disabled}
+        className={className}
+        title={this.props.title}
+        readOnly={this.props.readOnly}
+        required={this.props.required}
+        tabIndex={this.props.tabIndex} />
+  },
+
   renderClearButton () {
     if (this.props.isClearable && this.props.selected != null) {
       return <a className="close-icon" href="#" onClick={this.onClearClick}></a>
@@ -155,31 +186,7 @@ var DatePicker = React.createClass({
           renderElementTo={this.props.renderCalendarTo}
           constraints={this.props.tetherConstraints}>
         <div className="datepicker__input-container">
-          <DateInput
-              ref="input"
-              id={this.props.id}
-              name={this.props.name}
-              date={this.props.selected}
-              locale={this.props.locale}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
-              excludeDates={this.props.excludeDates}
-              includeDates={this.props.includeDates}
-              filterDate={this.props.filterDate}
-              dateFormat={this.props.dateFormat}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
-              handleClick={this.onInputClick}
-              handleDone={this.handleInputDone}
-              setSelected={this.setSelected}
-              placeholder={this.props.placeholderText}
-              disabled={this.props.disabled}
-              className={this.props.className}
-              title={this.props.title}
-              readOnly={this.props.readOnly}
-              required={this.props.required}
-              tabIndex={this.props.tabIndex}
-              open={this.state.open} />
+          {this.renderDateInput()}
           {this.renderClearButton()}
         </div>
         {this.renderCalendar()}

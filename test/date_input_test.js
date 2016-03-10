@@ -143,20 +143,6 @@ describe('DateInput', function () {
     assert(date.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
   })
 
-  it('should not have the ignore-react-onclickoutside class when closed so other pickers will close', function () {
-    var dateInput = TestUtils.renderIntoDocument(
-      <DateInput />
-    )
-    expect(ReactDOM.findDOMNode(dateInput).className).to.not.contain('ignore-react-onclickoutside')
-  })
-
-  it('should have the ignore-react-onclickoutside class when open to prevent closing', function () {
-    var dateInput = TestUtils.renderIntoDocument(
-      <DateInput open />
-    )
-    expect(ReactDOM.findDOMNode(dateInput).className).to.contain('ignore-react-onclickoutside')
-  })
-
   describe('blurring', function () {
     it('should call onBlur when blurring the input', function () {
       var spy = sinon.spy()

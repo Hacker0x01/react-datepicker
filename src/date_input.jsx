@@ -20,7 +20,6 @@ var DateInput = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
-    open: React.PropTypes.bool,
     setSelected: React.PropTypes.func
   },
 
@@ -91,13 +90,6 @@ var DateInput = React.createClass({
     this.refs.input.focus()
   },
 
-  getClassNames () {
-    return classnames(
-      'datepicker__input',
-      { 'ignore-react-onclickoutside': this.props.open },
-      this.props.className)
-  },
-
   render () {
     return <input
         ref='input'
@@ -108,7 +100,7 @@ var DateInput = React.createClass({
         onKeyDown={this.handleKeyDown}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
-        className={this.getClassNames()} />
+        className={classnames('datepicker__input', this.props.className)} />
   }
 })
 

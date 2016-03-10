@@ -94,6 +94,23 @@ describe('DatePicker', () => {
     assert(onBlurSpy.calledOnce, 'should call onBlur')
   })
 
+  it('should not apply the ignore-react-onclickoutside class to the date input when closed', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    expect(ReactDOM.findDOMNode(dateInput).className).to.not.contain('ignore-react-onclickoutside')
+  })
+
+  it('should apply the ignore-react-onclickoutside class to date input when open', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(ReactDOM.findDOMNode(dateInput).className).to.contain('ignore-react-onclickoutside')
+  })
+
   it('should allow clearing the date when isClearable is true', () => {
     var cleared = false
     function handleChange (d) {
