@@ -15,20 +15,13 @@ var DateInput = React.createClass({
     filterDate: React.PropTypes.func,
     handleClick: React.PropTypes.func,
     handleDone: React.PropTypes.func,
-    id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
-    name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
     open: React.PropTypes.bool,
-    placeholderText: React.PropTypes.string,
-    readOnly: React.PropTypes.bool,
-    required: React.PropTypes.bool,
-    setSelected: React.PropTypes.func,
-    tabIndex: React.PropTypes.number
+    setSelected: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -107,22 +100,15 @@ var DateInput = React.createClass({
 
   render () {
     return <input
-        ref="input"
-        type="text"
-        id={this.props.id}
-        name={this.props.name}
+        ref='input'
+        type='text'
+        {...this.props}
         value={this.state.maybeDate}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
-        onFocus={this.props.onFocus}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
-        className={this.getClassNames()}
-        disabled={this.props.disabled}
-        placeholder={this.props.placeholderText}
-        readOnly={this.props.readOnly}
-        required={this.props.required}
-        tabIndex={this.props.tabIndex} />
+        className={this.getClassNames()} />
   }
 })
 
