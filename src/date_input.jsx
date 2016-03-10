@@ -13,7 +13,6 @@ var DateInput = React.createClass({
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    handleClick: React.PropTypes.func,
     handleDone: React.PropTypes.func,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
@@ -71,12 +70,6 @@ var DateInput = React.createClass({
     }
   },
 
-  handleClick (event) {
-    if (!this.props.disabled) {
-      this.props.handleClick(event)
-    }
-  },
-
   handleBlur (event) {
     this.setState({
       maybeDate: this.safeDateFormat(this.props.date)
@@ -96,7 +89,6 @@ var DateInput = React.createClass({
         type='text'
         {...this.props}
         value={this.state.maybeDate}
-        onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
