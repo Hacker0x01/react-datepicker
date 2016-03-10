@@ -128,6 +128,21 @@ describe('DateInput', function () {
     assert(!callback.called, 'must not be called')
   })
 
+  it('should call setSelected with a date matching the format of the locale', function () {
+    var locale = 'fr'
+    var dateFormat = 'll'
+    var callback = sinon.spy()
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput date={null} locale={locale} dateFormat={dateFormat} setSelected={callback} />
+    )
+    var date = moment().locale(locale)
+    var inputNode = dateInput.refs.input
+    inputNode.value = date.format(dateFormat)
+    TestUtils.Simulate.change(inputNode)
+    assert(callback.called, 'must be called once')
+    assert(date.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
+  })
+
   it('should not have the ignore-react-onclickoutside class when closed so other pickers will close', function () {
     var dateInput = TestUtils.renderIntoDocument(
       <DateInput />
