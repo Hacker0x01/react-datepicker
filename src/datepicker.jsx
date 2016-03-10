@@ -107,8 +107,13 @@ var DatePicker = React.createClass({
     this.setOpen(true)
   },
 
-  handleInputDone () {
-    this.setOpen(false)
+  onInputKeyDown (event) {
+    if (event.key === 'Enter' || event.key === 'Escape') {
+      event.preventDefault()
+      this.setOpen(false)
+    } else if (event.key === 'Tab') {
+      this.setOpen(false)
+    }
   },
 
   onClearClick (event) {
@@ -157,7 +162,7 @@ var DatePicker = React.createClass({
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.onInputClick}
-        handleDone={this.handleInputDone}
+        onKeyDown={this.onInputKeyDown}
         setSelected={this.setSelected}
         placeholder={this.props.placeholderText}
         disabled={this.props.disabled}

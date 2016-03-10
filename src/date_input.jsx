@@ -13,7 +13,6 @@ var DateInput = React.createClass({
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
-    handleDone: React.PropTypes.func,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -61,15 +60,6 @@ var DateInput = React.createClass({
       .format(this.props.dateFormat)
   },
 
-  handleKeyDown (event) {
-    if (event.key === 'Enter' || event.key === 'Escape') {
-      event.preventDefault()
-      this.props.handleDone()
-    } else if (event.key === 'Tab') {
-      this.props.handleDone()
-    }
-  },
-
   handleBlur (event) {
     this.setState({
       maybeDate: this.safeDateFormat(this.props.date)
@@ -89,7 +79,6 @@ var DateInput = React.createClass({
         type='text'
         {...this.props}
         value={this.state.maybeDate}
-        onKeyDown={this.handleKeyDown}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
         className={classnames('datepicker__input', this.props.className)} />

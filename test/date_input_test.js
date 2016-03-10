@@ -5,23 +5,6 @@ import TestUtils from 'react-addons-test-utils'
 import DateInput from '../src/date_input.jsx'
 
 describe('DateInput', function () {
-  describe('handleDone', function () {
-    function testHandleDoneWithKey (key) {
-      it(`calls handleDone when the ${key} key is pressed`, function () {
-        var spy = sinon.spy()
-        var dateInput = TestUtils.renderIntoDocument(
-          <DateInput handleDone={spy} />
-        )
-        TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key })
-        expect(spy.calledOnce).to.be.true
-      })
-    }
-
-    testHandleDoneWithKey('Enter')
-    testHandleDoneWithKey('Escape')
-    testHandleDoneWithKey('Tab')
-  })
-
   it('adds disabled attribute to input field when disabled is passed as prop', function () {
     var dateInput = TestUtils.renderIntoDocument(
       <DateInput disabled />

@@ -71,13 +71,23 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.not.exist
   })
 
-  it('should hide the calendar when the date input signals done', () => {
+  it('should hide the calendar when the pressing enter in the date input', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
     var dateInput = datePicker.refs.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    expect(datePicker.refs.calendar).to.not.exist
+  })
+
+  it('should hide the calendar when the pressing escape in the date input', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Escape' })
     expect(datePicker.refs.calendar).to.not.exist
   })
 
