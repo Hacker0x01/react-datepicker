@@ -18,7 +18,8 @@ var DateInput = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
-    setSelected: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    onChangeDate: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -42,12 +43,22 @@ var DateInput = React.createClass({
   },
 
   handleChange (event) {
-    var value = event.target.value
-    var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
-    if (date.isValid() && !isDayDisabled(date, this.props)) {
-      this.props.setSelected(date)
-    } else if (value === '') {
-      this.props.setSelected(null)
+    if (this.props.onChange) {
+      this.props.onChange(event)
+    }
+    if (!event.isDefaultPrevented()) {
+      this.handleChangeDate(event.target.value)
+    }
+  },
+
+  handleChangeDate (value) {
+    if (this.props.onChangeDate) {
+      var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
+      if (date.isValid() && !isDayDisabled(date, this.props)) {
+        this.props.onChangeDate(date)
+      } else if (value === '') {
+        this.props.onChangeDate(null)
+      }
     }
     this.setState({
       maybeDate: value
