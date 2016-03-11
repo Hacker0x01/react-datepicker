@@ -17,6 +17,7 @@ var DateInput = React.createClass({
     handleDone: React.PropTypes.func,
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
+    isValidOrEmpty: React.PropTypes.func,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -53,12 +54,16 @@ var DateInput = React.createClass({
 
   handleChange (event) {
     var value = event.target.value
+    var isValid = false;
     var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
     if (date.isValid() && !isDayDisabled(date, this.props)) {
+      isValid = true;
       this.props.setSelected(date)
     } else if (value === '') {
+      isValid = true;
       this.props.setSelected(null)
     }
+    this.props.isValidOrEmpty(isValid, value)
     this.setState({
       maybeDate: value
     })
@@ -123,7 +128,7 @@ var DateInput = React.createClass({
         readOnly={this.props.readOnly}
         required={this.props.required}
         tabIndex={this.props.tabIndex} />
-  }
+    }
 })
 
 module.exports = DateInput
