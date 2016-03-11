@@ -22,6 +22,7 @@ var DatePicker = React.createClass({
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
     isClearable: React.PropTypes.bool,
+    isValidOrEmpty: React.PropTypes.func,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -98,6 +99,9 @@ var DatePicker = React.createClass({
 
   setSelected (date) {
     if (!isSameDay(this.props.selected, date)) {
+      if (date !== null) {
+        this.props.isValidOrEmpty(true, this.props.dateFormat ? date.format(this.props.dateFormat) : date )
+      }
       this.props.onChange(date)
     }
   },
@@ -157,29 +161,30 @@ var DatePicker = React.createClass({
         <div className="datepicker__input-container">
           <DateInput
               ref="input"
-              id={this.props.id}
-              name={this.props.name}
+              className={this.props.className}
               date={this.props.selected}
-              locale={this.props.locale}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
-              excludeDates={this.props.excludeDates}
-              includeDates={this.props.includeDates}
-              filterDate={this.props.filterDate}
               dateFormat={this.props.dateFormat}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
+              disabled={this.props.disabled}
+              excludeDates={this.props.excludeDates}
+              filterDate={this.props.filterDate}
               handleClick={this.onInputClick}
               handleDone={this.handleInputDone}
-              setSelected={this.setSelected}
+              id={this.props.id}
+              includeDates={this.props.includeDates}
+              isValidOrEmpty={this.props.isValidOrEmpty}
+              locale={this.props.locale}
+              maxDate={this.props.maxDate}
+              minDate={this.props.minDate}
+              name={this.props.name}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
+              open={this.state.open}
               placeholderText={this.props.placeholderText}
-              disabled={this.props.disabled}
-              className={this.props.className}
-              title={this.props.title}
               readOnly={this.props.readOnly}
               required={this.props.required}
+              setSelected={this.setSelected}
               tabIndex={this.props.tabIndex}
-              open={this.state.open} />
+              title={this.props.title} />
           {this.renderClearButton()}
         </div>
         {this.renderCalendar()}
