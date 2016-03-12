@@ -71,13 +71,23 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.not.exist
   })
 
-  it('should hide the calendar when the date input signals done', () => {
+  it('should hide the calendar when the pressing enter in the date input', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
     var dateInput = datePicker.refs.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    expect(datePicker.refs.calendar).to.not.exist
+  })
+
+  it('should hide the calendar when the pressing escape in the date input', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Escape' })
     expect(datePicker.refs.calendar).to.not.exist
   })
 
@@ -92,6 +102,23 @@ describe('DatePicker', () => {
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
     expect(datePicker.refs.calendar).to.not.exist
     assert(onBlurSpy.calledOnce, 'should call onBlur')
+  })
+
+  it('should not apply the ignore-react-onclickoutside class to the date input when closed', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    expect(ReactDOM.findDOMNode(dateInput).className).to.not.contain('ignore-react-onclickoutside')
+  })
+
+  it('should apply the ignore-react-onclickoutside class to date input when open', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(ReactDOM.findDOMNode(dateInput).className).to.contain('ignore-react-onclickoutside')
   })
 
   it('should allow clearing the date when isClearable is true', () => {
