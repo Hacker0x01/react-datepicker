@@ -285,4 +285,40 @@ describe('DateInput', function () {
       expect(dateInput.refs.input.value).to.equal(date.format(dateFormat))
     })
   })
+
+  describe('localeChange', function () {
+    it('should rerender with correct format on locale props change', function () {
+      // Need to use ReactDom Render
+      var node = document.createElement('div')
+      var date = moment()
+      date.locale('fr')
+      var dateInput = ReactDOM.render(
+        <DateInput date={date} locale='fr'/>
+      , node)
+      expect(dateInput.refs.input.value).to.equal(date.format('L'))
+
+      date.locale('en')
+      dateInput = ReactDOM.render(
+        <DateInput date={date} locale='en'/>
+      , node)
+      expect(dateInput.refs.input.value).to.equal(date.format('L'))
+    })
+
+    it('should rerender with correct format on format props change', function () {
+      // Need to use ReactDom Render
+      var node = document.createElement('div')
+      var date = moment()
+      var dateFormat = 'YYYY-MM-DD'
+      var dateInput = ReactDOM.render(
+        <DateInput date={date} dateFormat={dateFormat}/>
+      , node)
+      expect(dateInput.refs.input.value).to.equal(date.format(dateFormat))
+
+      dateFormat = 'DD-MM-YYYY'
+      dateInput = ReactDOM.render(
+        <DateInput date={date} dateFormat={dateFormat}/>
+      , node)
+      expect(dateInput.refs.input.value).to.equal(date.format(dateFormat))
+    })
+  })
 })

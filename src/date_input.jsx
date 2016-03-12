@@ -30,14 +30,16 @@ var DateInput = React.createClass({
 
   getInitialState () {
     return {
-      maybeDate: this.safeDateFormat(this.props.date)
+      maybeDate: this.safeDateFormat(this.props)
     }
   },
 
   componentWillReceiveProps (newProps) {
-    if (!isSameDay(newProps.date, this.props.date)) {
+    if (!isSameDay(newProps.date, this.props.date) ||
+          newProps.locale !== this.props.locale ||
+          newProps.dateFormat !== this.props.dateFormat) {
       this.setState({
-        maybeDate: this.safeDateFormat(newProps.date)
+        maybeDate: this.safeDateFormat(newProps)
       })
     }
   },
@@ -65,15 +67,15 @@ var DateInput = React.createClass({
     })
   },
 
-  safeDateFormat (date) {
-    return date && date.clone()
-      .locale(this.props.locale || moment.locale())
-      .format(this.props.dateFormat)
+  safeDateFormat (props) {
+    return props.date && props.date.clone()
+      .locale(props.locale || moment.locale())
+      .format(props.dateFormat)
   },
 
   handleBlur (event) {
     this.setState({
-      maybeDate: this.safeDateFormat(this.props.date)
+      maybeDate: this.safeDateFormat(this.props)
     })
     if (this.props.onBlur) {
       this.props.onBlur(event)
