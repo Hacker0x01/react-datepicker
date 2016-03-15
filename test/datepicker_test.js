@@ -134,7 +134,7 @@ describe('DatePicker', () => {
           isClearable
           onChange={handleChange} />
     )
-    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'close-icon')
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
     TestUtils.Simulate.click(clearButton)
     expect(cleared).to.be.true
   })

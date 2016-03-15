@@ -29,14 +29,14 @@ describe('YearDropdown', () => {
   })
 
   it('opens a list when read view is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'datepicker__year-read-view')
+    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
     TestUtils.Simulate.click(readView)
     var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
     expect(optionsView).to.exist
   })
 
   it('closes the dropdown when a year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'datepicker__year-read-view')
+    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
     TestUtils.Simulate.click(readView)
     var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
     var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')
@@ -46,7 +46,7 @@ describe('YearDropdown', () => {
   })
 
   it('does not call the supplied onChange function when the same year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'datepicker__year-read-view')
+    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
     TestUtils.Simulate.click(readView)
     var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
     var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')
@@ -55,7 +55,7 @@ describe('YearDropdown', () => {
   })
 
   it('calls the supplied onChange function when a different year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'datepicker__year-read-view')
+    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
     TestUtils.Simulate.click(readView)
     var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
     var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')

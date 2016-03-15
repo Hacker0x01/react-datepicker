@@ -89,7 +89,7 @@ var Calendar = React.createClass({
     return [0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
       return (
-        <div key={offset} className="datepicker__day">
+        <div key={offset} className="react-datepicker__day">
           {day.localeData().weekdaysMin(day)}
         </div>
       )
@@ -97,9 +97,9 @@ var Calendar = React.createClass({
   },
 
   renderCurrentMonth () {
-    var classes = ['datepicker__current-month']
+    var classes = ['react-datepicker__current-month']
     if (this.props.showYearDropdown) {
-      classes.push('datepicker__current-month--hasYearDropdown')
+      classes.push('react-datepicker__current-month--hasYearDropdown')
     }
     return (
       <div className={classes.join(' ')}>
@@ -124,7 +124,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
+      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
         {this.props.todayButton}
       </div>
     )
@@ -132,15 +132,15 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="datepicker">
-        <div className="datepicker__triangle"></div>
-        <div className="datepicker__header">
-          <a className="datepicker__navigation datepicker__navigation--previous"
+      <div className="react-datepicker">
+        <div className="react-datepicker__triangle"></div>
+        <div className="react-datepicker__header">
+          <a className="react-datepicker__navigation react-datepicker__navigation--previous"
               onClick={this.decreaseMonth}>
           </a>
           {this.renderCurrentMonth()}
           {this.renderYearDropdown()}
-          <a className="datepicker__navigation datepicker__navigation--next"
+          <a className="react-datepicker__navigation react-datepicker__navigation--next"
               onClick={this.increaseMonth}>
           </a>
           <div>

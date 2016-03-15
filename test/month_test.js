@@ -9,7 +9,7 @@ import range from 'lodash/range'
 describe('Month', () => {
   it('should have the month CSS class', () => {
     const month = TestUtils.renderIntoDocument(<Month day={moment()} />)
-    expect(ReactDOM.findDOMNode(month).className).to.equal('datepicker__month')
+    expect(ReactDOM.findDOMNode(month).className).to.equal('react-datepicker__month')
   })
 
   it('should render all days of the month', () => {

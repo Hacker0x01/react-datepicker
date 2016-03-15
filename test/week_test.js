@@ -8,7 +8,7 @@ import Day from '../src/day'
 describe('Week', () => {
   it('should have the week CSS class', () => {
     const week = TestUtils.renderIntoDocument(<Week day={moment()} />)
-    expect(ReactDOM.findDOMNode(week).className).to.equal('datepicker__week')
+    expect(ReactDOM.findDOMNode(week).className).to.equal('react-datepicker__week')
   })
 
   it('should render the days of the week', () => {

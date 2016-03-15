@@ -53,7 +53,7 @@ var Month = React.createClass({
 
   render () {
     return (
-      <div className="datepicker__month">
+      <div className="react-datepicker__month">
         {this.renderWeeks()}
       </div>
     )

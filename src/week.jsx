@@ -48,7 +48,7 @@ var Week = React.createClass({
 
   render () {
     return (
-      <div className="datepicker__week">
+      <div className="react-datepicker__week">
         {this.renderDays()}
       </div>
     )
