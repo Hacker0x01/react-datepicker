@@ -155,7 +155,7 @@
   }
 }
 
-.react-datepicker-input {
+.react-datepicker__input {
   position: relative;
   font-size: 13px;
   border-radius: $border-radius;
@@ -169,13 +169,9 @@
     border-color: $border-color;
     box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, .3);
   }
-
-  &:not(:valid) ~ .close-icon {
-    display: none;
-  }
 }
 
-.react-datepicker-input__container {
+.react-datepicker__input-container {
   position: relative;
 }
 
