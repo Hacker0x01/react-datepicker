@@ -1,5 +1,5 @@
 import React from 'react'
-import YearDropdownOptions from './year_dropdown_options.jsx'
+import YearDropdownOptions from './year_dropdown_options'
 
 var YearDropdown = React.createClass({
   displayName: 'YearDropdown',
