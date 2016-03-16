@@ -24,7 +24,7 @@ var Calendar = React.createClass({
     todayButton: React.PropTypes.string
   },
 
-  mixins: [require('react-onclickoutside')],
+  mixins: [require('react-onclickoutside-ie9')],
 
   getInitialState () {
     return {

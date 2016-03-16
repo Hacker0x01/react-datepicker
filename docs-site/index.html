@@ -1,11 +1,22 @@
 <html>
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=Edge,chrome=1" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>ReactJS Datepicker crafted by HackerOne</title>
     <meta charset="UTF-8">
     <meta name="description" content="A simple and reusable datepicker component for React.">
     <meta name="keywords" content="React, HTML, CSS, JavaScript, JSX, date, datepicker">
+<script>
+// Workaround: IE9 doesn't have console object defined when developer tools are closed
+if (!window.console) {
+ window.console = {
+  log: function() {},
+  warn: function() {},
+  error: function() {}
+ };
+}
+</script>
   </head>
 
   <body>
