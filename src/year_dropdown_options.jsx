@@ -17,7 +17,7 @@ var YearDropdownOptions = React.createClass({
     year: React.PropTypes.number.isRequired
   },
 
-  mixins: [require('react-onclickoutside')],
+  mixins: [require('react-onclickoutside-ie9')],
 
   getInitialState () {
     return {
