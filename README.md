@@ -72,12 +72,20 @@ _As of version 0.23, the `weekdays` and `weekStart` DatePicker props have been r
 
 ## Compatibility
 
+### React
+
 We're always trying to stay compatible with the latest version of React. We can't support all older versions of React, since React is still < 1.0 and introducing breaking changes every release.
 
 Latest compatible versions:
 - React 0.14 or newer: All above React-datepicker v0.13.0
 - React 0.13: React-datepicker v0.13.0
 - pre React 0.13: React-datepicker v0.6.2
+
+### Browser Support
+
+The date picker is compatible with the latest versions of Chrome, Firefox, and IE10+.
+
+Unfortunately it is difficult to support legacy browsers while maintaining our ability to develop new features in the future.  For IE9 support, it is known that the [classlist polyfill](https://www.npmjs.com/package/classlist-polyfill) is needed, but this may change or break at any point in the future.
 
 ## Local Development
 
