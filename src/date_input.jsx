@@ -1,13 +1,11 @@
 import moment from 'moment'
 import React from 'react'
-import classnames from 'classnames'
 import { isSameDay, isDayDisabled } from './date_utils'
 
 var DateInput = React.createClass({
   displayName: 'DateInput',
 
   propTypes: {
-    className: React.PropTypes.string,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -93,8 +91,7 @@ var DateInput = React.createClass({
         {...this.props}
         value={this.state.maybeDate}
         onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        className={classnames('react-datepicker__input', this.props.className)} />
+        onChange={this.handleChange} />
   }
 })
 
