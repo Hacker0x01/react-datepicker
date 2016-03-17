@@ -88,6 +88,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // standalone build for ./dist
     webpack: {
       unmin: mergeWebpackConfig({
         output: {
@@ -107,17 +108,30 @@ module.exports = function (grunt) {
         ]
       }),
       docs: require('./webpack.docs.config')
+    },
+
+    // source build for ./lib
+    babel: {
+      lib: {
+        files: [{
+          expand: true,
+          cwd: 'src/',
+          src: ['**/*.js', '**/*.jsx'],
+          dest: 'lib/'
+        }]
+      }
     }
   })
 
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-scss-lint')
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-webpack')
   grunt.loadNpmTasks('grunt-karma')
   grunt.loadNpmTasks('grunt-eslint')
 
   grunt.registerTask('default', ['watch', 'scsslint'])
   grunt.registerTask('travis', ['eslint', 'karma', 'scsslint'])
-  grunt.registerTask('build', ['scsslint', 'webpack', 'sass'])
+  grunt.registerTask('build', ['scsslint', 'babel', 'webpack', 'sass'])
 }
