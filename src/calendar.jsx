@@ -2,7 +2,7 @@ import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
-import { isSameDay } from './date_utils'
+import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter } from './date_utils'
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
@@ -96,6 +96,24 @@ var Calendar = React.createClass({
     })
   },
 
+  renderPreviousMonthButton () {
+    if (allDaysDisabledBefore(this.state.date, 'month', this.props)) {
+      return
+    }
+    return <a
+        className='react-datepicker__navigation react-datepicker__navigation--previous'
+        onClick={this.decreaseMonth} />
+  },
+
+  renderNextMonthButton () {
+    if (allDaysDisabledAfter(this.state.date, 'month', this.props)) {
+      return
+    }
+    return <a
+        className='react-datepicker__navigation react-datepicker__navigation--next'
+        onClick={this.increaseMonth} />
+  },
+
   renderCurrentMonth () {
     var classes = ['react-datepicker__current-month']
     if (this.props.showYearDropdown) {
@@ -135,14 +153,10 @@ var Calendar = React.createClass({
       <div className="react-datepicker">
         <div className="react-datepicker__triangle"></div>
         <div className="react-datepicker__header">
-          <a className="react-datepicker__navigation react-datepicker__navigation--previous"
-              onClick={this.decreaseMonth}>
-          </a>
+          {this.renderPreviousMonthButton()}
           {this.renderCurrentMonth()}
           {this.renderYearDropdown()}
-          <a className="react-datepicker__navigation react-datepicker__navigation--next"
-              onClick={this.increaseMonth}>
-          </a>
+          {this.renderNextMonthButton()}
           <div>
             {this.header()}
           </div>
