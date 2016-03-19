@@ -14,3 +14,17 @@ export function isDayDisabled (day, { minDate, maxDate, excludeDates, includeDat
     (filterDate && !filterDate(day.clone())) ||
     false
 }
+
+export function allDaysDisabledBefore (day, unit, { minDate, includeDates } = {}) {
+  const dateBefore = day.clone().subtract(1, unit)
+  return (minDate && dateBefore.isBefore(minDate, unit)) ||
+    (includeDates && includeDates.every(includeDate => dateBefore.isBefore(includeDate, unit))) ||
+    false
+}
+
+export function allDaysDisabledAfter (day, unit, { maxDate, includeDates } = {}) {
+  const dateAfter = day.clone().add(1, unit)
+  return (maxDate && dateAfter.isAfter(maxDate, unit)) ||
+    (includeDates && includeDates.every(includeDate => dateAfter.isAfter(includeDate, unit))) ||
+    false
+}

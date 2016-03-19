@@ -1,4 +1,9 @@
-import { isSameDay, isDayDisabled } from '../src/date_utils'
+import {
+  isSameDay,
+  isDayDisabled,
+  allDaysDisabledBefore,
+  allDaysDisabledAfter
+} from '../src/date_utils'
 import moment from 'moment'
 
 describe('date_utils', function () {
@@ -86,6 +91,54 @@ describe('date_utils', function () {
       }
       isDayDisabled(day, { filterDate })
       expect(day.isSame(dayClone)).to.be.true
+    })
+  })
+
+  describe('allDaysDisabledBefore', () => {
+    it('should return false by default', () => {
+      expect(allDaysDisabledBefore(moment(), 'month')).to.be.false
+    })
+
+    it('should return true if min date is in the same unit', () => {
+      const day = moment('2016-03-19')
+      const minDate = moment('2016-03-01')
+      expect(allDaysDisabledBefore(day, 'month', { minDate })).to.be.true
+    })
+
+    it('should return false if min date is in the previous unit', () => {
+      const day = moment('2016-03-19')
+      const minDate = moment('2016-02-29')
+      expect(allDaysDisabledBefore(day, 'month', { minDate })).to.be.false
+    })
+
+    it('should return true if previous unit is before include dates', () => {
+      const day = moment('2016-03-19')
+      const includeDates = [moment('2016-03-01')]
+      expect(allDaysDisabledBefore(day, 'month', { includeDates })).to.be.true
+    })
+  })
+
+  describe('allDaysDisabledAfter', () => {
+    it('should return false by default', () => {
+      expect(allDaysDisabledAfter(moment(), 'month')).to.be.false
+    })
+
+    it('should return true if max date is in the same unit', () => {
+      const day = moment('2016-03-19')
+      const maxDate = moment('2016-03-31')
+      expect(allDaysDisabledAfter(day, 'month', { maxDate })).to.be.true
+    })
+
+    it('should return false if max date is in the next unit', () => {
+      const day = moment('2016-03-19')
+      const maxDate = moment('2016-04-01')
+      expect(allDaysDisabledAfter(day, 'month', { maxDate })).to.be.false
+    })
+
+    it('should return true if next unit is after include dates', () => {
+      const day = moment('2016-03-19')
+      const includeDates = [moment('2016-03-01')]
+      expect(allDaysDisabledAfter(day, 'month', { includeDates })).to.be.true
     })
   })
 })
