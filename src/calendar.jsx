@@ -52,24 +52,32 @@ var Calendar = React.createClass({
     }
 
     const current = moment()
-    const startDate = minDate && minDate.isSameOrAfter(current) ? minDate : null
-    const endDate = maxDate && maxDate.isSameOrBefore(current) ? maxDate : null
 
     if (includeDates) {
-      const rangeDates = includeDates.filter(d => (
-        (!startDate || d.isSameOrAfter(startDate, 'day')) && (!endDate || d.isSameOrBefore(endDate, 'day'))
-      )).sort(d => d.diff(current, 'days'))
-      if (rangeDates.length) {
-        if (rangeDates[0].isSameOrAfter(current, 'day')) {
-          return rangeDates[0]
-        }
-        if (rangeDates[rangeDates.length - 1].isSameOrBefore(current, 'day')) {
-          return rangeDates[rangeDates.length - 1]
-        }
+      const earliestDate = minDate ? moment.max(minDate, current) : current
+      const futureDates = includeDates
+        .filter(d => d.isSameOrAfter(earliestDate, 'day'))
+        .sort((a, b) => a.diff(b, 'days'))
+      if (futureDates.length) {
+        return futureDates[0]
+      }
+
+      const latestDate = maxDate ? moment.min(maxDate, current) : current
+      const pastDates = includeDates
+        .filter(d => d.isSameOrBefore(latestDate, 'day'))
+        .sort((a, b) => b.diff(a, 'days'))
+      if (pastDates.length) {
+        return pastDates[0]
       }
     }
 
-    return startDate || endDate || current
+    if (minDate && minDate.isAfter(current)) {
+      return minDate
+    }
+    if (maxDate && maxDate.isBefore(current)) {
+      return maxDate
+    }
+    return current
   },
 
   localizeMoment (date) {
