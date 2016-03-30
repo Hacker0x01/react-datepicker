@@ -3,6 +3,7 @@ import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter } from './date_utils'
+import minBy from 'lodash/minBy'
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
@@ -45,10 +46,19 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, minDate, maxDate } = this.props
+    const { selected, includeDates, minDate, maxDate } = this.props
     const current = moment()
     if (selected) {
       return selected
+    } else if (includeDates) {
+      const futureDates = includeDates.filter(d => d.isSameOrAfter(current))
+      if (futureDates.length) {
+        return minBy(futureDates, d => d.diff(current, 'days'))
+      }
+      const pastDates = includeDates.filter(d => d.isSameOrBefore(current))
+      if (pastDates.length) {
+        return minBy(pastDates, d => current.diff(d, 'days'))
+      }
     } else if (minDate && minDate.isAfter(current)) {
       return minDate
     } else if (maxDate && maxDate.isBefore(current)) {
