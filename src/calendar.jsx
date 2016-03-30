@@ -3,7 +3,6 @@ import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter } from './date_utils'
-import minBy from 'lodash/minBy'
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
@@ -47,25 +46,30 @@ var Calendar = React.createClass({
 
   getDateInView () {
     const { selected, includeDates, minDate, maxDate } = this.props
-    const current = moment()
+
     if (selected) {
       return selected
-    } else if (includeDates) {
-      const futureDates = includeDates.filter(d => d.isSameOrAfter(current))
-      if (futureDates.length) {
-        return minBy(futureDates, d => d.diff(current, 'days'))
-      }
-      const pastDates = includeDates.filter(d => d.isSameOrBefore(current))
-      if (pastDates.length) {
-        return minBy(pastDates, d => current.diff(d, 'days'))
-      }
-    } else if (minDate && minDate.isAfter(current)) {
-      return minDate
-    } else if (maxDate && maxDate.isBefore(current)) {
-      return maxDate
-    } else {
-      return current
     }
+
+    const current = moment()
+    const startDate = minDate && minDate.isSameOrAfter(current) ? minDate : null
+    const endDate = maxDate && maxDate.isSameOrBefore(current) ? maxDate : null
+
+    if (includeDates) {
+      const rangeDates = includeDates.filter(d => (
+        (!startDate || d.isSameOrAfter(startDate, 'day')) && (!endDate || d.isSameOrBefore(endDate, 'day'))
+      )).sort(d => d.diff(current, 'days'))
+      if (rangeDates.length) {
+        if (rangeDates[0].isSameOrAfter(current, 'day')) {
+          return rangeDates[0]
+        }
+        if (rangeDates[rangeDates.length - 1].isSameOrBefore(current, 'day')) {
+          return rangeDates[rangeDates.length - 1]
+        }
+      }
+    }
+
+    return startDate || endDate || current
   },
 
   localizeMoment (date) {
