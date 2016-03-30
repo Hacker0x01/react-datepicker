@@ -45,17 +45,39 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, minDate, maxDate } = this.props
-    const current = moment()
+    const { selected, includeDates, minDate, maxDate } = this.props
+
     if (selected) {
       return selected
-    } else if (minDate && minDate.isAfter(current)) {
-      return minDate
-    } else if (maxDate && maxDate.isBefore(current)) {
-      return maxDate
-    } else {
-      return current
     }
+
+    const current = moment()
+
+    if (includeDates) {
+      const earliestPossibleDate = minDate ? moment.max(minDate, current) : current
+      const futureDates = includeDates
+        .filter(d => d.isSameOrAfter(earliestPossibleDate, 'day'))
+        .sort((a, b) => a.diff(b, 'days'))
+      if (futureDates.length) {
+        return futureDates[0]
+      }
+
+      const latestPossibleDate = maxDate ? moment.min(maxDate, current) : current
+      const pastDates = includeDates
+        .filter(d => d.isSameOrBefore(latestPossibleDate, 'day'))
+        .sort((a, b) => b.diff(a, 'days'))
+      if (pastDates.length) {
+        return pastDates[0]
+      }
+    }
+
+    if (minDate && minDate.isAfter(current)) {
+      return minDate
+    }
+    if (maxDate && maxDate.isBefore(current)) {
+      return maxDate
+    }
+    return current
   },
 
   localizeMoment (date) {

@@ -28,6 +28,47 @@ describe('Calendar', function () {
     assert(calendar.state.date.isSame(selected, 'day'))
   })
 
+  it('should start with the earliest in view in included dates', function () {
+    var now = moment()
+    var includeDates = [ now.clone().add(1, 'year') ]
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates }))
+    assert(calendar.state.date.isSame(includeDates[0], 'day'))
+  })
+
+  it('should start with the earliest current date in view in included dates', function () {
+    var now = moment()
+    var includeDates = [
+      now.clone().subtract(2, 'year'),
+      now.clone(),
+      now.clone().add(2, 'year')
+    ]
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates }))
+    assert(calendar.state.date.isSame(includeDates[1], 'day'))
+  })
+
+  it('should start with the earliest future date in view in included dates', function () {
+    var now = moment()
+    var includeDates = [
+      now.clone().subtract(2, 'year'),
+      now.clone().subtract(1, 'year'),
+      now.clone().add(1, 'year'),
+      now.clone().add(2, 'year')
+    ]
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates }))
+    assert(calendar.state.date.isSame(includeDates[2], 'day'))
+  })
+
+  it('should start with the most recent past date in view in included dates', function () {
+    var now = moment()
+    var includeDates = [
+      now.clone().subtract(1, 'year'),
+      now.clone().subtract(2, 'year'),
+      now.clone().subtract(3, 'year')
+    ]
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates }))
+    assert(calendar.state.date.isSame(includeDates[0], 'day'))
+  })
+
   it('should start with the current date in view if in date range', function () {
     var now = moment()
     var minDate = now.clone().subtract(1, 'year')
