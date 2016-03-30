@@ -42,9 +42,21 @@ describe('Calendar', function () {
     assert(calendar.state.date.isSame(minDate, 'day'))
   })
 
+  it('should start with the min include date in view if after the current date', function () {
+    var minDate = moment().add(1, 'year')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates: [minDate] }))
+    assert(calendar.state.date.isSame(minDate, 'day'))
+  })
+
   it('should start with the max date in view if before the current date', function () {
     var maxDate = moment().subtract(1, 'year')
     var calendar = TestUtils.renderIntoDocument(getCalendar({ maxDate }))
+    assert(calendar.state.date.isSame(maxDate, 'day'))
+  })
+
+  it('should start with the max include date in view if before the current date', function () {
+    var maxDate = moment().subtract(1, 'year')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ includeDates: [maxDate] }))
     assert(calendar.state.date.isSame(maxDate, 'day'))
   })
 

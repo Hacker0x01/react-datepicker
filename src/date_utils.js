@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export function isSameDay (moment1, moment2) {
   if (moment1 && moment2) {
     return moment1.isSame(moment2, 'day')
@@ -27,4 +29,24 @@ export function allDaysDisabledAfter (day, unit, { maxDate, includeDates } = {})
   return (maxDate && dateAfter.isAfter(maxDate, unit)) ||
     (includeDates && includeDates.every(includeDate => dateAfter.isAfter(includeDate, unit))) ||
     false
+}
+
+export function getEffectiveMinDate ({ minDate, includeDates }) {
+  if (includeDates && minDate) {
+    return moment.min(includeDates.filter(includeDate => minDate.isSameOrBefore(includeDate, 'day')))
+  } else if (includeDates) {
+    return moment.min(includeDates)
+  } else {
+    return minDate
+  }
+}
+
+export function getEffectiveMaxDate ({ maxDate, includeDates }) {
+  if (includeDates && maxDate) {
+    return moment.max(includeDates.filter(includeDate => maxDate.isSameOrAfter(includeDate, 'day')))
+  } else if (includeDates) {
+    return moment.max(includeDates)
+  } else {
+    return maxDate
+  }
 }

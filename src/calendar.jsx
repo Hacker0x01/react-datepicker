@@ -2,7 +2,7 @@ import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
-import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter } from './date_utils'
+import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
 
 var Calendar = React.createClass({
   displayName: 'Calendar',
@@ -45,7 +45,9 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, minDate, maxDate } = this.props
+    const { selected } = this.props
+    const minDate = getEffectiveMinDate(this.props)
+    const maxDate = getEffectiveMaxDate(this.props)
     const current = moment()
     if (selected) {
       return selected
