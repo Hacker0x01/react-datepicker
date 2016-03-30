@@ -2,7 +2,9 @@ import {
   isSameDay,
   isDayDisabled,
   allDaysDisabledBefore,
-  allDaysDisabledAfter
+  allDaysDisabledAfter,
+  getEffectiveMinDate,
+  getEffectiveMaxDate
 } from '../src/date_utils'
 import moment from 'moment'
 
@@ -139,6 +141,58 @@ describe('date_utils', function () {
       const day = moment('2016-03-19')
       const includeDates = [moment('2016-03-01')]
       expect(allDaysDisabledAfter(day, 'month', { includeDates })).to.be.true
+    })
+  })
+
+  describe('getEffectiveMinDate', () => {
+    it('should return null by default', () => {
+      expect(getEffectiveMinDate({})).to.not.exist
+    })
+
+    it('should return the min date', () => {
+      const minDate = moment('2016-03-30')
+      assert(getEffectiveMinDate({ minDate }).isSame(minDate))
+    })
+
+    it('should return the minimum include date', () => {
+      const date1 = moment('2016-03-30')
+      const date2 = moment('2016-04-01')
+      const includeDates = [date1, date2]
+      assert(getEffectiveMinDate({ includeDates }).isSame(date1))
+    })
+
+    it('should return the minimum include date satisfying the min date', () => {
+      const minDate = moment('2016-03-31')
+      const date1 = moment('2016-03-30')
+      const date2 = moment('2016-04-01')
+      const includeDates = [date1, date2]
+      assert(getEffectiveMinDate({ minDate, includeDates }).isSame(date2))
+    })
+  })
+
+  describe('getEffectiveMaxDate', () => {
+    it('should return null by default', () => {
+      expect(getEffectiveMaxDate({})).to.not.exist
+    })
+
+    it('should return the max date', () => {
+      const maxDate = moment('2016-03-30')
+      assert(getEffectiveMaxDate({ maxDate }).isSame(maxDate))
+    })
+
+    it('should return the maximum include date', () => {
+      const date1 = moment('2016-03-30')
+      const date2 = moment('2016-04-01')
+      const includeDates = [date1, date2]
+      assert(getEffectiveMaxDate({ includeDates }).isSame(date2))
+    })
+
+    it('should return the maximum include date satisfying the max date', () => {
+      const maxDate = moment('2016-03-31')
+      const date1 = moment('2016-03-30')
+      const date2 = moment('2016-04-01')
+      const includeDates = [date1, date2]
+      assert(getEffectiveMaxDate({ maxDate, includeDates }).isSame(date1))
     })
   })
 })
