@@ -5,6 +5,8 @@ import TetherComponent from 'react-tether'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
 
+var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+
 /**
  * General datepicker component.
  */
@@ -140,12 +142,13 @@ var DatePicker = React.createClass({
         onClickOutside={this.handleCalendarClickOutside}
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
-        todayButton={this.props.todayButton} />
+        todayButton={this.props.todayButton}
+        outsideClickIgnoreClass={outsideClickIgnoreClass} />
   },
 
   renderDateInput () {
     var className = classnames(this.props.className, {
-      'ignore-react-onclickoutside': this.state.open
+      [outsideClickIgnoreClass]: this.state.open
     })
     return <DateInput
         ref='input'
