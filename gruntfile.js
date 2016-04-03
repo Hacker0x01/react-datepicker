@@ -117,7 +117,8 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'src/',
           src: ['**/*.js', '**/*.jsx'],
-          dest: 'lib/'
+          dest: 'lib/',
+          ext: '.js'
         }]
       }
     }
