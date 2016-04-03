@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ./node_modules
+rm -rf ./node_modules ./lib ./dist
 npm install
 
 git checkout .
