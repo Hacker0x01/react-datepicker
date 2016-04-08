@@ -104,18 +104,12 @@
   }
 }
 
-.react-datepicker__week-day {
-  color: $muted-color;
-  display: inline-block;
-  width: $item-size + (2 * $day-margin);
-  line-height: $item-size;
-}
-
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
 }
 
+.react-datepicker__day-name,
 .react-datepicker__day {
   color: $text-color;
   display: inline-block;
@@ -123,6 +117,9 @@
   line-height: $item-size;
   text-align: center;
   margin: $day-margin;
+}
+
+.react-datepicker__day {
   cursor: pointer;
 
   &:hover {

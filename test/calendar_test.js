@@ -94,7 +94,7 @@ describe('Calendar', function () {
 
       var firstDateOfWeek = localized.clone().startOf('week')
       var firstWeekDayMin = firstDateOfWeek.localeData().weekdaysMin(firstDateOfWeek)
-      var firstHeader = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'react-datepicker__day')[0]
+      var firstHeader = TestUtils.scryRenderedDOMComponentsWithClass(calendar, 'react-datepicker__day-name')[0]
       expect(firstHeader.textContent).to.equal(firstWeekDayMin)
     }
 

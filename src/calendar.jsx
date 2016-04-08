@@ -91,7 +91,7 @@ var Calendar = React.createClass({
     return [0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
       return (
-        <div key={offset} className="react-datepicker__day">
+        <div key={offset} className="react-datepicker__day-name">
           {day.localeData().weekdaysMin(day)}
         </div>
       )
