@@ -80,7 +80,7 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0"
+    "react": "^15.0.1"
   },
   "dependencies": {
     "classnames": "^2.2.1",
