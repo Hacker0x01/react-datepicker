@@ -22,7 +22,7 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-              {"showTodayButton={'Vandaag'}"}<br />
+              {"todayButton={'Vandaag'}"}<br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange} />"}
         </code>
