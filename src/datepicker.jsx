@@ -106,7 +106,9 @@ var DatePicker = React.createClass({
   },
 
   onInputClick () {
-    this.setOpen(true)
+    if (!this.props.disabled) {
+      this.setOpen(true)
+    }
   },
 
   onInputKeyDown (event) {
