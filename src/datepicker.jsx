@@ -203,7 +203,7 @@ var DatePicker = React.createClass({
             {this.renderDateInput()}
             {this.renderClearButton()}
           </div>
-          {this.renderCalendar()}
+          {calendar}
         </TetherComponent>
       )
     }
