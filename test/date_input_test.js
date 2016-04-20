@@ -111,8 +111,7 @@ describe('DateInput', function () {
     assert(!callback.called, 'must not be called')
   })
 
-  // Excluded because of issue #438
-  xit('should call onChangeDate with a date matching the format of the locale', function () {
+  it('should call onChangeDate with a date matching the format of the locale', function () {
     var locale = 'fr'
     var dateFormat = 'll'
     var callback = sinon.spy()

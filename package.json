@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.1",
-    "moment": "^2.11.2",
+    "moment": "^2.13.0",
     "react-onclickoutside": "^4.8.0",
     "react-tether": "^0.3.3"
   },
