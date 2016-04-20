@@ -24,6 +24,7 @@ var DatePicker = React.createClass({
     filterDate: React.PropTypes.func,
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
+    inline: React.PropTypes.bool,
     isClearable: React.PropTypes.bool,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -124,7 +125,7 @@ var DatePicker = React.createClass({
   },
 
   renderCalendar () {
-    if (!this.state.open || this.props.disabled) {
+    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
     return <Calendar
@@ -185,21 +186,27 @@ var DatePicker = React.createClass({
   },
 
   render () {
-    return (
-      <TetherComponent
-          classPrefix={"react-datepicker__tether"}
-          attachment={this.props.popoverAttachment}
-          targetAttachment={this.props.popoverTargetAttachment}
-          targetOffset={this.props.popoverTargetOffset}
-          renderElementTo={this.props.renderCalendarTo}
-          constraints={this.props.tetherConstraints}>
-        <div className="react-datepicker__input-container">
-          {this.renderDateInput()}
-          {this.renderClearButton()}
-        </div>
-        {this.renderCalendar()}
-      </TetherComponent>
-    )
+    const calendar = this.renderCalendar()
+
+    if (this.props.inline) {
+      return calendar
+    } else {
+      return (
+        <TetherComponent
+            classPrefix={"react-datepicker__tether"}
+            attachment={this.props.popoverAttachment}
+            targetAttachment={this.props.popoverTargetAttachment}
+            targetOffset={this.props.popoverTargetOffset}
+            renderElementTo={this.props.renderCalendarTo}
+            constraints={this.props.tetherConstraints}>
+          <div className="react-datepicker__input-container">
+            {this.renderDateInput()}
+            {this.renderClearButton()}
+          </div>
+          {this.renderCalendar()}
+        </TetherComponent>
+      )
+    }
   }
 })
 
