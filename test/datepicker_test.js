@@ -24,6 +24,15 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.exist
   })
 
+  it('should not set open state when it is disabled and gets clicked', function () {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker disabled/>
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
+    expect(datePicker.state.open).to.be.false
+  })
+
   it('should render the calendar into a specified node', () => {
     var node = document.createElement('div')
     document.body.appendChild(node)
