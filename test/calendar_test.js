@@ -4,18 +4,22 @@ import Calendar from '../src/calendar'
 import Month from '../src/month'
 import Day from '../src/day'
 import YearDropdown from '../src/year_dropdown'
+import MonthDropdown from '../src/month_dropdown'
 import { shallow, mount } from 'enzyme'
 
 describe('Calendar', function () {
   var dateFormat = 'MMMM YYYY'
 
   function getCalendar (extraProps) {
-    return shallow(<Calendar
-        dateFormat={dateFormat}
-        onSelect={() => {}}
-        onClickOutside={() => {}}
-        hideCalendar={() => {}}
-        {...extraProps} />)
+    return shallow(
+      <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="scroll"
+          {...extraProps}/>
+    )
   }
 
   it('should start with the current date in view if no date range', function () {
@@ -69,27 +73,27 @@ describe('Calendar', function () {
   })
 
   it('should start with the open to date in view if given and no selected/min/max dates given', function () {
-    var openToDate = moment('09/28/1993')
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
     var calendar = getCalendar({ openToDate })
     assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should start with the open to date in view if given and after a min date', function () {
-    var openToDate = moment('09/28/1993')
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
     var minDate = moment('01/01/1993', 'MM/DD/YYYY')
     var calendar = getCalendar({ openToDate, minDate })
     assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should start with the open to date in view if given and before a max date', function () {
-    var openToDate = moment('09/28/1993')
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
     var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
     var calendar = getCalendar({ openToDate, maxDate })
     assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should start with the open to date in view if given and in range of the min/max dates', function () {
-    var openToDate = moment('09/28/1993')
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
     var minDate = moment('01/01/1993', 'MM/DD/YYYY')
     var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
     var calendar = getCalendar({ openToDate, minDate, maxDate })
@@ -106,6 +110,18 @@ describe('Calendar', function () {
     var calendar = getCalendar({ showYearDropdown: true })
     var yearReadView = calendar.find(YearDropdown)
     expect(yearReadView).to.have.length(1)
+  })
+
+  it('should not show the month dropdown menu by default', function () {
+    var calendar = getCalendar()
+    var monthReadView = calendar.find(MonthDropdown)
+    expect(monthReadView).to.have.length(0)
+  })
+
+  it('should show the month dropdown menu if toggled on', function () {
+    var calendar = getCalendar({ showMonthDropdown: true })
+    var monthReadView = calendar.find(MonthDropdown)
+    expect(monthReadView).to.have.length(1)
   })
 
   it('should not show the today button by default', function () {
@@ -137,7 +153,13 @@ describe('Calendar', function () {
   })
 
   it('should track the currently hovered day', () => {
-    const calendar = mount(<Calendar dateFormat={dateFormat} onClickOutside={() => {}} onSelect={() => {}} />)
+    const calendar = mount(
+      <Calendar
+          dateFormat={dateFormat}
+          dropdownMode="scroll"
+          onClickOutside={() => {}}
+          onSelect={() => {}}/>
+    )
     const day = calendar.find(Day).first()
     const month = calendar.find(Month).first()
     day.simulate('mouseenter')
@@ -146,12 +168,59 @@ describe('Calendar', function () {
   })
 
   it('should clear the hovered day when the mouse leaves', () => {
-    const calendar = mount(<Calendar dateFormat={dateFormat} onClickOutside={() => {}} onSelect={() => {}} />)
+    const calendar = mount(
+      <Calendar
+          dateFormat={dateFormat}
+          dropdownMode="scroll"
+          onClickOutside={() => {}}
+          onSelect={() => {}}/>
+    )
     calendar.setState({ selectingDate: moment() })
     const month = calendar.find(Month).first()
     expect(month.prop('selectingDate')).to.exist
     month.simulate('mouseleave')
     expect(month.prop('selectingDate')).not.to.exist
+  })
+
+  describe('onDropdownFocus', () => {
+    var onDropdownFocusSpy = sinon.spy()
+    var calendar
+
+    beforeEach(() => {
+      onDropdownFocusSpy = sinon.spy()
+      calendar = mount(
+        <Calendar
+            dateFormat={dateFormat}
+            onSelect={() => {}}
+            onClickOutside={() => {}}
+            hideCalendar={() => {}}
+            dropdownMode="select"
+            showYearDropdown
+            showMonthDropdown
+            onDropdownFocus={onDropdownFocusSpy}/>
+      )
+    })
+
+    it('calls onDropdownFocus prop when year select is focused', () => {
+      var select = calendar.find('.react-datepicker__year-select')
+      select.simulate('focus')
+
+      assert(onDropdownFocusSpy.called === true, 'onDropdownFocus should be called')
+    })
+
+    it('calls onDropdownFocus prop when month select is focused', () => {
+      var select = calendar.find('.react-datepicker__month-select')
+      select.simulate('focus')
+
+      assert(onDropdownFocusSpy.called === true, 'onDropdownFocus should to be called')
+    })
+
+    it('does not call onDropdownFocus prop when the dropdown container div is focused', () => {
+      var select = calendar.find('.react-datepicker__header__dropdown')
+      select.simulate('focus')
+
+      assert(onDropdownFocusSpy.called === false, 'onDropdownFocus should not to be called')
+    })
   })
 
   describe('localization', function () {

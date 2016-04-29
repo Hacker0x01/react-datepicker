@@ -39,6 +39,16 @@
   position: relative;
 }
 
+.react-datepicker__header__dropdown--select {
+  margin-top: -16px;
+}
+
+.react-datepicker__year-dropdown-container--select,
+.react-datepicker__month-dropdown-container--select {
+  display: inline-block;
+  margin: 0 2px;
+}
+
 .react-datepicker__current-month {
   margin-top: 0;
   color: #000;
