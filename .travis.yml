@@ -12,10 +12,6 @@ addons:
       - g++-4.8
 rvm:
   - 2.1.7
-cache:
-  directories:
-    - node_modules
-    - vendor/bundle
 before_install:
   - npm install -g grunt-cli
   - gem update --system && gem install scss_lint -v 0.44.0
