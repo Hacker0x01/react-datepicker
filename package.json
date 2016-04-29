@@ -68,7 +68,6 @@
     "node-sass": "^3.4.2",
     "react-addons-test-utils": "^15.0.0",
     "react-docgen": "^2.7.0",
-    "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "sass-loader": "^3.1.2",
     "sinon": "^1.15.4",
