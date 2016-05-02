@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
 [![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master)](https://travis-ci.org/Hacker0x01/react-datepicker)
 [![Dependency Status](https://david-dm.org/Hacker0x01/react-datepicker.svg)](https://david-dm.org/Hacker0x01/react-datepicker)
-[![codecov.io](https://codecov.io/github/Hacker0x01/react-datepicker/coverage.svg?branch=master)](https://codecov.io/github/Hacker0x01/react-datepicker?branch=master)
+[![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/master/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](http://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
 
 A simple and reusable Datepicker component for React ([Demo](https://hacker0x01.github.io/react-datepicker/))
