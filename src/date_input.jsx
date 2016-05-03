@@ -17,7 +17,8 @@ var DateInput = React.createClass({
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
-    onChangeDate: React.PropTypes.func
+    onChangeDate: React.PropTypes.func,
+    onFocus: React.PropTypes.func
   },
 
   getDefaultProps () {
