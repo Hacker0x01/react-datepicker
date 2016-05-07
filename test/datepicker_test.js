@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
+import TetherComponent from 'react-tether'
 import moment from 'moment'
 
 describe('DatePicker', () => {
@@ -161,5 +162,30 @@ describe('DatePicker', () => {
     })
     var element = TestUtils.renderIntoDocument(<TestComponent />)
     element.setState({ mounted: false }, done)
+  })
+
+  it('should render calendar inside TetherComponent when inline prop is not set', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+
+    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, TetherComponent) }).to.not.throw()
+  })
+
+  it('should render calendar directly without TetherComponent when inline prop is set', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline />
+    )
+
+    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, TetherComponent) }).to.throw()
+    expect(datePicker.refs.calendar).to.exist
+  })
+
+  it('should ignore disable prop when inline prop is set', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline disabled />
+    )
+
+    expect(datePicker.refs.calendar).to.exist
   })
 })
