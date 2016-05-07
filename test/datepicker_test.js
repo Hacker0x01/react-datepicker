@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
-import TetherComponent from 'react-tether'
+import TetherComponent from '../src/tether_component.jsx'
 import moment from 'moment'
 
 describe('DatePicker', () => {
