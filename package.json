@@ -70,14 +70,14 @@
     "react-addons-test-utils": "^15.0.0",
     "react-docgen": "^2.7.0",
     "react-dom": "^15.0.0",
-    "react-transform-hmr": "^1.0.1",
-    "sass-loader": "^3.1.2",
+    "react-transform-hmr": "^1.0.4",
+    "sass-loader": "^3.2.0",
     "sinon": "^1.15.4",
-    "style-loader": "^0.13.0",
-    "webpack": "^1.7.2",
-    "webpack-dev-middleware": "^1.4.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-hot-middleware": "^2.10.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
