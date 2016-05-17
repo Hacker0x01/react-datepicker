@@ -18,6 +18,7 @@ var Calendar = React.createClass({
     minDate: React.PropTypes.object,
     onClickOutside: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
+    openToDate: React.PropTypes.object,
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
@@ -45,7 +46,7 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected } = this.props
+    const { selected, openToDate } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const current = moment()
@@ -55,6 +56,8 @@ var Calendar = React.createClass({
       return minDate
     } else if (maxDate && maxDate.isBefore(current)) {
       return maxDate
+    } else if (openToDate) {
+      return openToDate
     } else {
       return current
     }
