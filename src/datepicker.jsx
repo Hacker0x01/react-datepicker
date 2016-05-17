@@ -33,6 +33,7 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
+    openToDate: React.PropTypes.object,
     placeholderText: React.PropTypes.string,
     popoverAttachment: React.PropTypes.string,
     popoverTargetAttachment: React.PropTypes.string,
@@ -136,6 +137,7 @@ var DatePicker = React.createClass({
         dateFormat={this.props.dateFormatCalendar}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         startDate={this.props.startDate}
