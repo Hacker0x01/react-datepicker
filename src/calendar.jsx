@@ -3,8 +3,9 @@ import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
+import onClickOutside from 'react-onclickoutside'
 
-var Calendar = React.createClass({
+var Calendar = onClickOutside(React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
@@ -24,8 +25,6 @@ var Calendar = React.createClass({
     startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string
   },
-
-  mixins: [require('react-onclickoutside')],
 
   getInitialState () {
     return {
@@ -181,6 +180,6 @@ var Calendar = React.createClass({
       </div>
     )
   }
-})
+}))
 
 module.exports = Calendar
