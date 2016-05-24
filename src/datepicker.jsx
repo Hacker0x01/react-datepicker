@@ -15,6 +15,7 @@ var DatePicker = React.createClass({
   displayName: 'DatePicker',
 
   propTypes: {
+    autoComplete: React.PropTypes.string,
     className: React.PropTypes.string,
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
@@ -174,6 +175,7 @@ var DatePicker = React.createClass({
         onChangeDate={this.setSelected}
         placeholder={this.props.placeholderText}
         disabled={this.props.disabled}
+        autoComplete={this.props.autoComplete}
         className={className}
         title={this.props.title}
         readOnly={this.props.readOnly}
