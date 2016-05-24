@@ -13,6 +13,14 @@ describe('DateInput', function () {
     expect(dateInput.disabled).to.not.equal(null)
   })
 
+  it('adds autocomplete attribute to input field when autoComplete is passed as prop', function () {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput autoComplete='off' />
+    )
+
+    expect(ReactDOM.findDOMNode(dateInput).autocomplete).to.equal('off')
+  })
+
   it('uses a custom className if provided', function () {
     const className = 'custom-class-name'
     var dateInput = TestUtils.renderIntoDocument(
