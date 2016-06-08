@@ -51,6 +51,16 @@ var Example = React.createClass({
 });
 ```
 
+### CDN
+The folks at [CDNJS](https://cdnjs.com/) graciously provide CDN support for React Datepicker's CSS and JavaScript. Just use these CDN links:
+```html
+<!-- Latest minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/0.27.0/react-datepicker.min.css" crossorigin="anonymous">
+
+<!-- Latest minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/0.27.0/react-datepicker.min.js" crossorigin="anonymous"></script>
+```
+
 ## Configuration
 
 The most basic use of the DatePicker can be described with:
