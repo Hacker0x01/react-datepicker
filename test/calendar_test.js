@@ -122,7 +122,7 @@ describe('Calendar', function () {
   it('should set the date when pressing todayButton', () => {
     var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag' }))
     var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
-    todayButton.click()
+    TestUtils.Simulate.click(todayButton)
     expect(calendar.state.date.isSame(moment(), 'day'))
   })
 
@@ -130,7 +130,7 @@ describe('Calendar', function () {
     var today = moment().subtract(1, 'day')
     var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag', todaysDate: today }))
     var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
-    todayButton.click()
+    TestUtils.Simulate.click(todayButton)
     expect(calendar.state.date.isSame(today, 'day'))
   })
 
