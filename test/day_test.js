@@ -99,6 +99,12 @@ describe('Day', () => {
       const dayDOM = renderDay(moment().add(1, 'day'))
       expect(dayDOM.className).to.not.contain(className)
     })
+
+    it('should apply the today class if custom today is provided', () => {
+      const today = moment().subtract(1, 'day')
+      const dayDOM = renderDay(today, {todaysDate: today})
+      expect(dayDOM.className).to.contain(className)
+    })
   })
 
   describe('weekend', () => {

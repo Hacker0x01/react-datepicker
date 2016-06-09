@@ -22,6 +22,12 @@ describe('Calendar', function () {
     assert(calendar.state.date.isSame(now, 'day'))
   })
 
+  it('should start with the today date in view if custom today date is set', function () {
+    var todaysDate = moment().subtract(1, 'day')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({todaysDate}))
+    assert(calendar.state.date.isSame(todaysDate, 'day'))
+  })
+
   it('should start with the selected date in view if provided', function () {
     var selected = moment().add(1, 'year')
     var calendar = TestUtils.renderIntoDocument(getCalendar({ selected }))
@@ -111,6 +117,21 @@ describe('Calendar', function () {
     var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
     expect(todayButton).to.exist
     expect(todayButton.textContent).to.equal('Vandaag')
+  })
+
+  it('should set the date when pressing todayButton', () => {
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag' }))
+    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
+    todayButton.click()
+    expect(calendar.state.date.isSame(moment(), 'day'))
+  })
+
+  it('should set custom today date when pressing todayButton', () => {
+    var today = moment().subtract(1, 'day')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag', todaysDate: today }))
+    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
+    todayButton.click()
+    expect(calendar.state.date.isSame(today, 'day'))
   })
 
   describe('localization', function () {

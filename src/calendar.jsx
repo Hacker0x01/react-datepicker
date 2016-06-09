@@ -23,7 +23,8 @@ var Calendar = React.createClass({
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    todaysDate: React.PropTypes.instanceOf(moment.fn.constructor)
   },
 
   mixins: [require('react-onclickoutside')],
@@ -47,10 +48,10 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, openToDate } = this.props
+    const { selected, openToDate, todaysDate } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
-    const current = moment()
+    const current = todaysDate || moment()
     if (selected) {
       return selected
     } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
@@ -154,7 +155,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
+      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(this.props.todaysDate || moment())}>
         {this.props.todayButton}
       </div>
     )
@@ -184,7 +185,8 @@ var Calendar = React.createClass({
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             startDate={this.props.startDate}
-            endDate={this.props.endDate} />
+            endDate={this.props.endDate}
+            todaysDate={this.props.todaysDate}/>
         {this.renderTodayButton()}
       </div>
     )
