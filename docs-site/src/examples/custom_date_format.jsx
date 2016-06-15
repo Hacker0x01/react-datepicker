@@ -29,7 +29,7 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="YYYY/MM/DD"
+            dateFormat="MMM DD, YYYY [at] hh:mm a"
             selected={this.state.startDate}
             onChange={this.handleChange} />
       </div>

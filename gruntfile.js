@@ -65,14 +65,14 @@ module.exports = function (grunt) {
       }
     },
 
-    scsslint: {
-      files: ['src/stylesheets/*.scss', 'docs-site/src/*.scss'],
-      options: {
-        config: '.scss-lint.yml',
-        colorizeOutput: true,
-        exclude: ['docs-site/src/higlight.scss', 'docs-site/src/reset.scss']
-      }
-    },
+    // scsslint: {
+    //   files: ['src/stylesheets/*.scss', 'docs-site/src/*.scss'],
+    //   options: {
+    //     config: '.scss-lint.yml',
+    //     colorizeOutput: true,
+    //     exclude: ['docs-site/src/higlight.scss', 'docs-site/src/reset.scss']
+    //   }
+    // },
 
     karma: {
       unit: {
@@ -125,14 +125,14 @@ module.exports = function (grunt) {
   })
 
   grunt.loadNpmTasks('grunt-contrib-sass')
-  grunt.loadNpmTasks('grunt-scss-lint')
+  // grunt.loadNpmTasks('grunt-scss-lint')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-webpack')
   grunt.loadNpmTasks('grunt-karma')
   grunt.loadNpmTasks('grunt-eslint')
 
-  grunt.registerTask('default', ['watch', 'scsslint'])
+  grunt.registerTask('default', ['watch'])
   grunt.registerTask('travis', ['eslint', 'karma', 'scsslint'])
-  grunt.registerTask('build', ['scsslint', 'babel', 'webpack', 'sass'])
+  grunt.registerTask('build', ['babel', 'webpack', 'sass'])
 }
