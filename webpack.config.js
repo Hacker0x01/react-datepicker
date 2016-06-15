@@ -13,7 +13,8 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules/
-      }
+      },
+      {include: /\.json$/, loaders: ['json-loader']}
     ]
   },
   resolve: {
