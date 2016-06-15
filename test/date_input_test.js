@@ -38,6 +38,14 @@ describe('DateInput', function () {
     expect(ReactDOM.findDOMNode(dateInput).tabIndex).to.equal(1)
   })
 
+  it('uses custom data-* attributes if provided', function () {
+    var dateInput = TestUtils.renderIntoDocument(
+      <DateInput data-color='pink' />
+    )
+
+    expect(ReactDOM.findDOMNode(dateInput).getAttribute('data-color')).to.equal('pink')
+  })
+
   it('should call onChangeDate when changing from null to valid date', function () {
     var date = moment()
     var dateFormat = 'YYYY-MM-DD'

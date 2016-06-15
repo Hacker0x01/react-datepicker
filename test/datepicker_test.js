@@ -188,4 +188,12 @@ describe('DatePicker', () => {
 
     expect(datePicker.refs.calendar).to.exist
   })
+
+  it('should render data-* attributes in DateInput if provided', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker dataAttributes={{'data-color': 'pink'}} />
+    )
+
+    expect(ReactDOM.findDOMNode(datePicker).querySelector('input').getAttribute('data-color')).to.equal('pink')
+  })
 })
