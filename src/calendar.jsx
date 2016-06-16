@@ -37,10 +37,10 @@ var Calendar = React.createClass({
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
-      let v = this.localizeMoment(nextProps.selected);
-      let vv = moment(v).format(this.props.dateFormatDay);
+      let localized = this.localizeMoment(nextProps.selected);
+      let formattedLocalized = moment(localized).format(this.props.dateFormatDay);
       this.setState({
-        date: moment(vv)
+        date: moment(formattedLocalized)
       })
     }
   },

@@ -59,7 +59,7 @@ var DateInput = React.createClass({
         this.props.onChangeDate(null)
       }
     }
-    this.setState({dateTZ})
+    this.setState({date: dateTZ})
   },
 
   safeDateFormat (props) {

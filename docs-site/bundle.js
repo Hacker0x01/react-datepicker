@@ -30402,6 +30402,7 @@
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
+	      timeZone: 'America/Los_Angeles',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -30487,7 +30488,7 @@
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateFormat, "America/Los_Angeles"),
+	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateFormat, this.props.timeZone),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -30619,7 +30620,7 @@
 	        this.props.onChangeDate(null);
 	      }
 	    }
-	    this.setState({ dateTZ: dateTZ });
+	    this.setState({ date: dateTZ });
 	  },
 	  safeDateFormat: function safeDateFormat(props) {
 	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
@@ -42193,10 +42194,10 @@
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    if (nextProps.selected && !(0, _date_utils.isSameDay)(nextProps.selected, this.props.selected)) {
-	      var v = this.localizeMoment(nextProps.selected);
-	      var vv = (0, _moment2.default)(v).format(this.props.dateFormatDay);
+	      var localized = this.localizeMoment(nextProps.selected);
+	      var formattedLocalized = (0, _moment2.default)(localized).format(this.props.dateFormatDay);
 	      this.setState({
-	        date: (0, _moment2.default)(vv)
+	        date: (0, _moment2.default)(formattedLocalized)
 	      });
 	    }
 	  },

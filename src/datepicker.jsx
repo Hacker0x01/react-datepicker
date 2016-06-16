@@ -66,6 +66,7 @@ var DatePicker = React.createClass({
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
+      timeZone: 'America/Los_Angeles',
       tetherConstraints: [
         {
           to: 'window',
@@ -167,7 +168,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={moment.tz(this.props.selected, this.props.dateFormat, "America/Los_Angeles")}
+        date={moment.tz(this.props.selected, this.props.dateFormat, this.props.timeZone)}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
