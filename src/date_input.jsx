@@ -33,13 +33,9 @@ var DateInput = React.createClass({
   },
 
   componentWillReceiveProps (newProps) {
-    if (!isSameDay(newProps.date, this.props.date) ||
-          newProps.locale !== this.props.locale ||
-          newProps.dateFormat !== this.props.dateFormat) {
       this.setState({
         value: this.safeDateFormat(newProps)
       })
-    }
   },
 
   handleChange (event) {
@@ -52,15 +48,17 @@ var DateInput = React.createClass({
   },
 
   handleChangeDate (value) {
+    let formatted = moment(value, this.props.dateFormat).format();
     if (this.props.onChangeDate) {
-      var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
-      if (date.isValid() && !isDayDisabled(date, this.props)) {
-        this.props.onChangeDate(date)
+      var date = moment(formatted);
+      var dateTZ = moment.tz(date, this.props.timeZone);
+      if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
+        this.props.onChangeDate(dateTZ)
       } else if (value === '') {
         this.props.onChangeDate(null)
       }
     }
-    this.setState({value})
+    this.setState({dateTZ})
   },
 
   safeDateFormat (props) {

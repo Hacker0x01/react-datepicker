@@ -124,6 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    startDate: _react2.default.PropTypes.object,
 	    tabIndex: _react2.default.PropTypes.number,
 	    tetherConstraints: _react2.default.PropTypes.array,
+	    timeZone: _react2.default.propTypes.string,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string
 	  },
@@ -140,6 +141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
+	      timeZone: 'Etc/Universal',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -243,7 +245,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      title: this.props.title,
 	      readOnly: this.props.readOnly,
 	      required: this.props.required,
-	      tabIndex: this.props.tabIndex });
+	      tabIndex: this.props.tabIndex,
+	      timeZone: this.props.timeZone });
 	  },
 	  renderClearButton: function renderClearButton() {
 	    if (this.props.isClearable && this.props.selected != null) {
@@ -316,7 +319,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    minDate: _react2.default.PropTypes.object,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
-	    onChangeDate: _react2.default.PropTypes.func
+	    onChangeDate: _react2.default.PropTypes.func,
+	    timeZone: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -330,11 +334,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (!(0, _date_utils.isSameDay)(newProps.date, this.props.date) || newProps.locale !== this.props.locale || newProps.dateFormat !== this.props.dateFormat) {
-	      this.setState({
-	        value: this.safeDateFormat(newProps)
-	      });
-	    }
+	    this.setState({
+	      value: this.safeDateFormat(newProps)
+	    });
 	  },
 	  handleChange: function handleChange(event) {
 	    if (this.props.onChange) {
@@ -345,6 +347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
+	    console.log(value);
 	    if (this.props.onChangeDate) {
 	      var date = (0, _momentTimezone2.default)(value, this.props.dateFormat, this.props.locale || _momentTimezone2.default.locale(), true);
 	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {

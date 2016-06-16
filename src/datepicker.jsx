@@ -3,6 +3,8 @@ import Calendar from './calendar'
 import React from 'react'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
+import moment from 'moment-timezone'
+
 import { isSameDay } from './date_utils'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
@@ -160,7 +162,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={this.props.selected}
+        date={moment.tz(this.props.selected, this.props.dateFormat, "America/Los_Angeles")}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -180,7 +182,7 @@ var DatePicker = React.createClass({
         title={this.props.title}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex} />
+        tabIndex={this.props.tabIndex}/>
   },
 
   renderClearButton () {

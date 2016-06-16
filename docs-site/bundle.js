@@ -30379,6 +30379,7 @@
 	    startDate: _react2.default.PropTypes.object,
 	    tabIndex: _react2.default.PropTypes.number,
 	    tetherConstraints: _react2.default.PropTypes.array,
+	    timeZone: _react2.default.propTypes.string,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string
 	  },
@@ -30395,6 +30396,7 @@
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
+	      timeZone: 'Etc/Universal',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -30498,7 +30500,8 @@
 	      title: this.props.title,
 	      readOnly: this.props.readOnly,
 	      required: this.props.required,
-	      tabIndex: this.props.tabIndex });
+	      tabIndex: this.props.tabIndex,
+	      timeZone: this.props.timeZone });
 	  },
 	  renderClearButton: function renderClearButton() {
 	    if (this.props.isClearable && this.props.selected != null) {
@@ -30571,7 +30574,8 @@
 	    minDate: _react2.default.PropTypes.object,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
-	    onChangeDate: _react2.default.PropTypes.func
+	    onChangeDate: _react2.default.PropTypes.func,
+	    timeZone: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -30585,11 +30589,9 @@
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (!(0, _date_utils.isSameDay)(newProps.date, this.props.date) || newProps.locale !== this.props.locale || newProps.dateFormat !== this.props.dateFormat) {
-	      this.setState({
-	        value: this.safeDateFormat(newProps)
-	      });
-	    }
+	    this.setState({
+	      value: this.safeDateFormat(newProps)
+	    });
 	  },
 	  handleChange: function handleChange(event) {
 	    if (this.props.onChange) {
@@ -30600,6 +30602,7 @@
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
+	    console.log(value);
 	    if (this.props.onChangeDate) {
 	      var date = (0, _momentTimezone2.default)(value, this.props.dateFormat, this.props.locale || _momentTimezone2.default.locale(), true);
 	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
@@ -45015,7 +45018,8 @@
 	  },
 	  render: function render() {
 	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, '    ', "dateFormat=\"YYYY/MM/DD\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
-	      dateFormat: 'YYYY/MM/DD',
+	      dateFormat: 'MMM DD, YYYY [at] hh:mm a z',
+	      timeZone: 'America/Los_Angeles',
 	      selected: this.state.startDate,
 	      onChange: this.handleChange })));
 	  }
