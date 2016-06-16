@@ -9,6 +9,7 @@ var Calendar = React.createClass({
 
   propTypes: {
     dateFormat: React.PropTypes.string.isRequired,
+    dateFormatDay: React.PropTypes.string.isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
@@ -22,7 +23,8 @@ var Calendar = React.createClass({
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    timeZone: React.PropTypes.string
   },
 
   mixins: [require('react-onclickoutside')],
@@ -35,8 +37,10 @@ var Calendar = React.createClass({
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
+      let v = this.localizeMoment(nextProps.selected);
+      let vv = moment(v).format(this.props.dateFormatDay);
       this.setState({
-        date: this.localizeMoment(nextProps.selected)
+        date: moment(vv)
       })
     }
   },

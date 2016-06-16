@@ -21,6 +21,7 @@ var DatePicker = React.createClass({
     className: React.PropTypes.string,
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
+    dateFormatDay: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -50,12 +51,14 @@ var DatePicker = React.createClass({
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    timeZone: React.PropTypes.string
   },
 
   getDefaultProps () {
     return {
       dateFormatCalendar: 'MMMM YYYY',
+      dateFormatDay: 'YYYY/MM/DD',
       onChange () {},
       disabled: false,
       onFocus () {},
@@ -138,6 +141,7 @@ var DatePicker = React.createClass({
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
+        dateFormatDay={this.props.dateFormatDay}
         selected={this.props.selected}
         onSelect={this.handleSelect}
         openToDate={this.props.openToDate}
@@ -151,7 +155,8 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
-        outsideClickIgnoreClass={outsideClickIgnoreClass} />
+        outsideClickIgnoreClass={outsideClickIgnoreClass}
+        timeZone={this.props.timeZone} />
   },
 
   renderDateInput () {
@@ -182,7 +187,8 @@ var DatePicker = React.createClass({
         title={this.props.title}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex}/>
+        tabIndex={this.props.tabIndex}
+        timeZone={this.props.timeZone}/>
   },
 
   renderClearButton () {

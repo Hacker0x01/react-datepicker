@@ -30323,6 +30323,10 @@
 
 	var _classnames3 = _interopRequireDefault(_classnames2);
 
+	var _momentTimezone = __webpack_require__(327);
+
+	var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
+
 	var _date_utils = __webpack_require__(433);
 
 	function _interopRequireDefault(obj) {
@@ -30351,6 +30355,7 @@
 	    className: _react2.default.PropTypes.string,
 	    dateFormat: _react2.default.PropTypes.string,
 	    dateFormatCalendar: _react2.default.PropTypes.string,
+	    dateFormatDay: _react2.default.PropTypes.string,
 	    disabled: _react2.default.PropTypes.bool,
 	    endDate: _react2.default.PropTypes.object,
 	    excludeDates: _react2.default.PropTypes.array,
@@ -30379,14 +30384,15 @@
 	    startDate: _react2.default.PropTypes.object,
 	    tabIndex: _react2.default.PropTypes.number,
 	    tetherConstraints: _react2.default.PropTypes.array,
-	    timeZone: _react2.default.propTypes.string,
 	    title: _react2.default.PropTypes.string,
-	    todayButton: _react2.default.PropTypes.string
+	    todayButton: _react2.default.PropTypes.string,
+	    timeZone: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      dateFormatCalendar: 'MMMM YYYY',
+	      dateFormatDay: 'YYYY/MM/DD',
 	      onChange: function onChange() {},
 
 	      disabled: false,
@@ -30396,7 +30402,6 @@
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
-	      timeZone: 'Etc/Universal',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -30459,6 +30464,7 @@
 	      ref: 'calendar',
 	      locale: this.props.locale,
 	      dateFormat: this.props.dateFormatCalendar,
+	      dateFormatDay: this.props.dateFormatDay,
 	      selected: this.props.selected,
 	      onSelect: this.handleSelect,
 	      openToDate: this.props.openToDate,
@@ -30472,7 +30478,8 @@
 	      includeDates: this.props.includeDates,
 	      showYearDropdown: this.props.showYearDropdown,
 	      todayButton: this.props.todayButton,
-	      outsideClickIgnoreClass: outsideClickIgnoreClass });
+	      outsideClickIgnoreClass: outsideClickIgnoreClass,
+	      timeZone: this.props.timeZone });
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -30480,7 +30487,7 @@
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: this.props.selected,
+	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateFormat, "America/Los_Angeles"),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -30574,8 +30581,7 @@
 	    minDate: _react2.default.PropTypes.object,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
-	    onChangeDate: _react2.default.PropTypes.func,
-	    timeZone: _react2.default.PropTypes.string
+	    onChangeDate: _react2.default.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -30602,16 +30608,18 @@
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
-	    console.log(value);
+	    var formatted = (0, _momentTimezone2.default)(value, this.props.dateFormat).format();
 	    if (this.props.onChangeDate) {
-	      var date = (0, _momentTimezone2.default)(value, this.props.dateFormat, this.props.locale || _momentTimezone2.default.locale(), true);
-	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
-	        this.props.onChangeDate(date);
+	      var date = (0, _momentTimezone2.default)(formatted);
+	      var justDate = (0, _momentTimezone2.default)(formatted, _momentTimezone2.default.ISO_8601).toString();
+	      var dateTZ = _momentTimezone2.default.tz(date, this.props.timeZone);
+	      if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
+	        this.props.onChangeDate(dateTZ);
 	      } else if (value === '') {
 	        this.props.onChangeDate(null);
 	      }
 	    }
-	    this.setState({ value: value });
+	    this.setState({ dateTZ: dateTZ });
 	  },
 	  safeDateFormat: function safeDateFormat(props) {
 	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
@@ -42049,7 +42057,7 @@
 
 	function isSameDay(moment1, moment2) {
 	  if (moment1 && moment2) {
-	    return moment1.isSame(moment2, 'day');
+	    return moment1.isSame(moment2, 'minute');
 	  } else {
 	    return !moment1 && !moment2;
 	  }
@@ -42158,6 +42166,7 @@
 
 	  propTypes: {
 	    dateFormat: _react2.default.PropTypes.string.isRequired,
+	    dateFormatDay: _react2.default.PropTypes.string.isRequired,
 	    endDate: _react2.default.PropTypes.object,
 	    excludeDates: _react2.default.PropTypes.array,
 	    filterDate: _react2.default.PropTypes.func,
@@ -42171,7 +42180,8 @@
 	    selected: _react2.default.PropTypes.object,
 	    showYearDropdown: _react2.default.PropTypes.bool,
 	    startDate: _react2.default.PropTypes.object,
-	    todayButton: _react2.default.PropTypes.string
+	    todayButton: _react2.default.PropTypes.string,
+	    timeZone: _react2.default.PropTypes.string
 	  },
 
 	  mixins: [__webpack_require__(437)],
@@ -42183,8 +42193,10 @@
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    if (nextProps.selected && !(0, _date_utils.isSameDay)(nextProps.selected, this.props.selected)) {
+	      var v = this.localizeMoment(nextProps.selected);
+	      var vv = (0, _moment2.default)(v).format(this.props.dateFormatDay);
 	      this.setState({
-	        date: this.localizeMoment(nextProps.selected)
+	        date: (0, _moment2.default)(vv)
 	      });
 	    }
 	  },
@@ -45018,7 +45030,7 @@
 	  },
 	  render: function render() {
 	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, '    ', "dateFormat=\"YYYY/MM/DD\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
-	      dateFormat: 'MMM DD, YYYY [at] hh:mm a z',
+	      dateFormat: 'MMM D, YYYY [at] hh:mm a z',
 	      timeZone: 'America/Los_Angeles',
 	      selected: this.state.startDate,
 	      onChange: this.handleChange })));

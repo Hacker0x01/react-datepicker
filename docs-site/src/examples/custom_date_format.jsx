@@ -12,8 +12,6 @@ export default React.createClass({
   },
 
   handleChange (date) {
-    console.log("change");
-    console.log(date);
     this.setState({
       startDate: date
     })
@@ -31,7 +29,7 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="MM-DD-YYYY [at] hh:mm a z"
+            dateFormat="MMM D, YYYY [at] hh:mm a z"
             timeZone="America/Los_Angeles"
             selected={this.state.startDate}
             onChange={this.handleChange} />

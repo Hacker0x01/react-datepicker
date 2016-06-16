@@ -51,6 +51,7 @@ var DateInput = React.createClass({
     let formatted = moment(value, this.props.dateFormat).format();
     if (this.props.onChangeDate) {
       var date = moment(formatted);
+      var justDate = moment(formatted, moment.ISO_8601).toString();
       var dateTZ = moment.tz(date, this.props.timeZone);
       if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
         this.props.onChangeDate(dateTZ)
