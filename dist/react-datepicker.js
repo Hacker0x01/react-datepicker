@@ -181,7 +181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setOpen(false);
 	  },
 	  setSelected: function setSelected(date) {
-	    if (!(0, _date_utils.isSameDay)(this.props.selected, date)) {
+	    if (!(0, _date_utils.isSameDayAndTime)(this.props.selected, date)) {
 	      this.props.onChange(date);
 	    }
 	  },
@@ -242,7 +242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      filterDate: this.props.filterDate,
 	      dateFormat: this.props.dateFormat,
 	      onFocus: this.handleFocus,
-	      onBlur: this.handleBlur,
+	      onBlur: this.setSelected,
 	      onClick: this.onInputClick,
 	      onKeyDown: this.onInputKeyDown,
 	      onChangeDate: this.setSelected,
@@ -337,7 +337,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      value: this.safeDateFormat(this.props)
+	      value: this.safeDateFormat(this.props),
+	      manualDate: null
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
@@ -354,10 +355,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
-	    var formatted = (0, _momentTimezone2.default)(value, this.props.dateFormat).format();
+	    // let formatted = moment(value, this.props.dateFormat).format();
+	    // if (this.props.onChangeDate) {
+	    //   var date = moment(formatted);
+	    //   var dateTZ = moment.tz(date, this.props.timeZone);
+	    //   if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
+	    //     this.props.onChangeDate(dateTZ)
+	    //   } else if (value === '') {
+	    //     this.props.onChangeDate(null)
+	    //   }
+	    // }
+	    // this.setState({date: dateTZ})
+	    this.setState({
+	      manualDate: value,
+	      value: value
+	    });
+	  },
+	  safeDateFormat: function safeDateFormat(props) {
+	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
+	  },
+	  handleBlur: function handleBlur(event) {
+	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).format();
 	    if (this.props.onChangeDate) {
 	      var date = (0, _momentTimezone2.default)(formatted);
-	      var justDate = (0, _momentTimezone2.default)(formatted, _momentTimezone2.default.ISO_8601).toString();
 	      var dateTZ = _momentTimezone2.default.tz(date, this.props.timeZone);
 	      if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
 	        this.props.onChangeDate(dateTZ);
@@ -366,17 +386,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    this.setState({ date: dateTZ });
-	  },
-	  safeDateFormat: function safeDateFormat(props) {
-	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
-	  },
-	  handleBlur: function handleBlur(event) {
-	    this.setState({
-	      value: this.safeDateFormat(this.props)
-	    });
-	    if (this.props.onBlur) {
-	      this.props.onBlur(event);
-	    }
+	    // this.setState({
+	    //   value: this.safeDateFormat(this.props)
+	    // })
+	    // if (this.props.onBlur) {
+	    //   this.props.onBlur(event)
+	    // }
 	  },
 	  focus: function focus() {
 	    this.refs.input.focus();
@@ -1631,6 +1646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.isSameDay = isSameDay;
+	exports.isSameDayAndTime = isSameDayAndTime;
 	exports.isDayDisabled = isDayDisabled;
 	exports.allDaysDisabledBefore = allDaysDisabledBefore;
 	exports.allDaysDisabledAfter = allDaysDisabledAfter;
@@ -1644,6 +1660,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function isSameDay(moment1, moment2) {
+	  if (moment1 && moment2) {
+	    return moment1.isSame(moment2, 'day');
+	  } else {
+	    return !moment1 && !moment2;
+	  }
+	}
+
+	function isSameDayAndTime(moment1, moment2) {
 	  if (moment1 && moment2) {
 	    return moment1.isSame(moment2, 'minute');
 	  } else {

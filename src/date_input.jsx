@@ -28,7 +28,8 @@ var DateInput = React.createClass({
 
   getInitialState () {
     return {
-      value: this.safeDateFormat(this.props)
+      value: this.safeDateFormat(this.props),
+      manualDate: null
     }
   },
 
@@ -48,18 +49,21 @@ var DateInput = React.createClass({
   },
 
   handleChangeDate (value) {
-    let formatted = moment(value, this.props.dateFormat).format();
-    if (this.props.onChangeDate) {
-      var date = moment(formatted);
-      var justDate = moment(formatted, moment.ISO_8601).toString();
-      var dateTZ = moment.tz(date, this.props.timeZone);
-      if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-        this.props.onChangeDate(dateTZ)
-      } else if (value === '') {
-        this.props.onChangeDate(null)
-      }
-    }
-    this.setState({date: dateTZ})
+    // let formatted = moment(value, this.props.dateFormat).format();
+    // if (this.props.onChangeDate) {
+    //   var date = moment(formatted);
+    //   var dateTZ = moment.tz(date, this.props.timeZone);
+    //   if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
+    //     this.props.onChangeDate(dateTZ)
+    //   } else if (value === '') {
+    //     this.props.onChangeDate(null)
+    //   }
+    // }
+    // this.setState({date: dateTZ})
+    this.setState({
+      manualDate: value,
+      value: value
+    })
   },
 
   safeDateFormat (props) {
@@ -69,12 +73,23 @@ var DateInput = React.createClass({
   },
 
   handleBlur (event) {
-    this.setState({
-      value: this.safeDateFormat(this.props)
-    })
-    if (this.props.onBlur) {
-      this.props.onBlur(event)
+    let formatted = moment(this.state.manualDate, this.props.dateFormat).format();
+    if (this.props.onChangeDate) {
+      var date = moment(formatted);
+      var dateTZ = moment.tz(date, this.props.timeZone);
+      if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
+        this.props.onChangeDate(dateTZ)
+      } else if (value === '') {
+        this.props.onChangeDate(null)
+      }
     }
+    this.setState({date: dateTZ})
+    // this.setState({
+    //   value: this.safeDateFormat(this.props)
+    // })
+    // if (this.props.onBlur) {
+    //   this.props.onBlur(event)
+    // }
   },
 
   focus () {
