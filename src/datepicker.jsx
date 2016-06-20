@@ -5,7 +5,7 @@ import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import moment from 'moment-timezone'
 
-import { isSameDay } from './date_utils'
+import { isSameDay, isSameDayAndTime } from './date_utils'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
 
@@ -109,7 +109,7 @@ var DatePicker = React.createClass({
   },
 
   setSelected (date) {
-    if (!isSameDay(this.props.selected, date)) {
+    if (!isSameDayAndTime(this.props.selected, date)) {
       this.props.onChange(date)
     }
   },
