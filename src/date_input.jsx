@@ -18,7 +18,8 @@ var DateInput = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onChangeDate: React.PropTypes.func,
-    isDateOnly: React.PropTypes.func
+    isDateOnly: React.PropTypes.func,
+    onInputKeyDown: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -38,6 +39,14 @@ var DateInput = React.createClass({
       this.setState({
         value: this.safeDateFormat(newProps)
       })
+  },
+
+  onKeyDown (event) {
+    if (event.key === 'Enter') {
+      this.handleBlur(event)
+    } else {
+      this.props.onInputKeyDown
+    }
   },
 
   handleChange (event) {
@@ -102,6 +111,7 @@ var DateInput = React.createClass({
         type='text'
         {...this.props}
         value={this.state.value}
+        onKeyDown={this.onKeyDown}
         onBlur={this.handleBlur}
         onChange={this.handleChange} />
   }

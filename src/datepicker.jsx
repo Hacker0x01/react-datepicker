@@ -120,8 +120,8 @@ var DatePicker = React.createClass({
     }
   },
 
-  setDateType (x) {
-      this.props.dateType(x)
+  setDateType (isDateOnly) {
+      this.props.dateType(isDateOnly)
   },
 
   onInputClick () {
@@ -131,7 +131,7 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if (event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
     } else if (event.key === 'Tab') {

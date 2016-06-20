@@ -191,8 +191,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.props.onChange(date);
 	    }
 	  },
-	  setDateType: function setDateType(x) {
-	    this.props.dateType(x);
+	  setDateType: function setDateType(isDateOnly) {
+	    this.props.dateType(isDateOnly);
 	  },
 	  onInputClick: function onInputClick() {
 	    if (!this.props.disabled) {
@@ -200,7 +200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  onInputKeyDown: function onInputKeyDown(event) {
-	    if (event.key === 'Enter' || event.key === 'Escape') {
+	    if (event.key === 'Escape') {
 	      event.preventDefault();
 	      this.setOpen(false);
 	    } else if (event.key === 'Tab') {
@@ -337,7 +337,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func,
-	    isDateOnly: _react2.default.PropTypes.func
+	    isDateOnly: _react2.default.PropTypes.func,
+	    onInputKeyDown: _react2.default.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -355,6 +356,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setState({
 	      value: this.safeDateFormat(newProps)
 	    });
+	  },
+	  onKeyDown: function onKeyDown(event) {
+	    if (event.key === 'Enter') {
+	      this.handleBlur(event);
+	    } else {
+	      this.props.onInputKeyDown;
+	    }
 	  },
 	  handleChange: function handleChange(event) {
 	    if (this.props.onChange) {
@@ -410,6 +418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: 'text'
 	    }, this.props, {
 	      value: this.state.value,
+	      onKeyDown: this.onKeyDown,
 	      onBlur: this.handleBlur,
 	      onChange: this.handleChange }));
 	  }
