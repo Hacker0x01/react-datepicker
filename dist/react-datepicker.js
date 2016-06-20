@@ -101,6 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormat: _react2.default.PropTypes.string,
 	    dateFormatCalendar: _react2.default.PropTypes.string,
 	    dateFormatDay: _react2.default.PropTypes.string,
+	    dateType: _react2.default.PropTypes.func,
 	    disabled: _react2.default.PropTypes.bool,
 	    endDate: _react2.default.PropTypes.object,
 	    excludeDates: _react2.default.PropTypes.array,
@@ -177,13 +178,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setOpen(false);
 	  },
 	  handleSelect: function handleSelect(date) {
-	    this.setSelected(date);
+	    var formattedDate = (0, _momentTimezone2.default)(date).format();
+	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
+	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
+	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
+	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timeZone);
+	    this.setSelected(dateTZ);
 	    this.setOpen(false);
 	  },
 	  setSelected: function setSelected(date) {
 	    if (!(0, _date_utils.isSameDayAndTime)(this.props.selected, date)) {
 	      this.props.onChange(date);
 	    }
+	  },
+	  setDateType: function setDateType(x) {
+	    this.props.dateType(x);
 	  },
 	  onInputClick: function onInputClick() {
 	    if (!this.props.disabled) {
@@ -240,12 +249,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      excludeDates: this.props.excludeDates,
 	      includeDates: this.props.includeDates,
 	      filterDate: this.props.filterDate,
-	      dateFormat: this.props.dateFormat,
+	      dateFormat: this.props.isDateOnly ? 'MMM D, YYYY' : this.props.dateFormat,
 	      onFocus: this.handleFocus,
-	      onBlur: this.setSelected,
 	      onClick: this.onInputClick,
 	      onKeyDown: this.onInputKeyDown,
 	      onChangeDate: this.setSelected,
+	      isDateOnly: this.setDateType,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled,
 	      autoComplete: this.props.autoComplete,
@@ -327,7 +336,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    minDate: _react2.default.PropTypes.object,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
-	    onChangeDate: _react2.default.PropTypes.func
+	    onChangeDate: _react2.default.PropTypes.func,
+	    isDateOnly: _react2.default.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -355,17 +365,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
-	    // let formatted = moment(value, this.props.dateFormat).format();
-	    // if (this.props.onChangeDate) {
-	    //   var date = moment(formatted);
-	    //   var dateTZ = moment.tz(date, this.props.timeZone);
-	    //   if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-	    //     this.props.onChangeDate(dateTZ)
-	    //   } else if (value === '') {
-	    //     this.props.onChangeDate(null)
-	    //   }
-	    // }
-	    // this.setState({date: dateTZ})
 	    this.setState({
 	      manualDate: value,
 	      value: value
@@ -375,23 +374,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
 	  },
 	  handleBlur: function handleBlur(event) {
-	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).format();
+	    this.checkManualDate();
+	  },
+	  checkManualDate: function checkManualDate() {
+	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
+	    var dateOnly = (0, _momentTimezone2.default)(this.state.manualDate).format("MMM D, YYYY");
 	    if (this.props.onChangeDate) {
-	      var date = (0, _momentTimezone2.default)(formatted);
-	      var dateTZ = _momentTimezone2.default.tz(date, this.props.timeZone);
-	      if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
-	        this.props.onChangeDate(dateTZ);
-	      } else if (value === '') {
-	        this.props.onChangeDate(null);
+	      if (dateOnly === "Invalid date") {
+	        var fullDate = (0, _momentTimezone2.default)(formatted);
+	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timeZone);
+	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
+	          this.props.isDateOnly(false);
+	          this.props.onChangeDate(dateTZ);
+	        } else if (value === '') {
+	          this.props.onChangeDate(null);
+	        }
+	      } else {
+	        if ((0, _momentTimezone2.default)(this.state.manualDate).isValid() && !(0, _date_utils.isDayDisabled)((0, _momentTimezone2.default)(this.state.manualDate), this.props)) {
+	          this.props.onChangeDate((0, _momentTimezone2.default)(this.state.manualDate));
+	          this.props.isDateOnly(true);
+	        }
 	      }
 	    }
-	    this.setState({ date: dateTZ });
-	    // this.setState({
-	    //   value: this.safeDateFormat(this.props)
-	    // })
-	    // if (this.props.onBlur) {
-	    //   this.props.onBlur(event)
-	    // }
+	    this.setState({
+	      date: dateTZ,
+	      value: this.safeDateFormat(this.props)
+	    });
 	  },
 	  focus: function focus() {
 	    this.refs.input.focus();

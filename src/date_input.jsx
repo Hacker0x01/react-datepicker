@@ -17,7 +17,8 @@ var DateInput = React.createClass({
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
-    onChangeDate: React.PropTypes.func
+    onChangeDate: React.PropTypes.func,
+    isDateOnly: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -49,17 +50,6 @@ var DateInput = React.createClass({
   },
 
   handleChangeDate (value) {
-    // let formatted = moment(value, this.props.dateFormat).format();
-    // if (this.props.onChangeDate) {
-    //   var date = moment(formatted);
-    //   var dateTZ = moment.tz(date, this.props.timeZone);
-    //   if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-    //     this.props.onChangeDate(dateTZ)
-    //   } else if (value === '') {
-    //     this.props.onChangeDate(null)
-    //   }
-    // }
-    // this.setState({date: dateTZ})
     this.setState({
       manualDate: value,
       value: value
@@ -73,23 +63,33 @@ var DateInput = React.createClass({
   },
 
   handleBlur (event) {
-    let formatted = moment(this.state.manualDate, this.props.dateFormat).format();
+    this.checkManualDate()
+  },
+
+  checkManualDate () {
+    let formatted = moment(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
+    let dateOnly = moment(this.state.manualDate).format("MMM D, YYYY");
     if (this.props.onChangeDate) {
-      var date = moment(formatted);
-      var dateTZ = moment.tz(date, this.props.timeZone);
-      if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-        this.props.onChangeDate(dateTZ)
-      } else if (value === '') {
-        this.props.onChangeDate(null)
+      if (dateOnly === "Invalid date") {
+        var fullDate = moment(formatted);
+        var dateTZ = moment.tz(fullDate, this.props.timeZone);
+        if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
+          this.props.isDateOnly(false)
+          this.props.onChangeDate(dateTZ)
+        } else if (value === '') {
+          this.props.onChangeDate(null)
+        }
+      } else {
+          if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {
+            this.props.onChangeDate(moment(this.state.manualDate))
+            this.props.isDateOnly(true)
+          }
       }
     }
-    this.setState({date: dateTZ})
-    // this.setState({
-    //   value: this.safeDateFormat(this.props)
-    // })
-    // if (this.props.onBlur) {
-    //   this.props.onBlur(event)
-    // }
+    this.setState({
+      date: dateTZ,
+      value: this.safeDateFormat(this.props)
+    })
   },
 
   focus () {

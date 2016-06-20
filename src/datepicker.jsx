@@ -22,6 +22,7 @@ var DatePicker = React.createClass({
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     dateFormatDay: React.PropTypes.string,
+    dateType: React.PropTypes.func,
     disabled: React.PropTypes.bool,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -104,7 +105,12 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date) {
-    this.setSelected(date)
+    let formattedDate = moment(date).format()
+    let previousHour = moment(this.props.selected).hours()
+    let previousMinute = moment(this.props.selected).minutes()
+    let adjustedDate = moment(formattedDate).hours(previousHour).minutes(previousMinute)
+    let dateTZ = moment.tz(moment(adjustedDate), this.props.timeZone)
+    this.setSelected(dateTZ)
     this.setOpen(false)
   },
 
@@ -112,6 +118,10 @@ var DatePicker = React.createClass({
     if (!isSameDayAndTime(this.props.selected, date)) {
       this.props.onChange(date)
     }
+  },
+
+  setDateType (x) {
+      this.props.dateType(x)
   },
 
   onInputClick () {
@@ -175,12 +185,12 @@ var DatePicker = React.createClass({
         excludeDates={this.props.excludeDates}
         includeDates={this.props.includeDates}
         filterDate={this.props.filterDate}
-        dateFormat={this.props.dateFormat}
+        dateFormat={this.props.isDateOnly ? 'MMM D, YYYY' : this.props.dateFormat}
         onFocus={this.handleFocus}
-        onBlur={this.setSelected}
         onClick={this.onInputClick}
         onKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
+        isDateOnly={this.setDateType}
         placeholder={this.props.placeholderText}
         disabled={this.props.disabled}
         autoComplete={this.props.autoComplete}
