@@ -30394,6 +30394,7 @@
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      dateFormatCalendar: 'MMMM YYYY',
+	      dateFormat: 'MMM/DD/YYYY',
 	      dateFormatDay: 'YYYY/MM/DD',
 	      dateOnly: true,
 	      onChange: function onChange() {},
@@ -30649,7 +30650,7 @@
 	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timeZone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
 	          this.props.onChangeDate(dateTZ, false);
-	        } else if (value === '') {
+	        } else if (this.state.value === '') {
 	          this.props.onChangeDate(null, false);
 	        }
 	      } else {
