@@ -140,6 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      dateFormatCalendar: 'MMMM YYYY',
 	      dateFormat: 'MMM/DD/YYYY',
+	      dateOnlyFormat: 'YYYY/MM/DD',
 	      dateFormatDay: 'YYYY/MM/DD',
 	      dateOnly: true,
 	      onChange: function onChange() {},
@@ -390,9 +391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  checkManualDate: function checkManualDate() {
 	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
-	    var dateOnly = (0, _momentTimezone2.default)(this.state.manualDate).format(this.props.dateOnlyFormat);
+	    var dateHour = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('hour');
+	    var isDateOnly = dateHour === 0;
 	    if (this.props.onChangeDate) {
-	      if (dateOnly === "Invalid date") {
+	      if (!isDateOnly) {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
 	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timezone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {

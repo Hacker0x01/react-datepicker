@@ -61,6 +61,7 @@ var DatePicker = React.createClass({
     return {
       dateFormatCalendar: 'MMMM YYYY',
       dateFormat: 'MMM/DD/YYYY',
+      dateOnlyFormat: 'YYYY/MM/DD',
       dateFormatDay: 'YYYY/MM/DD',
       dateOnly: true,
       onChange () {},

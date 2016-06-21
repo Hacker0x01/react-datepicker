@@ -24,7 +24,7 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-              <strong>{"dateFormat=\"MMM D, YYYY [at] hh:mm a z\""}</strong><br />
+              <strong>{"dateFormat=\"MMM D, YYYY [at] k:mm a z\""}</strong><br />
               <strong>{"timezone=\"America/Los_Angeles\""}</strong><br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange} />"}
@@ -32,7 +32,7 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="YYYY-MM-DD at hh:mm a z"
+            dateFormat="YYYY-MM-DD [at] hh:mm a z"
             dateOnlyFormat="YYYY-MM-DD z"
             timezone={moment.tz.guess()}
             selected={this.state.selected}
