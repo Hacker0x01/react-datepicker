@@ -8,19 +8,14 @@ export default React.createClass({
   getInitialState () {
     return {
       startDate: moment(),
-      isDateOnly: false
+      dateOnly: false
     }
   },
 
-  handleChange (date) {
+  handleChange (date, isDateOnly) {
     this.setState({
-      startDate: date
-    })
-  },
-
-  dateType (isDateOnly) {
-    this.setState({
-      isDateOnly: isDateOnly
+      startDate: date,
+      dateOnly: isDateOnly
     })
   },
 
@@ -38,11 +33,11 @@ export default React.createClass({
       <div className="column">
         <DatePicker
             dateFormat="MMM D, YYYY [at] hh:mm a z"
+            dateOnlyFormat="MMM D, YYYY"
             timeZone="America/Los_Angeles"
             selected={this.state.startDate}
             onChange={this.handleChange}
-            dateType={this.dateType}
-            isDateOnly={this.state.isDateOnly} />
+            dateOnly={this.state.dateOnly} />
       </div>
     </div>
   }

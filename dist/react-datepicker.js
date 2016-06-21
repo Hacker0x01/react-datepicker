@@ -101,7 +101,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormat: _react2.default.PropTypes.string,
 	    dateFormatCalendar: _react2.default.PropTypes.string,
 	    dateFormatDay: _react2.default.PropTypes.string,
-	    dateType: _react2.default.PropTypes.func,
+	    dateOnlyFormat: _react2.default.PropTypes.string,
+	    dateOnly: _react2.default.PropTypes.bool,
 	    disabled: _react2.default.PropTypes.bool,
 	    endDate: _react2.default.PropTypes.object,
 	    excludeDates: _react2.default.PropTypes.array,
@@ -139,6 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      dateFormatCalendar: 'MMMM YYYY',
 	      dateFormatDay: 'YYYY/MM/DD',
+	      dateOnly: true,
 	      onChange: function onChange() {},
 
 	      disabled: false,
@@ -183,16 +185,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
 	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timeZone);
-	    this.setSelected(dateTZ);
+	    this.setSelected(dateTZ, this.props.dateOnly);
 	    this.setOpen(false);
 	  },
-	  setSelected: function setSelected(date) {
+	  setSelected: function setSelected(date, isDateOnly) {
 	    if (!(0, _date_utils.isSameDayAndTime)(this.props.selected, date)) {
-	      this.props.onChange(date);
+	      this.props.onChange(date, isDateOnly);
 	    }
-	  },
-	  setDateType: function setDateType(isDateOnly) {
-	    this.props.dateType(isDateOnly);
 	  },
 	  onInputClick: function onInputClick() {
 	    if (!this.props.disabled) {
@@ -209,7 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  onClearClick: function onClearClick(event) {
 	    event.preventDefault();
-	    this.props.onChange(null);
+	    this.props.onChange(null, true);
 	  },
 	  renderCalendar: function renderCalendar() {
 	    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
@@ -242,19 +241,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateFormat, this.props.timeZone),
+	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timeZone),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
 	      excludeDates: this.props.excludeDates,
 	      includeDates: this.props.includeDates,
 	      filterDate: this.props.filterDate,
-	      dateFormat: this.props.isDateOnly ? 'MMM D, YYYY' : this.props.dateFormat,
+	      dateFormat: this.props.dateFormat,
+	      dateOnlyFormat: this.props.dateOnlyFormat,
+	      dateOnly: this.props.dateOnly,
 	      onFocus: this.handleFocus,
 	      onClick: this.onInputClick,
-	      onKeyDown: this.onInputKeyDown,
+	      onInputKeyDown: this.onInputKeyDown,
 	      onChangeDate: this.setSelected,
-	      isDateOnly: this.setDateType,
 	      placeholder: this.props.placeholderText,
 	      disabled: this.props.disabled,
 	      autoComplete: this.props.autoComplete,
@@ -327,6 +327,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  propTypes: {
 	    date: _react2.default.PropTypes.object,
 	    dateFormat: _react2.default.PropTypes.string,
+	    dateOnlyFormat: _react2.default.PropTypes.string,
+	    dateOnly: _react2.default.PropTypes.bool,
 	    disabled: _react2.default.PropTypes.bool,
 	    excludeDates: _react2.default.PropTypes.array,
 	    filterDate: _react2.default.PropTypes.func,
@@ -337,7 +339,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func,
-	    isDateOnly: _react2.default.PropTypes.func,
 	    onInputKeyDown: _react2.default.PropTypes.func
 	  },
 
@@ -379,28 +380,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 	  safeDateFormat: function safeDateFormat(props) {
-	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateFormat) || '';
+	    return props.date && props.date.clone().locale(props.locale || _momentTimezone2.default.locale()).format(props.dateOnly ? props.dateOnlyFormat : props.dateFormat) || '';
 	  },
 	  handleBlur: function handleBlur(event) {
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
 	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
-	    var dateOnly = (0, _momentTimezone2.default)(this.state.manualDate).format("MMM D, YYYY");
+	    var dateOnly = (0, _momentTimezone2.default)(this.state.manualDate).format(this.props.dateOnlyFormat);
 	    if (this.props.onChangeDate) {
 	      if (dateOnly === "Invalid date") {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
 	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timeZone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
-	          this.props.isDateOnly(false);
-	          this.props.onChangeDate(dateTZ);
+	          this.props.onChangeDate(dateTZ, false);
 	        } else if (value === '') {
-	          this.props.onChangeDate(null);
+	          this.props.onChangeDate(null, false);
 	        }
 	      } else {
 	        if ((0, _momentTimezone2.default)(this.state.manualDate).isValid() && !(0, _date_utils.isDayDisabled)((0, _momentTimezone2.default)(this.state.manualDate), this.props)) {
-	          this.props.onChangeDate((0, _momentTimezone2.default)(this.state.manualDate));
-	          this.props.isDateOnly(true);
+	          this.props.onChangeDate((0, _momentTimezone2.default)(this.state.manualDate), true);
 	        }
 	      }
 	    }

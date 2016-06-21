@@ -22,7 +22,8 @@ var DatePicker = React.createClass({
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     dateFormatDay: React.PropTypes.string,
-    dateType: React.PropTypes.func,
+    dateOnlyFormat: React.PropTypes.string,
+    dateOnly: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -60,6 +61,7 @@ var DatePicker = React.createClass({
     return {
       dateFormatCalendar: 'MMMM YYYY',
       dateFormatDay: 'YYYY/MM/DD',
+      dateOnly: true,
       onChange () {},
       disabled: false,
       onFocus () {},
@@ -110,18 +112,14 @@ var DatePicker = React.createClass({
     let previousMinute = moment(this.props.selected).minutes()
     let adjustedDate = moment(formattedDate).hours(previousHour).minutes(previousMinute)
     let dateTZ = moment.tz(moment(adjustedDate), this.props.timeZone)
-    this.setSelected(dateTZ)
+    this.setSelected(dateTZ, this.props.dateOnly)
     this.setOpen(false)
   },
 
-  setSelected (date) {
+  setSelected (date, isDateOnly) {
     if (!isSameDayAndTime(this.props.selected, date)) {
-      this.props.onChange(date)
+      this.props.onChange(date, isDateOnly)
     }
-  },
-
-  setDateType (isDateOnly) {
-      this.props.dateType(isDateOnly)
   },
 
   onInputClick () {
@@ -141,7 +139,7 @@ var DatePicker = React.createClass({
 
   onClearClick (event) {
     event.preventDefault()
-    this.props.onChange(null)
+    this.props.onChange(null, true)
   },
 
   renderCalendar () {
@@ -178,19 +176,20 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={moment.tz(this.props.selected, this.props.dateFormat, this.props.timeZone)}
+        date={moment.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timeZone)}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         excludeDates={this.props.excludeDates}
         includeDates={this.props.includeDates}
         filterDate={this.props.filterDate}
-        dateFormat={this.props.isDateOnly ? 'MMM D, YYYY' : this.props.dateFormat}
+        dateFormat={this.props.dateFormat}
+        dateOnlyFormat={this.props.dateOnlyFormat}
+        dateOnly={this.props.dateOnly}
         onFocus={this.handleFocus}
         onClick={this.onInputClick}
-        onKeyDown={this.onInputKeyDown}
+        onInputKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
-        isDateOnly={this.setDateType}
         placeholder={this.props.placeholderText}
         disabled={this.props.disabled}
         autoComplete={this.props.autoComplete}

@@ -8,6 +8,8 @@ var DateInput = React.createClass({
   propTypes: {
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.string,
+    dateOnlyFormat: React.PropTypes.string,
+    dateOnly: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
@@ -18,7 +20,6 @@ var DateInput = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onChangeDate: React.PropTypes.func,
-    isDateOnly: React.PropTypes.func,
     onInputKeyDown: React.PropTypes.func
   },
 
@@ -68,7 +69,7 @@ var DateInput = React.createClass({
   safeDateFormat (props) {
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
-      .format(props.dateFormat) || ''
+      .format(props.dateOnly ? props.dateOnlyFormat : props.dateFormat) || ''
   },
 
   handleBlur (event) {
@@ -77,21 +78,19 @@ var DateInput = React.createClass({
 
   checkManualDate () {
     let formatted = moment(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
-    let dateOnly = moment(this.state.manualDate).format("MMM D, YYYY");
+    let dateOnly = moment(this.state.manualDate).format(this.props.dateOnlyFormat);
     if (this.props.onChangeDate) {
       if (dateOnly === "Invalid date") {
         var fullDate = moment(formatted);
         var dateTZ = moment.tz(fullDate, this.props.timeZone);
         if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-          this.props.isDateOnly(false)
-          this.props.onChangeDate(dateTZ)
+          this.props.onChangeDate(dateTZ, false)
         } else if (value === '') {
-          this.props.onChangeDate(null)
+          this.props.onChangeDate(null, false)
         }
       } else {
           if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {
-            this.props.onChangeDate(moment(this.state.manualDate))
-            this.props.isDateOnly(true)
+            this.props.onChangeDate(moment(this.state.manualDate), true)
           }
       }
     }
