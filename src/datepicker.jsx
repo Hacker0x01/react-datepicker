@@ -54,7 +54,7 @@ var DatePicker = React.createClass({
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
-    timeZone: React.PropTypes.string
+    timezone: React.PropTypes.string
   },
 
   getDefaultProps () {
@@ -70,7 +70,7 @@ var DatePicker = React.createClass({
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
-      timeZone: 'America/Los_Angeles',
+      timezone: 'America/Los_Angeles',
       tetherConstraints: [
         {
           to: 'window',
@@ -112,7 +112,7 @@ var DatePicker = React.createClass({
     let previousHour = moment(this.props.selected).hours()
     let previousMinute = moment(this.props.selected).minutes()
     let adjustedDate = moment(formattedDate).hours(previousHour).minutes(previousMinute)
-    let dateTZ = moment.tz(moment(adjustedDate), this.props.timeZone)
+    let dateTZ = moment.tz(moment(adjustedDate), this.props.timezone)
     this.setSelected(dateTZ, this.props.dateOnly)
     this.setOpen(false)
   },
@@ -166,7 +166,7 @@ var DatePicker = React.createClass({
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
-        timeZone={this.props.timeZone} />
+        timezone={this.props.timezone} />
   },
 
   renderDateInput () {
@@ -177,7 +177,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={moment.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timeZone)}
+        date={moment.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timezone)}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -187,6 +187,7 @@ var DatePicker = React.createClass({
         dateFormat={this.props.dateFormat}
         dateOnlyFormat={this.props.dateOnlyFormat}
         dateOnly={this.props.dateOnly}
+        isEmpty={this.props.selected === null ? true : false}
         onFocus={this.handleFocus}
         onClick={this.onInputClick}
         onInputKeyDown={this.onInputKeyDown}
@@ -199,7 +200,7 @@ var DatePicker = React.createClass({
         readOnly={this.props.readOnly}
         required={this.props.required}
         tabIndex={this.props.tabIndex}
-        timeZone={this.props.timeZone}/>
+        timezone={this.props.timezone}/>
   },
 
   renderClearButton () {

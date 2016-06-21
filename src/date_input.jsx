@@ -20,7 +20,8 @@ var DateInput = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onChangeDate: React.PropTypes.func,
-    onInputKeyDown: React.PropTypes.func
+    onInputKeyDown: React.PropTypes.func,
+    isEmpty: React.PropTypes.bool
   },
 
   getDefaultProps () {
@@ -31,14 +32,14 @@ var DateInput = React.createClass({
 
   getInitialState () {
     return {
-      value: this.safeDateFormat(this.props),
+      value: this.props.isEmpty ? '' : this.safeDateFormat(this.props),
       manualDate: null
     }
   },
 
   componentWillReceiveProps (newProps) {
       this.setState({
-        value: this.safeDateFormat(newProps)
+        value: newProps.isEmpty ? '' : this.safeDateFormat(newProps)
       })
   },
 
@@ -82,11 +83,11 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       if (dateOnly === "Invalid date") {
         var fullDate = moment(formatted);
-        var dateTZ = moment.tz(fullDate, this.props.timeZone);
+        var dateTZ = moment.tz(fullDate, this.props.timezone);
         if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
           this.props.onChangeDate(dateTZ, false)
         } else if (this.state.value === '') {
-          this.props.onChangeDate(null, false)
+          this.props.onChangeDate('', false)
         }
       } else {
           if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {

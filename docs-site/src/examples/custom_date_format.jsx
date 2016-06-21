@@ -25,19 +25,20 @@ export default React.createClass({
         <code className="jsx">
           {"<DatePicker"}<br />
               <strong>{"dateFormat=\"MMM D, YYYY [at] hh:mm a z\""}</strong><br />
-              <strong>{"timeZone=\"America/Los_Angeles\""}</strong><br />
+              <strong>{"timezone=\"America/Los_Angeles\""}</strong><br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange} />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="MMM D, YYYY [at] hh:mm a z"
-            dateOnlyFormat="MMM D, YYYY"
-            timeZone={moment.tz.guess()}
+            dateFormat="YYYY-MM-DD at hh:mm a z"
+            dateOnlyFormat="YYYY-MM-DD z"
+            timezone={moment.tz.guess()}
             selected={this.state.selected}
             onChange={this.handleChange}
-            dateOnly={this.state.dateOnly} />
+            dateOnly={this.state.dateOnly}
+            isClearable={true} />
       </div>
     </div>
   }

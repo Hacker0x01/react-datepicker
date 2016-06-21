@@ -133,7 +133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    tetherConstraints: _react2.default.PropTypes.array,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string,
-	    timeZone: _react2.default.PropTypes.string
+	    timezone: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -151,7 +151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
-	      timeZone: 'America/Los_Angeles',
+	      timezone: 'America/Los_Angeles',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -185,7 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
-	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timeZone);
+	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timezone);
 	    this.setSelected(dateTZ, this.props.dateOnly);
 	    this.setOpen(false);
 	  },
@@ -234,7 +234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      showYearDropdown: this.props.showYearDropdown,
 	      todayButton: this.props.todayButton,
 	      outsideClickIgnoreClass: outsideClickIgnoreClass,
-	      timeZone: this.props.timeZone });
+	      timezone: this.props.timezone });
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -242,7 +242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timeZone),
+	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timezone),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -252,6 +252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      dateFormat: this.props.dateFormat,
 	      dateOnlyFormat: this.props.dateOnlyFormat,
 	      dateOnly: this.props.dateOnly,
+	      isEmpty: this.props.selected === null ? true : false,
 	      onFocus: this.handleFocus,
 	      onClick: this.onInputClick,
 	      onInputKeyDown: this.onInputKeyDown,
@@ -264,7 +265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      readOnly: this.props.readOnly,
 	      required: this.props.required,
 	      tabIndex: this.props.tabIndex,
-	      timeZone: this.props.timeZone });
+	      timezone: this.props.timezone });
 	  },
 	  renderClearButton: function renderClearButton() {
 	    if (this.props.isClearable && this.props.selected != null) {
@@ -340,7 +341,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func,
-	    onInputKeyDown: _react2.default.PropTypes.func
+	    onInputKeyDown: _react2.default.PropTypes.func,
+	    isEmpty: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -350,13 +352,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      value: this.safeDateFormat(this.props),
+	      value: this.props.isEmpty ? '' : this.safeDateFormat(this.props),
 	      manualDate: null
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.setState({
-	      value: this.safeDateFormat(newProps)
+	      value: newProps.isEmpty ? '' : this.safeDateFormat(newProps)
 	    });
 	  },
 	  onKeyDown: function onKeyDown(event) {
@@ -392,11 +394,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.props.onChangeDate) {
 	      if (dateOnly === "Invalid date") {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
-	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timeZone);
+	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timezone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
 	          this.props.onChangeDate(dateTZ, false);
 	        } else if (this.state.value === '') {
-	          this.props.onChangeDate(null, false);
+	          this.props.onChangeDate('', false);
 	        }
 	      } else {
 	        if ((0, _momentTimezone2.default)(this.state.manualDate).isValid() && !(0, _date_utils.isDayDisabled)((0, _momentTimezone2.default)(this.state.manualDate), this.props)) {

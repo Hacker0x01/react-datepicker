@@ -30388,7 +30388,7 @@
 	    tetherConstraints: _react2.default.PropTypes.array,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string,
-	    timeZone: _react2.default.PropTypes.string
+	    timezone: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -30406,7 +30406,7 @@
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
 	      popoverTargetOffset: '10px 0',
-	      timeZone: 'America/Los_Angeles',
+	      timezone: 'America/Los_Angeles',
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
@@ -30440,7 +30440,7 @@
 	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
-	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timeZone);
+	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timezone);
 	    this.setSelected(dateTZ, this.props.dateOnly);
 	    this.setOpen(false);
 	  },
@@ -30489,7 +30489,7 @@
 	      showYearDropdown: this.props.showYearDropdown,
 	      todayButton: this.props.todayButton,
 	      outsideClickIgnoreClass: outsideClickIgnoreClass,
-	      timeZone: this.props.timeZone });
+	      timezone: this.props.timezone });
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -30497,7 +30497,7 @@
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timeZone),
+	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timezone),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -30507,6 +30507,7 @@
 	      dateFormat: this.props.dateFormat,
 	      dateOnlyFormat: this.props.dateOnlyFormat,
 	      dateOnly: this.props.dateOnly,
+	      isEmpty: this.props.selected === null ? true : false,
 	      onFocus: this.handleFocus,
 	      onClick: this.onInputClick,
 	      onInputKeyDown: this.onInputKeyDown,
@@ -30519,7 +30520,7 @@
 	      readOnly: this.props.readOnly,
 	      required: this.props.required,
 	      tabIndex: this.props.tabIndex,
-	      timeZone: this.props.timeZone });
+	      timezone: this.props.timezone });
 	  },
 	  renderClearButton: function renderClearButton() {
 	    if (this.props.isClearable && this.props.selected != null) {
@@ -30595,7 +30596,8 @@
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func,
-	    onInputKeyDown: _react2.default.PropTypes.func
+	    onInputKeyDown: _react2.default.PropTypes.func,
+	    isEmpty: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -30605,13 +30607,13 @@
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      value: this.safeDateFormat(this.props),
+	      value: this.props.isEmpty ? '' : this.safeDateFormat(this.props),
 	      manualDate: null
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.setState({
-	      value: this.safeDateFormat(newProps)
+	      value: newProps.isEmpty ? '' : this.safeDateFormat(newProps)
 	    });
 	  },
 	  onKeyDown: function onKeyDown(event) {
@@ -30647,11 +30649,11 @@
 	    if (this.props.onChangeDate) {
 	      if (dateOnly === "Invalid date") {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
-	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timeZone);
+	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timezone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
 	          this.props.onChangeDate(dateTZ, false);
 	        } else if (this.state.value === '') {
-	          this.props.onChangeDate(null, false);
+	          this.props.onChangeDate('', false);
 	        }
 	      } else {
 	        if ((0, _momentTimezone2.default)(this.state.manualDate).isValid() && !(0, _date_utils.isDayDisabled)((0, _momentTimezone2.default)(this.state.manualDate), this.props)) {
@@ -45073,13 +45075,14 @@
 	    });
 	  },
 	  render: function render() {
-	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "dateFormat=\"MMM D, YYYY [at] hh:mm a z\""), _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "timeZone=\"America/Los_Angeles\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
-	      dateFormat: 'MMM D, YYYY [at] hh:mm a z',
-	      dateOnlyFormat: 'MMM D, YYYY',
-	      timeZone: _momentTimezone2.default.tz.guess(),
+	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "dateFormat=\"MMM D, YYYY [at] hh:mm a z\""), _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "timezone=\"America/Los_Angeles\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
+	      dateFormat: 'YYYY-MM-DD at hh:mm a z',
+	      dateOnlyFormat: 'YYYY-MM-DD z',
+	      timezone: _momentTimezone2.default.tz.guess(),
 	      selected: this.state.selected,
 	      onChange: this.handleChange,
-	      dateOnly: this.state.dateOnly })));
+	      dateOnly: this.state.dateOnly,
+	      isClearable: true })));
 	  }
 	});
 
