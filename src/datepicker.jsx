@@ -108,7 +108,6 @@ var DatePicker = React.createClass({
 
   handleSelect (date) {
     let formattedDate = moment(date).format()
-    console.log(formattedDate)
     let previousHour = moment(this.props.selected).hours()
     let previousMinute = moment(this.props.selected).minutes()
     let adjustedDate = moment(formattedDate).hours(previousHour).minutes(previousMinute)
