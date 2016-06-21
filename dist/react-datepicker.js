@@ -181,6 +181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  handleSelect: function handleSelect(date) {
 	    var formattedDate = (0, _momentTimezone2.default)(date).format();
+	    console.log(formattedDate);
 	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);

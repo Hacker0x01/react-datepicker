@@ -1,20 +1,20 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export default React.createClass({
   displayName: 'CustomDateFormat',
 
   getInitialState () {
     return {
-      startDate: moment(),
-      dateOnly: false
+      selected: moment.tz(moment.tz.guess()),
+      dateOnly: true
     }
   },
 
   handleChange (date, isDateOnly) {
     this.setState({
-      startDate: date,
+      selected: date,
       dateOnly: isDateOnly
     })
   },
@@ -34,8 +34,8 @@ export default React.createClass({
         <DatePicker
             dateFormat="MMM D, YYYY [at] hh:mm a z"
             dateOnlyFormat="MMM D, YYYY"
-            timeZone="America/Los_Angeles"
-            selected={this.state.startDate}
+            timeZone={moment.tz.guess()}
+            selected={this.state.selected}
             onChange={this.handleChange}
             dateOnly={this.state.dateOnly} />
       </div>

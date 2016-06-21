@@ -30436,6 +30436,7 @@
 	  },
 	  handleSelect: function handleSelect(date) {
 	    var formattedDate = (0, _momentTimezone2.default)(date).format();
+	    console.log(formattedDate);
 	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
@@ -45048,9 +45049,9 @@
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(329);
+	var _momentTimezone = __webpack_require__(327);
 
-	var _moment2 = _interopRequireDefault(_moment);
+	var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -45061,13 +45062,13 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      startDate: (0, _moment2.default)(),
-	      dateOnly: false
+	      selected: _momentTimezone2.default.tz(_momentTimezone2.default.tz.guess()),
+	      dateOnly: true
 	    };
 	  },
 	  handleChange: function handleChange(date, isDateOnly) {
 	    this.setState({
-	      startDate: date,
+	      selected: date,
 	      dateOnly: isDateOnly
 	    });
 	  },
@@ -45075,8 +45076,8 @@
 	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "dateFormat=\"MMM D, YYYY [at] hh:mm a z\""), _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "timeZone=\"America/Los_Angeles\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
 	      dateFormat: 'MMM D, YYYY [at] hh:mm a z',
 	      dateOnlyFormat: 'MMM D, YYYY',
-	      timeZone: 'America/Los_Angeles',
-	      selected: this.state.startDate,
+	      timeZone: _momentTimezone2.default.tz.guess(),
+	      selected: this.state.selected,
 	      onChange: this.handleChange,
 	      dateOnly: this.state.dateOnly })));
 	  }
