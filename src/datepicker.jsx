@@ -109,12 +109,11 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date) {
-    let formattedDate = moment(date).format()
-    let previousHour = moment(this.props.selected).hours()
-    let previousMinute = moment(this.props.selected).minutes()
-    let adjustedDate = moment(formattedDate).hours(previousHour).minutes(previousMinute)
-    let dateTZ = adjustedDate; // moment.tz(moment(adjustedDate), this.props.timezone)
-    this.setSelected(dateTZ, this.props.dateOnly)
+    let formattedDate = moment(date).format("YYYY-MM-DD");
+    let previousHour = this.props.selected ? moment(this.props.selected).hours() : 0;
+    let previousMinute = this.props.selected ? moment(this.props.selected).minutes() : 0;
+    let adjustedDate = moment.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    this.setSelected(adjustedDate, this.props.dateOnly)
     this.setOpen(false)
   },
 
@@ -178,7 +177,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={moment.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timezone)}
+        date={moment(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat)}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}

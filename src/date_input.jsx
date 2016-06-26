@@ -84,20 +84,19 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       if (!isDateOnly) {
         var fullDate = moment(formatted);
-        var dateTZ = fullDate; // moment.tz(fullDate, this.props.timezone);
-        if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
-          this.props.onChangeDate(dateTZ, false)
+        if (fullDate.isValid() && !isDayDisabled(fullDate, this.props)) {
+          this.props.onChangeDate(fullDate, false)
         } else if (this.state.value === '') {
           this.props.onChangeDate('', false)
         }
       } else {
-          if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {
-            this.props.onChangeDate(moment(this.state.manualDate), true)
-          }
+        if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {
+          this.props.onChangeDate(moment(this.state.manualDate), true)
+        }
       }
     }
     this.setState({
-      date: dateTZ,
+      date: fullDate,
       value: this.safeDateFormat(this.props)
     })
   },

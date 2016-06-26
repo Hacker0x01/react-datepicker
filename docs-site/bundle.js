@@ -30437,12 +30437,11 @@
 	    this.setOpen(false);
 	  },
 	  handleSelect: function handleSelect(date) {
-	    var formattedDate = (0, _momentTimezone2.default)(date).format();
-	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
-	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
-	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
-	    var dateTZ = adjustedDate; // moment.tz(moment(adjustedDate), this.props.timezone)
-	    this.setSelected(dateTZ, this.props.dateOnly);
+	    var formattedDate = (0, _momentTimezone2.default)(date).format("YYYY-MM-DD");
+	    var previousHour = this.props.selected ? (0, _momentTimezone2.default)(this.props.selected).hours() : 0;
+	    var previousMinute = this.props.selected ? (0, _momentTimezone2.default)(this.props.selected).minutes() : 0;
+	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+	    this.setSelected(adjustedDate, this.props.dateOnly);
 	    this.setOpen(false);
 	  },
 	  setSelected: function setSelected(date, isDateOnly) {
@@ -30498,7 +30497,7 @@
 	      ref: 'input',
 	      id: this.props.id,
 	      name: this.props.name,
-	      date: _momentTimezone2.default.tz(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat, this.props.timezone),
+	      date: (0, _momentTimezone2.default)(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat),
 	      locale: this.props.locale,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -30651,9 +30650,8 @@
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
-	        var dateTZ = fullDate; // moment.tz(fullDate, this.props.timezone);
-	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
-	          this.props.onChangeDate(dateTZ, false);
+	        if (fullDate.isValid() && !(0, _date_utils.isDayDisabled)(fullDate, this.props)) {
+	          this.props.onChangeDate(fullDate, false);
 	        } else if (this.state.value === '') {
 	          this.props.onChangeDate('', false);
 	        }
@@ -30664,7 +30662,7 @@
 	      }
 	    }
 	    this.setState({
-	      date: dateTZ,
+	      date: fullDate,
 	      value: this.safeDateFormat(this.props)
 	    });
 	  },
