@@ -47,7 +47,7 @@ var DateInput = React.createClass({
     if (event.key === 'Enter') {
       this.handleBlur(event)
     } else {
-      this.props.onInputKeyDown
+      this.props.onInputKeyDown(event)
     }
   },
 
@@ -80,7 +80,8 @@ var DateInput = React.createClass({
   checkManualDate () {
     let formatted = moment(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format()
     let dateHour = moment(this.state.manualDate, this.props.dateFormat).get('hour')
-    let isDateOnly = (dateHour === 0)
+    let dateMinute = moment(this.state.manualDate, this.props.dateFormat).get('minute')
+    let isDateOnly = ((dateHour === 0) && (dateMinute === 0) && (this.state.manualDate.indexOf(":") === -1));
     if (this.props.onChangeDate) {
       if (!isDateOnly) {
         var fullDate = moment(formatted);

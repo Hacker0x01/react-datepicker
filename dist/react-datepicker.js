@@ -365,7 +365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (event.key === 'Enter') {
 	      this.handleBlur(event);
 	    } else {
-	      this.props.onInputKeyDown;
+	      this.props.onInputKeyDown(event);
 	    }
 	  },
 	  handleChange: function handleChange(event) {
@@ -391,7 +391,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  checkManualDate: function checkManualDate() {
 	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
 	    var dateHour = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('hour');
-	    var isDateOnly = dateHour === 0;
+	    var dateMinute = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('minute');
+	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);

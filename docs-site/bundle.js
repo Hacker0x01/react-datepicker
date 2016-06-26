@@ -40,30 +40,7 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ((function(modules) {
-	// Check all modules for deduplicated modules
-	for(var i in modules) {
-		if(Object.prototype.hasOwnProperty.call(modules, i)) {
-			switch(typeof modules[i]) {
-			case "function": break;
-			case "object":
-				// Module can be created from a template
-				modules[i] = (function(_m) {
-					var args = _m.slice(1), fn = modules[_m[0]];
-					return function (a,b,c) {
-						fn.apply(this, [a,b,c].concat(args));
-					};
-				}(modules[i]));
-				break;
-			default:
-				// Module is a copy of another module
-				modules[i] = modules[modules[i]];
-				break;
-			}
-		}
-	}
-	return modules;
-}([
+/******/ ([
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20125,9 +20102,9 @@
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	__webpack_require__(464);
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-datepicker/dist/react-datepicker.css\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
-	__webpack_require__(465);
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./style.scss\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -30620,7 +30597,7 @@
 	    if (event.key === 'Enter') {
 	      this.handleBlur(event);
 	    } else {
-	      this.props.onInputKeyDown;
+	      this.props.onInputKeyDown(event);
 	    }
 	  },
 	  handleChange: function handleChange(event) {
@@ -30646,7 +30623,8 @@
 	  checkManualDate: function checkManualDate() {
 	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
 	    var dateHour = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('hour');
-	    var isDateOnly = dateHour === 0;
+	    var dateMinute = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('minute');
+	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
@@ -45892,14 +45870,8 @@
 	});
 
 /***/ },
-/* 464 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 465 */
-464,
+/* 464 */,
+/* 465 */,
 /* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -45946,4 +45918,4 @@
 	});
 
 /***/ }
-/******/ ])));
+/******/ ]);
