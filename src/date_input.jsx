@@ -84,7 +84,7 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       if (!isDateOnly) {
         var fullDate = moment(formatted);
-        var dateTZ = moment.tz(fullDate, this.props.timezone);
+        var dateTZ = fullDate; // moment.tz(fullDate, this.props.timezone);
         if (dateTZ.isValid() && !isDayDisabled(dateTZ, this.props)) {
           this.props.onChangeDate(dateTZ, false)
         } else if (this.state.value === '') {

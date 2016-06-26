@@ -186,7 +186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var previousHour = (0, _momentTimezone2.default)(this.props.selected).hours();
 	    var previousMinute = (0, _momentTimezone2.default)(this.props.selected).minutes();
 	    var adjustedDate = (0, _momentTimezone2.default)(formattedDate).hours(previousHour).minutes(previousMinute);
-	    var dateTZ = _momentTimezone2.default.tz((0, _momentTimezone2.default)(adjustedDate), this.props.timezone);
+	    var dateTZ = adjustedDate; // moment.tz(moment(adjustedDate), this.props.timezone)
 	    this.setSelected(dateTZ, this.props.dateOnly);
 	    this.setOpen(false);
 	  },
@@ -396,7 +396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
 	        var fullDate = (0, _momentTimezone2.default)(formatted);
-	        var dateTZ = _momentTimezone2.default.tz(fullDate, this.props.timezone);
+	        var dateTZ = fullDate; // moment.tz(fullDate, this.props.timezone);
 	        if (dateTZ.isValid() && !(0, _date_utils.isDayDisabled)(dateTZ, this.props)) {
 	          this.props.onChangeDate(dateTZ, false);
 	        } else if (this.state.value === '') {
