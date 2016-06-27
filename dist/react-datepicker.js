@@ -389,7 +389,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
-	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format();
+	    if (this.state.manualDate === null) {
+	      return;
+	    }
+	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).format();
 	    var dateHour = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('hour');
 	    var dateMinute = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('minute');
 	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
@@ -406,6 +409,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.props.onChangeDate((0, _momentTimezone2.default)(this.state.manualDate), true);
 	        }
 	      }
+	      this.state.manualDate = null;
 	    }
 	    this.setState({
 	      date: fullDate,

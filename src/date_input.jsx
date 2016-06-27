@@ -78,7 +78,10 @@ var DateInput = React.createClass({
   },
 
   checkManualDate () {
-    let formatted = moment(this.state.manualDate ? this.state.manualDate : this.state.value, this.props.dateFormat).format()
+    if (this.state.manualDate === null) {
+      return;
+    }
+    let formatted = moment(this.state.manualDate, this.props.dateFormat).format()
     let dateHour = moment(this.state.manualDate, this.props.dateFormat).get('hour')
     let dateMinute = moment(this.state.manualDate, this.props.dateFormat).get('minute')
     let isDateOnly = ((dateHour === 0) && (dateMinute === 0) && (this.state.manualDate.indexOf(":") === -1));
@@ -95,6 +98,7 @@ var DateInput = React.createClass({
           this.props.onChangeDate(moment(this.state.manualDate), true)
         }
       }
+      this.state.manualDate = null;
     }
     this.setState({
       date: fullDate,
