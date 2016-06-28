@@ -54,7 +54,8 @@ var DatePicker = React.createClass({
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
-    timezone: React.PropTypes.string
+    timezone: React.PropTypes.string,
+    timePickerButton: React.PropTypes.bool
   },
 
   getDefaultProps () {
@@ -77,13 +78,15 @@ var DatePicker = React.createClass({
           to: 'window',
           attachment: 'together'
         }
-      ]
+      ],
+      timePickerButton: false
     }
   },
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      showTimePicker: false
     }
   },
 
@@ -106,6 +109,12 @@ var DatePicker = React.createClass({
 
   handleCalendarClickOutside (event) {
     this.setOpen(false)
+  },
+
+  handleToggleTime () {
+    this.setState({
+      showTimePicker: !this.state.showTimePicker
+    })
   },
 
   handleSelect (date) {
@@ -166,7 +175,10 @@ var DatePicker = React.createClass({
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
-        timezone={this.props.timezone} />
+        timezone={this.props.timezone}
+        timePickerButton={this.props.timePickerButton}
+        onToggle={this.handleToggleTime}
+        showTimePicker={this.state.showTimePicker} />
   },
 
   renderDateInput () {
