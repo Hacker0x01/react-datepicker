@@ -28,7 +28,8 @@ var Calendar = React.createClass({
     timeZone: React.PropTypes.string,
     timePickerButton: React.PropTypes.bool,
     onToggle: React.PropTypes.func,
-    showTimePicker: React.PropTypes.bool
+    showTimePicker: React.PropTypes.bool,
+    onSelect: React.PropTypes.func,
   },
 
   mixins: [require('react-onclickoutside')],
@@ -92,9 +93,10 @@ var Calendar = React.createClass({
   },
 
   handleTimeClick (time) {
-    this.setState({
-      date: this.state.date.clone().set('hour', time.get('hour')).set('minute', time.get('minute'))
-    })
+    // this.setState({
+    //   date: this.state.date.clone().set('hour', time.hours).set('minute', time.minutes)
+    // })
+    this.props.onSelectTime(time)
   },
 
   changeYear (year) {
@@ -172,7 +174,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={() => this.props.onToggle()}>
+      <div className="react-datepicker__today-button" onClick={this.props.onToggle}>
         <span>Select Time</span>
       </div>
     )
@@ -183,7 +185,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={() => this.props.onToggle()}>
+      <div className="react-datepicker__today-button" onClick={this.props.onToggle}>
         <span>Select Date</span>
       </div>
     )
@@ -227,11 +229,6 @@ var Calendar = React.createClass({
     }
     return (
       <div>
-        <div className="react-datepicker__header">
-          <div>
-            {this.header()}
-          </div>
-        </div>
         <div className="react-datepicker__month">
           <Time
             selected='1:00'

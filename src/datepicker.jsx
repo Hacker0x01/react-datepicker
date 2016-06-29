@@ -118,10 +118,19 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date) {
+    console.log(date);
     let formattedDate = moment(date).format("YYYY-MM-DD");
     let previousHour = this.props.selected ? moment(this.props.selected).hours() : 0;
     let previousMinute = this.props.selected ? moment(this.props.selected).minutes() : 0;
     let adjustedDate = moment.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    this.setSelected(adjustedDate, this.props.dateOnly)
+    this.setOpen(false)
+  },
+
+  handleSelectTime (time) {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    console.log(adjustedDate);
     this.setSelected(adjustedDate, this.props.dateOnly)
     this.setOpen(false)
   },
@@ -163,6 +172,7 @@ var DatePicker = React.createClass({
         dateFormatDay={this.props.dateFormatDay}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        onSelectTime={this.handleSelectTime}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}

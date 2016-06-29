@@ -286,3 +286,16 @@
 .react-datepicker__tether-element {
   z-index: 2147483647;
 }
+
+.react-datepicker__times {
+  width: 206px;
+  height: 242px;
+  overflow: scroll;
+}
+.react-datepicker__time {
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    color: $selected-color;
+  }
+}

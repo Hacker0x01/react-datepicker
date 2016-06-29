@@ -15,8 +15,6 @@ var Time = React.createClass({
   },
 
   handleTimeClick (time) {
-    console.log(time);
-    // let t = times[i];
     this.props.onTimeClick(time);
   },
 
@@ -27,24 +25,21 @@ var Time = React.createClass({
     let time = startOfDay;
 
     while (time <= endOfDay) {
-      times.push(time.format('h:mm a'));
+      times.push(time.toObject());
       time = time.clone().add(30, 'minutes');
     }
-
     return (
-      <div>
-        {times.map(function(time, i){
-          return(
-            <div key={i} onClick={this.handleTimeClick.bind(this, time)}>{time}</div>
-          )
-        })}
+      <div className="react-datepicker__times">
+        {times.map(time => (
+          <div key={time.hours + time.minutes} className="react-datepicker__time" onClick={() => this.handleTimeClick(time)}>{moment().hours(time.hours).minutes(time.minutes).format('h:mm a').toString()}</div>
+        ))}
       </div>
     )
   },
 
   render () {
     return (
-      <div className="react-datepicker__times">
+      <div>
         {this.renderTimes()}
       </div>
     )
