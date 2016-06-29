@@ -1,24 +1,61 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import moment from 'moment'
+import { isSameDay, isSameDayAndTime, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
 
 var Time = React.createClass({
   displayName: 'Time',
 
   propTypes: {
-    selected: React.PropTypes.string,
-    onTimeClick: React.PropTypes.func
+    selected: React.PropTypes.object,
+    onTimeClick: React.PropTypes.func,
+    dateOnly: React.PropTypes.bool,
   },
-  getDefaultProps () {
+
+  getInitialState () {
     return {
-      selected: '12:00'
+      selectedTime: []
     }
   },
+
+  componentDidMount: function() {
+    if (!this.props.dateOnly && this.refs.activeTime) {
+      this.scrollElementIntoViewIfNeeded(this.refs.activeTime);
+    }
+  },
+
+  scrollElementIntoViewIfNeeded(domNode) {
+    var containerDomNode = ReactDOM.findDOMNode(this.refs.timeContainer);
+    let scrollPosition = domNode.id * domNode.offsetHeight;
+    containerDomNode.scrollTop = scrollPosition;
+  },
+
+  // componentDidMount () {
+  //   if (!this.props.dateOnly) {
+  //     let selectedHours = moment(this.props.selected).get('hours');
+  //     let selectedMinutes = moment(this.props.selected).get('minutes');
+  //     this.setState({
+  //       selectedTime: {
+  //         'hours': selectedHours,
+  //         'minutes': selectedMinutes
+  //       }
+  //     })
+  //   }
+  // },
 
   handleTimeClick (time) {
     this.props.onTimeClick(time);
   },
 
   renderTimes () {
+    let selectedHours = null;
+    let selectedMinutes = null;
+
+    if (!this.props.dateOnly) {
+      selectedHours = moment(this.props.selected).get('hours');
+      selectedMinutes = moment(this.props.selected).get('minutes');
+    }
+
     let times = [];
     let startOfDay = moment().startOf('day');
     let endOfDay = moment().endOf('day');
@@ -29,9 +66,9 @@ var Time = React.createClass({
       time = time.clone().add(30, 'minutes');
     }
     return (
-      <div className="react-datepicker__times">
-        {times.map(time => (
-          <div key={time.hours + time.minutes} className="react-datepicker__time" onClick={() => this.handleTimeClick(time)}>{moment().hours(time.hours).minutes(time.minutes).format('h:mm a').toString()}</div>
+      <div ref="timeContainer" className="react-datepicker__times">
+        {times.map((time, i) => (
+          <div key={time.hours + time.minutes} id={i} ref={selectedHours === time.hours && selectedMinutes === time.minutes ? 'activeTime' : null} className={'react-datepicker__time' + (selectedHours === time.hours && selectedMinutes === time.minutes ? ' react-datepicker__time--selected' : '')} onClick={() => this.handleTimeClick(time)}>{moment().hours(time.hours).minutes(time.minutes).format('h:mm a').toString()}</div>
         ))}
       </div>
     )

@@ -68,7 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _tether_component = __webpack_require__(16);
+	var _tether_component = __webpack_require__(18);
 
 	var _tether_component2 = _interopRequireDefault(_tether_component);
 
@@ -133,7 +133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    tetherConstraints: _react2.default.PropTypes.array,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string,
-	    timezone: _react2.default.PropTypes.string
+	    timezone: _react2.default.PropTypes.string,
+	    timePickerButton: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -156,12 +157,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      tetherConstraints: [{
 	        to: 'window',
 	        attachment: 'together'
-	      }]
+	      }],
+	      timePickerButton: false
 	    };
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      open: false
+	      open: false,
+	      showTimePicker: false
 	    };
 	  },
 	  setOpen: function setOpen(open) {
@@ -181,6 +184,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  handleCalendarClickOutside: function handleCalendarClickOutside(event) {
 	    this.setOpen(false);
 	  },
+	  handleToggleTime: function handleToggleTime() {
+	    this.setState({
+	      showTimePicker: !this.state.showTimePicker
+	    });
+	  },
 	  handleSelect: function handleSelect(date) {
 	    var formattedDate = (0, _momentTimezone2.default)(date).format("YYYY-MM-DD");
 	    var previousHour = this.props.selected ? (0, _momentTimezone2.default)(this.props.selected).hours() : 0;
@@ -188,6 +196,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
 	    this.setSelected(adjustedDate, this.props.dateOnly);
 	    this.setOpen(false);
+	  },
+	  handleSelectTime: function handleSelectTime(time) {
+	    var formattedDate = (0, _momentTimezone2.default)(this.props.selected).format("YYYY-MM-DD");
+	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+	    this.setSelected(adjustedDate, false);
+	    this.setOpen(false);
+	    this.handleToggleTime();
 	  },
 	  setSelected: function setSelected(date, isDateOnly) {
 	    if (!(0, _date_utils.isSameDayAndTime)(this.props.selected, date)) {
@@ -220,8 +235,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      locale: this.props.locale,
 	      dateFormat: this.props.dateFormatCalendar,
 	      dateFormatDay: this.props.dateFormatDay,
+	      dateOnly: this.props.dateOnly,
 	      selected: this.props.selected,
 	      onSelect: this.handleSelect,
+	      onSelectTime: this.handleSelectTime,
 	      openToDate: this.props.openToDate,
 	      minDate: this.props.minDate,
 	      maxDate: this.props.maxDate,
@@ -234,7 +251,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      showYearDropdown: this.props.showYearDropdown,
 	      todayButton: this.props.todayButton,
 	      outsideClickIgnoreClass: outsideClickIgnoreClass,
-	      timezone: this.props.timezone });
+	      timezone: this.props.timezone,
+	      timePickerButton: this.props.timePickerButton,
+	      onToggle: this.handleToggleTime,
+	      showTimePicker: this.state.showTimePicker });
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -1775,6 +1795,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _propTypes;
+
 	var _moment = __webpack_require__(4);
 
 	var _moment2 = _interopRequireDefault(_moment);
@@ -1787,6 +1809,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _month2 = _interopRequireDefault(_month);
 
+	var _time = __webpack_require__(16);
+
+	var _time2 = _interopRequireDefault(_time);
+
 	var _react = __webpack_require__(6);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -1795,10 +1821,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var Calendar = _react2.default.createClass({
 	  displayName: 'Calendar',
 
-	  propTypes: {
+	  propTypes: (_propTypes = {
 	    dateFormat: _react2.default.PropTypes.string.isRequired,
 	    dateFormatDay: _react2.default.PropTypes.string.isRequired,
 	    endDate: _react2.default.PropTypes.object,
@@ -1815,8 +1843,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    showYearDropdown: _react2.default.PropTypes.bool,
 	    startDate: _react2.default.PropTypes.object,
 	    todayButton: _react2.default.PropTypes.string,
-	    timeZone: _react2.default.PropTypes.string
-	  },
+	    timeZone: _react2.default.PropTypes.string,
+	    timePickerButton: _react2.default.PropTypes.bool,
+	    onToggle: _react2.default.PropTypes.func,
+	    showTimePicker: _react2.default.PropTypes.bool
+	  }, _defineProperty(_propTypes, 'onSelect', _react2.default.PropTypes.func), _defineProperty(_propTypes, 'dateOnly', _react2.default.PropTypes.bool), _propTypes),
 
 	  mixins: [__webpack_require__(11)],
 
@@ -1872,6 +1903,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  handleDayClick: function handleDayClick(day) {
 	    this.props.onSelect(day);
+	  },
+	  handleTimeClick: function handleTimeClick(time) {
+	    this.props.onSelectTime(time);
 	  },
 	  changeYear: function changeYear(year) {
 	    this.setState({
@@ -1938,11 +1972,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.props.todayButton
 	    );
 	  },
-	  render: function render() {
+	  renderTimePickerButton: function renderTimePickerButton() {
+	    if (!this.props.timePickerButton) {
+	      return;
+	    }
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'react-datepicker' },
-	      _react2.default.createElement('div', { className: 'react-datepicker__triangle' }),
+	      { className: 'react-datepicker__today-button', onClick: this.props.onToggle },
+	      _react2.default.createElement(
+	        'span',
+	        null,
+	        'Select Time'
+	      )
+	    );
+	  },
+	  renderDatePickerButton: function renderDatePickerButton() {
+	    if (!this.props.timePickerButton) {
+	      return;
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'react-datepicker__today-button', onClick: this.props.onToggle },
+	      _react2.default.createElement(
+	        'span',
+	        null,
+	        'Select Date'
+	      )
+	    );
+	  },
+	  renderDatePicker: function renderDatePicker() {
+	    if (this.props.showTimePicker) {
+	      return;
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'react-datepicker__header' },
@@ -1956,6 +2020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.header()
 	        )
 	      ),
+	      this.renderTodayButton(),
 	      _react2.default.createElement(_month2.default, {
 	        day: this.state.date,
 	        onDayClick: this.handleDayClick,
@@ -1967,7 +2032,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	        selected: this.props.selected,
 	        startDate: this.props.startDate,
 	        endDate: this.props.endDate }),
-	      this.renderTodayButton()
+	      this.renderTimePickerButton()
+	    );
+	  },
+	  renderTimePicker: function renderTimePicker() {
+	    if (!this.props.showTimePicker) {
+	      return;
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'react-datepicker__month' },
+	        _react2.default.createElement(_time2.default, {
+	          selected: this.props.selected,
+	          dateOnly: this.props.dateOnly,
+	          onTimeClick: this.handleTimeClick
+	        })
+	      ),
+	      this.renderDatePickerButton()
+	    );
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'react-datepicker' },
+	      _react2.default.createElement('div', { className: 'react-datepicker__triangle' }),
+	      this.renderDatePicker(),
+	      this.renderTimePicker()
 	    );
 	  }
 	});
@@ -2451,6 +2544,124 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _react = __webpack_require__(6);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(17);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _moment = __webpack_require__(4);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _date_utils = __webpack_require__(7);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Time = _react2.default.createClass({
+	  displayName: 'Time',
+
+	  propTypes: {
+	    selected: _react2.default.PropTypes.object,
+	    onTimeClick: _react2.default.PropTypes.func,
+	    dateOnly: _react2.default.PropTypes.bool
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      selectedTime: []
+	    };
+	  },
+
+
+	  componentDidMount: function componentDidMount() {
+	    if (!this.props.dateOnly && this.refs.activeTime) {
+	      this.scrollElementIntoViewIfNeeded(this.refs.activeTime);
+	    }
+	  },
+
+	  scrollElementIntoViewIfNeeded: function scrollElementIntoViewIfNeeded(domNode) {
+	    var containerDomNode = _reactDom2.default.findDOMNode(this.refs.timeContainer);
+	    var scrollPosition = domNode.id * domNode.offsetHeight;
+	    containerDomNode.scrollTop = scrollPosition;
+	  },
+
+
+	  // componentDidMount () {
+	  //   if (!this.props.dateOnly) {
+	  //     let selectedHours = moment(this.props.selected).get('hours');
+	  //     let selectedMinutes = moment(this.props.selected).get('minutes');
+	  //     this.setState({
+	  //       selectedTime: {
+	  //         'hours': selectedHours,
+	  //         'minutes': selectedMinutes
+	  //       }
+	  //     })
+	  //   }
+	  // },
+
+	  handleTimeClick: function handleTimeClick(time) {
+	    this.props.onTimeClick(time);
+	  },
+	  renderTimes: function renderTimes() {
+	    var _this = this;
+
+	    var selectedHours = null;
+	    var selectedMinutes = null;
+
+	    if (!this.props.dateOnly) {
+	      selectedHours = (0, _moment2.default)(this.props.selected).get('hours');
+	      selectedMinutes = (0, _moment2.default)(this.props.selected).get('minutes');
+	    }
+
+	    var times = [];
+	    var startOfDay = (0, _moment2.default)().startOf('day');
+	    var endOfDay = (0, _moment2.default)().endOf('day');
+	    var time = startOfDay;
+
+	    while (time <= endOfDay) {
+	      times.push(time.toObject());
+	      time = time.clone().add(30, 'minutes');
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { ref: 'timeContainer', className: 'react-datepicker__times' },
+	      times.map(function (time, i) {
+	        return _react2.default.createElement(
+	          'div',
+	          { key: time.hours + time.minutes, id: i, ref: selectedHours === time.hours && selectedMinutes === time.minutes ? 'activeTime' : null, className: 'react-datepicker__time' + (selectedHours === time.hours && selectedMinutes === time.minutes ? ' react-datepicker__time--selected' : ''), onClick: function onClick() {
+	              return _this.handleTimeClick(time);
+	            } },
+	          (0, _moment2.default)().hours(time.hours).minutes(time.minutes).format('h:mm a').toString()
+	        );
+	      })
+	    );
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      this.renderTimes()
+	    );
+	  }
+	});
+
+	module.exports = Time;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_17__;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _react = __webpack_require__(6);
@@ -2461,7 +2672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _tether = __webpack_require__(18);
+	var _tether = __webpack_require__(19);
 
 	var _tether2 = _interopRequireDefault(_tether);
 
@@ -2619,13 +2830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TetherComponent;
 
 /***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_17__;
-
-/***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.3.1 */
