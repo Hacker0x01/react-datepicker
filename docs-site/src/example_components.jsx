@@ -19,7 +19,7 @@ import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
 import Today from './examples/today'
-import TodaysDate from './examples/todaysdate'
+import TimeZoneDate from './examples/timezone_date'
 import Inline from './examples/inline'
 import OpenToDate from './examples/open_to_date'
 import FixedCalendar from './examples/fixed_calendar'
@@ -52,8 +52,8 @@ export default React.createClass({
       component: <Today />
     },
     {
-      title: `Today's date`,
-      component: <TodaysDate />
+      title: `TimeZone date`,
+      component: <TimeZoneDate />
     },
     {
       title: 'Placeholder text',

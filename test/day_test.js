@@ -100,9 +100,9 @@ describe('Day', () => {
       expect(dayDOM.className).to.not.contain(className)
     })
 
-    it('should apply the today class if custom today is provided', () => {
-      const today = moment().subtract(1, 'day')
-      const dayDOM = renderDay(today, {todaysDate: today})
+    it('should apply the today class if custom timezone is provided', () => {
+      const todayInAukland = moment.utc().tz('Pacific/Auckland')
+      const dayDOM = renderDay(todayInAukland, {timeZone: 'Pacific/Auckland'})
       expect(dayDOM.className).to.contain(className)
     })
   })

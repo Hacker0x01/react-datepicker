@@ -1,6 +1,5 @@
 import React from 'react'
 import Day from './day'
-import moment from 'moment'
 
 var Week = React.createClass({
   displayName: 'Week',
@@ -17,7 +16,7 @@ var Week = React.createClass({
     onDayClick: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
-    todaysDate: React.PropTypes.instanceOf(moment.fn.constructor)
+    timeZone: React.PropTypes.string
   },
 
   handleDayClick (day) {
@@ -44,7 +43,7 @@ var Week = React.createClass({
             selected={this.props.selected}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
-            todaysDate={this.props.todaysDate}/>
+            timeZone={this.props.timeZone}/>
       )
     })
   },

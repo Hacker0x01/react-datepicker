@@ -1,13 +1,12 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
 export default React.createClass({
   displayName: 'Default',
 
   getInitialState () {
     return {
-      startDate: moment()
+      startDate: null
     }
   },
 
@@ -22,16 +21,16 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-              {"todaysDate={moment().add(-1, 'days')}"}<br />
+              {"timeZone='Pacific/Auckland'"}<br />
               {"todayButton='Today'"}<br />
-              {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange} />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            todaysDate={moment().add(-1, 'days')}
-            todayButton="Today"
+            timeZone="Pacific/Auckland"
+            dateFormat="DD-MMM HH:mm z"
+            todayButton="Today in Auckland"
             selected={this.state.startDate}
             onChange={this.handleChange} />
       </div>

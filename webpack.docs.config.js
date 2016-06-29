@@ -25,7 +25,12 @@ module.exports = {
     loaders: [
       { test: /\.js/, loader: 'babel', exclude: /node_modules/ },
       { test: /\.scss/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader') },
-      { test: /\.css/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') }
+      { test: /\.css/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+
     ]
   },
   node: { Buffer: false },
