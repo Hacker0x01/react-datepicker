@@ -2587,21 +2587,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var scrollPosition = domNode.id * domNode.offsetHeight;
 	    containerDomNode.scrollTop = scrollPosition;
 	  },
-
-
-	  // componentDidMount () {
-	  //   if (!this.props.dateOnly) {
-	  //     let selectedHours = moment(this.props.selected).get('hours');
-	  //     let selectedMinutes = moment(this.props.selected).get('minutes');
-	  //     this.setState({
-	  //       selectedTime: {
-	  //         'hours': selectedHours,
-	  //         'minutes': selectedMinutes
-	  //       }
-	  //     })
-	  //   }
-	  // },
-
 	  handleTimeClick: function handleTimeClick(time) {
 	    this.props.onTimeClick(time);
 	  },
