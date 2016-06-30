@@ -31,6 +31,7 @@ var Calendar = React.createClass({
     showTimePicker: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
     dateOnly: React.PropTypes.bool,
+    onRemoveTime: React.PropTypes.func,
   },
 
   mixins: [require('react-onclickoutside')],
@@ -95,6 +96,10 @@ var Calendar = React.createClass({
 
   handleTimeClick (time) {
     this.props.onSelectTime(time)
+  },
+
+  handleTimeRemoval () {
+    this.props.onRemoveTime()
   },
 
   changeYear (year) {
@@ -232,6 +237,7 @@ var Calendar = React.createClass({
             selected={this.props.selected}
             dateOnly={this.props.dateOnly}
             onTimeClick={this.handleTimeClick}
+            onTimeRemoval={this.handleTimeRemoval}
           />
         </div>
         {this.renderDatePickerButton()}

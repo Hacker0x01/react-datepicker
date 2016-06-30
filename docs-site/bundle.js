@@ -30466,6 +30466,24 @@
 	    this.setOpen(false);
 	    this.handleToggleTime();
 	  },
+	  handleRemoveTime: function handleRemoveTime() {
+	    var formattedDate = (0, _momentTimezone2.default)(this.props.selected).format("YYYY-MM-DD");
+	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
+	    this.setSelected(adjustedDate, true);
+	    this.setOpen(false);
+	    this.handleToggleTime();
+	  },
+	  togglePicker: function togglePicker(clickLocation) {
+	    if (this.props.dateOnly) {
+	      this.setState({
+	        showTimePicker: false
+	      });
+	    } else {
+	      this.setState({
+	        showTimePicker: clickLocation <= 14 ? false : true
+	      });
+	    }
+	  },
 	  setSelected: function setSelected(date, isDateOnly) {
 	    if (!(0, _date_utils.isSameDayAndTime)(this.props.selected, date)) {
 	      this.props.onChange(date, isDateOnly);
@@ -30516,7 +30534,8 @@
 	      timezone: this.props.timezone,
 	      timePickerButton: this.props.timePickerButton,
 	      onToggle: this.handleToggleTime,
-	      showTimePicker: this.state.showTimePicker });
+	      showTimePicker: this.state.showTimePicker,
+	      onRemoveTime: this.handleRemoveTime });
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -30547,7 +30566,8 @@
 	      readOnly: this.props.readOnly,
 	      required: this.props.required,
 	      tabIndex: this.props.tabIndex,
-	      timezone: this.props.timezone });
+	      timezone: this.props.timezone,
+	      showPicker: this.togglePicker });
 	  },
 	  renderClearButton: function renderClearButton() {
 	    if (this.props.isClearable && this.props.selected != null) {
@@ -30624,7 +30644,8 @@
 	    onChange: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func,
 	    onInputKeyDown: _react2.default.PropTypes.func,
-	    isEmpty: _react2.default.PropTypes.bool
+	    isEmpty: _react2.default.PropTypes.bool,
+	    showPicker: _react2.default.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -30649,6 +30670,10 @@
 	    } else {
 	      this.props.onInputKeyDown(event);
 	    }
+	  },
+	  handleFocus: function handleFocus(event) {
+	    var clickLocation = event.target.selectionStart;
+	    this.props.showPicker(clickLocation);
 	  },
 	  handleChange: function handleChange(event) {
 	    if (this.props.onChange) {
@@ -30709,7 +30734,8 @@
 	      value: this.state.value,
 	      onKeyDown: this.onKeyDown,
 	      onBlur: this.handleBlur,
-	      onChange: this.handleChange }));
+	      onChange: this.handleChange,
+	      onClick: this.handleFocus }));
 	  }
 	});
 
@@ -42275,7 +42301,7 @@
 	    timePickerButton: _react2.default.PropTypes.bool,
 	    onToggle: _react2.default.PropTypes.func,
 	    showTimePicker: _react2.default.PropTypes.bool
-	  }, _defineProperty(_propTypes, 'onSelect', _react2.default.PropTypes.func), _defineProperty(_propTypes, 'dateOnly', _react2.default.PropTypes.bool), _propTypes),
+	  }, _defineProperty(_propTypes, 'onSelect', _react2.default.PropTypes.func), _defineProperty(_propTypes, 'dateOnly', _react2.default.PropTypes.bool), _defineProperty(_propTypes, 'onRemoveTime', _react2.default.PropTypes.func), _propTypes),
 
 	  mixins: [__webpack_require__(437)],
 
@@ -42334,6 +42360,9 @@
 	  },
 	  handleTimeClick: function handleTimeClick(time) {
 	    this.props.onSelectTime(time);
+	  },
+	  handleTimeRemoval: function handleTimeRemoval() {
+	    this.props.onRemoveTime();
 	  },
 	  changeYear: function changeYear(year) {
 	    this.setState({
@@ -42423,7 +42452,8 @@
 	    return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'react-datepicker__month' }, _react2.default.createElement(_time2.default, {
 	      selected: this.props.selected,
 	      dateOnly: this.props.dateOnly,
-	      onTimeClick: this.handleTimeClick
+	      onTimeClick: this.handleTimeClick,
+	      onTimeRemoval: this.handleTimeRemoval
 	    })), this.renderDatePickerButton());
 	  },
 	  render: function render() {
@@ -43043,6 +43073,7 @@
 	  propTypes: {
 	    selected: _react2.default.PropTypes.object,
 	    onTimeClick: _react2.default.PropTypes.func,
+	    onTimeRemoval: _react2.default.PropTypes.func,
 	    dateOnly: _react2.default.PropTypes.bool
 	  },
 
@@ -43066,6 +43097,9 @@
 	  handleTimeClick: function handleTimeClick(time) {
 	    this.props.onTimeClick(time);
 	  },
+	  handleTimeRemoval: function handleTimeRemoval() {
+	    this.props.onTimeRemoval();
+	  },
 	  renderTimes: function renderTimes() {
 	    var _this = this;
 
@@ -43086,7 +43120,9 @@
 	      times.push(time.toObject());
 	      time = time.clone().add(30, 'minutes');
 	    }
-	    return _react2.default.createElement('div', { ref: 'timeContainer', className: 'react-datepicker__times' }, times.map(function (time, i) {
+	    return _react2.default.createElement('div', { ref: 'timeContainer', className: 'react-datepicker__times' }, _react2.default.createElement('div', { key: 'unknown', id: 'unknown', ref: selectedHours && selectedMinutes === null ? 'activeTime' : null, className: 'react-datepicker__time' + (this.props.dateOnly ? ' react-datepicker__time--selected' : ''), onClick: function onClick() {
+	        return _this.handleTimeRemoval();
+	      } }, 'unknown'), times.map(function (time, i) {
 	      return _react2.default.createElement('div', { key: time.hours + time.minutes, id: i, ref: selectedHours === time.hours && selectedMinutes === time.minutes ? 'activeTime' : null, className: 'react-datepicker__time' + (selectedHours === time.hours && selectedMinutes === time.minutes ? ' react-datepicker__time--selected' : ''), onClick: function onClick() {
 	          return _this.handleTimeClick(time);
 	        } }, (0, _moment2.default)().hours(time.hours).minutes(time.minutes).format('h:mm a').toString());
@@ -45242,8 +45278,8 @@
 	  },
 	  render: function render() {
 	    return _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('pre', { className: 'column example__code' }, _react2.default.createElement('code', { className: 'jsx' }, "<DatePicker", _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "dateFormat=\"MMM D, YYYY [at] k:mm a z\""), _react2.default.createElement('br', null), _react2.default.createElement('strong', null, "timezone=\"America/Los_Angeles\""), _react2.default.createElement('br', null), '    ', "selected={this.state.startDate}", _react2.default.createElement('br', null), '    ', "onChange={this.handleChange} />", _react2.default.createElement('br', null), '    ', "timePickerButton={true} />")), _react2.default.createElement('div', { className: 'column' }, _react2.default.createElement(_reactDatepicker2.default, {
-	      dateFormat: 'YYYY-MM-DD [at] hh:mm a z',
-	      dateOnlyFormat: 'YYYY-MM-DD z',
+	      dateFormat: 'MMM D, YYYY [at] h:mm a z',
+	      dateOnlyFormat: 'MMM D, YYYY z',
 	      timezone: _momentTimezone2.default.tz.guess(),
 	      selected: this.state.selected,
 	      onChange: this.handleChange,

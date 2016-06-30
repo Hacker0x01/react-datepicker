@@ -134,6 +134,14 @@ var DatePicker = React.createClass({
     this.handleToggleTime()
   },
 
+  handleRemoveTime () {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
+    this.setSelected(adjustedDate, true)
+    this.setOpen(false)
+    this.handleToggleTime()
+  },
+
   togglePicker (clickLocation) {
     if (this.props.dateOnly) {
       this.setState({
@@ -200,7 +208,8 @@ var DatePicker = React.createClass({
         timezone={this.props.timezone}
         timePickerButton={this.props.timePickerButton}
         onToggle={this.handleToggleTime}
-        showTimePicker={this.state.showTimePicker} />
+        showTimePicker={this.state.showTimePicker}
+        onRemoveTime={this.handleRemoveTime} />
   },
 
   renderDateInput () {
