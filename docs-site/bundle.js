@@ -30322,6 +30322,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _tether_component = __webpack_require__(444);
 
 	var _tether_component2 = _interopRequireDefault(_tether_component);
@@ -30420,20 +30424,20 @@
 	        to: 'window',
 	        attachment: 'together'
 	      }],
-	      timePickerButton: false
+	      timePickerButton: true
 	    };
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      open: false
+	      open: false,
+	      showTimePicker: false
 	    };
 	  },
-	  setOpen: function setOpen(open) {
-	    this.setState({ open: open });
-	  },
-	  handleFocus: function handleFocus(event) {
-	    this.props.onFocus(event);
-	    this.setOpen(true);
+	  setOpen: function setOpen(open, showTimePicker) {
+	    this.setState({
+	      open: open,
+	      showTimePicker: showTimePicker
+	    });
 	  },
 	  handleBlur: function handleBlur(event) {
 	    if (this.state.open) {
@@ -30443,7 +30447,7 @@
 	    }
 	  },
 	  handleCalendarClickOutside: function handleCalendarClickOutside(event) {
-	    this.setOpen(false);
+	    this.setOpen(false, false);
 	  },
 	  handleToggleTime: function handleToggleTime() {
 	    this.setState({
@@ -30456,31 +30460,28 @@
 	    var previousMinute = this.props.selected ? (0, _momentTimezone2.default)(this.props.selected).minutes() : 0;
 	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
 	    this.setSelected(adjustedDate, this.props.dateOnly);
-	    this.setOpen(false);
+	    this.setOpen(false, false);
 	  },
 	  handleSelectTime: function handleSelectTime(time) {
 	    var formattedDate = (0, _momentTimezone2.default)(this.props.selected).format("YYYY-MM-DD");
 	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
 	    this.setSelected(adjustedDate, false);
-	    this.setOpen(false);
+	    this.setOpen(false, false);
 	    this.handleToggleTime();
 	  },
 	  handleRemoveTime: function handleRemoveTime() {
 	    var formattedDate = (0, _momentTimezone2.default)(this.props.selected).format("YYYY-MM-DD");
 	    var adjustedDate = _momentTimezone2.default.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
 	    this.setSelected(adjustedDate, true);
-	    this.setOpen(false);
+	    this.setOpen(false, false);
 	    this.handleToggleTime();
 	  },
 	  togglePicker: function togglePicker(clickLocation) {
 	    if (this.props.dateOnly) {
-	      this.setState({
-	        showTimePicker: false
-	      });
+	      this.setOpen(true, false);
 	    } else {
-	      this.setState({
-	        showTimePicker: clickLocation <= 14 ? false : true
-	      });
+
+	      this.setOpen(true, clickLocation <= 14 ? false : true);
 	    }
 	  },
 	  setSelected: function setSelected(date, isDateOnly) {
@@ -30553,7 +30554,6 @@
 	      dateOnlyFormat: this.props.dateOnlyFormat,
 	      dateOnly: this.props.dateOnly,
 	      isEmpty: this.props.selected === null ? true : false,
-	      onFocus: this.handleFocus,
 	      onClick: this.onInputClick,
 	      onInputKeyDown: this.onInputKeyDown,
 	      onChangeDate: this.setSelected,
@@ -43142,7 +43142,7 @@
 	    }
 	    return _react2.default.createElement('div', { ref: 'timeContainer', className: 'react-datepicker__times' }, _react2.default.createElement('div', { key: 'unknown', id: 'unknown', ref: selectedHours && selectedMinutes === null ? 'activeTime' : null, className: 'react-datepicker__time' + (this.props.dateOnly ? ' react-datepicker__time--selected' : ''), onClick: function onClick() {
 	        return _this.handleTimeRemoval();
-	      } }, 'unknown'), times.map(function (time, i) {
+	      } }, 'Unknown'), times.map(function (time, i) {
 	      return _react2.default.createElement('div', { key: time.hours + time.minutes, id: i, ref: selectedHours === time.hours && selectedMinutes === time.minutes ? 'activeTime' : null, className: 'react-datepicker__time' + (selectedHours === time.hours && selectedMinutes === time.minutes ? ' react-datepicker__time--selected' : ''), onClick: function onClick() {
 	          return _this.handleTimeClick(time);
 	        } }, (0, _moment2.default)().hours(time.hours).minutes(time.minutes).format('h:mm a').toString());

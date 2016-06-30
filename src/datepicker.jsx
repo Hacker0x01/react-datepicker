@@ -1,6 +1,7 @@
 import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import moment from 'moment-timezone'
@@ -79,23 +80,22 @@ var DatePicker = React.createClass({
           attachment: 'together'
         }
       ],
-      timePickerButton: false
+      timePickerButton: true
     }
   },
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      showTimePicker: false
     }
   },
 
-  setOpen (open) {
-    this.setState({ open })
-  },
-
-  handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+  setOpen (open, showTimePicker) {
+    this.setState({
+      open,
+      showTimePicker: showTimePicker
+    })
   },
 
   handleBlur (event) {
@@ -107,7 +107,7 @@ var DatePicker = React.createClass({
   },
 
   handleCalendarClickOutside (event) {
-    this.setOpen(false)
+    this.setOpen(false, false)
   },
 
   handleToggleTime () {
@@ -122,14 +122,14 @@ var DatePicker = React.createClass({
     let previousMinute = this.props.selected ? moment(this.props.selected).minutes() : 0;
     let adjustedDate = moment.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
     this.setSelected(adjustedDate, this.props.dateOnly)
-    this.setOpen(false)
+    this.setOpen(false, false)
   },
 
   handleSelectTime (time) {
     let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
     let adjustedDate = moment.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
     this.setSelected(adjustedDate, false)
-    this.setOpen(false)
+    this.setOpen(false, false)
     this.handleToggleTime()
   },
 
@@ -137,19 +137,16 @@ var DatePicker = React.createClass({
     let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
     let adjustedDate = moment.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
     this.setSelected(adjustedDate, true)
-    this.setOpen(false)
+    this.setOpen(false, false)
     this.handleToggleTime()
   },
 
   togglePicker (clickLocation) {
     if (this.props.dateOnly) {
-      this.setState({
-        showTimePicker: false
-      })
+      this.setOpen(true, false);
     } else {
-      this.setState({
-        showTimePicker: clickLocation <= 14 ? false : true
-      })
+
+      this.setOpen(true, clickLocation <= 14 ? false : true);
     }
   },
 
@@ -230,7 +227,6 @@ var DatePicker = React.createClass({
         dateOnlyFormat={this.props.dateOnlyFormat}
         dateOnly={this.props.dateOnly}
         isEmpty={this.props.selected === null ? true : false}
-        onFocus={this.handleFocus}
         onClick={this.onInputClick}
         onInputKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
