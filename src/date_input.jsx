@@ -5,8 +5,6 @@ import { isSameDayAndTime, isDayDisabled } from './date_utils'
 var DateInput = React.createClass({
   displayName: 'DateInput',
 
-  amPmRegex: new RegExp("[0-9| ]+[pm|PM]+[^a-z|A-Z]+"),
-
   propTypes: {
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.string,
@@ -115,6 +113,8 @@ var DateInput = React.createClass({
     dateFormats.forEach (dateFormat => {
       timeFormats.forEach (timeFormat => {
         dateTimeFormats.push(dateFormat + " " + timeFormat);
+      });
+      timeFormats.forEach (timeFormat => {
         dateTimeFormats.push(dateFormat);
       });
     });
@@ -129,12 +129,6 @@ var DateInput = React.createClass({
     let dateHour = fullDate.get('hour');
     let dateMinute = fullDate.get('minute');
     let isDateOnly = ((dateHour === 0) && (dateMinute === 0) && (this.state.manualDate.indexOf(":") === -1));
-
-    // Add 12 hours if user entered something like 5:00pm (i.e. forgot to include a space)
-    if ((dateHour < 12) && this.amPmRegex.test(this.state.manualDate)) {
-      dateHour += 12;
-      fullDate.add(12, 'hours');
-    }
 
     if (this.props.onChangeDate) {
       if (!isDateOnly) {

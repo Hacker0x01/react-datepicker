@@ -365,8 +365,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var DateInput = _react2.default.createClass({
 	  displayName: 'DateInput',
 
-	  amPmRegex: new RegExp("[0-9| ]+[pm|PM]+[^a-z|A-Z]+"),
-
 	  propTypes: {
 	    date: _react2.default.PropTypes.object,
 	    dateFormat: _react2.default.PropTypes.string,
@@ -447,6 +445,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormats.forEach(function (dateFormat) {
 	      timeFormats.forEach(function (timeFormat) {
 	        dateTimeFormats.push(dateFormat + " " + timeFormat);
+	      });
+	      timeFormats.forEach(function (timeFormat) {
 	        dateTimeFormats.push(dateFormat);
 	      });
 	    });
@@ -461,12 +461,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var dateHour = fullDate.get('hour');
 	    var dateMinute = fullDate.get('minute');
 	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
-
-	    // Add 12 hours if user entered something like 5:00pm (i.e. forgot to include a space)
-	    if (dateHour < 12 && this.amPmRegex.test(this.state.manualDate)) {
-	      dateHour += 12;
-	      fullDate.add(12, 'hours');
-	    }
 
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
