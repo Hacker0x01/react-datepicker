@@ -87,7 +87,7 @@ var DateInput = React.createClass({
 
   checkManualDate () {
     let dateFormats = [
-      this.props.DateOnlyFormat,
+      this.props.dateOnlyFormat,
 
       "MMM D, YYYY",
       "MMM D, YY",
@@ -115,7 +115,7 @@ var DateInput = React.createClass({
     dateFormats.forEach (dateFormat => {
       timeFormats.forEach (timeFormat => {
         dateTimeFormats.push(dateFormat + " " + timeFormat);
-        dateTimeFormats.push(dateFormat); // just date without time
+        dateTimeFormats.push(dateFormat);
       });
     });
 

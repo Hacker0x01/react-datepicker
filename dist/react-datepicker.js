@@ -435,7 +435,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
-	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY",
+	    var dateFormats = [this.props.dateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY",
 
 	    // without commas
 	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
@@ -447,7 +447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormats.forEach(function (dateFormat) {
 	      timeFormats.forEach(function (timeFormat) {
 	        dateTimeFormats.push(dateFormat + " " + timeFormat);
-	        dateTimeFormats.push(dateFormat); // just date without time
+	        dateTimeFormats.push(dateFormat);
 	      });
 	    });
 
