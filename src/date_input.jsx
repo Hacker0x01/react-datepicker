@@ -87,14 +87,12 @@ var DateInput = React.createClass({
       "MMM D, YY",
       "MMMM D, YYYY",
       "MMMM D, YY",
-      "MMM/D/YYYY",
 
       // without commas
       "MMM D YYYY",
       "MMM D YY",
       "MMMM D YYYY",
       "MMMM D YY",
-      "MMM-D-YYYY",
 
       "MM-DD-YYYY",
       "MM/DD/YYYY",

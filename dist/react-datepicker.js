@@ -391,10 +391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
-	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY", "MMM/D/YYYY",
+	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY",
 
 	    // without commas
-	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MMM-D-YYYY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
+	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
 
 	    var timeFormats = ["HH:mm:ss a"];
 
