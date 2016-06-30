@@ -30581,6 +30581,8 @@
 	var DateInput = _react2.default.createClass({
 	  displayName: 'DateInput',
 
+	  amPmRegex: new RegExp("[0-9| ]+[pm|PM]+[^a-z|A-Z]+"),
+
 	  propTypes: {
 	    date: _react2.default.PropTypes.object,
 	    dateFormat: _react2.default.PropTypes.string,
@@ -30644,16 +30646,44 @@
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
+	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY",
+
+	    // without commas
+	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
+
+	    var timeFormats = ["HH:mm:ss a"];
+
+	    //      "HH:mm:ssa" // if the user forgot a space; am vs. AM seems to work automatically
+	    var dateTimeFormats = [];
+	    dateTimeFormats.push(this.props.dateFormat);
+	    dateFormats.forEach(function (dateFormat) {
+	      timeFormats.forEach(function (timeFormat) {
+	        dateTimeFormats.push(dateFormat + " " + timeFormat);
+	      });
+	    });
+
 	    if (this.state.manualDate === null) {
 	      return;
 	    }
-	    var formatted = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).format();
-	    var dateHour = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('hour');
-	    var dateMinute = (0, _momentTimezone2.default)(this.state.manualDate, this.props.dateFormat).get('minute');
+
+	    var fullDate = _momentTimezone2.default.tz(this.state.manualDate, dateTimeFormats, "GMT");
+	    console.log("fullDate", fullDate);
+
+	    var formatted = fullDate.format(this.props.dateFormat);
+	    console.log("formatted", formatted);
+	    var dateHour = fullDate.get('hour');
+	    var dateMinute = fullDate.get('minute');
 	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
+
+	    // Add 12 hours if user entered something like 5:00pm (i.e. forgot to include a space)
+	    if (dateHour < 12 && this.amPmRegex.test(this.state.manualDate)) {
+	      dateHour += 12;
+	      fullDate.add(12, 'hours');
+	    }
+
+	    console.log("!!!", dateHour, dateMinute, isDateOnly);
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
-	        var fullDate = (0, _momentTimezone2.default)(formatted);
 	        if (fullDate.isValid() && !(0, _date_utils.isDayDisabled)(fullDate, this.props)) {
 	          this.props.onChangeDate(fullDate, false);
 	        } else if (this.state.value === '') {
