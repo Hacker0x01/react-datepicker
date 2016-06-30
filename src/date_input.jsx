@@ -5,6 +5,8 @@ import { isSameDayAndTime, isDayDisabled } from './date_utils'
 var DateInput = React.createClass({
   displayName: 'DateInput',
 
+  amPmRegex: new RegExp("[0-9| ]+[pm|PM]+[^a-z|A-Z]+"),
+
   propTypes: {
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.string,
@@ -84,16 +86,58 @@ var DateInput = React.createClass({
   },
 
   checkManualDate () {
+    let dateFormats = [
+      this.props.DateOnlyFormat,
+
+      "MMM D, YYYY",
+      "MMM D, YY",
+      "MMMM D, YYYY",
+      "MMMM D, YY",
+
+      // without commas
+      "MMM D YYYY",
+      "MMM D YY",
+      "MMMM D YYYY",
+      "MMMM D YY",
+
+      "MM-DD-YYYY",
+      "MM/DD/YYYY",
+      "MM-DD-YY",
+      "MM/DD/YY",
+    ];
+
+    let timeFormats = [
+      "HH:mm:ss a",
+    ];
+
+    let dateTimeFormats = [];
+    dateTimeFormats.push(this.props.dateFormat);
+    dateFormats.forEach (dateFormat => {
+      timeFormats.forEach (timeFormat => {
+        dateTimeFormats.push(dateFormat + " " + timeFormat);
+        dateTimeFormats.push(dateFormat); // just date without time
+      });
+    });
+
     if (this.state.manualDate === null) {
       return;
     }
-    let formatted = moment(this.state.manualDate, this.props.dateFormat).format()
-    let dateHour = moment(this.state.manualDate, this.props.dateFormat).get('hour')
-    let dateMinute = moment(this.state.manualDate, this.props.dateFormat).get('minute')
+
+    let fullDate = moment.tz(this.state.manualDate, dateTimeFormats, "GMT");
+
+    let formatted = fullDate.format(this.props.dateFormat);
+    let dateHour = fullDate.get('hour');
+    let dateMinute = fullDate.get('minute');
     let isDateOnly = ((dateHour === 0) && (dateMinute === 0) && (this.state.manualDate.indexOf(":") === -1));
+
+    // Add 12 hours if user entered something like 5:00pm (i.e. forgot to include a space)
+    if ((dateHour < 12) && this.amPmRegex.test(this.state.manualDate)) {
+      dateHour += 12;
+      fullDate.add(12, 'hours');
+    }
+
     if (this.props.onChangeDate) {
       if (!isDateOnly) {
-        var fullDate = moment(formatted);
         if (fullDate.isValid() && !isDayDisabled(fullDate, this.props)) {
           this.props.onChangeDate(fullDate, false)
         } else if (this.state.value === '') {
