@@ -59,7 +59,7 @@ var Time = React.createClass({
     }
     return (
       <div ref="timeContainer" className="react-datepicker__times">
-        <div key='unknown' id='unknown' ref={selectedHours && selectedMinutes === null ? 'activeTime' : null} className={'react-datepicker__time' + (this.props.dateOnly ? ' react-datepicker__time--selected' : '')} onClick={() => this.handleTimeRemoval()}>unknown</div>
+        <div key='unknown' id='unknown' ref={selectedHours && selectedMinutes === null ? 'activeTime' : null} className={'react-datepicker__time' + (this.props.dateOnly ? ' react-datepicker__time--selected' : '')} onClick={() => this.handleTimeRemoval()}>Unknown</div>
         {times.map((time, i) => (
           <div key={time.hours + time.minutes} id={i} ref={selectedHours === time.hours && selectedMinutes === time.minutes ? 'activeTime' : null} className={'react-datepicker__time' + (selectedHours === time.hours && selectedMinutes === time.minutes ? ' react-datepicker__time--selected' : '')} onClick={() => this.handleTimeClick(time)}>{moment().hours(time.hours).minutes(time.minutes).format('h:mm a').toString()}</div>
         ))}
