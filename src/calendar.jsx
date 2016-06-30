@@ -1,6 +1,7 @@
 import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import Month from './month'
+import Time from './time'
 import React from 'react'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
 
@@ -24,7 +25,13 @@ var Calendar = React.createClass({
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string,
-    timeZone: React.PropTypes.string
+    timeZone: React.PropTypes.string,
+    timePickerButton: React.PropTypes.bool,
+    onToggle: React.PropTypes.func,
+    showTimePicker: React.PropTypes.bool,
+    onSelect: React.PropTypes.func,
+    dateOnly: React.PropTypes.bool,
+    onRemoveTime: React.PropTypes.func,
   },
 
   mixins: [require('react-onclickoutside')],
@@ -85,6 +92,14 @@ var Calendar = React.createClass({
 
   handleDayClick (day) {
     this.props.onSelect(day)
+  },
+
+  handleTimeClick (time) {
+    this.props.onSelectTime(time)
+  },
+
+  handleTimeRemoval () {
+    this.props.onRemoveTime()
   },
 
   changeYear (year) {
@@ -157,31 +172,87 @@ var Calendar = React.createClass({
     )
   },
 
+  renderTimePickerButton () {
+    if (!this.props.timePickerButton) {
+      return
+    }
+    return (
+      <div className="react-datepicker__today-button" onClick={this.props.onToggle}>
+        <span>Select Time</span>
+      </div>
+    )
+  },
+
+  renderDatePickerButton () {
+    if (!this.props.timePickerButton) {
+      return
+    }
+    return (
+      <div className="react-datepicker__today-button" onClick={this.props.onToggle}>
+        <span>Select Date</span>
+      </div>
+    )
+  },
+
+  renderDatePicker () {
+    if (this.props.showTimePicker) {
+      return
+    }
+    return (
+      <div>
+        <div className="react-datepicker__header">
+            {this.renderPreviousMonthButton()}
+            {this.renderCurrentMonth()}
+            {this.renderYearDropdown()}
+            {this.renderNextMonthButton()}
+            <div>
+              {this.header()}
+            </div>
+          </div>
+          {this.renderTodayButton()}
+          <Month
+              day={this.state.date}
+              onDayClick={this.handleDayClick}
+              minDate={this.props.minDate}
+              maxDate={this.props.maxDate}
+              excludeDates={this.props.excludeDates}
+              includeDates={this.props.includeDates}
+              filterDate={this.props.filterDate}
+              selected={this.props.selected}
+              startDate={this.props.startDate}
+              endDate={this.props.endDate} />
+          {this.renderTimePickerButton()}
+      </div>
+    )
+  },
+
+  renderTimePicker () {
+    if (!this.props.showTimePicker) {
+      return
+    }
+    return (
+      <div>
+        <div className="react-datepicker__month">
+          <Time
+            selected={this.props.selected}
+            dateOnly={this.props.dateOnly}
+            onTimeClick={this.handleTimeClick}
+            onTimeRemoval={this.handleTimeRemoval}
+          />
+        </div>
+        {this.renderDatePickerButton()}
+      </div>
+    )
+  },
+
+
+
   render () {
     return (
       <div className="react-datepicker">
         <div className="react-datepicker__triangle"></div>
-        <div className="react-datepicker__header">
-          {this.renderPreviousMonthButton()}
-          {this.renderCurrentMonth()}
-          {this.renderYearDropdown()}
-          {this.renderNextMonthButton()}
-          <div>
-            {this.header()}
-          </div>
-        </div>
-        <Month
-            day={this.state.date}
-            onDayClick={this.handleDayClick}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            excludeDates={this.props.excludeDates}
-            includeDates={this.props.includeDates}
-            filterDate={this.props.filterDate}
-            selected={this.props.selected}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate} />
-        {this.renderTodayButton()}
+        {this.renderDatePicker()}
+        {this.renderTimePicker()}
       </div>
     )
   }

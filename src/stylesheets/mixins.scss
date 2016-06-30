@@ -31,7 +31,7 @@
   &,
   &::before {
     border-top: none;
-    border-bottom-color: $background-color;
+    border-bottom-color: $white;
   }
 
   &::before {
@@ -49,7 +49,7 @@
   &,
   &::before {
     border-bottom: none;
-    border-top-color: #fff;
+    border-top-color: $white;
   }
 
   &::before {

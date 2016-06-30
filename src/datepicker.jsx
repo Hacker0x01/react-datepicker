@@ -54,7 +54,8 @@ var DatePicker = React.createClass({
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
-    timezone: React.PropTypes.string
+    timezone: React.PropTypes.string,
+    timePickerButton: React.PropTypes.bool
   },
 
   getDefaultProps () {
@@ -77,7 +78,8 @@ var DatePicker = React.createClass({
           to: 'window',
           attachment: 'together'
         }
-      ]
+      ],
+      timePickerButton: false
     }
   },
 
@@ -108,6 +110,12 @@ var DatePicker = React.createClass({
     this.setOpen(false)
   },
 
+  handleToggleTime () {
+    this.setState({
+      showTimePicker: !this.state.showTimePicker
+    })
+  },
+
   handleSelect (date) {
     let formattedDate = moment(date).format("YYYY-MM-DD");
     let previousHour = this.props.selected ? moment(this.props.selected).hours() : 0;
@@ -115,6 +123,34 @@ var DatePicker = React.createClass({
     let adjustedDate = moment.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
     this.setSelected(adjustedDate, this.props.dateOnly)
     this.setOpen(false)
+  },
+
+  handleSelectTime (time) {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    this.setSelected(adjustedDate, false)
+    this.setOpen(false)
+    this.handleToggleTime()
+  },
+
+  handleRemoveTime () {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
+    this.setSelected(adjustedDate, true)
+    this.setOpen(false)
+    this.handleToggleTime()
+  },
+
+  togglePicker (clickLocation) {
+    if (this.props.dateOnly) {
+      this.setState({
+        showTimePicker: false
+      })
+    } else {
+      this.setState({
+        showTimePicker: clickLocation <= 14 ? false : true
+      })
+    }
   },
 
   setSelected (date, isDateOnly) {
@@ -152,8 +188,10 @@ var DatePicker = React.createClass({
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         dateFormatDay={this.props.dateFormatDay}
+        dateOnly={this.props.dateOnly}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        onSelectTime={this.handleSelectTime}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -166,7 +204,11 @@ var DatePicker = React.createClass({
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
-        timezone={this.props.timezone} />
+        timezone={this.props.timezone}
+        timePickerButton={this.props.timePickerButton}
+        onToggle={this.handleToggleTime}
+        showTimePicker={this.state.showTimePicker}
+        onRemoveTime={this.handleRemoveTime} />
   },
 
   renderDateInput () {
@@ -200,7 +242,8 @@ var DatePicker = React.createClass({
         readOnly={this.props.readOnly}
         required={this.props.required}
         tabIndex={this.props.tabIndex}
-        timezone={this.props.timezone}/>
+        timezone={this.props.timezone}
+        showPicker={this.togglePicker}/>
   },
 
   renderClearButton () {

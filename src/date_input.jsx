@@ -23,7 +23,8 @@ var DateInput = React.createClass({
     onChange: React.PropTypes.func,
     onChangeDate: React.PropTypes.func,
     onInputKeyDown: React.PropTypes.func,
-    isEmpty: React.PropTypes.bool
+    isEmpty: React.PropTypes.bool,
+    showPicker: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -51,6 +52,11 @@ var DateInput = React.createClass({
     } else {
       this.props.onInputKeyDown(event)
     }
+  },
+
+  handleFocus (event) {
+    let clickLocation = event.target.selectionStart;
+    this.props.showPicker(clickLocation);
   },
 
   handleChange (event) {
@@ -162,7 +168,8 @@ var DateInput = React.createClass({
         value={this.state.value}
         onKeyDown={this.onKeyDown}
         onBlur={this.handleBlur}
-        onChange={this.handleChange} />
+        onChange={this.handleChange}
+        onClick={this.handleFocus} />
   }
 })
 
