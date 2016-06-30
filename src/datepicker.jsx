@@ -85,8 +85,7 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      open: false,
-      showTimePicker: false
+      open: false
     }
   },
 
