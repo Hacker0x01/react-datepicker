@@ -33,8 +33,8 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="YYYY-MM-DD [at] hh:mm a z"
-            dateOnlyFormat="YYYY-MM-DD z"
+            dateFormat="MMM D, YYYY [at] h:mm a z"
+            dateOnlyFormat="MMM D, YYYY z"
             timezone={moment.tz.guess()}
             selected={this.state.selected}
             onChange={this.handleChange}

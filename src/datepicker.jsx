@@ -134,6 +134,18 @@ var DatePicker = React.createClass({
     this.handleToggleTime()
   },
 
+  togglePicker (clickLocation) {
+    if (this.props.dateOnly) {
+      this.setState({
+        showTimePicker: false
+      })
+    } else {
+      this.setState({
+        showTimePicker: clickLocation <= 14 ? false : true
+      })
+    }
+  },
+
   setSelected (date, isDateOnly) {
     if (!isSameDayAndTime(this.props.selected, date)) {
       this.props.onChange(date, isDateOnly)
@@ -222,7 +234,8 @@ var DatePicker = React.createClass({
         readOnly={this.props.readOnly}
         required={this.props.required}
         tabIndex={this.props.tabIndex}
-        timezone={this.props.timezone}/>
+        timezone={this.props.timezone}
+        showPicker={this.togglePicker}/>
   },
 
   renderClearButton () {
