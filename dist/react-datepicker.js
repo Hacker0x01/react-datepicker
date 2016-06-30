@@ -391,19 +391,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.checkManualDate();
 	  },
 	  checkManualDate: function checkManualDate() {
-	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY",
+	    var dateFormats = [this.props.DateOnlyFormat, "MMM D, YYYY", "MMM D, YY", "MMMM D, YYYY", "MMMM D, YY", "MMM/D/YYYY",
 
 	    // without commas
-	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
+	    "MMM D YYYY", "MMM D YY", "MMMM D YYYY", "MMMM D YY", "MMM-D-YYYY", "MM-DD-YYYY", "MM/DD/YYYY", "MM-DD-YY", "MM/DD/YY"];
 
 	    var timeFormats = ["HH:mm:ss a"];
 
-	    //      "HH:mm:ssa" // if the user forgot a space; am vs. AM seems to work automatically
 	    var dateTimeFormats = [];
 	    dateTimeFormats.push(this.props.dateFormat);
 	    dateFormats.forEach(function (dateFormat) {
 	      timeFormats.forEach(function (timeFormat) {
 	        dateTimeFormats.push(dateFormat + " " + timeFormat);
+	        dateTimeFormats.push(dateFormat); // just date without time
 	      });
 	    });
 
@@ -412,10 +412,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    var fullDate = _momentTimezone2.default.tz(this.state.manualDate, dateTimeFormats, "GMT");
-	    console.log("fullDate", fullDate);
 
 	    var formatted = fullDate.format(this.props.dateFormat);
-	    console.log("formatted", formatted);
 	    var dateHour = fullDate.get('hour');
 	    var dateMinute = fullDate.get('minute');
 	    var isDateOnly = dateHour === 0 && dateMinute === 0 && this.state.manualDate.indexOf(":") === -1;
@@ -426,7 +424,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      fullDate.add(12, 'hours');
 	    }
 
-	    console.log("!!!", dateHour, dateMinute, isDateOnly);
 	    if (this.props.onChangeDate) {
 	      if (!isDateOnly) {
 	        if (fullDate.isValid() && !(0, _date_utils.isDayDisabled)(fullDate, this.props)) {
