@@ -1,9 +1,12 @@
 import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay } from './date_utils'
+import moment from 'moment-timezone'
+
+import { isSameDay, isSameDayAndTime } from './date_utils'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
 
@@ -19,6 +22,9 @@ var DatePicker = React.createClass({
     className: React.PropTypes.string,
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
+    dateFormatDay: React.PropTypes.string,
+    dateOnlyFormat: React.PropTypes.string,
+    dateOnly: React.PropTypes.bool,
     disabled: React.PropTypes.bool,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -48,12 +54,18 @@ var DatePicker = React.createClass({
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    timezone: React.PropTypes.string,
+    timePickerButton: React.PropTypes.bool
   },
 
   getDefaultProps () {
     return {
       dateFormatCalendar: 'MMMM YYYY',
+      dateFormat: 'MMM/DD/YYYY',
+      dateOnlyFormat: 'YYYY/MM/DD',
+      dateFormatDay: 'YYYY/MM/DD',
+      dateOnly: true,
       onChange () {},
       disabled: false,
       onFocus () {},
@@ -61,28 +73,29 @@ var DatePicker = React.createClass({
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
+      timezone: 'America/Los_Angeles',
       tetherConstraints: [
         {
           to: 'window',
           attachment: 'together'
         }
-      ]
+      ],
+      timePickerButton: true
     }
   },
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      showTimePicker: false
     }
   },
 
-  setOpen (open) {
-    this.setState({ open })
-  },
-
-  handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+  setOpen (open, showTimePicker) {
+    this.setState({
+      open,
+      showTimePicker: showTimePicker
+    })
   },
 
   handleBlur (event) {
@@ -94,17 +107,52 @@ var DatePicker = React.createClass({
   },
 
   handleCalendarClickOutside (event) {
-    this.setOpen(false)
+    this.setOpen(false, false)
+  },
+
+  handleToggleTime () {
+    this.setState({
+      showTimePicker: !this.state.showTimePicker
+    })
   },
 
   handleSelect (date) {
-    this.setSelected(date)
-    this.setOpen(false)
+    let formattedDate = moment(date).format("YYYY-MM-DD");
+    let previousHour = this.props.selected ? moment(this.props.selected).hours() : 0;
+    let previousMinute = this.props.selected ? moment(this.props.selected).minutes() : 0;
+    let adjustedDate = moment.tz(formattedDate + " " + previousHour + ":" + previousMinute + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    this.setSelected(adjustedDate, this.props.dateOnly)
+    this.setOpen(false, false)
   },
 
-  setSelected (date) {
-    if (!isSameDay(this.props.selected, date)) {
-      this.props.onChange(date)
+  handleSelectTime (time) {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " " + time.hours + ":" + time.minutes + " +0000", "YYYY-MM-DD HH:mm Z", "GMT");
+    this.setSelected(adjustedDate, false)
+    this.setOpen(false, false)
+    this.handleToggleTime()
+  },
+
+  handleRemoveTime () {
+    let formattedDate = moment(this.props.selected).format("YYYY-MM-DD");
+    let adjustedDate = moment.tz(formattedDate + " +0000", "YYYY-MM-DD Z", "GMT");
+    this.setSelected(adjustedDate, true)
+    this.setOpen(false, false)
+    this.handleToggleTime()
+  },
+
+  togglePicker (clickLocation) {
+    if (this.props.dateOnly) {
+      this.setOpen(true, false);
+    } else {
+
+      this.setOpen(true, clickLocation <= 14 ? false : true);
+    }
+  },
+
+  setSelected (date, isDateOnly) {
+    if (!isSameDayAndTime(this.props.selected, date)) {
+      this.props.onChange(date, isDateOnly)
     }
   },
 
@@ -115,7 +163,7 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if (event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
     } else if (event.key === 'Tab') {
@@ -125,7 +173,7 @@ var DatePicker = React.createClass({
 
   onClearClick (event) {
     event.preventDefault()
-    this.props.onChange(null)
+    this.props.onChange(null, true)
   },
 
   renderCalendar () {
@@ -136,8 +184,11 @@ var DatePicker = React.createClass({
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
+        dateFormatDay={this.props.dateFormatDay}
+        dateOnly={this.props.dateOnly}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        onSelectTime={this.handleSelectTime}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -149,7 +200,12 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
-        outsideClickIgnoreClass={outsideClickIgnoreClass} />
+        outsideClickIgnoreClass={outsideClickIgnoreClass}
+        timezone={this.props.timezone}
+        timePickerButton={this.props.timePickerButton}
+        onToggle={this.handleToggleTime}
+        showTimePicker={this.state.showTimePicker}
+        onRemoveTime={this.handleRemoveTime} />
   },
 
   renderDateInput () {
@@ -160,7 +216,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
-        date={this.props.selected}
+        date={moment(this.props.selected, this.props.dateOnly ? this.props.dateOnlyFormat : this.props.dateFormat)}
         locale={this.props.locale}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -168,10 +224,11 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         filterDate={this.props.filterDate}
         dateFormat={this.props.dateFormat}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
+        dateOnlyFormat={this.props.dateOnlyFormat}
+        dateOnly={this.props.dateOnly}
+        isEmpty={this.props.selected === null ? true : false}
         onClick={this.onInputClick}
-        onKeyDown={this.onInputKeyDown}
+        onInputKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
         placeholder={this.props.placeholderText}
         disabled={this.props.disabled}
@@ -180,7 +237,9 @@ var DatePicker = React.createClass({
         title={this.props.title}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex} />
+        tabIndex={this.props.tabIndex}
+        timezone={this.props.timezone}
+        showPicker={this.togglePicker}/>
   },
 
   renderClearButton () {

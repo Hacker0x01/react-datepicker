@@ -13,11 +13,12 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules/
-      }
+      },
+      {include: /\.json$/, loaders: ['json-loader']}
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', '.json']
   },
   externals: [
     {

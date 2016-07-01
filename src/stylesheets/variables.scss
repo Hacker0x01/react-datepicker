@@ -1,10 +1,28 @@
-$border-color: #aeaeae;
-$background-color: #f0f0f0;
-$selected-color: #216ba5;
-$muted-color: #ccc;
-$text-color: #000;
+$black: #000;
+$darkestGray: #333;
+$darkerGray: #5A5A5A;
+$darkGray: #828282;
+$gray: #cccccc;
+$lightGray: #dfdfdf;
+$lighterGray: #efefef;
+$lightestGray: #f8f8f8;
+$white: #fff;
 
-$border-radius: 4px;
+$blue:		#1793BD;
+
+$baseTypeColor: $darkestGray;
+
+$borderRadiusDefault: 3px;
+
+// DatePicker
+$border-color: $lightGray;
+$background-color: $lighterGray;
+$selected-color: $blue;
+$muted-color: $gray;
+$text-color: $baseTypeColor;
+$dayDisabled: lighten($baseTypeColor, 50%);
+
+$border-radius: $borderRadiusDefault;
 $item-size: 24px;
 $day-margin: 2px;
 $triangle-size: 8px;

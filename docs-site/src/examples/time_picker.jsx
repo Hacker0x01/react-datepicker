@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment-timezone'
 
 export default React.createClass({
-  displayName: 'CustomDateFormat',
+  displayName: 'TimePicker',
 
   getInitialState () {
     return {
@@ -27,18 +27,20 @@ export default React.createClass({
               <strong>{"dateFormat=\"MMM D, YYYY [at] k:mm a z\""}</strong><br />
               <strong>{"timezone=\"America/Los_Angeles\""}</strong><br />
               {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange} />"}
+              {"onChange={this.handleChange} />"}<br />
+              {"timePickerButton={true} />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            dateFormat="YYYY-MM-DD [at] hh:mm a z"
-            dateOnlyFormat="YYYY-MM-DD z"
+            dateFormat="MMM D, YYYY [at] h:mm a z"
+            dateOnlyFormat="MMM D, YYYY z"
             timezone={moment.tz.guess()}
             selected={this.state.selected}
             onChange={this.handleChange}
             dateOnly={this.state.dateOnly}
-            isClearable={true} />
+            isClearable={true}
+            timePickerButton={true} />
       </div>
     </div>
   }

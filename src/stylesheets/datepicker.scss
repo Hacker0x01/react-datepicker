@@ -31,12 +31,16 @@
 
 .react-datepicker__header {
   text-align: center;
-  background-color: $background-color;
+  background-color: $white;
   border-bottom: 1px solid $border-color;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
   padding-top: 8px;
   position: relative;
+  div .react-datepicker__day:hover {
+    background-color: transparent;
+    cursor: default;
+  }
 }
 
 .react-datepicker__current-month {
@@ -149,6 +153,10 @@
     &:hover {
       background-color: transparent;
     }
+  }
+
+  &--outside-month {
+    color: $dayDisabled;
   }
 }
 
@@ -275,7 +283,7 @@
 }
 
 .react-datepicker__today-button {
-  background: $background-color;
+  background: $white;
   border-top: 1px solid $border-color;
   cursor: pointer;
   text-align: center;
@@ -286,3 +294,38 @@
 .react-datepicker__tether-element {
   z-index: 2147483647;
 }
+
+.react-datepicker__times {
+  width: 206px;
+  height: 242px;
+  overflow: scroll;
+}
+.react-datepicker__time {
+  width: 100%;
+  cursor: pointer;
+  &:hover {
+    color: $selected-color;
+  }
+  &--selected {
+    font-weight: bold;
+  }
+}
+
+
+// TODO(dmnd): Keep until my [PR][1] is included in a release.
+// [1]: https://github.com/Hacker0x01/react-datepicker/pull/428
+.react-datepicker__input-container {
+  display: inline-block;
+}
+
+// Tethering doesn't work properly when the input is floated left. I'm not
+// totally sure why bootstrap floats inputs left, but this seems to make things
+// work.
+.input-group .react-datepicker__input-container {
+  display: block;
+
+  & > .form-control {
+    float: none;
+  }
+}
+
