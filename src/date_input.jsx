@@ -108,6 +108,15 @@ var DateInput = React.createClass({
       "HH:mm:ss a",
     ];
 
+    let manualDateString = this.state.manualDate;
+
+    // Add a space before pm if there wasn't one
+    if (manualDateString !== null) {
+      for (let i = 0; i < 10; i++) {
+        manualDateString = manualDateString.replace(new RegExp(i.toString() + "pm", "g"), i.toString() + " pm");
+      }
+    }
+
     let dateTimeFormats = [];
     dateTimeFormats.push(this.props.dateFormat);
     dateFormats.forEach (dateFormat => {
@@ -123,7 +132,7 @@ var DateInput = React.createClass({
       return;
     }
 
-    let fullDate = moment.tz(this.state.manualDate, dateTimeFormats, "GMT");
+    let fullDate = moment.tz(manualDateString, dateTimeFormats, "GMT");
 
     let formatted = fullDate.format(this.props.dateFormat);
     let dateHour = fullDate.get('hour');
@@ -138,8 +147,8 @@ var DateInput = React.createClass({
           this.props.onChangeDate('', false)
         }
       } else {
-        if (moment(this.state.manualDate).isValid() && !isDayDisabled(moment(this.state.manualDate), this.props))  {
-          this.props.onChangeDate(moment(this.state.manualDate), true)
+        if (fullDate.isValid() && !isDayDisabled(fullDate, this.props))  {
+          this.props.onChangeDate(fullDate, true)
         }
       }
       this.state.manualDate = null;

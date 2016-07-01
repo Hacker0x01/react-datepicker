@@ -440,6 +440,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var timeFormats = ["HH:mm:ss a"];
 
+	    var manualDateString = this.state.manualDate;
+
+	    // Add a space before pm if there wasn't one
+	    if (manualDateString !== null) {
+	      for (var i = 0; i < 10; i++) {
+	        manualDateString = manualDateString.replace(new RegExp(i.toString() + "pm", "g"), i.toString() + " pm");
+	      }
+	    }
+
 	    var dateTimeFormats = [];
 	    dateTimeFormats.push(this.props.dateFormat);
 	    dateFormats.forEach(function (dateFormat) {
@@ -455,7 +464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return;
 	    }
 
-	    var fullDate = _momentTimezone2.default.tz(this.state.manualDate, dateTimeFormats, "GMT");
+	    var fullDate = _momentTimezone2.default.tz(manualDateString, dateTimeFormats, "GMT");
 
 	    var formatted = fullDate.format(this.props.dateFormat);
 	    var dateHour = fullDate.get('hour');
@@ -470,8 +479,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.props.onChangeDate('', false);
 	        }
 	      } else {
-	        if ((0, _momentTimezone2.default)(this.state.manualDate).isValid() && !(0, _date_utils.isDayDisabled)((0, _momentTimezone2.default)(this.state.manualDate), this.props)) {
-	          this.props.onChangeDate((0, _momentTimezone2.default)(this.state.manualDate), true);
+	        if (fullDate.isValid() && !(0, _date_utils.isDayDisabled)(fullDate, this.props)) {
+	          this.props.onChangeDate(fullDate, true);
 	        }
 	      }
 	      this.state.manualDate = null;
