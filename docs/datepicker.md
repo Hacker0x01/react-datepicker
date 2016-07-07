@@ -48,6 +48,11 @@ type: `array`
 type: `func`
 
 
+### `fixedHeight`
+
+type: `bool`
+
+
 ### `id`
 
 type: `string`
@@ -62,10 +67,6 @@ type: `array`
 
 type: `bool`
 
-
-### `isCalendarFixed`
-
-type: `bool`
 
 ### `isClearable`
 

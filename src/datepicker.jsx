@@ -23,10 +23,10 @@ var DatePicker = React.createClass({
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
+    fixedHeight: React.PropTypes.bool,
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
     inline: React.PropTypes.bool,
-    isCalendarFixed: React.PropTypes.bool,
     isClearable: React.PropTypes.bool,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -151,7 +151,7 @@ var DatePicker = React.createClass({
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
-        isFixed={this.props.isCalendarFixed} />
+        fixedHeight={this.props.fixedHeight} />
   },
 
   renderDateInput () {

@@ -111,7 +111,7 @@ export default React.createClass({
       component: <OpenToDate />
     },
     {
-      title: 'Fixed size of Calendar',
+      title: 'Fixed height of Calendar',
       component: <FixedCalendar />
     }
   ],
