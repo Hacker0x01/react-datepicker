@@ -48,6 +48,11 @@ type: `array`
 type: `func`
 
 
+### `fixedHeight`
+
+type: `bool`
+
+
 ### `id`
 
 type: `string`

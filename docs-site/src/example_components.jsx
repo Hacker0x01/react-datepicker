@@ -21,6 +21,7 @@ import YearDropdown from './examples/year_dropdown'
 import Today from './examples/today'
 import Inline from './examples/inline'
 import OpenToDate from './examples/open_to_date'
+import FixedCalendar from './examples/fixed_calendar'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -108,6 +109,10 @@ export default React.createClass({
     {
       title: 'Open to date',
       component: <OpenToDate />
+    },
+    {
+      title: 'Fixed height of Calendar',
+      component: <FixedCalendar />
     }
   ],
 
