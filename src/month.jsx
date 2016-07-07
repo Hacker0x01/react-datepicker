@@ -34,7 +34,7 @@ var Month = React.createClass({
     const startOfMonth = this.props.day.clone().startOf('month').startOf('week')
     return [0, 1, 2, 3, 4, 5]
       .map(offset => startOfMonth.clone().add(offset, 'weeks'))
-      .filter(startOfWeek => this.props.fixedHeight ? true : this.isWeekInMonth(startOfWeek))
+      .filter(startOfWeek => this.props.fixedHeight || this.isWeekInMonth(startOfWeek))
       .map((startOfWeek, offset) =>
         <Week
             key={offset}
