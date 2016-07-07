@@ -26,6 +26,7 @@ var DatePicker = React.createClass({
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
     inline: React.PropTypes.bool,
+    isCalendarFixed: React.PropTypes.bool,
     isClearable: React.PropTypes.bool,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -149,7 +150,8 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
-        outsideClickIgnoreClass={outsideClickIgnoreClass} />
+        outsideClickIgnoreClass={outsideClickIgnoreClass}
+        isFixed={this.props.isCalendarFixed} />
   },
 
   renderDateInput () {

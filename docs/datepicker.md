@@ -63,6 +63,10 @@ type: `array`
 type: `bool`
 
 
+### `isCalendarFixed`
+
+type: `bool`
+
 ### `isClearable`
 
 type: `bool`
