@@ -83,10 +83,11 @@ var DateInput = React.createClass({
   },
 
   render () {
+    const { date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
     return <input
         ref='input'
         type='text'
-        {...this.props}
+        {...rest}
         value={this.state.value}
         onBlur={this.handleBlur}
         onChange={this.handleChange} />
