@@ -83,7 +83,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props
+    const { date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
     return <input
         ref='input'
         type='text'
