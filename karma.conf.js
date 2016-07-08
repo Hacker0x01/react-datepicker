@@ -30,7 +30,10 @@ module.exports = function (config) {
           {
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel'
+            loader: 'babel',
+            query: {
+              presets: ['airbnb']
+            }
           },
           {
             test: /\.jsx?$/,
@@ -46,6 +49,12 @@ module.exports = function (config) {
       ],
       resolve: {
         extensions: ['', '.jsx', '.js']
+      },
+      externals: {
+        'cheerio': 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
       }
     },
 
