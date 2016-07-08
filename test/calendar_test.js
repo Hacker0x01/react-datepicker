@@ -7,7 +7,7 @@ import { shallow } from 'enzyme'
 describe('Calendar', function () {
   var dateFormat = 'MMMM YYYY'
 
-  function getCalendar (extraProps) { // eslint-disable-line react/display-name
+  function getCalendar (extraProps) {
     return shallow(<Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}
