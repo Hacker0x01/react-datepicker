@@ -91,7 +91,9 @@ Unfortunately it is difficult to support legacy browsers while maintaining our a
 
 ## Local Development
 
-The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `npm start`. This starts a simple webserver on http://localhost:8080. The server will automatically compile your changes, run tests and execute linters. To help you develop the component we’ve set up some tests that covers the basic functionality (can be found in  `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
+The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `npm start`. This starts a simple webserver on http://localhost:8080.
+
+You can run `npm test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that covers the basic functionality (can be found in  `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
 ### The examples
 The examples are hosted within the docs folder and are ran in the simple add that loads the Datepicker. To extend the examples with a new example, you can simply duplicate one of the existing examples and change the unique properties of your example.
