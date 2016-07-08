@@ -5,7 +5,7 @@ import Day from '../src/day'
 import range from 'lodash/range'
 import { mount, shallow } from 'enzyme'
 
-describe.only('Month', () => {
+describe('Month', () => {
   it('should have the month CSS class', () => {
     const month = shallow(<Month day={moment()} />)
     expect(month.hasClass('react-datepicker__month')).to.equal(true)
