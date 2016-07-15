@@ -66,6 +66,28 @@ describe('Calendar', function () {
     assert(calendar.state.date.isSame(openToDate, 'day'))
   })
 
+  it('should start with the open to date in view if given and after a min date', function () {
+    var openToDate = moment('09/28/1993')
+    var minDate = moment('01/01/1993', 'MM/DD/YYYY')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, minDate }))
+    assert(calendar.state.date.isSame(openToDate, 'day'))
+  })
+
+  it('should start with the open to date in view if given and before a max date', function () {
+    var openToDate = moment('09/28/1993')
+    var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, maxDate }))
+    assert(calendar.state.date.isSame(openToDate, 'day'))
+  })
+
+  it('should start with the open to date in view if given and in range of the min/max dates', function () {
+    var openToDate = moment('09/28/1993')
+    var minDate = moment('01/01/1993', 'MM/DD/YYYY')
+    var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, minDate, maxDate }))
+    assert(calendar.state.date.isSame(openToDate, 'day'))
+  })
+
   it('should not show the year dropdown menu by default', function () {
     var calendar = TestUtils.renderIntoDocument(getCalendar())
     var yearReadView = TestUtils.scryRenderedComponentsWithType(calendar, YearDropdown)
