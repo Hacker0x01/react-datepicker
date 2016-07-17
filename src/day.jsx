@@ -66,7 +66,12 @@ var Day = React.createClass({
 
   render () {
     return (
-      <div className={this.getClassNames()} onClick={this.handleClick}>
+      <div
+        className={this.getClassNames()}
+        onClick={this.handleClick}
+        aria-label={`day-${this.props.day.date()}`}
+        role="option"
+      >
         {this.props.day.date()}
       </div>
     )
