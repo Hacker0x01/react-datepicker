@@ -149,6 +149,7 @@ var DatePicker = React.createClass({
         onClickOutside={this.handleCalendarClickOutside}
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
+        scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight} />

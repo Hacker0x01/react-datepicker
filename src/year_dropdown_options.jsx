@@ -1,8 +1,8 @@
 import React from 'react'
 
-function generateYears (year) {
+function generateYears(year, noOfYear) {
   var list = []
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < noOfYear; i++) {
     list.push(year - i)
   }
   return list
@@ -14,14 +14,15 @@ var YearDropdownOptions = React.createClass({
   propTypes: {
     onCancel: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    year: React.PropTypes.number.isRequired
+    year: React.PropTypes.number.isRequired,
+    scrollableYearDropdown: React.PropTypes.bool
   },
 
   mixins: [require('react-onclickoutside')],
 
   getInitialState () {
     return {
-      yearsList: generateYears(this.props.year)
+      yearsList: this.props.scrollableYearDropdown == true ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
     }
   },
 
@@ -29,8 +30,8 @@ var YearDropdownOptions = React.createClass({
     var selectedYear = this.props.year
     var options = this.state.yearsList.map(year =>
       <div className="react-datepicker__year-option"
-          key={year}
-          onClick={this.onChange.bind(this, year)}>
+           key={year}
+           onClick={this.onChange.bind(this, year)}>
         {selectedYear === year ? <span className="react-datepicker__year-option--selected">✓</span> : ''}
         {year}
       </div>
@@ -38,18 +39,20 @@ var YearDropdownOptions = React.createClass({
 
     options.unshift(
       <div className="react-datepicker__year-option"
-          ref={"upcoming"}
-          key={"upcoming"}
-          onClick={this.incrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"></a>
+           ref={"upcoming"}
+           key={"upcoming"}
+           onClick={this.incrementYears}>
+        <a
+          className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"></a>
       </div>
     )
     options.push(
       <div className="react-datepicker__year-option"
-          ref={"previous"}
-          key={"previous"}
-          onClick={this.decrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"></a>
+           ref={"previous"}
+           key={"previous"}
+           onClick={this.decrementYears}>
+        <a
+          className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"></a>
       </div>
     )
     return options
@@ -82,9 +85,16 @@ var YearDropdownOptions = React.createClass({
   },
 
   render () {
-    return (
+    let dropDownComponent = this.props.scrollableYearDropdown == true ?
+      <div className="react-datepicker__year-dropdown scrollable-year-dropdown">
+        {this.renderOptions()}
+      </div> :
       <div className="react-datepicker__year-dropdown">
         {this.renderOptions()}
+      </div>
+    return (
+      <div>
+        {dropDownComponent}
       </div>
     )
   }
