@@ -4,7 +4,7 @@ import React from 'react'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
-import moment from 'moment-timezone'
+import moment from 'moment'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
 
@@ -49,9 +49,9 @@ var DatePicker = React.createClass({
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
-    timeZone: React.PropTypes.string,
     title: React.PropTypes.string,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    utcOffset: React.PropTypes.number
   },
 
   getDefaultProps () {
@@ -70,7 +70,7 @@ var DatePicker = React.createClass({
           attachment: 'together'
         }
       ],
-      timeZone: moment.tz.guess()
+      utcOffset: moment.utc().utcOffset()
     }
   },
 
@@ -153,7 +153,7 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
-        timeZone={this.props.timeZone}
+        utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight} />
   },

@@ -23,9 +23,9 @@ describe('Calendar', function () {
   })
 
   it('should start with the today date with specified time zone', function () {
-    var timeZone = 'Pacific/Auckland'
-    var calendar = TestUtils.renderIntoDocument(getCalendar({timeZone}))
-    assert(calendar.state.date.isSame(moment.utc().tz(timeZone), 'day'))
+    var utcOffset = 12
+    var calendar = TestUtils.renderIntoDocument(getCalendar({utcOffset}))
+    assert(calendar.state.date.isSame(moment.utc().utcOffset(utcOffset), 'day'))
   })
 
   it('should start with the selected date in view if provided', function () {
@@ -127,8 +127,8 @@ describe('Calendar', function () {
   })
 
   it('should set custom today date when pressing todayButton', () => {
-    var todayInAuckland = moment.utc().tz('Pacific/Auckland')
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag', timeZone: 'Pacific/Auckland' }))
+    var todayInAuckland = moment.utc().utcOffset(12)
+    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag', utcOffset: 12 }))
     var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
     TestUtils.Simulate.click(todayButton)
     expect(calendar.state.date.isSame(todayInAuckland, 'day'))

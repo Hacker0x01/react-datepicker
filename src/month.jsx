@@ -16,7 +16,7 @@ var Month = React.createClass({
     onDayClick: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
-    timeZone: React.PropTypes.string
+    utcOffset: React.PropTypes.number
   },
 
   handleDayClick (day) {
@@ -50,7 +50,7 @@ var Month = React.createClass({
             selected={this.props.selected}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
-            timeZone={this.props.timeZone}/>
+            utcOffset={this.props.utcOffset}/>
       )
   },
 

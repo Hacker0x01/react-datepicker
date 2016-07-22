@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import moment from 'moment'
 import React from 'react'
 import classnames from 'classnames'
 import { isSameDay, isDayDisabled } from './date_utils'
@@ -18,11 +18,11 @@ var Day = React.createClass({
     onClick: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
-    timeZone: React.PropTypes.string
+    utcOffset: React.PropTypes.number
   },
   getDefaultProps () {
     return {
-      timeZone: moment.tz.guess()
+      utcOffset: moment.utc().utcOffset()
     }
   },
   handleClick (event) {
@@ -63,7 +63,7 @@ var Day = React.createClass({
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
       'react-datepicker__day--in-range': this.isInRange(),
-      'react-datepicker__day--today': this.isSameDay(moment.utc().tz(this.props.timeZone)),
+      'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
     })

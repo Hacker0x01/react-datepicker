@@ -36,10 +36,6 @@ module.exports = function (config) {
             test: /\.jsx?$/,
             include: path.resolve(__dirname, 'src'),
             loader: 'isparta'
-          },
-          {
-            test: /\.json$/,
-            loader: 'json-loader'
           }
         ]
       },

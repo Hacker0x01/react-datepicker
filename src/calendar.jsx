@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import Month from './month'
 import React from 'react'
@@ -23,15 +23,15 @@ var Calendar = React.createClass({
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
-    timeZone: React.PropTypes.string,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    utcOffset: React.PropTypes.number
   },
 
   mixins: [require('react-onclickoutside')],
 
   getDefaultProps () {
     return {
-      timeZone: moment.tz.guess()
+      utcOffset: moment.utc().utcOffset()
     }
   },
 
@@ -54,10 +54,10 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, openToDate, timeZone } = this.props
+    const { selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
-    const current = moment.utc().tz(timeZone)
+    const current = moment.utc().utcOffset(utcOffset)
     if (selected) {
       return selected
     } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
@@ -161,7 +161,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment.utc().tz(this.props.timeZone).startOf('date'))}>
+      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'))}>
         {this.props.todayButton}
       </div>
     )
@@ -192,7 +192,7 @@ var Calendar = React.createClass({
             selected={this.props.selected}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
-            timeZone={this.props.timeZone}/>
+            utcOffset={this.props.utcOffset}/>
         {this.renderTodayButton()}
       </div>
     )

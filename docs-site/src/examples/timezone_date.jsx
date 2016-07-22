@@ -21,16 +21,16 @@ export default React.createClass({
       <pre className="column example__code">
         <code className="jsx">
           {"<DatePicker"}<br />
-              {"timeZone='Pacific/Auckland'"}<br />
+              {"utcOffset='1320'"}<br />
               {"todayButton='Today'"}<br />
               {"onChange={this.handleChange} />"}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            timeZone="Pacific/Auckland"
-            dateFormat="DD-MMM HH:mm z"
-            todayButton="Today in Auckland"
+            utcOffset={1320}
+            dateFormat="DD-MMM HH:mm"
+            todayButton="Today in Farawayland"
             selected={this.state.startDate}
             onChange={this.handleChange} />
       </div>
