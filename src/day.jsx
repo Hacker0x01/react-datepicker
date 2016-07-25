@@ -16,6 +16,7 @@ var Day = React.createClass({
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
+    onHover: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object
   },
@@ -23,6 +24,12 @@ var Day = React.createClass({
   handleClick (event) {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event)
+    }
+  },
+
+  handleHover (event) {
+    if (!this.isDisabled() && this.props.onHover) {
+      this.props.onHover(event)
     }
   },
 
@@ -66,7 +73,10 @@ var Day = React.createClass({
 
   render () {
     return (
-      <div className={this.getClassNames()} onClick={this.handleClick}>
+      <div
+          className={this.getClassNames()}
+          onClick={this.handleClick}
+          onMouseEnter={this.handleHover}>
         {this.props.day.date()}
       </div>
     )

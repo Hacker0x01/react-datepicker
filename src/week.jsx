@@ -14,6 +14,7 @@ var Week = React.createClass({
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onDayClick: React.PropTypes.func,
+    onDayHover: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object
   },
@@ -21,6 +22,12 @@ var Week = React.createClass({
   handleDayClick (day) {
     if (this.props.onDayClick) {
       this.props.onDayClick(day)
+    }
+  },
+
+  handleDayHover (day) {
+    if (this.props.onDayHover) {
+      this.props.onDayHover(day)
     }
   },
 
@@ -34,6 +41,7 @@ var Week = React.createClass({
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
+            onHover={this.handleDayHover.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}

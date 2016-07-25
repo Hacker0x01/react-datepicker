@@ -34,6 +34,8 @@ var DatePicker = React.createClass({
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
+    onDayClick: React.PropTypes.func,
+    onDayHover: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     placeholderText: React.PropTypes.string,
@@ -56,6 +58,8 @@ var DatePicker = React.createClass({
     return {
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
+      onDayClick () {},
+      onDayHover () {},
       disabled: false,
       onFocus () {},
       onBlur () {},
@@ -138,6 +142,8 @@ var DatePicker = React.createClass({
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         selected={this.props.selected}
+        onDayClick={this.props.onDayClick}
+        onDayHover={this.props.onDayHover}
         onSelect={this.handleSelect}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}

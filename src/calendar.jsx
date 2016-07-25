@@ -18,6 +18,8 @@ var Calendar = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onClickOutside: React.PropTypes.func.isRequired,
+    onDayClick: React.PropTypes.func,
+    onDayHover: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
     selected: React.PropTypes.object,
@@ -88,6 +90,11 @@ var Calendar = React.createClass({
 
   handleDayClick (day) {
     this.props.onSelect(day)
+    this.props.onDayClick(day)
+  },
+
+  handleDayHover (day) {
+    this.props.onDayHover(day)
   },
 
   changeYear (year) {
@@ -176,6 +183,7 @@ var Calendar = React.createClass({
         <Month
             day={this.state.date}
             onDayClick={this.handleDayClick}
+            onDayHover={this.handleDayHover}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
