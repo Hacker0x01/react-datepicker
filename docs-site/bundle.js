@@ -19796,7 +19796,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(468);
+	var _hero_example = __webpack_require__(469);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20010,9 +20010,13 @@
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	__webpack_require__(466);
+	var _events = __webpack_require__(466);
+
+	var _events2 = _interopRequireDefault(_events);
 
 	__webpack_require__(467);
+
+	__webpack_require__(468);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20084,6 +20088,9 @@
 	  }, {
 	    title: 'Fixed height of Calendar',
 	    component: _react2.default.createElement(_fixed_calendar2.default, null)
+	  }, {
+	    title: 'Raw events',
+	    component: _react2.default.createElement(_events2.default, null)
 	  }],
 
 	  renderExamples: function renderExamples() {
@@ -36287,8 +36294,8 @@
 	    name: _react2.default.PropTypes.string,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func.isRequired,
-	    onDateClick: _react2.default.PropTypes.func,
-	    onDateHover: _react2.default.PropTypes.func,
+	    onDayClick: _react2.default.PropTypes.func,
+	    onDayHover: _react2.default.PropTypes.func,
 	    onFocus: _react2.default.PropTypes.func,
 	    openToDate: _react2.default.PropTypes.object,
 	    placeholderText: _react2.default.PropTypes.string,
@@ -36311,6 +36318,8 @@
 	    return {
 	      dateFormatCalendar: 'MMMM YYYY',
 	      onChange: function onChange() {},
+	      onDayClick: function onDayClick() {},
+	      onDayHover: function onDayHover() {},
 
 	      disabled: false,
 	      onFocus: function onFocus() {},
@@ -36347,12 +36356,6 @@
 	  handleCalendarClickOutside: function handleCalendarClickOutside(event) {
 	    this.setOpen(false);
 	  },
-	  handleDateClick: function handleDateClick(date) {
-	    this.props.onDateClick && this.props.onDateClick(date);
-	  },
-	  handleDateHover: function handleDateHover(date) {
-	    this.props.onDateHover && this.props.onDateHover(date);
-	  },
 	  handleSelect: function handleSelect(date) {
 	    this.setSelected(date);
 	    this.setOpen(false);
@@ -36388,8 +36391,8 @@
 	      locale: this.props.locale,
 	      dateFormat: this.props.dateFormatCalendar,
 	      selected: this.props.selected,
-	      onDateClick: this.handleDateClick,
-	      onDateSelect: this.handleDateSelect,
+	      onDayClick: this.props.onDayClick,
+	      onDayHover: this.props.onDayHover,
 	      onSelect: this.handleSelect,
 	      openToDate: this.props.openToDate,
 	      minDate: this.props.minDate,
@@ -50774,8 +50777,8 @@
 	    maxDate: _react2.default.PropTypes.object,
 	    minDate: _react2.default.PropTypes.object,
 	    onClickOutside: _react2.default.PropTypes.func.isRequired,
-	    onDateClick: _react2.default.PropTypes.func.isRequired,
-	    onDateSelect: _react2.default.PropTypes.func.isRequired,
+	    onDayClick: _react2.default.PropTypes.func,
+	    onDayHover: _react2.default.PropTypes.func,
 	    onSelect: _react2.default.PropTypes.func.isRequired,
 	    openToDate: _react2.default.PropTypes.object,
 	    selected: _react2.default.PropTypes.object,
@@ -50842,6 +50845,10 @@
 	  },
 	  handleDayClick: function handleDayClick(day) {
 	    this.props.onSelect(day);
+	    this.props.onDayClick(day);
+	  },
+	  handleDayHover: function handleDayHover(day) {
+	    this.props.onDayHover(day);
 	  },
 	  changeYear: function changeYear(year) {
 	    this.setState({
@@ -50929,6 +50936,7 @@
 	      _react2.default.createElement(_month2.default, {
 	        day: this.state.date,
 	        onDayClick: this.handleDayClick,
+	        onDayHover: this.handleDayHover,
 	        minDate: this.props.minDate,
 	        maxDate: this.props.maxDate,
 	        excludeDates: this.props.excludeDates,
@@ -51286,6 +51294,7 @@
 	    maxDate: _react2.default.PropTypes.object,
 	    minDate: _react2.default.PropTypes.object,
 	    onDayClick: _react2.default.PropTypes.func,
+	    onDayHover: _react2.default.PropTypes.func,
 	    selected: _react2.default.PropTypes.object,
 	    startDate: _react2.default.PropTypes.object
 	  },
@@ -51293,6 +51302,11 @@
 	  handleDayClick: function handleDayClick(day) {
 	    if (this.props.onDayClick) {
 	      this.props.onDayClick(day);
+	    }
+	  },
+	  handleDayHover: function handleDayHover(day) {
+	    if (this.props.onDayHover) {
+	      this.props.onDayHover(day);
 	    }
 	  },
 	  isWeekInMonth: function isWeekInMonth(startOfWeek) {
@@ -51314,6 +51328,7 @@
 	        day: startOfWeek,
 	        month: _this.props.day.month(),
 	        onDayClick: _this.handleDayClick,
+	        onDayHover: _this.handleDayHover,
 	        minDate: _this.props.minDate,
 	        maxDate: _this.props.maxDate,
 	        excludeDates: _this.props.excludeDates,
@@ -51364,6 +51379,7 @@
 	    minDate: _react2.default.PropTypes.object,
 	    month: _react2.default.PropTypes.number,
 	    onDayClick: _react2.default.PropTypes.func,
+	    onDayHover: _react2.default.PropTypes.func,
 	    selected: _react2.default.PropTypes.object,
 	    startDate: _react2.default.PropTypes.object
 	  },
@@ -51371,6 +51387,11 @@
 	  handleDayClick: function handleDayClick(day) {
 	    if (this.props.onDayClick) {
 	      this.props.onDayClick(day);
+	    }
+	  },
+	  handleDayHover: function handleDayHover(day) {
+	    if (this.props.onDayHover) {
+	      this.props.onDayHover(day);
 	    }
 	  },
 	  renderDays: function renderDays() {
@@ -51384,6 +51405,7 @@
 	        day: day,
 	        month: _this.props.month,
 	        onClick: _this.handleDayClick.bind(_this, day),
+	        onHover: _this.handleDayHover.bind(_this, day),
 	        minDate: _this.props.minDate,
 	        maxDate: _this.props.maxDate,
 	        excludeDates: _this.props.excludeDates,
@@ -51440,6 +51462,7 @@
 	    minDate: _react2.default.PropTypes.object,
 	    month: _react2.default.PropTypes.number,
 	    onClick: _react2.default.PropTypes.func,
+	    onHover: _react2.default.PropTypes.func,
 	    selected: _react2.default.PropTypes.object,
 	    startDate: _react2.default.PropTypes.object
 	  },
@@ -51447,6 +51470,11 @@
 	  handleClick: function handleClick(event) {
 	    if (!this.isDisabled() && this.props.onClick) {
 	      this.props.onClick(event);
+	    }
+	  },
+	  handleHover: function handleHover(event) {
+	    if (!this.isDisabled() && this.props.onHover) {
+	      this.props.onHover(event);
 	    }
 	  },
 	  isSameDay: function isSameDay(other) {
@@ -51487,7 +51515,10 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: this.getClassNames(), onClick: this.handleClick },
+	      {
+	        className: this.getClassNames(),
+	        onClick: this.handleClick,
+	        onMouseEnter: this.handleHover },
 	      this.props.day.date()
 	    );
 	  }
@@ -55026,14 +55057,111 @@
 
 /***/ },
 /* 466 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(329);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(331);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Events',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)(),
+	      clicked: null,
+	      hovered: null
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({ startDate: date });
+	  },
+	  handleDayClick: function handleDayClick(date) {
+	    this.setState({ clicked: date });
+	  },
+	  handleDayHover: function handleDayHover(date) {
+	    this.setState({ hovered: date });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          "<DatePicker",
+	          _react2.default.createElement('br', null),
+	          '    ',
+	          "selected={this.state.startDate}",
+	          _react2.default.createElement('br', null),
+	          '    ',
+	          "onDayClick={this.handleDayClick}",
+	          _react2.default.createElement('br', null),
+	          '    ',
+	          "onDayHover={this.handleDayHover}",
+	          _react2.default.createElement('br', null),
+	          '    ',
+	          "onChange={this.handleChange} />"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onDayClick: this.handleDayClick,
+	          onDayHover: this.handleDayHover,
+	          onChange: this.handleChange }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'example__text' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Last click : ',
+	            this.state.clicked && this.state.clicked.format('L')
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Last hover : ',
+	            this.state.hovered && this.state.hovered.format('L')
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 467 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 467 */
-466,
 /* 468 */
+467,
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

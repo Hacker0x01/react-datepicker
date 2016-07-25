@@ -568,6 +568,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     .example__code code {
       background: none;
       border: 0; }
+  .example__text {
+    margin-top: 20px; }
 
 .red-border {
   border-color: #f00; }
