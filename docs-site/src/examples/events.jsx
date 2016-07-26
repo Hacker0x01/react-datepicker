@@ -9,7 +9,7 @@ export default React.createClass({
     return {
       startDate: moment(),
       clicked: null,
-      hovered: null,
+      hovered: null
     }
   },
 
