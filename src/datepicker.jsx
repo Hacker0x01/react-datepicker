@@ -17,6 +17,7 @@ var DatePicker = React.createClass({
   propTypes: {
     autoComplete: React.PropTypes.string,
     className: React.PropTypes.string,
+    dataAttributes: React.PropTypes.object,
     dateFormat: React.PropTypes.string,
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -182,7 +183,8 @@ var DatePicker = React.createClass({
         title={this.props.title}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex} />
+        tabIndex={this.props.tabIndex}
+        {...this.props.dataAttributes} />
   },
 
   renderClearButton () {
