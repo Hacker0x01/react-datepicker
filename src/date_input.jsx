@@ -7,7 +7,10 @@ var DateInput = React.createClass({
 
   propTypes: {
     date: React.PropTypes.object,
-    dateFormat: React.PropTypes.string,
+    dateFormat: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array
+    ]),
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
