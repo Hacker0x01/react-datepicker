@@ -69,7 +69,7 @@ var DateInput = React.createClass({
   safeDateFormat (props) {
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
-      .format(props.dateFormat) || ''
+      .format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || ''
   },
 
   handleBlur (event) {
