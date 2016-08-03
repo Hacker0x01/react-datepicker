@@ -301,7 +301,7 @@ describe('DateInput', function () {
         <DateInput date={date} dateFormat={dateFormats} locale={locale} />
       )
       var inputNode = dateInput.refs.input
-      inputNode.value = date.format(dateFormats[dateFormats-length-1])
+      inputNode.value = date.format(dateFormats[dateFormats.length - 1])
       TestUtils.Simulate.change(inputNode)
       TestUtils.Simulate.blur(inputNode)
       expect(inputNode.value).to.equal(date.format(dateFormats[0]))
