@@ -189,6 +189,12 @@
   }
 }
 
+body[dir=rtl] .react-datepicker__year-read-view--down-arrow {
+    right: 7px;
+    top: 10px;
+    left: auto;
+}
+
 .react-datepicker__year-dropdown {
   background-color: $background-color;
   position: absolute;
