@@ -6,6 +6,7 @@ var DateInput = React.createClass({
   displayName: 'DateInput',
 
   propTypes: {
+    allowInvalidDates: React.PropTypes.bool,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -39,16 +40,23 @@ var DateInput = React.createClass({
     if (!isSameDay(newProps.date, this.props.date) ||
           newProps.locale !== this.props.locale ||
           newProps.dateFormat !== this.props.dateFormat) {
-      this.setState({
+      this.updateState({
         value: this.safeDateFormat(newProps)
       })
     }
   },
 
-  handleChange (event) {
-    if (this.props.onChange) {
-      this.props.onChange(event)
+  updateState (obj) {
+    if (typeof obj.value !== 'undefined') {
+      this.setState({value: obj.value})
     }
+  },
+
+  handleChange (event) {
+    if (this.props.allowInvalidDates) {
+      this.updateState({value: event.target.value})
+    }
+
     if (!event.isDefaultPrevented()) {
       this.handleChangeDate(event.target.value)
     }
@@ -57,25 +65,34 @@ var DateInput = React.createClass({
   handleChangeDate (value) {
     if (this.props.onChangeDate) {
       var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
+
       if (date.isValid() && !isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
-      } else if (value === '') {
+      } else if (value === '' || this.props.allowInvalidDates) {
         this.props.onChangeDate(null)
       }
     }
-    this.setState({value})
+
+    this.updateState({value})
   },
 
-  safeDateFormat (props) {
+  safeDateFormat (props, value) {
+    if (typeof props.date === 'string' || !props.date) {
+      return value
+    }
+
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
       .format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || ''
   },
 
   handleBlur (event) {
-    this.setState({
-      value: this.safeDateFormat(this.props)
-    })
+    if (!this.props.allowInvalidDates) {
+      this.updateState({
+        value: this.safeDateFormat(this.props)
+      })
+    }
+
     if (this.props.onBlur) {
       this.props.onBlur(event)
     }
@@ -86,7 +103,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { allowInvalidDates, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
     return <input
         ref='input'
         type='text'
