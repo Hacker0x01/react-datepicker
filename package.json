@@ -1,7 +1,7 @@
 {
   "author": "HackerOne",
-  "name": "react-datepicker",
-  "description": "A simple and reusable datepicker component for React",
+  "name": "@concur/react-datepicker",
+  "description": "Fork of react-datepicker (https://github.com/Hacker0x01/react-datepicker)",
   "version": "0.28.2",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
