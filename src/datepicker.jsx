@@ -15,6 +15,7 @@ var DatePicker = React.createClass({
   displayName: 'DatePicker',
 
   propTypes: {
+    allowInvalidDates: React.PropTypes.bool,
     autoComplete: React.PropTypes.string,
     className: React.PropTypes.string,
     dateFormat: React.PropTypes.oneOfType([
@@ -163,6 +164,7 @@ var DatePicker = React.createClass({
     })
     return <DateInput
         ref='input'
+        allowInvalidDates={this.props.allowInvalidDates}
         id={this.props.id}
         name={this.props.name}
         date={this.props.selected}
