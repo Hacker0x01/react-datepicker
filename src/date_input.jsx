@@ -47,6 +47,10 @@ var DateInput = React.createClass({
   },
 
   updateState (obj) {
+    if (!this.props.allowInvalidDates) {
+      return this.setState({value: obj.value})
+    }
+
     if (typeof obj.value !== 'undefined') {
       this.setState({value: obj.value})
     }
@@ -55,6 +59,8 @@ var DateInput = React.createClass({
   handleChange (event) {
     if (this.props.allowInvalidDates) {
       this.updateState({value: event.target.value})
+    } else if (this.props.onChange) {
+      this.props.onChange(event)
     }
 
     if (!event.isDefaultPrevented()) {
@@ -77,8 +83,10 @@ var DateInput = React.createClass({
   },
 
   safeDateFormat (props, value) {
-    if (typeof props.date === 'string' || !props.date) {
-      return value
+    if (this.props.allowInvalidDates) {
+      if (typeof props.date === 'string' || !props.date) {
+        return value
+      }
     }
 
     return props.date && props.date.clone()
@@ -87,11 +95,9 @@ var DateInput = React.createClass({
   },
 
   handleBlur (event) {
-    if (!this.props.allowInvalidDates) {
-      this.updateState({
-        value: this.safeDateFormat(this.props)
-      })
-    }
+    this.updateState({
+      value: this.safeDateFormat(this.props)
+    })
 
     if (this.props.onBlur) {
       this.props.onBlur(event)
