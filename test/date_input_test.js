@@ -292,6 +292,20 @@ describe('DateInput', function () {
       )
       expect(dateInput.refs.input.value).to.equal(date.format(dateFormat))
     })
+
+    it('should format the output date using the first format of the dateFormat prop array and use any of the provided formats for parsing input', function () {
+      var locale = 'fr'
+      var dateFormats = ['LL', 'l']
+      var date = moment().locale(locale)
+      var dateInput = TestUtils.renderIntoDocument(
+        <DateInput date={date} dateFormat={dateFormats} locale={locale} />
+      )
+      var inputNode = dateInput.refs.input
+      inputNode.value = date.format(dateFormats[dateFormats.length - 1])
+      TestUtils.Simulate.change(inputNode)
+      TestUtils.Simulate.blur(inputNode)
+      expect(inputNode.value).to.equal(date.format(dateFormats[0]))
+    })
   })
 
   describe('localeChange', function () {

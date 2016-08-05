@@ -17,7 +17,10 @@ var DatePicker = React.createClass({
   propTypes: {
     autoComplete: React.PropTypes.string,
     className: React.PropTypes.string,
-    dateFormat: React.PropTypes.string,
+    dateFormat: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array
+    ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     endDate: React.PropTypes.object,

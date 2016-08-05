@@ -7,7 +7,10 @@ var DateInput = React.createClass({
 
   propTypes: {
     date: React.PropTypes.object,
-    dateFormat: React.PropTypes.string,
+    dateFormat: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array
+    ]),
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
@@ -66,7 +69,7 @@ var DateInput = React.createClass({
   safeDateFormat (props) {
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
-      .format(props.dateFormat) || ''
+      .format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || ''
   },
 
   handleBlur (event) {
