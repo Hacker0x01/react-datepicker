@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "@concur/react-datepicker",
   "description": "Fork of react-datepicker (https://github.com/Hacker0x01/react-datepicker)",
-  "version": "0.28.3",
+  "version": "0.29.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/react-datepicker.min.js",
