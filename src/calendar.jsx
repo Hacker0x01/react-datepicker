@@ -7,12 +7,13 @@ import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMin
 var Calendar = React.createClass({
   displayName: 'Calendar',
 
-  propTypes: {
+  propTypes: {.
     dateFormat: React.PropTypes.string.isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     fixedHeight: React.PropTypes.bool,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -179,6 +180,7 @@ var Calendar = React.createClass({
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
+            highlightDates={this.props.highlightDates}
             includeDates={this.props.includeDates}
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
