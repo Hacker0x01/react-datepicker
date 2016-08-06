@@ -14,6 +14,7 @@ var DateInput = React.createClass({
     disabled: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -86,7 +87,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { date, locale, minDate, maxDate, excludeDates, highlightDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
     return <input
         ref='input'
         type='text'
