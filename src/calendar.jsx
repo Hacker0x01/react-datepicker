@@ -7,7 +7,7 @@ import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMin
 var Calendar = React.createClass({
   displayName: 'Calendar',
 
-  propTypes: {.
+  propTypes: {
     dateFormat: React.PropTypes.string.isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
