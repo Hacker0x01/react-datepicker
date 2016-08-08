@@ -169,7 +169,7 @@ var Calendar = React.createClass({
           {this.renderCurrentMonth()}
           {this.renderYearDropdown()}
           {this.renderNextMonthButton()}
-          <div>
+          <div className="react-datepicker__day-names">
             {this.header()}
           </div>
         </div>
