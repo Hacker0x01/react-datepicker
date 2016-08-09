@@ -108,7 +108,7 @@ var DatePicker = React.createClass({
   },
 
   setSelected (date) {
-    if (!isSameDay(this.props.selected, date)) {
+    if (!isSameDay(this.props.selected, date) || this.props.allowInvalidDates) {
       this.props.onChange(date)
     }
   },

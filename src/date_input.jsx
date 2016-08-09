@@ -58,6 +58,7 @@ var DateInput = React.createClass({
 
   handleChange (event) {
     if (this.props.allowInvalidDates) {
+      this.handleChangeDate(event.target.value)
       this.updateState({value: event.target.value})
     } else if (this.props.onChange) {
       this.props.onChange(event)
