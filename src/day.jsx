@@ -43,6 +43,18 @@ var Day = React.createClass({
     return day.clone().startOf('day').isBetween(before, after)
   },
 
+  isRangeStart () {
+    const { day, startDate, endDate } = this.props
+    if (!startDate || !endDate) return false
+    return isSameDay(startDate, day)
+  },
+
+  isRangeEnd () {
+    const { day, startDate, endDate } = this.props
+    if (!startDate || !endDate) return false
+    return isSameDay(endDate, day)
+  },
+
   isWeekend () {
     const weekday = this.props.day.day()
     return weekday === 0 || weekday === 6
@@ -57,6 +69,8 @@ var Day = React.createClass({
     return classnames('react-datepicker__day', {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+      'react-datepicker__day--range-start': this.isRangeStart(),
+      'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
       'react-datepicker__day--today': this.isSameDay(moment()),
       'react-datepicker__day--weekend': this.isWeekend(),
