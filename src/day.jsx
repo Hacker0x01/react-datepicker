@@ -42,18 +42,16 @@ var Day = React.createClass({
     const after = endDate.clone().startOf('day').add(1, 'seconds')
     return day.clone().startOf('day').isBetween(before, after)
   },
-  
+
   isRangeStart () {
     const { day, startDate, endDate } = this.props
     if (!startDate || !endDate) return false
-
     return isSameDay(startDate, day)
   },
-  
+
   isRangeEnd () {
     const { day, startDate, endDate } = this.props
     if (!startDate || !endDate) return false
-
     return isSameDay(endDate, day)
   },
 
