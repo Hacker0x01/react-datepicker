@@ -22,6 +22,7 @@ var Calendar = React.createClass({
     openToDate: React.PropTypes.object,
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
+    scrollableYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string
   },
@@ -145,7 +146,8 @@ var Calendar = React.createClass({
     return (
       <YearDropdown
           onChange={this.changeYear}
-          year={this.state.date.year()} />
+          year={this.state.date.year()}
+          scrollableYearDropdown={this.props.scrollableYearDropdown} />
     )
   },
 
