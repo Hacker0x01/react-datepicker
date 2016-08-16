@@ -35,6 +35,28 @@ describe('Day', () => {
     })
   })
 
+  describe('highlighted', () => {
+    const className = 'react-datepicker__day--highlighted'
+
+    it('should apply the highlighted class if in highlighted array', () => {
+      const day = moment()
+      const highlightDay1 = day.clone()
+      const highlightDay2 = day.clone().add(1, 'day')
+      const highlightDates = [highlightDay1, highlightDay2]
+      const shallowDay = renderDay(day, { highlightDates })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should not apply the highlighted class if not in highlighted array', () => {
+      const day = moment()
+      const highlightDay1 = day.clone().subtract(1, 'day')
+      const highlightDay2 = day.clone().add(1, 'day')
+      const highlightDates = [highlightDay1, highlightDay2]
+      const shallowDay = renderDay(day, { highlightDates })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+    })
+  })
+
   describe('in range', () => {
     const className = 'react-datepicker__day--in-range'
 
