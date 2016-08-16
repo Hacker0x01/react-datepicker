@@ -99,9 +99,8 @@ describe('Day', () => {
     })
 
     it('should apply the today class if custom utcOffset is provided', () => {
-      const todayInAukland = moment.utc().utcOffset(720)
-      const dayDOM = renderDay(todayInAukland, {utcOffset: 720})
-      expect(dayDOM.className).to.contain(className)
+      const shallowDay = renderDay(moment.utc().utcOffset(720))
+      expect(shallowDay.hasClass(className)).to.equal(true)
     })
   })
 
