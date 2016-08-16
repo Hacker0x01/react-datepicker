@@ -24,8 +24,8 @@ describe('Calendar', function () {
 
   it('should start with the today date with specified time zone', function () {
     var utcOffset = 12
-    var calendar = TestUtils.renderIntoDocument(getCalendar({utcOffset}))
-    assert(calendar.state.date.isSame(moment.utc().utcOffset(utcOffset), 'day'))
+    var calendar = getCalendar({utcOffset})
+    assert(calendar.state().date.isSame(moment.utc().utcOffset(utcOffset), 'day'))
   })
 
   it('should start with the selected date in view if provided', function () {
@@ -75,23 +75,23 @@ describe('Calendar', function () {
   it('should start with the open to date in view if given and after a min date', function () {
     var openToDate = moment('09/28/1993')
     var minDate = moment('01/01/1993', 'MM/DD/YYYY')
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, minDate }))
-    assert(calendar.state.date.isSame(openToDate, 'day'))
+    var calendar = getCalendar({ openToDate, minDate })
+    assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should start with the open to date in view if given and before a max date', function () {
     var openToDate = moment('09/28/1993')
     var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, maxDate }))
-    assert(calendar.state.date.isSame(openToDate, 'day'))
+    var calendar = getCalendar({ openToDate, maxDate })
+    assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should start with the open to date in view if given and in range of the min/max dates', function () {
     var openToDate = moment('09/28/1993')
     var minDate = moment('01/01/1993', 'MM/DD/YYYY')
     var maxDate = moment('12/31/1993', 'MM/DD/YYYY')
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ openToDate, minDate, maxDate }))
-    assert(calendar.state.date.isSame(openToDate, 'day'))
+    var calendar = getCalendar({ openToDate, minDate, maxDate })
+    assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should not show the year dropdown menu by default', function () {
@@ -120,18 +120,18 @@ describe('Calendar', function () {
   })
 
   it('should set the date when pressing todayButton', () => {
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag' }))
-    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
-    TestUtils.Simulate.click(todayButton)
-    expect(calendar.state.date.isSame(moment(), 'day'))
+    var calendar = getCalendar({ todayButton: 'Vandaag' })
+    var todayButton = calendar.find('.react-datepicker__today-button')
+    todayButton.simulate('click')
+    expect(calendar.state().date.isSame(moment(), 'day'))
   })
 
   it('should set custom today date when pressing todayButton', () => {
     var todayInAuckland = moment.utc().utcOffset(12)
-    var calendar = TestUtils.renderIntoDocument(getCalendar({ todayButton: 'Vandaag', utcOffset: 12 }))
-    var todayButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__today-button')
-    TestUtils.Simulate.click(todayButton)
-    expect(calendar.state.date.isSame(todayInAuckland, 'day'))
+    var calendar = getCalendar({ todayButton: 'Vandaag', utcOffset: 12 })
+    var todayButton = calendar.find('.react-datepicker__today-button')
+    todayButton.simulate('click')
+    expect(calendar.state().date.isSame(todayInAuckland, 'day'))
   })
 
   describe('localization', function () {

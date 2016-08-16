@@ -343,14 +343,10 @@ describe('DateInput', function () {
       var locale = 'fr'
       var dateFormats = ['LL', 'l']
       var date = moment().locale(locale)
-      var dateInput = TestUtils.renderIntoDocument(
+      var dateInput = shallow(
         <DateInput date={date} dateFormat={dateFormats} locale={locale} />
       )
-      var inputNode = dateInput.refs.input
-      inputNode.value = date.format(dateFormats[dateFormats.length - 1])
-      TestUtils.Simulate.change(inputNode)
-      TestUtils.Simulate.blur(inputNode)
-      expect(inputNode.value).to.equal(date.format(dateFormats[0]))
+      expect(dateInput.find('input').prop('value')).to.equal(date.format('LL'))
     })
   })
 
