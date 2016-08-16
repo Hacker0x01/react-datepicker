@@ -3,7 +3,7 @@
 
 .react-datepicker {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 11px;
+  font-size: $font-size;
   background-color: #fff;
   color: $text-color;
   border: 1px solid $border-color;
@@ -43,7 +43,7 @@
   margin-top: 0;
   color: #000;
   font-weight: bold;
-  font-size: 13px;
+  font-size: $font-size * 1.18;
 
   &--hasYearDropdown {
     margin-bottom: 16px;
