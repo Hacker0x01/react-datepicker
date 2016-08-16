@@ -17,9 +17,14 @@ var Day = React.createClass({
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     selected: React.PropTypes.object,
-    startDate: React.PropTypes.object
+    startDate: React.PropTypes.object,
+    utcOffset: React.PropTypes.number
   },
-
+  getDefaultProps () {
+    return {
+      utcOffset: moment.utc().utcOffset()
+    }
+  },
   handleClick (event) {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event)
@@ -72,7 +77,7 @@ var Day = React.createClass({
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
-      'react-datepicker__day--today': this.isSameDay(moment()),
+      'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
     })
