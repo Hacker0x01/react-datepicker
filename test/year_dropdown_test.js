@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import TestUtils from 'react-addons-test-utils'
 import YearDropdown from '../src/year_dropdown.jsx'
 import YearDropdownOptions from '../src/year_dropdown_options.jsx'
+import { mount } from 'enzyme'
 
 describe('YearDropdown', () => {
   var yearDropdown,
@@ -12,54 +11,42 @@ describe('YearDropdown', () => {
   }
 
   beforeEach(function () {
-    yearDropdown = TestUtils.renderIntoDocument(
+    yearDropdown = mount(
       <YearDropdown year={2015} onChange={mockHandleChange}/>
     )
     handleChangeResult = null
   })
 
   it('shows the selected year in the initial view', () => {
-    var yearDropdownDOM = ReactDOM.findDOMNode(yearDropdown)
-    expect(yearDropdownDOM.textContent).to.contain('2015')
+    expect(yearDropdown.text()).to.contain('2015')
   })
 
   it('starts with the year options list hidden', () => {
-    var optionsView = TestUtils.scryRenderedComponentsWithType(yearDropdown, YearDropdownOptions)
-    expect(optionsView).to.be.empty
+    var optionsView = yearDropdown.find(YearDropdownOptions)
+    expect(optionsView).to.have.length(0)
   })
 
   it('opens a list when read view is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
-    TestUtils.Simulate.click(readView)
-    var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
+    yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
+    var optionsView = yearDropdown.find(YearDropdownOptions)
     expect(optionsView).to.exist
   })
 
   it('closes the dropdown when a year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
-    TestUtils.Simulate.click(readView)
-    var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
-    var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')
-    TestUtils.Simulate.click(optionNodes[2])
-    var optionsViewAfterClick = TestUtils.scryRenderedComponentsWithType(yearDropdown, YearDropdownOptions)
-    expect(optionsViewAfterClick).to.be.empty
+    yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
+    yearDropdown.find('.react-datepicker__year-option').at(1).simulate('click')
+    expect(yearDropdown.find(YearDropdownOptions)).to.have.length(0)
   })
 
   it('does not call the supplied onChange function when the same year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
-    TestUtils.Simulate.click(readView)
-    var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
-    var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')
-    TestUtils.Simulate.click(optionNodes[2])
+    yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
+    yearDropdown.find('.react-datepicker__year-option').at(1).simulate('click')
     expect(handleChangeResult).to.not.exist
   })
 
   it('calls the supplied onChange function when a different year is clicked', () => {
-    var readView = TestUtils.findRenderedDOMComponentWithClass(yearDropdown, 'react-datepicker__year-read-view')
-    TestUtils.Simulate.click(readView)
-    var optionsView = TestUtils.findRenderedComponentWithType(yearDropdown, YearDropdownOptions)
-    var optionNodes = TestUtils.scryRenderedDOMComponentsWithTag(optionsView, 'div')
-    TestUtils.Simulate.click(optionNodes[3])
+    yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
+    yearDropdown.find('.react-datepicker__year-option').at(2).simulate('click')
     expect(handleChangeResult).to.equal(2014)
   })
 })
