@@ -31,6 +31,12 @@ var DateInput = React.createClass({
   },
 
   getInitialState () {
+    if (this.props.allowInvalidDates && !this.props.date) {
+      return {
+        value: ''
+      }
+    }
+
     return {
       value: this.safeDateFormat(this.props)
     }
@@ -110,6 +116,7 @@ var DateInput = React.createClass({
 
   render () {
     const { allowInvalidDates, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+
     return <input
         ref='input'
         type='text'
