@@ -141,7 +141,7 @@ var DatePicker = React.createClass({
     }
     return <Calendar
         ref="calendar"
-		onMonthChange{this.props.onMonthChange}
+		onMonthChange={this.props.onMonthChange}
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         selected={this.props.selected}
