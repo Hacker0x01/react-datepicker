@@ -82,15 +82,24 @@ var Calendar = React.createClass({
   },
 
   increaseMonth () {
-    this.setState({
-      date: this.state.date.clone().add(1, 'month')
-    })
+  	var newDate = this.state.date.clone().add(1, 'month')
+  	if(	typeof(this.props.onMonthChange)=='undefined' ||
+  	  ( typeof(this.props.onMonthChange)!='undefined' && this.props.onMonthChange(newDate) != false) ) {
+	    this.setState({
+		  date: newDate
+		});
+  	}
   },
 
   decreaseMonth () {
-    this.setState({
-      date: this.state.date.clone().subtract(1, 'month')
-    })
+  	var newDate = this.state.date.clone().subtract(1, 'month');
+  	
+  	if(	typeof(this.props.onMonthChange)=='undefined' ||
+  	  ( typeof(this.props.onMonthChange)!='undefined' && this.props.onMonthChange(newDate) != false) ) {
+	    this.setState({
+		  date: newDate
+		});
+  	}
   },
 
   handleDayClick (day) {
