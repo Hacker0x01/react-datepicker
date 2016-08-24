@@ -11,15 +11,10 @@ var ExampleCustomInput = React.createClass({
     value: React.PropTypes.string
   },
 
-  handleFocus () {
-    this.props.onFocus()
-  },
-
   render () {
     return (
       <button
           className="example-custom-input"
-          onFocus={this.handleFocus}
           onClick={this.props.onClick}>
           {this.props.value}
       </button>
