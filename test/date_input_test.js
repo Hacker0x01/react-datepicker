@@ -381,4 +381,16 @@ describe('DateInput', function () {
       expect(dateInput.find('input').prop('value')).to.equal(date.format(dateFormat))
     })
   })
+
+  it('should render custom input when customInput is passed as prop', function () {
+    var date = moment()
+    var dateFormat = 'YYYY-MM-DD'
+    var inputElement = <button className="test-input">Click me to open date</button>
+    var dateInput = shallow(
+      <DateInput customInput={inputElement} date={date} dateFormat={dateFormat}/>
+    )
+
+    expect(dateInput.find('.test-input').length).to.equal(1)
+    expect(dateInput.find('.test-input').type()).to.equal('button')
+  })
 })

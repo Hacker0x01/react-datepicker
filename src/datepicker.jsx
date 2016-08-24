@@ -18,6 +18,7 @@ var DatePicker = React.createClass({
   propTypes: {
     autoComplete: React.PropTypes.string,
     className: React.PropTypes.string,
+    customInput: React.PropTypes.element,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.array
@@ -189,7 +190,8 @@ var DatePicker = React.createClass({
         title={this.props.title}
         readOnly={this.props.readOnly}
         required={this.props.required}
-        tabIndex={this.props.tabIndex} />
+        tabIndex={this.props.tabIndex}
+        customInput={this.props.customInput} />
   },
 
   renderClearButton () {
