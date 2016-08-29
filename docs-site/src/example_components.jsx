@@ -9,6 +9,7 @@ import PlaceholderText from './examples/placeholder_text'
 import SpecificDateRange from './examples/specific_date_range'
 import Locale from './examples/locale'
 import ExcludeDates from './examples/exclude_dates'
+import HighlightDates from './examples/highlight_dates'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
@@ -71,6 +72,10 @@ export default React.createClass({
     {
       title: 'Exclude dates',
       component: <ExcludeDates />
+    },
+    {
+      title: 'Highlight dates',
+      component: <HighlightDates />
     },
     {
       title: 'Include dates',

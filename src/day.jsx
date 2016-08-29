@@ -11,6 +11,7 @@ var Day = React.createClass({
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -37,6 +38,12 @@ var Day = React.createClass({
 
   isDisabled () {
     return isDayDisabled(this.props.day, this.props)
+  },
+
+  isHighlighted () {
+    const { day, highlightDates } = this.props
+    if (!highlightDates) return false
+    return highlightDates.some((testDay) => { return isSameDay(day, testDay) })
   },
 
   isInRange () {
@@ -74,6 +81,7 @@ var Day = React.createClass({
     return classnames('react-datepicker__day', {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+      'react-datepicker__day--highlighted': this.isHighlighted(),
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),

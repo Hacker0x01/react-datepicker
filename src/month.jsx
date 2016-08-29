@@ -10,6 +10,7 @@ var Month = React.createClass({
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     fixedHeight: React.PropTypes.bool,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -46,6 +47,7 @@ var Month = React.createClass({
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
+            highlightDates={this.props.highlightDates}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             startDate={this.props.startDate}
