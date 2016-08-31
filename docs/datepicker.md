@@ -6,6 +6,11 @@ General datepicker component.
 Props
 -----
 
+### `autoComplete`
+
+type: `string`
+
+
 ### `className`
 
 type: `string`
@@ -43,6 +48,11 @@ type: `array`
 type: `func`
 
 
+### `fixedHeight`
+
+type: `bool`
+
+
 ### `id`
 
 type: `string`
@@ -51,6 +61,11 @@ type: `string`
 ### `includeDates`
 
 type: `array`
+
+
+### `inline`
+
+type: `bool`
 
 
 ### `isClearable`
@@ -94,6 +109,11 @@ defaultValue: `function() {}`
 
 type: `func`
 defaultValue: `function() {}`
+
+
+### `openToDate`
+
+type: `object`
 
 
 ### `placeholderText`

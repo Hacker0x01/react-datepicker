@@ -11,15 +11,21 @@ var Day = React.createClass({
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     selected: React.PropTypes.object,
-    startDate: React.PropTypes.object
+    startDate: React.PropTypes.object,
+    utcOffset: React.PropTypes.number
   },
-
+  getDefaultProps () {
+    return {
+      utcOffset: moment.utc().utcOffset()
+    }
+  },
   handleClick (event) {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event)
@@ -34,6 +40,12 @@ var Day = React.createClass({
     return isDayDisabled(this.props.day, this.props)
   },
 
+  isHighlighted () {
+    const { day, highlightDates } = this.props
+    if (!highlightDates) return false
+    return highlightDates.some((testDay) => { return isSameDay(day, testDay) })
+  },
+
   isInRange () {
     const { day, startDate, endDate } = this.props
     if (!startDate || !endDate) return false
@@ -41,6 +53,18 @@ var Day = React.createClass({
     const before = startDate.clone().startOf('day').subtract(1, 'seconds')
     const after = endDate.clone().startOf('day').add(1, 'seconds')
     return day.clone().startOf('day').isBetween(before, after)
+  },
+
+  isRangeStart () {
+    const { day, startDate, endDate } = this.props
+    if (!startDate || !endDate) return false
+    return isSameDay(startDate, day)
+  },
+
+  isRangeEnd () {
+    const { day, startDate, endDate } = this.props
+    if (!startDate || !endDate) return false
+    return isSameDay(endDate, day)
   },
 
   isWeekend () {
@@ -57,8 +81,11 @@ var Day = React.createClass({
     return classnames('react-datepicker__day', {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+      'react-datepicker__day--highlighted': this.isHighlighted(),
+      'react-datepicker__day--range-start': this.isRangeStart(),
+      'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
-      'react-datepicker__day--today': this.isSameDay(moment()),
+      'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
     })
@@ -66,8 +93,12 @@ var Day = React.createClass({
 
   render () {
     return (
-      <div className={this.getClassNames()} onClick={this.handleClick}>
-        {this.props.day.date()}
+      <div
+          className={this.getClassNames()}
+          onClick={this.handleClick}
+          aria-label={`day-${this.props.day.date()}`}
+          role="option">
+          {this.props.day.date()}
       </div>
     )
   }

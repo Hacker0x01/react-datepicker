@@ -9,6 +9,7 @@ import PlaceholderText from './examples/placeholder_text'
 import SpecificDateRange from './examples/specific_date_range'
 import Locale from './examples/locale'
 import ExcludeDates from './examples/exclude_dates'
+import HighlightDates from './examples/highlight_dates'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
@@ -19,8 +20,11 @@ import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
 import Today from './examples/today'
+import TimeZoneDate from './examples/timezone_date'
 import Inline from './examples/inline'
 import OpenToDate from './examples/open_to_date'
+import FixedCalendar from './examples/fixed_calendar'
+import CustomInput from './examples/custom_input'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -50,6 +54,10 @@ export default React.createClass({
       component: <Today />
     },
     {
+      title: `TimeZone date`,
+      component: <TimeZoneDate />
+    },
+    {
       title: 'Placeholder text',
       component: <PlaceholderText />
     },
@@ -64,6 +72,10 @@ export default React.createClass({
     {
       title: 'Exclude dates',
       component: <ExcludeDates />
+    },
+    {
+      title: 'Highlight dates',
+      component: <HighlightDates />
     },
     {
       title: 'Include dates',
@@ -108,6 +120,14 @@ export default React.createClass({
     {
       title: 'Open to date',
       component: <OpenToDate />
+    },
+    {
+      title: 'Fixed height of Calendar',
+      component: <FixedCalendar />
+    },
+    {
+      title: 'Custom input',
+      component: <CustomInput />
     }
   ],
 

@@ -12,6 +12,8 @@ var Calendar = React.createClass({
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
+    fixedHeight: React.PropTypes.bool,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -22,10 +24,17 @@ var Calendar = React.createClass({
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
-    todayButton: React.PropTypes.string
+    todayButton: React.PropTypes.string,
+    utcOffset: React.PropTypes.number
   },
 
   mixins: [require('react-onclickoutside')],
+
+  getDefaultProps () {
+    return {
+      utcOffset: moment.utc().utcOffset()
+    }
+  },
 
   getInitialState () {
     return {
@@ -46,14 +55,20 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, openToDate } = this.props
+    const { selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
-    const current = moment()
+    const current = moment.utc().utcOffset(utcOffset)
     if (selected) {
       return selected
+    } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
+      return openToDate
+    } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
+      return openToDate
     } else if (minDate && minDate.isAfter(current)) {
       return minDate
+    } else if (maxDate && openToDate && openToDate.isBefore(maxDate)) {
+      return openToDate
     } else if (maxDate && maxDate.isBefore(current)) {
       return maxDate
     } else if (openToDate) {
@@ -147,7 +162,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment())}>
+      <div className="react-datepicker__today-button" onClick={() => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'))}>
         {this.props.todayButton}
       </div>
     )
@@ -162,7 +177,7 @@ var Calendar = React.createClass({
           {this.renderCurrentMonth()}
           {this.renderYearDropdown()}
           {this.renderNextMonthButton()}
-          <div>
+          <div className="react-datepicker__day-names">
             {this.header()}
           </div>
         </div>
@@ -172,11 +187,14 @@ var Calendar = React.createClass({
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
+            highlightDates={this.props.highlightDates}
             includeDates={this.props.includeDates}
+            fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             startDate={this.props.startDate}
-            endDate={this.props.endDate} />
+            endDate={this.props.endDate}
+            utcOffset={this.props.utcOffset}/>
         {this.renderTodayButton()}
       </div>
     )

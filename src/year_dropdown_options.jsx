@@ -30,6 +30,7 @@ var YearDropdownOptions = React.createClass({
     var options = this.state.yearsList.map(year =>
       <div className="react-datepicker__year-option"
           key={year}
+          ref={year}
           onClick={this.onChange.bind(this, year)}>
         {selectedYear === year ? <span className="react-datepicker__year-option--selected">✓</span> : ''}
         {year}
