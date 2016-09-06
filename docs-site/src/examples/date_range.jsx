@@ -7,8 +7,7 @@ var DateRange = React.createClass({
 
   getInitialState: function () {
     return {
-      startDate: moment('2014-02-08'),
-      endDate: moment('2014-02-10')
+      startDate: moment('2014-02-08')
     }
   },
 

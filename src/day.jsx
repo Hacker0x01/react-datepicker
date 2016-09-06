@@ -3,6 +3,12 @@ import React from 'react'
 import classnames from 'classnames'
 import { isSameDay, isDayDisabled } from './date_utils'
 
+function isDayInRange (day, startDate, endDate) {
+  const before = startDate.clone().startOf('day').subtract(1, 'seconds')
+  const after = endDate.clone().startOf('day').add(1, 'seconds')
+  return day.clone().startOf('day').isBetween(before, after)
+}
+
 var Day = React.createClass({
   displayName: 'Day',
 
@@ -12,11 +18,14 @@ var Day = React.createClass({
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     highlightDates: React.PropTypes.array,
+    hoverDate: React.PropTypes.object,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
@@ -29,6 +38,18 @@ var Day = React.createClass({
   handleClick (event) {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event)
+    }
+  },
+
+  handleMouseEnter (event) {
+    if (!this.isDisabled() && this.props.onMouseEnter) {
+      this.props.onMouseEnter(event)
+    }
+  },
+
+  handleMouseLeave (event) {
+    if (!this.isDisabled() && this.props.onMouseLeave) {
+      this.props.onMouseLeave(event)
     }
   },
 
@@ -49,15 +70,31 @@ var Day = React.createClass({
   isInRange () {
     const { day, startDate, endDate } = this.props
     if (!startDate || !endDate) return false
+    return isDayInRange(day, startDate, endDate)
+  },
 
-    const before = startDate.clone().startOf('day').subtract(1, 'seconds')
-    const after = endDate.clone().startOf('day').add(1, 'seconds')
-    return day.clone().startOf('day').isBetween(before, after)
+  isInSelectingRange () {
+    const { day, hoverDate, startDate, selected } = this.props
+
+    if (!startDate || !hoverDate) {
+      return false
+    }
+
+    // Selects start, don't show a range on this calendar
+    if (isSameDay(startDate, selected)) {
+      return false
+    }
+
+    return isDayInRange(day, startDate, hoverDate)
+  },
+
+  isSelectingRange () {
+    return this.props.startDate && this.props.hoverDate
   },
 
   isRangeStart () {
-    const { day, startDate, endDate } = this.props
-    if (!startDate || !endDate) return false
+    const { day, hoverDate, startDate, endDate } = this.props
+    if (!startDate && !(endDate || hoverDate)) return false
     return isSameDay(startDate, day)
   },
 
@@ -85,6 +122,7 @@ var Day = React.createClass({
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
+      'react-datepicker__day--in-selecting-range': this.isInSelectingRange(),
       'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
@@ -96,6 +134,8 @@ var Day = React.createClass({
       <div
           className={this.getClassNames()}
           onClick={this.handleClick}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
           aria-label={`day-${this.props.day.date()}`}
           role="option">
           {this.props.day.date()}

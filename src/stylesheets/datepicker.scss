@@ -142,6 +142,7 @@
   }
 
   &--selected,
+  &--in-selecting-range,
   &--in-range {
     border-radius: $border-radius;
     background-color: $selected-color;
@@ -150,6 +151,10 @@
     &:hover {
       background-color: darken($selected-color, 5%);
     }
+  }
+
+  &--in-selecting-range:not(&--in-range) {
+    background-color: rgba($selected-color, 0.5);
   }
 
   &--disabled {

@@ -1,5 +1,7 @@
 import React from 'react'
+import classnames from 'classnames'
 import Week from './week'
+import { isSameDay } from './date_utils'
 
 var Month = React.createClass({
   displayName: 'Month',
@@ -11,10 +13,13 @@ var Month = React.createClass({
     filterDate: React.PropTypes.func,
     fixedHeight: React.PropTypes.bool,
     highlightDates: React.PropTypes.array,
+    hoverDate: React.PropTypes.object,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
+    onDayMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
@@ -23,6 +28,18 @@ var Month = React.createClass({
   handleDayClick (day) {
     if (this.props.onDayClick) {
       this.props.onDayClick(day)
+    }
+  },
+
+  handleDayMouseEnter (day) {
+    if (this.props.onDayMouseEnter) {
+      this.props.onDayMouseEnter(day)
+    }
+  },
+
+  handleMouseLeave () {
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave()
     }
   },
 
@@ -43,11 +60,13 @@ var Month = React.createClass({
             day={startOfWeek}
             month={this.props.day.month()}
             onDayClick={this.handleDayClick}
+            onDayMouseEnter={this.handleDayMouseEnter}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
+            hoverDate={this.props.hoverDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             startDate={this.props.startDate}
@@ -56,9 +75,16 @@ var Month = React.createClass({
       )
   },
 
+  getClassNames () {
+    const { hoverDate, selected, startDate } = this.props
+    return classnames('react-datepicker__month', {
+      'react-datepicker__month--selecting-range': hoverDate && !isSameDay(startDate, selected)
+    })
+  },
+
   render () {
     return (
-      <div className="react-datepicker__month" role="listbox">
+      <div className={this.getClassNames()} onMouseLeave={this.handleMouseLeave} role="listbox">
         {this.renderWeeks()}
       </div>
     )
