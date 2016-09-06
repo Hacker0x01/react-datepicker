@@ -22,6 +22,8 @@ var Calendar = React.createClass({
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
     selected: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string,
@@ -204,6 +206,8 @@ var Calendar = React.createClass({
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
+            selectsStart={this.props.selectsStart}
+            selectsEnd={this.props.selectsEnd}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             utcOffset={this.props.utcOffset}/>

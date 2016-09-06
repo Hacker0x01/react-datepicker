@@ -69,6 +69,8 @@ var Month = React.createClass({
             hoverDate={this.props.hoverDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
+            selectsStart={this.props.selectsStart}
+            selectsEnd={this.props.selectsEnd}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             utcOffset={this.props.utcOffset}/>
@@ -76,9 +78,9 @@ var Month = React.createClass({
   },
 
   getClassNames () {
-    const { hoverDate, selected, startDate } = this.props
+    const { hoverDate, selectsStart, selectsEnd } = this.props
     return classnames('react-datepicker__month', {
-      'react-datepicker__month--selecting-range': hoverDate && !isSameDay(startDate, selected)
+      'react-datepicker__month--selecting-range': hoverDate && (selectsStart || selectsEnd)
     })
   },
 

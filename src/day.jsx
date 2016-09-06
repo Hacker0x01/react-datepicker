@@ -74,18 +74,21 @@ var Day = React.createClass({
   },
 
   isInSelectingRange () {
-    const { day, hoverDate, startDate, selected } = this.props
+    const { day, selectsStart, selectsEnd, hoverDate, startDate, endDate, selected } = this.props
 
-    if (!startDate || !hoverDate) {
+    if ((!selectsStart && !selectsEnd) || !startDate || !hoverDate) {
       return false
     }
 
-    // Selects start, don't show a range on this calendar
-    if (isSameDay(startDate, selected)) {
-      return false
+    if (selectsStart) {
+      return endDate && hoverDate.isBefore(endDate) && isDayInRange(day, hoverDate, endDate)
     }
 
-    return isDayInRange(day, startDate, hoverDate)
+    if (selectsEnd) {
+      return hoverDate.isAfter(startDate) && isDayInRange(day, startDate, hoverDate)
+    }
+
+    return false
   },
 
   isSelectingRange () {
