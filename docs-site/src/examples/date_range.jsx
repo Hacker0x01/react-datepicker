@@ -7,7 +7,8 @@ var DateRange = React.createClass({
 
   getInitialState: function () {
     return {
-      startDate: moment('2014-02-08')
+      startDate: moment('2014-02-08'),
+      endDate: moment('2014-02-10')
     }
   },
 
@@ -38,11 +39,13 @@ var DateRange = React.createClass({
         <code className="jsx">
           {"<DatePicker"}<br />
                 {"selected={this.state.startDate}"}<br />
+                {"selectsStart"}
                 {"startDate={this.state.startDate}"}<br />
                 {"endDate={this.state.endDate}"}<br />
                 {"onChange={this.handleChangeStart} />"}<br />
           {"<DatePicker"}<br />
                 {"selected={this.state.endDate}"}<br />
+                {"selectsEnd"}
                 {"startDate={this.state.startDate}"}<br />
                 {"endDate={this.state.endDate}"}<br />
                 {"onChange={this.handleChangeEnd} />"}<br />
