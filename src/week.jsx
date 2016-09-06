@@ -19,6 +19,8 @@ var Week = React.createClass({
     onDayMouseEnter: React.PropTypes.func,
     onDayMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },

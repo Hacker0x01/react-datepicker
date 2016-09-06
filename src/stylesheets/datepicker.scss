@@ -154,7 +154,7 @@
   }
 
   &--in-selecting-range:not(&--in-range) {
-    background-color: rgba($selected-color, 0.5);
+    background-color: rgba($selected-color, .5);
   }
 
   &--in-range:not(&--in-selecting-range) {

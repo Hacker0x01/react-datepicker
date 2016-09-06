@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import Week from './week'
-import { isSameDay } from './date_utils'
 
 var Month = React.createClass({
   displayName: 'Month',
@@ -21,6 +20,8 @@ var Month = React.createClass({
     onDayMouseEnter: React.PropTypes.func,
     onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },

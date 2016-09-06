@@ -27,6 +27,8 @@ var Day = React.createClass({
     onMouseEnter: React.PropTypes.func,
     onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },
@@ -74,7 +76,7 @@ var Day = React.createClass({
   },
 
   isInSelectingRange () {
-    const { day, selectsStart, selectsEnd, hoverDate, startDate, endDate, selected } = this.props
+    const { day, selectsStart, selectsEnd, hoverDate, startDate, endDate } = this.props
 
     if ((!selectsStart && !selectsEnd) || !startDate || !hoverDate) {
       return false
@@ -91,8 +93,18 @@ var Day = React.createClass({
     return false
   },
 
-  isSelectingRange () {
-    return this.props.startDate && this.props.hoverDate
+  isSelectingRangeStart () {
+    const { day, hoverDate, selectsStart, startDate, endDate } = this.props
+
+    if (!selectsStart || !hoverDate || !startDate || !endDate) return false
+    return isSameDay(hoverDate, day)
+  },
+
+  isSelectingRangeEnd () {
+    const { day, hoverDate, selectsEnd, startDate } = this.props
+
+    if (!selectsEnd || !hoverDate || !startDate) return false
+    return isSameDay(hoverDate, day)
   },
 
   isRangeStart () {
@@ -126,6 +138,8 @@ var Day = React.createClass({
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
       'react-datepicker__day--in-selecting-range': this.isInSelectingRange(),
+      'react-datepicker__day--selecting-range-start': this.isSelectingRangeStart(),
+      'react-datepicker__day--selecting-range-end': this.isSelectingRangeEnd(),
       'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
