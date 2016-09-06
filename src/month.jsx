@@ -12,7 +12,7 @@ var Month = React.createClass({
     filterDate: React.PropTypes.func,
     fixedHeight: React.PropTypes.bool,
     highlightDates: React.PropTypes.array,
-    hoverDate: React.PropTypes.object,
+    selectingDate: React.PropTypes.object,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -67,7 +67,7 @@ var Month = React.createClass({
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
-            hoverDate={this.props.hoverDate}
+            selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
@@ -79,9 +79,9 @@ var Month = React.createClass({
   },
 
   getClassNames () {
-    const { hoverDate, selectsStart, selectsEnd } = this.props
+    const { selectingDate, selectsStart, selectsEnd } = this.props
     return classnames('react-datepicker__month', {
-      'react-datepicker__month--selecting-range': hoverDate && (selectsStart || selectsEnd)
+      'react-datepicker__month--selecting-range': selectingDate && (selectsStart || selectsEnd)
     })
   },
 

@@ -117,8 +117,8 @@ describe('Day', () => {
 
         // All these should highlight: today, yesterday (startDate), the day before
         for (let daysFromEnd = 1; daysFromEnd <= 3; daysFromEnd++) {
-          const hoverDate = endDate.clone().subtract(daysFromEnd, 'days')
-          const shallowDay = renderDay(hoverDate, { startDate, endDate, hoverDate, selectsStart: true })
+          const selectingDate = endDate.clone().subtract(daysFromEnd, 'days')
+          const shallowDay = renderDay(selectingDate, { startDate, endDate, selectingDate, selectsStart: true })
           expect(shallowDay.hasClass(className)).to.be.true
         }
       })
@@ -127,24 +127,24 @@ describe('Day', () => {
         const day = moment()
         const startDate = day.clone().subtract(1, 'days')
         const endDate = day.clone().add(1, 'days')
-        const hoverDate = endDate.clone().add(1, 'days')
-        const shallowDay = renderDay(day, { startDate, endDate, hoverDate, selectsStart: true })
+        const selectingDate = endDate.clone().add(1, 'days')
+        const shallowDay = renderDay(day, { startDate, endDate, selectingDate, selectsStart: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight any dates if there is no end date selected', () => {
         const day = moment()
         const startDate = day.clone().subtract(1, 'days')
-        const hoverDate = startDate.clone().subtract(1, 'days')
-        const shallowDay = renderDay(day, { startDate, hoverDate, selectsStart: true })
+        const selectingDate = startDate.clone().subtract(1, 'days')
+        const shallowDay = renderDay(day, { startDate, selectingDate, selectsStart: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight disabled dates', () => {
         const startDate = moment()
-        const hoverDate = startDate.clone().subtract(1, 'days')
+        const selectingDate = startDate.clone().subtract(1, 'days')
         const endDate = startDate.clone().add(1, 'days')
-        const shallowDay = renderDay(hoverDate, { startDate, hoverDate, endDate, selectsStart: true, excludeDates: [hoverDate] })
+        const shallowDay = renderDay(selectingDate, { startDate, selectingDate, endDate, selectsStart: true, excludeDates: [selectingDate] })
         expect(shallowDay.hasClass(className)).to.be.false
       })
     })
@@ -157,7 +157,7 @@ describe('Day', () => {
         // All these should highlight: today, tomorrow (endDate), the day after
         for (let daysFromStart = 1; daysFromStart <= 3; daysFromStart++) {
           const day = startDate.clone().add(daysFromStart, 'days')
-          const shallowDay = renderDay(day, { startDate, endDate, hoverDate: day, selectsEnd: true })
+          const shallowDay = renderDay(day, { startDate, endDate, selectingDate: day, selectsEnd: true })
           expect(shallowDay.hasClass(className)).to.be.true
         }
       })
@@ -165,23 +165,23 @@ describe('Day', () => {
       it('should not highlight dates before the start date', () => {
         const day = moment()
         const startDate = day.clone().add(1, 'day')
-        const hoverDate = day.clone().subtract(1, 'day')
-        const shallowDay = renderDay(day, { startDate, hoverDate, selectsEnd: true })
+        const selectingDate = day.clone().subtract(1, 'day')
+        const shallowDay = renderDay(day, { startDate, selectingDate, selectsEnd: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight any dates if there is no start date selected', () => {
         const day = moment()
         const endDate = day.clone().subtract(1, 'day')
-        const hoverDate = day.clone().add(1, 'day')
-        const shallowDay = renderDay(day, { endDate, hoverDate, selectsEnd: true })
+        const selectingDate = day.clone().add(1, 'day')
+        const shallowDay = renderDay(day, { endDate, selectingDate, selectsEnd: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight disabled dates', () => {
         const startDate = moment()
-        const hoverDate = startDate.clone().add(1, 'days')
-        const shallowDay = renderDay(hoverDate, { startDate, hoverDate, selectsEnd: true, excludeDates: [hoverDate] })
+        const selectingDate = startDate.clone().add(1, 'days')
+        const shallowDay = renderDay(selectingDate, { startDate, selectingDate, selectsEnd: true, excludeDates: [selectingDate] })
         expect(shallowDay.hasClass(className)).to.be.false
       })
     })

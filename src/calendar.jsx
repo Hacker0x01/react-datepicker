@@ -41,7 +41,7 @@ var Calendar = React.createClass({
   getInitialState () {
     return {
       date: this.localizeMoment(this.getDateInView()),
-      hoverDate: null
+      selectingDate: null
     }
   },
 
@@ -102,11 +102,11 @@ var Calendar = React.createClass({
   },
 
   handleDayMouseEnter (day) {
-    this.setState({ hoverDate: day })
+    this.setState({ selectingDate: day })
   },
 
   handleMonthMouseLeave () {
-    this.setState({ hoverDate: null })
+    this.setState({ selectingDate: null })
   },
 
   changeYear (year) {
@@ -201,7 +201,7 @@ var Calendar = React.createClass({
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             highlightDates={this.props.highlightDates}
-            hoverDate={this.state.hoverDate}
+            selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}

@@ -18,7 +18,7 @@ var Day = React.createClass({
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     highlightDates: React.PropTypes.array,
-    hoverDate: React.PropTypes.object,
+    selectingDate: React.PropTypes.object,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -76,18 +76,18 @@ var Day = React.createClass({
   },
 
   isInSelectingRange () {
-    const { day, selectsStart, selectsEnd, hoverDate, startDate, endDate } = this.props
+    const { day, selectsStart, selectsEnd, selectingDate, startDate, endDate } = this.props
 
-    if (!(selectsStart || selectsEnd) || !hoverDate || this.isDisabled()) {
+    if (!(selectsStart || selectsEnd) || !selectingDate || this.isDisabled()) {
       return false
     }
 
-    if (selectsStart && endDate && hoverDate.isBefore(endDate)) {
-      return isDayInRange(day, hoverDate, endDate)
+    if (selectsStart && endDate && selectingDate.isBefore(endDate)) {
+      return isDayInRange(day, selectingDate, endDate)
     }
 
-    if (selectsEnd && startDate && hoverDate.isAfter(startDate)) {
-      return isDayInRange(day, startDate, hoverDate)
+    if (selectsEnd && startDate && selectingDate.isAfter(startDate)) {
+      return isDayInRange(day, startDate, selectingDate)
     }
 
     return false
@@ -98,10 +98,10 @@ var Day = React.createClass({
       return false
     }
 
-    const { day, hoverDate, startDate, selectsStart, selectsEnd } = this.props
+    const { day, selectingDate, startDate, selectsStart, selectsEnd } = this.props
 
     if (selectsStart) {
-      return isSameDay(day, hoverDate)
+      return isSameDay(day, selectingDate)
     } else if (selectsEnd) {
       return isSameDay(day, startDate)
     }
@@ -114,20 +114,20 @@ var Day = React.createClass({
       return false
     }
 
-    const { day, hoverDate, endDate, selectsStart, selectsEnd } = this.props
+    const { day, selectingDate, endDate, selectsStart, selectsEnd } = this.props
 
     if (selectsStart) {
       return isSameDay(day, endDate)
     } else if (selectsEnd) {
-      return isSameDay(day, hoverDate)
+      return isSameDay(day, selectingDate)
     }
 
     return false
   },
 
   isRangeStart () {
-    const { day, hoverDate, startDate, endDate } = this.props
-    if (!startDate && !(endDate || hoverDate)) return false
+    const { day, selectingDate, startDate, endDate } = this.props
+    if (!startDate && !(endDate || selectingDate)) return false
     return isSameDay(startDate, day)
   },
 

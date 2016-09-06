@@ -10,7 +10,7 @@ var Week = React.createClass({
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     highlightDates: React.PropTypes.array,
-    hoverDate: React.PropTypes.object,
+    selectingDate: React.PropTypes.object,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -60,7 +60,7 @@ var Week = React.createClass({
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
-            hoverDate={this.props.hoverDate}
+            selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
