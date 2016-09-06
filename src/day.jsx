@@ -94,17 +94,35 @@ var Day = React.createClass({
   },
 
   isSelectingRangeStart () {
-    const { day, hoverDate, endDate } = this.props
+    if (!this.isInSelectingRange()) {
+      return false
+    }
 
-    if (!hoverDate || !endDate || this.isDisabled()) return false
-    return isSameDay(hoverDate, day)
+    const { day, hoverDate, startDate, selectsStart, selectsEnd } = this.props
+
+    if (selectsStart) {
+      return isSameDay(day, hoverDate)
+    } else if (selectsEnd) {
+      return isSameDay(day, startDate)
+    }
+
+    return false
   },
 
   isSelectingRangeEnd () {
-    const { day, hoverDate, startDate } = this.props
+    if (!this.isInSelectingRange()) {
+      return false
+    }
 
-    if (!hoverDate || !startDate || this.isDisabled()) return false
-    return isSameDay(hoverDate, day)
+    const { day, hoverDate, endDate, selectsStart, selectsEnd } = this.props
+
+    if (selectsStart) {
+      return isSameDay(day, endDate)
+    } else if (selectsEnd) {
+      return isSameDay(day, hoverDate)
+    }
+
+    return false
   },
 
   isRangeStart () {
