@@ -107,6 +107,86 @@ describe('Day', () => {
     })
   })
 
+  describe('in selecting range', () => {
+    const className = 'react-datepicker__day--in-selecting-range'
+
+    describe('start selector', () => {
+      it('should highlight dates before the end date if a range is selected', () => {
+        const startDate = moment().subtract(1, 'days')
+        const endDate = startDate.clone().add(1, 'days')
+
+        // All these should highlight: today, yesterday (startDate), the day before
+        for (let daysFromEnd = 1; daysFromEnd <= 3; daysFromEnd++) {
+          const hoverDate = endDate.clone().subtract(daysFromEnd, 'days')
+          const shallowDay = renderDay(hoverDate, { startDate, endDate, hoverDate, selectsStart: true })
+          expect(shallowDay.hasClass(className)).to.be.true
+        }
+      })
+
+      it('should not highlight dates after the end date', () => {
+        const day = moment()
+        const startDate = day.clone().subtract(1, 'days')
+        const endDate = day.clone().add(1, 'days')
+        const hoverDate = endDate.clone().add(1, 'days')
+        const shallowDay = renderDay(day, { startDate, endDate, hoverDate, selectsStart: true })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+
+      it('should not highlight any dates if there is no end date selected', () => {
+        const day = moment()
+        const startDate = day.clone().subtract(1, 'days')
+        const hoverDate = startDate.clone().subtract(1, 'days')
+        const shallowDay = renderDay(day, { startDate, hoverDate, selectsStart: true })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+
+      it('should not highlight disabled dates', () => {
+        const startDate = moment()
+        const hoverDate = startDate.clone().subtract(1, 'days')
+        const endDate = startDate.clone().add(1, 'days')
+        const shallowDay = renderDay(hoverDate, { startDate, hoverDate, endDate, selectsStart: true, excludeDates: [hoverDate] })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+    })
+
+    describe('end selector', () => {
+      it('should highlight any dates after start date', () => {
+        const startDate = moment().subtract(1, 'days')
+        const endDate = startDate.clone().add(2, 'days')
+
+        // All these should highlight: today, tomorrow (endDate), the day after
+        for (let daysFromStart = 1; daysFromStart <= 3; daysFromStart++) {
+          const day = startDate.clone().add(daysFromStart, 'days')
+          const shallowDay = renderDay(day, { startDate, endDate, hoverDate: day, selectsEnd: true })
+          expect(shallowDay.hasClass(className)).to.be.true
+        }
+      })
+
+      it('should not highlight dates before the start date', () => {
+        const day = moment()
+        const startDate = day.clone().add(1, 'day')
+        const hoverDate = day.clone().subtract(1, 'day')
+        const shallowDay = renderDay(day, { startDate, hoverDate, selectsEnd: true })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+
+      it('should not highlight any dates if there is no start date selected', () => {
+        const day = moment()
+        const endDate = day.clone().subtract(1, 'day')
+        const hoverDate = day.clone().add(1, 'day')
+        const shallowDay = renderDay(day, { endDate, hoverDate, selectsEnd: true })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+
+      it('should not highlight disabled dates', () => {
+        const startDate = moment()
+        const hoverDate = startDate.clone().add(1, 'days')
+        const shallowDay = renderDay(hoverDate, { startDate, hoverDate, selectsEnd: true, excludeDates: [hoverDate] })
+        expect(shallowDay.hasClass(className)).to.be.false
+      })
+    })
+  })
+
   describe('today', () => {
     const className = 'react-datepicker__day--today'
 
@@ -203,6 +283,24 @@ describe('Day', () => {
       )
       dayNode.find('.react-datepicker__day').simulate('click')
       expect(onClickCalled).to.be.false
+    })
+  })
+
+  describe('mouse enter', () => {
+    var onMouseEnterCalled
+
+    function onMouseEnter () {
+      onMouseEnterCalled = true
+    }
+
+    beforeEach(() => {
+      onMouseEnterCalled = false
+    })
+
+    it('should call onMouseEnter if day is hovered', () => {
+      const shallowDay = renderDay(moment(), { onMouseEnter })
+      shallowDay.find('.react-datepicker__day').simulate('mouseenter')
+      expect(onMouseEnterCalled).to.be.true
     })
   })
 })
