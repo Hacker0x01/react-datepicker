@@ -82,11 +82,11 @@ var Day = React.createClass({
       return false
     }
 
-    if (selectsStart && endDate && selectingDate.isBefore(endDate)) {
+    if (selectsStart && endDate && selectingDate.isSameOrBefore(endDate)) {
       return isDayInRange(day, selectingDate, endDate)
     }
 
-    if (selectsEnd && startDate && selectingDate.isAfter(startDate)) {
+    if (selectsEnd && startDate && selectingDate.isSameOrAfter(startDate)) {
       return isDayInRange(day, startDate, selectingDate)
     }
 
