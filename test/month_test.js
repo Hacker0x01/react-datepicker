@@ -41,4 +41,29 @@ describe('Month', () => {
     day.simulate('click')
     assert(day.prop('day').isSame(dayClicked, 'day'))
   })
+
+  it('should call the provided onMouseLeave function', () => {
+    let mouseLeaveCalled = false
+
+    function onMouseLeave () {
+      mouseLeaveCalled = true
+    }
+
+    const month = shallow(<Month day={moment()} onMouseLeave={onMouseLeave} />)
+    month.simulate('mouseleave')
+    expect(mouseLeaveCalled).to.be.true
+  })
+
+  it('should call the provided onDayMouseEnter function', () => {
+    let dayMouseEntered = null
+
+    function onDayMouseEnter (day) {
+      dayMouseEntered = day
+    }
+
+    const month = mount(<Month day={moment()} onDayMouseEnter={onDayMouseEnter} />)
+    const day = month.find(Day).first()
+    day.simulate('mouseenter')
+    assert(day.prop('day').isSame(dayMouseEntered, 'day'))
+  })
 })
