@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import Week from './week'
 
 var Month = React.createClass({
@@ -15,7 +16,12 @@ var Month = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
+    onDayMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
+    selectingDate: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },
@@ -23,6 +29,18 @@ var Month = React.createClass({
   handleDayClick (day) {
     if (this.props.onDayClick) {
       this.props.onDayClick(day)
+    }
+  },
+
+  handleDayMouseEnter (day) {
+    if (this.props.onDayMouseEnter) {
+      this.props.onDayMouseEnter(day)
+    }
+  },
+
+  handleMouseLeave () {
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave()
     }
   },
 
@@ -43,22 +61,33 @@ var Month = React.createClass({
             day={startOfWeek}
             month={this.props.day.month()}
             onDayClick={this.handleDayClick}
+            onDayMouseEnter={this.handleDayMouseEnter}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
+            selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
+            selectsStart={this.props.selectsStart}
+            selectsEnd={this.props.selectsEnd}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             utcOffset={this.props.utcOffset}/>
       )
   },
 
+  getClassNames () {
+    const { selectingDate, selectsStart, selectsEnd } = this.props
+    return classnames('react-datepicker__month', {
+      'react-datepicker__month--selecting-range': selectingDate && (selectsStart || selectsEnd)
+    })
+  },
+
   render () {
     return (
-      <div className="react-datepicker__month" role="listbox">
+      <div className={this.getClassNames()} onMouseLeave={this.handleMouseLeave} role="listbox">
         {this.renderWeeks()}
       </div>
     )

@@ -142,6 +142,7 @@
   }
 
   &--selected,
+  &--in-selecting-range,
   &--in-range {
     border-radius: $border-radius;
     background-color: $selected-color;
@@ -149,6 +150,17 @@
 
     &:hover {
       background-color: darken($selected-color, 5%);
+    }
+  }
+
+  &--in-selecting-range:not(&--in-range) {
+    background-color: rgba($selected-color, .5);
+  }
+
+  &--in-range:not(&--in-selecting-range) {
+    .react-datepicker__month--selecting-range & {
+      background-color: $background-color;
+      color: $text-color;
     }
   }
 

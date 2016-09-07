@@ -50,6 +50,8 @@ var DatePicker = React.createClass({
     renderCalendarTo: React.PropTypes.any,
     required: React.PropTypes.bool,
     selected: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
@@ -150,6 +152,8 @@ var DatePicker = React.createClass({
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
+        selectsStart={this.props.selectsStart}
+        selectsEnd={this.props.selectsEnd}
         startDate={this.props.startDate}
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}

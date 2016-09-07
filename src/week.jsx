@@ -15,7 +15,11 @@ var Week = React.createClass({
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onDayClick: React.PropTypes.func,
+    onDayMouseEnter: React.PropTypes.func,
     selected: React.PropTypes.object,
+    selectingDate: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },
@@ -23,6 +27,12 @@ var Week = React.createClass({
   handleDayClick (day) {
     if (this.props.onDayClick) {
       this.props.onDayClick(day)
+    }
+  },
+
+  handleDayMouseEnter (day) {
+    if (this.props.onDayMouseEnter) {
+      this.props.onDayMouseEnter(day)
     }
   },
 
@@ -36,13 +46,17 @@ var Week = React.createClass({
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
+            onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
+            selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             selected={this.props.selected}
+            selectsStart={this.props.selectsStart}
+            selectsEnd={this.props.selectsEnd}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             utcOffset={this.props.utcOffset}/>

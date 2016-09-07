@@ -37,4 +37,18 @@ describe('Week', () => {
     day.simulate('click')
     assert(day.prop('day').isSame(dayClicked, 'day'))
   })
+
+  it('should call the provided onDayMouseEnter function', () => {
+    let dayMouseEntered = null
+
+    function onDayMouseEnter (day) {
+      dayMouseEntered = day
+    }
+
+    const weekStart = moment()
+    const week = shallow(<Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />)
+    const day = week.find(Day).first()
+    day.simulate('mouseenter')
+    assert(day.prop('day').isSame(dayMouseEntered, 'day'))
+  })
 })
