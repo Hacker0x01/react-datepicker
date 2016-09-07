@@ -20,9 +20,9 @@ var Month = React.createClass({
     utcOffset: React.PropTypes.number
   },
 
-  handleDayClick (day, ev) {
+  handleDayClick (day, event) {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day, ev)
+      this.props.onDayClick(day, event)
     }
   },
 

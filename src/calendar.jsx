@@ -94,8 +94,8 @@ var Calendar = React.createClass({
     })
   },
 
-  handleDayClick (day, ev) {
-    this.props.onSelect(day, ev)
+  handleDayClick (day, event) {
+    this.props.onSelect(day, event)
   },
 
   changeYear (year) {
@@ -162,7 +162,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={(ev) => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'), ev)}>
+      <div className="react-datepicker__today-button" onClick={(event) => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'), event)}>
         {this.props.todayButton}
       </div>
     )

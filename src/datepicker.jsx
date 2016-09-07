@@ -106,14 +106,14 @@ var DatePicker = React.createClass({
     this.setOpen(false)
   },
 
-  handleSelect (date, ev) {
-    this.setSelected(date, ev)
+  handleSelect (date, event) {
+    this.setSelected(date, event)
     this.setOpen(false)
   },
 
-  setSelected (date, ev) {
+  setSelected (date, event) {
     if (!isSameDay(this.props.selected, date)) {
-      this.props.onChange(date, ev)
+      this.props.onChange(date, event)
     }
   },
 
