@@ -126,8 +126,8 @@ var Day = React.createClass({
   },
 
   isRangeStart () {
-    const { day, selectingDate, startDate, endDate } = this.props
-    if (!startDate && !(endDate || selectingDate)) return false
+    const { day, startDate, endDate } = this.props
+    if (!startDate || !endDate) return false
     return isSameDay(startDate, day)
   },
 
