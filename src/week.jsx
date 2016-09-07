@@ -16,7 +16,6 @@ var Week = React.createClass({
     month: React.PropTypes.number,
     onDayClick: React.PropTypes.func,
     onDayMouseEnter: React.PropTypes.func,
-    onDayMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
@@ -37,12 +36,6 @@ var Week = React.createClass({
     }
   },
 
-  handleDayMouseLeave (day) {
-    if (this.props.onDayMouseLeave) {
-      this.props.onDayMouseLeave(day)
-    }
-  },
-
   renderDays () {
     const startOfWeek = this.props.day.clone().startOf('week')
     return [0, 1, 2, 3, 4, 5, 6].map(offset => {
@@ -54,7 +47,6 @@ var Week = React.createClass({
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
-            onMouseLeave={this.handleDayMouseLeave.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}

@@ -18,7 +18,6 @@ var Day = React.createClass({
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
-    onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
@@ -40,12 +39,6 @@ var Day = React.createClass({
   handleMouseEnter (event) {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event)
-    }
-  },
-
-  handleMouseLeave (event) {
-    if (!this.isDisabled() && this.props.onMouseLeave) {
-      this.props.onMouseLeave(event)
     }
   },
 
@@ -164,7 +157,6 @@ var Day = React.createClass({
           className={this.getClassNames()}
           onClick={this.handleClick}
           onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
           aria-label={`day-${this.props.day.date()}`}
           role="option">
           {this.props.day.date()}

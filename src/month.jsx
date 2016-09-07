@@ -17,7 +17,6 @@ var Month = React.createClass({
     minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
     onDayMouseEnter: React.PropTypes.func,
-    onMouseLeave: React.PropTypes.func,
     selected: React.PropTypes.object,
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
@@ -35,12 +34,6 @@ var Month = React.createClass({
   handleDayMouseEnter (day) {
     if (this.props.onDayMouseEnter) {
       this.props.onDayMouseEnter(day)
-    }
-  },
-
-  handleMouseLeave () {
-    if (this.props.onMouseLeave) {
-      this.props.onMouseLeave()
     }
   },
 
