@@ -1,13 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import classnames from 'classnames'
-import { isSameDay, isDayDisabled } from './date_utils'
-
-function isDayInRange (day, startDate, endDate) {
-  const before = startDate.clone().startOf('day').subtract(1, 'seconds')
-  const after = endDate.clone().startOf('day').add(1, 'seconds')
-  return day.clone().startOf('day').isBetween(before, after)
-}
+import { isSameDay, isDayDisabled, isDayInRange } from './date_utils'
 
 var Day = React.createClass({
   displayName: 'Day',
