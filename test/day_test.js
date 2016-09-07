@@ -110,10 +110,17 @@ describe('Day', () => {
   describe('in selecting range', () => {
     const className = 'react-datepicker__day--in-selecting-range'
 
+    function createDateRange (beforeDays, afterDays, day = moment()) {
+      return {
+        startDate: day.clone().subtract(beforeDays, 'days'),
+        endDate: day.clone().add(afterDays, 'days'),
+        day
+      }
+    }
+
     describe('start selector', () => {
       it('should highlight dates before the end date if a range is selected', () => {
-        const startDate = moment().subtract(1, 'days')
-        const endDate = startDate.clone().add(1, 'days')
+        const { startDate, endDate } = createDateRange(-1, 1)
 
         // All these should highlight: today, yesterday (startDate), the day before
         for (let daysFromEnd = 1; daysFromEnd <= 3; daysFromEnd++) {
@@ -123,36 +130,42 @@ describe('Day', () => {
         }
       })
 
-      it('should not highlight dates after the end date', () => {
-        const day = moment()
-        const startDate = day.clone().subtract(1, 'days')
-        const endDate = day.clone().add(1, 'days')
+      it('should correctly mark the start and end dates', () => {
+        const endDate = moment()
+        const selectingDate = endDate.clone().subtract(1, 'days')
+
+        const shallowStartDay = renderDay(selectingDate, { endDate, selectingDate, selectsStart: true })
+        expect(shallowStartDay.hasClass('react-datepicker__day--selecting-range-start')).to.be.true
+
+        const shallowEndDay = renderDay(endDate, { endDate, selectingDate, selectsStart: true })
+        expect(shallowEndDay.hasClass('react-datepicker__day--selecting-range-end')).to.be.true
+      })
+
+      it('should not highlight dates after an existing end date', () => {
+        const { day, startDate, endDate } = createDateRange(-1, 1)
         const selectingDate = endDate.clone().add(1, 'days')
         const shallowDay = renderDay(day, { startDate, endDate, selectingDate, selectsStart: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight any dates if there is no end date selected', () => {
-        const day = moment()
-        const startDate = day.clone().subtract(1, 'days')
+        const startDate = moment()
         const selectingDate = startDate.clone().subtract(1, 'days')
-        const shallowDay = renderDay(day, { startDate, selectingDate, selectsStart: true })
+        const shallowDay = renderDay(selectingDate, { startDate, selectingDate, selectsStart: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight disabled dates', () => {
-        const startDate = moment()
-        const selectingDate = startDate.clone().subtract(1, 'days')
-        const endDate = startDate.clone().add(1, 'days')
-        const shallowDay = renderDay(selectingDate, { startDate, selectingDate, endDate, selectsStart: true, excludeDates: [selectingDate] })
+        const endDate = moment()
+        const selectingDate = endDate.clone().subtract(1, 'days')
+        const shallowDay = renderDay(selectingDate, { selectingDate, endDate, selectsStart: true, excludeDates: [selectingDate] })
         expect(shallowDay.hasClass(className)).to.be.false
       })
     })
 
     describe('end selector', () => {
       it('should highlight any dates after start date', () => {
-        const startDate = moment().subtract(1, 'days')
-        const endDate = startDate.clone().add(2, 'days')
+        const { startDate, endDate } = createDateRange(-1, 1)
 
         // All these should highlight: today, tomorrow (endDate), the day after
         for (let daysFromStart = 1; daysFromStart <= 3; daysFromStart++) {
@@ -162,18 +175,27 @@ describe('Day', () => {
         }
       })
 
-      it('should not highlight dates before the start date', () => {
-        const day = moment()
-        const startDate = day.clone().add(1, 'day')
-        const selectingDate = day.clone().subtract(1, 'day')
-        const shallowDay = renderDay(day, { startDate, selectingDate, selectsEnd: true })
+      it('should correctly mark the start and end dates', () => {
+        const startDate = moment()
+        const selectingDate = startDate.clone().add(1, 'days')
+
+        const shallowStartDay = renderDay(startDate, { startDate, selectingDate, selectsEnd: true })
+        expect(shallowStartDay.hasClass('react-datepicker__day--selecting-range-start')).to.be.true
+
+        const shallowEndDay = renderDay(selectingDate, { startDate, selectingDate, selectsEnd: true })
+        expect(shallowEndDay.hasClass('react-datepicker__day--selecting-range-end')).to.be.true
+      })
+
+      it('should not highlight dates before an existing start date', () => {
+        const startDate = moment()
+        const selectingDate = startDate.subtract(1, 'day')
+        const shallowDay = renderDay(selectingDate, { startDate, selectingDate, selectsEnd: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
 
       it('should not highlight any dates if there is no start date selected', () => {
-        const day = moment()
-        const endDate = day.clone().subtract(1, 'day')
-        const selectingDate = day.clone().add(1, 'day')
+        const { day, endDate } = createDateRange(-1, 1)
+        const selectingDate = endDate.add(1, 'day')
         const shallowDay = renderDay(day, { endDate, selectingDate, selectsEnd: true })
         expect(shallowDay.hasClass(className)).to.be.false
       })
