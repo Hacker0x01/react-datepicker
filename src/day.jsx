@@ -85,15 +85,13 @@ var Day = React.createClass({
       return false
     }
 
-    const { day, selectingDate, startDate, selectsStart, selectsEnd } = this.props
+    const { day, selectingDate, startDate, selectsStart } = this.props
 
     if (selectsStart) {
       return isSameDay(day, selectingDate)
-    } else if (selectsEnd) {
+    } else {
       return isSameDay(day, startDate)
     }
-
-    return false
   },
 
   isSelectingRangeEnd () {
@@ -101,15 +99,13 @@ var Day = React.createClass({
       return false
     }
 
-    const { day, selectingDate, endDate, selectsStart, selectsEnd } = this.props
+    const { day, selectingDate, endDate, selectsEnd } = this.props
 
-    if (selectsStart) {
-      return isSameDay(day, endDate)
-    } else if (selectsEnd) {
+    if (selectsEnd) {
       return isSameDay(day, selectingDate)
+    } else {
+      return isSameDay(day, endDate)
     }
-
-    return false
   },
 
   isRangeStart () {

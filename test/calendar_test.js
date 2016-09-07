@@ -1,8 +1,10 @@
 import React from 'react'
 import moment from 'moment'
 import Calendar from '../src/calendar'
+import Month from '../src/month'
+import Day from '../src/day'
 import YearDropdown from '../src/year_dropdown'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 describe('Calendar', function () {
   var dateFormat = 'MMMM YYYY'
@@ -132,6 +134,24 @@ describe('Calendar', function () {
     var todayButton = calendar.find('.react-datepicker__today-button')
     todayButton.simulate('click')
     expect(calendar.state().date.isSame(todayInAuckland, 'day'))
+  })
+
+  it('should track the currently hovered day', () => {
+    const calendar = mount(<Calendar dateFormat={dateFormat} onClickOutside={() => {}} onSelect={() => {}} />)
+    const day = calendar.find(Day).first()
+    const month = calendar.find(Month).first()
+    day.simulate('mouseenter')
+    expect(month.prop('selectingDate')).to.exist
+    expect(month.prop('selectingDate').isSame(day.prop('day'), 'day')).to.be.true
+  })
+
+  it('should clear the hovered day when the mouse leaves', () => {
+    const calendar = mount(<Calendar dateFormat={dateFormat} onClickOutside={() => {}} onSelect={() => {}} />)
+    calendar.setState({ selectingDate: moment() })
+    const month = calendar.find(Month).first()
+    expect(month.prop('selectingDate')).to.exist
+    month.simulate('mouseleave')
+    expect(month.prop('selectingDate')).not.to.exist
   })
 
   describe('localization', function () {

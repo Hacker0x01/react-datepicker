@@ -134,10 +134,15 @@ describe('Day', () => {
 
       it('should have a class if it is a start or end date', () => {
         const endDate = moment()
-        const selectingDate = endDate.clone().subtract(1, 'days')
+        const midRangeDate = endDate.clone().subtract(1, 'days')
+        const selectingDate = endDate.clone().subtract(2, 'days')
 
         const shallowStartDay = renderDay(selectingDate, { endDate, selectingDate, selectsStart: true })
         expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true
+
+        const shallowMidRangeDay = renderDay(midRangeDate, { endDate, selectingDate, selectsStart: true })
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false
 
         const shallowEndDay = renderDay(endDate, { endDate, selectingDate, selectsStart: true })
         expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true
@@ -179,10 +184,15 @@ describe('Day', () => {
 
       it('should have a class if it is a start or end date', () => {
         const startDate = moment()
-        const selectingDate = startDate.clone().add(1, 'days')
+        const midRangeDate = startDate.clone().add(1, 'days')
+        const selectingDate = startDate.clone().add(2, 'days')
 
         const shallowStartDay = renderDay(startDate, { startDate, selectingDate, selectsEnd: true })
         expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true
+
+        const shallowMidRangeDay = renderDay(midRangeDate, { startDate, selectingDate, selectsEnd: true })
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false
 
         const shallowEndDay = renderDay(selectingDate, { startDate, selectingDate, selectsEnd: true })
         expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true
