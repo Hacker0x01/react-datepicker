@@ -126,11 +126,36 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
+    const copy = moment(this.props.selected)
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
     } else if (event.key === 'Tab') {
       this.setOpen(false)
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      this.setSelected(copy.subtract(1, 'days'))
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      this.setSelected(copy.add(1, 'days'))
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      this.setSelected(copy.subtract(1, 'weeks'))
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      this.setSelected(copy.add(1, 'weeks'))
+    } else if (event.key === 'PageUp') {
+      event.preventDefault()
+      this.setSelected(copy.subtract(1, 'months'))
+    } else if (event.key === 'PageDown') {
+      event.preventDefault()
+      this.setSelected(copy.add(1, 'months'))
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      this.setSelected(copy.subtract(1, 'years'))
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      this.setSelected(copy.add(1, 'years'))
     }
   },
 
