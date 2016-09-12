@@ -9,7 +9,7 @@ module.exports = function (config) {
   config.set({
     frameworks: ['mocha', 'sinon', 'chai'],
 
-    browsers: [CONTINUOUS_INTEGRATION ? 'Firefox' : 'Chrome'],
+    browsers: ['Firefox', 'Chrome'],
 
     singleRun: CONTINUOUS_INTEGRATION,
 
