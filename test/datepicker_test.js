@@ -188,4 +188,84 @@ describe('DatePicker', () => {
 
     expect(datePicker.refs.calendar).to.exist
   })
+
+  function getOnInputKeyDownStuff () {
+    var m = moment()
+    var copyM = moment(m)
+    var testFormat = 'YYYY-MM-DD'
+    var callback = sinon.spy()
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={m} onChange={callback}/>
+    )
+    var dateInput = datePicker.refs.input
+    var nodeInput = ReactDOM.findDOMNode(dateInput)
+    TestUtils.Simulate.focus(nodeInput)
+    return {
+      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+    }
+  }
+  it('should handle onInputKeyDown ArrowLeft', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    data.copyM.subtract(1, 'days')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowRight', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowRight', keyCode: 39, which: 39})
+    data.copyM.add(1, 'days')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowUp', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    data.copyM.subtract(1, 'weeks')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowDown', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    data.copyM.add(1, 'weeks')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown PageUp', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageUp', keyCode: 33, which: 33})
+    data.copyM.subtract(1, 'months')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown PageDown', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageDown', keyCode: 34, which: 34})
+    data.copyM.add(1, 'months')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown Home', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
+    data.copyM.subtract(1, 'years')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown End', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    data.copyM.add(1, 'years')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
 })
