@@ -37326,11 +37326,36 @@
 	    }
 	  },
 	  onInputKeyDown: function onInputKeyDown(event) {
+	    var copy = (0, _moment2.default)(this.props.selected);
 	    if (event.key === 'Enter' || event.key === 'Escape') {
 	      event.preventDefault();
 	      this.setOpen(false);
 	    } else if (event.key === 'Tab') {
 	      this.setOpen(false);
+	    } else if (event.key === 'ArrowLeft') {
+	      event.preventDefault();
+	      this.setSelected(copy.subtract(1, 'days'));
+	    } else if (event.key === 'ArrowRight') {
+	      event.preventDefault();
+	      this.setSelected(copy.add(1, 'days'));
+	    } else if (event.key === 'ArrowUp') {
+	      event.preventDefault();
+	      this.setSelected(copy.subtract(1, 'weeks'));
+	    } else if (event.key === 'ArrowDown') {
+	      event.preventDefault();
+	      this.setSelected(copy.add(1, 'weeks'));
+	    } else if (event.key === 'PageUp') {
+	      event.preventDefault();
+	      this.setSelected(copy.subtract(1, 'months'));
+	    } else if (event.key === 'PageDown') {
+	      event.preventDefault();
+	      this.setSelected(copy.add(1, 'months'));
+	    } else if (event.key === 'Home') {
+	      event.preventDefault();
+	      this.setSelected(copy.subtract(1, 'years'));
+	    } else if (event.key === 'End') {
+	      event.preventDefault();
+	      this.setSelected(copy.add(1, 'years'));
 	    }
 	  },
 	  onClearClick: function onClearClick(event) {
@@ -56083,48 +56108,18 @@
 	      this.renderSelectOptions()
 	    );
 	  },
-	  renderReadView: function renderReadView() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'react-datepicker__month-read-view', onClick: this.toggleDropdown },
-	      _react2.default.createElement(
-	        'span',
-	        { className: 'react-datepicker__month-read-view--selected-month' },
-	        this.props.month
-	      ),
-	      _react2.default.createElement('span', { className: 'react-datepicker__month-read-view--down-arrow' })
-	    );
-	  },
-	  renderDropdown: function renderDropdown() {
-	    // TODO
-	    // return (
-	    //   <MonthDropdownOptions
-	    //     ref="options"
-	    //     month={this.props.month}
-	    //     onChange={this.onChange}
-	    //     onCancel={this.toggleDropdown} />
-	    // )
-	  },
-	  renderScrollMode: function renderScrollMode() {
-	    return this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView();
-	  },
 	  onChange: function onChange(month) {
-	    this.toggleDropdown();
-	    if (month === this.props.month) return;
-	    this.props.onChange(month);
-	  },
-	  toggleDropdown: function toggleDropdown() {
-	    // TODO
-	    // this.setState({
-	    //   dropdownVisible: !this.state.dropdownVisible
-	    // })
+	    if (month !== this.props.month) {
+	      this.props.onChange(month);
+	    }
 	  },
 	  render: function render() {
 	    var renderedDropdown = void 0;
 	    switch (this.props.dropdownMode) {
-	      case 'scroll':
-	        renderedDropdown = this.renderScrollMode();
-	        break;
+	      // TODO: implement scroll mode
+	      // case 'scroll':
+	      //   renderedDropdown = this.renderScrollMode()
+	      //   break
 	      case 'select':
 	        renderedDropdown = this.renderSelectMode();
 	        break;
@@ -56368,6 +56363,7 @@
 	  },
 	  renderWeeks: function renderWeeks() {
 	    var weeks = [];
+	    var isFixedHeight = this.props.fixedHeight;
 	    var currentWeekStart = this.props.day.clone().startOf('month').startOf('week');
 	    var i = 0;
 	    var breakAfterNextPush = false;
@@ -56398,7 +56394,12 @@
 	      i++;
 	      currentWeekStart = currentWeekStart.clone().add(1, 'weeks');
 
-	      if (this.props.fixedHeight && i >= FIXED_HEIGHT_STANDARD_WEEK_COUNT || !this.isWeekInMonth(currentWeekStart)) {
+	      // If one of these conditions is true, we will either break on this week
+	      // or break on the next week
+	      var isFixedAndFinalWeek = isFixedHeight && i >= FIXED_HEIGHT_STANDARD_WEEK_COUNT;
+	      var isNonFixedAndOutOfMonth = !isFixedHeight && !this.isWeekInMonth(currentWeekStart);
+
+	      if (isFixedAndFinalWeek || isNonFixedAndOutOfMonth) {
 	        if (this.props.peekNextMonth) {
 	          breakAfterNextPush = true;
 	        } else {

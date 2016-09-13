@@ -55,6 +55,7 @@ var Month = React.createClass({
 
   renderWeeks () {
     const weeks = []
+    var isFixedHeight = this.props.fixedHeight
     let currentWeekStart = this.props.day.clone().startOf('month').startOf('week')
     let i = 0
     let breakAfterNextPush = false
@@ -85,8 +86,12 @@ var Month = React.createClass({
       i++
       currentWeekStart = currentWeekStart.clone().add(1, 'weeks')
 
-      if ((this.props.fixedHeight && i >= FIXED_HEIGHT_STANDARD_WEEK_COUNT) ||
-          !this.isWeekInMonth(currentWeekStart)) {
+      // If one of these conditions is true, we will either break on this week
+      // or break on the next week
+      const isFixedAndFinalWeek = isFixedHeight && i >= FIXED_HEIGHT_STANDARD_WEEK_COUNT
+      const isNonFixedAndOutOfMonth = !isFixedHeight && !this.isWeekInMonth(currentWeekStart)
+
+      if (isFixedAndFinalWeek || isNonFixedAndOutOfMonth) {
         if (this.props.peekNextMonth) {
           breakAfterNextPush = true
         } else {
