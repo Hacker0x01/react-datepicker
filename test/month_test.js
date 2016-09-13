@@ -6,7 +6,7 @@ import range from 'lodash/range'
 import { mount, shallow } from 'enzyme'
 
 describe('Month', () => {
-  function assertDateRangeInclusive(month, start, end) {
+  function assertDateRangeInclusive (month, start, end) {
     const dayCount = end.diff(start, 'days') + 1
     const days = month.find(Day)
     expect(days).to.have.length(dayCount)
