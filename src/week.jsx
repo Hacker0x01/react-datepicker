@@ -24,9 +24,9 @@ var Week = React.createClass({
     utcOffset: React.PropTypes.number
   },
 
-  handleDayClick (day) {
+  handleDayClick (day, event) {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day)
+      this.props.onDayClick(day, event)
     }
   },
 
