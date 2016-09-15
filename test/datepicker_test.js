@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
+import { mount } from 'enzyme'
+import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
 import TetherComponent from '../src/tether_component.jsx'
@@ -48,7 +50,7 @@ describe('DatePicker', () => {
     document.body.removeChild(node)
   })
 
-  it('should keep the calendar shown when blurring the date input', () => {
+  it('should keep the calendar shown when blurring the date input', (done) => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
@@ -56,8 +58,36 @@ describe('DatePicker', () => {
     var focusSpy = sinon.spy(dateInput, 'focus')
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
-    expect(datePicker.refs.calendar).to.exist
-    assert(focusSpy.calledOnce, 'should refocus the date input')
+
+    defer(() => {
+      expect(datePicker.refs.calendar).to.exist
+      assert(focusSpy.calledOnce, 'should refocus the date input')
+      done()
+    })
+  })
+
+  it('should not re-focus the date input when focusing the year dropdown', (done) => {
+    const onBlurSpy = sinon.spy()
+    const datePicker = mount(
+      <DatePicker
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          onBlur={onBlurSpy}/>
+    )
+    const dateInput = datePicker.ref('input')
+    const focusSpy = sinon.spy(dateInput.get(0), 'focus')
+
+    dateInput.simulate('focus')
+    const yearSelect = datePicker.ref('calendar').find('.react-datepicker__year-select')
+    dateInput.simulate('blur')
+    yearSelect.simulate('focus')
+
+    defer(() => {
+      assert(focusSpy.called === false, 'should not refocus the date input')
+      assert(onBlurSpy.called === false, 'should not call DatePicker onBlur')
+      done()
+    })
   })
 
   it('should keep the calendar shown when clicking the calendar', () => {

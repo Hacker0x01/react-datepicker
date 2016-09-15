@@ -6,23 +6,68 @@ import range from 'lodash/range'
 import { mount, shallow } from 'enzyme'
 
 describe('Month', () => {
+  function assertDateRangeInclusive (month, start, end) {
+    const dayCount = end.diff(start, 'days') + 1
+    const days = month.find(Day)
+    expect(days).to.have.length(dayCount)
+    range(0, dayCount).forEach(offset => {
+      const day = days.get(offset)
+      const expectedDay = start.clone().add(offset, 'days')
+      assert(
+        day.props.day.isSame(expectedDay, 'day'),
+        `Day ${(offset % 7) + 1} ` +
+        `of week ${(Math.floor(offset / 7) + 1)} ` +
+        `should be "${expectedDay.format('YYYY-MM-DD')}" ` +
+        `but it is "${day.props.day.format('YYYY-MM-DD')}"`
+      )
+    })
+  }
+
   it('should have the month CSS class', () => {
     const month = shallow(<Month day={moment()} />)
     expect(month.hasClass('react-datepicker__month')).to.equal(true)
   })
 
-  it('should render all days of the month', () => {
+  it('should render all days of the month and some days in neighboring months', () => {
     const monthStart = moment('2015-12-01')
-    const month = mount(<Month day={monthStart} />)
 
-    const days = month.find(Day)
-    range(0, monthStart.daysInMonth()).forEach(offset => {
-      const expectedDay = monthStart.clone().add(offset, 'days')
-      const foundDay = days.filterWhere(day =>
-        day.prop('day').isSame(expectedDay, 'day')
-      )
-      expect(foundDay).to.have.length(1)
-    })
+    assertDateRangeInclusive(
+      mount(<Month day={monthStart}/>),
+      monthStart.clone().startOf('week'),
+      monthStart.clone().endOf('month').endOf('week')
+    )
+  })
+
+  it('should render all days of the month and peek into the next month', () => {
+    const monthStart = moment('2015-12-01')
+
+    assertDateRangeInclusive(
+      mount(<Month day={monthStart} peekNextMonth/>),
+      monthStart.clone().startOf('week'),
+      monthStart.clone().add(1, 'month').add(1, 'week').endOf('week')
+    )
+  })
+
+  it('should render a calendar of fixed height', () => {
+    const monthStart = moment('2016-11-01')
+    const calendarStart = monthStart.clone().startOf('week')
+
+    assertDateRangeInclusive(
+      mount(<Month day={monthStart} fixedHeight/>),
+      calendarStart,
+      calendarStart.clone().add(5, 'weeks').endOf('week')
+    )
+  })
+
+  it('should render a calendar of fixed height with peeking', () => {
+    const monthStart = moment('2016-11-01')
+    const calendarStart = monthStart.clone().startOf('week')
+
+    assertDateRangeInclusive(
+      mount(<Month day={monthStart} fixedHeight peekNextMonth/>),
+      calendarStart,
+      calendarStart.clone().add(6, 'weeks').endOf('week')
+    )
   })
 
   it('should call the provided onDayClick function', () => {

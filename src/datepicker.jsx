@@ -1,6 +1,7 @@
 import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
+import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
@@ -25,6 +26,7 @@ var DatePicker = React.createClass({
     ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
@@ -42,6 +44,7 @@ var DatePicker = React.createClass({
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
     openToDate: React.PropTypes.object,
+    peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
     popoverAttachment: React.PropTypes.string,
     popoverTargetAttachment: React.PropTypes.string,
@@ -52,6 +55,7 @@ var DatePicker = React.createClass({
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
+    showMonthDropdown: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
@@ -66,6 +70,7 @@ var DatePicker = React.createClass({
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
+      dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
       popoverAttachment: 'top left',
@@ -96,9 +101,23 @@ var DatePicker = React.createClass({
     this.setOpen(true)
   },
 
+  cancelFocusInput () {
+    clearTimeout(this.inputFocusTimeout)
+    this.inputFocusTimeout = null
+  },
+
+  deferFocusInput () {
+    this.cancelFocusInput()
+    this.inputFocusTimeout = defer(() => this.refs.input.focus())
+  },
+
+  handleDropdownFocus () {
+    this.cancelFocusInput()
+  },
+
   handleBlur (event) {
     if (this.state.open) {
-      this.refs.input.focus()
+      this.deferFocusInput()
     } else {
       this.props.onBlur(event)
     }
@@ -172,6 +191,7 @@ var DatePicker = React.createClass({
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
+        dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         onSelect={this.handleSelect}
         openToDate={this.props.openToDate}
@@ -186,11 +206,14 @@ var DatePicker = React.createClass({
         onClickOutside={this.handleCalendarClickOutside}
         highlightDates={this.props.highlightDates}
         includeDates={this.props.includeDates}
+        peekNextMonth={this.props.peekNextMonth}
+        showMonthDropdown={this.props.showMonthDropdown}
         showYearDropdown={this.props.showYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
-        fixedHeight={this.props.fixedHeight} />
+        fixedHeight={this.props.fixedHeight}
+        onDropdownFocus={this.handleDropdownFocus}/>
   },
 
   renderDateInput () {

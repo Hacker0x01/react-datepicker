@@ -19,6 +19,7 @@ import Placement from './examples/placement'
 import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
+import YearSelectDropdown from './examples/year_select_dropdown'
 import Today from './examples/today'
 import TimeZoneDate from './examples/timezone_date'
 import Inline from './examples/inline'
@@ -112,6 +113,10 @@ export default React.createClass({
     {
       title: 'Year dropdown',
       component: <YearDropdown />
+    },
+    {
+      title: 'Year select dropdown',
+      component: <YearSelectDropdown />
     },
     {
       title: 'Inline version',
