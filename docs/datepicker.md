@@ -18,7 +18,8 @@ type: `string`
 
 ### `dateFormat`
 
-type: `string`
+type: `string` or `array`
+defaultValue: `'L'`
 
 
 ### `dateFormatCalendar`
