@@ -93,12 +93,6 @@ var DatePicker = React.createClass({
     }
   },
 
-  componentDidMount () {
-    if (this.props.autoFocus) {
-      this.setFocus()
-    }
-  },
-
   setFocus () {
     this.refs.input.focus()
   },
@@ -235,6 +229,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
+        autoFocus={this.props.autoFocus}
         date={this.props.selected}
         locale={this.props.locale}
         minDate={this.props.minDate}
