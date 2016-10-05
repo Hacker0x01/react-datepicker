@@ -18,6 +18,7 @@ var DatePicker = React.createClass({
 
   propTypes: {
     autoComplete: React.PropTypes.string,
+    autoFocus: React.PropTypes.bool,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
     dateFormat: React.PropTypes.oneOfType([
@@ -224,6 +225,7 @@ var DatePicker = React.createClass({
         ref='input'
         id={this.props.id}
         name={this.props.name}
+        autoFocus={this.props.autoFocus}
         date={this.props.selected}
         locale={this.props.locale}
         minDate={this.props.minDate}
