@@ -298,4 +298,13 @@ describe('DatePicker', () => {
     var result = data.callback.args[0][0]
     expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
+  it('should autofocus the input given the autoFocus prop', (done) => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(<DatePicker autoFocus />, div)
+    defer(() => {
+      expect(div.querySelector('input')).to.equal(document.activeElement)
+      done()
+    })
+  })
 })

@@ -18,6 +18,7 @@ var DatePicker = React.createClass({
 
   propTypes: {
     autoComplete: React.PropTypes.string,
+    autoFocus: React.PropTypes.bool,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
     dateFormat: React.PropTypes.oneOfType([
@@ -92,6 +93,16 @@ var DatePicker = React.createClass({
     }
   },
 
+  componentDidMount () {
+    if (this.props.autoFocus) {
+      this.setFocus()
+    }
+  },
+
+  setFocus () {
+    this.refs.input.focus()
+  },
+
   setOpen (open) {
     this.setState({ open })
   },
@@ -108,7 +119,7 @@ var DatePicker = React.createClass({
 
   deferFocusInput () {
     this.cancelFocusInput()
-    this.inputFocusTimeout = defer(() => this.refs.input.focus())
+    this.inputFocusTimeout = defer(() => this.setFocus())
   },
 
   handleDropdownFocus () {
