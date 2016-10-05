@@ -93,10 +93,6 @@ var DatePicker = React.createClass({
     }
   },
 
-  setFocus () {
-    this.refs.input.focus()
-  },
-
   setOpen (open) {
     this.setState({ open })
   },
@@ -113,7 +109,7 @@ var DatePicker = React.createClass({
 
   deferFocusInput () {
     this.cancelFocusInput()
-    this.inputFocusTimeout = defer(() => this.setFocus())
+    this.inputFocusTimeout = defer(() => this.refs.input.focus())
   },
 
   handleDropdownFocus () {
