@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 function generateYears (year, noOfYear) {
   var list = []
@@ -83,22 +84,15 @@ var YearDropdownOptions = React.createClass({
     return this.shiftYears(-1)
   },
 
-  dropDownComponent () {
-    if (this.props.scrollableYearDropdown === true) {
-      return <div className="react-datepicker__year-dropdown scrollable-year-dropdown">
-        {this.renderOptions()}
-      </div>
-    } else {
-      return <div className="react-datepicker__year-dropdown">
-        {this.renderOptions()}
-      </div>
-    }
-  },
-
   render () {
+    let dropdownClass = classNames({
+      'react-datepicker__year-dropdown': true,
+      'scrollable-year-dropdown': this.props.scrollableYearDropdown
+    })
+
     return (
-      <div>
-        {this.dropDownComponent()}
+      <div className={dropdownClass}>
+        {this.renderOptions()}
       </div>
     )
   }
