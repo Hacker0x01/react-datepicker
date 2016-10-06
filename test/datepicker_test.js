@@ -304,4 +304,11 @@ describe('DatePicker', () => {
     ReactDOM.render(<DatePicker autoFocus />, div)
     expect(div.querySelector('input')).to.equal(document.activeElement)
   })
+  it('should autofocus the input when calling the setFocus method', () => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    var datePicker = ReactDOM.render(<DatePicker />, div)
+    datePicker.setFocus()
+    expect(div.querySelector('input')).to.equal(document.activeElement)
+  })
 })
