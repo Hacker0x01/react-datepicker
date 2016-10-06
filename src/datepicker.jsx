@@ -53,6 +53,7 @@ var DatePicker = React.createClass({
     readOnly: React.PropTypes.bool,
     renderCalendarTo: React.PropTypes.any,
     required: React.PropTypes.bool,
+    scrollableYearDropdown: React.PropTypes.bool,
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,

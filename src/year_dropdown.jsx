@@ -9,8 +9,8 @@ var YearDropdown = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
-    year: React.PropTypes.number.isRequired,
-    scrollableYearDropdown: React.PropTypes.bool
+    scrollableYearDropdown: React.PropTypes.bool,
+    year: React.PropTypes.number.isRequired
   },
 
   getInitialState () {
