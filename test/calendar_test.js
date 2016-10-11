@@ -100,6 +100,23 @@ describe('Calendar', function () {
     assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
+  it('should open on selected date rather than openToDate when both are specified', function () {
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
+    var selected = moment('09/28/1995', 'MM/DD/YYYY')
+    var calendar = getCalendar({ openToDate, selected })
+    assert(calendar.state().date.isSame(selected, 'day'))
+  })
+
+  it('should trigger date change when openToDate prop is set after getInitialState()', () => {
+    const openToDate = moment('09/28/1993', 'MM/DD/YYYY')
+    const oneMonthFromOpenToDate = moment('10/28/1993', 'MM/DD/YYYY')
+    const calendar = getCalendar({ openToDate })
+
+    assert(calendar.state().date.isSame(openToDate, 'day'))
+    calendar.setProps({ openToDate: oneMonthFromOpenToDate })
+    assert(calendar.state().date.isSame(oneMonthFromOpenToDate))
+  })
+
   it('should not show the year dropdown menu by default', function () {
     var calendar = getCalendar()
     var yearReadView = calendar.find(YearDropdown)

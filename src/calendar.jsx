@@ -72,8 +72,7 @@ var Calendar = React.createClass({
       this.setState({
         date: this.localizeMoment(nextProps.selected)
       })
-    }
-    if (nextProps.openToDate && nextProps.openToDate !== this.props.openToDate) {
+    } else if (nextProps.openToDate && !isSameDay(nextProps.openToDate, this.props.openToDate)) {
       this.setState({
         date: this.localizeMoment(nextProps.openToDate)
       })
