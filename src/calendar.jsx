@@ -73,6 +73,11 @@ var Calendar = React.createClass({
         date: this.localizeMoment(nextProps.selected)
       })
     }
+    if (nextProps.openToDate && nextProps.openToDate !== this.props.openToDate) {
+      this.setState({
+        date: this.localizeMoment(nextProps.openToDate)
+      })
+    }
   },
 
   handleClickOutside (event) {
