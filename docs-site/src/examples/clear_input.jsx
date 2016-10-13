@@ -24,7 +24,7 @@ export default React.createClass({
           {"<DatePicker"}<br />
               {"selected={this.state.startDate}"}<br />
               {"onChange={this.handleChange}"}<br />
-              {"isClearable={true} />"}<br />
+              {"isClearable={true}"}<br />
               {"placeholderText='I have been cleared!' />"}
         </code>
       </pre>
