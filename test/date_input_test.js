@@ -198,7 +198,7 @@ describe('DateInput', function () {
       <DateInput date={null} dateFormat={dateFormat} onChange={onChange} onChangeDate={onChangeDate} />
     )
     dateInput.find('input').simulate('change', {
-      isDefaultPrevented: () => true,
+      defaultPrevented: true,
       preventDefault: () => {},
       target: {
         value: date.format(dateFormat)
