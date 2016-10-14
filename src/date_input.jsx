@@ -50,7 +50,7 @@ var DateInput = React.createClass({
     if (this.props.onChange) {
       this.props.onChange(event)
     }
-    if (event.defaultPrevented === false || (typeof event.isDefaultPrevented === 'function' && !event.isDefaultPrevented())) {
+    if (!event.defaultPrevented) {
       this.handleChangeDate(event.target.value)
     }
   },
