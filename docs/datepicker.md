@@ -195,3 +195,6 @@ type: `string`
 
 type: `string`
 
+### `months`
+
+type: `number`
