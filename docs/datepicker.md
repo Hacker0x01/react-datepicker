@@ -11,15 +11,24 @@ Props
 type: `string`
 
 
+### `autoFocus`
+
+type: `bool`
+
+
 ### `className`
 
 type: `string`
 
 
+### `customInput`
+
+type: `element`
+
+
 ### `dateFormat`
 
-type: `string` or `array`
-defaultValue: `'L'`
+type: `union(string|array)`
 
 
 ### `dateFormatCalendar`
@@ -32,6 +41,12 @@ defaultValue: `'MMMM YYYY'`
 
 type: `bool`
 defaultValue: `false`
+
+
+### `dropdownMode` (required)
+
+type: `enum('scroll'|'select')`
+defaultValue: `'scroll'`
 
 
 ### `endDate`
@@ -52,6 +67,11 @@ type: `func`
 ### `fixedHeight`
 
 type: `bool`
+
+
+### `highlightDates`
+
+type: `array`
 
 
 ### `id`
@@ -117,6 +137,11 @@ defaultValue: `function() {}`
 type: `object`
 
 
+### `peekNextMonth`
+
+type: `bool`
+
+
 ### `placeholderText`
 
 type: `string`
@@ -155,9 +180,29 @@ type: `any`
 type: `bool`
 
 
+### `scrollableYearDropdown`
+
+type: `bool`
+
+
 ### `selected`
 
 type: `object`
+
+
+### `selectsEnd`
+
+type: `bool`
+
+
+### `selectsStart`
+
+type: `bool`
+
+
+### `showMonthDropdown`
+
+type: `bool`
 
 
 ### `showYearDropdown`
@@ -194,4 +239,10 @@ type: `string`
 ### `todayButton`
 
 type: `string`
+
+
+### `utcOffset`
+
+type: `number`
+defaultValue: `moment.utc().utcOffset()`
 
