@@ -41,6 +41,7 @@ var Calendar = React.createClass({
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
+    scrollableYearDropdown: React.PropTypes.bool,
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
@@ -208,7 +209,8 @@ var Calendar = React.createClass({
           onChange={this.changeYear}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
-          year={this.state.date.year()}/>
+          year={this.state.date.year()}
+          scrollableYearDropdown={this.props.scrollableYearDropdown} />
     )
   },
 
