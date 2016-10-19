@@ -26,6 +26,8 @@ import Inline from './examples/inline'
 import OpenToDate from './examples/open_to_date'
 import FixedCalendar from './examples/fixed_calendar'
 import CustomInput from './examples/custom_input'
+import MultiMonth from './examples/multi_month'
+import MultiMonthDrp from './examples/multi_month_drp'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -133,6 +135,14 @@ export default React.createClass({
     {
       title: 'Custom input',
       component: <CustomInput />
+    },
+    {
+      title: 'Multiple months',
+      component: <MultiMonth />
+    },
+    {
+      title: 'Multiple months with year dropdown',
+      component: <MultiMonthDrp />
     }
   ],
 
