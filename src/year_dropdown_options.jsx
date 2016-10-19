@@ -23,7 +23,7 @@ var YearDropdownOptions = React.createClass({
 
   getInitialState () {
     return {
-      yearsList: this.props.scrollableYearDropdown === true ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
+      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
     }
   },
 
