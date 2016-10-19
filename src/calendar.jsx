@@ -197,8 +197,8 @@ var Calendar = React.createClass({
     )
   },
 
-  renderYearDropdown (index = 0) {
-    if (!this.props.showYearDropdown || index != 0) {
+  renderYearDropdown (overrideHide = false) {
+    if (!this.props.showYearDropdown || overrideHide) {
       return
     }
     return (
@@ -211,7 +211,7 @@ var Calendar = React.createClass({
     )
   },
 
-  renderMonthDropdown () {
+  renderMonthDropdown (overrideHide = false) {
     if (!this.props.showMonthDropdown) {
       return
     }
@@ -241,35 +241,39 @@ var Calendar = React.createClass({
       var monthDate = this.state.date.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
-          <div className="react-datepicker__month-wrapper">
+          <div key={monthKey} className="react-datepicker__month-container">
             <div className="react-datepicker__header">
               {this.renderCurrentMonth(monthDate)}
-              {this.renderYearDropdown(i)}
+              <div
+                  className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
+                  onFocus={this.handleDropdownFocus}>
+                {this.renderMonthDropdown(i !== 0)}
+                {this.renderYearDropdown(i !== 0)}
+              </div>
               <div className="react-datepicker__day-names">
                 {this.header(monthDate)}
               </div>
             </div>
             <Month
-            key={monthKey}
-            day={monthDate}
-            onDayClick={this.handleDayClick}
-            onDayMouseEnter={this.handleDayMouseEnter}
-            onMouseLeave={this.handleMonthMouseLeave}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            excludeDates={this.props.excludeDates}
-            highlightDates={this.props.highlightDates}
-            selectingDate={this.state.selectingDate}
-            includeDates={this.props.includeDates}
-            fixedHeight={this.props.fixedHeight}
-            filterDate={this.props.filterDate}
-            selected={this.props.selected}
-            selectsStart={this.props.selectsStart}
-            selectsEnd={this.props.selectsEnd}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate}
-            peekNextMonth={this.props.peekNextMonth}
-            utcOffset={this.props.utcOffset}/>
+                day={monthDate}
+                onDayClick={this.handleDayClick}
+                onDayMouseEnter={this.handleDayMouseEnter}
+                onMouseLeave={this.handleMonthMouseLeave}
+                minDate={this.props.minDate}
+                maxDate={this.props.maxDate}
+                excludeDates={this.props.excludeDates}
+                highlightDates={this.props.highlightDates}
+                selectingDate={this.state.selectingDate}
+                includeDates={this.props.includeDates}
+                fixedHeight={this.props.fixedHeight}
+                filterDate={this.props.filterDate}
+                selected={this.props.selected}
+                selectsStart={this.props.selectsStart}
+                selectsEnd={this.props.selectsEnd}
+                startDate={this.props.startDate}
+                endDate={this.props.endDate}
+                peekNextMonth={this.props.peekNextMonth}
+                utcOffset={this.props.utcOffset}/>
           </div>
       )
     }
