@@ -40,7 +40,7 @@ var DatePicker = React.createClass({
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
-    months: React.PropTypes.number,
+    monthsShown: React.PropTypes.number,
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
@@ -86,7 +86,7 @@ var DatePicker = React.createClass({
         }
       ],
       utcOffset: moment.utc().utcOffset(),
-      months: 1
+      monthsShown: 1
     }
   },
 
@@ -222,7 +222,7 @@ var DatePicker = React.createClass({
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
-        months={this.props.months}
+        monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}/>
   },
 

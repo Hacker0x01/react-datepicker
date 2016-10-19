@@ -36,7 +36,7 @@ var Calendar = React.createClass({
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
-    months: React.PropTypes.number,
+    monthsShown: React.PropTypes.number,
     onClickOutside: React.PropTypes.func.isRequired,
     onDropdownFocus: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
@@ -62,7 +62,7 @@ var Calendar = React.createClass({
   getDefaultProps () {
     return {
       utcOffset: moment.utc().utcOffset(),
-      months: 1
+      monthsShown: 1
     }
   },
 
@@ -242,7 +242,7 @@ var Calendar = React.createClass({
 
   renderMonths () {
     var monthList = []
-    for (var i = 0; i < this.props.months; ++i) {
+    for (var i = 0; i < this.props.monthsShown; ++i) {
       var monthDate = this.state.date.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
