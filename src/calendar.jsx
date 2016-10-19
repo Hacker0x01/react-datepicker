@@ -197,8 +197,8 @@ var Calendar = React.createClass({
     )
   },
 
-  renderYearDropdown () {
-    if (!this.props.showYearDropdown) {
+  renderYearDropdown (index = 0) {
+    if (!this.props.showYearDropdown || index != 0) {
       return
     }
     return (
@@ -239,11 +239,12 @@ var Calendar = React.createClass({
     var monthList = []
     for (var i = 0; i < this.props.months; ++i) {
       var monthDate = this.state.date.clone().add(i, 'M')
-      var monthKey = `month-{i}`
+      var monthKey = `month-${i}`
       monthList.push(
           <div className="react-datepicker__month-wrapper">
             <div className="react-datepicker__header">
               {this.renderCurrentMonth(monthDate)}
+              {this.renderYearDropdown(i)}
               <div className="react-datepicker__day-names">
                 {this.header(monthDate)}
               </div>
