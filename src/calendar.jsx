@@ -22,7 +22,10 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
-    dateFormat: React.PropTypes.string.isRequired,
+    dateFormat: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array
+    ]).isRequired,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
