@@ -234,6 +234,11 @@
   &:hover {
     cursor: pointer;
   }
+
+  &--scrollable {
+    height: 150px;
+    overflow-y: scroll;
+  }
 }
 
 .react-datepicker__year-option {
@@ -317,9 +322,4 @@
 
 .react-datepicker__tether-element {
   z-index: 2147483647;
-}
-
-.scrollable-year-dropdown {
-  height: 150px;
-  overflow-y: scroll;
 }
