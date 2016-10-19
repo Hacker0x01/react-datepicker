@@ -239,6 +239,11 @@
   &:hover {
     cursor: pointer;
   }
+
+  &--scrollable {
+    height: 150px;
+    overflow-y: scroll;
+  }
 }
 
 .react-datepicker__year-option {

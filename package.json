@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.30.0",
+  "version": "0.32.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/react-datepicker.min.js",
@@ -85,7 +85,7 @@
     "react-dom": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {
-    "classnames": "^2.2.1",
+    "classnames": "^2.2.5",
     "moment": "^2.13.0",
     "react-onclickoutside": "^4.8.0",
     "tether": "^1.3.2"

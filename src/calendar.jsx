@@ -22,7 +22,10 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
-    dateFormat: React.PropTypes.string.isRequired,
+    dateFormat: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array
+    ]).isRequired,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -39,6 +42,7 @@ var Calendar = React.createClass({
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
+    scrollableYearDropdown: React.PropTypes.bool,
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
@@ -207,7 +211,8 @@ var Calendar = React.createClass({
           onChange={this.changeYear}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
-          year={this.state.date.year()}/>
+          year={this.state.date.year()}
+          scrollableYearDropdown={this.props.scrollableYearDropdown} />
     )
   },
 
