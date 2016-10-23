@@ -50,7 +50,7 @@
     "grunt-cli": "^1.2.0",
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-eslint": "^19.0.0",
+    "grunt-eslint": "^17.3.2",
     "grunt-karma": "^2.0.0",
     "grunt-scss-lint": "^0.5.0",
     "grunt-webpack": "^1.0.11",
