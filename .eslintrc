@@ -10,25 +10,13 @@
 
   "extends": "standard",
 
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "jsx": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
   },
 
   "parser": null,
+
   "rules": {
     "no-irregular-whitespace": 0,
     "react/display-name": 2,
