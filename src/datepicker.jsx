@@ -59,6 +59,7 @@ var DatePicker = React.createClass({
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
     showMonthDropdown: React.PropTypes.bool,
+    showWeekNumbers: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
@@ -216,6 +217,7 @@ var DatePicker = React.createClass({
         includeDates={this.props.includeDates}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
+        showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}

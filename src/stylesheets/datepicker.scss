@@ -124,6 +124,15 @@
   text-align: center;
 }
 
+.react-datepicker__week-number {
+  color: $muted-color;
+  display: inline-block;
+  width: $item-size;
+  line-height: $item-size;
+  text-align: center;
+  margin: $day-margin;
+}
+
 .react-datepicker__day-name,
 .react-datepicker__day {
   color: $text-color;
