@@ -20,10 +20,10 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"utcOffset='1320'"}<br />
-              {"todayButton='Today'"}<br />
-              {"onChange={this.handleChange} />"}
+          {'<DatePicker'}<br />
+              {'utcOffset=1320'}<br />
+              {'todayButton="Today"'}<br />
+              {'onChange={this.handleChange} />'}
         </code>
       </pre>
       <div className="column">

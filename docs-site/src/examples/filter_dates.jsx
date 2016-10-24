@@ -25,11 +25,11 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.date}"}<br />
-              {"onChange={this.handleChange}"}<br />
-        <strong>    {"filterDate={this.isWeekday}"}</strong><br />
-              {"placeholderText=\"Select a weekday\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.date}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'filterDate={this.isWeekday}'}</strong><br />
+              {'placeholderText="Select a weekday" />'}
         </code>
       </pre>
       <div className="column">

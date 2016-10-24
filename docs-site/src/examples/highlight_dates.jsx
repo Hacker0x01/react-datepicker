@@ -21,11 +21,11 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-        <strong>    {"highlightDates={[moment().subtract(7, 'days'), moment().add(7, 'days')]}"}</strong><br />
-              {"placeholderText=\"This highlights a week ago and a week from today\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'highlightDates={[moment().subtract(7, "days"), moment().add(7, "days")]}'}</strong><br />
+              {'placeholderText="This highlights a week ago and a week from today" />'}
         </code>
       </pre>
       <div className="column">

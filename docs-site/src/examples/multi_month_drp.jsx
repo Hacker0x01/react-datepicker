@@ -21,11 +21,11 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-          {"selected={this.state.startDate}"}<br />
-          {"onChange={this.handleChange}"}<br/>
-          {"showYearDropdown"}<br/>
-          {"months={2} />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br/>
+              {'showYearDropdown'}<br/>
+              {'months={2} />'}
         </code>
       </pre>
       <div className="column">

@@ -41,31 +41,31 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"var ExampleCustomInput = React.createClass({"}<br />
-            {"displayName: 'ExampleCustomInput',"}<br />
+            {'var ExampleCustomInput = React.createClass({'}<br />
+            {'displayName: "ExampleCustomInput" ,'}<br />
           <br />
-            {"propTypes: {"}<br />
-              {"onClick: React.PropTypes.func,"}<br />
-              {"value: React.PropTypes.string"}<br />
-            {"},"}<br />
+            {'propTypes: {'}<br />
+              {'onClick: React.PropTypes.func,'}<br />
+              {'value: React.PropTypes.string'}<br />
+            {'},'}<br />
           <br />
-            {"render () {"}<br />
-              {"return ("}<br />
-                {"<button"}<br />
-                  {"className=\"example-custom-input\""}<br />
-                  {"onClick={this.props.onClick}>"}<br />
-                  {"{this.props.value}"}<br />
-                {"</button>"}<br />
-              {")"}<br />
-            {"}"}<br />
-          {"})"}<br />
+            {'render () {'}<br />
+              {'return ('}<br />
+                {'<button'}<br />
+                  {'className="example-custom-input"'}<br />
+                  {'onClick={this.props.onClick}>'}<br />
+                  {'{this.props.value}'}<br />
+                  {'</button>'}<br />
+              {')'}<br />
+            {'}'}<br />
+          {'})'}<br />
           <br />
-          {"..."}<br />
+          {'...'}<br />
           <br />
-          {"<DatePicker"}<br />
-              {"customInput={<ExampleCustomInput />}"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange} />"}
+          {'<DatePicker'}<br />
+              {'customInput={<ExampleCustomInput />}'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange} />'}
         </code>
       </pre>
       <div className="column">

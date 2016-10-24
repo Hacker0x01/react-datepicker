@@ -28,23 +28,23 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="js">
-          {"handleOnBlur: function (date) {"}<br />
-              {"if (date === null) {"}<br />
-                  {"console.log('selected date: %s', date);"}<br />
-              {"}"}<br />
-              {"else {"}<br />
-                  {"console.log('selected date: %s', date.format('DD/MM/YYYY'));"}<br />
-              {"}"}<br />
-          {"};"}
+          {'handleOnBlur: function (date) {'}<br />
+              {'if (date === null) {'}<br />
+                  {'console.log("selected date: %s", date);'}<br />
+              {'}'}<br />
+              {'else {'}<br />
+                  {'console.log("selected date: %s", date.format("DD/MM/YYYY"));'}<br />
+              {'}'}<br />
+          {'};'}
         </code>
         <br />
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"key='example9'"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-          <strong>    {"onBlur={this.handleOnBlur}"}</strong><br />
-              {"placeholderText=\"View blur callbacks in console\" />"}
+          {'<DatePicker'}<br />
+              {'key="example9"'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'onBlur={this.handleOnBlur}'}</strong><br />
+              {'placeholderText="View blur callbacks in console" />'}
         </code>
       </pre>
       <div className="column">

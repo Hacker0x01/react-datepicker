@@ -21,12 +21,12 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-          <strong>    {"minDate={moment()}"}</strong><br />
-          <strong>    {"maxDate={moment().add(5, 'days')}"}</strong><br />
-              {"placeholderText=\"Select a date between today and 5 days in the future\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'minDate={moment()}'}</strong><br />
+              <strong>{'maxDate={moment().add(5, "days")}'}</strong><br />
+              {'placeholderText="Select a date between today and 5 days in the future" />'}
         </code>
       </pre>
       <div className="column">

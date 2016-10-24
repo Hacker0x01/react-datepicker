@@ -20,11 +20,11 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-          <strong>    {"disabled={true}"}</strong><br />
-              {"placeholderText='This is disabled'"} />
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'disabled={true}'}</strong><br />
+              {'placeholderText="This is disabled"'} />
         </code>
       </pre>
       <div className="column">
