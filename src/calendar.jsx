@@ -47,6 +47,7 @@ var Calendar = React.createClass({
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
     showMonthDropdown: React.PropTypes.bool,
+    showWeekNumbers: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     todayButton: React.PropTypes.string,
@@ -161,14 +162,22 @@ var Calendar = React.createClass({
 
   header (date = this.state.date) {
     const startOfWeek = date.clone().startOf('week')
-    return [0, 1, 2, 3, 4, 5, 6].map(offset => {
+    const dayNames = []
+    if (this.props.showWeekNumbers) {
+      dayNames.push(
+        <div key="W" className="react-datepicker__day-name">
+          #
+        </div>
+      )
+    }
+    return dayNames.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
       return (
         <div key={offset} className="react-datepicker__day-name">
           {day.localeData().weekdaysMin(day)}
         </div>
       )
-    })
+    }))
   },
 
   renderPreviousMonthButton () {
@@ -275,6 +284,7 @@ var Calendar = React.createClass({
                 selected={this.props.selected}
                 selectsStart={this.props.selectsStart}
                 selectsEnd={this.props.selectsEnd}
+                showWeekNumbers={this.props.showWeekNumbers}
                 startDate={this.props.startDate}
                 endDate={this.props.endDate}
                 peekNextMonth={this.props.peekNextMonth}

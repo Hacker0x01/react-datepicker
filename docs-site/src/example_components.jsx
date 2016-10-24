@@ -25,6 +25,7 @@ import TimeZoneDate from './examples/timezone_date'
 import Inline from './examples/inline'
 import OpenToDate from './examples/open_to_date'
 import FixedCalendar from './examples/fixed_calendar'
+import WeekNumbers from './examples/week_numbers'
 import CustomInput from './examples/custom_input'
 import MultiMonth from './examples/multi_month'
 import MultiMonthDrp from './examples/multi_month_drp'
@@ -131,6 +132,10 @@ export default React.createClass({
     {
       title: 'Fixed height of Calendar',
       component: <FixedCalendar />
+    },
+    {
+      title: 'Display Week Numbers',
+      component: <WeekNumbers />
     },
     {
       title: 'Custom input',

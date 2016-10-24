@@ -25,6 +25,7 @@ var Month = React.createClass({
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
+    showWeekNumbers: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },
@@ -77,6 +78,7 @@ var Month = React.createClass({
           selected={this.props.selected}
           selectsStart={this.props.selectsStart}
           selectsEnd={this.props.selectsEnd}
+          showWeekNumber={this.props.showWeekNumbers}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           utcOffset={this.props.utcOffset}/>)

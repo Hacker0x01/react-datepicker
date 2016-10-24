@@ -1,5 +1,6 @@
 import React from 'react'
 import Day from './day'
+import WeekNumber from './week_number'
 
 var Week = React.createClass({
   displayName: 'Week',
@@ -20,6 +21,7 @@ var Week = React.createClass({
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
+    showWeekNumber: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     utcOffset: React.PropTypes.number
   },
@@ -38,7 +40,11 @@ var Week = React.createClass({
 
   renderDays () {
     const startOfWeek = this.props.day.clone().startOf('week')
-    return [0, 1, 2, 3, 4, 5, 6].map(offset => {
+    const days = []
+    if (this.props.showWeekNumber) {
+      days.push(<WeekNumber key="W" weekNumber={parseInt(startOfWeek.format('w'), 10)} />)
+    }
+    return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
       return (
         <Day
@@ -61,7 +67,7 @@ var Week = React.createClass({
             endDate={this.props.endDate}
             utcOffset={this.props.utcOffset}/>
       )
-    })
+    }))
   },
 
   render () {
