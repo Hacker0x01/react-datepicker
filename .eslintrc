@@ -10,26 +10,18 @@
 
   "extends": "standard",
 
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "jsx": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+    },
   },
 
   "parser": null,
+
   "rules": {
+    "jsx-quotes": [2, "prefer-double"],
     "no-irregular-whitespace": 0,
     "react/display-name": 2,
     "react/forbid-prop-types": 0,
@@ -43,7 +35,6 @@
     "react/jsx-no-literals": 0,
     "react/jsx-no-undef": 2,
     "react/jsx-pascal-case": 2,
-    "react/jsx-sort-prop-types": 2,
     "react/jsx-sort-props": 0,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
@@ -58,7 +49,6 @@
     "react/prefer-es6-class": 0,
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,
-    "react/require-extension": 2,
     "react/self-closing-comp": 2,
     "react/sort-comp": 2,
     "react/wrap-multilines": 0,

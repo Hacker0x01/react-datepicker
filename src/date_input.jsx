@@ -100,8 +100,8 @@ var DateInput = React.createClass({
     }
 
     return <input
-        ref='input'
-        type='text'
+        ref="input"
+        type="text"
         {...rest}
         value={this.state.value}
         onBlur={this.handleBlur}

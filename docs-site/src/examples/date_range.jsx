@@ -37,18 +37,18 @@ var DateRange = React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-                {"selected={this.state.startDate}"}<br />
-                {"selectsStart"}
-                {"startDate={this.state.startDate}"}<br />
-                {"endDate={this.state.endDate}"}<br />
-                {"onChange={this.handleChangeStart} />"}<br />
-          {"<DatePicker"}<br />
-                {"selected={this.state.endDate}"}<br />
-                {"selectsEnd"}
-                {"startDate={this.state.startDate}"}<br />
-                {"endDate={this.state.endDate}"}<br />
-                {"onChange={this.handleChangeEnd} />"}<br />
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'selectsStart'}
+              {'startDate={this.state.startDate}'}<br />
+              {'endDate={this.state.endDate}'}<br />
+              {'onChange={this.handleChangeStart} />'}<br />
+          {'<DatePicker'}<br />
+              {'selected={this.state.endDate}'}<br />
+              {'selectsEnd'}
+              {'startDate={this.state.startDate}'}<br />
+              {'endDate={this.state.endDate}'}<br />
+              {'onChange={this.handleChangeEnd} />'}<br />
         </code>
       </pre>
       <div className="column">

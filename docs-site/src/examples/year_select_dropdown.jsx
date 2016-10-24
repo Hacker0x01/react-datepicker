@@ -21,13 +21,13 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"} <br />
-              {"peekNextMonth"} <br />
-              {"showMonthDropdown"} <br />
-              {"showYearDropdown"} <br />
-              {"dropdownMode=\"select\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'} <br />
+              {'peekNextMonth'} <br />
+              {'showMonthDropdown'} <br />
+              {'showYearDropdown'} <br />
+              {'dropdownMode="select" />'}
         </code>
       </pre>
       <div className="column">

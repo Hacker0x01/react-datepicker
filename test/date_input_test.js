@@ -14,7 +14,7 @@ describe('DateInput', function () {
 
   it('adds autocomplete attribute to input field when autoComplete is passed as prop', function () {
     var dateInput = shallow(
-      <DateInput autoComplete='off' />
+      <DateInput autoComplete="off" />
     )
 
     expect(dateInput.find('input').prop('autoComplete')).to.equal('off')
@@ -356,13 +356,13 @@ describe('DateInput', function () {
       var date = moment()
       date.locale('fr')
       var dateInput = shallow(
-        <DateInput date={date} locale='fr'/>
+        <DateInput date={date} locale="fr"/>
       )
       expect(dateInput.find('input').prop('value')).to.equal(date.format('L'))
 
       date.locale('en')
       dateInput = shallow(
-        <DateInput date={date} locale='en'/>
+        <DateInput date={date} locale="en"/>
       )
       expect(dateInput.find('input').prop('value')).to.equal(date.format('L'))
     })

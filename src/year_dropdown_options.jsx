@@ -41,18 +41,18 @@ var YearDropdownOptions = React.createClass({
 
     options.unshift(
       <div className="react-datepicker__year-option"
-          ref={"upcoming"}
-          key={"upcoming"}
+          ref={'upcoming'}
+          key={'upcoming'}
           onClick={this.incrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"></a>
+        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming" />
       </div>
     )
     options.push(
       <div className="react-datepicker__year-option"
-          ref={"previous"}
-          key={"previous"}
+          ref={'previous'}
+          key={'previous'}
           onClick={this.decrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"></a>
+        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous" />
       </div>
     )
     return options

@@ -21,12 +21,12 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-              {"popoverAttachment='bottom center'"}<br />
-              {"popoverTargetAttachment='top center'"}<br />
-              {"popoverTargetOffset='0px 0px' />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              {'popoverAttachment="bottom center"'}<br />
+              {'popoverTargetAttachment="top center"'}<br />
+              {'popoverTargetOffset="0px 0px" />'}
         </code>
       </pre>
       <div className="column">

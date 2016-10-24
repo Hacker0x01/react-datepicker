@@ -185,7 +185,7 @@ var Calendar = React.createClass({
       return
     }
     return <a
-        className='react-datepicker__navigation react-datepicker__navigation--previous'
+        className="react-datepicker__navigation react-datepicker__navigation--previous"
         onClick={this.decreaseMonth} />
   },
 
@@ -194,7 +194,7 @@ var Calendar = React.createClass({
       return
     }
     return <a
-        className='react-datepicker__navigation react-datepicker__navigation--next'
+        className="react-datepicker__navigation react-datepicker__navigation--next"
         onClick={this.increaseMonth} />
   },
 
@@ -298,7 +298,7 @@ var Calendar = React.createClass({
   render () {
     return (
       <div className="react-datepicker">
-        <div className="react-datepicker__triangle"></div>
+        <div className="react-datepicker__triangle" />
         {this.renderPreviousMonthButton()}
         {this.renderNextMonthButton()}
         {this.renderMonths()}

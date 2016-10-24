@@ -21,15 +21,15 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"todayButton={'Vandaag'}"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange} />"}
+          {'<DatePicker'}<br />
+              {'todayButton={"Vandaag"}'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange} />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            todayButton={"Vandaag"}
+            todayButton="Vandaag"
             selected={this.state.startDate}
             onChange={this.handleChange} />
       </div>
