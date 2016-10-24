@@ -10,7 +10,7 @@ var WeekNumber = React.createClass({
   render () {
     return (
       <div
-          className='react-datepicker__week-number'
+          className="react-datepicker__week-number"
           aria-label={`week-${this.props.weekNumber}`}>
         {this.props.weekNumber}
       </div>
