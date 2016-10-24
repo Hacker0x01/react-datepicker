@@ -68,6 +68,7 @@
   top: 10px;
   width: 0;
   border: $navigation-size solid transparent;
+  z-index: 1;
 
   &--previous {
     left: 10px;
