@@ -5,6 +5,7 @@ import MonthDropdown from './month_dropdown'
 import Month from './month'
 import React from 'react'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
+import onClickOutside from 'react-onclickoutside'
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
   'react-datepicker__year-select',
@@ -18,7 +19,7 @@ const isDropdownSelect = (element = {}) => {
   })
 }
 
-var Calendar = React.createClass({
+var Calendar = onClickOutside(React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
@@ -53,8 +54,6 @@ var Calendar = React.createClass({
     todayButton: React.PropTypes.string,
     utcOffset: React.PropTypes.number
   },
-
-  mixins: [require('react-onclickoutside')],
 
   defaultProps: {
     onDropdownFocus: () => {}
@@ -306,6 +305,6 @@ var Calendar = React.createClass({
       </div>
     )
   }
-})
+}))
 
 module.exports = Calendar

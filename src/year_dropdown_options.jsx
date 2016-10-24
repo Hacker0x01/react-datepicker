@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import onClickOutside from 'react-onclickoutside'
 
 function generateYears (year, noOfYear) {
   var list = []
@@ -9,7 +10,7 @@ function generateYears (year, noOfYear) {
   return list
 }
 
-var YearDropdownOptions = React.createClass({
+var YearDropdownOptions = onClickOutside(React.createClass({
   displayName: 'YearDropdownOptions',
 
   propTypes: {
@@ -18,8 +19,6 @@ var YearDropdownOptions = React.createClass({
     scrollableYearDropdown: React.PropTypes.bool,
     year: React.PropTypes.number.isRequired
   },
-
-  mixins: [require('react-onclickoutside')],
 
   getInitialState () {
     return {
@@ -96,6 +95,6 @@ var YearDropdownOptions = React.createClass({
       </div>
     )
   }
-})
+}))
 
 module.exports = YearDropdownOptions
