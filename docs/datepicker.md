@@ -109,6 +109,12 @@ type: `object`
 type: `object`
 
 
+### `monthsShown`
+
+type: `number`
+defaultValue: `1`
+
+
 ### `name`
 
 type: `string`
@@ -201,6 +207,11 @@ type: `bool`
 
 
 ### `showMonthDropdown`
+
+type: `bool`
+
+
+### `showWeekNumbers`
 
 type: `bool`
 
