@@ -172,6 +172,16 @@
     }
   }
 
+  &--keyboard-selected {
+    border-radius: $border-radius;
+    background-color: lighten($selected-color, 10%);
+    color: #fff;
+
+    &:hover {
+      background-color: darken($selected-color, 5%);
+    }
+  }
+
   &--in-selecting-range:not(&--in-range) {
     background-color: rgba($selected-color, .5);
   }

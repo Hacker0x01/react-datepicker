@@ -4,7 +4,7 @@ import React from 'react'
 import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay } from './date_utils'
+import { isSameDay, isDayDisabled } from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -104,7 +104,8 @@ var DatePicker = React.createClass({
   getInitialState () {
     return {
       open: false,
-      preventFocus: false
+      preventFocus: false,
+      preSelection: this.props.selected ? moment(this.props.selected) : moment()
     }
   },
 
@@ -113,7 +114,10 @@ var DatePicker = React.createClass({
   },
 
   setOpen (open) {
-    this.setState({ open })
+    this.setState({
+      open: open,
+      preSelection: open && this.state.open ? this.state.preSelection : this.getInitialState().preSelection
+    })
   },
 
   handleFocus (event) {
@@ -163,17 +167,32 @@ var DatePicker = React.createClass({
   setSelected (date, event) {
     let changedDate = date
 
+    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+      return
+    }
+
     if (!isSameDay(this.props.selected, changedDate)) {
-      if (this.props.selected && changedDate != null) {
-        changedDate = moment(changedDate).set({
-          hour: this.props.selected.hour(),
-          minute: this.props.selected.minute(),
-          second: this.props.selected.second()
+      if (changedDate !== null) {
+        if (this.props.selected) {
+          changedDate = moment(changedDate).set({
+            hour: this.props.selected.hour(),
+            minute: this.props.selected.minute(),
+            second: this.props.selected.second()
+          })
+        }
+        this.setState({
+          preSelection: changedDate
         })
       }
 
       this.props.onChange(changedDate, event)
     }
+  },
+
+  setPreSelection (date) {
+    this.setState({
+      preSelection: date
+    })
   },
 
   onInputClick () {
@@ -183,8 +202,17 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    const copy = this.props.selected ? moment(this.props.selected) : moment()
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if (!this.state.open && !this.props.inline) {
+      if (/^Arrow/.test(event.key)) {
+        this.onInputClick()
+      }
+      return
+    }
+    const copy = moment(this.state.preSelection)
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      this.handleSelect(copy, event)
+    } else if (event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
     } else if (event.key === 'Tab') {
@@ -193,28 +221,28 @@ var DatePicker = React.createClass({
     if (!this.props.disabledKeyboardNavigation) {
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
-        this.setSelected(copy.subtract(1, 'days'))
+        this.setPreSelection(copy.subtract(1, 'days'))
       } else if (event.key === 'ArrowRight') {
         event.preventDefault()
-        this.setSelected(copy.add(1, 'days'))
+        this.setPreSelection(copy.add(1, 'days'))
       } else if (event.key === 'ArrowUp') {
         event.preventDefault()
-        this.setSelected(copy.subtract(1, 'weeks'))
+        this.setPreSelection(copy.subtract(1, 'weeks'))
       } else if (event.key === 'ArrowDown') {
         event.preventDefault()
-        this.setSelected(copy.add(1, 'weeks'))
+        this.setPreSelection(copy.add(1, 'weeks'))
       } else if (event.key === 'PageUp') {
         event.preventDefault()
-        this.setSelected(copy.subtract(1, 'months'))
+        this.setPreSelection(copy.subtract(1, 'months'))
       } else if (event.key === 'PageDown') {
         event.preventDefault()
-        this.setSelected(copy.add(1, 'months'))
+        this.setPreSelection(copy.add(1, 'months'))
       } else if (event.key === 'Home') {
         event.preventDefault()
-        this.setSelected(copy.subtract(1, 'years'))
+        this.setPreSelection(copy.subtract(1, 'years'))
       } else if (event.key === 'End') {
         event.preventDefault()
-        this.setSelected(copy.add(1, 'years'))
+        this.setPreSelection(copy.add(1, 'years'))
       }
     }
   },
@@ -234,6 +262,7 @@ var DatePicker = React.createClass({
         dateFormat={this.props.dateFormatCalendar}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
+        preSelection={this.state.preSelection}
         onSelect={this.handleSelect}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}

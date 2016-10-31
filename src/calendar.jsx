@@ -46,6 +46,7 @@ var Calendar = React.createClass({
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     scrollableYearDropdown: React.PropTypes.bool,
+    preSelection: React.PropTypes.object,
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
@@ -77,9 +78,9 @@ var Calendar = React.createClass({
   },
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
+    if (nextProps.preSelection && !isSameDay(nextProps.preSelection, this.props.preSelection)) {
       this.setState({
-        date: this.localizeMoment(nextProps.selected)
+        date: this.localizeMoment(nextProps.preSelection)
       })
     } else if (nextProps.openToDate && !isSameDay(nextProps.openToDate, this.props.openToDate)) {
       this.setState({
@@ -99,12 +100,13 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, openToDate, utcOffset } = this.props
+    const { preSelection, selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const current = moment.utc().utcOffset(utcOffset)
-    if (selected) {
-      return selected
+    const initialDate = preSelection || selected
+    if (initialDate) {
+      return initialDate
     } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
       return openToDate
     } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
@@ -292,6 +294,7 @@ var Calendar = React.createClass({
                 includeDates={this.props.includeDates}
                 fixedHeight={this.props.fixedHeight}
                 filterDate={this.props.filterDate}
+                preSelection={this.props.preSelection}
                 selected={this.props.selected}
                 selectsStart={this.props.selectsStart}
                 selectsEnd={this.props.selectsEnd}

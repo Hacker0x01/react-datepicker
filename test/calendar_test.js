@@ -40,6 +40,13 @@ describe('Calendar', function () {
     assert(calendar.state().date.isSame(selected, 'day'))
   })
 
+  it('should start with the pre-selected date in view if provided', function () {
+    var preSelected = moment().add(2, 'year')
+    var selected = moment().add(1, 'year')
+    var calendar = getCalendar({ preSelected, selected })
+    assert(calendar.state().date.isSame(selected, 'day'))
+  })
+
   it('should start with the current date in view if in date range', function () {
     var now = moment()
     var minDate = now.clone().subtract(1, 'year')

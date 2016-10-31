@@ -13,6 +13,7 @@ var Day = React.createClass({
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
+    preSelection: React.PropTypes.object,
     selected: React.PropTypes.object,
     selectingDate: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
@@ -39,6 +40,10 @@ var Day = React.createClass({
 
   isSameDay (other) {
     return isSameDay(this.props.day, other)
+  },
+
+  isKeyboardSelected () {
+    return !this.isSameDay(this.props.selected) && this.isSameDay(this.props.preSelection)
   },
 
   isDisabled () {
@@ -129,6 +134,7 @@ var Day = React.createClass({
     return classnames('react-datepicker__day', {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+      'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
       'react-datepicker__day--highlighted': this.isHighlighted(),
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
