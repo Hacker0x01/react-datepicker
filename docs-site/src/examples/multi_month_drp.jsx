@@ -25,12 +25,12 @@ export default React.createClass({
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'}<br/>
               {'showYearDropdown'}<br/>
-              {'months={2} />'}
+              {'monthsShown={2} />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            months={2}
+            monthsShown={2}
             onChange={this.handleChange}
             showYearDropdown
             selected={this.state.startDate} />

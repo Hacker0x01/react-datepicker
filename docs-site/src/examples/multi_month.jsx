@@ -24,12 +24,12 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'}<br/>
-              {'months={2} />'}
+              {'monthsShown={2} />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            months={2}
+            monthsShown={2}
             onChange={this.handleChange}
             selected={this.state.startDate} />
       </div>
