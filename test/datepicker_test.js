@@ -179,6 +179,24 @@ describe('DatePicker', () => {
     expect(cleared).to.be.true
   })
 
+  it('should save time from the selected date', () => {
+    const selected = moment('2015-12-20 10:11:12')
+    let date
+
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          inline
+          selected={selected}
+          onChange={(d) => { date = d }} />
+    )
+    var dayButton = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'react-datepicker__day')[0]
+    TestUtils.Simulate.click(dayButton)
+
+    expect(date.hours()).to.equal(10)
+    expect(date.minutes()).to.equal(11)
+    expect(date.seconds()).to.equal(12)
+  })
+
   it('should mount and unmount properly', done => {
     var TestComponent = React.createClass({
       displayName: 'TestComponent',
