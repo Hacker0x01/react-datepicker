@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 rm -rf ./node_modules ./lib ./dist
-npm install
+yarn
 
 git checkout .
 
@@ -17,6 +17,6 @@ git push
 
 git push --tags
 
-npm publish
+yarn publish
 
 ./docs-site/publish.sh
