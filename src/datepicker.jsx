@@ -45,6 +45,10 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
+    onMonthIncrease: React.PropTypes.func,
+    onMonthDecrease: React.PropTypes.func,
+    onMonthChange: React.PropTypes.func,
+    onYearChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
@@ -213,6 +217,10 @@ var DatePicker = React.createClass({
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        onMonthIncrease={this.props.onMonthIncrease}
+        onMonthDecrease={this.props.onMonthDecrease}
+        onMonthChange={this.props.onMonthChange}
+        onYearChange={this.props.onYearChange}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}

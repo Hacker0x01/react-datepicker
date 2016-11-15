@@ -40,6 +40,10 @@ var Calendar = React.createClass({
     onClickOutside: React.PropTypes.func.isRequired,
     onDropdownFocus: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
+    onMonthIncrease: React.PropTypes.func,
+    onMonthDecrease: React.PropTypes.func,
+    onMonthChange: React.PropTypes.func,
+    onYearChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     scrollableYearDropdown: React.PropTypes.bool,
@@ -57,7 +61,11 @@ var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],
 
   defaultProps: {
-    onDropdownFocus: () => {}
+    onDropdownFocus: () => {},
+    onMonthIncrease: () => {},
+    onMonthDecrease: () => {},
+    onMonthChange: () => {},
+    onYearChange: () => {},
   },
 
   getDefaultProps () {
@@ -127,13 +135,13 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    })
+    }, this.props.onMonthDecrease(this.state.date.month()) )
   },
 
   decreaseMonth () {
     this.setState({
       date: this.state.date.clone().subtract(1, 'month')
-    })
+    }, this.props.onMonthDecrease(this.state.date.month()))
   },
 
   handleDayClick (day, event) {
@@ -151,13 +159,13 @@ var Calendar = React.createClass({
   changeYear (year) {
     this.setState({
       date: this.state.date.clone().set('year', year)
-    })
+    }, this.props.onYearChange(year))
   },
 
   changeMonth (month) {
     this.setState({
       date: this.state.date.clone().set('month', month)
-    })
+    }, this.props.onMonthChange(month))
   },
 
   header (date = this.state.date) {
