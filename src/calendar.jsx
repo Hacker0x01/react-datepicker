@@ -135,7 +135,7 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    }, this.props.onMonthDecrease(this.state.date.month()) )
+    }, this.props.onMonthIncrease(this.state.date.month()) )
   },
 
   decreaseMonth () {
