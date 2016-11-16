@@ -61,7 +61,7 @@ var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],
 
   defaultProps: {
-    onDropdownFocus () {},
+    onDropdownFocus () {}
   },
 
   getDefaultProps () {
@@ -131,7 +131,7 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    }, this.props.onMonthIncrease(this.state.date) )
+    }, this.props.onMonthIncrease(this.state.date))
   },
 
   decreaseMonth () {
