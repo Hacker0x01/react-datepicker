@@ -131,13 +131,13 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    }, this.props.onMonthIncrease(this.state.date))
+    }, () => this.props.onMonthIncrease(this.state.date))
   },
 
   decreaseMonth () {
     this.setState({
       date: this.state.date.clone().subtract(1, 'month')
-    }, this.props.onMonthDecrease(this.state.date))
+    }, () => this.props.onMonthDecrease(this.state.date))
   },
 
   handleDayClick (day, event) {
@@ -155,13 +155,13 @@ var Calendar = React.createClass({
   changeYear (year) {
     this.setState({
       date: this.state.date.clone().set('year', year)
-    }, this.props.onYearChange(this.state.date))
+    }, () => this.props.onYearChange(this.state.date))
   },
 
   changeMonth (month) {
     this.setState({
       date: this.state.date.clone().set('month', month)
-    }, this.props.onMonthChange(this.state.date))
+    }, () => this.props.onMonthChange(this.state.date))
   },
 
   header (date = this.state.date) {
