@@ -144,7 +144,7 @@ var DatePicker = React.createClass({
     // https://github.com/Hacker0x01/react-datepicker/issues/628
     this.setState({ preventFocus: true },
       () => setTimeout(() => this.setState({ preventFocus: false }), 50)
-    );
+    )
     this.setSelected(date, event)
     this.setOpen(false)
   },
