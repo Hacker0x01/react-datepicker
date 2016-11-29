@@ -36861,7 +36861,16 @@
 	        });
 	      }
 
-	      this.props.onChange(changedDate, event);
+	      //  If the above moment.set() call returned a valid date, publish the new date object:
+	      if (changedDate && changedDate.isValid()) {
+	        this.props.onChange(changedDate, event);
+	      }
+
+	      //  Else the date *isn't* valid, but if we allow invalid dates to be entered
+	      //  anyway, publish the change using a null value:
+	      else if (this.props.allowInvalidDates) {
+	          this.props.onChange(null, event);
+	        }
 	    }
 	  },
 	  onInputClick: function onInputClick() {
@@ -36871,6 +36880,12 @@
 	  },
 	  onInputKeyDown: function onInputKeyDown(event) {
 	    var copy = (0, _moment2.default)(this.props.selected);
+
+	    //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
+	    if (this.props.allowInvalidDates && event.key !== 'Enter' && event.key !== 'Escape' && event.key !== 'Tab' && (!copy || !copy.isValid())) {
+	      copy = (0, _moment2.default)();
+	    }
+
 	    if (event.key === 'Enter' || event.key === 'Escape') {
 	      event.preventDefault();
 	      this.setOpen(false);
@@ -37097,9 +37112,9 @@
 	    if (this.props.onChangeDate) {
 	      var date = (0, _moment2.default)(value, this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
 
-	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
+	      if (date && date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
 	        this.props.onChangeDate(date);
-	      } else if (value === '' || this.props.allowInvalidDates) {
+	      } else if (this.props.allowInvalidDates) {
 	        this.props.onChangeDate(null);
 	      }
 	    }

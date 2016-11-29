@@ -160,9 +160,9 @@ var DatePicker = React.createClass({
       }
 
       //  Else the date *isn't* valid, but if we allow invalid dates to be entered
-      //  anyway, publish the change using the original user-entered value:
+      //  anyway, publish the change using a null value:
       else if ( this.props.allowInvalidDates ) {
-        this.props.onChange(date, event)
+        this.props.onChange(null, event)
       }
     }
   },
@@ -174,7 +174,11 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    const copy = moment(this.props.selected)
+    let copy = moment(this.props.selected)
+
+    //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
+    if ( this.props.allowInvalidDates && ( ( event.key !== 'Enter' ) && ( event.key !== 'Escape' ) && ( event.key !== 'Tab' ) && ( !copy || !copy.isValid() ) ) ) { copy = moment() }
+
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)

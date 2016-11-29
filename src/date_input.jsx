@@ -79,9 +79,9 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
 
-      if (date.isValid() && !isDayDisabled(date, this.props)) {
+      if (date && date.isValid() && !isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
-      } else if (value === '' || this.props.allowInvalidDates) {
+      } else if (this.props.allowInvalidDates) {
         this.props.onChangeDate(null)
       }
     }
