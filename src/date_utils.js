@@ -8,6 +8,12 @@ export function isSameDay (moment1, moment2) {
   }
 }
 
+export function isDayInRange (day, startDate, endDate) {
+  const before = startDate.clone().startOf('day').subtract(1, 'seconds')
+  const after = endDate.clone().startOf('day').add(1, 'seconds')
+  return day.clone().startOf('day').isBetween(before, after)
+}
+
 export function isDayDisabled (day, { minDate, maxDate, excludeDates, includeDates, filterDate } = {}) {
   return (minDate && day.isBefore(minDate, 'day')) ||
     (maxDate && day.isAfter(maxDate, 'day')) ||

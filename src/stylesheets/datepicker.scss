@@ -3,7 +3,7 @@
 
 .react-datepicker {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 11px;
+  font-size: $font-size;
   background-color: #fff;
   color: $text-color;
   border: 1px solid $border-color;
@@ -39,11 +39,21 @@
   position: relative;
 }
 
+.react-datepicker__header__dropdown--select {
+  margin-top: -16px;
+}
+
+.react-datepicker__year-dropdown-container--select,
+.react-datepicker__month-dropdown-container--select {
+  display: inline-block;
+  margin: 0 2px;
+}
+
 .react-datepicker__current-month {
   margin-top: 0;
   color: #000;
   font-weight: bold;
-  font-size: 13px;
+  font-size: $font-size * 1.18;
 
   &--hasYearDropdown {
     margin-bottom: 16px;
@@ -58,6 +68,7 @@
   top: 10px;
   width: 0;
   border: $navigation-size solid transparent;
+  z-index: 1;
 
   &--previous {
     left: 10px;
@@ -104,9 +115,23 @@
   }
 }
 
+.react-datepicker__month-container {
+  display: inline;
+  float: left;
+}
+
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
+}
+
+.react-datepicker__week-number {
+  color: $muted-color;
+  display: inline-block;
+  width: $item-size;
+  line-height: $item-size;
+  text-align: center;
+  margin: $day-margin;
 }
 
 .react-datepicker__day-name,
@@ -131,7 +156,18 @@
     font-weight: bold;
   }
 
+  &--highlighted {
+    border-radius: $border-radius;
+    background-color: $highlighted-color;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($highlighted-color, 5%);
+    }
+  }
+
   &--selected,
+  &--in-selecting-range,
   &--in-range {
     border-radius: $border-radius;
     background-color: $selected-color;
@@ -139,6 +175,17 @@
 
     &:hover {
       background-color: darken($selected-color, 5%);
+    }
+  }
+
+  &--in-selecting-range:not(&--in-range) {
+    background-color: rgba($selected-color, .5);
+  }
+
+  &--in-range:not(&--in-selecting-range) {
+    .react-datepicker__month--selecting-range & {
+      background-color: $background-color;
+      color: $text-color;
     }
   }
 
@@ -201,6 +248,11 @@
 
   &:hover {
     cursor: pointer;
+  }
+
+  &--scrollable {
+    height: 150px;
+    overflow-y: scroll;
   }
 }
 

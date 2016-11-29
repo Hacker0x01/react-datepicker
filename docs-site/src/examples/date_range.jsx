@@ -37,26 +37,30 @@ var DateRange = React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-                {"selected={this.state.startDate}"}<br />
-                {"startDate={this.state.startDate}"}<br />
-                {"endDate={this.state.endDate}"}<br />
-                {"onChange={this.handleChangeStart} />"}<br />
-          {"<DatePicker"}<br />
-                {"selected={this.state.endDate}"}<br />
-                {"startDate={this.state.startDate}"}<br />
-                {"endDate={this.state.endDate}"}<br />
-                {"onChange={this.handleChangeEnd} />"}<br />
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'selectsStart'}
+              {'startDate={this.state.startDate}'}<br />
+              {'endDate={this.state.endDate}'}<br />
+              {'onChange={this.handleChangeStart} />'}<br />
+          {'<DatePicker'}<br />
+              {'selected={this.state.endDate}'}<br />
+              {'selectsEnd'}
+              {'startDate={this.state.startDate}'}<br />
+              {'endDate={this.state.endDate}'}<br />
+              {'onChange={this.handleChangeEnd} />'}<br />
         </code>
       </pre>
       <div className="column">
         <DatePicker
             selected={this.state.startDate}
+            selectsStart
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onChange={this.handleChangeStart} />
         <DatePicker
             selected={this.state.endDate}
+            selectsEnd
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onChange={this.handleChangeEnd} />

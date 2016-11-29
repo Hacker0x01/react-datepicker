@@ -21,11 +21,12 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"} <br />
-              {"showYearDropdown"} <br />
-              {"dateFormatCalendar=\"MMMM\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'} <br />
+              {'showYearDropdown'} <br />
+              {'dateFormatCalendar="MMMM"'} <br />
+              {'scrollableYearDropdown />'}
         </code>
       </pre>
       <div className="column">
@@ -33,7 +34,8 @@ export default React.createClass({
             selected={this.state.startDate}
             onChange={this.handleChange}
             showYearDropdown
-            dateFormatCalendar="MMMM" />
+            dateFormatCalendar="MMMM"
+            scrollableYearDropdown />
       </div>
     </div>
   }
