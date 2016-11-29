@@ -154,7 +154,16 @@ var DatePicker = React.createClass({
         })
       }
 
-      this.props.onChange(changedDate, event)
+      //  If the above moment.set() call returned a valid date, publish the new date object:
+      if ( changedDate && changedDate.isValid() ) {
+        this.props.onChange(changedDate, event)
+      }
+
+      //  Else the date *isn't* valid, but if we allow invalid dates to be entered
+      //  anyway, publish the change using the original user-entered value:
+      else if ( this.props.allowInvalidDates ) {
+        this.props.onChange(date, event)
+      }
     }
   },
 
