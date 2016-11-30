@@ -36864,13 +36864,12 @@
 	      //  If the above moment.set() call returned a valid date, publish the new date object:
 	      if (changedDate && changedDate.isValid()) {
 	        this.props.onChange(changedDate, event);
-	      }
 
-	      //  Else the date *isn't* valid, but if we allow invalid dates to be entered
-	      //  anyway, publish the change using a null value:
-	      else if (this.props.allowInvalidDates) {
-	          this.props.onChange(null, event);
-	        }
+	        //  Else the date *isn't* valid, but if we allow invalid dates to be entered
+	        //  anyway, publish the change using a null value:
+	      } else if (this.props.allowInvalidDates) {
+	        this.props.onChange(null, event);
+	      }
 	    }
 	  },
 	  onInputClick: function onInputClick() {
@@ -37104,7 +37103,7 @@
 	      this.props.onChange(event);
 	    }
 
-	    if (!event.isDefaultPrevented()) {
+	    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
 	      this.handleChangeDate(event.target.value);
 	    }
 	  },
@@ -37112,10 +37111,8 @@
 	    if (this.props.onChangeDate) {
 	      var date = (0, _moment2.default)(value, this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
 
-	      if (date && date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
+	      if (!(0, _date_utils.isDayDisabled)(date, this.props)) {
 	        this.props.onChangeDate(date);
-	      } else if (this.props.allowInvalidDates) {
-	        this.props.onChangeDate(null);
 	      }
 	    }
 
@@ -59881,20 +59878,20 @@
 	        _react2.default.createElement(
 	          'code',
 	          { className: 'jsx' },
-	          "<DatePicker",
+	          '<DatePicker',
 	          _react2.default.createElement('br', null),
 	          '\xA0 \xA0 ',
 	          _react2.default.createElement(
 	            'strong',
 	            null,
-	            "allowInvalidDates",
+	            'allowInvalidDates',
 	            _react2.default.createElement('br', null)
 	          ),
 	          '\xA0 \xA0 ',
-	          "selected={this.state.startDate}",
+	          'selected={this.state.startDate}',
 	          _react2.default.createElement('br', null),
 	          '\xA0 \xA0 ',
-	          "onChange={this.handleChange} />"
+	          'onChange={this.handleChange} />'
 	        )
 	      ),
 	      _react2.default.createElement(

@@ -155,13 +155,12 @@ var DatePicker = React.createClass({
       }
 
       //  If the above moment.set() call returned a valid date, publish the new date object:
-      if ( changedDate && changedDate.isValid() ) {
+      if (changedDate && changedDate.isValid()) {
         this.props.onChange(changedDate, event)
-      }
 
       //  Else the date *isn't* valid, but if we allow invalid dates to be entered
       //  anyway, publish the change using a null value:
-      else if ( this.props.allowInvalidDates ) {
+      } else if (this.props.allowInvalidDates) {
         this.props.onChange(null, event)
       }
     }
@@ -177,7 +176,7 @@ var DatePicker = React.createClass({
     let copy = moment(this.props.selected)
 
     //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
-    if ( this.props.allowInvalidDates && ( ( event.key !== 'Enter' ) && ( event.key !== 'Escape' ) && ( event.key !== 'Tab' ) && ( !copy || !copy.isValid() ) ) ) { copy = moment() }
+    if (this.props.allowInvalidDates && ((event.key !== 'Enter') && (event.key !== 'Escape') && (event.key !== 'Tab') && (!copy || !copy.isValid()))) { copy = moment() }
 
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()

@@ -70,7 +70,7 @@ var DateInput = React.createClass({
       this.props.onChange(event)
     }
 
-    if (!event.isDefaultPrevented()) {
+    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
       this.handleChangeDate(event.target.value)
     }
   },
@@ -79,10 +79,8 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
 
-      if (date && date.isValid() && !isDayDisabled(date, this.props)) {
+      if (!isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
-      } else if (this.props.allowInvalidDates) {
-        this.props.onChangeDate(null)
       }
     }
 
@@ -129,8 +127,8 @@ var DateInput = React.createClass({
     }
 
     return <input
-        ref='input'
-        type='text'
+        ref="input"
+        type="text"
         {...rest}
         value={this.state.value}
         onBlur={this.handleBlur}
