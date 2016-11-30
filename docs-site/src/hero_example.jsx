@@ -19,6 +19,7 @@ export default React.createClass({
 
   render () {
     return <DatePicker
+        autoFocus
         selected={this.state.startDate}
         onChange={this.handleChange} />
   }

@@ -1,5 +1,8 @@
 import React from 'react'
+import classnames from 'classnames'
 import Week from './week'
+
+const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6
 
 var Month = React.createClass({
   displayName: 'Month',
@@ -10,17 +13,38 @@ var Month = React.createClass({
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     fixedHeight: React.PropTypes.bool,
+    highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
+    onDayMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
+    peekNextMonth: React.PropTypes.bool,
     selected: React.PropTypes.object,
-    startDate: React.PropTypes.object
+    selectingDate: React.PropTypes.object,
+    selectsEnd: React.PropTypes.bool,
+    selectsStart: React.PropTypes.bool,
+    showWeekNumbers: React.PropTypes.bool,
+    startDate: React.PropTypes.object,
+    utcOffset: React.PropTypes.number
   },
 
-  handleDayClick (day) {
+  handleDayClick (day, event) {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day)
+      this.props.onDayClick(day, event)
+    }
+  },
+
+  handleDayMouseEnter (day) {
+    if (this.props.onDayMouseEnter) {
+      this.props.onDayMouseEnter(day)
+    }
+  },
+
+  handleMouseLeave () {
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave()
     }
   },
 
@@ -31,30 +55,66 @@ var Month = React.createClass({
   },
 
   renderWeeks () {
-    const startOfMonth = this.props.day.clone().startOf('month').startOf('week')
-    return [0, 1, 2, 3, 4, 5]
-      .map(offset => startOfMonth.clone().add(offset, 'weeks'))
-      .filter(startOfWeek => this.props.fixedHeight || this.isWeekInMonth(startOfWeek))
-      .map((startOfWeek, offset) =>
-        <Week
-            key={offset}
-            day={startOfWeek}
-            month={this.props.day.month()}
-            onDayClick={this.handleDayClick}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            excludeDates={this.props.excludeDates}
-            includeDates={this.props.includeDates}
-            filterDate={this.props.filterDate}
-            selected={this.props.selected}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate} />
-      )
+    const weeks = []
+    var isFixedHeight = this.props.fixedHeight
+    let currentWeekStart = this.props.day.clone().startOf('month').startOf('week')
+    let i = 0
+    let breakAfterNextPush = false
+
+    while (true) {
+      weeks.push(<Week
+          key={i}
+          day={currentWeekStart}
+          month={this.props.day.month()}
+          onDayClick={this.handleDayClick}
+          onDayMouseEnter={this.handleDayMouseEnter}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
+          excludeDates={this.props.excludeDates}
+          includeDates={this.props.includeDates}
+          highlightDates={this.props.highlightDates}
+          selectingDate={this.props.selectingDate}
+          filterDate={this.props.filterDate}
+          selected={this.props.selected}
+          selectsStart={this.props.selectsStart}
+          selectsEnd={this.props.selectsEnd}
+          showWeekNumber={this.props.showWeekNumbers}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          utcOffset={this.props.utcOffset}/>)
+
+      if (breakAfterNextPush) break
+
+      i++
+      currentWeekStart = currentWeekStart.clone().add(1, 'weeks')
+
+      // If one of these conditions is true, we will either break on this week
+      // or break on the next week
+      const isFixedAndFinalWeek = isFixedHeight && i >= FIXED_HEIGHT_STANDARD_WEEK_COUNT
+      const isNonFixedAndOutOfMonth = !isFixedHeight && !this.isWeekInMonth(currentWeekStart)
+
+      if (isFixedAndFinalWeek || isNonFixedAndOutOfMonth) {
+        if (this.props.peekNextMonth) {
+          breakAfterNextPush = true
+        } else {
+          break
+        }
+      }
+    }
+
+    return weeks
+  },
+
+  getClassNames () {
+    const { selectingDate, selectsStart, selectsEnd } = this.props
+    return classnames('react-datepicker__month', {
+      'react-datepicker__month--selecting-range': selectingDate && (selectsStart || selectsEnd)
+    })
   },
 
   render () {
     return (
-      <div className="react-datepicker__month" role="listbox">
+      <div className={this.getClassNames()} onMouseLeave={this.handleMouseLeave} role="listbox">
         {this.renderWeeks()}
       </div>
     )

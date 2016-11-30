@@ -1,0 +1,21 @@
+{
+  "name": "hello-world",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.2.0"
+  },
+  "dependencies": {
+    "moment": "^2.15.1",
+    "react": "^15.2.1",
+    "react-datepicker": "^0.30.0",
+    "react-dom": "^15.2.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  }
+}

@@ -8,7 +8,7 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker placeholderText=\"Click to select a date\" />"}
+          {'<DatePicker placeholderText="Click to select a date" />'}
         </code>
       </pre>
       <div className="column">

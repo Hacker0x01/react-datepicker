@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
+import { mount } from 'enzyme'
+import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
 import TetherComponent from '../src/tether_component.jsx'
@@ -48,7 +50,7 @@ describe('DatePicker', () => {
     document.body.removeChild(node)
   })
 
-  it('should keep the calendar shown when blurring the date input', () => {
+  it('should keep the calendar shown when blurring the date input', (done) => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
@@ -56,8 +58,36 @@ describe('DatePicker', () => {
     var focusSpy = sinon.spy(dateInput, 'focus')
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
-    expect(datePicker.refs.calendar).to.exist
-    assert(focusSpy.calledOnce, 'should refocus the date input')
+
+    defer(() => {
+      expect(datePicker.refs.calendar).to.exist
+      assert(focusSpy.calledOnce, 'should refocus the date input')
+      done()
+    })
+  })
+
+  it('should not re-focus the date input when focusing the year dropdown', (done) => {
+    const onBlurSpy = sinon.spy()
+    const datePicker = mount(
+      <DatePicker
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          onBlur={onBlurSpy}/>
+    )
+    const dateInput = datePicker.ref('input')
+    const focusSpy = sinon.spy(dateInput.get(0), 'focus')
+
+    dateInput.simulate('focus')
+    const yearSelect = datePicker.ref('calendar').find('.react-datepicker__year-select')
+    dateInput.simulate('blur')
+    yearSelect.simulate('focus')
+
+    defer(() => {
+      assert(focusSpy.called === false, 'should not refocus the date input')
+      assert(onBlurSpy.called === false, 'should not call DatePicker onBlur')
+      done()
+    })
   })
 
   it('should keep the calendar shown when clicking the calendar', () => {
@@ -149,6 +179,24 @@ describe('DatePicker', () => {
     expect(cleared).to.be.true
   })
 
+  it('should save time from the selected date', () => {
+    const selected = moment('2015-12-20 10:11:12')
+    let date
+
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          inline
+          selected={selected}
+          onChange={(d) => { date = d }} />
+    )
+    var dayButton = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'react-datepicker__day')[0]
+    TestUtils.Simulate.click(dayButton)
+
+    expect(date.hours()).to.equal(10)
+    expect(date.minutes()).to.equal(11)
+    expect(date.seconds()).to.equal(12)
+  })
+
   it('should mount and unmount properly', done => {
     var TestComponent = React.createClass({
       displayName: 'TestComponent',
@@ -187,5 +235,98 @@ describe('DatePicker', () => {
     )
 
     expect(datePicker.refs.calendar).to.exist
+  })
+
+  function getOnInputKeyDownStuff () {
+    var m = moment()
+    var copyM = moment(m)
+    var testFormat = 'YYYY-MM-DD'
+    var callback = sinon.spy()
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={m} onChange={callback}/>
+    )
+    var dateInput = datePicker.refs.input
+    var nodeInput = ReactDOM.findDOMNode(dateInput)
+    TestUtils.Simulate.focus(nodeInput)
+    return {
+      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+    }
+  }
+  it('should handle onInputKeyDown ArrowLeft', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    data.copyM.subtract(1, 'days')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowRight', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowRight', keyCode: 39, which: 39})
+    data.copyM.add(1, 'days')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowUp', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    data.copyM.subtract(1, 'weeks')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown ArrowDown', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    data.copyM.add(1, 'weeks')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown PageUp', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageUp', keyCode: 33, which: 33})
+    data.copyM.subtract(1, 'months')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown PageDown', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageDown', keyCode: 34, which: 34})
+    data.copyM.add(1, 'months')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown Home', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
+    data.copyM.subtract(1, 'years')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should handle onInputKeyDown End', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    data.copyM.add(1, 'years')
+    expect(data.callback.calledOnce).to.be.true
+    var result = data.callback.args[0][0]
+    expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+  it('should autofocus the input given the autoFocus prop', () => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(<DatePicker autoFocus />, div)
+    expect(div.querySelector('input')).to.equal(document.activeElement)
+  })
+  it('should autofocus the input when calling the setFocus method', () => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    var datePicker = ReactDOM.render(<DatePicker />, div)
+    datePicker.setFocus()
+    expect(div.querySelector('input')).to.equal(document.activeElement)
   })
 })

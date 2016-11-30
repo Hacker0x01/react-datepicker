@@ -98,6 +98,20 @@ You can run `npm test` to execute the test suite and linters. To help you develo
 ### The examples
 The examples are hosted within the docs folder and are ran in the simple add that loads the Datepicker. To extend the examples with a new example, you can simply duplicate one of the existing examples and change the unique properties of your example.
 
+## Accessibility
+
+### Keyboard support
+
+* *Left*: Move to the previous day.
+* *Right*: Move to the next day.
+* *Up*: Move to the previous week.
+* *Down*: Move to the next week.
+* *PgUp*: Move to the previous month.
+* *PgDn*: Move to the next month.
+* *Home*: Move to the previous year.
+* *End*: Move to the next year.
+* *Enter/Esc/Tab*: close the calendar. (Enter & Esc calls preventDefautl)
+
 ## License
 
 Copyright (c) 2016 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.

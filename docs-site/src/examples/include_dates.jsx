@@ -21,11 +21,11 @@ export default React.createClass({
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">
-          {"<DatePicker"}<br />
-              {"selected={this.state.startDate}"}<br />
-              {"onChange={this.handleChange}"}<br />
-        <strong>    {"includeDates={[moment(), moment().add(1, 'days')]}"}</strong><br />
-              {"placeholderText=\"This only includes today and tomorrow\" />"}
+          {'<DatePicker'}<br />
+              {'selected={this.state.startDate}'}<br />
+              {'onChange={this.handleChange}'}<br />
+              <strong>{'includeDates={[moment(), moment().add(1, "days")]}'}</strong><br />
+              {'placeholderText="This only includes today and tomorrow" />'}
         </code>
       </pre>
       <div className="column">

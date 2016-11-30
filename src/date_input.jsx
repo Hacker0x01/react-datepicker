@@ -7,6 +7,7 @@ var DateInput = React.createClass({
 
   propTypes: {
     allowInvalidDates: React.PropTypes.bool,
+    customInput: React.PropTypes.element,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -69,7 +70,7 @@ var DateInput = React.createClass({
       this.props.onChange(event)
     }
 
-    if (!event.isDefaultPrevented()) {
+    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
       this.handleChangeDate(event.target.value)
     }
   },
@@ -78,10 +79,8 @@ var DateInput = React.createClass({
     if (this.props.onChangeDate) {
       var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
 
-      if (date.isValid() && !isDayDisabled(date, this.props)) {
+      if (!isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
-      } else if (value === '' || this.props.allowInvalidDates) {
-        this.props.onChangeDate(null)
       }
     }
 
@@ -115,11 +114,21 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { allowInvalidDates, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { allowInvalidDates, customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+
+    if (customInput) {
+      return React.cloneElement(customInput, {
+        ...rest,
+        ref: 'input',
+        value: this.state.value,
+        onBlur: this.handleBlur,
+        onChange: this.handleChange
+      })
+    }
 
     return <input
-        ref='input'
-        type='text'
+        ref="input"
+        type="text"
         {...rest}
         value={this.state.value}
         onBlur={this.handleBlur}
