@@ -145,7 +145,7 @@ var DatePicker = React.createClass({
     let changedDate = date
 
     if (!isSameDay(this.props.selected, changedDate)) {
-      if (this.props.selected) {
+      if (this.props.selected && changedDate != null) {
         changedDate = moment(changedDate).set({
           hour: this.props.selected.hour(),
           minute: this.props.selected.minute(),

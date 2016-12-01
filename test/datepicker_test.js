@@ -329,4 +329,24 @@ describe('DatePicker', () => {
     datePicker.setFocus()
     expect(div.querySelector('input')).to.equal(document.activeElement)
   })
+
+  it('should correctly clear date with empty input string', () => {
+    var cleared = false
+    function handleChange (d) {
+      // Internally DateInput calls it's onChange prop with null
+      // when the input value is an empty string
+      if (d === null) {
+        cleared = true
+      }
+    }
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          selected={moment('2016-11-22')}
+          onChange={handleChange} />
+    )
+    var input = ReactDOM.findDOMNode(datePicker.refs.input)
+    input.value = ''
+    TestUtils.Simulate.change(input)
+    expect(cleared).to.be.true
+  })
 })
