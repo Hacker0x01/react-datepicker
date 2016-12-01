@@ -8,7 +8,7 @@ Props
 
 ### `attachment` (required)
 
-type: `enumattachmentPositions`
+type: `enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`
 
 
 ### `children`
@@ -75,7 +75,7 @@ type: `object`
 
 ### `targetAttachment`
 
-type: `enumattachmentPositions`
+type: `enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`
 
 
 ### `targetModifier`
