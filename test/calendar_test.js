@@ -129,6 +129,12 @@ describe('Calendar', function () {
     expect(yearReadView).to.have.length(1)
   })
 
+  it('should show month navigation if toggled on', function () {
+    var calendar = getCalendar({ includeDates: [moment()], forceShowMonthNavigation: true })
+    var nextNavigationButton = calendar.find('.react-datepicker__navigation--next')
+    expect(nextNavigationButton).to.have.length(1)
+  })
+
   it('should not show the month dropdown menu by default', function () {
     var calendar = getCalendar()
     var monthReadView = calendar.find(MonthDropdown)
