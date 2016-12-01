@@ -9,12 +9,7 @@ var Day = React.createClass({
   propTypes: {
     day: React.PropTypes.object.isRequired,
     endDate: React.PropTypes.object,
-    excludeDates: React.PropTypes.array,
-    filterDate: React.PropTypes.func,
     highlightDates: React.PropTypes.array,
-    includeDates: React.PropTypes.array,
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
