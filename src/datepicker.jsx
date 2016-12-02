@@ -6,8 +6,10 @@ import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
 import moment from 'moment'
+import onClickOutside from 'react-onclickoutside'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+var WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -206,7 +208,7 @@ var DatePicker = React.createClass({
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
-    return <Calendar
+    return <WrappedCalendar
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
