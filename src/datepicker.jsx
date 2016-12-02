@@ -95,7 +95,8 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      preventFocus: false
     }
   },
 
@@ -108,8 +109,10 @@ var DatePicker = React.createClass({
   },
 
   handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+    if (!this.state.preventFocus) {
+      this.props.onFocus(event)
+      this.setOpen(true)
+    }
   },
 
   cancelFocusInput () {
@@ -139,6 +142,11 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date, event) {
+    // Preventing onFocus event to fix issue
+    // https://github.com/Hacker0x01/react-datepicker/issues/628
+    this.setState({ preventFocus: true },
+      () => setTimeout(() => this.setState({ preventFocus: false }), 50)
+    )
     this.setSelected(date, event)
     this.setOpen(false)
   },
