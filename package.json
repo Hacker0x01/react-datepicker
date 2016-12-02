@@ -36,7 +36,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
-    "css-loader": "^0.25.0",
+    "css-loader": "^0.26.0",
     "enzyme": "^2.4.0",
     "eslint": "^3.8.1",
     "eslint-config-standard": "^6.2.0",
