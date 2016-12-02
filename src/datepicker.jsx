@@ -166,7 +166,7 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    const copy = moment(this.props.selected)
+    const copy = this.props.selected ? moment(this.props.selected) : moment()
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
