@@ -57,6 +57,19 @@
 
   &--hasYearDropdown {
     margin-bottom: 16px;
+
+    .react-datepicker__month-read-view,
+      .react-datepicker__month-dropdown {
+        left: 0%;
+      }
+    }
+  }
+
+  &--hasMonthDropdown {
+    .react-datepicker__year-read-view,
+    .react-datepicker__year-dropdown {
+      left: 50%;
+    }
   }
 }
 
@@ -238,21 +251,6 @@
     position: relative;
   }
 }
-
-.react-datepicker__current-month--hasMonthDropdown {
-  .react-datepicker__year-read-view,
-  .react-datepicker__year-dropdown {
-    left: 50%;
-  }
-}
-
-.react-datepicker__current-month--hasYearDropdown {
-  .react-datepicker__month-read-view,
-  .react-datepicker__month-dropdown {
-    left: 0%;
-  }
-}
-
 
 .react-datepicker__year-dropdown,
 .react-datepicker__month-dropdown {
