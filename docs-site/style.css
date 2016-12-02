@@ -83,7 +83,8 @@
   position: absolute;
   top: 10px;
   width: 0;
-  border: 0.45rem solid transparent; }
+  border: 0.45rem solid transparent;
+  z-index: 1; }
   .react-datepicker__navigation--previous {
     left: 10px;
     border-right-color: #ccc; }
@@ -111,9 +112,21 @@
       .react-datepicker__navigation--years-upcoming:hover {
         border-bottom-color: #b3b3b3; }
 
+.react-datepicker__month-container {
+  display: inline;
+  float: left; }
+
 .react-datepicker__month {
   margin: 0.4rem;
   text-align: center; }
+
+.react-datepicker__week-number {
+  color: #ccc;
+  display: inline-block;
+  width: 1.7rem;
+  line-height: 1.7rem;
+  text-align: center;
+  margin: 0.166rem; }
 
 .react-datepicker__day-name,
 .react-datepicker__day {
@@ -191,6 +204,9 @@
   border: 1px solid #aeaeae; }
   .react-datepicker__year-dropdown:hover {
     cursor: pointer; }
+  .react-datepicker__year-dropdown--scrollable {
+    height: 150px;
+    overflow-y: scroll; }
 
 .react-datepicker__year-option {
   line-height: 20px;
@@ -252,7 +268,8 @@
   cursor: pointer;
   text-align: center;
   font-weight: bold;
-  padding: 5px 0; }
+  padding: 5px 0;
+  clear: left; }
 
 .react-datepicker__tether-element {
   z-index: 2147483647; }
