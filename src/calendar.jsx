@@ -54,8 +54,6 @@ var Calendar = React.createClass({
     utcOffset: React.PropTypes.number
   },
 
-  mixins: [require('react-onclickoutside')],
-
   defaultProps: {
     onDropdownFocus: () => {}
   },

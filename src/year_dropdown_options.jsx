@@ -19,8 +19,6 @@ var YearDropdownOptions = React.createClass({
     year: React.PropTypes.number.isRequired
   },
 
-  mixins: [require('react-onclickoutside')],
-
   getInitialState () {
     return {
       yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)

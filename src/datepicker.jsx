@@ -6,8 +6,10 @@ import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
 import moment from 'moment'
+import onClickOutside from 'react-onclickoutside'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+var WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -93,7 +95,8 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      preventFocus: false
     }
   },
 
@@ -106,8 +109,10 @@ var DatePicker = React.createClass({
   },
 
   handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+    if (!this.state.preventFocus) {
+      this.props.onFocus(event)
+      this.setOpen(true)
+    }
   },
 
   cancelFocusInput () {
@@ -137,6 +142,11 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date, event) {
+    // Preventing onFocus event to fix issue
+    // https://github.com/Hacker0x01/react-datepicker/issues/628
+    this.setState({ preventFocus: true },
+      () => setTimeout(() => this.setState({ preventFocus: false }), 50)
+    )
     this.setSelected(date, event)
     this.setOpen(false)
   },
@@ -145,7 +155,7 @@ var DatePicker = React.createClass({
     let changedDate = date
 
     if (!isSameDay(this.props.selected, changedDate)) {
-      if (this.props.selected) {
+      if (this.props.selected && changedDate != null) {
         changedDate = moment(changedDate).set({
           hour: this.props.selected.hour(),
           minute: this.props.selected.minute(),
@@ -164,7 +174,7 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    const copy = moment(this.props.selected)
+    const copy = this.props.selected ? moment(this.props.selected) : moment()
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
@@ -206,7 +216,7 @@ var DatePicker = React.createClass({
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
-    return <Calendar
+    return <WrappedCalendar
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}

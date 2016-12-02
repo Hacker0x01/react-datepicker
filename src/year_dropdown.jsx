@@ -1,5 +1,8 @@
 import React from 'react'
 import YearDropdownOptions from './year_dropdown_options'
+import onClickOutside from 'react-onclickoutside'
+
+var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
 var YearDropdown = React.createClass({
   displayName: 'YearDropdown',
@@ -56,7 +59,7 @@ var YearDropdown = React.createClass({
 
   renderDropdown () {
     return (
-      <YearDropdownOptions
+      <WrappedYearDropdownOptions
           ref="options"
           year={this.props.year}
           onChange={this.onChange}
