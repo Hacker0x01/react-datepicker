@@ -62,6 +62,7 @@ var MonthDropdown = React.createClass({
   },
 
   onChange (month) {
+    this.toggleDropdown()
     if (month !== this.props.month) {
       this.props.onChange(month)
     }
