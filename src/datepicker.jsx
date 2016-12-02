@@ -47,6 +47,7 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
+    open: React.PropTypes.bool,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
@@ -79,6 +80,7 @@ var DatePicker = React.createClass({
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      open: false,
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
@@ -95,7 +97,7 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      open: false
+      open: this.props.open
     }
   },
 
