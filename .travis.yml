@@ -1,7 +1,15 @@
 sudo: false
 language: node_js
 node_js:
-  - '6'
+  - "4.6.0"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 before_install:
   - rvm install 2.3.1
   - npm install -g grunt-cli
@@ -15,7 +23,3 @@ after_success:
 notifications:
   slack:
     secure: kAmrLltV0ZLuhl6rKk26fDLGuoCch6AYaObRQje4UZlxVQjR2467k430vOZLqv39Mr3U5XmYl6VLcCGmBr3tjM/9c1zjoXnRT8MRy4eIYaUr/thXeh2FlfHKOk8rXnNOoRZ1kBsCzCDFCNDYZZA4jya8S5ITcQyGyYcOqBWVy1w=
-cache:
-  yarn: true
-  directories:
-    - node_modules
