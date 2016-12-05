@@ -39,12 +39,10 @@
   position: relative;
 }
 
-.react-datepicker__header__dropdown--select {
-  margin-top: -16px;
-}
-
 .react-datepicker__year-dropdown-container--select,
-.react-datepicker__month-dropdown-container--select {
+.react-datepicker__month-dropdown-container--select,
+.react-datepicker__year-dropdown-container--scroll,
+.react-datepicker__month-dropdown-container--scroll {
   display: inline-block;
   margin: 0 2px;
 }
@@ -55,9 +53,6 @@
   font-weight: bold;
   font-size: $font-size * 1.18;
 
-  &--hasYearDropdown {
-    margin-bottom: 16px;
-  }
 }
 
 .react-datepicker__navigation {
@@ -205,10 +200,6 @@
 }
 
 .react-datepicker__year-read-view {
-  width: 50%;
-  left: 25%;
-  position: absolute;
-  bottom: 25px;
   border: 1px solid transparent;
   border-radius: $border-radius;
 
@@ -223,17 +214,13 @@
   &--down-arrow {
     @extend %triangle-arrow-down;
     border-top-color: $muted-color;
-    margin-bottom: 3px;
-    left: 5px;
-    top: 9px;
+    float: right;
+    margin-left: 20px;
+    top: 8px;
     position: relative;
     border-width: $navigation-size;
   }
 
-  &--selected-year {
-    right: $navigation-size;
-    position: relative;
-  }
 }
 
 .react-datepicker__year-dropdown {
@@ -291,7 +278,7 @@
 
   &--selected {
     position: absolute;
-    left: 30px;
+    left: 20px;
   }
 }
 
