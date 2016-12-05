@@ -218,6 +218,7 @@ var DatePicker = React.createClass({
     }
     return <WrappedCalendar
         ref="calendar"
+		onMonthChange={this.props.onMonthChange}
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         dropdownMode={this.props.dropdownMode}
