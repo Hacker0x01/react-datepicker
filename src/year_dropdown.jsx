@@ -69,9 +69,9 @@ var YearDropdown = React.createClass({
   },
 
   renderScrollMode () {
-    const { dropdownVisible } = this.state;
-    let result = [this.renderReadView(!this.state.dropdownVisible)];
-    if (this.state.dropdownVisible){
+    const { dropdownVisible } = this.state
+    let result = [this.renderReadView(!dropdownVisible)]
+    if (dropdownVisible) {
       result.unshift(this.renderDropdown())
     }
     return result
