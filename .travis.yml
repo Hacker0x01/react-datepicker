@@ -23,7 +23,3 @@ after_success:
 notifications:
   slack:
     secure: kAmrLltV0ZLuhl6rKk26fDLGuoCch6AYaObRQje4UZlxVQjR2467k430vOZLqv39Mr3U5XmYl6VLcCGmBr3tjM/9c1zjoXnRT8MRy4eIYaUr/thXeh2FlfHKOk8rXnNOoRZ1kBsCzCDFCNDYZZA4jya8S5ITcQyGyYcOqBWVy1w=
-cache:
-  yarn: true
-  directories:
-    - node_modules
