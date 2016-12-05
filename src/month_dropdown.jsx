@@ -36,9 +36,9 @@ var MonthDropdown = React.createClass({
     )
   },
 
-  renderReadView (monthNames) {
+  renderReadView (visible, monthNames) {
     return (
-      <div className="react-datepicker__month-read-view" onClick={this.toggleDropdown}>
+      <div style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__month-read-view" onClick={this.toggleDropdown}>
         <span className="react-datepicker__month-read-view--selected-month">{monthNames[this.props.month]}</span>
         <span className="react-datepicker__month-read-view--down-arrow" />
       </div>
@@ -57,7 +57,12 @@ var MonthDropdown = React.createClass({
   },
 
   renderScrollMode (monthNames) {
-    return this.state.dropdownVisible ? this.renderDropdown(monthNames) : this.renderReadView(monthNames)
+    const { dropdownVisible } = this.state
+    let result = [this.renderReadView(!dropdownVisible, monthNames)]
+    if (dropdownVisible) {
+      result.unshift(this.renderDropdown(monthNames))
+    }
+    return result
   },
 
   onChange (month) {
