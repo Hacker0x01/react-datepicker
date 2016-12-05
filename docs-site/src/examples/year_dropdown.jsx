@@ -24,7 +24,6 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'} <br />
-              {'showMonthDropdown'} <br />
               {'showYearDropdown'} <br />
               {'dateFormatCalendar="MMMM"'} <br />
               {'scrollableYearDropdown />'}
@@ -34,7 +33,7 @@ export default React.createClass({
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            showYearDropdown showMonthDropdown
+            showYearDropdown
             dateFormatCalendar="MMMM"
             scrollableYearDropdown />
       </div>
