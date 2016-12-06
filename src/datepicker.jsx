@@ -47,6 +47,7 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
+    onMonthChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
@@ -63,6 +64,7 @@ var DatePicker = React.createClass({
     showMonthDropdown: React.PropTypes.bool,
     showWeekNumbers: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
+    forceShowMonthNavigation: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
@@ -79,6 +81,7 @@ var DatePicker = React.createClass({
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
@@ -239,13 +242,15 @@ var DatePicker = React.createClass({
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
-        onDropdownFocus={this.handleDropdownFocus}/>
+        onDropdownFocus={this.handleDropdownFocus}
+        onMonthChange={this.props.onMonthChange}/>
   },
 
   renderDateInput () {

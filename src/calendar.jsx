@@ -38,6 +38,8 @@ var Calendar = React.createClass({
     minDate: React.PropTypes.object,
     monthsShown: React.PropTypes.number,
     onClickOutside: React.PropTypes.func.isRequired,
+    onMonthChange: React.PropTypes.func,
+    forceShowMonthNavigation: React.PropTypes.bool,
     onDropdownFocus: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
@@ -61,7 +63,8 @@ var Calendar = React.createClass({
   getDefaultProps () {
     return {
       utcOffset: moment.utc().utcOffset(),
-      monthsShown: 1
+      monthsShown: 1,
+      forceShowMonthNavigation: false
     }
   },
 
@@ -125,13 +128,13 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   decreaseMonth () {
     this.setState({
       date: this.state.date.clone().subtract(1, 'month')
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   handleDayClick (day, event) {
@@ -146,6 +149,12 @@ var Calendar = React.createClass({
     this.setState({ selectingDate: null })
   },
 
+  handleMonthChange (date) {
+    if (this.props.onMonthChange) {
+      this.props.onMonthChange(date)
+    }
+  },
+
   changeYear (year) {
     this.setState({
       date: this.state.date.clone().set('year', year)
@@ -155,7 +164,7 @@ var Calendar = React.createClass({
   changeMonth (month) {
     this.setState({
       date: this.state.date.clone().set('month', month)
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   header (date = this.state.date) {
@@ -179,7 +188,7 @@ var Calendar = React.createClass({
   },
 
   renderPreviousMonthButton () {
-    if (allDaysDisabledBefore(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledBefore(this.state.date, 'month', this.props)) {
       return
     }
     return <a
@@ -188,7 +197,7 @@ var Calendar = React.createClass({
   },
 
   renderNextMonthButton () {
-    if (allDaysDisabledAfter(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledAfter(this.state.date, 'month', this.props)) {
       return
     }
     return <a
