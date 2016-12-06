@@ -210,6 +210,9 @@ var Calendar = React.createClass({
     if (this.props.showYearDropdown) {
       classes.push('react-datepicker__current-month--hasYearDropdown')
     }
+    if (this.props.showMonthDropdown) {
+      classes.push('react-datepicker__current-month--hasMonthDropdown')
+    }
     return (
       <div className={classes.join(' ')}>
         {date.format(this.props.dateFormat)}

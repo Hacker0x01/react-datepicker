@@ -52,7 +52,6 @@
   color: #000;
   font-weight: bold;
   font-size: $font-size * 1.18;
-
 }
 
 .react-datepicker__navigation {
@@ -199,14 +198,16 @@
   display: inline-block;
 }
 
-.react-datepicker__year-read-view {
+.react-datepicker__year-read-view,
+.react-datepicker__month-read-view {
   border: 1px solid transparent;
   border-radius: $border-radius;
 
   &:hover {
     cursor: pointer;
 
-    .react-datepicker__year-read-view--down-arrow {
+    .react-datepicker__year-read-view--down-arrow,
+    .react-datepicker__month-read-view--down-arrow {
       border-top-color: darken($muted-color, 10%);
     }
   }
@@ -223,7 +224,8 @@
 
 }
 
-.react-datepicker__year-dropdown {
+.react-datepicker__year-dropdown,
+.react-datepicker__month-dropdown {
   background-color: $background-color;
   position: absolute;
   width: 50%;
@@ -243,7 +245,8 @@
   }
 }
 
-.react-datepicker__year-option {
+.react-datepicker__year-option,
+.react-datepicker__month-option {
   line-height: 20px;
   width: 100%;
   display: block;
@@ -278,7 +281,7 @@
 
   &--selected {
     position: absolute;
-    left: 20px;
+    left: 15px;
   }
 }
 
