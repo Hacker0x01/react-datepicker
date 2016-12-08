@@ -24,7 +24,7 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'} <br />
-              {'showMonthDropdown'} <br /> }
+              {'showMonthDropdown />'}
         </code>
       </pre>
       <div className="column">
