@@ -50,7 +50,7 @@ var YearDropdown = React.createClass({
 
   renderReadView (visible) {
     return (
-      <div style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
+      <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
         <span className="react-datepicker__year-read-view--down-arrow" />
         <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
       </div>
@@ -60,6 +60,7 @@ var YearDropdown = React.createClass({
   renderDropdown () {
     return (
       <WrappedYearDropdownOptions
+          key="dropdown"
           ref="options"
           year={this.props.year}
           onChange={this.onChange}

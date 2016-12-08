@@ -38,7 +38,7 @@ var MonthDropdown = React.createClass({
 
   renderReadView (visible, monthNames) {
     return (
-      <div style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__month-read-view" onClick={this.toggleDropdown}>
+      <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__month-read-view" onClick={this.toggleDropdown}>
         <span className="react-datepicker__month-read-view--selected-month">{monthNames[this.props.month]}</span>
         <span className="react-datepicker__month-read-view--down-arrow" />
       </div>
@@ -48,6 +48,7 @@ var MonthDropdown = React.createClass({
   renderDropdown (monthNames) {
     return (
       <WrappedMonthDropdownOptions
+          key="dropdown"
           ref="options"
           month={this.props.month}
           monthNames={monthNames}
