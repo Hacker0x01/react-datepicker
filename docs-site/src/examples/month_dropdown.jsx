@@ -24,16 +24,14 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'} <br />
-              {'showMonthDropdown'} <br />
-              {'dateFormatCalendar="MMMM" />'}
+              {'showMonthDropdown'} <br /> }
         </code>
       </pre>
       <div className="column">
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            showMonthDropdown
-            dateFormatCalendar="MMMM" />
+            showMonthDropdown />
       </div>
     </div>
   }
