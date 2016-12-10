@@ -5,7 +5,8 @@
   },
 
   "plugins": [
-    "react"
+    "react",
+    "import"
   ],
 
   "extends": "standard",
@@ -50,6 +51,7 @@
     "react/prefer-es6-class": 0,
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,
+    "import/extensions": 2,
     "react/self-closing-comp": 2,
     "react/sort-comp": 2,
     "react/wrap-multilines": 0,
