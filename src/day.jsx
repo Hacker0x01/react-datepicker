@@ -48,7 +48,7 @@ var Day = React.createClass({
   isHighlighted () {
     const { day, highlightDates } = this.props
     if (!highlightDates) return false
-    return highlightDates.some((testDay) => { return isSameDay(day, testDay) })
+    return highlightDates.some(testDay => (isSameDay(day, testDay)))
   },
 
   isInRange () {

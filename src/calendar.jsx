@@ -13,9 +13,9 @@ const DROPDOWN_FOCUS_CLASSNAMES = [
 
 const isDropdownSelect = (element = {}) => {
   const classNames = (element.className || '').split(/\s+/)
-  return !!find(DROPDOWN_FOCUS_CLASSNAMES, (testClassname) => {
-    return classNames.indexOf(testClassname) >= 0
-  })
+  return !!find(DROPDOWN_FOCUS_CLASSNAMES, testClassname => (
+    classNames.indexOf(testClassname) >= 0
+  ))
 }
 
 var Calendar = React.createClass({
@@ -253,7 +253,7 @@ var Calendar = React.createClass({
       return
     }
     return (
-      <div className="react-datepicker__today-button" onClick={(event) => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'), event)}>
+      <div className="react-datepicker__today-button" onClick={event => this.props.onSelect(moment.utc().utcOffset(this.props.utcOffset).startOf('date'), event)}>
         {this.props.todayButton}
       </div>
     )
