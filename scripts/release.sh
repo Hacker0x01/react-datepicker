@@ -17,6 +17,6 @@ git push
 
 git push --tags
 
-yarn publish
+npm publish
 
 ./docs-site/publish.sh
