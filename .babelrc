@@ -9,7 +9,8 @@
             "imports": ["react"],
             "locals": ["module"]
           }]
-        }]
+        }, 
+        "transform-es2015-destructuring"]
       ]
     }
   }
