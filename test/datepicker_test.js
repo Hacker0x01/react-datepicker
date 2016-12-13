@@ -6,6 +6,7 @@ import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
 import TetherComponent from '../src/tether_component.jsx'
+import TimezoneDatePicker from './timezone_date_picker.jsx'
 import moment from 'moment'
 
 describe('DatePicker', () => {
@@ -424,5 +425,16 @@ describe('DatePicker', () => {
     input.value = ''
     TestUtils.Simulate.change(input)
     expect(cleared).to.be.true
+  })
+  it('should correctly update the date input when utcOffset is all that changes on the selected date', () => {
+    var date = moment('2016-11-22T00:00:00Z').utcOffset(-6)
+    var tmzDatePicker = mount(<TimezoneDatePicker />)
+    tmzDatePicker.setState({startDate: date, utcOffset: -6})
+
+    expect(tmzDatePicker.find('input').prop('value')).to.equal('2016-11-21 18:00')
+
+    tmzDatePicker.setState({utcOffset: 6, startDate: date.clone().utcOffset(6)})
+
+    expect(tmzDatePicker.find('input').prop('value')).to.equal('2016-11-22 06:00')
   })
 })

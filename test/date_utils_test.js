@@ -1,5 +1,6 @@
 import {
   isSameDay,
+  isSameUtcOffset,
   isDayDisabled,
   allDaysDisabledBefore,
   allDaysDisabledAfter,
@@ -25,6 +26,29 @@ describe('date_utils', function () {
 
     it('should return true for equal dates', function () {
       expect(isSameDay(moment('2016-02-10'), moment('2016-02-10'))).to.be.true
+    })
+  })
+
+  describe('isSameUtcOffset', function () {
+    it('should return true for null dates', function () {
+      expect(isSameUtcOffset(null, null)).to.be.true
+    })
+
+    it('should return false for a null and a non-null date', function () {
+      expect(isSameUtcOffset(moment(), null)).to.be.false
+      expect(isSameUtcOffset(null, moment())).to.be.false
+    })
+
+    it('should return true for non-equal utc offsets, but same dates', function () {
+      expect(isSameUtcOffset(moment('2016-02-10').utcOffset(-3), moment('2016-02-10').utcOffset(5))).to.be.false
+      expect(isSameUtcOffset(moment('2016-02-10').utcOffset(3), moment('2016-02-10').utcOffset(-5))).to.be.false
+      expect(isSameUtcOffset(moment('2016-02-10').utcOffset(180), moment('2016-02-10').utcOffset(-210))).to.be.false
+    })
+
+    it('should return true for equal utc offsets, regardless of dates', function () {
+      expect(isSameUtcOffset(moment('2016-02-10'), moment('2016-02-10'))).to.be.true
+      expect(isSameUtcOffset(moment('2016-02-10').utcOffset(-3), moment('2016-05-10').utcOffset(-3))).to.be.true
+      expect(isSameUtcOffset(moment('2016-12-10').utcOffset(6), moment('2016-02-15').utcOffset(6))).to.be.true
     })
   })
 
