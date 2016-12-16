@@ -105,7 +105,14 @@ module.exports = function (grunt) {
               warnings: false
             }
           })
-        ]
+        ],
+        module: {
+          loaders: [{
+            query: {
+              plugins: ['transform-react-remove-prop-types']
+            }
+          }]
+        }
       }),
       docs: require('./webpack.docs.config')
     },
