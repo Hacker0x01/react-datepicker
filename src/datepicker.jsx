@@ -6,8 +6,10 @@ import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import { isSameDay } from './date_utils'
 import moment from 'moment'
+import onClickOutside from 'react-onclickoutside'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+var WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -45,10 +47,7 @@ var DatePicker = React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func,
-    onMonthIncrease: React.PropTypes.func,
-    onMonthDecrease: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
-    onYearChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
@@ -65,6 +64,7 @@ var DatePicker = React.createClass({
     showMonthDropdown: React.PropTypes.bool,
     showWeekNumbers: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
+    forceShowMonthNavigation: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
@@ -81,10 +81,7 @@ var DatePicker = React.createClass({
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
-      onMonthIncrease () {},
-      onMonthDecrease () {},
       onMonthChange () {},
-      onYearChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
@@ -101,7 +98,8 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      preventFocus: false
     }
   },
 
@@ -114,8 +112,10 @@ var DatePicker = React.createClass({
   },
 
   handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+    if (!this.state.preventFocus) {
+      this.props.onFocus(event)
+      this.setOpen(true)
+    }
   },
 
   cancelFocusInput () {
@@ -145,6 +145,11 @@ var DatePicker = React.createClass({
   },
 
   handleSelect (date, event) {
+    // Preventing onFocus event to fix issue
+    // https://github.com/Hacker0x01/react-datepicker/issues/628
+    this.setState({ preventFocus: true },
+      () => setTimeout(() => this.setState({ preventFocus: false }), 50)
+    )
     this.setSelected(date, event)
     this.setOpen(false)
   },
@@ -153,7 +158,7 @@ var DatePicker = React.createClass({
     let changedDate = date
 
     if (!isSameDay(this.props.selected, changedDate)) {
-      if (this.props.selected) {
+      if (this.props.selected && changedDate != null) {
         changedDate = moment(changedDate).set({
           hour: this.props.selected.hour(),
           minute: this.props.selected.minute(),
@@ -172,7 +177,7 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    const copy = moment(this.props.selected)
+    const copy = this.props.selected ? moment(this.props.selected) : moment()
     if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
@@ -214,17 +219,13 @@ var DatePicker = React.createClass({
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
-    return <Calendar
+    return <WrappedCalendar
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         onSelect={this.handleSelect}
-        onMonthIncrease={this.props.onMonthIncrease}
-        onMonthDecrease={this.props.onMonthDecrease}
-        onMonthChange={this.props.onMonthChange}
-        onYearChange={this.props.onYearChange}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
@@ -241,13 +242,15 @@ var DatePicker = React.createClass({
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
-        onDropdownFocus={this.handleDropdownFocus}/>
+        onDropdownFocus={this.handleDropdownFocus}
+        onMonthChange={this.props.onMonthChange}/>
   },
 
   renderDateInput () {

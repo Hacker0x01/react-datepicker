@@ -69,6 +69,11 @@ type: `func`
 type: `bool`
 
 
+### `forceShowMonthNavigation`
+
+type: `bool`
+
+
 ### `highlightDates`
 
 type: `array`
@@ -133,6 +138,12 @@ defaultValue: `function() {}`
 
 
 ### `onFocus`
+
+type: `func`
+defaultValue: `function() {}`
+
+
+### `onMonthChange`
 
 type: `func`
 defaultValue: `function() {}`
