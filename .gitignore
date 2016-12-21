@@ -2,8 +2,6 @@ node_modules
 .sass-cache
 npm-debug.log
 .idea
-dist
-lib
 tmp
 coverage
 
