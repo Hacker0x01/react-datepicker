@@ -30,6 +30,7 @@ import WeekNumbers from './examples/week_numbers'
 import CustomInput from './examples/custom_input'
 import MultiMonth from './examples/multi_month'
 import MultiMonthDrp from './examples/multi_month_drp'
+import Children from './examples/children'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -153,6 +154,10 @@ export default React.createClass({
     {
       title: 'Multiple months with year dropdown',
       component: <MultiMonthDrp />
+    },
+    {
+      title: 'Children',
+      component: <Children />
     }
   ],
 

@@ -22,6 +22,7 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
+    children: React.PropTypes.node,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.array
@@ -313,6 +314,7 @@ var Calendar = React.createClass({
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
+        {this.props.children}
       </div>
     )
   }
