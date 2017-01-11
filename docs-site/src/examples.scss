@@ -64,7 +64,6 @@
     border-bottom: 1px solid #d8e4ef;
     overflow-x: auto;
     overflow-y: hidden;
-    white-space: nowrap;
 
     @include breakpoint(768px) {
       border-top-right-radius: 4px;
