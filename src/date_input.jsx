@@ -83,7 +83,7 @@ var DateInput = React.createClass({
   },
 
   focus () {
-    if(this.refs.input) {
+    if (this.refs.input) {
       this.refs.input.focus()
     }
   },
