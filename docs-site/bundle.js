@@ -480,7 +480,7 @@
 
 /***/ },
 /* 6 */
-[634, 7],
+[637, 7],
 /* 7 */
 /***/ function(module, exports) {
 
@@ -5500,7 +5500,7 @@
 
 /***/ },
 /* 47 */
-[634, 32],
+[637, 32],
 /* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -19814,7 +19814,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(633);
+	var _hero_example = __webpack_require__(636);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -19948,121 +19948,129 @@
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(603);
+	var _code_example_component = __webpack_require__(604);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _custom_date_format = __webpack_require__(604);
+	var _custom_date_format = __webpack_require__(605);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(605);
+	var _custom_class_name = __webpack_require__(606);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _placeholder_text = __webpack_require__(606);
+	var _placeholder_text = __webpack_require__(607);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(607);
+	var _specific_date_range = __webpack_require__(608);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(608);
+	var _locale = __webpack_require__(609);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(609);
+	var _exclude_dates = __webpack_require__(610);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(610);
+	var _highlight_dates = __webpack_require__(611);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _include_dates = __webpack_require__(611);
+	var _include_dates = __webpack_require__(612);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(612);
+	var _filter_dates = __webpack_require__(613);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(613);
+	var _disabled = __webpack_require__(614);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _clear_input = __webpack_require__(614);
+	var _clear_input = __webpack_require__(615);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(615);
+	var _on_blur_callbacks = __webpack_require__(616);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _placement = __webpack_require__(616);
+	var _placement = __webpack_require__(617);
 
 	var _placement2 = _interopRequireDefault(_placement);
 
-	var _date_range = __webpack_require__(617);
+	var _date_range = __webpack_require__(618);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(618);
+	var _tab_index = __webpack_require__(619);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(619);
+	var _year_dropdown = __webpack_require__(620);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(620);
+	var _month_dropdown = __webpack_require__(621);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(621);
+	var _year_select_dropdown = __webpack_require__(622);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(622);
+	var _today = __webpack_require__(623);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(623);
+	var _timezone_date = __webpack_require__(624);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(624);
+	var _inline = __webpack_require__(625);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(625);
+	var _open_to_date = __webpack_require__(626);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(626);
+	var _fixed_calendar = __webpack_require__(627);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(627);
+	var _week_numbers = __webpack_require__(628);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(628);
+	var _custom_input = __webpack_require__(629);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(629);
+	var _multi_month = __webpack_require__(630);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(630);
+	var _multi_month_drp = __webpack_require__(631);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	__webpack_require__(631);
+	var _children = __webpack_require__(632);
 
-	__webpack_require__(632);
+	var _children2 = _interopRequireDefault(_children);
+
+	var _portal = __webpack_require__(633);
+
+	var _portal2 = _interopRequireDefault(_portal);
+
+	__webpack_require__(634);
+
+	__webpack_require__(635);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20126,6 +20134,9 @@
 	    title: 'Configure Popover Placement',
 	    component: _react2.default.createElement(_placement2.default, null)
 	  }, {
+	    title: 'Portal version',
+	    component: _react2.default.createElement(_portal2.default, null)
+	  }, {
 	    title: 'TabIndex',
 	    component: _react2.default.createElement(_tab_index2.default, null)
 	  }, {
@@ -20158,6 +20169,9 @@
 	  }, {
 	    title: 'Multiple months with year dropdown',
 	    component: _react2.default.createElement(_multi_month_drp2.default, null)
+	  }, {
+	    title: 'Children',
+	    component: _react2.default.createElement(_children2.default, null)
 	  }],
 
 	  renderExamples: function renderExamples() {
@@ -36787,6 +36801,10 @@
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
+	var _reactPortal = __webpack_require__(603);
+
+	var _reactPortal2 = _interopRequireDefault(_reactPortal);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -36804,6 +36822,7 @@
 	  propTypes: {
 	    autoComplete: _react2.default.PropTypes.string,
 	    autoFocus: _react2.default.PropTypes.bool,
+	    children: _react2.default.PropTypes.node,
 	    className: _react2.default.PropTypes.string,
 	    customInput: _react2.default.PropTypes.element,
 	    dateFormat: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.array]),
@@ -36850,7 +36869,8 @@
 	    tetherConstraints: _react2.default.PropTypes.array,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string,
-	    utcOffset: _react2.default.PropTypes.number
+	    utcOffset: _react2.default.PropTypes.number,
+	    withPortal: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -36872,7 +36892,8 @@
 	        attachment: 'together'
 	      }],
 	      utcOffset: _moment2.default.utc().utcOffset(),
-	      monthsShown: 1
+	      monthsShown: 1,
+	      withPortal: false
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -36992,38 +37013,42 @@
 	    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
 	      return null;
 	    }
-	    return _react2.default.createElement(WrappedCalendar, {
-	      ref: 'calendar',
-	      locale: this.props.locale,
-	      dateFormat: this.props.dateFormatCalendar,
-	      dropdownMode: this.props.dropdownMode,
-	      selected: this.props.selected,
-	      onSelect: this.handleSelect,
-	      openToDate: this.props.openToDate,
-	      minDate: this.props.minDate,
-	      maxDate: this.props.maxDate,
-	      selectsStart: this.props.selectsStart,
-	      selectsEnd: this.props.selectsEnd,
-	      startDate: this.props.startDate,
-	      endDate: this.props.endDate,
-	      excludeDates: this.props.excludeDates,
-	      filterDate: this.props.filterDate,
-	      onClickOutside: this.handleCalendarClickOutside,
-	      highlightDates: this.props.highlightDates,
-	      includeDates: this.props.includeDates,
-	      peekNextMonth: this.props.peekNextMonth,
-	      showMonthDropdown: this.props.showMonthDropdown,
-	      showWeekNumbers: this.props.showWeekNumbers,
-	      showYearDropdown: this.props.showYearDropdown,
-	      forceShowMonthNavigation: this.props.forceShowMonthNavigation,
-	      scrollableYearDropdown: this.props.scrollableYearDropdown,
-	      todayButton: this.props.todayButton,
-	      utcOffset: this.props.utcOffset,
-	      outsideClickIgnoreClass: outsideClickIgnoreClass,
-	      fixedHeight: this.props.fixedHeight,
-	      monthsShown: this.props.monthsShown,
-	      onDropdownFocus: this.handleDropdownFocus,
-	      onMonthChange: this.props.onMonthChange });
+	    return _react2.default.createElement(
+	      WrappedCalendar,
+	      {
+	        ref: 'calendar',
+	        locale: this.props.locale,
+	        dateFormat: this.props.dateFormatCalendar,
+	        dropdownMode: this.props.dropdownMode,
+	        selected: this.props.selected,
+	        onSelect: this.handleSelect,
+	        openToDate: this.props.openToDate,
+	        minDate: this.props.minDate,
+	        maxDate: this.props.maxDate,
+	        selectsStart: this.props.selectsStart,
+	        selectsEnd: this.props.selectsEnd,
+	        startDate: this.props.startDate,
+	        endDate: this.props.endDate,
+	        excludeDates: this.props.excludeDates,
+	        filterDate: this.props.filterDate,
+	        onClickOutside: this.handleCalendarClickOutside,
+	        highlightDates: this.props.highlightDates,
+	        includeDates: this.props.includeDates,
+	        peekNextMonth: this.props.peekNextMonth,
+	        showMonthDropdown: this.props.showMonthDropdown,
+	        showWeekNumbers: this.props.showWeekNumbers,
+	        showYearDropdown: this.props.showYearDropdown,
+	        forceShowMonthNavigation: this.props.forceShowMonthNavigation,
+	        scrollableYearDropdown: this.props.scrollableYearDropdown,
+	        todayButton: this.props.todayButton,
+	        utcOffset: this.props.utcOffset,
+	        outsideClickIgnoreClass: outsideClickIgnoreClass,
+	        fixedHeight: this.props.fixedHeight,
+	        monthsShown: this.props.monthsShown,
+	        onDropdownFocus: this.handleDropdownFocus,
+	        onMonthChange: this.props.onMonthChange },
+	      this.props.children
+	    );
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
@@ -37067,25 +37092,47 @@
 
 	    if (this.props.inline) {
 	      return calendar;
-	    } else {
+	    }
+
+	    if (this.props.withPortal) {
 	      return _react2.default.createElement(
-	        _tether_component2.default,
-	        {
-	          classPrefix: 'react-datepicker__tether',
-	          attachment: this.props.popoverAttachment,
-	          targetAttachment: this.props.popoverTargetAttachment,
-	          targetOffset: this.props.popoverTargetOffset,
-	          renderElementTo: this.props.renderCalendarTo,
-	          constraints: this.props.tetherConstraints },
+	        'div',
+	        null,
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'react-datepicker__input-container' },
 	          this.renderDateInput(),
 	          this.renderClearButton()
 	        ),
-	        calendar
+	        _react2.default.createElement(
+	          _reactPortal2.default,
+	          { isOpened: this.state.open },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'react-datepicker__portal' },
+	            calendar
+	          )
+	        )
 	      );
 	    }
+
+	    return _react2.default.createElement(
+	      _tether_component2.default,
+	      {
+	        classPrefix: 'react-datepicker__tether',
+	        attachment: this.props.popoverAttachment,
+	        targetAttachment: this.props.popoverTargetAttachment,
+	        targetOffset: this.props.popoverTargetOffset,
+	        renderElementTo: this.props.renderCalendarTo,
+	        constraints: this.props.tetherConstraints },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'react-datepicker__input-container' },
+	        this.renderDateInput(),
+	        this.renderClearButton()
+	      ),
+	      calendar
+	    );
 	  }
 	});
 
@@ -52270,6 +52317,7 @@
 	  displayName: 'Calendar',
 
 	  propTypes: {
+	    children: _react2.default.PropTypes.node,
 	    dateFormat: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.array]).isRequired,
 	    dropdownMode: _react2.default.PropTypes.oneOf(['scroll', 'select']).isRequired,
 	    endDate: _react2.default.PropTypes.object,
@@ -52565,7 +52613,8 @@
 	      this.renderPreviousMonthButton(),
 	      this.renderNextMonthButton(),
 	      this.renderMonths(),
-	      this.renderTodayButton()
+	      this.renderTodayButton(),
+	      this.props.children
 	    );
 	  }
 	});
@@ -60285,6 +60334,230 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(29);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var KEYCODES = {
+	  ESCAPE: 27
+	};
+
+	var Portal = function (_React$Component) {
+	  _inherits(Portal, _React$Component);
+
+	  function Portal() {
+	    _classCallCheck(this, Portal);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Portal).call(this));
+
+	    _this.state = { active: false };
+	    _this.handleWrapperClick = _this.handleWrapperClick.bind(_this);
+	    _this.closePortal = _this.closePortal.bind(_this);
+	    _this.handleOutsideMouseClick = _this.handleOutsideMouseClick.bind(_this);
+	    _this.handleKeydown = _this.handleKeydown.bind(_this);
+	    _this.portal = null;
+	    _this.node = null;
+	    return _this;
+	  }
+
+	  _createClass(Portal, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.closeOnEsc) {
+	        document.addEventListener('keydown', this.handleKeydown);
+	      }
+
+	      if (this.props.closeOnOutsideClick) {
+	        document.addEventListener('mouseup', this.handleOutsideMouseClick);
+	        document.addEventListener('touchstart', this.handleOutsideMouseClick);
+	      }
+
+	      if (this.props.isOpened) {
+	        this.openPortal();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      // portal's 'is open' state is handled through the prop isOpened
+	      if (typeof newProps.isOpened !== 'undefined') {
+	        if (newProps.isOpened) {
+	          if (this.state.active) {
+	            this.renderPortal(newProps);
+	          } else {
+	            this.openPortal(newProps);
+	          }
+	        }
+	        if (!newProps.isOpened && this.state.active) {
+	          this.closePortal();
+	        }
+	      }
+
+	      // portal handles its own 'is open' state
+	      if (typeof newProps.isOpened === 'undefined' && this.state.active) {
+	        this.renderPortal(newProps);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      if (this.props.closeOnEsc) {
+	        document.removeEventListener('keydown', this.handleKeydown);
+	      }
+
+	      if (this.props.closeOnOutsideClick) {
+	        document.removeEventListener('mouseup', this.handleOutsideMouseClick);
+	        document.removeEventListener('touchstart', this.handleOutsideMouseClick);
+	      }
+
+	      this.closePortal(true);
+	    }
+	  }, {
+	    key: 'handleWrapperClick',
+	    value: function handleWrapperClick(e) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	      if (this.state.active) {
+	        return;
+	      }
+	      this.openPortal();
+	    }
+	  }, {
+	    key: 'openPortal',
+	    value: function openPortal() {
+	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+
+	      this.setState({ active: true });
+	      this.renderPortal(props);
+	      this.props.onOpen(this.node);
+	    }
+	  }, {
+	    key: 'closePortal',
+	    value: function closePortal() {
+	      var _this2 = this;
+
+	      var isUnmounted = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+	      var resetPortalState = function resetPortalState() {
+	        if (_this2.node) {
+	          _reactDom2.default.unmountComponentAtNode(_this2.node);
+	          document.body.removeChild(_this2.node);
+	        }
+	        _this2.portal = null;
+	        _this2.node = null;
+	        if (isUnmounted !== true) {
+	          _this2.setState({ active: false });
+	        }
+	      };
+
+	      if (this.state.active) {
+	        if (this.props.beforeClose) {
+	          this.props.beforeClose(this.node, resetPortalState);
+	        } else {
+	          resetPortalState();
+	        }
+
+	        this.props.onClose();
+	      }
+	    }
+	  }, {
+	    key: 'handleOutsideMouseClick',
+	    value: function handleOutsideMouseClick(e) {
+	      if (!this.state.active) {
+	        return;
+	      }
+
+	      var root = (0, _reactDom.findDOMNode)(this.portal);
+	      if (root.contains(e.target) || e.button && e.button !== 0) {
+	        return;
+	      }
+
+	      e.stopPropagation();
+	      this.closePortal();
+	    }
+	  }, {
+	    key: 'handleKeydown',
+	    value: function handleKeydown(e) {
+	      if (e.keyCode === KEYCODES.ESCAPE && this.state.active) {
+	        this.closePortal();
+	      }
+	    }
+	  }, {
+	    key: 'renderPortal',
+	    value: function renderPortal(props) {
+	      if (!this.node) {
+	        this.node = document.createElement('div');
+	        document.body.appendChild(this.node);
+	      }
+
+	      var children = props.children;
+	      // https://gist.github.com/jimfb/d99e0678e9da715ccf6454961ef04d1b
+	      if (typeof props.children.type === 'function') {
+	        children = _react2.default.cloneElement(props.children, { closePortal: this.closePortal });
+	      }
+
+	      this.portal = _reactDom2.default.unstable_renderSubtreeIntoContainer(this, children, this.node, this.props.onUpdate);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.props.openByClickOn) {
+	        return _react2.default.cloneElement(this.props.openByClickOn, { onClick: this.handleWrapperClick });
+	      }
+	      return null;
+	    }
+	  }]);
+
+	  return Portal;
+	}(_react2.default.Component);
+
+	exports.default = Portal;
+
+
+	Portal.propTypes = {
+	  children: _react2.default.PropTypes.element.isRequired,
+	  openByClickOn: _react2.default.PropTypes.element,
+	  closeOnEsc: _react2.default.PropTypes.bool,
+	  closeOnOutsideClick: _react2.default.PropTypes.bool,
+	  isOpened: _react2.default.PropTypes.bool,
+	  onOpen: _react2.default.PropTypes.func,
+	  onClose: _react2.default.PropTypes.func,
+	  beforeClose: _react2.default.PropTypes.func,
+	  onUpdate: _react2.default.PropTypes.func
+	};
+
+	Portal.defaultProps = {
+	  onOpen: function onOpen() {},
+	  onClose: function onClose() {},
+	  onUpdate: function onUpdate() {}
+	};
+	module.exports = exports['default'];
+
+
+/***/ },
+/* 604 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -60315,7 +60588,7 @@
 	});
 
 /***/ },
-/* 604 */
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60387,7 +60660,7 @@
 	});
 
 /***/ },
-/* 605 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60456,7 +60729,7 @@
 	});
 
 /***/ },
-/* 606 */
+/* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60501,7 +60774,7 @@
 	});
 
 /***/ },
-/* 607 */
+/* 608 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60584,7 +60857,7 @@
 	});
 
 /***/ },
-/* 608 */
+/* 609 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60656,7 +60929,7 @@
 	});
 
 /***/ },
-/* 609 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60732,7 +61005,7 @@
 	});
 
 /***/ },
-/* 610 */
+/* 611 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60808,7 +61081,7 @@
 	});
 
 /***/ },
-/* 611 */
+/* 612 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60884,7 +61157,7 @@
 	});
 
 /***/ },
-/* 612 */
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60960,7 +61233,7 @@
 	});
 
 /***/ },
-/* 613 */
+/* 614 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61033,7 +61306,7 @@
 	});
 
 /***/ },
-/* 614 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61104,7 +61377,7 @@
 	});
 
 /***/ },
-/* 615 */
+/* 616 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61210,7 +61483,7 @@
 	});
 
 /***/ },
-/* 616 */
+/* 617 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61284,7 +61557,7 @@
 	});
 
 /***/ },
-/* 617 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61386,7 +61659,7 @@
 	module.exports = DateRange;
 
 /***/ },
-/* 618 */
+/* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61454,7 +61727,7 @@
 	});
 
 /***/ },
-/* 619 */
+/* 620 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61531,7 +61804,7 @@
 	});
 
 /***/ },
-/* 620 */
+/* 621 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61600,7 +61873,7 @@
 	});
 
 /***/ },
-/* 621 */
+/* 622 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61682,7 +61955,7 @@
 	});
 
 /***/ },
-/* 622 */
+/* 623 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61750,7 +62023,7 @@
 	});
 
 /***/ },
-/* 623 */
+/* 624 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61816,7 +62089,7 @@
 	});
 
 /***/ },
-/* 624 */
+/* 625 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61884,7 +62157,7 @@
 	});
 
 /***/ },
-/* 625 */
+/* 626 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61952,7 +62225,7 @@
 	});
 
 /***/ },
-/* 626 */
+/* 627 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62016,7 +62289,7 @@
 	});
 
 /***/ },
-/* 627 */
+/* 628 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62084,7 +62357,7 @@
 	});
 
 /***/ },
-/* 628 */
+/* 629 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62212,7 +62485,7 @@
 	});
 
 /***/ },
-/* 629 */
+/* 630 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62280,7 +62553,7 @@
 	});
 
 /***/ },
-/* 630 */
+/* 631 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62351,15 +62624,152 @@
 	});
 
 /***/ },
-/* 631 */
+/* 632 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Children',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}>\n  <div style={{color: \'red\'}}>\n    Don\'t forget to check the weather!\n  </div>\n</DatePicker>\n'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(
+	          _reactDatepicker2.default,
+	          {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange },
+	          _react2.default.createElement(
+	            'div',
+	            { style: { color: 'red' } },
+	            'Don\'t forget to check the weather!'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 633 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'With Portal',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          'selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          'onChange={this.handleChange}',
+	          _react2.default.createElement('br', null),
+	          'withPortal />'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          withPortal: true })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 634 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 632 */
-631,
-/* 633 */
+/* 635 */
+634,
+/* 636 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62404,7 +62814,7 @@
 	});
 
 /***/ },
-/* 634 */
+/* 637 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
