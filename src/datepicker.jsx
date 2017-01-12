@@ -71,7 +71,8 @@ var DatePicker = React.createClass({
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
-    utcOffset: React.PropTypes.number
+    utcOffset: React.PropTypes.number,
+    withPortal: React.PropTypes.bool
   },
 
   getDefaultProps () {
@@ -93,7 +94,8 @@ var DatePicker = React.createClass({
         }
       ],
       utcOffset: moment.utc().utcOffset(),
-      monthsShown: 1
+      monthsShown: 1,
+      withPortal: false
     }
   },
 
@@ -302,23 +304,41 @@ var DatePicker = React.createClass({
 
     if (this.props.inline) {
       return calendar
-    } else {
+    }
+
+    if (this.props.withPortal) {
       return (
-        <TetherComponent
-            classPrefix={'react-datepicker__tether'}
-            attachment={this.props.popoverAttachment}
-            targetAttachment={this.props.popoverTargetAttachment}
-            targetOffset={this.props.popoverTargetOffset}
-            renderElementTo={this.props.renderCalendarTo}
-            constraints={this.props.tetherConstraints}>
+        <div>
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
             {this.renderClearButton()}
           </div>
-          {calendar}
-        </TetherComponent>
+          {
+          this.state.open
+          ? <div className="react-datepicker__portal">
+              {calendar}
+            </div>
+          : null
+          }
+        </div>
       )
     }
+
+    return (
+      <TetherComponent
+          classPrefix={'react-datepicker__tether'}
+          attachment={this.props.popoverAttachment}
+          targetAttachment={this.props.popoverTargetAttachment}
+          targetOffset={this.props.popoverTargetOffset}
+          renderElementTo={this.props.renderCalendarTo}
+          constraints={this.props.tetherConstraints}>
+        <div className="react-datepicker__input-container">
+          {this.renderDateInput()}
+          {this.renderClearButton()}
+        </div>
+        {calendar}
+      </TetherComponent>
+    )
   }
 })
 
