@@ -31,6 +31,7 @@ import CustomInput from './examples/custom_input'
 import MultiMonth from './examples/multi_month'
 import MultiMonthDrp from './examples/multi_month_drp'
 import Children from './examples/children'
+import Portal from './examples/portal'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -110,6 +111,10 @@ export default React.createClass({
     {
       title: 'Configure Popover Placement',
       component: <Placement />
+    },
+    {
+      title: 'Portal version',
+      component: <Portal />
     },
     {
       title: 'TabIndex',
