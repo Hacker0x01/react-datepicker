@@ -13,6 +13,7 @@ import HighlightDates from './examples/highlight_dates'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
+import DisabledNavigation from './examples/disabled_navigation'
 import ClearInput from './examples/clear_input'
 import OnBlurCallbacks from './examples/on_blur_callbacks'
 import Placement from './examples/placement'
@@ -98,6 +99,10 @@ export default React.createClass({
     {
       title: 'Disable datepicker',
       component: <Disabled />
+    },
+    {
+      title: 'Disable navigation',
+      component: <DisabledNavigation />
     },
     {
       title: 'Clear datepicker input',
