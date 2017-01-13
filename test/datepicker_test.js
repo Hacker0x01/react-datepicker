@@ -503,6 +503,27 @@ describe('DatePicker', () => {
 
     expect(tmzDatePicker.find('input').prop('value')).to.equal('2016-11-22 06:00')
   })
+  it('should correctly update the input when the value prop changes', () => {
+    const datePicker = mount(<DatePicker />)
+    expect(datePicker.find('input').prop('value')).to.equal('')
+    datePicker.setProps({value: 'foo'})
+    expect(datePicker.find('input').prop('value')).to.equal('foo')
+  })
+  it('should preserve user input as they are typing', () => {
+    const onChange = date => datePicker.setProps({selected: date})
+    const datePicker = mount(
+      <DatePicker dateFormat={['YYYY-MM-DD', 'MM/DD/YYYY', 'MM/DD/YY']} onChange={onChange}/>
+    )
+    const input = datePicker.find('input')
+    expect(input.prop('value')).to.equal('')
+
+    const str = '12/30/1982'
+    str.split('').forEach((c, i) => {
+      input.simulate('change', {target: { value: input.prop('value') + c }})
+      expect(input.prop('value')).to.equal(str.substring(0, i + 1))
+    })
+    expect(datePicker.prop('selected').format('YYYY-MM-DD')).to.equal('1982-12-30')
+  })
   it('should invoke provided onChangeRaw function on manual input change', () => {
     const inputValue = 'test'
     const onChangeRawSpy = sandbox.spy()
