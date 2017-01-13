@@ -6,6 +6,8 @@ dist
 lib
 tmp
 coverage
+docs-site/bundle.js
+docs-site/style.css
 
 docs/calendar.md
 docs/date_input.md
