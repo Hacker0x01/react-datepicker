@@ -64,3 +64,15 @@ export function getEffectiveMaxDate ({ maxDate, includeDates }) {
     return maxDate
   }
 }
+
+export function parseDate (value, { dateFormat, locale }) {
+  // TODO: Parse as UTC instead, for consistency with clicked dates?
+  const m = moment(value, dateFormat, locale || moment.locale(), true)
+  return m.isValid() ? m : null
+}
+
+export function safeDateFormat (date, { dateFormat, locale }) {
+  return date && date.clone()
+    .locale(locale || moment.locale())
+    .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || ''
+}
