@@ -92,7 +92,7 @@ var DatePicker = React.createClass({
           attachment: 'together'
         }
       ],
-      utcOffset: moment.utc().utcOffset(),
+      utcOffset: moment().utcOffset(),
       monthsShown: 1
     }
   },
