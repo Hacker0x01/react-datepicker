@@ -349,7 +349,7 @@
   }
 
   // Resize for small screens
-  @media (max-width: 400px), (max-height: 400px)  {
+  @media (max-width: 400px), (max-height: 550px)  {
     .react-datepicker__day-name,
     .react-datepicker__day {
       width: 2rem;
