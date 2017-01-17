@@ -30,7 +30,7 @@ var DatePicker = React.createClass({
     ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    disabledNavigation: React.PropTypes.bool,
+    disabledKeyboardNavigation: React.PropTypes.bool,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -80,7 +80,7 @@ var DatePicker = React.createClass({
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
-      disabledNavigation: false,
+      disabledKeyboardNavigation: false,
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
@@ -187,7 +187,7 @@ var DatePicker = React.createClass({
     } else if (event.key === 'Tab') {
       this.setOpen(false)
     }
-    if (!this.props.disabledNavigation) {
+    if (!this.props.disabledKeyboardNavigation) {
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
         this.setSelected(copy.subtract(1, 'days'))

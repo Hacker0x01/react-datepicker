@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 export default React.createClass({
-  displayName: 'DisabledNavigation',
+  displayName: 'DisabledKeyboardNavigation',
 
   getInitialState () {
     return {
@@ -24,16 +24,16 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'}<br />
-              <strong>{'disabledNavigation />'}</strong><br />
-              {'placeholderText="This has disabled navigation"'}
+              <strong>{'disabledKeyboardNavigation />'}</strong><br />
+              {'placeholderText="This has disabled keyboard navigation"'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            disabledNavigation
-            placeholderText="This has disabled navigation" />
+            disabledKeyboardNavigation
+            placeholderText="This has disabled keyboard navigation" />
       </div>
     </div>
   }
