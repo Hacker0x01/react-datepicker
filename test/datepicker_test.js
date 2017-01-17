@@ -330,6 +330,62 @@ describe('DatePicker', () => {
     expect(div.querySelector('input')).to.equal(document.activeElement)
   })
 
+  function getOnInputKeyDownDisabledKeyboardNavigationStuff () {
+    var m = moment()
+    var copyM = moment(m)
+    var testFormat = 'YYYY-MM-DD'
+    var callback = sinon.spy()
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={m} onChange={callback} disabledKeyboardNavigation/>
+    )
+    var dateInput = datePicker.refs.input
+    var nodeInput = ReactDOM.findDOMNode(dateInput)
+    TestUtils.Simulate.focus(nodeInput)
+    return {
+      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+    }
+  }
+  it('should not handle onInputKeyDown ArrowLeft', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown ArrowRight', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowRight', keyCode: 39, which: 39})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown ArrowUp', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown ArrowDown', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown PageUp', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageUp', keyCode: 33, which: 33})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown PageDown', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageDown', keyCode: 34, which: 34})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown Home', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
+    expect(data.callback.called).to.be.false
+  })
+  it('should not handle onInputKeyDown End', () => {
+    var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    expect(data.callback.called).to.be.false
+  })
+
   it('should correctly clear date with empty input string', () => {
     var cleared = false
     function handleChange (d) {

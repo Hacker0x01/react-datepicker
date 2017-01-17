@@ -267,4 +267,3 @@ type: `string`
 
 type: `number`
 defaultValue: `moment.utc().utcOffset()`
-
