@@ -237,6 +237,26 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.exist
   })
 
+  it('should render Calendar in portal when withPortal is set and input has focus', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+
+    expect(function () { TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__portal') }).to.not.throw()
+    expect(datePicker.refs.calendar).to.exist
+  })
+
+  it('should not render Calendar when withPortal is set and no focus is given to input', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal />
+    )
+
+    expect(function () { TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__portal') }).to.throw()
+    expect(datePicker.refs.calendar).not.to.exist
+  })
+
   function getOnInputKeyDownStuff () {
     var m = moment()
     var copyM = moment(m)

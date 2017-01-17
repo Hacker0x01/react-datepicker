@@ -329,3 +329,57 @@
 .react-datepicker__tether-element {
   z-index: 2147483647;
 }
+
+.react-datepicker__portal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .8);
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  z-index: 2147483647;
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 3rem;
+    line-height: 3rem;
+  }
+
+  // Resize for small screens
+  @media (max-width: 400px), (max-height: 550px)  {
+    .react-datepicker__day-name,
+    .react-datepicker__day {
+      width: 2rem;
+      line-height: 2rem;
+    }
+  }
+
+  .react-datepicker__current-month {
+    font-size: $font-size * 1.8;
+  }
+
+  .react-datepicker__navigation {
+    border: 1.8 * $navigation-size solid transparent;
+  }
+
+  .react-datepicker__navigation--previous {
+    border-right-color: $muted-color;
+
+    &:hover {
+      border-right-color: darken($muted-color, 10%);
+    }
+  }
+
+  .react-datepicker__navigation--next {
+    border-left-color: $muted-color;
+
+    &:hover {
+      border-left-color: darken($muted-color, 10%);
+    }
+  }
+}
+
+
