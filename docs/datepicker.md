@@ -266,5 +266,5 @@ type: `string`
 ### `utcOffset`
 
 type: `number`
-defaultValue: `moment.utc().utcOffset()`
+defaultValue: `moment.utcOffset()`
 
