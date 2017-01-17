@@ -43,12 +43,6 @@ type: `bool`
 defaultValue: `false`
 
 
-### `disabledNavigation`
-
-type: `bool`
-defaultValue: `false`
-
-
 ### `dropdownMode` (required)
 
 type: `enum('scroll'|'select')`
