@@ -16,6 +16,11 @@ type: `string`
 type: `bool`
 
 
+### `children`
+
+type: `node`
+
+
 ### `className`
 
 type: `string`
@@ -38,6 +43,12 @@ defaultValue: `'MMMM YYYY'`
 
 
 ### `disabled`
+
+type: `bool`
+defaultValue: `false`
+
+
+### `disabledKeyboardNavigation`
 
 type: `bool`
 defaultValue: `false`
@@ -266,4 +277,11 @@ type: `string`
 ### `utcOffset`
 
 type: `number`
-defaultValue: `moment.utc().utcOffset()`
+defaultValue: `moment().utcOffset()`
+
+
+### `withPortal`
+
+type: `bool`
+defaultValue: `false`
+
