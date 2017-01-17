@@ -147,6 +147,7 @@ var DatePicker = React.createClass({
 
   handleCalendarClickOutside (event) {
     this.setOpen(false)
+    if (this.props.withPortal) { event.preventDefault() }
   },
 
   handleSelect (date, event) {
