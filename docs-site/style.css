@@ -631,6 +631,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   font: inherit;
   color: #fff; }
 
+.example__timezone-selector {
+  margin-left: 10px; }
+
 .hero__content, .wrapper {
   max-width: 1100px;
   margin: 0 auto; }

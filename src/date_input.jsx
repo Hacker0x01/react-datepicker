@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React from 'react'
-import { isSameDay, isDayDisabled } from './date_utils'
+import { isSameDay, isDayDisabled, isSameUtcOffset } from './date_utils'
 
 var DateInput = React.createClass({
   displayName: 'DateInput',
@@ -38,6 +38,7 @@ var DateInput = React.createClass({
 
   componentWillReceiveProps (newProps) {
     if (!isSameDay(newProps.date, this.props.date) ||
+        !isSameUtcOffset(newProps.date, this.props.date) ||
           newProps.locale !== this.props.locale ||
           newProps.dateFormat !== this.props.dateFormat) {
       this.setState({

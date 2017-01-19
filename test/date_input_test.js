@@ -383,6 +383,25 @@ describe('DateInput', function () {
     })
   })
 
+  describe('utcOffsetChange', function () {
+    it('should rerender with correct date and time when utcOffset prop changes', function () {
+      var date = moment('2015-10-11T00:00:00Z')
+      var newDate = date.clone()
+      var dateFormat = 'YYYY-MM-DD HH:mm'
+      date.utcOffset(-5)
+      var dateInput = shallow(
+        <DateInput date={date} dateFormat={dateFormat}/>
+      )
+      expect(dateInput.find('input').prop('value')).to.equal('2015-10-10 19:00')
+
+      newDate.utcOffset(5)
+      dateInput = shallow(
+        <DateInput date={newDate} dateFormat={dateFormat}/>
+      )
+      expect(dateInput.find('input').prop('value')).to.equal('2015-10-11 05:00')
+    })
+  })
+
   it('should render custom input when customInput is passed as prop', function () {
     var date = moment()
     var dateFormat = 'YYYY-MM-DD'
