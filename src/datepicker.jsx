@@ -103,7 +103,7 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
-      inputValue: safeDateFormat(this.props.selected, this.props),
+      inputValue: null,
       open: false,
       preventFocus: false
     }
@@ -181,7 +181,7 @@ var DatePicker = React.createClass({
       this.props.onChange(changedDate, event)
     }
     if (!keepInput) {
-      this.setState({ inputValue: safeDateFormat(changedDate, this.props) })
+      this.setState({ inputValue: null })
     }
   },
 
@@ -283,7 +283,7 @@ var DatePicker = React.createClass({
 
     return React.cloneElement(customInput, {
       ref: 'input',
-      value: this.state.inputValue,
+      value: this.state.inputValue || safeDateFormat(this.props.selected, this.props),
       onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,

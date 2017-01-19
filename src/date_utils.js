@@ -2,7 +2,8 @@ import moment from 'moment'
 
 export function isSameDay (moment1, moment2) {
   if (moment1 && moment2) {
-    return moment1.isSame(moment2, 'day')
+    // Workaround for https://github.com/moment/moment/issues/2427
+    return moment1.format('YYYY-MM-DD') === moment2.format('YYYY-MM-DD')
   } else {
     return !moment1 && !moment2
   }
