@@ -11,9 +11,7 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  - rvm install 2.3.1
   - npm install -g grunt-cli
-  - gem update --system && gem install scss_lint -v 0.50.2
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script:
