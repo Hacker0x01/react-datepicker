@@ -22,7 +22,7 @@ var Day = React.createClass({
   },
   getDefaultProps () {
     return {
-      utcOffset: moment.utc().utcOffset()
+      utcOffset: moment().utcOffset()
     }
   },
   handleClick (event) {

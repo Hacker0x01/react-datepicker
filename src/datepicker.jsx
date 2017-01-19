@@ -1,10 +1,9 @@
-import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
 import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay } from './date_utils'
+import { isSameDay, parseDate, safeDateFormat } from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -24,7 +23,7 @@ var DatePicker = React.createClass({
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
-    dateFormat: React.PropTypes.oneOfType([
+    dateFormat: React.PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
       React.PropTypes.string,
       React.PropTypes.array
     ]),
@@ -78,6 +77,7 @@ var DatePicker = React.createClass({
 
   getDefaultProps () {
     return {
+      dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
@@ -103,6 +103,7 @@ var DatePicker = React.createClass({
 
   getInitialState () {
     return {
+      inputValue: null,
       open: false,
       preventFocus: false
     }
@@ -150,6 +151,12 @@ var DatePicker = React.createClass({
     if (this.props.withPortal) { event.preventDefault() }
   },
 
+  handleChange (event) {
+    this.setState({ inputValue: event.target.value })
+    const date = parseDate(event.target.value, this.props)
+    ;(date || !event.target.value) && this.setSelected(date, event, true)
+  },
+
   handleSelect (date, event) {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
@@ -160,7 +167,7 @@ var DatePicker = React.createClass({
     this.setOpen(false)
   },
 
-  setSelected (date, event) {
+  setSelected (date, event, keepInput) {
     let changedDate = date
 
     if (!isSameDay(this.props.selected, changedDate)) {
@@ -171,8 +178,10 @@ var DatePicker = React.createClass({
           second: this.props.selected.second()
         })
       }
-
       this.props.onChange(changedDate, event)
+    }
+    if (!keepInput) {
+      this.setState({ inputValue: null })
     }
   },
 
@@ -189,6 +198,7 @@ var DatePicker = React.createClass({
       this.setOpen(false)
     } else if (event.key === 'Tab') {
       this.setOpen(false)
+      this.setSelected(this.props.selected, event, false)
     }
     if (!this.props.disabledKeyboardNavigation) {
       if (event.key === 'ArrowLeft') {
@@ -268,33 +278,29 @@ var DatePicker = React.createClass({
     var className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open
     })
-    return <DateInput
-        ref="input"
-        id={this.props.id}
-        name={this.props.name}
-        autoFocus={this.props.autoFocus}
-        date={this.props.selected}
-        locale={this.props.locale}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        excludeDates={this.props.excludeDates}
-        includeDates={this.props.includeDates}
-        filterDate={this.props.filterDate}
-        dateFormat={this.props.dateFormat}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onClick={this.onInputClick}
-        onKeyDown={this.onInputKeyDown}
-        onChangeDate={this.setSelected}
-        placeholder={this.props.placeholderText}
-        disabled={this.props.disabled}
-        autoComplete={this.props.autoComplete}
-        className={className}
-        title={this.props.title}
-        readOnly={this.props.readOnly}
-        required={this.props.required}
-        tabIndex={this.props.tabIndex}
-        customInput={this.props.customInput} />
+
+    const customInput = this.props.customInput || <input type="text" />
+
+    return React.cloneElement(customInput, {
+      ref: 'input',
+      value: this.state.inputValue || safeDateFormat(this.props.selected, this.props),
+      onBlur: this.handleBlur,
+      onChange: this.handleChange,
+      onClick: this.onInputClick,
+      onFocus: this.handleFocus,
+      onKeyDown: this.onInputKeyDown,
+      id: this.props.id,
+      name: this.props.name,
+      autoFocus: this.props.autoFocus,
+      placeholder: this.props.placeholderText,
+      disabled: this.props.disabled,
+      autoComplete: this.props.autoComplete,
+      className: className,
+      title: this.props.title,
+      readOnly: this.props.readOnly,
+      required: this.props.required,
+      tabIndex: this.props.tabIndex
+    })
   },
 
   renderClearButton () {

@@ -63,7 +63,7 @@ var Calendar = React.createClass({
 
   getDefaultProps () {
     return {
-      utcOffset: moment.utc().utcOffset(),
+      utcOffset: moment().utcOffset(),
       monthsShown: 1,
       forceShowMonthNavigation: false
     }
