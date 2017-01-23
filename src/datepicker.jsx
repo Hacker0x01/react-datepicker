@@ -21,6 +21,7 @@ var DatePicker = React.createClass({
   propTypes: {
     autoComplete: React.PropTypes.string,
     autoFocus: React.PropTypes.bool,
+    calendarClassName: React.PropTypes.string,
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
@@ -288,7 +289,8 @@ var DatePicker = React.createClass({
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
-        onMonthChange={this.props.onMonthChange}>
+        onMonthChange={this.props.onMonthChange}
+        className={this.props.calendarClassName}>
       {this.props.children}
     </WrappedCalendar>
   },
