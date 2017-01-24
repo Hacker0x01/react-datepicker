@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import DateInput from '../src/date_input.jsx'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 describe('DateInput', function () {
   it('adds disabled attribute to input field when disabled is passed as prop', function () {
@@ -84,6 +84,23 @@ describe('DateInput', function () {
       }
     })
     assert(callback.withArgs(null).calledOnce, 'must be called once with null')
+  })
+
+  it('should recognize a date with trailing whitespace as valid and call onChangeDate with the trimmed date', function () {
+    var callback = sinon.spy()
+    var dateInput = mount(
+      <DateInput date={moment()} dateFormat="MM/DD/YYYY" onChangeDate={callback} />
+    )
+    var dateFormat = dateInput.prop('dateFormat')
+    var dateWithWhitespace = moment().add(2, 'days').format(dateFormat) + '   '
+    var expectedDate = moment(dateWithWhitespace.trim(), dateFormat, moment.locale(), true)
+    dateInput.find('input').simulate('change', {
+      isDefaultPrevented: () => false,
+      target: {
+        value: dateWithWhitespace
+      }
+    })
+    assert(callback.withArgs(expectedDate).calledOnce, 'must be called once with expectedDate')
   })
 
   it('should not call onChangeDate when changing from valid date to invalid', function () {
