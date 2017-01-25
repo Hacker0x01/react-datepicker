@@ -83,6 +83,22 @@
   border-color: #f00;
 }
 
+$iron-color: #215005;
+$lion-color: #eea429;
+$zion-color: #a82a15;
+
+.rasta-stripes {
+  .react-datepicker__week:nth-child(3n+1) {
+    background-color: $iron-color;
+  }
+  .react-datepicker__week:nth-child(3n+2) {
+    background-color: $lion-color;
+  }
+  .react-datepicker__week:nth-child(3n+3) {
+    background-color: $zion-color;
+  }
+}
+
 .example-custom-input {
   cursor: pointer;
   padding: 5px 15px;
