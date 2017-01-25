@@ -196,9 +196,13 @@ var DatePicker = React.createClass({
   },
 
   setPreSelection (date) {
-    this.setState({
-      preSelection: date
-    })
+    const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
+    const isValidDateSelection = isDateRangePresent ? isDayInRange(date, this.props.minDate, this.props.maxDate) : true
+    if (isValidDateSelection) {
+      this.setState({
+        preSelection: date
+      })
+    }
   },
 
   onInputClick () {
@@ -260,11 +264,7 @@ var DatePicker = React.createClass({
           newSelection = copy.add(1, 'years')
           break
       }
-      const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
-      const isValidDateSelection = isDateRangePresent ? isDayInRange(newSelection, this.props.minDate, this.props.maxDate) : true
-      if (isValidDateSelection) {
-        this.setPreSelection(newSelection)
-      }
+      this.setPreSelection(newSelection)
     }
   },
 

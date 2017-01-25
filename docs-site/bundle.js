@@ -37644,9 +37644,13 @@
 	    }
 	  },
 	  setPreSelection: function setPreSelection(date) {
-	    this.setState({
-	      preSelection: date
-	    });
+	    var isDateRangePresent = typeof this.props.minDate !== 'undefined' && typeof this.props.maxDate !== 'undefined';
+	    var isValidDateSelection = isDateRangePresent ? (0, _date_utils.isDayInRange)(date, this.props.minDate, this.props.maxDate) : true;
+	    if (isValidDateSelection) {
+	      this.setState({
+	        preSelection: date
+	      });
+	    }
 	  },
 	  onInputClick: function onInputClick() {
 	    if (!this.props.disabled) {
@@ -37706,11 +37710,7 @@
 	          newSelection = copy.add(1, 'years');
 	          break;
 	      }
-	      var isDateRangePresent = typeof this.props.minDate !== 'undefined' && typeof this.props.maxDate !== 'undefined';
-	      var isValidDateSelection = isDateRangePresent ? (0, _date_utils.isDayInRange)(newSelection, this.props.minDate, this.props.maxDate) : true;
-	      if (isValidDateSelection) {
-	        this.setPreSelection(newSelection);
-	      }
+	      this.setPreSelection(newSelection);
 	    }
 	  },
 	  onClearClick: function onClearClick(event) {
