@@ -4,7 +4,7 @@ import React from 'react'
 import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay, isDayDisabled } from './date_utils'
+import {isSameDay, isDayDisabled, isDayInRange} from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -79,13 +79,17 @@ var DatePicker = React.createClass({
   getDefaultProps () {
     return {
       dateFormatCalendar: 'MMMM YYYY',
-      onChange () {},
+      onChange () {
+      },
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: 'scroll',
-      onFocus () {},
-      onBlur () {},
-      onMonthChange () {},
+      onFocus () {
+      },
+      onBlur () {
+      },
+      onMonthChange () {
+      },
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
@@ -151,14 +155,16 @@ var DatePicker = React.createClass({
 
   handleCalendarClickOutside (event) {
     this.setOpen(false)
-    if (this.props.withPortal) { event.preventDefault() }
+    if (this.props.withPortal) {
+      event.preventDefault()
+    }
   },
 
   handleSelect (date, event) {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
-    this.setState({ preventFocus: true },
-      () => setTimeout(() => this.setState({ preventFocus: false }), 50)
+    this.setState({preventFocus: true},
+        () => setTimeout(() => this.setState({preventFocus: false}), 50)
     )
     this.setSelected(date, event)
     this.setOpen(false)
@@ -219,30 +225,45 @@ var DatePicker = React.createClass({
       this.setOpen(false)
     }
     if (!this.props.disabledKeyboardNavigation) {
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'days'))
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'days'))
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'weeks'))
-      } else if (event.key === 'ArrowDown') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'weeks'))
-      } else if (event.key === 'PageUp') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'months'))
-      } else if (event.key === 'PageDown') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'months'))
-      } else if (event.key === 'Home') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'years'))
-      } else if (event.key === 'End') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'years'))
+      let newSelection
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'days')
+          break
+        case 'ArrowRight':
+          event.preventDefault()
+          newSelection = copy.add(1, 'days')
+          break
+        case 'ArrowUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'weeks')
+          break
+        case 'ArrowDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'weeks')
+          break
+        case 'PageUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'months')
+          break
+        case 'PageDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'months')
+          break
+        case 'Home':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'years')
+          break
+        case 'End':
+          event.preventDefault()
+          newSelection = copy.add(1, 'years')
+          break
+      }
+      const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
+      const isValidDateSelection = isDateRangePresent ? isDayInRange(newSelection, this.props.minDate, this.props.maxDate) : true
+      if (isValidDateSelection) {
+        this.setPreSelection(newSelection)
       }
     }
   },
@@ -323,12 +344,12 @@ var DatePicker = React.createClass({
         readOnly={this.props.readOnly}
         required={this.props.required}
         tabIndex={this.props.tabIndex}
-        customInput={this.props.customInput} />
+        customInput={this.props.customInput}/>
   },
 
   renderClearButton () {
     if (this.props.isClearable && this.props.selected != null) {
-      return <a className="react-datepicker__close-icon" href="#" onClick={this.onClearClick} />
+      return <a className="react-datepicker__close-icon" href="#" onClick={this.onClearClick}/>
     } else {
       return null
     }
@@ -343,36 +364,36 @@ var DatePicker = React.createClass({
 
     if (this.props.withPortal) {
       return (
-        <div>
-          <div className="react-datepicker__input-container">
-            {this.renderDateInput()}
-            {this.renderClearButton()}
-          </div>
-          {
-          this.state.open
-          ? <div className="react-datepicker__portal">
-              {calendar}
+          <div>
+            <div className="react-datepicker__input-container">
+              {this.renderDateInput()}
+              {this.renderClearButton()}
             </div>
-          : null
-          }
-        </div>
+            {
+              this.state.open
+                  ? <div className="react-datepicker__portal">
+                    {calendar}
+                  </div>
+                  : null
+            }
+          </div>
       )
     }
 
     return (
-      <TetherComponent
-          classPrefix={'react-datepicker__tether'}
-          attachment={this.props.popoverAttachment}
-          targetAttachment={this.props.popoverTargetAttachment}
-          targetOffset={this.props.popoverTargetOffset}
-          renderElementTo={this.props.renderCalendarTo}
-          constraints={this.props.tetherConstraints}>
-        <div className="react-datepicker__input-container">
-          {this.renderDateInput()}
-          {this.renderClearButton()}
-        </div>
-        {calendar}
-      </TetherComponent>
+        <TetherComponent
+            classPrefix={'react-datepicker__tether'}
+            attachment={this.props.popoverAttachment}
+            targetAttachment={this.props.popoverTargetAttachment}
+            targetOffset={this.props.popoverTargetOffset}
+            renderElementTo={this.props.renderCalendarTo}
+            constraints={this.props.tetherConstraints}>
+          <div className="react-datepicker__input-container">
+            {this.renderDateInput()}
+            {this.renderClearButton()}
+          </div>
+          {calendar}
+        </TetherComponent>
     )
   }
 })

@@ -37,6 +37,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
+    "cross-env": "^3.1.4",
     "css-loader": "^0.26.0",
     "enzyme": "^2.4.0",
     "eslint": "^3.8.1",
@@ -49,10 +50,10 @@
     "grunt": "1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
-    "grunt-sass": "2.0.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-eslint": "^19.0.0",
     "grunt-karma": "^2.0.0",
+    "grunt-sass": "2.0.0",
     "grunt-sass-lint": "^0.2.2",
     "grunt-webpack": "^1.0.11",
     "highlight.js": "^9.0.0",
@@ -92,9 +93,9 @@
     "tether": "^1.3.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production grunt build",
+    "build": "cross-env NODE_ENV=production grunt build",
     "start": "node server.js",
-    "test": "NODE_ENV=test grunt travis",
+    "test": "cross-env NODE_ENV=test grunt travis",
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
