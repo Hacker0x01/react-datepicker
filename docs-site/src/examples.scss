@@ -83,19 +83,15 @@
   border-color: #f00;
 }
 
-$iron-color: #215005;
-$lion-color: #eea429;
-$zion-color: #a82a15;
-
 .rasta-stripes {
   .react-datepicker__week:nth-child(3n+1) {
-    background-color: $iron-color;
+    background-color: #215005;
   }
   .react-datepicker__week:nth-child(3n+2) {
-    background-color: $lion-color;
+    background-color: #eea429;
   }
   .react-datepicker__week:nth-child(3n+3) {
-    background-color: $zion-color;
+    background-color: #a82a15;
   }
 }
 
