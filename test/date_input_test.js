@@ -100,7 +100,8 @@ describe('DateInput', function () {
         value: dateWithWhitespace
       }
     })
-    assert(callback.withArgs(expectedDate).calledOnce, 'must be called once with expectedDate')
+    assert(callback.calledOnce, 'must be called once')
+    assert.equal(moment(callback.args[0][0]).format(dateFormat), expectedDate.format(dateFormat), 'must be called with expectedDate')
   })
 
   it('should not call onChangeDate when changing from valid date to invalid', function () {
