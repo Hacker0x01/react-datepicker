@@ -4,7 +4,7 @@ import classNames from 'classnames'
 function generateYears (year, noOfYear) {
   var list = []
   for (var i = 0; i < (2 * noOfYear); i++) {
-    list.push(year + noOfYear- i)
+    list.push(year + noOfYear - i)
   }
   return list
 }
