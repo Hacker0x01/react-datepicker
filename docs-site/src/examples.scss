@@ -83,6 +83,18 @@
   border-color: #f00;
 }
 
+.rasta-stripes {
+  .react-datepicker__week:nth-child(3n+1) {
+    background-color: #215005;
+  }
+  .react-datepicker__week:nth-child(3n+2) {
+    background-color: #eea429;
+  }
+  .react-datepicker__week:nth-child(3n+3) {
+    background-color: #a82a15;
+  }
+}
+
 .example-custom-input {
   cursor: pointer;
   padding: 5px 15px;
