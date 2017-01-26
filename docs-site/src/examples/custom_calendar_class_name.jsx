@@ -3,8 +3,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 export default React.createClass({
-  displayName: 'CustomCalendarClassName'
-  ,
+  displayName: 'CustomCalendarClassName',
 
   getInitialState () {
     return {
@@ -30,9 +29,9 @@ export default React.createClass({
       </pre>
       <div className="column">
         <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          calendarClassName="rasta-stripes" />
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            calendarClassName="rasta-stripes"/>
       </div>
     </div>
   }
