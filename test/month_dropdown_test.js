@@ -3,13 +3,15 @@ import range from 'lodash/range'
 import MonthDropdown from '../src/month_dropdown.jsx'
 import MonthDropdownOptions from '../src/month_dropdown_options.jsx'
 import { mount } from 'enzyme'
+import moment from 'moment'
 
 describe('MonthDropdown', () => {
-  var monthDropdown
-  var handleChangeResult
-  var mockHandleChange = function (changeInput) {
+  let monthDropdown
+  let handleChangeResult
+  const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput
   }
+  let sandbox
 
   function getMonthDropdown (overrideProps) {
     return mount(
@@ -21,8 +23,13 @@ describe('MonthDropdown', () => {
     )
   }
 
-  beforeEach(function () {
+  beforeEach(() => {
     handleChangeResult = null
+    sandbox = sinon.sandbox.create()
+  })
+
+  afterEach(() => {
+    sandbox.restore()
   })
 
   describe('scroll mode', () => {
@@ -44,6 +51,16 @@ describe('MonthDropdown', () => {
       monthDropdown.find('.react-datepicker__month-read-view').simulate('click')
       monthDropdown.find('.react-datepicker__month-option').at(1).simulate('click')
       expect(monthDropdown.find(MonthDropdownOptions)).to.have.length(0)
+    })
+
+    it('closes the dropdown if outside is clicked', () => {
+      const monthNames = range(0, 12).map((M) => moment.localeData().months(moment({M})))
+      const onCancelSpy = sandbox.spy()
+      const monthDropdownOptionsInstance = mount(
+        <MonthDropdownOptions onCancel={onCancelSpy} onChange={sandbox.spy()} month={11} monthNames={monthNames}/>
+      ).instance()
+      monthDropdownOptionsInstance.handleClickOutside()
+      expect(onCancelSpy.calledOnce).to.be.true
     })
 
     it('does not call the supplied onChange function when the same month is clicked', () => {
