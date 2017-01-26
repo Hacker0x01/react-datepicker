@@ -25,7 +25,7 @@ describe('YearDropdownOptions', () => {
       .map(node => node.text())
 
     expect(textContents).to.have.members([
-      '', '✓2015', '2014', '2013', '2012', '2011', ''
+      '', '2020', '2019', '2018', '2017', '2016', '✓2015', '2014', '2013', '2012', '2011', ''
     ])
   })
 
@@ -37,7 +37,7 @@ describe('YearDropdownOptions', () => {
       .map(node => node.text())
 
     expect(textContents).to.have.members([
-      '', '2016', '✓2015', '2014', '2013', '2012', ''
+      '', '2021', '2020', '2019', '2018', '2017', '2016', '✓2015', '2014', '2013', '2012', ''
     ])
   })
 
@@ -49,7 +49,7 @@ describe('YearDropdownOptions', () => {
       .map(node => node.text())
 
     expect(textContents).to.have.members([
-      '', '2014', '2013', '2012', '2011', '2010', ''
+      '2019', '2018', '2017', '2016', '✓2015', '2014', '2013', '2012', '2011', '2010', ''
     ])
   })
 
