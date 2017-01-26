@@ -106,7 +106,8 @@ var DateInput = React.createClass({
         {...rest}
         value={this.state.value}
         onBlur={this.handleBlur}
-        onChange={this.handleChange} />
+        onChange={this.handleChange} 
+        autocomplete="off" />
   }
 })
 
