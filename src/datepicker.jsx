@@ -111,6 +111,10 @@ var DatePicker = React.createClass({
   },
 
   componentWillUnmount () {
+    this.clearPreventFocusTimeout()
+  },
+
+  clearPreventFocusTimeout () {
     if (this.preventFocusTimeout) {
       clearTimeout(this.preventFocusTimeout)
     }

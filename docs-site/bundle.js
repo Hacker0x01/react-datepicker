@@ -36924,6 +36924,9 @@
 	    };
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
+	    this.clearPreventFocusTimeout();
+	  },
+	  clearPreventFocusTimeout: function clearPreventFocusTimeout() {
 	    if (this.preventFocusTimeout) {
 	      clearTimeout(this.preventFocusTimeout);
 	    }
