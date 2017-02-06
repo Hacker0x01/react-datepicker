@@ -382,6 +382,14 @@ describe('DatePicker', () => {
     datePicker.setFocus()
     expect(div.querySelector('input')).to.equal(document.activeElement)
   })
+  it('should clear preventFocus timeout id when component is unmounted', () => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    var datePicker = ReactDOM.render(<DatePicker inline />, div)
+    datePicker.clearPreventFocusTimeout = sinon.spy()
+    ReactDOM.unmountComponentAtNode(div)
+    assert(datePicker.clearPreventFocusTimeout.calledOnce, 'should call clearPreventFocusTimeout')
+  })
 
   function getOnInputKeyDownDisabledKeyboardNavigationStuff () {
     var m = moment()

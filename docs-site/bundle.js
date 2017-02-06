@@ -36923,6 +36923,14 @@
 	      preSelection: this.props.selected ? (0, _moment2.default)(this.props.selected) : (0, _moment2.default)()
 	    };
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.clearPreventFocusTimeout();
+	  },
+	  clearPreventFocusTimeout: function clearPreventFocusTimeout() {
+	    if (this.preventFocusTimeout) {
+	      clearTimeout(this.preventFocusTimeout);
+	    }
+	  },
 	  setFocus: function setFocus() {
 	    this.refs.input.focus();
 	  },
@@ -36972,9 +36980,10 @@
 	    // Preventing onFocus event to fix issue
 	    // https://github.com/Hacker0x01/react-datepicker/issues/628
 	    this.setState({ preventFocus: true }, function () {
-	      return setTimeout(function () {
+	      _this2.preventFocusTimeout = setTimeout(function () {
 	        return _this2.setState({ preventFocus: false });
 	      }, 50);
+	      return _this2.preventFocusTimeout;
 	    });
 	    this.setSelected(date, event);
 	    this.setOpen(false);
@@ -37257,7 +37266,7 @@
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
 	    if (this.props.onChangeDate) {
-	      var date = (0, _moment2.default)(value, this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
+	      var date = (0, _moment2.default)(value.trim(), this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
 	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
 	        this.props.onChangeDate(date);
 	      } else if (value === '') {
@@ -56851,8 +56860,8 @@
 
 	function generateYears(year, noOfYear) {
 	  var list = [];
-	  for (var i = 0; i < noOfYear; i++) {
-	    list.push(year - i);
+	  for (var i = 0; i < 2 * noOfYear; i++) {
+	    list.push(year + noOfYear - i);
 	  }
 	  return list;
 	}
@@ -56869,7 +56878,7 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
+	      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
 	    };
 	  },
 	  renderOptions: function renderOptions() {
