@@ -10,6 +10,16 @@ import TimezoneDatePicker from './timezone_date_picker.jsx'
 import moment from 'moment'
 
 describe('DatePicker', () => {
+  let sandbox
+
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create()
+  })
+
+  afterEach(() => {
+    sandbox.restore()
+  })
+
   it('should show the calendar when focusing on the date input', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
@@ -56,7 +66,7 @@ describe('DatePicker', () => {
       <DatePicker />
     )
     var dateInput = datePicker.refs.input
-    var focusSpy = sinon.spy(dateInput, 'focus')
+    var focusSpy = sandbox.spy(dateInput, 'focus')
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
 
@@ -68,7 +78,7 @@ describe('DatePicker', () => {
   })
 
   it('should not re-focus the date input when focusing the year dropdown', (done) => {
-    const onBlurSpy = sinon.spy()
+    const onBlurSpy = sandbox.spy()
     const datePicker = mount(
       <DatePicker
           showMonthDropdown
@@ -77,7 +87,7 @@ describe('DatePicker', () => {
           onBlur={onBlurSpy}/>
     )
     const dateInput = datePicker.ref('input')
-    const focusSpy = sinon.spy(dateInput.get(0), 'focus')
+    const focusSpy = sandbox.spy(dateInput.get(0), 'focus')
 
     dateInput.simulate('focus')
     const yearSelect = datePicker.ref('calendar').find('.react-datepicker__year-select')
@@ -133,7 +143,7 @@ describe('DatePicker', () => {
   })
 
   it('should hide the calendar when tabbing from the date input', () => {
-    var onBlurSpy = sinon.spy()
+    var onBlurSpy = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker onBlur={onBlurSpy} />
     )
@@ -263,7 +273,7 @@ describe('DatePicker', () => {
     var m = moment()
     var copyM = moment(m)
     var testFormat = 'YYYY-MM-DD'
-    var callback = sinon.spy()
+    var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
           onChange={callback}
@@ -395,7 +405,7 @@ describe('DatePicker', () => {
     var m = moment()
     var copyM = moment(m)
     var testFormat = 'YYYY-MM-DD'
-    var callback = sinon.spy()
+    var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m} onChange={callback} disabledKeyboardNavigation/>
     )
@@ -476,5 +486,18 @@ describe('DatePicker', () => {
     tmzDatePicker.setState({utcOffset: 6, startDate: date.clone().utcOffset(6)})
 
     expect(tmzDatePicker.find('input').prop('value')).to.equal('2016-11-22 06:00')
+  })
+  it('should invoke provided onChangeRaw function on manual input change', () => {
+    const inputValue = 'test'
+    const onChangeRawSpy = sandbox.spy()
+    const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={moment()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
+    )
+    expect(onChangeRawSpy.called).to.be.false
+    const input = ReactDOM.findDOMNode(datePicker.refs.input)
+    input.value = inputValue
+    TestUtils.Simulate.change(input)
+    expect(onChangeRawSpy.calledOnce).to.be.true
+    expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue)
   })
 })

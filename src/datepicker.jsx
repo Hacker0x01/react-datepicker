@@ -49,6 +49,7 @@ var DatePicker = React.createClass({
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
+    onChangeRaw: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
@@ -328,6 +329,7 @@ var DatePicker = React.createClass({
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.onInputClick}
+        onChangeRaw={this.props.onChangeRaw}
         onKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
         placeholder={this.props.placeholderText}
