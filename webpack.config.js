@@ -8,16 +8,16 @@ module.exports = {
     path: './dist/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/
       }
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx']
   },
   externals: [
     {
@@ -55,7 +55,6 @@ module.exports = {
   ],
   node: { Buffer: false },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
