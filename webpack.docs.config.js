@@ -2,6 +2,15 @@ var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+var sassLoaders = [
+  {
+    loader: 'css-loader'
+  },
+  {
+    loader: 'sass-loader'
+  }
+]
+
 module.exports = {
   entry: [
     './docs-site/src/boot'
@@ -12,7 +21,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx'],
 
     // Needed to direct the docs to the local version of the datepicker, this is not needed for
     // normal setup.
@@ -21,17 +30,17 @@ module.exports = {
       'react-datepicker': path.resolve('./src/datepicker.jsx')
     }
   },
+
   module: {
-    loaders: [
-      { test: /\.js/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader') },
-      { test: /\.css/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') }
+    rules: [
+      { test: /\.js/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.scss/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: sassLoaders }) },
+      { test: /\.css/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) }
     ]
   },
   node: { Buffer: false },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('style.css', { allChunks: true }),
+    new ExtractTextPlugin({ filename: 'style.css', disable: false, allChunks: true }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
