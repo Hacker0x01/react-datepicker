@@ -21,6 +21,7 @@ var DateInput = React.createClass({
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
+    onChangeRaw: React.PropTypes.func,
     onChangeDate: React.PropTypes.func
   },
 
@@ -51,6 +52,9 @@ var DateInput = React.createClass({
     if (this.props.onChange) {
       this.props.onChange(event)
     }
+    if (this.props.onChangeRaw) {
+      this.props.onChangeRaw(event)
+    }
     if (!event.defaultPrevented) {
       this.handleChangeDate(event.target.value)
     }
@@ -58,7 +62,7 @@ var DateInput = React.createClass({
 
   handleChangeDate (value) {
     if (this.props.onChangeDate) {
-      var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
+      var date = moment(value.trim(), this.props.dateFormat, this.props.locale || moment.locale(), true)
       if (date.isValid() && !isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
       } else if (value === '') {
@@ -88,7 +92,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
 
     if (customInput) {
       return React.cloneElement(customInput, {
@@ -98,15 +102,15 @@ var DateInput = React.createClass({
         onBlur: this.handleBlur,
         onChange: this.handleChange
       })
+    } else {
+      return <input
+          ref="input"
+          type="text"
+          {...rest}
+          value={this.state.value}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}/>
     }
-
-    return <input
-        ref="input"
-        type="text"
-        {...rest}
-        value={this.state.value}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange} />
   }
 })
 

@@ -4,6 +4,7 @@ import YearDropdown from './year_dropdown'
 import MonthDropdown from './month_dropdown'
 import Month from './month'
 import React from 'react'
+import classnames from 'classnames'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -22,6 +23,7 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
+    className: React.PropTypes.string,
     children: React.PropTypes.node,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -311,7 +313,7 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="react-datepicker">
+      <div className={classnames('react-datepicker', this.props.className)}>
         <div className="react-datepicker__triangle" />
         {this.renderPreviousMonthButton()}
         {this.renderNextMonthButton()}

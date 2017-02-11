@@ -38,6 +38,15 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.exist
   })
 
+  it('should not set open state when it is disabled and gets clicked', function () {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker disabled/>
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
+    expect(datePicker.state.open).to.be.false
+  })
+
   it('should render the calendar into a specified node', () => {
     var node = document.createElement('div')
     document.body.appendChild(node)
@@ -57,7 +66,7 @@ describe('DatePicker', () => {
       <DatePicker />
     )
     var dateInput = datePicker.refs.input
-    var focusSpy = sinon.spy(dateInput, 'focus')
+    var focusSpy = sandbox.spy(dateInput, 'focus')
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
 
@@ -399,6 +408,14 @@ describe('DatePicker', () => {
     datePicker.setFocus()
     expect(div.querySelector('input')).to.equal(document.activeElement)
   })
+  it('should clear preventFocus timeout id when component is unmounted', () => {
+    var div = document.createElement('div')
+    document.body.appendChild(div)
+    var datePicker = ReactDOM.render(<DatePicker inline />, div)
+    datePicker.clearPreventFocusTimeout = sinon.spy()
+    ReactDOM.unmountComponentAtNode(div)
+    assert(datePicker.clearPreventFocusTimeout.calledOnce, 'should call clearPreventFocusTimeout')
+  })
 
   function getOnInputKeyDownDisabledKeyboardNavigationStuff () {
     var m = moment()
@@ -485,6 +502,19 @@ describe('DatePicker', () => {
     tmzDatePicker.setState({utcOffset: 6, startDate: date.clone().utcOffset(6)})
 
     expect(tmzDatePicker.find('input').prop('value')).to.equal('2016-11-22 06:00')
+  })
+  it('should invoke provided onChangeRaw function on manual input change', () => {
+    const inputValue = 'test'
+    const onChangeRawSpy = sandbox.spy()
+    const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={moment()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
+    )
+    expect(onChangeRawSpy.called).to.be.false
+    const input = ReactDOM.findDOMNode(datePicker.refs.input)
+    input.value = inputValue
+    TestUtils.Simulate.change(input)
+    expect(onChangeRawSpy.calledOnce).to.be.true
+    expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue)
   })
 
   it('should handle a click outside of the calendar', () => {
