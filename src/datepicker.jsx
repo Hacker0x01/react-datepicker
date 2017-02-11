@@ -4,7 +4,7 @@ import React from 'react'
 import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay, isDayDisabled } from './date_utils'
+import {isSameDay, isDayDisabled, isDayInRange} from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -205,9 +205,13 @@ var DatePicker = React.createClass({
   },
 
   setPreSelection (date) {
-    this.setState({
-      preSelection: date
-    })
+    const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
+    const isValidDateSelection = isDateRangePresent ? isDayInRange(date, this.props.minDate, this.props.maxDate) : true
+    if (isValidDateSelection) {
+      this.setState({
+        preSelection: date
+      })
+    }
   },
 
   onInputClick () {
@@ -234,31 +238,42 @@ var DatePicker = React.createClass({
       this.setOpen(false)
     }
     if (!this.props.disabledKeyboardNavigation) {
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'days'))
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'days'))
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'weeks'))
-      } else if (event.key === 'ArrowDown') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'weeks'))
-      } else if (event.key === 'PageUp') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'months'))
-      } else if (event.key === 'PageDown') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'months'))
-      } else if (event.key === 'Home') {
-        event.preventDefault()
-        this.setPreSelection(copy.subtract(1, 'years'))
-      } else if (event.key === 'End') {
-        event.preventDefault()
-        this.setPreSelection(copy.add(1, 'years'))
+      let newSelection
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'days')
+          break
+        case 'ArrowRight':
+          event.preventDefault()
+          newSelection = copy.add(1, 'days')
+          break
+        case 'ArrowUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'weeks')
+          break
+        case 'ArrowDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'weeks')
+          break
+        case 'PageUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'months')
+          break
+        case 'PageDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'months')
+          break
+        case 'Home':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'years')
+          break
+        case 'End':
+          event.preventDefault()
+          newSelection = copy.add(1, 'years')
+          break
       }
+      this.setPreSelection(newSelection)
     }
   },
 

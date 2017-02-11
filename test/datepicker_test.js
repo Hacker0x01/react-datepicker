@@ -111,6 +111,15 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.exist
   })
 
+  it('should not set open state when it is disabled and gets clicked', function () {
+    var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker disabled/>
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
+    expect(datePicker.state.open).to.be.false
+  })
+
   it('should hide the calendar when clicking a day on the calendar', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
@@ -279,7 +288,9 @@ describe('DatePicker', () => {
           onChange={callback}
           inline={opts.inline}
           excludeDates={opts.excludeDates}
-          filterDate={opts.filterDate}/>
+          filterDate={opts.filterDate}
+          minDate={opts.minDate}
+          maxDate={opts.maxDate}/>
     )
     var dateInput = datePicker.refs.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)
@@ -324,17 +335,22 @@ describe('DatePicker', () => {
     data.copyM.add(1, 'months')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
+  it('should handle onInputKeyDown End', () => {
+    var data = getOnInputKeyDownStuff()
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    data.copyM.add(1, 'years')
+    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
   it('should handle onInputKeyDown Home', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
     data.copyM.subtract(1, 'years')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
-  it('should handle onInputKeyDown End', () => {
-    var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
-    data.copyM.add(1, 'years')
-    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  it('should not preSelect date if not between minDate and maxDate', () => {
+    var data = getOnInputKeyDownStuff({minDate: moment().subtract(1, 'day'), maxDate: moment().add(1, 'day')})
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(moment().format(data.testFormat))
   })
   describe('onInputKeyDown Enter', () => {
     it('should update the selected date', () => {
@@ -499,5 +515,15 @@ describe('DatePicker', () => {
     TestUtils.Simulate.change(input)
     expect(onChangeRawSpy.calledOnce).to.be.true
     expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue)
+  })
+
+  it('should handle a click outside of the calendar', () => {
+    const datePicker = mount(
+        <DatePicker selected={moment()} withPortal/>
+    ).instance()
+    const openSpy = sandbox.spy(datePicker, 'setOpen')
+    datePicker.handleCalendarClickOutside(sandbox.stub({preventDefault: () => {}}))
+    expect(openSpy.calledOnce).to.be.true
+    expect(openSpy.calledWithExactly(false)).to.be.true
   })
 })
