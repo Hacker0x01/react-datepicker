@@ -83,7 +83,7 @@ var YearDropdownOptions = React.createClass({
   },
 
   render () {
-    let dropdownClass = classNames({
+    const dropdownClass = classNames({
       'react-datepicker__year-dropdown': true,
       'react-datepicker__year-dropdown--scrollable': this.props.scrollableYearDropdown
     })

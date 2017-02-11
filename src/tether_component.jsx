@@ -93,7 +93,7 @@ var TetherComponent = React.createClass({
 
   _update () {
     const { children, renderElementTag, renderElementTo } = this.props
-    let elementComponent = children[1]
+    const elementComponent = children[1]
 
     // if no element component provided, bail out
     if (!elementComponent) {

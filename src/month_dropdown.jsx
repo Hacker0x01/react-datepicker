@@ -59,7 +59,7 @@ var MonthDropdown = React.createClass({
 
   renderScrollMode (monthNames) {
     const { dropdownVisible } = this.state
-    let result = [this.renderReadView(!dropdownVisible, monthNames)]
+    const result = [this.renderReadView(!dropdownVisible, monthNames)]
     if (dropdownVisible) {
       result.unshift(this.renderDropdown(monthNames))
     }
@@ -81,7 +81,7 @@ var MonthDropdown = React.createClass({
 
   render () {
     const localeData = moment.localeData(this.props.locale)
-    const monthNames = range(0, 12).map((M) => localeData.months(moment({M})))
+    const monthNames = range(0, 12).map(M => localeData.months(moment({M})))
 
     let renderedDropdown
     switch (this.props.dropdownMode) {
