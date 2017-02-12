@@ -16,6 +16,11 @@ type: `string`
 type: `bool`
 
 
+### `calendarClassName`
+
+type: `string`
+
+
 ### `children`
 
 type: `node`
@@ -146,6 +151,11 @@ defaultValue: `function() {}`
 
 type: `func`
 defaultValue: `function() {}`
+
+
+### `onChangeRaw`
+
+type: `func`
 
 
 ### `onFocus`
