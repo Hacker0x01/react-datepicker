@@ -480,7 +480,7 @@
 
 /***/ },
 /* 6 */
-[627, 7],
+[639, 7],
 /* 7 */
 /***/ function(module, exports) {
 
@@ -3104,7 +3104,7 @@
 
 	'use strict';
 
-	module.exports = '15.4.1';
+	module.exports = '15.4.2';
 
 /***/ },
 /* 28 */
@@ -3301,6 +3301,13 @@
 	var internalInstanceKey = '__reactInternalInstance$' + Math.random().toString(36).slice(2);
 
 	/**
+	 * Check if a given node should be cached.
+	 */
+	function shouldPrecacheNode(node, nodeID) {
+	  return node.nodeType === 1 && node.getAttribute(ATTR_NAME) === String(nodeID) || node.nodeType === 8 && node.nodeValue === ' react-text: ' + nodeID + ' ' || node.nodeType === 8 && node.nodeValue === ' react-empty: ' + nodeID + ' ';
+	}
+
+	/**
 	 * Drill down (through composites and empty components) until we get a host or
 	 * host text component.
 	 *
@@ -3365,7 +3372,7 @@
 	    }
 	    // We assume the child nodes are in the same order as the child instances.
 	    for (; childNode !== null; childNode = childNode.nextSibling) {
-	      if (childNode.nodeType === 1 && childNode.getAttribute(ATTR_NAME) === String(childID) || childNode.nodeType === 8 && childNode.nodeValue === ' react-text: ' + childID + ' ' || childNode.nodeType === 8 && childNode.nodeValue === ' react-empty: ' + childID + ' ') {
+	      if (shouldPrecacheNode(childNode, childID)) {
 	        precacheNode(childInst, childNode);
 	        continue outer;
 	      }
@@ -5487,7 +5494,7 @@
 
 /***/ },
 /* 47 */
-[627, 32],
+[639, 32],
 /* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -9776,12 +9783,18 @@
 	    } else {
 	      var contentToUse = CONTENT_TYPES[typeof props.children] ? props.children : null;
 	      var childrenToUse = contentToUse != null ? null : props.children;
+	      // TODO: Validate that text is allowed as a child of this node
 	      if (contentToUse != null) {
-	        // TODO: Validate that text is allowed as a child of this node
-	        if (false) {
-	          setAndValidateContentChildDev.call(this, contentToUse);
+	        // Avoid setting textContent when the text is empty. In IE11 setting
+	        // textContent on a text area will cause the placeholder to not
+	        // show within the textarea until it has been focused and blurred again.
+	        // https://github.com/facebook/react/issues/6731#issuecomment-254874553
+	        if (contentToUse !== '') {
+	          if (false) {
+	            setAndValidateContentChildDev.call(this, contentToUse);
+	          }
+	          DOMLazyTree.queueText(lazyTree, contentToUse);
 	        }
-	        DOMLazyTree.queueText(lazyTree, contentToUse);
 	      } else if (childrenToUse != null) {
 	        var mountImages = this.mountChildren(childrenToUse, transaction, context);
 	        for (var i = 0; i < mountImages.length; i++) {
@@ -11697,7 +11710,17 @@
 	      }
 	    } else {
 	      if (props.value == null && props.defaultValue != null) {
-	        node.defaultValue = '' + props.defaultValue;
+	        // In Chrome, assigning defaultValue to certain input types triggers input validation.
+	        // For number inputs, the display value loses trailing decimal points. For email inputs,
+	        // Chrome raises "The specified value <x> is not a valid email address".
+	        //
+	        // Here we check to see if the defaultValue has actually changed, avoiding these problems
+	        // when the user is inputting text
+	        //
+	        // https://github.com/facebook/react/issues/7253
+	        if (node.defaultValue !== '' + props.defaultValue) {
+	          node.defaultValue = '' + props.defaultValue;
+	        }
 	      }
 	      if (props.checked == null && props.defaultChecked != null) {
 	        node.defaultChecked = !!props.defaultChecked;
@@ -12421,9 +12444,15 @@
 	    // This is in postMount because we need access to the DOM node, which is not
 	    // available until after the component has mounted.
 	    var node = ReactDOMComponentTree.getNodeFromInstance(inst);
+	    var textContent = node.textContent;
 
-	    // Warning: node.value may be the empty string at this point (IE11) if placeholder is set.
-	    node.value = node.textContent; // Detach value from defaultValue
+	    // Only set node.value if textContent is equal to the expected
+	    // initial value. In IE10/IE11 there is a bug where the placeholder attribute
+	    // will populate textContent as well.
+	    // https://developer.microsoft.com/microsoft-edge/platform/issues/101525/
+	    if (textContent === inst._wrapperState.initialValue) {
+	      node.value = textContent;
+	    }
 	  }
 	};
 
@@ -13408,7 +13437,17 @@
 	    instance = ReactEmptyComponent.create(instantiateReactComponent);
 	  } else if (typeof node === 'object') {
 	    var element = node;
-	    !(element && (typeof element.type === 'function' || typeof element.type === 'string')) ?  false ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', element.type == null ? element.type : typeof element.type, getDeclarationErrorAddendum(element._owner)) : _prodInvariant('130', element.type == null ? element.type : typeof element.type, getDeclarationErrorAddendum(element._owner)) : void 0;
+	    var type = element.type;
+	    if (typeof type !== 'function' && typeof type !== 'string') {
+	      var info = '';
+	      if (false) {
+	        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+	          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+	        }
+	      }
+	      info += getDeclarationErrorAddendum(element._owner);
+	       true ?  false ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', type == null ? type : typeof type, info) : _prodInvariant('130', type == null ? type : typeof type, info) : void 0;
+	    }
 
 	    // Special case string values
 	    if (typeof element.type === 'string') {
@@ -13697,7 +13736,7 @@
 	      // Since plain JS classes are defined without any special initialization
 	      // logic, we can not catch common errors early. Therefore, we have to
 	      // catch them here, at initialization time, instead.
-	      process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
+	      process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component') : void 0;
@@ -14577,14 +14616,11 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(32),
-	    _assign = __webpack_require__(4);
+	var _prodInvariant = __webpack_require__(32);
 
 	var invariant = __webpack_require__(8);
 
 	var genericComponentClass = null;
-	// This registry keeps track of wrapper classes around host tags.
-	var tagToComponentClass = {};
 	var textComponentClass = null;
 
 	var ReactHostComponentInjection = {
@@ -14597,11 +14633,6 @@
 	  // rendered as props.
 	  injectTextComponentClass: function (componentClass) {
 	    textComponentClass = componentClass;
-	  },
-	  // This accepts a keyed object with classes as values. Each key represents a
-	  // tag. That particular tag will use this class instead of the generic one.
-	  injectComponentClasses: function (componentClasses) {
-	    _assign(tagToComponentClass, componentClasses);
 	  }
 	};
 
@@ -19777,7 +19808,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(626);
+	var _hero_example = __webpack_require__(638);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -19907,125 +19938,145 @@
 
 	var _highlight2 = _interopRequireDefault(_highlight);
 
-	var _default = __webpack_require__(339);
+	var _default = __webpack_require__(340);
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(596);
+	var _code_example_component = __webpack_require__(603);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _allow_invalid_dates = __webpack_require__(597);
-
-	var _allow_invalid_dates2 = _interopRequireDefault(_allow_invalid_dates);
-
-	var _custom_date_format = __webpack_require__(598);
+	var _custom_date_format = __webpack_require__(604);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(599);
+	var _custom_class_name = __webpack_require__(605);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _placeholder_text = __webpack_require__(600);
+	var _custom_calendar_class_name = __webpack_require__(606);
+
+	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
+
+	var _placeholder_text = __webpack_require__(607);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(601);
+	var _specific_date_range = __webpack_require__(608);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(602);
+	var _locale = __webpack_require__(609);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(603);
+	var _exclude_dates = __webpack_require__(610);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(604);
+	var _highlight_dates = __webpack_require__(611);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _include_dates = __webpack_require__(605);
+	var _include_dates = __webpack_require__(612);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(606);
+	var _filter_dates = __webpack_require__(613);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(607);
+	var _disabled = __webpack_require__(614);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _clear_input = __webpack_require__(608);
+	var _disabled_keyboard_navigation = __webpack_require__(615);
+
+	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
+
+	var _clear_input = __webpack_require__(616);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(609);
+	var _on_blur_callbacks = __webpack_require__(617);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _placement = __webpack_require__(610);
+	var _placement = __webpack_require__(618);
 
 	var _placement2 = _interopRequireDefault(_placement);
 
-	var _date_range = __webpack_require__(611);
+	var _date_range = __webpack_require__(619);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(612);
+	var _tab_index = __webpack_require__(620);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(613);
+	var _year_dropdown = __webpack_require__(621);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(614);
+	var _month_dropdown = __webpack_require__(622);
+
+	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
+
+	var _year_select_dropdown = __webpack_require__(623);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(615);
+	var _today = __webpack_require__(624);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(616);
+	var _timezone_date = __webpack_require__(625);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(617);
+	var _inline = __webpack_require__(626);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(618);
+	var _open_to_date = __webpack_require__(627);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(619);
+	var _fixed_calendar = __webpack_require__(628);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(620);
+	var _week_numbers = __webpack_require__(629);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(621);
+	var _custom_input = __webpack_require__(630);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(622);
+	var _multi_month = __webpack_require__(631);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(623);
+	var _multi_month_drp = __webpack_require__(632);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	__webpack_require__(624);
+	var _children = __webpack_require__(633);
 
-	__webpack_require__(625);
+	var _children2 = _interopRequireDefault(_children);
+
+	var _portal = __webpack_require__(634);
+
+	var _portal2 = _interopRequireDefault(_portal);
+
+	var _raw_change = __webpack_require__(635);
+
+	var _raw_change2 = _interopRequireDefault(_raw_change);
+
+	__webpack_require__(636);
+
+	__webpack_require__(637);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20041,14 +20092,14 @@
 	    title: 'Default',
 	    component: _react2.default.createElement(_default2.default, null)
 	  }, {
-	    title: 'Allow invalid dates',
-	    component: _react2.default.createElement(_allow_invalid_dates2.default, null)
-	  }, {
 	    title: 'Custom date format',
 	    component: _react2.default.createElement(_custom_date_format2.default, null)
 	  }, {
 	    title: 'Custom class name',
 	    component: _react2.default.createElement(_custom_class_name2.default, null)
+	  }, {
+	    title: 'Custom calendar class name',
+	    component: _react2.default.createElement(_custom_calendar_class_name2.default, null)
 	  }, {
 	    title: 'Today button',
 	    component: _react2.default.createElement(_today2.default, null)
@@ -20083,6 +20134,9 @@
 	    title: 'Disable datepicker',
 	    component: _react2.default.createElement(_disabled2.default, null)
 	  }, {
+	    title: 'Disable keyboard navigation',
+	    component: _react2.default.createElement(_disabled_keyboard_navigation2.default, null)
+	  }, {
 	    title: 'Clear datepicker input',
 	    component: _react2.default.createElement(_clear_input2.default, null)
 	  }, {
@@ -20092,11 +20146,17 @@
 	    title: 'Configure Popover Placement',
 	    component: _react2.default.createElement(_placement2.default, null)
 	  }, {
+	    title: 'Portal version',
+	    component: _react2.default.createElement(_portal2.default, null)
+	  }, {
 	    title: 'TabIndex',
 	    component: _react2.default.createElement(_tab_index2.default, null)
 	  }, {
 	    title: 'Year dropdown',
 	    component: _react2.default.createElement(_year_dropdown2.default, null)
+	  }, {
+	    title: 'Month dropdown',
+	    component: _react2.default.createElement(_month_dropdown2.default, null)
 	  }, {
 	    title: 'Year select dropdown',
 	    component: _react2.default.createElement(_year_select_dropdown2.default, null)
@@ -20121,6 +20181,12 @@
 	  }, {
 	    title: 'Multiple months with year dropdown',
 	    component: _react2.default.createElement(_multi_month_drp2.default, null)
+	  }, {
+	    title: 'Children',
+	    component: _react2.default.createElement(_children2.default, null)
+	  }, {
+	    title: 'Get raw input value on change',
+	    component: _react2.default.createElement(_raw_change2.default, null)
 	  }],
 
 	  renderExamples: function renderExamples() {
@@ -20265,83 +20331,84 @@
 	hljs.registerLanguage('lisp', __webpack_require__(259));
 	hljs.registerLanguage('livecodeserver', __webpack_require__(260));
 	hljs.registerLanguage('livescript', __webpack_require__(261));
-	hljs.registerLanguage('lsl', __webpack_require__(262));
-	hljs.registerLanguage('lua', __webpack_require__(263));
-	hljs.registerLanguage('makefile', __webpack_require__(264));
-	hljs.registerLanguage('mathematica', __webpack_require__(265));
-	hljs.registerLanguage('matlab', __webpack_require__(266));
-	hljs.registerLanguage('maxima', __webpack_require__(267));
-	hljs.registerLanguage('mel', __webpack_require__(268));
-	hljs.registerLanguage('mercury', __webpack_require__(269));
-	hljs.registerLanguage('mipsasm', __webpack_require__(270));
-	hljs.registerLanguage('mizar', __webpack_require__(271));
-	hljs.registerLanguage('perl', __webpack_require__(272));
-	hljs.registerLanguage('mojolicious', __webpack_require__(273));
-	hljs.registerLanguage('monkey', __webpack_require__(274));
-	hljs.registerLanguage('moonscript', __webpack_require__(275));
-	hljs.registerLanguage('nginx', __webpack_require__(276));
-	hljs.registerLanguage('nimrod', __webpack_require__(277));
-	hljs.registerLanguage('nix', __webpack_require__(278));
-	hljs.registerLanguage('nsis', __webpack_require__(279));
-	hljs.registerLanguage('objectivec', __webpack_require__(280));
-	hljs.registerLanguage('ocaml', __webpack_require__(281));
-	hljs.registerLanguage('openscad', __webpack_require__(282));
-	hljs.registerLanguage('oxygene', __webpack_require__(283));
-	hljs.registerLanguage('parser3', __webpack_require__(284));
-	hljs.registerLanguage('pf', __webpack_require__(285));
-	hljs.registerLanguage('php', __webpack_require__(286));
-	hljs.registerLanguage('pony', __webpack_require__(287));
-	hljs.registerLanguage('powershell', __webpack_require__(288));
-	hljs.registerLanguage('processing', __webpack_require__(289));
-	hljs.registerLanguage('profile', __webpack_require__(290));
-	hljs.registerLanguage('prolog', __webpack_require__(291));
-	hljs.registerLanguage('protobuf', __webpack_require__(292));
-	hljs.registerLanguage('puppet', __webpack_require__(293));
-	hljs.registerLanguage('purebasic', __webpack_require__(294));
-	hljs.registerLanguage('python', __webpack_require__(295));
-	hljs.registerLanguage('q', __webpack_require__(296));
-	hljs.registerLanguage('qml', __webpack_require__(297));
-	hljs.registerLanguage('r', __webpack_require__(298));
-	hljs.registerLanguage('rib', __webpack_require__(299));
-	hljs.registerLanguage('roboconf', __webpack_require__(300));
-	hljs.registerLanguage('rsl', __webpack_require__(301));
-	hljs.registerLanguage('ruleslanguage', __webpack_require__(302));
-	hljs.registerLanguage('rust', __webpack_require__(303));
-	hljs.registerLanguage('scala', __webpack_require__(304));
-	hljs.registerLanguage('scheme', __webpack_require__(305));
-	hljs.registerLanguage('scilab', __webpack_require__(306));
-	hljs.registerLanguage('scss', __webpack_require__(307));
-	hljs.registerLanguage('smali', __webpack_require__(308));
-	hljs.registerLanguage('smalltalk', __webpack_require__(309));
-	hljs.registerLanguage('sml', __webpack_require__(310));
-	hljs.registerLanguage('sqf', __webpack_require__(311));
-	hljs.registerLanguage('sql', __webpack_require__(312));
-	hljs.registerLanguage('stan', __webpack_require__(313));
-	hljs.registerLanguage('stata', __webpack_require__(314));
-	hljs.registerLanguage('step21', __webpack_require__(315));
-	hljs.registerLanguage('stylus', __webpack_require__(316));
-	hljs.registerLanguage('subunit', __webpack_require__(317));
-	hljs.registerLanguage('swift', __webpack_require__(318));
-	hljs.registerLanguage('taggerscript', __webpack_require__(319));
-	hljs.registerLanguage('yaml', __webpack_require__(320));
-	hljs.registerLanguage('tap', __webpack_require__(321));
-	hljs.registerLanguage('tcl', __webpack_require__(322));
-	hljs.registerLanguage('tex', __webpack_require__(323));
-	hljs.registerLanguage('thrift', __webpack_require__(324));
-	hljs.registerLanguage('tp', __webpack_require__(325));
-	hljs.registerLanguage('twig', __webpack_require__(326));
-	hljs.registerLanguage('typescript', __webpack_require__(327));
-	hljs.registerLanguage('vala', __webpack_require__(328));
-	hljs.registerLanguage('vbnet', __webpack_require__(329));
-	hljs.registerLanguage('vbscript', __webpack_require__(330));
-	hljs.registerLanguage('vbscript-html', __webpack_require__(331));
-	hljs.registerLanguage('verilog', __webpack_require__(332));
-	hljs.registerLanguage('vhdl', __webpack_require__(333));
-	hljs.registerLanguage('vim', __webpack_require__(334));
-	hljs.registerLanguage('x86asm', __webpack_require__(335));
-	hljs.registerLanguage('xl', __webpack_require__(336));
-	hljs.registerLanguage('xquery', __webpack_require__(337));
-	hljs.registerLanguage('zephir', __webpack_require__(338));
+	hljs.registerLanguage('llvm', __webpack_require__(262));
+	hljs.registerLanguage('lsl', __webpack_require__(263));
+	hljs.registerLanguage('lua', __webpack_require__(264));
+	hljs.registerLanguage('makefile', __webpack_require__(265));
+	hljs.registerLanguage('mathematica', __webpack_require__(266));
+	hljs.registerLanguage('matlab', __webpack_require__(267));
+	hljs.registerLanguage('maxima', __webpack_require__(268));
+	hljs.registerLanguage('mel', __webpack_require__(269));
+	hljs.registerLanguage('mercury', __webpack_require__(270));
+	hljs.registerLanguage('mipsasm', __webpack_require__(271));
+	hljs.registerLanguage('mizar', __webpack_require__(272));
+	hljs.registerLanguage('perl', __webpack_require__(273));
+	hljs.registerLanguage('mojolicious', __webpack_require__(274));
+	hljs.registerLanguage('monkey', __webpack_require__(275));
+	hljs.registerLanguage('moonscript', __webpack_require__(276));
+	hljs.registerLanguage('nginx', __webpack_require__(277));
+	hljs.registerLanguage('nimrod', __webpack_require__(278));
+	hljs.registerLanguage('nix', __webpack_require__(279));
+	hljs.registerLanguage('nsis', __webpack_require__(280));
+	hljs.registerLanguage('objectivec', __webpack_require__(281));
+	hljs.registerLanguage('ocaml', __webpack_require__(282));
+	hljs.registerLanguage('openscad', __webpack_require__(283));
+	hljs.registerLanguage('oxygene', __webpack_require__(284));
+	hljs.registerLanguage('parser3', __webpack_require__(285));
+	hljs.registerLanguage('pf', __webpack_require__(286));
+	hljs.registerLanguage('php', __webpack_require__(287));
+	hljs.registerLanguage('pony', __webpack_require__(288));
+	hljs.registerLanguage('powershell', __webpack_require__(289));
+	hljs.registerLanguage('processing', __webpack_require__(290));
+	hljs.registerLanguage('profile', __webpack_require__(291));
+	hljs.registerLanguage('prolog', __webpack_require__(292));
+	hljs.registerLanguage('protobuf', __webpack_require__(293));
+	hljs.registerLanguage('puppet', __webpack_require__(294));
+	hljs.registerLanguage('purebasic', __webpack_require__(295));
+	hljs.registerLanguage('python', __webpack_require__(296));
+	hljs.registerLanguage('q', __webpack_require__(297));
+	hljs.registerLanguage('qml', __webpack_require__(298));
+	hljs.registerLanguage('r', __webpack_require__(299));
+	hljs.registerLanguage('rib', __webpack_require__(300));
+	hljs.registerLanguage('roboconf', __webpack_require__(301));
+	hljs.registerLanguage('rsl', __webpack_require__(302));
+	hljs.registerLanguage('ruleslanguage', __webpack_require__(303));
+	hljs.registerLanguage('rust', __webpack_require__(304));
+	hljs.registerLanguage('scala', __webpack_require__(305));
+	hljs.registerLanguage('scheme', __webpack_require__(306));
+	hljs.registerLanguage('scilab', __webpack_require__(307));
+	hljs.registerLanguage('scss', __webpack_require__(308));
+	hljs.registerLanguage('smali', __webpack_require__(309));
+	hljs.registerLanguage('smalltalk', __webpack_require__(310));
+	hljs.registerLanguage('sml', __webpack_require__(311));
+	hljs.registerLanguage('sqf', __webpack_require__(312));
+	hljs.registerLanguage('sql', __webpack_require__(313));
+	hljs.registerLanguage('stan', __webpack_require__(314));
+	hljs.registerLanguage('stata', __webpack_require__(315));
+	hljs.registerLanguage('step21', __webpack_require__(316));
+	hljs.registerLanguage('stylus', __webpack_require__(317));
+	hljs.registerLanguage('subunit', __webpack_require__(318));
+	hljs.registerLanguage('swift', __webpack_require__(319));
+	hljs.registerLanguage('taggerscript', __webpack_require__(320));
+	hljs.registerLanguage('yaml', __webpack_require__(321));
+	hljs.registerLanguage('tap', __webpack_require__(322));
+	hljs.registerLanguage('tcl', __webpack_require__(323));
+	hljs.registerLanguage('tex', __webpack_require__(324));
+	hljs.registerLanguage('thrift', __webpack_require__(325));
+	hljs.registerLanguage('tp', __webpack_require__(326));
+	hljs.registerLanguage('twig', __webpack_require__(327));
+	hljs.registerLanguage('typescript', __webpack_require__(328));
+	hljs.registerLanguage('vala', __webpack_require__(329));
+	hljs.registerLanguage('vbnet', __webpack_require__(330));
+	hljs.registerLanguage('vbscript', __webpack_require__(331));
+	hljs.registerLanguage('vbscript-html', __webpack_require__(332));
+	hljs.registerLanguage('verilog', __webpack_require__(333));
+	hljs.registerLanguage('vhdl', __webpack_require__(334));
+	hljs.registerLanguage('vim', __webpack_require__(335));
+	hljs.registerLanguage('x86asm', __webpack_require__(336));
+	hljs.registerLanguage('xl', __webpack_require__(337));
+	hljs.registerLanguage('xquery', __webpack_require__(338));
+	hljs.registerLanguage('zephir', __webpack_require__(339));
 
 	module.exports = hljs;
 
@@ -20543,7 +20610,7 @@
 
 	    while (original.length || highlighted.length) {
 	      var stream = selectStream();
-	      result += escape(value.substr(processed, stream[0].offset - processed));
+	      result += escape(value.substring(processed, stream[0].offset));
 	      processed = stream[0].offset;
 	      if (stream === original) {
 	        /*
@@ -20729,7 +20796,7 @@
 	      match = top.lexemesRe.exec(mode_buffer);
 
 	      while (match) {
-	        result += escape(mode_buffer.substr(last_index, match.index - last_index));
+	        result += escape(mode_buffer.substring(last_index, match.index));
 	        keyword_match = keywordMatch(top, match);
 	        if (keyword_match) {
 	          relevance += keyword_match[1];
@@ -20866,7 +20933,7 @@
 	        match = top.terminators.exec(value);
 	        if (!match)
 	          break;
-	        count = processLexeme(value.substr(index, match.index - index), match[0]);
+	        count = processLexeme(value.substring(index, match.index), match[0]);
 	        index = match.index + count;
 	      }
 	      processLexeme(value.substr(index));
@@ -23545,7 +23612,7 @@
 	    keyword:
 	      // JS keywords
 	      'in if for while finally new do return else break catch instanceof throw try this ' +
-	      'switch continue typeof delete debugger super ' +
+	      'switch continue typeof delete debugger super yield import export from as default await ' +
 	      // Coffee keywords
 	      'then unless until loop of by when and or is isnt not',
 	    literal:
@@ -23608,9 +23675,16 @@
 	      begin: '@' + JS_IDENT_RE // relevance booster
 	    },
 	    {
-	      begin: '`', end: '`',
+	      subLanguage: 'javascript',
 	      excludeBegin: true, excludeEnd: true,
-	      subLanguage: 'javascript'
+	      variants: [
+	        {
+	          begin: '```', end: '```',
+	        },
+	        {
+	          begin: '`', end: '`',
+	        }
+	      ]
 	    }
 	  ];
 	  SUBST.contains = EXPRESSIONS;
@@ -24961,21 +25035,16 @@
 	    'specialize strict unaligned varargs ';
 	  var COMMENT_MODES = [
 	    hljs.C_LINE_COMMENT_MODE,
-	    hljs.COMMENT(
-	      /\{/,
-	      /\}/,
-	      {
-	        relevance: 0
-	      }
-	    ),
-	    hljs.COMMENT(
-	      /\(\*/,
-	      /\*\)/,
-	      {
-	        relevance: 10
-	      }
-	    )
+	    hljs.COMMENT(/\{/, /\}/, {relevance: 0}),
+	    hljs.COMMENT(/\(\*/, /\*\)/, {relevance: 10})
 	  ];
+	  var DIRECTIVE = {
+	    className: 'meta',
+	    variants: [
+	      {begin: /\{\$/, end: /\}/},
+	      {begin: /\(\*\$/, end: /\*\)/}
+	    ]
+	  };
 	  var STRING = {
 	    className: 'string',
 	    begin: /'/, end: /'/,
@@ -25000,8 +25069,9 @@
 	        className: 'params',
 	        begin: /\(/, end: /\)/,
 	        keywords: KEYWORDS,
-	        contains: [STRING, CHAR_STRING]
-	      }
+	        contains: [STRING, CHAR_STRING, DIRECTIVE].concat(COMMENT_MODES)
+	      },
+	      DIRECTIVE
 	    ].concat(COMMENT_MODES)
 	  };
 	  return {
@@ -25013,7 +25083,8 @@
 	      STRING, CHAR_STRING,
 	      hljs.NUMBER_MODE,
 	      CLASS,
-	      FUNCTION
+	      FUNCTION,
+	      DIRECTIVE
 	    ].concat(COMMENT_MODES)
 	  };
 	};
@@ -25814,7 +25885,7 @@
 	      keywords: RUBY_KEYWORDS
 	    },
 	    { // regexp container
-	      begin: '(' + hljs.RE_STARTERS_RE + ')\\s*',
+	      begin: '(' + hljs.RE_STARTERS_RE + '|unless)\\s*',
 	      contains: [
 	        IRB_OBJECT,
 	        {
@@ -29419,6 +29490,99 @@
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
+	  var identifier = '([-a-zA-Z$._][\\w\\-$.]*)';
+	  return {
+	    //lexemes: '[.%]?' + hljs.IDENT_RE,
+	    keywords:
+	      'begin end true false declare define global ' +
+	      'constant private linker_private internal ' +
+	      'available_externally linkonce linkonce_odr weak ' +
+	      'weak_odr appending dllimport dllexport common ' +
+	      'default hidden protected extern_weak external ' +
+	      'thread_local zeroinitializer undef null to tail ' +
+	      'target triple datalayout volatile nuw nsw nnan ' +
+	      'ninf nsz arcp fast exact inbounds align ' +
+	      'addrspace section alias module asm sideeffect ' +
+	      'gc dbg linker_private_weak attributes blockaddress ' +
+	      'initialexec localdynamic localexec prefix unnamed_addr ' +
+	      'ccc fastcc coldcc x86_stdcallcc x86_fastcallcc ' +
+	      'arm_apcscc arm_aapcscc arm_aapcs_vfpcc ptx_device ' +
+	      'ptx_kernel intel_ocl_bicc msp430_intrcc spir_func ' +
+	      'spir_kernel x86_64_sysvcc x86_64_win64cc x86_thiscallcc ' +
+	      'cc c signext zeroext inreg sret nounwind ' +
+	      'noreturn noalias nocapture byval nest readnone ' +
+	      'readonly inlinehint noinline alwaysinline optsize ssp ' +
+	      'sspreq noredzone noimplicitfloat naked builtin cold ' +
+	      'nobuiltin noduplicate nonlazybind optnone returns_twice ' +
+	      'sanitize_address sanitize_memory sanitize_thread sspstrong ' +
+	      'uwtable returned type opaque eq ne slt sgt ' +
+	      'sle sge ult ugt ule uge oeq one olt ogt ' +
+	      'ole oge ord uno ueq une x acq_rel acquire ' +
+	      'alignstack atomic catch cleanup filter inteldialect ' +
+	      'max min monotonic nand personality release seq_cst ' +
+	      'singlethread umax umin unordered xchg add fadd ' +
+	      'sub fsub mul fmul udiv sdiv fdiv urem srem ' +
+	      'frem shl lshr ashr and or xor icmp fcmp ' +
+	      'phi call trunc zext sext fptrunc fpext uitofp ' +
+	      'sitofp fptoui fptosi inttoptr ptrtoint bitcast ' +
+	      'addrspacecast select va_arg ret br switch invoke ' +
+	      'unwind unreachable indirectbr landingpad resume ' +
+	      'malloc alloca free load store getelementptr ' +
+	      'extractelement insertelement shufflevector getresult ' +
+	      'extractvalue insertvalue atomicrmw cmpxchg fence ' +
+	      'argmemonly double',
+	    contains: [
+	      {
+	        className: 'keyword',
+	        begin: 'i\\d+'
+	      },
+	      hljs.COMMENT(
+	        ';', '\\n', {relevance: 0}
+	      ),
+	      // Double quote string
+	      hljs.QUOTE_STRING_MODE,
+	      {
+	        className: 'string',
+	        variants: [
+	          // Double-quoted string
+	          { begin: '"', end: '[^\\\\]"' },
+	        ],
+	        relevance: 0
+	      },
+	      {
+	        className: 'title',
+	        variants: [
+	          { begin: '@' + identifier },
+	          { begin: '@\\d+' },
+	          { begin: '!' + identifier },
+	          { begin: '!\\d+' + identifier }
+	        ]
+	      },
+	      {
+	        className: 'symbol',
+	        variants: [
+	          { begin: '%' + identifier },
+	          { begin: '%\\d+' },
+	          { begin: '#\\d+' },
+	        ]
+	      },
+	      {
+	        className: 'number',
+	        variants: [
+	            { begin: '0[xX][a-fA-F0-9]+' },
+	            { begin: '-?\\d+(?:[.]\\d+)?(?:[eE][-+]?\\d+(?:[.]\\d+)?)?' }
+	        ],
+	        relevance: 0
+	      },
+	    ]
+	  };
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports) {
+
+	module.exports = function(hljs) {
 
 	    var LSL_STRING_ESCAPE_CHARS = {
 	        className: 'subst',
@@ -29502,7 +29666,7 @@
 	};
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29562,7 +29726,7 @@
 	};
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29611,7 +29775,7 @@
 	};
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29673,7 +29837,7 @@
 	};
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29765,7 +29929,7 @@
 	};
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30175,7 +30339,7 @@
 	};
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30404,7 +30568,7 @@
 	};
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30490,7 +30654,7 @@
 	};
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30580,7 +30744,7 @@
 	};
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30603,7 +30767,7 @@
 	};
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30764,7 +30928,7 @@
 	};
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30793,7 +30957,7 @@
 	};
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30872,7 +31036,7 @@
 	};
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30988,7 +31152,7 @@
 	};
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31085,7 +31249,7 @@
 	};
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31144,7 +31308,7 @@
 	};
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31197,7 +31361,7 @@
 	};
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31307,7 +31471,7 @@
 	};
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31402,7 +31566,7 @@
 	};
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31477,7 +31641,7 @@
 	};
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31538,7 +31702,7 @@
 	};
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31612,7 +31776,7 @@
 	};
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31664,7 +31828,7 @@
 	};
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31720,7 +31884,7 @@
 	};
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31851,7 +32015,7 @@
 	};
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31946,7 +32110,7 @@
 	};
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32031,7 +32195,7 @@
 	};
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32083,7 +32247,7 @@
 	};
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32117,7 +32281,7 @@
 	};
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32209,7 +32373,7 @@
 	};
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32249,7 +32413,7 @@
 	};
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32368,7 +32532,7 @@
 	};
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports) {
 
 	module.exports = // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
@@ -32430,7 +32594,7 @@
 	};
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32526,7 +32690,7 @@
 	};
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32553,7 +32717,7 @@
 	};
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32726,7 +32890,7 @@
 	};
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32800,7 +32964,7 @@
 	};
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32831,7 +32995,7 @@
 	};
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32902,7 +33066,7 @@
 	};
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32942,7 +33106,7 @@
 	};
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33007,7 +33171,7 @@
 	};
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33115,7 +33279,7 @@
 	};
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33234,7 +33398,7 @@
 	};
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33379,7 +33543,7 @@
 	};
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33437,7 +33601,7 @@
 	};
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33539,7 +33703,7 @@
 	};
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33599,7 +33763,7 @@
 	};
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33653,7 +33817,7 @@
 	};
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33723,11 +33887,24 @@
 	};
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CPP = hljs.getLanguage('cpp').exports;
+
+	  // In SQF, a variable start with _
+	  var VARIABLE = {
+	    className: 'variable',
+	    begin: /\b_+[a-zA-Z_]\w*/
+	  };
+
+	  // In SQF, a function should fit myTag_fnc_myFunction pattern
+	  // https://community.bistudio.com/wiki/Functions_Library_(Arma_3)#Adding_a_Function
+	  var FUNCTION = {
+	    className: 'title',
+	    begin: /[a-zA-Z][a-zA-Z0-9]+_fnc_\w*/
+	  };
 
 	  // In SQF strings, quotes matching the start are escaped by adding a consecutive.
 	  // Example of single escaped quotes: " "" " and  ' '' '.
@@ -33753,426 +33930,321 @@
 	    keywords: {
 	      keyword:
 	        'case catch default do else exit exitWith for forEach from if ' +
-	        'switch then throw to try while with',
+	        'switch then throw to try waitUntil while with',
 	      built_in:
-	        'or plus abs accTime acos action actionKeys actionKeysImages ' +
-	        'actionKeysNames actionKeysNamesArray actionName activateAddons ' +
-	        'activatedAddons activateKey addAction addBackpack addBackpackCargo ' +
-	        'addBackpackCargoGlobal addBackpackGlobal addCamShake ' +
-	        'addCuratorAddons addCuratorCameraArea addCuratorEditableObjects ' +
-	        'addCuratorEditingArea addCuratorPoints addEditorObject ' +
-	        'addEventHandler addGoggles addGroupIcon addHandgunItem addHeadgear ' +
-	        'addItem addItemCargo addItemCargoGlobal addItemPool ' +
-	        'addItemToBackpack addItemToUniform addItemToVest addLiveStats ' +
-	        'addMagazine addMagazine array addMagazineAmmoCargo ' +
-	        'addMagazineCargo addMagazineCargoGlobal addMagazineGlobal ' +
-	        'addMagazinePool addMagazines addMagazineTurret addMenu addMenuItem ' +
-	        'addMissionEventHandler addMPEventHandler addMusicEventHandler ' +
-	        'addPrimaryWeaponItem addPublicVariableEventHandler addRating ' +
-	        'addResources addScore addScoreSide addSecondaryWeaponItem ' +
-	        'addSwitchableUnit addTeamMember addToRemainsCollector addUniform ' +
-	        'addVehicle addVest addWaypoint addWeapon addWeaponCargo ' +
-	        'addWeaponCargoGlobal addWeaponGlobal addWeaponPool addWeaponTurret ' +
-	        'agent agents AGLToASL aimedAtTarget aimPos airDensityRTD ' +
-	        'airportSide AISFinishHeal alive allControls allCurators allDead ' +
-	        'allDeadMen allDisplays allGroups allMapMarkers allMines ' +
-	        'allMissionObjects allow3DMode allowCrewInImmobile ' +
-	        'allowCuratorLogicIgnoreAreas allowDamage allowDammage ' +
-	        'allowFileOperations allowFleeing allowGetIn allPlayers allSites ' +
-	        'allTurrets allUnits allUnitsUAV allVariables ammo and animate ' +
-	        'animateDoor animationPhase animationState append armoryPoints ' +
-	        'arrayIntersect asin ASLToAGL ASLToATL assert assignAsCargo ' +
-	        'assignAsCargoIndex assignAsCommander assignAsDriver assignAsGunner ' +
-	        'assignAsTurret assignCurator assignedCargo assignedCommander ' +
-	        'assignedDriver assignedGunner assignedItems assignedTarget ' +
-	        'assignedTeam assignedVehicle assignedVehicleRole assignItem ' +
-	        'assignTeam assignToAirport atan atan2 atg ATLToASL attachedObject ' +
-	        'attachedObjects attachedTo attachObject attachTo attackEnabled ' +
-	        'backpack backpackCargo backpackContainer backpackItems ' +
-	        'backpackMagazines backpackSpaceFor behaviour benchmark binocular ' +
-	        'blufor boundingBox boundingBoxReal boundingCenter breakOut breakTo ' +
-	        'briefingName buildingExit buildingPos buttonAction buttonSetAction ' +
-	        'cadetMode call callExtension camCommand camCommit ' +
-	        'camCommitPrepared camCommitted camConstuctionSetParams camCreate ' +
-	        'camDestroy cameraEffect cameraEffectEnableHUD cameraInterest ' +
-	        'cameraOn cameraView campaignConfigFile camPreload camPreloaded ' +
-	        'camPrepareBank camPrepareDir camPrepareDive camPrepareFocus ' +
-	        'camPrepareFov camPrepareFovRange camPreparePos camPrepareRelPos ' +
-	        'camPrepareTarget camSetBank camSetDir camSetDive camSetFocus ' +
-	        'camSetFov camSetFovRange camSetPos camSetRelPos camSetTarget ' +
-	        'camTarget camUseNVG canAdd canAddItemToBackpack ' +
-	        'canAddItemToUniform canAddItemToVest cancelSimpleTaskDestination ' +
-	        'canFire canMove canSlingLoad canStand canUnloadInCombat captive ' +
-	        'captiveNum cbChecked cbSetChecked ceil cheatsEnabled ' +
-	        'checkAIFeature civilian className clearAllItemsFromBackpack ' +
-	        'clearBackpackCargo clearBackpackCargoGlobal clearGroupIcons ' +
-	        'clearItemCargo clearItemCargoGlobal clearItemPool ' +
-	        'clearMagazineCargo clearMagazineCargoGlobal clearMagazinePool ' +
-	        'clearOverlay clearRadio clearWeaponCargo clearWeaponCargoGlobal ' +
-	        'clearWeaponPool closeDialog closeDisplay closeOverlay ' +
-	        'collapseObjectTree combatMode commandArtilleryFire commandChat ' +
-	        'commander commandFire commandFollow commandFSM commandGetOut ' +
-	        'commandingMenu commandMove commandRadio commandStop commandTarget ' +
-	        'commandWatch comment commitOverlay compile compileFinal ' +
-	        'completedFSM composeText configClasses configFile configHierarchy ' +
-	        'configName configProperties configSourceMod configSourceModList ' +
-	        'connectTerminalToUAV controlNull controlsGroupCtrl ' +
-	        'copyFromClipboard copyToClipboard copyWaypoints cos count ' +
-	        'countEnemy countFriendly countSide countType countUnknown ' +
-	        'createAgent createCenter createDialog createDiaryLink ' +
-	        'createDiaryRecord createDiarySubject createDisplay ' +
-	        'createGearDialog createGroup createGuardedPoint createLocation ' +
-	        'createMarker createMarkerLocal createMenu createMine ' +
-	        'createMissionDisplay createSimpleTask createSite createSoundSource ' +
-	        'createTask createTeam createTrigger createUnit createUnit array ' +
-	        'createVehicle createVehicle array createVehicleCrew ' +
-	        'createVehicleLocal crew ctrlActivate ctrlAddEventHandler ' +
-	        'ctrlAutoScrollDelay ctrlAutoScrollRewind ctrlAutoScrollSpeed ' +
-	        'ctrlChecked ctrlClassName ctrlCommit ctrlCommitted ctrlCreate ' +
-	        'ctrlDelete ctrlEnable ctrlEnabled ctrlFade ctrlHTMLLoaded ctrlIDC ' +
-	        'ctrlIDD ctrlMapAnimAdd ctrlMapAnimClear ctrlMapAnimCommit ' +
-	        'ctrlMapAnimDone ctrlMapCursor ctrlMapMouseOver ctrlMapScale ' +
-	        'ctrlMapScreenToWorld ctrlMapWorldToScreen ctrlModel ' +
-	        'ctrlModelDirAndUp ctrlModelScale ctrlParent ctrlPosition ' +
-	        'ctrlRemoveAllEventHandlers ctrlRemoveEventHandler ctrlScale ' +
-	        'ctrlSetActiveColor ctrlSetAutoScrollDelay ctrlSetAutoScrollRewind ' +
-	        'ctrlSetAutoScrollSpeed ctrlSetBackgroundColor ctrlSetChecked ' +
-	        'ctrlSetEventHandler ctrlSetFade ctrlSetFocus ctrlSetFont ' +
-	        'ctrlSetFontH1 ctrlSetFontH1B ctrlSetFontH2 ctrlSetFontH2B ' +
-	        'ctrlSetFontH3 ctrlSetFontH3B ctrlSetFontH4 ctrlSetFontH4B ' +
-	        'ctrlSetFontH5 ctrlSetFontH5B ctrlSetFontH6 ctrlSetFontH6B ' +
-	        'ctrlSetFontHeight ctrlSetFontHeightH1 ctrlSetFontHeightH2 ' +
-	        'ctrlSetFontHeightH3 ctrlSetFontHeightH4 ctrlSetFontHeightH5 ' +
-	        'ctrlSetFontHeightH6 ctrlSetFontP ctrlSetFontPB ' +
-	        'ctrlSetForegroundColor ctrlSetModel ctrlSetModelDirAndUp ' +
-	        'ctrlSetModelScale ctrlSetPosition ctrlSetScale ' +
-	        'ctrlSetStructuredText ctrlSetText ctrlSetTextColor ctrlSetTooltip ' +
-	        'ctrlSetTooltipColorBox ctrlSetTooltipColorShade ' +
-	        'ctrlSetTooltipColorText ctrlShow ctrlShown ctrlText ctrlTextHeight ' +
-	        'ctrlType ctrlVisible curatorAddons curatorCamera curatorCameraArea ' +
-	        'curatorCameraAreaCeiling curatorCoef curatorEditableObjects ' +
-	        'curatorEditingArea curatorEditingAreaType curatorMouseOver ' +
-	        'curatorPoints curatorRegisteredObjects curatorSelected ' +
-	        'curatorWaypointCost currentChannel currentCommand currentMagazine ' +
-	        'currentMagazineDetail currentMagazineDetailTurret ' +
-	        'currentMagazineTurret currentMuzzle currentNamespace currentTask ' +
-	        'currentTasks currentThrowable currentVisionMode currentWaypoint ' +
-	        'currentWeapon currentWeaponMode currentWeaponTurret currentZeroing ' +
-	        'cursorTarget customChat customRadio cutFadeOut cutObj cutRsc ' +
-	        'cutText damage date dateToNumber daytime deActivateKey ' +
-	        'debriefingText debugFSM debugLog deg deleteAt deleteCenter ' +
-	        'deleteCollection deleteEditorObject deleteGroup deleteIdentity ' +
-	        'deleteLocation deleteMarker deleteMarkerLocal deleteRange ' +
-	        'deleteResources deleteSite deleteStatus deleteTeam deleteVehicle ' +
-	        'deleteVehicleCrew deleteWaypoint detach detectedMines ' +
-	        'diag activeMissionFSMs diag activeSQFScripts diag activeSQSScripts ' +
-	        'diag captureFrame diag captureSlowFrame diag fps diag fpsMin ' +
-	        'diag frameNo diag log diag logSlowFrame diag tickTime dialog ' +
-	        'diarySubjectExists didJIP didJIPOwner difficulty difficultyEnabled ' +
-	        'difficultyEnabledRTD direction directSay disableAI ' +
-	        'disableCollisionWith disableConversation disableDebriefingStats ' +
-	        'disableSerialization disableTIEquipment disableUAVConnectability ' +
-	        'disableUserInput displayAddEventHandler displayCtrl displayNull ' +
-	        'displayRemoveAllEventHandlers displayRemoveEventHandler ' +
-	        'displaySetEventHandler dissolveTeam distance distance2D ' +
-	        'distanceSqr distributionRegion doArtilleryFire doFire doFollow ' +
-	        'doFSM doGetOut doMove doorPhase doStop doTarget doWatch drawArrow ' +
-	        'drawEllipse drawIcon drawIcon3D drawLine drawLine3D drawLink ' +
-	        'drawLocation drawRectangle driver drop east echo editObject ' +
-	        'editorSetEventHandler effectiveCommander emptyPositions enableAI ' +
-	        'enableAIFeature enableAttack enableCamShake enableCaustics ' +
-	        'enableCollisionWith enableCopilot enableDebriefingStats ' +
-	        'enableDiagLegend enableEndDialog enableEngineArtillery ' +
-	        'enableEnvironment enableFatigue enableGunLights enableIRLasers ' +
-	        'enableMimics enablePersonTurret enableRadio enableReload ' +
-	        'enableRopeAttach enableSatNormalOnDetail enableSaving ' +
-	        'enableSentences enableSimulation enableSimulationGlobal ' +
-	        'enableTeamSwitch enableUAVConnectability enableUAVWaypoints ' +
-	        'endLoadingScreen endMission engineOn enginesIsOnRTD enginesRpmRTD ' +
-	        'enginesTorqueRTD entities estimatedEndServerTime estimatedTimeLeft ' +
-	        'evalObjectArgument everyBackpack everyContainer exec ' +
-	        'execEditorScript execFSM execVM exp expectedDestination ' +
-	        'eyeDirection eyePos face faction fadeMusic fadeRadio fadeSound ' +
-	        'fadeSpeech failMission fillWeaponsFromPool find findCover ' +
-	        'findDisplay findEditorObject findEmptyPosition ' +
-	        'findEmptyPositionReady findNearestEnemy finishMissionInit finite ' +
-	        'fire fireAtTarget firstBackpack flag flagOwner fleeing floor ' +
-	        'flyInHeight fog fogForecast fogParams forceAddUniform forceEnd ' +
-	        'forceMap forceRespawn forceSpeed forceWalk forceWeaponFire ' +
-	        'forceWeatherChange forEachMember forEachMemberAgent ' +
-	        'forEachMemberTeam format formation formationDirection ' +
-	        'formationLeader formationMembers formationPosition formationTask ' +
-	        'formatText formLeader freeLook fromEditor fuel fullCrew ' +
-	        'gearSlotAmmoCount gearSlotData getAllHitPointsDamage getAmmoCargo ' +
-	        'getArray getArtilleryAmmo getArtilleryComputerSettings ' +
-	        'getArtilleryETA getAssignedCuratorLogic getAssignedCuratorUnit ' +
-	        'getBackpackCargo getBleedingRemaining getBurningValue ' +
-	        'getCargoIndex getCenterOfMass getClientState getConnectedUAV ' +
-	        'getDammage getDescription getDir getDirVisual getDLCs ' +
-	        'getEditorCamera getEditorMode getEditorObjectScope ' +
-	        'getElevationOffset getFatigue getFriend getFSMVariable ' +
-	        'getFuelCargo getGroupIcon getGroupIconParams getGroupIcons ' +
-	        'getHideFrom getHit getHitIndex getHitPointDamage getItemCargo ' +
-	        'getMagazineCargo getMarkerColor getMarkerPos getMarkerSize ' +
-	        'getMarkerType getMass getModelInfo getNumber getObjectArgument ' +
-	        'getObjectChildren getObjectDLC getObjectMaterials getObjectProxy ' +
-	        'getObjectTextures getObjectType getObjectViewDistance ' +
-	        'getOxygenRemaining getPersonUsedDLCs getPlayerChannel getPlayerUID ' +
-	        'getPos getPosASL getPosASLVisual getPosASLW getPosATL ' +
-	        'getPosATLVisual getPosVisual getPosWorld getRepairCargo ' +
-	        'getResolution getShadowDistance getSlingLoad getSpeed ' +
-	        'getSuppression getTerrainHeightASL getText getVariable ' +
-	        'getWeaponCargo getWPPos glanceAt globalChat globalRadio goggles ' +
-	        'goto group groupChat groupFromNetId groupIconSelectable ' +
-	        'groupIconsVisible groupId groupOwner groupRadio groupSelectedUnits ' +
-	        'groupSelectUnit grpNull gunner gusts halt handgunItems ' +
-	        'handgunMagazine handgunWeapon handsHit hasInterface hasWeapon ' +
-	        'hcAllGroups hcGroupParams hcLeader hcRemoveAllGroups hcRemoveGroup ' +
-	        'hcSelected hcSelectGroup hcSetGroup hcShowBar hcShownBar headgear ' +
-	        'hideBody hideObject hideObjectGlobal hint hintC hintCadet ' +
-	        'hintSilent hmd hostMission htmlLoad HUDMovementLevels humidity ' +
-	        'image importAllGroups importance in incapacitatedState independent ' +
-	        'inflame inflamed inGameUISetEventHandler inheritsFrom ' +
-	        'initAmbientLife inputAction inRangeOfArtillery insertEditorObject ' +
-	        'intersect isAbleToBreathe isAgent isArray isAutoHoverOn ' +
-	        'isAutonomous isAutotest isBleeding isBurning isClass ' +
-	        'isCollisionLightOn isCopilotEnabled isDedicated isDLCAvailable ' +
-	        'isEngineOn isEqualTo isFlashlightOn isFlatEmpty isForcedWalk ' +
-	        'isFormationLeader isHidden isInRemainsCollector ' +
-	        'isInstructorFigureEnabled isIRLaserOn isKeyActive isKindOf ' +
-	        'isLightOn isLocalized isManualFire isMarkedForCollection ' +
-	        'isMultiplayer isNil isNull isNumber isObjectHidden isObjectRTD ' +
-	        'isOnRoad isPipEnabled isPlayer isRealTime isServer ' +
-	        'isShowing3DIcons isSteamMission isStreamFriendlyUIEnabled isText ' +
-	        'isTouchingGround isTurnedOut isTutHintsEnabled isUAVConnectable ' +
-	        'isUAVConnected isUniformAllowed isWalking isWeaponDeployed ' +
-	        'isWeaponRested itemCargo items itemsWithMagazines join joinAs ' +
-	        'joinAsSilent joinSilent joinString kbAddDatabase ' +
-	        'kbAddDatabaseTargets kbAddTopic kbHasTopic kbReact kbRemoveTopic ' +
-	        'kbTell kbWasSaid keyImage keyName knowsAbout land landAt ' +
-	        'landResult language laserTarget lbAdd lbClear lbColor lbCurSel ' +
-	        'lbData lbDelete lbIsSelected lbPicture lbSelection lbSetColor ' +
-	        'lbSetCurSel lbSetData lbSetPicture lbSetPictureColor ' +
-	        'lbSetPictureColorDisabled lbSetPictureColorSelected ' +
-	        'lbSetSelectColor lbSetSelectColorRight lbSetSelected lbSetTooltip ' +
-	        'lbSetValue lbSize lbSort lbSortByValue lbText lbValue leader ' +
-	        'leaderboardDeInit leaderboardGetRows leaderboardInit leaveVehicle ' +
-	        'libraryCredits libraryDisclaimers lifeState lightAttachObject ' +
-	        'lightDetachObject lightIsOn lightnings limitSpeed linearConversion ' +
-	        'lineBreak lineIntersects lineIntersectsObjs lineIntersectsSurfaces ' +
-	        'lineIntersectsWith linkItem list listObjects ln lnbAddArray ' +
-	        'lnbAddColumn lnbAddRow lnbClear lnbColor lnbCurSelRow lnbData ' +
-	        'lnbDeleteColumn lnbDeleteRow lnbGetColumnsPosition lnbPicture ' +
-	        'lnbSetColor lnbSetColumnsPos lnbSetCurSelRow lnbSetData ' +
-	        'lnbSetPicture lnbSetText lnbSetValue lnbSize lnbText lnbValue load ' +
-	        'loadAbs loadBackpack loadFile loadGame loadIdentity loadMagazine ' +
-	        'loadOverlay loadStatus loadUniform loadVest local localize ' +
-	        'locationNull locationPosition lock lockCameraTo lockCargo ' +
-	        'lockDriver locked lockedCargo lockedDriver lockedTurret lockTurret ' +
-	        'lockWP log logEntities lookAt lookAtPos magazineCargo magazines ' +
-	        'magazinesAllTurrets magazinesAmmo magazinesAmmoCargo ' +
-	        'magazinesAmmoFull magazinesDetail magazinesDetailBackpack ' +
-	        'magazinesDetailUniform magazinesDetailVest magazinesTurret ' +
-	        'magazineTurretAmmo mapAnimAdd mapAnimClear mapAnimCommit ' +
-	        'mapAnimDone mapCenterOnCamera mapGridPosition ' +
-	        'markAsFinishedOnSteam markerAlpha markerBrush markerColor ' +
-	        'markerDir markerPos markerShape markerSize markerText markerType ' +
-	        'max members min mineActive mineDetectedBy missionConfigFile ' +
-	        'missionName missionNamespace missionStart mod modelToWorld ' +
-	        'modelToWorldVisual moonIntensity morale move moveInAny moveInCargo ' +
-	        'moveInCommander moveInDriver moveInGunner moveInTurret ' +
-	        'moveObjectToEnd moveOut moveTime moveTo moveToCompleted ' +
-	        'moveToFailed musicVolume name name location nameSound nearEntities ' +
-	        'nearestBuilding nearestLocation nearestLocations ' +
-	        'nearestLocationWithDubbing nearestObject nearestObjects ' +
-	        'nearObjects nearObjectsReady nearRoads nearSupplies nearTargets ' +
-	        'needReload netId netObjNull newOverlay nextMenuItemIndex ' +
-	        'nextWeatherChange nMenuItems not numberToDate objectCurators ' +
-	        'objectFromNetId objectParent objNull objStatus onBriefingGroup ' +
-	        'onBriefingNotes onBriefingPlan onBriefingTeamSwitch ' +
-	        'onCommandModeChanged onDoubleClick onEachFrame onGroupIconClick ' +
-	        'onGroupIconOverEnter onGroupIconOverLeave ' +
-	        'onHCGroupSelectionChanged onMapSingleClick onPlayerConnected ' +
-	        'onPlayerDisconnected onPreloadFinished onPreloadStarted ' +
-	        'onShowNewObject onTeamSwitch openCuratorInterface openMap ' +
-	        'openYoutubeVideo opfor or orderGetIn overcast overcastForecast ' +
-	        'owner param params parseNumber parseText parsingNamespace ' +
-	        'particlesQuality pi pickWeaponPool pitch playableSlotsNumber ' +
-	        'playableUnits playAction playActionNow player playerRespawnTime ' +
-	        'playerSide playersNumber playGesture playMission playMove ' +
-	        'playMoveNow playMusic playScriptedMission playSound playSound3D ' +
-	        'position positionCameraToWorld posScreenToWorld posWorldToScreen ' +
-	        'ppEffectAdjust ppEffectCommit ppEffectCommitted ppEffectCreate ' +
-	        'ppEffectDestroy ppEffectEnable ppEffectForceInNVG precision ' +
-	        'preloadCamera preloadObject preloadSound preloadTitleObj ' +
-	        'preloadTitleRsc preprocessFile preprocessFileLineNumbers ' +
-	        'primaryWeapon primaryWeaponItems primaryWeaponMagazine priority ' +
-	        'private processDiaryLink productVersion profileName ' +
-	        'profileNamespace profileNameSteam progressLoadingScreen ' +
-	        'progressPosition progressSetPosition publicVariable ' +
-	        'publicVariableClient publicVariableServer pushBack putWeaponPool ' +
-	        'queryItemsPool queryMagazinePool queryWeaponPool rad ' +
-	        'radioChannelAdd radioChannelCreate radioChannelRemove ' +
-	        'radioChannelSetCallSign radioChannelSetLabel radioVolume rain ' +
-	        'rainbow random rank rankId rating rectangular registeredTasks ' +
-	        'registerTask reload reloadEnabled remoteControl remoteExec ' +
-	        'remoteExecCall removeAction removeAllActions ' +
-	        'removeAllAssignedItems removeAllContainers removeAllCuratorAddons ' +
-	        'removeAllCuratorCameraAreas removeAllCuratorEditingAreas ' +
-	        'removeAllEventHandlers removeAllHandgunItems removeAllItems ' +
-	        'removeAllItemsWithMagazines removeAllMissionEventHandlers ' +
-	        'removeAllMPEventHandlers removeAllMusicEventHandlers ' +
-	        'removeAllPrimaryWeaponItems removeAllWeapons removeBackpack ' +
-	        'removeBackpackGlobal removeCuratorAddons removeCuratorCameraArea ' +
-	        'removeCuratorEditableObjects removeCuratorEditingArea ' +
-	        'removeDrawIcon removeDrawLinks removeEventHandler ' +
-	        'removeFromRemainsCollector removeGoggles removeGroupIcon ' +
-	        'removeHandgunItem removeHeadgear removeItem removeItemFromBackpack ' +
-	        'removeItemFromUniform removeItemFromVest removeItems ' +
-	        'removeMagazine removeMagazineGlobal removeMagazines ' +
-	        'removeMagazinesTurret removeMagazineTurret removeMenuItem ' +
-	        'removeMissionEventHandler removeMPEventHandler ' +
-	        'removeMusicEventHandler removePrimaryWeaponItem ' +
-	        'removeSecondaryWeaponItem removeSimpleTask removeSwitchableUnit ' +
-	        'removeTeamMember removeUniform removeVest removeWeapon ' +
-	        'removeWeaponGlobal removeWeaponTurret requiredVersion ' +
-	        'resetCamShake resetSubgroupDirection resistance resize resources ' +
-	        'respawnVehicle restartEditorCamera reveal revealMine reverse ' +
-	        'reversedMouseY roadsConnectedTo roleDescription ' +
-	        'ropeAttachedObjects ropeAttachedTo ropeAttachEnabled ropeAttachTo ' +
-	        'ropeCreate ropeCut ropeEndPosition ropeLength ropes ropeUnwind ' +
-	        'ropeUnwound rotorsForcesRTD rotorsRpmRTD round runInitScript ' +
-	        'safeZoneH safeZoneW safeZoneWAbs safeZoneX safeZoneXAbs safeZoneY ' +
-	        'saveGame saveIdentity saveJoysticks saveOverlay ' +
-	        'saveProfileNamespace saveStatus saveVar savingEnabled say say2D ' +
-	        'say3D scopeName score scoreSide screenToWorld scriptDone ' +
-	        'scriptName scriptNull scudState secondaryWeapon ' +
-	        'secondaryWeaponItems secondaryWeaponMagazine select ' +
-	        'selectBestPlaces selectDiarySubject selectedEditorObjects ' +
-	        'selectEditorObject selectionPosition selectLeader selectNoPlayer ' +
-	        'selectPlayer selectWeapon selectWeaponTurret sendAUMessage ' +
-	        'sendSimpleCommand sendTask sendTaskResult sendUDPMessage ' +
-	        'serverCommand serverCommandAvailable serverCommandExecutable ' +
-	        'serverName serverTime set setAccTime setAirportSide setAmmo ' +
-	        'setAmmoCargo setAperture setApertureNew setArmoryPoints ' +
-	        'setAttributes setAutonomous setBehaviour setBleedingRemaining ' +
-	        'setCameraInterest setCamShakeDefParams setCamShakeParams ' +
-	        'setCamUseTi setCaptive setCenterOfMass setCollisionLight ' +
-	        'setCombatMode setCompassOscillation setCuratorCameraAreaCeiling ' +
-	        'setCuratorCoef setCuratorEditingAreaType setCuratorWaypointCost ' +
-	        'setCurrentChannel setCurrentTask setCurrentWaypoint setDamage ' +
-	        'setDammage setDate setDebriefingText setDefaultCamera ' +
-	        'setDestination setDetailMapBlendPars setDir setDirection ' +
-	        'setDrawIcon setDropInterval setEditorMode setEditorObjectScope ' +
-	        'setEffectCondition setFace setFaceAnimation setFatigue ' +
-	        'setFlagOwner setFlagSide setFlagTexture setFog setFog array ' +
-	        'setFormation setFormationTask setFormDir setFriend setFromEditor ' +
-	        'setFSMVariable setFuel setFuelCargo setGroupIcon ' +
-	        'setGroupIconParams setGroupIconsSelectable setGroupIconsVisible ' +
-	        'setGroupId setGroupIdGlobal setGroupOwner setGusts setHideBehind ' +
-	        'setHit setHitIndex setHitPointDamage setHorizonParallaxCoef ' +
-	        'setHUDMovementLevels setIdentity setImportance setLeader ' +
-	        'setLightAmbient setLightAttenuation setLightBrightness ' +
-	        'setLightColor setLightDayLight setLightFlareMaxDistance ' +
-	        'setLightFlareSize setLightIntensity setLightnings setLightUseFlare ' +
-	        'setLocalWindParams setMagazineTurretAmmo setMarkerAlpha ' +
-	        'setMarkerAlphaLocal setMarkerBrush setMarkerBrushLocal ' +
-	        'setMarkerColor setMarkerColorLocal setMarkerDir setMarkerDirLocal ' +
-	        'setMarkerPos setMarkerPosLocal setMarkerShape setMarkerShapeLocal ' +
-	        'setMarkerSize setMarkerSizeLocal setMarkerText setMarkerTextLocal ' +
-	        'setMarkerType setMarkerTypeLocal setMass setMimic setMousePosition ' +
-	        'setMusicEffect setMusicEventHandler setName setNameSound ' +
-	        'setObjectArguments setObjectMaterial setObjectProxy ' +
-	        'setObjectTexture setObjectTextureGlobal setObjectViewDistance ' +
-	        'setOvercast setOwner setOxygenRemaining setParticleCircle ' +
-	        'setParticleClass setParticleFire setParticleParams ' +
-	        'setParticleRandom setPilotLight setPiPEffect setPitch setPlayable ' +
-	        'setPlayerRespawnTime setPos setPosASL setPosASL2 setPosASLW ' +
-	        'setPosATL setPosition setPosWorld setRadioMsg setRain setRainbow ' +
-	        'setRandomLip setRank setRectangular setRepairCargo ' +
-	        'setShadowDistance setSide setSimpleTaskDescription ' +
-	        'setSimpleTaskDestination setSimpleTaskTarget setSimulWeatherLayers ' +
-	        'setSize setSkill setSkill array setSlingLoad setSoundEffect ' +
-	        'setSpeaker setSpeech setSpeedMode setStatValue setSuppression ' +
-	        'setSystemOfUnits setTargetAge setTaskResult setTaskState ' +
-	        'setTerrainGrid setText setTimeMultiplier setTitleEffect ' +
-	        'setTriggerActivation setTriggerArea setTriggerStatements ' +
-	        'setTriggerText setTriggerTimeout setTriggerType setType ' +
-	        'setUnconscious setUnitAbility setUnitPos setUnitPosWeak ' +
-	        'setUnitRank setUnitRecoilCoefficient setUnloadInCombat ' +
-	        'setUserActionText setVariable setVectorDir setVectorDirAndUp ' +
-	        'setVectorUp setVehicleAmmo setVehicleAmmoDef setVehicleArmor ' +
-	        'setVehicleId setVehicleLock setVehiclePosition setVehicleTiPars ' +
-	        'setVehicleVarName setVelocity setVelocityTransformation ' +
-	        'setViewDistance setVisibleIfTreeCollapsed setWaves ' +
-	        'setWaypointBehaviour setWaypointCombatMode ' +
-	        'setWaypointCompletionRadius setWaypointDescription ' +
-	        'setWaypointFormation setWaypointHousePosition ' +
-	        'setWaypointLoiterRadius setWaypointLoiterType setWaypointName ' +
-	        'setWaypointPosition setWaypointScript setWaypointSpeed ' +
-	        'setWaypointStatements setWaypointTimeout setWaypointType ' +
-	        'setWaypointVisible setWeaponReloadingTime setWind setWindDir ' +
-	        'setWindForce setWindStr setWPPos show3DIcons showChat ' +
-	        'showCinemaBorder showCommandingMenu showCompass showCuratorCompass ' +
-	        'showGPS showHUD showLegend showMap shownArtilleryComputer ' +
-	        'shownChat shownCompass shownCuratorCompass showNewEditorObject ' +
-	        'shownGPS shownHUD shownMap shownPad shownRadio shownUAVFeed ' +
-	        'shownWarrant shownWatch showPad showRadio showSubtitles ' +
-	        'showUAVFeed showWarrant showWatch showWaypoint side sideChat ' +
-	        'sideEnemy sideFriendly sideLogic sideRadio sideUnknown simpleTasks ' +
-	        'simulationEnabled simulCloudDensity simulCloudOcclusion ' +
-	        'simulInClouds simulWeatherSync sin size sizeOf skill skillFinal ' +
-	        'skipTime sleep sliderPosition sliderRange sliderSetPosition ' +
-	        'sliderSetRange sliderSetSpeed sliderSpeed slingLoadAssistantShown ' +
-	        'soldierMagazines someAmmo sort soundVolume spawn speaker speed ' +
-	        'speedMode splitString sqrt squadParams stance startLoadingScreen ' +
-	        'step stop stopped str sunOrMoon supportInfo suppressFor ' +
-	        'surfaceIsWater surfaceNormal surfaceType swimInDepth ' +
-	        'switchableUnits switchAction switchCamera switchGesture ' +
-	        'switchLight switchMove synchronizedObjects synchronizedTriggers ' +
-	        'synchronizedWaypoints synchronizeObjectsAdd ' +
-	        'synchronizeObjectsRemove synchronizeTrigger synchronizeWaypoint ' +
-	        'synchronizeWaypoint trigger systemChat systemOfUnits tan ' +
-	        'targetKnowledge targetsAggregate targetsQuery taskChildren ' +
-	        'taskCompleted taskDescription taskDestination taskHint taskNull ' +
-	        'taskParent taskResult taskState teamMember teamMemberNull teamName ' +
-	        'teams teamSwitch teamSwitchEnabled teamType terminate ' +
-	        'terrainIntersect terrainIntersectASL text text location textLog ' +
-	        'textLogFormat tg time timeMultiplier titleCut titleFadeOut ' +
-	        'titleObj titleRsc titleText toArray toLower toString toUpper ' +
-	        'triggerActivated triggerActivation triggerArea ' +
-	        'triggerAttachedVehicle triggerAttachObject triggerAttachVehicle ' +
-	        'triggerStatements triggerText triggerTimeout triggerTimeoutCurrent ' +
-	        'triggerType turretLocal turretOwner turretUnit tvAdd tvClear ' +
-	        'tvCollapse tvCount tvCurSel tvData tvDelete tvExpand tvPicture ' +
-	        'tvSetCurSel tvSetData tvSetPicture tvSetPictureColor tvSetTooltip ' +
-	        'tvSetValue tvSort tvSortByValue tvText tvValue type typeName ' +
-	        'typeOf UAVControl uiNamespace uiSleep unassignCurator unassignItem ' +
-	        'unassignTeam unassignVehicle underwater uniform uniformContainer ' +
-	        'uniformItems uniformMagazines unitAddons unitBackpack unitPos ' +
-	        'unitReady unitRecoilCoefficient units unitsBelowHeight unlinkItem ' +
-	        'unlockAchievement unregisterTask updateDrawIcon updateMenuItem ' +
-	        'updateObjectTree useAudioTimeForMoves vectorAdd vectorCos ' +
-	        'vectorCrossProduct vectorDiff vectorDir vectorDirVisual ' +
-	        'vectorDistance vectorDistanceSqr vectorDotProduct vectorFromTo ' +
-	        'vectorMagnitude vectorMagnitudeSqr vectorMultiply vectorNormalized ' +
-	        'vectorUp vectorUpVisual vehicle vehicleChat vehicleRadio vehicles ' +
-	        'vehicleVarName velocity velocityModelSpace verifySignature vest ' +
-	        'vestContainer vestItems vestMagazines viewDistance visibleCompass ' +
-	        'visibleGPS visibleMap visiblePosition visiblePositionASL ' +
-	        'visibleWatch waitUntil waves waypointAttachedObject ' +
-	        'waypointAttachedVehicle waypointAttachObject waypointAttachVehicle ' +
-	        'waypointBehaviour waypointCombatMode waypointCompletionRadius ' +
-	        'waypointDescription waypointFormation waypointHousePosition ' +
-	        'waypointLoiterRadius waypointLoiterType waypointName ' +
-	        'waypointPosition waypoints waypointScript waypointsEnabledUAV ' +
-	        'waypointShow waypointSpeed waypointStatements waypointTimeout ' +
-	        'waypointTimeoutCurrent waypointType waypointVisible ' +
-	        'weaponAccessories weaponCargo weaponDirection weaponLowered ' +
-	        'weapons weaponsItems weaponsItemsCargo weaponState weaponsTurret ' +
-	        'weightRTD west WFSideText wind windDir windStr wingsForcesRTD ' +
-	        'worldName worldSize worldToModel worldToModelVisual worldToScreen ' +
-	        '_forEachIndex _this _x',
+	        'abs accTime acos action actionIDs actionKeys actionKeysImages actionKeysNames ' +
+	        'actionKeysNamesArray actionName actionParams activateAddons activatedAddons activateKey ' +
+	        'add3DENConnection add3DENEventHandler add3DENLayer addAction addBackpack addBackpackCargo ' +
+	        'addBackpackCargoGlobal addBackpackGlobal addCamShake addCuratorAddons addCuratorCameraArea ' +
+	        'addCuratorEditableObjects addCuratorEditingArea addCuratorPoints addEditorObject addEventHandler ' +
+	        'addGoggles addGroupIcon addHandgunItem addHeadgear addItem addItemCargo addItemCargoGlobal ' +
+	        'addItemPool addItemToBackpack addItemToUniform addItemToVest addLiveStats addMagazine ' +
+	        'addMagazineAmmoCargo addMagazineCargo addMagazineCargoGlobal addMagazineGlobal addMagazinePool ' +
+	        'addMagazines addMagazineTurret addMenu addMenuItem addMissionEventHandler addMPEventHandler ' +
+	        'addMusicEventHandler addOwnedMine addPlayerScores addPrimaryWeaponItem ' +
+	        'addPublicVariableEventHandler addRating addResources addScore addScoreSide addSecondaryWeaponItem ' +
+	        'addSwitchableUnit addTeamMember addToRemainsCollector addUniform addVehicle addVest addWaypoint ' +
+	        'addWeapon addWeaponCargo addWeaponCargoGlobal addWeaponGlobal addWeaponItem addWeaponPool ' +
+	        'addWeaponTurret agent agents AGLToASL aimedAtTarget aimPos airDensityRTD airportSide ' +
+	        'AISFinishHeal alive all3DENEntities allControls allCurators allCutLayers allDead allDeadMen ' +
+	        'allDisplays allGroups allMapMarkers allMines allMissionObjects allow3DMode allowCrewInImmobile ' +
+	        'allowCuratorLogicIgnoreAreas allowDamage allowDammage allowFileOperations allowFleeing allowGetIn ' +
+	        'allowSprint allPlayers allSites allTurrets allUnits allUnitsUAV allVariables ammo and animate ' +
+	        'animateDoor animateSource animationNames animationPhase animationSourcePhase animationState ' +
+	        'append apply armoryPoints arrayIntersect asin ASLToAGL ASLToATL assert assignAsCargo ' +
+	        'assignAsCargoIndex assignAsCommander assignAsDriver assignAsGunner assignAsTurret assignCurator ' +
+	        'assignedCargo assignedCommander assignedDriver assignedGunner assignedItems assignedTarget ' +
+	        'assignedTeam assignedVehicle assignedVehicleRole assignItem assignTeam assignToAirport atan atan2 ' +
+	        'atg ATLToASL attachedObject attachedObjects attachedTo attachObject attachTo attackEnabled ' +
+	        'backpack backpackCargo backpackContainer backpackItems backpackMagazines backpackSpaceFor ' +
+	        'behaviour benchmark binocular blufor boundingBox boundingBoxReal boundingCenter breakOut breakTo ' +
+	        'briefingName buildingExit buildingPos buttonAction buttonSetAction cadetMode call callExtension ' +
+	        'camCommand camCommit camCommitPrepared camCommitted camConstuctionSetParams camCreate camDestroy ' +
+	        'cameraEffect cameraEffectEnableHUD cameraInterest cameraOn cameraView campaignConfigFile ' +
+	        'camPreload camPreloaded camPrepareBank camPrepareDir camPrepareDive camPrepareFocus camPrepareFov ' +
+	        'camPrepareFovRange camPreparePos camPrepareRelPos camPrepareTarget camSetBank camSetDir ' +
+	        'camSetDive camSetFocus camSetFov camSetFovRange camSetPos camSetRelPos camSetTarget camTarget ' +
+	        'camUseNVG canAdd canAddItemToBackpack canAddItemToUniform canAddItemToVest ' +
+	        'cancelSimpleTaskDestination canFire canMove canSlingLoad canStand canSuspend canUnloadInCombat ' +
+	        'canVehicleCargo captive captiveNum cbChecked cbSetChecked ceil channelEnabled cheatsEnabled ' +
+	        'checkAIFeature checkVisibility civilian className clearAllItemsFromBackpack clearBackpackCargo ' +
+	        'clearBackpackCargoGlobal clearGroupIcons clearItemCargo clearItemCargoGlobal clearItemPool ' +
+	        'clearMagazineCargo clearMagazineCargoGlobal clearMagazinePool clearOverlay clearRadio ' +
+	        'clearWeaponCargo clearWeaponCargoGlobal clearWeaponPool clientOwner closeDialog closeDisplay ' +
+	        'closeOverlay collapseObjectTree collect3DENHistory combatMode commandArtilleryFire commandChat ' +
+	        'commander commandFire commandFollow commandFSM commandGetOut commandingMenu commandMove ' +
+	        'commandRadio commandStop commandSuppressiveFire commandTarget commandWatch comment commitOverlay ' +
+	        'compile compileFinal completedFSM composeText configClasses configFile configHierarchy configName ' +
+	        'configNull configProperties configSourceAddonList configSourceMod configSourceModList ' +
+	        'connectTerminalToUAV controlNull controlsGroupCtrl copyFromClipboard copyToClipboard ' +
+	        'copyWaypoints cos count countEnemy countFriendly countSide countType countUnknown ' +
+	        'create3DENComposition create3DENEntity createAgent createCenter createDialog createDiaryLink ' +
+	        'createDiaryRecord createDiarySubject createDisplay createGearDialog createGroup ' +
+	        'createGuardedPoint createLocation createMarker createMarkerLocal createMenu createMine ' +
+	        'createMissionDisplay createMPCampaignDisplay createSimpleObject createSimpleTask createSite ' +
+	        'createSoundSource createTask createTeam createTrigger createUnit createVehicle createVehicleCrew ' +
+	        'createVehicleLocal crew ctrlActivate ctrlAddEventHandler ctrlAngle ctrlAutoScrollDelay ' +
+	        'ctrlAutoScrollRewind ctrlAutoScrollSpeed ctrlChecked ctrlClassName ctrlCommit ctrlCommitted ' +
+	        'ctrlCreate ctrlDelete ctrlEnable ctrlEnabled ctrlFade ctrlHTMLLoaded ctrlIDC ctrlIDD ' +
+	        'ctrlMapAnimAdd ctrlMapAnimClear ctrlMapAnimCommit ctrlMapAnimDone ctrlMapCursor ctrlMapMouseOver ' +
+	        'ctrlMapScale ctrlMapScreenToWorld ctrlMapWorldToScreen ctrlModel ctrlModelDirAndUp ctrlModelScale ' +
+	        'ctrlParent ctrlParentControlsGroup ctrlPosition ctrlRemoveAllEventHandlers ctrlRemoveEventHandler ' +
+	        'ctrlScale ctrlSetActiveColor ctrlSetAngle ctrlSetAutoScrollDelay ctrlSetAutoScrollRewind ' +
+	        'ctrlSetAutoScrollSpeed ctrlSetBackgroundColor ctrlSetChecked ctrlSetEventHandler ctrlSetFade ' +
+	        'ctrlSetFocus ctrlSetFont ctrlSetFontH1 ctrlSetFontH1B ctrlSetFontH2 ctrlSetFontH2B ctrlSetFontH3 ' +
+	        'ctrlSetFontH3B ctrlSetFontH4 ctrlSetFontH4B ctrlSetFontH5 ctrlSetFontH5B ctrlSetFontH6 ' +
+	        'ctrlSetFontH6B ctrlSetFontHeight ctrlSetFontHeightH1 ctrlSetFontHeightH2 ctrlSetFontHeightH3 ' +
+	        'ctrlSetFontHeightH4 ctrlSetFontHeightH5 ctrlSetFontHeightH6 ctrlSetFontHeightSecondary ' +
+	        'ctrlSetFontP ctrlSetFontPB ctrlSetFontSecondary ctrlSetForegroundColor ctrlSetModel ' +
+	        'ctrlSetModelDirAndUp ctrlSetModelScale ctrlSetPosition ctrlSetScale ctrlSetStructuredText ' +
+	        'ctrlSetText ctrlSetTextColor ctrlSetTooltip ctrlSetTooltipColorBox ctrlSetTooltipColorShade ' +
+	        'ctrlSetTooltipColorText ctrlShow ctrlShown ctrlText ctrlTextHeight ctrlType ctrlVisible ' +
+	        'curatorAddons curatorCamera curatorCameraArea curatorCameraAreaCeiling curatorCoef ' +
+	        'curatorEditableObjects curatorEditingArea curatorEditingAreaType curatorMouseOver curatorPoints ' +
+	        'curatorRegisteredObjects curatorSelected curatorWaypointCost current3DENOperation currentChannel ' +
+	        'currentCommand currentMagazine currentMagazineDetail currentMagazineDetailTurret ' +
+	        'currentMagazineTurret currentMuzzle currentNamespace currentTask currentTasks currentThrowable ' +
+	        'currentVisionMode currentWaypoint currentWeapon currentWeaponMode currentWeaponTurret ' +
+	        'currentZeroing cursorObject cursorTarget customChat customRadio cutFadeOut cutObj cutRsc cutText ' +
+	        'damage date dateToNumber daytime deActivateKey debriefingText debugFSM debugLog deg ' +
+	        'delete3DENEntities deleteAt deleteCenter deleteCollection deleteEditorObject deleteGroup ' +
+	        'deleteIdentity deleteLocation deleteMarker deleteMarkerLocal deleteRange deleteResources ' +
+	        'deleteSite deleteStatus deleteTeam deleteVehicle deleteVehicleCrew deleteWaypoint detach ' +
+	        'detectedMines diag_activeMissionFSMs diag_activeScripts diag_activeSQFScripts ' +
+	        'diag_activeSQSScripts diag_captureFrame diag_captureSlowFrame diag_codePerformance diag_drawMode ' +
+	        'diag_enable diag_enabled diag_fps diag_fpsMin diag_frameNo diag_list diag_log diag_logSlowFrame ' +
+	        'diag_mergeConfigFile diag_recordTurretLimits diag_tickTime diag_toggle dialog diarySubjectExists ' +
+	        'didJIP didJIPOwner difficulty difficultyEnabled difficultyEnabledRTD difficultyOption direction ' +
+	        'directSay disableAI disableCollisionWith disableConversation disableDebriefingStats ' +
+	        'disableNVGEquipment disableRemoteSensors disableSerialization disableTIEquipment ' +
+	        'disableUAVConnectability disableUserInput displayAddEventHandler displayCtrl displayNull ' +
+	        'displayParent displayRemoveAllEventHandlers displayRemoveEventHandler displaySetEventHandler ' +
+	        'dissolveTeam distance distance2D distanceSqr distributionRegion do3DENAction doArtilleryFire ' +
+	        'doFire doFollow doFSM doGetOut doMove doorPhase doStop doSuppressiveFire doTarget doWatch ' +
+	        'drawArrow drawEllipse drawIcon drawIcon3D drawLine drawLine3D drawLink drawLocation drawPolygon ' +
+	        'drawRectangle driver drop east echo edit3DENMissionAttributes editObject editorSetEventHandler ' +
+	        'effectiveCommander emptyPositions enableAI enableAIFeature enableAimPrecision enableAttack ' +
+	        'enableAudioFeature enableCamShake enableCaustics enableChannel enableCollisionWith enableCopilot ' +
+	        'enableDebriefingStats enableDiagLegend enableEndDialog enableEngineArtillery enableEnvironment ' +
+	        'enableFatigue enableGunLights enableIRLasers enableMimics enablePersonTurret enableRadio ' +
+	        'enableReload enableRopeAttach enableSatNormalOnDetail enableSaving enableSentences ' +
+	        'enableSimulation enableSimulationGlobal enableStamina enableTeamSwitch enableUAVConnectability ' +
+	        'enableUAVWaypoints enableVehicleCargo endLoadingScreen endMission engineOn enginesIsOnRTD ' +
+	        'enginesRpmRTD enginesTorqueRTD entities estimatedEndServerTime estimatedTimeLeft ' +
+	        'evalObjectArgument everyBackpack everyContainer exec execEditorScript execFSM execVM exp ' +
+	        'expectedDestination exportJIPMessages eyeDirection eyePos face faction fadeMusic fadeRadio ' +
+	        'fadeSound fadeSpeech failMission fillWeaponsFromPool find findCover findDisplay findEditorObject ' +
+	        'findEmptyPosition findEmptyPositionReady findNearestEnemy finishMissionInit finite fire ' +
+	        'fireAtTarget firstBackpack flag flagOwner flagSide flagTexture fleeing floor flyInHeight ' +
+	        'flyInHeightASL fog fogForecast fogParams forceAddUniform forcedMap forceEnd forceMap forceRespawn ' +
+	        'forceSpeed forceWalk forceWeaponFire forceWeatherChange forEachMember forEachMemberAgent ' +
+	        'forEachMemberTeam format formation formationDirection formationLeader formationMembers ' +
+	        'formationPosition formationTask formatText formLeader freeLook fromEditor fuel fullCrew ' +
+	        'gearIDCAmmoCount gearSlotAmmoCount gearSlotData get3DENActionState get3DENAttribute get3DENCamera ' +
+	        'get3DENConnections get3DENEntity get3DENEntityID get3DENGrid get3DENIconsVisible ' +
+	        'get3DENLayerEntities get3DENLinesVisible get3DENMissionAttribute get3DENMouseOver get3DENSelected ' +
+	        'getAimingCoef getAllHitPointsDamage getAllOwnedMines getAmmoCargo getAnimAimPrecision ' +
+	        'getAnimSpeedCoef getArray getArtilleryAmmo getArtilleryComputerSettings getArtilleryETA ' +
+	        'getAssignedCuratorLogic getAssignedCuratorUnit getBackpackCargo getBleedingRemaining ' +
+	        'getBurningValue getCameraViewDirection getCargoIndex getCenterOfMass getClientState ' +
+	        'getClientStateNumber getConnectedUAV getCustomAimingCoef getDammage getDescription getDir ' +
+	        'getDirVisual getDLCs getEditorCamera getEditorMode getEditorObjectScope getElevationOffset ' +
+	        'getFatigue getFriend getFSMVariable getFuelCargo getGroupIcon getGroupIconParams getGroupIcons ' +
+	        'getHideFrom getHit getHitIndex getHitPointDamage getItemCargo getMagazineCargo getMarkerColor ' +
+	        'getMarkerPos getMarkerSize getMarkerType getMass getMissionConfig getMissionConfigValue ' +
+	        'getMissionDLCs getMissionLayerEntities getModelInfo getMousePosition getNumber getObjectArgument ' +
+	        'getObjectChildren getObjectDLC getObjectMaterials getObjectProxy getObjectTextures getObjectType ' +
+	        'getObjectViewDistance getOxygenRemaining getPersonUsedDLCs getPilotCameraDirection ' +
+	        'getPilotCameraPosition getPilotCameraRotation getPilotCameraTarget getPlayerChannel ' +
+	        'getPlayerScores getPlayerUID getPos getPosASL getPosASLVisual getPosASLW getPosATL ' +
+	        'getPosATLVisual getPosVisual getPosWorld getRelDir getRelPos getRemoteSensorsDisabled ' +
+	        'getRepairCargo getResolution getShadowDistance getShotParents getSlingLoad getSpeed getStamina ' +
+	        'getStatValue getSuppression getTerrainHeightASL getText getUnitLoadout getUnitTrait getVariable ' +
+	        'getVehicleCargo getWeaponCargo getWeaponSway getWPPos glanceAt globalChat globalRadio goggles ' +
+	        'goto group groupChat groupFromNetId groupIconSelectable groupIconsVisible groupId groupOwner ' +
+	        'groupRadio groupSelectedUnits groupSelectUnit grpNull gunner gusts halt handgunItems ' +
+	        'handgunMagazine handgunWeapon handsHit hasInterface hasPilotCamera hasWeapon hcAllGroups ' +
+	        'hcGroupParams hcLeader hcRemoveAllGroups hcRemoveGroup hcSelected hcSelectGroup hcSetGroup ' +
+	        'hcShowBar hcShownBar headgear hideBody hideObject hideObjectGlobal hideSelection hint hintC ' +
+	        'hintCadet hintSilent hmd hostMission htmlLoad HUDMovementLevels humidity image importAllGroups ' +
+	        'importance in inArea inAreaArray incapacitatedState independent inflame inflamed ' +
+	        'inGameUISetEventHandler inheritsFrom initAmbientLife inPolygon inputAction inRangeOfArtillery ' +
+	        'insertEditorObject intersect is3DEN is3DENMultiplayer isAbleToBreathe isAgent isArray ' +
+	        'isAutoHoverOn isAutonomous isAutotest isBleeding isBurning isClass isCollisionLightOn ' +
+	        'isCopilotEnabled isDedicated isDLCAvailable isEngineOn isEqualTo isEqualType isEqualTypeAll ' +
+	        'isEqualTypeAny isEqualTypeArray isEqualTypeParams isFilePatchingEnabled isFlashlightOn ' +
+	        'isFlatEmpty isForcedWalk isFormationLeader isHidden isInRemainsCollector ' +
+	        'isInstructorFigureEnabled isIRLaserOn isKeyActive isKindOf isLightOn isLocalized isManualFire ' +
+	        'isMarkedForCollection isMultiplayer isMultiplayerSolo isNil isNull isNumber isObjectHidden ' +
+	        'isObjectRTD isOnRoad isPipEnabled isPlayer isRealTime isRemoteExecuted isRemoteExecutedJIP ' +
+	        'isServer isShowing3DIcons isSprintAllowed isStaminaEnabled isSteamMission ' +
+	        'isStreamFriendlyUIEnabled isText isTouchingGround isTurnedOut isTutHintsEnabled isUAVConnectable ' +
+	        'isUAVConnected isUniformAllowed isVehicleCargo isWalking isWeaponDeployed isWeaponRested ' +
+	        'itemCargo items itemsWithMagazines join joinAs joinAsSilent joinSilent joinString kbAddDatabase ' +
+	        'kbAddDatabaseTargets kbAddTopic kbHasTopic kbReact kbRemoveTopic kbTell kbWasSaid keyImage ' +
+	        'keyName knowsAbout land landAt landResult language laserTarget lbAdd lbClear lbColor lbCurSel ' +
+	        'lbData lbDelete lbIsSelected lbPicture lbSelection lbSetColor lbSetCurSel lbSetData lbSetPicture ' +
+	        'lbSetPictureColor lbSetPictureColorDisabled lbSetPictureColorSelected lbSetSelectColor ' +
+	        'lbSetSelectColorRight lbSetSelected lbSetTooltip lbSetValue lbSize lbSort lbSortByValue lbText ' +
+	        'lbValue leader leaderboardDeInit leaderboardGetRows leaderboardInit leaveVehicle libraryCredits ' +
+	        'libraryDisclaimers lifeState lightAttachObject lightDetachObject lightIsOn lightnings limitSpeed ' +
+	        'linearConversion lineBreak lineIntersects lineIntersectsObjs lineIntersectsSurfaces ' +
+	        'lineIntersectsWith linkItem list listObjects ln lnbAddArray lnbAddColumn lnbAddRow lnbClear ' +
+	        'lnbColor lnbCurSelRow lnbData lnbDeleteColumn lnbDeleteRow lnbGetColumnsPosition lnbPicture ' +
+	        'lnbSetColor lnbSetColumnsPos lnbSetCurSelRow lnbSetData lnbSetPicture lnbSetText lnbSetValue ' +
+	        'lnbSize lnbText lnbValue load loadAbs loadBackpack loadFile loadGame loadIdentity loadMagazine ' +
+	        'loadOverlay loadStatus loadUniform loadVest local localize locationNull locationPosition lock ' +
+	        'lockCameraTo lockCargo lockDriver locked lockedCargo lockedDriver lockedTurret lockIdentity ' +
+	        'lockTurret lockWP log logEntities logNetwork logNetworkTerminate lookAt lookAtPos magazineCargo ' +
+	        'magazines magazinesAllTurrets magazinesAmmo magazinesAmmoCargo magazinesAmmoFull magazinesDetail ' +
+	        'magazinesDetailBackpack magazinesDetailUniform magazinesDetailVest magazinesTurret ' +
+	        'magazineTurretAmmo mapAnimAdd mapAnimClear mapAnimCommit mapAnimDone mapCenterOnCamera ' +
+	        'mapGridPosition markAsFinishedOnSteam markerAlpha markerBrush markerColor markerDir markerPos ' +
+	        'markerShape markerSize markerText markerType max members menuAction menuAdd menuChecked menuClear ' +
+	        'menuCollapse menuData menuDelete menuEnable menuEnabled menuExpand menuHover menuPicture ' +
+	        'menuSetAction menuSetCheck menuSetData menuSetPicture menuSetValue menuShortcut menuShortcutText ' +
+	        'menuSize menuSort menuText menuURL menuValue min mineActive mineDetectedBy missionConfigFile ' +
+	        'missionDifficulty missionName missionNamespace missionStart missionVersion mod modelToWorld ' +
+	        'modelToWorldVisual modParams moonIntensity moonPhase morale move move3DENCamera moveInAny ' +
+	        'moveInCargo moveInCommander moveInDriver moveInGunner moveInTurret moveObjectToEnd moveOut ' +
+	        'moveTime moveTo moveToCompleted moveToFailed musicVolume name nameSound nearEntities ' +
+	        'nearestBuilding nearestLocation nearestLocations nearestLocationWithDubbing nearestObject ' +
+	        'nearestObjects nearestTerrainObjects nearObjects nearObjectsReady nearRoads nearSupplies ' +
+	        'nearTargets needReload netId netObjNull newOverlay nextMenuItemIndex nextWeatherChange nMenuItems ' +
+	        'not numberToDate objectCurators objectFromNetId objectParent objNull objStatus onBriefingGroup ' +
+	        'onBriefingNotes onBriefingPlan onBriefingTeamSwitch onCommandModeChanged onDoubleClick ' +
+	        'onEachFrame onGroupIconClick onGroupIconOverEnter onGroupIconOverLeave onHCGroupSelectionChanged ' +
+	        'onMapSingleClick onPlayerConnected onPlayerDisconnected onPreloadFinished onPreloadStarted ' +
+	        'onShowNewObject onTeamSwitch openCuratorInterface openDLCPage openMap openYoutubeVideo opfor or ' +
+	        'orderGetIn overcast overcastForecast owner param params parseNumber parseText parsingNamespace ' +
+	        'particlesQuality pi pickWeaponPool pitch pixelGrid pixelGridBase pixelGridNoUIScale pixelH pixelW ' +
+	        'playableSlotsNumber playableUnits playAction playActionNow player playerRespawnTime playerSide ' +
+	        'playersNumber playGesture playMission playMove playMoveNow playMusic playScriptedMission ' +
+	        'playSound playSound3D position positionCameraToWorld posScreenToWorld posWorldToScreen ' +
+	        'ppEffectAdjust ppEffectCommit ppEffectCommitted ppEffectCreate ppEffectDestroy ppEffectEnable ' +
+	        'ppEffectEnabled ppEffectForceInNVG precision preloadCamera preloadObject preloadSound ' +
+	        'preloadTitleObj preloadTitleRsc preprocessFile preprocessFileLineNumbers primaryWeapon ' +
+	        'primaryWeaponItems primaryWeaponMagazine priority private processDiaryLink productVersion ' +
+	        'profileName profileNamespace profileNameSteam progressLoadingScreen progressPosition ' +
+	        'progressSetPosition publicVariable publicVariableClient publicVariableServer pushBack ' +
+	        'pushBackUnique putWeaponPool queryItemsPool queryMagazinePool queryWeaponPool rad radioChannelAdd ' +
+	        'radioChannelCreate radioChannelRemove radioChannelSetCallSign radioChannelSetLabel radioVolume ' +
+	        'rain rainbow random rank rankId rating rectangular registeredTasks registerTask reload ' +
+	        'reloadEnabled remoteControl remoteExec remoteExecCall remove3DENConnection remove3DENEventHandler ' +
+	        'remove3DENLayer removeAction removeAll3DENEventHandlers removeAllActions removeAllAssignedItems ' +
+	        'removeAllContainers removeAllCuratorAddons removeAllCuratorCameraAreas ' +
+	        'removeAllCuratorEditingAreas removeAllEventHandlers removeAllHandgunItems removeAllItems ' +
+	        'removeAllItemsWithMagazines removeAllMissionEventHandlers removeAllMPEventHandlers ' +
+	        'removeAllMusicEventHandlers removeAllOwnedMines removeAllPrimaryWeaponItems removeAllWeapons ' +
+	        'removeBackpack removeBackpackGlobal removeCuratorAddons removeCuratorCameraArea ' +
+	        'removeCuratorEditableObjects removeCuratorEditingArea removeDrawIcon removeDrawLinks ' +
+	        'removeEventHandler removeFromRemainsCollector removeGoggles removeGroupIcon removeHandgunItem ' +
+	        'removeHeadgear removeItem removeItemFromBackpack removeItemFromUniform removeItemFromVest ' +
+	        'removeItems removeMagazine removeMagazineGlobal removeMagazines removeMagazinesTurret ' +
+	        'removeMagazineTurret removeMenuItem removeMissionEventHandler removeMPEventHandler ' +
+	        'removeMusicEventHandler removeOwnedMine removePrimaryWeaponItem removeSecondaryWeaponItem ' +
+	        'removeSimpleTask removeSwitchableUnit removeTeamMember removeUniform removeVest removeWeapon ' +
+	        'removeWeaponGlobal removeWeaponTurret requiredVersion resetCamShake resetSubgroupDirection ' +
+	        'resistance resize resources respawnVehicle restartEditorCamera reveal revealMine reverse ' +
+	        'reversedMouseY roadAt roadsConnectedTo roleDescription ropeAttachedObjects ropeAttachedTo ' +
+	        'ropeAttachEnabled ropeAttachTo ropeCreate ropeCut ropeDestroy ropeDetach ropeEndPosition ' +
+	        'ropeLength ropes ropeUnwind ropeUnwound rotorsForcesRTD rotorsRpmRTD round runInitScript ' +
+	        'safeZoneH safeZoneW safeZoneWAbs safeZoneX safeZoneXAbs safeZoneY save3DENInventory saveGame ' +
+	        'saveIdentity saveJoysticks saveOverlay saveProfileNamespace saveStatus saveVar savingEnabled say ' +
+	        'say2D say3D scopeName score scoreSide screenshot screenToWorld scriptDone scriptName scriptNull ' +
+	        'scudState secondaryWeapon secondaryWeaponItems secondaryWeaponMagazine select selectBestPlaces ' +
+	        'selectDiarySubject selectedEditorObjects selectEditorObject selectionNames selectionPosition ' +
+	        'selectLeader selectMax selectMin selectNoPlayer selectPlayer selectRandom selectWeapon ' +
+	        'selectWeaponTurret sendAUMessage sendSimpleCommand sendTask sendTaskResult sendUDPMessage ' +
+	        'serverCommand serverCommandAvailable serverCommandExecutable serverName serverTime set ' +
+	        'set3DENAttribute set3DENAttributes set3DENGrid set3DENIconsVisible set3DENLayer ' +
+	        'set3DENLinesVisible set3DENMissionAttributes set3DENModelsVisible set3DENObjectType ' +
+	        'set3DENSelected setAccTime setAirportSide setAmmo setAmmoCargo setAnimSpeedCoef setAperture ' +
+	        'setApertureNew setArmoryPoints setAttributes setAutonomous setBehaviour setBleedingRemaining ' +
+	        'setCameraInterest setCamShakeDefParams setCamShakeParams setCamUseTi setCaptive setCenterOfMass ' +
+	        'setCollisionLight setCombatMode setCompassOscillation setCuratorCameraAreaCeiling setCuratorCoef ' +
+	        'setCuratorEditingAreaType setCuratorWaypointCost setCurrentChannel setCurrentTask ' +
+	        'setCurrentWaypoint setCustomAimCoef setDamage setDammage setDate setDebriefingText ' +
+	        'setDefaultCamera setDestination setDetailMapBlendPars setDir setDirection setDrawIcon ' +
+	        'setDropInterval setEditorMode setEditorObjectScope setEffectCondition setFace setFaceAnimation ' +
+	        'setFatigue setFlagOwner setFlagSide setFlagTexture setFog setFormation setFormationTask ' +
+	        'setFormDir setFriend setFromEditor setFSMVariable setFuel setFuelCargo setGroupIcon ' +
+	        'setGroupIconParams setGroupIconsSelectable setGroupIconsVisible setGroupId setGroupIdGlobal ' +
+	        'setGroupOwner setGusts setHideBehind setHit setHitIndex setHitPointDamage setHorizonParallaxCoef ' +
+	        'setHUDMovementLevels setIdentity setImportance setLeader setLightAmbient setLightAttenuation ' +
+	        'setLightBrightness setLightColor setLightDayLight setLightFlareMaxDistance setLightFlareSize ' +
+	        'setLightIntensity setLightnings setLightUseFlare setLocalWindParams setMagazineTurretAmmo ' +
+	        'setMarkerAlpha setMarkerAlphaLocal setMarkerBrush setMarkerBrushLocal setMarkerColor ' +
+	        'setMarkerColorLocal setMarkerDir setMarkerDirLocal setMarkerPos setMarkerPosLocal setMarkerShape ' +
+	        'setMarkerShapeLocal setMarkerSize setMarkerSizeLocal setMarkerText setMarkerTextLocal ' +
+	        'setMarkerType setMarkerTypeLocal setMass setMimic setMousePosition setMusicEffect ' +
+	        'setMusicEventHandler setName setNameSound setObjectArguments setObjectMaterial ' +
+	        'setObjectMaterialGlobal setObjectProxy setObjectTexture setObjectTextureGlobal ' +
+	        'setObjectViewDistance setOvercast setOwner setOxygenRemaining setParticleCircle setParticleClass ' +
+	        'setParticleFire setParticleParams setParticleRandom setPilotCameraDirection ' +
+	        'setPilotCameraRotation setPilotCameraTarget setPilotLight setPiPEffect setPitch setPlayable ' +
+	        'setPlayerRespawnTime setPos setPosASL setPosASL2 setPosASLW setPosATL setPosition setPosWorld ' +
+	        'setRadioMsg setRain setRainbow setRandomLip setRank setRectangular setRepairCargo ' +
+	        'setShadowDistance setShotParents setSide setSimpleTaskAlwaysVisible setSimpleTaskCustomData ' +
+	        'setSimpleTaskDescription setSimpleTaskDestination setSimpleTaskTarget setSimpleTaskType ' +
+	        'setSimulWeatherLayers setSize setSkill setSlingLoad setSoundEffect setSpeaker setSpeech ' +
+	        'setSpeedMode setStamina setStaminaScheme setStatValue setSuppression setSystemOfUnits ' +
+	        'setTargetAge setTaskResult setTaskState setTerrainGrid setText setTimeMultiplier setTitleEffect ' +
+	        'setTriggerActivation setTriggerArea setTriggerStatements setTriggerText setTriggerTimeout ' +
+	        'setTriggerType setType setUnconscious setUnitAbility setUnitLoadout setUnitPos setUnitPosWeak ' +
+	        'setUnitRank setUnitRecoilCoefficient setUnitTrait setUnloadInCombat setUserActionText setVariable ' +
+	        'setVectorDir setVectorDirAndUp setVectorUp setVehicleAmmo setVehicleAmmoDef setVehicleArmor ' +
+	        'setVehicleCargo setVehicleId setVehicleLock setVehiclePosition setVehicleTiPars setVehicleVarName ' +
+	        'setVelocity setVelocityTransformation setViewDistance setVisibleIfTreeCollapsed setWaves ' +
+	        'setWaypointBehaviour setWaypointCombatMode setWaypointCompletionRadius setWaypointDescription ' +
+	        'setWaypointForceBehaviour setWaypointFormation setWaypointHousePosition setWaypointLoiterRadius ' +
+	        'setWaypointLoiterType setWaypointName setWaypointPosition setWaypointScript setWaypointSpeed ' +
+	        'setWaypointStatements setWaypointTimeout setWaypointType setWaypointVisible ' +
+	        'setWeaponReloadingTime setWind setWindDir setWindForce setWindStr setWPPos show3DIcons showChat ' +
+	        'showCinemaBorder showCommandingMenu showCompass showCuratorCompass showGPS showHUD showLegend ' +
+	        'showMap shownArtilleryComputer shownChat shownCompass shownCuratorCompass showNewEditorObject ' +
+	        'shownGPS shownHUD shownMap shownPad shownRadio shownScoretable shownUAVFeed shownWarrant ' +
+	        'shownWatch showPad showRadio showScoretable showSubtitles showUAVFeed showWarrant showWatch ' +
+	        'showWaypoint showWaypoints side sideAmbientLife sideChat sideEmpty sideEnemy sideFriendly ' +
+	        'sideLogic sideRadio sideUnknown simpleTasks simulationEnabled simulCloudDensity ' +
+	        'simulCloudOcclusion simulInClouds simulWeatherSync sin size sizeOf skill skillFinal skipTime ' +
+	        'sleep sliderPosition sliderRange sliderSetPosition sliderSetRange sliderSetSpeed sliderSpeed ' +
+	        'slingLoadAssistantShown soldierMagazines someAmmo sort soundVolume spawn speaker speed speedMode ' +
+	        'splitString sqrt squadParams stance startLoadingScreen step stop stopEngineRTD stopped str ' +
+	        'sunOrMoon supportInfo suppressFor surfaceIsWater surfaceNormal surfaceType swimInDepth ' +
+	        'switchableUnits switchAction switchCamera switchGesture switchLight switchMove ' +
+	        'synchronizedObjects synchronizedTriggers synchronizedWaypoints synchronizeObjectsAdd ' +
+	        'synchronizeObjectsRemove synchronizeTrigger synchronizeWaypoint systemChat systemOfUnits tan ' +
+	        'targetKnowledge targetsAggregate targetsQuery taskAlwaysVisible taskChildren taskCompleted ' +
+	        'taskCustomData taskDescription taskDestination taskHint taskMarkerOffset taskNull taskParent ' +
+	        'taskResult taskState taskType teamMember teamMemberNull teamName teams teamSwitch ' +
+	        'teamSwitchEnabled teamType terminate terrainIntersect terrainIntersectASL text textLog ' +
+	        'textLogFormat tg time timeMultiplier titleCut titleFadeOut titleObj titleRsc titleText toArray ' +
+	        'toFixed toLower toString toUpper triggerActivated triggerActivation triggerArea ' +
+	        'triggerAttachedVehicle triggerAttachObject triggerAttachVehicle triggerStatements triggerText ' +
+	        'triggerTimeout triggerTimeoutCurrent triggerType turretLocal turretOwner turretUnit tvAdd tvClear ' +
+	        'tvCollapse tvCount tvCurSel tvData tvDelete tvExpand tvPicture tvSetCurSel tvSetData tvSetPicture ' +
+	        'tvSetPictureColor tvSetPictureColorDisabled tvSetPictureColorSelected tvSetPictureRight ' +
+	        'tvSetPictureRightColor tvSetPictureRightColorDisabled tvSetPictureRightColorSelected tvSetText ' +
+	        'tvSetTooltip tvSetValue tvSort tvSortByValue tvText tvTooltip tvValue type typeName typeOf ' +
+	        'UAVControl uiNamespace uiSleep unassignCurator unassignItem unassignTeam unassignVehicle ' +
+	        'underwater uniform uniformContainer uniformItems uniformMagazines unitAddons unitAimPosition ' +
+	        'unitAimPositionVisual unitBackpack unitIsUAV unitPos unitReady unitRecoilCoefficient units ' +
+	        'unitsBelowHeight unlinkItem unlockAchievement unregisterTask updateDrawIcon updateMenuItem ' +
+	        'updateObjectTree useAISteeringComponent useAudioTimeForMoves vectorAdd vectorCos ' +
+	        'vectorCrossProduct vectorDiff vectorDir vectorDirVisual vectorDistance vectorDistanceSqr ' +
+	        'vectorDotProduct vectorFromTo vectorMagnitude vectorMagnitudeSqr vectorMultiply vectorNormalized ' +
+	        'vectorUp vectorUpVisual vehicle vehicleCargoEnabled vehicleChat vehicleRadio vehicles ' +
+	        'vehicleVarName velocity velocityModelSpace verifySignature vest vestContainer vestItems ' +
+	        'vestMagazines viewDistance visibleCompass visibleGPS visibleMap visiblePosition ' +
+	        'visiblePositionASL visibleScoretable visibleWatch waves waypointAttachedObject ' +
+	        'waypointAttachedVehicle waypointAttachObject waypointAttachVehicle waypointBehaviour ' +
+	        'waypointCombatMode waypointCompletionRadius waypointDescription waypointForceBehaviour ' +
+	        'waypointFormation waypointHousePosition waypointLoiterRadius waypointLoiterType waypointName ' +
+	        'waypointPosition waypoints waypointScript waypointsEnabledUAV waypointShow waypointSpeed ' +
+	        'waypointStatements waypointTimeout waypointTimeoutCurrent waypointType waypointVisible ' +
+	        'weaponAccessories weaponAccessoriesCargo weaponCargo weaponDirection weaponInertia weaponLowered ' +
+	        'weapons weaponsItems weaponsItemsCargo weaponState weaponsTurret weightRTD west WFSideText wind',
 	      literal:
 	        'true false nil'
 	    },
@@ -34180,6 +34252,8 @@
 	      hljs.C_LINE_COMMENT_MODE,
 	      hljs.C_BLOCK_COMMENT_MODE,
 	      hljs.NUMBER_MODE,
+	      VARIABLE,
+	      FUNCTION,
 	      STRINGS,
 	      CPP.preprocessor
 	    ],
@@ -34188,7 +34262,7 @@
 	};
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34352,7 +34426,7 @@
 	};
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34439,7 +34513,7 @@
 	};
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34481,7 +34555,7 @@
 	};
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34532,7 +34606,7 @@
 	};
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34990,7 +35064,7 @@
 	};
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35028,7 +35102,7 @@
 	};
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35149,7 +35223,7 @@
 	};
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35197,7 +35271,7 @@
 	};
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35285,7 +35359,7 @@
 	};
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35325,7 +35399,7 @@
 	};
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35390,7 +35464,7 @@
 	};
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35456,7 +35530,7 @@
 	};
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35495,7 +35569,7 @@
 	};
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35583,7 +35657,7 @@
 	};
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35653,7 +35727,7 @@
 	};
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35741,7 +35815,22 @@
 	        relevance: 0 // () => {} is more typical in TypeScript
 	      },
 	      {
-	        beginKeywords: 'constructor', end: /\{/, excludeEnd: true
+	        beginKeywords: 'constructor', end: /\{/, excludeEnd: true,
+	        contains: [
+	          'self',
+	          {
+	            className: 'params',
+	            begin: /\(/, end: /\)/,
+	            excludeBegin: true,
+	            excludeEnd: true,
+	            keywords: KEYWORDS,
+	            contains: [
+	              hljs.C_LINE_COMMENT_MODE,
+	              hljs.C_BLOCK_COMMENT_MODE
+	            ],
+	            illegal: /["'\(]/
+	          }
+	        ]
 	      },
 	      { // prevent references like module.id from being higlighted as module definitions
 	        begin: /module\./,
@@ -35760,13 +35849,16 @@
 	      },
 	      {
 	        begin: '\\.' + hljs.IDENT_RE, relevance: 0 // hack: prevents detection of keywords after dots
+	      },
+	      {
+	        className: 'meta', begin: '@[A-Za-z]+'
 	      }
 	    ]
 	  };
 	};
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35820,7 +35912,7 @@
 	};
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35880,7 +35972,7 @@
 	};
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35923,7 +36015,7 @@
 	};
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35939,7 +36031,7 @@
 	};
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36042,7 +36134,7 @@
 	};
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36107,7 +36199,7 @@
 	};
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36217,7 +36309,7 @@
 	};
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36357,7 +36449,7 @@
 	};
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36434,7 +36526,7 @@
 	};
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36509,7 +36601,7 @@
 	};
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36620,7 +36712,7 @@
 	};
 
 /***/ },
-/* 339 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36633,11 +36725,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -36685,12 +36777,12 @@
 	});
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _date_input = __webpack_require__(341);
+	var _date_input = __webpack_require__(342);
 
 	var _date_input2 = _interopRequireDefault(_date_input);
 
@@ -36702,29 +36794,34 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _defer = __webpack_require__(584);
+	var _defer = __webpack_require__(591);
 
 	var _defer2 = _interopRequireDefault(_defer);
 
-	var _tether_component = __webpack_require__(594);
+	var _tether_component = __webpack_require__(601);
 
 	var _tether_component2 = _interopRequireDefault(_tether_component);
 
-	var _classnames2 = __webpack_require__(573);
+	var _classnames2 = __webpack_require__(579);
 
 	var _classnames3 = _interopRequireDefault(_classnames2);
 
 	var _date_utils = __webpack_require__(454);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
+
+	var _reactOnclickoutside = __webpack_require__(580);
+
+	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside';
+	var WrappedCalendar = (0, _reactOnclickoutside2.default)(_calendar2.default);
 
 	/**
 	 * General datepicker component.
@@ -36734,14 +36831,16 @@
 	  displayName: 'DatePicker',
 
 	  propTypes: {
-	    allowInvalidDates: _react2.default.PropTypes.bool,
 	    autoComplete: _react2.default.PropTypes.string,
 	    autoFocus: _react2.default.PropTypes.bool,
+	    calendarClassName: _react2.default.PropTypes.string,
+	    children: _react2.default.PropTypes.node,
 	    className: _react2.default.PropTypes.string,
 	    customInput: _react2.default.PropTypes.element,
 	    dateFormat: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.array]),
 	    dateFormatCalendar: _react2.default.PropTypes.string,
 	    disabled: _react2.default.PropTypes.bool,
+	    disabledKeyboardNavigation: _react2.default.PropTypes.bool,
 	    dropdownMode: _react2.default.PropTypes.oneOf(['scroll', 'select']).isRequired,
 	    endDate: _react2.default.PropTypes.object,
 	    excludeDates: _react2.default.PropTypes.array,
@@ -36759,7 +36858,9 @@
 	    name: _react2.default.PropTypes.string,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func.isRequired,
+	    onChangeRaw: _react2.default.PropTypes.func,
 	    onFocus: _react2.default.PropTypes.func,
+	    onMonthChange: _react2.default.PropTypes.func,
 	    openToDate: _react2.default.PropTypes.object,
 	    peekNextMonth: _react2.default.PropTypes.bool,
 	    placeholderText: _react2.default.PropTypes.string,
@@ -36776,12 +36877,14 @@
 	    showMonthDropdown: _react2.default.PropTypes.bool,
 	    showWeekNumbers: _react2.default.PropTypes.bool,
 	    showYearDropdown: _react2.default.PropTypes.bool,
+	    forceShowMonthNavigation: _react2.default.PropTypes.bool,
 	    startDate: _react2.default.PropTypes.object,
 	    tabIndex: _react2.default.PropTypes.number,
 	    tetherConstraints: _react2.default.PropTypes.array,
 	    title: _react2.default.PropTypes.string,
 	    todayButton: _react2.default.PropTypes.string,
-	    utcOffset: _react2.default.PropTypes.number
+	    utcOffset: _react2.default.PropTypes.number,
+	    withPortal: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -36790,9 +36893,11 @@
 	      onChange: function onChange() {},
 
 	      disabled: false,
+	      disabledKeyboardNavigation: false,
 	      dropdownMode: 'scroll',
 	      onFocus: function onFocus() {},
 	      onBlur: function onBlur() {},
+	      onMonthChange: function onMonthChange() {},
 
 	      popoverAttachment: 'top left',
 	      popoverTargetAttachment: 'bottom left',
@@ -36801,24 +36906,40 @@
 	        to: 'window',
 	        attachment: 'together'
 	      }],
-	      utcOffset: _moment2.default.utc().utcOffset(),
-	      monthsShown: 1
+	      utcOffset: (0, _moment2.default)().utcOffset(),
+	      monthsShown: 1,
+	      withPortal: false
 	    };
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
-	      open: false
+	      open: false,
+	      preventFocus: false,
+	      preSelection: this.props.selected ? (0, _moment2.default)(this.props.selected) : (0, _moment2.default)()
 	    };
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.clearPreventFocusTimeout();
+	  },
+	  clearPreventFocusTimeout: function clearPreventFocusTimeout() {
+	    if (this.preventFocusTimeout) {
+	      clearTimeout(this.preventFocusTimeout);
+	    }
 	  },
 	  setFocus: function setFocus() {
 	    this.refs.input.focus();
 	  },
 	  setOpen: function setOpen(open) {
-	    this.setState({ open: open });
+	    this.setState({
+	      open: open,
+	      preSelection: open && this.state.open ? this.state.preSelection : this.getInitialState().preSelection
+	    });
 	  },
 	  handleFocus: function handleFocus(event) {
-	    this.props.onFocus(event);
-	    this.setOpen(true);
+	    if (!this.state.preventFocus) {
+	      this.props.onFocus(event);
+	      this.setOpen(true);
+	    }
 	  },
 	  cancelFocusInput: function cancelFocusInput() {
 	    clearTimeout(this.inputFocusTimeout);
@@ -36844,32 +36965,55 @@
 	  },
 	  handleCalendarClickOutside: function handleCalendarClickOutside(event) {
 	    this.setOpen(false);
+	    if (this.props.withPortal) {
+	      event.preventDefault();
+	    }
 	  },
 	  handleSelect: function handleSelect(date, event) {
+	    var _this2 = this;
+
+	    // Preventing onFocus event to fix issue
+	    // https://github.com/Hacker0x01/react-datepicker/issues/628
+	    this.setState({ preventFocus: true }, function () {
+	      _this2.preventFocusTimeout = setTimeout(function () {
+	        return _this2.setState({ preventFocus: false });
+	      }, 50);
+	      return _this2.preventFocusTimeout;
+	    });
 	    this.setSelected(date, event);
 	    this.setOpen(false);
 	  },
 	  setSelected: function setSelected(date, event) {
 	    var changedDate = date;
 
-	    if (!(0, _date_utils.isSameDay)(this.props.selected, changedDate) || this.props.allowInvalidDates) {
-	      if (this.props.selected) {
-	        changedDate = (0, _moment2.default)(changedDate).set({
-	          hour: this.props.selected.hour(),
-	          minute: this.props.selected.minute(),
-	          second: this.props.selected.second()
+	    if (changedDate !== null && (0, _date_utils.isDayDisabled)(changedDate, this.props)) {
+	      return;
+	    }
+
+	    if (!(0, _date_utils.isSameDay)(this.props.selected, changedDate)) {
+	      if (changedDate !== null) {
+	        if (this.props.selected) {
+	          changedDate = (0, _moment2.default)(changedDate).set({
+	            hour: this.props.selected.hour(),
+	            minute: this.props.selected.minute(),
+	            second: this.props.selected.second()
+	          });
+	        }
+	        this.setState({
+	          preSelection: changedDate
 	        });
 	      }
 
-	      //  If the above moment.set() call returned a valid date, publish the new date object:
-	      if (changedDate && changedDate.isValid()) {
-	        this.props.onChange(changedDate, event);
-
-	        //  Else the date *isn't* valid, but if we allow invalid dates to be entered
-	        //  anyway, publish the change using a null value:
-	      } else if (this.props.allowInvalidDates) {
-	        this.props.onChange(null, event);
-	      }
+	      this.props.onChange(changedDate, event);
+	    }
+	  },
+	  setPreSelection: function setPreSelection(date) {
+	    var isDateRangePresent = typeof this.props.minDate !== 'undefined' && typeof this.props.maxDate !== 'undefined';
+	    var isValidDateSelection = isDateRangePresent ? (0, _date_utils.isDayInRange)(date, this.props.minDate, this.props.maxDate) : true;
+	    if (isValidDateSelection) {
+	      this.setState({
+	        preSelection: date
+	      });
 	    }
 	  },
 	  onInputClick: function onInputClick() {
@@ -36878,42 +37022,59 @@
 	    }
 	  },
 	  onInputKeyDown: function onInputKeyDown(event) {
-	    var copy = (0, _moment2.default)(this.props.selected);
-
-	    //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
-	    if (this.props.allowInvalidDates && event.key !== 'Enter' && event.key !== 'Escape' && event.key !== 'Tab' && (!copy || !copy.isValid())) {
-	      copy = (0, _moment2.default)();
+	    if (!this.state.open && !this.props.inline) {
+	      if (/^Arrow/.test(event.key)) {
+	        this.onInputClick();
+	      }
+	      return;
 	    }
-
-	    if (event.key === 'Enter' || event.key === 'Escape') {
+	    var copy = (0, _moment2.default)(this.state.preSelection);
+	    if (event.key === 'Enter') {
+	      event.preventDefault();
+	      this.handleSelect(copy, event);
+	    } else if (event.key === 'Escape') {
 	      event.preventDefault();
 	      this.setOpen(false);
 	    } else if (event.key === 'Tab') {
 	      this.setOpen(false);
-	    } else if (event.key === 'ArrowLeft') {
-	      event.preventDefault();
-	      this.setSelected(copy.subtract(1, 'days'));
-	    } else if (event.key === 'ArrowRight') {
-	      event.preventDefault();
-	      this.setSelected(copy.add(1, 'days'));
-	    } else if (event.key === 'ArrowUp') {
-	      event.preventDefault();
-	      this.setSelected(copy.subtract(1, 'weeks'));
-	    } else if (event.key === 'ArrowDown') {
-	      event.preventDefault();
-	      this.setSelected(copy.add(1, 'weeks'));
-	    } else if (event.key === 'PageUp') {
-	      event.preventDefault();
-	      this.setSelected(copy.subtract(1, 'months'));
-	    } else if (event.key === 'PageDown') {
-	      event.preventDefault();
-	      this.setSelected(copy.add(1, 'months'));
-	    } else if (event.key === 'Home') {
-	      event.preventDefault();
-	      this.setSelected(copy.subtract(1, 'years'));
-	    } else if (event.key === 'End') {
-	      event.preventDefault();
-	      this.setSelected(copy.add(1, 'years'));
+	    }
+	    if (!this.props.disabledKeyboardNavigation) {
+	      var newSelection = void 0;
+	      switch (event.key) {
+	        case 'ArrowLeft':
+	          event.preventDefault();
+	          newSelection = copy.subtract(1, 'days');
+	          break;
+	        case 'ArrowRight':
+	          event.preventDefault();
+	          newSelection = copy.add(1, 'days');
+	          break;
+	        case 'ArrowUp':
+	          event.preventDefault();
+	          newSelection = copy.subtract(1, 'weeks');
+	          break;
+	        case 'ArrowDown':
+	          event.preventDefault();
+	          newSelection = copy.add(1, 'weeks');
+	          break;
+	        case 'PageUp':
+	          event.preventDefault();
+	          newSelection = copy.subtract(1, 'months');
+	          break;
+	        case 'PageDown':
+	          event.preventDefault();
+	          newSelection = copy.add(1, 'months');
+	          break;
+	        case 'Home':
+	          event.preventDefault();
+	          newSelection = copy.subtract(1, 'years');
+	          break;
+	        case 'End':
+	          event.preventDefault();
+	          newSelection = copy.add(1, 'years');
+	          break;
+	      }
+	      this.setPreSelection(newSelection);
 	    }
 	  },
 	  onClearClick: function onClearClick(event) {
@@ -36924,42 +37085,49 @@
 	    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
 	      return null;
 	    }
-	    return _react2.default.createElement(_calendar2.default, {
-	      ref: 'calendar',
-	      locale: this.props.locale,
-	      dateFormat: this.props.dateFormatCalendar,
-	      dropdownMode: this.props.dropdownMode,
-	      selected: this.props.selected,
-	      onSelect: this.handleSelect,
-	      openToDate: this.props.openToDate,
-	      minDate: this.props.minDate,
-	      maxDate: this.props.maxDate,
-	      selectsStart: this.props.selectsStart,
-	      selectsEnd: this.props.selectsEnd,
-	      startDate: this.props.startDate,
-	      endDate: this.props.endDate,
-	      excludeDates: this.props.excludeDates,
-	      filterDate: this.props.filterDate,
-	      onClickOutside: this.handleCalendarClickOutside,
-	      highlightDates: this.props.highlightDates,
-	      includeDates: this.props.includeDates,
-	      peekNextMonth: this.props.peekNextMonth,
-	      showMonthDropdown: this.props.showMonthDropdown,
-	      showWeekNumbers: this.props.showWeekNumbers,
-	      showYearDropdown: this.props.showYearDropdown,
-	      scrollableYearDropdown: this.props.scrollableYearDropdown,
-	      todayButton: this.props.todayButton,
-	      utcOffset: this.props.utcOffset,
-	      outsideClickIgnoreClass: outsideClickIgnoreClass,
-	      fixedHeight: this.props.fixedHeight,
-	      monthsShown: this.props.monthsShown,
-	      onDropdownFocus: this.handleDropdownFocus });
+	    return _react2.default.createElement(
+	      WrappedCalendar,
+	      {
+	        ref: 'calendar',
+	        locale: this.props.locale,
+	        dateFormat: this.props.dateFormatCalendar,
+	        dropdownMode: this.props.dropdownMode,
+	        selected: this.props.selected,
+	        preSelection: this.state.preSelection,
+	        onSelect: this.handleSelect,
+	        openToDate: this.props.openToDate,
+	        minDate: this.props.minDate,
+	        maxDate: this.props.maxDate,
+	        selectsStart: this.props.selectsStart,
+	        selectsEnd: this.props.selectsEnd,
+	        startDate: this.props.startDate,
+	        endDate: this.props.endDate,
+	        excludeDates: this.props.excludeDates,
+	        filterDate: this.props.filterDate,
+	        onClickOutside: this.handleCalendarClickOutside,
+	        highlightDates: this.props.highlightDates,
+	        includeDates: this.props.includeDates,
+	        peekNextMonth: this.props.peekNextMonth,
+	        showMonthDropdown: this.props.showMonthDropdown,
+	        showWeekNumbers: this.props.showWeekNumbers,
+	        showYearDropdown: this.props.showYearDropdown,
+	        forceShowMonthNavigation: this.props.forceShowMonthNavigation,
+	        scrollableYearDropdown: this.props.scrollableYearDropdown,
+	        todayButton: this.props.todayButton,
+	        utcOffset: this.props.utcOffset,
+	        outsideClickIgnoreClass: outsideClickIgnoreClass,
+	        fixedHeight: this.props.fixedHeight,
+	        monthsShown: this.props.monthsShown,
+	        onDropdownFocus: this.handleDropdownFocus,
+	        onMonthChange: this.props.onMonthChange,
+	        className: this.props.calendarClassName },
+	      this.props.children
+	    );
 	  },
 	  renderDateInput: function renderDateInput() {
 	    var className = (0, _classnames3.default)(this.props.className, _defineProperty({}, outsideClickIgnoreClass, this.state.open));
 	    return _react2.default.createElement(_date_input2.default, {
 	      ref: 'input',
-	      allowInvalidDates: this.props.allowInvalidDates,
 	      id: this.props.id,
 	      name: this.props.name,
 	      autoFocus: this.props.autoFocus,
@@ -36974,6 +37142,7 @@
 	      onFocus: this.handleFocus,
 	      onBlur: this.handleBlur,
 	      onClick: this.onInputClick,
+	      onChangeRaw: this.props.onChangeRaw,
 	      onKeyDown: this.onInputKeyDown,
 	      onChangeDate: this.setSelected,
 	      placeholder: this.props.placeholderText,
@@ -36998,39 +37167,57 @@
 
 	    if (this.props.inline) {
 	      return calendar;
-	    } else {
+	    }
+
+	    if (this.props.withPortal) {
 	      return _react2.default.createElement(
-	        _tether_component2.default,
-	        {
-	          classPrefix: 'react-datepicker__tether',
-	          attachment: this.props.popoverAttachment,
-	          targetAttachment: this.props.popoverTargetAttachment,
-	          targetOffset: this.props.popoverTargetOffset,
-	          renderElementTo: this.props.renderCalendarTo,
-	          constraints: this.props.tetherConstraints },
+	        'div',
+	        null,
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'react-datepicker__input-container' },
 	          this.renderDateInput(),
 	          this.renderClearButton()
 	        ),
-	        calendar
+	        this.state.open ? _react2.default.createElement(
+	          'div',
+	          { className: 'react-datepicker__portal' },
+	          calendar
+	        ) : null
 	      );
 	    }
+
+	    return _react2.default.createElement(
+	      _tether_component2.default,
+	      {
+	        classPrefix: 'react-datepicker__tether',
+	        attachment: this.props.popoverAttachment,
+	        targetAttachment: this.props.popoverTargetAttachment,
+	        targetOffset: this.props.popoverTargetOffset,
+	        renderElementTo: this.props.renderCalendarTo,
+	        constraints: this.props.tetherConstraints },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'react-datepicker__input-container' },
+	        this.renderDateInput(),
+	        this.renderClearButton()
+	      ),
+	      calendar
+	    );
 	  }
 	});
 
 	module.exports = DatePicker;
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -37048,7 +37235,6 @@
 	  displayName: 'DateInput',
 
 	  propTypes: {
-	    allowInvalidDates: _react2.default.PropTypes.bool,
 	    customInput: _react2.default.PropTypes.element,
 	    date: _react2.default.PropTypes.object,
 	    dateFormat: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.array]),
@@ -37061,6 +37247,7 @@
 	    minDate: _react2.default.PropTypes.object,
 	    onBlur: _react2.default.PropTypes.func,
 	    onChange: _react2.default.PropTypes.func,
+	    onChangeRaw: _react2.default.PropTypes.func,
 	    onChangeDate: _react2.default.PropTypes.func
 	  },
 
@@ -37070,68 +37257,46 @@
 	    };
 	  },
 	  getInitialState: function getInitialState() {
-	    if (this.props.allowInvalidDates && !this.props.date) {
-	      return {
-	        value: ''
-	      };
-	    }
-
 	    return {
 	      value: this.safeDateFormat(this.props)
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (!(0, _date_utils.isSameDay)(newProps.date, this.props.date) || newProps.locale !== this.props.locale || newProps.dateFormat !== this.props.dateFormat) {
-	      this.updateState({
+	    if (!(0, _date_utils.isSameDay)(newProps.date, this.props.date) || !(0, _date_utils.isSameUtcOffset)(newProps.date, this.props.date) || newProps.locale !== this.props.locale || newProps.dateFormat !== this.props.dateFormat) {
+	      this.setState({
 	        value: this.safeDateFormat(newProps)
 	      });
 	    }
 	  },
-	  updateState: function updateState(obj) {
-	    if (!this.props.allowInvalidDates) {
-	      return this.setState({ value: obj.value });
-	    }
-
-	    if (typeof obj.value !== 'undefined') {
-	      this.setState({ value: obj.value });
-	    }
-	  },
 	  handleChange: function handleChange(event) {
-	    if (this.props.allowInvalidDates) {
-	      this.updateState({ value: event.target.value });
-	    } else if (this.props.onChange) {
+	    if (this.props.onChange) {
 	      this.props.onChange(event);
 	    }
-
-	    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
+	    if (this.props.onChangeRaw) {
+	      this.props.onChangeRaw(event);
+	    }
+	    if (!event.defaultPrevented) {
 	      this.handleChangeDate(event.target.value);
 	    }
 	  },
 	  handleChangeDate: function handleChangeDate(value) {
 	    if (this.props.onChangeDate) {
-	      var date = (0, _moment2.default)(value, this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
-
-	      if (!(0, _date_utils.isDayDisabled)(date, this.props)) {
+	      var date = (0, _moment2.default)(value.trim(), this.props.dateFormat, this.props.locale || _moment2.default.locale(), true);
+	      if (date.isValid() && !(0, _date_utils.isDayDisabled)(date, this.props)) {
 	        this.props.onChangeDate(date);
+	      } else if (value === '') {
+	        this.props.onChangeDate(null);
 	      }
 	    }
-
-	    this.updateState({ value: value });
+	    this.setState({ value: value });
 	  },
-	  safeDateFormat: function safeDateFormat(props, value) {
-	    if (this.props.allowInvalidDates) {
-	      if (typeof props.date === 'string' || !props.date) {
-	        return value;
-	      }
-	    }
-
+	  safeDateFormat: function safeDateFormat(props) {
 	    return props.date && props.date.clone().locale(props.locale || _moment2.default.locale()).format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || '';
 	  },
 	  handleBlur: function handleBlur(event) {
-	    this.updateState({
+	    this.setState({
 	      value: this.safeDateFormat(this.props)
 	    });
-
 	    if (this.props.onBlur) {
 	      this.props.onBlur(event);
 	    }
@@ -37141,7 +37306,6 @@
 	  },
 	  render: function render() {
 	    var _props = this.props,
-	        allowInvalidDates = _props.allowInvalidDates,
 	        customInput = _props.customInput,
 	        date = _props.date,
 	        locale = _props.locale,
@@ -37152,7 +37316,8 @@
 	        filterDate = _props.filterDate,
 	        dateFormat = _props.dateFormat,
 	        onChangeDate = _props.onChangeDate,
-	        rest = _objectWithoutProperties(_props, ['allowInvalidDates', 'customInput', 'date', 'locale', 'minDate', 'maxDate', 'excludeDates', 'includeDates', 'filterDate', 'dateFormat', 'onChangeDate']); // eslint-disable-line no-unused-vars
+	        onChangeRaw = _props.onChangeRaw,
+	        rest = _objectWithoutProperties(_props, ['customInput', 'date', 'locale', 'minDate', 'maxDate', 'excludeDates', 'includeDates', 'filterDate', 'dateFormat', 'onChangeDate', 'onChangeRaw']); // eslint-disable-line no-unused-vars
 
 	    if (customInput) {
 	      return _react2.default.cloneElement(customInput, _extends({}, rest, {
@@ -37161,26 +37326,26 @@
 	        onBlur: this.handleBlur,
 	        onChange: this.handleChange
 	      }));
+	    } else {
+	      return _react2.default.createElement('input', _extends({
+	        ref: 'input',
+	        type: 'text'
+	      }, rest, {
+	        value: this.state.value,
+	        onBlur: this.handleBlur,
+	        onChange: this.handleChange }));
 	    }
-
-	    return _react2.default.createElement('input', _extends({
-	      ref: 'input',
-	      type: 'text'
-	    }, rest, {
-	      value: this.state.value,
-	      onBlur: this.handleBlur,
-	      onChange: this.handleChange }));
 	  }
 	});
 
 	module.exports = DateInput;
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
-	//! version : 2.17.0
+	//! version : 2.17.1
 	//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 	//! license : MIT
 	//! momentjs.com
@@ -38993,7 +39158,7 @@
 	            module && module.exports) {
 	        try {
 	            oldLocale = globalLocale._abbr;
-	            __webpack_require__(344)("./" + name);
+	            __webpack_require__(345)("./" + name);
 	            // because defineLocale currently also sets the global locale, we
 	            // want to undo that for lazy loaded locales
 	            getSetGlobalLocale(oldLocale);
@@ -41445,7 +41610,7 @@
 	// Side effect imports
 
 
-	hooks.version = '2.17.0';
+	hooks.version = '2.17.1';
 
 	setHookCallback(createLocal);
 
@@ -41481,10 +41646,10 @@
 
 	})));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(343)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(344)(module)))
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -41500,32 +41665,30 @@
 
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 345,
-		"./af.js": 345,
-		"./ar": 346,
-		"./ar-dz": 347,
-		"./ar-dz.js": 347,
-		"./ar-ly": 348,
-		"./ar-ly.js": 348,
-		"./ar-ma": 349,
-		"./ar-ma.js": 349,
-		"./ar-sa": 350,
-		"./ar-sa.js": 350,
-		"./ar-tn": 351,
-		"./ar-tn.js": 351,
-		"./ar.js": 346,
-		"./az": 352,
-		"./az.js": 352,
-		"./be": 353,
-		"./be.js": 353,
-		"./bg": 354,
-		"./bg-x": 355,
-		"./bg-x.js": 355,
-		"./bg.js": 354,
+		"./af": 346,
+		"./af.js": 346,
+		"./ar": 347,
+		"./ar-dz": 348,
+		"./ar-dz.js": 348,
+		"./ar-ly": 349,
+		"./ar-ly.js": 349,
+		"./ar-ma": 350,
+		"./ar-ma.js": 350,
+		"./ar-sa": 351,
+		"./ar-sa.js": 351,
+		"./ar-tn": 352,
+		"./ar-tn.js": 352,
+		"./ar.js": 347,
+		"./az": 353,
+		"./az.js": 353,
+		"./be": 354,
+		"./be.js": 354,
+		"./bg": 355,
+		"./bg.js": 355,
 		"./bn": 356,
 		"./bn.js": 356,
 		"./bo": 357,
@@ -41734,11 +41897,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 344;
+	webpackContext.id = 345;
 
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41746,7 +41909,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41816,7 +41979,7 @@
 
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41826,7 +41989,7 @@
 	//! author : forabi https://github.com/forabi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -41963,7 +42126,7 @@
 
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -41971,7 +42134,7 @@
 	//! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42027,7 +42190,7 @@
 
 
 /***/ },
-/* 348 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42035,7 +42198,7 @@
 	//! author : Ali Hmer: https://github.com/kikoanis
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42158,7 +42321,7 @@
 
 
 /***/ },
-/* 349 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42167,7 +42330,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42223,7 +42386,7 @@
 
 
 /***/ },
-/* 350 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42231,7 +42394,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42333,7 +42496,7 @@
 
 
 /***/ },
-/* 351 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42341,7 +42504,7 @@
 	//! author : Nader Toukabri : https://github.com/naderio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42397,7 +42560,7 @@
 
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42405,7 +42568,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42507,7 +42670,7 @@
 
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42517,7 +42680,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42646,7 +42809,7 @@
 
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -42654,7 +42817,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42741,26 +42904,6 @@
 
 
 /***/ },
-/* 355 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
-	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-	   factory(global.moment)
-	}(this, (function (moment) { 'use strict';
-
-	var bgX = moment.defineLocale('bg-x', {
-	    parentLocale: 'bg'
-	});
-
-	return bgX;
-
-	})));
-
-
-/***/ },
 /* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -42769,7 +42912,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42893,7 +43036,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43017,7 +43160,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43131,7 +43274,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43278,7 +43421,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43364,7 +43507,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43541,7 +43684,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43610,7 +43753,7 @@
 	//! author : https://github.com/ryangreaves
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43695,7 +43838,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43762,7 +43905,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43846,7 +43989,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43927,7 +44070,7 @@
 	//! author : Jawish Hameed : https://github.com/jawish
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44032,7 +44175,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44135,7 +44278,7 @@
 	//! author : Jared Morse : https://github.com/jarcoal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44207,7 +44350,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44275,7 +44418,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44347,7 +44490,7 @@
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44419,7 +44562,7 @@
 	//! author : Luke McGregor : https://github.com/lukemcgregor
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44493,7 +44636,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44569,7 +44712,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44654,7 +44797,7 @@
 	//! locale : Spanish (Dominican Republic) [es-do]
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44741,7 +44884,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44825,7 +44968,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44896,7 +45039,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45008,7 +45151,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45120,7 +45263,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45185,7 +45328,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45254,7 +45397,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45319,7 +45462,7 @@
 	//! author : Gaspard Bucher : https://github.com/gaspard
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45388,7 +45531,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45466,7 +45609,7 @@
 	//! author : Jon Ashdown : https://github.com/jonashdown
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45547,7 +45690,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45631,7 +45774,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45733,7 +45876,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45862,7 +46005,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46012,7 +46155,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46126,7 +46269,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46227,7 +46370,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46314,7 +46457,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46447,7 +46590,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46521,7 +46664,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46603,7 +46746,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46690,7 +46833,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46784,7 +46927,7 @@
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46876,7 +47019,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46940,7 +47083,7 @@
 	//! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47009,7 +47152,7 @@
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47103,7 +47246,7 @@
 	//! author : David Raison : https://github.com/kwisatz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47244,7 +47387,7 @@
 	//! author : Ryan Hart : https://github.com/ryanhart2
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47319,7 +47462,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47442,7 +47585,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47543,7 +47686,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47659,7 +47802,7 @@
 	//! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47728,7 +47871,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47823,7 +47966,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47910,7 +48053,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48073,7 +48216,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48161,7 +48304,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48250,7 +48393,7 @@
 	//! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48350,7 +48493,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48417,7 +48560,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48546,7 +48689,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48637,7 +48780,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48727,7 +48870,7 @@
 	//! author : https://github.com/mechuwind
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48792,7 +48935,7 @@
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48921,7 +49064,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49031,7 +49174,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49101,7 +49244,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49168,7 +49311,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49249,7 +49392,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49435,7 +49578,7 @@
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49501,7 +49644,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49578,7 +49721,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49732,7 +49875,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49901,7 +50044,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49974,7 +50117,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50089,7 +50232,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50204,7 +50347,7 @@
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50298,7 +50441,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50372,7 +50515,7 @@
 	//! author : Fahad Kassim : https://github.com/fadsel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50436,7 +50579,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50571,7 +50714,7 @@
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50666,7 +50809,7 @@
 	//! author : Onorio De J. Afonso : https://github.com/marobo
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50738,7 +50881,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50810,7 +50953,7 @@
 	//! author : Dan Hagman : https://github.com/hagmandan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50877,7 +51020,7 @@
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51003,7 +51146,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51098,7 +51241,7 @@
 	//! author : Iustì Canun
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51193,7 +51336,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51256,7 +51399,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51320,7 +51463,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51470,7 +51613,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51533,7 +51676,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51617,7 +51760,7 @@
 	//! author : Andrew Hood : https://github.com/andrewhood125
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51686,11 +51829,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
-	//! locale : Yoruba Nigeria (yo)
+	//! locale : Yoruba Nigeria [yo]
 	//! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51756,7 +51899,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51889,7 +52032,7 @@
 	//! author : Konstantin : https://github.com/skfd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51998,7 +52141,7 @@
 	//! author : Chris Lam : https://github.com/hehachris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(342)) :
+	    true ? factory(__webpack_require__(343)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52107,6 +52250,7 @@
 	  value: true
 	});
 	exports.isSameDay = isSameDay;
+	exports.isSameUtcOffset = isSameUtcOffset;
 	exports.isDayInRange = isDayInRange;
 	exports.isDayDisabled = isDayDisabled;
 	exports.allDaysDisabledBefore = allDaysDisabledBefore;
@@ -52114,7 +52258,7 @@
 	exports.getEffectiveMinDate = getEffectiveMinDate;
 	exports.getEffectiveMaxDate = getEffectiveMaxDate;
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -52123,6 +52267,14 @@
 	function isSameDay(moment1, moment2) {
 	  if (moment1 && moment2) {
 	    return moment1.isSame(moment2, 'day');
+	  } else {
+	    return !moment1 && !moment2;
+	  }
+	}
+
+	function isSameUtcOffset(moment1, moment2) {
+	  if (moment1 && moment2) {
+	    return moment1.utcOffset() === moment2.utcOffset();
 	  } else {
 	    return !moment1 && !moment2;
 	  }
@@ -52207,7 +52359,7 @@
 
 	'use strict';
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -52215,21 +52367,25 @@
 
 	var _find2 = _interopRequireDefault(_find);
 
-	var _year_dropdown = __webpack_require__(571);
+	var _year_dropdown = __webpack_require__(577);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(575);
+	var _month_dropdown = __webpack_require__(581);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _month = __webpack_require__(580);
+	var _month = __webpack_require__(587);
 
 	var _month2 = _interopRequireDefault(_month);
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(579);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _date_utils = __webpack_require__(454);
 
@@ -52250,6 +52406,8 @@
 	  displayName: 'Calendar',
 
 	  propTypes: {
+	    className: _react2.default.PropTypes.string,
+	    children: _react2.default.PropTypes.node,
 	    dateFormat: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.array]).isRequired,
 	    dropdownMode: _react2.default.PropTypes.oneOf(['scroll', 'select']).isRequired,
 	    endDate: _react2.default.PropTypes.object,
@@ -52263,11 +52421,14 @@
 	    minDate: _react2.default.PropTypes.object,
 	    monthsShown: _react2.default.PropTypes.number,
 	    onClickOutside: _react2.default.PropTypes.func.isRequired,
+	    onMonthChange: _react2.default.PropTypes.func,
+	    forceShowMonthNavigation: _react2.default.PropTypes.bool,
 	    onDropdownFocus: _react2.default.PropTypes.func,
 	    onSelect: _react2.default.PropTypes.func.isRequired,
 	    openToDate: _react2.default.PropTypes.object,
 	    peekNextMonth: _react2.default.PropTypes.bool,
 	    scrollableYearDropdown: _react2.default.PropTypes.bool,
+	    preSelection: _react2.default.PropTypes.object,
 	    selected: _react2.default.PropTypes.object,
 	    selectsEnd: _react2.default.PropTypes.bool,
 	    selectsStart: _react2.default.PropTypes.bool,
@@ -52279,8 +52440,6 @@
 	    utcOffset: _react2.default.PropTypes.number
 	  },
 
-	  mixins: [__webpack_require__(574)],
-
 	  defaultProps: {
 	    onDropdownFocus: function onDropdownFocus() {}
 	  },
@@ -52288,7 +52447,8 @@
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      utcOffset: _moment2.default.utc().utcOffset(),
-	      monthsShown: 1
+	      monthsShown: 1,
+	      forceShowMonthNavigation: false
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -52298,9 +52458,9 @@
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.selected && !(0, _date_utils.isSameDay)(nextProps.selected, this.props.selected)) {
+	    if (nextProps.preSelection && !(0, _date_utils.isSameDay)(nextProps.preSelection, this.props.preSelection)) {
 	      this.setState({
-	        date: this.localizeMoment(nextProps.selected)
+	        date: this.localizeMoment(nextProps.preSelection)
 	      });
 	    } else if (nextProps.openToDate && !(0, _date_utils.isSameDay)(nextProps.openToDate, this.props.openToDate)) {
 	      this.setState({
@@ -52318,6 +52478,7 @@
 	  },
 	  getDateInView: function getDateInView() {
 	    var _props = this.props,
+	        preSelection = _props.preSelection,
 	        selected = _props.selected,
 	        openToDate = _props.openToDate,
 	        utcOffset = _props.utcOffset;
@@ -52325,8 +52486,9 @@
 	    var minDate = (0, _date_utils.getEffectiveMinDate)(this.props);
 	    var maxDate = (0, _date_utils.getEffectiveMaxDate)(this.props);
 	    var current = _moment2.default.utc().utcOffset(utcOffset);
-	    if (selected) {
-	      return selected;
+	    var initialDate = preSelection || selected;
+	    if (initialDate) {
+	      return initialDate;
 	    } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
 	      return openToDate;
 	    } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
@@ -52347,13 +52509,21 @@
 	    return date.clone().locale(this.props.locale || _moment2.default.locale());
 	  },
 	  increaseMonth: function increaseMonth() {
+	    var _this = this;
+
 	    this.setState({
 	      date: this.state.date.clone().add(1, 'month')
+	    }, function () {
+	      return _this.handleMonthChange(_this.state.date);
 	    });
 	  },
 	  decreaseMonth: function decreaseMonth() {
+	    var _this2 = this;
+
 	    this.setState({
 	      date: this.state.date.clone().subtract(1, 'month')
+	    }, function () {
+	      return _this2.handleMonthChange(_this2.state.date);
 	    });
 	  },
 	  handleDayClick: function handleDayClick(day, event) {
@@ -52365,14 +52535,23 @@
 	  handleMonthMouseLeave: function handleMonthMouseLeave() {
 	    this.setState({ selectingDate: null });
 	  },
+	  handleMonthChange: function handleMonthChange(date) {
+	    if (this.props.onMonthChange) {
+	      this.props.onMonthChange(date);
+	    }
+	  },
 	  changeYear: function changeYear(year) {
 	    this.setState({
 	      date: this.state.date.clone().set('year', year)
 	    });
 	  },
 	  changeMonth: function changeMonth(month) {
+	    var _this3 = this;
+
 	    this.setState({
 	      date: this.state.date.clone().set('month', month)
+	    }, function () {
+	      return _this3.handleMonthChange(_this3.state.date);
 	    });
 	  },
 	  header: function header() {
@@ -52397,7 +52576,7 @@
 	    }));
 	  },
 	  renderPreviousMonthButton: function renderPreviousMonthButton() {
-	    if ((0, _date_utils.allDaysDisabledBefore)(this.state.date, 'month', this.props)) {
+	    if (!this.props.forceShowMonthNavigation && (0, _date_utils.allDaysDisabledBefore)(this.state.date, 'month', this.props)) {
 	      return;
 	    }
 	    return _react2.default.createElement('a', {
@@ -52405,7 +52584,7 @@
 	      onClick: this.decreaseMonth });
 	  },
 	  renderNextMonthButton: function renderNextMonthButton() {
-	    if ((0, _date_utils.allDaysDisabledAfter)(this.state.date, 'month', this.props)) {
+	    if (!this.props.forceShowMonthNavigation && (0, _date_utils.allDaysDisabledAfter)(this.state.date, 'month', this.props)) {
 	      return;
 	    }
 	    return _react2.default.createElement('a', {
@@ -52418,6 +52597,9 @@
 	    var classes = ['react-datepicker__current-month'];
 	    if (this.props.showYearDropdown) {
 	      classes.push('react-datepicker__current-month--hasYearDropdown');
+	    }
+	    if (this.props.showMonthDropdown) {
+	      classes.push('react-datepicker__current-month--hasMonthDropdown');
 	    }
 	    return _react2.default.createElement(
 	      'div',
@@ -52452,7 +52634,7 @@
 	      month: this.state.date.month() });
 	  },
 	  renderTodayButton: function renderTodayButton() {
-	    var _this = this;
+	    var _this4 = this;
 
 	    if (!this.props.todayButton) {
 	      return;
@@ -52460,7 +52642,7 @@
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'react-datepicker__today-button', onClick: function onClick(event) {
-	          return _this.props.onSelect(_moment2.default.utc().utcOffset(_this.props.utcOffset).startOf('date'), event);
+	          return _this4.props.onSelect(_moment2.default.utc().utcOffset(_this4.props.utcOffset).startOf('date'), event);
 	        } },
 	      this.props.todayButton
 	    );
@@ -52504,6 +52686,7 @@
 	          includeDates: this.props.includeDates,
 	          fixedHeight: this.props.fixedHeight,
 	          filterDate: this.props.filterDate,
+	          preSelection: this.props.preSelection,
 	          selected: this.props.selected,
 	          selectsStart: this.props.selectsStart,
 	          selectsEnd: this.props.selectsEnd,
@@ -52519,12 +52702,13 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'react-datepicker' },
+	      { className: (0, _classnames2.default)('react-datepicker', this.props.className) },
 	      _react2.default.createElement('div', { className: 'react-datepicker__triangle' }),
 	      this.renderPreviousMonthButton(),
 	      this.renderNextMonthButton(),
 	      this.renderMonths(),
-	      this.renderTodayButton()
+	      this.renderTodayButton(),
+	      this.props.children
 	    );
 	  }
 	});
@@ -52536,7 +52720,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var createFind = __webpack_require__(457),
-	    findIndex = __webpack_require__(566);
+	    findIndex = __webpack_require__(572);
 
 	/**
 	 * Iterates over elements of `collection`, returning the first element
@@ -52584,8 +52768,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseIteratee = __webpack_require__(458),
-	    isArrayLike = __webpack_require__(537),
-	    keys = __webpack_require__(518);
+	    isArrayLike = __webpack_require__(543),
+	    keys = __webpack_require__(525);
 
 	/**
 	 * Creates a `_.find` or `_.findLast` function.
@@ -52615,10 +52799,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseMatches = __webpack_require__(459),
-	    baseMatchesProperty = __webpack_require__(546),
-	    identity = __webpack_require__(562),
-	    isArray = __webpack_require__(524),
-	    property = __webpack_require__(563);
+	    baseMatchesProperty = __webpack_require__(552),
+	    identity = __webpack_require__(568),
+	    isArray = __webpack_require__(521),
+	    property = __webpack_require__(569);
 
 	/**
 	 * The base implementation of `_.iteratee`.
@@ -52652,8 +52836,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseIsMatch = __webpack_require__(460),
-	    getMatchData = __webpack_require__(543),
-	    matchesStrictComparable = __webpack_require__(545);
+	    getMatchData = __webpack_require__(549),
+	    matchesStrictComparable = __webpack_require__(551);
 
 	/**
 	 * The base implementation of `_.matches` which doesn't clone `source`.
@@ -53306,8 +53490,7 @@
 	  if (value == null) {
 	    return value === undefined ? undefinedTag : nullTag;
 	  }
-	  value = Object(value);
-	  return (symToStringTag && symToStringTag in value)
+	  return (symToStringTag && symToStringTag in Object(value))
 	    ? getRawTag(value)
 	    : objectToString(value);
 	}
@@ -53777,7 +53960,7 @@
 	 */
 	function hashHas(key) {
 	  var data = this.__data__;
-	  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+	  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
 	}
 
 	module.exports = hashHas;
@@ -53958,8 +54141,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseIsEqualDeep = __webpack_require__(506),
-	    isObject = __webpack_require__(485),
-	    isObjectLike = __webpack_require__(523);
+	    isObjectLike = __webpack_require__(530);
 
 	/**
 	 * The base implementation of `_.isEqual` which supports partial comparisons
@@ -53979,7 +54161,7 @@
 	  if (value === other) {
 	    return true;
 	  }
-	  if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
+	  if (value == null || other == null || (!isObjectLike(value) && !isObjectLike(other))) {
 	    return value !== value && other !== other;
 	  }
 	  return baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
@@ -53996,10 +54178,10 @@
 	    equalArrays = __webpack_require__(507),
 	    equalByTag = __webpack_require__(513),
 	    equalObjects = __webpack_require__(517),
-	    getTag = __webpack_require__(538),
-	    isArray = __webpack_require__(524),
-	    isBuffer = __webpack_require__(525),
-	    isTypedArray = __webpack_require__(528);
+	    getTag = __webpack_require__(544),
+	    isArray = __webpack_require__(521),
+	    isBuffer = __webpack_require__(531),
+	    isTypedArray = __webpack_require__(534);
 
 	/** Used to compose bitmasks for value comparisons. */
 	var COMPARE_PARTIAL_FLAG = 1;
@@ -54032,17 +54214,12 @@
 	function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
 	  var objIsArr = isArray(object),
 	      othIsArr = isArray(other),
-	      objTag = arrayTag,
-	      othTag = arrayTag;
+	      objTag = objIsArr ? arrayTag : getTag(object),
+	      othTag = othIsArr ? arrayTag : getTag(other);
 
-	  if (!objIsArr) {
-	    objTag = getTag(object);
-	    objTag = objTag == argsTag ? objectTag : objTag;
-	  }
-	  if (!othIsArr) {
-	    othTag = getTag(other);
-	    othTag = othTag == argsTag ? objectTag : othTag;
-	  }
+	  objTag = objTag == argsTag ? objectTag : objTag;
+	  othTag = othTag == argsTag ? objectTag : othTag;
+
 	  var objIsObj = objTag == objectTag,
 	      othIsObj = othTag == objectTag,
 	      isSameTag = objTag == othTag;
@@ -54479,7 +54656,7 @@
 /* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(518);
+	var getAllKeys = __webpack_require__(518);
 
 	/** Used to compose bitmasks for value comparisons. */
 	var COMPARE_PARTIAL_FLAG = 1;
@@ -54505,9 +54682,9 @@
 	 */
 	function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
 	  var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
-	      objProps = keys(object),
+	      objProps = getAllKeys(object),
 	      objLength = objProps.length,
-	      othProps = keys(other),
+	      othProps = getAllKeys(other),
 	      othLength = othProps.length;
 
 	  if (objLength != othLength && !isPartial) {
@@ -54574,9 +54751,211 @@
 /* 518 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayLikeKeys = __webpack_require__(519),
-	    baseKeys = __webpack_require__(533),
-	    isArrayLike = __webpack_require__(537);
+	var baseGetAllKeys = __webpack_require__(519),
+	    getSymbols = __webpack_require__(522),
+	    keys = __webpack_require__(525);
+
+	/**
+	 * Creates an array of own enumerable property names and symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function getAllKeys(object) {
+	  return baseGetAllKeys(object, keys, getSymbols);
+	}
+
+	module.exports = getAllKeys;
+
+
+/***/ },
+/* 519 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayPush = __webpack_require__(520),
+	    isArray = __webpack_require__(521);
+
+	/**
+	 * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+	 * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+	 * symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Function} keysFunc The function to get the keys of `object`.
+	 * @param {Function} symbolsFunc The function to get the symbols of `object`.
+	 * @returns {Array} Returns the array of property names and symbols.
+	 */
+	function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+	  var result = keysFunc(object);
+	  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+	}
+
+	module.exports = baseGetAllKeys;
+
+
+/***/ },
+/* 520 */
+/***/ function(module, exports) {
+
+	/**
+	 * Appends the elements of `values` to `array`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {Array} values The values to append.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayPush(array, values) {
+	  var index = -1,
+	      length = values.length,
+	      offset = array.length;
+
+	  while (++index < length) {
+	    array[offset + index] = values[index];
+	  }
+	  return array;
+	}
+
+	module.exports = arrayPush;
+
+
+/***/ },
+/* 521 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+
+	module.exports = isArray;
+
+
+/***/ },
+/* 522 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayFilter = __webpack_require__(523),
+	    stubArray = __webpack_require__(524);
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+	/**
+	 * Creates an array of the own enumerable symbols of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of symbols.
+	 */
+	var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
+	  if (object == null) {
+	    return [];
+	  }
+	  object = Object(object);
+	  return arrayFilter(nativeGetSymbols(object), function(symbol) {
+	    return propertyIsEnumerable.call(object, symbol);
+	  });
+	};
+
+	module.exports = getSymbols;
+
+
+/***/ },
+/* 523 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.filter` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} predicate The function invoked per iteration.
+	 * @returns {Array} Returns the new filtered array.
+	 */
+	function arrayFilter(array, predicate) {
+	  var index = -1,
+	      length = array == null ? 0 : array.length,
+	      resIndex = 0,
+	      result = [];
+
+	  while (++index < length) {
+	    var value = array[index];
+	    if (predicate(value, index, array)) {
+	      result[resIndex++] = value;
+	    }
+	  }
+	  return result;
+	}
+
+	module.exports = arrayFilter;
+
+
+/***/ },
+/* 524 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns a new empty array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.13.0
+	 * @category Util
+	 * @returns {Array} Returns the new empty array.
+	 * @example
+	 *
+	 * var arrays = _.times(2, _.stubArray);
+	 *
+	 * console.log(arrays);
+	 * // => [[], []]
+	 *
+	 * console.log(arrays[0] === arrays[1]);
+	 * // => false
+	 */
+	function stubArray() {
+	  return [];
+	}
+
+	module.exports = stubArray;
+
+
+/***/ },
+/* 525 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayLikeKeys = __webpack_require__(526),
+	    baseKeys = __webpack_require__(539),
+	    isArrayLike = __webpack_require__(543);
 
 	/**
 	 * Creates an array of the own enumerable property names of `object`.
@@ -54614,15 +54993,15 @@
 
 
 /***/ },
-/* 519 */
+/* 526 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(520),
-	    isArguments = __webpack_require__(521),
-	    isArray = __webpack_require__(524),
-	    isBuffer = __webpack_require__(525),
-	    isIndex = __webpack_require__(527),
-	    isTypedArray = __webpack_require__(528);
+	var baseTimes = __webpack_require__(527),
+	    isArguments = __webpack_require__(528),
+	    isArray = __webpack_require__(521),
+	    isBuffer = __webpack_require__(531),
+	    isIndex = __webpack_require__(533),
+	    isTypedArray = __webpack_require__(534);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -54669,7 +55048,7 @@
 
 
 /***/ },
-/* 520 */
+/* 527 */
 /***/ function(module, exports) {
 
 	/**
@@ -54695,11 +55074,11 @@
 
 
 /***/ },
-/* 521 */
+/* 528 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(522),
-	    isObjectLike = __webpack_require__(523);
+	var baseIsArguments = __webpack_require__(529),
+	    isObjectLike = __webpack_require__(530);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -54737,11 +55116,11 @@
 
 
 /***/ },
-/* 522 */
+/* 529 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(479),
-	    isObjectLike = __webpack_require__(523);
+	    isObjectLike = __webpack_require__(530);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -54761,7 +55140,7 @@
 
 
 /***/ },
-/* 523 */
+/* 530 */
 /***/ function(module, exports) {
 
 	/**
@@ -54796,43 +55175,11 @@
 
 
 /***/ },
-/* 524 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is classified as an `Array` object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is an array, else `false`.
-	 * @example
-	 *
-	 * _.isArray([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isArray(document.body.children);
-	 * // => false
-	 *
-	 * _.isArray('abc');
-	 * // => false
-	 *
-	 * _.isArray(_.noop);
-	 * // => false
-	 */
-	var isArray = Array.isArray;
-
-	module.exports = isArray;
-
-
-/***/ },
-/* 525 */
+/* 531 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(481),
-	    stubFalse = __webpack_require__(526);
+	    stubFalse = __webpack_require__(532);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -54870,10 +55217,10 @@
 
 	module.exports = isBuffer;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(343)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(344)(module)))
 
 /***/ },
-/* 526 */
+/* 532 */
 /***/ function(module, exports) {
 
 	/**
@@ -54897,7 +55244,7 @@
 
 
 /***/ },
-/* 527 */
+/* 533 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -54925,12 +55272,12 @@
 
 
 /***/ },
-/* 528 */
+/* 534 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(529),
-	    baseUnary = __webpack_require__(531),
-	    nodeUtil = __webpack_require__(532);
+	var baseIsTypedArray = __webpack_require__(535),
+	    baseUnary = __webpack_require__(537),
+	    nodeUtil = __webpack_require__(538);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -54958,12 +55305,12 @@
 
 
 /***/ },
-/* 529 */
+/* 535 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(479),
-	    isLength = __webpack_require__(530),
-	    isObjectLike = __webpack_require__(523);
+	    isLength = __webpack_require__(536),
+	    isObjectLike = __webpack_require__(530);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -55024,7 +55371,7 @@
 
 
 /***/ },
-/* 530 */
+/* 536 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -55065,7 +55412,7 @@
 
 
 /***/ },
-/* 531 */
+/* 537 */
 /***/ function(module, exports) {
 
 	/**
@@ -55085,7 +55432,7 @@
 
 
 /***/ },
-/* 532 */
+/* 538 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(482);
@@ -55111,14 +55458,14 @@
 
 	module.exports = nodeUtil;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(343)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(344)(module)))
 
 /***/ },
-/* 533 */
+/* 539 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(534),
-	    nativeKeys = __webpack_require__(535);
+	var isPrototype = __webpack_require__(540),
+	    nativeKeys = __webpack_require__(541);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -55150,7 +55497,7 @@
 
 
 /***/ },
-/* 534 */
+/* 540 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -55174,10 +55521,10 @@
 
 
 /***/ },
-/* 535 */
+/* 541 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(536);
+	var overArg = __webpack_require__(542);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -55186,7 +55533,7 @@
 
 
 /***/ },
-/* 536 */
+/* 542 */
 /***/ function(module, exports) {
 
 	/**
@@ -55207,11 +55554,11 @@
 
 
 /***/ },
-/* 537 */
+/* 543 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isFunction = __webpack_require__(478),
-	    isLength = __webpack_require__(530);
+	    isLength = __webpack_require__(536);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -55246,14 +55593,14 @@
 
 
 /***/ },
-/* 538 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(539),
+	var DataView = __webpack_require__(545),
 	    Map = __webpack_require__(475),
-	    Promise = __webpack_require__(540),
-	    Set = __webpack_require__(541),
-	    WeakMap = __webpack_require__(542),
+	    Promise = __webpack_require__(546),
+	    Set = __webpack_require__(547),
+	    WeakMap = __webpack_require__(548),
 	    baseGetTag = __webpack_require__(479),
 	    toSource = __webpack_require__(488);
 
@@ -55310,7 +55657,7 @@
 
 
 /***/ },
-/* 539 */
+/* 545 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(476),
@@ -55323,7 +55670,7 @@
 
 
 /***/ },
-/* 540 */
+/* 546 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(476),
@@ -55336,7 +55683,7 @@
 
 
 /***/ },
-/* 541 */
+/* 547 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(476),
@@ -55349,7 +55696,7 @@
 
 
 /***/ },
-/* 542 */
+/* 548 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(476),
@@ -55362,11 +55709,11 @@
 
 
 /***/ },
-/* 543 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isStrictComparable = __webpack_require__(544),
-	    keys = __webpack_require__(518);
+	var isStrictComparable = __webpack_require__(550),
+	    keys = __webpack_require__(525);
 
 	/**
 	 * Gets the property names, values, and compare flags of `object`.
@@ -55392,7 +55739,7 @@
 
 
 /***/ },
-/* 544 */
+/* 550 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(485);
@@ -55413,7 +55760,7 @@
 
 
 /***/ },
-/* 545 */
+/* 551 */
 /***/ function(module, exports) {
 
 	/**
@@ -55439,16 +55786,16 @@
 
 
 /***/ },
-/* 546 */
+/* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseIsEqual = __webpack_require__(505),
-	    get = __webpack_require__(547),
-	    hasIn = __webpack_require__(559),
-	    isKey = __webpack_require__(550),
-	    isStrictComparable = __webpack_require__(544),
-	    matchesStrictComparable = __webpack_require__(545),
-	    toKey = __webpack_require__(558);
+	    get = __webpack_require__(553),
+	    hasIn = __webpack_require__(565),
+	    isKey = __webpack_require__(556),
+	    isStrictComparable = __webpack_require__(550),
+	    matchesStrictComparable = __webpack_require__(551),
+	    toKey = __webpack_require__(564);
 
 	/** Used to compose bitmasks for value comparisons. */
 	var COMPARE_PARTIAL_FLAG = 1,
@@ -55478,10 +55825,10 @@
 
 
 /***/ },
-/* 547 */
+/* 553 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(548);
+	var baseGet = __webpack_require__(554);
 
 	/**
 	 * Gets the value at `path` of `object`. If the resolved value is
@@ -55517,11 +55864,11 @@
 
 
 /***/ },
-/* 548 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(549),
-	    toKey = __webpack_require__(558);
+	var castPath = __webpack_require__(555),
+	    toKey = __webpack_require__(564);
 
 	/**
 	 * The base implementation of `_.get` without support for default values.
@@ -55547,13 +55894,13 @@
 
 
 /***/ },
-/* 549 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(524),
-	    isKey = __webpack_require__(550),
-	    stringToPath = __webpack_require__(552),
-	    toString = __webpack_require__(555);
+	var isArray = __webpack_require__(521),
+	    isKey = __webpack_require__(556),
+	    stringToPath = __webpack_require__(558),
+	    toString = __webpack_require__(561);
 
 	/**
 	 * Casts `value` to a path array if it's not one.
@@ -55574,11 +55921,11 @@
 
 
 /***/ },
-/* 550 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(524),
-	    isSymbol = __webpack_require__(551);
+	var isArray = __webpack_require__(521),
+	    isSymbol = __webpack_require__(557);
 
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -55609,11 +55956,11 @@
 
 
 /***/ },
-/* 551 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(479),
-	    isObjectLike = __webpack_require__(523);
+	    isObjectLike = __webpack_require__(530);
 
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -55644,10 +55991,10 @@
 
 
 /***/ },
-/* 552 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var memoizeCapped = __webpack_require__(553);
+	var memoizeCapped = __webpack_require__(559);
 
 	/** Used to match property names within property paths. */
 	var reLeadingDot = /^\./,
@@ -55678,10 +56025,10 @@
 
 
 /***/ },
-/* 553 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var memoize = __webpack_require__(554);
+	var memoize = __webpack_require__(560);
 
 	/** Used as the maximum memoize cache size. */
 	var MAX_MEMOIZE_SIZE = 500;
@@ -55710,7 +56057,7 @@
 
 
 /***/ },
-/* 554 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var MapCache = __webpack_require__(490);
@@ -55789,10 +56136,10 @@
 
 
 /***/ },
-/* 555 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(556);
+	var baseToString = __webpack_require__(562);
 
 	/**
 	 * Converts `value` to a string. An empty string is returned for `null`
@@ -55823,13 +56170,13 @@
 
 
 /***/ },
-/* 556 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(480),
-	    arrayMap = __webpack_require__(557),
-	    isArray = __webpack_require__(524),
-	    isSymbol = __webpack_require__(551);
+	    arrayMap = __webpack_require__(563),
+	    isArray = __webpack_require__(521),
+	    isSymbol = __webpack_require__(557);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -55866,7 +56213,7 @@
 
 
 /***/ },
-/* 557 */
+/* 563 */
 /***/ function(module, exports) {
 
 	/**
@@ -55893,10 +56240,10 @@
 
 
 /***/ },
-/* 558 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isSymbol = __webpack_require__(551);
+	var isSymbol = __webpack_require__(557);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -55920,11 +56267,11 @@
 
 
 /***/ },
-/* 559 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHasIn = __webpack_require__(560),
-	    hasPath = __webpack_require__(561);
+	var baseHasIn = __webpack_require__(566),
+	    hasPath = __webpack_require__(567);
 
 	/**
 	 * Checks if `path` is a direct or inherited property of `object`.
@@ -55960,7 +56307,7 @@
 
 
 /***/ },
-/* 560 */
+/* 566 */
 /***/ function(module, exports) {
 
 	/**
@@ -55979,15 +56326,15 @@
 
 
 /***/ },
-/* 561 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(549),
-	    isArguments = __webpack_require__(521),
-	    isArray = __webpack_require__(524),
-	    isIndex = __webpack_require__(527),
-	    isLength = __webpack_require__(530),
-	    toKey = __webpack_require__(558);
+	var castPath = __webpack_require__(555),
+	    isArguments = __webpack_require__(528),
+	    isArray = __webpack_require__(521),
+	    isIndex = __webpack_require__(533),
+	    isLength = __webpack_require__(536),
+	    toKey = __webpack_require__(564);
 
 	/**
 	 * Checks if `path` exists on `object`.
@@ -56024,7 +56371,7 @@
 
 
 /***/ },
-/* 562 */
+/* 568 */
 /***/ function(module, exports) {
 
 	/**
@@ -56051,13 +56398,13 @@
 
 
 /***/ },
-/* 563 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(564),
-	    basePropertyDeep = __webpack_require__(565),
-	    isKey = __webpack_require__(550),
-	    toKey = __webpack_require__(558);
+	var baseProperty = __webpack_require__(570),
+	    basePropertyDeep = __webpack_require__(571),
+	    isKey = __webpack_require__(556),
+	    toKey = __webpack_require__(564);
 
 	/**
 	 * Creates a function that returns the value at `path` of a given object.
@@ -56089,7 +56436,7 @@
 
 
 /***/ },
-/* 564 */
+/* 570 */
 /***/ function(module, exports) {
 
 	/**
@@ -56109,10 +56456,10 @@
 
 
 /***/ },
-/* 565 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(548);
+	var baseGet = __webpack_require__(554);
 
 	/**
 	 * A specialized version of `baseProperty` which supports deep paths.
@@ -56131,12 +56478,12 @@
 
 
 /***/ },
-/* 566 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFindIndex = __webpack_require__(567),
+	var baseFindIndex = __webpack_require__(573),
 	    baseIteratee = __webpack_require__(458),
-	    toInteger = __webpack_require__(568);
+	    toInteger = __webpack_require__(574);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeMax = Math.max;
@@ -56192,7 +56539,7 @@
 
 
 /***/ },
-/* 567 */
+/* 573 */
 /***/ function(module, exports) {
 
 	/**
@@ -56222,10 +56569,10 @@
 
 
 /***/ },
-/* 568 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toFinite = __webpack_require__(569);
+	var toFinite = __webpack_require__(575);
 
 	/**
 	 * Converts `value` to an integer.
@@ -56264,10 +56611,10 @@
 
 
 /***/ },
-/* 569 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toNumber = __webpack_require__(570);
+	var toNumber = __webpack_require__(576);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0,
@@ -56312,11 +56659,11 @@
 
 
 /***/ },
-/* 570 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(485),
-	    isSymbol = __webpack_require__(551);
+	    isSymbol = __webpack_require__(557);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -56384,7 +56731,7 @@
 
 
 /***/ },
-/* 571 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56393,11 +56740,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _year_dropdown_options = __webpack_require__(572);
+	var _year_dropdown_options = __webpack_require__(578);
 
 	var _year_dropdown_options2 = _interopRequireDefault(_year_dropdown_options);
 
+	var _reactOnclickoutside = __webpack_require__(580);
+
+	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var WrappedYearDropdownOptions = (0, _reactOnclickoutside2.default)(_year_dropdown_options2.default);
 
 	var YearDropdown = _react2.default.createClass({
 	  displayName: 'YearDropdown',
@@ -56443,20 +56796,21 @@
 	      this.renderSelectOptions()
 	    );
 	  },
-	  renderReadView: function renderReadView() {
+	  renderReadView: function renderReadView(visible) {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'react-datepicker__year-read-view', onClick: this.toggleDropdown },
+	      { key: 'read', style: { visibility: visible ? 'visible' : 'hidden' }, className: 'react-datepicker__year-read-view', onClick: this.toggleDropdown },
+	      _react2.default.createElement('span', { className: 'react-datepicker__year-read-view--down-arrow' }),
 	      _react2.default.createElement(
 	        'span',
 	        { className: 'react-datepicker__year-read-view--selected-year' },
 	        this.props.year
-	      ),
-	      _react2.default.createElement('span', { className: 'react-datepicker__year-read-view--down-arrow' })
+	      )
 	    );
 	  },
 	  renderDropdown: function renderDropdown() {
-	    return _react2.default.createElement(_year_dropdown_options2.default, {
+	    return _react2.default.createElement(WrappedYearDropdownOptions, {
+	      key: 'dropdown',
 	      ref: 'options',
 	      year: this.props.year,
 	      onChange: this.onChange,
@@ -56464,7 +56818,13 @@
 	      scrollableYearDropdown: this.props.scrollableYearDropdown });
 	  },
 	  renderScrollMode: function renderScrollMode() {
-	    return this.state.dropdownVisible ? this.renderDropdown() : this.renderReadView();
+	    var dropdownVisible = this.state.dropdownVisible;
+
+	    var result = [this.renderReadView(!dropdownVisible)];
+	    if (dropdownVisible) {
+	      result.unshift(this.renderDropdown());
+	    }
+	    return result;
 	  },
 	  onChange: function onChange(year) {
 	    this.toggleDropdown();
@@ -56499,7 +56859,7 @@
 	module.exports = YearDropdown;
 
 /***/ },
-/* 572 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56508,7 +56868,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(573);
+	var _classnames = __webpack_require__(579);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -56516,8 +56876,8 @@
 
 	function generateYears(year, noOfYear) {
 	  var list = [];
-	  for (var i = 0; i < noOfYear; i++) {
-	    list.push(year - i);
+	  for (var i = 0; i < 2 * noOfYear; i++) {
+	    list.push(year + noOfYear - i);
 	  }
 	  return list;
 	}
@@ -56532,11 +56892,9 @@
 	    year: _react2.default.PropTypes.number.isRequired
 	  },
 
-	  mixins: [__webpack_require__(574)],
-
 	  getInitialState: function getInitialState() {
 	    return {
-	      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
+	      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
 	    };
 	  },
 	  renderOptions: function renderOptions() {
@@ -56615,7 +56973,7 @@
 	module.exports = YearDropdownOptions;
 
 /***/ },
-/* 573 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -56669,50 +57027,25 @@
 
 
 /***/ },
-/* 574 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
-	 * A mixin for handling (effectively) onClickOutside for React components.
-	 * Note that we're not intercepting any events in this approach, and we're
-	 * not using double events for capturing and discarding in layers or wrappers.
-	 *
-	 * The idea is that components define function
-	 *
-	 *   handleClickOutside: function() { ... }
-	 *
-	 * If no such function is defined, an error will be thrown, as this means
-	 * either it still needs to be written, or the component should not be using
-	 * this mixing since it will not exhibit onClickOutside behaviour.
-	 *
+	 * A higher-order-component for handling onClickOutside for React components.
 	 */
-	(function (root, factory) {
-	  if (true) {
-	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(29)], __WEBPACK_AMD_DEFINE_RESULT__ = function(reactDom) {
-	      return factory(root, reactDom);
-	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  } else if (typeof exports === 'object') {
-	    // Node. Note that this does not work with strict
-	    // CommonJS, but only CommonJS-like environments
-	    // that support module.exports
-	    module.exports = factory(root, require('react-dom'));
-	  } else {
-	    // Browser globals (root is window)
-	    root.OnClickOutside = factory(root, ReactDOM);
-	  }
-	}(this, function (root, ReactDOM) {
-	  "use strict";
+	(function(root) {
 
-	  // Use a parallel array because we can't use
-	  // objects as keys, they get toString-coerced
+	  // administrative
 	  var registeredComponents = [];
 	  var handlers = [];
-
 	  var IGNORE_CLASS = 'ignore-react-onclickoutside';
+	  var DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 
-	  var isSourceFound = function(source, localNode, ignoreClass) {
-	    if (source === localNode) {
+	  /**
+	   * Check whether some DOM node is our Component's node.
+	   */
+	  var isNodeFound = function(current, componentNode, ignoreClass) {
+	    if (current === componentNode) {
 	      return true;
 	    }
 	    // SVG <use/> elements do not technically reside in the rendered DOM, so
@@ -56721,93 +57054,287 @@
 	    // that case.
 	    // See: http://www.w3.org/TR/SVG11/struct.html#InterfaceSVGUseElement
 	    // Discussion: https://github.com/Pomax/react-onclickoutside/pull/17
-	    if (source.correspondingElement) {
-	      return source.correspondingElement.classList.contains(ignoreClass);
+	    if (current.correspondingElement) {
+	      return current.correspondingElement.classList.contains(ignoreClass);
 	    }
-	    return source.classList.contains(ignoreClass);
+	    return current.classList.contains(ignoreClass);
 	  };
 
-	  return {
-	    componentDidMount: function() {
-	      if(typeof this.handleClickOutside !== "function")
-	        throw new Error("Component lacks a handleClickOutside(event) function for processing outside click events.");
+	  /**
+	   * Try to find our node in a hierarchy of nodes, returning the document
+	   * node as highest noode if our node is not found in the path up.
+	   */
+	  var findHighest = function(current, componentNode, ignoreClass) {
+	    if (current === componentNode) {
+	      return true;
+	    }
 
-	      var fn = this.__outsideClickHandler = (function(localNode, eventHandler, ignoreClass) {
-	        return function(evt) {
-	          evt.stopPropagation();
-	          var source = evt.target;
-	          var found = false;
-	          // If source=local then this event came from "somewhere"
-	          // inside and should be ignored. We could handle this with
-	          // a layered approach, too, but that requires going back to
-	          // thinking in terms of Dom node nesting, running counter
-	          // to React's "you shouldn't care about the DOM" philosophy.
-	          while(source.parentNode) {
-	            found = isSourceFound(source, localNode, ignoreClass);
-	            if(found) return;
-	            source = source.parentNode;
+	    // If source=local then this event came from 'somewhere'
+	    // inside and should be ignored. We could handle this with
+	    // a layered approach, too, but that requires going back to
+	    // thinking in terms of Dom node nesting, running counter
+	    // to React's 'you shouldn't care about the DOM' philosophy.
+	    while(current.parentNode) {
+	      if (isNodeFound(current, componentNode, ignoreClass)) {
+	        return true;
+	      }
+	      current = current.parentNode;
+	    }
+	    return current;
+	  };
+
+	  /**
+	   * Check if the browser scrollbar was clicked
+	   */
+	  var clickedScrollbar = function(evt) {
+	    return document.documentElement.clientWidth <= evt.clientX;
+	  };
+
+	  /**
+	   * Generate the event handler that checks whether a clicked DOM node
+	   * is inside of, or lives outside of, our Component's node tree.
+	   */
+	  var generateOutsideCheck = function(componentNode, componentInstance, eventHandler, ignoreClass, excludeScrollbar, preventDefault, stopPropagation) {
+	    return function(evt) {
+	      if (preventDefault) {
+	        evt.preventDefault();
+	      }
+	      if (stopPropagation) {
+	        evt.stopPropagation();
+	      }
+	      var current = evt.target;
+	      if((excludeScrollbar && clickedScrollbar(evt)) || (findHighest(current, componentNode, ignoreClass) !== document)) {
+	        return;
+	      }
+	      eventHandler(evt);
+	    };
+	  };
+
+	  /**
+	   * This function generates the HOC function that you'll use
+	   * in order to impart onOutsideClick listening to an
+	   * arbitrary component. It gets called at the end of the
+	   * bootstrapping code to yield an instance of the
+	   * onClickOutsideHOC function defined inside setupHOC().
+	   */
+	  function setupHOC(root, React, ReactDOM) {
+
+	    // The actual Component-wrapping HOC:
+	    return function onClickOutsideHOC(Component, config) {
+	      var wrapComponentWithOnClickOutsideHandling = React.createClass({
+	        statics: {
+	          /**
+	           * Access the wrapped Component's class.
+	           */
+	          getClass: function() {
+	            if (Component.getClass) {
+	              return Component.getClass();
+	            }
+	            return Component;
 	          }
-	          // If element is in detached DOM, consider it not clicked
-	          // outside as it can't be known whether it was outside.
-	          if(source !== document) return;
-	          eventHandler(evt);
+	        },
+
+	        /**
+	         * Access the wrapped Component's instance.
+	         */
+	        getInstance: function() {
+	          return Component.prototype.isReactComponent ? this.refs.instance : this;
+	        },
+
+	        // this is given meaning in componentDidMount
+	        __outsideClickHandler: function() {},
+
+	        /**
+	         * Add click listeners to the current document,
+	         * linked to this component's state.
+	         */
+	        componentDidMount: function() {
+	          // If we are in an environment without a DOM such
+	          // as shallow rendering or snapshots then we exit
+	          // early to prevent any unhandled errors being thrown.
+	          if (typeof document === 'undefined' || !document.createElement){
+	            return;
+	          }
+
+	          var instance = this.getInstance();
+	          var clickOutsideHandler;
+
+	          if(config && typeof config.handleClickOutside === 'function') {
+	            clickOutsideHandler = config.handleClickOutside(instance);
+	            if(typeof clickOutsideHandler !== 'function') {
+	              throw new Error('Component lacks a function for processing outside click events specified by the handleClickOutside config option.');
+	            }
+	          } else if(typeof instance.handleClickOutside === 'function') {
+	            if (React.Component.prototype.isPrototypeOf(instance)) {
+	              clickOutsideHandler = instance.handleClickOutside.bind(instance);
+	            } else {
+	              clickOutsideHandler = instance.handleClickOutside;
+	            }
+	          } else if(typeof instance.props.handleClickOutside === 'function') {
+	            clickOutsideHandler = instance.props.handleClickOutside;
+	          } else {
+	            throw new Error('Component lacks a handleClickOutside(event) function for processing outside click events.');
+	          }
+
+	          var componentNode = ReactDOM.findDOMNode(instance);
+	          if (componentNode === null) {
+	            console.warn('Antipattern warning: there was no DOM node associated with the component that is being wrapped by outsideClick.');
+	            console.warn([
+	              'This is typically caused by having a component that starts life with a render function that',
+	              'returns `null` (due to a state or props value), so that the component \'exist\' in the React',
+	              'chain of components, but not in the DOM.\n\nInstead, you need to refactor your code so that the',
+	              'decision of whether or not to show your component is handled by the parent, in their render()',
+	              'function.\n\nIn code, rather than:\n\n  A{render(){return check? <.../> : null;}\n  B{render(){<A check=... />}\n\nmake sure that you',
+	              'use:\n\n  A{render(){return <.../>}\n  B{render(){return <...>{ check ? <A/> : null }<...>}}\n\nThat is:',
+	              'the parent is always responsible for deciding whether or not to render any of its children.',
+	              'It is not the child\'s responsibility to decide whether a render instruction from above should',
+	              'get ignored or not by returning `null`.\n\nWhen any component gets its render() function called,',
+	              'that is the signal that it should be rendering its part of the UI. It may in turn decide not to',
+	              'render all of *its* children, but it should never return `null` for itself. It is not responsible',
+	              'for that decision.'
+	            ].join(' '));
+	          }
+
+	          var fn = this.__outsideClickHandler = generateOutsideCheck(
+	            componentNode,
+	            instance,
+	            clickOutsideHandler,
+	            this.props.outsideClickIgnoreClass || IGNORE_CLASS,
+	            this.props.excludeScrollbar || false,
+	            this.props.preventDefault || false,
+	            this.props.stopPropagation || false
+	          );
+
+	          var pos = registeredComponents.length;
+	          registeredComponents.push(this);
+	          handlers[pos] = fn;
+
+	          // If there is a truthy disableOnClickOutside property for this
+	          // component, don't immediately start listening for outside events.
+	          if (!this.props.disableOnClickOutside) {
+	            this.enableOnClickOutside();
+	          }
+	        },
+
+	        /**
+	        * Track for disableOnClickOutside props changes and enable/disable click outside
+	        */
+	        componentWillReceiveProps: function(nextProps) {
+	          if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
+	            this.enableOnClickOutside();
+	          } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
+	            this.disableOnClickOutside();
+	          }
+	        },
+
+	        /**
+	         * Remove the document's event listeners
+	         */
+	        componentWillUnmount: function() {
+	          this.disableOnClickOutside();
+	          this.__outsideClickHandler = false;
+	          var pos = registeredComponents.indexOf(this);
+	          if( pos>-1) {
+	            // clean up so we don't leak memory
+	            if (handlers[pos]) { handlers.splice(pos, 1); }
+	            registeredComponents.splice(pos, 1);
+	          }
+	        },
+
+	        /**
+	         * Can be called to explicitly enable event listening
+	         * for clicks and touches outside of this element.
+	         */
+	        enableOnClickOutside: function() {
+	          var fn = this.__outsideClickHandler;
+	          if (typeof document !== 'undefined') {
+	            var events = this.props.eventTypes || DEFAULT_EVENTS;
+	            if (!events.forEach) {
+	              events = [events];
+	            }
+	            events.forEach(function (eventName) {
+	              document.addEventListener(eventName, fn);
+	            });
+	          }
+	        },
+
+	        /**
+	         * Can be called to explicitly disable event listening
+	         * for clicks and touches outside of this element.
+	         */
+	        disableOnClickOutside: function() {
+	          var fn = this.__outsideClickHandler;
+	          if (typeof document !== 'undefined') {
+	            var events = this.props.eventTypes || DEFAULT_EVENTS;
+	            if (!events.forEach) {
+	              events = [events];
+	            }
+	            events.forEach(function (eventName) {
+	              document.removeEventListener(eventName, fn);
+	            });
+	          }
+	        },
+
+	        /**
+	         * Pass-through render
+	         */
+	        render: function() {
+	          var passedProps = this.props;
+	          var props = {};
+	          Object.keys(this.props).forEach(function(key) {
+	            if (key !== 'excludeScrollbar') {
+	              props[key] = passedProps[key];
+	            }
+	          });
+	          if (Component.prototype.isReactComponent) {
+	            props.ref = 'instance';
+	          }
+	          props.disableOnClickOutside = this.disableOnClickOutside;
+	          props.enableOnClickOutside = this.enableOnClickOutside;
+	          return React.createElement(Component, props);
 	        }
-	      }(ReactDOM.findDOMNode(this), this.handleClickOutside, this.props.outsideClickIgnoreClass || IGNORE_CLASS));
+	      });
 
-	      var pos = registeredComponents.length;
-	      registeredComponents.push(this);
-	      handlers[pos] = fn;
+	      // Add display name for React devtools
+	      (function bindWrappedComponentName(c, wrapper) {
+	        var componentName = c.displayName || c.name || 'Component';
+	        wrapper.displayName = 'OnClickOutside(' + componentName + ')';
+	      }(Component, wrapComponentWithOnClickOutsideHandling));
 
-	      // If there is a truthy disableOnClickOutside property for this
-	      // component, don't immediately start listening for outside events.
-	      if (!this.props.disableOnClickOutside) {
-	        this.enableOnClickOutside();
-	      }
-	    },
+	      return wrapComponentWithOnClickOutsideHandling;
+	    };
+	  }
 
-	    componentWillUnmount: function() {
-	      this.disableOnClickOutside();
-	      this.__outsideClickHandler = false;
-	      var pos = registeredComponents.indexOf(this);
-	      if( pos>-1) {
-	        if (handlers[pos]) {
-	          // clean up so we don't leak memory
-	          handlers.splice(pos, 1);
-	          registeredComponents.splice(pos, 1);
-	        }
-	      }
-	    },
-
-	    /**
-	     * Can be called to explicitly enable event listening
-	     * for clicks and touches outside of this element.
-	     */
-	    enableOnClickOutside: function() {
-	      var fn = this.__outsideClickHandler;
-	      if (typeof document !== "undefined") {
-	        document.addEventListener("mousedown", fn);
-	        document.addEventListener("touchstart", fn);
-	      }
-	    },
-
-	    /**
-	     * Can be called to explicitly disable event listening
-	     * for clicks and touches outside of this element.
-	     */
-	    disableOnClickOutside: function() {
-	      var fn = this.__outsideClickHandler;
-	      if (typeof document !== "undefined") {
-	        document.removeEventListener("mousedown", fn);
-	        document.removeEventListener("touchstart", fn);
-	      }
+	  /**
+	   * This function sets up the library in ways that
+	   * work with the various modulde loading solutions
+	   * used in JavaScript land today.
+	   */
+	  function setupBinding(root, factory) {
+	    if (true) {
+	      // AMD. Register as an anonymous module.
+	      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(29)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom) {
+	        return factory(root, React, ReactDom);
+	      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else if (typeof exports === 'object') {
+	      // Node. Note that this does not work with strict
+	      // CommonJS, but only CommonJS-like environments
+	      // that support module.exports
+	      module.exports = factory(root, require('react'), require('react-dom'));
+	    } else {
+	      // Browser globals (root is window)
+	      root.onClickOutside = factory(root, React, ReactDOM);
 	    }
-	  };
+	  }
 
-	}));
+	  // Make it all happen
+	  setupBinding(root, setupHOC);
+
+	}(this));
 
 
 /***/ },
-/* 575 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56816,15 +57343,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(342);
+	var _month_dropdown_options = __webpack_require__(582);
+
+	var _month_dropdown_options2 = _interopRequireDefault(_month_dropdown_options);
+
+	var _reactOnclickoutside = __webpack_require__(580);
+
+	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
+
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _range = __webpack_require__(576);
+	var _range = __webpack_require__(583);
 
 	var _range2 = _interopRequireDefault(_range);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var WrappedMonthDropdownOptions = (0, _reactOnclickoutside2.default)(_month_dropdown_options2.default);
 
 	var MonthDropdown = _react2.default.createClass({
 	  displayName: 'MonthDropdown',
@@ -56841,17 +57378,16 @@
 	      dropdownVisible: false
 	    };
 	  },
-	  renderSelectOptions: function renderSelectOptions() {
-	    var localeData = _moment2.default.localeData(this.props.locale);
-	    return (0, _range2.default)(0, 12).map(function (M, i) {
+	  renderSelectOptions: function renderSelectOptions(monthNames) {
+	    return monthNames.map(function (M, i) {
 	      return _react2.default.createElement(
 	        'option',
 	        { key: i, value: i },
-	        localeData.months((0, _moment2.default)({ M: M }))
+	        M
 	      );
 	    });
 	  },
-	  renderSelectMode: function renderSelectMode() {
+	  renderSelectMode: function renderSelectMode(monthNames) {
 	    var _this = this;
 
 	    return _react2.default.createElement(
@@ -56859,23 +57395,63 @@
 	      { value: this.props.month, className: 'react-datepicker__month-select', onChange: function onChange(e) {
 	          return _this.onChange(e.target.value);
 	        } },
-	      this.renderSelectOptions()
+	      this.renderSelectOptions(monthNames)
 	    );
 	  },
+	  renderReadView: function renderReadView(visible, monthNames) {
+	    return _react2.default.createElement(
+	      'div',
+	      { key: 'read', style: { visibility: visible ? 'visible' : 'hidden' }, className: 'react-datepicker__month-read-view', onClick: this.toggleDropdown },
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'react-datepicker__month-read-view--selected-month' },
+	        monthNames[this.props.month]
+	      ),
+	      _react2.default.createElement('span', { className: 'react-datepicker__month-read-view--down-arrow' })
+	    );
+	  },
+	  renderDropdown: function renderDropdown(monthNames) {
+	    return _react2.default.createElement(WrappedMonthDropdownOptions, {
+	      key: 'dropdown',
+	      ref: 'options',
+	      month: this.props.month,
+	      monthNames: monthNames,
+	      onChange: this.onChange,
+	      onCancel: this.toggleDropdown });
+	  },
+	  renderScrollMode: function renderScrollMode(monthNames) {
+	    var dropdownVisible = this.state.dropdownVisible;
+
+	    var result = [this.renderReadView(!dropdownVisible, monthNames)];
+	    if (dropdownVisible) {
+	      result.unshift(this.renderDropdown(monthNames));
+	    }
+	    return result;
+	  },
 	  onChange: function onChange(month) {
+	    this.toggleDropdown();
 	    if (month !== this.props.month) {
 	      this.props.onChange(month);
 	    }
 	  },
+	  toggleDropdown: function toggleDropdown() {
+	    this.setState({
+	      dropdownVisible: !this.state.dropdownVisible
+	    });
+	  },
 	  render: function render() {
+	    var localeData = _moment2.default.localeData(this.props.locale);
+	    var monthNames = (0, _range2.default)(0, 12).map(function (M) {
+	      return localeData.months((0, _moment2.default)({ M: M }));
+	    });
+
 	    var renderedDropdown = void 0;
 	    switch (this.props.dropdownMode) {
-	      // TODO: implement scroll mode
-	      // case 'scroll':
-	      //   renderedDropdown = this.renderScrollMode()
-	      //   break
+	      case 'scroll':
+	        renderedDropdown = this.renderScrollMode(monthNames);
+	        break;
 	      case 'select':
-	        renderedDropdown = this.renderSelectMode();
+	        renderedDropdown = this.renderSelectMode(monthNames);
 	        break;
 	    }
 
@@ -56891,10 +57467,71 @@
 	module.exports = MonthDropdown;
 
 /***/ },
-/* 576 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(577);
+	'use strict';
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var MonthDropdownOptions = _react2.default.createClass({
+	  displayName: 'MonthDropdownOptions',
+
+	  propTypes: {
+	    onCancel: _react2.default.PropTypes.func.isRequired,
+	    onChange: _react2.default.PropTypes.func.isRequired,
+	    month: _react2.default.PropTypes.number.isRequired,
+	    monthNames: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string.isRequired).isRequired
+	  },
+
+	  renderOptions: function renderOptions() {
+	    var _this = this;
+
+	    var selectedMonth = this.props.month;
+	    var options = this.props.monthNames.map(function (month, i) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'react-datepicker__month-option',
+	          key: month,
+	          ref: month,
+	          onClick: _this.onChange.bind(_this, i) },
+	        selectedMonth === i ? _react2.default.createElement(
+	          'span',
+	          { className: 'react-datepicker__month-option--selected' },
+	          '\u2713'
+	        ) : '',
+	        month
+	      );
+	    });
+
+	    return options;
+	  },
+	  onChange: function onChange(month) {
+	    this.props.onChange(month);
+	  },
+	  handleClickOutside: function handleClickOutside() {
+	    this.props.onCancel();
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'react-datepicker__month-dropdown' },
+	      this.renderOptions()
+	    );
+	  }
+	});
+
+	module.exports = MonthDropdownOptions;
+
+/***/ },
+/* 583 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createRange = __webpack_require__(584);
 
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -56943,12 +57580,12 @@
 
 
 /***/ },
-/* 577 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(578),
-	    isIterateeCall = __webpack_require__(579),
-	    toFinite = __webpack_require__(569);
+	var baseRange = __webpack_require__(585),
+	    isIterateeCall = __webpack_require__(586),
+	    toFinite = __webpack_require__(575);
 
 	/**
 	 * Creates a `_.range` or `_.rangeRight` function.
@@ -56979,7 +57616,7 @@
 
 
 /***/ },
-/* 578 */
+/* 585 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -57013,12 +57650,12 @@
 
 
 /***/ },
-/* 579 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var eq = __webpack_require__(466),
-	    isArrayLike = __webpack_require__(537),
-	    isIndex = __webpack_require__(527),
+	    isArrayLike = __webpack_require__(543),
+	    isIndex = __webpack_require__(533),
 	    isObject = __webpack_require__(485);
 
 	/**
@@ -57049,7 +57686,7 @@
 
 
 /***/ },
-/* 580 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57058,11 +57695,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(573);
+	var _classnames = __webpack_require__(579);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _week = __webpack_require__(581);
+	var _week = __webpack_require__(588);
 
 	var _week2 = _interopRequireDefault(_week);
 
@@ -57087,6 +57724,7 @@
 	    onDayMouseEnter: _react2.default.PropTypes.func,
 	    onMouseLeave: _react2.default.PropTypes.func,
 	    peekNextMonth: _react2.default.PropTypes.bool,
+	    preSelection: _react2.default.PropTypes.object,
 	    selected: _react2.default.PropTypes.object,
 	    selectingDate: _react2.default.PropTypes.object,
 	    selectsEnd: _react2.default.PropTypes.bool,
@@ -57137,6 +57775,7 @@
 	        highlightDates: this.props.highlightDates,
 	        selectingDate: this.props.selectingDate,
 	        filterDate: this.props.filterDate,
+	        preSelection: this.props.preSelection,
 	        selected: this.props.selected,
 	        selectsStart: this.props.selectsStart,
 	        selectsEnd: this.props.selectsEnd,
@@ -57188,7 +57827,7 @@
 	module.exports = Month;
 
 /***/ },
-/* 581 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57197,11 +57836,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _day = __webpack_require__(582);
+	var _day = __webpack_require__(589);
 
 	var _day2 = _interopRequireDefault(_day);
 
-	var _week_number = __webpack_require__(583);
+	var _week_number = __webpack_require__(590);
 
 	var _week_number2 = _interopRequireDefault(_week_number);
 
@@ -57222,6 +57861,7 @@
 	    month: _react2.default.PropTypes.number,
 	    onDayClick: _react2.default.PropTypes.func,
 	    onDayMouseEnter: _react2.default.PropTypes.func,
+	    preSelection: _react2.default.PropTypes.object,
 	    selected: _react2.default.PropTypes.object,
 	    selectingDate: _react2.default.PropTypes.object,
 	    selectsEnd: _react2.default.PropTypes.bool,
@@ -57264,6 +57904,7 @@
 	        highlightDates: _this.props.highlightDates,
 	        selectingDate: _this.props.selectingDate,
 	        filterDate: _this.props.filterDate,
+	        preSelection: _this.props.preSelection,
 	        selected: _this.props.selected,
 	        selectsStart: _this.props.selectsStart,
 	        selectsEnd: _this.props.selectsEnd,
@@ -57284,12 +57925,12 @@
 	module.exports = Week;
 
 /***/ },
-/* 582 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -57297,7 +57938,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(573);
+	var _classnames = __webpack_require__(579);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -57311,15 +57952,11 @@
 	  propTypes: {
 	    day: _react2.default.PropTypes.object.isRequired,
 	    endDate: _react2.default.PropTypes.object,
-	    excludeDates: _react2.default.PropTypes.array,
-	    filterDate: _react2.default.PropTypes.func,
 	    highlightDates: _react2.default.PropTypes.array,
-	    includeDates: _react2.default.PropTypes.array,
-	    maxDate: _react2.default.PropTypes.object,
-	    minDate: _react2.default.PropTypes.object,
 	    month: _react2.default.PropTypes.number,
 	    onClick: _react2.default.PropTypes.func,
 	    onMouseEnter: _react2.default.PropTypes.func,
+	    preSelection: _react2.default.PropTypes.object,
 	    selected: _react2.default.PropTypes.object,
 	    selectingDate: _react2.default.PropTypes.object,
 	    selectsEnd: _react2.default.PropTypes.bool,
@@ -57344,6 +57981,9 @@
 	  },
 	  isSameDay: function isSameDay(other) {
 	    return (0, _date_utils.isSameDay)(this.props.day, other);
+	  },
+	  isKeyboardSelected: function isKeyboardSelected() {
+	    return !this.isSameDay(this.props.selected) && this.isSameDay(this.props.preSelection);
 	  },
 	  isDisabled: function isDisabled() {
 	    return (0, _date_utils.isDayDisabled)(this.props.day, this.props);
@@ -57456,6 +58096,7 @@
 	    return (0, _classnames2.default)('react-datepicker__day', {
 	      'react-datepicker__day--disabled': this.isDisabled(),
 	      'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+	      'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
 	      'react-datepicker__day--highlighted': this.isHighlighted(),
 	      'react-datepicker__day--range-start': this.isRangeStart(),
 	      'react-datepicker__day--range-end': this.isRangeEnd(),
@@ -57485,7 +58126,7 @@
 	module.exports = Day;
 
 /***/ },
-/* 583 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57517,11 +58158,11 @@
 	module.exports = WeekNumber;
 
 /***/ },
-/* 584 */
+/* 591 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseDelay = __webpack_require__(585),
-	    baseRest = __webpack_require__(586);
+	var baseDelay = __webpack_require__(592),
+	    baseRest = __webpack_require__(593);
 
 	/**
 	 * Defers invoking the `func` until the current call stack has cleared. Any
@@ -57549,7 +58190,7 @@
 
 
 /***/ },
-/* 585 */
+/* 592 */
 /***/ function(module, exports) {
 
 	/** Error message constants. */
@@ -57576,12 +58217,12 @@
 
 
 /***/ },
-/* 586 */
+/* 593 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(562),
-	    overRest = __webpack_require__(587),
-	    setToString = __webpack_require__(589);
+	var identity = __webpack_require__(568),
+	    overRest = __webpack_require__(594),
+	    setToString = __webpack_require__(596);
 
 	/**
 	 * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -57599,10 +58240,10 @@
 
 
 /***/ },
-/* 587 */
+/* 594 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(588);
+	var apply = __webpack_require__(595);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeMax = Math.max;
@@ -57641,7 +58282,7 @@
 
 
 /***/ },
-/* 588 */
+/* 595 */
 /***/ function(module, exports) {
 
 	/**
@@ -57668,11 +58309,11 @@
 
 
 /***/ },
-/* 589 */
+/* 596 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseSetToString = __webpack_require__(590),
-	    shortOut = __webpack_require__(593);
+	var baseSetToString = __webpack_require__(597),
+	    shortOut = __webpack_require__(600);
 
 	/**
 	 * Sets the `toString` method of `func` to return `string`.
@@ -57688,12 +58329,12 @@
 
 
 /***/ },
-/* 590 */
+/* 597 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var constant = __webpack_require__(591),
-	    defineProperty = __webpack_require__(592),
-	    identity = __webpack_require__(562);
+	var constant = __webpack_require__(598),
+	    defineProperty = __webpack_require__(599),
+	    identity = __webpack_require__(568);
 
 	/**
 	 * The base implementation of `setToString` without support for hot loop shorting.
@@ -57716,7 +58357,7 @@
 
 
 /***/ },
-/* 591 */
+/* 598 */
 /***/ function(module, exports) {
 
 	/**
@@ -57748,7 +58389,7 @@
 
 
 /***/ },
-/* 592 */
+/* 599 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(476);
@@ -57765,7 +58406,7 @@
 
 
 /***/ },
-/* 593 */
+/* 600 */
 /***/ function(module, exports) {
 
 	/** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -57808,7 +58449,7 @@
 
 
 /***/ },
-/* 594 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57823,7 +58464,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _tether = __webpack_require__(595);
+	var _tether = __webpack_require__(602);
 
 	var _tether2 = _interopRequireDefault(_tether);
 
@@ -57969,7 +58610,7 @@
 	    _react.Children.forEach(children, function (child, index) {
 	      if (index === 0) {
 	        firstChild = child;
-	        return;
+	        return false;
 	      }
 	    });
 
@@ -57980,10 +58621,10 @@
 	module.exports = TetherComponent;
 
 /***/ },
-/* 595 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.3.8 */
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
 
 	(function(root, factory) {
 	  if (true) {
@@ -59232,20 +59873,24 @@
 	      }
 
 	      if (!moved) {
-	        var offsetParentIsBody = true;
-	        var currentNode = this.element.parentNode;
-	        while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
-	          if (getComputedStyle(currentNode).position !== 'static') {
-	            offsetParentIsBody = false;
-	            break;
+	        if (this.options.bodyElement) {
+	          this.options.bodyElement.appendChild(this.element);
+	        } else {
+	          var offsetParentIsBody = true;
+	          var currentNode = this.element.parentNode;
+	          while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
+	            if (getComputedStyle(currentNode).position !== 'static') {
+	              offsetParentIsBody = false;
+	              break;
+	            }
+
+	            currentNode = currentNode.parentNode;
 	          }
 
-	          currentNode = currentNode.parentNode;
-	        }
-
-	        if (!offsetParentIsBody) {
-	          this.element.parentNode.removeChild(this.element);
-	          this.element.ownerDocument.body.appendChild(this.element);
+	          if (!offsetParentIsBody) {
+	            this.element.parentNode.removeChild(this.element);
+	            this.element.ownerDocument.body.appendChild(this.element);
+	          }
 	        }
 	      }
 
@@ -59793,7 +60438,7 @@
 
 
 /***/ },
-/* 596 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59832,7 +60477,7 @@
 	});
 
 /***/ },
-/* 597 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59845,86 +60490,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(342);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'Allow Invalid Dates',
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      startDate: (0, _moment2.default)()
-	    };
-	  },
-	  handleChange: function handleChange(date) {
-	    this.setState({
-	      startDate: date
-	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'pre',
-	        { className: 'column example__code' },
-	        _react2.default.createElement(
-	          'code',
-	          { className: 'jsx' },
-	          '<DatePicker',
-	          _react2.default.createElement('br', null),
-	          '\xA0 \xA0 ',
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            'allowInvalidDates',
-	            _react2.default.createElement('br', null)
-	          ),
-	          '\xA0 \xA0 ',
-	          'selected={this.state.startDate}',
-	          _react2.default.createElement('br', null),
-	          '\xA0 \xA0 ',
-	          'onChange={this.handleChange} />'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'column' },
-	        _react2.default.createElement(_reactDatepicker2.default, {
-	          allowInvalidDates: true,
-	          selected: this.state.startDate,
-	          onChange: this.handleChange })
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 598 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDatepicker = __webpack_require__(340);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59979,7 +60549,7 @@
 	});
 
 /***/ },
-/* 599 */
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59992,11 +60562,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60048,7 +60618,7 @@
 	});
 
 /***/ },
-/* 600 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60061,7 +60631,76 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'CustomCalendarClassName',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          'selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          'onChange={this.handleChange}',
+	          ' ',
+	          _react2.default.createElement('br', null),
+	          'calendarClassName="rasta-stripes" />'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          calendarClassName: 'rasta-stripes' })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 607 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -60093,7 +60732,7 @@
 	});
 
 /***/ },
-/* 601 */
+/* 608 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60106,11 +60745,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60176,7 +60815,7 @@
 	});
 
 /***/ },
-/* 602 */
+/* 609 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60189,7 +60828,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -60248,7 +60887,7 @@
 	});
 
 /***/ },
-/* 603 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60261,11 +60900,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60324,7 +60963,7 @@
 	});
 
 /***/ },
-/* 604 */
+/* 611 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60337,11 +60976,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60400,7 +61039,7 @@
 	});
 
 /***/ },
-/* 605 */
+/* 612 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60413,11 +61052,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60476,7 +61115,7 @@
 	});
 
 /***/ },
-/* 606 */
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60489,7 +61128,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -60552,7 +61191,7 @@
 	});
 
 /***/ },
-/* 607 */
+/* 614 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60565,7 +61204,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -60625,7 +61264,7 @@
 	});
 
 /***/ },
-/* 608 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60638,11 +61277,86 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'DisabledKeyboardNavigation',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          'selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          'onChange={this.handleChange}',
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'disabledKeyboardNavigation />'
+	          ),
+	          _react2.default.createElement('br', null),
+	          'placeholderText="This has disabled keyboard navigation"'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          disabledKeyboardNavigation: true,
+	          placeholderText: 'This has disabled keyboard navigation' })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 616 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60696,7 +61410,7 @@
 	});
 
 /***/ },
-/* 609 */
+/* 617 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60709,7 +61423,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -60802,7 +61516,7 @@
 	});
 
 /***/ },
-/* 610 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60815,11 +61529,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60876,14 +61590,14 @@
 	});
 
 /***/ },
-/* 611 */
+/* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var DatePicker = __webpack_require__(340);
-	var moment = __webpack_require__(342);
+	var DatePicker = __webpack_require__(341);
+	var moment = __webpack_require__(343);
 
 	var DateRange = React.createClass({
 	  displayName: 'DateRange',
@@ -60978,7 +61692,7 @@
 	module.exports = DateRange;
 
 /***/ },
-/* 612 */
+/* 620 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60991,11 +61705,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61046,7 +61760,7 @@
 	});
 
 /***/ },
-/* 613 */
+/* 621 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61059,11 +61773,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61123,7 +61837,7 @@
 	});
 
 /***/ },
-/* 614 */
+/* 622 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61136,11 +61850,80 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'MonthDropdown',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          'selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          'onChange={this.handleChange}',
+	          ' ',
+	          _react2.default.createElement('br', null),
+	          'showMonthDropdown />'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          showMonthDropdown: true })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 623 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61205,7 +61988,7 @@
 	});
 
 /***/ },
-/* 615 */
+/* 624 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61218,11 +62001,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61273,7 +62056,7 @@
 	});
 
 /***/ },
-/* 616 */
+/* 625 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61286,7 +62069,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -61297,15 +62084,35 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      startDate: null
+	      startDate: null,
+	      utcOffset: -4
 	    };
 	  },
+
+
+	  timezoneNames: [{ name: 'GMT+10', value: 10 }, { name: 'GMT+8', value: 8 }, { name: 'GMT+4', value: 4 }, { name: 'GMT+1', value: 1 }, { name: 'GMT', value: 0 }, { name: 'GMT-3', value: -3 }, { name: 'GMT-4', value: -4 }, { name: 'GMT-8', value: -8 }, { name: 'GMT-10', value: -10 }],
+
 	  handleChange: function handleChange(date) {
 	    this.setState({
 	      startDate: date
 	    });
 	  },
+	  handleTmzChange: function handleTmzChange(event) {
+	    this.setState({
+	      utcOffset: parseInt(event.target.value, 10)
+	    });
+	  },
+	  getOffsetLabel: function getOffsetLabel(tmz) {
+	    var obj = this.timezoneNames.find(function (item) {
+	      return item.value === tmz;
+	    });
+	    return obj && obj.name || '';
+	  },
 	  render: function render() {
+	    var selected = this.state.startDate && this.state.startDate.clone().utcOffset(this.state.utcOffset);
+	    var utcText = this.getOffsetLabel(this.state.utcOffset);
+	    var todayTxt = 'Today in ' + utcText;
+
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'row' },
@@ -61317,9 +62124,11 @@
 	          { className: 'jsx' },
 	          '<DatePicker',
 	          _react2.default.createElement('br', null),
-	          'utcOffset=1320',
+	          'utcOffset=-4',
 	          _react2.default.createElement('br', null),
-	          'todayButton="Today"',
+	          'dateFormat="DD-MMM HH:mm"',
+	          _react2.default.createElement('br', null),
+	          'todayButton="Today in Puerto Rico"',
 	          _react2.default.createElement('br', null),
 	          'onChange={this.handleChange} />'
 	        )
@@ -61328,18 +62137,75 @@
 	        'div',
 	        { className: 'column' },
 	        _react2.default.createElement(_reactDatepicker2.default, {
-	          utcOffset: 1320,
-	          dateFormat: 'DD-MMM HH:mm',
-	          todayButton: 'Today in Farawayland',
-	          selected: this.state.startDate,
-	          onChange: this.handleChange })
+	          utcOffset: this.state.utcOffset,
+	          dateFormat: 'DD-MMM YYYY HH:mm',
+	          todayButton: todayTxt,
+	          selected: selected,
+	          minDate: (0, _moment2.default)('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset),
+	          maxDate: (0, _moment2.default)('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset),
+	          onChange: this.handleChange }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'label',
+	          { className: 'example__timezone-label' },
+	          'Timezone Offset:',
+	          _react2.default.createElement(
+	            'select',
+	            { className: 'example__timezone-selector', value: this.state.utcOffset, onChange: this.handleTmzChange },
+	            _react2.default.createElement(
+	              'option',
+	              { value: '10' },
+	              'GMT+10:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '8' },
+	              'GMT+08:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '4' },
+	              'GMT+04:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '1' },
+	              'GMT+01:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '0' },
+	              'GMT'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '-3' },
+	              'GMT-03:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '-4' },
+	              'GMT-04:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '-8' },
+	              'GMT-08:00'
+	            ),
+	            _react2.default.createElement(
+	              'option',
+	              { value: '-10' },
+	              'GMT-10:00'
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
 	});
 
 /***/ },
-/* 617 */
+/* 626 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61352,11 +62218,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61407,7 +62273,7 @@
 	});
 
 /***/ },
-/* 618 */
+/* 627 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61420,11 +62286,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61475,7 +62341,7 @@
 	});
 
 /***/ },
-/* 619 */
+/* 628 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61488,7 +62354,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -61539,7 +62405,7 @@
 	});
 
 /***/ },
-/* 620 */
+/* 629 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61552,11 +62418,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61607,7 +62473,7 @@
 	});
 
 /***/ },
-/* 621 */
+/* 630 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61620,11 +62486,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61735,7 +62601,7 @@
 	});
 
 /***/ },
-/* 622 */
+/* 631 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61748,11 +62614,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61803,7 +62669,7 @@
 	});
 
 /***/ },
-/* 623 */
+/* 632 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61816,11 +62682,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61874,15 +62740,7 @@
 	});
 
 /***/ },
-/* 624 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 625 */
-624,
-/* 626 */
+/* 633 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61895,11 +62753,252 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(340);
+	var _reactDatepicker = __webpack_require__(341);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(342);
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Children',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}>\n  <div style={{color: \'red\'}}>\n    Don\'t forget to check the weather!\n  </div>\n</DatePicker>\n'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(
+	          _reactDatepicker2.default,
+	          {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange },
+	          _react2.default.createElement(
+	            'div',
+	            { style: { color: 'red' } },
+	            'Don\'t forget to check the weather!'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 634 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'With Portal',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: (0, _moment2.default)()
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          'selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          'onChange={this.handleChange}',
+	          _react2.default.createElement('br', null),
+	          'withPortal />'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          withPortal: true })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 635 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Default',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      startDate: null
+	    };
+	  },
+	  handleChange: function handleChange(date) {
+	    this.setState({
+	      startDate: date
+	    });
+	  },
+	  handleChangeRaw: function handleChangeRaw(value) {
+	    if (value === 'tomorrow') {
+	      this.handleChange((0, _moment2.default)().add(1, 'day'));
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'pre',
+	        { className: 'column example__code' },
+	        _react2.default.createElement(
+	          'code',
+	          { className: 'jsx' },
+	          'handleChangeRaw(value) {',
+	          _react2.default.createElement('br', null),
+	          '  if(value === "tomorrow") {',
+	          _react2.default.createElement('br', null),
+	          '    const tomorrow = moment().add(1, "day")',
+	          _react2.default.createElement('br', null),
+	          '    this.handleChange(tomorrow)',
+	          _react2.default.createElement('br', null),
+	          '  }',
+	          _react2.default.createElement('br', null),
+	          '}',
+	          _react2.default.createElement('br', null),
+	          '<DatePicker',
+	          _react2.default.createElement('br', null),
+	          '    selected={this.state.startDate}',
+	          _react2.default.createElement('br', null),
+	          '    onChange={this.handleChange} />',
+	          _react2.default.createElement('br', null),
+	          '    placeholderText="Enter tomorrow"',
+	          _react2.default.createElement('br', null),
+	          '    onChangeRaw={(event) => ',
+	          _react2.default.createElement('br', null),
+	          '    this.handleChangeRaw(event.target.value)',
+	          _react2.default.createElement('br', null),
+	          '/>'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'column' },
+	        _react2.default.createElement(_reactDatepicker2.default, {
+	          selected: this.state.startDate,
+	          onChange: this.handleChange,
+	          placeholderText: 'Enter "tomorrow"',
+	          onChangeRaw: function onChangeRaw(event) {
+	            return _this.handleChangeRaw(event.target.value);
+	          } })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 636 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 637 */
+636,
+/* 638 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(341);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(343);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61927,7 +63026,7 @@
 	});
 
 /***/ },
-/* 627 */
+/* 639 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
@@ -61998,17 +63097,6 @@
 	  }
 	};
 
-	var fiveArgumentPooler = function (a1, a2, a3, a4, a5) {
-	  var Klass = this;
-	  if (Klass.instancePool.length) {
-	    var instance = Klass.instancePool.pop();
-	    Klass.call(instance, a1, a2, a3, a4, a5);
-	    return instance;
-	  } else {
-	    return new Klass(a1, a2, a3, a4, a5);
-	  }
-	};
-
 	var standardReleaser = function (instance) {
 	  var Klass = this;
 	  !(instance instanceof Klass) ?  false ? invariant(false, 'Trying to release an instance into a pool of a different type.') : _prodInvariant('25') : void 0;
@@ -62048,8 +63136,7 @@
 	  oneArgumentPooler: oneArgumentPooler,
 	  twoArgumentPooler: twoArgumentPooler,
 	  threeArgumentPooler: threeArgumentPooler,
-	  fourArgumentPooler: fourArgumentPooler,
-	  fiveArgumentPooler: fiveArgumentPooler
+	  fourArgumentPooler: fourArgumentPooler
 	};
 
 	module.exports = PooledClass;

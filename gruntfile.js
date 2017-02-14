@@ -20,7 +20,8 @@ module.exports = function (grunt) {
     sass: {
       min: {
         files: {
-          'dist/react-datepicker.css': 'src/stylesheets/datepicker.scss'
+          'dist/react-datepicker.css': 'src/stylesheets/datepicker.scss',
+          'dist/react-datepicker-cssmodules.css': 'src/stylesheets/datepicker-cssmodules.scss'
         },
         options: {
           sourcemap: 'none',
@@ -29,7 +30,8 @@ module.exports = function (grunt) {
       },
       unmin: {
         files: {
-          'dist/react-datepicker.min.css': 'src/stylesheets/datepicker.scss'
+          'dist/react-datepicker.min.css': 'src/stylesheets/datepicker.scss',
+          'dist/react-datepicker-cssmodules.min.css': 'src/stylesheets/datepicker-cssmodules.scss'
         },
         options: {
           sourcemap: 'none',
@@ -65,10 +67,10 @@ module.exports = function (grunt) {
       }
     },
 
-    scsslint: {
+    sasslint: {
       files: ['src/stylesheets/*.scss', 'docs-site/src/*.scss'],
       options: {
-        config: '.scss-lint.yml',
+        config: '.sass-lint.yml',
         colorizeOutput: true,
         exclude: ['docs-site/src/higlight.scss', 'docs-site/src/reset.scss']
       }
@@ -105,7 +107,14 @@ module.exports = function (grunt) {
               warnings: false
             }
           })
-        ]
+        ],
+        module: {
+          loaders: [{
+            query: {
+              plugins: ['transform-react-remove-prop-types']
+            }
+          }]
+        }
       }),
       docs: require('./webpack.docs.config')
     },
@@ -124,15 +133,15 @@ module.exports = function (grunt) {
     }
   })
 
-  grunt.loadNpmTasks('grunt-contrib-sass')
-  grunt.loadNpmTasks('grunt-scss-lint')
+  grunt.loadNpmTasks('grunt-sass')
+  grunt.loadNpmTasks('grunt-sass-lint')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-babel')
   grunt.loadNpmTasks('grunt-webpack')
   grunt.loadNpmTasks('grunt-karma')
   grunt.loadNpmTasks('grunt-eslint')
 
-  grunt.registerTask('default', ['watch', 'scsslint'])
-  grunt.registerTask('travis', ['eslint', 'karma', 'scsslint'])
-  grunt.registerTask('build', ['scsslint', 'babel', 'webpack', 'sass'])
+  grunt.registerTask('default', ['watch', 'sasslint'])
+  grunt.registerTask('travis', ['eslint', 'karma', 'sasslint'])
+  grunt.registerTask('build', ['sasslint', 'babel', 'webpack', 'sass'])
 }

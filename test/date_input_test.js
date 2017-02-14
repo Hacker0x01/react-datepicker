@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import DateInput from '../src/date_input.jsx'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 describe('DateInput', function () {
   it('adds disabled attribute to input field when disabled is passed as prop', function () {
@@ -71,9 +71,7 @@ describe('DateInput', function () {
     assert(callback.calledOnce, 'must be called once')
     assert(dateTo.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
   })
-  //  The following 3 tests no longer apply because the Concur fork of react-datepicker
-  //  has slightly altered the fundamental flow of error checking and validation.
-/*
+
   it('should call onChangeDate when changing from valid date to empty', function () {
     var callback = sinon.spy()
     var dateInput = shallow(
@@ -86,6 +84,24 @@ describe('DateInput', function () {
       }
     })
     assert(callback.withArgs(null).calledOnce, 'must be called once with null')
+  })
+
+  it('should recognize a date with trailing whitespace as valid and call onChangeDate with the trimmed date', function () {
+    var callback = sinon.spy()
+    var dateInput = mount(
+      <DateInput date={moment()} dateFormat="MM/DD/YYYY" onChangeDate={callback} />
+    )
+    var dateFormat = dateInput.prop('dateFormat')
+    var dateWithWhitespace = moment().add(2, 'days').format(dateFormat) + '   '
+    var expectedDate = moment(dateWithWhitespace.trim(), dateFormat, moment.locale(), true)
+    dateInput.find('input').simulate('change', {
+      isDefaultPrevented: () => false,
+      target: {
+        value: dateWithWhitespace
+      }
+    })
+    assert(callback.calledOnce, 'must be called once')
+    assert.equal(moment(callback.args[0][0]).format(dateFormat), expectedDate.format(dateFormat), 'must be called with expectedDate')
   })
 
   it('should not call onChangeDate when changing from valid date to invalid', function () {
@@ -125,7 +141,7 @@ describe('DateInput', function () {
     assert(callback.calledOnce, 'must be called once')
     assert(dateTo.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
   })
-*/
+
   it('should not call onChangeDate when changing to a disabled date', function () {
     var date = moment()
     var dateFormat = 'YYYY-MM-DD'
@@ -382,6 +398,25 @@ describe('DateInput', function () {
         <DateInput date={date} dateFormat={dateFormat}/>
       )
       expect(dateInput.find('input').prop('value')).to.equal(date.format(dateFormat))
+    })
+  })
+
+  describe('utcOffsetChange', function () {
+    it('should rerender with correct date and time when utcOffset prop changes', function () {
+      var date = moment('2015-10-11T00:00:00Z')
+      var newDate = date.clone()
+      var dateFormat = 'YYYY-MM-DD HH:mm'
+      date.utcOffset(-5)
+      var dateInput = shallow(
+        <DateInput date={date} dateFormat={dateFormat}/>
+      )
+      expect(dateInput.find('input').prop('value')).to.equal('2015-10-10 19:00')
+
+      newDate.utcOffset(5)
+      dateInput = shallow(
+        <DateInput date={newDate} dateFormat={dateFormat}/>
+      )
+      expect(dateInput.find('input').prop('value')).to.equal('2015-10-11 05:00')
     })
   })
 

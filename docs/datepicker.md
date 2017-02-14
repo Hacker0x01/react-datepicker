@@ -16,6 +16,16 @@ type: `string`
 type: `bool`
 
 
+### `calendarClassName`
+
+type: `string`
+
+
+### `children`
+
+type: `node`
+
+
 ### `className`
 
 type: `string`
@@ -43,6 +53,12 @@ type: `bool`
 defaultValue: `false`
 
 
+### `disabledKeyboardNavigation`
+
+type: `bool`
+defaultValue: `false`
+
+
 ### `dropdownMode` (required)
 
 type: `enum('scroll'|'select')`
@@ -65,6 +81,11 @@ type: `func`
 
 
 ### `fixedHeight`
+
+type: `bool`
+
+
+### `forceShowMonthNavigation`
 
 type: `bool`
 
@@ -132,7 +153,18 @@ type: `func`
 defaultValue: `function() {}`
 
 
+### `onChangeRaw`
+
+type: `func`
+
+
 ### `onFocus`
+
+type: `func`
+defaultValue: `function() {}`
+
+
+### `onMonthChange`
 
 type: `func`
 defaultValue: `function() {}`
@@ -255,5 +287,11 @@ type: `string`
 ### `utcOffset`
 
 type: `number`
-defaultValue: `moment.utc().utcOffset()`
+defaultValue: `moment().utcOffset()`
+
+
+### `withPortal`
+
+type: `bool`
+defaultValue: `false`
 

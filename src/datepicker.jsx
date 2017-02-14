@@ -4,10 +4,12 @@ import React from 'react'
 import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import { isSameDay } from './date_utils'
+import {isSameDay, isDayDisabled, isDayInRange} from './date_utils'
 import moment from 'moment'
+import onClickOutside from 'react-onclickoutside'
 
 var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+var WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -17,9 +19,10 @@ var DatePicker = React.createClass({
   displayName: 'DatePicker',
 
   propTypes: {
-    allowInvalidDates: React.PropTypes.bool,
     autoComplete: React.PropTypes.string,
     autoFocus: React.PropTypes.bool,
+    calendarClassName: React.PropTypes.string,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
     dateFormat: React.PropTypes.oneOfType([
@@ -28,6 +31,7 @@ var DatePicker = React.createClass({
     ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    disabledKeyboardNavigation: React.PropTypes.bool,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
     excludeDates: React.PropTypes.array,
@@ -45,7 +49,9 @@ var DatePicker = React.createClass({
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
+    onChangeRaw: React.PropTypes.func,
     onFocus: React.PropTypes.func,
+    onMonthChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     placeholderText: React.PropTypes.string,
@@ -62,12 +68,14 @@ var DatePicker = React.createClass({
     showMonthDropdown: React.PropTypes.bool,
     showWeekNumbers: React.PropTypes.bool,
     showYearDropdown: React.PropTypes.bool,
+    forceShowMonthNavigation: React.PropTypes.bool,
     startDate: React.PropTypes.object,
     tabIndex: React.PropTypes.number,
     tetherConstraints: React.PropTypes.array,
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
-    utcOffset: React.PropTypes.number
+    utcOffset: React.PropTypes.number,
+    withPortal: React.PropTypes.bool
   },
 
   getDefaultProps () {
@@ -75,9 +83,11 @@ var DatePicker = React.createClass({
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
+      disabledKeyboardNavigation: false,
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
@@ -87,14 +97,27 @@ var DatePicker = React.createClass({
           attachment: 'together'
         }
       ],
-      utcOffset: moment.utc().utcOffset(),
-      monthsShown: 1
+      utcOffset: moment().utcOffset(),
+      monthsShown: 1,
+      withPortal: false
     }
   },
 
   getInitialState () {
     return {
-      open: false
+      open: false,
+      preventFocus: false,
+      preSelection: this.props.selected ? moment(this.props.selected) : moment()
+    }
+  },
+
+  componentWillUnmount () {
+    this.clearPreventFocusTimeout()
+  },
+
+  clearPreventFocusTimeout () {
+    if (this.preventFocusTimeout) {
+      clearTimeout(this.preventFocusTimeout)
     }
   },
 
@@ -103,12 +126,17 @@ var DatePicker = React.createClass({
   },
 
   setOpen (open) {
-    this.setState({ open })
+    this.setState({
+      open: open,
+      preSelection: open && this.state.open ? this.state.preSelection : this.getInitialState().preSelection
+    })
   },
 
   handleFocus (event) {
-    this.props.onFocus(event)
-    this.setOpen(true)
+    if (!this.state.preventFocus) {
+      this.props.onFocus(event)
+      this.setOpen(true)
+    }
   },
 
   cancelFocusInput () {
@@ -135,9 +163,18 @@ var DatePicker = React.createClass({
 
   handleCalendarClickOutside (event) {
     this.setOpen(false)
+    if (this.props.withPortal) { event.preventDefault() }
   },
 
   handleSelect (date, event) {
+    // Preventing onFocus event to fix issue
+    // https://github.com/Hacker0x01/react-datepicker/issues/628
+    this.setState({ preventFocus: true },
+      () => {
+        this.preventFocusTimeout = setTimeout(() => this.setState({ preventFocus: false }), 50)
+        return this.preventFocusTimeout
+      }
+    )
     this.setSelected(date, event)
     this.setOpen(false)
   },
@@ -145,24 +182,35 @@ var DatePicker = React.createClass({
   setSelected (date, event) {
     let changedDate = date
 
-    if (!isSameDay(this.props.selected, changedDate) || this.props.allowInvalidDates) {
-      if (this.props.selected) {
-        changedDate = moment(changedDate).set({
-          hour: this.props.selected.hour(),
-          minute: this.props.selected.minute(),
-          second: this.props.selected.second()
+    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+      return
+    }
+
+    if (!isSameDay(this.props.selected, changedDate)) {
+      if (changedDate !== null) {
+        if (this.props.selected) {
+          changedDate = moment(changedDate).set({
+            hour: this.props.selected.hour(),
+            minute: this.props.selected.minute(),
+            second: this.props.selected.second()
+          })
+        }
+        this.setState({
+          preSelection: changedDate
         })
       }
 
-      //  If the above moment.set() call returned a valid date, publish the new date object:
-      if (changedDate && changedDate.isValid()) {
-        this.props.onChange(changedDate, event)
+      this.props.onChange(changedDate, event)
+    }
+  },
 
-      //  Else the date *isn't* valid, but if we allow invalid dates to be entered
-      //  anyway, publish the change using a null value:
-      } else if (this.props.allowInvalidDates) {
-        this.props.onChange(null, event)
-      }
+  setPreSelection (date) {
+    const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
+    const isValidDateSelection = isDateRangePresent ? isDayInRange(date, this.props.minDate, this.props.maxDate) : true
+    if (isValidDateSelection) {
+      this.setState({
+        preSelection: date
+      })
     }
   },
 
@@ -173,40 +221,59 @@ var DatePicker = React.createClass({
   },
 
   onInputKeyDown (event) {
-    let copy = moment(this.props.selected)
-
-    //  If this is a keyboard event that changes the date AND the user-entered date is invalid, then change the date to the current date:
-    if (this.props.allowInvalidDates && ((event.key !== 'Enter') && (event.key !== 'Escape') && (event.key !== 'Tab') && (!copy || !copy.isValid()))) { copy = moment() }
-
-    if (event.key === 'Enter' || event.key === 'Escape') {
+    if (!this.state.open && !this.props.inline) {
+      if (/^Arrow/.test(event.key)) {
+        this.onInputClick()
+      }
+      return
+    }
+    const copy = moment(this.state.preSelection)
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      this.handleSelect(copy, event)
+    } else if (event.key === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
     } else if (event.key === 'Tab') {
       this.setOpen(false)
-    } else if (event.key === 'ArrowLeft') {
-      event.preventDefault()
-      this.setSelected(copy.subtract(1, 'days'))
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault()
-      this.setSelected(copy.add(1, 'days'))
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      this.setSelected(copy.subtract(1, 'weeks'))
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      this.setSelected(copy.add(1, 'weeks'))
-    } else if (event.key === 'PageUp') {
-      event.preventDefault()
-      this.setSelected(copy.subtract(1, 'months'))
-    } else if (event.key === 'PageDown') {
-      event.preventDefault()
-      this.setSelected(copy.add(1, 'months'))
-    } else if (event.key === 'Home') {
-      event.preventDefault()
-      this.setSelected(copy.subtract(1, 'years'))
-    } else if (event.key === 'End') {
-      event.preventDefault()
-      this.setSelected(copy.add(1, 'years'))
+    }
+    if (!this.props.disabledKeyboardNavigation) {
+      let newSelection
+      switch (event.key) {
+        case 'ArrowLeft':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'days')
+          break
+        case 'ArrowRight':
+          event.preventDefault()
+          newSelection = copy.add(1, 'days')
+          break
+        case 'ArrowUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'weeks')
+          break
+        case 'ArrowDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'weeks')
+          break
+        case 'PageUp':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'months')
+          break
+        case 'PageDown':
+          event.preventDefault()
+          newSelection = copy.add(1, 'months')
+          break
+        case 'Home':
+          event.preventDefault()
+          newSelection = copy.subtract(1, 'years')
+          break
+        case 'End':
+          event.preventDefault()
+          newSelection = copy.add(1, 'years')
+          break
+      }
+      this.setPreSelection(newSelection)
     }
   },
 
@@ -219,12 +286,13 @@ var DatePicker = React.createClass({
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
-    return <Calendar
+    return <WrappedCalendar
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
+        preSelection={this.state.preSelection}
         onSelect={this.handleSelect}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
@@ -242,13 +310,18 @@ var DatePicker = React.createClass({
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
-        onDropdownFocus={this.handleDropdownFocus}/>
+        onDropdownFocus={this.handleDropdownFocus}
+        onMonthChange={this.props.onMonthChange}
+        className={this.props.calendarClassName}>
+      {this.props.children}
+    </WrappedCalendar>
   },
 
   renderDateInput () {
@@ -257,7 +330,6 @@ var DatePicker = React.createClass({
     })
     return <DateInput
         ref="input"
-        allowInvalidDates={this.props.allowInvalidDates}
         id={this.props.id}
         name={this.props.name}
         autoFocus={this.props.autoFocus}
@@ -272,6 +344,7 @@ var DatePicker = React.createClass({
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.onInputClick}
+        onChangeRaw={this.props.onChangeRaw}
         onKeyDown={this.onInputKeyDown}
         onChangeDate={this.setSelected}
         placeholder={this.props.placeholderText}
@@ -298,23 +371,41 @@ var DatePicker = React.createClass({
 
     if (this.props.inline) {
       return calendar
-    } else {
+    }
+
+    if (this.props.withPortal) {
       return (
-        <TetherComponent
-            classPrefix={'react-datepicker__tether'}
-            attachment={this.props.popoverAttachment}
-            targetAttachment={this.props.popoverTargetAttachment}
-            targetOffset={this.props.popoverTargetOffset}
-            renderElementTo={this.props.renderCalendarTo}
-            constraints={this.props.tetherConstraints}>
+        <div>
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
             {this.renderClearButton()}
           </div>
-          {calendar}
-        </TetherComponent>
+          {
+          this.state.open
+          ? <div className="react-datepicker__portal">
+              {calendar}
+            </div>
+          : null
+          }
+        </div>
       )
     }
+
+    return (
+      <TetherComponent
+          classPrefix={'react-datepicker__tether'}
+          attachment={this.props.popoverAttachment}
+          targetAttachment={this.props.popoverTargetAttachment}
+          targetOffset={this.props.popoverTargetOffset}
+          renderElementTo={this.props.renderCalendarTo}
+          constraints={this.props.tetherConstraints}>
+        <div className="react-datepicker__input-container">
+          {this.renderDateInput()}
+          {this.renderClearButton()}
+        </div>
+        {calendar}
+      </TetherComponent>
+    )
   }
 })
 

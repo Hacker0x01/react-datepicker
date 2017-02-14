@@ -1,12 +1,11 @@
 import moment from 'moment'
 import React from 'react'
-import { isSameDay, isDayDisabled } from './date_utils'
+import { isSameDay, isDayDisabled, isSameUtcOffset } from './date_utils'
 
 var DateInput = React.createClass({
   displayName: 'DateInput',
 
   propTypes: {
-    allowInvalidDates: React.PropTypes.bool,
     customInput: React.PropTypes.element,
     date: React.PropTypes.object,
     dateFormat: React.PropTypes.oneOfType([
@@ -22,6 +21,7 @@ var DateInput = React.createClass({
     minDate: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
+    onChangeRaw: React.PropTypes.func,
     onChangeDate: React.PropTypes.func
   },
 
@@ -32,12 +32,6 @@ var DateInput = React.createClass({
   },
 
   getInitialState () {
-    if (this.props.allowInvalidDates && !this.props.date) {
-      return {
-        value: ''
-      }
-    }
-
     return {
       value: this.safeDateFormat(this.props)
     }
@@ -45,65 +39,49 @@ var DateInput = React.createClass({
 
   componentWillReceiveProps (newProps) {
     if (!isSameDay(newProps.date, this.props.date) ||
+        !isSameUtcOffset(newProps.date, this.props.date) ||
           newProps.locale !== this.props.locale ||
           newProps.dateFormat !== this.props.dateFormat) {
-      this.updateState({
+      this.setState({
         value: this.safeDateFormat(newProps)
       })
     }
   },
 
-  updateState (obj) {
-    if (!this.props.allowInvalidDates) {
-      return this.setState({value: obj.value})
-    }
-
-    if (typeof obj.value !== 'undefined') {
-      this.setState({value: obj.value})
-    }
-  },
-
   handleChange (event) {
-    if (this.props.allowInvalidDates) {
-      this.updateState({value: event.target.value})
-    } else if (this.props.onChange) {
+    if (this.props.onChange) {
       this.props.onChange(event)
     }
-
-    if (event.isDefaultPrevented && !event.isDefaultPrevented()) {
+    if (this.props.onChangeRaw) {
+      this.props.onChangeRaw(event)
+    }
+    if (!event.defaultPrevented) {
       this.handleChangeDate(event.target.value)
     }
   },
 
   handleChangeDate (value) {
     if (this.props.onChangeDate) {
-      var date = moment(value, this.props.dateFormat, this.props.locale || moment.locale(), true)
-
-      if (!isDayDisabled(date, this.props)) {
+      var date = moment(value.trim(), this.props.dateFormat, this.props.locale || moment.locale(), true)
+      if (date.isValid() && !isDayDisabled(date, this.props)) {
         this.props.onChangeDate(date)
+      } else if (value === '') {
+        this.props.onChangeDate(null)
       }
     }
-
-    this.updateState({value})
+    this.setState({value})
   },
 
-  safeDateFormat (props, value) {
-    if (this.props.allowInvalidDates) {
-      if (typeof props.date === 'string' || !props.date) {
-        return value
-      }
-    }
-
+  safeDateFormat (props) {
     return props.date && props.date.clone()
       .locale(props.locale || moment.locale())
       .format(Array.isArray(props.dateFormat) ? props.dateFormat[0] : props.dateFormat) || ''
   },
 
   handleBlur (event) {
-    this.updateState({
+    this.setState({
       value: this.safeDateFormat(this.props)
     })
-
     if (this.props.onBlur) {
       this.props.onBlur(event)
     }
@@ -114,7 +92,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { allowInvalidDates, customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
 
     if (customInput) {
       return React.cloneElement(customInput, {
@@ -124,15 +102,15 @@ var DateInput = React.createClass({
         onBlur: this.handleBlur,
         onChange: this.handleChange
       })
+    } else {
+      return <input
+          ref="input"
+          type="text"
+          {...rest}
+          value={this.state.value}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}/>
     }
-
-    return <input
-        ref="input"
-        type="text"
-        {...rest}
-        value={this.state.value}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange} />
   }
 })
 

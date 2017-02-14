@@ -149,7 +149,7 @@ var TetherComponent = React.createClass({
     Children.forEach(children, (child, index) => {
       if (index === 0) {
         firstChild = child
-        return
+        return false
       }
     })
 

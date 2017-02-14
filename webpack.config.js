@@ -46,7 +46,7 @@ module.exports = {
     },
     {
       'react-onclickoutside': {
-        root: 'OnClickOutside',
+        root: 'onClickOutside',
         commonjs2: 'react-onclickoutside',
         commonjs: 'react-onclickoutside',
         amd: 'react-onclickoutside'

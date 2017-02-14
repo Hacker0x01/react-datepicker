@@ -64,7 +64,6 @@
     border-bottom: 1px solid #d8e4ef;
     overflow-x: auto;
     overflow-y: hidden;
-    white-space: nowrap;
 
     @include breakpoint(768px) {
       border-top-right-radius: 4px;
@@ -84,6 +83,18 @@
   border-color: #f00;
 }
 
+.rasta-stripes {
+  .react-datepicker__week:nth-child(3n+1) {
+    background-color: #215005;
+  }
+  .react-datepicker__week:nth-child(3n+2) {
+    background-color: #eea429;
+  }
+  .react-datepicker__week:nth-child(3n+3) {
+    background-color: #a82a15;
+  }
+}
+
 .example-custom-input {
   cursor: pointer;
   padding: 5px 15px;
@@ -92,4 +103,8 @@
   background-color: #216ba5;
   font: inherit;
   color: #fff;
+}
+
+.example__timezone-selector {
+  margin-left: 10px;
 }

@@ -40,6 +40,13 @@ describe('Calendar', function () {
     assert(calendar.state().date.isSame(selected, 'day'))
   })
 
+  it('should start with the pre-selected date in view if provided', function () {
+    var preSelected = moment().add(2, 'year')
+    var selected = moment().add(1, 'year')
+    var calendar = getCalendar({ preSelected, selected })
+    assert(calendar.state().date.isSame(selected, 'day'))
+  })
+
   it('should start with the current date in view if in date range', function () {
     var now = moment()
     var minDate = now.clone().subtract(1, 'year')
@@ -129,6 +136,12 @@ describe('Calendar', function () {
     expect(yearReadView).to.have.length(1)
   })
 
+  it('should show month navigation if toggled on', function () {
+    var calendar = getCalendar({ includeDates: [moment()], forceShowMonthNavigation: true })
+    var nextNavigationButton = calendar.find('.react-datepicker__navigation--next')
+    expect(nextNavigationButton).to.have.length(1)
+  })
+
   it('should not show the month dropdown menu by default', function () {
     var calendar = getCalendar()
     var monthReadView = calendar.find(MonthDropdown)
@@ -197,6 +210,48 @@ describe('Calendar', function () {
     expect(month.prop('selectingDate')).to.exist
     month.simulate('mouseleave')
     expect(month.prop('selectingDate')).not.to.exist
+  })
+
+  describe('onMonthChange', () => {
+    var onMonthChangeSpy = sinon.spy()
+    var calendar
+
+    beforeEach(() => {
+      onMonthChangeSpy = sinon.spy()
+      calendar = mount(
+        <Calendar
+            dateFormat={dateFormat}
+            onSelect={() => {}}
+            onClickOutside={() => {}}
+            hideCalendar={() => {}}
+            dropdownMode="select"
+            showYearDropdown
+            showMonthDropdown
+            forceShowMonthNavigation
+            onMonthChange={onMonthChangeSpy}/>
+      )
+    })
+
+    it('calls onMonthChange prop when previous month button clicked', () => {
+      var select = calendar.find('.react-datepicker__navigation--previous')
+      select.simulate('click')
+
+      assert(onMonthChangeSpy.called === true, 'onMonthChange should be called')
+    })
+
+    it('calls onMonthChange prop when next month button clicked', () => {
+      var select = calendar.find('.react-datepicker__navigation--next')
+      select.simulate('click')
+
+      assert(onMonthChangeSpy.called === true, 'onMonthChange should be called')
+    })
+
+    it('calls onMonthChange prop when month changed from month dropdown', () => {
+      var select = calendar.find(MonthDropdown).find('select')
+      select.simulate('change')
+
+      assert(onMonthChangeSpy.called === true, 'onMonthChange should be called')
+    })
   })
 
   describe('onDropdownFocus', () => {

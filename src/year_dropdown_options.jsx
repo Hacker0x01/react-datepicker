@@ -3,8 +3,8 @@ import classNames from 'classnames'
 
 function generateYears (year, noOfYear) {
   var list = []
-  for (var i = 0; i < noOfYear; i++) {
-    list.push(year - i)
+  for (var i = 0; i < (2 * noOfYear); i++) {
+    list.push(year + noOfYear - i)
   }
   return list
 }
@@ -19,11 +19,9 @@ var YearDropdownOptions = React.createClass({
     year: React.PropTypes.number.isRequired
   },
 
-  mixins: [require('react-onclickoutside')],
-
   getInitialState () {
     return {
-      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 50) : generateYears(this.props.year, 5)
+      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
     }
   },
 

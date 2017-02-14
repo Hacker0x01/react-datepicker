@@ -4,6 +4,7 @@ import YearDropdown from './year_dropdown'
 import MonthDropdown from './month_dropdown'
 import Month from './month'
 import React from 'react'
+import classnames from 'classnames'
 import { isSameDay, allDaysDisabledBefore, allDaysDisabledAfter, getEffectiveMinDate, getEffectiveMaxDate } from './date_utils'
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -22,6 +23,8 @@ var Calendar = React.createClass({
   displayName: 'Calendar',
 
   propTypes: {
+    className: React.PropTypes.string,
+    children: React.PropTypes.node,
     dateFormat: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.array
@@ -38,11 +41,14 @@ var Calendar = React.createClass({
     minDate: React.PropTypes.object,
     monthsShown: React.PropTypes.number,
     onClickOutside: React.PropTypes.func.isRequired,
+    onMonthChange: React.PropTypes.func,
+    forceShowMonthNavigation: React.PropTypes.bool,
     onDropdownFocus: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
     scrollableYearDropdown: React.PropTypes.bool,
+    preSelection: React.PropTypes.object,
     selected: React.PropTypes.object,
     selectsEnd: React.PropTypes.bool,
     selectsStart: React.PropTypes.bool,
@@ -54,8 +60,6 @@ var Calendar = React.createClass({
     utcOffset: React.PropTypes.number
   },
 
-  mixins: [require('react-onclickoutside')],
-
   defaultProps: {
     onDropdownFocus: () => {}
   },
@@ -63,7 +67,8 @@ var Calendar = React.createClass({
   getDefaultProps () {
     return {
       utcOffset: moment.utc().utcOffset(),
-      monthsShown: 1
+      monthsShown: 1,
+      forceShowMonthNavigation: false
     }
   },
 
@@ -75,9 +80,9 @@ var Calendar = React.createClass({
   },
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.selected && !isSameDay(nextProps.selected, this.props.selected)) {
+    if (nextProps.preSelection && !isSameDay(nextProps.preSelection, this.props.preSelection)) {
       this.setState({
-        date: this.localizeMoment(nextProps.selected)
+        date: this.localizeMoment(nextProps.preSelection)
       })
     } else if (nextProps.openToDate && !isSameDay(nextProps.openToDate, this.props.openToDate)) {
       this.setState({
@@ -97,12 +102,13 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, openToDate, utcOffset } = this.props
+    const { preSelection, selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const current = moment.utc().utcOffset(utcOffset)
-    if (selected) {
-      return selected
+    const initialDate = preSelection || selected
+    if (initialDate) {
+      return initialDate
     } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
       return openToDate
     } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
@@ -127,13 +133,13 @@ var Calendar = React.createClass({
   increaseMonth () {
     this.setState({
       date: this.state.date.clone().add(1, 'month')
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   decreaseMonth () {
     this.setState({
       date: this.state.date.clone().subtract(1, 'month')
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   handleDayClick (day, event) {
@@ -148,6 +154,12 @@ var Calendar = React.createClass({
     this.setState({ selectingDate: null })
   },
 
+  handleMonthChange (date) {
+    if (this.props.onMonthChange) {
+      this.props.onMonthChange(date)
+    }
+  },
+
   changeYear (year) {
     this.setState({
       date: this.state.date.clone().set('year', year)
@@ -157,7 +169,7 @@ var Calendar = React.createClass({
   changeMonth (month) {
     this.setState({
       date: this.state.date.clone().set('month', month)
-    })
+    }, () => this.handleMonthChange(this.state.date))
   },
 
   header (date = this.state.date) {
@@ -181,7 +193,7 @@ var Calendar = React.createClass({
   },
 
   renderPreviousMonthButton () {
-    if (allDaysDisabledBefore(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledBefore(this.state.date, 'month', this.props)) {
       return
     }
     return <a
@@ -190,7 +202,7 @@ var Calendar = React.createClass({
   },
 
   renderNextMonthButton () {
-    if (allDaysDisabledAfter(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledAfter(this.state.date, 'month', this.props)) {
       return
     }
     return <a
@@ -202,6 +214,9 @@ var Calendar = React.createClass({
     var classes = ['react-datepicker__current-month']
     if (this.props.showYearDropdown) {
       classes.push('react-datepicker__current-month--hasYearDropdown')
+    }
+    if (this.props.showMonthDropdown) {
+      classes.push('react-datepicker__current-month--hasMonthDropdown')
     }
     return (
       <div className={classes.join(' ')}>
@@ -281,6 +296,7 @@ var Calendar = React.createClass({
                 includeDates={this.props.includeDates}
                 fixedHeight={this.props.fixedHeight}
                 filterDate={this.props.filterDate}
+                preSelection={this.props.preSelection}
                 selected={this.props.selected}
                 selectsStart={this.props.selectsStart}
                 selectsEnd={this.props.selectsEnd}
@@ -297,12 +313,13 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="react-datepicker">
+      <div className={classnames('react-datepicker', this.props.className)}>
         <div className="react-datepicker__triangle" />
         {this.renderPreviousMonthButton()}
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
+        {this.props.children}
       </div>
     )
   }

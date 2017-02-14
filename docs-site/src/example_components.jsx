@@ -3,9 +3,9 @@ import hljs from 'highlight.js'
 import Default from './examples/default'
 import CodeExampleComponent from './code_example_component'
 
-import AllowInvalidDates from './examples/allow_invalid_dates'
 import CustomDateFormat from './examples/custom_date_format'
 import CustomClassName from './examples/custom_class_name'
+import CustomCalendarClassName from './examples/custom_calendar_class_name'
 import PlaceholderText from './examples/placeholder_text'
 import SpecificDateRange from './examples/specific_date_range'
 import Locale from './examples/locale'
@@ -14,12 +14,14 @@ import HighlightDates from './examples/highlight_dates'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
+import DisabledKeyboardNavigation from './examples/disabled_keyboard_navigation'
 import ClearInput from './examples/clear_input'
 import OnBlurCallbacks from './examples/on_blur_callbacks'
 import Placement from './examples/placement'
 import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
+import MonthDropdown from './examples/month_dropdown'
 import YearSelectDropdown from './examples/year_select_dropdown'
 import Today from './examples/today'
 import TimeZoneDate from './examples/timezone_date'
@@ -30,6 +32,9 @@ import WeekNumbers from './examples/week_numbers'
 import CustomInput from './examples/custom_input'
 import MultiMonth from './examples/multi_month'
 import MultiMonthDrp from './examples/multi_month_drp'
+import Children from './examples/children'
+import Portal from './examples/portal'
+import RawChange from './examples/raw_change'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -47,16 +52,16 @@ export default React.createClass({
       component: <Default />
     },
     {
-      title: 'Allow invalid dates',
-      component: <AllowInvalidDates />
-    },
-    {
       title: 'Custom date format',
       component: <CustomDateFormat />
     },
     {
       title: 'Custom class name',
       component: <CustomClassName />
+    },
+    {
+      title: 'Custom calendar class name',
+      component: <CustomCalendarClassName />
     },
     {
       title: 'Today button',
@@ -103,6 +108,10 @@ export default React.createClass({
       component: <Disabled />
     },
     {
+      title: 'Disable keyboard navigation',
+      component: <DisabledKeyboardNavigation />
+    },
+    {
       title: 'Clear datepicker input',
       component: <ClearInput />
     },
@@ -115,12 +124,20 @@ export default React.createClass({
       component: <Placement />
     },
     {
+      title: 'Portal version',
+      component: <Portal />
+    },
+    {
       title: 'TabIndex',
       component: <TabIndex />
     },
     {
       title: 'Year dropdown',
       component: <YearDropdown />
+    },
+    {
+      title: 'Month dropdown',
+      component: <MonthDropdown />
     },
     {
       title: 'Year select dropdown',
@@ -153,6 +170,14 @@ export default React.createClass({
     {
       title: 'Multiple months with year dropdown',
       component: <MultiMonthDrp />
+    },
+    {
+      title: 'Children',
+      component: <Children />
+    },
+    {
+      title: 'Get raw input value on change',
+      component: <RawChange/>
     }
   ],
 

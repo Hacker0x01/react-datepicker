@@ -8,6 +8,14 @@ export function isSameDay (moment1, moment2) {
   }
 }
 
+export function isSameUtcOffset (moment1, moment2) {
+  if (moment1 && moment2) {
+    return moment1.utcOffset() === moment2.utcOffset()
+  } else {
+    return !moment1 && !moment2
+  }
+}
+
 export function isDayInRange (day, startDate, endDate) {
   const before = startDate.clone().startOf('day').subtract(1, 'seconds')
   const after = endDate.clone().startOf('day').add(1, 'seconds')

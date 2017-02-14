@@ -55,13 +55,13 @@ describe('YearDropdown', () => {
 
     it('does not call the supplied onChange function when the same year is clicked', () => {
       yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
-      yearDropdown.find('.react-datepicker__year-option').at(1).simulate('click')
+      yearDropdown.find('.react-datepicker__year-option').at(6).simulate('click')
       expect(lastOnChangeValue).to.be.null
     })
 
     it('calls the supplied onChange function when a different year is clicked', () => {
       yearDropdown.find('.react-datepicker__year-read-view').simulate('click')
-      yearDropdown.find('.react-datepicker__year-option').at(2).simulate('click')
+      yearDropdown.find('.react-datepicker__year-option').at(7).simulate('click')
       expect(lastOnChangeValue).to.eq(2014)
     })
   })
