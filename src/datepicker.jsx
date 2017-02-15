@@ -217,7 +217,7 @@ var DatePicker = React.createClass({
 
       //  Else the date *isn't* valid, but if we allow invalid dates to be entered
       //  anyway, publish the change using a null value:
-      } else if (this.props.allowInvalidDates) {
+      } else {
         this.props.onChange(null, event)
       }
       // ##  END custom code in concur fork

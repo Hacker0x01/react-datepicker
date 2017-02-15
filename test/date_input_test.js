@@ -1,7 +1,11 @@
 import React from 'react'
 import moment from 'moment'
 import DateInput from '../src/date_input.jsx'
-import { shallow, mount } from 'enzyme'
+// ##################################################
+// ##  START custom code in concur fork
+import { shallow } from 'enzyme'
+// ##  END custom code in concur fork
+// ##################################################
 
 describe('DateInput', function () {
   it('adds disabled attribute to input field when disabled is passed as prop', function () {
