@@ -72,6 +72,11 @@ describe('DateInput', function () {
     assert(dateTo.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
   })
 
+  // ##################################################
+  // ##  START custom code in concur fork
+  //  The following 4 tests no longer apply because the Concur fork of react-datepicker
+  //  has slightly altered the fundamental flow of error checking and validation.
+/*
   it('should call onChangeDate when changing from valid date to empty', function () {
     var callback = sinon.spy()
     var dateInput = shallow(
@@ -141,6 +146,9 @@ describe('DateInput', function () {
     assert(callback.calledOnce, 'must be called once')
     assert(dateTo.isSame(callback.getCall(0).args[0], 'day'), 'must be called with correct date')
   })
+*/
+// ##  END custom code in concur fork
+// ##################################################
 
   it('should not call onChangeDate when changing to a disabled date', function () {
     var date = moment()
