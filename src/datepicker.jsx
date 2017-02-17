@@ -41,6 +41,7 @@ var DatePicker = React.createClass({
     id: React.PropTypes.string,
     includeDates: React.PropTypes.array,
     inline: React.PropTypes.bool,
+    inputClassName: React.PropTypes.string,
     isClearable: React.PropTypes.bool,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -325,7 +326,7 @@ var DatePicker = React.createClass({
   },
 
   renderDateInput () {
-    var className = classnames(this.props.className, {
+    var className = classnames(this.props.inputClassName, {
       [outsideClickIgnoreClass]: this.state.open
     })
     return <DateInput
@@ -375,7 +376,7 @@ var DatePicker = React.createClass({
 
     if (this.props.withPortal) {
       return (
-        <div>
+        <div className={this.props.className}>
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
             {this.renderClearButton()}
@@ -399,7 +400,7 @@ var DatePicker = React.createClass({
           targetOffset={this.props.popoverTargetOffset}
           renderElementTo={this.props.renderCalendarTo}
           constraints={this.props.tetherConstraints}>
-        <div className="react-datepicker__input-container">
+        <div className={classnames('react-datepicker__input-container', this.props.className)}>
           {this.renderDateInput()}
           {this.renderClearButton()}
         </div>

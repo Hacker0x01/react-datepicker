@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 export default React.createClass({
-  displayName: 'CustomClassName',
+  displayName: 'CustomInputClassName',
 
   getInitialState () {
     return {
@@ -24,14 +24,14 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'} <br />
-              {'className="red-border" />'}
+              {'inputClassName="red-border" />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            className="red-border" />
+            inputClassName="red-border" />
       </div>
     </div>
   }
