@@ -35,7 +35,7 @@ export default React.createClass({
           {'}'}<br />
           {'<DatePicker'}<br />
           {'    selected={this.state.startDate}'}<br />
-          {'    onChange={this.handleChange} />'}<br />
+          {'    onChange={this.handleChange}'}<br />
           {'    placeholderText="Enter tomorrow"'}<br />
           {'    onChangeRaw={(event) => '}<br />
           {'    this.handleChangeRaw(event.target.value)'}<br />
