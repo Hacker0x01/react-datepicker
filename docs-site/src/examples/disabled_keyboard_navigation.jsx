@@ -24,7 +24,7 @@ export default React.createClass({
           {'<DatePicker'}<br />
               {'selected={this.state.startDate}'}<br />
               {'onChange={this.handleChange}'}<br />
-              <strong>{'disabledKeyboardNavigatio'}</strong><br />
+              <strong>{'disabledKeyboardNavigation'}</strong><br />
               {'placeholderText="This has disabled keyboard navigation" />'}
         </code>
       </pre>
