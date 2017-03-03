@@ -1,7 +1,6 @@
 import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
-import defer from 'lodash/defer'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
 import {isSameDay, isDayDisabled, isDayInRange} from './date_utils'
@@ -146,7 +145,7 @@ var DatePicker = React.createClass({
 
   deferFocusInput () {
     this.cancelFocusInput()
-    this.inputFocusTimeout = defer(() => this.setFocus())
+    this.inputFocusTimeout = window.setTimeout(() => this.setFocus(), 1)
   },
 
   handleDropdownFocus () {

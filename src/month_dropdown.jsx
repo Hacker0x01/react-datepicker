@@ -2,7 +2,6 @@ import React from 'react'
 import MonthDropdownOptions from './month_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
 import moment from 'moment'
-import range from 'lodash/range'
 
 var WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions)
 
@@ -81,7 +80,9 @@ var MonthDropdown = React.createClass({
 
   render () {
     const localeData = moment.localeData(this.props.locale)
-    const monthNames = range(0, 12).map((M) => localeData.months(moment({M})))
+    const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
+      (M) => localeData.months(moment({M}))
+    )
 
     let renderedDropdown
     switch (this.props.dropdownMode) {
