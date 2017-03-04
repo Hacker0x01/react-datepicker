@@ -1,5 +1,4 @@
 import moment from 'moment'
-import find from 'lodash/find'
 import YearDropdown from './year_dropdown'
 import MonthDropdown from './month_dropdown'
 import Month from './month'
@@ -14,9 +13,7 @@ const DROPDOWN_FOCUS_CLASSNAMES = [
 
 const isDropdownSelect = (element = {}) => {
   const classNames = (element.className || '').split(/\s+/)
-  return !!find(DROPDOWN_FOCUS_CLASSNAMES, (testClassname) => {
-    return classNames.indexOf(testClassname) >= 0
-  })
+  return DROPDOWN_FOCUS_CLASSNAMES.some(testClassname => classNames.indexOf(testClassname) >= 0)
 }
 
 var Calendar = React.createClass({
