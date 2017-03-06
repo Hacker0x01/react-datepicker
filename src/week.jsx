@@ -12,6 +12,7 @@ var Week = React.createClass({
     filterDate: React.PropTypes.func,
     highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
+    inline: React.PropTypes.bool,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     month: React.PropTypes.number,
@@ -58,6 +59,7 @@ var Week = React.createClass({
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
+            inline={this.props.inline}
             highlightDates={this.props.highlightDates}
             selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}

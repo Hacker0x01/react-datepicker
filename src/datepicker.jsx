@@ -305,6 +305,7 @@ var DatePicker = React.createClass({
         onClickOutside={this.handleCalendarClickOutside}
         highlightDates={this.props.highlightDates}
         includeDates={this.props.includeDates}
+        inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
