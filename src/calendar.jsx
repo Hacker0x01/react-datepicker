@@ -33,6 +33,7 @@ var Calendar = React.createClass({
     fixedHeight: React.PropTypes.bool,
     highlightDates: React.PropTypes.array,
     includeDates: React.PropTypes.array,
+    inline: React.PropTypes.bool,
     locale: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -291,6 +292,7 @@ var Calendar = React.createClass({
                 highlightDates={this.props.highlightDates}
                 selectingDate={this.state.selectingDate}
                 includeDates={this.props.includeDates}
+                inline={this.props.inline}
                 fixedHeight={this.props.fixedHeight}
                 filterDate={this.props.filterDate}
                 preSelection={this.props.preSelection}

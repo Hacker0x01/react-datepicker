@@ -10,6 +10,7 @@ var Day = React.createClass({
     day: React.PropTypes.object.isRequired,
     endDate: React.PropTypes.object,
     highlightDates: React.PropTypes.array,
+    inline: React.PropTypes.bool,
     month: React.PropTypes.number,
     onClick: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
@@ -43,7 +44,7 @@ var Day = React.createClass({
   },
 
   isKeyboardSelected () {
-    return !this.isSameDay(this.props.selected) && this.isSameDay(this.props.preSelection)
+    return !this.props.inline && !this.isSameDay(this.props.selected) && this.isSameDay(this.props.preSelection)
   },
 
   isDisabled () {
