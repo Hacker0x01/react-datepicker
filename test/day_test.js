@@ -35,6 +35,38 @@ describe('Day', () => {
     })
   })
 
+  describe('keyboard-selected', () => {
+    const className = 'react-datepicker__day--keyboard-selected'
+
+    it('should apply the keyboard-selected class when pre-selected and another day is selected', () => {
+      const day = moment()
+      const selected = day.clone().add(1, 'day')
+      const shallowDay = renderDay(day, { selected, preSelection: day })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should not apply the keyboard-selected class when selected', () => {
+      const day = moment()
+      const shallowDay = renderDay(day, { selected: day, preSelection: day })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+    })
+
+    it('should not apply the keyboard-selected class when another day is pre-selected', () => {
+      const day = moment()
+      const selected = day.clone().add(1, 'day')
+      const preSelection = day.clone().add(2, 'day')
+      const shallowDay = renderDay(day, { selected, preSelection })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+    })
+
+    it('should not apply the keyboard-selected class if in inline mode', () => {
+      const day = moment()
+      const selected = day.clone().add(1, 'day')
+      const shallowDay = renderDay(day, { selected, preSelection: day, inline: true })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+    })
+  })
+
   describe('highlighted', () => {
     const className = 'react-datepicker__day--highlighted'
 
