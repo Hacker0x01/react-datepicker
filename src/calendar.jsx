@@ -100,12 +100,13 @@ var Calendar = React.createClass({
   },
 
   getDateInView () {
-    const { selected, preSelection, openToDate } = this.props
+    const { preSelection, selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
-    const current = preSelection
-    if (selected) {
-      return selected
+    const current = moment.utc().utcOffset(utcOffset)
+    const initialDate = preSelection || selected
+    if (initialDate) {
+      return initialDate
     } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
       return openToDate
     } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
