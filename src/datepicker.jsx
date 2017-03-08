@@ -106,7 +106,9 @@ var DatePicker = React.createClass({
     return {
       open: false,
       preventFocus: false,
-      preSelection: this.props.selected ? moment(this.props.selected) : moment()
+      preSelection: this.props.selected
+        ? moment(this.props.selected)
+        : moment.utc().utcOffset(this.props.utcOffset)
     }
   },
 
