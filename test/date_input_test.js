@@ -271,7 +271,7 @@ describe('DateInput', function () {
     })
 
     it('should empty the input if no date selected and input is invalid', function () {
-      var dateInput = shallow(
+      var dateInput = mount(
         <DateInput />
       )
       var inputNode = dateInput.find('input')
@@ -283,6 +283,21 @@ describe('DateInput', function () {
       })
       inputNode.simulate('blur')
       expect(inputNode.prop('value')).to.equal('')
+    })
+
+    it('should leave invalid input when disableDateAutoCorrection is set', function () {
+      var dateInput = mount(
+        <DateInput disableDateAutoCorrection />
+      )
+      var inputNode = dateInput.find('input')
+      inputNode.simulate('change', {
+        isDefaultPrevented: () => false,
+        target: {
+          value: 'invalid'
+        }
+      })
+      inputNode.simulate('blur')
+      expect(inputNode.prop('value')).to.equal('invalid')
     })
   })
 
