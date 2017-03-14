@@ -286,8 +286,9 @@ describe('DateInput', function () {
     })
 
     it('should leave invalid input when disableDateAutoCorrection is set', function () {
+      var onChangeDate = sinon.spy()
       var dateInput = mount(
-        <DateInput disableDateAutoCorrection />
+        <DateInput disableDateAutoCorrection onChangeDate={onChangeDate} />
       )
       var inputNode = dateInput.find('input')
       inputNode.simulate('change', {
