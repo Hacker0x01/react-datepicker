@@ -34,6 +34,7 @@ import MultiMonth from './examples/multi_month'
 import MultiMonthDrp from './examples/multi_month_drp'
 import Children from './examples/children'
 import Portal from './examples/portal'
+import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -126,6 +127,10 @@ export default React.createClass({
     {
       title: 'Portal version',
       component: <Portal />
+    },
+    {
+      title: 'Inline portal version',
+      component: <InlinePortal />
     },
     {
       title: 'TabIndex',

@@ -370,19 +370,23 @@ var DatePicker = React.createClass({
   render () {
     const calendar = this.renderCalendar()
 
-    if (this.props.inline) {
+    if (this.props.inline && !this.props.withPortal) {
       return calendar
     }
 
     if (this.props.withPortal) {
       return (
         <div>
-          <div className="react-datepicker__input-container">
-            {this.renderDateInput()}
-            {this.renderClearButton()}
-          </div>
           {
-          this.state.open
+          !this.props.inline
+          ? <div className="react-datepicker__input-container">
+              {this.renderDateInput()}
+              {this.renderClearButton()}
+            </div>
+          : null
+          }
+          {
+          this.state.open || this.props.inline
           ? <div className="react-datepicker__portal">
               {calendar}
             </div>
