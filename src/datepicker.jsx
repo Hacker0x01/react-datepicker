@@ -103,10 +103,11 @@ var DatePicker = React.createClass({
   },
 
   getInitialState () {
+    const defaultPreSelection = this.props.openToDate ? moment(this.props.openToDate) : moment()
     return {
       open: false,
       preventFocus: false,
-      preSelection: this.props.selected ? moment(this.props.selected) : moment()
+      preSelection: this.props.selected ? moment(this.props.selected) : defaultPreSelection
     }
   },
 
