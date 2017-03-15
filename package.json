@@ -10,7 +10,8 @@
   "files": [
     "*.md",
     "dist",
-    "lib"
+    "lib",
+    "src/stylesheets"
   ],
   "keywords": [
     "react",
