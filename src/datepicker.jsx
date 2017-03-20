@@ -3,7 +3,7 @@ import Calendar from './calendar'
 import React from 'react'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import {isSameDay, isDayDisabled, isDayInRange} from './date_utils'
+import {isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate} from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -103,11 +103,22 @@ var DatePicker = React.createClass({
   },
 
   getInitialState () {
-    const defaultPreSelection = this.props.openToDate ? moment(this.props.openToDate) : moment()
+    const defaultPreSelection =
+      this.props.openToDate ? moment(this.props.openToDate)
+      : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
+      : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
+      : moment()
+    const minDate = getEffectiveMinDate(this.props)
+    const maxDate = getEffectiveMaxDate(this.props)
+    const boundedPreSelection =
+      minDate && defaultPreSelection.isBefore(minDate) ? minDate
+      : maxDate && defaultPreSelection.isAfter(maxDate) ? maxDate
+      : defaultPreSelection
+
     return {
       open: false,
       preventFocus: false,
-      preSelection: this.props.selected ? moment(this.props.selected) : defaultPreSelection
+      preSelection: this.props.selected ? moment(this.props.selected) : boundedPreSelection
     }
   },
 
