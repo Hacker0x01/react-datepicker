@@ -206,7 +206,6 @@ var DatePicker = React.createClass({
     }
 
     this.props.onSelect(changedDate, event)
-
   },
 
   setPreSelection (date) {
