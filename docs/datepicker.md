@@ -152,6 +152,16 @@ defaultValue: `function() {}`
 type: `func`
 defaultValue: `function() {}`
 
+### `onSelect`
+
+type: `func`
+defaultValue: `function() {}`
+
+### `onClickOutside`
+
+type: `func`
+defaultValue: `function() {}`
+
 
 ### `onChangeRaw`
 

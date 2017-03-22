@@ -62,6 +62,17 @@ The most basic use of the DatePicker can be described with:
 <DatePicker selected={this.state.date} onChange={this.handleChange} />
 ```
 
+You can use `onSelect` event handler which fires each time some calendar date has been selected
+
+```js
+<DatePicker selected={this.state.date}
+  onSelect={this.handleSelect //when day is clicked}
+  onChange={this.handleChange //only when value has changed}
+/>
+```
+
+`onClickOutside` handler may be useful to close datepicker in `inline` mode
+
 See [here](https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
 
 ### Localization

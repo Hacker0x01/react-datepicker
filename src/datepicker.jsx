@@ -48,6 +48,8 @@ var DatePicker = React.createClass({
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
+    onSelect: React.PropTypes.func,
+    onClickOutside: React.PropTypes.func,
     onChangeRaw: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
@@ -86,6 +88,8 @@ var DatePicker = React.createClass({
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      onSelect () {},
+      onClickOutside () {},
       onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
@@ -163,6 +167,7 @@ var DatePicker = React.createClass({
 
   handleCalendarClickOutside (event) {
     this.setOpen(false)
+    this.props.onClickOutside(event)
     if (this.props.withPortal) { event.preventDefault() }
   },
 
@@ -202,11 +207,13 @@ var DatePicker = React.createClass({
 
       this.props.onChange(changedDate, event)
     }
+
+    this.props.onSelect(changedDate, event)
   },
 
   setPreSelection (date) {
     const isDateRangePresent = ((typeof this.props.minDate !== 'undefined') && (typeof this.props.maxDate !== 'undefined'))
-    const isValidDateSelection = isDateRangePresent ? isDayInRange(date, this.props.minDate, this.props.maxDate) : true
+    const isValidDateSelection = isDateRangePresent && date ? isDayInRange(date, this.props.minDate, this.props.maxDate) : true
     if (isValidDateSelection) {
       this.setState({
         preSelection: date
