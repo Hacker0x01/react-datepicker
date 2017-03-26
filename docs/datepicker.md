@@ -47,6 +47,12 @@ type: `string`
 defaultValue: `'MMMM YYYY'`
 
 
+### `disableDateAutoCorrection`
+
+type: `bool`
+defaultValue: `false`
+
+
 ### `disabled`
 
 type: `bool`
@@ -152,20 +158,16 @@ defaultValue: `function() {}`
 type: `func`
 defaultValue: `function() {}`
 
-### `onSelect`
+
+### `onChangeRaw`
 
 type: `func`
-defaultValue: `function() {}`
+
 
 ### `onClickOutside`
 
 type: `func`
 defaultValue: `function() {}`
-
-
-### `onChangeRaw`
-
-type: `func`
 
 
 ### `onFocus`
@@ -175,6 +177,12 @@ defaultValue: `function() {}`
 
 
 ### `onMonthChange`
+
+type: `func`
+defaultValue: `function() {}`
+
+
+### `onSelect`
 
 type: `func`
 defaultValue: `function() {}`
