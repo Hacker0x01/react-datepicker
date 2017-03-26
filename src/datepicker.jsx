@@ -48,6 +48,7 @@ var DatePicker = React.createClass({
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func.isRequired,
+    onSelect: React.PropTypes.func,
     onChangeRaw: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
@@ -86,6 +87,7 @@ var DatePicker = React.createClass({
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      onSelect () {},
       onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
@@ -213,6 +215,8 @@ var DatePicker = React.createClass({
 
       this.props.onChange(changedDate, event)
     }
+
+    this.props.onSelect(changedDate, event)
   },
 
   setPreSelection (date) {
