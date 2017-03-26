@@ -526,4 +526,46 @@ describe('DatePicker', () => {
     expect(openSpy.calledOnce).to.be.true
     expect(openSpy.calledWithExactly(false)).to.be.true
   })
+  it('should default to the currently selected date', () => {
+    const datePicker = mount(
+      <DatePicker selected={moment('1988-12-30')} />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('1988-12-30')
+  })
+  it('should default to the start date when selecting an end date', () => {
+    const datePicker = mount(
+      <DatePicker startDate={moment('1988-11-30')} selectsEnd />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('1988-11-30')
+  })
+  it('should default to the end date when selecting a start date', () => {
+    const datePicker = mount(
+      <DatePicker endDate={moment('1988-12-31')} selectsStart />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('1988-12-31')
+  })
+  it('should default to a date <= maxDate', () => {
+    const datePicker = mount(
+      <DatePicker maxDate={moment('1982-01-01')} />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('1982-01-01')
+  })
+  it('should default to a date >= minDate', () => {
+    const datePicker = mount(
+      <DatePicker minDate={moment('2063-04-05')} />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('2063-04-05')
+  })
+  it('should default to the openToDate if there is one', () => {
+    const datePicker = mount(
+      <DatePicker openToDate={moment('2020-01-23')} />
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal('2020-01-23')
+  })
+  it('should otherwise default to the current date', () => {
+    const datePicker = mount(
+      <DatePicker/>
+    )
+    expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal(moment().format('YYYY-MM-DD'))
+  })
 })
