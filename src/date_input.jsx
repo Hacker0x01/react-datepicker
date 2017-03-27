@@ -92,7 +92,8 @@ var DateInput = React.createClass({
       })
     }
     if (this.props.onBlur) {
-      this.props.onBlur(event)
+      const blurredValue = moment(event.target.value, this.props.dateFormat)
+      this.props.onBlur(blurredValue.isValid() ? blurredValue : this.props.date)
     }
   },
 
