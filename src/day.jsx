@@ -2,7 +2,7 @@ import moment from 'moment'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { isSameDay, isDayDisabled, isDayInRange } from './date_utils'
+import { isSameDay, isDayDisabled, isDayInRange, getDayOfWeekCode } from './date_utils'
 
 export default class Day extends React.Component {
   static propTypes = {
@@ -153,7 +153,7 @@ export default class Day extends React.Component {
 
   getClassNames = (date) => {
     const dayClassName = (this.props.dayClassName ? this.props.dayClassName(date) : undefined)
-    return classnames('react-datepicker__day', dayClassName, {
+    return classnames('react-datepicker__day', dayClassName, 'react-datepicker__day--' + getDayOfWeekCode(this.props.day), {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
       'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
