@@ -13,7 +13,6 @@ var DateInput = React.createClass({
       React.PropTypes.array
     ]),
     disabled: React.PropTypes.bool,
-    disableDateAutoCorrection: React.PropTypes.bool,
     excludeDates: React.PropTypes.array,
     filterDate: React.PropTypes.func,
     includeDates: React.PropTypes.array,
@@ -28,8 +27,7 @@ var DateInput = React.createClass({
 
   getDefaultProps () {
     return {
-      dateFormat: 'L',
-      disableDateAutoCorrection: false
+      dateFormat: 'L'
     }
   },
 
@@ -44,11 +42,9 @@ var DateInput = React.createClass({
         !isSameUtcOffset(newProps.date, this.props.date) ||
           newProps.locale !== this.props.locale ||
           newProps.dateFormat !== this.props.dateFormat) {
-      if (!this.props.disableDateAutoCorrection || (newProps.date && newProps.date.isValid())) {
-        this.setState({
-          value: this.safeDateFormat(newProps)
-        })
-      }
+      this.setState({
+        value: this.safeDateFormat(newProps)
+      })
     }
   },
 
@@ -71,8 +67,6 @@ var DateInput = React.createClass({
         this.props.onChangeDate(date)
       } else if (value === '') {
         this.props.onChangeDate(null)
-      } else if (this.props.disableDateAutoCorrection && !date.isValid()) {
-        this.props.onChangeDate(null)
       }
     }
     this.setState({value})
@@ -85,12 +79,9 @@ var DateInput = React.createClass({
   },
 
   handleBlur (event) {
-    let val = this.safeDateFormat(this.props)
-    if (!this.props.disableDateAutoCorrection || val !== '') {
-      this.setState({
-        value: val
-      })
-    }
+    this.setState({
+      value: this.safeDateFormat(this.props)
+    })
     if (this.props.onBlur) {
       this.props.onBlur(event)
     }
@@ -101,7 +92,7 @@ var DateInput = React.createClass({
   },
 
   render () {
-    const { customInput, date, disableDateAutoCorrection, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
+    const { customInput, date, locale, minDate, maxDate, excludeDates, includeDates, filterDate, dateFormat, onChangeDate, onChangeRaw, ...rest } = this.props // eslint-disable-line no-unused-vars
 
     if (customInput) {
       return React.cloneElement(customInput, {
