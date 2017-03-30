@@ -537,6 +537,18 @@ describe('DatePicker', () => {
     expect(onChangeRawSpy.calledOnce).to.be.true
     expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue)
   })
+  it('should allow onChangeRaw to prevent a change', () => {
+    const onChangeRaw = e => e.target.value > '2' && e.preventDefault()
+    const datePicker = mount(
+      <DatePicker onChangeRaw={onChangeRaw} />
+    )
+    const input = datePicker.find('input')
+    expect(input.prop('value')).to.equal('')
+    input.simulate('change', {target: { value: '3' }})
+    expect(input.prop('value')).to.equal('')
+    input.simulate('change', {target: { value: '1' }})
+    expect(input.prop('value')).to.equal('1')
+  })
 
   it('should handle a click outside of the calendar', () => {
     const datePicker = mount(
