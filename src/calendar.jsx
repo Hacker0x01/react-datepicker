@@ -39,6 +39,7 @@ var Calendar = React.createClass({
     minDate: React.PropTypes.object,
     monthsShown: React.PropTypes.number,
     onClickOutside: React.PropTypes.func.isRequired,
+    onYearChange: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
     forceShowMonthNavigation: React.PropTypes.bool,
     onDropdownFocus: React.PropTypes.func,
@@ -152,6 +153,12 @@ var Calendar = React.createClass({
     this.setState({ selectingDate: null })
   },
 
+  handleChangeYear (date) {
+    if (this.props.onYearChange) {
+      this.props.onYearChange(date)
+    }
+  },
+
   handleMonthChange (date) {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
@@ -161,7 +168,7 @@ var Calendar = React.createClass({
   changeYear (year) {
     this.setState({
       date: this.state.date.clone().set('year', year)
-    })
+    }, () => this.handleChangeYear(this.state.date))
   },
 
   changeMonth (month) {

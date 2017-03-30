@@ -53,6 +53,7 @@ var DatePicker = React.createClass({
     onClickOutside: React.PropTypes.func,
     onChangeRaw: React.PropTypes.func,
     onFocus: React.PropTypes.func,
+    onYearChange: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
     openToDate: React.PropTypes.object,
     peekNextMonth: React.PropTypes.bool,
@@ -92,6 +93,7 @@ var DatePicker = React.createClass({
       onBlur () {},
       onSelect () {},
       onClickOutside () {},
+      onYearChange () {},
       onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
@@ -339,6 +341,7 @@ var DatePicker = React.createClass({
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
+        onYearChange={this.props.onYearChange}
         onMonthChange={this.props.onMonthChange}
         className={this.props.calendarClassName}>
       {this.props.children}

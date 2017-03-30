@@ -37,6 +37,7 @@ import Children from './examples/children'
 import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
+import YearSelectDropdownWithChange from './examples/year_select_dropdown_with_change'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -148,6 +149,10 @@ export default React.createClass({
     {
       title: 'Year select dropdown',
       component: <YearSelectDropdown />
+    },
+    {
+      title: 'Year select dropdown with change',
+      component: <YearSelectDropdownWithChange />
     },
     {
       title: 'Inline version',
