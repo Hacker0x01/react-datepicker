@@ -1,12 +1,12 @@
 %triangle-arrow {
-  margin-left: -$triangle-size;
+  margin-left: -$datepicker__triangle-size;
   position: absolute;
 
   &,
   &::before {
     box-sizing: content-box;
     position: absolute;
-    border: $triangle-size solid transparent;
+    border: $datepicker__triangle-size solid transparent;
 
     height: 0;
     width: 1px;
@@ -15,10 +15,10 @@
   &::before {
     content: "";
     z-index: -1;
-    border-width: $triangle-size;
+    border-width: $datepicker__triangle-size;
 
-    left: -$triangle-size;
-    border-bottom-color: $border-color;
+    left: -$datepicker__triangle-size;
+    border-bottom-color: $datepicker__border-color;
   }
 }
 
@@ -26,17 +26,17 @@
   @extend %triangle-arrow;
 
   top: 0;
-  margin-top: -$triangle-size;
+  margin-top: -$datepicker__triangle-size;
 
   &,
   &::before {
     border-top: none;
-    border-bottom-color: $background-color;
+    border-bottom-color: $datepicker__background-color;
   }
 
   &::before {
     top: -1px;
-    border-bottom-color: $border-color;
+    border-bottom-color: $datepicker__border-color;
   }
 }
 
@@ -44,7 +44,7 @@
   @extend %triangle-arrow;
 
   bottom: 0;
-  margin-bottom: -$triangle-size;
+  margin-bottom: -$datepicker__triangle-size;
 
   &,
   &::before {
@@ -54,6 +54,6 @@
 
   &::before {
     bottom: -1px;
-    border-top-color: $border-color;
+    border-top-color: $datepicker__border-color;
   }
 }
