@@ -1,14 +1,14 @@
-$border-color: #aeaeae;
-$background-color: #f0f0f0;
-$selected-color: #216ba5;
-$highlighted-color: #3dcc4a;
-$muted-color: #ccc;
-$text-color: #000;
+$border-color: #aeaeae !default;
+$background-color: #f0f0f0 !default;
+$selected-color: #216ba5 !default;
+$highlighted-color: #3dcc4a !default;
+$muted-color: #ccc !default;
+$text-color: #000 !default;
 
-$font-size: .8rem;
-$border-radius: .3rem;
-$item-size: 1.7rem;
-$day-margin: .166rem;
-$triangle-size: 8px;
-$datepicker__margin: .4rem;
-$navigation-size: .45rem;
+$font-size: .8rem !default;
+$border-radius: .3rem !default;
+$item-size: 1.7rem !default;
+$day-margin: .166rem !default;
+$triangle-size: 8px !default;
+$datepicker__margin: .4rem !default;
+$navigation-size: .45rem !default;
