@@ -23,7 +23,7 @@ var YearDropdownOptions = React.createClass({
   getInitialState () {
     var noOfYear;
     if(this.props.yearDropdownItemNumber){
-      noOfYear = yearDropdownItemNumber;
+      noOfYear = this.props.yearDropdownItemNumber;
     } else {
       noOfYear = this.props.scrollableYearDropdown ? 10 : 5;
     }
