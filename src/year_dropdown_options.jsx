@@ -16,12 +16,20 @@ var YearDropdownOptions = React.createClass({
     onCancel: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func.isRequired,
     scrollableYearDropdown: React.PropTypes.bool,
-    year: React.PropTypes.number.isRequired
+    year: React.PropTypes.number.isRequired,
+    yearDropdownItemNumber: React.PropTypes.number
   },
 
   getInitialState () {
+    var noOfYear;
+    if(this.props.yearDropdownItemNumber){
+      noOfYear = yearDropdownItemNumber;
+    } else {
+      noOfYear = this.props.scrollableYearDropdown ? 10 : 5;
+    }
+
     return {
-      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
+      yearsList: generateYears(this.props.year, noOfYear)
     }
   },
 
