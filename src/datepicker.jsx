@@ -1,9 +1,8 @@
-import DateInput from './date_input'
 import Calendar from './calendar'
 import React from 'react'
 import TetherComponent from './tether_component'
 import classnames from 'classnames'
-import {isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate} from './date_utils'
+import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate, parseDate, safeDateFormat } from './date_utils'
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
@@ -24,13 +23,12 @@ var DatePicker = React.createClass({
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     customInput: React.PropTypes.element,
-    dateFormat: React.PropTypes.oneOfType([
+    dateFormat: React.PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
       React.PropTypes.string,
       React.PropTypes.array
     ]),
     dateFormatCalendar: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    disableDateAutoCorrection: React.PropTypes.bool,
     disabledKeyboardNavigation: React.PropTypes.bool,
     dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: React.PropTypes.object,
@@ -77,15 +75,16 @@ var DatePicker = React.createClass({
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
     utcOffset: React.PropTypes.number,
+    value: React.PropTypes.string,
     withPortal: React.PropTypes.bool
   },
 
   getDefaultProps () {
     return {
+      dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
-      disableDateAutoCorrection: false,
       disabledKeyboardNavigation: false,
       dropdownMode: 'scroll',
       onFocus () {},
@@ -184,6 +183,20 @@ var DatePicker = React.createClass({
     if (this.props.withPortal) { event.preventDefault() }
   },
 
+  handleChange (event) {
+    if (this.props.onChangeRaw) {
+      this.props.onChangeRaw(event)
+      if (event.isDefaultPrevented()) {
+        return
+      }
+    }
+    this.setState({ inputValue: event.target.value })
+    const date = parseDate(event.target.value, this.props)
+    if (date || !event.target.value) {
+      this.setSelected(date, event, true)
+    }
+  },
+
   handleSelect (date, event) {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
@@ -197,14 +210,14 @@ var DatePicker = React.createClass({
     this.setOpen(false)
   },
 
-  setSelected (date, event) {
+  setSelected (date, event, keepInput) {
     let changedDate = date
 
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
       return
     }
 
-    if (!isSameDay(this.props.selected, changedDate) || this.props.disableDateAutoCorrection) {
+    if (!isSameDay(this.props.selected, changedDate)) {
       if (changedDate !== null) {
         if (this.props.selected) {
           changedDate = moment(changedDate).set({
@@ -217,11 +230,14 @@ var DatePicker = React.createClass({
           preSelection: changedDate
         })
       }
-
       this.props.onChange(changedDate, event)
     }
 
     this.props.onSelect(changedDate, event)
+
+    if (!keepInput) {
+      this.setState({ inputValue: null })
+    }
   },
 
   setPreSelection (date) {
@@ -349,35 +365,33 @@ var DatePicker = React.createClass({
     var className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open
     })
-    return <DateInput
-        ref="input"
-        disableDateAutoCorrection={this.props.disableDateAutoCorrection}
-        id={this.props.id}
-        name={this.props.name}
-        autoFocus={this.props.autoFocus}
-        date={this.props.selected}
-        locale={this.props.locale}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        excludeDates={this.props.excludeDates}
-        includeDates={this.props.includeDates}
-        filterDate={this.props.filterDate}
-        dateFormat={this.props.dateFormat}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onClick={this.onInputClick}
-        onChangeRaw={this.props.onChangeRaw}
-        onKeyDown={this.onInputKeyDown}
-        onChangeDate={this.setSelected}
-        placeholder={this.props.placeholderText}
-        disabled={this.props.disabled}
-        autoComplete={this.props.autoComplete}
-        className={className}
-        title={this.props.title}
-        readOnly={this.props.readOnly}
-        required={this.props.required}
-        tabIndex={this.props.tabIndex}
-        customInput={this.props.customInput} />
+
+    const customInput = this.props.customInput || <input type="text" />
+    const inputValue =
+      typeof this.props.value === 'string' ? this.props.value
+        : typeof this.state.inputValue === 'string' ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props)
+
+    return React.cloneElement(customInput, {
+      ref: 'input',
+      value: inputValue,
+      onBlur: this.handleBlur,
+      onChange: this.handleChange,
+      onClick: this.onInputClick,
+      onFocus: this.handleFocus,
+      onKeyDown: this.onInputKeyDown,
+      id: this.props.id,
+      name: this.props.name,
+      autoFocus: this.props.autoFocus,
+      placeholder: this.props.placeholderText,
+      disabled: this.props.disabled,
+      autoComplete: this.props.autoComplete,
+      className: className,
+      title: this.props.title,
+      readOnly: this.props.readOnly,
+      required: this.props.required,
+      tabIndex: this.props.tabIndex
+    })
   },
 
   renderClearButton () {
