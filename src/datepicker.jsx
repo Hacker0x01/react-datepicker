@@ -77,7 +77,8 @@ var DatePicker = React.createClass({
     title: React.PropTypes.string,
     todayButton: React.PropTypes.string,
     utcOffset: React.PropTypes.number,
-    withPortal: React.PropTypes.bool
+    withPortal: React.PropTypes.bool,
+    yearDropdownItemNumber: React.PropTypes.number
   },
 
   getDefaultProps () {
@@ -340,7 +341,8 @@ var DatePicker = React.createClass({
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
-        className={this.props.calendarClassName}>
+        className={this.props.calendarClassName}
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}
     </WrappedCalendar>
   },

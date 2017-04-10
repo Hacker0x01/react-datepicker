@@ -26,6 +26,7 @@ export default React.createClass({
               {'onChange={this.handleChange}'} <br />
               {'showYearDropdown'} <br />
               {'dateFormatCalendar="MMMM"'} <br />
+              {'yearDropdownItemNumber={15}'} <br />
               {'scrollableYearDropdown />'}
         </code>
       </pre>
@@ -35,7 +36,9 @@ export default React.createClass({
             onChange={this.handleChange}
             showYearDropdown
             dateFormatCalendar="MMMM"
-            scrollableYearDropdown />
+            yearDropdownItemNumber={15}
+            scrollableYearDropdown
+        />
       </div>
     </div>
   }
