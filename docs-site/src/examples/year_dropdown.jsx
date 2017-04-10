@@ -37,8 +37,7 @@ export default React.createClass({
             showYearDropdown
             dateFormatCalendar="MMMM"
             yearDropdownItemNumber={15}
-            scrollableYearDropdown
-        />
+            scrollableYearDropdown />
       </div>
     </div>
   }
