@@ -1,20 +1,19 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
 
-export default React.createClass({
-  displayName: 'Disabled',
-
-  getInitialState () {
-    return {
+export default class Disabled extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: null
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
@@ -36,4 +35,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

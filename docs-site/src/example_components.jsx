@@ -41,7 +41,11 @@ import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
 
 export default class exampleComponents extends React.Component {
-  static examples = [{
+  componentDidMount () {
+    hljs.initHighlightingOnLoad()
+  }
+
+  examples = [{
     title: 'Default',
     component: <Default />
   },
@@ -177,10 +181,6 @@ export default class exampleComponents extends React.Component {
     title: 'Get raw input value on change',
     component: <RawChange/>
   }]
-
-  componentDidMount () {
-    hljs.initHighlightingOnLoad()
-  }
 
   renderExamples = () =>
     this.examples.map((example, index) =>

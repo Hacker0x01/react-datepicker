@@ -1,28 +1,25 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import YearDropdownOptions from './year_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
 
 var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
-var YearDropdown = React.createClass({
-  displayName: 'YearDropdown',
+export default class YearDropdown extends React.Component {
+  static propTypes = {
+    dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
+    maxDate: PropTypes.object,
+    minDate: PropTypes.object,
+    onChange: PropTypes.func.isRequired,
+    scrollableYearDropdown: PropTypes.bool,
+    year: PropTypes.number.isRequired
+  }
 
-  propTypes: {
-    dropdownMode: React.PropTypes.oneOf(['scroll', 'select']).isRequired,
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
-    onChange: React.PropTypes.func.isRequired,
-    scrollableYearDropdown: React.PropTypes.bool,
-    year: React.PropTypes.number.isRequired
-  },
+  state = {
+    dropdownVisible: false
+  }
 
-  getInitialState () {
-    return {
-      dropdownVisible: false
-    }
-  },
-
-  renderSelectOptions () {
+  renderSelectOptions = () => {
     const minYear = this.props.minDate ? this.props.minDate.year() : 1900
     const maxYear = this.props.maxDate ? this.props.maxDate.year() : 2100
 
@@ -31,64 +28,58 @@ var YearDropdown = React.createClass({
       options.push(<option key={i} value={i}>{i}</option>)
     }
     return options
-  },
+  }
 
-  onSelectChange (e) {
+  onSelectChange = (e) => {
     this.onChange(e.target.value)
-  },
+  }
 
-  renderSelectMode () {
-    return (
-      <select
-          value={this.props.year}
-          className="react-datepicker__year-select"
-          onChange={this.onSelectChange}>
-        {this.renderSelectOptions()}
-      </select>
-    )
-  },
+  renderSelectMode = () => (
+    <select
+        value={this.props.year}
+        className="react-datepicker__year-select"
+        onChange={this.onSelectChange}>
+      {this.renderSelectOptions()}
+    </select>
+  )
 
-  renderReadView (visible) {
-    return (
-      <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
-        <span className="react-datepicker__year-read-view--down-arrow" />
-        <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
-      </div>
-    )
-  },
+  renderReadView = (visible) => (
+    <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
+      <span className="react-datepicker__year-read-view--down-arrow" />
+      <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
+    </div>
+  )
 
-  renderDropdown () {
-    return (
-      <WrappedYearDropdownOptions
-          key="dropdown"
-          ref="options"
-          year={this.props.year}
-          onChange={this.onChange}
-          onCancel={this.toggleDropdown}
-          scrollableYearDropdown={this.props.scrollableYearDropdown} />
-    )
-  },
+  renderDropdown = () => (
+    <WrappedYearDropdownOptions
+        key="dropdown"
+        ref="options"
+        year={this.props.year}
+        onChange={this.onChange}
+        onCancel={this.toggleDropdown}
+        scrollableYearDropdown={this.props.scrollableYearDropdown} />
+  )
 
-  renderScrollMode () {
+  renderScrollMode = () => {
     const { dropdownVisible } = this.state
     let result = [this.renderReadView(!dropdownVisible)]
     if (dropdownVisible) {
       result.unshift(this.renderDropdown())
     }
     return result
-  },
+  }
 
-  onChange (year) {
+  onChange = (year) => {
     this.toggleDropdown()
     if (year === this.props.year) return
     this.props.onChange(year)
-  },
+  }
 
-  toggleDropdown () {
+  toggleDropdown = () => {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
     })
-  },
+  }
 
   render () {
     let renderedDropdown
@@ -108,6 +99,4 @@ var YearDropdown = React.createClass({
       </div>
     )
   }
-})
-
-module.exports = YearDropdown
+}

@@ -1,9 +1,10 @@
-import React, { Children, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Tether from 'tether'
 
 function childrenPropType ({ children }, propName, componentName) {
-  const childCount = Children.count(children)
+  const childCount = React.Children.count(children)
   if (childCount <= 0) {
     return new Error(`${componentName} expects at least one child to use as the target element.`)
   } else if (childCount > 2) {
@@ -23,10 +24,8 @@ const attachmentPositions = [
   'bottom right'
 ]
 
-var TetherComponent = React.createClass({
-  displayName: 'TetherComponent',
-
-  propTypes: {
+export default class TetherComponent extends React.Component {
+  static propTypes = {
     attachment: PropTypes.oneOf(attachmentPositions).isRequired,
     children: childrenPropType,
     className: PropTypes.string,
@@ -43,41 +42,33 @@ var TetherComponent = React.createClass({
     targetAttachment: PropTypes.oneOf(attachmentPositions),
     targetModifier: PropTypes.string,
     targetOffset: PropTypes.string
-  },
+  }
 
-  getDefaultProps () {
-    return {
-      renderElementTag: 'div',
-      renderElementTo: null
-    }
-  },
+  static defaultProps = {
+    renderElementTag: 'div',
+    renderElementTo: null
+  }
 
   componentDidMount () {
     this._targetNode = ReactDOM.findDOMNode(this)
     this._update()
-  },
+  }
 
   componentDidUpdate () {
     this._update()
-  },
+  }
 
   componentWillUnmount () {
     this._destroy()
-  },
+  }
 
-  disable () {
-    this._tether.disable()
-  },
+  disable = () => this._tether.disable()
 
-  enable () {
-    this._tether.enable()
-  },
+  enable = () => this._tether.enable()
 
-  position () {
-    this._tether.position()
-  },
+  position = () => this._tether.position()
 
-  _destroy () {
+  _destroy = () => {
     if (this._elementParentNode) {
       ReactDOM.unmountComponentAtNode(this._elementParentNode)
       this._elementParentNode.parentNode.removeChild(this._elementParentNode)
@@ -89,9 +80,9 @@ var TetherComponent = React.createClass({
 
     this._elementParentNode = null
     this._tether = null
-  },
+  }
 
-  _update () {
+  _update = () => {
     const { children, renderElementTag, renderElementTo } = this.props
     let elementComponent = children[1]
 
@@ -121,9 +112,9 @@ var TetherComponent = React.createClass({
         this._updateTether()
       }
     )
-  },
+  }
 
-  _updateTether () {
+  _updateTether = () => {
     const { renderElementTag, renderElementTo, ...options } = this.props // eslint-disable-line no-unused-vars
     const tetherOptions = {
       target: this._targetNode,
@@ -138,7 +129,7 @@ var TetherComponent = React.createClass({
     }
 
     this._tether.position()
-  },
+  }
 
   render () {
     const { children } = this.props
@@ -146,7 +137,7 @@ var TetherComponent = React.createClass({
 
     // we use forEach because the second child could be null
     // causing children to not be an array
-    Children.forEach(children, (child, index) => {
+    React.Children.forEach(children, (child, index) => {
       if (index === 0) {
         firstChild = child
         return false
@@ -155,6 +146,4 @@ var TetherComponent = React.createClass({
 
     return firstChild
   }
-})
-
-module.exports = TetherComponent
+}

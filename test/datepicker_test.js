@@ -218,16 +218,16 @@ describe('DatePicker', () => {
   })
 
   it('should mount and unmount properly', done => {
-    var TestComponent = React.createClass({
-      displayName: 'TestComponent',
+    class TestComponent extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = { mounted: true }
+      }
 
-      getInitialState () {
-        return { mounted: true }
-      },
       render () {
         return this.state.mounted ? <DatePicker /> : null
       }
-    })
+    }
     var element = TestUtils.renderIntoDocument(<TestComponent />)
     element.setState({ mounted: false }, done)
   })
