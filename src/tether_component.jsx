@@ -74,7 +74,7 @@ var TetherComponent = React.createClass({
   },
 
   position () {
-    this._tether.position()
+    this._updatePosition()
   },
 
   _destroy () {
@@ -124,20 +124,27 @@ var TetherComponent = React.createClass({
   },
 
   _updateTether () {
-    const { renderElementTag, renderElementTo, ...options } = this.props // eslint-disable-line no-unused-vars
-    const tetherOptions = {
-      target: this._targetNode,
-      element: this._elementParentNode,
-      ...options
-    }
+    setTimeout(() => {
+      const { renderElementTag, renderElementTo, ...options } = this.props // eslint-disable-line no-unused-vars
+      const tetherOptions = {
+        target: this._targetNode,
+        element: this._elementParentNode,
+        ...options
+      }
 
-    if (!this._tether) {
-      this._tether = new Tether(tetherOptions)
-    } else {
-      this._tether.setOptions(tetherOptions)
-    }
+      if (!this._tether) {
+        this._tether = new Tether(tetherOptions)
+      } else {
+        this._tether.setOptions(tetherOptions)
+      }
 
-    this._tether.position()
+      this._updatePosition()
+    }, 100)
+  },
+
+  _updatePosition () {
+    for (var i = 0; i < 10; i++)
+      this._tether.position()
   },
 
   render () {
