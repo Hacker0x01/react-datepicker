@@ -19,12 +19,13 @@ export default class CustomCalendarClassName extends React.Component {
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-          {'selected={this.state.startDate}'}<br />
-          {'onChange={this.handleChange}'} <br />
-          {'calendarClassName="rasta-stripes" />'}
-        </code>
+        <code className="jsx">{`
+<DatePicker
+  selected={this.state.startDate}
+  onChange={this.handleChange}
+  calendarClassName="rasta-stripes"
+/>
+`}</code>
       </pre>
       <div className="column">
         <DatePicker

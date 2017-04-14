@@ -19,11 +19,13 @@ export default class CustomClassName extends React.Component {
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange}'} <br />
-              {'className="red-border" />'}
+        <code className="jsx">{`
+<DatePicker
+  selected={this.state.startDate}
+  onChange={this.handleChange}
+  className="red-border"
+/>
+`}
         </code>
       </pre>
       <div className="column">
