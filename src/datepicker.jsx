@@ -207,7 +207,10 @@ var DatePicker = React.createClass({
       }
     )
     this.setSelected(date, event)
-    this.setOpen(false)
+
+    if (!this.props.inline) {
+      this.setOpen(false)
+    }
   },
 
   setSelected (date, event, keepInput) {
