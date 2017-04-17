@@ -104,7 +104,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const onCancelSpy = sandbox.spy()
     const onChangeSpy = sandbox.spy()
     const minDate = moment()
-    const maxDate = moment().add(1, 'y')
+    const maxDate = moment().add(1, 'year')
     const yearDropdown = shallow(
             <YearDropdownOptions onCancel={onCancelSpy} onChange={onChangeSpy} scrollableYearDropdown year={2015}
                 minDate={minDate} maxDate={maxDate}/>
@@ -127,7 +127,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(0)
   })
 
-  it('should show arrows to add years, if actual years list contains years between min and max date, if provided', () => {
+  it('should show arrows to add years, if actual years list contains years between min and max date, if both provided', () => {
     const onCancelSpy = sandbox.spy()
     const onChangeSpy = sandbox.spy()
     const minDate = moment().subtract(10, 'y')
@@ -156,5 +156,51 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
             .map(node => node.text())
     expect(textContents.find(year => year === minDate.year())).to.be.defined
     expect(textContents.find(year => year === maxDate.year())).to.be.defined
+  })
+
+  it('should show arrows to add previous years, if actual years list does not contain minDate year, if minDate is provided', () => {
+    const onCancelSpy = sandbox.spy()
+    const onChangeSpy = sandbox.spy()
+    const minDate = moment().subtract(10, 'y')
+    const yearDropdown = mount(
+            <YearDropdownOptions onCancel={onCancelSpy} onChange={onChangeSpy} scrollableYearDropdown year={moment().year()}
+                minDate={minDate}/>
+        )
+    expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
+    expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(1)
+    let textContents = yearDropdown
+             .find('.react-datepicker__year-option')
+             .map(node => node.text())
+    expect(textContents.find(year => year === minDate.year())).to.be.undefined
+    yearDropdown.ref('previous').simulate('click')
+    textContents = yearDropdown
+             .find('.react-datepicker__year-option')
+             .map(node => node.text())
+    expect(textContents.find(year => year === minDate.year())).to.be.defined
+    expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(1)
+    expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(0)
+  })
+
+  it('should show arrows to add upcoming years, if actual years list does not contain maxDate year, if only maxDate is provided', () => {
+    const onCancelSpy = sandbox.spy()
+    const onChangeSpy = sandbox.spy()
+    const maxDate = moment().add(11, 'y')
+    const yearDropdown = mount(
+            <YearDropdownOptions onCancel={onCancelSpy} onChange={onChangeSpy} scrollableYearDropdown year={moment().year()}
+                maxDate={maxDate}/>
+        )
+    expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
+    expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(1)
+    let textContents = yearDropdown
+            .find('.react-datepicker__year-option')
+            .map(node => node.text())
+    expect(textContents.find(year => year === maxDate.year())).to.be.undefined
+    yearDropdown.ref('upcoming').simulate('click')
+    textContents = yearDropdown
+            .find('.react-datepicker__year-option')
+            .map(node => node.text())
+    expect(textContents.find(year => year === maxDate.year())).to.be.defined
+    expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(0)
+    expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
   })
 })

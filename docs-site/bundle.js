@@ -54449,11 +54449,14 @@
 	  var list = [];
 	  for (var i = 0; i < 2 * noOfYear; i++) {
 	    var newYear = year + noOfYear - i;
-	    if (minDate && maxDate) {
-	      if (newYear >= minDate.year() && newYear <= maxDate.year()) {
-	        list.push(newYear);
-	      }
-	    } else {
+	    var isInRange = true;
+	    if (minDate) {
+	      isInRange = minDate.year() <= newYear;
+	    }
+	    if (maxDate && isInRange) {
+	      isInRange = maxDate.year() >= newYear;
+	    }
+	    if (isInRange) {
 	      list.push(newYear);
 	    }
 	  }

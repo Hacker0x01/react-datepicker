@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import YearDropdownOptions from './year_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
 
-var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
+const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
 export default class YearDropdown extends React.Component {
   static propTypes = {

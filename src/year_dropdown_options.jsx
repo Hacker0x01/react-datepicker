@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 function generateYears (year, noOfYear, minDate, maxDate) {
-  var list = []
-  for (var i = 0; i < (2 * noOfYear); i++) {
+  const list = []
+  for (let i = 0; i < (2 * noOfYear); i++) {
     const newYear = year + noOfYear - i
-    if (minDate && maxDate) {
-      if (newYear >= minDate.year() && newYear <= maxDate.year()) {
-        list.push(newYear)
-      }
-    } else {
+    let isInRange = true
+    if (minDate) {
+      isInRange = minDate.year() <= newYear
+    }
+    if (maxDate && isInRange) {
+      isInRange = maxDate.year() >= newYear
+    }
+    if (isInRange) {
       list.push(newYear)
     }
   }
@@ -43,8 +46,8 @@ export default class YearDropdownOptions extends React.Component {
   }
 
   renderOptions = () => {
-    var selectedYear = this.props.year
-    var options = this.state.yearsList.map(year =>
+    const selectedYear = this.props.year
+    const options = this.state.yearsList.map(year =>
       <div className="react-datepicker__year-option"
           key={year}
           ref={year}
@@ -86,7 +89,7 @@ export default class YearDropdownOptions extends React.Component {
   }
 
   shiftYears = (amount) => {
-    var years = this.state.yearsList.map(function (year) {
+    const years = this.state.yearsList.map(function (year) {
       return year + amount
     })
 
