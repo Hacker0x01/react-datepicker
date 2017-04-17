@@ -55,6 +55,8 @@ export default class YearDropdown extends React.Component {
         key="dropdown"
         ref="options"
         year={this.props.year}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
         onChange={this.onChange}
         onCancel={this.toggleDropdown}
         scrollableYearDropdown={this.props.scrollableYearDropdown} />

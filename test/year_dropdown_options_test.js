@@ -139,21 +139,21 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
     expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(1)
     let textContents = yearDropdown
-          .find('.react-datepicker__year-option')
-          .map(node => node.text())
+            .find('.react-datepicker__year-option')
+            .map(node => node.text())
     expect(textContents.find(year => year === minDate.year())).to.be.undefined
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
     yearDropdown.ref('previous').simulate('click')
     textContents = yearDropdown
-          .find('.react-datepicker__year-option')
-          .map(node => node.text())
+            .find('.react-datepicker__year-option')
+            .map(node => node.text())
     expect(textContents.find(year => year === minDate.year())).to.be.defined
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(0)
     yearDropdown.ref('upcoming').simulate('click')
     textContents = yearDropdown
-          .find('.react-datepicker__year-option')
-          .map(node => node.text())
+            .find('.react-datepicker__year-option')
+            .map(node => node.text())
     expect(textContents.find(year => year === minDate.year())).to.be.defined
     expect(textContents.find(year => year === maxDate.year())).to.be.defined
   })

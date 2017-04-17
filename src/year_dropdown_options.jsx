@@ -2,10 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-function generateYears (year, noOfYear) {
+function generateYears (year, noOfYear, minDate, maxDate) {
   var list = []
   for (var i = 0; i < (2 * noOfYear); i++) {
-    list.push(year + noOfYear - i)
+    const newYear = year + noOfYear - i
+    if (minDate && maxDate) {
+      if (newYear >= minDate.year() && newYear <= maxDate.year()) {
+        list.push(newYear)
+      }
+    } else {
+      list.push(newYear)
+    }
   }
   return list
 }
@@ -15,13 +22,23 @@ export default class YearDropdownOptions extends React.Component {
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
-    year: PropTypes.number.isRequired
+    year: PropTypes.number.isRequired,
+    minDate: PropTypes.object,
+    maxDate: PropTypes.object
   }
 
   constructor (props) {
     super(props)
     this.state = {
-      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
+      yearsList: this.getYearsList(this.props.year, this.props.minDate, this.props.maxDate)
+    }
+  }
+
+  getYearsList = (year, minDate, maxDate) => {
+    if (this.props.scrollableYearDropdown) {
+      return generateYears(this.props.year, 10, this.props.minDate, this.props.maxDate)
+    } else {
+      return generateYears(this.props.year, 5, this.props.minDate, this.props.maxDate)
     }
   }
 
@@ -37,22 +54,26 @@ export default class YearDropdownOptions extends React.Component {
       </div>
     )
 
-    options.unshift(
-      <div className="react-datepicker__year-option"
-          ref={'upcoming'}
-          key={'upcoming'}
-          onClick={this.incrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming" />
-      </div>
-    )
-    options.push(
-      <div className="react-datepicker__year-option"
-          ref={'previous'}
-          key={'previous'}
-          onClick={this.decrementYears}>
-        <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous" />
-      </div>
-    )
+    if (!this.props.maxDate || !this.state.yearsList.find(year => year === this.props.maxDate.year())) {
+      options.unshift(
+              <div className="react-datepicker__year-option"
+                  ref={'upcoming'}
+                  key={'upcoming'}
+                  onClick={this.incrementYears}>
+                <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"/>
+              </div>
+          )
+    }
+    if (!this.props.minDate || !this.state.yearsList.find(year => year === this.props.minDate.year())) {
+      options.push(
+              <div className="react-datepicker__year-option"
+                  ref={'previous'}
+                  key={'previous'}
+                  onClick={this.decrementYears}>
+                <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"/>
+              </div>
+          )
+    }
     return options
   }
 
