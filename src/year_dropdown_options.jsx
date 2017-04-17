@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 function generateYears (year, noOfYear) {
@@ -9,23 +10,22 @@ function generateYears (year, noOfYear) {
   return list
 }
 
-var YearDropdownOptions = React.createClass({
-  displayName: 'YearDropdownOptions',
+export default class YearDropdownOptions extends React.Component {
+  static propTypes = {
+    onCancel: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    scrollableYearDropdown: PropTypes.bool,
+    year: PropTypes.number.isRequired
+  }
 
-  propTypes: {
-    onCancel: React.PropTypes.func.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    scrollableYearDropdown: React.PropTypes.bool,
-    year: React.PropTypes.number.isRequired
-  },
-
-  getInitialState () {
-    return {
+  constructor (props) {
+    super(props)
+    this.state = {
       yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
     }
-  },
+  }
 
-  renderOptions () {
+  renderOptions = () => {
     var selectedYear = this.props.year
     var options = this.state.yearsList.map(year =>
       <div className="react-datepicker__year-option"
@@ -54,17 +54,17 @@ var YearDropdownOptions = React.createClass({
       </div>
     )
     return options
-  },
+  }
 
-  onChange (year) {
+  onChange = (year) => {
     this.props.onChange(year)
-  },
+  }
 
-  handleClickOutside () {
+  handleClickOutside = () => {
     this.props.onCancel()
-  },
+  }
 
-  shiftYears (amount) {
+  shiftYears = (amount) => {
     var years = this.state.yearsList.map(function (year) {
       return year + amount
     })
@@ -72,15 +72,15 @@ var YearDropdownOptions = React.createClass({
     this.setState({
       yearsList: years
     })
-  },
+  }
 
-  incrementYears () {
+  incrementYears = () => {
     return this.shiftYears(1)
-  },
+  }
 
-  decrementYears () {
+  decrementYears = () => {
     return this.shiftYears(-1)
-  },
+  }
 
   render () {
     let dropdownClass = classNames({
@@ -94,6 +94,4 @@ var YearDropdownOptions = React.createClass({
       </div>
     )
   }
-})
-
-module.exports = YearDropdownOptions
+}

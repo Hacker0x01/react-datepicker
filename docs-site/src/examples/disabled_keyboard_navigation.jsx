@@ -2,20 +2,19 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default React.createClass({
-  displayName: 'DisabledKeyboardNavigation',
-
-  getInitialState () {
-    return {
+export default class DisabledKeyboardNavigation extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
@@ -37,4 +36,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

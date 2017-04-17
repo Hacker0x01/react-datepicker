@@ -3,17 +3,13 @@ import moment from 'moment'
 
 import DatePicker from 'react-datepicker'
 
-export default React.createClass({
-  displayName: 'Default',
+export default class TimeZoneDate extends React.Component {
+  state = {
+    startDate: null,
+    utcOffset: -4
+  }
 
-  getInitialState () {
-    return {
-      startDate: null,
-      utcOffset: -4
-    }
-  },
-
-  timezoneNames: [
+  timezoneNames = [
     { name: 'GMT+10', value: 10 },
     { name: 'GMT+8', value: 8 },
     { name: 'GMT+4', value: 4 },
@@ -23,41 +19,41 @@ export default React.createClass({
     { name: 'GMT-4', value: -4 },
     { name: 'GMT-8', value: -8 },
     { name: 'GMT-10', value: -10 }
-  ],
+  ]
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
-  handleTmzChange (event) {
+  handleTmzChange = (event) => {
     this.setState({
       utcOffset: parseInt(event.target.value, 10)
     })
-  },
+  }
 
-  getOffsetLabel (tmz) {
-    var obj = this.timezoneNames.find(function (item) {
-      return item.value === tmz
-    })
+  getOffsetLabel = (tmz) => {
+    const obj = this.timezoneNames.find(({ value }) => value === tmz)
     return (obj && obj.name) || ''
-  },
+  }
 
   render () {
-    var selected = this.state.startDate &&
+    const selected = this.state.startDate &&
                    this.state.startDate.clone().utcOffset(this.state.utcOffset)
-    var utcText = this.getOffsetLabel(this.state.utcOffset)
-    var todayTxt = 'Today in ' + utcText
+    const utcText = this.getOffsetLabel(this.state.utcOffset)
+    const todayTxt = `Today in ${utcText}`
 
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'utcOffset=-4'}<br />
-              {'dateFormat="DD-MMM HH:mm"'}<br />
-              {'todayButton="Today in Puerto Rico"'}<br />
-              {'onChange={this.handleChange} />'}
+        <code className="jsx">{`
+<DatePicker
+    utcOffset=-4
+    dateFormat="DD-MMM HH:mm"
+    todayButton="Today in Puerto Rico"
+    onChange={this.handleChange}
+/>
+`}
         </code>
       </pre>
       <div className="column">
@@ -87,4 +83,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

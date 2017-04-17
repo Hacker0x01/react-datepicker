@@ -2,9 +2,7 @@ import React from 'react'
 import ExampleComponents from './example_components.jsx'
 import HeroExample from './hero_example.jsx'
 
-export default React.createClass({
-  displayName: 'Root',
-
+export default class Root extends React.Component {
   render () {
     return (
       <div>
@@ -58,4 +56,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}
