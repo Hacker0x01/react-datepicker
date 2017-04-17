@@ -2,28 +2,28 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default React.createClass({
-  displayName: 'Children',
-
-  getInitialState () {
-    return {
+export default class Children extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
-      <pre className="column">
+      <pre className="column example__code">
         <code className="jsx">{`
 <DatePicker
-    selected={this.state.startDate}
-    onChange={this.handleChange}>
+  selected={this.state.startDate}
+  onChange={this.handleChange}
+>
   <div style={{color: 'red'}}>
     Don't forget to check the weather!
   </div>
@@ -42,4 +42,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

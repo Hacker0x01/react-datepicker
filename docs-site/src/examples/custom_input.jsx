@@ -1,15 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
 /* eslint-disable react/no-multi-comp */
-var ExampleCustomInput = React.createClass({
-  displayName: 'ExampleCustomInput',
-
-  propTypes: {
-    onClick: React.PropTypes.func,
-    value: React.PropTypes.string
-  },
+class ExampleCustomInput extends React.Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    value: PropTypes.string
+  }
 
   render () {
     return (
@@ -20,52 +19,51 @@ var ExampleCustomInput = React.createClass({
       </button>
     )
   }
-})
+}
 
-export default React.createClass({
-  displayName: 'Custom Input',
-
-  getInitialState () {
-    return {
+export default class CustomInput extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-            {'var ExampleCustomInput = React.createClass({'}<br />
-            {'displayName: "ExampleCustomInput" ,'}<br />
-          <br />
-            {'propTypes: {'}<br />
-              {'onClick: React.PropTypes.func,'}<br />
-              {'value: React.PropTypes.string'}<br />
-            {'},'}<br />
-          <br />
-            {'render () {'}<br />
-              {'return ('}<br />
-                {'<button'}<br />
-                  {'className="example-custom-input"'}<br />
-                  {'onClick={this.props.onClick}>'}<br />
-                  {'{this.props.value}'}<br />
-                  {'</button>'}<br />
-              {')'}<br />
-            {'}'}<br />
-          {'})'}<br />
-          <br />
-          {'...'}<br />
-          <br />
-          {'<DatePicker'}<br />
-              {'customInput={<ExampleCustomInput />}'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange} />'}
+        <code className="jsx">{`
+class ExampleCustomInput extends React.Component {
+
+  render () {
+    return (
+      <button
+        className="example-custom-input"
+        onClick={this.props.onClick}>
+        {this.props.value}
+      </button>
+    )
+  }
+}
+
+ExampleCustomInput.propTypes = {
+  onClick: PropTypes.func,
+  value: PropTypes.string
+};
+
+...
+
+<DatePicker
+  customInput={<ExampleCustomInput />}
+  selected={this.state.startDate}
+  onChange={this.handleChange} />
+`}
         </code>
       </pre>
       <div className="column">
@@ -76,4 +74,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

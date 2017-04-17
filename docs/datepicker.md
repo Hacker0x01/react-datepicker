@@ -39,18 +39,13 @@ type: `element`
 ### `dateFormat`
 
 type: `union(string|array)`
+defaultValue: `'L'`
 
 
 ### `dateFormatCalendar`
 
 type: `string`
 defaultValue: `'MMMM YYYY'`
-
-
-### `disableDateAutoCorrection`
-
-type: `bool`
-defaultValue: `false`
 
 
 ### `disabled`
@@ -306,6 +301,11 @@ type: `string`
 
 type: `number`
 defaultValue: `moment().utcOffset()`
+
+
+### `value`
+
+type: `string`
 
 
 ### `withPortal`

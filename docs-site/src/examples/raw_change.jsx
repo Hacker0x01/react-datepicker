@@ -2,44 +2,41 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default React.createClass({
-  displayName: 'Default',
+export default class RawChanges extends React.Component {
+  state = {
+    startDate: null
+  }
 
-  getInitialState () {
-    return {
-      startDate: null
-    }
-  },
-
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
-  handleChangeRaw (value) {
+  handleChangeRaw = (value) => {
     if (value === 'tomorrow') {
       this.handleChange(moment().add(1, 'day'))
     }
-  },
+  }
 
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'handleChangeRaw(value) {'}<br />
-          {'  if(value === "tomorrow") {'}<br />
-          {'    const tomorrow = moment().add(1, "day")'}<br />
-          {'    this.handleChange(tomorrow)'}<br />
-          {'  }'}<br />
-          {'}'}<br />
-          {'<DatePicker'}<br />
-          {'    selected={this.state.startDate}'}<br />
-          {'    onChange={this.handleChange}'}<br />
-          {'    placeholderText="Enter tomorrow"'}<br />
-          {'    onChangeRaw={(event) => '}<br />
-          {'    this.handleChangeRaw(event.target.value)'}<br />
-          {'/>'}
+        <code className="jsx">{`
+handleChangeRaw(value) {
+  if(value === "tomorrow") {
+    const tomorrow = moment().add(1, "day")
+    this.handleChange(tomorrow)
+  }
+}
+<DatePicker
+    selected={this.state.startDate}
+    onChange={this.handleChange}
+    placeholderText="Enter tomorrow"
+    onChangeRaw={(event) =>
+      this.handleChangeRaw(event.target.value)}
+/>
+`}
         </code>
       </pre>
       <div className="column">
@@ -51,4 +48,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

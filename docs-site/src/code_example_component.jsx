@@ -1,13 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default React.createClass({
-  displayName: 'CodeExampleComponent',
-
-  propTypes: {
-    children: React.PropTypes.element,
-    id: React.PropTypes.number,
-    title: React.PropTypes.string
-  },
+export default class CodeExampleComponent extends React.Component {
+  static propTypes = {
+    children: PropTypes.element,
+    id: PropTypes.number,
+    title: PropTypes.string
+  }
 
   render () {
     return <div key={this.props.id} id={`example-${this.props.id}`} className="example">
@@ -15,4 +14,4 @@ export default React.createClass({
       {this.props.children}
     </div>
   }
-})
+}
