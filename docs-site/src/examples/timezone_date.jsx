@@ -61,7 +61,11 @@ export default class TimeZoneDate extends React.Component {
             dateFormat="DD-MMM YYYY HH:mm"
             todayButton={todayTxt}
             selected={selected}
-            onChange={this.handleChange} />
+            minDate={moment('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset)}
+            maxDate={moment('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset)}
+            onChange={this.handleChange}
+            selectTime={true}
+            timeIntervals={15} />
         <br/>
         <label className="example__timezone-label">
           Timezone Offset:

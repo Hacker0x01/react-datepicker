@@ -2,6 +2,7 @@ import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import MonthDropdown from './month_dropdown'
 import Month from './month'
+import Time from './time'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
@@ -44,7 +45,9 @@ export default class Calendar extends React.Component {
     forceShowMonthNavigation: PropTypes.bool,
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
-    onWeekSelect: PropTypes.func,
+    selectTime: PropTypes.bool,
+    timeIntervals: PropTypes.number,
+    onTimeChange: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -302,11 +305,24 @@ export default class Calendar extends React.Component {
                 startDate={this.props.startDate}
                 endDate={this.props.endDate}
                 peekNextMonth={this.props.peekNextMonth}
-                utcOffset={this.props.utcOffset}/>
+                utcOffset={this.props.utcOffset} />
           </div>
       )
     }
     return monthList
+  }
+
+  renderTimeSection = () => {
+    if (this.props.selectTime)
+      return (
+        <Time 
+            selected={this.props.selected}
+            onTimeChange={this.props.onTimeChange}
+            intervals={this.props.timeIntervals}
+            todayButton={this.props.todayButton} />
+      )
+    else
+      return
   }
 
   render () {
@@ -317,6 +333,7 @@ export default class Calendar extends React.Component {
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
+        {this.renderTimeSection()}
         {this.props.children}
       </div>
     )

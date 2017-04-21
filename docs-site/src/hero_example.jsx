@@ -20,6 +20,8 @@ export default class HeroExample extends React.Component {
     return <DatePicker
         autoFocus
         selected={this.state.startDate}
-        onChange={this.handleChange} />
+        onChange={this.handleChange}
+        selectTime={true}
+        timeIntervals={30} />
   }
 }

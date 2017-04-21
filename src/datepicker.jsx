@@ -79,16 +79,15 @@ export default class DatePicker extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
-    weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
-    yearDropdownItemNumber: PropTypes.number,
-    shouldCloseOnSelect: PropTypes.bool
+    // time api
+    selectTime: PropTypes.bool,
+    timeIntervals: PropTypes.number
   }
 
   static get defaultProps () {
     return {
-      allowSameDay: false,
-      dateFormat: 'L',
+      dateFormat: 'LLL',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
@@ -103,7 +102,8 @@ export default class DatePicker extends React.Component {
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false,
-      shouldCloseOnSelect: true
+      selectTime: false,
+      timeIntervals: 30
     }
   }
 
@@ -270,6 +270,20 @@ export default class DatePicker extends React.Component {
     }
   }
 
+  handleTimeChange = (time) => {
+    const selected = (this.props.selected) ? this.props.selected : moment()
+    let changedDate = selected.clone().set({
+      hour: time.get("hours"),
+      minute: time.get("minutes")
+    })
+
+    this.setState({
+      preSelection: changedDate
+    })
+
+    this.props.onChange(changedDate)
+  }
+
   onInputClick = () => {
     if (!this.props.disabled) {
       this.setOpen(true)
@@ -386,9 +400,10 @@ export default class DatePicker extends React.Component {
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
-        dayClassName={this.props.dayClassName}
-        className={this.props.calendarClassName}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
+        selectTime={this.props.selectTime}
+        onTimeChange={this.handleTimeChange}
+        timeIntervals={this.props.timeIntervals}
+        className={this.props.calendarClassName}>
       {this.props.children}
     </WrappedCalendar>
   }
