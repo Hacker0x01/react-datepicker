@@ -31,6 +31,24 @@ export function isDayDisabled (day, { minDate, maxDate, excludeDates, includeDat
     false
 }
 
+export function isTimeDisabled(time, disabledTimes) {
+  const l = disabledTimes.length
+  for (let i = 0; i < l; i++)
+    if (disabledTimes[i].get("hours") === time.get("hours") && disabledTimes[i].get("minutes") === time.get("minutes"))
+      return true
+
+  return false
+}
+
+export function isTimePeriodDisabled(time, excludedTimes) {
+  const base = moment().hours(0).minutes(0).seconds(0)
+  const baseTime = base.clone().hours(time.get("hours")).minutes(time.get("minutes"))
+  const minTime = base.clone().hours(excludedTimes[0].get("hours")).minutes(excludedTimes[0].get("minutes"))
+  const maxTime = base.clone().hours(excludedTimes[1].get("hours")).minutes(excludedTimes[1].get("minutes"))
+
+  return baseTime.isSameOrAfter(minTime) && baseTime.isSameOrBefore(maxTime)
+}
+
 export function allDaysDisabledBefore (day, unit, { minDate, includeDates } = {}) {
   const dateBefore = day.clone().subtract(1, unit)
   return (minDate && dateBefore.isBefore(minDate, unit)) ||

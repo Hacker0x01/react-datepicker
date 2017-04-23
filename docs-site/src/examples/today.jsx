@@ -32,9 +32,7 @@ export default class Today extends React.Component {
         <DatePicker
             todayButton="Vandaag"
             selected={this.state.startDate}
-            onChange={this.handleChange}
-            selectTime={true}
-            timeIntervals={1} />
+            onChange={this.handleChange} />
       </div>
     </div>
   }

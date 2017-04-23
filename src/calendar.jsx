@@ -45,9 +45,11 @@ export default class Calendar extends React.Component {
     forceShowMonthNavigation: PropTypes.bool,
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
-    selectTime: PropTypes.bool,
+    showTimeSelect: PropTypes.bool,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
+    excludeTimePeriod: PropTypes.array,
+    excludeTimes: PropTypes.array,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -60,10 +62,8 @@ export default class Calendar extends React.Component {
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
-    useWeekdaysShort: PropTypes.bool,
-    utcOffset: PropTypes.number,
-    weekLabel: PropTypes.string,
-    yearDropdownItemNumber: PropTypes.number
+    withPortal: PropTypes.bool,
+    utcOffset: PropTypes.number
   }
 
   static get defaultProps () {
@@ -197,8 +197,15 @@ export default class Calendar extends React.Component {
     if (!this.props.forceShowMonthNavigation && allDaysDisabledAfter(this.state.date, 'month', this.props)) {
       return
     }
+
+    let classes = ["react-datepicker__navigation", "react-datepicker__navigation--next"]
+    if (this.props.showTimeSelect)
+      classes.push("react-datepicker__navigation--next--with-time")
+    if (this.props.todayButton)
+      classes.push("react-datepicker__navigation--next--with-today-button")
+
     return <a
-        className="react-datepicker__navigation react-datepicker__navigation--next"
+        className={classes.join(" ")}
         onClick={this.increaseMonth} />
   }
 
@@ -313,13 +320,18 @@ export default class Calendar extends React.Component {
   }
 
   renderTimeSection = () => {
-    if (this.props.selectTime)
+    if (this.props.showTimeSelect)
       return (
         <Time 
             selected={this.props.selected}
             onTimeChange={this.props.onTimeChange}
             intervals={this.props.timeIntervals}
-            todayButton={this.props.todayButton} />
+            excludeTimePeriod={this.props.excludeTimePeriod}
+            excludeTimes={this.props.excludeTimes}
+            todayButton={this.props.todayButton}
+            showMonthDropdown={this.props.showMonthDropdown}
+            showYearDropdown={this.props.showYearDropdown}
+            withPortal={this.props.withPortal} />
       )
     else
       return

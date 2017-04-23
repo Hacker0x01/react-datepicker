@@ -21,7 +21,8 @@ export default class HeroExample extends React.Component {
         autoFocus
         selected={this.state.startDate}
         onChange={this.handleChange}
-        selectTime={true}
-        timeIntervals={30} />
+        showTimeSelect
+        timeIntervals={30}
+        excludeTimes={[moment().hours(17).minutes(0), moment().hours(22).minutes(30), moment().hours(19).minutes(30)]} />
   }
 }

@@ -1,13 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 import moment from "moment"
+import { isTimePeriodDisabled, isTimeDisabled } from "./date_utils"
 
 export default class Time extends React.Component {
   static propTypes = {
     intervals: PropTypes.number,
     selected: PropTypes.object,
     onTimeChange: PropTypes.func,
-    todayButton: PropTypes.string
+    todayButton: PropTypes.string,
+    showMonthDropdown: PropTypes.bool,
+    showYearDropdown: PropTypes.bool,
+    withPortal: PropTypes.bool,
+    excludeTimePeriod: PropTypes.array,
+    excludeTimes: PropTypes.array
   }
 
   static get defaultProps () {
@@ -19,6 +25,9 @@ export default class Time extends React.Component {
   }
 
   handleClick = (time) => {
+    if ((this.props.excludeTimePeriod && isTimePeriodDisabled(time, this.props.excludeTimePeriod)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
+      return
+
     this.props.onTimeChange(time)
   }
 
@@ -28,6 +37,28 @@ export default class Time extends React.Component {
     const multiplier = 60 / this.props.intervals
     const currH = (this.props.selected) ? this.props.selected.get("hours") : moment().get("hours")
     node.scrollTop = 30 * (multiplier * currH)
+  }
+
+  ulClasses = () => {
+    let classes = ["react-datepicker__time-list"]
+    if (this.props.showYearDropdown || this.props.showMonthDropdown)
+      classes.push("react-datepicker__time-list--with-dropdowns")
+    if (this.props.todayButton)
+      classes.push("react-datepicker__time-list--with-today-button")
+    if (this.props.withPortal)
+      classes.push("react-datepicker__time-list--with-portal")
+
+    return classes.join(" ")
+  }
+
+  liClasses = (time, currH, currM) => {
+    let classes = ["react-datepicker__time-list-item"]
+    if ((currH == time.get("hours")) && (currM == time.get("minutes")))
+      classes.push("react-datepicker__time-list-item--selected")
+    if ((this.props.excludeTimePeriod && isTimePeriodDisabled(time, this.props.excludeTimePeriod)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
+      classes.push("react-datepicker__time-list-item--disabled")
+
+    return classes.join(" ")
   }
 
   renderTimes = () => {
@@ -40,32 +71,22 @@ export default class Time extends React.Component {
     const multiplier = 1440 / intervals
     for (let i = 0; i < multiplier; i++)
       times.push(base.clone().add(i * intervals, "minutes"))
-    return times.map((time, i) => {
-      let active = (currH == time.get("hours")) && (currM == time.get("minutes"))
-      return <li key={i} onClick={this.handleClick.bind(this, time)} className={`react-datepicker__time-list-item ${(active) ? "react-datepicker__time-list-item--selected" : ""}`}>
+    return times.map((time, i) => 
+      <li key={i} onClick={this.handleClick.bind(this, time)} className={this.liClasses(time, currH, currM)}>
         {time.format("hh:mm A")}
       </li>
-    });
+    );
   }
 
   render() {
-    let containerStyles = (this.props.todayButton) ? {
-      display: "inline",
-      border: "1px solid #aeaeae",
-      borderRadius: "0.3rem",
-      position: "absolute",
-      right: "-72px",
-      top: 0
-    } : {}
-
     return (
-      <div className="react-datepicker__time-container" style={containerStyles}>
-        <div className="react-datepicker__header">
+      <div className={`react-datepicker__time-container ${(this.props.todayButton) ? "react-datepicker__time-container--with-today-button" : ""}`}>
+        <div className="react-datepicker__header react-datepicker__header--time">
           <div className="react-datepicker-time__header">Time</div>
         </div>
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
-            <ul className="react-datepicker__time-list" ref="timeList">
+            <ul className={this.ulClasses()} ref="timeList">
               {this.renderTimes.bind(this)()}
             </ul>
           </div>

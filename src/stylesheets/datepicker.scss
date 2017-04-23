@@ -67,6 +67,10 @@
   border-top-right-radius: $datepicker__border-radius;
   padding-top: 8px;
   position: relative;
+
+  &--time {
+    padding-bottom: 8px;
+  }
 }
 
 .react-datepicker__year-dropdown-container--select,
@@ -104,8 +108,11 @@
   }
 
   &--next {
-    left: 190px;
+    right: 10px;
     border-left-color: $datepicker__muted-color;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
 
     &:hover {
       border-left-color: darken($datepicker__muted-color, 10%);
@@ -149,13 +156,19 @@
   text-align: center;
 }
 
-/*
-  MY CONTRIBUTION REPO
- */
 .react-datepicker__time-container {
   display: inline-block;
   position: relative;
   border-left: 1px solid $datepicker__border-color;
+
+  &--with-today-button {
+    display: inline;
+    border: 1px solid #aeaeae;
+    border-radius: .3rem;
+    position: absolute;
+    right: -72px;
+    top: 0;
+  }
 
   .react-datepicker__time {
     position: relative;
@@ -172,6 +185,16 @@
         padding-right: 30px;
         width: 100%;
 
+        &--with-today-button, &--with-dropdowns {
+          height: calc(220px + calc(#{$datepicker__item-size} / 2));
+        }
+        &--with-portal {
+          height: 37%;
+        }
+        &--with-portal.react-datepicker__time-list--with-today-button, &--with-portal.react-datepicker__time-list--with-dropdowns {
+          height: 40%;
+        }
+
         li.react-datepicker__time-list-item {
           padding: 5px 10px;
           &:hover {
@@ -184,14 +207,19 @@
               background-color: $datepicker__selected-color;
             }
           }
+          &--disabled {
+            color: $datepicker__muted-color;
+
+            &:hover {
+              cursor: default;
+              background-color: transparent;
+            }
+          }
         }
       }
     }
   }
 }
-/*
-  / MY CONTRIBUTION REPO
- */
 
 .react-datepicker__week-number {
   color: $datepicker__muted-color;

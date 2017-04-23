@@ -80,9 +80,10 @@ export default class DatePicker extends React.Component {
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     withPortal: PropTypes.bool,
-    // time api
-    selectTime: PropTypes.bool,
-    timeIntervals: PropTypes.number
+    showTimeSelect: PropTypes.bool,
+    timeIntervals: PropTypes.number,
+    excludeTimePeriod: PropTypes.array,
+    excludeTimes: PropTypes.array
   }
 
   static get defaultProps () {
@@ -102,7 +103,7 @@ export default class DatePicker extends React.Component {
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false,
-      selectTime: false,
+      showTimeSelect: false,
       timeIntervals: 30
     }
   }
@@ -228,6 +229,7 @@ export default class DatePicker extends React.Component {
     } else if (!this.props.inline) {
       this.setOpen(false)
     }
+    if (!this.props.showTimeSelect) this.setOpen(false)
   }
 
   setSelected = (date, event, keepInput) => {
@@ -390,6 +392,7 @@ export default class DatePicker extends React.Component {
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        withPortal={this.props.withPortal}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
@@ -400,9 +403,11 @@ export default class DatePicker extends React.Component {
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
-        selectTime={this.props.selectTime}
+        showTimeSelect={this.props.showTimeSelect}
         onTimeChange={this.handleTimeChange}
         timeIntervals={this.props.timeIntervals}
+        excludeTimePeriod={this.props.excludeTimePeriod}
+        excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}>
       {this.props.children}
     </WrappedCalendar>
