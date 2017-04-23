@@ -40,13 +40,16 @@ export function isTimeDisabled(time, disabledTimes) {
   return false
 }
 
-export function isTimePeriodDisabled(time, excludedTimes) {
+export function isTimeInDisabledRange(time, { minTime, maxTime }) {
+  if (!minTime || !maxTime)
+    throw new Error("Both minTime and maxTime props required")
+
   const base = moment().hours(0).minutes(0).seconds(0)
   const baseTime = base.clone().hours(time.get("hours")).minutes(time.get("minutes"))
-  const minTime = base.clone().hours(excludedTimes[0].get("hours")).minutes(excludedTimes[0].get("minutes"))
-  const maxTime = base.clone().hours(excludedTimes[1].get("hours")).minutes(excludedTimes[1].get("minutes"))
+  const min = base.clone().hours(minTime.get("hours")).minutes(minTime.get("minutes"))
+  const max = base.clone().hours(maxTime.get("hours")).minutes(maxTime.get("minutes"))
 
-  return baseTime.isSameOrAfter(minTime) && baseTime.isSameOrBefore(maxTime)
+  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max))
 }
 
 export function allDaysDisabledBefore (day, unit, { minDate, includeDates } = {}) {

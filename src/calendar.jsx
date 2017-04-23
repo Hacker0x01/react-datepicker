@@ -48,7 +48,8 @@ export default class Calendar extends React.Component {
     showTimeSelect: PropTypes.bool,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
-    excludeTimePeriod: PropTypes.array,
+    minTime: PropTypes.object,
+    maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
@@ -326,7 +327,8 @@ export default class Calendar extends React.Component {
             selected={this.props.selected}
             onTimeChange={this.props.onTimeChange}
             intervals={this.props.timeIntervals}
-            excludeTimePeriod={this.props.excludeTimePeriod}
+            minTime={this.props.minTime}
+            maxTime={this.props.maxTime}
             excludeTimes={this.props.excludeTimes}
             todayButton={this.props.todayButton}
             showMonthDropdown={this.props.showMonthDropdown}

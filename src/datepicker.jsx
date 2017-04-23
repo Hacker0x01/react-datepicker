@@ -82,7 +82,8 @@ export default class DatePicker extends React.Component {
     withPortal: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     timeIntervals: PropTypes.number,
-    excludeTimePeriod: PropTypes.array,
+    minTime: PropTypes.object,
+    maxTime: PropTypes.object,
     excludeTimes: PropTypes.array
   }
 
@@ -406,7 +407,8 @@ export default class DatePicker extends React.Component {
         showTimeSelect={this.props.showTimeSelect}
         onTimeChange={this.handleTimeChange}
         timeIntervals={this.props.timeIntervals}
-        excludeTimePeriod={this.props.excludeTimePeriod}
+        minTime={this.props.minTime}
+        maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}>
       {this.props.children}

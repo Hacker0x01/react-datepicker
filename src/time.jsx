@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import moment from "moment"
-import { isTimePeriodDisabled, isTimeDisabled } from "./date_utils"
+import { isTimeInDisabledRange, isTimeDisabled } from "./date_utils"
 
 export default class Time extends React.Component {
   static propTypes = {
@@ -12,7 +12,8 @@ export default class Time extends React.Component {
     showMonthDropdown: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     withPortal: PropTypes.bool,
-    excludeTimePeriod: PropTypes.array,
+    minTime: PropTypes.object,
+    maxTime: PropTypes.object,
     excludeTimes: PropTypes.array
   }
 
@@ -25,7 +26,7 @@ export default class Time extends React.Component {
   }
 
   handleClick = (time) => {
-    if ((this.props.excludeTimePeriod && isTimePeriodDisabled(time, this.props.excludeTimePeriod)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
+    if (((this.props.minTime || this.props.maxTime) && isTimeInDisabledRange(time, this.props)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
       return
 
     this.props.onTimeChange(time)
@@ -55,7 +56,7 @@ export default class Time extends React.Component {
     let classes = ["react-datepicker__time-list-item"]
     if ((currH == time.get("hours")) && (currM == time.get("minutes")))
       classes.push("react-datepicker__time-list-item--selected")
-    if ((this.props.excludeTimePeriod && isTimePeriodDisabled(time, this.props.excludeTimePeriod)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
+    if (((this.props.minTime || this.props.maxTime) && isTimeInDisabledRange(time, this.props)) || (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)))
       classes.push("react-datepicker__time-list-item--disabled")
 
     return classes.join(" ")

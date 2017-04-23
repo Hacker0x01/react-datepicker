@@ -38,7 +38,9 @@ import Children from './examples/children'
 import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
-import DontCloseOnSelect from './examples/dont_close_onSelect'
+import ShowTime from './examples/show_time'
+import ExcludeTimes from './examples/exclude_times'
+import ExcludeTimePeriod from './examples/exclude_time_period'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -193,8 +195,16 @@ export default class exampleComponents extends React.Component {
     component: <RawChange/>
   },
   {
-    title: 'Don\'t hide calendar on date selection',
-    component: <DontCloseOnSelect/>
+    title: 'Select Time',
+    component: <ShowTime />
+  },
+  {
+    title: 'Exclude Times',
+    component: <ExcludeTimes />
+  },
+  {
+    title: 'Specific Time Range',
+    component: <ExcludeTimePeriod />
   }]
 
   renderExamples = () =>
