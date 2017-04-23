@@ -482,7 +482,7 @@
 
 /***/ }),
 /* 6 */
-[521, 7],
+[525, 7],
 /* 7 */
 /***/ (function(module, exports) {
 
@@ -526,11 +526,7 @@
 	module.exports = reactProdInvariant;
 
 /***/ }),
-<<<<<<< HEAD
-/* 7 */
-=======
 /* 8 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -629,11 +625,7 @@
 	module.exports = ReactNoopUpdateQueue;
 
 /***/ }),
-<<<<<<< HEAD
-/* 8 */
-=======
 /* 9 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -6318,10 +6310,14 @@
 /***/ }),
 /* 50 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 [534, 35],
 =======
 [521, 35],
 >>>>>>> First working draft of selectTime feature
+=======
+[525, 35],
+>>>>>>> Ran 'npm start build'
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21273,10 +21269,14 @@
 	var _example_components2 = _interopRequireDefault(_example_components);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var _hero_example = __webpack_require__(533);
 =======
 	var _hero_example = __webpack_require__(520);
 >>>>>>> First working draft of selectTime feature
+=======
+	var _hero_example = __webpack_require__(524);
+>>>>>>> Ran 'npm start build'
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -21510,71 +21510,76 @@
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(484);
+	var _code_example_component = __webpack_require__(485);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _custom_date_format = __webpack_require__(485);
+	var _custom_date_format = __webpack_require__(486);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(486);
+	var _custom_class_name = __webpack_require__(487);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _custom_calendar_class_name = __webpack_require__(487);
+	var _custom_calendar_class_name = __webpack_require__(488);
 
 	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
 
-	var _placeholder_text = __webpack_require__(488);
+	var _placeholder_text = __webpack_require__(489);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(489);
+	var _specific_date_range = __webpack_require__(490);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(490);
+	var _locale = __webpack_require__(491);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(491);
+	var _exclude_dates = __webpack_require__(492);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(492);
+	var _highlight_dates = __webpack_require__(493);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _include_dates = __webpack_require__(493);
+	var _include_dates = __webpack_require__(494);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(494);
+	var _filter_dates = __webpack_require__(495);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(495);
+	var _disabled = __webpack_require__(496);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _disabled_keyboard_navigation = __webpack_require__(496);
+	var _disabled_keyboard_navigation = __webpack_require__(497);
 
 	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
 
-	var _clear_input = __webpack_require__(497);
+	var _clear_input = __webpack_require__(498);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(498);
+	var _on_blur_callbacks = __webpack_require__(499);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
+<<<<<<< HEAD
 	var _placement = __webpack_require__(499);
 >>>>>>> First working draft of selectTime feature
+=======
+	var _placement = __webpack_require__(500);
+>>>>>>> Ran 'npm start build'
 
 	var _configurePopper2 = _interopRequireDefault(_configurePopper);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	var _date_range = __webpack_require__(513);
 
@@ -21653,81 +21658,100 @@
 	__webpack_require__(532);
 =======
 	var _date_range = __webpack_require__(500);
+=======
+	var _date_range = __webpack_require__(501);
+>>>>>>> Ran 'npm start build'
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(501);
+	var _tab_index = __webpack_require__(502);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(502);
+	var _year_dropdown = __webpack_require__(503);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(503);
+	var _month_dropdown = __webpack_require__(504);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(504);
+	var _year_select_dropdown = __webpack_require__(505);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(505);
+	var _today = __webpack_require__(506);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(506);
+	var _timezone_date = __webpack_require__(507);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(507);
+	var _inline = __webpack_require__(508);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(508);
+	var _open_to_date = __webpack_require__(509);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(509);
+	var _fixed_calendar = __webpack_require__(510);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(510);
+	var _week_numbers = __webpack_require__(511);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(511);
+	var _custom_input = __webpack_require__(512);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(512);
+	var _multi_month = __webpack_require__(513);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(513);
+	var _multi_month_drp = __webpack_require__(514);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	var _children = __webpack_require__(514);
+	var _children = __webpack_require__(515);
 
 	var _children2 = _interopRequireDefault(_children);
 
-	var _portal = __webpack_require__(515);
+	var _portal = __webpack_require__(516);
 
 	var _portal2 = _interopRequireDefault(_portal);
 
-	var _inline_portal = __webpack_require__(516);
+	var _inline_portal = __webpack_require__(517);
 
 	var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-	var _raw_change = __webpack_require__(517);
+	var _raw_change = __webpack_require__(518);
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(518);
+	var _show_time = __webpack_require__(519);
 
+<<<<<<< HEAD
 	__webpack_require__(519);
 >>>>>>> First working draft of selectTime feature
+=======
+	var _show_time2 = _interopRequireDefault(_show_time);
+
+	var _exclude_times = __webpack_require__(520);
+
+	var _exclude_times2 = _interopRequireDefault(_exclude_times);
+
+	var _exclude_time_period = __webpack_require__(521);
+
+	var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
+
+	__webpack_require__(522);
+
+	__webpack_require__(523);
+>>>>>>> Ran 'npm start build'
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21859,6 +21883,15 @@
 	    }, {
 	      title: 'Get raw input value on change',
 	      component: _react2.default.createElement(_raw_change2.default, null)
+	    }, {
+	      title: 'Select Time',
+	      component: _react2.default.createElement(_show_time2.default, null)
+	    }, {
+	      title: 'Exclude Times',
+	      component: _react2.default.createElement(_exclude_times2.default, null)
+	    }, {
+	      title: 'Specific Time Range',
+	      component: _react2.default.createElement(_exclude_time_period2.default, null)
 	    }], _this.renderExamples = function () {
 	      return _this.examples.map(function (example, index) {
 	        return _react2.default.createElement(
@@ -40480,8 +40513,12 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
+<<<<<<< HEAD
 	var _tether_component = __webpack_require__(482);
 >>>>>>> First working draft of selectTime feature
+=======
+	var _tether_component = __webpack_require__(483);
+>>>>>>> Ran 'npm start build'
 
 	var _popper_component2 = _interopRequireDefault(_popper_component);
 
@@ -40537,8 +40574,12 @@
 	    key: 'defaultProps',
 	    get: function get() {
 	      return {
+<<<<<<< HEAD
 	        allowSameDay: false,
 	        dateFormat: 'L',
+=======
+	        dateFormat: 'LLL',
+>>>>>>> Ran 'npm start build'
 	        dateFormatCalendar: 'MMMM YYYY',
 	        onChange: function onChange() {},
 
@@ -40554,7 +40595,9 @@
 
 	        utcOffset: (0, _moment2.default)().utcOffset(),
 	        monthsShown: 1,
-	        withPortal: false
+	        withPortal: false,
+	        showTimeSelect: false,
+	        timeIntervals: 30
 	      };
 	    }
 	  }]);
@@ -40659,9 +40702,13 @@
 	        return _this.preventFocusTimeout;
 	      });
 	      _this.setSelected(date, event);
+<<<<<<< HEAD
 	      if (!_this.props.inline) {
 	        _this.setOpen(false);
 	      }
+=======
+	      if (!_this.props.showTimeSelect) _this.setOpen(false);
+>>>>>>> Ran 'npm start build'
 	    };
 
 	    _this.setSelected = function (date, event, keepInput) {
@@ -40702,6 +40749,20 @@
 	          preSelection: date
 	        });
 	      }
+	    };
+
+	    _this.handleTimeChange = function (time) {
+	      var selected = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
+	      var changedDate = selected.clone().set({
+	        hour: time.get("hours"),
+	        minute: time.get("minutes")
+	      });
+
+	      _this.setState({
+	        preSelection: changedDate
+	      });
+
+	      _this.props.onChange(changedDate);
 	    };
 
 	    _this.onInputClick = function () {
@@ -40814,6 +40875,7 @@
 	          showMonthDropdown: _this.props.showMonthDropdown,
 	          showWeekNumbers: _this.props.showWeekNumbers,
 	          showYearDropdown: _this.props.showYearDropdown,
+	          withPortal: _this.props.withPortal,
 	          forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
 	          scrollableYearDropdown: _this.props.scrollableYearDropdown,
 	          todayButton: _this.props.todayButton,
@@ -40824,9 +40886,19 @@
 	          monthsShown: _this.props.monthsShown,
 	          onDropdownFocus: _this.handleDropdownFocus,
 	          onMonthChange: _this.props.onMonthChange,
+<<<<<<< HEAD
 	          dayClassName: _this.props.dayClassName,
 	          className: _this.props.calendarClassName,
 	          yearDropdownItemNumber: _this.props.yearDropdownItemNumber },
+=======
+	          showTimeSelect: _this.props.showTimeSelect,
+	          onTimeChange: _this.handleTimeChange,
+	          timeIntervals: _this.props.timeIntervals,
+	          minTime: _this.props.minTime,
+	          maxTime: _this.props.maxTime,
+	          excludeTimes: _this.props.excludeTimes,
+	          className: _this.props.calendarClassName },
+>>>>>>> Ran 'npm start build'
 	        _this.props.children
 	      );
 	    };
@@ -40992,9 +41064,18 @@
 	  useWeekdaysShort: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number,
 	  value: _propTypes2.default.string,
+<<<<<<< HEAD
 	  weekLabel: _propTypes2.default.string,
 	  withPortal: _propTypes2.default.bool,
 	  yearDropdownItemNumber: _propTypes2.default.number
+=======
+	  withPortal: _propTypes2.default.bool,
+	  showTimeSelect: _propTypes2.default.bool,
+	  timeIntervals: _propTypes2.default.number,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array
+>>>>>>> Ran 'npm start build'
 	};
 	exports.default = DatePicker;
 
@@ -41045,6 +41126,10 @@
 >>>>>>> First working draft of selectTime feature
 
 	var _month2 = _interopRequireDefault(_month);
+
+	var _time = __webpack_require__(482);
+
+	var _time2 = _interopRequireDefault(_time);
 
 	var _react = __webpack_require__(2);
 
@@ -41232,8 +41317,13 @@
 	      if (!_this.props.forceShowMonthNavigation && (0, _date_utils.allDaysDisabledAfter)(_this.state.date, 'month', _this.props)) {
 	        return;
 	      }
+
+	      var classes = ["react-datepicker__navigation", "react-datepicker__navigation--next"];
+	      if (_this.props.showTimeSelect) classes.push("react-datepicker__navigation--next--with-time");
+	      if (_this.props.todayButton) classes.push("react-datepicker__navigation--next--with-today-button");
+
 	      return _react2.default.createElement('a', {
-	        className: 'react-datepicker__navigation react-datepicker__navigation--next',
+	        className: classes.join(" "),
 	        onClick: _this.increaseMonth });
 	    };
 
@@ -41357,6 +41447,20 @@
 	      return monthList;
 	    };
 
+	    _this.renderTimeSection = function () {
+	      if (_this.props.showTimeSelect) return _react2.default.createElement(_time2.default, {
+	        selected: _this.props.selected,
+	        onTimeChange: _this.props.onTimeChange,
+	        intervals: _this.props.timeIntervals,
+	        minTime: _this.props.minTime,
+	        maxTime: _this.props.maxTime,
+	        excludeTimes: _this.props.excludeTimes,
+	        todayButton: _this.props.todayButton,
+	        showMonthDropdown: _this.props.showMonthDropdown,
+	        showYearDropdown: _this.props.showYearDropdown,
+	        withPortal: _this.props.withPortal });else return;
+	    };
+
 	    _this.state = {
 	      date: _this.localizeMoment(_this.getDateInView()),
 	      selectingDate: null
@@ -41388,6 +41492,7 @@
 	        this.renderNextMonthButton(),
 	        this.renderMonths(),
 	        this.renderTodayButton(),
+	        this.renderTimeSection(),
 	        this.props.children
 	      );
 	    }
@@ -41419,7 +41524,16 @@
 	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,
 	  onSelect: _propTypes2.default.func.isRequired,
+<<<<<<< HEAD
 	  onWeekSelect: _propTypes2.default.func,
+=======
+	  showTimeSelect: _propTypes2.default.bool,
+	  timeIntervals: _propTypes2.default.number,
+	  onTimeChange: _propTypes2.default.func,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array,
+>>>>>>> Ran 'npm start build'
 	  openToDate: _propTypes2.default.object,
 	  peekNextMonth: _propTypes2.default.bool,
 	  scrollableYearDropdown: _propTypes2.default.bool,
@@ -41432,10 +41546,15 @@
 	  showYearDropdown: _propTypes2.default.bool,
 	  startDate: _propTypes2.default.object,
 	  todayButton: _propTypes2.default.string,
+<<<<<<< HEAD
 	  useWeekdaysShort: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number,
 	  weekLabel: _propTypes2.default.string,
 	  yearDropdownItemNumber: _propTypes2.default.number
+=======
+	  withPortal: _propTypes2.default.bool,
+	  utcOffset: _propTypes2.default.number
+>>>>>>> Ran 'npm start build'
 	};
 	exports.default = Calendar;
 
@@ -60922,6 +61041,8 @@
 	exports.isSameUtcOffset = isSameUtcOffset;
 	exports.isDayInRange = isDayInRange;
 	exports.isDayDisabled = isDayDisabled;
+	exports.isTimeDisabled = isTimeDisabled;
+	exports.isTimeInDisabledRange = isTimeInDisabledRange;
 	exports.allDaysDisabledBefore = allDaysDisabledBefore;
 	exports.allDaysDisabledAfter = allDaysDisabledAfter;
 	exports.getEffectiveMinDate = getEffectiveMinDate;
@@ -60977,10 +61098,31 @@
 	  }) || filterDate && !filterDate(day.clone()) || false;
 	}
 
+	function isTimeDisabled(time, disabledTimes) {
+	  var l = disabledTimes.length;
+	  for (var i = 0; i < l; i++) {
+	    if (disabledTimes[i].get("hours") === time.get("hours") && disabledTimes[i].get("minutes") === time.get("minutes")) return true;
+	  }return false;
+	}
+
+	function isTimeInDisabledRange(time, _ref2) {
+	  var minTime = _ref2.minTime,
+	      maxTime = _ref2.maxTime;
+
+	  if (!minTime || !maxTime) throw new Error("Both minTime and maxTime props required");
+
+	  var base = (0, _moment2.default)().hours(0).minutes(0).seconds(0);
+	  var baseTime = base.clone().hours(time.get("hours")).minutes(time.get("minutes"));
+	  var min = base.clone().hours(minTime.get("hours")).minutes(minTime.get("minutes"));
+	  var max = base.clone().hours(maxTime.get("hours")).minutes(maxTime.get("minutes"));
+
+	  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
+	}
+
 	function allDaysDisabledBefore(day, unit) {
-	  var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-	      minDate = _ref2.minDate,
-	      includeDates = _ref2.includeDates;
+	  var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      minDate = _ref3.minDate,
+	      includeDates = _ref3.includeDates;
 
 	  var dateBefore = day.clone().subtract(1, unit);
 	  return minDate && dateBefore.isBefore(minDate, unit) || includeDates && includeDates.every(function (includeDate) {
@@ -60989,9 +61131,9 @@
 	}
 
 	function allDaysDisabledAfter(day, unit) {
-	  var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-	      maxDate = _ref3.maxDate,
-	      includeDates = _ref3.includeDates;
+	  var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      maxDate = _ref4.maxDate,
+	      includeDates = _ref4.includeDates;
 
 	  var dateAfter = day.clone().add(1, unit);
 	  return maxDate && dateAfter.isAfter(maxDate, unit) || includeDates && includeDates.every(function (includeDate) {
@@ -60999,9 +61141,9 @@
 	  }) || false;
 	}
 
-	function getEffectiveMinDate(_ref4) {
-	  var minDate = _ref4.minDate,
-	      includeDates = _ref4.includeDates;
+	function getEffectiveMinDate(_ref5) {
+	  var minDate = _ref5.minDate,
+	      includeDates = _ref5.includeDates;
 
 	  if (includeDates && minDate) {
 	    return _moment2.default.min(includeDates.filter(function (includeDate) {
@@ -61014,9 +61156,9 @@
 	  }
 	}
 
-	function getEffectiveMaxDate(_ref5) {
-	  var maxDate = _ref5.maxDate,
-	      includeDates = _ref5.includeDates;
+	function getEffectiveMaxDate(_ref6) {
+	  var maxDate = _ref6.maxDate,
+	      includeDates = _ref6.includeDates;
 
 	  if (includeDates && maxDate) {
 	    return _moment2.default.max(includeDates.filter(function (includeDate) {
@@ -61029,17 +61171,17 @@
 	  }
 	}
 
-	function parseDate(value, _ref6) {
-	  var dateFormat = _ref6.dateFormat,
-	      locale = _ref6.locale;
+	function parseDate(value, _ref7) {
+	  var dateFormat = _ref7.dateFormat,
+	      locale = _ref7.locale;
 
 	  var m = (0, _moment2.default)(value, dateFormat, locale || _moment2.default.locale(), true);
 	  return m.isValid() ? m : null;
 	}
 
-	function safeDateFormat(date, _ref7) {
-	  var dateFormat = _ref7.dateFormat,
-	      locale = _ref7.locale;
+	function safeDateFormat(date, _ref8) {
+	  var dateFormat = _ref8.dateFormat,
+	      locale = _ref8.locale;
 
 	  return date && date.clone().locale(locale || _moment2.default.locale()).format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || '';
 	}
@@ -61155,6 +61297,158 @@
 >>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(468);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _moment = __webpack_require__(349);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _date_utils = __webpack_require__(480);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Time = function (_React$Component) {
+	  _inherits(Time, _React$Component);
+
+	  function Time() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Time);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Time.__proto__ || Object.getPrototypeOf(Time)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (time) {
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) return;
+
+	      _this.props.onTimeChange(time);
+	    }, _this.ulClasses = function () {
+	      var classes = ["react-datepicker__time-list"];
+	      if (_this.props.showYearDropdown || _this.props.showMonthDropdown) classes.push("react-datepicker__time-list--with-dropdowns");
+	      if (_this.props.todayButton) classes.push("react-datepicker__time-list--with-today-button");
+	      if (_this.props.withPortal) classes.push("react-datepicker__time-list--with-portal");
+
+	      return classes.join(" ");
+	    }, _this.liClasses = function (time, currH, currM) {
+	      var classes = ["react-datepicker__time-list-item"];
+	      if (currH == time.get("hours") && currM == time.get("minutes")) classes.push("react-datepicker__time-list-item--selected");
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) classes.push("react-datepicker__time-list-item--disabled");
+
+	      return classes.join(" ");
+	    }, _this.renderTimes = function () {
+	      var times = [];
+	      var intervals = _this.props.intervals;
+	      var activeTime = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
+	      var currH = activeTime.get("hours");
+	      var currM = activeTime.get("minutes");
+	      var base = (0, _moment2.default)().startOf("day");
+	      var multiplier = 1440 / intervals;
+	      for (var i = 0; i < multiplier; i++) {
+	        times.push(base.clone().add(i * intervals, "minutes"));
+	      }return times.map(function (time, i) {
+	        return _react2.default.createElement(
+	          "li",
+	          { key: i, onClick: _this.handleClick.bind(_this, time), className: _this.liClasses(time, currH, currM) },
+	          time.format("hh:mm A")
+	        );
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Time, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      //code to ensure selected time will always be in focus within time window when it first appears
+	      var node = this.refs.timeList;
+	      var multiplier = 60 / this.props.intervals;
+	      var currH = this.props.selected ? this.props.selected.get("hours") : (0, _moment2.default)().get("hours");
+	      node.scrollTop = 30 * (multiplier * currH);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "react-datepicker__time-container " + (this.props.todayButton ? "react-datepicker__time-container--with-today-button" : "") },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "react-datepicker__header react-datepicker__header--time" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "react-datepicker-time__header" },
+	            "Time"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "react-datepicker__time" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "react-datepicker__time-box" },
+	            _react2.default.createElement(
+	              "ul",
+	              { className: this.ulClasses(), ref: "timeList" },
+	              this.renderTimes.bind(this)()
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }], [{
+	    key: "defaultProps",
+	    get: function get() {
+	      return {
+	        intervals: 30,
+	        onTimeChange: function onTimeChange() {},
+	        todayButton: null
+	      };
+	    }
+	  }]);
+
+	  return Time;
+	}(_react2.default.Component);
+
+	Time.propTypes = {
+	  intervals: _propTypes2.default.number,
+	  selected: _propTypes2.default.object,
+	  onTimeChange: _propTypes2.default.func,
+	  todayButton: _propTypes2.default.string,
+	  showMonthDropdown: _propTypes2.default.bool,
+	  showYearDropdown: _propTypes2.default.bool,
+	  withPortal: _propTypes2.default.bool,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array
+	};
+	exports.default = Time;
+
+/***/ }),
+/* 483 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -61180,6 +61474,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -61308,6 +61603,9 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+=======
+	var _tether = __webpack_require__(484);
+>>>>>>> Ran 'npm start build'
 
 	var _propTypes = __webpack_require__(473);
 
@@ -61326,8 +61624,26 @@
 	var Manager = function (_Component) {
 	  _inherits(Manager, _Component);
 
+<<<<<<< HEAD
 	  function Manager() {
 	    var _ref;
+=======
+	  var childCount = _react2.default.Children.count(children);
+	  if (childCount <= 0) {
+	    return new Error(componentName + ' expects at least one child to use as the target element.');
+	  } else if (childCount > 3) {
+	    return new Error('Only a max of two children allowed in ' + componentName + '.');
+	  }
+	}
+
+	var attachmentPositions = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
+
+	var TetherComponent = function (_React$Component) {
+	  _inherits(TetherComponent, _React$Component);
+
+	  function TetherComponent() {
+	    var _ref2;
+>>>>>>> Ran 'npm start build'
 
 	    var _temp, _this, _ret;
 
@@ -61790,7 +62106,7 @@
 	exports.default = TetherComponent;
 
 /***/ }),
-/* 483 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 >>>>>>> First working draft of selectTime feature
 
@@ -64256,11 +64572,15 @@
 	exports.default = Arrow;
 
 /***/ }),
+<<<<<<< HEAD
 /* 495 */
 =======
 /***/ }),
 /* 484 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 485 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64328,10 +64648,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 496 */
 =======
 /* 485 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 486 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64434,10 +64758,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 497 */
 =======
 /* 486 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 487 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64530,10 +64858,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 498 */
 =======
 /* 487 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 488 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64626,6 +64958,7 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64716,6 +65049,9 @@
 =======
 /* 488 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 489 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64762,10 +65098,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 501 */
 =======
 /* 489 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 490 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64883,10 +65223,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 502 */
 =======
 /* 490 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 491 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64987,10 +65331,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 503 */
 =======
 /* 491 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 492 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65099,10 +65447,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 504 */
 =======
 /* 492 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 493 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65211,6 +65563,7 @@
 	exports.default = highlightDates;
 
 /***/ }),
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 505 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -65356,6 +65709,9 @@
 =======
 /* 493 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 494 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65465,10 +65821,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 507 */
 =======
 /* 494 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 495 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65573,10 +65933,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 508 */
 =======
 /* 495 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 496 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65675,10 +66039,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 509 */
 =======
 /* 496 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 497 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65784,10 +66152,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 510 */
 =======
 /* 497 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 498 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65881,10 +66253,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 511 */
 =======
 /* 498 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 499 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66001,10 +66377,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 512 */
 =======
 /* 499 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 500 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66108,10 +66488,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 513 */
 =======
 /* 500 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 501 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66231,10 +66615,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 514 */
 =======
 /* 501 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 502 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66327,9 +66715,13 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 515 */
 =======
 /* 502 */
+=======
+/* 503 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66415,7 +66807,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 503 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66499,7 +66891,7 @@
 	exports.default = MonthDropdown;
 
 /***/ }),
-/* 504 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66586,8 +66978,12 @@
 	exports.default = YearDropdown;
 
 /***/ }),
+<<<<<<< HEAD
 /* 505 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 506 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66938,10 +67334,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 519 */
 =======
 /* 506 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 507 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67105,10 +67505,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 520 */
 =======
 /* 507 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 508 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67201,10 +67605,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 521 */
 =======
 /* 508 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 509 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67300,10 +67708,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 522 */
 =======
 /* 509 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 510 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67397,10 +67809,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 523 */
 =======
 /* 510 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 511 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67493,10 +67909,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 524 */
 =======
 /* 511 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 512 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67628,10 +68048,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 525 */
 =======
 /* 512 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 513 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67724,10 +68148,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 526 */
 =======
 /* 513 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 514 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67821,10 +68249,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 527 */
 =======
 /* 514 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 515 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67924,10 +68356,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 528 */
 =======
 /* 515 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 516 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68020,10 +68456,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 529 */
 =======
 /* 516 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 517 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68127,10 +68567,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 530 */
 =======
 /* 517 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 518 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68235,15 +68679,318 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 531 */
 =======
 /* 518 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 519 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(347);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(349);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ShowTime = function (_React$Component) {
+	  _inherits(ShowTime, _React$Component);
+
+	  function ShowTime(props) {
+	    _classCallCheck(this, ShowTime);
+
+	    var _this = _possibleConstructorReturn(this, (ShowTime.__proto__ || Object.getPrototypeOf(ShowTime)).call(this, props));
+
+	    _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    };
+
+	    _this.state = {
+	      startDate: (0, _moment2.default)()
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ShowTime, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '    showTimeSelect\n    timeIntervals={15}\n/>\n'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            timeIntervals: 15 })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ShowTime;
+	}(_react2.default.Component);
+
+	exports.default = ShowTime;
+
+/***/ }),
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(347);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(349);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ExcludeTimes = function (_React$Component) {
+	  _inherits(ExcludeTimes, _React$Component);
+
+	  function ExcludeTimes() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ExcludeTimes);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExcludeTimes.__proto__ || Object.getPrototypeOf(ExcludeTimes)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      startDate: (0, _moment2.default)().hours(16).minutes(30)
+	    }, _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(ExcludeTimes, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '<DatePicker',
+	            _react2.default.createElement('br', null),
+	            '  selected={this.state.startDate}',
+	            _react2.default.createElement('br', null),
+	            '  onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '  showTimeSelect',
+	              _react2.default.createElement('br', null),
+	              '  excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}'
+	            ),
+	            _react2.default.createElement('br', null),
+	            '/>'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            excludeTimes: [(0, _moment2.default)().hours(17).minutes(0), (0, _moment2.default)().hours(18).minutes(30), (0, _moment2.default)().hours(19).minutes(30), (0, _moment2.default)().hours(17).minutes(30)] })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExcludeTimes;
+	}(_react2.default.Component);
+
+	exports.default = ExcludeTimes;
+
+/***/ }),
+/* 521 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(347);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(349);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ExcludeTimePeriod = function (_React$Component) {
+	  _inherits(ExcludeTimePeriod, _React$Component);
+
+	  function ExcludeTimePeriod() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ExcludeTimePeriod);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExcludeTimePeriod.__proto__ || Object.getPrototypeOf(ExcludeTimePeriod)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      startDate: (0, _moment2.default)().hours(17).minutes(30)
+	    }, _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(ExcludeTimePeriod, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '<DatePicker',
+	            _react2.default.createElement('br', null),
+	            '  selected={this.state.startDate}',
+	            _react2.default.createElement('br', null),
+	            '  onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '  showTimeSelect',
+	              _react2.default.createElement('br', null),
+	              '  minTime={moment().hours(17).minutes(0)}',
+	              _react2.default.createElement('br', null),
+	              '  maxTime={moment().hours(20).minutes(30)}'
+	            ),
+	            _react2.default.createElement('br', null),
+	            '/>'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            minTime: (0, _moment2.default)().hours(17).minutes(0),
+	            maxTime: (0, _moment2.default)().hours(20).minutes(30) })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExcludeTimePeriod;
+	}(_react2.default.Component);
+
+	exports.default = ExcludeTimePeriod;
+
+/***/ }),
+/* 522 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 532 */
 531,
@@ -68253,6 +69000,11 @@
 518,
 /* 520 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 523 */
+522,
+/* 524 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68328,10 +69080,14 @@
 
 /***/ }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* 534 */
 =======
 /* 521 */
 >>>>>>> First working draft of selectTime feature
+=======
+/* 525 */
+>>>>>>> Ran 'npm start build'
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
