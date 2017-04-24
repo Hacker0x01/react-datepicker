@@ -276,8 +276,8 @@ export default class DatePicker extends React.Component {
   handleTimeChange = (time) => {
     const selected = (this.props.selected) ? this.props.selected : moment()
     let changedDate = selected.clone().set({
-      hour: time.get("hours"),
-      minute: time.get("minutes")
+      hour: time.get('hours'),
+      minute: time.get('minutes')
     })
 
     this.setState({

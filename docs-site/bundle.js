@@ -40754,8 +40754,8 @@
 	    _this.handleTimeChange = function (time) {
 	      var selected = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
 	      var changedDate = selected.clone().set({
-	        hour: time.get("hours"),
-	        minute: time.get("minutes")
+	        hour: time.get('hours'),
+	        minute: time.get('minutes')
 	      });
 
 	      _this.setState({
@@ -41318,12 +41318,16 @@
 	        return;
 	      }
 
-	      var classes = ["react-datepicker__navigation", "react-datepicker__navigation--next"];
-	      if (_this.props.showTimeSelect) classes.push("react-datepicker__navigation--next--with-time");
-	      if (_this.props.todayButton) classes.push("react-datepicker__navigation--next--with-today-button");
+	      var classes = ['react-datepicker__navigation', 'react-datepicker__navigation--next'];
+	      if (_this.props.showTimeSelect) {
+	        classes.push('react-datepicker__navigation--next--with-time');
+	      }
+	      if (_this.props.todayButton) {
+	        classes.push('react-datepicker__navigation--next--with-today-button');
+	      }
 
 	      return _react2.default.createElement('a', {
-	        className: classes.join(" "),
+	        className: classes.join(' '),
 	        onClick: _this.increaseMonth });
 	    };
 
@@ -41448,17 +41452,21 @@
 	    };
 
 	    _this.renderTimeSection = function () {
-	      if (_this.props.showTimeSelect) return _react2.default.createElement(_time2.default, {
-	        selected: _this.props.selected,
-	        onTimeChange: _this.props.onTimeChange,
-	        intervals: _this.props.timeIntervals,
-	        minTime: _this.props.minTime,
-	        maxTime: _this.props.maxTime,
-	        excludeTimes: _this.props.excludeTimes,
-	        todayButton: _this.props.todayButton,
-	        showMonthDropdown: _this.props.showMonthDropdown,
-	        showYearDropdown: _this.props.showYearDropdown,
-	        withPortal: _this.props.withPortal });else return;
+	      if (_this.props.showTimeSelect) {
+	        return _react2.default.createElement(_time2.default, {
+	          selected: _this.props.selected,
+	          onTimeChange: _this.props.onTimeChange,
+	          intervals: _this.props.timeIntervals,
+	          minTime: _this.props.minTime,
+	          maxTime: _this.props.maxTime,
+	          excludeTimes: _this.props.excludeTimes,
+	          todayButton: _this.props.todayButton,
+	          showMonthDropdown: _this.props.showMonthDropdown,
+	          showYearDropdown: _this.props.showYearDropdown,
+	          withPortal: _this.props.withPortal });
+	      } else {
+	        return;
+	      }
 	    };
 
 	    _this.state = {
@@ -61101,20 +61109,26 @@
 	function isTimeDisabled(time, disabledTimes) {
 	  var l = disabledTimes.length;
 	  for (var i = 0; i < l; i++) {
-	    if (disabledTimes[i].get("hours") === time.get("hours") && disabledTimes[i].get("minutes") === time.get("minutes")) return true;
-	  }return false;
+	    if (disabledTimes[i].get('hours') === time.get('hours') && disabledTimes[i].get('minutes') === time.get('minutes')) {
+	      return true;
+	    }
+	  }
+
+	  return false;
 	}
 
 	function isTimeInDisabledRange(time, _ref2) {
 	  var minTime = _ref2.minTime,
 	      maxTime = _ref2.maxTime;
 
-	  if (!minTime || !maxTime) throw new Error("Both minTime and maxTime props required");
+	  if (!minTime || !maxTime) {
+	    throw new Error('Both minTime and maxTime props required');
+	  }
 
 	  var base = (0, _moment2.default)().hours(0).minutes(0).seconds(0);
-	  var baseTime = base.clone().hours(time.get("hours")).minutes(time.get("minutes"));
-	  var min = base.clone().hours(minTime.get("hours")).minutes(minTime.get("minutes"));
-	  var max = base.clone().hours(maxTime.get("hours")).minutes(maxTime.get("minutes"));
+	  var baseTime = base.clone().hours(time.get('hours')).minutes(time.get('minutes'));
+	  var min = base.clone().hours(minTime.get('hours')).minutes(minTime.get('minutes'));
+	  var max = base.clone().hours(maxTime.get('hours')).minutes(maxTime.get('minutes'));
 
 	  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
 	}
@@ -61297,7 +61311,7 @@
 >>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -61342,75 +61356,91 @@
 	    }
 
 	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Time.__proto__ || Object.getPrototypeOf(Time)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (time) {
-	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) return;
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) {
+	        return;
+	      }
 
 	      _this.props.onTimeChange(time);
 	    }, _this.ulClasses = function () {
-	      var classes = ["react-datepicker__time-list"];
-	      if (_this.props.showYearDropdown || _this.props.showMonthDropdown) classes.push("react-datepicker__time-list--with-dropdowns");
-	      if (_this.props.todayButton) classes.push("react-datepicker__time-list--with-today-button");
-	      if (_this.props.withPortal) classes.push("react-datepicker__time-list--with-portal");
+	      var classes = ['react-datepicker__time-list'];
 
-	      return classes.join(" ");
+	      if (_this.props.showYearDropdown || _this.props.showMonthDropdown) {
+	        classes.push('react-datepicker__time-list--with-dropdowns');
+	      }
+	      if (_this.props.todayButton) {
+	        classes.push('react-datepicker__time-list--with-today-button');
+	      }
+	      if (_this.props.withPortal) {
+	        classes.push('react-datepicker__time-list--with-portal');
+	      }
+
+	      return classes.join(' ');
 	    }, _this.liClasses = function (time, currH, currM) {
-	      var classes = ["react-datepicker__time-list-item"];
-	      if (currH == time.get("hours") && currM == time.get("minutes")) classes.push("react-datepicker__time-list-item--selected");
-	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) classes.push("react-datepicker__time-list-item--disabled");
+	      var classes = ['react-datepicker__time-list-item'];
 
-	      return classes.join(" ");
+	      if (currH === time.get('hours') && currM === time.get('minutes')) {
+	        classes.push('react-datepicker__time-list-item--selected');
+	      }
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) {
+	        classes.push('react-datepicker__time-list-item--disabled');
+	      }
+
+	      return classes.join(' ');
 	    }, _this.renderTimes = function () {
 	      var times = [];
 	      var intervals = _this.props.intervals;
 	      var activeTime = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
-	      var currH = activeTime.get("hours");
-	      var currM = activeTime.get("minutes");
-	      var base = (0, _moment2.default)().startOf("day");
+	      var currH = activeTime.get('hours');
+	      var currM = activeTime.get('minutes');
+	      var base = (0, _moment2.default)().startOf('day');
 	      var multiplier = 1440 / intervals;
 	      for (var i = 0; i < multiplier; i++) {
-	        times.push(base.clone().add(i * intervals, "minutes"));
-	      }return times.map(function (time, i) {
+	        times.push(base.clone().add(i * intervals, 'minutes'));
+	      }
+
+	      return times.map(function (time, i) {
 	        return _react2.default.createElement(
-	          "li",
+	          'li',
 	          { key: i, onClick: _this.handleClick.bind(_this, time), className: _this.liClasses(time, currH, currM) },
-	          time.format("hh:mm A")
+	          time.format('hh:mm A')
 	        );
 	      });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
 	  _createClass(Time, [{
-	    key: "componentDidMount",
+	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      //code to ensure selected time will always be in focus within time window when it first appears
+	      // code to ensure selected time will always be in focus within time window when it first appears
 	      var node = this.refs.timeList;
 	      var multiplier = 60 / this.props.intervals;
-	      var currH = this.props.selected ? this.props.selected.get("hours") : (0, _moment2.default)().get("hours");
+	      var currH = this.props.selected ? this.props.selected.get('hours') : (0, _moment2.default)().get('hours');
 	      node.scrollTop = 30 * (multiplier * currH);
 	    }
 	  }, {
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "react-datepicker__time-container " + (this.props.todayButton ? "react-datepicker__time-container--with-today-button" : "") },
+	        'div',
+	        { className: 'react-datepicker__time-container ' + (this.props.todayButton ? 'react-datepicker__time-container--with-today-button' : '') },
 	        _react2.default.createElement(
-	          "div",
-	          { className: "react-datepicker__header react-datepicker__header--time" },
+	          'div',
+	          { className: 'react-datepicker__header react-datepicker__header--time' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "react-datepicker-time__header" },
-	            "Time"
+	            'div',
+	            { className: 'react-datepicker-time__header' },
+	            'Time'
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "react-datepicker__time" },
+	          'div',
+	          { className: 'react-datepicker__time' },
 	          _react2.default.createElement(
-	            "div",
-	            { className: "react-datepicker__time-box" },
+	            'div',
+	            { className: 'react-datepicker__time-box' },
 	            _react2.default.createElement(
-	              "ul",
-	              { className: this.ulClasses(), ref: "timeList" },
+	              'ul',
+	              { className: this.ulClasses(), ref: 'timeList' },
 	              this.renderTimes.bind(this)()
 	            )
 	          )
@@ -61418,7 +61448,7 @@
 	      );
 	    }
 	  }], [{
-	    key: "defaultProps",
+	    key: 'defaultProps',
 	    get: function get() {
 	      return {
 	        intervals: 30,

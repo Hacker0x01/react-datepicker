@@ -31,23 +31,26 @@ export function isDayDisabled (day, { minDate, maxDate, excludeDates, includeDat
     false
 }
 
-export function isTimeDisabled(time, disabledTimes) {
+export function isTimeDisabled (time, disabledTimes) {
   const l = disabledTimes.length
-  for (let i = 0; i < l; i++)
-    if (disabledTimes[i].get("hours") === time.get("hours") && disabledTimes[i].get("minutes") === time.get("minutes"))
+  for (let i = 0; i < l; i++) {
+    if (disabledTimes[i].get('hours') === time.get('hours') && disabledTimes[i].get('minutes') === time.get('minutes')) {
       return true
+    }
+  }
 
   return false
 }
 
-export function isTimeInDisabledRange(time, { minTime, maxTime }) {
-  if (!minTime || !maxTime)
-    throw new Error("Both minTime and maxTime props required")
+export function isTimeInDisabledRange (time, { minTime, maxTime }) {
+  if (!minTime || !maxTime) {
+    throw new Error('Both minTime and maxTime props required')
+  }
 
   const base = moment().hours(0).minutes(0).seconds(0)
-  const baseTime = base.clone().hours(time.get("hours")).minutes(time.get("minutes"))
-  const min = base.clone().hours(minTime.get("hours")).minutes(minTime.get("minutes"))
-  const max = base.clone().hours(maxTime.get("hours")).minutes(maxTime.get("minutes"))
+  const baseTime = base.clone().hours(time.get('hours')).minutes(time.get('minutes'))
+  const min = base.clone().hours(minTime.get('hours')).minutes(minTime.get('minutes'))
+  const max = base.clone().hours(maxTime.get('hours')).minutes(maxTime.get('minutes'))
 
   return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max))
 }

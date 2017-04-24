@@ -199,14 +199,16 @@ export default class Calendar extends React.Component {
       return
     }
 
-    let classes = ["react-datepicker__navigation", "react-datepicker__navigation--next"]
-    if (this.props.showTimeSelect)
-      classes.push("react-datepicker__navigation--next--with-time")
-    if (this.props.todayButton)
-      classes.push("react-datepicker__navigation--next--with-today-button")
+    let classes = ['react-datepicker__navigation', 'react-datepicker__navigation--next']
+    if (this.props.showTimeSelect) {
+      classes.push('react-datepicker__navigation--next--with-time')
+    }
+    if (this.props.todayButton) {
+      classes.push('react-datepicker__navigation--next--with-today-button')
+    }
 
     return <a
-        className={classes.join(" ")}
+        className={classes.join(' ')}
         onClick={this.increaseMonth} />
   }
 
@@ -321,9 +323,9 @@ export default class Calendar extends React.Component {
   }
 
   renderTimeSection = () => {
-    if (this.props.showTimeSelect)
+    if (this.props.showTimeSelect) {
       return (
-        <Time 
+        <Time
             selected={this.props.selected}
             onTimeChange={this.props.onTimeChange}
             intervals={this.props.timeIntervals}
@@ -335,8 +337,9 @@ export default class Calendar extends React.Component {
             showYearDropdown={this.props.showYearDropdown}
             withPortal={this.props.withPortal} />
       )
-    else
+    } else {
       return
+    }
   }
 
   render () {

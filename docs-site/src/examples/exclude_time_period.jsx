@@ -37,4 +37,3 @@ export default class ExcludeTimePeriod extends React.Component {
     </div>
   }
 }
- 
