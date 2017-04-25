@@ -9,6 +9,8 @@ export default class Day extends React.Component {
     day: PropTypes.object.isRequired,
     endDate: PropTypes.object,
     highlightDates: PropTypes.array,
+    highlightDates2: PropTypes.array,
+    highlightDates3: PropTypes.array,
     inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
@@ -45,8 +47,8 @@ export default class Day extends React.Component {
 
   isDisabled = () => isDayDisabled(this.props.day, this.props)
 
-  isHighlighted = () => {
-    const { day, highlightDates } = this.props
+  isHighlighted = (highlightDates) => {
+    const { day } = this.props
     if (!highlightDates) {
       return false
     }
@@ -138,7 +140,9 @@ export default class Day extends React.Component {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
       'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
-      'react-datepicker__day--highlighted': this.isHighlighted(),
+      'react-datepicker__day--highlighted': this.isHighlighted(this.props.highlightDates),
+      'react-datepicker__day--highlighted2': this.isHighlighted(this.props.highlightDates2),
+      'react-datepicker__day--highlighted3': this.isHighlighted(this.props.highlightDates3),
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),

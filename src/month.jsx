@@ -13,6 +13,8 @@ export default class Month extends React.Component {
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     highlightDates: PropTypes.array,
+    highlightDates2: PropTypes.array,
+    highlightDates3: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
     maxDate: PropTypes.object,
@@ -75,6 +77,8 @@ export default class Month extends React.Component {
           includeDates={this.props.includeDates}
           inline={this.props.inline}
           highlightDates={this.props.highlightDates}
+          highlightDates2={this.props.highlightDates2}
+          highlightDates3={this.props.highlightDates3}
           selectingDate={this.props.selectingDate}
           filterDate={this.props.filterDate}
           preSelection={this.props.preSelection}

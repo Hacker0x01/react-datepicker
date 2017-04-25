@@ -31,6 +31,8 @@ export default class Calendar extends React.Component {
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     highlightDates: PropTypes.array,
+    highlightDates2: PropTypes.array,
+    highlightDates3: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
     locale: PropTypes.string,
@@ -282,6 +284,8 @@ export default class Calendar extends React.Component {
                 maxDate={this.props.maxDate}
                 excludeDates={this.props.excludeDates}
                 highlightDates={this.props.highlightDates}
+                highlightDates2={this.props.highlightDates2}
+                highlightDates3={this.props.highlightDates3}
                 selectingDate={this.state.selectingDate}
                 includeDates={this.props.includeDates}
                 inline={this.props.inline}
