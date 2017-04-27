@@ -154,13 +154,15 @@ export default class Day extends React.Component {
   render () {
     return (
       <div
-          className={this.getClassNames()}
-          onClick={this.handleClick}
-          onMouseEnter={this.handleMouseEnter}
-          aria-label={`day-${this.props.day.date()}`}
-          role="option">
+        className={this.getClassNames()}
+        onClick={this.handleClick}
+        onMouseEnter={this.handleMouseEnter}
+        aria-label={`day-${this.props.day.date()}`}
+        role="option">
+        <div className="react-datepicker__day--date">
           {this.props.day.date()}
+        </div>
       </div>
-    )
+    );
   }
 }
