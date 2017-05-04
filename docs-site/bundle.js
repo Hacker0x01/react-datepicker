@@ -65,14 +65,14 @@
 	return modules;
 }([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -92,18 +92,18 @@
 
 	_reactDom2.default.render(_react2.default.createElement(_root2.default, null), document.getElementById('app'));
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(3);
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -209,12 +209,19 @@
 
 	module.exports = React;
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
+
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
 
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -235,7 +242,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -264,7 +271,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -284,8 +291,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -298,9 +305,9 @@
 	};
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -493,11 +500,11 @@
 
 	module.exports = ReactChildren;
 
-/***/ },
+/***/ }),
 /* 6 */
-[512, 7],
+[521, 7],
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -538,9 +545,9 @@
 
 	module.exports = reactProdInvariant;
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -598,9 +605,9 @@
 
 	module.exports = invariant;
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -943,9 +950,9 @@
 
 	module.exports = ReactElement;
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -978,9 +985,9 @@
 
 	module.exports = ReactCurrentOwner;
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -1049,9 +1056,9 @@
 
 	module.exports = warning;
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -1092,9 +1099,9 @@
 
 	module.exports = emptyFunction;
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1122,9 +1129,9 @@
 
 	module.exports = canDefineProperty;
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -1146,9 +1153,9 @@
 
 	module.exports = REACT_ELEMENT_TYPE;
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1326,9 +1333,9 @@
 
 	module.exports = traverseAllChildren;
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1371,9 +1378,9 @@
 
 	module.exports = getIteratorFn;
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1434,9 +1441,9 @@
 
 	module.exports = KeyEscapeUtils;
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1556,9 +1563,9 @@
 
 	module.exports = ReactComponent;
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -1656,9 +1663,9 @@
 
 	module.exports = ReactNoopUpdateQueue;
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -1680,9 +1687,9 @@
 
 	module.exports = emptyObject;
 
-/***/ },
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1726,9 +1733,9 @@
 
 	module.exports = ReactPureComponent;
 
-/***/ },
+/***/ }),
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2453,9 +2460,9 @@
 
 	module.exports = ReactClass;
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2482,9 +2489,9 @@
 
 	module.exports = ReactPropTypeLocationNames;
 
-/***/ },
+/***/ }),
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2656,9 +2663,9 @@
 
 	module.exports = ReactDOMFactories;
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2679,9 +2686,9 @@
 
 	module.exports = factory(isValidElement);
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2706,9 +2713,9 @@
 	};
 
 
-/***/ },
+/***/ }),
 /* 27 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3190,9 +3197,9 @@
 	};
 
 
-/***/ },
+/***/ }),
 /* 28 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3210,9 +3217,9 @@
 	module.exports = ReactPropTypesSecret;
 
 
-/***/ },
+/***/ }),
 /* 29 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3277,9 +3284,9 @@
 	module.exports = checkPropTypes;
 
 
-/***/ },
+/***/ }),
 /* 30 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3295,9 +3302,9 @@
 
 	module.exports = '15.5.4';
 
-/***/ },
+/***/ }),
 /* 31 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3337,18 +3344,18 @@
 
 	module.exports = onlyChild;
 
-/***/ },
+/***/ }),
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(33);
 
 
-/***/ },
+/***/ }),
 /* 33 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3461,9 +3468,9 @@
 
 	module.exports = ReactDOM;
 
-/***/ },
+/***/ }),
 /* 34 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3660,11 +3667,11 @@
 
 	module.exports = ReactDOMComponentTree;
 
-/***/ },
+/***/ }),
 /* 35 */
 7,
 /* 36 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3876,9 +3883,9 @@
 
 	module.exports = DOMProperty;
 
-/***/ },
+/***/ }),
 /* 37 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -3898,9 +3905,9 @@
 
 	module.exports = ReactDOMComponentFlags;
 
-/***/ },
+/***/ }),
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3988,9 +3995,9 @@
 	  inject: inject
 	};
 
-/***/ },
+/***/ }),
 /* 39 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4066,9 +4073,9 @@
 
 	module.exports = ARIADOMPropertyConfig;
 
-/***/ },
+/***/ }),
 /* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present Facebook, Inc.
@@ -4455,9 +4462,9 @@
 
 	module.exports = BeforeInputEventPlugin;
 
-/***/ },
+/***/ }),
 /* 41 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4593,9 +4600,9 @@
 
 	module.exports = EventPropagators;
 
-/***/ },
+/***/ }),
 /* 42 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4875,9 +4882,9 @@
 
 	module.exports = EventPluginHub;
 
-/***/ },
+/***/ }),
 /* 43 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5134,9 +5141,9 @@
 
 	module.exports = EventPluginRegistry;
 
-/***/ },
+/***/ }),
 /* 44 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5364,9 +5371,9 @@
 
 	module.exports = EventPluginUtils;
 
-/***/ },
+/***/ }),
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5444,9 +5451,9 @@
 
 	module.exports = ReactErrorUtils;
 
-/***/ },
+/***/ }),
 /* 46 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -5506,9 +5513,9 @@
 
 	module.exports = accumulateInto;
 
-/***/ },
+/***/ }),
 /* 47 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5541,9 +5548,9 @@
 
 	module.exports = forEachAccumulated;
 
-/***/ },
+/***/ }),
 /* 48 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -5581,9 +5588,9 @@
 
 	module.exports = ExecutionEnvironment;
 
-/***/ },
+/***/ }),
 /* 49 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5680,11 +5687,11 @@
 
 	module.exports = FallbackCompositionState;
 
-/***/ },
+/***/ }),
 /* 50 */
-[512, 35],
+[521, 35],
 /* 51 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5719,9 +5726,9 @@
 
 	module.exports = getTextContentAccessor;
 
-/***/ },
+/***/ }),
 /* 52 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5759,9 +5766,9 @@
 
 	module.exports = SyntheticCompositionEvent;
 
-/***/ },
+/***/ }),
 /* 53 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6031,9 +6038,9 @@
 	  }
 	}
 
-/***/ },
+/***/ }),
 /* 54 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6072,9 +6079,9 @@
 
 	module.exports = SyntheticInputEvent;
 
-/***/ },
+/***/ }),
 /* 55 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6422,9 +6429,9 @@
 
 	module.exports = ChangeEventPlugin;
 
-/***/ },
+/***/ }),
 /* 56 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6677,9 +6684,9 @@
 
 	module.exports = ReactUpdates;
 
-/***/ },
+/***/ }),
 /* 57 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6800,9 +6807,9 @@
 
 	module.exports = PooledClass.addPoolingTo(CallbackQueue);
 
-/***/ },
+/***/ }),
 /* 58 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6826,9 +6833,9 @@
 
 	module.exports = ReactFeatureFlags;
 
-/***/ },
+/***/ }),
 /* 59 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6998,9 +7005,9 @@
 
 	module.exports = ReactReconciler;
 
-/***/ },
+/***/ }),
 /* 60 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7091,9 +7098,9 @@
 
 	module.exports = ReactRef;
 
-/***/ },
+/***/ }),
 /* 61 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7189,9 +7196,9 @@
 
 	module.exports = ReactOwner;
 
-/***/ },
+/***/ }),
 /* 62 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -7217,9 +7224,9 @@
 
 	module.exports = { debugTool: debugTool };
 
-/***/ },
+/***/ }),
 /* 63 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7446,9 +7453,9 @@
 
 	module.exports = TransactionImpl;
 
-/***/ },
+/***/ }),
 /* 64 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7485,9 +7492,9 @@
 
 	module.exports = getEventTarget;
 
-/***/ },
+/***/ }),
 /* 65 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7549,9 +7556,9 @@
 
 	module.exports = isEventSupported;
 
-/***/ },
+/***/ }),
 /* 66 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7604,9 +7611,9 @@
 
 	module.exports = isTextInputElement;
 
-/***/ },
+/***/ }),
 /* 67 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7634,9 +7641,9 @@
 
 	module.exports = DefaultEventPluginOrder;
 
-/***/ },
+/***/ }),
 /* 68 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7738,9 +7745,9 @@
 
 	module.exports = EnterLeaveEventPlugin;
 
-/***/ },
+/***/ }),
 /* 69 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7814,9 +7821,9 @@
 
 	module.exports = SyntheticMouseEvent;
 
-/***/ },
+/***/ }),
 /* 70 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7877,9 +7884,9 @@
 
 	module.exports = SyntheticUIEvent;
 
-/***/ },
+/***/ }),
 /* 71 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7908,9 +7915,9 @@
 
 	module.exports = ViewportMetrics;
 
-/***/ },
+/***/ }),
 /* 72 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7955,9 +7962,9 @@
 
 	module.exports = getEventModifierState;
 
-/***/ },
+/***/ }),
 /* 73 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8195,9 +8202,9 @@
 
 	module.exports = HTMLDOMPropertyConfig;
 
-/***/ },
+/***/ }),
 /* 74 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8229,9 +8236,9 @@
 
 	module.exports = ReactComponentBrowserEnvironment;
 
-/***/ },
+/***/ }),
 /* 75 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8458,9 +8465,9 @@
 
 	module.exports = DOMChildrenOperations;
 
-/***/ },
+/***/ }),
 /* 76 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -8580,9 +8587,9 @@
 
 	module.exports = DOMLazyTree;
 
-/***/ },
+/***/ }),
 /* 77 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8604,9 +8611,9 @@
 
 	module.exports = DOMNamespaces;
 
-/***/ },
+/***/ }),
 /* 78 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8706,9 +8713,9 @@
 
 	module.exports = setInnerHTML;
 
-/***/ },
+/***/ }),
 /* 79 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8742,9 +8749,9 @@
 
 	module.exports = createMicrosoftUnsafeLocalFunction;
 
-/***/ },
+/***/ }),
 /* 80 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8798,9 +8805,9 @@
 
 	module.exports = setTextContent;
 
-/***/ },
+/***/ }),
 /* 81 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -8925,9 +8932,9 @@
 
 	module.exports = escapeTextContentForBrowser;
 
-/***/ },
+/***/ }),
 /* 82 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8977,9 +8984,9 @@
 
 	module.exports = Danger;
 
-/***/ },
+/***/ }),
 /* 83 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -9065,9 +9072,9 @@
 
 	module.exports = createNodesFromMarkup;
 
-/***/ },
+/***/ }),
 /* 84 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -9196,9 +9203,9 @@
 
 	module.exports = createArrayFromMixed;
 
-/***/ },
+/***/ }),
 /* 85 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -9295,9 +9302,9 @@
 
 	module.exports = getMarkupWrap;
 
-/***/ },
+/***/ }),
 /* 86 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9333,9 +9340,9 @@
 
 	module.exports = ReactDOMIDOperations;
 
-/***/ },
+/***/ }),
 /* 87 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10338,9 +10345,9 @@
 
 	module.exports = ReactDOMComponent;
 
-/***/ },
+/***/ }),
 /* 88 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10366,9 +10373,9 @@
 
 	module.exports = AutoFocusUtils;
 
-/***/ },
+/***/ }),
 /* 89 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -10397,9 +10404,9 @@
 
 	module.exports = focusNode;
 
-/***/ },
+/***/ }),
 /* 90 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10610,9 +10617,9 @@
 
 	module.exports = CSSPropertyOperations;
 
-/***/ },
+/***/ }),
 /* 91 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10762,9 +10769,9 @@
 
 	module.exports = CSSProperty;
 
-/***/ },
+/***/ }),
 /* 92 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -10806,9 +10813,9 @@
 
 	module.exports = camelizeStyleName;
 
-/***/ },
+/***/ }),
 /* 93 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -10842,9 +10849,9 @@
 
 	module.exports = camelize;
 
-/***/ },
+/***/ }),
 /* 94 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10925,9 +10932,9 @@
 
 	module.exports = dangerousStyleValue;
 
-/***/ },
+/***/ }),
 /* 95 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -10968,9 +10975,9 @@
 
 	module.exports = hyphenateStyleName;
 
-/***/ },
+/***/ }),
 /* 96 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -11005,9 +11012,9 @@
 
 	module.exports = hyphenate;
 
-/***/ },
+/***/ }),
 /* 97 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -11039,9 +11046,9 @@
 
 	module.exports = memoizeStringOnly;
 
-/***/ },
+/***/ }),
 /* 98 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11280,9 +11287,9 @@
 
 	module.exports = DOMPropertyOperations;
 
-/***/ },
+/***/ }),
 /* 99 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11310,9 +11317,9 @@
 
 	module.exports = quoteAttributeValueForBrowser;
 
-/***/ },
+/***/ }),
 /* 100 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11642,9 +11649,9 @@
 
 	module.exports = ReactBrowserEventEmitter;
 
-/***/ },
+/***/ }),
 /* 101 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11679,9 +11686,9 @@
 
 	module.exports = ReactEventEmitterMixin;
 
-/***/ },
+/***/ }),
 /* 102 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11784,9 +11791,9 @@
 
 	module.exports = getVendorPrefixedEventName;
 
-/***/ },
+/***/ }),
 /* 103 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12073,9 +12080,9 @@
 
 	module.exports = ReactDOMInput;
 
-/***/ },
+/***/ }),
 /* 104 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12215,9 +12222,9 @@
 
 	module.exports = LinkedValueUtils;
 
-/***/ },
+/***/ }),
 /* 105 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12236,9 +12243,9 @@
 
 	module.exports = ReactPropTypesSecret;
 
-/***/ },
+/***/ }),
 /* 106 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12363,9 +12370,9 @@
 
 	module.exports = ReactDOMOption;
 
-/***/ },
+/***/ }),
 /* 107 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12567,9 +12574,9 @@
 
 	module.exports = ReactDOMSelect;
 
-/***/ },
+/***/ }),
 /* 108 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12731,9 +12738,9 @@
 
 	module.exports = ReactDOMTextarea;
 
-/***/ },
+/***/ }),
 /* 109 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13185,9 +13192,9 @@
 
 	module.exports = ReactMultiChild;
 
-/***/ },
+/***/ }),
 /* 110 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -13235,9 +13242,9 @@
 
 	module.exports = ReactComponentEnvironment;
 
-/***/ },
+/***/ }),
 /* 111 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13287,9 +13294,9 @@
 
 	module.exports = ReactInstanceMap;
 
-/***/ },
+/***/ }),
 /* 112 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -13446,9 +13453,9 @@
 	module.exports = ReactChildReconciler;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(113)))
 
-/***/ },
+/***/ }),
 /* 113 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// shim for using process in browser
 	var process = module.exports = {};
@@ -13632,9 +13639,9 @@
 	process.umask = function() { return 0; };
 
 
-/***/ },
+/***/ }),
 /* 114 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13765,9 +13772,9 @@
 
 	module.exports = instantiateReactComponent;
 
-/***/ },
+/***/ }),
 /* 115 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14671,9 +14678,9 @@
 
 	module.exports = ReactCompositeComponent;
 
-/***/ },
+/***/ }),
 /* 116 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14715,9 +14722,9 @@
 
 	module.exports = ReactNodeTypes;
 
-/***/ },
+/***/ }),
 /* 117 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -14787,9 +14794,9 @@
 
 	module.exports = shallowEqual;
 
-/***/ },
+/***/ }),
 /* 118 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14833,9 +14840,9 @@
 
 	module.exports = shouldUpdateReactComponent;
 
-/***/ },
+/***/ }),
 /* 119 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -14867,9 +14874,9 @@
 
 	module.exports = ReactEmptyComponent;
 
-/***/ },
+/***/ }),
 /* 120 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -14939,9 +14946,9 @@
 
 	module.exports = ReactHostComponent;
 
-/***/ },
+/***/ }),
 /* 121 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14964,11 +14971,11 @@
 
 	module.exports = getNextDebugID;
 
-/***/ },
+/***/ }),
 /* 122 */
 17,
 /* 123 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15146,13 +15153,13 @@
 
 	module.exports = traverseAllChildren;
 
-/***/ },
+/***/ }),
 /* 124 */
 14,
 /* 125 */
 16,
 /* 126 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -15488,9 +15495,9 @@
 
 	module.exports = ReactComponentTreeHook;
 
-/***/ },
+/***/ }),
 /* 127 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15569,9 +15576,9 @@
 	module.exports = flattenChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(113)))
 
-/***/ },
+/***/ }),
 /* 128 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15663,9 +15670,9 @@
 
 	module.exports = ReactServerRenderingTransaction;
 
-/***/ },
+/***/ }),
 /* 129 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -15806,9 +15813,9 @@
 
 	module.exports = ReactServerUpdateQueue;
 
-/***/ },
+/***/ }),
 /* 130 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -16046,9 +16053,9 @@
 
 	module.exports = ReactUpdateQueue;
 
-/***/ },
+/***/ }),
 /* 131 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -16427,9 +16434,9 @@
 
 	module.exports = validateDOMNesting;
 
-/***/ },
+/***/ }),
 /* 132 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -16491,9 +16498,9 @@
 
 	module.exports = ReactDOMEmptyComponent;
 
-/***/ },
+/***/ }),
 /* 133 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -16631,9 +16638,9 @@
 	  traverseEnterLeave: traverseEnterLeave
 	};
 
-/***/ },
+/***/ }),
 /* 134 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16799,9 +16806,9 @@
 
 	module.exports = ReactDOMTextComponent;
 
-/***/ },
+/***/ }),
 /* 135 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16871,9 +16878,9 @@
 
 	module.exports = ReactDefaultBatchingStrategy;
 
-/***/ },
+/***/ }),
 /* 136 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17030,9 +17037,9 @@
 
 	module.exports = ReactEventListener;
 
-/***/ },
+/***/ }),
 /* 137 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -17118,9 +17125,9 @@
 
 	module.exports = EventListener;
 
-/***/ },
+/***/ }),
 /* 138 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -17161,9 +17168,9 @@
 
 	module.exports = getUnboundedScrollPosition;
 
-/***/ },
+/***/ }),
 /* 139 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17199,9 +17206,9 @@
 
 	module.exports = ReactInjection;
 
-/***/ },
+/***/ }),
 /* 140 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17381,9 +17388,9 @@
 
 	module.exports = ReactReconcileTransaction;
 
-/***/ },
+/***/ }),
 /* 141 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17509,9 +17516,9 @@
 
 	module.exports = ReactInputSelection;
 
-/***/ },
+/***/ }),
 /* 142 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17725,9 +17732,9 @@
 
 	module.exports = ReactDOMSelection;
 
-/***/ },
+/***/ }),
 /* 143 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17803,9 +17810,9 @@
 
 	module.exports = getNodeForCharacterOffset;
 
-/***/ },
+/***/ }),
 /* 144 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -17847,9 +17854,9 @@
 
 	module.exports = containsNode;
 
-/***/ },
+/***/ }),
 /* 145 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -17876,9 +17883,9 @@
 
 	module.exports = isTextNode;
 
-/***/ },
+/***/ }),
 /* 146 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -17905,9 +17912,9 @@
 
 	module.exports = isNode;
 
-/***/ },
+/***/ }),
 /* 147 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -17948,9 +17955,9 @@
 
 	module.exports = getActiveElement;
 
-/***/ },
+/***/ }),
 /* 148 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18254,9 +18261,9 @@
 
 	module.exports = SVGDOMPropertyConfig;
 
-/***/ },
+/***/ }),
 /* 149 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18449,9 +18456,9 @@
 
 	module.exports = SelectEventPlugin;
 
-/***/ },
+/***/ }),
 /* 150 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18681,9 +18688,9 @@
 
 	module.exports = SimpleEventPlugin;
 
-/***/ },
+/***/ }),
 /* 151 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18724,9 +18731,9 @@
 
 	module.exports = SyntheticAnimationEvent;
 
-/***/ },
+/***/ }),
 /* 152 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18766,9 +18773,9 @@
 
 	module.exports = SyntheticClipboardEvent;
 
-/***/ },
+/***/ }),
 /* 153 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18806,9 +18813,9 @@
 
 	module.exports = SyntheticFocusEvent;
 
-/***/ },
+/***/ }),
 /* 154 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18894,9 +18901,9 @@
 
 	module.exports = SyntheticKeyboardEvent;
 
-/***/ },
+/***/ }),
 /* 155 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18948,9 +18955,9 @@
 
 	module.exports = getEventCharCode;
 
-/***/ },
+/***/ }),
 /* 156 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19054,9 +19061,9 @@
 
 	module.exports = getEventKey;
 
-/***/ },
+/***/ }),
 /* 157 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19094,9 +19101,9 @@
 
 	module.exports = SyntheticDragEvent;
 
-/***/ },
+/***/ }),
 /* 158 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19143,9 +19150,9 @@
 
 	module.exports = SyntheticTouchEvent;
 
-/***/ },
+/***/ }),
 /* 159 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19186,9 +19193,9 @@
 
 	module.exports = SyntheticTransitionEvent;
 
-/***/ },
+/***/ }),
 /* 160 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19244,9 +19251,9 @@
 
 	module.exports = SyntheticWheelEvent;
 
-/***/ },
+/***/ }),
 /* 161 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19786,9 +19793,9 @@
 
 	module.exports = ReactMount;
 
-/***/ },
+/***/ }),
 /* 162 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19823,9 +19830,9 @@
 
 	module.exports = ReactDOMContainerInfo;
 
-/***/ },
+/***/ }),
 /* 163 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19846,9 +19853,9 @@
 
 	module.exports = ReactDOMFeatureFlags;
 
-/***/ },
+/***/ }),
 /* 164 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19900,9 +19907,9 @@
 
 	module.exports = ReactMarkupChecksum;
 
-/***/ },
+/***/ }),
 /* 165 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19948,11 +19955,11 @@
 
 	module.exports = adler32;
 
-/***/ },
+/***/ }),
 /* 166 */
 30,
 /* 167 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20014,9 +20021,9 @@
 
 	module.exports = findDOMNode;
 
-/***/ },
+/***/ }),
 /* 168 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20048,9 +20055,9 @@
 
 	module.exports = getHostComponentFromComposite;
 
-/***/ },
+/***/ }),
 /* 169 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20068,9 +20075,9 @@
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
-/***/ },
+/***/ }),
 /* 170 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -20088,7 +20095,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(511);
+	var _hero_example = __webpack_require__(520);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20219,9 +20226,9 @@
 
 	exports.default = Root;
 
-/***/ },
+/***/ }),
 /* 171 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -20239,149 +20246,149 @@
 
 	var _highlight2 = _interopRequireDefault(_highlight);
 
-	var _default = __webpack_require__(343);
+	var _default = __webpack_require__(346);
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(475);
+	var _code_example_component = __webpack_require__(484);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _custom_date_format = __webpack_require__(476);
+	var _custom_date_format = __webpack_require__(485);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(477);
+	var _custom_class_name = __webpack_require__(486);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _custom_calendar_class_name = __webpack_require__(478);
+	var _custom_calendar_class_name = __webpack_require__(487);
 
 	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
 
-	var _placeholder_text = __webpack_require__(479);
+	var _placeholder_text = __webpack_require__(488);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(480);
+	var _specific_date_range = __webpack_require__(489);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(481);
+	var _locale = __webpack_require__(490);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(482);
+	var _exclude_dates = __webpack_require__(491);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(483);
+	var _highlight_dates = __webpack_require__(492);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _include_dates = __webpack_require__(484);
+	var _include_dates = __webpack_require__(493);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(485);
+	var _filter_dates = __webpack_require__(494);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(486);
+	var _disabled = __webpack_require__(495);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _disabled_keyboard_navigation = __webpack_require__(487);
+	var _disabled_keyboard_navigation = __webpack_require__(496);
 
 	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
 
-	var _clear_input = __webpack_require__(488);
+	var _clear_input = __webpack_require__(497);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(489);
+	var _on_blur_callbacks = __webpack_require__(498);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _placement = __webpack_require__(490);
+	var _placement = __webpack_require__(499);
 
 	var _placement2 = _interopRequireDefault(_placement);
 
-	var _date_range = __webpack_require__(491);
+	var _date_range = __webpack_require__(500);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(492);
+	var _tab_index = __webpack_require__(501);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(493);
+	var _year_dropdown = __webpack_require__(502);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(494);
+	var _month_dropdown = __webpack_require__(503);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(495);
+	var _year_select_dropdown = __webpack_require__(504);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(496);
+	var _today = __webpack_require__(505);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(497);
+	var _timezone_date = __webpack_require__(506);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(498);
+	var _inline = __webpack_require__(507);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(499);
+	var _open_to_date = __webpack_require__(508);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(500);
+	var _fixed_calendar = __webpack_require__(509);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(501);
+	var _week_numbers = __webpack_require__(510);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(502);
+	var _custom_input = __webpack_require__(511);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(503);
+	var _multi_month = __webpack_require__(512);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(504);
+	var _multi_month_drp = __webpack_require__(513);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	var _children = __webpack_require__(505);
+	var _children = __webpack_require__(514);
 
 	var _children2 = _interopRequireDefault(_children);
 
-	var _portal = __webpack_require__(506);
+	var _portal = __webpack_require__(515);
 
 	var _portal2 = _interopRequireDefault(_portal);
 
-	var _inline_portal = __webpack_require__(507);
+	var _inline_portal = __webpack_require__(516);
 
 	var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-	var _raw_change = __webpack_require__(508);
+	var _raw_change = __webpack_require__(517);
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(509);
+	__webpack_require__(518);
 
-	__webpack_require__(510);
+	__webpack_require__(519);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20565,9 +20572,9 @@
 
 	exports.default = exampleComponents;
 
-/***/ },
+/***/ }),
 /* 172 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var hljs = __webpack_require__(173);
 
@@ -20648,104 +20655,107 @@
 	hljs.registerLanguage('hsp', __webpack_require__(248));
 	hljs.registerLanguage('htmlbars', __webpack_require__(249));
 	hljs.registerLanguage('http', __webpack_require__(250));
-	hljs.registerLanguage('inform7', __webpack_require__(251));
-	hljs.registerLanguage('ini', __webpack_require__(252));
-	hljs.registerLanguage('irpf90', __webpack_require__(253));
-	hljs.registerLanguage('java', __webpack_require__(254));
-	hljs.registerLanguage('javascript', __webpack_require__(255));
-	hljs.registerLanguage('json', __webpack_require__(256));
-	hljs.registerLanguage('julia', __webpack_require__(257));
-	hljs.registerLanguage('kotlin', __webpack_require__(258));
-	hljs.registerLanguage('lasso', __webpack_require__(259));
-	hljs.registerLanguage('ldif', __webpack_require__(260));
-	hljs.registerLanguage('less', __webpack_require__(261));
-	hljs.registerLanguage('lisp', __webpack_require__(262));
-	hljs.registerLanguage('livecodeserver', __webpack_require__(263));
-	hljs.registerLanguage('livescript', __webpack_require__(264));
-	hljs.registerLanguage('llvm', __webpack_require__(265));
-	hljs.registerLanguage('lsl', __webpack_require__(266));
-	hljs.registerLanguage('lua', __webpack_require__(267));
-	hljs.registerLanguage('makefile', __webpack_require__(268));
-	hljs.registerLanguage('mathematica', __webpack_require__(269));
-	hljs.registerLanguage('matlab', __webpack_require__(270));
-	hljs.registerLanguage('maxima', __webpack_require__(271));
-	hljs.registerLanguage('mel', __webpack_require__(272));
-	hljs.registerLanguage('mercury', __webpack_require__(273));
-	hljs.registerLanguage('mipsasm', __webpack_require__(274));
-	hljs.registerLanguage('mizar', __webpack_require__(275));
-	hljs.registerLanguage('perl', __webpack_require__(276));
-	hljs.registerLanguage('mojolicious', __webpack_require__(277));
-	hljs.registerLanguage('monkey', __webpack_require__(278));
-	hljs.registerLanguage('moonscript', __webpack_require__(279));
-	hljs.registerLanguage('nginx', __webpack_require__(280));
-	hljs.registerLanguage('nimrod', __webpack_require__(281));
-	hljs.registerLanguage('nix', __webpack_require__(282));
-	hljs.registerLanguage('nsis', __webpack_require__(283));
-	hljs.registerLanguage('objectivec', __webpack_require__(284));
-	hljs.registerLanguage('ocaml', __webpack_require__(285));
-	hljs.registerLanguage('openscad', __webpack_require__(286));
-	hljs.registerLanguage('oxygene', __webpack_require__(287));
-	hljs.registerLanguage('parser3', __webpack_require__(288));
-	hljs.registerLanguage('pf', __webpack_require__(289));
-	hljs.registerLanguage('php', __webpack_require__(290));
-	hljs.registerLanguage('pony', __webpack_require__(291));
-	hljs.registerLanguage('powershell', __webpack_require__(292));
-	hljs.registerLanguage('processing', __webpack_require__(293));
-	hljs.registerLanguage('profile', __webpack_require__(294));
-	hljs.registerLanguage('prolog', __webpack_require__(295));
-	hljs.registerLanguage('protobuf', __webpack_require__(296));
-	hljs.registerLanguage('puppet', __webpack_require__(297));
-	hljs.registerLanguage('purebasic', __webpack_require__(298));
-	hljs.registerLanguage('python', __webpack_require__(299));
-	hljs.registerLanguage('q', __webpack_require__(300));
-	hljs.registerLanguage('qml', __webpack_require__(301));
-	hljs.registerLanguage('r', __webpack_require__(302));
-	hljs.registerLanguage('rib', __webpack_require__(303));
-	hljs.registerLanguage('roboconf', __webpack_require__(304));
-	hljs.registerLanguage('rsl', __webpack_require__(305));
-	hljs.registerLanguage('ruleslanguage', __webpack_require__(306));
-	hljs.registerLanguage('rust', __webpack_require__(307));
-	hljs.registerLanguage('scala', __webpack_require__(308));
-	hljs.registerLanguage('scheme', __webpack_require__(309));
-	hljs.registerLanguage('scilab', __webpack_require__(310));
-	hljs.registerLanguage('scss', __webpack_require__(311));
-	hljs.registerLanguage('smali', __webpack_require__(312));
-	hljs.registerLanguage('smalltalk', __webpack_require__(313));
-	hljs.registerLanguage('sml', __webpack_require__(314));
-	hljs.registerLanguage('sqf', __webpack_require__(315));
-	hljs.registerLanguage('sql', __webpack_require__(316));
-	hljs.registerLanguage('stan', __webpack_require__(317));
-	hljs.registerLanguage('stata', __webpack_require__(318));
-	hljs.registerLanguage('step21', __webpack_require__(319));
-	hljs.registerLanguage('stylus', __webpack_require__(320));
-	hljs.registerLanguage('subunit', __webpack_require__(321));
-	hljs.registerLanguage('swift', __webpack_require__(322));
-	hljs.registerLanguage('taggerscript', __webpack_require__(323));
-	hljs.registerLanguage('yaml', __webpack_require__(324));
-	hljs.registerLanguage('tap', __webpack_require__(325));
-	hljs.registerLanguage('tcl', __webpack_require__(326));
-	hljs.registerLanguage('tex', __webpack_require__(327));
-	hljs.registerLanguage('thrift', __webpack_require__(328));
-	hljs.registerLanguage('tp', __webpack_require__(329));
-	hljs.registerLanguage('twig', __webpack_require__(330));
-	hljs.registerLanguage('typescript', __webpack_require__(331));
-	hljs.registerLanguage('vala', __webpack_require__(332));
-	hljs.registerLanguage('vbnet', __webpack_require__(333));
-	hljs.registerLanguage('vbscript', __webpack_require__(334));
-	hljs.registerLanguage('vbscript-html', __webpack_require__(335));
-	hljs.registerLanguage('verilog', __webpack_require__(336));
-	hljs.registerLanguage('vhdl', __webpack_require__(337));
-	hljs.registerLanguage('vim', __webpack_require__(338));
-	hljs.registerLanguage('x86asm', __webpack_require__(339));
-	hljs.registerLanguage('xl', __webpack_require__(340));
-	hljs.registerLanguage('xquery', __webpack_require__(341));
-	hljs.registerLanguage('zephir', __webpack_require__(342));
+	hljs.registerLanguage('hy', __webpack_require__(251));
+	hljs.registerLanguage('inform7', __webpack_require__(252));
+	hljs.registerLanguage('ini', __webpack_require__(253));
+	hljs.registerLanguage('irpf90', __webpack_require__(254));
+	hljs.registerLanguage('java', __webpack_require__(255));
+	hljs.registerLanguage('javascript', __webpack_require__(256));
+	hljs.registerLanguage('json', __webpack_require__(257));
+	hljs.registerLanguage('julia', __webpack_require__(258));
+	hljs.registerLanguage('kotlin', __webpack_require__(259));
+	hljs.registerLanguage('lasso', __webpack_require__(260));
+	hljs.registerLanguage('ldif', __webpack_require__(261));
+	hljs.registerLanguage('leaf', __webpack_require__(262));
+	hljs.registerLanguage('less', __webpack_require__(263));
+	hljs.registerLanguage('lisp', __webpack_require__(264));
+	hljs.registerLanguage('livecodeserver', __webpack_require__(265));
+	hljs.registerLanguage('livescript', __webpack_require__(266));
+	hljs.registerLanguage('llvm', __webpack_require__(267));
+	hljs.registerLanguage('lsl', __webpack_require__(268));
+	hljs.registerLanguage('lua', __webpack_require__(269));
+	hljs.registerLanguage('makefile', __webpack_require__(270));
+	hljs.registerLanguage('mathematica', __webpack_require__(271));
+	hljs.registerLanguage('matlab', __webpack_require__(272));
+	hljs.registerLanguage('maxima', __webpack_require__(273));
+	hljs.registerLanguage('mel', __webpack_require__(274));
+	hljs.registerLanguage('mercury', __webpack_require__(275));
+	hljs.registerLanguage('mipsasm', __webpack_require__(276));
+	hljs.registerLanguage('mizar', __webpack_require__(277));
+	hljs.registerLanguage('perl', __webpack_require__(278));
+	hljs.registerLanguage('mojolicious', __webpack_require__(279));
+	hljs.registerLanguage('monkey', __webpack_require__(280));
+	hljs.registerLanguage('moonscript', __webpack_require__(281));
+	hljs.registerLanguage('n1ql', __webpack_require__(282));
+	hljs.registerLanguage('nginx', __webpack_require__(283));
+	hljs.registerLanguage('nimrod', __webpack_require__(284));
+	hljs.registerLanguage('nix', __webpack_require__(285));
+	hljs.registerLanguage('nsis', __webpack_require__(286));
+	hljs.registerLanguage('objectivec', __webpack_require__(287));
+	hljs.registerLanguage('ocaml', __webpack_require__(288));
+	hljs.registerLanguage('openscad', __webpack_require__(289));
+	hljs.registerLanguage('oxygene', __webpack_require__(290));
+	hljs.registerLanguage('parser3', __webpack_require__(291));
+	hljs.registerLanguage('pf', __webpack_require__(292));
+	hljs.registerLanguage('php', __webpack_require__(293));
+	hljs.registerLanguage('pony', __webpack_require__(294));
+	hljs.registerLanguage('powershell', __webpack_require__(295));
+	hljs.registerLanguage('processing', __webpack_require__(296));
+	hljs.registerLanguage('profile', __webpack_require__(297));
+	hljs.registerLanguage('prolog', __webpack_require__(298));
+	hljs.registerLanguage('protobuf', __webpack_require__(299));
+	hljs.registerLanguage('puppet', __webpack_require__(300));
+	hljs.registerLanguage('purebasic', __webpack_require__(301));
+	hljs.registerLanguage('python', __webpack_require__(302));
+	hljs.registerLanguage('q', __webpack_require__(303));
+	hljs.registerLanguage('qml', __webpack_require__(304));
+	hljs.registerLanguage('r', __webpack_require__(305));
+	hljs.registerLanguage('rib', __webpack_require__(306));
+	hljs.registerLanguage('roboconf', __webpack_require__(307));
+	hljs.registerLanguage('rsl', __webpack_require__(308));
+	hljs.registerLanguage('ruleslanguage', __webpack_require__(309));
+	hljs.registerLanguage('rust', __webpack_require__(310));
+	hljs.registerLanguage('scala', __webpack_require__(311));
+	hljs.registerLanguage('scheme', __webpack_require__(312));
+	hljs.registerLanguage('scilab', __webpack_require__(313));
+	hljs.registerLanguage('scss', __webpack_require__(314));
+	hljs.registerLanguage('smali', __webpack_require__(315));
+	hljs.registerLanguage('smalltalk', __webpack_require__(316));
+	hljs.registerLanguage('sml', __webpack_require__(317));
+	hljs.registerLanguage('sqf', __webpack_require__(318));
+	hljs.registerLanguage('sql', __webpack_require__(319));
+	hljs.registerLanguage('stan', __webpack_require__(320));
+	hljs.registerLanguage('stata', __webpack_require__(321));
+	hljs.registerLanguage('step21', __webpack_require__(322));
+	hljs.registerLanguage('stylus', __webpack_require__(323));
+	hljs.registerLanguage('subunit', __webpack_require__(324));
+	hljs.registerLanguage('swift', __webpack_require__(325));
+	hljs.registerLanguage('taggerscript', __webpack_require__(326));
+	hljs.registerLanguage('yaml', __webpack_require__(327));
+	hljs.registerLanguage('tap', __webpack_require__(328));
+	hljs.registerLanguage('tcl', __webpack_require__(329));
+	hljs.registerLanguage('tex', __webpack_require__(330));
+	hljs.registerLanguage('thrift', __webpack_require__(331));
+	hljs.registerLanguage('tp', __webpack_require__(332));
+	hljs.registerLanguage('twig', __webpack_require__(333));
+	hljs.registerLanguage('typescript', __webpack_require__(334));
+	hljs.registerLanguage('vala', __webpack_require__(335));
+	hljs.registerLanguage('vbnet', __webpack_require__(336));
+	hljs.registerLanguage('vbscript', __webpack_require__(337));
+	hljs.registerLanguage('vbscript-html', __webpack_require__(338));
+	hljs.registerLanguage('verilog', __webpack_require__(339));
+	hljs.registerLanguage('vhdl', __webpack_require__(340));
+	hljs.registerLanguage('vim', __webpack_require__(341));
+	hljs.registerLanguage('x86asm', __webpack_require__(342));
+	hljs.registerLanguage('xl', __webpack_require__(343));
+	hljs.registerLanguage('xquery', __webpack_require__(344));
+	hljs.registerLanguage('zephir', __webpack_require__(345));
 
 	module.exports = hljs;
 
-/***/ },
+/***/ }),
 /* 173 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	Syntax highlighting with language autodetection.
@@ -20851,15 +20861,17 @@
 	    }
 	  }
 
-	  function inherit(parent, obj) {
+	  function inherit(parent) {  // inherit(parent, override_obj, override_obj, ...)
 	    var key;
 	    var result = {};
+	    var objects = Array.prototype.slice.call(arguments, 1);
 
 	    for (key in parent)
 	      result[key] = parent[key];
-	    if (obj)
+	    objects.forEach(function(obj) {
 	      for (key in obj)
 	        result[key] = obj[key];
+	    });
 	    return result;
 	  }
 
@@ -20970,6 +20982,15 @@
 
 	  /* Initialization */
 
+	  function expand_mode(mode) {
+	    if (mode.variants && !mode.cached_variants) {
+	      mode.cached_variants = mode.variants.map(function(variant) {
+	        return inherit(mode, {variants: null}, variant);
+	      });
+	    }
+	    return mode.cached_variants || (mode.endsWithParent && [inherit(mode)]) || [mode];
+	  }
+
 	  function compileLanguage(language) {
 
 	    function reStr(re) {
@@ -21035,15 +21056,9 @@
 	      if (!mode.contains) {
 	        mode.contains = [];
 	      }
-	      var expanded_contains = [];
-	      mode.contains.forEach(function(c) {
-	        if (c.variants) {
-	          c.variants.forEach(function(v) {expanded_contains.push(inherit(c, v));});
-	        } else {
-	          expanded_contains.push(c === 'self' ? mode : c);
-	        }
-	      });
-	      mode.contains = expanded_contains;
+	      mode.contains = Array.prototype.concat.apply([], mode.contains.map(function(c) {
+	        return expand_mode(c === 'self' ? mode : c)
+	      }));
 	      mode.contains.forEach(function(c) {compileMode(c, mode);});
 
 	      if (mode.starts) {
@@ -21342,6 +21357,7 @@
 	          } else if (options.tabReplace) {
 	            return p1.replace(/\t/g, options.tabReplace);
 	          }
+	          return '';
 	      });
 	  }
 
@@ -21567,9 +21583,9 @@
 	}));
 
 
-/***/ },
+/***/ }),
 /* 174 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs){
 	  var IDENT_RE_RU = '[a-zA-Zа-яА-Я][a-zA-Z0-9_а-яА-Я]*';
@@ -21650,9 +21666,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 175 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    var regexes = {
@@ -21725,9 +21741,9 @@
 	    };
 	};
 
-/***/ },
+/***/ }),
 /* 176 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -21767,9 +21783,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 177 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '[a-zA-Z_$][a-zA-Z0-9_$]*';
@@ -21845,9 +21861,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 178 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = // We try to support full Ada2012
 	//
@@ -22022,9 +22038,9 @@
 	    };
 	};
 
-/***/ },
+/***/ }),
 /* 179 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var NUMBER = {className: 'number', begin: '[\\$%]\\d+'};
@@ -22072,9 +22088,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 180 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var STRING = hljs.inherit(hljs.QUOTE_STRING_MODE, {illegal: ''});
@@ -22162,9 +22178,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 181 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CPP_PRIMITIVE_TYPES = {
@@ -22216,7 +22232,7 @@
 	      hljs.inherit(STRINGS, {className: 'meta-string'}),
 	      {
 	        className: 'meta-string',
-	        begin: '<', end: '>',
+	        begin: /<[^\n>]*>/, end: /$/,
 	        illegal: '\\n',
 	      },
 	      hljs.C_LINE_COMMENT_MODE,
@@ -22332,9 +22348,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 182 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CPP = hljs.getLanguage('cpp').exports;
@@ -22436,9 +22452,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 183 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    //local labels: %?[FB]?[AT]?\d{1,2}\w+
@@ -22532,9 +22548,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 184 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var XML_IDENT_RE = '[A-Za-z0-9\\._:-]+';
@@ -22639,9 +22655,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 185 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -22831,9 +22847,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 186 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
 	  var KEYWORDS =
@@ -22979,9 +22995,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 187 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BACKTICK_ESCAPE = {
@@ -23031,9 +23047,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 188 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    var KEYWORDS = 'ByRef Case Const ContinueCase ContinueLoop ' +
@@ -23171,9 +23187,9 @@
 	    }
 	};
 
-/***/ },
+/***/ }),
 /* 189 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23237,9 +23253,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 190 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VARIABLE = {
@@ -23294,9 +23310,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 191 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23329,9 +23345,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 192 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VAR = {
@@ -23408,9 +23424,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 193 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23463,9 +23479,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 194 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs){
 	  return {
@@ -23496,9 +23512,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 195 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs){
 	  var LITERAL = {
@@ -23537,9 +23553,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 196 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS =
@@ -23621,9 +23637,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 197 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23674,9 +23690,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 198 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  // 2.3. Identifiers and keywords
@@ -23745,9 +23761,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 199 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23774,9 +23790,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 200 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var keywords = {
@@ -23873,9 +23889,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 201 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23892,9 +23908,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 202 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -23934,9 +23950,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 203 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -24084,9 +24100,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 204 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -24155,9 +24171,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 205 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function cos (hljs) {
 
@@ -24283,9 +24299,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 206 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var RESOURCES = 'primitive rsc_template';
@@ -24381,9 +24397,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 207 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var NUM_SUFFIX = '(_[uif](8|16|32|64))?';
@@ -24562,9 +24578,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 208 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -24733,9 +24749,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 209 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -24759,9 +24775,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 210 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '[a-zA-Z-][a-zA-Z0-9_-]*';
@@ -24868,9 +24884,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 211 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = /**
 	 * Known issues:
@@ -25130,9 +25146,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 212 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -25242,9 +25258,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 213 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
 	  var SUBST = {
@@ -25347,9 +25363,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 214 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS =
@@ -25420,9 +25436,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 215 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -25464,9 +25480,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 216 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var FILTER = {
@@ -25532,9 +25548,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 217 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -25565,9 +25581,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 218 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -25591,9 +25607,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 219 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMENT = hljs.COMMENT(
@@ -25647,9 +25663,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 220 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var QUOTED_PROPERTY = {
@@ -25698,9 +25714,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 221 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var STRINGS = {
@@ -25826,9 +25842,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 222 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var EXPRESSION_KEYWORDS = 'if eq ne lt lte gt gte select default math sep';
@@ -25862,9 +25878,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 223 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    var commentMode = hljs.COMMENT(/\(\*/, /\*\)/);
@@ -25899,9 +25915,9 @@
 	    };
 	};
 
-/***/ },
+/***/ }),
 /* 224 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var ELIXIR_IDENT_RE = '[a-zA-Z_][a-zA-Z0-9_]*(\\!|\\?)?';
@@ -26000,9 +26016,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 225 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMENT = {
@@ -26087,9 +26103,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 226 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var RUBY_METHOD_RE = '[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?';
@@ -26267,9 +26283,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 227 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -26286,9 +26302,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 228 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -26336,9 +26352,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 229 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BASIC_ATOM_RE = '[a-z\'][a-zA-Z0-9_\']*';
@@ -26486,9 +26502,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 230 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -26538,9 +26554,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 231 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -26571,9 +26587,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 232 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
 
@@ -26620,9 +26636,9 @@
 	    };
 	};
 
-/***/ },
+/***/ }),
 /* 233 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var PARAMS = {
@@ -26695,9 +26711,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 234 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var TYPEPARAM = {
@@ -26758,9 +26774,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 235 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
 	  var KEYWORDS = {
@@ -26916,9 +26932,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 236 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -26972,7 +26988,7 @@
 	              'getpath getPreviousTradingDay getPreviousWeekDay getRow getscalar3D getscalar4D getTrRow getwind glm gradcplx gradMT ' +
 	              'gradMTm gradMTT gradMTTm gradp graphprt graphset hasimag header headermt hess hessMT hessMTg hessMTgw hessMTm ' +
 	              'hessMTmw hessMTT hessMTTg hessMTTgw hessMTTm hessMTw hessp hist histf histp hsec imag indcv indexcat indices indices2 ' +
-	              'indicesf indicesfn indnv indsav indx integrate1d integrateControlCreate intgrat2 intgrat3 inthp1 inthp2 inthp3 inthp4 ' +
+	              'indicesf indicesfn indnv indsav integrate1d integrateControlCreate intgrat2 intgrat3 inthp1 inthp2 inthp3 inthp4 ' +
 	              'inthpControlCreate intquad1 intquad2 intquad3 intrleav intrleavsa intrsect intsimp inv invpd invswp iscplx iscplxf ' +
 	              'isden isinfnanmiss ismiss key keyav keyw lag lag1 lagn lapEighb lapEighi lapEighvb lapEighvi lapgEig lapgEigh lapgEighv ' +
 	              'lapgEigv lapgSchur lapgSvdcst lapgSvds lapgSvdst lapSvdcusv lapSvds lapSvdusv ldlp ldlsol linSolve listwise ln lncdfbvn ' +
@@ -27012,7 +27028,9 @@
 	              'utctodtv utrisol vals varCovMS varCovXS varget vargetl varmall varmares varput varputl vartypef vcm vcms vcx vcxs ' +
 	              'vec vech vecr vector vget view viewxyz vlist vnamecv volume vput vread vtypecv wait waitc walkindex where window ' +
 	              'writer xlabel xlsGetSheetCount xlsGetSheetSize xlsGetSheetTypes xlsMakeRange xlsReadM xlsReadSA xlsWrite xlsWriteM ' +
-	              'xlsWriteSA xpnd xtics xy xyz ylabel ytics zeros zeta zlabel ztics',
+	              'xlsWriteSA xpnd xtics xy xyz ylabel ytics zeros zeta zlabel ztics cdfEmpirical dot h5create h5open h5read h5readAttribute ' +
+	              'h5write h5writeAttribute ldl plotAddErrorBar plotAddSurface plotCDFEmpirical plotSetColormap plotSetContourLabels ' +
+	              'plotSetLegendFont plotSetTextInterpreter plotSetXTicCount plotSetYTicCount plotSetZLevels powerm strjoin strtrim sylvester',
 	    literal: 'DB_AFTER_LAST_ROW DB_ALL_TABLES DB_BATCH_OPERATIONS DB_BEFORE_FIRST_ROW DB_BLOB DB_EVENT_NOTIFICATIONS ' +
 	             'DB_FINISH_QUERY DB_HIGH_PRECISION DB_LAST_INSERT_ID DB_LOW_PRECISION_DOUBLE DB_LOW_PRECISION_INT32 ' +
 	             'DB_LOW_PRECISION_INT64 DB_LOW_PRECISION_NUMBERS DB_MULTIPLE_RESULT_SETS DB_NAMED_PLACEHOLDERS ' +
@@ -27142,9 +27160,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 237 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    var GCODE_IDENT_RE = '[A-Z_][A-Z0-9_.]*';
@@ -27213,9 +27231,9 @@
 	    };
 	};
 
-/***/ },
+/***/ }),
 /* 238 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
 	  return {
@@ -27254,9 +27272,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 239 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -27375,9 +27393,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 240 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var GO_KEYWORDS = {
@@ -27433,9 +27451,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 241 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    return {
@@ -27460,9 +27478,9 @@
 	    }
 	};
 
-/***/ },
+/***/ }),
 /* 242 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -27499,9 +27517,9 @@
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 243 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    return {
@@ -27597,9 +27615,9 @@
 	    }
 	};
 
-/***/ },
+/***/ }),
 /* 244 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = // TODO support filter tags like :javascript, support inline HTML
 	function(hljs) {
@@ -27708,9 +27726,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 245 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BUILT_INS = {'builtin-name': 'each in with if else unless bindattr action collection debugger log outlet template unbound view yield'};
@@ -27746,9 +27764,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 246 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMENT = {
@@ -27872,9 +27890,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 247 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '[a-zA-Z_$][a-zA-Z0-9_$]*';
@@ -27988,9 +28006,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 248 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -28038,9 +28056,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 249 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BUILT_INS = 'action collection component concat debugger each each-in else get hash if input link-to loc log mut outlet partial query-params render textarea unbound unless with yield view';
@@ -28113,9 +28131,9 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 250 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VERSION = 'HTTP/[0-9\\.]+';
@@ -28158,9 +28176,115 @@
 	  };
 	};
 
-/***/ },
+/***/ }),
 /* 251 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
+
+	module.exports = function(hljs) {
+	  var keywords = {
+	    'builtin-name':
+	      // keywords
+	      '!= % %= & &= * ** **= *= *map ' +
+	      '+ += , --build-class-- --import-- -= . / // //= ' +
+	      '/= < << <<= <= = > >= >> >>= ' +
+	      '@ @= ^ ^= abs accumulate all and any ap-compose ' +
+	      'ap-dotimes ap-each ap-each-while ap-filter ap-first ap-if ap-last ap-map ap-map-when ap-pipe ' +
+	      'ap-reduce ap-reject apply as-> ascii assert assoc bin break butlast ' +
+	      'callable calling-module-name car case cdr chain chr coll? combinations compile ' +
+	      'compress cond cons cons? continue count curry cut cycle dec ' +
+	      'def default-method defclass defmacro defmacro-alias defmacro/g! defmain defmethod defmulti defn ' +
+	      'defn-alias defnc defnr defreader defseq del delattr delete-route dict-comp dir ' +
+	      'disassemble dispatch-reader-macro distinct divmod do doto drop drop-last drop-while empty? ' +
+	      'end-sequence eval eval-and-compile eval-when-compile even? every? except exec filter first ' +
+	      'flatten float? fn fnc fnr for for* format fraction genexpr ' +
+	      'gensym get getattr global globals group-by hasattr hash hex id ' +
+	      'identity if if* if-not if-python2 import in inc input instance? ' +
+	      'integer integer-char? integer? interleave interpose is is-coll is-cons is-empty is-even ' +
+	      'is-every is-float is-instance is-integer is-integer-char is-iterable is-iterator is-keyword is-neg is-none ' +
+	      'is-not is-numeric is-odd is-pos is-string is-symbol is-zero isinstance islice issubclass ' +
+	      'iter iterable? iterate iterator? keyword keyword? lambda last len let ' +
+	      'lif lif-not list* list-comp locals loop macro-error macroexpand macroexpand-1 macroexpand-all ' +
+	      'map max merge-with method-decorator min multi-decorator multicombinations name neg? next ' +
+	      'none? nonlocal not not-in not? nth numeric? oct odd? open ' +
+	      'or ord partition permutations pos? post-route postwalk pow prewalk print ' +
+	      'product profile/calls profile/cpu put-route quasiquote quote raise range read read-str ' +
+	      'recursive-replace reduce remove repeat repeatedly repr require rest round route ' +
+	      'route-with-methods rwm second seq set-comp setattr setv some sorted string ' +
+	      'string? sum switch symbol? take take-nth take-while tee try unless ' +
+	      'unquote unquote-splicing vars walk when while with with* with-decorator with-gensyms ' +
+	      'xi xor yield yield-from zero? zip zip-longest | |= ~'
+	   };
+
+	  var SYMBOLSTART = 'a-zA-Z_\\-!.?+*=<>&#\'';
+	  var SYMBOL_RE = '[' + SYMBOLSTART + '][' + SYMBOLSTART + '0-9/;:]*';
+	  var SIMPLE_NUMBER_RE = '[-+]?\\d+(\\.\\d+)?';
+
+	  var SHEBANG = {
+	    className: 'meta',
+	    begin: '^#!', end: '$'
+	  };
+
+	  var SYMBOL = {
+	    begin: SYMBOL_RE,
+	    relevance: 0
+	  };
+	  var NUMBER = {
+	    className: 'number', begin: SIMPLE_NUMBER_RE,
+	    relevance: 0
+	  };
+	  var STRING = hljs.inherit(hljs.QUOTE_STRING_MODE, {illegal: null});
+	  var COMMENT = hljs.COMMENT(
+	    ';',
+	    '$',
+	    {
+	      relevance: 0
+	    }
+	  );
+	  var LITERAL = {
+	    className: 'literal',
+	    begin: /\b([Tt]rue|[Ff]alse|nil|None)\b/
+	  };
+	  var COLLECTION = {
+	    begin: '[\\[\\{]', end: '[\\]\\}]'
+	  };
+	  var HINT = {
+	    className: 'comment',
+	    begin: '\\^' + SYMBOL_RE
+	  };
+	  var HINT_COL = hljs.COMMENT('\\^\\{', '\\}');
+	  var KEY = {
+	    className: 'symbol',
+	    begin: '[:]{1,2}' + SYMBOL_RE
+	  };
+	  var LIST = {
+	    begin: '\\(', end: '\\)'
+	  };
+	  var BODY = {
+	    endsWithParent: true,
+	    relevance: 0
+	  };
+	  var NAME = {
+	    keywords: keywords,
+	    lexemes: SYMBOL_RE,
+	    className: 'name', begin: SYMBOL_RE,
+	    starts: BODY
+	  };
+	  var DEFAULT_CONTAINS = [LIST, STRING, HINT, HINT_COL, COMMENT, KEY, COLLECTION, NUMBER, LITERAL, SYMBOL];
+
+	  LIST.contains = [hljs.COMMENT('comment', ''), NAME, BODY];
+	  BODY.contains = DEFAULT_CONTAINS;
+	  COLLECTION.contains = DEFAULT_CONTAINS;
+
+	  return {
+	    aliases: ['hylang'],
+	    illegal: /\S/,
+	    contains: [SHEBANG, LIST, STRING, HINT, HINT_COL, COMMENT, KEY, COLLECTION, NUMBER, LITERAL]
+	  }
+	};
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var START_BRACKET = '\\[';
@@ -28219,9 +28343,9 @@
 	  };
 	};
 
-/***/ },
-/* 252 */
-/***/ function(module, exports) {
+/***/ }),
+/* 253 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var STRING = {
@@ -28289,9 +28413,9 @@
 	  };
 	};
 
-/***/ },
-/* 253 */
-/***/ function(module, exports) {
+/***/ }),
+/* 254 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var PARAMS = {
@@ -28369,9 +28493,9 @@
 	  };
 	};
 
-/***/ },
-/* 254 */
-/***/ function(module, exports) {
+/***/ }),
+/* 255 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var JAVA_IDENT_RE = '[\u00C0-\u02B8a-zA-Z_$][\u00C0-\u02B8a-zA-Z_$0-9]*';
@@ -28481,9 +28605,9 @@
 	  };
 	};
 
-/***/ },
-/* 255 */
-/***/ function(module, exports) {
+/***/ }),
+/* 256 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '[A-Za-z$_][0-9A-Za-z$_]*';
@@ -28656,9 +28780,9 @@
 	  };
 	};
 
-/***/ },
-/* 256 */
-/***/ function(module, exports) {
+/***/ }),
+/* 257 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var LITERALS = {literal: 'true false null'};
@@ -28697,9 +28821,9 @@
 	  };
 	};
 
-/***/ },
-/* 257 */
-/***/ function(module, exports) {
+/***/ }),
+/* 258 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  // Since there are numerous special names in Julia, it is too much trouble
@@ -28879,16 +29003,16 @@
 	  return DEFAULT;
 	};
 
-/***/ },
-/* 258 */
-/***/ function(module, exports) {
+/***/ }),
+/* 259 */
+/***/ (function(module, exports) {
 
-	module.exports = function (hljs) {
+	module.exports = function(hljs) {
 	  var KEYWORDS = {
 	    keyword:
 	      'abstract as val var vararg get set class object open private protected public noinline ' +
 	      'crossinline dynamic final enum if else do while for when throw try catch finally ' +
-	      'import package is in fun override companion reified inline ' +
+	      'import package is in fun override companion reified inline lateinit init' +
 	      'interface annotation data sealed internal infix operator out by constructor super ' +
 	      // to be deleted soon
 	      'trait volatile transient native default',
@@ -29057,9 +29181,9 @@
 	  };
 	};
 
-/***/ },
-/* 259 */
-/***/ function(module, exports) {
+/***/ }),
+/* 260 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var LASSO_IDENT_RE = '[a-zA-Z_][\\w.]*';
@@ -29224,9 +29348,9 @@
 	  };
 	};
 
-/***/ },
-/* 260 */
-/***/ function(module, exports) {
+/***/ }),
+/* 261 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -29251,9 +29375,53 @@
 	  };
 	};
 
-/***/ },
-/* 261 */
-/***/ function(module, exports) {
+/***/ }),
+/* 262 */
+/***/ (function(module, exports) {
+
+	module.exports = function (hljs) {
+	  return {
+	    contains: [
+	      {
+	        className: 'function',
+	        begin: '#+' + '[A-Za-z_0-9]*' + '\\(',
+	        end:' {',
+	        returnBegin: true,
+	        excludeEnd: true,
+	        contains : [
+	          {
+	            className: 'keyword',
+	            begin: '#+'
+	          },
+	          {
+	            className: 'title',
+	            begin: '[A-Za-z_][A-Za-z_0-9]*'
+	          },
+	          {
+	            className: 'params',
+	            begin: '\\(', end: '\\)',
+	            endsParent: true,
+	            contains: [
+	              {
+	                className: 'string',
+	                begin: '"',
+	                end: '"'
+	              },
+	              {
+	                className: 'variable',
+	                begin: '[A-Za-z_][A-Za-z_0-9]*'
+	              }
+	            ]
+	          }
+	        ]
+	      }
+	    ]
+	  };
+	};
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE        = '[\\w-]+'; // yes, Less identifiers may begin with a digit
@@ -29395,9 +29563,9 @@
 	  };
 	};
 
-/***/ },
-/* 262 */
-/***/ function(module, exports) {
+/***/ }),
+/* 264 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var LISP_IDENT_RE = '[a-zA-Z_\\-\\+\\*\\/\\<\\=\\>\\&\\#][a-zA-Z0-9_\\-\\+\\*\\/\\<\\=\\>\\&\\#!]*';
@@ -29502,9 +29670,9 @@
 	  };
 	};
 
-/***/ },
-/* 263 */
-/***/ function(module, exports) {
+/***/ }),
+/* 265 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VARIABLE = {
@@ -29663,9 +29831,9 @@
 	  };
 	};
 
-/***/ },
-/* 264 */
-/***/ function(module, exports) {
+/***/ }),
+/* 266 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -29816,9 +29984,9 @@
 	  };
 	};
 
-/***/ },
-/* 265 */
-/***/ function(module, exports) {
+/***/ }),
+/* 267 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var identifier = '([-a-zA-Z$._][\\w\\-$.]*)';
@@ -29909,9 +30077,9 @@
 	  };
 	};
 
-/***/ },
-/* 266 */
-/***/ function(module, exports) {
+/***/ }),
+/* 268 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -29996,9 +30164,9 @@
 	    };
 	};
 
-/***/ },
-/* 267 */
-/***/ function(module, exports) {
+/***/ }),
+/* 269 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var OPENING_LONG_BRACKET = '\\[=*\\[';
@@ -30021,14 +30189,24 @@
 	  return {
 	    lexemes: hljs.UNDERSCORE_IDENT_RE,
 	    keywords: {
-	      keyword:
-	        'and break do else elseif end false for if in local nil not or repeat return then ' +
-	        'true until while',
+	      literal: "true false nil",
+	      keyword: "and break do else elseif end for goto if in local not or repeat return then until while",
 	      built_in:
-	        '_G _VERSION assert collectgarbage dofile error getfenv getmetatable ipairs load ' +
-	        'loadfile loadstring module next pairs pcall print rawequal rawget rawset require ' +
-	        'select setfenv setmetatable tonumber tostring type unpack xpcall coroutine debug ' +
-	        'io math os package string table'
+	        //Metatags and globals:
+	        '_G _ENV _VERSION __index __newindex __mode __call __metatable __tostring __len ' +
+	        '__gc __add __sub __mul __div __mod __pow __concat __unm __eq __lt __le assert ' +
+	        //Standard methods and properties:
+	        'collectgarbage dofile error getfenv getmetatable ipairs load loadfile loadstring' +
+	        'module next pairs pcall print rawequal rawget rawset require select setfenv' +
+	        'setmetatable tonumber tostring type unpack xpcall arg self' +
+	        //Library methods and properties (one line per library):
+	        'coroutine resume yield status wrap create running debug getupvalue' +
+	        'debug sethook getmetatable gethook setmetatable setlocal traceback setfenv getinfo setupvalue getlocal getregistry getfenv' +
+	        'io lines write close flush open output type read stderr stdin input stdout popen tmpfile' +
+	        'math, log, max, acos, huge, ldexp, pi, cos, tanh, pow, deg, tan, cosh, sinh, random, randomseed, frexp, ceil, floor, rad, abs, sqrt, modf, asin, min, mod, fmod, log10, atan2, exp, sin, atan' +
+	        'os, exit, setlocale, date, getenv, difftime, remove, time, clock, tmpname, rename, execute, package, preload, loadlib, loaded, loaders, cpath, config path, seeall' +
+	        'string, sub, upper, len, gfind, rep, find, match, char, dump, gmatch, reverse, byte, format, gsub, lower' +
+	        'table, setn, insert, getn, foreachi, maxn, foreach, concat, sort, remove'
 	    },
 	    contains: COMMENTS.concat([
 	      {
@@ -30056,9 +30234,9 @@
 	  };
 	};
 
-/***/ },
-/* 268 */
-/***/ function(module, exports) {
+/***/ }),
+/* 270 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VARIABLE = {
@@ -30105,9 +30283,9 @@
 	  };
 	};
 
-/***/ },
-/* 269 */
-/***/ function(module, exports) {
+/***/ }),
+/* 271 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -30167,9 +30345,9 @@
 	  };
 	};
 
-/***/ },
-/* 270 */
-/***/ function(module, exports) {
+/***/ }),
+/* 272 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMON_CONTAINS = [
@@ -30259,9 +30437,9 @@
 	  };
 	};
 
-/***/ },
-/* 271 */
-/***/ function(module, exports) {
+/***/ }),
+/* 273 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = 'if then else elseif for thru do while unless step in and or not';
@@ -30669,9 +30847,9 @@
 	  }
 	};
 
-/***/ },
-/* 272 */
-/***/ function(module, exports) {
+/***/ }),
+/* 274 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -30898,9 +31076,9 @@
 	  };
 	};
 
-/***/ },
-/* 273 */
-/***/ function(module, exports) {
+/***/ }),
+/* 275 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -30984,9 +31162,9 @@
 	  };
 	};
 
-/***/ },
-/* 274 */
-/***/ function(module, exports) {
+/***/ }),
+/* 276 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	    //local labels: %?[FB]?[AT]?\d{1,2}\w+
@@ -31074,9 +31252,9 @@
 	  };
 	};
 
-/***/ },
-/* 275 */
-/***/ function(module, exports) {
+/***/ }),
+/* 277 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -31097,9 +31275,9 @@
 	  };
 	};
 
-/***/ },
-/* 276 */
-/***/ function(module, exports) {
+/***/ }),
+/* 278 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var PERL_KEYWORDS = 'getpwent getservent quotemeta msgrcv scalar kill dbmclose undef lc ' +
@@ -31258,9 +31436,9 @@
 	  };
 	};
 
-/***/ },
-/* 277 */
-/***/ function(module, exports) {
+/***/ }),
+/* 279 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -31287,9 +31465,9 @@
 	  };
 	};
 
-/***/ },
-/* 278 */
-/***/ function(module, exports) {
+/***/ }),
+/* 280 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var NUMBER = {
@@ -31366,9 +31544,9 @@
 	  }
 	};
 
-/***/ },
-/* 279 */
-/***/ function(module, exports) {
+/***/ }),
+/* 281 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -31482,9 +31660,82 @@
 	  };
 	};
 
-/***/ },
-/* 280 */
-/***/ function(module, exports) {
+/***/ }),
+/* 282 */
+/***/ (function(module, exports) {
+
+	module.exports = function(hljs) {
+	  return {
+	    case_insensitive: true,
+	    contains: [
+	      {
+	        beginKeywords:
+	          'build create index delete drop explain infer|10 insert merge prepare select update upsert|10',
+	        end: /;/, endsWithParent: true,
+	        keywords: {
+	          // Taken from http://developer.couchbase.com/documentation/server/current/n1ql/n1ql-language-reference/reservedwords.html
+	          keyword:
+	            'all alter analyze and any array as asc begin between binary boolean break bucket build by call ' +
+	            'case cast cluster collate collection commit connect continue correlate cover create database ' +
+	            'dataset datastore declare decrement delete derived desc describe distinct do drop each element ' +
+	            'else end every except exclude execute exists explain fetch first flatten for force from ' +
+	            'function grant group gsi having if ignore ilike in include increment index infer inline inner ' +
+	            'insert intersect into is join key keys keyspace known last left let letting like limit lsm map ' +
+	            'mapping matched materialized merge minus namespace nest not number object offset on ' +
+	            'option or order outer over parse partition password path pool prepare primary private privilege ' +
+	            'procedure public raw realm reduce rename return returning revoke right role rollback satisfies ' +
+	            'schema select self semi set show some start statistics string system then to transaction trigger ' +
+	            'truncate under union unique unknown unnest unset update upsert use user using validate value ' +
+	            'valued values via view when where while with within work xor',
+	          // Taken from http://developer.couchbase.com/documentation/server/4.5/n1ql/n1ql-language-reference/literals.html
+	          literal:
+	            'true false null missing|5',
+	          // Taken from http://developer.couchbase.com/documentation/server/4.5/n1ql/n1ql-language-reference/functions.html
+	          built_in:
+	            'array_agg array_append array_concat array_contains array_count array_distinct array_ifnull array_length ' +
+	            'array_max array_min array_position array_prepend array_put array_range array_remove array_repeat array_replace ' +
+	            'array_reverse array_sort array_sum avg count max min sum greatest least ifmissing ifmissingornull ifnull ' +
+	            'missingif nullif ifinf ifnan ifnanorinf naninf neginfif posinfif clock_millis clock_str date_add_millis ' +
+	            'date_add_str date_diff_millis date_diff_str date_part_millis date_part_str date_trunc_millis date_trunc_str ' +
+	            'duration_to_str millis str_to_millis millis_to_str millis_to_utc millis_to_zone_name now_millis now_str ' +
+	            'str_to_duration str_to_utc str_to_zone_name decode_json encode_json encoded_size poly_length base64 base64_encode ' +
+	            'base64_decode meta uuid abs acos asin atan atan2 ceil cos degrees e exp ln log floor pi power radians random ' +
+	            'round sign sin sqrt tan trunc object_length object_names object_pairs object_inner_pairs object_values ' +
+	            'object_inner_values object_add object_put object_remove object_unwrap regexp_contains regexp_like regexp_position ' +
+	            'regexp_replace contains initcap length lower ltrim position repeat replace rtrim split substr title trim upper ' +
+	            'isarray isatom isboolean isnumber isobject isstring type toarray toatom toboolean tonumber toobject tostring'
+	        },
+	        contains: [
+	          {
+	            className: 'string',
+	            begin: '\'', end: '\'',
+	            contains: [hljs.BACKSLASH_ESCAPE],
+	            relevance: 0
+	          },
+	          {
+	            className: 'string',
+	            begin: '"', end: '"',
+	            contains: [hljs.BACKSLASH_ESCAPE],
+	            relevance: 0
+	          },
+	          {
+	            className: 'symbol',
+	            begin: '`', end: '`',
+	            contains: [hljs.BACKSLASH_ESCAPE],
+	            relevance: 2
+	          },
+	          hljs.C_NUMBER_MODE,
+	          hljs.C_BLOCK_COMMENT_MODE
+	        ]
+	      },
+	      hljs.C_BLOCK_COMMENT_MODE
+	    ]
+	  };
+	};
+
+/***/ }),
+/* 283 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VAR = {
@@ -31579,9 +31830,9 @@
 	  };
 	};
 
-/***/ },
-/* 281 */
-/***/ function(module, exports) {
+/***/ }),
+/* 284 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -31638,9 +31889,9 @@
 	  }
 	};
 
-/***/ },
-/* 282 */
-/***/ function(module, exports) {
+/***/ }),
+/* 285 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var NIX_KEYWORDS = {
@@ -31691,9 +31942,9 @@
 	  };
 	};
 
-/***/ },
-/* 283 */
-/***/ function(module, exports) {
+/***/ }),
+/* 286 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CONSTANTS = {
@@ -31801,9 +32052,9 @@
 	  };
 	};
 
-/***/ },
-/* 284 */
-/***/ function(module, exports) {
+/***/ }),
+/* 287 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var API_CLASS = {
@@ -31896,9 +32147,9 @@
 	  };
 	};
 
-/***/ },
-/* 285 */
-/***/ function(module, exports) {
+/***/ }),
+/* 288 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  /* missing support for heredoc-like string (OCaml 4.0.2+) */
@@ -31971,9 +32222,9 @@
 	  }
 	};
 
-/***/ },
-/* 286 */
-/***/ function(module, exports) {
+/***/ }),
+/* 289 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 		var SPECIAL_VARS = {
@@ -32032,9 +32283,9 @@
 		}
 	};
 
-/***/ },
-/* 287 */
-/***/ function(module, exports) {
+/***/ }),
+/* 290 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var OXYGENE_KEYWORDS = 'abstract add and array as asc aspect assembly async begin break block by case class concat const copy constructor continue '+
@@ -32106,9 +32357,9 @@
 	  };
 	};
 
-/***/ },
-/* 288 */
-/***/ function(module, exports) {
+/***/ }),
+/* 291 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CURLY_SUBCOMMENT = hljs.COMMENT(
@@ -32158,9 +32409,9 @@
 	  };
 	};
 
-/***/ },
-/* 289 */
-/***/ function(module, exports) {
+/***/ }),
+/* 292 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var MACRO = {
@@ -32214,9 +32465,9 @@
 	  };
 	};
 
-/***/ },
-/* 290 */
-/***/ function(module, exports) {
+/***/ }),
+/* 293 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VARIABLE = {
@@ -32345,9 +32596,9 @@
 	  };
 	};
 
-/***/ },
-/* 291 */
-/***/ function(module, exports) {
+/***/ }),
+/* 294 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -32440,9 +32691,9 @@
 	  };
 	};
 
-/***/ },
-/* 292 */
-/***/ function(module, exports) {
+/***/ }),
+/* 295 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BACKTICK_ESCAPE = {
@@ -32525,9 +32776,9 @@
 	  };
 	};
 
-/***/ },
-/* 293 */
-/***/ function(module, exports) {
+/***/ }),
+/* 296 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -32577,9 +32828,9 @@
 	  };
 	};
 
-/***/ },
-/* 294 */
-/***/ function(module, exports) {
+/***/ }),
+/* 297 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -32611,9 +32862,9 @@
 	  };
 	};
 
-/***/ },
-/* 295 */
-/***/ function(module, exports) {
+/***/ }),
+/* 298 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -32703,9 +32954,9 @@
 	  };
 	};
 
-/***/ },
-/* 296 */
-/***/ function(module, exports) {
+/***/ }),
+/* 299 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -32743,9 +32994,9 @@
 	  };
 	};
 
-/***/ },
-/* 297 */
-/***/ function(module, exports) {
+/***/ }),
+/* 300 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -32862,9 +33113,9 @@
 	  }
 	};
 
-/***/ },
-/* 298 */
-/***/ function(module, exports) {
+/***/ }),
+/* 301 */
+/***/ (function(module, exports) {
 
 	module.exports = // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
 
@@ -32924,13 +33175,27 @@
 	  };
 	};
 
-/***/ },
-/* 299 */
-/***/ function(module, exports) {
+/***/ }),
+/* 302 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
+	  var KEYWORDS = {
+	    keyword:
+	      'and elif is global as in if from raise for except finally print import pass return ' +
+	      'exec else break not with class assert yield try while continue del or def lambda ' +
+	      'async await nonlocal|10 None True False',
+	    built_in:
+	      'Ellipsis NotImplemented'
+	  };
 	  var PROMPT = {
 	    className: 'meta',  begin: /^(>>>|\.\.\.) /
+	  };
+	  var SUBST = {
+	    className: 'subst',
+	    begin: /\{/, end: /\}/,
+	    keywords: KEYWORDS,
+	    illegal: /#/
 	  };
 	  var STRING = {
 	    className: 'string',
@@ -32947,6 +33212,14 @@
 	        relevance: 10
 	      },
 	      {
+	        begin: /(fr|rf|f)'''/, end: /'''/,
+	        contains: [PROMPT, SUBST]
+	      },
+	      {
+	        begin: /(fr|rf|f)"""/, end: /"""/,
+	        contains: [PROMPT, SUBST]
+	      },
+	      {
 	        begin: /(u|r|ur)'/, end: /'/,
 	        relevance: 10
 	      },
@@ -32959,6 +33232,14 @@
 	      },
 	      {
 	        begin: /(b|br)"/, end: /"/
+	      },
+	      {
+	        begin: /(fr|rf|f)'/, end: /'/,
+	        contains: [SUBST]
+	      },
+	      {
+	        begin: /(fr|rf|f)"/, end: /"/,
+	        contains: [SUBST]
 	      },
 	      hljs.APOS_STRING_MODE,
 	      hljs.QUOTE_STRING_MODE
@@ -32977,16 +33258,10 @@
 	    begin: /\(/, end: /\)/,
 	    contains: ['self', PROMPT, NUMBER, STRING]
 	  };
+	  SUBST.contains = [STRING, NUMBER, PROMPT];
 	  return {
 	    aliases: ['py', 'gyp'],
-	    keywords: {
-	      keyword:
-	        'and elif is global as in if from raise for except finally print import pass return ' +
-	        'exec else break not with class assert yield try while continue del or def lambda ' +
-	        'async await nonlocal|10 None True False',
-	      built_in:
-	        'Ellipsis NotImplemented'
-	    },
+	    keywords: KEYWORDS,
 	    illegal: /(<\/|->|\?)|=>/,
 	    contains: [
 	      PROMPT,
@@ -33020,9 +33295,9 @@
 	  };
 	};
 
-/***/ },
-/* 300 */
-/***/ function(module, exports) {
+/***/ }),
+/* 303 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var Q_KEYWORDS = {
@@ -33047,9 +33322,9 @@
 	  };
 	};
 
-/***/ },
-/* 301 */
-/***/ function(module, exports) {
+/***/ }),
+/* 304 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -33220,9 +33495,9 @@
 	  };
 	};
 
-/***/ },
-/* 302 */
-/***/ function(module, exports) {
+/***/ }),
+/* 305 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '([a-zA-Z]|\\.[a-zA-Z.])[a-zA-Z0-9._]*';
@@ -33294,9 +33569,9 @@
 	  };
 	};
 
-/***/ },
-/* 303 */
-/***/ function(module, exports) {
+/***/ }),
+/* 306 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -33325,9 +33600,9 @@
 	  };
 	};
 
-/***/ },
-/* 304 */
-/***/ function(module, exports) {
+/***/ }),
+/* 307 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENTIFIER = '[a-zA-Z-_][^\\n{]+\\{';
@@ -33396,9 +33671,9 @@
 	  };
 	};
 
-/***/ },
-/* 305 */
-/***/ function(module, exports) {
+/***/ }),
+/* 308 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -33436,9 +33711,9 @@
 	  };
 	};
 
-/***/ },
-/* 306 */
-/***/ function(module, exports) {
+/***/ }),
+/* 309 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -33501,33 +33776,37 @@
 	  };
 	};
 
-/***/ },
-/* 307 */
-/***/ function(module, exports) {
+/***/ }),
+/* 310 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
-	  var NUM_SUFFIX = '([uif](8|16|32|64|size))\?';
+	  var NUM_SUFFIX = '([ui](8|16|32|64|128|size)|f(32|64))\?';
 	  var KEYWORDS =
 	    'alignof as be box break const continue crate do else enum extern ' +
 	    'false fn for if impl in let loop match mod mut offsetof once priv ' +
 	    'proc pub pure ref return self Self sizeof static struct super trait true ' +
-	    'type typeof unsafe unsized use virtual while where yield move default ' +
-	    'int i8 i16 i32 i64 isize ' +
-	    'uint u8 u32 u64 usize ' +
-	    'float f32 f64 ' +
-	    'str char bool'
+	    'type typeof unsafe unsized use virtual while where yield move default';
 	  var BUILTINS =
-	    // prelude
-	    'Copy Send Sized Sync Drop Fn FnMut FnOnce drop Box ToOwned Clone ' +
+	    // functions
+	    'drop ' +
+	    // types
+	    'i8 i16 i32 i64 i128 isize ' +
+	    'u8 u16 u32 u64 u128 usize ' +
+	    'f32 f64 ' +
+	    'str char bool ' +
+	    'Box Option Result String Vec ' +
+	    // traits
+	    'Copy Send Sized Sync Drop Fn FnMut FnOnce ToOwned Clone Debug ' +
 	    'PartialEq PartialOrd Eq Ord AsRef AsMut Into From Default Iterator ' +
-	    'Extend IntoIterator DoubleEndedIterator ExactSizeIterator Option ' +
-	    'Result SliceConcatExt String ToString Vec ' +
+	    'Extend IntoIterator DoubleEndedIterator ExactSizeIterator ' +
+	    'SliceConcatExt ToString ' +
 	    // macros
 	    'assert! assert_eq! bitflags! bytes! cfg! col! concat! concat_idents! ' +
 	    'debug_assert! debug_assert_eq! env! panic! file! format! format_args! ' +
 	    'include_bin! include_str! line! local_data_key! module_path! ' +
 	    'option_env! print! println! select! stringify! try! unimplemented! ' +
-	    'unreachable! vec! write! writeln! macro_rules!';
+	    'unreachable! vec! write! writeln! macro_rules! assert_ne! debug_assert_ne!';
 	  return {
 	    aliases: ['rs'],
 	    keywords: {
@@ -33592,7 +33871,7 @@
 	      },
 	      {
 	        className: 'class',
-	        beginKeywords: 'trait enum struct', end: '{',
+	        beginKeywords: 'trait enum struct union', end: '{',
 	        contains: [
 	          hljs.inherit(hljs.UNDERSCORE_TITLE_MODE, {endsParent: true})
 	        ],
@@ -33609,9 +33888,9 @@
 	  };
 	};
 
-/***/ },
-/* 308 */
-/***/ function(module, exports) {
+/***/ }),
+/* 311 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -33728,9 +34007,9 @@
 	  };
 	};
 
-/***/ },
-/* 309 */
-/***/ function(module, exports) {
+/***/ }),
+/* 312 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var SCHEME_IDENT_RE = '[^\\(\\)\\[\\]\\{\\}",\'`;#|\\\\\\s]+';
@@ -33830,7 +34109,10 @@
 	  };
 
 	  var QUOTED_LIST = {
-	    begin: /'/,
+	    variants: [
+	      { begin: /'/ },
+	      { begin: '`' }
+	    ],
 	    contains: [
 	      {
 	        begin: '\\(', end: '\\)',
@@ -33873,9 +34155,9 @@
 	  };
 	};
 
-/***/ },
-/* 310 */
-/***/ function(module, exports) {
+/***/ }),
+/* 313 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -33931,9 +34213,9 @@
 	  };
 	};
 
-/***/ },
-/* 311 */
-/***/ function(module, exports) {
+/***/ }),
+/* 314 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var IDENT_RE = '[a-zA-Z-][a-zA-Z0-9_-]*';
@@ -34033,9 +34315,9 @@
 	  };
 	};
 
-/***/ },
-/* 312 */
-/***/ function(module, exports) {
+/***/ }),
+/* 315 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var smali_instr_low_prio = ['add', 'and', 'cmp', 'cmpg', 'cmpl', 'const', 'div', 'double', 'float', 'goto', 'if', 'int', 'long', 'move', 'mul', 'neg', 'new', 'nop', 'not', 'or', 'rem', 'return', 'shl', 'shr', 'sput', 'sub', 'throw', 'ushr', 'xor'];
@@ -34093,9 +34375,9 @@
 	  };
 	};
 
-/***/ },
-/* 313 */
-/***/ function(module, exports) {
+/***/ }),
+/* 316 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var VAR_IDENT_RE = '[a-z][a-zA-Z0-9_]*';
@@ -34147,9 +34429,9 @@
 	  };
 	};
 
-/***/ },
-/* 314 */
-/***/ function(module, exports) {
+/***/ }),
+/* 317 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -34217,9 +34499,9 @@
 	  };
 	};
 
-/***/ },
-/* 315 */
-/***/ function(module, exports) {
+/***/ }),
+/* 318 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var CPP = hljs.getLanguage('cpp').exports;
@@ -34592,9 +34874,9 @@
 	  };
 	};
 
-/***/ },
-/* 316 */
-/***/ function(module, exports) {
+/***/ }),
+/* 319 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMENT_MODE = hljs.COMMENT('--', '$');
@@ -34756,9 +35038,9 @@
 	  };
 	};
 
-/***/ },
-/* 317 */
-/***/ function(module, exports) {
+/***/ }),
+/* 320 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -34843,9 +35125,9 @@
 	  };
 	};
 
-/***/ },
-/* 318 */
-/***/ function(module, exports) {
+/***/ }),
+/* 321 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -34885,9 +35167,9 @@
 	  };
 	};
 
-/***/ },
-/* 319 */
-/***/ function(module, exports) {
+/***/ }),
+/* 322 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var STEP21_IDENT_RE = '[A-Z_][A-Z0-9_.]*';
@@ -34936,9 +35218,9 @@
 	  };
 	};
 
-/***/ },
-/* 320 */
-/***/ function(module, exports) {
+/***/ }),
+/* 323 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -35394,9 +35676,9 @@
 	  };
 	};
 
-/***/ },
-/* 321 */
-/***/ function(module, exports) {
+/***/ }),
+/* 324 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var DETAILS = {
@@ -35432,9 +35714,9 @@
 	  };
 	};
 
-/***/ },
-/* 322 */
-/***/ function(module, exports) {
+/***/ }),
+/* 325 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var SWIFT_KEYWORDS = {
@@ -35553,9 +35835,9 @@
 	  };
 	};
 
-/***/ },
-/* 323 */
-/***/ function(module, exports) {
+/***/ }),
+/* 326 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 
@@ -35601,12 +35883,12 @@
 	  };
 	};
 
-/***/ },
-/* 324 */
-/***/ function(module, exports) {
+/***/ }),
+/* 327 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
-	  var LITERALS = {literal: '{ } true false yes no Yes No True False null'};
+	  var LITERALS = 'true false yes no null';
 
 	  var keyPrefix = '^[ \\-]*';
 	  var keyName =  '[a-zA-Z_][\\w\\-]*';
@@ -35631,7 +35913,8 @@
 	    relevance: 0,
 	    variants: [
 	      {begin: /'/, end: /'/},
-	      {begin: /"/, end: /"/}
+	      {begin: /"/, end: /"/},
+	      {begin: /\S+/}
 	    ],
 	    contains: [
 	      hljs.BACKSLASH_ESCAPE,
@@ -35681,17 +35964,20 @@
 	        begin: '^ *-',
 	        relevance: 0
 	      },
-	      STRING,
 	      hljs.HASH_COMMENT_MODE,
-	      hljs.C_NUMBER_MODE
-	    ],
-	    keywords: LITERALS
+	      {
+	        beginKeywords: LITERALS,
+	        keywords: {literal: LITERALS}
+	      },
+	      hljs.C_NUMBER_MODE,
+	      STRING
+	    ]
 	  };
 	};
 
-/***/ },
-/* 325 */
-/***/ function(module, exports) {
+/***/ }),
+/* 328 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -35729,9 +36015,9 @@
 	  };
 	};
 
-/***/ },
-/* 326 */
-/***/ function(module, exports) {
+/***/ }),
+/* 329 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -35794,9 +36080,9 @@
 	  }
 	};
 
-/***/ },
-/* 327 */
-/***/ function(module, exports) {
+/***/ }),
+/* 330 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var COMMAND = {
@@ -35860,9 +36146,9 @@
 	  };
 	};
 
-/***/ },
-/* 328 */
-/***/ function(module, exports) {
+/***/ }),
+/* 331 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BUILT_IN_TYPES = 'bool byte i16 i32 i64 double string binary';
@@ -35899,9 +36185,9 @@
 	  };
 	};
 
-/***/ },
-/* 329 */
-/***/ function(module, exports) {
+/***/ }),
+/* 332 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var TPID = {
@@ -35987,9 +36273,9 @@
 	  };
 	};
 
-/***/ },
-/* 330 */
-/***/ function(module, exports) {
+/***/ }),
+/* 333 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var PARAMS = {
@@ -36057,9 +36343,9 @@
 	  };
 	};
 
-/***/ },
-/* 331 */
-/***/ function(module, exports) {
+/***/ }),
+/* 334 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = {
@@ -36067,7 +36353,8 @@
 	      'in if for while finally var new function do return void else break catch ' +
 	      'instanceof with throw case default try this switch continue typeof delete ' +
 	      'let yield const class public private protected get set super ' +
-	      'static implements enum export import declare type namespace abstract',
+	      'static implements enum export import declare type namespace abstract ' +
+	      'as from extends async await',
 	    literal:
 	      'true false null undefined NaN Infinity',
 	    built_in:
@@ -36077,7 +36364,7 @@
 	      'TypeError URIError Number Math Date String RegExp Array Float32Array ' +
 	      'Float64Array Int16Array Int32Array Int8Array Uint16Array Uint32Array ' +
 	      'Uint8Array Uint8ClampedArray ArrayBuffer DataView JSON Intl arguments require ' +
-	      'module console window document any number boolean string void'
+	      'module console window document any number boolean string void Promise'
 	  };
 
 	  return {
@@ -36118,7 +36405,35 @@
 	        contains: [
 	          hljs.C_LINE_COMMENT_MODE,
 	          hljs.C_BLOCK_COMMENT_MODE,
-	          hljs.REGEXP_MODE
+	          hljs.REGEXP_MODE,
+	          {
+	            className: 'function',
+	            begin: '(\\(.*?\\)|' + hljs.IDENT_RE + ')\\s*=>', returnBegin: true,
+	            end: '\\s*=>',
+	            contains: [
+	              {
+	                className: 'params',
+	                variants: [
+	                  {
+	                    begin: hljs.IDENT_RE
+	                  },
+	                  {
+	                    begin: /\(\s*\)/,
+	                  },
+	                  {
+	                    begin: /\(/, end: /\)/,
+	                    excludeBegin: true, excludeEnd: true,
+	                    keywords: KEYWORDS,
+	                    contains: [
+	                      'self',
+	                      hljs.C_LINE_COMMENT_MODE,
+	                      hljs.C_BLOCK_COMMENT_MODE
+	                    ]
+	                  }
+	                ]
+	              }
+	            ]
+	          }
 	        ],
 	        relevance: 0
 	      },
@@ -36188,9 +36503,9 @@
 	  };
 	};
 
-/***/ },
-/* 332 */
-/***/ function(module, exports) {
+/***/ }),
+/* 335 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36242,9 +36557,9 @@
 	  };
 	};
 
-/***/ },
-/* 333 */
-/***/ function(module, exports) {
+/***/ }),
+/* 336 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36302,9 +36617,9 @@
 	  };
 	};
 
-/***/ },
-/* 334 */
-/***/ function(module, exports) {
+/***/ }),
+/* 337 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36345,9 +36660,9 @@
 	  };
 	};
 
-/***/ },
-/* 335 */
-/***/ function(module, exports) {
+/***/ }),
+/* 338 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36361,9 +36676,9 @@
 	  };
 	};
 
-/***/ },
-/* 336 */
-/***/ function(module, exports) {
+/***/ }),
+/* 339 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var SV_KEYWORDS = {
@@ -36464,9 +36779,9 @@
 	  }; // return
 	};
 
-/***/ },
-/* 337 */
-/***/ function(module, exports) {
+/***/ }),
+/* 340 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  // Regular expression for VHDL numeric literals.
@@ -36529,9 +36844,9 @@
 	  };
 	};
 
-/***/ },
-/* 338 */
-/***/ function(module, exports) {
+/***/ }),
+/* 341 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36639,9 +36954,9 @@
 	  };
 	};
 
-/***/ },
-/* 339 */
-/***/ function(module, exports) {
+/***/ }),
+/* 342 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  return {
@@ -36779,9 +37094,9 @@
 	  };
 	};
 
-/***/ },
-/* 340 */
-/***/ function(module, exports) {
+/***/ }),
+/* 343 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var BUILTIN_MODULES =
@@ -36856,9 +37171,9 @@
 	  };
 	};
 
-/***/ },
-/* 341 */
-/***/ function(module, exports) {
+/***/ }),
+/* 344 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var KEYWORDS = 'for let if while then else return where group by xquery encoding version' +
@@ -36931,9 +37246,9 @@
 	  };
 	};
 
-/***/ },
-/* 342 */
-/***/ function(module, exports) {
+/***/ }),
+/* 345 */
+/***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
 	  var STRING = {
@@ -37042,9 +37357,9 @@
 	  };
 	};
 
-/***/ },
-/* 343 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -37058,11 +37373,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -37125,9 +37440,9 @@
 
 	exports.default = Default;
 
-/***/ },
-/* 344 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -37137,7 +37452,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _calendar = __webpack_require__(345);
+	var _calendar = __webpack_require__(348);
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
@@ -37145,25 +37460,25 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _tether_component = __webpack_require__(473);
+	var _tether_component = __webpack_require__(482);
 
 	var _tether_component2 = _interopRequireDefault(_tether_component);
 
-	var _classnames2 = __webpack_require__(461);
+	var _classnames2 = __webpack_require__(471);
 
 	var _classnames3 = _interopRequireDefault(_classnames2);
 
-	var _date_utils = __webpack_require__(471);
+	var _date_utils = __webpack_require__(480);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _reactOnclickoutside = __webpack_require__(462);
+	var _reactOnclickoutside = __webpack_require__(472);
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
@@ -37629,9 +37944,9 @@
 	};
 	exports.default = DatePicker;
 
-/***/ },
-/* 345 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -37641,19 +37956,19 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _year_dropdown = __webpack_require__(457);
+	var _year_dropdown = __webpack_require__(467);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(466);
+	var _month_dropdown = __webpack_require__(475);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _month = __webpack_require__(468);
+	var _month = __webpack_require__(477);
 
 	var _month2 = _interopRequireDefault(_month);
 
@@ -37661,15 +37976,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _classnames = __webpack_require__(461);
+	var _classnames = __webpack_require__(471);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _date_utils = __webpack_require__(471);
+	var _date_utils = __webpack_require__(480);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38033,12 +38348,12 @@
 	};
 	exports.default = Calendar;
 
-/***/ },
-/* 346 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
-	//! version : 2.17.1
+	//! version : 2.18.1
 	//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 	//! license : MIT
 	//! momentjs.com
@@ -38078,6 +38393,10 @@
 	        return false;
 	    }
 	    return true;
+	}
+
+	function isUndefined(input) {
+	    return input === void 0;
 	}
 
 	function isNumber(input) {
@@ -38136,7 +38455,9 @@
 	        userInvalidated : false,
 	        iso             : false,
 	        parsedDateParts : [],
-	        meridiem        : null
+	        meridiem        : null,
+	        rfc2822         : false,
+	        weekdayMismatch : false
 	    };
 	}
 
@@ -38212,10 +38533,6 @@
 	    return m;
 	}
 
-	function isUndefined(input) {
-	    return input === void 0;
-	}
-
 	// Plugins that add properties should also add the key here (null value),
 	// so we can properly clone ourselves.
 	var momentProperties = hooks.momentProperties = [];
@@ -38255,7 +38572,7 @@
 	    }
 
 	    if (momentProperties.length > 0) {
-	        for (i in momentProperties) {
+	        for (i = 0; i < momentProperties.length; i++) {
 	            prop = momentProperties[i];
 	            val = from[prop];
 	            if (!isUndefined(val)) {
@@ -38392,8 +38709,11 @@
 	    }
 	    this._config = config;
 	    // Lenient ordinal parsing accepts just a number in addition to
-	    // number + (possibly) stuff coming from _ordinalParseLenient.
-	    this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + (/\d{1,2}/).source);
+	    // number + (possibly) stuff coming from _dayOfMonthOrdinalParse.
+	    // TODO: Remove "ordinalParse" fallback in next major release.
+	    this._dayOfMonthOrdinalParseLenient = new RegExp(
+	        (this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) +
+	            '|' + (/\d{1,2}/).source);
 	}
 
 	function mergeConfigs(parentConfig, childConfig) {
@@ -38491,7 +38811,7 @@
 	}
 
 	var defaultOrdinal = '%d';
-	var defaultOrdinalParse = /\d{1,2}/;
+	var defaultDayOfMonthOrdinalParse = /\d{1,2}/;
 
 	function ordinal (number) {
 	    return this._ordinal.replace('%d', number);
@@ -38501,6 +38821,7 @@
 	    future : 'in %s',
 	    past   : '%s ago',
 	    s  : 'a few seconds',
+	    ss : '%d seconds',
 	    m  : 'a minute',
 	    mm : '%d minutes',
 	    h  : 'an hour',
@@ -38683,7 +39004,7 @@
 	    return function (mom) {
 	        var output = '', i;
 	        for (i = 0; i < length; i++) {
-	            output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
+	            output += isFunction(array[i]) ? array[i].call(mom, format) : array[i];
 	        }
 	        return output;
 	    };
@@ -38886,7 +39207,8 @@
 	var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
 	function localeMonths (m, format) {
 	    if (!m) {
-	        return this._months;
+	        return isArray(this._months) ? this._months :
+	            this._months['standalone'];
 	    }
 	    return isArray(this._months) ? this._months[m.month()] :
 	        this._months[(this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? 'format' : 'standalone'][m.month()];
@@ -38895,7 +39217,8 @@
 	var defaultLocaleMonthsShort = 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_');
 	function localeMonthsShort (m, format) {
 	    if (!m) {
-	        return this._monthsShort;
+	        return isArray(this._monthsShort) ? this._monthsShort :
+	            this._monthsShort['standalone'];
 	    }
 	    return isArray(this._monthsShort) ? this._monthsShort[m.month()] :
 	        this._monthsShort[MONTHS_IN_FORMAT.test(format) ? 'format' : 'standalone'][m.month()];
@@ -39162,11 +39485,11 @@
 	}
 
 	function createDate (y, m, d, h, M, s, ms) {
-	    //can't just apply() to create a date:
-	    //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
+	    // can't just apply() to create a date:
+	    // https://stackoverflow.com/q/181348
 	    var date = new Date(y, m, d, h, M, s, ms);
 
-	    //the date constructor remaps years 0-99 to 1900-1999
+	    // the date constructor remaps years 0-99 to 1900-1999
 	    if (y < 100 && y >= 0 && isFinite(date.getFullYear())) {
 	        date.setFullYear(y);
 	    }
@@ -39176,7 +39499,7 @@
 	function createUTCDate (y) {
 	    var date = new Date(Date.UTC.apply(null, arguments));
 
-	    //the Date.UTC function remaps years 0-99 to 1900-1999
+	    // the Date.UTC function remaps years 0-99 to 1900-1999
 	    if (y < 100 && y >= 0 && isFinite(date.getUTCFullYear())) {
 	        date.setUTCFullYear(y);
 	    }
@@ -39193,7 +39516,7 @@
 	    return -fwdlw + fwd - 1;
 	}
 
-	//http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+	// https://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
 	function dayOfYearFromWeeks(year, week, weekday, dow, doy) {
 	    var localWeekday = (7 + weekday - dow) % 7,
 	        weekOffset = firstWeekOffset(year, dow, doy),
@@ -39394,7 +39717,8 @@
 	var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
 	function localeWeekdays (m, format) {
 	    if (!m) {
-	        return this._weekdays;
+	        return isArray(this._weekdays) ? this._weekdays :
+	            this._weekdays['standalone'];
 	    }
 	    return isArray(this._weekdays) ? this._weekdays[m.day()] :
 	        this._weekdays[this._weekdays.isFormat.test(format) ? 'format' : 'standalone'][m.day()];
@@ -39714,8 +40038,10 @@
 	addRegexToken('A',  matchMeridiem);
 	addRegexToken('H',  match1to2);
 	addRegexToken('h',  match1to2);
+	addRegexToken('k',  match1to2);
 	addRegexToken('HH', match1to2, match2);
 	addRegexToken('hh', match1to2, match2);
+	addRegexToken('kk', match1to2, match2);
 
 	addRegexToken('hmm', match3to4);
 	addRegexToken('hmmss', match5to6);
@@ -39723,6 +40049,10 @@
 	addRegexToken('Hmmss', match5to6);
 
 	addParseToken(['H', 'HH'], HOUR);
+	addParseToken(['k', 'kk'], function (input, array, config) {
+	    var kInput = toInt(input);
+	    array[HOUR] = kInput === 24 ? 0 : kInput;
+	});
 	addParseToken(['a', 'A'], function (input, array, config) {
 	    config._isPm = config._locale.isPM(input);
 	    config._meridiem = input;
@@ -39793,7 +40123,7 @@
 	    longDateFormat: defaultLongDateFormat,
 	    invalidDate: defaultInvalidDate,
 	    ordinal: defaultOrdinal,
-	    ordinalParse: defaultOrdinalParse,
+	    dayOfMonthOrdinalParse: defaultDayOfMonthOrdinalParse,
 	    relativeTime: defaultRelativeTime,
 
 	    months: defaultLocaleMonths,
@@ -39851,7 +40181,7 @@
 	            module && module.exports) {
 	        try {
 	            oldLocale = globalLocale._abbr;
-	            __webpack_require__(348)("./" + name);
+	            __webpack_require__(351)("./" + name);
 	            // because defineLocale currently also sets the global locale, we
 	            // want to undo that for lazy loaded locales
 	            getSetGlobalLocale(oldLocale);
@@ -40104,6 +40434,77 @@
 	    }
 	}
 
+	// RFC 2822 regex: For details see https://tools.ietf.org/html/rfc2822#section-3.3
+	var basicRfcRegex = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d?\d\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(?:\d\d)?\d\d\s)(\d\d:\d\d)(\:\d\d)?(\s(?:UT|GMT|[ECMP][SD]T|[A-IK-Za-ik-z]|[+-]\d{4}))$/;
+
+	// date and time from ref 2822 format
+	function configFromRFC2822(config) {
+	    var string, match, dayFormat,
+	        dateFormat, timeFormat, tzFormat;
+	    var timezones = {
+	        ' GMT': ' +0000',
+	        ' EDT': ' -0400',
+	        ' EST': ' -0500',
+	        ' CDT': ' -0500',
+	        ' CST': ' -0600',
+	        ' MDT': ' -0600',
+	        ' MST': ' -0700',
+	        ' PDT': ' -0700',
+	        ' PST': ' -0800'
+	    };
+	    var military = 'YXWVUTSRQPONZABCDEFGHIKLM';
+	    var timezone, timezoneIndex;
+
+	    string = config._i
+	        .replace(/\([^\)]*\)|[\n\t]/g, ' ') // Remove comments and folding whitespace
+	        .replace(/(\s\s+)/g, ' ') // Replace multiple-spaces with a single space
+	        .replace(/^\s|\s$/g, ''); // Remove leading and trailing spaces
+	    match = basicRfcRegex.exec(string);
+
+	    if (match) {
+	        dayFormat = match[1] ? 'ddd' + ((match[1].length === 5) ? ', ' : ' ') : '';
+	        dateFormat = 'D MMM ' + ((match[2].length > 10) ? 'YYYY ' : 'YY ');
+	        timeFormat = 'HH:mm' + (match[4] ? ':ss' : '');
+
+	        // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
+	        if (match[1]) { // day of week given
+	            var momentDate = new Date(match[2]);
+	            var momentDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][momentDate.getDay()];
+
+	            if (match[1].substr(0,3) !== momentDay) {
+	                getParsingFlags(config).weekdayMismatch = true;
+	                config._isValid = false;
+	                return;
+	            }
+	        }
+
+	        switch (match[5].length) {
+	            case 2: // military
+	                if (timezoneIndex === 0) {
+	                    timezone = ' +0000';
+	                } else {
+	                    timezoneIndex = military.indexOf(match[5][1].toUpperCase()) - 12;
+	                    timezone = ((timezoneIndex < 0) ? ' -' : ' +') +
+	                        (('' + timezoneIndex).replace(/^-?/, '0')).match(/..$/)[0] + '00';
+	                }
+	                break;
+	            case 4: // Zone
+	                timezone = timezones[match[5]];
+	                break;
+	            default: // UT or +/-9999
+	                timezone = timezones[' GMT'];
+	        }
+	        match[5] = timezone;
+	        config._i = match.splice(1).join('');
+	        tzFormat = ' ZZ';
+	        config._f = dayFormat + dateFormat + timeFormat + tzFormat;
+	        configFromStringAndFormat(config);
+	        getParsingFlags(config).rfc2822 = true;
+	    } else {
+	        config._isValid = false;
+	    }
+	}
+
 	// date from iso format or fallback
 	function configFromString(config) {
 	    var matched = aspNetJsonRegex.exec(config._i);
@@ -40116,13 +40517,24 @@
 	    configFromISO(config);
 	    if (config._isValid === false) {
 	        delete config._isValid;
-	        hooks.createFromInputFallback(config);
+	    } else {
+	        return;
 	    }
+
+	    configFromRFC2822(config);
+	    if (config._isValid === false) {
+	        delete config._isValid;
+	    } else {
+	        return;
+	    }
+
+	    // Final attempt, use Input Fallback
+	    hooks.createFromInputFallback(config);
 	}
 
 	hooks.createFromInputFallback = deprecate(
-	    'value provided is not in a recognized ISO format. moment construction falls back to js Date(), ' +
-	    'which is not reliable across all browsers and versions. Non ISO date formats are ' +
+	    'value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), ' +
+	    'which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are ' +
 	    'discouraged and will be removed in an upcoming major release. Please refer to ' +
 	    'http://momentjs.com/guides/#/warnings/js-date/ for more info.',
 	    function (config) {
@@ -40169,10 +40581,10 @@
 	    }
 
 	    //if the day of the year is set, figure out what it is
-	    if (config._dayOfYear) {
+	    if (config._dayOfYear != null) {
 	        yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
 
-	        if (config._dayOfYear > daysInYear(yearToUse)) {
+	        if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) {
 	            getParsingFlags(config)._overflowDayOfYear = true;
 	        }
 
@@ -40276,6 +40688,9 @@
 	// constant that refers to the ISO standard
 	hooks.ISO_8601 = function () {};
 
+	// constant that refers to the RFC 2822 form
+	hooks.RFC_2822 = function () {};
+
 	// date from string and format string
 	function configFromStringAndFormat(config) {
 	    // TODO: Move this to another part of the creation flow to prevent circular deps
@@ -40283,7 +40698,10 @@
 	        configFromISO(config);
 	        return;
 	    }
-
+	    if (config._f === hooks.RFC_2822) {
+	        configFromRFC2822(config);
+	        return;
+	    }
 	    config._a = [];
 	    getParsingFlags(config).empty = true;
 
@@ -40475,7 +40893,7 @@
 
 	function configFromInput(config) {
 	    var input = config._i;
-	    if (input === undefined) {
+	    if (isUndefined(input)) {
 	        config._d = new Date(hooks.now());
 	    } else if (isDate(input)) {
 	        config._d = new Date(input.valueOf());
@@ -40486,7 +40904,7 @@
 	            return parseInt(obj, 10);
 	        });
 	        configFromArray(config);
-	    } else if (typeof(input) === 'object') {
+	    } else if (isObject(input)) {
 	        configFromObject(config);
 	    } else if (isNumber(input)) {
 	        // from milliseconds
@@ -40587,6 +41005,38 @@
 	    return Date.now ? Date.now() : +(new Date());
 	};
 
+	var ordering = ['year', 'quarter', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'];
+
+	function isDurationValid(m) {
+	    for (var key in m) {
+	        if (!(ordering.indexOf(key) !== -1 && (m[key] == null || !isNaN(m[key])))) {
+	            return false;
+	        }
+	    }
+
+	    var unitHasDecimal = false;
+	    for (var i = 0; i < ordering.length; ++i) {
+	        if (m[ordering[i]]) {
+	            if (unitHasDecimal) {
+	                return false; // only allow non-integers for smallest unit
+	            }
+	            if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
+	                unitHasDecimal = true;
+	            }
+	        }
+	    }
+
+	    return true;
+	}
+
+	function isValid$1() {
+	    return this._isValid;
+	}
+
+	function createInvalid$1() {
+	    return createDuration(NaN);
+	}
+
 	function Duration (duration) {
 	    var normalizedInput = normalizeObjectUnits(duration),
 	        years = normalizedInput.year || 0,
@@ -40598,6 +41048,8 @@
 	        minutes = normalizedInput.minute || 0,
 	        seconds = normalizedInput.second || 0,
 	        milliseconds = normalizedInput.millisecond || 0;
+
+	    this._isValid = isDurationValid(normalizedInput);
 
 	    // representation for dateAddRemove
 	    this._milliseconds = +milliseconds +
@@ -40722,7 +41174,7 @@
 	// a second time. In case it wants us to change the offset again
 	// _changeInProgress == true case, then we have to adjust, because
 	// there is no such time in the given timezone.
-	function getSetOffset (input, keepLocalTime) {
+	function getSetOffset (input, keepLocalTime, keepMinutes) {
 	    var offset = this._offset || 0,
 	        localAdjust;
 	    if (!this.isValid()) {
@@ -40734,7 +41186,7 @@
 	            if (input === null) {
 	                return this;
 	            }
-	        } else if (Math.abs(input) < 16) {
+	        } else if (Math.abs(input) < 16 && !keepMinutes) {
 	            input = input * 60;
 	        }
 	        if (!this._isUTC && keepLocalTime) {
@@ -40792,7 +41244,7 @@
 
 	function setOffsetToParsedOffset () {
 	    if (this._tzm != null) {
-	        this.utcOffset(this._tzm);
+	        this.utcOffset(this._tzm, false, true);
 	    } else if (typeof this._i === 'string') {
 	        var tZone = offsetFromString(matchOffset, this._i);
 	        if (tZone != null) {
@@ -40924,6 +41376,7 @@
 	}
 
 	createDuration.fn = Duration.prototype;
+	createDuration.invalid = createInvalid$1;
 
 	function parseIso (inp, sign) {
 	    // We'd normally use ~~inp for this, but unfortunately it also
@@ -41160,18 +41613,19 @@
 	    return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
 	}
 
-	function toISOString () {
+	function toISOString() {
+	    if (!this.isValid()) {
+	        return null;
+	    }
 	    var m = this.clone().utc();
-	    if (0 < m.year() && m.year() <= 9999) {
-	        if (isFunction(Date.prototype.toISOString)) {
-	            // native implementation is ~50x faster, use it when we can
-	            return this.toDate().toISOString();
-	        } else {
-	            return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
-	        }
-	    } else {
+	    if (m.year() < 0 || m.year() > 9999) {
 	        return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
 	    }
+	    if (isFunction(Date.prototype.toISOString)) {
+	        // native implementation is ~50x faster, use it when we can
+	        return this.toDate().toISOString();
+	    }
+	    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
 	}
 
 	/**
@@ -41191,7 +41645,7 @@
 	        zone = 'Z';
 	    }
 	    var prefix = '[' + func + '("]';
-	    var year = (0 < this.year() && this.year() <= 9999) ? 'YYYY' : 'YYYYYY';
+	    var year = (0 <= this.year() && this.year() <= 9999) ? 'YYYY' : 'YYYYYY';
 	    var datetime = '-MM-DD[T]HH:mm:ss.SSS';
 	    var suffix = zone + '[")]';
 
@@ -41359,7 +41813,7 @@
 	    return this.isValid() ? this.toISOString() : null;
 	}
 
-	function isValid$1 () {
+	function isValid$2 () {
 	    return isValid(this);
 	}
 
@@ -41519,7 +41973,10 @@
 	addRegexToken('D',  match1to2);
 	addRegexToken('DD', match1to2, match2);
 	addRegexToken('Do', function (isStrict, locale) {
-	    return isStrict ? locale._ordinalParse : locale._ordinalParseLenient;
+	    // TODO: Remove "ordinalParse" fallback in next major release.
+	    return isStrict ?
+	      (locale._dayOfMonthOrdinalParse || locale._ordinalParse) :
+	      locale._dayOfMonthOrdinalParseLenient;
 	});
 
 	addParseToken(['D', 'DD'], DATE);
@@ -41699,7 +42156,7 @@
 	proto.isSame            = isSame;
 	proto.isSameOrAfter     = isSameOrAfter;
 	proto.isSameOrBefore    = isSameOrBefore;
-	proto.isValid           = isValid$1;
+	proto.isValid           = isValid$2;
 	proto.lang              = lang;
 	proto.locale            = locale;
 	proto.localeData        = localeData;
@@ -41924,7 +42381,7 @@
 	}
 
 	getSetGlobalLocale('en', {
-	    ordinalParse: /\d{1,2}(th|st|nd|rd)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (toInt(number % 100 / 10) === 1) ? 'th' :
@@ -42045,6 +42502,9 @@
 	}
 
 	function as (units) {
+	    if (!this.isValid()) {
+	        return NaN;
+	    }
 	    var days;
 	    var months;
 	    var milliseconds = this._milliseconds;
@@ -42073,6 +42533,9 @@
 
 	// TODO: Use this.as('ms')?
 	function valueOf$1 () {
+	    if (!this.isValid()) {
+	        return NaN;
+	    }
 	    return (
 	        this._milliseconds +
 	        this._days * 864e5 +
@@ -42098,12 +42561,12 @@
 
 	function get$2 (units) {
 	    units = normalizeUnits(units);
-	    return this[units + 's']();
+	    return this.isValid() ? this[units + 's']() : NaN;
 	}
 
 	function makeGetter(name) {
 	    return function () {
-	        return this._data[name];
+	        return this.isValid() ? this._data[name] : NaN;
 	    };
 	}
 
@@ -42121,11 +42584,12 @@
 
 	var round = Math.round;
 	var thresholds = {
-	    s: 45,  // seconds to minute
-	    m: 45,  // minutes to hour
-	    h: 22,  // hours to day
-	    d: 26,  // days to month
-	    M: 11   // months to year
+	    ss: 44,         // a few seconds to seconds
+	    s : 45,         // seconds to minute
+	    m : 45,         // minutes to hour
+	    h : 22,         // hours to day
+	    d : 26,         // days to month
+	    M : 11          // months to year
 	};
 
 	// helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
@@ -42142,16 +42606,17 @@
 	    var months   = round(duration.as('M'));
 	    var years    = round(duration.as('y'));
 
-	    var a = seconds < thresholds.s && ['s', seconds]  ||
-	            minutes <= 1           && ['m']           ||
-	            minutes < thresholds.m && ['mm', minutes] ||
-	            hours   <= 1           && ['h']           ||
-	            hours   < thresholds.h && ['hh', hours]   ||
-	            days    <= 1           && ['d']           ||
-	            days    < thresholds.d && ['dd', days]    ||
-	            months  <= 1           && ['M']           ||
-	            months  < thresholds.M && ['MM', months]  ||
-	            years   <= 1           && ['y']           || ['yy', years];
+	    var a = seconds <= thresholds.ss && ['s', seconds]  ||
+	            seconds < thresholds.s   && ['ss', seconds] ||
+	            minutes <= 1             && ['m']           ||
+	            minutes < thresholds.m   && ['mm', minutes] ||
+	            hours   <= 1             && ['h']           ||
+	            hours   < thresholds.h   && ['hh', hours]   ||
+	            days    <= 1             && ['d']           ||
+	            days    < thresholds.d   && ['dd', days]    ||
+	            months  <= 1             && ['M']           ||
+	            months  < thresholds.M   && ['MM', months]  ||
+	            years   <= 1             && ['y']           || ['yy', years];
 
 	    a[2] = withoutSuffix;
 	    a[3] = +posNegDuration > 0;
@@ -42180,10 +42645,17 @@
 	        return thresholds[threshold];
 	    }
 	    thresholds[threshold] = limit;
+	    if (threshold === 's') {
+	        thresholds.ss = limit - 1;
+	    }
 	    return true;
 	}
 
 	function humanize (withSuffix) {
+	    if (!this.isValid()) {
+	        return this.localeData().invalidDate();
+	    }
+
 	    var locale = this.localeData();
 	    var output = relativeTime$1(this, !withSuffix, locale);
 
@@ -42204,6 +42676,10 @@
 	    // This is because there is no context-free conversion between hours and days
 	    // (think of clock changes)
 	    // and also not between days and months (28-31 days per month)
+	    if (!this.isValid()) {
+	        return this.localeData().invalidDate();
+	    }
+
 	    var seconds = abs$1(this._milliseconds) / 1000;
 	    var days         = abs$1(this._days);
 	    var months       = abs$1(this._months);
@@ -42248,6 +42724,7 @@
 
 	var proto$2 = Duration.prototype;
 
+	proto$2.isValid        = isValid$1;
 	proto$2.abs            = abs;
 	proto$2.add            = add$1;
 	proto$2.subtract       = subtract$1;
@@ -42303,7 +42780,7 @@
 	// Side effect imports
 
 
-	hooks.version = '2.17.1';
+	hooks.version = '2.18.1';
 
 	setHookCallback(createLocal);
 
@@ -42339,11 +42816,11 @@
 
 	})));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(347)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(350)(module)))
 
-/***/ },
-/* 347 */
-/***/ function(module, exports) {
+/***/ }),
+/* 350 */
+/***/ (function(module, exports) {
 
 	module.exports = function(module) {
 		if(!module.webpackPolyfill) {
@@ -42357,227 +42834,241 @@
 	}
 
 
-/***/ },
-/* 348 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 351 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 349,
-		"./af.js": 349,
-		"./ar": 350,
-		"./ar-dz": 351,
-		"./ar-dz.js": 351,
-		"./ar-ly": 352,
-		"./ar-ly.js": 352,
-		"./ar-ma": 353,
-		"./ar-ma.js": 353,
-		"./ar-sa": 354,
-		"./ar-sa.js": 354,
-		"./ar-tn": 355,
-		"./ar-tn.js": 355,
-		"./ar.js": 350,
-		"./az": 356,
-		"./az.js": 356,
-		"./be": 357,
-		"./be.js": 357,
-		"./bg": 358,
-		"./bg.js": 358,
-		"./bn": 359,
-		"./bn.js": 359,
-		"./bo": 360,
-		"./bo.js": 360,
-		"./br": 361,
-		"./br.js": 361,
-		"./bs": 362,
-		"./bs.js": 362,
-		"./ca": 363,
-		"./ca.js": 363,
-		"./cs": 364,
-		"./cs.js": 364,
-		"./cv": 365,
-		"./cv.js": 365,
-		"./cy": 366,
-		"./cy.js": 366,
-		"./da": 367,
-		"./da.js": 367,
-		"./de": 368,
-		"./de-at": 369,
-		"./de-at.js": 369,
-		"./de.js": 368,
-		"./dv": 370,
-		"./dv.js": 370,
-		"./el": 371,
-		"./el.js": 371,
-		"./en-au": 372,
-		"./en-au.js": 372,
-		"./en-ca": 373,
-		"./en-ca.js": 373,
-		"./en-gb": 374,
-		"./en-gb.js": 374,
-		"./en-ie": 375,
-		"./en-ie.js": 375,
-		"./en-nz": 376,
-		"./en-nz.js": 376,
-		"./eo": 377,
-		"./eo.js": 377,
-		"./es": 378,
-		"./es-do": 379,
-		"./es-do.js": 379,
-		"./es.js": 378,
-		"./et": 380,
-		"./et.js": 380,
-		"./eu": 381,
-		"./eu.js": 381,
-		"./fa": 382,
-		"./fa.js": 382,
-		"./fi": 383,
-		"./fi.js": 383,
-		"./fo": 384,
-		"./fo.js": 384,
-		"./fr": 385,
-		"./fr-ca": 386,
-		"./fr-ca.js": 386,
-		"./fr-ch": 387,
-		"./fr-ch.js": 387,
-		"./fr.js": 385,
-		"./fy": 388,
-		"./fy.js": 388,
-		"./gd": 389,
-		"./gd.js": 389,
-		"./gl": 390,
-		"./gl.js": 390,
-		"./he": 391,
-		"./he.js": 391,
-		"./hi": 392,
-		"./hi.js": 392,
-		"./hr": 393,
-		"./hr.js": 393,
-		"./hu": 394,
-		"./hu.js": 394,
-		"./hy-am": 395,
-		"./hy-am.js": 395,
-		"./id": 396,
-		"./id.js": 396,
-		"./is": 397,
-		"./is.js": 397,
-		"./it": 398,
-		"./it.js": 398,
-		"./ja": 399,
-		"./ja.js": 399,
-		"./jv": 400,
-		"./jv.js": 400,
-		"./ka": 401,
-		"./ka.js": 401,
-		"./kk": 402,
-		"./kk.js": 402,
-		"./km": 403,
-		"./km.js": 403,
-		"./ko": 404,
-		"./ko.js": 404,
-		"./ky": 405,
-		"./ky.js": 405,
-		"./lb": 406,
-		"./lb.js": 406,
-		"./lo": 407,
-		"./lo.js": 407,
-		"./lt": 408,
-		"./lt.js": 408,
-		"./lv": 409,
-		"./lv.js": 409,
-		"./me": 410,
-		"./me.js": 410,
-		"./mi": 411,
-		"./mi.js": 411,
-		"./mk": 412,
-		"./mk.js": 412,
-		"./ml": 413,
-		"./ml.js": 413,
-		"./mr": 414,
-		"./mr.js": 414,
-		"./ms": 415,
-		"./ms-my": 416,
-		"./ms-my.js": 416,
-		"./ms.js": 415,
-		"./my": 417,
-		"./my.js": 417,
-		"./nb": 418,
-		"./nb.js": 418,
-		"./ne": 419,
-		"./ne.js": 419,
-		"./nl": 420,
-		"./nl-be": 421,
-		"./nl-be.js": 421,
-		"./nl.js": 420,
-		"./nn": 422,
-		"./nn.js": 422,
-		"./pa-in": 423,
-		"./pa-in.js": 423,
-		"./pl": 424,
-		"./pl.js": 424,
-		"./pt": 425,
-		"./pt-br": 426,
-		"./pt-br.js": 426,
-		"./pt.js": 425,
-		"./ro": 427,
-		"./ro.js": 427,
-		"./ru": 428,
-		"./ru.js": 428,
-		"./se": 429,
-		"./se.js": 429,
-		"./si": 430,
-		"./si.js": 430,
-		"./sk": 431,
-		"./sk.js": 431,
-		"./sl": 432,
-		"./sl.js": 432,
-		"./sq": 433,
-		"./sq.js": 433,
-		"./sr": 434,
-		"./sr-cyrl": 435,
-		"./sr-cyrl.js": 435,
-		"./sr.js": 434,
-		"./ss": 436,
-		"./ss.js": 436,
-		"./sv": 437,
-		"./sv.js": 437,
-		"./sw": 438,
-		"./sw.js": 438,
-		"./ta": 439,
-		"./ta.js": 439,
-		"./te": 440,
-		"./te.js": 440,
-		"./tet": 441,
-		"./tet.js": 441,
-		"./th": 442,
-		"./th.js": 442,
-		"./tl-ph": 443,
-		"./tl-ph.js": 443,
-		"./tlh": 444,
-		"./tlh.js": 444,
-		"./tr": 445,
-		"./tr.js": 445,
-		"./tzl": 446,
-		"./tzl.js": 446,
-		"./tzm": 447,
-		"./tzm-latn": 448,
-		"./tzm-latn.js": 448,
-		"./tzm.js": 447,
-		"./uk": 449,
-		"./uk.js": 449,
-		"./uz": 450,
-		"./uz.js": 450,
-		"./vi": 451,
-		"./vi.js": 451,
-		"./x-pseudo": 452,
-		"./x-pseudo.js": 452,
-		"./yo": 453,
-		"./yo.js": 453,
-		"./zh-cn": 454,
-		"./zh-cn.js": 454,
-		"./zh-hk": 455,
-		"./zh-hk.js": 455,
-		"./zh-tw": 456,
-		"./zh-tw.js": 456
+		"./af": 352,
+		"./af.js": 352,
+		"./ar": 353,
+		"./ar-dz": 354,
+		"./ar-dz.js": 354,
+		"./ar-kw": 355,
+		"./ar-kw.js": 355,
+		"./ar-ly": 356,
+		"./ar-ly.js": 356,
+		"./ar-ma": 357,
+		"./ar-ma.js": 357,
+		"./ar-sa": 358,
+		"./ar-sa.js": 358,
+		"./ar-tn": 359,
+		"./ar-tn.js": 359,
+		"./ar.js": 353,
+		"./az": 360,
+		"./az.js": 360,
+		"./be": 361,
+		"./be.js": 361,
+		"./bg": 362,
+		"./bg.js": 362,
+		"./bn": 363,
+		"./bn.js": 363,
+		"./bo": 364,
+		"./bo.js": 364,
+		"./br": 365,
+		"./br.js": 365,
+		"./bs": 366,
+		"./bs.js": 366,
+		"./ca": 367,
+		"./ca.js": 367,
+		"./cs": 368,
+		"./cs.js": 368,
+		"./cv": 369,
+		"./cv.js": 369,
+		"./cy": 370,
+		"./cy.js": 370,
+		"./da": 371,
+		"./da.js": 371,
+		"./de": 372,
+		"./de-at": 373,
+		"./de-at.js": 373,
+		"./de-ch": 374,
+		"./de-ch.js": 374,
+		"./de.js": 372,
+		"./dv": 375,
+		"./dv.js": 375,
+		"./el": 376,
+		"./el.js": 376,
+		"./en-au": 377,
+		"./en-au.js": 377,
+		"./en-ca": 378,
+		"./en-ca.js": 378,
+		"./en-gb": 379,
+		"./en-gb.js": 379,
+		"./en-ie": 380,
+		"./en-ie.js": 380,
+		"./en-nz": 381,
+		"./en-nz.js": 381,
+		"./eo": 382,
+		"./eo.js": 382,
+		"./es": 383,
+		"./es-do": 384,
+		"./es-do.js": 384,
+		"./es.js": 383,
+		"./et": 385,
+		"./et.js": 385,
+		"./eu": 386,
+		"./eu.js": 386,
+		"./fa": 387,
+		"./fa.js": 387,
+		"./fi": 388,
+		"./fi.js": 388,
+		"./fo": 389,
+		"./fo.js": 389,
+		"./fr": 390,
+		"./fr-ca": 391,
+		"./fr-ca.js": 391,
+		"./fr-ch": 392,
+		"./fr-ch.js": 392,
+		"./fr.js": 390,
+		"./fy": 393,
+		"./fy.js": 393,
+		"./gd": 394,
+		"./gd.js": 394,
+		"./gl": 395,
+		"./gl.js": 395,
+		"./gom-latn": 396,
+		"./gom-latn.js": 396,
+		"./he": 397,
+		"./he.js": 397,
+		"./hi": 398,
+		"./hi.js": 398,
+		"./hr": 399,
+		"./hr.js": 399,
+		"./hu": 400,
+		"./hu.js": 400,
+		"./hy-am": 401,
+		"./hy-am.js": 401,
+		"./id": 402,
+		"./id.js": 402,
+		"./is": 403,
+		"./is.js": 403,
+		"./it": 404,
+		"./it.js": 404,
+		"./ja": 405,
+		"./ja.js": 405,
+		"./jv": 406,
+		"./jv.js": 406,
+		"./ka": 407,
+		"./ka.js": 407,
+		"./kk": 408,
+		"./kk.js": 408,
+		"./km": 409,
+		"./km.js": 409,
+		"./kn": 410,
+		"./kn.js": 410,
+		"./ko": 411,
+		"./ko.js": 411,
+		"./ky": 412,
+		"./ky.js": 412,
+		"./lb": 413,
+		"./lb.js": 413,
+		"./lo": 414,
+		"./lo.js": 414,
+		"./lt": 415,
+		"./lt.js": 415,
+		"./lv": 416,
+		"./lv.js": 416,
+		"./me": 417,
+		"./me.js": 417,
+		"./mi": 418,
+		"./mi.js": 418,
+		"./mk": 419,
+		"./mk.js": 419,
+		"./ml": 420,
+		"./ml.js": 420,
+		"./mr": 421,
+		"./mr.js": 421,
+		"./ms": 422,
+		"./ms-my": 423,
+		"./ms-my.js": 423,
+		"./ms.js": 422,
+		"./my": 424,
+		"./my.js": 424,
+		"./nb": 425,
+		"./nb.js": 425,
+		"./ne": 426,
+		"./ne.js": 426,
+		"./nl": 427,
+		"./nl-be": 428,
+		"./nl-be.js": 428,
+		"./nl.js": 427,
+		"./nn": 429,
+		"./nn.js": 429,
+		"./pa-in": 430,
+		"./pa-in.js": 430,
+		"./pl": 431,
+		"./pl.js": 431,
+		"./pt": 432,
+		"./pt-br": 433,
+		"./pt-br.js": 433,
+		"./pt.js": 432,
+		"./ro": 434,
+		"./ro.js": 434,
+		"./ru": 435,
+		"./ru.js": 435,
+		"./sd": 436,
+		"./sd.js": 436,
+		"./se": 437,
+		"./se.js": 437,
+		"./si": 438,
+		"./si.js": 438,
+		"./sk": 439,
+		"./sk.js": 439,
+		"./sl": 440,
+		"./sl.js": 440,
+		"./sq": 441,
+		"./sq.js": 441,
+		"./sr": 442,
+		"./sr-cyrl": 443,
+		"./sr-cyrl.js": 443,
+		"./sr.js": 442,
+		"./ss": 444,
+		"./ss.js": 444,
+		"./sv": 445,
+		"./sv.js": 445,
+		"./sw": 446,
+		"./sw.js": 446,
+		"./ta": 447,
+		"./ta.js": 447,
+		"./te": 448,
+		"./te.js": 448,
+		"./tet": 449,
+		"./tet.js": 449,
+		"./th": 450,
+		"./th.js": 450,
+		"./tl-ph": 451,
+		"./tl-ph.js": 451,
+		"./tlh": 452,
+		"./tlh.js": 452,
+		"./tr": 453,
+		"./tr.js": 453,
+		"./tzl": 454,
+		"./tzl.js": 454,
+		"./tzm": 455,
+		"./tzm-latn": 456,
+		"./tzm-latn.js": 456,
+		"./tzm.js": 455,
+		"./uk": 457,
+		"./uk.js": 457,
+		"./ur": 458,
+		"./ur.js": 458,
+		"./uz": 459,
+		"./uz-latn": 460,
+		"./uz-latn.js": 460,
+		"./uz.js": 459,
+		"./vi": 461,
+		"./vi.js": 461,
+		"./x-pseudo": 462,
+		"./x-pseudo.js": 462,
+		"./yo": 463,
+		"./yo.js": 463,
+		"./zh-cn": 464,
+		"./zh-cn.js": 464,
+		"./zh-hk": 465,
+		"./zh-hk.js": 465,
+		"./zh-tw": 466,
+		"./zh-tw.js": 466
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -42590,19 +43081,19 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 348;
+	webpackContext.id = 351;
 
 
-/***/ },
-/* 349 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 352 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Afrikaans [af]
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42656,7 +43147,7 @@
 	        y : '\'n jaar',
 	        yy : '%d jaar'
 	    },
-	    ordinalParse: /\d{1,2}(ste|de)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
 	    ordinal : function (number) {
 	        return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de'); // Thanks to Joris Röling : https://github.com/jjupiter
 	    },
@@ -42671,9 +43162,9 @@
 	})));
 
 
-/***/ },
-/* 350 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 353 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Arabic [ar]
@@ -42682,7 +43173,7 @@
 	//! author : forabi https://github.com/forabi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42818,16 +43309,16 @@
 	})));
 
 
-/***/ },
-/* 351 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 354 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Arabic (Algeria) [ar-dz]
 	//! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -42882,16 +43373,80 @@
 	})));
 
 
-/***/ },
-/* 352 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 355 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Arabic (Kuwait) [ar-kw]
+	//! author : Nusret Parlak: https://github.com/nusretparlak
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	var arKw = moment.defineLocale('ar-kw', {
+	    months : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
+	    monthsShort : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
+	    weekdays : 'الأحد_الإتنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
+	    weekdaysShort : 'احد_اتنين_ثلاثاء_اربعاء_خميس_جمعة_سبت'.split('_'),
+	    weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
+	    weekdaysParseExact : true,
+	    longDateFormat : {
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
+	        L : 'DD/MM/YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY HH:mm',
+	        LLLL : 'dddd D MMMM YYYY HH:mm'
+	    },
+	    calendar : {
+	        sameDay: '[اليوم على الساعة] LT',
+	        nextDay: '[غدا على الساعة] LT',
+	        nextWeek: 'dddd [على الساعة] LT',
+	        lastDay: '[أمس على الساعة] LT',
+	        lastWeek: 'dddd [على الساعة] LT',
+	        sameElse: 'L'
+	    },
+	    relativeTime : {
+	        future : 'في %s',
+	        past : 'منذ %s',
+	        s : 'ثوان',
+	        m : 'دقيقة',
+	        mm : '%d دقائق',
+	        h : 'ساعة',
+	        hh : '%d ساعات',
+	        d : 'يوم',
+	        dd : '%d أيام',
+	        M : 'شهر',
+	        MM : '%d أشهر',
+	        y : 'سنة',
+	        yy : '%d سنوات'
+	    },
+	    week : {
+	        dow : 0, // Sunday is the first day of the week.
+	        doy : 12  // The week that contains Jan 1st is the first week of the year.
+	    }
+	});
+
+	return arKw;
+
+	})));
+
+
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Arabic (Lybia) [ar-ly]
 	//! author : Ali Hmer: https://github.com/kikoanis
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43013,9 +43568,9 @@
 	})));
 
 
-/***/ },
-/* 353 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 357 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Arabic (Morocco) [ar-ma]
@@ -43023,7 +43578,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43078,16 +43633,16 @@
 	})));
 
 
-/***/ },
-/* 354 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Arabic (Saudi Arabia) [ar-sa]
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43188,16 +43743,16 @@
 	})));
 
 
-/***/ },
-/* 355 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  :  Arabic (Tunisia) [ar-tn]
 	//! author : Nader Toukabri : https://github.com/naderio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43252,16 +43807,16 @@
 	})));
 
 
-/***/ },
-/* 356 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Azerbaijani [az]
 	//! author : topchiyev : https://github.com/topchiyev
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43341,7 +43896,7 @@
 	            return 'axşam';
 	        }
 	    },
-	    ordinalParse: /\d{1,2}-(ıncı|inci|nci|üncü|ncı|uncu)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(ıncı|inci|nci|üncü|ncı|uncu)/,
 	    ordinal : function (number) {
 	        if (number === 0) {  // special case for zero
 	            return number + '-ıncı';
@@ -43362,9 +43917,9 @@
 	})));
 
 
-/***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Belarusian [be]
@@ -43373,7 +43928,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43475,7 +44030,7 @@
 	            return 'вечара';
 	        }
 	    },
-	    ordinalParse: /\d{1,2}-(і|ы|га)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(і|ы|га)/,
 	    ordinal: function (number, period) {
 	        switch (period) {
 	            case 'M':
@@ -43501,16 +44056,16 @@
 	})));
 
 
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Bulgarian [bg]
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43565,7 +44120,7 @@
 	        y : 'година',
 	        yy : '%d години'
 	    },
-	    ordinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
 	    ordinal : function (number) {
 	        var lastDigit = number % 10,
 	            last2Digits = number % 100;
@@ -43596,16 +44151,16 @@
 	})));
 
 
-/***/ },
-/* 359 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Bengali [bn]
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43720,16 +44275,16 @@
 	})));
 
 
-/***/ },
-/* 360 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Tibetan [bo]
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43844,16 +44399,16 @@
 	})));
 
 
-/***/ },
-/* 361 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Breton [br]
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -43941,7 +44496,7 @@
 	        y : 'ur bloaz',
 	        yy : specialMutationForYears
 	    },
-	    ordinalParse: /\d{1,2}(añ|vet)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(añ|vet)/,
 	    ordinal : function (number) {
 	        var output = (number === 1) ? 'añ' : 'vet';
 	        return number + output;
@@ -43957,9 +44512,9 @@
 	})));
 
 
-/***/ },
-/* 362 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Bosnian [bs]
@@ -43967,7 +44522,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44092,7 +44647,7 @@
 	        y      : 'godinu',
 	        yy     : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44105,24 +44660,28 @@
 	})));
 
 
-/***/ },
-/* 363 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Catalan [ca]
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
 
 
 	var ca = moment.defineLocale('ca', {
-	    months : 'gener_febrer_març_abril_maig_juny_juliol_agost_setembre_octubre_novembre_desembre'.split('_'),
-	    monthsShort : 'gen._febr._mar._abr._mai._jun._jul._ag._set._oct._nov._des.'.split('_'),
+	    months : {
+	        standalone: 'gener_febrer_març_abril_maig_juny_juliol_agost_setembre_octubre_novembre_desembre'.split('_'),
+	        format: 'de gener_de febrer_de març_d\'abril_de maig_de juny_de juliol_d\'agost_de setembre_d\'octubre_de novembre_de desembre'.split('_'),
+	        isFormat: /D[oD]?(\s)+MMMM/
+	    },
+	    monthsShort : 'gen._febr._març_abr._maig_juny_jul._ag._set._oct._nov._des.'.split('_'),
 	    monthsParseExact : true,
 	    weekdays : 'diumenge_dilluns_dimarts_dimecres_dijous_divendres_dissabte'.split('_'),
 	    weekdaysShort : 'dg._dl._dt._dc._dj._dv._ds.'.split('_'),
@@ -44132,9 +44691,12 @@
 	        LT : 'H:mm',
 	        LTS : 'H:mm:ss',
 	        L : 'DD/MM/YYYY',
-	        LL : 'D MMMM YYYY',
-	        LLL : 'D MMMM YYYY H:mm',
-	        LLLL : 'dddd D MMMM YYYY H:mm'
+	        LL : '[el] D MMMM [de] YYYY',
+	        ll : 'D MMM YYYY',
+	        LLL : '[el] D MMMM [de] YYYY [a les] H:mm',
+	        lll : 'D MMM YYYY, H:mm',
+	        LLLL : '[el] dddd D MMMM [de] YYYY [a les] H:mm',
+	        llll : 'ddd D MMM YYYY, H:mm'
 	    },
 	    calendar : {
 	        sameDay : function () {
@@ -44169,7 +44731,7 @@
 	        y : 'un any',
 	        yy : '%d anys'
 	    },
-	    ordinalParse: /\d{1,2}(r|n|t|è|a)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(r|n|t|è|a)/,
 	    ordinal : function (number, period) {
 	        var output = (number === 1) ? 'r' :
 	            (number === 2) ? 'n' :
@@ -44191,16 +44753,16 @@
 	})));
 
 
-/***/ },
-/* 364 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Czech [cs]
 	//! author : petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44355,7 +44917,7 @@
 	        y : translate,
 	        yy : translate
 	    },
-	    ordinalParse : /\d{1,2}\./,
+	    dayOfMonthOrdinalParse : /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44368,16 +44930,16 @@
 	})));
 
 
-/***/ },
-/* 365 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Chuvash [cv]
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44423,7 +44985,7 @@
 	        y : 'пӗр ҫул',
 	        yy : '%d ҫул'
 	    },
-	    ordinalParse: /\d{1,2}-мӗш/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-мӗш/,
 	    ordinal : '%d-мӗш',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44436,9 +44998,9 @@
 	})));
 
 
-/***/ },
-/* 366 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Welsh [cy]
@@ -44446,7 +45008,7 @@
 	//! author : https://github.com/ryangreaves
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44491,7 +45053,7 @@
 	        y: 'blwyddyn',
 	        yy: '%d flynedd'
 	    },
-	    ordinalParse: /\d{1,2}(fed|ain|af|il|ydd|ed|eg)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(fed|ain|af|il|ydd|ed|eg)/,
 	    // traditional ordinal numbers above 31 are not commonly used in colloquial Welsh
 	    ordinal: function (number) {
 	        var b = number,
@@ -44522,16 +45084,16 @@
 	})));
 
 
-/***/ },
-/* 367 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Danish [da]
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44549,14 +45111,14 @@
 	        L : 'DD/MM/YYYY',
 	        LL : 'D. MMMM YYYY',
 	        LLL : 'D. MMMM YYYY HH:mm',
-	        LLLL : 'dddd [d.] D. MMMM YYYY HH:mm'
+	        LLLL : 'dddd [d.] D. MMMM YYYY [kl.] HH:mm'
 	    },
 	    calendar : {
-	        sameDay : '[I dag kl.] LT',
-	        nextDay : '[I morgen kl.] LT',
-	        nextWeek : 'dddd [kl.] LT',
-	        lastDay : '[I går kl.] LT',
-	        lastWeek : '[sidste] dddd [kl] LT',
+	        sameDay : '[i dag kl.] LT',
+	        nextDay : '[i morgen kl.] LT',
+	        nextWeek : 'på dddd [kl.] LT',
+	        lastDay : '[i går kl.] LT',
+	        lastWeek : '[i] dddd[s kl.] LT',
 	        sameElse : 'L'
 	    },
 	    relativeTime : {
@@ -44574,7 +45136,7 @@
 	        y : 'et år',
 	        yy : '%d år'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44587,9 +45149,9 @@
 	})));
 
 
-/***/ },
-/* 368 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : German [de]
@@ -44598,7 +45160,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44657,7 +45219,7 @@
 	        y : processRelativeTime,
 	        yy : processRelativeTime
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44670,9 +45232,9 @@
 	})));
 
 
-/***/ },
-/* 369 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : German (Austria) [de-at]
@@ -44682,7 +45244,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44741,7 +45303,7 @@
 	        y : processRelativeTime,
 	        yy : processRelativeTime
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44754,16 +45316,99 @@
 	})));
 
 
-/***/ },
-/* 370 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : German (Switzerland) [de-ch]
+	//! author : sschueller : https://github.com/sschueller
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	// based on: https://www.bk.admin.ch/dokumentation/sprachen/04915/05016/index.html?lang=de#
+
+	function processRelativeTime(number, withoutSuffix, key, isFuture) {
+	    var format = {
+	        'm': ['eine Minute', 'einer Minute'],
+	        'h': ['eine Stunde', 'einer Stunde'],
+	        'd': ['ein Tag', 'einem Tag'],
+	        'dd': [number + ' Tage', number + ' Tagen'],
+	        'M': ['ein Monat', 'einem Monat'],
+	        'MM': [number + ' Monate', number + ' Monaten'],
+	        'y': ['ein Jahr', 'einem Jahr'],
+	        'yy': [number + ' Jahre', number + ' Jahren']
+	    };
+	    return withoutSuffix ? format[key][0] : format[key][1];
+	}
+
+	var deCh = moment.defineLocale('de-ch', {
+	    months : 'Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
+	    monthsShort : 'Jan._Febr._März_April_Mai_Juni_Juli_Aug._Sept._Okt._Nov._Dez.'.split('_'),
+	    monthsParseExact : true,
+	    weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
+	    weekdaysShort : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
+	    weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
+	    weekdaysParseExact : true,
+	    longDateFormat : {
+	        LT: 'HH.mm',
+	        LTS: 'HH.mm.ss',
+	        L : 'DD.MM.YYYY',
+	        LL : 'D. MMMM YYYY',
+	        LLL : 'D. MMMM YYYY HH.mm',
+	        LLLL : 'dddd, D. MMMM YYYY HH.mm'
+	    },
+	    calendar : {
+	        sameDay: '[heute um] LT [Uhr]',
+	        sameElse: 'L',
+	        nextDay: '[morgen um] LT [Uhr]',
+	        nextWeek: 'dddd [um] LT [Uhr]',
+	        lastDay: '[gestern um] LT [Uhr]',
+	        lastWeek: '[letzten] dddd [um] LT [Uhr]'
+	    },
+	    relativeTime : {
+	        future : 'in %s',
+	        past : 'vor %s',
+	        s : 'ein paar Sekunden',
+	        m : processRelativeTime,
+	        mm : '%d Minuten',
+	        h : processRelativeTime,
+	        hh : '%d Stunden',
+	        d : processRelativeTime,
+	        dd : processRelativeTime,
+	        M : processRelativeTime,
+	        MM : processRelativeTime,
+	        y : processRelativeTime,
+	        yy : processRelativeTime
+	    },
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
+	    ordinal : '%d.',
+	    week : {
+	        dow : 1, // Monday is the first day of the week.
+	        doy : 4  // The week that contains Jan 4th is the first week of the year.
+	    }
+	});
+
+	return deCh;
+
+	})));
+
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Maldivian [dv]
 	//! author : Jawish Hameed : https://github.com/jawish
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44859,16 +45504,16 @@
 	})));
 
 
-/***/ },
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Greek [el]
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -44882,7 +45527,9 @@
 	    monthsNominativeEl : 'Ιανουάριος_Φεβρουάριος_Μάρτιος_Απρίλιος_Μάιος_Ιούνιος_Ιούλιος_Αύγουστος_Σεπτέμβριος_Οκτώβριος_Νοέμβριος_Δεκέμβριος'.split('_'),
 	    monthsGenitiveEl : 'Ιανουαρίου_Φεβρουαρίου_Μαρτίου_Απριλίου_Μαΐου_Ιουνίου_Ιουλίου_Αυγούστου_Σεπτεμβρίου_Οκτωβρίου_Νοεμβρίου_Δεκεμβρίου'.split('_'),
 	    months : function (momentToFormat, format) {
-	        if (/D/.test(format.substring(0, format.indexOf('MMMM')))) { // if there is a day number before 'MMMM'
+	        if (!momentToFormat) {
+	            return this._monthsNominativeEl;
+	        } else if (/D/.test(format.substring(0, format.indexOf('MMMM')))) { // if there is a day number before 'MMMM'
 	            return this._monthsGenitiveEl[momentToFormat.month()];
 	        } else {
 	            return this._monthsNominativeEl[momentToFormat.month()];
@@ -44949,7 +45596,7 @@
 	        y : 'ένας χρόνος',
 	        yy : '%d χρόνια'
 	    },
-	    ordinalParse: /\d{1,2}η/,
+	    dayOfMonthOrdinalParse: /\d{1,2}η/,
 	    ordinal: '%dη',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -44962,16 +45609,16 @@
 	})));
 
 
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : English (Australia) [en-au]
 	//! author : Jared Morse : https://github.com/jarcoal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45014,7 +45661,7 @@
 	        y : 'a year',
 	        yy : '%d years'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -45034,16 +45681,16 @@
 	})));
 
 
-/***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : English (Canada) [en-ca]
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45086,7 +45733,7 @@
 	        y : 'a year',
 	        yy : '%d years'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -45102,16 +45749,16 @@
 	})));
 
 
-/***/ },
-/* 374 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : English (United Kingdom) [en-gb]
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45154,7 +45801,7 @@
 	        y : 'a year',
 	        yy : '%d years'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -45174,16 +45821,16 @@
 	})));
 
 
-/***/ },
-/* 375 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : English (Ireland) [en-ie]
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45226,7 +45873,7 @@
 	        y : 'a year',
 	        yy : '%d years'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -45246,16 +45893,16 @@
 	})));
 
 
-/***/ },
-/* 376 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : English (New Zealand) [en-nz]
 	//! author : Luke McGregor : https://github.com/lukemcgregor
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45298,7 +45945,7 @@
 	        y : 'a year',
 	        yy : '%d years'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -45318,18 +45965,18 @@
 	})));
 
 
-/***/ },
-/* 377 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Esperanto [eo]
 	//! author : Colin Dean : https://github.com/colindean
-	//! komento: Mi estas malcerta se mi korekte traktis akuzativojn en tiu traduko.
-	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
+	//! author : Mia Nordentoft Imperatori : https://github.com/miestasmia
+	//! comment : miestasmia corrected the translation by colindean
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45338,16 +45985,16 @@
 	var eo = moment.defineLocale('eo', {
 	    months : 'januaro_februaro_marto_aprilo_majo_junio_julio_aŭgusto_septembro_oktobro_novembro_decembro'.split('_'),
 	    monthsShort : 'jan_feb_mar_apr_maj_jun_jul_aŭg_sep_okt_nov_dec'.split('_'),
-	    weekdays : 'Dimanĉo_Lundo_Mardo_Merkredo_Ĵaŭdo_Vendredo_Sabato'.split('_'),
-	    weekdaysShort : 'Dim_Lun_Mard_Merk_Ĵaŭ_Ven_Sab'.split('_'),
-	    weekdaysMin : 'Di_Lu_Ma_Me_Ĵa_Ve_Sa'.split('_'),
+	    weekdays : 'dimanĉo_lundo_mardo_merkredo_ĵaŭdo_vendredo_sabato'.split('_'),
+	    weekdaysShort : 'dim_lun_mard_merk_ĵaŭ_ven_sab'.split('_'),
+	    weekdaysMin : 'di_lu_ma_me_ĵa_ve_sa'.split('_'),
 	    longDateFormat : {
 	        LT : 'HH:mm',
 	        LTS : 'HH:mm:ss',
 	        L : 'YYYY-MM-DD',
-	        LL : 'D[-an de] MMMM, YYYY',
-	        LLL : 'D[-an de] MMMM, YYYY HH:mm',
-	        LLLL : 'dddd, [la] D[-an de] MMMM, YYYY HH:mm'
+	        LL : 'D[-a de] MMMM, YYYY',
+	        LLL : 'D[-a de] MMMM, YYYY HH:mm',
+	        LLLL : 'dddd, [la] D[-a de] MMMM, YYYY HH:mm'
 	    },
 	    meridiemParse: /[ap]\.t\.m/i,
 	    isPM: function (input) {
@@ -45369,7 +46016,7 @@
 	        sameElse : 'L'
 	    },
 	    relativeTime : {
-	        future : 'je %s',
+	        future : 'post %s',
 	        past : 'antaŭ %s',
 	        s : 'sekundoj',
 	        m : 'minuto',
@@ -45383,7 +46030,7 @@
 	        y : 'jaro',
 	        yy : '%d jaroj'
 	    },
-	    ordinalParse: /\d{1,2}a/,
+	    dayOfMonthOrdinalParse: /\d{1,2}a/,
 	    ordinal : '%da',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45396,16 +46043,16 @@
 	})));
 
 
-/***/ },
-/* 378 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Spanish [es]
 	//! author : Julio Napurí : https://github.com/julionc
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45417,7 +46064,9 @@
 	var es = moment.defineLocale('es', {
 	    months : 'enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre'.split('_'),
 	    monthsShort : function (m, format) {
-	        if (/-MMM-/.test(format)) {
+	        if (!m) {
+	            return monthsShortDot;
+	        } else if (/-MMM-/.test(format)) {
 	            return monthsShort[m.month()];
 	        } else {
 	            return monthsShortDot[m.month()];
@@ -45469,7 +46118,7 @@
 	        y : 'un año',
 	        yy : '%d años'
 	    },
-	    ordinalParse : /\d{1,2}º/,
+	    dayOfMonthOrdinalParse : /\d{1,2}º/,
 	    ordinal : '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45482,15 +46131,15 @@
 	})));
 
 
-/***/ },
-/* 379 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Spanish (Dominican Republic) [es-do]
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45502,7 +46151,9 @@
 	var esDo = moment.defineLocale('es-do', {
 	    months : 'enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre'.split('_'),
 	    monthsShort : function (m, format) {
-	        if (/-MMM-/.test(format)) {
+	        if (!m) {
+	            return monthsShortDot;
+	        } else if (/-MMM-/.test(format)) {
 	            return monthsShort[m.month()];
 	        } else {
 	            return monthsShortDot[m.month()];
@@ -45554,7 +46205,7 @@
 	        y : 'un año',
 	        yy : '%d años'
 	    },
-	    ordinalParse : /\d{1,2}º/,
+	    dayOfMonthOrdinalParse : /\d{1,2}º/,
 	    ordinal : '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45567,9 +46218,9 @@
 	})));
 
 
-/***/ },
-/* 380 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Estonian [et]
@@ -45577,7 +46228,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45639,7 +46290,7 @@
 	        y      : processRelativeTime,
 	        yy     : processRelativeTime
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45652,16 +46303,16 @@
 	})));
 
 
-/***/ },
-/* 381 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 386 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Basque [eu]
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45710,7 +46361,7 @@
 	        y : 'urte bat',
 	        yy : '%d urte'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45723,16 +46374,16 @@
 	})));
 
 
-/***/ },
-/* 382 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 387 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Persian [fa]
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45800,7 +46451,7 @@
 	    relativeTime : {
 	        future : 'در %s',
 	        past : '%s پیش',
-	        s : 'چندین ثانیه',
+	        s : 'چند ثانیه',
 	        m : 'یک دقیقه',
 	        mm : '%d دقیقه',
 	        h : 'یک ساعت',
@@ -45822,7 +46473,7 @@
 	            return symbolMap[match];
 	        }).replace(/,/g, '،');
 	    },
-	    ordinalParse: /\d{1,2}م/,
+	    dayOfMonthOrdinalParse: /\d{1,2}م/,
 	    ordinal : '%dم',
 	    week : {
 	        dow : 6, // Saturday is the first day of the week.
@@ -45835,16 +46486,16 @@
 	})));
 
 
-/***/ },
-/* 383 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Finnish [fi]
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45934,7 +46585,7 @@
 	        y : translate,
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -45947,16 +46598,16 @@
 	})));
 
 
-/***/ },
-/* 384 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Faroese [fo]
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -45999,7 +46650,7 @@
 	        y : 'eitt ár',
 	        yy : '%d ár'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46012,16 +46663,16 @@
 	})));
 
 
-/***/ },
-/* 385 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : French [fr]
 	//! author : John Fischer : https://github.com/jfroffice
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46044,12 +46695,12 @@
 	        LLLL : 'dddd D MMMM YYYY HH:mm'
 	    },
 	    calendar : {
-	        sameDay: '[Aujourd\'hui à] LT',
-	        nextDay: '[Demain à] LT',
-	        nextWeek: 'dddd [à] LT',
-	        lastDay: '[Hier à] LT',
-	        lastWeek: 'dddd [dernier à] LT',
-	        sameElse: 'L'
+	        sameDay : '[Aujourd’hui à] LT',
+	        nextDay : '[Demain à] LT',
+	        nextWeek : 'dddd [à] LT',
+	        lastDay : '[Hier à] LT',
+	        lastWeek : 'dddd [dernier à] LT',
+	        sameElse : 'L'
 	    },
 	    relativeTime : {
 	        future : 'dans %s',
@@ -46066,9 +46717,28 @@
 	        y : 'un an',
 	        yy : '%d ans'
 	    },
-	    ordinalParse: /\d{1,2}(er|)/,
-	    ordinal : function (number) {
-	        return number + (number === 1 ? 'er' : '');
+	    dayOfMonthOrdinalParse: /\d{1,2}(er|)/,
+	    ordinal : function (number, period) {
+	        switch (period) {
+	            // TODO: Return 'e' when day of month > 1. Move this case inside
+	            // block for masculine words below.
+	            // See https://github.com/moment/moment/issues/3375
+	            case 'D':
+	                return number + (number === 1 ? 'er' : '');
+
+	            // Words with masculine grammatical gender: mois, trimestre, jour
+	            default:
+	            case 'M':
+	            case 'Q':
+	            case 'DDD':
+	            case 'd':
+	                return number + (number === 1 ? 'er' : 'e');
+
+	            // Words with feminine grammatical gender: semaine
+	            case 'w':
+	            case 'W':
+	                return number + (number === 1 ? 're' : 'e');
+	        }
 	    },
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46081,16 +46751,16 @@
 	})));
 
 
-/***/ },
-/* 386 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : French (Canada) [fr-ca]
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46113,12 +46783,12 @@
 	        LLLL : 'dddd D MMMM YYYY HH:mm'
 	    },
 	    calendar : {
-	        sameDay: '[Aujourd\'hui à] LT',
-	        nextDay: '[Demain à] LT',
-	        nextWeek: 'dddd [à] LT',
-	        lastDay: '[Hier à] LT',
-	        lastWeek: 'dddd [dernier à] LT',
-	        sameElse: 'L'
+	        sameDay : '[Aujourd’hui à] LT',
+	        nextDay : '[Demain à] LT',
+	        nextWeek : 'dddd [à] LT',
+	        lastDay : '[Hier à] LT',
+	        lastWeek : 'dddd [dernier à] LT',
+	        sameElse : 'L'
 	    },
 	    relativeTime : {
 	        future : 'dans %s',
@@ -46135,9 +46805,23 @@
 	        y : 'un an',
 	        yy : '%d ans'
 	    },
-	    ordinalParse: /\d{1,2}(er|e)/,
-	    ordinal : function (number) {
-	        return number + (number === 1 ? 'er' : 'e');
+	    dayOfMonthOrdinalParse: /\d{1,2}(er|e)/,
+	    ordinal : function (number, period) {
+	        switch (period) {
+	            // Words with masculine grammatical gender: mois, trimestre, jour
+	            default:
+	            case 'M':
+	            case 'Q':
+	            case 'D':
+	            case 'DDD':
+	            case 'd':
+	                return number + (number === 1 ? 'er' : 'e');
+
+	            // Words with feminine grammatical gender: semaine
+	            case 'w':
+	            case 'W':
+	                return number + (number === 1 ? 're' : 'e');
+	        }
 	    }
 	});
 
@@ -46146,16 +46830,16 @@
 	})));
 
 
-/***/ },
-/* 387 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : French (Switzerland) [fr-ch]
 	//! author : Gaspard Bucher : https://github.com/gaspard
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46178,12 +46862,12 @@
 	        LLLL : 'dddd D MMMM YYYY HH:mm'
 	    },
 	    calendar : {
-	        sameDay: '[Aujourd\'hui à] LT',
-	        nextDay: '[Demain à] LT',
-	        nextWeek: 'dddd [à] LT',
-	        lastDay: '[Hier à] LT',
-	        lastWeek: 'dddd [dernier à] LT',
-	        sameElse: 'L'
+	        sameDay : '[Aujourd’hui à] LT',
+	        nextDay : '[Demain à] LT',
+	        nextWeek : 'dddd [à] LT',
+	        lastDay : '[Hier à] LT',
+	        lastWeek : 'dddd [dernier à] LT',
+	        sameElse : 'L'
 	    },
 	    relativeTime : {
 	        future : 'dans %s',
@@ -46200,9 +46884,23 @@
 	        y : 'un an',
 	        yy : '%d ans'
 	    },
-	    ordinalParse: /\d{1,2}(er|e)/,
-	    ordinal : function (number) {
-	        return number + (number === 1 ? 'er' : 'e');
+	    dayOfMonthOrdinalParse: /\d{1,2}(er|e)/,
+	    ordinal : function (number, period) {
+	        switch (period) {
+	            // Words with masculine grammatical gender: mois, trimestre, jour
+	            default:
+	            case 'M':
+	            case 'Q':
+	            case 'D':
+	            case 'DDD':
+	            case 'd':
+	                return number + (number === 1 ? 'er' : 'e');
+
+	            // Words with feminine grammatical gender: semaine
+	            case 'w':
+	            case 'W':
+	                return number + (number === 1 ? 're' : 'e');
+	        }
 	    },
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46215,16 +46913,16 @@
 	})));
 
 
-/***/ },
-/* 388 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Frisian [fy]
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46236,7 +46934,9 @@
 	var fy = moment.defineLocale('fy', {
 	    months : 'jannewaris_febrewaris_maart_april_maaie_juny_july_augustus_septimber_oktober_novimber_desimber'.split('_'),
 	    monthsShort : function (m, format) {
-	        if (/-MMM-/.test(format)) {
+	        if (!m) {
+	            return monthsShortWithDots;
+	        } else if (/-MMM-/.test(format)) {
 	            return monthsShortWithoutDots[m.month()];
 	        } else {
 	            return monthsShortWithDots[m.month()];
@@ -46278,7 +46978,7 @@
 	        y : 'ien jier',
 	        yy : '%d jierren'
 	    },
-	    ordinalParse: /\d{1,2}(ste|de)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
 	    ordinal : function (number) {
 	        return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de');
 	    },
@@ -46293,16 +46993,16 @@
 	})));
 
 
-/***/ },
-/* 389 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Scottish Gaelic [gd]
 	//! author : Jon Ashdown : https://github.com/jonashdown
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46358,7 +47058,7 @@
 	        y : 'bliadhna',
 	        yy : '%d bliadhna'
 	    },
-	    ordinalParse : /\d{1,2}(d|na|mh)/,
+	    dayOfMonthOrdinalParse : /\d{1,2}(d|na|mh)/,
 	    ordinal : function (number) {
 	        var output = number === 1 ? 'd' : number % 10 === 2 ? 'na' : 'mh';
 	        return number + output;
@@ -46374,16 +47074,16 @@
 	})));
 
 
-/***/ },
-/* 390 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 395 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Galician [gl]
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46443,7 +47143,7 @@
 	        y : 'un ano',
 	        yy : '%d anos'
 	    },
-	    ordinalParse : /\d{1,2}º/,
+	    dayOfMonthOrdinalParse : /\d{1,2}º/,
 	    ordinal : '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46456,9 +47156,136 @@
 	})));
 
 
-/***/ },
-/* 391 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 396 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Konkani Latin script [gom-latn]
+	//! author : The Discoverer : https://github.com/WikiDiscoverer
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	function processRelativeTime(number, withoutSuffix, key, isFuture) {
+	    var format = {
+	        's': ['thodde secondanim', 'thodde second'],
+	        'm': ['eka mintan', 'ek minute'],
+	        'mm': [number + ' mintanim', number + ' mintam'],
+	        'h': ['eka horan', 'ek hor'],
+	        'hh': [number + ' horanim', number + ' hor'],
+	        'd': ['eka disan', 'ek dis'],
+	        'dd': [number + ' disanim', number + ' dis'],
+	        'M': ['eka mhoinean', 'ek mhoino'],
+	        'MM': [number + ' mhoineanim', number + ' mhoine'],
+	        'y': ['eka vorsan', 'ek voros'],
+	        'yy': [number + ' vorsanim', number + ' vorsam']
+	    };
+	    return withoutSuffix ? format[key][0] : format[key][1];
+	}
+
+	var gomLatn = moment.defineLocale('gom-latn', {
+	    months : 'Janer_Febrer_Mars_Abril_Mai_Jun_Julai_Agost_Setembr_Otubr_Novembr_Dezembr'.split('_'),
+	    monthsShort : 'Jan._Feb._Mars_Abr._Mai_Jun_Jul._Ago._Set._Otu._Nov._Dez.'.split('_'),
+	    monthsParseExact : true,
+	    weekdays : 'Aitar_Somar_Mongllar_Budvar_Brestar_Sukrar_Son\'var'.split('_'),
+	    weekdaysShort : 'Ait._Som._Mon._Bud._Bre._Suk._Son.'.split('_'),
+	    weekdaysMin : 'Ai_Sm_Mo_Bu_Br_Su_Sn'.split('_'),
+	    weekdaysParseExact : true,
+	    longDateFormat : {
+	        LT : 'A h:mm [vazta]',
+	        LTS : 'A h:mm:ss [vazta]',
+	        L : 'DD-MM-YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY A h:mm [vazta]',
+	        LLLL : 'dddd, MMMM[achea] Do, YYYY, A h:mm [vazta]',
+	        llll: 'ddd, D MMM YYYY, A h:mm [vazta]'
+	    },
+	    calendar : {
+	        sameDay: '[Aiz] LT',
+	        nextDay: '[Faleam] LT',
+	        nextWeek: '[Ieta to] dddd[,] LT',
+	        lastDay: '[Kal] LT',
+	        lastWeek: '[Fatlo] dddd[,] LT',
+	        sameElse: 'L'
+	    },
+	    relativeTime : {
+	        future : '%s',
+	        past : '%s adim',
+	        s : processRelativeTime,
+	        m : processRelativeTime,
+	        mm : processRelativeTime,
+	        h : processRelativeTime,
+	        hh : processRelativeTime,
+	        d : processRelativeTime,
+	        dd : processRelativeTime,
+	        M : processRelativeTime,
+	        MM : processRelativeTime,
+	        y : processRelativeTime,
+	        yy : processRelativeTime
+	    },
+	    dayOfMonthOrdinalParse : /\d{1,2}(er)/,
+	    ordinal : function (number, period) {
+	        switch (period) {
+	            // the ordinal 'er' only applies to day of the month
+	            case 'D':
+	                return number + 'er';
+	            default:
+	            case 'M':
+	            case 'Q':
+	            case 'DDD':
+	            case 'd':
+	            case 'w':
+	            case 'W':
+	                return number;
+	        }
+	    },
+	    week : {
+	        dow : 1, // Monday is the first day of the week.
+	        doy : 4  // The week that contains Jan 4th is the first week of the year.
+	    },
+	    meridiemParse: /rati|sokalli|donparam|sanje/,
+	    meridiemHour : function (hour, meridiem) {
+	        if (hour === 12) {
+	            hour = 0;
+	        }
+	        if (meridiem === 'rati') {
+	            return hour < 4 ? hour : hour + 12;
+	        } else if (meridiem === 'sokalli') {
+	            return hour;
+	        } else if (meridiem === 'donparam') {
+	            return hour > 12 ? hour : hour + 12;
+	        } else if (meridiem === 'sanje') {
+	            return hour + 12;
+	        }
+	    },
+	    meridiem : function (hour, minute, isLower) {
+	        if (hour < 4) {
+	            return 'rati';
+	        } else if (hour < 12) {
+	            return 'sokalli';
+	        } else if (hour < 16) {
+	            return 'donparam';
+	        } else if (hour < 20) {
+	            return 'sanje';
+	        } else {
+	            return 'rati';
+	        }
+	    }
+	});
+
+	return gomLatn;
+
+	})));
+
+
+/***/ }),
+/* 397 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Hebrew [he]
@@ -46467,7 +47294,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46560,16 +47387,16 @@
 	})));
 
 
-/***/ },
-/* 392 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Hindi [hi]
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46689,16 +47516,16 @@
 	})));
 
 
-/***/ },
-/* 393 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 399 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Croatian [hr]
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46826,7 +47653,7 @@
 	        y      : 'godinu',
 	        yy     : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46839,16 +47666,16 @@
 	})));
 
 
-/***/ },
-/* 394 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 400 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Hungarian [hu]
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46940,7 +47767,7 @@
 	        y : translate,
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -46953,16 +47780,16 @@
 	})));
 
 
-/***/ },
-/* 395 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 401 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Armenian [hy-am]
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47027,7 +47854,7 @@
 	            return 'երեկոյան';
 	        }
 	    },
-	    ordinalParse: /\d{1,2}|\d{1,2}-(ին|րդ)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}|\d{1,2}-(ին|րդ)/,
 	    ordinal: function (number, period) {
 	        switch (period) {
 	            case 'DDD':
@@ -47053,9 +47880,9 @@
 	})));
 
 
-/***/ },
-/* 396 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 402 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Indonesian [id]
@@ -47063,7 +47890,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47141,16 +47968,16 @@
 	})));
 
 
-/***/ },
-/* 397 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 403 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Icelandic [is]
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47260,7 +48087,7 @@
 	        y : translate,
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -47273,9 +48100,9 @@
 	})));
 
 
-/***/ },
-/* 398 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 404 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Italian [it]
@@ -47283,7 +48110,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47292,9 +48119,9 @@
 	var it = moment.defineLocale('it', {
 	    months : 'gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre'.split('_'),
 	    monthsShort : 'gen_feb_mar_apr_mag_giu_lug_ago_set_ott_nov_dic'.split('_'),
-	    weekdays : 'Domenica_Lunedì_Martedì_Mercoledì_Giovedì_Venerdì_Sabato'.split('_'),
-	    weekdaysShort : 'Dom_Lun_Mar_Mer_Gio_Ven_Sab'.split('_'),
-	    weekdaysMin : 'Do_Lu_Ma_Me_Gi_Ve_Sa'.split('_'),
+	    weekdays : 'domenica_lunedì_martedì_mercoledì_giovedì_venerdì_sabato'.split('_'),
+	    weekdaysShort : 'dom_lun_mar_mer_gio_ven_sab'.split('_'),
+	    weekdaysMin : 'do_lu_ma_me_gi_ve_sa'.split('_'),
 	    longDateFormat : {
 	        LT : 'HH:mm',
 	        LTS : 'HH:mm:ss',
@@ -47335,7 +48162,7 @@
 	        y : 'un anno',
 	        yy : '%d anni'
 	    },
-	    ordinalParse : /\d{1,2}º/,
+	    dayOfMonthOrdinalParse : /\d{1,2}º/,
 	    ordinal: '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -47348,16 +48175,16 @@
 	})));
 
 
-/***/ },
-/* 399 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Japanese [ja]
 	//! author : LI Long : https://github.com/baryon
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47370,12 +48197,16 @@
 	    weekdaysShort : '日_月_火_水_木_金_土'.split('_'),
 	    weekdaysMin : '日_月_火_水_木_金_土'.split('_'),
 	    longDateFormat : {
-	        LT : 'Ah時m分',
-	        LTS : 'Ah時m分s秒',
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
 	        L : 'YYYY/MM/DD',
 	        LL : 'YYYY年M月D日',
-	        LLL : 'YYYY年M月D日Ah時m分',
-	        LLLL : 'YYYY年M月D日Ah時m分 dddd'
+	        LLL : 'YYYY年M月D日 HH:mm',
+	        LLLL : 'YYYY年M月D日 HH:mm dddd',
+	        l : 'YYYY/MM/DD',
+	        ll : 'YYYY年M月D日',
+	        lll : 'YYYY年M月D日 HH:mm',
+	        llll : 'YYYY年M月D日 HH:mm dddd'
 	    },
 	    meridiemParse: /午前|午後/i,
 	    isPM : function (input) {
@@ -47396,7 +48227,7 @@
 	        lastWeek : '[前週]dddd LT',
 	        sameElse : 'L'
 	    },
-	    ordinalParse : /\d{1,2}日/,
+	    dayOfMonthOrdinalParse : /\d{1,2}日/,
 	    ordinal : function (number, period) {
 	        switch (period) {
 	            case 'd':
@@ -47429,9 +48260,9 @@
 	})));
 
 
-/***/ },
-/* 400 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 406 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Javanese [jv]
@@ -47439,7 +48270,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47517,16 +48348,16 @@
 	})));
 
 
-/***/ },
-/* 401 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 407 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Georgian [ka]
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47569,10 +48400,10 @@
 	        },
 	        past : function (s) {
 	            if ((/(წამი|წუთი|საათი|დღე|თვე)/).test(s)) {
-	                return s.replace(/(ი|ე)$/, 'ის წინ');
+	                return s.replace(/(ი|ე)$/, 'ის უკან');
 	            }
 	            if ((/წელი/).test(s)) {
-	                return s.replace(/წელი$/, 'წლის წინ');
+	                return s.replace(/წელი$/, 'წლის უკან');
 	            }
 	        },
 	        s : 'რამდენიმე წამი',
@@ -47587,7 +48418,7 @@
 	        y : 'წელი',
 	        yy : '%d წელი'
 	    },
-	    ordinalParse: /0|1-ლი|მე-\d{1,2}|\d{1,2}-ე/,
+	    dayOfMonthOrdinalParse: /0|1-ლი|მე-\d{1,2}|\d{1,2}-ე/,
 	    ordinal : function (number) {
 	        if (number === 0) {
 	            return number;
@@ -47611,16 +48442,16 @@
 	})));
 
 
-/***/ },
-/* 402 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Kazakh [kk]
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47686,7 +48517,7 @@
 	        y : 'бір жыл',
 	        yy : '%d жыл'
 	    },
-	    ordinalParse: /\d{1,2}-(ші|шы)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(ші|шы)/,
 	    ordinal : function (number) {
 	        var a = number % 10,
 	            b = number >= 100 ? 100 : null;
@@ -47703,16 +48534,16 @@
 	})));
 
 
-/***/ },
-/* 403 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Cambodian [km]
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47766,9 +48597,140 @@
 	})));
 
 
-/***/ },
-/* 404 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Kannada [kn]
+	//! author : Rajeev Naik : https://github.com/rajeevnaikte
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	var symbolMap = {
+	    '1': '೧',
+	    '2': '೨',
+	    '3': '೩',
+	    '4': '೪',
+	    '5': '೫',
+	    '6': '೬',
+	    '7': '೭',
+	    '8': '೮',
+	    '9': '೯',
+	    '0': '೦'
+	};
+	var numberMap = {
+	    '೧': '1',
+	    '೨': '2',
+	    '೩': '3',
+	    '೪': '4',
+	    '೫': '5',
+	    '೬': '6',
+	    '೭': '7',
+	    '೮': '8',
+	    '೯': '9',
+	    '೦': '0'
+	};
+
+	var kn = moment.defineLocale('kn', {
+	    months : 'ಜನವರಿ_ಫೆಬ್ರವರಿ_ಮಾರ್ಚ್_ಏಪ್ರಿಲ್_ಮೇ_ಜೂನ್_ಜುಲೈ_ಆಗಸ್ಟ್_ಸೆಪ್ಟೆಂಬರ್_ಅಕ್ಟೋಬರ್_ನವೆಂಬರ್_ಡಿಸೆಂಬರ್'.split('_'),
+	    monthsShort : 'ಜನ_ಫೆಬ್ರ_ಮಾರ್ಚ್_ಏಪ್ರಿಲ್_ಮೇ_ಜೂನ್_ಜುಲೈ_ಆಗಸ್ಟ್_ಸೆಪ್ಟೆಂಬ_ಅಕ್ಟೋಬ_ನವೆಂಬ_ಡಿಸೆಂಬ'.split('_'),
+	    monthsParseExact: true,
+	    weekdays : 'ಭಾನುವಾರ_ಸೋಮವಾರ_ಮಂಗಳವಾರ_ಬುಧವಾರ_ಗುರುವಾರ_ಶುಕ್ರವಾರ_ಶನಿವಾರ'.split('_'),
+	    weekdaysShort : 'ಭಾನು_ಸೋಮ_ಮಂಗಳ_ಬುಧ_ಗುರು_ಶುಕ್ರ_ಶನಿ'.split('_'),
+	    weekdaysMin : 'ಭಾ_ಸೋ_ಮಂ_ಬು_ಗು_ಶು_ಶ'.split('_'),
+	    longDateFormat : {
+	        LT : 'A h:mm',
+	        LTS : 'A h:mm:ss',
+	        L : 'DD/MM/YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY, A h:mm',
+	        LLLL : 'dddd, D MMMM YYYY, A h:mm'
+	    },
+	    calendar : {
+	        sameDay : '[ಇಂದು] LT',
+	        nextDay : '[ನಾಳೆ] LT',
+	        nextWeek : 'dddd, LT',
+	        lastDay : '[ನಿನ್ನೆ] LT',
+	        lastWeek : '[ಕೊನೆಯ] dddd, LT',
+	        sameElse : 'L'
+	    },
+	    relativeTime : {
+	        future : '%s ನಂತರ',
+	        past : '%s ಹಿಂದೆ',
+	        s : 'ಕೆಲವು ಕ್ಷಣಗಳು',
+	        m : 'ಒಂದು ನಿಮಿಷ',
+	        mm : '%d ನಿಮಿಷ',
+	        h : 'ಒಂದು ಗಂಟೆ',
+	        hh : '%d ಗಂಟೆ',
+	        d : 'ಒಂದು ದಿನ',
+	        dd : '%d ದಿನ',
+	        M : 'ಒಂದು ತಿಂಗಳು',
+	        MM : '%d ತಿಂಗಳು',
+	        y : 'ಒಂದು ವರ್ಷ',
+	        yy : '%d ವರ್ಷ'
+	    },
+	    preparse: function (string) {
+	        return string.replace(/[೧೨೩೪೫೬೭೮೯೦]/g, function (match) {
+	            return numberMap[match];
+	        });
+	    },
+	    postformat: function (string) {
+	        return string.replace(/\d/g, function (match) {
+	            return symbolMap[match];
+	        });
+	    },
+	    meridiemParse: /ರಾತ್ರಿ|ಬೆಳಿಗ್ಗೆ|ಮಧ್ಯಾಹ್ನ|ಸಂಜೆ/,
+	    meridiemHour : function (hour, meridiem) {
+	        if (hour === 12) {
+	            hour = 0;
+	        }
+	        if (meridiem === 'ರಾತ್ರಿ') {
+	            return hour < 4 ? hour : hour + 12;
+	        } else if (meridiem === 'ಬೆಳಿಗ್ಗೆ') {
+	            return hour;
+	        } else if (meridiem === 'ಮಧ್ಯಾಹ್ನ') {
+	            return hour >= 10 ? hour : hour + 12;
+	        } else if (meridiem === 'ಸಂಜೆ') {
+	            return hour + 12;
+	        }
+	    },
+	    meridiem : function (hour, minute, isLower) {
+	        if (hour < 4) {
+	            return 'ರಾತ್ರಿ';
+	        } else if (hour < 10) {
+	            return 'ಬೆಳಿಗ್ಗೆ';
+	        } else if (hour < 17) {
+	            return 'ಮಧ್ಯಾಹ್ನ';
+	        } else if (hour < 20) {
+	            return 'ಸಂಜೆ';
+	        } else {
+	            return 'ರಾತ್ರಿ';
+	        }
+	    },
+	    dayOfMonthOrdinalParse: /\d{1,2}(ನೇ)/,
+	    ordinal : function (number) {
+	        return number + 'ನೇ';
+	    },
+	    week : {
+	        dow : 0, // Sunday is the first day of the week.
+	        doy : 6  // The week that contains Jan 1st is the first week of the year.
+	    }
+	});
+
+	return kn;
+
+	})));
+
+
+/***/ }),
+/* 411 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Korean [ko]
@@ -47776,7 +48738,7 @@
 	//! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47789,12 +48751,16 @@
 	    weekdaysShort : '일_월_화_수_목_금_토'.split('_'),
 	    weekdaysMin : '일_월_화_수_목_금_토'.split('_'),
 	    longDateFormat : {
-	        LT : 'A h시 m분',
-	        LTS : 'A h시 m분 s초',
+	        LT : 'A h:mm',
+	        LTS : 'A h:mm:ss',
 	        L : 'YYYY.MM.DD',
 	        LL : 'YYYY년 MMMM D일',
-	        LLL : 'YYYY년 MMMM D일 A h시 m분',
-	        LLLL : 'YYYY년 MMMM D일 dddd A h시 m분'
+	        LLL : 'YYYY년 MMMM D일 A h:mm',
+	        LLLL : 'YYYY년 MMMM D일 dddd A h:mm',
+	        l : 'YYYY.MM.DD',
+	        ll : 'YYYY년 MMMM D일',
+	        lll : 'YYYY년 MMMM D일 A h:mm',
+	        llll : 'YYYY년 MMMM D일 dddd A h:mm'
 	    },
 	    calendar : {
 	        sameDay : '오늘 LT',
@@ -47809,7 +48775,7 @@
 	        past : '%s 전',
 	        s : '몇 초',
 	        ss : '%d초',
-	        m : '일분',
+	        m : '1분',
 	        mm : '%d분',
 	        h : '한 시간',
 	        hh : '%d시간',
@@ -47820,7 +48786,7 @@
 	        y : '일 년',
 	        yy : '%d년'
 	    },
-	    ordinalParse : /\d{1,2}일/,
+	    dayOfMonthOrdinalParse : /\d{1,2}일/,
 	    ordinal : '%d일',
 	    meridiemParse : /오전|오후/,
 	    isPM : function (token) {
@@ -47836,16 +48802,16 @@
 	})));
 
 
-/***/ },
-/* 405 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 412 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Kyrgyz [ky]
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47912,7 +48878,7 @@
 	        y : 'бир жыл',
 	        yy : '%d жыл'
 	    },
-	    ordinalParse: /\d{1,2}-(чи|чы|чү|чу)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(чи|чы|чү|чу)/,
 	    ordinal : function (number) {
 	        var a = number % 10,
 	            b = number >= 100 ? 100 : null;
@@ -47929,9 +48895,9 @@
 	})));
 
 
-/***/ },
-/* 406 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 413 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Luxembourgish [lb]
@@ -47939,7 +48905,7 @@
 	//! author : David Raison : https://github.com/kwisatz
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48058,7 +49024,7 @@
 	        y : processRelativeTime,
 	        yy : '%d Joer'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal: '%d.',
 	    week: {
 	        dow: 1, // Monday is the first day of the week.
@@ -48071,16 +49037,16 @@
 	})));
 
 
-/***/ },
-/* 407 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Lao [lo]
 	//! author : Ryan Hart : https://github.com/ryanhart2
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48135,7 +49101,7 @@
 	        y : '1 ປີ',
 	        yy : '%d ປີ'
 	    },
-	    ordinalParse: /(ທີ່)\d{1,2}/,
+	    dayOfMonthOrdinalParse: /(ທີ່)\d{1,2}/,
 	    ordinal : function (number) {
 	        return 'ທີ່' + number;
 	    }
@@ -48146,16 +49112,16 @@
 	})));
 
 
-/***/ },
-/* 408 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Lithuanian [lt]
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48253,7 +49219,7 @@
 	        y : translateSingular,
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}-oji/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-oji/,
 	    ordinal : function (number) {
 	        return number + '-oji';
 	    },
@@ -48268,9 +49234,9 @@
 	})));
 
 
-/***/ },
-/* 409 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Latvian [lv]
@@ -48278,7 +49244,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48357,7 +49323,7 @@
 	        y : relativeTimeWithSingular,
 	        yy : relativeTimeWithPlural
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -48370,16 +49336,16 @@
 	})));
 
 
-/***/ },
-/* 410 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Montenegrin [me]
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48473,7 +49439,7 @@
 	        y      : 'godinu',
 	        yy     : translator.translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -48486,16 +49452,16 @@
 	})));
 
 
-/***/ },
-/* 411 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Maori [mi]
 	//! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48542,7 +49508,7 @@
 	        y: 'he tau',
 	        yy: '%d tau'
 	    },
-	    ordinalParse: /\d{1,2}º/,
+	    dayOfMonthOrdinalParse: /\d{1,2}º/,
 	    ordinal: '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -48555,16 +49521,16 @@
 	})));
 
 
-/***/ },
-/* 412 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 419 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Macedonian [mk]
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48619,7 +49585,7 @@
 	        y : 'година',
 	        yy : '%d години'
 	    },
-	    ordinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
 	    ordinal : function (number) {
 	        var lastDigit = number % 10,
 	            last2Digits = number % 100;
@@ -48650,16 +49616,16 @@
 	})));
 
 
-/***/ },
-/* 413 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 420 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Malayalam [ml]
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48736,9 +49702,9 @@
 	})));
 
 
-/***/ },
-/* 414 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 421 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Marathi [mr]
@@ -48746,7 +49712,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48900,16 +49866,16 @@
 	})));
 
 
-/***/ },
-/* 415 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 422 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Malay [ms]
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48987,9 +49953,9 @@
 	})));
 
 
-/***/ },
-/* 416 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 423 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Malay [ms-my]
@@ -48997,7 +49963,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49075,9 +50041,9 @@
 	})));
 
 
-/***/ },
-/* 417 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 424 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Burmese [my]
@@ -49086,7 +50052,7 @@
 	//! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49176,9 +50142,9 @@
 	})));
 
 
-/***/ },
-/* 418 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Norwegian Bokmål [nb]
@@ -49186,7 +50152,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49231,7 +50197,7 @@
 	        y : 'ett år',
 	        yy : '%d år'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -49244,16 +50210,16 @@
 	})));
 
 
-/***/ },
-/* 419 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 426 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Nepalese [ne]
 	//! author : suvash : https://github.com/suvash
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49372,9 +50338,9 @@
 	})));
 
 
-/***/ },
-/* 420 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 427 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Dutch [nl]
@@ -49382,7 +50348,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49397,7 +50363,9 @@
 	var nl = moment.defineLocale('nl', {
 	    months : 'januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december'.split('_'),
 	    monthsShort : function (m, format) {
-	        if (/-MMM-/.test(format)) {
+	        if (!m) {
+	            return monthsShortWithDots;
+	        } else if (/-MMM-/.test(format)) {
 	            return monthsShortWithoutDots[m.month()];
 	        } else {
 	            return monthsShortWithDots[m.month()];
@@ -49448,7 +50416,7 @@
 	        y : 'één jaar',
 	        yy : '%d jaar'
 	    },
-	    ordinalParse: /\d{1,2}(ste|de)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
 	    ordinal : function (number) {
 	        return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de');
 	    },
@@ -49463,9 +50431,9 @@
 	})));
 
 
-/***/ },
-/* 421 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 428 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Dutch (Belgium) [nl-be]
@@ -49473,7 +50441,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49488,7 +50456,9 @@
 	var nlBe = moment.defineLocale('nl-be', {
 	    months : 'januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december'.split('_'),
 	    monthsShort : function (m, format) {
-	        if (/-MMM-/.test(format)) {
+	        if (!m) {
+	            return monthsShortWithDots;
+	        } else if (/-MMM-/.test(format)) {
 	            return monthsShortWithoutDots[m.month()];
 	        } else {
 	            return monthsShortWithDots[m.month()];
@@ -49539,7 +50509,7 @@
 	        y : 'één jaar',
 	        yy : '%d jaar'
 	    },
-	    ordinalParse: /\d{1,2}(ste|de)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(ste|de)/,
 	    ordinal : function (number) {
 	        return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de');
 	    },
@@ -49554,16 +50524,16 @@
 	})));
 
 
-/***/ },
-/* 422 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 429 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Nynorsk [nn]
 	//! author : https://github.com/mechuwind
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49606,7 +50576,7 @@
 	        y : 'eit år',
 	        yy : '%d år'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -49619,16 +50589,16 @@
 	})));
 
 
-/***/ },
-/* 423 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 430 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Punjabi (India) [pa-in]
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49748,16 +50718,16 @@
 	})));
 
 
-/***/ },
-/* 424 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 431 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Polish [pl]
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49788,7 +50758,9 @@
 
 	var pl = moment.defineLocale('pl', {
 	    months : function (momentToFormat, format) {
-	        if (format === '') {
+	        if (!momentToFormat) {
+	            return monthsNominative;
+	        } else if (format === '') {
 	            // Hack: if format empty we know this is used to generate
 	            // RegExp by moment. Give then back both valid forms of months
 	            // in RegExp ready format.
@@ -49845,7 +50817,7 @@
 	        y : 'rok',
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -49858,16 +50830,16 @@
 	})));
 
 
-/***/ },
-/* 425 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 432 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Portuguese [pt]
 	//! author : Jefferson : https://github.com/jalex79
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49878,7 +50850,7 @@
 	    monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
 	    weekdays : 'Domingo_Segunda-Feira_Terça-Feira_Quarta-Feira_Quinta-Feira_Sexta-Feira_Sábado'.split('_'),
 	    weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
-	    weekdaysMin : 'Dom_2ª_3ª_4ª_5ª_6ª_Sáb'.split('_'),
+	    weekdaysMin : 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_'),
 	    weekdaysParseExact : true,
 	    longDateFormat : {
 	        LT : 'HH:mm',
@@ -49915,7 +50887,7 @@
 	        y : 'um ano',
 	        yy : '%d anos'
 	    },
-	    ordinalParse: /\d{1,2}º/,
+	    dayOfMonthOrdinalParse: /\d{1,2}º/,
 	    ordinal : '%dº',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -49928,16 +50900,16 @@
 	})));
 
 
-/***/ },
-/* 426 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 433 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Portuguese (Brazil) [pt-br]
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49948,7 +50920,7 @@
 	    monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
 	    weekdays : 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
 	    weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
-	    weekdaysMin : 'Dom_2ª_3ª_4ª_5ª_6ª_Sáb'.split('_'),
+	    weekdaysMin : 'Do_2ª_3ª_4ª_5ª_6ª_Sá'.split('_'),
 	    weekdaysParseExact : true,
 	    longDateFormat : {
 	        LT : 'HH:mm',
@@ -49985,7 +50957,7 @@
 	        y : 'um ano',
 	        yy : '%d anos'
 	    },
-	    ordinalParse: /\d{1,2}º/,
+	    dayOfMonthOrdinalParse: /\d{1,2}º/,
 	    ordinal : '%dº'
 	});
 
@@ -49994,9 +50966,9 @@
 	})));
 
 
-/***/ },
-/* 427 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 434 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Romanian [ro]
@@ -50004,7 +50976,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50074,9 +51046,9 @@
 	})));
 
 
-/***/ },
-/* 428 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 435 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Russian [ru]
@@ -50085,7 +51057,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50235,7 +51207,7 @@
 	            return 'вечера';
 	        }
 	    },
-	    ordinalParse: /\d{1,2}-(й|го|я)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(й|го|я)/,
 	    ordinal: function (number, period) {
 	        switch (period) {
 	            case 'M':
@@ -50262,16 +51234,119 @@
 	})));
 
 
-/***/ },
-/* 429 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 436 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Sindhi [sd]
+	//! author : Narain Sagar : https://github.com/narainsagar
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	var months = [
+	    'جنوري',
+	    'فيبروري',
+	    'مارچ',
+	    'اپريل',
+	    'مئي',
+	    'جون',
+	    'جولاءِ',
+	    'آگسٽ',
+	    'سيپٽمبر',
+	    'آڪٽوبر',
+	    'نومبر',
+	    'ڊسمبر'
+	];
+	var days = [
+	    'آچر',
+	    'سومر',
+	    'اڱارو',
+	    'اربع',
+	    'خميس',
+	    'جمع',
+	    'ڇنڇر'
+	];
+
+	var sd = moment.defineLocale('sd', {
+	    months : months,
+	    monthsShort : months,
+	    weekdays : days,
+	    weekdaysShort : days,
+	    weekdaysMin : days,
+	    longDateFormat : {
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
+	        L : 'DD/MM/YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY HH:mm',
+	        LLLL : 'dddd، D MMMM YYYY HH:mm'
+	    },
+	    meridiemParse: /صبح|شام/,
+	    isPM : function (input) {
+	        return 'شام' === input;
+	    },
+	    meridiem : function (hour, minute, isLower) {
+	        if (hour < 12) {
+	            return 'صبح';
+	        }
+	        return 'شام';
+	    },
+	    calendar : {
+	        sameDay : '[اڄ] LT',
+	        nextDay : '[سڀاڻي] LT',
+	        nextWeek : 'dddd [اڳين هفتي تي] LT',
+	        lastDay : '[ڪالهه] LT',
+	        lastWeek : '[گزريل هفتي] dddd [تي] LT',
+	        sameElse : 'L'
+	    },
+	    relativeTime : {
+	        future : '%s پوء',
+	        past : '%s اڳ',
+	        s : 'چند سيڪنڊ',
+	        m : 'هڪ منٽ',
+	        mm : '%d منٽ',
+	        h : 'هڪ ڪلاڪ',
+	        hh : '%d ڪلاڪ',
+	        d : 'هڪ ڏينهن',
+	        dd : '%d ڏينهن',
+	        M : 'هڪ مهينو',
+	        MM : '%d مهينا',
+	        y : 'هڪ سال',
+	        yy : '%d سال'
+	    },
+	    preparse: function (string) {
+	        return string.replace(/،/g, ',');
+	    },
+	    postformat: function (string) {
+	        return string.replace(/,/g, '،');
+	    },
+	    week : {
+	        dow : 1, // Monday is the first day of the week.
+	        doy : 4  // The week that contains Jan 4th is the first week of the year.
+	    }
+	});
+
+	return sd;
+
+	})));
+
+
+/***/ }),
+/* 437 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Northern Sami [se]
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50315,7 +51390,7 @@
 	        y : 'okta jahki',
 	        yy : '%d jagit'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -50328,16 +51403,16 @@
 	})));
 
 
-/***/ },
-/* 430 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 438 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Sinhalese [si]
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50382,7 +51457,7 @@
 	        y : 'වසර',
 	        yy : 'වසර %d'
 	    },
-	    ordinalParse: /\d{1,2} වැනි/,
+	    dayOfMonthOrdinalParse: /\d{1,2} වැනි/,
 	    ordinal : function (number) {
 	        return number + ' වැනි';
 	    },
@@ -50404,9 +51479,9 @@
 	})));
 
 
-/***/ },
-/* 431 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 439 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Slovak [sk]
@@ -50414,7 +51489,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50546,7 +51621,7 @@
 	        y : translate,
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -50559,16 +51634,16 @@
 	})));
 
 
-/***/ },
-/* 432 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 440 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Slovenian [sl]
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50713,7 +51788,7 @@
 	        y      : processRelativeTime,
 	        yy     : processRelativeTime
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -50726,9 +51801,9 @@
 	})));
 
 
-/***/ },
-/* 433 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 441 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Albanian [sq]
@@ -50737,7 +51812,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50788,7 +51863,7 @@
 	        y : 'një vit',
 	        yy : '%d vite'
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -50801,16 +51876,16 @@
 	})));
 
 
-/***/ },
-/* 434 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 442 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Serbian [sr]
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50903,7 +51978,7 @@
 	        y      : 'godinu',
 	        yy     : translator.translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -50916,16 +51991,16 @@
 	})));
 
 
-/***/ },
-/* 435 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 443 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Serbian Cyrillic [sr-cyrl]
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51018,7 +52093,7 @@
 	        y      : 'годину',
 	        yy     : translator.translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -51031,16 +52106,16 @@
 	})));
 
 
-/***/ },
-/* 436 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 444 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : siSwati [ss]
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51112,7 +52187,7 @@
 	            return hour + 12;
 	        }
 	    },
-	    ordinalParse: /\d{1,2}/,
+	    dayOfMonthOrdinalParse: /\d{1,2}/,
 	    ordinal : '%d',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -51125,16 +52200,16 @@
 	})));
 
 
-/***/ },
-/* 437 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 445 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Swedish [sv]
 	//! author : Jens Alm : https://github.com/ulmus
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51179,7 +52254,7 @@
 	        y : 'ett år',
 	        yy : '%d år'
 	    },
-	    ordinalParse: /\d{1,2}(e|a)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(e|a)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'e' :
@@ -51199,16 +52274,16 @@
 	})));
 
 
-/***/ },
-/* 438 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 446 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Swahili [sw]
 	//! author : Fahad Kassim : https://github.com/fadsel
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51263,16 +52338,16 @@
 	})));
 
 
-/***/ },
-/* 439 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 447 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Tamil [ta]
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51340,7 +52415,7 @@
 	        y : 'ஒரு வருடம்',
 	        yy : '%d ஆண்டுகள்'
 	    },
-	    ordinalParse: /\d{1,2}வது/,
+	    dayOfMonthOrdinalParse: /\d{1,2}வது/,
 	    ordinal : function (number) {
 	        return number + 'வது';
 	    },
@@ -51398,16 +52473,16 @@
 	})));
 
 
-/***/ },
-/* 440 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 448 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Telugu [te]
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51451,7 +52526,7 @@
 	        y : 'ఒక సంవత్సరం',
 	        yy : '%d సంవత్సరాలు'
 	    },
-	    ordinalParse : /\d{1,2}వ/,
+	    dayOfMonthOrdinalParse : /\d{1,2}వ/,
 	    ordinal : '%dవ',
 	    meridiemParse: /రాత్రి|ఉదయం|మధ్యాహ్నం|సాయంత్రం/,
 	    meridiemHour : function (hour, meridiem) {
@@ -51492,9 +52567,9 @@
 	})));
 
 
-/***/ },
-/* 441 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 449 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Tetun Dili (East Timor) [tet]
@@ -51502,7 +52577,7 @@
 	//! author : Onorio De J. Afonso : https://github.com/marobo
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51545,7 +52620,7 @@
 	        y : 'tinan ida',
 	        yy : 'tinan %d'
 	    },
-	    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -51565,16 +52640,16 @@
 	})));
 
 
-/***/ },
-/* 442 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 450 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Thai [th]
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51591,7 +52666,7 @@
 	    longDateFormat : {
 	        LT : 'H:mm',
 	        LTS : 'H:mm:ss',
-	        L : 'YYYY/MM/DD',
+	        L : 'DD/MM/YYYY',
 	        LL : 'D MMMM YYYY',
 	        LLL : 'D MMMM YYYY เวลา H:mm',
 	        LLLL : 'วันddddที่ D MMMM YYYY เวลา H:mm'
@@ -51637,16 +52712,16 @@
 	})));
 
 
-/***/ },
-/* 443 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 451 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Tagalog (Philippines) [tl-ph]
 	//! author : Dan Hagman : https://github.com/hagmandan
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51689,7 +52764,7 @@
 	        y : 'isang taon',
 	        yy : '%d taon'
 	    },
-	    ordinalParse: /\d{1,2}/,
+	    dayOfMonthOrdinalParse: /\d{1,2}/,
 	    ordinal : function (number) {
 	        return number;
 	    },
@@ -51704,16 +52779,16 @@
 	})));
 
 
-/***/ },
-/* 444 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 452 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Klingon [tlh]
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51816,7 +52891,7 @@
 	        y : 'wa’ DIS',
 	        yy : translate
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -51829,9 +52904,9 @@
 	})));
 
 
-/***/ },
-/* 445 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 453 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Turkish [tr]
@@ -51839,7 +52914,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51903,7 +52978,7 @@
 	        y : 'bir yıl',
 	        yy : '%d yıl'
 	    },
-	    ordinalParse: /\d{1,2}'(inci|nci|üncü|ncı|uncu|ıncı)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}'(inci|nci|üncü|ncı|uncu|ıncı)/,
 	    ordinal : function (number) {
 	        if (number === 0) {  // special case for zero
 	            return number + '\'ıncı';
@@ -51924,9 +52999,9 @@
 	})));
 
 
-/***/ },
-/* 446 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 454 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Talossan [tzl]
@@ -51934,7 +53009,7 @@
 	//! author : Iustì Canun
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51990,7 +53065,7 @@
 	        y : processRelativeTime,
 	        yy : processRelativeTime
 	    },
-	    ordinalParse: /\d{1,2}\./,
+	    dayOfMonthOrdinalParse: /\d{1,2}\./,
 	    ordinal : '%d.',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -52020,16 +53095,16 @@
 	})));
 
 
-/***/ },
-/* 447 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 455 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Central Atlas Tamazight [tzm]
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52083,16 +53158,16 @@
 	})));
 
 
-/***/ },
-/* 448 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 456 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Central Atlas Tamazight Latin [tzm-latn]
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52146,9 +53221,9 @@
 	})));
 
 
-/***/ },
-/* 449 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 457 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Ukrainian [uk]
@@ -52156,7 +53231,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52189,8 +53264,13 @@
 	        'nominative': 'неділя_понеділок_вівторок_середа_четвер_п’ятниця_субота'.split('_'),
 	        'accusative': 'неділю_понеділок_вівторок_середу_четвер_п’ятницю_суботу'.split('_'),
 	        'genitive': 'неділі_понеділка_вівторка_середи_четверга_п’ятниці_суботи'.split('_')
-	    },
-	    nounCase = (/(\[[ВвУу]\]) ?dddd/).test(format) ?
+	    };
+
+	    if (!m) {
+	        return weekdays['nominative'];
+	    }
+
+	    var nounCase = (/(\[[ВвУу]\]) ?dddd/).test(format) ?
 	        'accusative' :
 	        ((/\[?(?:минулої|наступної)? ?\] ?dddd/).test(format) ?
 	            'genitive' :
@@ -52271,7 +53351,7 @@
 	            return 'вечора';
 	        }
 	    },
-	    ordinalParse: /\d{1,2}-(й|го)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}-(й|го)/,
 	    ordinal: function (number, period) {
 	        switch (period) {
 	            case 'M':
@@ -52297,16 +53377,120 @@
 	})));
 
 
-/***/ },
-/* 450 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 458 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Urdu [ur]
+	//! author : Sawood Alam : https://github.com/ibnesayeed
+	//! author : Zack : https://github.com/ZackVision
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	var months = [
+	    'جنوری',
+	    'فروری',
+	    'مارچ',
+	    'اپریل',
+	    'مئی',
+	    'جون',
+	    'جولائی',
+	    'اگست',
+	    'ستمبر',
+	    'اکتوبر',
+	    'نومبر',
+	    'دسمبر'
+	];
+	var days = [
+	    'اتوار',
+	    'پیر',
+	    'منگل',
+	    'بدھ',
+	    'جمعرات',
+	    'جمعہ',
+	    'ہفتہ'
+	];
+
+	var ur = moment.defineLocale('ur', {
+	    months : months,
+	    monthsShort : months,
+	    weekdays : days,
+	    weekdaysShort : days,
+	    weekdaysMin : days,
+	    longDateFormat : {
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
+	        L : 'DD/MM/YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY HH:mm',
+	        LLLL : 'dddd، D MMMM YYYY HH:mm'
+	    },
+	    meridiemParse: /صبح|شام/,
+	    isPM : function (input) {
+	        return 'شام' === input;
+	    },
+	    meridiem : function (hour, minute, isLower) {
+	        if (hour < 12) {
+	            return 'صبح';
+	        }
+	        return 'شام';
+	    },
+	    calendar : {
+	        sameDay : '[آج بوقت] LT',
+	        nextDay : '[کل بوقت] LT',
+	        nextWeek : 'dddd [بوقت] LT',
+	        lastDay : '[گذشتہ روز بوقت] LT',
+	        lastWeek : '[گذشتہ] dddd [بوقت] LT',
+	        sameElse : 'L'
+	    },
+	    relativeTime : {
+	        future : '%s بعد',
+	        past : '%s قبل',
+	        s : 'چند سیکنڈ',
+	        m : 'ایک منٹ',
+	        mm : '%d منٹ',
+	        h : 'ایک گھنٹہ',
+	        hh : '%d گھنٹے',
+	        d : 'ایک دن',
+	        dd : '%d دن',
+	        M : 'ایک ماہ',
+	        MM : '%d ماہ',
+	        y : 'ایک سال',
+	        yy : '%d سال'
+	    },
+	    preparse: function (string) {
+	        return string.replace(/،/g, ',');
+	    },
+	    postformat: function (string) {
+	        return string.replace(/,/g, '،');
+	    },
+	    week : {
+	        dow : 1, // Monday is the first day of the week.
+	        doy : 4  // The week that contains Jan 4th is the first week of the year.
+	    }
+	});
+
+	return ur;
+
+	})));
+
+
+/***/ }),
+/* 459 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Uzbek [uz]
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52360,16 +53544,79 @@
 	})));
 
 
-/***/ },
-/* 451 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 460 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Uzbek Latin [uz-latn]
+	//! author : Rasulbek Mirzayev : github.com/Rasulbeeek
+
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(349)) :
+	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+	   factory(global.moment)
+	}(this, (function (moment) { 'use strict';
+
+
+	var uzLatn = moment.defineLocale('uz-latn', {
+	    months : 'Yanvar_Fevral_Mart_Aprel_May_Iyun_Iyul_Avgust_Sentabr_Oktabr_Noyabr_Dekabr'.split('_'),
+	    monthsShort : 'Yan_Fev_Mar_Apr_May_Iyun_Iyul_Avg_Sen_Okt_Noy_Dek'.split('_'),
+	    weekdays : 'Yakshanba_Dushanba_Seshanba_Chorshanba_Payshanba_Juma_Shanba'.split('_'),
+	    weekdaysShort : 'Yak_Dush_Sesh_Chor_Pay_Jum_Shan'.split('_'),
+	    weekdaysMin : 'Ya_Du_Se_Cho_Pa_Ju_Sha'.split('_'),
+	    longDateFormat : {
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
+	        L : 'DD/MM/YYYY',
+	        LL : 'D MMMM YYYY',
+	        LLL : 'D MMMM YYYY HH:mm',
+	        LLLL : 'D MMMM YYYY, dddd HH:mm'
+	    },
+	    calendar : {
+	        sameDay : '[Bugun soat] LT [da]',
+	        nextDay : '[Ertaga] LT [da]',
+	        nextWeek : 'dddd [kuni soat] LT [da]',
+	        lastDay : '[Kecha soat] LT [da]',
+	        lastWeek : '[O\'tgan] dddd [kuni soat] LT [da]',
+	        sameElse : 'L'
+	    },
+	    relativeTime : {
+	        future : 'Yaqin %s ichida',
+	        past : 'Bir necha %s oldin',
+	        s : 'soniya',
+	        m : 'bir daqiqa',
+	        mm : '%d daqiqa',
+	        h : 'bir soat',
+	        hh : '%d soat',
+	        d : 'bir kun',
+	        dd : '%d kun',
+	        M : 'bir oy',
+	        MM : '%d oy',
+	        y : 'bir yil',
+	        yy : '%d yil'
+	    },
+	    week : {
+	        dow : 1, // Monday is the first day of the week.
+	        doy : 7  // The week that contains Jan 1st is the first week of the year.
+	    }
+	});
+
+	return uzLatn;
+
+	})));
+
+
+/***/ }),
+/* 461 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Vietnamese [vi]
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52429,7 +53676,7 @@
 	        y : 'một năm',
 	        yy : '%d năm'
 	    },
-	    ordinalParse: /\d{1,2}/,
+	    dayOfMonthOrdinalParse: /\d{1,2}/,
 	    ordinal : function (number) {
 	        return number;
 	    },
@@ -52444,16 +53691,16 @@
 	})));
 
 
-/***/ },
-/* 452 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 462 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Pseudo [x-pseudo]
 	//! author : Andrew Hood : https://github.com/andrewhood125
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52497,7 +53744,7 @@
 	        y : 'á ~ýéár',
 	        yy : '%d ý~éárs'
 	    },
-	    ordinalParse: /\d{1,2}(th|st|nd|rd)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
 	    ordinal : function (number) {
 	        var b = number % 10,
 	            output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -52517,16 +53764,16 @@
 	})));
 
 
-/***/ },
-/* 453 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 463 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Yoruba Nigeria [yo]
 	//! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52569,7 +53816,7 @@
 	        y : 'ọdún kan',
 	        yy : 'ọdún %d'
 	    },
-	    ordinalParse : /ọjọ́\s\d{1,2}/,
+	    dayOfMonthOrdinalParse : /ọjọ́\s\d{1,2}/,
 	    ordinal : 'ọjọ́ %d',
 	    week : {
 	        dow : 1, // Monday is the first day of the week.
@@ -52582,9 +53829,9 @@
 	})));
 
 
-/***/ },
-/* 454 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Chinese (China) [zh-cn]
@@ -52592,7 +53839,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52605,16 +53852,16 @@
 	    weekdaysShort : '周日_周一_周二_周三_周四_周五_周六'.split('_'),
 	    weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
 	    longDateFormat : {
-	        LT : 'Ah点mm分',
-	        LTS : 'Ah点m分s秒',
-	        L : 'YYYY-MM-DD',
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
+	        L : 'YYYY年MMMD日',
 	        LL : 'YYYY年MMMD日',
 	        LLL : 'YYYY年MMMD日Ah点mm分',
 	        LLLL : 'YYYY年MMMD日ddddAh点mm分',
-	        l : 'YYYY-MM-DD',
+	        l : 'YYYY年MMMD日',
 	        ll : 'YYYY年MMMD日',
-	        lll : 'YYYY年MMMD日Ah点mm分',
-	        llll : 'YYYY年MMMD日ddddAh点mm分'
+	        lll : 'YYYY年MMMD日 HH:mm',
+	        llll : 'YYYY年MMMD日dddd HH:mm'
 	    },
 	    meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
 	    meridiemHour: function (hour, meridiem) {
@@ -52648,30 +53895,14 @@
 	        }
 	    },
 	    calendar : {
-	        sameDay : function () {
-	            return this.minutes() === 0 ? '[今天]Ah[点整]' : '[今天]LT';
-	        },
-	        nextDay : function () {
-	            return this.minutes() === 0 ? '[明天]Ah[点整]' : '[明天]LT';
-	        },
-	        lastDay : function () {
-	            return this.minutes() === 0 ? '[昨天]Ah[点整]' : '[昨天]LT';
-	        },
-	        nextWeek : function () {
-	            var startOfWeek, prefix;
-	            startOfWeek = moment().startOf('week');
-	            prefix = this.diff(startOfWeek, 'days') >= 7 ? '[下]' : '[本]';
-	            return this.minutes() === 0 ? prefix + 'dddAh点整' : prefix + 'dddAh点mm';
-	        },
-	        lastWeek : function () {
-	            var startOfWeek, prefix;
-	            startOfWeek = moment().startOf('week');
-	            prefix = this.unix() < startOfWeek.unix()  ? '[上]' : '[本]';
-	            return this.minutes() === 0 ? prefix + 'dddAh点整' : prefix + 'dddAh点mm';
-	        },
-	        sameElse : 'LL'
+	        sameDay : '[今天]LT',
+	        nextDay : '[明天]LT',
+	        nextWeek : '[下]ddddLT',
+	        lastDay : '[昨天]LT',
+	        lastWeek : '[上]ddddLT',
+	        sameElse : 'L'
 	    },
-	    ordinalParse: /\d{1,2}(日|月|周)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
 	    ordinal : function (number, period) {
 	        switch (period) {
 	            case 'd':
@@ -52714,9 +53945,9 @@
 	})));
 
 
-/***/ },
-/* 455 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 465 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Chinese (Hong Kong) [zh-hk]
@@ -52725,7 +53956,7 @@
 	//! author : Konstantin : https://github.com/skfd
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52738,16 +53969,16 @@
 	    weekdaysShort : '週日_週一_週二_週三_週四_週五_週六'.split('_'),
 	    weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
 	    longDateFormat : {
-	        LT : 'Ah點mm分',
-	        LTS : 'Ah點m分s秒',
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
 	        L : 'YYYY年MMMD日',
 	        LL : 'YYYY年MMMD日',
-	        LLL : 'YYYY年MMMD日Ah點mm分',
-	        LLLL : 'YYYY年MMMD日ddddAh點mm分',
+	        LLL : 'YYYY年MMMD日 HH:mm',
+	        LLLL : 'YYYY年MMMD日dddd HH:mm',
 	        l : 'YYYY年MMMD日',
 	        ll : 'YYYY年MMMD日',
-	        lll : 'YYYY年MMMD日Ah點mm分',
-	        llll : 'YYYY年MMMD日ddddAh點mm分'
+	        lll : 'YYYY年MMMD日 HH:mm',
+	        llll : 'YYYY年MMMD日dddd HH:mm'
 	    },
 	    meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
 	    meridiemHour : function (hour, meridiem) {
@@ -52786,7 +54017,7 @@
 	        lastWeek : '[上]ddddLT',
 	        sameElse : 'L'
 	    },
-	    ordinalParse: /\d{1,2}(日|月|週)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(日|月|週)/,
 	    ordinal : function (number, period) {
 	        switch (period) {
 	            case 'd' :
@@ -52824,9 +54055,9 @@
 	})));
 
 
-/***/ },
-/* 456 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 466 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Chinese (Taiwan) [zh-tw]
@@ -52834,7 +54065,7 @@
 	//! author : Chris Lam : https://github.com/hehachris
 
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(346)) :
+	    true ? factory(__webpack_require__(349)) :
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52847,16 +54078,16 @@
 	    weekdaysShort : '週日_週一_週二_週三_週四_週五_週六'.split('_'),
 	    weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
 	    longDateFormat : {
-	        LT : 'Ah點mm分',
-	        LTS : 'Ah點m分s秒',
+	        LT : 'HH:mm',
+	        LTS : 'HH:mm:ss',
 	        L : 'YYYY年MMMD日',
 	        LL : 'YYYY年MMMD日',
-	        LLL : 'YYYY年MMMD日Ah點mm分',
-	        LLLL : 'YYYY年MMMD日ddddAh點mm分',
+	        LLL : 'YYYY年MMMD日 HH:mm',
+	        LLLL : 'YYYY年MMMD日dddd HH:mm',
 	        l : 'YYYY年MMMD日',
 	        ll : 'YYYY年MMMD日',
-	        lll : 'YYYY年MMMD日Ah點mm分',
-	        llll : 'YYYY年MMMD日ddddAh點mm分'
+	        lll : 'YYYY年MMMD日 HH:mm',
+	        llll : 'YYYY年MMMD日dddd HH:mm'
 	    },
 	    meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
 	    meridiemHour : function (hour, meridiem) {
@@ -52895,7 +54126,7 @@
 	        lastWeek : '[上]ddddLT',
 	        sameElse : 'L'
 	    },
-	    ordinalParse: /\d{1,2}(日|月|週)/,
+	    dayOfMonthOrdinalParse: /\d{1,2}(日|月|週)/,
 	    ordinal : function (number, period) {
 	        switch (period) {
 	            case 'd' :
@@ -52933,9 +54164,9 @@
 	})));
 
 
-/***/ },
-/* 457 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 467 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -52949,15 +54180,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _year_dropdown_options = __webpack_require__(460);
+	var _year_dropdown_options = __webpack_require__(470);
 
 	var _year_dropdown_options2 = _interopRequireDefault(_year_dropdown_options);
 
-	var _reactOnclickoutside = __webpack_require__(462);
+	var _reactOnclickoutside = __webpack_require__(472);
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
@@ -53084,9 +54315,9 @@
 	};
 	exports.default = YearDropdown;
 
-/***/ },
-/* 458 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 468 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -53116,13 +54347,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(459)();
+	  module.exports = __webpack_require__(469)();
 	}
 
 
-/***/ },
-/* 459 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 469 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -53180,9 +54411,9 @@
 	};
 
 
-/***/ },
-/* 460 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 470 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -53196,11 +54427,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _classnames = __webpack_require__(461);
+	var _classnames = __webpack_require__(471);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -53324,9 +54555,9 @@
 	};
 	exports.default = YearDropdownOptions;
 
-/***/ },
-/* 461 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 471 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  Copyright (c) 2016 Jed Watson.
@@ -53378,9 +54609,9 @@
 	}());
 
 
-/***/ },
-/* 462 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 472 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 	 * A higher-order-component for handling onClickOutside for React components.
@@ -53671,7 +54902,7 @@
 	  function setupBinding(root, factory) {
 	    if (true) {
 	      // AMD. Register as an anonymous module.
-	      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(32),__webpack_require__(463)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+	      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(32),__webpack_require__(473)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
 	        if (!createReactClass) createReactClass = React.createClass;
 	        return factory(root, React, ReactDom, createReactClass);
 	      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -53693,9 +54924,9 @@
 	}(this));
 
 
-/***/ },
-/* 463 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 473 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -53710,7 +54941,7 @@
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var factory = __webpack_require__(464);
+	var factory = __webpack_require__(474);
 
 	// Hack to grab NoopUpdateQueue from isomorphic React
 	var ReactNoopUpdateQueue = new React.Component().updater;
@@ -53722,9 +54953,9 @@
 	);
 
 
-/***/ },
-/* 464 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 474 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -53738,7 +54969,7 @@
 
 	'use strict';
 
-	var _assign = __webpack_require__(465);
+	var _assign = __webpack_require__(4);
 
 	var emptyObject = __webpack_require__(20);
 	var _invariant = __webpack_require__(8);
@@ -54452,105 +55683,9 @@
 	module.exports = factory;
 
 
-/***/ },
-/* 465 */
-/***/ function(module, exports) {
-
-	/*
-	object-assign
-	(c) Sindre Sorhus
-	@license MIT
-	*/
-
-	'use strict';
-	/* eslint-disable no-unused-vars */
-	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-
-		return Object(val);
-	}
-
-	function shouldUseNative() {
-		try {
-			if (!Object.assign) {
-				return false;
-			}
-
-			// Detect buggy property enumeration order in older V8 versions.
-
-			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-			test1[5] = 'de';
-			if (Object.getOwnPropertyNames(test1)[0] === '5') {
-				return false;
-			}
-
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test2 = {};
-			for (var i = 0; i < 10; i++) {
-				test2['_' + String.fromCharCode(i)] = i;
-			}
-			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-				return test2[n];
-			});
-			if (order2.join('') !== '0123456789') {
-				return false;
-			}
-
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test3 = {};
-			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-				test3[letter] = letter;
-			});
-			if (Object.keys(Object.assign({}, test3)).join('') !==
-					'abcdefghijklmnopqrst') {
-				return false;
-			}
-
-			return true;
-		} catch (err) {
-			// We don't expect any of the above to throw, but better to be safe.
-			return false;
-		}
-	}
-
-	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-
-			if (getOwnPropertySymbols) {
-				symbols = getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-
-		return to;
-	};
-
-
-/***/ },
-/* 466 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 475 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -54564,19 +55699,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _month_dropdown_options = __webpack_require__(467);
+	var _month_dropdown_options = __webpack_require__(476);
 
 	var _month_dropdown_options2 = _interopRequireDefault(_month_dropdown_options);
 
-	var _reactOnclickoutside = __webpack_require__(462);
+	var _reactOnclickoutside = __webpack_require__(472);
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -54699,9 +55834,9 @@
 	};
 	exports.default = MonthDropdown;
 
-/***/ },
-/* 467 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 476 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -54715,7 +55850,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -54786,9 +55921,9 @@
 	};
 	exports.default = MonthDropdownOptions;
 
-/***/ },
-/* 468 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 477 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -54802,15 +55937,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _classnames = __webpack_require__(461);
+	var _classnames = __webpack_require__(471);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _week = __webpack_require__(469);
+	var _week = __webpack_require__(478);
 
 	var _week2 = _interopRequireDefault(_week);
 
@@ -54957,9 +56092,9 @@
 	};
 	exports.default = Month;
 
-/***/ },
-/* 469 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 478 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -54973,15 +56108,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _day = __webpack_require__(470);
+	var _day = __webpack_require__(479);
 
 	var _day2 = _interopRequireDefault(_day);
 
-	var _week_number = __webpack_require__(472);
+	var _week_number = __webpack_require__(481);
 
 	var _week_number2 = _interopRequireDefault(_week_number);
 
@@ -55086,9 +56221,9 @@
 	};
 	exports.default = Week;
 
-/***/ },
-/* 470 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 479 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -55098,7 +56233,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -55106,15 +56241,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _classnames = __webpack_require__(461);
+	var _classnames = __webpack_require__(471);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _date_utils = __webpack_require__(471);
+	var _date_utils = __webpack_require__(480);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55288,13 +56423,6 @@
 	        this.props.day.date()
 	      );
 	    }
-	  }, {
-	    key: 'defaultProps',
-	    get: function get() {
-	      return {
-	        utcOffset: _moment2.default.utc().utcOffset()
-	      };
-	    }
 	  }]);
 
 	  return Day;
@@ -55316,11 +56444,14 @@
 	  startDate: _propTypes2.default.object,
 	  utcOffset: _propTypes2.default.number
 	};
+	Day.defaultProps = {
+	  utcOffset: _moment2.default.utc().utcOffset()
+	};
 	exports.default = Day;
 
-/***/ },
-/* 471 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 480 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -55338,7 +56469,7 @@
 	exports.parseDate = parseDate;
 	exports.safeDateFormat = safeDateFormat;
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -55448,9 +56579,9 @@
 	  return date && date.clone().locale(locale || _moment2.default.locale()).format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || '';
 	}
 
-/***/ },
-/* 472 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 481 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -55464,7 +56595,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -55506,9 +56637,9 @@
 	};
 	exports.default = WeekNumber;
 
-/***/ },
-/* 473 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 482 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -55524,7 +56655,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -55532,7 +56663,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _tether = __webpack_require__(474);
+	var _tether = __webpack_require__(483);
 
 	var _tether2 = _interopRequireDefault(_tether);
 
@@ -55708,9 +56839,9 @@
 	};
 	exports.default = TetherComponent;
 
-/***/ },
-/* 474 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 483 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
 
@@ -57525,9 +58656,9 @@
 	}));
 
 
-/***/ },
-/* 475 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 484 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57541,7 +58672,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -57588,9 +58719,9 @@
 	};
 	exports.default = CodeExampleComponent;
 
-/***/ },
-/* 476 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 485 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57604,11 +58735,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -57682,9 +58813,9 @@
 
 	exports.default = CustomDateFormat;
 
-/***/ },
-/* 477 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 486 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57698,11 +58829,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -57766,9 +58897,9 @@
 
 	exports.default = CustomClassName;
 
-/***/ },
-/* 478 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 487 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57782,11 +58913,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -57850,9 +58981,9 @@
 
 	exports.default = CustomCalendarClassName;
 
-/***/ },
-/* 479 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 488 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57865,7 +58996,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -57892,9 +59023,9 @@
 	  );
 	}
 
-/***/ },
-/* 480 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 489 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -57908,11 +59039,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58001,9 +59132,9 @@
 
 	exports.default = SpecificDateRange;
 
-/***/ },
-/* 481 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 490 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58017,7 +59148,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -58097,9 +59228,9 @@
 
 	exports.default = CustomStartDate;
 
-/***/ },
-/* 482 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 491 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58113,11 +59244,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58197,9 +59328,9 @@
 
 	exports.default = ExcludeDates;
 
-/***/ },
-/* 483 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 492 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58213,11 +59344,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58298,9 +59429,9 @@
 
 	exports.default = highlightDates;
 
-/***/ },
-/* 484 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 493 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58314,11 +59445,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58399,9 +59530,9 @@
 
 	exports.default = includeDates;
 
-/***/ },
-/* 485 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 494 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58415,7 +59546,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -58499,9 +59630,9 @@
 
 	exports.default = FilterDates;
 
-/***/ },
-/* 486 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 495 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58515,7 +59646,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -58593,9 +59724,9 @@
 
 	exports.default = Disabled;
 
-/***/ },
-/* 487 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 496 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58609,11 +59740,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58690,9 +59821,9 @@
 
 	exports.default = DisabledKeyboardNavigation;
 
-/***/ },
-/* 488 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 497 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58706,11 +59837,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58775,9 +59906,9 @@
 
 	exports.default = ClearInput;
 
-/***/ },
-/* 489 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 498 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58791,7 +59922,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -58887,9 +60018,9 @@
 
 	exports.default = Disabled;
 
-/***/ },
-/* 490 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 499 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58903,11 +60034,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -58973,9 +60104,9 @@
 
 	exports.default = Placement;
 
-/***/ },
-/* 491 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 500 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -58989,11 +60120,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59084,9 +60215,9 @@
 
 	exports.default = DateRange;
 
-/***/ },
-/* 492 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 501 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59100,11 +60231,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59168,9 +60299,9 @@
 
 	exports.default = TabIndex;
 
-/***/ },
-/* 493 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 502 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59184,11 +60315,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59254,9 +60385,9 @@
 
 	exports.default = YearDropdown;
 
-/***/ },
-/* 494 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 503 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59270,11 +60401,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59338,9 +60469,9 @@
 
 	exports.default = MonthDropdown;
 
-/***/ },
-/* 495 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 504 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59354,11 +60485,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59425,9 +60556,9 @@
 
 	exports.default = YearDropdown;
 
-/***/ },
-/* 496 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 505 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59441,11 +60572,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59509,9 +60640,9 @@
 
 	exports.default = Today;
 
-/***/ },
-/* 497 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 506 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59525,11 +60656,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -59670,9 +60801,9 @@
 
 	exports.default = TimeZoneDate;
 
-/***/ },
-/* 498 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 507 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59686,11 +60817,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59754,9 +60885,9 @@
 
 	exports.default = Inline;
 
-/***/ },
-/* 499 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 508 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59770,11 +60901,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -59841,9 +60972,9 @@
 
 	exports.default = OpenToDate;
 
-/***/ },
-/* 500 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 509 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59857,7 +60988,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -59930,9 +61061,9 @@
 
 	exports.default = FixedCalendar;
 
-/***/ },
-/* 501 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 510 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -59946,11 +61077,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60014,9 +61145,9 @@
 
 	exports.default = Default;
 
-/***/ },
-/* 502 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 511 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60030,15 +61161,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(458);
+	var _propTypes = __webpack_require__(468);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60133,9 +61264,9 @@
 
 	exports.default = CustomInput;
 
-/***/ },
-/* 503 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 512 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60149,11 +61280,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60217,9 +61348,9 @@
 
 	exports.default = MultiMonth;
 
-/***/ },
-/* 504 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 513 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60233,11 +61364,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60302,9 +61433,9 @@
 
 	exports.default = MultiMonthDrp;
 
-/***/ },
-/* 505 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 514 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60318,11 +61449,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60393,9 +61524,9 @@
 
 	exports.default = Children;
 
-/***/ },
-/* 506 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 515 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60409,11 +61540,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60477,9 +61608,9 @@
 
 	exports.default = WithPortal;
 
-/***/ },
-/* 507 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 516 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60493,11 +61624,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60572,9 +61703,9 @@
 
 	exports.default = InlinePortalVersion;
 
-/***/ },
-/* 508 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 517 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60588,11 +61719,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60668,17 +61799,17 @@
 
 	exports.default = RawChanges;
 
-/***/ },
-/* 509 */
-/***/ function(module, exports) {
+/***/ }),
+/* 518 */
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
-/* 510 */
-509,
-/* 511 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 519 */
+518,
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -60692,11 +61823,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(344);
+	var _reactDatepicker = __webpack_require__(347);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(346);
+	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60743,9 +61874,9 @@
 
 	exports.default = HeroExample;
 
-/***/ },
-/* 512 */
-/***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
+/***/ }),
+/* 521 */
+/***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -60859,5 +61990,5 @@
 
 	module.exports = PooledClass;
 
-/***/ }
+/***/ })
 /******/ ])));
