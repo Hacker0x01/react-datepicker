@@ -28,28 +28,34 @@ export default class YearDropdownOptions extends React.Component {
   renderOptions = () => {
     var selectedYear = this.props.year
     var options = this.state.yearsList.map(year =>
-      <div className="react-datepicker__year-option"
+      <div aria-selected={selectedYear === year}
+          className="react-datepicker__year-option"
           key={year}
+          onClick={this.onChange.bind(this, year)}
           ref={year}
-          onClick={this.onChange.bind(this, year)}>
+          role="option">
         {selectedYear === year ? <span className="react-datepicker__year-option--selected">✓</span> : ''}
         {year}
       </div>
     )
 
     options.unshift(
-      <div className="react-datepicker__year-option"
+      <div aria-selected="false"
+          className="react-datepicker__year-option"
           ref={'upcoming'}
           key={'upcoming'}
-          onClick={this.incrementYears}>
+          onClick={this.incrementYears}
+          role="option">
         <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming" />
       </div>
     )
     options.push(
-      <div className="react-datepicker__year-option"
+      <div aria-selected="false"
+          className="react-datepicker__year-option"
           ref={'previous'}
           key={'previous'}
-          onClick={this.decrementYears}>
+          onClick={this.decrementYears}
+          role="option">
         <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous" />
       </div>
     )

@@ -84,6 +84,8 @@ export default class MonthDropdown extends React.Component {
 
     return (
       <div
+          role="combobox"
+          aria-expanded={this.state.dropdownVisible}
           className={`react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--${this.props.dropdownMode}`}>
         {renderedDropdown}
       </div>

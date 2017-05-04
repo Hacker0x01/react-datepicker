@@ -94,6 +94,8 @@ export default class YearDropdown extends React.Component {
 
     return (
       <div
+          role="combobox"
+          aria-expanded={this.state.dropdownVisible}
           className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}>
         {renderedDropdown}
       </div>
