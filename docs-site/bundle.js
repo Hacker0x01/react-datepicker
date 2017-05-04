@@ -54296,6 +54296,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        {
+	          role: 'combobox',
+	          'aria-expanded': this.state.dropdownVisible,
 	          className: 'react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--' + this.props.dropdownMode },
 	        renderedDropdown
 	      );
@@ -54464,10 +54466,12 @@
 	      var options = _this.state.yearsList.map(function (year) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'react-datepicker__year-option',
+	          { 'aria-selected': selectedYear === year,
+	            className: 'react-datepicker__year-option',
 	            key: year,
+	            onClick: _this.onChange.bind(_this, year),
 	            ref: year,
-	            onClick: _this.onChange.bind(_this, year) },
+	            role: 'option' },
 	          selectedYear === year ? _react2.default.createElement(
 	            'span',
 	            { className: 'react-datepicker__year-option--selected' },
@@ -54479,18 +54483,22 @@
 
 	      options.unshift(_react2.default.createElement(
 	        'div',
-	        { className: 'react-datepicker__year-option',
+	        { 'aria-selected': 'false',
+	          className: 'react-datepicker__year-option',
 	          ref: 'upcoming',
 	          key: 'upcoming',
-	          onClick: _this.incrementYears },
+	          onClick: _this.incrementYears,
+	          role: 'option' },
 	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming' })
 	      ));
 	      options.push(_react2.default.createElement(
 	        'div',
-	        { className: 'react-datepicker__year-option',
+	        { 'aria-selected': 'false',
+	          className: 'react-datepicker__year-option',
 	          ref: 'previous',
 	          key: 'previous',
-	          onClick: _this.decrementYears },
+	          onClick: _this.decrementYears,
+	          role: 'option' },
 	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous' })
 	      ));
 	      return options;
@@ -55817,6 +55825,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        {
+	          role: 'combobox',
+	          'aria-expanded': this.state.dropdownVisible,
 	          className: 'react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--' + this.props.dropdownMode },
 	        renderedDropdown
 	      );
@@ -55880,10 +55890,12 @@
 	      return _this.props.monthNames.map(function (month, i) {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'react-datepicker__month-option',
+	          { 'aria-selected': _this.props.month === i,
+	            className: 'react-datepicker__month-option',
 	            key: month,
+	            onClick: _this.onChange.bind(_this, i),
 	            ref: month,
-	            onClick: _this.onChange.bind(_this, i) },
+	            role: 'option' },
 	          _this.props.month === i ? _react2.default.createElement(
 	            'span',
 	            { className: 'react-datepicker__month-option--selected' },
@@ -55950,6 +55962,8 @@
 	var _week2 = _interopRequireDefault(_week);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -56057,7 +56071,8 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: this.getClassNames(), onMouseLeave: this.handleMouseLeave, role: 'listbox' },
+	        _defineProperty({ className: this.getClassNames(), onMouseLeave: this.handleMouseLeave, role: 'listbox'
+	        }, 'role', 'grid'),
 	        this.renderWeeks()
 	      );
 	    }
@@ -56415,11 +56430,13 @@
 	      return _react2.default.createElement(
 	        'div',
 	        {
+	          'aria-label': 'day-' + this.props.day.date(),
+	          'aria-selected': this.isSameDay(this.props.selected),
 	          className: this.getClassNames(),
 	          onClick: this.handleClick,
 	          onMouseEnter: this.handleMouseEnter,
-	          'aria-label': 'day-' + this.props.day.date(),
-	          role: 'option' },
+	          role: 'gridcell'
+	        },
 	        this.props.day.date()
 	      );
 	    }
