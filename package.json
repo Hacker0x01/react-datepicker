@@ -79,6 +79,7 @@
     "react-transform-hmr": "^1.0.4",
     "sass-loader": "^4.1.1",
     "sinon": "^1.17.7",
+    "standard": "^10.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.10.0",
@@ -95,6 +96,11 @@
     "prop-types": "^15.5.8",
     "react-onclickoutside": "^5.11.1",
     "tether": "^1.4.0"
+  },
+  "standard": {
+    "plugins": [
+      "babel-eslint"
+    ]
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
