@@ -114,7 +114,7 @@ describe('Calendar', function () {
     assert(calendar.state().date.isSame(selected, 'day'))
   })
 
-  it('should trigger date change when openToDate prop is set after getInitialState()', () => {
+  it('should trigger date change when openToDate prop is set after calcInitialState()', () => {
     const openToDate = moment('09/28/1993', 'MM/DD/YYYY')
     const oneMonthFromOpenToDate = moment('10/28/1993', 'MM/DD/YYYY')
     const calendar = getCalendar({ openToDate })
