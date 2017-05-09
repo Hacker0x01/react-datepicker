@@ -131,6 +131,12 @@ export default class DatePicker extends React.Component {
     }
   }
 
+  componentWillUpdate (nextProps, nextState) {
+    if (nextProps.selected !== this.props.selected) {
+      this.setPreSelection(nextProps.selected)
+    }
+  }
+
   componentWillUnmount () {
     this.clearPreventFocusTimeout()
   }
@@ -262,9 +268,7 @@ export default class DatePicker extends React.Component {
 
   onInputKeyDown = (event) => {
     if (!this.state.open && !this.props.inline) {
-      if (/^Arrow/.test(event.key)) {
-        this.onInputClick()
-      }
+      this.onInputClick()
       return
     }
     const copy = moment(this.state.preSelection)
