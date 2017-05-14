@@ -11,6 +11,7 @@ import SpecificDateRange from './examples/specific_date_range'
 import Locale from './examples/locale'
 import ExcludeDates from './examples/exclude_dates'
 import HighlightDates from './examples/highlight_dates'
+import HighlightDatesRanges from './examples/highlight_dates_with_ranges'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
@@ -88,6 +89,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Highlight dates',
     component: <HighlightDates />
+  },
+  {
+    title: 'Highlight dates with custom class names and ranges',
+    component: <HighlightDatesRanges />
   },
   {
     title: 'Include dates',
