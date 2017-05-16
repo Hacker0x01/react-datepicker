@@ -52,6 +52,25 @@
   color: #000;
   font-weight: bold;
   font-size: $datepicker__font-size * 1.18;
+  text-align: left;
+  > div {
+    position: relative;
+    top: -2px;
+    display: inline-block;
+    margin-left: 21px;
+    width: 83px;
+    text-align: center;
+  }
+  > input {
+    position: absolute;
+    right: 16px;
+    width: 60px;
+    height: 20px;
+    top: 6px;
+    border-radius: 0;
+    font-weight: 600;
+    text-align: center;
+  }
 }
 
 .react-datepicker__navigation {
@@ -74,7 +93,7 @@
   }
 
   &--next {
-    right: 10px;
+    left: 104px;
     border-left-color: $datepicker__muted-color;
 
     &:hover {
