@@ -75,7 +75,7 @@ export default class Week extends React.Component {
 
   render () {
     return (
-      <div className="react-datepicker__week">
+      <div className="react-datepicker__week" role="row">
         {this.renderDays()}
       </div>
     )

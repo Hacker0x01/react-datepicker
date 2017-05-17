@@ -154,7 +154,7 @@ export default class Day extends React.Component {
   render () {
     return (
       <div
-          aria-label={`day-${this.props.day.date()}`}
+          aria-label={`${this.props.day.format('MMMM Do, YYYY')}`}
           aria-selected={this.isSameDay(this.props.selected)}
           className={this.getClassNames()}
           onClick={this.handleClick}
