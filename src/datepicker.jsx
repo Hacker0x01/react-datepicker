@@ -331,40 +331,41 @@ export default class DatePicker extends React.Component {
       return null
     }
     return <WrappedCalendar
-        ref="calendar"
-        locale={this.props.locale}
+        className={this.props.calendarClassName}
         dateFormat={this.props.dateFormatCalendar}
         dropdownMode={this.props.dropdownMode}
-        selected={this.props.selected}
-        preSelection={this.state.preSelection}
-        onSelect={this.handleSelect}
-        openToDate={this.props.openToDate}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selectsStart={this.props.selectsStart}
-        selectsEnd={this.props.selectsEnd}
-        startDate={this.props.startDate}
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
         filterDate={this.props.filterDate}
-        onClickOutside={this.handleCalendarClickOutside}
+        fixedHeight={this.props.fixedHeight}
+        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         highlightDates={this.props.highlightDates}
         includeDates={this.props.includeDates}
         inline={this.props.inline}
+        locale={this.props.locale}
+        maxDate={this.props.maxDate}
+        minDate={this.props.minDate}
+        monthsShown={this.props.monthsShown}
+        onClickOutside={this.handleCalendarClickOutside}
+        onDropdownFocus={this.handleDropdownFocus}
+        onMonthChange={this.props.onMonthChange}
+        onSelect={this.handleSelect}
+        openToDate={this.props.openToDate}
+        outsideClickIgnoreClass={outsideClickIgnoreClass}
         peekNextMonth={this.props.peekNextMonth}
+        preSelection={this.state.preSelection}
+        ref="calendar"
+        scrollableYearDropdown={this.props.scrollableYearDropdown}
+        selected={this.props.selected}
+        selectsEnd={this.props.selectsEnd}
+        selectsStart={this.props.selectsStart}
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
-        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
-        scrollableYearDropdown={this.props.scrollableYearDropdown}
+        startDate={this.props.startDate}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
-        fixedHeight={this.props.fixedHeight}
-        monthsShown={this.props.monthsShown}
-        onDropdownFocus={this.handleDropdownFocus}
-        onMonthChange={this.props.onMonthChange}
-        className={this.props.calendarClassName}>
+        withPortal={this.props.withPortal}>
       {this.props.children}
     </WrappedCalendar>
   }
@@ -421,19 +422,19 @@ export default class DatePicker extends React.Component {
       return (
         <div>
           {
-          !this.props.inline
-          ? <div className="react-datepicker__input-container">
-              {this.renderDateInput()}
-              {this.renderClearButton()}
-            </div>
-          : null
+            !this.props.inline
+              ? <div className="react-datepicker__input-container">
+                {this.renderDateInput()}
+                {this.renderClearButton()}
+              </div>
+            : null
           }
           {
-          this.state.open || this.props.inline
-          ? <div className="react-datepicker__portal">
-              {calendar}
-            </div>
-          : null
+            this.state.open || this.props.inline
+              ? <div className="react-datepicker__portal" role="document">
+                {calendar}
+              </div>
+            : null
           }
         </div>
       )

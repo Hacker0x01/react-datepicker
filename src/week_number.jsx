@@ -10,7 +10,8 @@ export default class WeekNumber extends React.Component {
     return (
       <div
           className="react-datepicker__week-number"
-          aria-label={`week-${this.props.weekNumber}`}>
+          aria-label={`week-${this.props.weekNumber}`}
+          role="rowheader">
         {this.props.weekNumber}
       </div>
     )
