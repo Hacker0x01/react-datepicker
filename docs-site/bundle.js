@@ -37749,40 +37749,42 @@
 	      return _react2.default.createElement(
 	        WrappedCalendar,
 	        {
-	          ref: 'calendar',
-	          locale: _this.props.locale,
+	          className: _this.props.calendarClassName,
 	          dateFormat: _this.props.dateFormatCalendar,
 	          dropdownMode: _this.props.dropdownMode,
-	          selected: _this.props.selected,
-	          preSelection: _this.state.preSelection,
-	          onSelect: _this.handleSelect,
-	          openToDate: _this.props.openToDate,
-	          minDate: _this.props.minDate,
-	          maxDate: _this.props.maxDate,
-	          selectsStart: _this.props.selectsStart,
-	          selectsEnd: _this.props.selectsEnd,
-	          startDate: _this.props.startDate,
 	          endDate: _this.props.endDate,
 	          excludeDates: _this.props.excludeDates,
 	          filterDate: _this.props.filterDate,
-	          onClickOutside: _this.handleCalendarClickOutside,
+	          fixedHeight: _this.props.fixedHeight,
+	          forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
 	          highlightDates: _this.props.highlightDates,
 	          includeDates: _this.props.includeDates,
 	          inline: _this.props.inline,
+	          locale: _this.props.locale,
+	          maxDate: _this.props.maxDate,
+	          minDate: _this.props.minDate,
+	          monthsShown: _this.props.monthsShown,
+	          onClickOutside: _this.handleCalendarClickOutside,
+	          onDropdownFocus: _this.handleDropdownFocus,
+	          onMonthChange: _this.props.onMonthChange,
+	          onSelect: _this.handleSelect,
+	          openToDate: _this.props.openToDate,
+	          outsideClickIgnoreClass: outsideClickIgnoreClass,
 	          peekNextMonth: _this.props.peekNextMonth,
+	          preSelection: _this.state.preSelection,
+	          ref: 'calendar',
+	          scrollableYearDropdown: _this.props.scrollableYearDropdown,
+	          selected: _this.props.selected,
+	          selectsEnd: _this.props.selectsEnd,
+	          selectsStart: _this.props.selectsStart,
 	          showMonthDropdown: _this.props.showMonthDropdown,
 	          showWeekNumbers: _this.props.showWeekNumbers,
 	          showYearDropdown: _this.props.showYearDropdown,
-	          forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
-	          scrollableYearDropdown: _this.props.scrollableYearDropdown,
+	          startDate: _this.props.startDate,
 	          todayButton: _this.props.todayButton,
 	          utcOffset: _this.props.utcOffset,
-	          outsideClickIgnoreClass: outsideClickIgnoreClass,
-	          fixedHeight: _this.props.fixedHeight,
-	          monthsShown: _this.props.monthsShown,
-	          onDropdownFocus: _this.handleDropdownFocus,
-	          onMonthChange: _this.props.onMonthChange,
-	          className: _this.props.calendarClassName },
+	          withPortal: _this.props.withPortal
+	        },
 	        _this.props.children
 	      );
 	    };
@@ -37853,7 +37855,7 @@
 	          ) : null,
 	          this.state.open || this.props.inline ? _react2.default.createElement(
 	            'div',
-	            { className: 'react-datepicker__portal' },
+	            { className: 'react-datepicker__portal', role: 'document' },
 	            calendar
 	          ) : null
 	        );
@@ -38012,10 +38014,10 @@
 	    key: 'defaultProps',
 	    get: function get() {
 	      return {
-	        onDropdownFocus: function onDropdownFocus() {},
-	        utcOffset: _moment2.default.utc().utcOffset(),
+	        forceShowMonthNavigation: false,
 	        monthsShown: 1,
-	        forceShowMonthNavigation: false
+	        onDropdownFocus: function onDropdownFocus() {},
+	        utcOffset: _moment2.default.utc().utcOffset()
 	      };
 	    }
 	  }]);
@@ -38133,8 +38135,15 @@
 	        var day = startOfWeek.clone().add(offset, 'days');
 	        return _react2.default.createElement(
 	          'div',
-	          { key: offset, className: 'react-datepicker__day-name' },
-	          day.localeData().weekdaysMin(day)
+	          {
+	            'aria-label': day.localeData().weekdays(day),
+	            className: 'react-datepicker__day-name',
+	            key: offset },
+	          _react2.default.createElement(
+	            'span',
+	            { 'aria-hidden': true },
+	            day.localeData().weekdaysMin(day)
+	          )
 	        );
 	      }));
 	    };
@@ -38246,26 +38255,26 @@
 	          ),
 	          _react2.default.createElement(_month2.default, {
 	            day: monthDate,
+	            endDate: _this.props.endDate,
+	            excludeDates: _this.props.excludeDates,
+	            filterDate: _this.props.filterDate,
+	            fixedHeight: _this.props.fixedHeight,
+	            highlightDates: _this.props.highlightDates,
+	            includeDates: _this.props.includeDates,
+	            inline: _this.props.inline,
+	            maxDate: _this.props.maxDate,
+	            minDate: _this.props.minDate,
 	            onDayClick: _this.handleDayClick,
 	            onDayMouseEnter: _this.handleDayMouseEnter,
 	            onMouseLeave: _this.handleMonthMouseLeave,
-	            minDate: _this.props.minDate,
-	            maxDate: _this.props.maxDate,
-	            excludeDates: _this.props.excludeDates,
-	            highlightDates: _this.props.highlightDates,
-	            selectingDate: _this.state.selectingDate,
-	            includeDates: _this.props.includeDates,
-	            inline: _this.props.inline,
-	            fixedHeight: _this.props.fixedHeight,
-	            filterDate: _this.props.filterDate,
+	            peekNextMonth: _this.props.peekNextMonth,
 	            preSelection: _this.props.preSelection,
 	            selected: _this.props.selected,
-	            selectsStart: _this.props.selectsStart,
+	            selectingDate: _this.state.selectingDate,
 	            selectsEnd: _this.props.selectsEnd,
+	            selectsStart: _this.props.selectsStart,
 	            showWeekNumbers: _this.props.showWeekNumbers,
 	            startDate: _this.props.startDate,
-	            endDate: _this.props.endDate,
-	            peekNextMonth: _this.props.peekNextMonth,
 	            utcOffset: _this.props.utcOffset })
 	        ));
 	      }
@@ -38297,7 +38306,9 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: (0, _classnames2.default)('react-datepicker', this.props.className) },
+	        {
+	          className: (0, _classnames2.default)('react-datepicker', this.props.className),
+	          role: this.props.withPortal === true ? 'dialog' : 'tooltip' },
 	        _react2.default.createElement('div', { className: 'react-datepicker__triangle' }),
 	        this.renderPreviousMonthButton(),
 	        this.renderNextMonthButton(),
@@ -38312,14 +38323,15 @@
 	}(_react2.default.Component);
 
 	Calendar.propTypes = {
-	  className: _propTypes2.default.string,
 	  children: _propTypes2.default.node,
+	  className: _propTypes2.default.string,
 	  dateFormat: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.array]).isRequired,
 	  dropdownMode: _propTypes2.default.oneOf(['scroll', 'select']).isRequired,
 	  endDate: _propTypes2.default.object,
 	  excludeDates: _propTypes2.default.array,
 	  filterDate: _propTypes2.default.func,
 	  fixedHeight: _propTypes2.default.bool,
+	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  highlightDates: _propTypes2.default.array,
 	  includeDates: _propTypes2.default.array,
 	  inline: _propTypes2.default.bool,
@@ -38328,14 +38340,13 @@
 	  minDate: _propTypes2.default.object,
 	  monthsShown: _propTypes2.default.number,
 	  onClickOutside: _propTypes2.default.func.isRequired,
-	  onMonthChange: _propTypes2.default.func,
-	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,
+	  onMonthChange: _propTypes2.default.func,
 	  onSelect: _propTypes2.default.func.isRequired,
 	  openToDate: _propTypes2.default.object,
 	  peekNextMonth: _propTypes2.default.bool,
-	  scrollableYearDropdown: _propTypes2.default.bool,
 	  preSelection: _propTypes2.default.object,
+	  scrollableYearDropdown: _propTypes2.default.bool,
 	  selected: _propTypes2.default.object,
 	  selectsEnd: _propTypes2.default.bool,
 	  selectsStart: _propTypes2.default.bool,
@@ -38344,7 +38355,8 @@
 	  showYearDropdown: _propTypes2.default.bool,
 	  startDate: _propTypes2.default.object,
 	  todayButton: _propTypes2.default.string,
-	  utcOffset: _propTypes2.default.number
+	  utcOffset: _propTypes2.default.number,
+	  withPortal: _propTypes2.default.bool
 	};
 	exports.default = Calendar;
 
@@ -56071,7 +56083,8 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        _defineProperty({ className: this.getClassNames(), onMouseLeave: this.handleMouseLeave, role: 'listbox'
+	        _defineProperty({ className: this.getClassNames(),
+	          onMouseLeave: this.handleMouseLeave, role: 'listbox'
 	        }, 'role', 'grid'),
 	        this.renderWeeks()
 	      );
@@ -56435,9 +56448,12 @@
 	          className: this.getClassNames(),
 	          onClick: this.handleClick,
 	          onMouseEnter: this.handleMouseEnter,
-	          role: 'gridcell'
-	        },
-	        this.props.day.date()
+	          role: 'gridcell' },
+	        _react2.default.createElement(
+	          'span',
+	          { 'aria-hidden': true },
+	          this.props.day.date()
+	        )
 	      );
 	    }
 	  }]);

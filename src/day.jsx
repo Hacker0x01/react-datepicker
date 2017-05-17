@@ -159,9 +159,8 @@ export default class Day extends React.Component {
           className={this.getClassNames()}
           onClick={this.handleClick}
           onMouseEnter={this.handleMouseEnter}
-          role='gridcell'
-          >
-        {this.props.day.date()}
+          role="gridcell">
+        <span aria-hidden>{this.props.day.date()}</span>
       </div>
     )
   }
