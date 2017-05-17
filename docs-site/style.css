@@ -218,7 +218,7 @@
     cursor: pointer; }
   .react-datepicker__year-dropdown--scrollable,
   .react-datepicker__month-dropdown--scrollable {
-    height: 150px;
+    max-height: 150px;
     overflow-y: scroll; }
 
 .react-datepicker__year-option,

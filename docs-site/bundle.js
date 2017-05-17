@@ -54258,6 +54258,8 @@
 	        key: 'dropdown',
 	        ref: 'options',
 	        year: _this.props.year,
+	        minDate: _this.props.minDate,
+	        maxDate: _this.props.maxDate,
 	        onChange: _this.onChange,
 	        onCancel: _this.toggleDropdown,
 	        scrollableYearDropdown: _this.props.scrollableYearDropdown });
@@ -54443,10 +54445,20 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function generateYears(year, noOfYear) {
+	function generateYears(year, noOfYear, minDate, maxDate) {
 	  var list = [];
 	  for (var i = 0; i < 2 * noOfYear; i++) {
-	    list.push(year + noOfYear - i);
+	    var newYear = year + noOfYear - i;
+	    var isInRange = true;
+	    if (minDate) {
+	      isInRange = minDate.year() <= newYear;
+	    }
+	    if (maxDate && isInRange) {
+	      isInRange = maxDate.year() >= newYear;
+	    }
+	    if (isInRange) {
+	      list.push(newYear);
+	    }
 	  }
 	  return list;
 	}
@@ -54458,6 +54470,14 @@
 	    _classCallCheck(this, YearDropdownOptions);
 
 	    var _this = _possibleConstructorReturn(this, (YearDropdownOptions.__proto__ || Object.getPrototypeOf(YearDropdownOptions)).call(this, props));
+
+	    _this.getYearsList = function (year, minDate, maxDate) {
+	      if (_this.props.scrollableYearDropdown) {
+	        return generateYears(_this.props.year, 10, _this.props.minDate, _this.props.maxDate);
+	      } else {
+	        return generateYears(_this.props.year, 5, _this.props.minDate, _this.props.maxDate);
+	      }
+	    };
 
 	    _this.renderOptions = function () {
 	      var selectedYear = _this.props.year;
@@ -54477,22 +54497,30 @@
 	        );
 	      });
 
-	      options.unshift(_react2.default.createElement(
-	        'div',
-	        { className: 'react-datepicker__year-option',
-	          ref: 'upcoming',
-	          key: 'upcoming',
-	          onClick: _this.incrementYears },
-	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming' })
-	      ));
-	      options.push(_react2.default.createElement(
-	        'div',
-	        { className: 'react-datepicker__year-option',
-	          ref: 'previous',
-	          key: 'previous',
-	          onClick: _this.decrementYears },
-	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous' })
-	      ));
+	      if (!_this.props.maxDate || !_this.state.yearsList.find(function (year) {
+	        return year === _this.props.maxDate.year();
+	      })) {
+	        options.unshift(_react2.default.createElement(
+	          'div',
+	          { className: 'react-datepicker__year-option',
+	            ref: 'upcoming',
+	            key: 'upcoming',
+	            onClick: _this.incrementYears },
+	          _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming' })
+	        ));
+	      }
+	      if (!_this.props.minDate || !_this.state.yearsList.find(function (year) {
+	        return year === _this.props.minDate.year();
+	      })) {
+	        options.push(_react2.default.createElement(
+	          'div',
+	          { className: 'react-datepicker__year-option',
+	            ref: 'previous',
+	            key: 'previous',
+	            onClick: _this.decrementYears },
+	          _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous' })
+	        ));
+	      }
 	      return options;
 	    };
 
@@ -54523,7 +54551,7 @@
 	    };
 
 	    _this.state = {
-	      yearsList: _this.props.scrollableYearDropdown ? generateYears(_this.props.year, 10) : generateYears(_this.props.year, 5)
+	      yearsList: _this.getYearsList(_this.props.year, _this.props.minDate, _this.props.maxDate)
 	    };
 	    return _this;
 	  }
@@ -54551,7 +54579,9 @@
 	  onCancel: _propTypes2.default.func.isRequired,
 	  onChange: _propTypes2.default.func.isRequired,
 	  scrollableYearDropdown: _propTypes2.default.bool,
-	  year: _propTypes2.default.number.isRequired
+	  year: _propTypes2.default.number.isRequired,
+	  minDate: _propTypes2.default.object,
+	  maxDate: _propTypes2.default.object
 	};
 	exports.default = YearDropdownOptions;
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import YearDropdownOptions from './year_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
 
-var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
+const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
 export default class YearDropdown extends React.Component {
   static propTypes = {
@@ -55,6 +55,8 @@ export default class YearDropdown extends React.Component {
         key="dropdown"
         ref="options"
         year={this.props.year}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
         onChange={this.onChange}
         onCancel={this.toggleDropdown}
         scrollableYearDropdown={this.props.scrollableYearDropdown} />
