@@ -14,10 +14,12 @@ describe('MonthDropdown', () => {
   let sandbox
 
   function getMonthDropdown (overrideProps) {
+    const dateFormatCalendar = 'MMMM YYYY'
     return mount(
       <MonthDropdown
           dropdownMode="scroll"
           month={11}
+          dateFormat={dateFormatCalendar}
           onChange={mockHandleChange}
           {...overrideProps} />
     )
@@ -73,6 +75,21 @@ describe('MonthDropdown', () => {
       monthDropdown.find('.react-datepicker__month-read-view').simulate('click')
       monthDropdown.find('.react-datepicker__month-option').at(2).simulate('click')
       expect(handleChangeResult).to.eq(2)
+    })
+
+    it('should use dateFormat property to determine nominative or genitive display of month names', () => {
+      let dropdownDateFormat = getMonthDropdown({dateFormat: 'DD/MM/YYYY'})
+      expect(dropdownDateFormat.text()).to.contain('December')
+
+      dropdownDateFormat = getMonthDropdown({locale: 'el'})
+      expect(dropdownDateFormat.text()).to.contain('Δεκέμβριος')
+      dropdownDateFormat = getMonthDropdown({locale: 'el', showMonthDropwdown: true})
+      expect(dropdownDateFormat.text()).to.contain('Δεκέμβριος')
+
+      dropdownDateFormat = getMonthDropdown({dateFormat: 'DMMMMYYYY', locale: 'el'})
+      expect(dropdownDateFormat.text()).to.contain('Δεκεμβρίου')
+      dropdownDateFormat = getMonthDropdown({dateFormat: 'DMMMMYYYY', locale: 'el', showMonthDropwdown: true})
+      expect(dropdownDateFormat.text()).to.contain('Δεκεμβρίου')
     })
   })
 

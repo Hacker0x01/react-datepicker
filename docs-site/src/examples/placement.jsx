@@ -23,8 +23,8 @@ export default class Placement extends React.Component {
 <DatePicker
     selected={this.state.startDate}
     onChange={this.handleChange}
-    popoverAttachment="bottom center"
-    popoverTargetAttachment="top center"
+    popoverAttachment="bottom right"
+    popoverTargetAttachment="top right"
     popoverTargetOffset="0px 0px"
 />
 `}
@@ -34,8 +34,8 @@ export default class Placement extends React.Component {
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            popoverAttachment="bottom center"
-            popoverTargetAttachment="top center"
+            popoverAttachment="bottom right"
+            popoverTargetAttachment="top right"
             popoverTargetOffset="0px 0px" />
       </div>
     </div>

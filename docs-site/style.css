@@ -56,6 +56,10 @@
   left: 50px;
   position: absolute; }
 
+.react-datepicker__tether-element-attached-right .react-datepicker__triangle {
+  left: auto;
+  right: 42px; }
+
 .react-datepicker__tether-element-attached-bottom.react-datepicker__tether-element {
   margin-top: -20px; }
 
@@ -212,7 +216,8 @@
   position: absolute;
   text-align: center;
   top: 30px;
-  width: 50%; }
+  width: 50%;
+  z-index: 1; }
   .react-datepicker__year-dropdown:hover,
   .react-datepicker__month-dropdown:hover {
     cursor: pointer; }

@@ -25,6 +25,11 @@
   @extend %triangle-arrow-down;
 }
 
+.react-datepicker__tether-element-attached-right .react-datepicker__triangle {
+  left: auto;
+  right: 42px;
+}
+
 .react-datepicker__tether-element-attached-bottom.react-datepicker__tether-element {
   margin-top: -20px;
 }
@@ -244,6 +249,7 @@
   text-align: center;
   top: 30px;
   width: 50%;
+  z-index: 1;
 
   &:hover {
     cursor: pointer;
