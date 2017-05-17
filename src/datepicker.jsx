@@ -365,8 +365,7 @@ export default class DatePicker extends React.Component {
         startDate={this.props.startDate}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
-        withPortal={this.props.withPortal}
-        >
+        withPortal={this.props.withPortal}>
       {this.props.children}
     </WrappedCalendar>
   }
