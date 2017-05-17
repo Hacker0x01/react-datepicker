@@ -56216,7 +56216,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'react-datepicker__week' },
+	        { className: 'react-datepicker__week', role: 'row' },
 	        this.renderDays()
 	      );
 	    }
@@ -56443,7 +56443,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        {
-	          'aria-label': 'day-' + this.props.day.date(),
+	          'aria-label': '' + this.props.day.format('MMMM Do, YYYY'),
 	          'aria-selected': this.isSameDay(this.props.selected),
 	          className: this.getClassNames(),
 	          onClick: this.handleClick,
@@ -56656,7 +56656,8 @@
 	        'div',
 	        {
 	          className: 'react-datepicker__week-number',
-	          'aria-label': 'week-' + this.props.weekNumber },
+	          'aria-label': 'week-' + this.props.weekNumber,
+	          role: 'rowheader' },
 	        this.props.weekNumber
 	      );
 	    }
