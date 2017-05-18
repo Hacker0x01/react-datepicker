@@ -25,11 +25,13 @@ export default class Calendar extends React.Component {
       PropTypes.string,
       PropTypes.array
     ]).isRequired,
+    dateFormatCalendar: PropTypes.string,
     dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
+    handleInputChange: PropTypes.func,
     highlightDates: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -68,13 +70,21 @@ export default class Calendar extends React.Component {
 
   constructor (props) {
     super(props)
+
     this.state = {
       date: this.localizeMoment(this.getDateInView()),
-      selectingDate: null
+      selectingDate: null,
+      inputYear: props.selected.format('YYYY')
     }
   }
 
   componentWillReceiveProps (nextProps) {
+    const nextSelectedYear = nextProps.selected.format('YYYY')
+    if (nextSelectedYear !== this.state.inputYear) {
+      this.setState({
+        inputYear: nextSelectedYear
+      })
+    }
     if (nextProps.preSelection && !isSameDay(nextProps.preSelection, this.props.preSelection)) {
       this.setState({
         date: this.localizeMoment(nextProps.preSelection)
@@ -135,6 +145,26 @@ export default class Calendar extends React.Component {
     }, () => this.handleMonthChange(this.state.date))
   }
 
+  handleYearChange = (newYear) => {
+    const updatedYear = this.state.date.clone().set('year', newYear)
+    const { onMonthChange, handleInputChange, dateFormat } = this.props
+    this.setState({
+      date: updatedYear
+    }, () => {
+      if (onMonthChange) {
+        onMonthChange(updatedYear)
+      }
+      if (handleInputChange) {
+        const fakeEvent = {
+          target: {
+            value: this.state.date.format(dateFormat)
+          }
+        }
+        this.props.handleInputChange(fakeEvent)
+      }
+    })
+  }
+
   handleDayClick = (day, event) => this.props.onSelect(day, event)
 
   handleDayMouseEnter = day => this.setState({ selectingDate: day })
@@ -145,6 +175,30 @@ export default class Calendar extends React.Component {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
     }
+  }
+
+  handleYearInputChange = (e) => {
+    let {value} = (e && e.target)
+    const newYear = +value
+    if (!isNaN(newYear)) {
+      // must be a number
+      if (value.length === 5) {
+        // keep replacing the char at the end of the string: we not gonna support dates after 9999
+        const digits = value.split('')
+        const endOfString = digits.pop()
+        digits.pop()
+        digits.push(endOfString)
+        value = digits.join('')
+      }
+    }
+    this.setState({
+      inputYear: value
+    }, () => {
+      if (newYear - 1000 > 0) {
+        // must also be larger than the year 999
+        this.handleYearChange(value)
+      }
+    })
   }
 
   changeYear = (year) => {
@@ -197,7 +251,7 @@ export default class Calendar extends React.Component {
         onClick={this.increaseMonth} />
   }
 
-  renderCurrentMonth = (date = this.state.date) => {
+  renderCurrentMonthHeader = (date = this.state.date) => {
     const classes = ['react-datepicker__current-month']
 
     if (this.props.showYearDropdown) {
@@ -208,7 +262,13 @@ export default class Calendar extends React.Component {
     }
     return (
       <div className={classes.join(' ')}>
-        {date.format(this.props.dateFormat)}
+        <div>
+          {date.format(this.props.dateFormatCalendar)}
+        </div>
+        <input
+            type="text"
+            value={this.state.inputYear}
+            onChange={this.handleYearInputChange}/>
       </div>
     )
   }
@@ -263,7 +323,7 @@ export default class Calendar extends React.Component {
       monthList.push(
           <div key={monthKey} className="react-datepicker__month-container">
             <div className="react-datepicker__header">
-              {this.renderCurrentMonth(monthDate)}
+              {this.renderCurrentMonthHeader(monthDate)}
               <div
                   className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
                   onFocus={this.handleDropdownFocus}>
