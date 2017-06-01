@@ -7,8 +7,8 @@ import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffecti
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
-var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
-var WrappedCalendar = onClickOutside(Calendar)
+const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+const WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
