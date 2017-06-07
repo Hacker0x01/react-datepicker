@@ -35,6 +35,8 @@ export default class DatePicker extends React.Component {
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     highlightDates: PropTypes.array,
+    highlightDates2: PropTypes.array,
+    highlightDates3: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -343,6 +345,8 @@ export default class DatePicker extends React.Component {
         filterDate={this.props.filterDate}
         onClickOutside={this.handleCalendarClickOutside}
         highlightDates={this.props.highlightDates}
+        highlightDates2={this.props.highlightDates2}
+        highlightDates3={this.props.highlightDates3}
         includeDates={this.props.includeDates}
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
