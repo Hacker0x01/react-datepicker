@@ -2,6 +2,7 @@ node_modules
 .sass-cache
 npm-debug.log
 .idea
+.vscode
 dist
 lib
 tmp

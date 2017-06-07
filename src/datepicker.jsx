@@ -7,8 +7,8 @@ import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffecti
 import moment from 'moment'
 import onClickOutside from 'react-onclickoutside'
 
-var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
-var WrappedCalendar = onClickOutside(Calendar)
+const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
+const WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -108,10 +108,14 @@ export default class DatePicker extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = this.getInitialState()
+    this.state = this.calcInitialState()
   }
 
-  getInitialState = () => {
+  componentWillUnmount () {
+    this.clearPreventFocusTimeout()
+  }
+
+  calcInitialState = () => {
     const defaultPreSelection =
       this.props.openToDate ? moment(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
@@ -131,16 +135,6 @@ export default class DatePicker extends React.Component {
     }
   }
 
-  componentWillUpdate (nextProps, nextState) {
-    if (nextProps.selected !== this.props.selected) {
-      this.setPreSelection(nextProps.selected)
-    }
-  }
-
-  componentWillUnmount () {
-    this.clearPreventFocusTimeout()
-  }
-
   clearPreventFocusTimeout = () => {
     if (this.preventFocusTimeout) {
       clearTimeout(this.preventFocusTimeout)
@@ -154,7 +148,7 @@ export default class DatePicker extends React.Component {
   setOpen = (open) => {
     this.setState({
       open: open,
-      preSelection: open && this.state.open ? this.state.preSelection : this.getInitialState().preSelection
+      preSelection: open && this.state.open ? this.state.preSelection : this.calcInitialState().preSelection
     })
   }
 
