@@ -16,6 +16,7 @@ const WrappedCalendar = onClickOutside(Calendar)
 
 export default class DatePicker extends React.Component {
   static propTypes = {
+    allowSameDay: PropTypes.bool,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
@@ -80,6 +81,7 @@ export default class DatePicker extends React.Component {
 
   static get defaultProps () {
     return {
+      allowSameDay: false,
       dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
@@ -221,7 +223,7 @@ export default class DatePicker extends React.Component {
       return
     }
 
-    if (!isSameDay(this.props.selected, changedDate)) {
+    if (!isSameDay(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
         if (this.props.selected) {
           changedDate = moment(changedDate).set({
