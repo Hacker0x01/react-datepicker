@@ -37468,32 +37468,19 @@
 
 	var _tether_component2 = _interopRequireDefault(_tether_component);
 
-	var _classnames2 = __webpack_require__(471);
-
-	var _classnames3 = _interopRequireDefault(_classnames2);
-
 	var _date_utils = __webpack_require__(480);
 
 	var _moment = __webpack_require__(349);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _reactOnclickoutside = __webpack_require__(472);
-
-	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside';
-	var WrappedCalendar = (0, _reactOnclickoutside2.default)(_calendar2.default);
 
 	/**
 	 * General datepicker component.
@@ -37516,7 +37503,6 @@
 	        onFocus: function onFocus() {},
 	        onBlur: function onBlur() {},
 	        onSelect: function onSelect() {},
-	        onClickOutside: function onClickOutside() {},
 	        onMonthChange: function onMonthChange() {},
 
 	        popoverAttachment: 'top left',
@@ -37585,6 +37571,7 @@
 	      _this.inputFocusTimeout = window.setTimeout(function () {
 	        return _this.setFocus();
 	      }, 1);
+	      _this.refocus = false;
 	    };
 
 	    _this.handleDropdownFocus = function () {
@@ -37592,19 +37579,16 @@
 	    };
 
 	    _this.handleBlur = function (event) {
-	      if (_this.state.open) {
+	      if (_this.state.open && _this.refocus) {
 	        _this.deferFocusInput();
 	      } else {
+	        _this.setOpen(false);
 	        _this.props.onBlur(event);
 	      }
 	    };
 
-	    _this.handleCalendarClickOutside = function (event) {
-	      _this.setOpen(false);
-	      _this.props.onClickOutside(event);
-	      if (_this.props.withPortal) {
-	        event.preventDefault();
-	      }
+	    _this.handleCalendarMouseDown = function (event) {
+	      _this.refocus = true;
 	    };
 
 	    _this.handleChange = function (event) {
@@ -37745,7 +37729,7 @@
 	        return null;
 	      }
 	      return _react2.default.createElement(
-	        WrappedCalendar,
+	        _calendar2.default,
 	        {
 	          ref: 'calendar',
 	          locale: _this.props.locale,
@@ -37763,7 +37747,7 @@
 	          endDate: _this.props.endDate,
 	          excludeDates: _this.props.excludeDates,
 	          filterDate: _this.props.filterDate,
-	          onClickOutside: _this.handleCalendarClickOutside,
+	          onMouseDown: _this.handleCalendarMouseDown,
 	          highlightDates: _this.props.highlightDates,
 	          includeDates: _this.props.includeDates,
 	          inline: _this.props.inline,
@@ -37775,7 +37759,6 @@
 	          scrollableYearDropdown: _this.props.scrollableYearDropdown,
 	          todayButton: _this.props.todayButton,
 	          utcOffset: _this.props.utcOffset,
-	          outsideClickIgnoreClass: outsideClickIgnoreClass,
 	          fixedHeight: _this.props.fixedHeight,
 	          monthsShown: _this.props.monthsShown,
 	          onDropdownFocus: _this.handleDropdownFocus,
@@ -37786,7 +37769,6 @@
 	    };
 
 	    _this.renderDateInput = function () {
-	      var className = (0, _classnames3.default)(_this.props.className, _defineProperty({}, outsideClickIgnoreClass, _this.state.open));
 
 	      var customInput = _this.props.customInput || _react2.default.createElement('input', { type: 'text' });
 	      var inputValue = typeof _this.props.value === 'string' ? _this.props.value : typeof _this.state.inputValue === 'string' ? _this.state.inputValue : (0, _date_utils.safeDateFormat)(_this.props.selected, _this.props);
@@ -37805,7 +37787,7 @@
 	        placeholder: _this.props.placeholderText,
 	        disabled: _this.props.disabled,
 	        autoComplete: _this.props.autoComplete,
-	        className: className,
+	        className: _this.props.className,
 	        title: _this.props.title,
 	        readOnly: _this.props.readOnly,
 	        required: _this.props.required,
@@ -37910,7 +37892,6 @@
 	  onBlur: _propTypes2.default.func,
 	  onChange: _propTypes2.default.func.isRequired,
 	  onSelect: _propTypes2.default.func,
-	  onClickOutside: _propTypes2.default.func,
 	  onChangeRaw: _propTypes2.default.func,
 	  onFocus: _propTypes2.default.func,
 	  onMonthChange: _propTypes2.default.func,
@@ -38022,10 +38003,6 @@
 	    _classCallCheck(this, Calendar);
 
 	    var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-
-	    _this.handleClickOutside = function (event) {
-	      _this.props.onClickOutside(event);
-	    };
 
 	    _this.handleDropdownFocus = function (event) {
 	      if (isDropdownSelect(event.target)) {
@@ -38296,7 +38273,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: (0, _classnames2.default)('react-datepicker', this.props.className) },
+	        { className: (0, _classnames2.default)('react-datepicker', this.props.className), onMouseDown: this.props.onMouseDown },
 	        _react2.default.createElement('div', { className: 'react-datepicker__triangle' }),
 	        this.renderPreviousMonthButton(),
 	        this.renderNextMonthButton(),
@@ -38326,7 +38303,7 @@
 	  maxDate: _propTypes2.default.object,
 	  minDate: _propTypes2.default.object,
 	  monthsShown: _propTypes2.default.number,
-	  onClickOutside: _propTypes2.default.func.isRequired,
+	  onMouseDown: _propTypes2.default.func.isRequired,
 	  onMonthChange: _propTypes2.default.func,
 	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,

@@ -5,9 +5,6 @@ import TetherComponent from './tether_component'
 import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate, parseDate, safeDateFormat } from './date_utils'
 import moment from 'moment'
 
-const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
-const WrappedCalendar = onClickOutside(Calendar)
-
 /**
  * General datepicker component.
  */
@@ -179,8 +176,8 @@ export default class DatePicker extends React.Component {
     }
   }
 
-  handleCalendarClickOutside = (event) => {
-    this.refoucs = true
+    handleCalendarMouseDown = (event) => {
+    this.refocus = true
   }
 
   handleChange = (event) => {
@@ -337,7 +334,7 @@ export default class DatePicker extends React.Component {
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
         filterDate={this.props.filterDate}
-        onClickOutside={this.handleCalendarClickOutside}
+        onMouseDown={this.handleCalendarMouseDown}
         highlightDates={this.props.highlightDates}
         includeDates={this.props.includeDates}
         inline={this.props.inline}
@@ -349,7 +346,6 @@ export default class DatePicker extends React.Component {
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
