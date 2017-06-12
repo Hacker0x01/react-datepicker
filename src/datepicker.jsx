@@ -2,13 +2,8 @@ import Calendar from './calendar'
 import React from 'react'
 import PropTypes from 'prop-types'
 import TetherComponent from './tether_component'
-import classnames from 'classnames'
 import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate, parseDate, safeDateFormat } from './date_utils'
 import moment from 'moment'
-import onClickOutside from 'react-onclickoutside'
-
-const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
-const WrappedCalendar = onClickOutside(Calendar)
 
 /**
  * General datepicker component.
@@ -47,7 +42,6 @@ export default class DatePicker extends React.Component {
     onBlur: PropTypes.func,
     onChange: PropTypes.func.isRequired,
     onSelect: PropTypes.func,
-    onClickOutside: PropTypes.func,
     onChangeRaw: PropTypes.func,
     onFocus: PropTypes.func,
     onMonthChange: PropTypes.func,
@@ -89,7 +83,6 @@ export default class DatePicker extends React.Component {
       onFocus () {},
       onBlur () {},
       onSelect () {},
-      onClickOutside () {},
       onMonthChange () {},
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
@@ -167,6 +160,7 @@ export default class DatePicker extends React.Component {
   deferFocusInput = () => {
     this.cancelFocusInput()
     this.inputFocusTimeout = window.setTimeout(() => this.setFocus(), 1)
+    this.refocus = false
   }
 
   handleDropdownFocus = () => {
@@ -174,17 +168,16 @@ export default class DatePicker extends React.Component {
   }
 
   handleBlur = (event) => {
-    if (this.state.open) {
+    if (this.state.open && this.refocus) {
       this.deferFocusInput()
     } else {
+      this.setOpen(false)
       this.props.onBlur(event)
     }
   }
 
-  handleCalendarClickOutside = (event) => {
-    this.setOpen(false)
-    this.props.onClickOutside(event)
-    if (this.props.withPortal) { event.preventDefault() }
+    handleCalendarMouseDown = (event) => {
+    this.refocus = true
   }
 
   handleChange = (event) => {
@@ -324,7 +317,7 @@ export default class DatePicker extends React.Component {
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
       return null
     }
-    return <WrappedCalendar
+    return <Calendar
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
@@ -341,7 +334,7 @@ export default class DatePicker extends React.Component {
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
         filterDate={this.props.filterDate}
-        onClickOutside={this.handleCalendarClickOutside}
+        onMouseDown={this.handleCalendarMouseDown}
         highlightDates={this.props.highlightDates}
         includeDates={this.props.includeDates}
         inline={this.props.inline}
@@ -353,20 +346,16 @@ export default class DatePicker extends React.Component {
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         utcOffset={this.props.utcOffset}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
         className={this.props.calendarClassName}>
       {this.props.children}
-    </WrappedCalendar>
+    </Calendar>
   }
 
   renderDateInput = () => {
-    var className = classnames(this.props.className, {
-      [outsideClickIgnoreClass]: this.state.open
-    })
 
     const customInput = this.props.customInput || <input type="text" />
     const inputValue =
@@ -388,7 +377,7 @@ export default class DatePicker extends React.Component {
       placeholder: this.props.placeholderText,
       disabled: this.props.disabled,
       autoComplete: this.props.autoComplete,
-      className: className,
+      className: this.props.className,
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
