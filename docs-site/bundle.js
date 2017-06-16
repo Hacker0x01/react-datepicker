@@ -37545,7 +37545,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
-	    _this.getInitialState = function () {
+	    _this.calcInitialState = function () {
 	      var defaultPreSelection = _this.props.openToDate ? (0, _moment2.default)(_this.props.openToDate) : _this.props.selectsEnd && _this.props.startDate ? (0, _moment2.default)(_this.props.startDate) : _this.props.selectsStart && _this.props.endDate ? (0, _moment2.default)(_this.props.endDate) : (0, _moment2.default)();
 	      var minDate = (0, _date_utils.getEffectiveMinDate)(_this.props);
 	      var maxDate = (0, _date_utils.getEffectiveMaxDate)(_this.props);
@@ -37571,7 +37571,7 @@
 	    _this.setOpen = function (open) {
 	      _this.setState({
 	        open: open,
-	        preSelection: open && _this.state.open ? _this.state.preSelection : _this.getInitialState().preSelection
+	        preSelection: open && _this.state.open ? _this.state.preSelection : _this.calcInitialState().preSelection
 	      });
 	    };
 
@@ -37828,18 +37828,11 @@
 	      }
 	    };
 
-	    _this.state = _this.getInitialState();
+	    _this.state = _this.calcInitialState();
 	    return _this;
 	  }
 
 	  _createClass(DatePicker, [{
-	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate(nextProps, nextState) {
-	      if (nextProps.selected !== this.props.selected) {
-	        this.setPreSelection(nextProps.selected);
-	      }
-	    }
-	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.clearPreventFocusTimeout();
@@ -38057,17 +38050,24 @@
 	      var minDate = (0, _date_utils.getEffectiveMinDate)(_this.props);
 	      var maxDate = (0, _date_utils.getEffectiveMaxDate)(_this.props);
 	      var current = _moment2.default.utc().utcOffset(utcOffset);
-	      var initialDate = openToDate || selected || preSelection;
+	      var initialDate = preSelection || selected;
 	      if (initialDate) {
 	        return initialDate;
+	      } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
+	        return openToDate;
+	      } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
+	        return openToDate;
+	      } else if (minDate && minDate.isAfter(current)) {
+	        return minDate;
+	      } else if (maxDate && openToDate && openToDate.isBefore(maxDate)) {
+	        return openToDate;
+	      } else if (maxDate && maxDate.isBefore(current)) {
+	        return maxDate;
+	      } else if (openToDate) {
+	        return openToDate;
 	      } else {
-	        if (minDate && current.isBefore(minDate)) {
-	          return minDate;
-	        } else if (maxDate && current.isAfter(maxDate)) {
-	          return maxDate;
-	        }
+	        return current;
 	      }
-	      return current;
 	    };
 
 	    _this.localizeMoment = function (date) {
@@ -60249,7 +60249,7 @@
 	          _react2.default.createElement(
 	            'code',
 	            { className: 'jsx' },
-	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    popoverAttachment="bottom center"\n    popoverTargetAttachment="top center"\n    popoverTargetOffset="0px 0px"\n/>\n'
+	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    popoverAttachment="bottom right"\n    popoverTargetAttachment="top right"\n    popoverTargetOffset="0px 0px"\n/>\n'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -60258,8 +60258,8 @@
 	          _react2.default.createElement(_reactDatepicker2.default, {
 	            selected: this.state.startDate,
 	            onChange: this.handleChange,
-	            popoverAttachment: 'bottom center',
-	            popoverTargetAttachment: 'top center',
+	            popoverAttachment: 'bottom right',
+	            popoverTargetAttachment: 'top right',
 	            popoverTargetOffset: '0px 0px' })
 	        )
 	      );
