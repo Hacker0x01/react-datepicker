@@ -101,24 +101,17 @@ export default class Calendar extends React.Component {
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const current = moment.utc().utcOffset(utcOffset)
-    const initialDate = preSelection || selected
+    const initialDate = openToDate || selected || preSelection
     if (initialDate) {
       return initialDate
-    } else if (minDate && maxDate && openToDate && openToDate.isBetween(minDate, maxDate)) {
-      return openToDate
-    } else if (minDate && openToDate && openToDate.isAfter(minDate)) {
-      return openToDate
-    } else if (minDate && minDate.isAfter(current)) {
-      return minDate
-    } else if (maxDate && openToDate && openToDate.isBefore(maxDate)) {
-      return openToDate
-    } else if (maxDate && maxDate.isBefore(current)) {
-      return maxDate
-    } else if (openToDate) {
-      return openToDate
     } else {
-      return current
+      if (minDate && current.isBefore(minDate)) {
+        return minDate
+      } else if (maxDate && current.isAfter(maxDate)) {
+        return maxDate
+      }
     }
+    return current
   }
 
   localizeMoment = date => date.clone().locale(this.props.locale || moment.locale())
