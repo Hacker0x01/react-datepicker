@@ -6,6 +6,11 @@
 Props
 -----
 
+### `dateFormat` (required)
+
+type: `string`
+
+
 ### `dropdownMode` (required)
 
 type: `enum('scroll'|'select')`

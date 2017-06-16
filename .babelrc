@@ -10,7 +10,8 @@
             "imports": ["react"],
             "locals": ["module"]
           }]
-        }]
+        }],
+        "add-react-displayname"
       ]
     }
   }
