@@ -159,6 +159,10 @@
     color: #fff; }
     .react-datepicker__day--highlighted:hover {
       background-color: #32be3f; }
+    .react-datepicker__day--highlighted-custom-1 {
+      color: magenta; }
+    .react-datepicker__day--highlighted-custom-2 {
+      color: green; }
   .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
     border-radius: 0.3rem;
     background-color: #216ba5;

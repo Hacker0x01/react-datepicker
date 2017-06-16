@@ -502,7 +502,7 @@
 
 /***/ }),
 /* 6 */
-[521, 7],
+[522, 7],
 /* 7 */
 /***/ (function(module, exports) {
 
@@ -5689,7 +5689,7 @@
 
 /***/ }),
 /* 50 */
-[521, 35],
+[522, 35],
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20095,7 +20095,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(520);
+	var _hero_example = __webpack_require__(521);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20286,109 +20286,113 @@
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _include_dates = __webpack_require__(493);
+	var _highlight_dates_with_ranges = __webpack_require__(493);
+
+	var _highlight_dates_with_ranges2 = _interopRequireDefault(_highlight_dates_with_ranges);
+
+	var _include_dates = __webpack_require__(494);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(494);
+	var _filter_dates = __webpack_require__(495);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(495);
+	var _disabled = __webpack_require__(496);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _disabled_keyboard_navigation = __webpack_require__(496);
+	var _disabled_keyboard_navigation = __webpack_require__(497);
 
 	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
 
-	var _clear_input = __webpack_require__(497);
+	var _clear_input = __webpack_require__(498);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(498);
+	var _on_blur_callbacks = __webpack_require__(499);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _placement = __webpack_require__(499);
+	var _placement = __webpack_require__(500);
 
 	var _placement2 = _interopRequireDefault(_placement);
 
-	var _date_range = __webpack_require__(500);
+	var _date_range = __webpack_require__(501);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(501);
+	var _tab_index = __webpack_require__(502);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(502);
+	var _year_dropdown = __webpack_require__(503);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(503);
+	var _month_dropdown = __webpack_require__(504);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(504);
+	var _year_select_dropdown = __webpack_require__(505);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(505);
+	var _today = __webpack_require__(506);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(506);
+	var _timezone_date = __webpack_require__(507);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(507);
+	var _inline = __webpack_require__(508);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(508);
+	var _open_to_date = __webpack_require__(509);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(509);
+	var _fixed_calendar = __webpack_require__(510);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(510);
+	var _week_numbers = __webpack_require__(511);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(511);
+	var _custom_input = __webpack_require__(512);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(512);
+	var _multi_month = __webpack_require__(513);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(513);
+	var _multi_month_drp = __webpack_require__(514);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	var _children = __webpack_require__(514);
+	var _children = __webpack_require__(515);
 
 	var _children2 = _interopRequireDefault(_children);
 
-	var _portal = __webpack_require__(515);
+	var _portal = __webpack_require__(516);
 
 	var _portal2 = _interopRequireDefault(_portal);
 
-	var _inline_portal = __webpack_require__(516);
+	var _inline_portal = __webpack_require__(517);
 
 	var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-	var _raw_change = __webpack_require__(517);
+	var _raw_change = __webpack_require__(518);
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(518);
-
 	__webpack_require__(519);
+
+	__webpack_require__(520);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20445,6 +20449,9 @@
 	    }, {
 	      title: 'Highlight dates',
 	      component: _react2.default.createElement(_highlight_dates2.default, null)
+	    }, {
+	      title: 'Highlight dates with custom class names and ranges',
+	      component: _react2.default.createElement(_highlight_dates_with_ranges2.default, null)
 	    }, {
 	      title: 'Include dates',
 	      component: _react2.default.createElement(_include_dates2.default, null)
@@ -56233,6 +56240,8 @@
 	  value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _moment = __webpack_require__(349);
@@ -56254,6 +56263,8 @@
 	var _date_utils = __webpack_require__(480);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -56289,17 +56300,32 @@
 	      return !_this.props.inline && !_this.isSameDay(_this.props.selected) && _this.isSameDay(_this.props.preSelection);
 	    }, _this.isDisabled = function () {
 	      return (0, _date_utils.isDayDisabled)(_this.props.day, _this.props);
-	    }, _this.isHighlighted = function () {
+	    }, _this.getHighLightedClass = function (defaultClassName) {
 	      var _this$props = _this.props,
 	          day = _this$props.day,
 	          highlightDates = _this$props.highlightDates;
 
 	      if (!highlightDates) {
-	        return false;
+	        return _defineProperty({}, defaultClassName, false);
 	      }
-	      return highlightDates.some(function (testDay) {
-	        return (0, _date_utils.isSameDay)(day, testDay);
-	      });
+	      for (var i = 0, len = highlightDates.length; i < len; i++) {
+	        var obj = highlightDates[i];
+	        if (obj instanceof _moment2.default) {
+	          if ((0, _date_utils.isSameDay)(day, obj)) {
+	            return _defineProperty({}, defaultClassName, true);
+	          }
+	        } else if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+	          var keys = Object.keys(obj);
+	          var arr = obj[keys[0]];
+	          if (typeof keys[0] === 'string' && arr.constructor === Array) {
+	            for (var k = 0, _len2 = arr.length; k < _len2; k++) {
+	              if ((0, _date_utils.isSameDay)(day, arr[k])) {
+	                return _defineProperty({}, keys[0], true);
+	              }
+	            }
+	          }
+	        }
+	      }
 	    }, _this.isInRange = function () {
 	      var _this$props2 = _this.props,
 	          day = _this$props2.day,
@@ -56397,7 +56423,6 @@
 	        'react-datepicker__day--disabled': _this.isDisabled(),
 	        'react-datepicker__day--selected': _this.isSameDay(_this.props.selected),
 	        'react-datepicker__day--keyboard-selected': _this.isKeyboardSelected(),
-	        'react-datepicker__day--highlighted': _this.isHighlighted(),
 	        'react-datepicker__day--range-start': _this.isRangeStart(),
 	        'react-datepicker__day--range-end': _this.isRangeEnd(),
 	        'react-datepicker__day--in-range': _this.isInRange(),
@@ -56407,7 +56432,7 @@
 	        'react-datepicker__day--today': _this.isSameDay(_moment2.default.utc().utcOffset(_this.props.utcOffset)),
 	        'react-datepicker__day--weekend': _this.isWeekend(),
 	        'react-datepicker__day--outside-month': _this.isOutsideMonth()
-	      });
+	      }, _this.getHighLightedClass('react-datepicker__day--highlighted'));
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
@@ -59463,6 +59488,146 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var highlightDatesRanges = function (_React$Component) {
+	  _inherits(highlightDatesRanges, _React$Component);
+
+	  function highlightDatesRanges(props) {
+	    _classCallCheck(this, highlightDatesRanges);
+
+	    var _this = _possibleConstructorReturn(this, (highlightDatesRanges.__proto__ || Object.getPrototypeOf(highlightDatesRanges)).call(this, props));
+
+	    _this.state = {
+	      startDate: null
+	    };
+
+	    _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    };
+
+	    _this.highlightWithRanges = [{ 'react-datepicker__day--highlighted-custom-1': [(0, _moment2.default)().subtract(4, 'days'), (0, _moment2.default)().subtract(3, 'days'), (0, _moment2.default)().subtract(2, 'days'), (0, _moment2.default)().subtract(1, 'days')]
+	    }, { 'react-datepicker__day--highlighted-custom-2': [(0, _moment2.default)().add(1, 'days'), (0, _moment2.default)().add(2, 'days'), (0, _moment2.default)().add(3, 'days'), (0, _moment2.default)().add(4, 'days')]
+	    }];
+	    return _this;
+	  }
+
+	  _createClass(highlightDatesRanges, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            null,
+	            'constructor (props) {',
+	            _react2.default.createElement('br', null),
+	            '  super(props)',
+	            _react2.default.createElement('br', null),
+	            '  this.highlightWithRanges = [',
+	            _react2.default.createElement('br', null),
+	            '    { "react-datepicker__day--highlighted-custom-1": [',
+	            _react2.default.createElement('br', null),
+	            '      moment().subtract(4, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().subtract(3, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().subtract(2, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().subtract(1, "days") ]',
+	            _react2.default.createElement('br', null),
+	            '    },',
+	            _react2.default.createElement('br', null),
+	            '    { "react-datepicker__day--highlighted-custom-2": [',
+	            _react2.default.createElement('br', null),
+	            '      moment().add(1, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().add(2, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().add(3, "days"),',
+	            _react2.default.createElement('br', null),
+	            '      moment().add(4, "days") ]',
+	            _react2.default.createElement('br', null),
+	            '    }',
+	            _react2.default.createElement('br', null),
+	            '  ]',
+	            _react2.default.createElement('br', null),
+	            '}',
+	            _react2.default.createElement('br', null)
+	          ),
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '<DatePicker',
+	            _react2.default.createElement('br', null),
+	            'selected={this.state.startDate}',
+	            _react2.default.createElement('br', null),
+	            'onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'highlightDates={this.highlightWithRanges}'
+	            ),
+	            _react2.default.createElement('br', null),
+	            '\xA0 \xA0 ',
+	            'placeholderText="This highlight two ranges with custom classes" />'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            highlightDates: this.highlightWithRanges,
+	            placeholderText: 'This highlight two ranges with custom classes' })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return highlightDatesRanges;
+	}(_react2.default.Component);
+
+	exports.default = highlightDatesRanges;
+
+/***/ }),
+/* 494 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(347);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(349);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	var includeDates = function (_React$Component) {
 	  _inherits(includeDates, _React$Component);
 
@@ -59533,7 +59698,7 @@
 	exports.default = includeDates;
 
 /***/ }),
-/* 494 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59633,7 +59798,7 @@
 	exports.default = FilterDates;
 
 /***/ }),
-/* 495 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59727,7 +59892,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-/* 496 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59824,7 +59989,7 @@
 	exports.default = DisabledKeyboardNavigation;
 
 /***/ }),
-/* 497 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59909,7 +60074,7 @@
 	exports.default = ClearInput;
 
 /***/ }),
-/* 498 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60021,7 +60186,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-/* 499 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60107,7 +60272,7 @@
 	exports.default = Placement;
 
 /***/ }),
-/* 500 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60218,7 +60383,7 @@
 	exports.default = DateRange;
 
 /***/ }),
-/* 501 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60302,7 +60467,7 @@
 	exports.default = TabIndex;
 
 /***/ }),
-/* 502 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60388,7 +60553,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 503 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60472,7 +60637,7 @@
 	exports.default = MonthDropdown;
 
 /***/ }),
-/* 504 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60559,7 +60724,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 505 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60643,7 +60808,7 @@
 	exports.default = Today;
 
 /***/ }),
-/* 506 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60804,7 +60969,7 @@
 	exports.default = TimeZoneDate;
 
 /***/ }),
-/* 507 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60888,7 +61053,7 @@
 	exports.default = Inline;
 
 /***/ }),
-/* 508 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60975,7 +61140,7 @@
 	exports.default = OpenToDate;
 
 /***/ }),
-/* 509 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61064,7 +61229,7 @@
 	exports.default = FixedCalendar;
 
 /***/ }),
-/* 510 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61148,7 +61313,7 @@
 	exports.default = Default;
 
 /***/ }),
-/* 511 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61267,7 +61432,7 @@
 	exports.default = CustomInput;
 
 /***/ }),
-/* 512 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61351,7 +61516,7 @@
 	exports.default = MultiMonth;
 
 /***/ }),
-/* 513 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61436,7 +61601,7 @@
 	exports.default = MultiMonthDrp;
 
 /***/ }),
-/* 514 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61527,7 +61692,7 @@
 	exports.default = Children;
 
 /***/ }),
-/* 515 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61611,7 +61776,7 @@
 	exports.default = WithPortal;
 
 /***/ }),
-/* 516 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61706,7 +61871,7 @@
 	exports.default = InlinePortalVersion;
 
 /***/ }),
-/* 517 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61802,15 +61967,15 @@
 	exports.default = RawChanges;
 
 /***/ }),
-/* 518 */
+/* 519 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 519 */
-518,
 /* 520 */
+519,
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61877,7 +62042,7 @@
 	exports.default = HeroExample;
 
 /***/ }),
-/* 521 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**

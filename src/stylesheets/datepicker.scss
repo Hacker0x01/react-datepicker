@@ -163,6 +163,14 @@
     &:hover {
       background-color: darken($datepicker__highlighted-color, 5%);
     }
+
+    &-custom-1 {
+      color: magenta;
+    }
+
+    &-custom-2 {
+      color: green;
+    }
   }
 
   &--selected,

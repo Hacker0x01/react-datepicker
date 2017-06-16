@@ -45,12 +45,29 @@ export default class Day extends React.Component {
 
   isDisabled = () => isDayDisabled(this.props.day, this.props)
 
-  isHighlighted = () => {
+  getHighLightedClass = (defaultClassName) => {
     const { day, highlightDates } = this.props
     if (!highlightDates) {
-      return false
+      return {[defaultClassName]: false}
     }
-    return highlightDates.some(testDay => isSameDay(day, testDay))
+    for (let i = 0, len = highlightDates.length; i < len; i++) {
+      const obj = highlightDates[i]
+      if (obj instanceof moment) {
+        if (isSameDay(day, obj)) {
+          return {[defaultClassName]: true}
+        }
+      } else if (typeof obj === 'object') {
+        const keys = Object.keys(obj)
+        const arr = obj[keys[0]]
+        if (typeof keys[0] === 'string' && arr.constructor === Array) {
+          for (let k = 0, len = arr.length; k < len; k++) {
+            if (isSameDay(day, arr[k])) {
+              return {[keys[0]]: true}
+            }
+          }
+        }
+      }
+    }
   }
 
   isInRange = () => {
@@ -138,7 +155,6 @@ export default class Day extends React.Component {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
       'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
-      'react-datepicker__day--highlighted': this.isHighlighted(),
       'react-datepicker__day--range-start': this.isRangeStart(),
       'react-datepicker__day--range-end': this.isRangeEnd(),
       'react-datepicker__day--in-range': this.isInRange(),
@@ -148,7 +164,7 @@ export default class Day extends React.Component {
       'react-datepicker__day--today': this.isSameDay(moment.utc().utcOffset(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
-    })
+    }, this.getHighLightedClass('react-datepicker__day--highlighted'))
   }
 
   render () {

@@ -87,6 +87,28 @@ describe('Day', () => {
       const shallowDay = renderDay(day, { highlightDates })
       expect(shallowDay.hasClass(className)).to.equal(false)
     })
+
+    describe('highlighted prop is an array of objects with class name as a key and array of moments as a value', () => {
+      it('should apply the highlighted class if in highlighted', () => {
+        const day = moment()
+        const highlightDay1 = {'testClassName': [day.clone().add(1, 'day'), day.clone()]}
+        const highlightDay2 = day.clone().add(2, 'day')
+        const highlightDay3 = day.clone().add(3, 'day')
+        const highlightDates = [highlightDay1, highlightDay2, highlightDay3]
+        const shallowDay = renderDay(day, { highlightDates })
+        expect(shallowDay.hasClass('testClassName')).to.equal(true)
+      })
+
+      it('should not apply the highlighted class if not in highlighted array', () => {
+        const day = moment()
+        const highlightDay1 = {'testClassName': [day.clone().add(1, 'day'), day.clone().add(2, 'day')]}
+        const highlightDay2 = day.clone().add(3, 'day')
+        const highlightDay3 = day.clone().add(4, 'day')
+        const highlightDates = [highlightDay1, highlightDay2, highlightDay3]
+        const shallowDay = renderDay(day, { highlightDates })
+        expect(shallowDay.hasClass('testClassName')).to.equal(false)
+      })
+    })
   })
 
   describe('in range', () => {
