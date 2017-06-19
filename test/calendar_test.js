@@ -108,11 +108,11 @@ describe('Calendar', function () {
     assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
-  it('should open on selected date rather than openToDate when both are specified', function () {
-    const openToDate = moment('09/28/1993', 'MM/DD/YYYY')
-    const selected = moment('09/28/1995', 'MM/DD/YYYY')
-    const calendar = getCalendar({ openToDate, selected })
-    assert(calendar.state().date.isSame(selected, 'day'))
+  it('should open on openToDate date rather than selected date when both are specified', function () {
+    var openToDate = moment('09/28/1993', 'MM/DD/YYYY')
+    var selected = moment('09/28/1995', 'MM/DD/YYYY')
+    var calendar = getCalendar({ openToDate, selected })
+    assert(calendar.state().date.isSame(openToDate, 'day'))
   })
 
   it('should trigger date change when openToDate prop is set after calcInitialState()', () => {
