@@ -96,12 +96,7 @@ export default class DatePicker extends React.Component {
       popoverAttachment: 'top left',
       popoverTargetAttachment: 'bottom left',
       popoverTargetOffset: '10px 0',
-      tetherConstraints: [
-        {
-          to: 'window',
-          attachment: 'together'
-        }
-      ],
+      tetherConstraints: [{ to: 'window', attachment: 'together' }],
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false
