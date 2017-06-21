@@ -12,11 +12,11 @@ General datepicker component.
 |`children`|`node`|||
 |`className`|`string`|||
 |`customInput`|`element`|||
-|`dateFormat`|`union(string|array)`|`'L'`||
+|`dateFormat`|`union(string\|array)`|`'L'`||
 |`dateFormatCalendar`|`string`|`'MMMM YYYY'`||
 |`disabled`|`bool`|`false`||
 |`disabledKeyboardNavigation`|`bool`|`false`||
-|`dropdownMode` (required)|`enum('scroll'|'select')`|`'scroll'`||
+|`dropdownMode` (required)|`enum('scroll'\|'select')`|`'scroll'`||
 |`endDate`|`object`|||
 |`excludeDates`|`array`|||
 |`filterDate`|`func`|||
