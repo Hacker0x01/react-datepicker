@@ -258,23 +258,26 @@ export default class DatePicker extends React.Component {
   }
 
   onInputKeyDown = (event) => {
+    const eventKey = event.key
     if (!this.state.open && !this.props.inline) {
-      this.onInputClick()
+      if (eventKey !== 'Enter' && eventKey !== 'Escape' && eventKey !== 'Tab') {
+        this.onInputClick()
+      }
       return
     }
     const copy = moment(this.state.preSelection)
-    if (event.key === 'Enter') {
+    if (eventKey === 'Enter') {
       event.preventDefault()
       this.handleSelect(copy, event)
-    } else if (event.key === 'Escape') {
+    } else if (eventKey === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
-    } else if (event.key === 'Tab') {
+    } else if (eventKey === 'Tab') {
       this.setOpen(false)
     }
     if (!this.props.disabledKeyboardNavigation) {
       let newSelection
-      switch (event.key) {
+      switch (eventKey) {
         case 'ArrowLeft':
           event.preventDefault()
           newSelection = copy.subtract(1, 'days')
