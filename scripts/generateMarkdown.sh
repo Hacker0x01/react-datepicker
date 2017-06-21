@@ -32,8 +32,8 @@ function generatePropType(type) {
   if (Array.isArray(type.value)) {
     values = '(' +
       type.value.map(function(typeValue) {
-        return (typeValue.name || typeValue.value).replace(/\|/g, '\\|');
-      }).join('|') +
+        return typeValue.name || typeValue.value;
+      }).join('\\|') +
       ')';
   } else {
     values = type.value;
