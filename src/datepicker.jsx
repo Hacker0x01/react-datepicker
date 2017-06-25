@@ -1,7 +1,7 @@
 import Calendar from './calendar'
 import React from 'react'
 import PropTypes from 'prop-types'
-import TetherComponent from './tether_component'
+import PopperComponent, { popperPlacementPositions } from './popper_component'
 import classnames from 'classnames'
 import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate, parseDate, safeDateFormat } from './date_utils'
 import moment from 'moment'
@@ -55,11 +55,10 @@ export default class DatePicker extends React.Component {
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
-    popoverAttachment: PropTypes.string,
-    popoverTargetAttachment: PropTypes.string,
-    popoverTargetOffset: PropTypes.string,
+    popperClassName: PropTypes.string, // <PopperComponent/> props
+    popperModifiers: PropTypes.object, // <PopperComponent/> props
+    popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
     readOnly: PropTypes.bool,
-    renderCalendarTo: PropTypes.any,
     required: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
     selected: PropTypes.object,
@@ -71,7 +70,6 @@ export default class DatePicker extends React.Component {
     forceShowMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
     tabIndex: PropTypes.number,
-    tetherConstraints: PropTypes.array,
     title: PropTypes.string,
     todayButton: PropTypes.string,
     utcOffset: PropTypes.number,
@@ -93,10 +91,6 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
-      popoverAttachment: 'top left',
-      popoverTargetAttachment: 'bottom left',
-      popoverTargetOffset: '10px 0',
-      tetherConstraints: [{ to: 'window', attachment: 'together' }],
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false
@@ -434,19 +428,18 @@ export default class DatePicker extends React.Component {
     }
 
     return (
-      <TetherComponent
-          classPrefix={'react-datepicker__tether'}
-          attachment={this.props.popoverAttachment}
-          targetAttachment={this.props.popoverTargetAttachment}
-          targetOffset={this.props.popoverTargetOffset}
-          renderElementTo={this.props.renderCalendarTo}
-          constraints={this.props.tetherConstraints}>
-        <div className="react-datepicker__input-container">
-          {this.renderDateInput()}
-          {this.renderClearButton()}
-        </div>
-        {calendar}
-      </TetherComponent>
+      <PopperComponent
+          className={this.props.popperClassName}
+          hidePopper={(!this.state.open || this.props.disabled)}
+          popperModifiers={this.props.popperModifiers}
+          targetComponent={
+            <div className="react-datepicker__input-container">
+              {this.renderDateInput()}
+              {this.renderClearButton()}
+            </div>
+          }
+          popperComponent={calendar}
+          popperPlacement={this.props.popperPlacement}/>
     )
   }
 }

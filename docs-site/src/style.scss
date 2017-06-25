@@ -12,15 +12,12 @@
 html,
 body {
   height: 100%;
+  width: 100%;
   background: #f5f5f5;
   font-family: "Open Sans", sans-serif;
   color: #555;
   font-size: 14px;
   line-height: 21px;
-
-  input {
-    width: 100%;
-  }
 }
 
 a {
@@ -76,6 +73,18 @@ strong {
 .wrapper {
   @extend %container-styling;
   padding: 20px;
+}
+
+.badges > a {
+  margin: 0 5px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .row {

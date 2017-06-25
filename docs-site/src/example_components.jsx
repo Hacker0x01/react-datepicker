@@ -18,7 +18,7 @@ import Disabled from './examples/disabled'
 import DisabledKeyboardNavigation from './examples/disabled_keyboard_navigation'
 import ClearInput from './examples/clear_input'
 import OnBlurCallbacks from './examples/on_blur_callbacks'
-import Placement from './examples/placement'
+import ConfigurePopper from './examples/configurePopper'
 import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
@@ -123,8 +123,8 @@ export default class exampleComponents extends React.Component {
     component: <OnBlurCallbacks />
   },
   {
-    title: 'Configure Popover Placement',
-    component: <Placement />
+    title: 'Configure Popper Properties',
+    component: <ConfigurePopper />
   },
   {
     title: 'Portal version',

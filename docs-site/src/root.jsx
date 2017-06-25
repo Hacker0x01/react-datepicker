@@ -23,7 +23,7 @@ export default class Root extends React.Component {
         </div>
         <div className="wrapper">
           <h1>ReactJS Datepicker</h1>
-          <p>
+          <p className="badges">
             <a href="https://npmjs.org/package/react-datepicker">
               <img src="https://badge.fury.io/js/react-datepicker.svg" className="badge" />
             </a>
