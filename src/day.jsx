@@ -7,6 +7,7 @@ import { isSameDay, isDayDisabled, isDayInRange } from './date_utils'
 export default class Day extends React.Component {
   static propTypes = {
     day: PropTypes.object.isRequired,
+    dayClassName: PropTypes.func,
     endDate: PropTypes.object,
     highlightDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -150,8 +151,9 @@ export default class Day extends React.Component {
       this.props.month !== this.props.day.month()
   }
 
-  getClassNames = () => {
-    return classnames('react-datepicker__day', {
+  getClassNames = (date) => {
+    const dayClassName = (this.props.dayClassName ? this.props.dayClassName(date) : undefined)
+    return classnames('react-datepicker__day', dayClassName, {
       'react-datepicker__day--disabled': this.isDisabled(),
       'react-datepicker__day--selected': this.isSameDay(this.props.selected),
       'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
@@ -170,7 +172,7 @@ export default class Day extends React.Component {
   render () {
     return (
       <div
-          className={this.getClassNames()}
+          className={this.getClassNames(this.props.day)}
           onClick={this.handleClick}
           onMouseEnter={this.handleMouseEnter}
           aria-label={`day-${this.props.day.date()}`}

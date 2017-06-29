@@ -111,6 +111,42 @@ describe('Day', () => {
     })
   })
 
+  describe('custom day className', () => {
+    const className = 'customClassName'
+
+    it('should apply className returned from passed dayClassName prop function', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => (className)
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should pass rendered days date to dayClassName func', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => {
+        expect(date).to.equal(day)
+        return className
+      }
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should not add any additional className when passed dayClassName prop function returns undefined', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => (undefined)
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+      expect(shallowDay.hasClass('undefined')).to.equal(false)
+    })
+
+    it('should not add any additional className when dayClassName prop is not passed', () => {
+      const day = moment()
+      const shallowDay = renderDay(day)
+      expect(shallowDay.hasClass(className)).to.equal(false)
+      expect(shallowDay.hasClass('undefined')).to.equal(false)
+    })
+  })
+
   describe('in range', () => {
     const className = 'react-datepicker__day--in-range'
 

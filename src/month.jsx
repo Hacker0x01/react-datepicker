@@ -8,6 +8,7 @@ const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6
 export default class Month extends React.Component {
   static propTypes = {
     day: PropTypes.object.isRequired,
+    dayClassName: PropTypes.func,
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
@@ -84,6 +85,7 @@ export default class Month extends React.Component {
           showWeekNumber={this.props.showWeekNumbers}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
+          dayClassName={this.props.dayClassName}
           utcOffset={this.props.utcOffset}/>)
 
       if (breakAfterNextPush) break

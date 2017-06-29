@@ -25,6 +25,7 @@ export default class Calendar extends React.Component {
       PropTypes.string,
       PropTypes.array
     ]).isRequired,
+    dayClassName: PropTypes.func,
     dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
@@ -269,6 +270,7 @@ export default class Calendar extends React.Component {
             </div>
             <Month
                 day={monthDate}
+                dayClassName={this.props.dayClassName}
                 onDayClick={this.handleDayClick}
                 onDayMouseEnter={this.handleDayMouseEnter}
                 onMouseLeave={this.handleMonthMouseLeave}

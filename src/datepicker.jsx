@@ -28,6 +28,7 @@ export default class DatePicker extends React.Component {
       PropTypes.array
     ]),
     dateFormatCalendar: PropTypes.string,
+    dayClassName: PropTypes.func,
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
@@ -352,6 +353,7 @@ export default class DatePicker extends React.Component {
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
+        dayClassName={this.props.dayClassName}
         className={this.props.calendarClassName}>
       {this.props.children}
     </WrappedCalendar>
