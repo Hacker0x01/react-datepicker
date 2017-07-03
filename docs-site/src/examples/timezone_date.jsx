@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 
 import DatePicker from 'react-datepicker'
 
