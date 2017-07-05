@@ -55,6 +55,7 @@ export default class Calendar extends React.Component {
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
+    weekLabel: PropTypes.string,
     utcOffset: PropTypes.number
   }
 
@@ -159,7 +160,7 @@ export default class Calendar extends React.Component {
     if (this.props.showWeekNumbers) {
       dayNames.push(
         <div key="W" className="react-datepicker__day-name">
-          #
+            {this.props.weekLabel || '#'}
         </div>
       )
     }
