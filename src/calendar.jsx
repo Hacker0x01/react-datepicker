@@ -55,6 +55,7 @@ export default class Calendar extends React.Component {
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
+    useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number
   }
 
@@ -165,9 +166,12 @@ export default class Calendar extends React.Component {
     }
     return dayNames.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
+      const weekDayName = this.props.useWeekdaysShort
+          ? day.localeData().weekdaysShort(day)
+          : day.localeData().weekdaysMin(day)
       return (
         <div key={offset} className="react-datepicker__day-name">
-          {day.localeData().weekdaysMin(day)}
+          {weekDayName}
         </div>
       )
     }))
