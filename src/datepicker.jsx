@@ -74,6 +74,7 @@ export default class DatePicker extends React.Component {
     tetherConstraints: PropTypes.array,
     title: PropTypes.string,
     todayButton: PropTypes.string,
+    useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     withPortal: PropTypes.bool
@@ -325,6 +326,7 @@ export default class DatePicker extends React.Component {
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
+        useWeekdaysShort={this.props.useWeekdaysShort}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         preSelection={this.state.preSelection}
