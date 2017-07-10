@@ -213,6 +213,29 @@ describe('Calendar', function () {
     expect(month.prop('selectingDate')).not.to.exist
   })
 
+  it('uses MomentJS\'s weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present', () => {
+    moment.defineLocale('weekDaysLocale', {
+      parentLocale: 'en',
+      weekdaysMin: 'AA_BB_CC_DD_EE_FF_GG'.split('_'),
+      weekdaysShort: 'AAA_BBB_CCC_DDD_EEE_FFF_GGG'.split('_')
+    })
+
+    const calendarShort = mount(
+      <Calendar locale="weekDaysLocale" useWeekdaysShort />
+    )
+    const calendarMin = mount(
+      <Calendar locale="weekDaysLocale" />
+    )
+
+    const daysNamesShort = calendarShort.find('.react-datepicker__day-name')
+    expect(daysNamesShort.at(0).text()).to.equal('AAA')
+    expect(daysNamesShort.at(6).text()).to.equal('GGG')
+
+    const daysNamesMin = calendarMin.find('.react-datepicker__day-name')
+    expect(daysNamesMin.at(0).text()).to.equal('AA')
+    expect(daysNamesMin.at(6).text()).to.equal('GG')
+  })
+
   describe('onMonthChange', () => {
     let onMonthChangeSpy = sinon.spy()
     let calendar

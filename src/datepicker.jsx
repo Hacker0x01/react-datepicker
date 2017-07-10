@@ -73,6 +73,7 @@ export default class DatePicker extends React.Component {
     tabIndex: PropTypes.number,
     title: PropTypes.string,
     todayButton: PropTypes.string,
+    useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     withPortal: PropTypes.bool
@@ -112,6 +113,7 @@ export default class DatePicker extends React.Component {
       this.props.openToDate ? moment(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
       : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
+      : this.props.utcOffset ? moment.utc().utcOffset(this.props.utcOffset)
       : moment()
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
@@ -158,7 +160,7 @@ export default class DatePicker extends React.Component {
 
   deferFocusInput = () => {
     this.cancelFocusInput()
-    this.inputFocusTimeout = window.setTimeout(() => this.setFocus(), 1)
+    this.inputFocusTimeout = setTimeout(() => this.setFocus(), 1)
   }
 
   handleDropdownFocus = () => {
@@ -323,6 +325,7 @@ export default class DatePicker extends React.Component {
         ref="calendar"
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
+        useWeekdaysShort={this.props.useWeekdaysShort}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         preSelection={this.state.preSelection}

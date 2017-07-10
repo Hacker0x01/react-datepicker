@@ -12,11 +12,12 @@ General datepicker component.
 |`children`|`node`|||
 |`className`|`string`|||
 |`customInput`|`element`|||
-|`dateFormat`|`union(string|array)`|`'L'`||
+|`dateFormat`|`union(string\|array)`|`'L'`||
 |`dateFormatCalendar`|`string`|`'MMMM YYYY'`||
+|`dayClassName`|`func`|||
 |`disabled`|`bool`|`false`||
 |`disabledKeyboardNavigation`|`bool`|`false`||
-|`dropdownMode` (required)|`enum('scroll'|'select')`|`'scroll'`||
+|`dropdownMode` (required)|`enum('scroll'\|'select')`|`'scroll'`||
 |`endDate`|`object`|||
 |`excludeDates`|`array`|||
 |`filterDate`|`func`|||
@@ -42,11 +43,10 @@ General datepicker component.
 |`openToDate`|`object`|||
 |`peekNextMonth`|`bool`|||
 |`placeholderText`|`string`|||
-|`popoverAttachment`|`string`|`'top left'`||
-|`popoverTargetAttachment`|`string`|`'bottom left'`||
-|`popoverTargetOffset`|`string`|`'10px 0'`||
+|`popperClassName`|`string`|||
+|`popperModifiers`|`object`|||
+|`popperPlacement`|`enumpopperPlacementPositions`|||
 |`readOnly`|`bool`|||
-|`renderCalendarTo`|`any`|||
 |`required`|`bool`|||
 |`scrollableYearDropdown`|`bool`|||
 |`selected`|`object`|||
@@ -57,7 +57,6 @@ General datepicker component.
 |`showYearDropdown`|`bool`|||
 |`startDate`|`object`|||
 |`tabIndex`|`number`|||
-|`tetherConstraints`|`array`|`[{ to: 'window', attachment: 'together' }]`||
 |`title`|`string`|||
 |`todayButton`|`string`|||
 |`utcOffset`|`number`|`moment().utcOffset()`||
