@@ -57,6 +57,24 @@ describe('Week', () => {
     assert(day.prop('day').isSame(dayClicked, 'day'))
   })
 
+  it('should set the week number with the provided formatWeekNumber function', () => {
+    let firstDayReceived = null
+
+    function weekNumberFormatter (newFirstWeekDay) {
+      firstDayReceived = newFirstWeekDay
+      return 9
+    }
+
+    const weekStart = moment('2015-12-20')
+    const week = shallow(
+      <Week day={weekStart} showWeekNumber formatWeekNumber={weekNumberFormatter} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+
+    expect(firstDayReceived.isSame(weekStart)).to.be.true
+    expect(weekNumberElement.prop('weekNumber')).to.equal(9)
+  })
+
   it('should call the provided onDayMouseEnter function', () => {
     let dayMouseEntered = null
 

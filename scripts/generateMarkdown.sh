@@ -22,7 +22,9 @@ function generateTitle(name) {
 }
 
 function generateDesciption(description) {
-  return description + '\n';
+  if (description) return description + '\n';
+
+  return '';
 }
 
 function generatePropType(type) {
@@ -31,37 +33,32 @@ function generatePropType(type) {
     values = '(' +
       type.value.map(function(typeValue) {
         return typeValue.name || typeValue.value;
-      }).join('|') +
+      }).join('\\|') +
       ')';
   } else {
     values = type.value;
   }
 
-  return 'type: `' + type.name + (values ? values: '') + '`\n';
+  return '`' + type.name + (values ? values: '') + '`';
 }
 
 function generatePropDefaultValue(value) {
-  return 'defaultValue: `' + value.value + '`\n';
+  return '`' + value.value + '`';
 }
 
 function generateProp(propName, prop) {
   return (
-    '### `' + propName + '`' + (prop.required ? ' (required)' : '') + '\n' +
-    '\n' +
-    (prop.description ? prop.description + '\n\n' : '') +
-    (prop.type ? generatePropType(prop.type) : '') +
-    (prop.defaultValue ? generatePropDefaultValue(prop.defaultValue) : '') +
-    '\n'
+    '|`' + propName + '`' + (prop.required ? ' (required)' : '')  +
+    '|' + (prop.type ? generatePropType(prop.type) : '') +
+    '|' + (prop.defaultValue ? generatePropDefaultValue(prop.defaultValue) : '') +
+    '|' + (prop.description ? prop.description + '\n\n' : '') + '|'
   );
 }
 
 function generateProps(props) {
-  var title = 'Props';
-
   return (
-    title + '\n' +
-    stringOfLength('-', title.length) + '\n' +
-    '\n' +
+    '| name  | type  | default value  | description  |' + '\n' +
+    '|---|---|---|---|' + '\n' +
     Object.keys(props).sort().map(function(propName) {
       return generateProp(propName, props[propName]);
     }).join('\n')

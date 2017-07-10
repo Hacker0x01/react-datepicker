@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
-import TetherComponent from '../src/tether_component.jsx'
+import PopperComponent from '../src/popper_component.jsx'
 import TimezoneDatePicker from './timezone_date_picker.jsx'
 import moment from 'moment'
 
@@ -45,20 +45,6 @@ describe('DatePicker', () => {
     var dateInput = datePicker.refs.input
     TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
     expect(datePicker.state.open).to.be.false
-  })
-
-  it('should render the calendar into a specified node', () => {
-    var node = document.createElement('div')
-    document.body.appendChild(node)
-    var datePicker = TestUtils.renderIntoDocument(
-        <DatePicker renderCalendarTo={node} />
-    )
-    var dateInput = datePicker.refs.input
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
-    expect(datePicker.refs.calendar).to.exist
-    var calendarNode = ReactDOM.findDOMNode(datePicker.refs.calendar)
-    expect(node.contains(calendarNode)).to.be.true
-    document.body.removeChild(node)
   })
 
   it('should keep the calendar shown when blurring the date input', (done) => {
@@ -218,34 +204,34 @@ describe('DatePicker', () => {
   })
 
   it('should mount and unmount properly', done => {
-    var TestComponent = React.createClass({
-      displayName: 'TestComponent',
+    class TestComponent extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = { mounted: true }
+      }
 
-      getInitialState () {
-        return { mounted: true }
-      },
       render () {
         return this.state.mounted ? <DatePicker /> : null
       }
-    })
+    }
     var element = TestUtils.renderIntoDocument(<TestComponent />)
     element.setState({ mounted: false }, done)
   })
 
-  it('should render calendar inside TetherComponent when inline prop is not set', () => {
+  it('should render calendar inside PopperComponent when inline prop is not set', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
 
-    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, TetherComponent) }).to.not.throw()
+    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, PopperComponent) }).to.not.throw()
   })
 
-  it('should render calendar directly without TetherComponent when inline prop is set', () => {
+  it('should render calendar directly without PopperComponent when inline prop is set', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker inline />
     )
 
-    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, TetherComponent) }).to.throw()
+    expect(function () { TestUtils.findRenderedComponentWithType(datePicker, PopperComponent) }).to.throw()
     expect(datePicker.refs.calendar).to.exist
   })
 
@@ -361,6 +347,13 @@ describe('DatePicker', () => {
       expect(data.callback.calledOnce).to.be.true
       var result = data.callback.args[0][0]
       expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+    })
+    it('should update the selected date on manual input', () => {
+      var data = getOnInputKeyDownStuff()
+      TestUtils.Simulate.change(data.nodeInput, {target: {value: '02/02/2017'}})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      data.copyM = moment('02/02/2017')
+      expect(data.callback.args[0][0].format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
     })
     it('should not select excludeDates', () => {
       var data = getOnInputKeyDownStuff({ excludeDates: [moment().subtract(1, 'days')] })

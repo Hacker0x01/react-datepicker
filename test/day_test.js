@@ -87,6 +87,64 @@ describe('Day', () => {
       const shallowDay = renderDay(day, { highlightDates })
       expect(shallowDay.hasClass(className)).to.equal(false)
     })
+
+    describe('highlighted prop is an array of objects with class name as a key and array of moments as a value', () => {
+      it('should apply the highlighted class if in highlighted', () => {
+        const day = moment()
+        const highlightDay1 = {'testClassName': [day.clone().add(1, 'day'), day.clone()]}
+        const highlightDay2 = day.clone().add(2, 'day')
+        const highlightDay3 = day.clone().add(3, 'day')
+        const highlightDates = [highlightDay1, highlightDay2, highlightDay3]
+        const shallowDay = renderDay(day, { highlightDates })
+        expect(shallowDay.hasClass('testClassName')).to.equal(true)
+      })
+
+      it('should not apply the highlighted class if not in highlighted array', () => {
+        const day = moment()
+        const highlightDay1 = {'testClassName': [day.clone().add(1, 'day'), day.clone().add(2, 'day')]}
+        const highlightDay2 = day.clone().add(3, 'day')
+        const highlightDay3 = day.clone().add(4, 'day')
+        const highlightDates = [highlightDay1, highlightDay2, highlightDay3]
+        const shallowDay = renderDay(day, { highlightDates })
+        expect(shallowDay.hasClass('testClassName')).to.equal(false)
+      })
+    })
+  })
+
+  describe('custom day className', () => {
+    const className = 'customClassName'
+
+    it('should apply className returned from passed dayClassName prop function', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => (className)
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should pass rendered days date to dayClassName func', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => {
+        expect(date).to.equal(day)
+        return className
+      }
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(true)
+    })
+
+    it('should not add any additional className when passed dayClassName prop function returns undefined', () => {
+      const day = moment()
+      const dayClassNameFunc = (date) => (undefined)
+      const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc })
+      expect(shallowDay.hasClass(className)).to.equal(false)
+      expect(shallowDay.hasClass('undefined')).to.equal(false)
+    })
+
+    it('should not add any additional className when dayClassName prop is not passed', () => {
+      const day = moment()
+      const shallowDay = renderDay(day)
+      expect(shallowDay.hasClass(className)).to.equal(false)
+      expect(shallowDay.hasClass('undefined')).to.equal(false)
+    })
   })
 
   describe('in range', () => {

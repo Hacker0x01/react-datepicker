@@ -2,9 +2,7 @@ import React from 'react'
 import ExampleComponents from './example_components.jsx'
 import HeroExample from './hero_example.jsx'
 
-export default React.createClass({
-  displayName: 'Root',
-
+export default class Root extends React.Component {
   render () {
     return (
       <div>
@@ -25,7 +23,7 @@ export default React.createClass({
         </div>
         <div className="wrapper">
           <h1>ReactJS Datepicker</h1>
-          <p>
+          <p className="badges">
             <a href="https://npmjs.org/package/react-datepicker">
               <img src="https://badge.fury.io/js/react-datepicker.svg" className="badge" />
             </a>
@@ -58,4 +56,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}
