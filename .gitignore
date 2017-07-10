@@ -3,7 +3,7 @@ node_modules
 npm-debug.log
 .idea
 .vscode
-dist
+# dist
 lib
 tmp
 coverage

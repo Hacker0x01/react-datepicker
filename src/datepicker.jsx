@@ -267,7 +267,7 @@ export default class DatePicker extends React.Component {
     const copy = moment(this.state.preSelection)
     if (eventKey === 'Enter') {
       event.preventDefault()
-      this.handleSelect(copy, event)
+      this.setOpen(false)
     } else if (eventKey === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
