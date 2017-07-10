@@ -1,16 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 export default class WeekNumber extends React.Component {
   static propTypes = {
-    weekNumber: PropTypes.number.isRequired
+    weekNumber: PropTypes.number.isRequired,
+    onClick: PropTypes.func
+  }
+
+  handleClick = (event) => {
+    if (this.props.onClick) {
+      this.props.onClick(event)
+    }
   }
 
   render () {
+    const weekNumberClasses = {
+      'react-datepicker__week-number': true,
+      'react-datepicker__week-number--clickable': !!this.props.onClick
+    }
     return (
       <div
-          className="react-datepicker__week-number"
-          aria-label={`week-${this.props.weekNumber}`}>
+          className={classnames(weekNumberClasses)}
+          aria-label={`week-${this.props.weekNumber}`}
+          onClick={this.handleClick}>
         {this.props.weekNumber}
       </div>
     )
