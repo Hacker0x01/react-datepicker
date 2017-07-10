@@ -10,6 +10,7 @@ export default class Week extends React.Component {
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
+    formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -40,11 +41,18 @@ export default class Week extends React.Component {
     }
   }
 
+  formatWeekNumber = (startOfWeek) => {
+    if (this.props.formatWeekNumber) {
+      return this.props.formatWeekNumber(startOfWeek)
+    }
+    return parseInt(startOfWeek.format('w'), 10)
+  }
+
   renderDays = () => {
     const startOfWeek = this.props.day.clone().startOf('week')
     const days = []
     if (this.props.showWeekNumber) {
-      days.push(<WeekNumber key="W" weekNumber={parseInt(startOfWeek.format('w'), 10)} />)
+      days.push(<WeekNumber key="W" weekNumber={this.formatWeekNumber(startOfWeek)} />)
     }
     return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')

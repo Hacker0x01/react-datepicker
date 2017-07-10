@@ -31,6 +31,7 @@ export default class Calendar extends React.Component {
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
+    formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -56,7 +57,8 @@ export default class Calendar extends React.Component {
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    weekLabel: PropTypes.string
   }
 
   static get defaultProps () {
@@ -160,7 +162,7 @@ export default class Calendar extends React.Component {
     if (this.props.showWeekNumbers) {
       dayNames.push(
         <div key="W" className="react-datepicker__day-name">
-          #
+            {this.props.weekLabel || '#'}
         </div>
       )
     }
@@ -278,6 +280,7 @@ export default class Calendar extends React.Component {
                 onDayClick={this.handleDayClick}
                 onDayMouseEnter={this.handleDayMouseEnter}
                 onMouseLeave={this.handleMonthMouseLeave}
+                formatWeekNumber={this.props.formatWeekNumber}
                 minDate={this.props.minDate}
                 maxDate={this.props.maxDate}
                 excludeDates={this.props.excludeDates}
