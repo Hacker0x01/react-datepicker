@@ -183,6 +183,12 @@ describe('Calendar', function () {
     expect(calendar.state().date.isSame(todayInAuckland, 'day'))
   })
 
+  it('should set custom week label if weekLabel is provided', () => {
+    const calendar = getCalendar({ showWeekNumbers: true, weekLabel: 'Foo' })
+    const weekLabel = calendar.find('.react-datepicker__day-name')
+    expect(weekLabel.at(0).text()).to.equal('Foo')
+  })
+
   it('should track the currently hovered day', () => {
     const calendar = mount(
       <Calendar
