@@ -33,7 +33,7 @@ function generatePropType(type) {
     values = '(' +
       type.value.map(function(typeValue) {
         return typeValue.name || typeValue.value;
-      }).join('|') +
+      }).join('\\|') +
       ')';
   } else {
     values = type.value;
