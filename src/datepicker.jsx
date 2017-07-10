@@ -158,7 +158,7 @@ export default class DatePicker extends React.Component {
 
   deferFocusInput = () => {
     this.cancelFocusInput()
-    this.inputFocusTimeout = window.setTimeout(() => this.setFocus(), 1)
+    this.inputFocusTimeout = setTimeout(() => this.setFocus(), 1)
   }
 
   handleDropdownFocus = () => {
