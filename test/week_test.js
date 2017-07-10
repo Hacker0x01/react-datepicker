@@ -61,7 +61,7 @@ describe('Week', () => {
     let firstDayReceived = null
 
     function onWeekClick (newFirstWeekDay) {
-      firstDayReceived = newFirstWeekDay.format()
+      firstDayReceived = newFirstWeekDay
     }
 
     const weekStart = moment('2015-12-20')
@@ -70,7 +70,7 @@ describe('Week', () => {
     )
     const weekNumberElement = week.find(WeekNumber)
     weekNumberElement.simulate('click')
-    expect(firstDayReceived).to.equal(weekStart.format())
+    expect(firstDayReceived.isSame(weekStart)).to.be.true
   })
 
   it('should call the provided onWeekSelect function and pass the week number', () => {
