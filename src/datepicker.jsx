@@ -76,6 +76,7 @@ export default class DatePicker extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
+    weekLabel: PropTypes.string,
     withPortal: PropTypes.bool
   }
 
@@ -350,6 +351,7 @@ export default class DatePicker extends React.Component {
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
+        weekLabel={this.props.weekLabel}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
