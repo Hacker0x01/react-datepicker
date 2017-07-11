@@ -58,7 +58,8 @@ export default class Calendar extends React.Component {
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
-    weekLabel: PropTypes.string
+    weekLabel: PropTypes.string,
+    yearDropdownItemNumber: React.PropTypes.number
   }
 
   static get defaultProps () {
@@ -224,7 +225,8 @@ export default class Calendar extends React.Component {
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           year={this.state.date.year()}
-          scrollableYearDropdown={this.props.scrollableYearDropdown} />
+          scrollableYearDropdown={this.props.scrollableYearDropdown}
+          yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
     )
   }
 

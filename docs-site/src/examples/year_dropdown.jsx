@@ -20,14 +20,15 @@ export default class YearDropdown extends React.Component {
     return <div className="row">
       <pre className="column example__code">
         <code className="jsx">{`
-<DatePicker
-    selected={this.state.startDate}
-    onChange={this.handleChange}
-    showYearDropdown
-    dateFormatCalendar="MMMM"
-    scrollableYearDropdown
-/>
-`}
+        <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            showYearDropdown
+            dateFormatCalendar="MMMM"
+            scrollableYearDropdown
+            yearDropdownItemNumber={15}
+        />
+        `}
         </code>
       </pre>
       <div className="column">
@@ -36,6 +37,7 @@ export default class YearDropdown extends React.Component {
             onChange={this.handleChange}
             showYearDropdown
             dateFormatCalendar="MMMM"
+            yearDropdownItemNumber={15}
             scrollableYearDropdown />
       </div>
     </div>

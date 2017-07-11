@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 function generateYears (year, noOfYear) {
   var list = []
-  for (var i = 0; i < (2 * noOfYear); i++) {
+  for (var i = 0; i < (2 * noOfYear + 1); i++) {
     list.push(year + noOfYear - i)
   }
   return list
@@ -15,13 +15,17 @@ export default class YearDropdownOptions extends React.Component {
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
-    year: PropTypes.number.isRequired
+    year: PropTypes.number.isRequired,
+    yearDropdownItemNumber: PropTypes.number
   }
 
   constructor (props) {
     super(props)
+    const { yearDropdownItemNumber, scrollableYearDropdown } = props
+    const noOfYear = yearDropdownItemNumber || (scrollableYearDropdown ? 10 : 5)
+
     this.state = {
-      yearsList: this.props.scrollableYearDropdown ? generateYears(this.props.year, 10) : generateYears(this.props.year, 5)
+      yearsList: generateYears(this.props.year, noOfYear)
     }
   }
 

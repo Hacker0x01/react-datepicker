@@ -12,7 +12,8 @@ export default class YearDropdown extends React.Component {
     minDate: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
-    year: PropTypes.number.isRequired
+    year: PropTypes.number.isRequired,
+    yearDropdownItemNumber: PropTypes.number
   }
 
   state = {
@@ -57,7 +58,8 @@ export default class YearDropdown extends React.Component {
         year={this.props.year}
         onChange={this.onChange}
         onCancel={this.toggleDropdown}
-        scrollableYearDropdown={this.props.scrollableYearDropdown} />
+        scrollableYearDropdown={this.props.scrollableYearDropdown}
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
   )
 
   renderScrollMode = () => {

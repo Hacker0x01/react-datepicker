@@ -78,7 +78,8 @@ export default class DatePicker extends React.Component {
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
-    withPortal: PropTypes.bool
+    withPortal: PropTypes.bool,
+    yearDropdownItemNumber: React.PropTypes.number
   }
 
   static get defaultProps () {
@@ -361,7 +362,8 @@ export default class DatePicker extends React.Component {
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
         dayClassName={this.props.dayClassName}
-        className={this.props.calendarClassName}>
+        className={this.props.calendarClassName}
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}
     </WrappedCalendar>
   }
