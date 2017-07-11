@@ -96,4 +96,18 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     )
     expect(yearDropdown.state().yearsList.length).to.equal(21)
   })
+
+  it('should generate 25 years (25 above, 25 below selected) if prop yearDropdownItemNumber is set to 25', () => {
+    const onCancelSpy = sandbox.spy()
+    const onChangeSpy = sandbox.spy()
+    const yearDropdown = shallow(
+        <YearDropdownOptions
+            onCancel={onCancelSpy}
+            onChange={onChangeSpy}
+            scrollableYearDropdown
+            year={2015}
+            yearDropdownItemNumber={25}/>
+    )
+    expect(yearDropdown.state().yearsList.length).to.equal(51)
+  })
 })
