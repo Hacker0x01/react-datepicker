@@ -207,8 +207,8 @@ export default class DatePicker extends React.Component {
         return this.preventFocusTimeout
       }
     )
-    this.setSelected(date, event)
     this.setOpen(false)
+    this.setSelected(date, event)
   }
 
   setSelected = (date, event, keepInput) => {
