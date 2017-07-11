@@ -79,7 +79,7 @@ export default class DatePicker extends React.Component {
     value: PropTypes.string,
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
-    yearDropdownItemNumber: React.PropTypes.number
+    yearDropdownItemNumber: PropTypes.number
   }
 
   static get defaultProps () {
