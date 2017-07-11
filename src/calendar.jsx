@@ -59,7 +59,7 @@ export default class Calendar extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
-    yearDropdownItemNumber: React.PropTypes.number
+    yearDropdownItemNumber: PropTypes.number
   }
 
   static get defaultProps () {
