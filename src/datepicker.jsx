@@ -53,6 +53,7 @@ export default class DatePicker extends React.Component {
     onClickOutside: PropTypes.func,
     onChangeRaw: PropTypes.func,
     onFocus: PropTypes.func,
+    onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
@@ -93,6 +94,7 @@ export default class DatePicker extends React.Component {
       dropdownMode: 'scroll',
       onFocus () {},
       onBlur () {},
+      onKeyDown () {},
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
@@ -258,6 +260,7 @@ export default class DatePicker extends React.Component {
   }
 
   onInputKeyDown = (event) => {
+    this.props.onKeyDown(event);
     const eventKey = event.key
     if (!this.state.open && !this.props.inline) {
       if (eventKey !== 'Enter' && eventKey !== 'Escape' && eventKey !== 'Tab') {
