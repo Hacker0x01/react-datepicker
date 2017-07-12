@@ -208,7 +208,9 @@ export default class DatePicker extends React.Component {
       }
     )
     this.setSelected(date, event)
-    this.setOpen(false)
+    if (!this.props.inline) {
+      this.setOpen(false)
+    }
   }
 
   setSelected = (date, event, keepInput) => {
