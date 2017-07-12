@@ -23,6 +23,7 @@ General datepicker component.
 |`filterDate`|`func`|||
 |`fixedHeight`|`bool`|||
 |`forceShowMonthNavigation`|`bool`|||
+|`formatWeekNumber`|`func`|||
 |`highlightDates`|`array`|||
 |`id`|`string`|||
 |`includeDates`|`array`|||
@@ -59,6 +60,9 @@ General datepicker component.
 |`tabIndex`|`number`|||
 |`title`|`string`|||
 |`todayButton`|`string`|||
+|`useWeekdaysShort`|`bool`|||
 |`utcOffset`|`number`|`moment().utcOffset()`||
 |`value`|`string`|||
+|`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
+|`yearDropdownItemNumber`|`number`|||
