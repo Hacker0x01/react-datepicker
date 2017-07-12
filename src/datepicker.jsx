@@ -207,7 +207,6 @@ export default class DatePicker extends React.Component {
         return this.preventFocusTimeout
       }
     )
-    
     this.setSelected(date, event)
     if (!this.props.inline) {
       this.setOpen(false)
