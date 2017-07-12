@@ -1,6 +1,5 @@
 # React Date Picker
 
-[![Join the chat at https://gitter.im/Hacker0x01/react-datepicker](https://badges.gitter.im/Hacker0x01/react-datepicker.svg)](https://gitter.im/Hacker0x01/react-datepicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
 [![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master)](https://travis-ci.org/Hacker0x01/react-datepicker)
 [![Dependency Status](https://david-dm.org/Hacker0x01/react-datepicker.svg)](https://david-dm.org/Hacker0x01/react-datepicker)
