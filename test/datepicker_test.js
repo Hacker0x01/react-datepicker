@@ -339,7 +339,7 @@ describe('DatePicker', () => {
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(moment().format(data.testFormat))
   })
   describe('onInputKeyDown Enter', () => {
-    it('should update the selected date', () => {
+    it('should update the selected date if the date format is valid', () => {
       var data = getOnInputKeyDownStuff()
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
@@ -347,6 +347,12 @@ describe('DatePicker', () => {
       expect(data.callback.calledOnce).to.be.true
       var result = data.callback.args[0][0]
       expect(result.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+    })
+    it('should not update the selected date if the date format is wrong', () => {
+      var data = getOnInputKeyDownStuff()
+      TestUtils.Simulate.change(data.nodeInput, {target: {value: '02/02/20177'}})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      expect(data.callback.calledOnce).to.be.false
     })
     it('should update the selected date on manual input', () => {
       var data = getOnInputKeyDownStuff()
