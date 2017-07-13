@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.react-datepicker-wrapper {
+  display: inline-block;
+}
+
 .react-datepicker {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: $datepicker__font-size;

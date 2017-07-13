@@ -54,8 +54,7 @@ export default class PopperComponent extends React.Component {
 
     return (
       <Manager>
-        <Target
-            style={{display: 'inline-block'}}>
+        <Target className="react-datepicker-wrapper">
           {targetComponent}
         </Target>
         {
