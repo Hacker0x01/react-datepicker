@@ -355,6 +355,13 @@ describe('DatePicker', () => {
       data.copyM = moment('02/02/2017')
       expect(data.callback.args[0][0].format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
     })
+    it('should not update the selected date if the date input manually it has something wrong', () => {
+      var data = getOnInputKeyDownStuff()
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      expect(data.callback.calledOnce).to.be.false
+    })
     it('should not select excludeDates', () => {
       var data = getOnInputKeyDownStuff({ excludeDates: [moment().subtract(1, 'days')] })
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
