@@ -232,8 +232,8 @@ export default class DatePicker extends React.Component {
         this.setState({
           preSelection: changedDate
         })
+        this.props.onChange(changedDate, event)
       }
-      this.props.onChange(changedDate, event)
     }
 
     this.props.onSelect(changedDate, event)
