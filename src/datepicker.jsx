@@ -116,7 +116,7 @@ export default class DatePicker extends React.Component {
       this.props.openToDate ? moment(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
       : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
-      : this.props.utcOffset ? moment.utc().utcOffset(this.props.utcOffset)
+      : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
       : moment()
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
