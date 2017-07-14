@@ -148,6 +148,13 @@
   line-height: $datepicker__item-size;
   text-align: center;
   margin: $datepicker__day-margin;
+  &.react-datepicker__week-number--clickable {
+    cursor: pointer;
+    &:hover {
+      border-radius: $datepicker__border-radius;
+      background-color: $datepicker__background-color;
+    }
+  }
 }
 
 .react-datepicker__day-name,

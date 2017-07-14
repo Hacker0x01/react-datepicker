@@ -50,6 +50,7 @@ export default class DatePicker extends React.Component {
     onBlur: PropTypes.func,
     onChange: PropTypes.func.isRequired,
     onSelect: PropTypes.func,
+    onWeekSelect: PropTypes.func,
     onClickOutside: PropTypes.func,
     onChangeRaw: PropTypes.func,
     onFocus: PropTypes.func,
@@ -339,6 +340,7 @@ export default class DatePicker extends React.Component {
         selected={this.props.selected}
         preSelection={this.state.preSelection}
         onSelect={this.handleSelect}
+        onWeekSelect={this.props.onWeekSelect}
         openToDate={this.props.openToDate}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}

@@ -57,6 +57,39 @@ describe('Week', () => {
     assert(day.prop('day').isSame(dayClicked, 'day'))
   })
 
+  it('should call the provided onWeekSelect function and pass the first day of the week', () => {
+    let firstDayReceived = null
+
+    function onWeekClick (newFirstWeekDay) {
+      firstDayReceived = newFirstWeekDay
+    }
+
+    const weekStart = moment('2015-12-20')
+    const week = shallow(
+      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+    weekNumberElement.simulate('click')
+    expect(firstDayReceived.isSame(weekStart)).to.be.true
+  })
+
+  it('should call the provided onWeekSelect function and pass the week number', () => {
+    let weekNumberReceived = null
+
+    function onWeekClick (unused, newWeekNumber) {
+      weekNumberReceived = newWeekNumber
+    }
+
+    const weekStart = moment('2015-12-20')
+    const realWeekNumber = parseInt(weekStart.format('w'), 10)
+    const week = shallow(
+      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+    weekNumberElement.simulate('click')
+    expect(weekNumberReceived).to.equal(realWeekNumber)
+  })
+
   it('should set the week number with the provided formatWeekNumber function', () => {
     let firstDayReceived = null
 

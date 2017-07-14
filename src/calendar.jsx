@@ -44,6 +44,7 @@ export default class Calendar extends React.Component {
     forceShowMonthNavigation: PropTypes.bool,
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
+    onWeekSelect: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -282,6 +283,7 @@ export default class Calendar extends React.Component {
                 onDayClick={this.handleDayClick}
                 onDayMouseEnter={this.handleDayMouseEnter}
                 onMouseLeave={this.handleMonthMouseLeave}
+                onWeekSelect={this.props.onWeekSelect}
                 formatWeekNumber={this.props.formatWeekNumber}
                 minDate={this.props.minDate}
                 maxDate={this.props.maxDate}
