@@ -75,3 +75,17 @@ export function safeDateFormat (date, { dateFormat, locale }) {
     .locale(locale || moment.locale())
     .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || ''
 }
+
+const dayOfWeekCodes = {
+  1: 'mon',
+  2: 'tue',
+  3: 'wed',
+  4: 'thu',
+  5: 'fri',
+  6: 'sat',
+  7: 'sun'
+}
+
+export function getDayOfWeekCode (day) {
+  return dayOfWeekCodes[day.isoWeekday()]
+}
