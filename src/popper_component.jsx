@@ -60,10 +60,9 @@ export default class PopperComponent extends React.Component {
         {
           !hidePopper &&
           <Popper
-              style={{zIndex: 1}}
+              className="react-datepicker-popper"
               modifiers={popperModifiers}
-              placement={popperPlacement}
-              className="popper">
+              placement={popperPlacement}>
             {popperComponent}
           </Popper>
         }
