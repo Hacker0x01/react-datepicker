@@ -21,33 +21,41 @@
   left: 50px;
 }
 
-.popper[data-placement^="bottom"] {
-  margin-top: $datepicker__triangle-size + 2px;
-  .react-datepicker__triangle {
-    @extend %triangle-arrow-up;
-  }
-}
+.react-datepicker-popper {
+  z-index: 1;
 
-.popper[data-placement^="top"] {
-  margin-bottom: $datepicker__triangle-size - 2px;
-  .react-datepicker__triangle {
-    @extend %triangle-arrow-down;
-  }
-}
+  &[data-placement^="bottom"] {
+    margin-top: $datepicker__triangle-size + 2px;
 
-.popper[data-placement^="right"] {
-  margin-left: $datepicker__triangle-size;
-  .react-datepicker__triangle {
-    left: auto;
-    right: 42px;
+    .react-datepicker__triangle {
+      @extend %triangle-arrow-up;
+    }
   }
-}
 
-.popper[data-placement^="left"] {
-  margin-right: $datepicker__triangle-size;
-  .react-datepicker__triangle {
-    left: 42px;
-    right: auto;
+  &[data-placement^="top"] {
+    margin-bottom: $datepicker__triangle-size - 2px;
+
+    .react-datepicker__triangle {
+      @extend %triangle-arrow-down;
+    }
+  }
+
+  &[data-placement^="right"] {
+    margin-left: $datepicker__triangle-size;
+
+    .react-datepicker__triangle {
+      left: auto;
+      right: 42px;
+    }
+  }
+
+  &[data-placement^="left"] {
+    margin-right: $datepicker__triangle-size;
+
+    .react-datepicker__triangle {
+      left: 42px;
+      right: auto;
+    }
   }
 }
 
