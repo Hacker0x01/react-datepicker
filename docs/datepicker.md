@@ -39,8 +39,10 @@ General datepicker component.
 |`onChangeRaw`|`func`|||
 |`onClickOutside`|`func`|`function() {}`||
 |`onFocus`|`func`|`function() {}`||
+|`onKeyDown`|`func`|`function() {}`||
 |`onMonthChange`|`func`|`function() {}`||
 |`onSelect`|`func`|`function() {}`||
+|`onWeekSelect`|`func`|||
 |`openToDate`|`object`|||
 |`peekNextMonth`|`bool`|||
 |`placeholderText`|`string`|||

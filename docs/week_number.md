@@ -4,4 +4,5 @@
 
 | name  | type  | default value  | description  |
 |---|---|---|---|
+|`onClick`|`func`|||
 |`weekNumber` (required)|`number`|||
