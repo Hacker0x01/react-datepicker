@@ -1,20 +1,16 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
 
-export default React.createClass({
-  displayName: 'FixedCalendar',
+export default class FixedCalendar extends React.Component {
+  state = {
+    startDate: null
+  }
 
-  getInitialState () {
-    return {
-      startDate: null
-    }
-  },
-
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
@@ -34,4 +30,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

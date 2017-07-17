@@ -3,22 +3,23 @@ import hljs from 'highlight.js'
 import Default from './examples/default'
 import CodeExampleComponent from './code_example_component'
 
-import DisableDateAutoCorrection from './examples/disable_date_auto_correction'
 import CustomDateFormat from './examples/custom_date_format'
 import CustomClassName from './examples/custom_class_name'
 import CustomCalendarClassName from './examples/custom_calendar_class_name'
+import CustomDayClassNames from './examples/custom_day_class_names'
 import PlaceholderText from './examples/placeholder_text'
 import SpecificDateRange from './examples/specific_date_range'
 import Locale from './examples/locale'
 import ExcludeDates from './examples/exclude_dates'
 import HighlightDates from './examples/highlight_dates'
+import HighlightDatesRanges from './examples/highlight_dates_with_ranges'
 import IncludeDates from './examples/include_dates'
 import FilterDates from './examples/filter_dates'
 import Disabled from './examples/disabled'
 import DisabledKeyboardNavigation from './examples/disabled_keyboard_navigation'
 import ClearInput from './examples/clear_input'
 import OnBlurCallbacks from './examples/on_blur_callbacks'
-import Placement from './examples/placement'
+import ConfigurePopper from './examples/configurePopper'
 import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
@@ -42,12 +43,10 @@ import YearSelectDropdownWithChange from './examples/year_select_dropdown_with_c
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
 
-export default React.createClass({
-  displayName: 'exampleComponents',
-
+export default class exampleComponents extends React.Component {
   componentDidMount () {
     hljs.initHighlightingOnLoad()
-  },
+  }
 
   examples: [
     {
@@ -194,25 +193,23 @@ export default React.createClass({
       title: 'Disable date auto correction',
       component: <DisableDateAutoCorrection />
     }
-  ],
+  ]
 
-  renderExamples () {
-    return this.examples.map((example, index) =>
+  renderExamples = () =>
+    this.examples.map((example, index) =>
       <CodeExampleComponent key={`example-${index}`} id={index} title={example.title}>
         {example.component}
       </CodeExampleComponent>
     )
-  },
 
-  renderLeftColumn () {
-    return this.examples.map((example, index) =>
+  renderLeftColumn = () =>
+    this.examples.map((example, index) =>
       <li className="examples__navigation-item" key={`link-${index}`}>
         <a href={`#example-${index}`}>
           {example.title}
         </a>
       </li>
     )
-  },
 
   render () {
     return <div>
@@ -225,4 +222,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

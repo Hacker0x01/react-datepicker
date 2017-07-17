@@ -1,6 +1,5 @@
 # React Date Picker
 
-[![Join the chat at https://gitter.im/Hacker0x01/react-datepicker](https://badges.gitter.im/Hacker0x01/react-datepicker.svg)](https://gitter.im/Hacker0x01/react-datepicker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
 [![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master)](https://travis-ci.org/Hacker0x01/react-datepicker)
 [![Dependency Status](https://david-dm.org/Hacker0x01/react-datepicker.svg)](https://david-dm.org/Hacker0x01/react-datepicker)
@@ -22,36 +21,37 @@ npm install react-datepicker --save
 You’ll need to install React and Moment.js separately since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
 
 ```js
-var React = require('react');
-var DatePicker = require('react-datepicker');
-var moment = require('moment');
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-require('react-datepicker/dist/react-datepicker.css');
+import 'react-datepicker/dist/react-datepicker.css';
 
 // CSS Modules, react-datepicker-cssmodules.css
-// require('react-datepicker/dist/react-datepicker-cssmodules.css');
+// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-var Example = React.createClass({
-  displayName: 'Example',
-
-  getInitialState: function() {
-    return {
+class Example extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     };
-  },
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  handleChange: function(date) {
+  handleChange(date) {
     this.setState({
       startDate: date
     });
-  },
+  }
 
-  render: function() {
+  render() {
     return <DatePicker
         selected={this.state.startDate}
-        onChange={this.handleChange} />;
+        onChange={this.handleChange}
+    />;
   }
-});
+}
 ```
 
 ## Configuration
@@ -93,6 +93,8 @@ _As of version 0.23, the `weekdays` and `weekStart` DatePicker props have been r
 We're always trying to stay compatible with the latest version of React. We can't support all older versions of React, since React is still < 1.0 and introducing breaking changes every release.
 
 Latest compatible versions:
+- React 15.5 or newer: All above React-datepicker v.0.40.0
+- React 15.4.1: needs React-datepicker v0.40.0, newer won't work (due to react-onclickoutside dependencies)
 - React 0.14 or newer: All above React-datepicker v0.13.0
 - React 0.13: React-datepicker v0.13.0
 - pre React 0.13: React-datepicker v0.6.2

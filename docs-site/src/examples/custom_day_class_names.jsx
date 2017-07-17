@@ -2,7 +2,7 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default class CustomCalendarClassName extends React.Component {
+export default class CustomDayClassNames extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -23,15 +23,16 @@ export default class CustomCalendarClassName extends React.Component {
 <DatePicker
   selected={this.state.startDate}
   onChange={this.handleChange}
-  calendarClassName="rasta-stripes"
+  dayClassName={date => date.date() < Math.random() * 31 ? 'random' : undefined} />
 />
-`}</code>
+`}
+        </code>
       </pre>
       <div className="column">
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            calendarClassName="rasta-stripes"/>
+            dayClassName={date => date.date() < Math.random() * 31 ? 'random' : undefined} />
       </div>
     </div>
   }

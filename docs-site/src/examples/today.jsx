@@ -2,29 +2,30 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default React.createClass({
-  displayName: 'Default',
-
-  getInitialState () {
-    return {
+export default class Today extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'todayButton={"Vandaag"}'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange} />'}
+        <code className="jsx">{`
+<DatePicker
+    todayButton={"Vandaag"}
+    selected={this.state.startDate}
+    onChange={this.handleChange}
+/>
+`}
         </code>
       </pre>
       <div className="column">
@@ -35,4 +36,4 @@ export default React.createClass({
       </div>
     </div>
   }
-})
+}

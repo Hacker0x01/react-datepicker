@@ -2,31 +2,33 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-export default React.createClass({
-  displayName: 'YearDropdown',
-
-  getInitialState () {
-    return {
+export default class YearDropdown extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
       startDate: moment()
     }
-  },
+  }
 
-  handleChange (date) {
+  handleChange = (date) => {
     this.setState({
       startDate: date
     })
-  },
+  }
 
   render () {
     return <div className="row">
       <pre className="column example__code">
-        <code className="jsx">
-          {'<DatePicker'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange}'} <br />
-              {'showYearDropdown'} <br />
-              {'dateFormatCalendar="MMMM"'} <br />
-              {'scrollableYearDropdown />'}
+        <code className="jsx">{`
+        <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            showYearDropdown
+            dateFormatCalendar="MMMM"
+            scrollableYearDropdown
+            yearDropdownItemNumber={15}
+        />
+        `}
         </code>
       </pre>
       <div className="column">
@@ -35,8 +37,9 @@ export default React.createClass({
             onChange={this.handleChange}
             showYearDropdown
             dateFormatCalendar="MMMM"
+            yearDropdownItemNumber={15}
             scrollableYearDropdown />
       </div>
     </div>
   }
-})
+}

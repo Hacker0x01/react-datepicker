@@ -64,3 +64,28 @@ export function getEffectiveMaxDate ({ maxDate, includeDates }) {
     return maxDate
   }
 }
+
+export function parseDate (value, { dateFormat, locale }) {
+  const m = moment(value, dateFormat, locale || moment.locale(), true)
+  return m.isValid() ? m : null
+}
+
+export function safeDateFormat (date, { dateFormat, locale }) {
+  return date && date.clone()
+    .locale(locale || moment.locale())
+    .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || ''
+}
+
+const dayOfWeekCodes = {
+  1: 'mon',
+  2: 'tue',
+  3: 'wed',
+  4: 'thu',
+  5: 'fri',
+  6: 'sat',
+  7: 'sun'
+}
+
+export function getDayOfWeekCode (day) {
+  return dayOfWeekCodes[day.isoWeekday()]
+}

@@ -2,88 +2,21 @@
 ==============================
 
 
-
-Props
------
-
-### `attachment` (required)
-
-type: `enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`
-
-
-### `children`
-
-type: `custom`
-
-
-### `className`
-
-type: `string`
-
-
-### `classPrefix`
-
-type: `string`
-
-
-### `classes`
-
-type: `object`
-
-
-### `constraints`
-
-type: `array`
-
-
-### `enabled`
-
-type: `bool`
-
-
-### `id`
-
-type: `string`
-
-
-### `offset`
-
-type: `string`
-
-
-### `optimizations`
-
-type: `object`
-
-
-### `renderElementTag`
-
-type: `string`
-defaultValue: `'div'`
-
-
-### `renderElementTo`
-
-type: `any`
-defaultValue: `null`
-
-
-### `style`
-
-type: `object`
-
-
-### `targetAttachment`
-
-type: `enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`
-
-
-### `targetModifier`
-
-type: `string`
-
-
-### `targetOffset`
-
-type: `string`
-
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`attachment` (required)|`enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`|||
+|`children`|`custom`|||
+|`className`|`string`|||
+|`classPrefix`|`string`|||
+|`classes`|`object`|||
+|`constraints`|`array`|||
+|`enabled`|`bool`|||
+|`id`|`string`|||
+|`offset`|`string`|||
+|`optimizations`|`object`|||
+|`renderElementTag`|`string`|`'div'`||
+|`renderElementTo`|`any`|`null`||
+|`style`|`object`|||
+|`targetAttachment`|`enum('top left'|'top center'|'top right'|'middle left'|'middle center'|'middle right'|'bottom left'|'bottom center'|'bottom right')`|||
+|`targetModifier`|`string`|||
+|`targetOffset`|`string`|||

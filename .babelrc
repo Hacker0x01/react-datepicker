@@ -3,13 +3,15 @@
   "env": {
     "development": {
       "plugins": [
+        "transform-class-properties",
         ["react-transform", {
           "transforms": [{
             "transform": "react-transform-hmr",
             "imports": ["react"],
             "locals": ["module"]
           }]
-        }]
+        }],
+        "add-react-displayname"
       ]
     }
   }

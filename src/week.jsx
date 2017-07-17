@@ -1,50 +1,69 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Day from './day'
 import WeekNumber from './week_number'
 
-var Week = React.createClass({
-  displayName: 'Week',
+export default class Week extends React.Component {
+  static propTypes = {
+    day: PropTypes.object.isRequired,
+    dayClassName: PropTypes.func,
+    endDate: PropTypes.object,
+    excludeDates: PropTypes.array,
+    filterDate: PropTypes.func,
+    formatWeekNumber: PropTypes.func,
+    highlightDates: PropTypes.array,
+    includeDates: PropTypes.array,
+    inline: PropTypes.bool,
+    maxDate: PropTypes.object,
+    minDate: PropTypes.object,
+    month: PropTypes.number,
+    onDayClick: PropTypes.func,
+    onDayMouseEnter: PropTypes.func,
+    onWeekSelect: PropTypes.func,
+    preSelection: PropTypes.object,
+    selected: PropTypes.object,
+    selectingDate: PropTypes.object,
+    selectsEnd: PropTypes.bool,
+    selectsStart: PropTypes.bool,
+    showWeekNumber: PropTypes.bool,
+    startDate: PropTypes.object,
+    utcOffset: PropTypes.number
+  }
 
-  propTypes: {
-    day: React.PropTypes.object.isRequired,
-    endDate: React.PropTypes.object,
-    excludeDates: React.PropTypes.array,
-    filterDate: React.PropTypes.func,
-    highlightDates: React.PropTypes.array,
-    includeDates: React.PropTypes.array,
-    inline: React.PropTypes.bool,
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
-    month: React.PropTypes.number,
-    onDayClick: React.PropTypes.func,
-    onDayMouseEnter: React.PropTypes.func,
-    preSelection: React.PropTypes.object,
-    selected: React.PropTypes.object,
-    selectingDate: React.PropTypes.object,
-    selectsEnd: React.PropTypes.bool,
-    selectsStart: React.PropTypes.bool,
-    showWeekNumber: React.PropTypes.bool,
-    startDate: React.PropTypes.object,
-    utcOffset: React.PropTypes.number
-  },
-
-  handleDayClick (day, event) {
+  handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event)
     }
-  },
+  }
 
-  handleDayMouseEnter (day) {
+  handleDayMouseEnter = (day) => {
     if (this.props.onDayMouseEnter) {
       this.props.onDayMouseEnter(day)
     }
-  },
+  }
 
-  renderDays () {
+  handleWeekClick = (day, weekNumber, event) => {
+    if (typeof this.props.onWeekSelect === 'function') {
+      this.props.onWeekSelect(day, weekNumber, event)
+    }
+  }
+
+  formatWeekNumber = (startOfWeek) => {
+    if (this.props.formatWeekNumber) {
+      return this.props.formatWeekNumber(startOfWeek)
+    }
+    return parseInt(startOfWeek.format('w'), 10)
+  }
+
+  renderDays = () => {
     const startOfWeek = this.props.day.clone().startOf('week')
     const days = []
+    const weekNumber = this.formatWeekNumber(startOfWeek)
     if (this.props.showWeekNumber) {
-      days.push(<WeekNumber key="W" weekNumber={parseInt(startOfWeek.format('w'), 10)} />)
+      const onClickAction = this.props.onWeekSelect
+          ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
+          : undefined
+      days.push(<WeekNumber key="W" weekNumber={weekNumber} onClick={onClickAction} />)
     }
     return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
@@ -69,10 +88,11 @@ var Week = React.createClass({
             selectsEnd={this.props.selectsEnd}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
+            dayClassName={this.props.dayClassName}
             utcOffset={this.props.utcOffset}/>
       )
     }))
-  },
+  }
 
   render () {
     return (
@@ -81,7 +101,4 @@ var Week = React.createClass({
       </div>
     )
   }
-
-})
-
-module.exports = Week
+}
