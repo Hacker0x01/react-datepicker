@@ -111,7 +111,7 @@ export default class DatePicker extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.inline && !this.props.selected.isSame(nextProps.selected)) {
+    if (this.props.inline && !this.props.selected.isSame(nextProps.selected, 'month')) {
       this.setPreSelection(nextProps.selected)
     }
   }
