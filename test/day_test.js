@@ -119,6 +119,18 @@ describe('Day', () => {
         const shallowDay = renderDay(day, { highlightDates })
         expect(shallowDay.hasClass('testClassName')).to.equal(false)
       })
+
+      it('should apply the highlighted classes even if the same day in highlighted array', () => {
+        const day = moment()
+        const highlightDay1 = {'fooClassName': [day.clone()]}
+        const highlightDay2 = {'barClassName': [day.clone()]}
+        const highlightDay3 = day.clone()
+        const highlightDates = [highlightDay1, highlightDay2, highlightDay3]
+        const shallowDay = renderDay(day, { highlightDates })
+        expect(shallowDay.hasClass('fooClassName')).to.equal(true)
+        expect(shallowDay.hasClass('barClassName')).to.equal(true)
+        expect(shallowDay.hasClass('react-datepicker__day--highlighted')).to.equal(true)
+      })
     })
   })
 
