@@ -56770,14 +56770,17 @@
 	          day = _this$props.day,
 	          highlightDates = _this$props.highlightDates;
 
+
 	      if (!highlightDates) {
 	        return _defineProperty({}, defaultClassName, false);
 	      }
+
+	      var classNames = {};
 	      for (var i = 0, len = highlightDates.length; i < len; i++) {
 	        var obj = highlightDates[i];
 	        if (obj instanceof _moment2.default) {
 	          if ((0, _date_utils.isSameDay)(day, obj)) {
-	            return _defineProperty({}, defaultClassName, true);
+	            classNames[defaultClassName] = true;
 	          }
 	        } else if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
 	          var keys = Object.keys(obj);
@@ -56785,12 +56788,14 @@
 	          if (typeof keys[0] === 'string' && arr.constructor === Array) {
 	            for (var k = 0, _len2 = arr.length; k < _len2; k++) {
 	              if ((0, _date_utils.isSameDay)(day, arr[k])) {
-	                return _defineProperty({}, keys[0], true);
+	                classNames[keys[0]] = true;
 	              }
 	            }
 	          }
 	        }
 	      }
+
+	      return classNames;
 	    }, _this.isInRange = function () {
 	      var _this$props2 = _this.props,
 	          day = _this$props2.day,
@@ -57232,10 +57237,9 @@
 	        !hidePopper && _react2.default.createElement(
 	          _reactPopper.Popper,
 	          {
-	            style: { zIndex: 1 },
+	            className: 'react-datepicker-popper',
 	            modifiers: popperModifiers,
-	            placement: popperPlacement,
-	            className: 'popper' },
+	            placement: popperPlacement },
 	          popperComponent
 	        )
 	      );
