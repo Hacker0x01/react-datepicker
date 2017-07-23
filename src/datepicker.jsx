@@ -110,6 +110,12 @@ export default class DatePicker extends React.Component {
     this.state = this.calcInitialState()
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.inline && !this.props.selected.isSame(nextProps.selected, 'month')) {
+      this.setPreSelection(nextProps.selected)
+    }
+  }
+
   componentWillUnmount () {
     this.clearPreventFocusTimeout()
   }
@@ -182,7 +188,9 @@ export default class DatePicker extends React.Component {
   }
 
   handleCalendarClickOutside = (event) => {
-    this.setOpen(false)
+    if (!this.props.inline) {
+      this.setOpen(false)
+    }
     this.props.onClickOutside(event)
     if (this.props.withPortal) { event.preventDefault() }
   }
