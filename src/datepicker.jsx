@@ -14,6 +14,8 @@ const WrappedCalendar = onClickOutside(Calendar)
  * General datepicker component.
  */
 
+const INPUT_ERR_1 = 'Date input not valid.'
+
 export default class DatePicker extends React.Component {
   static propTypes = {
     allowSameDay: PropTypes.bool,
@@ -56,6 +58,7 @@ export default class DatePicker extends React.Component {
     onFocus: PropTypes.func,
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
+    onInputError: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -99,6 +102,7 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
+      onInputError () {},
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false
@@ -280,18 +284,26 @@ export default class DatePicker extends React.Component {
       return
     }
     const copy = moment(this.state.preSelection)
+    const inputOk = moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)
     if (eventKey === 'Enter') {
       event.preventDefault()
-      if (moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)) {
+      if (inputOk) {
         this.handleSelect(copy, event)
       } else {
         this.setOpen(false)
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
       }
     } else if (eventKey === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
+      if (!inputOk) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
+      }
     } else if (eventKey === 'Tab') {
       this.setOpen(false)
+      if (!inputOk) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
+      }
     }
     if (!this.props.disabledKeyboardNavigation) {
       let newSelection
