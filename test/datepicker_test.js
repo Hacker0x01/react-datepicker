@@ -269,9 +269,11 @@ describe('DatePicker', () => {
     var copyM = moment(m)
     var testFormat = 'YYYY-MM-DD'
     var callback = sandbox.spy()
+    var inputErrorCallback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
           onChange={callback}
+          onInputError={inputErrorCallback}
           inline={opts.inline}
           excludeDates={opts.excludeDates}
           filterDate={opts.filterDate}
@@ -361,6 +363,7 @@ describe('DatePicker', () => {
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
       expect(data.callback.calledOnce).to.be.false
+      expect(data.inputErrorCallback.calledOnce).to.be.true
     })
     it('should not select excludeDates', () => {
       var data = getOnInputKeyDownStuff({ excludeDates: [moment().subtract(1, 'days')] })
@@ -373,6 +376,26 @@ describe('DatePicker', () => {
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
       TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
       expect(data.callback.calledOnce).to.be.false
+    })
+  })
+  describe('onInputKeyDown Tab', () => {
+    it('should not update the selected date if the date input manually it has something wrong', () => {
+      var data = getOnInputKeyDownStuff()
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Tab', keyCode: 9, which: 9})
+      expect(data.callback.calledOnce).to.be.false
+      expect(data.inputErrorCallback.calledOnce).to.be.true
+    })
+  })
+  describe('onInputKeyDown Escape', () => {
+    it('should not update the selected date if the date input manually it has something wrong', () => {
+      var data = getOnInputKeyDownStuff()
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
+      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Escape', keyCode: 27, which: 27})
+      expect(data.callback.calledOnce).to.be.false
+      expect(data.inputErrorCallback.calledOnce).to.be.true
     })
   })
   it('should reset the keyboard selection when closed', () => {
