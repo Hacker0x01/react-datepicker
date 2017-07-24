@@ -284,7 +284,7 @@ describe('DatePicker', () => {
     var nodeInput = ReactDOM.findDOMNode(dateInput)
     TestUtils.Simulate.focus(nodeInput)
     return {
-      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+      m, copyM, testFormat, callback, inputErrorCallback, datePicker, dateInput, nodeInput
     }
   }
   it('should handle onInputKeyDown ArrowLeft', () => {
