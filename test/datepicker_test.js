@@ -611,4 +611,13 @@ describe('DatePicker', () => {
     datePicker.setProps({ selected: future })
     expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal(future.format('YYYY-MM-DD'))
   })
+  it('should call the onOpenChange function if passed as prop when setOpen is called', () => {
+    var onOpenChangeSpy = sandbox.spy()
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker onOpenChange={onOpenChangeSpy} />
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(onOpenChangeSpy.calledOnce)
+  })
 })

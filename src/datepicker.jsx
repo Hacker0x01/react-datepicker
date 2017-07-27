@@ -56,6 +56,7 @@ export default class DatePicker extends React.Component {
     onFocus: PropTypes.func,
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
+    onOpenChange: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -156,6 +157,10 @@ export default class DatePicker extends React.Component {
       open: open,
       preSelection: open && this.state.open ? this.state.preSelection : this.calcInitialState().preSelection
     })
+
+    if (this.props.onOpenChange) {
+      this.props.onOpenChange(open)
+    }
   }
 
   handleFocus = (event) => {
