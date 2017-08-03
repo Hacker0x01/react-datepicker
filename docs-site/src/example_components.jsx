@@ -38,6 +38,7 @@ import Children from './examples/children'
 import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
+import WithOpenChangeHandle from './examples/with_open_change_handle'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -190,6 +191,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Get raw input value on change',
     component: <RawChange/>
+  },
+  {
+    title: 'Retrieve the current Open Status of the Calendar',
+    component: <WithOpenChangeHandle />
   }]
 
   renderExamples = () =>
