@@ -601,6 +601,11 @@ describe('DatePicker', () => {
     )
     expect(datePicker.state('preSelection').format('YYYY-MM-DD')).to.equal(moment().format('YYYY-MM-DD'))
   })
+  it('should support an initial null `selected` value in inline mode', () => {
+    const datePicker = mount(<DatePicker inline selected={null} />)
+
+    expect(() => datePicker.setProps({ selected: moment() })).to.not.throw()
+  })
   it('should switch month in inline mode immediately', () => {
     const selected = moment()
     const future = moment().add(100, 'day')
