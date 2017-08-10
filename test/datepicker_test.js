@@ -378,16 +378,6 @@ describe('DatePicker', () => {
       expect(data.callback.calledOnce).to.be.false
     })
   })
-  describe('onInputKeyDown Tab', () => {
-    it('should not update the selected date if the date input manually it has something wrong', () => {
-      var data = getOnInputKeyDownStuff()
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Tab', keyCode: 9, which: 9})
-      expect(data.callback.calledOnce).to.be.false
-      expect(data.inputErrorCallback.calledOnce).to.be.true
-    })
-  })
   describe('onInputKeyDown Escape', () => {
     it('should not update the selected date if the date input manually it has something wrong', () => {
       var data = getOnInputKeyDownStuff()

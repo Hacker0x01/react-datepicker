@@ -162,6 +162,9 @@ export default class DatePicker extends React.Component {
     })
   }
 
+  inputOk = () =>
+    moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)
+
   handleFocus = (event) => {
     if (!this.state.preventFocus) {
       this.props.onFocus(event)
@@ -188,6 +191,9 @@ export default class DatePicker extends React.Component {
       this.deferFocusInput()
     } else {
       this.props.onBlur(event)
+      if (!this.inputOk()) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
+      }
     }
   }
 
@@ -284,10 +290,9 @@ export default class DatePicker extends React.Component {
       return
     }
     const copy = moment(this.state.preSelection)
-    const inputOk = moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)
     if (eventKey === 'Enter') {
       event.preventDefault()
-      if (inputOk) {
+      if (this.inputOk()) {
         this.handleSelect(copy, event)
       } else {
         this.setOpen(false)
@@ -296,14 +301,11 @@ export default class DatePicker extends React.Component {
     } else if (eventKey === 'Escape') {
       event.preventDefault()
       this.setOpen(false)
-      if (!inputOk) {
+      if (!this.inputOk()) {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
       }
     } else if (eventKey === 'Tab') {
       this.setOpen(false)
-      if (!inputOk) {
-        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 })
-      }
     }
     if (!this.props.disabledKeyboardNavigation) {
       let newSelection
