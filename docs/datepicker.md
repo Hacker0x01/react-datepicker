@@ -68,3 +68,4 @@ General datepicker component.
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
 |`yearDropdownItemNumber`|`number`|||
+|`shouldCloseOnSelect`|`bool`|`true`|should the calendar close on day selection|
