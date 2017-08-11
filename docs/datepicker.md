@@ -55,6 +55,7 @@ General datepicker component.
 |`selected`|`object`|||
 |`selectsEnd`|`bool`|||
 |`selectsStart`|`bool`|||
+|`shouldCloseOnSelect`|`bool`|`true`||
 |`showMonthDropdown`|`bool`|||
 |`showWeekNumbers`|`bool`|||
 |`showYearDropdown`|`bool`|||
@@ -68,4 +69,3 @@ General datepicker component.
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
 |`yearDropdownItemNumber`|`number`|||
-|`shouldCloseOnSelect`|`bool`|`true`|should the calendar close on day selection|
