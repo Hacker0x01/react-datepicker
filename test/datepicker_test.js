@@ -117,7 +117,49 @@ describe('DatePicker', () => {
     expect(datePicker.refs.calendar).to.not.exist
   })
 
-  it('should hide the calendar when the pressing enter in the date input', () => {
+  it('should not hide the calendar when clicking a day on the calendar and shouldCloseOnSelect prop is false', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker shouldCloseOnSelect={false}/>
+    )
+    var dateInput = datePicker.refs.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    var day = TestUtils.scryRenderedComponentsWithType(datePicker.refs.calendar, Day)[0]
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
+    expect(datePicker.state.open).to.be.true
+  })
+
+  it('should not hide the calendar when selecting a day in the calendar with Enter press, and shouldCloseOnSelect prop is false', () => {
+    var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
+    var dateInput = data.datePicker.refs.input
+
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    expect(data.datePicker.state.open).to.be.true
+  })
+
+  it('should update the preSelection state when a day is selected with Enter press', () => {
+    var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
+    var dateInput = data.datePicker.refs.input
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    data.copyM.add(2, 'weeks')
+    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+
+  it('should update the preSelection state when a day is selected with mouse click', () => {
+    var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
+    var day = TestUtils.findRenderedDOMComponentWithClass(data.datePicker.refs.calendar, 'react-datepicker__day--today')
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
+
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    data.copyM.add(1, 'weeks')
+    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+  })
+
+  it('should hide the calendar when pressing enter in the date input', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
@@ -276,7 +318,8 @@ describe('DatePicker', () => {
           excludeDates={opts.excludeDates}
           filterDate={opts.filterDate}
           minDate={opts.minDate}
-          maxDate={opts.maxDate}/>
+          maxDate={opts.maxDate}
+          shouldCloseOnSelect={opts.shouldCloseOnSelect}/>
     )
     var dateInput = datePicker.refs.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)

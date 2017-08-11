@@ -81,7 +81,8 @@ export default class DatePicker extends React.Component {
     value: PropTypes.string,
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    shouldCloseOnSelect: PropTypes.bool
   }
 
   static get defaultProps () {
@@ -101,7 +102,8 @@ export default class DatePicker extends React.Component {
       onMonthChange () {},
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
-      withPortal: false
+      withPortal: false,
+      shouldCloseOnSelect: true
     }
   }
 
@@ -221,7 +223,9 @@ export default class DatePicker extends React.Component {
       }
     )
     this.setSelected(date, event)
-    if (!this.props.inline) {
+    if (!this.props.shouldCloseOnSelect) {
+      this.setPreSelection(date)
+    } else if (!this.props.inline) {
       this.setOpen(false)
     }
   }
@@ -286,6 +290,7 @@ export default class DatePicker extends React.Component {
       event.preventDefault()
       if (moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)) {
         this.handleSelect(copy, event)
+        !this.props.shouldCloseOnSelect && this.setPreSelection(copy)
       } else {
         this.setOpen(false)
       }
@@ -294,8 +299,7 @@ export default class DatePicker extends React.Component {
       this.setOpen(false)
     } else if (eventKey === 'Tab') {
       this.setOpen(false)
-    }
-    if (!this.props.disabledKeyboardNavigation) {
+    } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection
       switch (eventKey) {
         case 'ArrowLeft':
