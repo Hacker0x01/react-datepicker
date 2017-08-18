@@ -39,6 +39,7 @@ import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
 import YearSelectDropdownWithChange from './examples/year_select_dropdown_with_change'
+import DontCloseOnSelect from './examples/dont_close_onSelect'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -48,152 +49,159 @@ export default class exampleComponents extends React.Component {
     hljs.initHighlightingOnLoad()
   }
 
-  examples: [
-    {
-      title: 'Default',
-      component: <Default />
-    },
-    {
-      title: 'Custom date format',
-      component: <CustomDateFormat />
-    },
-    {
-      title: 'Custom class name',
-      component: <CustomClassName />
-    },
-    {
-      title: 'Custom calendar class name',
-      component: <CustomCalendarClassName />
-    },
-    {
-      title: 'Today button',
-      component: <Today />
-    },
-    {
-      title: `TimeZone date`,
-      component: <TimeZoneDate />
-    },
-    {
-      title: 'Placeholder text',
-      component: <PlaceholderText />
-    },
-    {
-      title: 'Specific date range',
-      component: <SpecificDateRange />
-    },
-    {
-      title: 'Locale',
-      component: <Locale />
-    },
-    {
-      title: 'Exclude dates',
-      component: <ExcludeDates />
-    },
-    {
-      title: 'Highlight dates',
-      component: <HighlightDates />
-    },
-    {
-      title: 'Include dates',
-      component: <IncludeDates />
-    },
-    {
-      title: 'Filter dates',
-      component: <FilterDates />
-    },
-    {
-      title: 'Date Range',
-      component: <DateRange />
-    },
-    {
-      title: 'Disable datepicker',
-      component: <Disabled />
-    },
-    {
-      title: 'Disable keyboard navigation',
-      component: <DisabledKeyboardNavigation />
-    },
-    {
-      title: 'Clear datepicker input',
-      component: <ClearInput />
-    },
-    {
-      title: 'onBlur callbacks in console',
-      component: <OnBlurCallbacks />
-    },
-    {
-      title: 'Configure Popover Placement',
-      component: <Placement />
-    },
-    {
-      title: 'Portal version',
-      component: <Portal />
-    },
-    {
-      title: 'Inline portal version',
-      component: <InlinePortal />
-    },
-    {
-      title: 'TabIndex',
-      component: <TabIndex />
-    },
-    {
-      title: 'Year dropdown',
-      component: <YearDropdown />
-    },
-    {
-      title: 'Month dropdown',
-      component: <MonthDropdown />
-    },
-    {
-      title: 'Year select dropdown',
-      component: <YearSelectDropdown />
-    },
-    {
-      title: 'Year select dropdown with change',
-      component: <YearSelectDropdownWithChange />
-    },
-    {
-      title: 'Inline version',
-      component: <Inline />
-    },
-    {
-      title: 'Open to date',
-      component: <OpenToDate />
-    },
-    {
-      title: 'Fixed height of Calendar',
-      component: <FixedCalendar />
-    },
-    {
-      title: 'Display Week Numbers',
-      component: <WeekNumbers />
-    },
-    {
-      title: 'Custom input',
-      component: <CustomInput />
-    },
-    {
-      title: 'Multiple months',
-      component: <MultiMonth />
-    },
-    {
-      title: 'Multiple months with year dropdown',
-      component: <MultiMonthDrp />
-    },
-    {
-      title: 'Children',
-      component: <Children />
-    },
-    {
-      title: 'Get raw input value on change',
-      component: <RawChange/>
-    },
-    {
-      title: 'Disable date auto correction',
-      component: <DisableDateAutoCorrection />
-    }
-  ]
+  examples = [{
+    title: 'Default',
+    component: <Default />
+  },
+  {
+    title: 'Custom date format',
+    component: <CustomDateFormat />
+  },
+  {
+    title: 'Custom class name',
+    component: <CustomClassName />
+  },
+  {
+    title: 'Custom calendar class name',
+    component: <CustomCalendarClassName />
+  },
+  {
+    title: 'Custom day class names',
+    component: <CustomDayClassNames />
+  },
+  {
+    title: 'Today button',
+    component: <Today />
+  },
+  {
+    title: `TimeZone date`,
+    component: <TimeZoneDate />
+  },
+  {
+    title: 'Placeholder text',
+    component: <PlaceholderText />
+  },
+  {
+    title: 'Specific date range',
+    component: <SpecificDateRange />
+  },
+  {
+    title: 'Locale',
+    component: <Locale />
+  },
+  {
+    title: 'Exclude dates',
+    component: <ExcludeDates />
+  },
+  {
+    title: 'Highlight dates',
+    component: <HighlightDates />
+  },
+  {
+    title: 'Highlight dates with custom class names and ranges',
+    component: <HighlightDatesRanges />
+  },
+  {
+    title: 'Include dates',
+    component: <IncludeDates />
+  },
+  {
+    title: 'Filter dates',
+    component: <FilterDates />
+  },
+  {
+    title: 'Date Range',
+    component: <DateRange />
+  },
+  {
+    title: 'Disable datepicker',
+    component: <Disabled />
+  },
+  {
+    title: 'Disable keyboard navigation',
+    component: <DisabledKeyboardNavigation />
+  },
+  {
+    title: 'Clear datepicker input',
+    component: <ClearInput />
+  },
+  {
+    title: 'onBlur callbacks in console',
+    component: <OnBlurCallbacks />
+  },
+  {
+    title: 'Configure Popper Properties',
+    component: <ConfigurePopper />
+  },
+  {
+    title: 'Portal version',
+    component: <Portal />
+  },
+  {
+    title: 'Inline portal version',
+    component: <InlinePortal />
+  },
+  {
+    title: 'TabIndex',
+    component: <TabIndex />
+  },
+  {
+    title: 'Year dropdown',
+    component: <YearDropdown />
+  },
+  {
+    title: 'Month dropdown',
+    component: <MonthDropdown />
+  },
+  {
+    title: 'Year select dropdown',
+    component: <YearSelectDropdown />
+  },
+  {
+    title: 'Inline version',
+    component: <Inline />
+  },
+  {
+    title: 'Open to date',
+    component: <OpenToDate />
+  },
+  {
+    title: 'Fixed height of Calendar',
+    component: <FixedCalendar />
+  },
+  {
+    title: 'Display Week Numbers',
+    component: <WeekNumbers />
+  },
+  {
+    title: 'Custom input',
+    component: <CustomInput />
+  },
+  {
+    title: 'Multiple months',
+    component: <MultiMonth />
+  },
+  {
+    title: 'Multiple months with year dropdown',
+    component: <MultiMonthDrp />
+  },
+  {
+    title: 'Children',
+    component: <Children />
+  },
+  {
+    title: 'Get raw input value on change',
+    component: <RawChange/>
+  },
+  {
+    title: 'Don\'t hide calendar on date selection',
+    component: <DontCloseOnSelect/>
+  },
+  {
+    title: 'Disable date auto correction',
+    component: <DisableDateAutoCorrection />
+  }
+]
 
   renderExamples = () =>
     this.examples.map((example, index) =>

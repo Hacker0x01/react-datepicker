@@ -48,14 +48,17 @@ export default class Day extends React.Component {
 
   getHighLightedClass = (defaultClassName) => {
     const { day, highlightDates } = this.props
+
     if (!highlightDates) {
       return {[defaultClassName]: false}
     }
+
+    const classNames = {}
     for (let i = 0, len = highlightDates.length; i < len; i++) {
       const obj = highlightDates[i]
       if (obj instanceof moment) {
         if (isSameDay(day, obj)) {
-          return {[defaultClassName]: true}
+          classNames[defaultClassName] = true
         }
       } else if (typeof obj === 'object') {
         const keys = Object.keys(obj)
@@ -63,12 +66,14 @@ export default class Day extends React.Component {
         if (typeof keys[0] === 'string' && arr.constructor === Array) {
           for (let k = 0, len = arr.length; k < len; k++) {
             if (isSameDay(day, arr[k])) {
-              return {[keys[0]]: true}
+              classNames[keys[0]] = true
             }
           }
         }
       }
     }
+
+    return classNames
   }
 
   isInRange = () => {
