@@ -104,6 +104,10 @@
     {
       "path": "./dist/react-datepicker.js",
       "maxSize": "38 kB"
+    },
+    {
+      "path": "./dist/react-datepicker.css",
+      "maxSize": "2 kB"
     }
   ],
 
