@@ -11,3 +11,6 @@ dependencies:
 test:
   override:
     - yarn test
+  post:
+    - yarn run codecov
+    - yarn run bundlesize
