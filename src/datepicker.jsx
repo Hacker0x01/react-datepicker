@@ -152,7 +152,7 @@ export default class DatePicker extends React.Component {
   }
 
   setFocus = () => {
-    this.refs.input.focus()
+    this.input.focus()
   }
 
   setOpen = (open) => {
@@ -349,7 +349,7 @@ export default class DatePicker extends React.Component {
       return null
     }
     return <WrappedCalendar
-        ref="calendar"
+        ref={(elem) => { this.calendar = elem }}
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         useWeekdaysShort={this.props.useWeekdaysShort}
@@ -405,7 +405,7 @@ export default class DatePicker extends React.Component {
         : safeDateFormat(this.props.selected, this.props)
 
     return React.cloneElement(customInput, {
-      ref: 'input',
+      ref: (input) => { this.input = input },
       value: inputValue,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
