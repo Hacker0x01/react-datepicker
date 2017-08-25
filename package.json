@@ -96,7 +96,7 @@
     "moment": "^2.17.1",
     "prop-types": "^15.5.8",
     "react-onclickoutside": "^6.1.1",
-    "react-popper": "^0.7.0"
+    "react-popper": "^0.7.2"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
