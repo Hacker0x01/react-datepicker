@@ -53,6 +53,7 @@ export default class Calendar extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showPreviousMonths: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
@@ -260,8 +261,10 @@ export default class Calendar extends React.Component {
 
   renderMonths = () => {
     var monthList = []
+    var monthsToSubtract = this.props.showPreviousMonths ? this.props.monthsShown - 1 : 0
+    var fromMonthDate = this.state.date.clone().subtract(monthsToSubtract, 'M')
     for (var i = 0; i < this.props.monthsShown; ++i) {
-      var monthDate = this.state.date.clone().add(i, 'M')
+      var monthDate = fromMonthDate.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
           <div key={monthKey} className="react-datepicker__month-container">
