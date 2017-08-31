@@ -5,6 +5,7 @@ import { mount, ReactWrapper } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
+import TestWrapper from './test_wrapper.jsx'
 import PopperComponent from '../src/popper_component.jsx'
 import TimezoneDatePicker from './timezone_date_picker.jsx'
 import * as utils from '../src/date_utils'
@@ -45,6 +46,18 @@ describe('DatePicker', () => {
     var dateInput = datePicker.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     expect(datePicker.calendar).to.exist
+  })
+
+  it('should allow the user to supply a wrapper component for the popper', () => {
+    var datePicker = mount(
+      <DatePicker popperContainer={TestWrapper} />
+    )
+
+    const dateInput = datePicker.instance().input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+
+    expect(datePicker.find('.test-wrapper').length).to.equal(1)
+    expect(datePicker.instance().calendar).to.exist
   })
 
   it('should show the calendar when clicking on the date input', () => {
