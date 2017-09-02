@@ -650,43 +650,45 @@
 	var warning = emptyFunction;
 
 	if (false) {
-	  var printWarning = function printWarning(format) {
-	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	      args[_key - 1] = arguments[_key];
-	    }
-
-	    var argIndex = 0;
-	    var message = 'Warning: ' + format.replace(/%s/g, function () {
-	      return args[argIndex++];
-	    });
-	    if (typeof console !== 'undefined') {
-	      console.error(message);
-	    }
-	    try {
-	      // --- Welcome to debugging React ---
-	      // This error was thrown as a convenience so that you can use this stack
-	      // to find the callsite that caused this warning to fire.
-	      throw new Error(message);
-	    } catch (x) {}
-	  };
-
-	  warning = function warning(condition, format) {
-	    if (format === undefined) {
-	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	    }
-
-	    if (format.indexOf('Failed Composite propType: ') === 0) {
-	      return; // Ignore CompositeComponent proptype check.
-	    }
-
-	    if (!condition) {
-	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	        args[_key2 - 2] = arguments[_key2];
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
 	      }
 
-	      printWarning.apply(undefined, [format].concat(args));
-	    }
-	  };
+	      var argIndex = 0;
+	      var message = 'Warning: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // --- Welcome to debugging React ---
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch (x) {}
+	    };
+
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
 	}
 
 	module.exports = warning;
@@ -17415,11 +17417,18 @@
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
 	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
 	 *
 	 * @typechecks
 	 */
@@ -55877,8 +55886,12 @@
 
 	'use strict';
 
-	exports.__esModule = true;
-	exports.IGNORE_CLASS_NAME = undefined;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	exports.default = onClickOutsideHOC;
 
 	var _react = __webpack_require__(2);
@@ -55903,9 +55916,6 @@
 	var registeredComponents = [];
 	var handlers = [];
 
-	var touchEvents = ['touchstart', 'touchmove'];
-	var IGNORE_CLASS_NAME = exports.IGNORE_CLASS_NAME = 'ignore-react-onclickoutside';
-
 	/**
 	 * This function generates the HOC function that you'll use
 	 * in order to impart onOutsideClick listening to an
@@ -55920,6 +55930,8 @@
 	    _inherits(onClickOutside, _Component);
 
 	    function onClickOutside() {
+	      var _ref;
+
 	      var _temp, _this, _ret;
 
 	      _classCallCheck(this, onClickOutside);
@@ -55928,22 +55940,15 @@
 	        args[_key] = arguments[_key];
 	      }
 
-	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = onClickOutside.__proto__ || Object.getPrototypeOf(onClickOutside)).call.apply(_ref, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
 	        var fn = _this.__outsideClickHandler;
 	        if (fn && typeof document !== 'undefined') {
 	          var events = _this.props.eventTypes;
 	          if (!events.forEach) {
 	            events = [events];
 	          }
-
 	          events.forEach(function (eventName) {
-	            var handlerOptions = null;
-	            var isTouchEvent = touchEvents.indexOf(eventName) !== -1;
-
-	            if (isTouchEvent) {
-	              handlerOptions = { passive: !_this.props.preventDefault };
-	            }
-
+	            var handlerOptions = !_this.props.preventDefault && ['touchstart', 'touchmove'].indexOf(eventName) !== -1 ? { passive: true } : null;
 	            document.addEventListener(eventName, fn, handlerOptions);
 	          });
 	        }
@@ -55963,166 +55968,182 @@
 	      }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
-	    /**
-	     * Access the WrappedComponent's instance.
-	     */
-	    onClickOutside.prototype.getInstance = function getInstance() {
-	      if (!WrappedComponent.prototype.isReactComponent) {
-	        return this;
-	      }
-	      var ref = this.instanceRef;
-	      return ref.getInstance ? ref.getInstance() : ref;
-	    };
-
-	    // this is given meaning in componentDidMount/componentDidUpdate
+	    _createClass(onClickOutside, [{
+	      key: 'getInstance',
 
 
-	    /**
-	     * Add click listeners to the current document,
-	     * linked to this component's state.
-	     */
-	    onClickOutside.prototype.componentDidMount = function componentDidMount() {
-	      // If we are in an environment without a DOM such
-	      // as shallow rendering or snapshots then we exit
-	      // early to prevent any unhandled errors being thrown.
-	      if (typeof document === 'undefined' || !document.createElement) {
-	        return;
-	      }
-
-	      var instance = this.getInstance();
-
-	      if (config && typeof config.handleClickOutside === 'function') {
-	        this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
-	        if (typeof this.__clickOutsideHandlerProp !== 'function') {
-	          throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
+	      /**
+	       * Access the WrappedComponent's instance.
+	       */
+	      value: function getInstance() {
+	        if (!WrappedComponent.prototype.isReactComponent) {
+	          return this;
 	        }
-	      } else if (typeof instance.handleClickOutside === 'function') {
-	        if (_react.Component.prototype.isPrototypeOf(instance)) {
-	          this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
+	        var ref = this.instanceRef;
+	        return ref.getInstance ? ref.getInstance() : ref;
+	      }
+
+	      // this is given meaning in componentDidMount/componentDidUpdate
+
+	    }, {
+	      key: 'componentDidMount',
+
+
+	      /**
+	       * Add click listeners to the current document,
+	       * linked to this component's state.
+	       */
+	      value: function componentDidMount() {
+	        // If we are in an environment without a DOM such
+	        // as shallow rendering or snapshots then we exit
+	        // early to prevent any unhandled errors being thrown.
+	        if (typeof document === 'undefined' || !document.createElement) {
+	          return;
+	        }
+
+	        var instance = this.getInstance();
+
+	        if (config && typeof config.handleClickOutside === 'function') {
+	          this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
+	          if (typeof this.__clickOutsideHandlerProp !== 'function') {
+	            throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
+	          }
+	        } else if (typeof instance.handleClickOutside === 'function') {
+	          if (_react.Component.prototype.isPrototypeOf(instance)) {
+	            this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
+	          } else {
+	            this.__clickOutsideHandlerProp = instance.handleClickOutside;
+	          }
+	        } else if (typeof instance.props.handleClickOutside === 'function') {
+	          this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
 	        } else {
-	          this.__clickOutsideHandlerProp = instance.handleClickOutside;
+	          throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
 	        }
-	      } else if (typeof instance.props.handleClickOutside === 'function') {
-	        this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
-	      } else {
-	        throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
-	      }
 
-	      // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
-	      if ((0, _reactDom.findDOMNode)(instance) === null) {
-	        return;
-	      }
+	        // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
+	        if ((0, _reactDom.findDOMNode)(instance) === null) {
+	          return;
+	        }
 
-	      this.addOutsideClickHandler();
-	    };
-
-	    /**
-	    * Track for disableOnClickOutside props changes and enable/disable click outside
-	    */
-
-
-	    onClickOutside.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	      if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
-	        this.enableOnClickOutside();
-	      } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
-	        this.disableOnClickOutside();
-	      }
-	    };
-
-	    onClickOutside.prototype.componentDidUpdate = function componentDidUpdate() {
-	      var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
-
-	      if (componentNode === null && this.__outsideClickHandler) {
-	        this.removeOutsideClickHandler();
-	        return;
-	      }
-
-	      if (componentNode !== null && !this.__outsideClickHandler) {
 	        this.addOutsideClickHandler();
-	        return;
 	      }
-	    };
 
-	    /**
-	     * Remove all document's event listeners for this component
-	     */
+	      /**
+	      * Track for disableOnClickOutside props changes and enable/disable click outside
+	      */
 
-
-	    onClickOutside.prototype.componentWillUnmount = function componentWillUnmount() {
-	      this.removeOutsideClickHandler();
-	    };
-
-	    /**
-	     * Can be called to explicitly enable event listening
-	     * for clicks and touches outside of this element.
-	     */
-
-
-	    /**
-	     * Can be called to explicitly disable event listening
-	     * for clicks and touches outside of this element.
-	     */
-
-
-	    onClickOutside.prototype.addOutsideClickHandler = function addOutsideClickHandler() {
-	      var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
-
-	      var pos = registeredComponents.length;
-	      registeredComponents.push(this);
-	      handlers[pos] = fn;
-
-	      // If there is a truthy disableOnClickOutside property for this
-	      // component, don't immediately start listening for outside events.
-	      if (!this.props.disableOnClickOutside) {
-	        this.enableOnClickOutside();
-	      }
-	    };
-
-	    onClickOutside.prototype.removeOutsideClickHandler = function removeOutsideClickHandler() {
-	      this.disableOnClickOutside();
-	      this.__outsideClickHandler = false;
-
-	      var pos = registeredComponents.indexOf(this);
-
-	      if (pos > -1) {
-	        // clean up so we don't leak memory
-	        if (handlers[pos]) {
-	          handlers.splice(pos, 1);
+	    }, {
+	      key: 'componentWillReceiveProps',
+	      value: function componentWillReceiveProps(nextProps) {
+	        if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
+	          this.enableOnClickOutside();
+	        } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
+	          this.disableOnClickOutside();
 	        }
-	        registeredComponents.splice(pos, 1);
 	      }
-	    };
+	    }, {
+	      key: 'componentDidUpdate',
+	      value: function componentDidUpdate() {
+	        var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
 
-	    /**
-	     * Pass-through render
-	     */
-	    onClickOutside.prototype.render = function render() {
-	      var _this2 = this;
+	        if (componentNode === null && this.__outsideClickHandler) {
+	          this.removeOutsideClickHandler();
+	          return;
+	        }
 
-	      var props = Object.keys(this.props).filter(function (prop) {
-	        return prop !== 'excludeScrollbar';
-	      }).reduce(function (props, prop) {
-	        props[prop] = _this2.props[prop];
-	        return props;
-	      }, {});
-
-	      if (WrappedComponent.prototype.isReactComponent) {
-	        props.ref = this.getRef;
-	      } else {
-	        props.wrappedRef = this.getRef;
+	        if (componentNode !== null && !this.__outsideClickHandler) {
+	          this.addOutsideClickHandler();
+	          return;
+	        }
 	      }
 
-	      props.disableOnClickOutside = this.disableOnClickOutside;
-	      props.enableOnClickOutside = this.enableOnClickOutside;
+	      /**
+	       * Remove all document's event listeners for this component
+	       */
 
-	      return (0, _react.createElement)(WrappedComponent, props);
-	    };
+	    }, {
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        this.removeOutsideClickHandler();
+	      }
+
+	      /**
+	       * Can be called to explicitly enable event listening
+	       * for clicks and touches outside of this element.
+	       */
+
+
+	      /**
+	       * Can be called to explicitly disable event listening
+	       * for clicks and touches outside of this element.
+	       */
+
+	    }, {
+	      key: 'addOutsideClickHandler',
+	      value: function addOutsideClickHandler() {
+	        var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
+
+	        var pos = registeredComponents.length;
+	        registeredComponents.push(this);
+	        handlers[pos] = fn;
+
+	        // If there is a truthy disableOnClickOutside property for this
+	        // component, don't immediately start listening for outside events.
+	        if (!this.props.disableOnClickOutside) {
+	          this.enableOnClickOutside();
+	        }
+	      }
+	    }, {
+	      key: 'removeOutsideClickHandler',
+	      value: function removeOutsideClickHandler() {
+	        this.disableOnClickOutside();
+	        this.__outsideClickHandler = false;
+
+	        var pos = registeredComponents.indexOf(this);
+
+	        if (pos > -1) {
+	          // clean up so we don't leak memory
+	          if (handlers[pos]) {
+	            handlers.splice(pos, 1);
+	          }
+	          registeredComponents.splice(pos, 1);
+	        }
+	      }
+	    }, {
+	      key: 'render',
+
+
+	      /**
+	       * Pass-through render
+	       */
+	      value: function render() {
+	        var _this2 = this;
+
+	        var props = Object.keys(this.props).filter(function (prop) {
+	          return prop !== 'excludeScrollbar';
+	        }).reduce(function (props, prop) {
+	          props[prop] = _this2.props[prop];
+	          return props;
+	        }, {});
+
+	        if (WrappedComponent.prototype.isReactComponent) {
+	          props.ref = this.getRef;
+	        } else {
+	          props.wrappedRef = this.getRef;
+	        }
+
+	        props.disableOnClickOutside = this.disableOnClickOutside;
+	        props.enableOnClickOutside = this.enableOnClickOutside;
+
+	        return (0, _react.createElement)(WrappedComponent, props);
+	      }
+	    }]);
 
 	    return onClickOutside;
 	  }(_react.Component), _class.displayName = 'OnClickOutside(' + (WrappedComponent.displayName || WrappedComponent.name || 'Component') + ')', _class.defaultProps = {
 	    eventTypes: ['mousedown', 'touchstart'],
 	    excludeScrollbar: config && config.excludeScrollbar || false,
-	    outsideClickIgnoreClass: IGNORE_CLASS_NAME,
+	    outsideClickIgnoreClass: 'ignore-react-onclickoutside',
 	    preventDefault: false,
 	    stopPropagation: false
 	  }, _class.getClass = function () {
@@ -56136,7 +56157,9 @@
 
 	"use strict";
 
-	exports.__esModule = true;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.default = generateOutsideCheck;
 	/**
 	 * Check whether some DOM node is our Component's node.
@@ -58003,7 +58026,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**!
 	 * @fileOverview Kickass library to create and place poppers near their reference elements.
-	 * @version 1.12.5
+	 * @version 1.12.3
 	 * @license
 	 * Copyright (c) 2016 Federico Zivolo and contributors
 	 *
