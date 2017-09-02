@@ -22,7 +22,8 @@ export default class ExcludeTimePeriod extends React.Component {
         {'  onChange={this.handleChange}'}<br />
         <strong>{'  showTimeSelect'}<br />
         {'  minTime={moment().hours(17).minutes(0)}'}<br />
-        {'  maxTime={moment().hours(20).minutes(30)}'}</strong><br />
+        {'  maxTime={moment().hours(20).minutes(30)}'}<br />
+        {'  dateFormat="LLL"'}</strong><br />
         {'/>'}
         </code>
       </pre>
@@ -32,7 +33,8 @@ export default class ExcludeTimePeriod extends React.Component {
             onChange={this.handleChange}
             showTimeSelect
             minTime={moment().hours(17).minutes(0)}
-            maxTime={moment().hours(20).minutes(30)} />
+            maxTime={moment().hours(20).minutes(30)}
+            dateFormat="LLL" />
       </div>
     </div>
   }

@@ -22,6 +22,7 @@ export default class ExcludeTimes extends React.Component {
         {'  onChange={this.handleChange}'}<br />
         <strong>{'  showTimeSelect'}<br />
         {'  excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}'}</strong><br />
+        <strong>{'  dateFormat="LLL"'}</strong><br />
         {'/>'}
         </code>
       </pre>
@@ -30,7 +31,8 @@ export default class ExcludeTimes extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             showTimeSelect
-            excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30), moment().hours(17).minutes(30)]} />
+            excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30), moment().hours(17).minutes(30)]}
+            dateFormat="LLL" />
       </div>
     </div>
   }

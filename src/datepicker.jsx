@@ -89,7 +89,7 @@ export default class DatePicker extends React.Component {
 
   static get defaultProps () {
     return {
-      dateFormat: 'LLL',
+      dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
