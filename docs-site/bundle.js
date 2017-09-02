@@ -482,8 +482,6 @@
 
 /***/ }),
 /* 6 */
-[525, 7],
-/* 7 */
 /***/ (function(module, exports) {
 
 	/**
@@ -526,7 +524,7 @@
 	module.exports = reactProdInvariant;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -625,7 +623,7 @@
 	module.exports = ReactNoopUpdateQueue;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -652,45 +650,43 @@
 	var warning = emptyFunction;
 
 	if (false) {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
+	  var printWarning = function printWarning(format) {
+	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      args[_key - 1] = arguments[_key];
+	    }
+
+	    var argIndex = 0;
+	    var message = 'Warning: ' + format.replace(/%s/g, function () {
+	      return args[argIndex++];
+	    });
+	    if (typeof console !== 'undefined') {
+	      console.error(message);
+	    }
+	    try {
+	      // --- Welcome to debugging React ---
+	      // This error was thrown as a convenience so that you can use this stack
+	      // to find the callsite that caused this warning to fire.
+	      throw new Error(message);
+	    } catch (x) {}
+	  };
+
+	  warning = function warning(condition, format) {
+	    if (format === undefined) {
+	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	    }
+
+	    if (format.indexOf('Failed Composite propType: ') === 0) {
+	      return; // Ignore CompositeComponent proptype check.
+	    }
+
+	    if (!condition) {
+	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	        args[_key2 - 2] = arguments[_key2];
 	      }
 
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
+	      printWarning.apply(undefined, [format].concat(args));
+	    }
+	  };
 	}
 
 	module.exports = warning;
@@ -1118,7 +1114,7 @@
 
 /***/ }),
 /* 15 */
-[534, 6],
+[538, 6],
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1464,11 +1460,7 @@
 	module.exports = ReactElement;
 
 /***/ }),
-<<<<<<< HEAD
 /* 17 */
-=======
-/* 10 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -1501,13 +1493,8 @@
 	module.exports = ReactCurrentOwner;
 
 /***/ }),
-<<<<<<< HEAD
 /* 18 */
 /***/ (function(module, exports) {
-=======
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> First working draft of selectTime feature
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -1545,168 +1532,7 @@
 
 	'use strict';
 
-<<<<<<< HEAD
 	var _prodInvariant = __webpack_require__(6);
-=======
-	if (false) {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
-	      }
-
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
-	}
-
-	module.exports = warning;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-
-	module.exports = emptyFunction;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	'use strict';
-
-	var canDefineProperty = false;
-	if (false) {
-	  try {
-	    // $FlowFixMe https://github.com/facebook/flow/issues/285
-	    Object.defineProperty({}, 'x', { get: function () {} });
-	    canDefineProperty = true;
-	  } catch (x) {
-	    // IE will fail on defineProperty
-	  }
-	}
-
-	module.exports = canDefineProperty;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-	/**
-	 * Copyright 2014-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	'use strict';
-
-	// The Symbol used to tag the ReactElement type. If there is no native Symbol
-	// nor polyfill, then a plain number is used for performance.
-
-	var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
-
-	module.exports = REACT_ELEMENT_TYPE;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var _prodInvariant = __webpack_require__(7);
->>>>>>> First working draft of selectTime feature
 
 	var ReactCurrentOwner = __webpack_require__(17);
 	var REACT_ELEMENT_TYPE = __webpack_require__(18);
@@ -1871,11 +1697,7 @@
 	module.exports = traverseAllChildren;
 
 /***/ }),
-<<<<<<< HEAD
 /* 20 */
-=======
-/* 16 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -1920,11 +1742,7 @@
 	module.exports = getIteratorFn;
 
 /***/ }),
-<<<<<<< HEAD
 /* 21 */
-=======
-/* 17 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -1987,11 +1805,7 @@
 	module.exports = KeyEscapeUtils;
 
 /***/ }),
-<<<<<<< HEAD
 /* 22 */
-=======
-/* 18 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -2164,11 +1978,7 @@
 	module.exports = ReactDOMFactories;
 
 /***/ }),
-<<<<<<< HEAD
 /* 23 */
-=======
-/* 19 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -2191,11 +2001,7 @@
 	module.exports = factory(isValidElement);
 
 /***/ }),
-<<<<<<< HEAD
 /* 24 */
-=======
-/* 20 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -2222,11 +2028,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 25 */
-=======
-/* 21 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -2247,145 +2049,10 @@
 	var ReactPropTypesSecret = __webpack_require__(26);
 	var checkPropTypes = __webpack_require__(27);
 
-<<<<<<< HEAD
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
 	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
 	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-=======
-	/**
-	 * Base class helpers for the updating state of a component.
-	 */
-	function ReactPureComponent(props, context, updater) {
-	  // Duplicated from ReactComponent.
-	  this.props = props;
-	  this.context = context;
-	  this.refs = emptyObject;
-	  // We initialize the default updater but the real one gets injected by the
-	  // renderer.
-	  this.updater = updater || ReactNoopUpdateQueue;
-	}
-
-	function ComponentDummy() {}
-	ComponentDummy.prototype = ReactComponent.prototype;
-	ReactPureComponent.prototype = new ComponentDummy();
-	ReactPureComponent.prototype.constructor = ReactPureComponent;
-	// Avoid an extra prototype jump for these methods.
-	_assign(ReactPureComponent.prototype, ReactComponent.prototype);
-	ReactPureComponent.prototype.isPureReactComponent = true;
-
-	module.exports = ReactPureComponent;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var _prodInvariant = __webpack_require__(7),
-	    _assign = __webpack_require__(4);
-
-	var ReactComponent = __webpack_require__(18);
-	var ReactElement = __webpack_require__(9);
-	var ReactPropTypeLocationNames = __webpack_require__(23);
-	var ReactNoopUpdateQueue = __webpack_require__(19);
-
-	var emptyObject = __webpack_require__(20);
-	var invariant = __webpack_require__(8);
-	var warning = __webpack_require__(11);
-
-	var MIXINS_KEY = 'mixins';
-
-	// Helper function to allow the creation of anonymous functions which do not
-	// have .name set to the name of the variable being assigned to.
-	function identity(fn) {
-	  return fn;
-	}
-
-	/**
-	 * Policies that describe methods in `ReactClassInterface`.
-	 */
-
-
-	var injectedMixins = [];
-
-	/**
-	 * Composite components are higher-level components that compose other composite
-	 * or host components.
-	 *
-	 * To create a new type of `ReactClass`, pass a specification of
-	 * your new class to `React.createClass`. The only requirement of your class
-	 * specification is that you implement a `render` method.
-	 *
-	 *   var MyComponent = React.createClass({
-	 *     render: function() {
-	 *       return <div>Hello World</div>;
-	 *     }
-	 *   });
-	 *
-	 * The class specification supports a specific protocol of methods that have
-	 * special meaning (e.g. `render`). See `ReactClassInterface` for
-	 * more the comprehensive protocol. Any other properties and methods in the
-	 * class specification will be available on the prototype.
-	 *
-	 * @interface ReactClassInterface
-	 * @internal
-	 */
-	var ReactClassInterface = {
-
-	  /**
-	   * An array of Mixin objects to include when defining your component.
-	   *
-	   * @type {array}
-	   * @optional
-	   */
-	  mixins: 'DEFINE_MANY',
-
-	  /**
-	   * An object containing properties and methods that should be defined on
-	   * the component's constructor instead of its prototype (static methods).
-	   *
-	   * @type {object}
-	   * @optional
-	   */
-	  statics: 'DEFINE_MANY',
-
-	  /**
-	   * Definition of prop types for this component.
-	   *
-	   * @type {object}
-	   * @optional
-	   */
-	  propTypes: 'DEFINE_MANY',
-
-	  /**
-	   * Definition of context types for this component.
-	   *
-	   * @type {object}
-	   * @optional
-	   */
-	  contextTypes: 'DEFINE_MANY',
-
-	  /**
-	   * Definition of context types this component sets for its children.
-	   *
-	   * @type {object}
-	   * @optional
-	   */
-	  childContextTypes: 'DEFINE_MANY',
-
-	  // ==== Definition methods ====
->>>>>>> First working draft of selectTime feature
 
 	  /**
 	   * Returns the iterator method function contained on the iterable object.
@@ -2879,13 +2546,8 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 26 */
 /***/ (function(module, exports) {
-=======
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> First working draft of selectTime feature
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2904,11 +2566,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 27 */
-=======
-/* 24 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -2971,18 +2629,12 @@
 	  }
 	}
 
-<<<<<<< HEAD
 	module.exports = checkPropTypes;
 
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
-=======
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> First working draft of selectTime feature
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2999,11 +2651,7 @@
 	module.exports = '15.6.1';
 
 /***/ }),
-<<<<<<< HEAD
 /* 29 */
-=======
-/* 26 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -3024,7 +2672,6 @@
 	var _require2 = __webpack_require__(16),
 	    isValidElement = _require2.isValidElement;
 
-<<<<<<< HEAD
 	var ReactNoopUpdateQueue = __webpack_require__(7);
 	var factory = __webpack_require__(30);
 
@@ -3032,10 +2679,6 @@
 
 /***/ }),
 /* 30 */
-=======
-/***/ }),
-/* 27 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -3757,7 +3400,6 @@
 	      this.updater.enqueueReplaceState(this, newState, callback);
 	    },
 
-<<<<<<< HEAD
 	    /**
 	     * Checks whether or not this composite component is mounted.
 	     * @return {boolean} True if mounted, false otherwise.
@@ -3780,11 +3422,6 @@
 	      return !!this.__isMounted;
 	    }
 	  };
-=======
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
->>>>>>> First working draft of selectTime feature
 
 	  var ReactClassComponent = function() {};
 	  _assign(
@@ -3827,13 +3464,7 @@
 	      this.refs = emptyObject;
 	      this.updater = updater || ReactNoopUpdateQueue;
 
-<<<<<<< HEAD
 	      this.state = null;
-=======
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> First working draft of selectTime feature
 
 	      // ReactClasses doesn't have constructors. Instead, they use the
 	      // getInitialState and componentWillMount methods for initialization.
@@ -3908,18 +3539,12 @@
 	      );
 	    }
 
-<<<<<<< HEAD
 	    // Reduce time spent doing lookups by setting these on the prototype.
 	    for (var methodName in ReactClassInterface) {
 	      if (!Constructor.prototype[methodName]) {
 	        Constructor.prototype[methodName] = null;
 	      }
 	    }
-=======
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
->>>>>>> First working draft of selectTime feature
 
 	    return Constructor;
 	  }
@@ -6309,15 +5934,7 @@
 
 /***/ }),
 /* 50 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-[534, 35],
-=======
-[521, 35],
->>>>>>> First working draft of selectTime feature
-=======
-[525, 35],
->>>>>>> Ran 'npm start build'
+[538, 35],
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8047,7 +7664,6 @@
 
 /***/ }),
 /* 64 */
-<<<<<<< HEAD
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8175,8 +7791,6 @@
 
 /***/ }),
 /* 65 */
-=======
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -8215,11 +7829,7 @@
 	module.exports = getEventTarget;
 
 /***/ }),
-<<<<<<< HEAD
 /* 66 */
-=======
-/* 65 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8283,11 +7893,7 @@
 	module.exports = isEventSupported;
 
 /***/ }),
-<<<<<<< HEAD
 /* 67 */
-=======
-/* 66 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -8342,11 +7948,7 @@
 	module.exports = isTextInputElement;
 
 /***/ }),
-<<<<<<< HEAD
 /* 68 */
-=======
-/* 67 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -8376,11 +7978,7 @@
 	module.exports = DefaultEventPluginOrder;
 
 /***/ }),
-<<<<<<< HEAD
 /* 69 */
-=======
-/* 68 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8482,11 +8080,7 @@
 	module.exports = EnterLeaveEventPlugin;
 
 /***/ }),
-<<<<<<< HEAD
 /* 70 */
-=======
-/* 69 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8562,11 +8156,7 @@
 	module.exports = SyntheticMouseEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 71 */
-=======
-/* 70 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8629,11 +8219,7 @@
 	module.exports = SyntheticUIEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 72 */
-=======
-/* 71 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -8662,11 +8248,7 @@
 	module.exports = ViewportMetrics;
 
 /***/ }),
-<<<<<<< HEAD
 /* 73 */
-=======
-/* 72 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -8713,11 +8295,7 @@
 	module.exports = getEventModifierState;
 
 /***/ }),
-<<<<<<< HEAD
 /* 74 */
-=======
-/* 73 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8957,11 +8535,7 @@
 	module.exports = HTMLDOMPropertyConfig;
 
 /***/ }),
-<<<<<<< HEAD
 /* 75 */
-=======
-/* 74 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -8993,11 +8567,7 @@
 	module.exports = ReactComponentBrowserEnvironment;
 
 /***/ }),
-<<<<<<< HEAD
 /* 76 */
-=======
-/* 75 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9227,11 +8797,7 @@
 	module.exports = DOMChildrenOperations;
 
 /***/ }),
-<<<<<<< HEAD
 /* 77 */
-=======
-/* 76 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9353,11 +8919,7 @@
 	module.exports = DOMLazyTree;
 
 /***/ }),
-<<<<<<< HEAD
 /* 78 */
-=======
-/* 77 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -9381,11 +8943,7 @@
 	module.exports = DOMNamespaces;
 
 /***/ }),
-<<<<<<< HEAD
 /* 79 */
-=======
-/* 78 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9487,11 +9045,7 @@
 	module.exports = setInnerHTML;
 
 /***/ }),
-<<<<<<< HEAD
 /* 80 */
-=======
-/* 79 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -9527,11 +9081,7 @@
 	module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ }),
-<<<<<<< HEAD
 /* 81 */
-=======
-/* 80 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9587,11 +9137,7 @@
 	module.exports = setTextContent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 82 */
-=======
-/* 81 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -9717,11 +9263,7 @@
 	module.exports = escapeTextContentForBrowser;
 
 /***/ }),
-<<<<<<< HEAD
 /* 83 */
-=======
-/* 82 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -9771,11 +9313,7 @@
 	module.exports = Danger;
 
 /***/ }),
-<<<<<<< HEAD
 /* 84 */
-=======
-/* 83 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9863,11 +9401,7 @@
 	module.exports = createNodesFromMarkup;
 
 /***/ }),
-<<<<<<< HEAD
 /* 85 */
-=======
-/* 84 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9998,11 +9532,7 @@
 	module.exports = createArrayFromMixed;
 
 /***/ }),
-<<<<<<< HEAD
 /* 86 */
-=======
-/* 85 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10101,11 +9631,7 @@
 	module.exports = getMarkupWrap;
 
 /***/ }),
-<<<<<<< HEAD
 /* 87 */
-=======
-/* 86 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -10142,11 +9668,7 @@
 	module.exports = ReactDOMIDOperations;
 
 /***/ }),
-<<<<<<< HEAD
 /* 88 */
-=======
-/* 87 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11160,11 +10682,7 @@
 	module.exports = ReactDOMComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 89 */
-=======
-/* 88 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11192,11 +10710,7 @@
 	module.exports = AutoFocusUtils;
 
 /***/ }),
-<<<<<<< HEAD
 /* 90 */
-=======
-/* 89 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -11227,11 +10741,7 @@
 	module.exports = focusNode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 91 */
-=======
-/* 90 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11450,11 +10960,7 @@
 	module.exports = CSSPropertyOperations;
 
 /***/ }),
-<<<<<<< HEAD
 /* 92 */
-=======
-/* 91 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -11612,11 +11118,7 @@
 	module.exports = CSSProperty;
 
 /***/ }),
-<<<<<<< HEAD
 /* 93 */
-=======
-/* 92 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11660,11 +11162,7 @@
 	module.exports = camelizeStyleName;
 
 /***/ }),
-<<<<<<< HEAD
 /* 94 */
-=======
-/* 93 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -11700,11 +11198,7 @@
 	module.exports = camelize;
 
 /***/ }),
-<<<<<<< HEAD
 /* 95 */
-=======
-/* 94 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11787,11 +11281,7 @@
 	module.exports = dangerousStyleValue;
 
 /***/ }),
-<<<<<<< HEAD
 /* 96 */
-=======
-/* 95 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11834,11 +11324,7 @@
 	module.exports = hyphenateStyleName;
 
 /***/ }),
-<<<<<<< HEAD
 /* 97 */
-=======
-/* 96 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -11875,11 +11361,7 @@
 	module.exports = hyphenate;
 
 /***/ }),
-<<<<<<< HEAD
 /* 98 */
-=======
-/* 97 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -11913,11 +11395,7 @@
 	module.exports = memoizeStringOnly;
 
 /***/ }),
-<<<<<<< HEAD
 /* 99 */
-=======
-/* 98 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12156,11 +11634,7 @@
 	module.exports = DOMPropertyOperations;
 
 /***/ }),
-<<<<<<< HEAD
 /* 100 */
-=======
-/* 99 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12190,11 +11664,7 @@
 	module.exports = quoteAttributeValueForBrowser;
 
 /***/ }),
-<<<<<<< HEAD
 /* 101 */
-=======
-/* 100 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12522,11 +11992,7 @@
 	module.exports = ReactBrowserEventEmitter;
 
 /***/ }),
-<<<<<<< HEAD
 /* 102 */
-=======
-/* 101 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12562,11 +12028,7 @@
 	module.exports = ReactEventEmitterMixin;
 
 /***/ }),
-<<<<<<< HEAD
 /* 103 */
-=======
-/* 102 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12671,11 +12133,7 @@
 	module.exports = getVendorPrefixedEventName;
 
 /***/ }),
-<<<<<<< HEAD
 /* 104 */
-=======
-/* 103 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12966,11 +12424,7 @@
 	module.exports = ReactDOMInput;
 
 /***/ }),
-<<<<<<< HEAD
 /* 105 */
-=======
-/* 104 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13112,11 +12566,7 @@
 	module.exports = LinkedValueUtils;
 
 /***/ }),
-<<<<<<< HEAD
 /* 106 */
-=======
-/* 105 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -13137,11 +12587,7 @@
 	module.exports = ReactPropTypesSecret;
 
 /***/ }),
-<<<<<<< HEAD
 /* 107 */
-=======
-/* 106 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13267,11 +12713,7 @@
 	module.exports = ReactDOMOption;
 
 /***/ }),
-<<<<<<< HEAD
 /* 108 */
-=======
-/* 107 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13475,11 +12917,7 @@
 	module.exports = ReactDOMSelect;
 
 /***/ }),
-<<<<<<< HEAD
 /* 109 */
-=======
-/* 108 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13643,11 +13081,7 @@
 	module.exports = ReactDOMTextarea;
 
 /***/ }),
-<<<<<<< HEAD
 /* 110 */
-=======
-/* 109 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -14097,11 +13531,7 @@
 	module.exports = ReactMultiChild;
 
 /***/ }),
-<<<<<<< HEAD
 /* 111 */
-=======
-/* 110 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -14149,11 +13579,7 @@
 	module.exports = ReactComponentEnvironment;
 
 /***/ }),
-<<<<<<< HEAD
 /* 112 */
-=======
-/* 111 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -14203,11 +13629,7 @@
 	module.exports = ReactInstanceMap;
 
 /***/ }),
-<<<<<<< HEAD
 /* 113 */
-=======
-/* 112 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14365,11 +13787,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(114)))
 
 /***/ }),
-<<<<<<< HEAD
 /* 114 */
-=======
-/* 113 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -14559,11 +13977,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 115 */
-=======
-/* 114 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -14696,11 +14110,7 @@
 	module.exports = instantiateReactComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 116 */
-=======
-/* 115 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -15604,11 +15014,7 @@
 	module.exports = ReactCompositeComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 117 */
-=======
-/* 116 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -15652,11 +15058,7 @@
 	module.exports = ReactNodeTypes;
 
 /***/ }),
-<<<<<<< HEAD
 /* 118 */
-=======
-/* 117 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -15728,11 +15130,7 @@
 	module.exports = shallowEqual;
 
 /***/ }),
-<<<<<<< HEAD
 /* 119 */
-=======
-/* 118 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -15778,11 +15176,7 @@
 	module.exports = shouldUpdateReactComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 120 */
-=======
-/* 119 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -15816,11 +15210,7 @@
 	module.exports = ReactEmptyComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 121 */
-=======
-/* 120 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -15892,11 +15282,7 @@
 	module.exports = ReactHostComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 122 */
-=======
-/* 121 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -15921,15 +15307,9 @@
 	module.exports = getNextDebugID;
 
 /***/ }),
-<<<<<<< HEAD
 /* 123 */
 21,
 /* 124 */
-=======
-/* 122 */
-17,
-/* 123 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -16109,19 +15489,11 @@
 	module.exports = traverseAllChildren;
 
 /***/ }),
-<<<<<<< HEAD
-=======
-/* 124 */
-14,
->>>>>>> First working draft of selectTime feature
 /* 125 */
 18,
 /* 126 */
-<<<<<<< HEAD
 20,
 /* 127 */
-=======
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -16504,11 +15876,7 @@
 	module.exports = ReactComponentTreeHook;
 
 /***/ }),
-<<<<<<< HEAD
 /* 128 */
-=======
-/* 127 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16589,11 +15957,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(114)))
 
 /***/ }),
-<<<<<<< HEAD
 /* 129 */
-=======
-/* 128 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -16687,11 +16051,7 @@
 	module.exports = ReactServerRenderingTransaction;
 
 /***/ }),
-<<<<<<< HEAD
 /* 130 */
-=======
-/* 129 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -16834,11 +16194,7 @@
 	module.exports = ReactServerUpdateQueue;
 
 /***/ }),
-<<<<<<< HEAD
 /* 131 */
-=======
-/* 130 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17076,11 +16432,7 @@
 	module.exports = ReactUpdateQueue;
 
 /***/ }),
-<<<<<<< HEAD
 /* 132 */
-=======
-/* 131 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17455,11 +16807,7 @@
 	module.exports = validateDOMNesting;
 
 /***/ }),
-<<<<<<< HEAD
 /* 133 */
-=======
-/* 132 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17523,11 +16871,7 @@
 	module.exports = ReactDOMEmptyComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 134 */
-=======
-/* 133 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17667,11 +17011,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 135 */
-=======
-/* 134 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17837,11 +17177,7 @@
 	module.exports = ReactDOMTextComponent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 136 */
-=======
-/* 135 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -17913,11 +17249,7 @@
 	module.exports = ReactDefaultBatchingStrategy;
 
 /***/ }),
-<<<<<<< HEAD
 /* 137 */
-=======
-/* 136 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -18076,29 +17408,18 @@
 	module.exports = ReactEventListener;
 
 /***/ }),
-<<<<<<< HEAD
 /* 138 */
-=======
-/* 137 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
 	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
 	 * @typechecks
 	 */
@@ -18168,11 +17489,7 @@
 	module.exports = EventListener;
 
 /***/ }),
-<<<<<<< HEAD
 /* 139 */
-=======
-/* 138 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -18215,11 +17532,7 @@
 	module.exports = getUnboundedScrollPosition;
 
 /***/ }),
-<<<<<<< HEAD
 /* 140 */
-=======
-/* 139 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -18257,11 +17570,7 @@
 	module.exports = ReactInjection;
 
 /***/ }),
-<<<<<<< HEAD
 /* 141 */
-=======
-/* 140 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -18443,11 +17752,7 @@
 	module.exports = ReactReconcileTransaction;
 
 /***/ }),
-<<<<<<< HEAD
 /* 142 */
-=======
-/* 141 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -18574,11 +17879,7 @@
 	module.exports = ReactInputSelection;
 
 /***/ }),
-<<<<<<< HEAD
 /* 143 */
-=======
-/* 142 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -18794,11 +18095,7 @@
 	module.exports = ReactDOMSelection;
 
 /***/ }),
-<<<<<<< HEAD
 /* 144 */
-=======
-/* 143 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -18876,11 +18173,7 @@
 	module.exports = getNodeForCharacterOffset;
 
 /***/ }),
-<<<<<<< HEAD
 /* 145 */
-=======
-/* 144 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18924,11 +18217,7 @@
 	module.exports = containsNode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 146 */
-=======
-/* 145 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18957,11 +18246,7 @@
 	module.exports = isTextNode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 147 */
-=======
-/* 146 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -18990,11 +18275,7 @@
 	module.exports = isNode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 148 */
-=======
-/* 147 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -19037,11 +18318,7 @@
 	module.exports = getActiveElement;
 
 /***/ }),
-<<<<<<< HEAD
 /* 149 */
-=======
-/* 148 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -19347,11 +18624,7 @@
 	module.exports = SVGDOMPropertyConfig;
 
 /***/ }),
-<<<<<<< HEAD
 /* 150 */
-=======
-/* 149 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19543,11 +18816,7 @@
 	module.exports = SelectEventPlugin;
 
 /***/ }),
-<<<<<<< HEAD
 /* 151 */
-=======
-/* 150 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19777,11 +19046,7 @@
 	module.exports = SimpleEventPlugin;
 
 /***/ }),
-<<<<<<< HEAD
 /* 152 */
-=======
-/* 151 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19824,11 +19089,7 @@
 	module.exports = SyntheticAnimationEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 153 */
-=======
-/* 152 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19870,11 +19131,7 @@
 	module.exports = SyntheticClipboardEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 154 */
-=======
-/* 153 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19914,11 +19171,7 @@
 	module.exports = SyntheticFocusEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 155 */
-=======
-/* 154 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20006,11 +19259,7 @@
 	module.exports = SyntheticKeyboardEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 156 */
-=======
-/* 155 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -20064,11 +19313,7 @@
 	module.exports = getEventCharCode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 157 */
-=======
-/* 156 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20184,11 +19429,7 @@
 	module.exports = getEventKey;
 
 /***/ }),
-<<<<<<< HEAD
 /* 158 */
-=======
-/* 157 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20228,11 +19469,7 @@
 	module.exports = SyntheticDragEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 159 */
-=======
-/* 158 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20281,11 +19518,7 @@
 	module.exports = SyntheticTouchEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 160 */
-=======
-/* 159 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20328,11 +19561,7 @@
 	module.exports = SyntheticTransitionEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 161 */
-=======
-/* 160 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20387,11 +19616,7 @@
 	module.exports = SyntheticWheelEvent;
 
 /***/ }),
-<<<<<<< HEAD
 /* 162 */
-=======
-/* 161 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20933,11 +20158,7 @@
 	module.exports = ReactMount;
 
 /***/ }),
-<<<<<<< HEAD
 /* 163 */
-=======
-/* 162 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -20974,11 +20195,7 @@
 	module.exports = ReactDOMContainerInfo;
 
 /***/ }),
-<<<<<<< HEAD
 /* 164 */
-=======
-/* 163 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -21001,11 +20218,7 @@
 	module.exports = ReactDOMFeatureFlags;
 
 /***/ }),
-<<<<<<< HEAD
 /* 165 */
-=======
-/* 164 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -21059,11 +20272,7 @@
 	module.exports = ReactMarkupChecksum;
 
 /***/ }),
-<<<<<<< HEAD
 /* 166 */
-=======
-/* 165 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	/**
@@ -21111,15 +20320,9 @@
 	module.exports = adler32;
 
 /***/ }),
-<<<<<<< HEAD
 /* 167 */
 28,
 /* 168 */
-=======
-/* 166 */
-30,
-/* 167 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -21183,11 +20386,7 @@
 	module.exports = findDOMNode;
 
 /***/ }),
-<<<<<<< HEAD
 /* 169 */
-=======
-/* 168 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -21221,11 +20420,7 @@
 	module.exports = getHostComponentFromComposite;
 
 /***/ }),
-<<<<<<< HEAD
 /* 170 */
-=======
-/* 169 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -21245,11 +20440,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ }),
-<<<<<<< HEAD
 /* 171 */
-=======
-/* 170 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21268,15 +20459,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _hero_example = __webpack_require__(533);
-=======
-	var _hero_example = __webpack_require__(520);
->>>>>>> First working draft of selectTime feature
-=======
-	var _hero_example = __webpack_require__(524);
->>>>>>> Ran 'npm start build'
+	var _hero_example = __webpack_require__(537);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -21408,11 +20591,7 @@
 	exports.default = Root;
 
 /***/ }),
-<<<<<<< HEAD
 /* 172 */
-=======
-/* 171 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21431,327 +20610,169 @@
 
 	var _highlight2 = _interopRequireDefault(_highlight);
 
-<<<<<<< HEAD
 	var _default = __webpack_require__(351);
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(495);
+	var _code_example_component = __webpack_require__(496);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _custom_date_format = __webpack_require__(496);
+	var _custom_date_format = __webpack_require__(497);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(497);
+	var _custom_class_name = __webpack_require__(498);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _custom_calendar_class_name = __webpack_require__(498);
+	var _custom_calendar_class_name = __webpack_require__(499);
 
 	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
 
-	var _custom_day_class_names = __webpack_require__(499);
+	var _custom_day_class_names = __webpack_require__(500);
 
 	var _custom_day_class_names2 = _interopRequireDefault(_custom_day_class_names);
 
-	var _placeholder_text = __webpack_require__(500);
+	var _placeholder_text = __webpack_require__(501);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(501);
+	var _specific_date_range = __webpack_require__(502);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(502);
+	var _locale = __webpack_require__(503);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(503);
+	var _exclude_dates = __webpack_require__(504);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(504);
+	var _highlight_dates = __webpack_require__(505);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _highlight_dates_with_ranges = __webpack_require__(505);
+	var _highlight_dates_with_ranges = __webpack_require__(506);
 
 	var _highlight_dates_with_ranges2 = _interopRequireDefault(_highlight_dates_with_ranges);
 
-	var _include_dates = __webpack_require__(506);
+	var _include_dates = __webpack_require__(507);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(507);
+	var _filter_dates = __webpack_require__(508);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(508);
+	var _disabled = __webpack_require__(509);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _disabled_keyboard_navigation = __webpack_require__(509);
+	var _disabled_keyboard_navigation = __webpack_require__(510);
 
 	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
 
-	var _clear_input = __webpack_require__(510);
+	var _clear_input = __webpack_require__(511);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(511);
+	var _on_blur_callbacks = __webpack_require__(512);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _configurePopper = __webpack_require__(512);
-=======
-	var _default = __webpack_require__(346);
-
-	var _default2 = _interopRequireDefault(_default);
-
-	var _code_example_component = __webpack_require__(485);
-
-	var _code_example_component2 = _interopRequireDefault(_code_example_component);
-
-	var _custom_date_format = __webpack_require__(486);
-
-	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
-
-	var _custom_class_name = __webpack_require__(487);
-
-	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
-
-	var _custom_calendar_class_name = __webpack_require__(488);
-
-	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
-
-	var _placeholder_text = __webpack_require__(489);
-
-	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
-
-	var _specific_date_range = __webpack_require__(490);
-
-	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
-
-	var _locale = __webpack_require__(491);
-
-	var _locale2 = _interopRequireDefault(_locale);
-
-	var _exclude_dates = __webpack_require__(492);
-
-	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
-
-	var _highlight_dates = __webpack_require__(493);
-
-	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
-
-	var _include_dates = __webpack_require__(494);
-
-	var _include_dates2 = _interopRequireDefault(_include_dates);
-
-	var _filter_dates = __webpack_require__(495);
-
-	var _filter_dates2 = _interopRequireDefault(_filter_dates);
-
-	var _disabled = __webpack_require__(496);
-
-	var _disabled2 = _interopRequireDefault(_disabled);
-
-	var _disabled_keyboard_navigation = __webpack_require__(497);
-
-	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
-
-	var _clear_input = __webpack_require__(498);
-
-	var _clear_input2 = _interopRequireDefault(_clear_input);
-
-	var _on_blur_callbacks = __webpack_require__(499);
-
-	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
-
-<<<<<<< HEAD
-	var _placement = __webpack_require__(499);
->>>>>>> First working draft of selectTime feature
-=======
-	var _placement = __webpack_require__(500);
->>>>>>> Ran 'npm start build'
+	var _configurePopper = __webpack_require__(513);
 
 	var _configurePopper2 = _interopRequireDefault(_configurePopper);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var _date_range = __webpack_require__(513);
+	var _date_range = __webpack_require__(514);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(514);
+	var _tab_index = __webpack_require__(515);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(515);
+	var _year_dropdown = __webpack_require__(516);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(516);
+	var _month_dropdown = __webpack_require__(517);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(517);
+	var _year_select_dropdown = __webpack_require__(518);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(518);
+	var _today = __webpack_require__(519);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(519);
+	var _timezone_date = __webpack_require__(520);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(520);
+	var _inline = __webpack_require__(521);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(521);
+	var _open_to_date = __webpack_require__(522);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(522);
+	var _fixed_calendar = __webpack_require__(523);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(523);
+	var _week_numbers = __webpack_require__(524);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(524);
+	var _custom_input = __webpack_require__(525);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(525);
+	var _multi_month = __webpack_require__(526);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(526);
+	var _multi_month_drp = __webpack_require__(527);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	var _children = __webpack_require__(527);
+	var _children = __webpack_require__(528);
 
 	var _children2 = _interopRequireDefault(_children);
 
-	var _portal = __webpack_require__(528);
+	var _portal = __webpack_require__(529);
 
 	var _portal2 = _interopRequireDefault(_portal);
 
-	var _inline_portal = __webpack_require__(529);
+	var _inline_portal = __webpack_require__(530);
 
 	var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-	var _raw_change = __webpack_require__(530);
+	var _raw_change = __webpack_require__(531);
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(531);
+	var _show_time = __webpack_require__(532);
 
-	__webpack_require__(532);
-=======
-	var _date_range = __webpack_require__(500);
-=======
-	var _date_range = __webpack_require__(501);
->>>>>>> Ran 'npm start build'
-
-	var _date_range2 = _interopRequireDefault(_date_range);
-
-	var _tab_index = __webpack_require__(502);
-
-	var _tab_index2 = _interopRequireDefault(_tab_index);
-
-	var _year_dropdown = __webpack_require__(503);
-
-	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
-
-	var _month_dropdown = __webpack_require__(504);
-
-	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
-
-	var _year_select_dropdown = __webpack_require__(505);
-
-	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
-
-	var _today = __webpack_require__(506);
-
-	var _today2 = _interopRequireDefault(_today);
-
-	var _timezone_date = __webpack_require__(507);
-
-	var _timezone_date2 = _interopRequireDefault(_timezone_date);
-
-	var _inline = __webpack_require__(508);
-
-	var _inline2 = _interopRequireDefault(_inline);
-
-	var _open_to_date = __webpack_require__(509);
-
-	var _open_to_date2 = _interopRequireDefault(_open_to_date);
-
-	var _fixed_calendar = __webpack_require__(510);
-
-	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
-
-	var _week_numbers = __webpack_require__(511);
-
-	var _week_numbers2 = _interopRequireDefault(_week_numbers);
-
-	var _custom_input = __webpack_require__(512);
-
-	var _custom_input2 = _interopRequireDefault(_custom_input);
-
-	var _multi_month = __webpack_require__(513);
-
-	var _multi_month2 = _interopRequireDefault(_multi_month);
-
-	var _multi_month_drp = __webpack_require__(514);
-
-	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
-
-	var _children = __webpack_require__(515);
-
-	var _children2 = _interopRequireDefault(_children);
-
-	var _portal = __webpack_require__(516);
-
-	var _portal2 = _interopRequireDefault(_portal);
-
-	var _inline_portal = __webpack_require__(517);
-
-	var _inline_portal2 = _interopRequireDefault(_inline_portal);
-
-	var _raw_change = __webpack_require__(518);
-
-	var _raw_change2 = _interopRequireDefault(_raw_change);
-
-	var _show_time = __webpack_require__(519);
-
-<<<<<<< HEAD
-	__webpack_require__(519);
->>>>>>> First working draft of selectTime feature
-=======
 	var _show_time2 = _interopRequireDefault(_show_time);
 
-	var _exclude_times = __webpack_require__(520);
+	var _exclude_times = __webpack_require__(533);
 
 	var _exclude_times2 = _interopRequireDefault(_exclude_times);
 
-	var _exclude_time_period = __webpack_require__(521);
+	var _exclude_time_period = __webpack_require__(534);
 
 	var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-	__webpack_require__(522);
+	__webpack_require__(535);
 
-	__webpack_require__(523);
->>>>>>> Ran 'npm start build'
+	__webpack_require__(536);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21951,7 +20972,6 @@
 	exports.default = exampleComponents;
 
 /***/ }),
-<<<<<<< HEAD
 /* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22133,194 +21153,11 @@
 	hljs.registerLanguage('xl', __webpack_require__(348));
 	hljs.registerLanguage('xquery', __webpack_require__(349));
 	hljs.registerLanguage('zephir', __webpack_require__(350));
-=======
-/* 172 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var hljs = __webpack_require__(173);
-
-	hljs.registerLanguage('1c', __webpack_require__(174));
-	hljs.registerLanguage('abnf', __webpack_require__(175));
-	hljs.registerLanguage('accesslog', __webpack_require__(176));
-	hljs.registerLanguage('actionscript', __webpack_require__(177));
-	hljs.registerLanguage('ada', __webpack_require__(178));
-	hljs.registerLanguage('apache', __webpack_require__(179));
-	hljs.registerLanguage('applescript', __webpack_require__(180));
-	hljs.registerLanguage('cpp', __webpack_require__(181));
-	hljs.registerLanguage('arduino', __webpack_require__(182));
-	hljs.registerLanguage('armasm', __webpack_require__(183));
-	hljs.registerLanguage('xml', __webpack_require__(184));
-	hljs.registerLanguage('asciidoc', __webpack_require__(185));
-	hljs.registerLanguage('aspectj', __webpack_require__(186));
-	hljs.registerLanguage('autohotkey', __webpack_require__(187));
-	hljs.registerLanguage('autoit', __webpack_require__(188));
-	hljs.registerLanguage('avrasm', __webpack_require__(189));
-	hljs.registerLanguage('awk', __webpack_require__(190));
-	hljs.registerLanguage('axapta', __webpack_require__(191));
-	hljs.registerLanguage('bash', __webpack_require__(192));
-	hljs.registerLanguage('basic', __webpack_require__(193));
-	hljs.registerLanguage('bnf', __webpack_require__(194));
-	hljs.registerLanguage('brainfuck', __webpack_require__(195));
-	hljs.registerLanguage('cal', __webpack_require__(196));
-	hljs.registerLanguage('capnproto', __webpack_require__(197));
-	hljs.registerLanguage('ceylon', __webpack_require__(198));
-	hljs.registerLanguage('clean', __webpack_require__(199));
-	hljs.registerLanguage('clojure', __webpack_require__(200));
-	hljs.registerLanguage('clojure-repl', __webpack_require__(201));
-	hljs.registerLanguage('cmake', __webpack_require__(202));
-	hljs.registerLanguage('coffeescript', __webpack_require__(203));
-	hljs.registerLanguage('coq', __webpack_require__(204));
-	hljs.registerLanguage('cos', __webpack_require__(205));
-	hljs.registerLanguage('crmsh', __webpack_require__(206));
-	hljs.registerLanguage('crystal', __webpack_require__(207));
-	hljs.registerLanguage('cs', __webpack_require__(208));
-	hljs.registerLanguage('csp', __webpack_require__(209));
-	hljs.registerLanguage('css', __webpack_require__(210));
-	hljs.registerLanguage('d', __webpack_require__(211));
-	hljs.registerLanguage('markdown', __webpack_require__(212));
-	hljs.registerLanguage('dart', __webpack_require__(213));
-	hljs.registerLanguage('delphi', __webpack_require__(214));
-	hljs.registerLanguage('diff', __webpack_require__(215));
-	hljs.registerLanguage('django', __webpack_require__(216));
-	hljs.registerLanguage('dns', __webpack_require__(217));
-	hljs.registerLanguage('dockerfile', __webpack_require__(218));
-	hljs.registerLanguage('dos', __webpack_require__(219));
-	hljs.registerLanguage('dsconfig', __webpack_require__(220));
-	hljs.registerLanguage('dts', __webpack_require__(221));
-	hljs.registerLanguage('dust', __webpack_require__(222));
-	hljs.registerLanguage('ebnf', __webpack_require__(223));
-	hljs.registerLanguage('elixir', __webpack_require__(224));
-	hljs.registerLanguage('elm', __webpack_require__(225));
-	hljs.registerLanguage('ruby', __webpack_require__(226));
-	hljs.registerLanguage('erb', __webpack_require__(227));
-	hljs.registerLanguage('erlang-repl', __webpack_require__(228));
-	hljs.registerLanguage('erlang', __webpack_require__(229));
-	hljs.registerLanguage('excel', __webpack_require__(230));
-	hljs.registerLanguage('fix', __webpack_require__(231));
-	hljs.registerLanguage('flix', __webpack_require__(232));
-	hljs.registerLanguage('fortran', __webpack_require__(233));
-	hljs.registerLanguage('fsharp', __webpack_require__(234));
-	hljs.registerLanguage('gams', __webpack_require__(235));
-	hljs.registerLanguage('gauss', __webpack_require__(236));
-	hljs.registerLanguage('gcode', __webpack_require__(237));
-	hljs.registerLanguage('gherkin', __webpack_require__(238));
-	hljs.registerLanguage('glsl', __webpack_require__(239));
-	hljs.registerLanguage('go', __webpack_require__(240));
-	hljs.registerLanguage('golo', __webpack_require__(241));
-	hljs.registerLanguage('gradle', __webpack_require__(242));
-	hljs.registerLanguage('groovy', __webpack_require__(243));
-	hljs.registerLanguage('haml', __webpack_require__(244));
-	hljs.registerLanguage('handlebars', __webpack_require__(245));
-	hljs.registerLanguage('haskell', __webpack_require__(246));
-	hljs.registerLanguage('haxe', __webpack_require__(247));
-	hljs.registerLanguage('hsp', __webpack_require__(248));
-	hljs.registerLanguage('htmlbars', __webpack_require__(249));
-	hljs.registerLanguage('http', __webpack_require__(250));
-	hljs.registerLanguage('hy', __webpack_require__(251));
-	hljs.registerLanguage('inform7', __webpack_require__(252));
-	hljs.registerLanguage('ini', __webpack_require__(253));
-	hljs.registerLanguage('irpf90', __webpack_require__(254));
-	hljs.registerLanguage('java', __webpack_require__(255));
-	hljs.registerLanguage('javascript', __webpack_require__(256));
-	hljs.registerLanguage('json', __webpack_require__(257));
-	hljs.registerLanguage('julia', __webpack_require__(258));
-	hljs.registerLanguage('kotlin', __webpack_require__(259));
-	hljs.registerLanguage('lasso', __webpack_require__(260));
-	hljs.registerLanguage('ldif', __webpack_require__(261));
-	hljs.registerLanguage('leaf', __webpack_require__(262));
-	hljs.registerLanguage('less', __webpack_require__(263));
-	hljs.registerLanguage('lisp', __webpack_require__(264));
-	hljs.registerLanguage('livecodeserver', __webpack_require__(265));
-	hljs.registerLanguage('livescript', __webpack_require__(266));
-	hljs.registerLanguage('llvm', __webpack_require__(267));
-	hljs.registerLanguage('lsl', __webpack_require__(268));
-	hljs.registerLanguage('lua', __webpack_require__(269));
-	hljs.registerLanguage('makefile', __webpack_require__(270));
-	hljs.registerLanguage('mathematica', __webpack_require__(271));
-	hljs.registerLanguage('matlab', __webpack_require__(272));
-	hljs.registerLanguage('maxima', __webpack_require__(273));
-	hljs.registerLanguage('mel', __webpack_require__(274));
-	hljs.registerLanguage('mercury', __webpack_require__(275));
-	hljs.registerLanguage('mipsasm', __webpack_require__(276));
-	hljs.registerLanguage('mizar', __webpack_require__(277));
-	hljs.registerLanguage('perl', __webpack_require__(278));
-	hljs.registerLanguage('mojolicious', __webpack_require__(279));
-	hljs.registerLanguage('monkey', __webpack_require__(280));
-	hljs.registerLanguage('moonscript', __webpack_require__(281));
-	hljs.registerLanguage('n1ql', __webpack_require__(282));
-	hljs.registerLanguage('nginx', __webpack_require__(283));
-	hljs.registerLanguage('nimrod', __webpack_require__(284));
-	hljs.registerLanguage('nix', __webpack_require__(285));
-	hljs.registerLanguage('nsis', __webpack_require__(286));
-	hljs.registerLanguage('objectivec', __webpack_require__(287));
-	hljs.registerLanguage('ocaml', __webpack_require__(288));
-	hljs.registerLanguage('openscad', __webpack_require__(289));
-	hljs.registerLanguage('oxygene', __webpack_require__(290));
-	hljs.registerLanguage('parser3', __webpack_require__(291));
-	hljs.registerLanguage('pf', __webpack_require__(292));
-	hljs.registerLanguage('php', __webpack_require__(293));
-	hljs.registerLanguage('pony', __webpack_require__(294));
-	hljs.registerLanguage('powershell', __webpack_require__(295));
-	hljs.registerLanguage('processing', __webpack_require__(296));
-	hljs.registerLanguage('profile', __webpack_require__(297));
-	hljs.registerLanguage('prolog', __webpack_require__(298));
-	hljs.registerLanguage('protobuf', __webpack_require__(299));
-	hljs.registerLanguage('puppet', __webpack_require__(300));
-	hljs.registerLanguage('purebasic', __webpack_require__(301));
-	hljs.registerLanguage('python', __webpack_require__(302));
-	hljs.registerLanguage('q', __webpack_require__(303));
-	hljs.registerLanguage('qml', __webpack_require__(304));
-	hljs.registerLanguage('r', __webpack_require__(305));
-	hljs.registerLanguage('rib', __webpack_require__(306));
-	hljs.registerLanguage('roboconf', __webpack_require__(307));
-	hljs.registerLanguage('rsl', __webpack_require__(308));
-	hljs.registerLanguage('ruleslanguage', __webpack_require__(309));
-	hljs.registerLanguage('rust', __webpack_require__(310));
-	hljs.registerLanguage('scala', __webpack_require__(311));
-	hljs.registerLanguage('scheme', __webpack_require__(312));
-	hljs.registerLanguage('scilab', __webpack_require__(313));
-	hljs.registerLanguage('scss', __webpack_require__(314));
-	hljs.registerLanguage('smali', __webpack_require__(315));
-	hljs.registerLanguage('smalltalk', __webpack_require__(316));
-	hljs.registerLanguage('sml', __webpack_require__(317));
-	hljs.registerLanguage('sqf', __webpack_require__(318));
-	hljs.registerLanguage('sql', __webpack_require__(319));
-	hljs.registerLanguage('stan', __webpack_require__(320));
-	hljs.registerLanguage('stata', __webpack_require__(321));
-	hljs.registerLanguage('step21', __webpack_require__(322));
-	hljs.registerLanguage('stylus', __webpack_require__(323));
-	hljs.registerLanguage('subunit', __webpack_require__(324));
-	hljs.registerLanguage('swift', __webpack_require__(325));
-	hljs.registerLanguage('taggerscript', __webpack_require__(326));
-	hljs.registerLanguage('yaml', __webpack_require__(327));
-	hljs.registerLanguage('tap', __webpack_require__(328));
-	hljs.registerLanguage('tcl', __webpack_require__(329));
-	hljs.registerLanguage('tex', __webpack_require__(330));
-	hljs.registerLanguage('thrift', __webpack_require__(331));
-	hljs.registerLanguage('tp', __webpack_require__(332));
-	hljs.registerLanguage('twig', __webpack_require__(333));
-	hljs.registerLanguage('typescript', __webpack_require__(334));
-	hljs.registerLanguage('vala', __webpack_require__(335));
-	hljs.registerLanguage('vbnet', __webpack_require__(336));
-	hljs.registerLanguage('vbscript', __webpack_require__(337));
-	hljs.registerLanguage('vbscript-html', __webpack_require__(338));
-	hljs.registerLanguage('verilog', __webpack_require__(339));
-	hljs.registerLanguage('vhdl', __webpack_require__(340));
-	hljs.registerLanguage('vim', __webpack_require__(341));
-	hljs.registerLanguage('x86asm', __webpack_require__(342));
-	hljs.registerLanguage('xl', __webpack_require__(343));
-	hljs.registerLanguage('xquery', __webpack_require__(344));
-	hljs.registerLanguage('zephir', __webpack_require__(345));
->>>>>>> First working draft of selectTime feature
 
 	module.exports = hljs;
 
 /***/ }),
-<<<<<<< HEAD
 /* 174 */
-=======
-/* 173 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -23142,11 +21979,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 175 */
-=======
-/* 174 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs){
@@ -23660,11 +22493,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 176 */
-=======
-/* 175 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -23739,11 +22568,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 177 */
-=======
-/* 176 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -23785,11 +22610,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 178 */
-=======
-/* 177 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -23867,11 +22688,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 179 */
-=======
-/* 178 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = // We try to support full Ada2012
@@ -24048,11 +22865,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 180 */
-=======
-/* 179 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24102,11 +22915,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 181 */
-=======
-/* 180 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24196,11 +23005,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 182 */
-=======
-/* 181 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24379,11 +23184,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 183 */
-=======
-/* 182 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24487,11 +23288,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 184 */
-=======
-/* 183 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24587,11 +23384,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 185 */
-=======
-/* 184 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24698,11 +23491,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 186 */
-=======
-/* 185 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -24894,11 +23683,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 187 */
-=======
-/* 186 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -25047,11 +23832,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 188 */
-=======
-/* 187 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25114,11 +23895,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 189 */
-=======
-/* 188 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25258,11 +24035,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 190 */
-=======
-/* 189 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25328,11 +24101,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 191 */
-=======
-/* 190 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25389,11 +24158,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 192 */
-=======
-/* 191 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25428,11 +24193,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 193 */
-=======
-/* 192 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25511,11 +24272,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 194 */
-=======
-/* 193 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25570,11 +24327,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 195 */
-=======
-/* 194 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs){
@@ -25607,11 +24360,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 196 */
-=======
-/* 195 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs){
@@ -25652,11 +24401,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 197 */
-=======
-/* 196 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25740,11 +24485,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 198 */
-=======
-/* 197 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25797,11 +24538,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 199 */
-=======
-/* 198 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25872,11 +24609,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 200 */
-=======
-/* 199 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -25905,11 +24638,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 201 */
-=======
-/* 200 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26009,11 +24738,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 202 */
-=======
-/* 201 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26032,11 +24757,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 203 */
-=======
-/* 202 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26078,11 +24799,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 204 */
-=======
-/* 203 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26232,11 +24949,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 205 */
-=======
-/* 204 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26307,11 +25020,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 206 */
-=======
-/* 205 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function cos (hljs) {
@@ -26439,11 +25148,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 207 */
-=======
-/* 206 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26541,11 +25246,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 208 */
-=======
-/* 207 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26743,11 +25444,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 209 */
-=======
-/* 208 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26928,11 +25625,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 210 */
-=======
-/* 209 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -26958,11 +25651,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 211 */
-=======
-/* 210 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27071,11 +25760,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 212 */
-=======
-/* 211 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = /**
@@ -27337,11 +26022,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 213 */
-=======
-/* 212 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27453,11 +26134,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 214 */
-=======
-/* 213 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -27562,11 +26239,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 215 */
-=======
-/* 214 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27639,11 +26312,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 216 */
-=======
-/* 215 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27687,11 +26356,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 217 */
-=======
-/* 216 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27759,11 +26424,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 218 */
-=======
-/* 217 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27796,11 +26457,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 219 */
-=======
-/* 218 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27826,11 +26483,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 220 */
-=======
-/* 219 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27886,11 +26539,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 221 */
-=======
-/* 220 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -27941,11 +26590,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 222 */
-=======
-/* 221 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28073,11 +26718,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 223 */
-=======
-/* 222 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28113,11 +26754,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 224 */
-=======
-/* 223 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28154,11 +26791,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 225 */
-=======
-/* 224 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28259,11 +26892,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 226 */
-=======
-/* 225 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28351,11 +26980,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 227 */
-=======
-/* 226 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28536,11 +27161,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 228 */
-=======
-/* 227 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28559,11 +27180,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 229 */
-=======
-/* 228 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28613,11 +27230,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 230 */
-=======
-/* 229 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28767,11 +27380,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 231 */
-=======
-/* 230 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28823,11 +27432,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 232 */
-=======
-/* 231 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28860,11 +27465,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 233 */
-=======
-/* 232 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -28913,11 +27514,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 234 */
-=======
-/* 233 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -28992,11 +27589,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 235 */
-=======
-/* 234 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29059,11 +27652,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 236 */
-=======
-/* 235 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -29221,11 +27810,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 237 */
-=======
-/* 236 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29453,11 +28038,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 238 */
-=======
-/* 237 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29528,11 +28109,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 239 */
-=======
-/* 238 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -29573,11 +28150,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 240 */
-=======
-/* 239 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29698,11 +28271,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 241 */
-=======
-/* 240 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29760,11 +28329,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 242 */
-=======
-/* 241 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29791,11 +28356,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 243 */
-=======
-/* 242 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29834,11 +28395,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 244 */
-=======
-/* 243 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -29936,11 +28493,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 245 */
-=======
-/* 244 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = // TODO support filter tags like :javascript, support inline HTML
@@ -30051,11 +28604,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 246 */
-=======
-/* 245 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30093,11 +28642,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 247 */
-=======
-/* 246 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30223,11 +28768,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 248 */
-=======
-/* 247 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30343,11 +28884,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 249 */
-=======
-/* 248 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30397,11 +28934,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 250 */
-=======
-/* 249 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30476,11 +29009,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 251 */
-=======
-/* 250 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30525,11 +29054,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 252 */
-=======
-/* 251 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30635,11 +29160,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 253 */
-=======
-/* 252 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30700,11 +29221,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 254 */
-=======
-/* 253 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30774,11 +29291,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 255 */
-=======
-/* 254 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30858,11 +29371,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 256 */
-=======
-/* 255 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -30974,11 +29483,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 257 */
-=======
-/* 256 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31153,7 +29658,6 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 258 */
 /***/ (function(module, exports) {
 
@@ -31206,9 +29710,6 @@
 
 /***/ }),
 /* 259 */
-=======
-/* 257 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31249,11 +29750,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 260 */
-=======
-/* 258 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31419,7 +29916,6 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 261 */
 /***/ (function(module, exports) {
 
@@ -31452,12 +29948,6 @@
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
-=======
-/* 259 */
-/***/ (function(module, exports) {
-
-	module.exports = function(hljs) {
->>>>>>> First working draft of selectTime feature
 	  var KEYWORDS = {
 	    keyword:
 	      'abstract as val var vararg get set class object open private protected public noinline ' +
@@ -31632,11 +30122,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 263 */
-=======
-/* 260 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31803,11 +30289,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 264 */
-=======
-/* 261 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -31834,11 +30316,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 265 */
-=======
-/* 262 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function (hljs) {
@@ -31882,11 +30360,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 266 */
-=======
-/* 263 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32030,11 +30504,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 267 */
-=======
-/* 264 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32141,11 +30611,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 268 */
-=======
-/* 265 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32306,11 +30772,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 269 */
-=======
-/* 266 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32463,11 +30925,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 270 */
-=======
-/* 267 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32560,11 +31018,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 271 */
-=======
-/* 268 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32651,11 +31105,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 272 */
-=======
-/* 269 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32690,7 +31140,6 @@
 	        'module next pairs pcall print rawequal rawget rawset require select setfenv' +
 	        'setmetatable tonumber tostring type unpack xpcall arg self' +
 	        //Library methods and properties (one line per library):
-<<<<<<< HEAD
 	        'coroutine resume yield status wrap create running debug getupvalue ' +
 	        'debug sethook getmetatable gethook setmetatable setlocal traceback setfenv getinfo setupvalue getlocal getregistry getfenv ' +
 	        'io lines write close flush open output type read stderr stdin input stdout popen tmpfile ' +
@@ -32698,15 +31147,6 @@
 	        'os exit setlocale date getenv difftime remove time clock tmpname rename execute package preload loadlib loaded loaders cpath config path seeall ' +
 	        'string sub upper len gfind rep find match char dump gmatch reverse byte format gsub lower ' +
 	        'table setn insert getn foreachi maxn foreach concat sort remove'
-=======
-	        'coroutine resume yield status wrap create running debug getupvalue' +
-	        'debug sethook getmetatable gethook setmetatable setlocal traceback setfenv getinfo setupvalue getlocal getregistry getfenv' +
-	        'io lines write close flush open output type read stderr stdin input stdout popen tmpfile' +
-	        'math, log, max, acos, huge, ldexp, pi, cos, tanh, pow, deg, tan, cosh, sinh, random, randomseed, frexp, ceil, floor, rad, abs, sqrt, modf, asin, min, mod, fmod, log10, atan2, exp, sin, atan' +
-	        'os, exit, setlocale, date, getenv, difftime, remove, time, clock, tmpname, rename, execute, package, preload, loadlib, loaded, loaders, cpath, config path, seeall' +
-	        'string, sub, upper, len, gfind, rep, find, match, char, dump, gmatch, reverse, byte, format, gsub, lower' +
-	        'table, setn, insert, getn, foreachi, maxn, foreach, concat, sort, remove'
->>>>>>> First working draft of selectTime feature
 	    },
 	    contains: COMMENTS.concat([
 	      {
@@ -32735,11 +31175,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 273 */
-=======
-/* 270 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32824,11 +31260,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 274 */
-=======
-/* 271 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32890,11 +31322,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 275 */
-=======
-/* 272 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -32986,11 +31414,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 276 */
-=======
-/* 273 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33400,11 +31824,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 277 */
-=======
-/* 274 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33633,11 +32053,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 278 */
-=======
-/* 275 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33723,11 +32139,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 279 */
-=======
-/* 276 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33817,11 +32229,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 280 */
-=======
-/* 277 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -33844,11 +32252,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 281 */
-=======
-/* 278 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34009,11 +32413,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 282 */
-=======
-/* 279 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34042,11 +32442,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 283 */
-=======
-/* 280 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34125,11 +32521,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 284 */
-=======
-/* 281 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34245,11 +32637,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 285 */
-=======
-/* 282 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34322,11 +32710,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 286 */
-=======
-/* 283 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34423,11 +32807,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 287 */
-=======
-/* 284 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34486,11 +32866,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 288 */
-=======
-/* 285 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34543,11 +32919,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 289 */
-=======
-/* 286 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34657,11 +33029,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 290 */
-=======
-/* 287 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34756,11 +33124,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 291 */
-=======
-/* 288 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34835,11 +33199,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 292 */
-=======
-/* 289 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34900,11 +33260,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 293 */
-=======
-/* 290 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -34978,11 +33334,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 294 */
-=======
-/* 291 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35034,11 +33386,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 295 */
-=======
-/* 292 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35094,11 +33442,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 296 */
-=======
-/* 293 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35229,11 +33573,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 297 */
-=======
-/* 294 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35328,11 +33668,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 298 */
-=======
-/* 295 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35417,11 +33753,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 299 */
-=======
-/* 296 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35473,11 +33805,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 300 */
-=======
-/* 297 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35511,11 +33839,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 301 */
-=======
-/* 298 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35607,11 +33931,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 302 */
-=======
-/* 299 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35651,11 +33971,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 303 */
-=======
-/* 300 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35774,11 +34090,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 304 */
-=======
-/* 301 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
@@ -35840,11 +34152,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 305 */
-=======
-/* 302 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35964,11 +34272,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 306 */
-=======
-/* 303 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -35995,11 +34299,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 307 */
-=======
-/* 304 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36172,11 +34472,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 308 */
-=======
-/* 305 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36250,11 +34546,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 309 */
-=======
-/* 306 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36285,11 +34577,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 310 */
-=======
-/* 307 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36360,7 +34648,6 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 311 */
 /***/ (function(module, exports) {
 
@@ -36525,9 +34812,6 @@
 
 /***/ }),
 /* 312 */
-=======
-/* 308 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36567,11 +34851,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 313 */
-=======
-/* 309 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36636,11 +34916,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 314 */
-=======
-/* 310 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36752,11 +35028,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 315 */
-=======
-/* 311 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -36875,11 +35147,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 316 */
-=======
-/* 312 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37027,11 +35295,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 317 */
-=======
-/* 313 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37089,11 +35353,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 318 */
-=======
-/* 314 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37195,7 +35455,6 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 319 */
 /***/ (function(module, exports) {
 
@@ -37216,9 +35475,6 @@
 
 /***/ }),
 /* 320 */
-=======
-/* 315 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37278,11 +35534,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 321 */
-=======
-/* 316 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37336,11 +35588,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 322 */
-=======
-/* 317 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37410,11 +35658,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 323 */
-=======
-/* 318 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37789,11 +36033,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 324 */
-=======
-/* 319 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -37957,11 +36197,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 325 */
-=======
-/* 320 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38048,11 +36284,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 326 */
-=======
-/* 321 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38094,11 +36326,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 327 */
-=======
-/* 322 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38149,11 +36377,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 328 */
-=======
-/* 323 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38611,11 +36835,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 329 */
-=======
-/* 324 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38653,11 +36873,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 330 */
-=======
-/* 325 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38778,11 +36994,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 331 */
-=======
-/* 326 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38830,11 +37042,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 332 */
-=======
-/* 327 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38926,11 +37134,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 333 */
-=======
-/* 328 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -38970,11 +37174,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 334 */
-=======
-/* 329 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39039,11 +37239,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 335 */
-=======
-/* 330 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39109,11 +37305,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 336 */
-=======
-/* 331 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39152,11 +37344,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 337 */
-=======
-/* 332 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39244,11 +37432,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 338 */
-=======
-/* 333 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39318,11 +37502,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 339 */
-=======
-/* 334 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39482,11 +37662,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 340 */
-=======
-/* 335 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39540,11 +37716,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 341 */
-=======
-/* 336 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39604,11 +37776,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 342 */
-=======
-/* 337 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39651,11 +37819,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 343 */
-=======
-/* 338 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39671,11 +37835,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 344 */
-=======
-/* 339 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39778,11 +37938,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 345 */
-=======
-/* 340 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39847,11 +38003,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 346 */
-=======
-/* 341 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -39961,11 +38113,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 347 */
-=======
-/* 342 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -40105,11 +38253,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 348 */
-=======
-/* 343 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -40186,11 +38330,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 349 */
-=======
-/* 344 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -40265,11 +38405,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 350 */
-=======
-/* 345 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(hljs) {
@@ -40380,11 +38516,7 @@
 	};
 
 /***/ }),
-<<<<<<< HEAD
 /* 351 */
-=======
-/* 346 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40399,19 +38531,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -40475,11 +38599,7 @@
 	exports.default = Default;
 
 /***/ }),
-<<<<<<< HEAD
 /* 352 */
-=======
-/* 347 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40490,11 +38610,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-<<<<<<< HEAD
 	var _calendar = __webpack_require__(353);
-=======
-	var _calendar = __webpack_require__(348);
->>>>>>> First working draft of selectTime feature
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
@@ -40502,27 +38618,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _popper_component = __webpack_require__(486);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-<<<<<<< HEAD
-	var _tether_component = __webpack_require__(482);
->>>>>>> First working draft of selectTime feature
-=======
-	var _tether_component = __webpack_require__(483);
->>>>>>> Ran 'npm start build'
+	var _popper_component = __webpack_require__(487);
 
 	var _popper_component2 = _interopRequireDefault(_popper_component);
 
-<<<<<<< HEAD
 	var _classnames2 = __webpack_require__(476);
 
 	var _classnames3 = _interopRequireDefault(_classnames2);
@@ -40534,19 +38637,6 @@
 	var _moment2 = _interopRequireDefault(_moment);
 
 	var _reactOnclickoutside = __webpack_require__(477);
-=======
-	var _classnames2 = __webpack_require__(471);
-
-	var _classnames3 = _interopRequireDefault(_classnames2);
-
-	var _date_utils = __webpack_require__(480);
-
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _reactOnclickoutside = __webpack_require__(472);
->>>>>>> First working draft of selectTime feature
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
@@ -40574,12 +38664,7 @@
 	    key: 'defaultProps',
 	    get: function get() {
 	      return {
-<<<<<<< HEAD
-	        allowSameDay: false,
-	        dateFormat: 'L',
-=======
 	        dateFormat: 'LLL',
->>>>>>> Ran 'npm start build'
 	        dateFormatCalendar: 'MMMM YYYY',
 	        onChange: function onChange() {},
 
@@ -40702,13 +38787,12 @@
 	        return _this.preventFocusTimeout;
 	      });
 	      _this.setSelected(date, event);
-<<<<<<< HEAD
-	      if (!_this.props.inline) {
+	      if (!_this.props.shouldCloseOnSelect) {
+	        _this.setPreSelection(date);
+	      } else if (!_this.props.inline) {
 	        _this.setOpen(false);
 	      }
-=======
 	      if (!_this.props.showTimeSelect) _this.setOpen(false);
->>>>>>> Ran 'npm start build'
 	    };
 
 	    _this.setSelected = function (date, event, keepInput) {
@@ -40785,6 +38869,7 @@
 	        event.preventDefault();
 	        if (_moment2.default.isMoment(_this.state.preSelection) || _moment2.default.isDate(_this.state.preSelection)) {
 	          _this.handleSelect(copy, event);
+	          !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
 	        } else {
 	          _this.setOpen(false);
 	        }
@@ -40793,8 +38878,7 @@
 	        _this.setOpen(false);
 	      } else if (eventKey === 'Tab') {
 	        _this.setOpen(false);
-	      }
-	      if (!_this.props.disabledKeyboardNavigation) {
+	      } else if (!_this.props.disabledKeyboardNavigation) {
 	        var newSelection = void 0;
 	        switch (eventKey) {
 	          case 'ArrowLeft':
@@ -40886,11 +38970,6 @@
 	          monthsShown: _this.props.monthsShown,
 	          onDropdownFocus: _this.handleDropdownFocus,
 	          onMonthChange: _this.props.onMonthChange,
-<<<<<<< HEAD
-	          dayClassName: _this.props.dayClassName,
-	          className: _this.props.calendarClassName,
-	          yearDropdownItemNumber: _this.props.yearDropdownItemNumber },
-=======
 	          showTimeSelect: _this.props.showTimeSelect,
 	          onTimeChange: _this.handleTimeChange,
 	          timeIntervals: _this.props.timeIntervals,
@@ -40898,7 +38977,6 @@
 	          maxTime: _this.props.maxTime,
 	          excludeTimes: _this.props.excludeTimes,
 	          className: _this.props.calendarClassName },
->>>>>>> Ran 'npm start build'
 	        _this.props.children
 	      );
 	    };
@@ -40948,7 +39026,9 @@
 	  _createClass(DatePicker, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.inline && !this.props.selected.isSame(nextProps.selected, 'month')) {
+	      var currentMonth = this.props.selected && this.props.selected.month();
+	      var nextMonth = nextProps.selected && nextProps.selected.month();
+	      if (this.props.inline && currentMonth !== nextMonth) {
 	        this.setPreSelection(nextProps.selected);
 	      }
 	    }
@@ -41064,27 +39144,17 @@
 	  useWeekdaysShort: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number,
 	  value: _propTypes2.default.string,
-<<<<<<< HEAD
-	  weekLabel: _propTypes2.default.string,
-	  withPortal: _propTypes2.default.bool,
-	  yearDropdownItemNumber: _propTypes2.default.number
-=======
 	  withPortal: _propTypes2.default.bool,
 	  showTimeSelect: _propTypes2.default.bool,
 	  timeIntervals: _propTypes2.default.number,
 	  minTime: _propTypes2.default.object,
 	  maxTime: _propTypes2.default.object,
 	  excludeTimes: _propTypes2.default.array
->>>>>>> Ran 'npm start build'
 	};
 	exports.default = DatePicker;
 
 /***/ }),
-<<<<<<< HEAD
 /* 353 */
-=======
-/* 348 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41095,7 +39165,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-<<<<<<< HEAD
 	var _moment = __webpack_require__(354);
 
 	var _moment2 = _interopRequireDefault(_moment);
@@ -41109,25 +39178,10 @@
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
 	var _month = __webpack_require__(481);
-=======
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _year_dropdown = __webpack_require__(467);
-
-	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
-
-	var _month_dropdown = __webpack_require__(475);
-
-	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
-
-	var _month = __webpack_require__(477);
->>>>>>> First working draft of selectTime feature
 
 	var _month2 = _interopRequireDefault(_month);
 
-	var _time = __webpack_require__(482);
+	var _time = __webpack_require__(486);
 
 	var _time2 = _interopRequireDefault(_time);
 
@@ -41135,7 +39189,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -41145,17 +39198,6 @@
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _date_utils = __webpack_require__(484);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _classnames = __webpack_require__(471);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _date_utils = __webpack_require__(480);
->>>>>>> First working draft of selectTime feature
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41532,16 +39574,12 @@
 	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,
 	  onSelect: _propTypes2.default.func.isRequired,
-<<<<<<< HEAD
-	  onWeekSelect: _propTypes2.default.func,
-=======
 	  showTimeSelect: _propTypes2.default.bool,
 	  timeIntervals: _propTypes2.default.number,
 	  onTimeChange: _propTypes2.default.func,
 	  minTime: _propTypes2.default.object,
 	  maxTime: _propTypes2.default.object,
 	  excludeTimes: _propTypes2.default.array,
->>>>>>> Ran 'npm start build'
 	  openToDate: _propTypes2.default.object,
 	  peekNextMonth: _propTypes2.default.bool,
 	  scrollableYearDropdown: _propTypes2.default.bool,
@@ -41554,24 +39592,13 @@
 	  showYearDropdown: _propTypes2.default.bool,
 	  startDate: _propTypes2.default.object,
 	  todayButton: _propTypes2.default.string,
-<<<<<<< HEAD
-	  useWeekdaysShort: _propTypes2.default.bool,
-	  utcOffset: _propTypes2.default.number,
-	  weekLabel: _propTypes2.default.string,
-	  yearDropdownItemNumber: _propTypes2.default.number
-=======
 	  withPortal: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number
->>>>>>> Ran 'npm start build'
 	};
 	exports.default = Calendar;
 
 /***/ }),
-<<<<<<< HEAD
 /* 354 */
-=======
-/* 349 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -43403,11 +41430,7 @@
 	            module && module.exports) {
 	        try {
 	            oldLocale = globalLocale._abbr;
-<<<<<<< HEAD
 	            __webpack_require__(356)("./" + name);
-=======
-	            __webpack_require__(351)("./" + name);
->>>>>>> First working draft of selectTime feature
 	            // because defineLocale currently also sets the global locale, we
 	            // want to undo that for lazy loaded locales
 	            getSetGlobalLocale(oldLocale);
@@ -43745,7 +41768,6 @@
 	        delete config._isValid;
 	    } else {
 	        return;
-<<<<<<< HEAD
 	    }
 
 	    configFromRFC2822(config);
@@ -43755,17 +41777,6 @@
 	        return;
 	    }
 
-=======
-	    }
-
-	    configFromRFC2822(config);
-	    if (config._isValid === false) {
-	        delete config._isValid;
-	    } else {
-	        return;
-	    }
-
->>>>>>> First working draft of selectTime feature
 	    // Final attempt, use Input Fallback
 	    hooks.createFromInputFallback(config);
 	}
@@ -46054,17 +44065,10 @@
 
 	})));
 
-<<<<<<< HEAD
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(355)(module)))
 
 /***/ }),
 /* 355 */
-=======
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(350)(module)))
-
-/***/ }),
-/* 350 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -46080,7 +44084,6 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46315,242 +44318,6 @@
 		"./zh-hk.js": 470,
 		"./zh-tw": 471,
 		"./zh-tw.js": 471
-=======
-/* 351 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./af": 352,
-		"./af.js": 352,
-		"./ar": 353,
-		"./ar-dz": 354,
-		"./ar-dz.js": 354,
-		"./ar-kw": 355,
-		"./ar-kw.js": 355,
-		"./ar-ly": 356,
-		"./ar-ly.js": 356,
-		"./ar-ma": 357,
-		"./ar-ma.js": 357,
-		"./ar-sa": 358,
-		"./ar-sa.js": 358,
-		"./ar-tn": 359,
-		"./ar-tn.js": 359,
-		"./ar.js": 353,
-		"./az": 360,
-		"./az.js": 360,
-		"./be": 361,
-		"./be.js": 361,
-		"./bg": 362,
-		"./bg.js": 362,
-		"./bn": 363,
-		"./bn.js": 363,
-		"./bo": 364,
-		"./bo.js": 364,
-		"./br": 365,
-		"./br.js": 365,
-		"./bs": 366,
-		"./bs.js": 366,
-		"./ca": 367,
-		"./ca.js": 367,
-		"./cs": 368,
-		"./cs.js": 368,
-		"./cv": 369,
-		"./cv.js": 369,
-		"./cy": 370,
-		"./cy.js": 370,
-		"./da": 371,
-		"./da.js": 371,
-		"./de": 372,
-		"./de-at": 373,
-		"./de-at.js": 373,
-		"./de-ch": 374,
-		"./de-ch.js": 374,
-		"./de.js": 372,
-		"./dv": 375,
-		"./dv.js": 375,
-		"./el": 376,
-		"./el.js": 376,
-		"./en-au": 377,
-		"./en-au.js": 377,
-		"./en-ca": 378,
-		"./en-ca.js": 378,
-		"./en-gb": 379,
-		"./en-gb.js": 379,
-		"./en-ie": 380,
-		"./en-ie.js": 380,
-		"./en-nz": 381,
-		"./en-nz.js": 381,
-		"./eo": 382,
-		"./eo.js": 382,
-		"./es": 383,
-		"./es-do": 384,
-		"./es-do.js": 384,
-		"./es.js": 383,
-		"./et": 385,
-		"./et.js": 385,
-		"./eu": 386,
-		"./eu.js": 386,
-		"./fa": 387,
-		"./fa.js": 387,
-		"./fi": 388,
-		"./fi.js": 388,
-		"./fo": 389,
-		"./fo.js": 389,
-		"./fr": 390,
-		"./fr-ca": 391,
-		"./fr-ca.js": 391,
-		"./fr-ch": 392,
-		"./fr-ch.js": 392,
-		"./fr.js": 390,
-		"./fy": 393,
-		"./fy.js": 393,
-		"./gd": 394,
-		"./gd.js": 394,
-		"./gl": 395,
-		"./gl.js": 395,
-		"./gom-latn": 396,
-		"./gom-latn.js": 396,
-		"./he": 397,
-		"./he.js": 397,
-		"./hi": 398,
-		"./hi.js": 398,
-		"./hr": 399,
-		"./hr.js": 399,
-		"./hu": 400,
-		"./hu.js": 400,
-		"./hy-am": 401,
-		"./hy-am.js": 401,
-		"./id": 402,
-		"./id.js": 402,
-		"./is": 403,
-		"./is.js": 403,
-		"./it": 404,
-		"./it.js": 404,
-		"./ja": 405,
-		"./ja.js": 405,
-		"./jv": 406,
-		"./jv.js": 406,
-		"./ka": 407,
-		"./ka.js": 407,
-		"./kk": 408,
-		"./kk.js": 408,
-		"./km": 409,
-		"./km.js": 409,
-		"./kn": 410,
-		"./kn.js": 410,
-		"./ko": 411,
-		"./ko.js": 411,
-		"./ky": 412,
-		"./ky.js": 412,
-		"./lb": 413,
-		"./lb.js": 413,
-		"./lo": 414,
-		"./lo.js": 414,
-		"./lt": 415,
-		"./lt.js": 415,
-		"./lv": 416,
-		"./lv.js": 416,
-		"./me": 417,
-		"./me.js": 417,
-		"./mi": 418,
-		"./mi.js": 418,
-		"./mk": 419,
-		"./mk.js": 419,
-		"./ml": 420,
-		"./ml.js": 420,
-		"./mr": 421,
-		"./mr.js": 421,
-		"./ms": 422,
-		"./ms-my": 423,
-		"./ms-my.js": 423,
-		"./ms.js": 422,
-		"./my": 424,
-		"./my.js": 424,
-		"./nb": 425,
-		"./nb.js": 425,
-		"./ne": 426,
-		"./ne.js": 426,
-		"./nl": 427,
-		"./nl-be": 428,
-		"./nl-be.js": 428,
-		"./nl.js": 427,
-		"./nn": 429,
-		"./nn.js": 429,
-		"./pa-in": 430,
-		"./pa-in.js": 430,
-		"./pl": 431,
-		"./pl.js": 431,
-		"./pt": 432,
-		"./pt-br": 433,
-		"./pt-br.js": 433,
-		"./pt.js": 432,
-		"./ro": 434,
-		"./ro.js": 434,
-		"./ru": 435,
-		"./ru.js": 435,
-		"./sd": 436,
-		"./sd.js": 436,
-		"./se": 437,
-		"./se.js": 437,
-		"./si": 438,
-		"./si.js": 438,
-		"./sk": 439,
-		"./sk.js": 439,
-		"./sl": 440,
-		"./sl.js": 440,
-		"./sq": 441,
-		"./sq.js": 441,
-		"./sr": 442,
-		"./sr-cyrl": 443,
-		"./sr-cyrl.js": 443,
-		"./sr.js": 442,
-		"./ss": 444,
-		"./ss.js": 444,
-		"./sv": 445,
-		"./sv.js": 445,
-		"./sw": 446,
-		"./sw.js": 446,
-		"./ta": 447,
-		"./ta.js": 447,
-		"./te": 448,
-		"./te.js": 448,
-		"./tet": 449,
-		"./tet.js": 449,
-		"./th": 450,
-		"./th.js": 450,
-		"./tl-ph": 451,
-		"./tl-ph.js": 451,
-		"./tlh": 452,
-		"./tlh.js": 452,
-		"./tr": 453,
-		"./tr.js": 453,
-		"./tzl": 454,
-		"./tzl.js": 454,
-		"./tzm": 455,
-		"./tzm-latn": 456,
-		"./tzm-latn.js": 456,
-		"./tzm.js": 455,
-		"./uk": 457,
-		"./uk.js": 457,
-		"./ur": 458,
-		"./ur.js": 458,
-		"./uz": 459,
-		"./uz-latn": 460,
-		"./uz-latn.js": 460,
-		"./uz.js": 459,
-		"./vi": 461,
-		"./vi.js": 461,
-		"./x-pseudo": 462,
-		"./x-pseudo.js": 462,
-		"./yo": 463,
-		"./yo.js": 463,
-		"./zh-cn": 464,
-		"./zh-cn.js": 464,
-		"./zh-hk": 465,
-		"./zh-hk.js": 465,
-		"./zh-tw": 466,
-		"./zh-tw.js": 466
->>>>>>> First working draft of selectTime feature
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -46563,19 +44330,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-<<<<<<< HEAD
 	webpackContext.id = 356;
 
 
 /***/ }),
 /* 357 */
-=======
-	webpackContext.id = 351;
-
-
-/***/ }),
-/* 352 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46583,11 +44342,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46657,11 +44412,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 358 */
-=======
-/* 353 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46671,11 +44422,7 @@
 	//! author : forabi https://github.com/forabi
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46812,11 +44559,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 359 */
-=======
-/* 354 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46824,11 +44567,7 @@
 	//! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46884,11 +44623,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 360 */
-=======
-/* 355 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46896,11 +44631,7 @@
 	//! author : Nusret Parlak: https://github.com/nusretparlak
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -46956,11 +44687,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 361 */
-=======
-/* 356 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46968,11 +44695,7 @@
 	//! author : Ali Hmer: https://github.com/kikoanis
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47095,11 +44818,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 362 */
-=======
-/* 357 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47108,11 +44827,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47168,11 +44883,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 363 */
-=======
-/* 358 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47180,11 +44891,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47286,11 +44993,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 364 */
-=======
-/* 359 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47298,11 +45001,7 @@
 	//! author : Nader Toukabri : https://github.com/naderio
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47358,11 +45057,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 365 */
-=======
-/* 360 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47370,11 +45065,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47476,11 +45167,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 366 */
-=======
-/* 361 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47490,11 +45177,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47623,11 +45306,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 367 */
-=======
-/* 362 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47635,11 +45314,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47726,11 +45401,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 368 */
-=======
-/* 363 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47738,11 +45409,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47858,11 +45525,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 369 */
-=======
-/* 364 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47870,11 +45533,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -47990,11 +45649,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 370 */
-=======
-/* 365 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48002,11 +45657,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48111,11 +45762,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 371 */
-=======
-/* 366 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48124,11 +45771,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48267,11 +45910,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 372 */
-=======
-/* 367 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48279,11 +45918,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48368,11 +46003,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 373 */
-=======
-/* 368 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48380,11 +46011,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48553,11 +46180,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 374 */
-=======
-/* 369 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48565,11 +46188,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48629,11 +46248,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 375 */
-=======
-/* 370 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48642,11 +46257,7 @@
 	//! author : https://github.com/ryangreaves
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48723,11 +46334,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 376 */
-=======
-/* 371 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48735,11 +46342,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48796,11 +46399,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 377 */
-=======
-/* 372 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48810,11 +46409,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48887,11 +46482,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 378 */
-=======
-/* 373 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48902,11 +46493,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -48979,11 +46566,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 379 */
-=======
-/* 374 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48991,11 +46574,7 @@
 	//! author : sschueller : https://github.com/sschueller
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49070,11 +46649,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 380 */
-=======
-/* 375 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49082,11 +46657,7 @@
 	//! author : Jawish Hameed : https://github.com/jawish
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49183,11 +46754,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 381 */
-=======
-/* 376 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49195,11 +46762,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49296,11 +46859,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 382 */
-=======
-/* 377 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49308,11 +46867,7 @@
 	//! author : Jared Morse : https://github.com/jarcoal
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49376,11 +46931,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 383 */
-=======
-/* 378 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49388,11 +46939,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49452,11 +46999,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 384 */
-=======
-/* 379 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49464,11 +47007,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49532,11 +47071,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 385 */
-=======
-/* 380 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49544,11 +47079,7 @@
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49612,11 +47143,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 386 */
-=======
-/* 381 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49624,11 +47151,7 @@
 	//! author : Luke McGregor : https://github.com/lukemcgregor
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49692,11 +47215,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 387 */
-=======
-/* 382 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49706,11 +47225,7 @@
 	//! comment : miestasmia corrected the translation by colindean
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49778,11 +47293,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 388 */
-=======
-/* 383 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49790,11 +47301,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49874,22 +47381,14 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 389 */
-=======
-/* 384 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Spanish (Dominican Republic) [es-do]
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -49969,11 +47468,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 390 */
-=======
-/* 385 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49982,11 +47477,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50062,11 +47553,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 391 */
-=======
-/* 386 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50074,11 +47561,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50141,11 +47624,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 392 */
-=======
-/* 387 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50153,11 +47632,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50261,11 +47736,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 393 */
-=======
-/* 388 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50273,11 +47744,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50381,11 +47848,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 394 */
-=======
-/* 389 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50393,11 +47856,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50454,11 +47913,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 395 */
-=======
-/* 390 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50466,11 +47921,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50550,11 +48001,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 396 */
-=======
-/* 391 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50562,11 +48009,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50637,11 +48080,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 397 */
-=======
-/* 392 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50649,11 +48088,7 @@
 	//! author : Gaspard Bucher : https://github.com/gaspard
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50728,11 +48163,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 398 */
-=======
-/* 393 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50740,11 +48171,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50816,11 +48243,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 399 */
-=======
-/* 394 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50828,11 +48251,7 @@
 	//! author : Jon Ashdown : https://github.com/jonashdown
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50905,11 +48324,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 400 */
-=======
-/* 395 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50917,11 +48332,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -50995,11 +48406,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 401 */
-=======
-/* 396 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51007,11 +48414,7 @@
 	//! author : The Discoverer : https://github.com/WikiDiscoverer
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51130,11 +48533,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 402 */
-=======
-/* 397 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51144,11 +48543,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51242,11 +48637,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 403 */
-=======
-/* 398 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51254,11 +48645,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51379,11 +48766,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 404 */
-=======
-/* 399 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51391,11 +48774,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51537,11 +48916,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 405 */
-=======
-/* 400 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51549,11 +48924,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51659,11 +49030,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 406 */
-=======
-/* 401 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51671,11 +49038,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51767,11 +49130,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 407 */
-=======
-/* 402 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51780,11 +49139,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -51863,11 +49218,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 408 */
-=======
-/* 403 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51875,11 +49226,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52003,11 +49350,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 409 */
-=======
-/* 404 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52016,11 +49359,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52086,11 +49425,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 410 */
-=======
-/* 405 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52098,11 +49433,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52179,11 +49510,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 411 */
-=======
-/* 406 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52192,11 +49519,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52275,11 +49598,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 412 */
-=======
-/* 407 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52287,11 +49606,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52377,11 +49692,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 413 */
-=======
-/* 408 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52389,11 +49700,7 @@
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52477,11 +49784,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 414 */
-=======
-/* 409 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52489,11 +49792,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52548,11 +49847,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 415 */
-=======
-/* 410 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52560,11 +49855,7 @@
 	//! author : Rajeev Naik : https://github.com/rajeevnaikte
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52687,11 +49978,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 416 */
-=======
-/* 411 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52700,11 +49987,7 @@
 	//! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52769,11 +50052,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 417 */
-=======
-/* 412 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52781,11 +50060,7 @@
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -52870,11 +50145,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 418 */
-=======
-/* 413 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52883,11 +50154,7 @@
 	//! author : David Raison : https://github.com/kwisatz
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53020,11 +50287,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 419 */
-=======
-/* 414 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53032,11 +50295,7 @@
 	//! author : Ryan Hart : https://github.com/ryanhart2
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53103,11 +50362,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 420 */
-=======
-/* 415 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53115,11 +50370,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53233,11 +50484,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 421 */
-=======
-/* 416 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53246,11 +50493,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53343,11 +50586,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 422 */
-=======
-/* 417 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53355,11 +50594,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53467,11 +50702,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 423 */
-=======
-/* 418 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53479,11 +50710,7 @@
 	//! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53544,11 +50771,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 424 */
-=======
-/* 419 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53556,11 +50779,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53647,11 +50866,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 425 */
-=======
-/* 420 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53659,11 +50874,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53741,11 +50952,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 426 */
-=======
-/* 421 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53754,11 +50961,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -53913,11 +51116,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 427 */
-=======
-/* 422 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53925,11 +51124,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54008,11 +51203,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 428 */
-=======
-/* 423 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54021,11 +51212,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54104,11 +51291,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 429 */
-=======
-/* 424 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54118,11 +51301,7 @@
 	//! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54213,11 +51392,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 430 */
-=======
-/* 425 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54226,11 +51401,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54289,11 +51460,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 431 */
-=======
-/* 426 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54301,11 +51468,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54425,11 +51588,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 432 */
-=======
-/* 427 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54438,11 +51597,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54526,11 +51681,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 433 */
-=======
-/* 428 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54539,11 +51690,7 @@
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54627,11 +51774,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 434 */
-=======
-/* 429 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54639,11 +51782,7 @@
 	//! author : https://github.com/mechuwind
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54700,11 +51839,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 435 */
-=======
-/* 430 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54712,11 +51847,7 @@
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54837,11 +51968,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 436 */
-=======
-/* 431 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54849,11 +51976,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -54957,11 +52080,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 437 */
-=======
-/* 432 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54969,11 +52088,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55035,11 +52150,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 438 */
-=======
-/* 433 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55047,11 +52158,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55109,11 +52216,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 439 */
-=======
-/* 434 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55122,11 +52225,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55197,11 +52296,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 440 */
-=======
-/* 435 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55211,11 +52306,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55393,11 +52484,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 441 */
-=======
-/* 436 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55405,11 +52492,7 @@
 	//! author : Narain Sagar : https://github.com/narainsagar
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55504,11 +52587,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 442 */
-=======
-/* 437 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55516,11 +52595,7 @@
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55578,11 +52653,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 443 */
-=======
-/* 438 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55590,11 +52661,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55662,11 +52729,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 444 */
-=======
-/* 439 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55675,11 +52738,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -55825,11 +52884,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 445 */
-=======
-/* 440 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55837,11 +52892,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56000,11 +53051,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 446 */
-=======
-/* 441 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56014,11 +53061,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56083,11 +53126,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 447 */
-=======
-/* 442 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56095,11 +53134,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56206,11 +53241,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 448 */
-=======
-/* 443 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56218,11 +53249,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56329,11 +53356,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 449 */
-=======
-/* 444 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56341,11 +53364,7 @@
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56431,11 +53450,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 450 */
-=======
-/* 445 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56443,11 +53458,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56513,11 +53524,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 451 */
-=======
-/* 446 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56525,11 +53532,7 @@
 	//! author : Fahad Kassim : https://github.com/fadsel
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56585,11 +53588,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 452 */
-=======
-/* 447 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56597,11 +53596,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56728,11 +53723,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 453 */
-=======
-/* 448 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56740,11 +53731,7 @@
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56830,11 +53817,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 454 */
-=======
-/* 449 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56843,11 +53826,7 @@
 	//! author : Onorio De J. Afonso : https://github.com/marobo
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56911,11 +53890,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 455 */
-=======
-/* 450 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56923,11 +53898,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -56991,11 +53962,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 456 */
-=======
-/* 451 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57003,11 +53970,7 @@
 	//! author : Dan Hagman : https://github.com/hagmandan
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57066,11 +54029,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 457 */
-=======
-/* 452 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57078,11 +54037,7 @@
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57199,11 +54154,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 458 */
-=======
-/* 453 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57212,11 +54163,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57302,11 +54249,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 459 */
-=======
-/* 454 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57315,11 +54258,7 @@
 	//! author : Iustì Canun
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57406,11 +54345,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 460 */
-=======
-/* 455 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57418,11 +54353,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57477,11 +54408,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 461 */
-=======
-/* 456 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57489,11 +54416,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57548,11 +54471,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 462 */
-=======
-/* 457 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57561,11 +54480,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57816,115 +54731,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 464 */
-=======
-/* 458 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Urdu [ur]
-	//! author : Sawood Alam : https://github.com/ibnesayeed
-	//! author : Zack : https://github.com/ZackVision
-
-	;(function (global, factory) {
-	    true ? factory(__webpack_require__(349)) :
-	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-	   factory(global.moment)
-	}(this, (function (moment) { 'use strict';
-
-
-	var months = [
-	    'جنوری',
-	    'فروری',
-	    'مارچ',
-	    'اپریل',
-	    'مئی',
-	    'جون',
-	    'جولائی',
-	    'اگست',
-	    'ستمبر',
-	    'اکتوبر',
-	    'نومبر',
-	    'دسمبر'
-	];
-	var days = [
-	    'اتوار',
-	    'پیر',
-	    'منگل',
-	    'بدھ',
-	    'جمعرات',
-	    'جمعہ',
-	    'ہفتہ'
-	];
-
-	var ur = moment.defineLocale('ur', {
-	    months : months,
-	    monthsShort : months,
-	    weekdays : days,
-	    weekdaysShort : days,
-	    weekdaysMin : days,
-	    longDateFormat : {
-	        LT : 'HH:mm',
-	        LTS : 'HH:mm:ss',
-	        L : 'DD/MM/YYYY',
-	        LL : 'D MMMM YYYY',
-	        LLL : 'D MMMM YYYY HH:mm',
-	        LLLL : 'dddd، D MMMM YYYY HH:mm'
-	    },
-	    meridiemParse: /صبح|شام/,
-	    isPM : function (input) {
-	        return 'شام' === input;
-	    },
-	    meridiem : function (hour, minute, isLower) {
-	        if (hour < 12) {
-	            return 'صبح';
-	        }
-	        return 'شام';
-	    },
-	    calendar : {
-	        sameDay : '[آج بوقت] LT',
-	        nextDay : '[کل بوقت] LT',
-	        nextWeek : 'dddd [بوقت] LT',
-	        lastDay : '[گذشتہ روز بوقت] LT',
-	        lastWeek : '[گذشتہ] dddd [بوقت] LT',
-	        sameElse : 'L'
-	    },
-	    relativeTime : {
-	        future : '%s بعد',
-	        past : '%s قبل',
-	        s : 'چند سیکنڈ',
-	        m : 'ایک منٹ',
-	        mm : '%d منٹ',
-	        h : 'ایک گھنٹہ',
-	        hh : '%d گھنٹے',
-	        d : 'ایک دن',
-	        dd : '%d دن',
-	        M : 'ایک ماہ',
-	        MM : '%d ماہ',
-	        y : 'ایک سال',
-	        yy : '%d سال'
-	    },
-	    preparse: function (string) {
-	        return string.replace(/،/g, ',');
-	    },
-	    postformat: function (string) {
-	        return string.replace(/,/g, '،');
-	    },
-	    week : {
-	        dow : 1, // Monday is the first day of the week.
-	        doy : 4  // The week that contains Jan 4th is the first week of the year.
-	    }
-	});
-
-	return ur;
-
-	})));
-
-
-/***/ }),
-/* 459 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57932,11 +54739,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -57991,11 +54794,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 465 */
-=======
-/* 460 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58003,11 +54802,7 @@
 	//! author : Rasulbek Mirzayev : github.com/Rasulbeeek
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58062,11 +54857,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 466 */
-=======
-/* 461 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58074,11 +54865,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58154,11 +54941,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 467 */
-=======
-/* 462 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58166,11 +54949,7 @@
 	//! author : Andrew Hood : https://github.com/andrewhood125
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58235,11 +55014,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 468 */
-=======
-/* 463 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58247,11 +55022,7 @@
 	//! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58308,11 +55079,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 469 */
-=======
-/* 464 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58321,11 +55088,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58432,11 +55195,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 470 */
-=======
-/* 465 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58446,11 +55205,7 @@
 	//! author : Konstantin : https://github.com/skfd
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58550,11 +55305,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 471 */
-=======
-/* 466 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58563,11 +55314,7 @@
 	//! author : Chris Lam : https://github.com/hehachris
 
 	;(function (global, factory) {
-<<<<<<< HEAD
 	    true ? factory(__webpack_require__(354)) :
-=======
-	    true ? factory(__webpack_require__(349)) :
->>>>>>> First working draft of selectTime feature
 	   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
 	   factory(global.moment)
 	}(this, (function (moment) { 'use strict';
@@ -58667,11 +55414,7 @@
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 472 */
-=======
-/* 467 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58686,7 +55429,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -58696,17 +55438,6 @@
 	var _year_dropdown_options2 = _interopRequireDefault(_year_dropdown_options);
 
 	var _reactOnclickoutside = __webpack_require__(477);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _year_dropdown_options = __webpack_require__(470);
-
-	var _year_dropdown_options2 = _interopRequireDefault(_year_dropdown_options);
-
-	var _reactOnclickoutside = __webpack_require__(472);
->>>>>>> First working draft of selectTime feature
 
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
@@ -58795,8 +55526,6 @@
 	    }, _this.toggleDropdown = function () {
 	      _this.setState({
 	        dropdownVisible: !_this.state.dropdownVisible
-<<<<<<< HEAD
-=======
 	      });
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -58813,639 +55542,6 @@
 	          renderedDropdown = this.renderSelectMode();
 	          break;
 	      }
-
-	      return _react2.default.createElement(
-	        'div',
-	        {
-	          className: 'react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--' + this.props.dropdownMode },
-	        renderedDropdown
-	      );
-	    }
-	  }]);
-
-	  return YearDropdown;
-	}(_react2.default.Component);
-
-	YearDropdown.propTypes = {
-	  dropdownMode: _propTypes2.default.oneOf(['scroll', 'select']).isRequired,
-	  maxDate: _propTypes2.default.object,
-	  minDate: _propTypes2.default.object,
-	  onChange: _propTypes2.default.func.isRequired,
-	  scrollableYearDropdown: _propTypes2.default.bool,
-	  year: _propTypes2.default.number.isRequired
-	};
-	exports.default = YearDropdown;
-
-/***/ }),
-/* 468 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	if (false) {
-	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-	    Symbol.for &&
-	    Symbol.for('react.element')) ||
-	    0xeac7;
-
-	  var isValidElement = function(object) {
-	    return typeof object === 'object' &&
-	      object !== null &&
-	      object.$$typeof === REACT_ELEMENT_TYPE;
-	  };
-
-	  // By explicitly using `prop-types` you are opting into new development behavior.
-	  // http://fb.me/prop-types-in-prod
-	  var throwOnDirectAccess = true;
-	  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
-	} else {
-	  // By explicitly using `prop-types` you are opting into new production behavior.
-	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(469)();
-	}
-
-
-/***/ }),
-/* 469 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	var emptyFunction = __webpack_require__(12);
-	var invariant = __webpack_require__(8);
-
-	module.exports = function() {
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-	  function shim() {
-	    invariant(
-	      false,
-	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-	      'Use PropTypes.checkPropTypes() to call them. ' +
-	      'Read more at http://fb.me/use-check-prop-types'
-	    );
-	  };
-	  shim.isRequired = shim;
-	  function getShim() {
-	    return shim;
-	  };
-	  var ReactPropTypes = {
-	    array: shim,
-	    bool: shim,
-	    func: shim,
-	    number: shim,
-	    object: shim,
-	    string: shim,
-	    symbol: shim,
-
-	    any: shim,
-	    arrayOf: getShim,
-	    element: shim,
-	    instanceOf: getShim,
-	    node: shim,
-	    objectOf: getShim,
-	    oneOf: getShim,
-	    oneOfType: getShim,
-	    shape: getShim
-	  };
-
-	  ReactPropTypes.checkPropTypes = emptyFunction;
-	  ReactPropTypes.PropTypes = ReactPropTypes;
-
-	  return ReactPropTypes;
-	};
-
-
-/***/ }),
-/* 470 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _classnames = __webpack_require__(471);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function generateYears(year, noOfYear) {
-	  var list = [];
-	  for (var i = 0; i < 2 * noOfYear; i++) {
-	    list.push(year + noOfYear - i);
-	  }
-	  return list;
-	}
-
-	var YearDropdownOptions = function (_React$Component) {
-	  _inherits(YearDropdownOptions, _React$Component);
-
-	  function YearDropdownOptions(props) {
-	    _classCallCheck(this, YearDropdownOptions);
-
-	    var _this = _possibleConstructorReturn(this, (YearDropdownOptions.__proto__ || Object.getPrototypeOf(YearDropdownOptions)).call(this, props));
-
-	    _this.renderOptions = function () {
-	      var selectedYear = _this.props.year;
-	      var options = _this.state.yearsList.map(function (year) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'react-datepicker__year-option',
-	            key: year,
-	            ref: year,
-	            onClick: _this.onChange.bind(_this, year) },
-	          selectedYear === year ? _react2.default.createElement(
-	            'span',
-	            { className: 'react-datepicker__year-option--selected' },
-	            '\u2713'
-	          ) : '',
-	          year
-	        );
-	      });
-
-	      options.unshift(_react2.default.createElement(
-	        'div',
-	        { className: 'react-datepicker__year-option',
-	          ref: 'upcoming',
-	          key: 'upcoming',
-	          onClick: _this.incrementYears },
-	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming' })
-	      ));
-	      options.push(_react2.default.createElement(
-	        'div',
-	        { className: 'react-datepicker__year-option',
-	          ref: 'previous',
-	          key: 'previous',
-	          onClick: _this.decrementYears },
-	        _react2.default.createElement('a', { className: 'react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous' })
-	      ));
-	      return options;
-	    };
-
-	    _this.onChange = function (year) {
-	      _this.props.onChange(year);
-	    };
-
-	    _this.handleClickOutside = function () {
-	      _this.props.onCancel();
-	    };
-
-	    _this.shiftYears = function (amount) {
-	      var years = _this.state.yearsList.map(function (year) {
-	        return year + amount;
-	      });
-
-	      _this.setState({
-	        yearsList: years
-	      });
-	    };
-
-	    _this.incrementYears = function () {
-	      return _this.shiftYears(1);
-	    };
-
-	    _this.decrementYears = function () {
-	      return _this.shiftYears(-1);
-	    };
-
-	    _this.state = {
-	      yearsList: _this.props.scrollableYearDropdown ? generateYears(_this.props.year, 10) : generateYears(_this.props.year, 5)
-	    };
-	    return _this;
-	  }
-
-	  _createClass(YearDropdownOptions, [{
-	    key: 'render',
-	    value: function render() {
-	      var dropdownClass = (0, _classnames2.default)({
-	        'react-datepicker__year-dropdown': true,
-	        'react-datepicker__year-dropdown--scrollable': this.props.scrollableYearDropdown
-	      });
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: dropdownClass },
-	        this.renderOptions()
-	      );
-	    }
-	  }]);
-
-	  return YearDropdownOptions;
-	}(_react2.default.Component);
-
-	YearDropdownOptions.propTypes = {
-	  onCancel: _propTypes2.default.func.isRequired,
-	  onChange: _propTypes2.default.func.isRequired,
-	  scrollableYearDropdown: _propTypes2.default.bool,
-	  year: _propTypes2.default.number.isRequired
-	};
-	exports.default = YearDropdownOptions;
-
-/***/ }),
-/* 471 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ }),
-/* 472 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
-	 * A higher-order-component for handling onClickOutside for React components.
-	 */
-	(function(root) {
-
-	  // administrative
-	  var registeredComponents = [];
-	  var handlers = [];
-	  var IGNORE_CLASS = 'ignore-react-onclickoutside';
-	  var DEFAULT_EVENTS = ['mousedown', 'touchstart'];
-
-	  /**
-	   * Check whether some DOM node is our Component's node.
-	   */
-	  var isNodeFound = function(current, componentNode, ignoreClass) {
-	    if (current === componentNode) {
-	      return true;
-	    }
-	    // SVG <use/> elements do not technically reside in the rendered DOM, so
-	    // they do not have classList directly, but they offer a link to their
-	    // corresponding element, which can have classList. This extra check is for
-	    // that case.
-	    // See: http://www.w3.org/TR/SVG11/struct.html#InterfaceSVGUseElement
-	    // Discussion: https://github.com/Pomax/react-onclickoutside/pull/17
-	    if (current.correspondingElement) {
-	      return current.correspondingElement.classList.contains(ignoreClass);
-	    }
-	    return current.classList.contains(ignoreClass);
-	  };
-
-	  /**
-	   * Try to find our node in a hierarchy of nodes, returning the document
-	   * node as highest noode if our node is not found in the path up.
-	   */
-	  var findHighest = function(current, componentNode, ignoreClass) {
-	    if (current === componentNode) {
-	      return true;
-	    }
-
-	    // If source=local then this event came from 'somewhere'
-	    // inside and should be ignored. We could handle this with
-	    // a layered approach, too, but that requires going back to
-	    // thinking in terms of Dom node nesting, running counter
-	    // to React's 'you shouldn't care about the DOM' philosophy.
-	    while(current.parentNode) {
-	      if (isNodeFound(current, componentNode, ignoreClass)) {
-	        return true;
-	      }
-	      current = current.parentNode;
-	    }
-	    return current;
-	  };
-
-	  /**
-	   * Check if the browser scrollbar was clicked
-	   */
-	  var clickedScrollbar = function(evt) {
-	    return document.documentElement.clientWidth <= evt.clientX || document.documentElement.clientHeight <= evt.clientY;
-	  };
-
-	  /**
-	   * Generate the event handler that checks whether a clicked DOM node
-	   * is inside of, or lives outside of, our Component's node tree.
-	   */
-	  var generateOutsideCheck = function(componentNode, componentInstance, eventHandler, ignoreClass, excludeScrollbar, preventDefault, stopPropagation) {
-	    return function(evt) {
-	      if (preventDefault) {
-	        evt.preventDefault();
-	      }
-	      if (stopPropagation) {
-	        evt.stopPropagation();
-	      }
-	      var current = evt.target;
-	      if((excludeScrollbar && clickedScrollbar(evt)) || (findHighest(current, componentNode, ignoreClass) !== document)) {
-	        return;
-	      }
-	      eventHandler(evt);
-	    };
-	  };
-
-	  /**
-	   * This function generates the HOC function that you'll use
-	   * in order to impart onOutsideClick listening to an
-	   * arbitrary component. It gets called at the end of the
-	   * bootstrapping code to yield an instance of the
-	   * onClickOutsideHOC function defined inside setupHOC().
-	   */
-	  function setupHOC(root, React, ReactDOM, createReactClass) {
-
-	    // The actual Component-wrapping HOC:
-	    return function onClickOutsideHOC(Component, config) {
-	      var wrapComponentWithOnClickOutsideHandling = createReactClass({
-	        statics: {
-	          /**
-	           * Access the wrapped Component's class.
-	           */
-	          getClass: function() {
-	            if (Component.getClass) {
-	              return Component.getClass();
-	            }
-	            return Component;
-	          }
-	        },
-
-	        /**
-	         * Access the wrapped Component's instance.
-	         */
-	        getInstance: function() {
-	          return Component.prototype.isReactComponent ? this.refs.instance : this;
-	        },
-
-	        // this is given meaning in componentDidMount
-	        __outsideClickHandler: function() {},
-
-	        getDefaultProps: function() {
-	          return {
-	            excludeScrollbar: config && config.excludeScrollbar
-	          };
-	        },
-
-	        /**
-	         * Add click listeners to the current document,
-	         * linked to this component's state.
-	         */
-	        componentDidMount: function() {
-	          // If we are in an environment without a DOM such
-	          // as shallow rendering or snapshots then we exit
-	          // early to prevent any unhandled errors being thrown.
-	          if (typeof document === 'undefined' || !document.createElement){
-	            return;
-	          }
-
-	          var instance = this.getInstance();
-	          var clickOutsideHandler;
-
-	          if(config && typeof config.handleClickOutside === 'function') {
-	            clickOutsideHandler = config.handleClickOutside(instance);
-	            if(typeof clickOutsideHandler !== 'function') {
-	              throw new Error('Component lacks a function for processing outside click events specified by the handleClickOutside config option.');
-	            }
-	          } else if(typeof instance.handleClickOutside === 'function') {
-	            if (React.Component.prototype.isPrototypeOf(instance)) {
-	              clickOutsideHandler = instance.handleClickOutside.bind(instance);
-	            } else {
-	              clickOutsideHandler = instance.handleClickOutside;
-	            }
-	          } else if(typeof instance.props.handleClickOutside === 'function') {
-	            clickOutsideHandler = instance.props.handleClickOutside;
-	          } else {
-	            throw new Error('Component lacks a handleClickOutside(event) function for processing outside click events.');
-	          }
-
-	          var componentNode = ReactDOM.findDOMNode(instance);
-	          if (componentNode === null) {
-	            console.warn('Antipattern warning: there was no DOM node associated with the component that is being wrapped by outsideClick.');
-	            console.warn([
-	              'This is typically caused by having a component that starts life with a render function that',
-	              'returns `null` (due to a state or props value), so that the component \'exist\' in the React',
-	              'chain of components, but not in the DOM.\n\nInstead, you need to refactor your code so that the',
-	              'decision of whether or not to show your component is handled by the parent, in their render()',
-	              'function.\n\nIn code, rather than:\n\n  A{render(){return check? <.../> : null;}\n  B{render(){<A check=... />}\n\nmake sure that you',
-	              'use:\n\n  A{render(){return <.../>}\n  B{render(){return <...>{ check ? <A/> : null }<...>}}\n\nThat is:',
-	              'the parent is always responsible for deciding whether or not to render any of its children.',
-	              'It is not the child\'s responsibility to decide whether a render instruction from above should',
-	              'get ignored or not by returning `null`.\n\nWhen any component gets its render() function called,',
-	              'that is the signal that it should be rendering its part of the UI. It may in turn decide not to',
-	              'render all of *its* children, but it should never return `null` for itself. It is not responsible',
-	              'for that decision.'
-	            ].join(' '));
-	          }
-
-	          var fn = this.__outsideClickHandler = generateOutsideCheck(
-	            componentNode,
-	            instance,
-	            clickOutsideHandler,
-	            this.props.outsideClickIgnoreClass || IGNORE_CLASS,
-	            this.props.excludeScrollbar, // fallback not needed, prop always exists because of getDefaultProps
-	            this.props.preventDefault || false,
-	            this.props.stopPropagation || false
-	          );
-
-	          var pos = registeredComponents.length;
-	          registeredComponents.push(this);
-	          handlers[pos] = fn;
-
-	          // If there is a truthy disableOnClickOutside property for this
-	          // component, don't immediately start listening for outside events.
-	          if (!this.props.disableOnClickOutside) {
-	            this.enableOnClickOutside();
-	          }
-	        },
-
-	        /**
-	        * Track for disableOnClickOutside props changes and enable/disable click outside
-	        */
-	        componentWillReceiveProps: function(nextProps) {
-	          if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
-	            this.enableOnClickOutside();
-	          } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
-	            this.disableOnClickOutside();
-	          }
-	        },
-
-	        /**
-	         * Remove the document's event listeners
-	         */
-	        componentWillUnmount: function() {
-	          this.disableOnClickOutside();
-	          this.__outsideClickHandler = false;
-	          var pos = registeredComponents.indexOf(this);
-	          if( pos>-1) {
-	            // clean up so we don't leak memory
-	            if (handlers[pos]) { handlers.splice(pos, 1); }
-	            registeredComponents.splice(pos, 1);
-	          }
-	        },
-
-	        /**
-	         * Can be called to explicitly enable event listening
-	         * for clicks and touches outside of this element.
-	         */
-	        enableOnClickOutside: function() {
-	          var fn = this.__outsideClickHandler;
-	          if (typeof document !== 'undefined') {
-	            var events = this.props.eventTypes || DEFAULT_EVENTS;
-	            if (!events.forEach) {
-	              events = [events];
-	            }
-	            events.forEach(function (eventName) {
-	              document.addEventListener(eventName, fn);
-	            });
-	          }
-	        },
-
-	        /**
-	         * Can be called to explicitly disable event listening
-	         * for clicks and touches outside of this element.
-	         */
-	        disableOnClickOutside: function() {
-	          var fn = this.__outsideClickHandler;
-	          if (typeof document !== 'undefined') {
-	            var events = this.props.eventTypes || DEFAULT_EVENTS;
-	            if (!events.forEach) {
-	              events = [events];
-	            }
-	            events.forEach(function (eventName) {
-	              document.removeEventListener(eventName, fn);
-	            });
-	          }
-	        },
-
-	        /**
-	         * Pass-through render
-	         */
-	        render: function() {
-	          var passedProps = this.props;
-	          var props = {};
-	          Object.keys(this.props).forEach(function(key) {
-	            if (key !== 'excludeScrollbar') {
-	              props[key] = passedProps[key];
-	            }
-	          });
-	          if (Component.prototype.isReactComponent) {
-	            props.ref = 'instance';
-	          }
-	          props.disableOnClickOutside = this.disableOnClickOutside;
-	          props.enableOnClickOutside = this.enableOnClickOutside;
-	          return React.createElement(Component, props);
-	        }
->>>>>>> First working draft of selectTime feature
-	      });
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
-	  }
-
-<<<<<<< HEAD
-	  _createClass(YearDropdown, [{
-	    key: 'render',
-	    value: function render() {
-	      var renderedDropdown = void 0;
-	      switch (this.props.dropdownMode) {
-	        case 'scroll':
-	          renderedDropdown = this.renderScrollMode();
-	          break;
-	        case 'select':
-	          renderedDropdown = this.renderSelectMode();
-	          break;
-	      }
-=======
-	  /**
-	   * This function sets up the library in ways that
-	   * work with the various modulde loading solutions
-	   * used in JavaScript land today.
-	   */
-	  function setupBinding(root, factory) {
-	    if (true) {
-	      // AMD. Register as an anonymous module.
-	      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(32),__webpack_require__(473)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
-	        if (!createReactClass) createReactClass = React.createClass;
-	        return factory(root, React, ReactDom, createReactClass);
-	      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	    } else if (typeof exports === 'object') {
-	      // Node. Note that this does not work with strict
-	      // CommonJS, but only CommonJS-like environments
-	      // that support module.exports
-	      module.exports = factory(root, require('react'), require('react-dom'), require('create-react-class'));
-	    } else {
-	      // Browser globals (root is window)
-	      var createReactClass = React.createClass ? React.createClass : window.createReactClass;
-	      root.onClickOutside = factory(root, React, ReactDOM, createReactClass);
-	    }
-	  }
->>>>>>> First working draft of selectTime feature
 
 	      return _react2.default.createElement(
 	        'div',
@@ -59483,18 +55579,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-<<<<<<< HEAD
 	if (false) {
 	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
 	    Symbol.for &&
 	    Symbol.for('react.element')) ||
 	    0xeac7;
-=======
-	'use strict';
-
-	var React = __webpack_require__(2);
-	var factory = __webpack_require__(474);
->>>>>>> First working draft of selectTime feature
 
 	  var isValidElement = function(object) {
 	    return typeof object === 'object' &&
@@ -59528,13 +55617,9 @@
 
 	'use strict';
 
-<<<<<<< HEAD
 	var emptyFunction = __webpack_require__(9);
 	var invariant = __webpack_require__(12);
 	var ReactPropTypesSecret = __webpack_require__(26);
-=======
-	var _assign = __webpack_require__(4);
->>>>>>> First working draft of selectTime feature
 
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -59792,12 +55877,8 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+	exports.__esModule = true;
+	exports.IGNORE_CLASS_NAME = undefined;
 	exports.default = onClickOutsideHOC;
 
 	var _react = __webpack_require__(2);
@@ -59822,6 +55903,9 @@
 	var registeredComponents = [];
 	var handlers = [];
 
+	var touchEvents = ['touchstart', 'touchmove'];
+	var IGNORE_CLASS_NAME = exports.IGNORE_CLASS_NAME = 'ignore-react-onclickoutside';
+
 	/**
 	 * This function generates the HOC function that you'll use
 	 * in order to impart onOutsideClick listening to an
@@ -59836,8 +55920,6 @@
 	    _inherits(onClickOutside, _Component);
 
 	    function onClickOutside() {
-	      var _ref;
-
 	      var _temp, _this, _ret;
 
 	      _classCallCheck(this, onClickOutside);
@@ -59846,15 +55928,22 @@
 	        args[_key] = arguments[_key];
 	      }
 
-	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = onClickOutside.__proto__ || Object.getPrototypeOf(onClickOutside)).call.apply(_ref, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.__outsideClickHandler = null, _this.enableOnClickOutside = function () {
 	        var fn = _this.__outsideClickHandler;
 	        if (fn && typeof document !== 'undefined') {
 	          var events = _this.props.eventTypes;
 	          if (!events.forEach) {
 	            events = [events];
 	          }
+
 	          events.forEach(function (eventName) {
-	            var handlerOptions = !_this.props.preventDefault && ['touchstart', 'touchmove'].indexOf(eventName) !== -1 ? { passive: true } : null;
+	            var handlerOptions = null;
+	            var isTouchEvent = touchEvents.indexOf(eventName) !== -1;
+
+	            if (isTouchEvent) {
+	              handlerOptions = { passive: !_this.props.preventDefault };
+	            }
+
 	            document.addEventListener(eventName, fn, handlerOptions);
 	          });
 	        }
@@ -59874,183 +55963,166 @@
 	      }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
-	    _createClass(onClickOutside, [{
-	      key: 'getInstance',
+	    /**
+	     * Access the WrappedComponent's instance.
+	     */
+	    onClickOutside.prototype.getInstance = function getInstance() {
+	      if (!WrappedComponent.prototype.isReactComponent) {
+	        return this;
+	      }
+	      var ref = this.instanceRef;
+	      return ref.getInstance ? ref.getInstance() : ref;
+	    };
+
+	    // this is given meaning in componentDidMount/componentDidUpdate
 
 
-	      /**
-	       * Access the WrappedComponent's instance.
-	       */
-	      value: function getInstance() {
-	        if (!WrappedComponent.prototype.isReactComponent) {
-	          return this;
-	        }
-	        var ref = this.instanceRef;
-	        return ref.getInstance ? ref.getInstance() : ref;
+	    /**
+	     * Add click listeners to the current document,
+	     * linked to this component's state.
+	     */
+	    onClickOutside.prototype.componentDidMount = function componentDidMount() {
+	      // If we are in an environment without a DOM such
+	      // as shallow rendering or snapshots then we exit
+	      // early to prevent any unhandled errors being thrown.
+	      if (typeof document === 'undefined' || !document.createElement) {
+	        return;
 	      }
 
-	      // this is given meaning in componentDidMount/componentDidUpdate
+	      var instance = this.getInstance();
 
-	    }, {
-	      key: 'componentDidMount',
-
-
-	      /**
-	       * Add click listeners to the current document,
-	       * linked to this component's state.
-	       */
-	      value: function componentDidMount() {
-	        // If we are in an environment without a DOM such
-	        // as shallow rendering or snapshots then we exit
-	        // early to prevent any unhandled errors being thrown.
-	        if (typeof document === 'undefined' || !document.createElement) {
-	          return;
+	      if (config && typeof config.handleClickOutside === 'function') {
+	        this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
+	        if (typeof this.__clickOutsideHandlerProp !== 'function') {
+	          throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
 	        }
-
-	        var instance = this.getInstance();
-
-	        if (config && typeof config.handleClickOutside === 'function') {
-	          this.__clickOutsideHandlerProp = config.handleClickOutside(instance);
-	          if (typeof this.__clickOutsideHandlerProp !== 'function') {
-	            throw new Error('WrappedComponent lacks a function for processing outside click events specified by the handleClickOutside config option.');
-	          }
-	        } else if (typeof instance.handleClickOutside === 'function') {
-	          if (_react.Component.prototype.isPrototypeOf(instance)) {
-	            this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
-	          } else {
-	            this.__clickOutsideHandlerProp = instance.handleClickOutside;
-	          }
-	        } else if (typeof instance.props.handleClickOutside === 'function') {
-	          this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
+	      } else if (typeof instance.handleClickOutside === 'function') {
+	        if (_react.Component.prototype.isPrototypeOf(instance)) {
+	          this.__clickOutsideHandlerProp = instance.handleClickOutside.bind(instance);
 	        } else {
-	          throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
+	          this.__clickOutsideHandlerProp = instance.handleClickOutside;
 	        }
-
-	        // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
-	        if ((0, _reactDom.findDOMNode)(instance) === null) {
-	          return;
-	        }
-
-	        this.addOutsideClickHandler();
+	      } else if (typeof instance.props.handleClickOutside === 'function') {
+	        this.__clickOutsideHandlerProp = instance.props.handleClickOutside;
+	      } else {
+	        throw new Error('WrappedComponent lacks a handleClickOutside(event) function for processing outside click events.');
 	      }
 
-	      /**
-	      * Track for disableOnClickOutside props changes and enable/disable click outside
-	      */
-
-	    }, {
-	      key: 'componentWillReceiveProps',
-	      value: function componentWillReceiveProps(nextProps) {
-	        if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
-	          this.enableOnClickOutside();
-	        } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
-	          this.disableOnClickOutside();
-	        }
-	      }
-	    }, {
-	      key: 'componentDidUpdate',
-	      value: function componentDidUpdate() {
-	        var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
-
-	        if (componentNode === null && this.__outsideClickHandler) {
-	          this.removeOutsideClickHandler();
-	          return;
-	        }
-
-	        if (componentNode !== null && !this.__outsideClickHandler) {
-	          this.addOutsideClickHandler();
-	          return;
-	        }
+	      // TODO: try to get rid of this, could be done with function ref, might be problematic for SFC though, they do not expose refs
+	      if ((0, _reactDom.findDOMNode)(instance) === null) {
+	        return;
 	      }
 
-	      /**
-	       * Remove all document's event listeners for this component
-	       */
+	      this.addOutsideClickHandler();
+	    };
 
-	    }, {
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        this.removeOutsideClickHandler();
-	      }
-
-	      /**
-	       * Can be called to explicitly enable event listening
-	       * for clicks and touches outside of this element.
-	       */
+	    /**
+	    * Track for disableOnClickOutside props changes and enable/disable click outside
+	    */
 
 
-<<<<<<< HEAD
-	      /**
-	       * Can be called to explicitly disable event listening
-	       * for clicks and touches outside of this element.
-	       */
-
-	    }, {
-	      key: 'addOutsideClickHandler',
-	      value: function addOutsideClickHandler() {
-	        var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
-
-	        var pos = registeredComponents.length;
-	        registeredComponents.push(this);
-	        handlers[pos] = fn;
-
-	        // If there is a truthy disableOnClickOutside property for this
-	        // component, don't immediately start listening for outside events.
-	        if (!this.props.disableOnClickOutside) {
-	          this.enableOnClickOutside();
-	        }
-	      }
-	    }, {
-	      key: 'removeOutsideClickHandler',
-	      value: function removeOutsideClickHandler() {
+	    onClickOutside.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	      if (this.props.disableOnClickOutside && !nextProps.disableOnClickOutside) {
+	        this.enableOnClickOutside();
+	      } else if (!this.props.disableOnClickOutside && nextProps.disableOnClickOutside) {
 	        this.disableOnClickOutside();
-	        this.__outsideClickHandler = false;
-
-	        var pos = registeredComponents.indexOf(this);
-
-	        if (pos > -1) {
-	          // clean up so we don't leak memory
-	          if (handlers[pos]) {
-	            handlers.splice(pos, 1);
-	          }
-	          registeredComponents.splice(pos, 1);
-	        }
 	      }
-	    }, {
-	      key: 'render',
+	    };
 
+	    onClickOutside.prototype.componentDidUpdate = function componentDidUpdate() {
+	      var componentNode = (0, _reactDom.findDOMNode)(this.getInstance());
 
-	      /**
-	       * Pass-through render
-	       */
-	      value: function render() {
-	        var _this2 = this;
-
-	        var props = Object.keys(this.props).filter(function (prop) {
-	          return prop !== 'excludeScrollbar';
-	        }).reduce(function (props, prop) {
-	          props[prop] = _this2.props[prop];
-	          return props;
-	        }, {});
-
-	        if (WrappedComponent.prototype.isReactComponent) {
-	          props.ref = this.getRef;
-	        } else {
-	          props.wrappedRef = this.getRef;
-	        }
-
-	        props.disableOnClickOutside = this.disableOnClickOutside;
-	        props.enableOnClickOutside = this.enableOnClickOutside;
-
-	        return (0, _react.createElement)(WrappedComponent, props);
+	      if (componentNode === null && this.__outsideClickHandler) {
+	        this.removeOutsideClickHandler();
+	        return;
 	      }
-	    }]);
+
+	      if (componentNode !== null && !this.__outsideClickHandler) {
+	        this.addOutsideClickHandler();
+	        return;
+	      }
+	    };
+
+	    /**
+	     * Remove all document's event listeners for this component
+	     */
+
+
+	    onClickOutside.prototype.componentWillUnmount = function componentWillUnmount() {
+	      this.removeOutsideClickHandler();
+	    };
+
+	    /**
+	     * Can be called to explicitly enable event listening
+	     * for clicks and touches outside of this element.
+	     */
+
+
+	    /**
+	     * Can be called to explicitly disable event listening
+	     * for clicks and touches outside of this element.
+	     */
+
+
+	    onClickOutside.prototype.addOutsideClickHandler = function addOutsideClickHandler() {
+	      var fn = this.__outsideClickHandler = (0, _generateOutsideCheck2.default)((0, _reactDom.findDOMNode)(this.getInstance()), this.__clickOutsideHandlerProp, this.props.outsideClickIgnoreClass, this.props.excludeScrollbar, this.props.preventDefault, this.props.stopPropagation);
+
+	      var pos = registeredComponents.length;
+	      registeredComponents.push(this);
+	      handlers[pos] = fn;
+
+	      // If there is a truthy disableOnClickOutside property for this
+	      // component, don't immediately start listening for outside events.
+	      if (!this.props.disableOnClickOutside) {
+	        this.enableOnClickOutside();
+	      }
+	    };
+
+	    onClickOutside.prototype.removeOutsideClickHandler = function removeOutsideClickHandler() {
+	      this.disableOnClickOutside();
+	      this.__outsideClickHandler = false;
+
+	      var pos = registeredComponents.indexOf(this);
+
+	      if (pos > -1) {
+	        // clean up so we don't leak memory
+	        if (handlers[pos]) {
+	          handlers.splice(pos, 1);
+	        }
+	        registeredComponents.splice(pos, 1);
+	      }
+	    };
+
+	    /**
+	     * Pass-through render
+	     */
+	    onClickOutside.prototype.render = function render() {
+	      var _this2 = this;
+
+	      var props = Object.keys(this.props).filter(function (prop) {
+	        return prop !== 'excludeScrollbar';
+	      }).reduce(function (props, prop) {
+	        props[prop] = _this2.props[prop];
+	        return props;
+	      }, {});
+
+	      if (WrappedComponent.prototype.isReactComponent) {
+	        props.ref = this.getRef;
+	      } else {
+	        props.wrappedRef = this.getRef;
+	      }
+
+	      props.disableOnClickOutside = this.disableOnClickOutside;
+	      props.enableOnClickOutside = this.enableOnClickOutside;
+
+	      return (0, _react.createElement)(WrappedComponent, props);
+	    };
 
 	    return onClickOutside;
 	  }(_react.Component), _class.displayName = 'OnClickOutside(' + (WrappedComponent.displayName || WrappedComponent.name || 'Component') + ')', _class.defaultProps = {
 	    eventTypes: ['mousedown', 'touchstart'],
 	    excludeScrollbar: config && config.excludeScrollbar || false,
-	    outsideClickIgnoreClass: 'ignore-react-onclickoutside',
+	    outsideClickIgnoreClass: IGNORE_CLASS_NAME,
 	    preventDefault: false,
 	    stopPropagation: false
 	  }, _class.getClass = function () {
@@ -60064,9 +56136,7 @@
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	exports.default = generateOutsideCheck;
 	/**
 	 * Check whether some DOM node is our Component's node.
@@ -60139,10 +56209,6 @@
 
 /***/ }),
 /* 479 */
-=======
-/***/ }),
-/* 475 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60157,7 +56223,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -60171,21 +56236,6 @@
 	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _month_dropdown_options = __webpack_require__(476);
-
-	var _month_dropdown_options2 = _interopRequireDefault(_month_dropdown_options);
-
-	var _reactOnclickoutside = __webpack_require__(472);
-
-	var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60312,11 +56362,7 @@
 	exports.default = MonthDropdown;
 
 /***/ }),
-<<<<<<< HEAD
 /* 480 */
-=======
-/* 476 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60331,11 +56377,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
-=======
-	var _propTypes = __webpack_require__(468);
->>>>>>> First working draft of selectTime feature
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -60407,11 +56449,7 @@
 	exports.default = MonthDropdownOptions;
 
 /***/ }),
-<<<<<<< HEAD
 /* 481 */
-=======
-/* 477 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60426,7 +56464,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -60436,17 +56473,6 @@
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _week = __webpack_require__(482);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _classnames = __webpack_require__(471);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _week = __webpack_require__(478);
->>>>>>> First working draft of selectTime feature
 
 	var _week2 = _interopRequireDefault(_week);
 
@@ -60600,11 +56626,7 @@
 	exports.default = Month;
 
 /***/ }),
-<<<<<<< HEAD
 /* 482 */
-=======
-/* 478 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60619,7 +56641,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -60629,17 +56650,6 @@
 	var _day2 = _interopRequireDefault(_day);
 
 	var _week_number = __webpack_require__(485);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _day = __webpack_require__(479);
-
-	var _day2 = _interopRequireDefault(_day);
-
-	var _week_number = __webpack_require__(481);
->>>>>>> First working draft of selectTime feature
 
 	var _week_number2 = _interopRequireDefault(_week_number);
 
@@ -60760,11 +56770,7 @@
 	exports.default = Week;
 
 /***/ }),
-<<<<<<< HEAD
 /* 483 */
-=======
-/* 479 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60777,11 +56783,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-<<<<<<< HEAD
 	var _moment = __webpack_require__(354);
-=======
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -60789,7 +56791,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -60799,17 +56800,6 @@
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _date_utils = __webpack_require__(484);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _classnames = __webpack_require__(471);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _date_utils = __webpack_require__(480);
->>>>>>> First working draft of selectTime feature
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61033,11 +57023,7 @@
 	exports.default = Day;
 
 /***/ }),
-<<<<<<< HEAD
 /* 484 */
-=======
-/* 480 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61059,11 +57045,7 @@
 	exports.safeDateFormat = safeDateFormat;
 	exports.getDayOfWeekCode = getDayOfWeekCode;
 
-<<<<<<< HEAD
 	var _moment = __webpack_require__(354);
-=======
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -61200,7 +57182,6 @@
 	  return date && date.clone().locale(locale || _moment2.default.locale()).format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || '';
 	}
 
-<<<<<<< HEAD
 	var dayOfWeekCodes = {
 	  1: 'mon',
 	  2: 'tue',
@@ -61217,10 +57198,6 @@
 
 /***/ }),
 /* 485 */
-=======
-/***/ }),
-/* 481 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61235,11 +57212,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
-=======
-	var _propTypes = __webpack_require__(468);
->>>>>>> First working draft of selectTime feature
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -61304,11 +57277,7 @@
 	exports.default = WeekNumber;
 
 /***/ }),
-<<<<<<< HEAD
 /* 486 */
-=======
-/* 482 */
->>>>>>> First working draft of selectTime feature
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61323,15 +57292,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(468);
+	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _moment = __webpack_require__(349);
+	var _moment = __webpack_require__(354);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _date_utils = __webpack_require__(480);
+	var _date_utils = __webpack_require__(484);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61476,7 +57445,7 @@
 	exports.default = Time;
 
 /***/ }),
-/* 483 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61492,20 +57461,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
-=======
-	var _propTypes = __webpack_require__(468);
->>>>>>> First working draft of selectTime feature
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactPopper = __webpack_require__(487);
+	var _reactPopper = __webpack_require__(488);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -61522,9 +57485,6 @@
 
 	    return _possibleConstructorReturn(this, (PopperComponent.__proto__ || Object.getPrototypeOf(PopperComponent)).apply(this, arguments));
 	  }
-=======
-	var _tether = __webpack_require__(483);
->>>>>>> First working draft of selectTime feature
 
 	  _createClass(PopperComponent, [{
 	    key: 'render',
@@ -61585,7 +57545,7 @@
 	exports.default = PopperComponent;
 
 /***/ }),
-/* 487 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61595,19 +57555,19 @@
 	});
 	exports.Arrow = exports.Popper = exports.Target = exports.Manager = undefined;
 
-	var _Manager2 = __webpack_require__(488);
+	var _Manager2 = __webpack_require__(489);
 
 	var _Manager3 = _interopRequireDefault(_Manager2);
 
-	var _Target2 = __webpack_require__(489);
+	var _Target2 = __webpack_require__(490);
 
 	var _Target3 = _interopRequireDefault(_Target2);
 
-	var _Popper2 = __webpack_require__(490);
+	var _Popper2 = __webpack_require__(491);
 
 	var _Popper3 = _interopRequireDefault(_Popper2);
 
-	var _Arrow2 = __webpack_require__(494);
+	var _Arrow2 = __webpack_require__(495);
 
 	var _Arrow3 = _interopRequireDefault(_Arrow2);
 
@@ -61619,7 +57579,7 @@
 	exports.Arrow = _Arrow3.default;
 
 /***/ }),
-/* 488 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61633,9 +57593,6 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
-=======
-	var _tether = __webpack_require__(484);
->>>>>>> Ran 'npm start build'
 
 	var _propTypes = __webpack_require__(473);
 
@@ -61654,26 +57611,8 @@
 	var Manager = function (_Component) {
 	  _inherits(Manager, _Component);
 
-<<<<<<< HEAD
 	  function Manager() {
 	    var _ref;
-=======
-	  var childCount = _react2.default.Children.count(children);
-	  if (childCount <= 0) {
-	    return new Error(componentName + ' expects at least one child to use as the target element.');
-	  } else if (childCount > 3) {
-	    return new Error('Only a max of two children allowed in ' + componentName + '.');
-	  }
-	}
-
-	var attachmentPositions = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right'];
-
-	var TetherComponent = function (_React$Component) {
-	  _inherits(TetherComponent, _React$Component);
-
-	  function TetherComponent() {
-	    var _ref2;
->>>>>>> Ran 'npm start build'
 
 	    var _temp, _this, _ret;
 
@@ -61731,7 +57670,7 @@
 	exports.default = Manager;
 
 /***/ }),
-/* 489 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61799,7 +57738,7 @@
 	exports.default = Target;
 
 /***/ }),
-/* 490 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61820,11 +57759,11 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _popper = __webpack_require__(491);
+	var _popper = __webpack_require__(492);
 
 	var _popper2 = _interopRequireDefault(_popper);
 
-	var _isEqualShallow = __webpack_require__(492);
+	var _isEqualShallow = __webpack_require__(493);
 
 	var _isEqualShallow2 = _interopRequireDefault(_isEqualShallow);
 
@@ -61904,11 +57843,7 @@
 	            top = _this$state$data$offs.top,
 	            left = _this$state$data$offs.left;
 
-	        if (!left) {
-	          return { top: +top };
-	        } else {
-	          return { left: +left };
-	        }
+	        return { top: top, left: left };
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -61935,7 +57870,7 @@
 	        this._updatePopper();
 	      }
 
-	      if (lastProps.children !== this.props.children) {
+	      if (this._popper && lastProps.children !== this.props.children) {
 	        this._popper.scheduleUpdate();
 	      }
 	    }
@@ -62063,10 +57998,34 @@
 	exports.default = Popper;
 
 /***/ }),
-/* 491 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
+	/* WEBPACK VAR INJECTION */(function(global) {/**!
+	 * @fileOverview Kickass library to create and place poppers near their reference elements.
+	 * @version 1.12.5
+	 * @license
+	 * Copyright (c) 2016 Federico Zivolo and contributors
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
+	(function (global, factory) {
 		 true ? module.exports = factory() :
 		typeof define === 'function' && define.amd ? define(factory) :
 		(global.Popper = factory());
@@ -62102,7 +58061,6 @@
 	  var i = 0;
 	  var elem = document.createElement('span');
 
-<<<<<<< HEAD
 	  // MutationObserver provides a mechanism for scheduling microtasks, which
 	  // are scheduled *before* the next task. This gives us a way to debounce
 	  // a function but ensure it's called *before* the next paint.
@@ -62110,35 +58068,6 @@
 	    fn();
 	    scheduled = false;
 	  });
-=======
-	TetherComponent.propTypes = {
-	  attachment: _propTypes2.default.oneOf(attachmentPositions).isRequired,
-	  children: childrenPropType,
-	  className: _propTypes2.default.string,
-	  classPrefix: _propTypes2.default.string,
-	  classes: _propTypes2.default.object,
-	  constraints: _propTypes2.default.array,
-	  enabled: _propTypes2.default.bool,
-	  id: _propTypes2.default.string,
-	  offset: _propTypes2.default.string,
-	  optimizations: _propTypes2.default.object,
-	  renderElementTag: _propTypes2.default.string,
-	  renderElementTo: _propTypes2.default.any,
-	  style: _propTypes2.default.object,
-	  targetAttachment: _propTypes2.default.oneOf(attachmentPositions),
-	  targetModifier: _propTypes2.default.string,
-	  targetOffset: _propTypes2.default.string
-	};
-	TetherComponent.defaultProps = {
-	  renderElementTag: 'div',
-	  renderElementTo: null
-	};
-	exports.default = TetherComponent;
-
-/***/ }),
-/* 484 */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> First working draft of selectTime feature
 
 	  observer.observe(elem, { attributes: true });
 
@@ -62250,30 +58179,6 @@
 	  return getScrollParent(getParentNode(element));
 	}
 
-	function isOffsetContainer(element) {
-	  var nodeName = element.nodeName;
-
-	  if (nodeName === 'BODY') {
-	    return false;
-	  }
-	  return nodeName === 'HTML' || element.firstElementChild.offsetParent === element;
-	}
-
-	/**
-	 * Finds the root node (document, shadowDOM root) of the given element
-	 * @method
-	 * @memberof Popper.Utils
-	 * @argument {Element} node
-	 * @returns {Element} root node
-	 */
-	function getRoot(node) {
-	  if (node.parentNode !== null) {
-	    return getRoot(node.parentNode);
-	  }
-
-	  return node;
-	}
-
 	/**
 	 * Returns the offset parent of the given element
 	 * @method
@@ -62290,7 +58195,37 @@
 	    return window.document.documentElement;
 	  }
 
+	  // .offsetParent will return the closest TD or TABLE in case
+	  // no offsetParent is present, I hate this job...
+	  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+	    return getOffsetParent(offsetParent);
+	  }
+
 	  return offsetParent;
+	}
+
+	function isOffsetContainer(element) {
+	  var nodeName = element.nodeName;
+
+	  if (nodeName === 'BODY') {
+	    return false;
+	  }
+	  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+	}
+
+	/**
+	 * Finds the root node (document, shadowDOM root) of the given element
+	 * @method
+	 * @memberof Popper.Utils
+	 * @argument {Element} node
+	 * @returns {Element} root node
+	 */
+	function getRoot(node) {
+	  if (node.parentNode !== null) {
+	    return getRoot(node.parentNode);
+	  }
+
+	  return node;
 	}
 
 	/**
@@ -62415,7 +58350,7 @@
 	};
 
 	function getSize(axis, body, html, computedStyle) {
-	  return Math.max(body['offset' + axis], html['client' + axis], html['offset' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
+	  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
 	}
 
 	function getWindowSizes() {
@@ -62429,7 +58364,62 @@
 	  };
 	}
 
-	var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var classCallCheck = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+
+	var createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }
+
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
+	  };
+	}();
+
+
+
+
+
+	var defineProperty = function (obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+
+	  return target;
+	};
 
 	/**
 	 * Given element offsets, generate an output similar to getBoundingClientRect
@@ -62439,7 +58429,7 @@
 	 * @returns {Object} ClientRect like output
 	 */
 	function getClientRect(offsets) {
-	  return _extends$2({}, offsets, {
+	  return _extends({}, offsets, {
 	    right: offsets.left + offsets.width,
 	    bottom: offsets.top + offsets.height
 	  });
@@ -62643,8 +58633,6 @@
 	  return boundaries;
 	}
 
-	var _extends$1 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	function getArea(_ref) {
 	  var width = _ref.width,
 	      height = _ref.height;
@@ -62690,7 +58678,7 @@
 	  };
 
 	  var sortedAreas = Object.keys(rects).map(function (key) {
-	    return _extends$1({
+	    return _extends({
 	      key: key
 	    }, rects[key], {
 	      area: getArea(rects[key])
@@ -62888,6 +58876,7 @@
 	  var data = {
 	    instance: this,
 	    styles: {},
+	    arrowStyles: {},
 	    attributes: {},
 	    flipped: false,
 	    offsets: {}
@@ -62940,10 +58929,10 @@
 	 * @method
 	 * @memberof Popper.Utils
 	 * @argument {String} property (camelCase)
-	 * @returns {String} prefixed property (camelCase)
+	 * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
 	 */
 	function getSupportedPropertyName(property) {
-	  var prefixes = [false, 'ms', 'webkit', 'moz', 'o'];
+	  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
 	  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
 
 	  for (var i = 0; i < prefixes.length - 1; i++) {
@@ -63132,9 +59121,9 @@
 	  // they will be set as HTML attributes of the element
 	  setAttributes(data.instance.popper, data.attributes);
 
-	  // if the arrow style has been computed, apply the arrow style
-	  if (data.offsets.arrow) {
-	    setStyles(data.arrowElement, data.offsets.arrow);
+	  // if arrowElement is defined and arrowStyles has some properties
+	  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+	    setStyles(data.arrowElement, data.arrowStyles);
 	  }
 
 	  return data;
@@ -63167,8 +59156,6 @@
 
 	  return options;
 	}
-
-	var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	/**
 	 * @function
@@ -63256,9 +59243,10 @@
 	    'x-placement': data.placement
 	  };
 
-	  // Update attributes and styles of `data`
-	  data.attributes = attributes;
-	  data.styles = _extends$3({}, styles, data.styles);
+	  // Update `data` attributes, styles and arrowStyles
+	  data.attributes = _extends({}, attributes, data.attributes);
+	  data.styles = _extends({}, styles, data.styles);
+	  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
 
 	  return data;
 	}
@@ -63331,13 +59319,15 @@
 	  var isVertical = ['left', 'right'].indexOf(placement) !== -1;
 
 	  var len = isVertical ? 'height' : 'width';
-	  var side = isVertical ? 'top' : 'left';
+	  var sideCapitalized = isVertical ? 'Top' : 'Left';
+	  var side = sideCapitalized.toLowerCase();
 	  var altSide = isVertical ? 'left' : 'top';
 	  var opSide = isVertical ? 'bottom' : 'right';
 	  var arrowElementSize = getOuterSizes(arrowElement)[len];
 
 	  //
-	  // extends keepTogether behavior making sure the popper and its reference have enough pixels in conjuction
+	  // extends keepTogether behavior making sure the popper and its
+	  // reference have enough pixels in conjuction
 	  //
 
 	  // top/left side
@@ -63353,7 +59343,9 @@
 	  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
 
 	  // Compute the sideValue using the updated popper offsets
-	  var sideValue = center - getClientRect(data.offsets.popper)[side];
+	  // take popper margin in account because we don't have this info available
+	  var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace('px', '');
+	  var sideValue = center - getClientRect(data.offsets.popper)[side] - popperMarginSide;
 
 	  // prevent arrowElement from being placed not contiguously to its popper
 	  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
@@ -63435,8 +59427,6 @@
 	  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
 	  return counter ? arr.reverse() : arr;
 	}
-
-	var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var BEHAVIORS = {
 	  FLIP: 'flip',
@@ -63526,7 +59516,7 @@
 
 	      // this object contains `position`, we want to preserve it along with
 	      // any additional property we may add in the future
-	      data.offsets.popper = _extends$4({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+	      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
 
 	      data = runModifiers(data.instance.modifiers, data, 'flip');
 	    }
@@ -63676,9 +59666,9 @@
 	      } else {
 	        return a.concat(b);
 	      }
-	    }, []
+	    }, [])
 	    // Here we convert the string values into number values (in px)
-	    ).map(function (str) {
+	    .map(function (str) {
 	      return toValue(str, measurement, popperOffsets, referenceOffsets);
 	    });
 	  });
@@ -63737,10 +59727,6 @@
 	  return data;
 	}
 
-	var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	/**
 	 * @function
 	 * @memberof Modifiers
@@ -63770,7 +59756,7 @@
 	      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.max(popper[placement], boundaries[placement]);
 	      }
-	      return _defineProperty({}, placement, value);
+	      return defineProperty({}, placement, value);
 	    },
 	    secondary: function secondary(placement) {
 	      var mainSide = placement === 'right' ? 'left' : 'top';
@@ -63778,23 +59764,19 @@
 	      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
 	      }
-	      return _defineProperty({}, mainSide, value);
+	      return defineProperty({}, mainSide, value);
 	    }
 	  };
 
 	  order.forEach(function (placement) {
 	    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
-	    popper = _extends$5({}, popper, check[side](placement));
+	    popper = _extends({}, popper, check[side](placement));
 	  });
 
 	  data.offsets.popper = popper;
 
 	  return data;
 	}
-
-	var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty$1(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	/**
 	 * @function
@@ -63819,11 +59801,11 @@
 	    var measurement = isVertical ? 'width' : 'height';
 
 	    var shiftOffsets = {
-	      start: _defineProperty$1({}, side, reference[side]),
-	      end: _defineProperty$1({}, side, reference[side] + reference[measurement] - popper[measurement])
+	      start: defineProperty({}, side, reference[side]),
+	      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
 	    };
 
-	    data.offsets.popper = _extends$6({}, popper, shiftOffsets[shiftvariation]);
+	    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
 	  }
 
 	  return data;
@@ -63885,7 +59867,7 @@
 
 	  var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
 
-	  popper[isHoriz ? 'left' : 'top'] = reference[placement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+	  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
 
 	  data.placement = getOppositePlacement(placement);
 	  data.offsets.popper = getClientRect(popper);
@@ -63963,6 +59945,9 @@
 	   * '10 - 5vh + 3%'
 	   * '-10px + 5vh, 5px - 6%'
 	   * ```
+	   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+	   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+	   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
 	   *
 	   * @memberof modifiers
 	   * @inner
@@ -64225,6 +60210,7 @@
 	 * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
 	 * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
 	 * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
+	 * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
 	 * @property {Object} data.boundaries Offsets of the popper boundaries
 	 * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
 	 * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
@@ -64304,12 +60290,6 @@
 	 * @param {dataObject} data
 	 */
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	// Utils
 	// Methods
 	var Popper = function () {
@@ -64325,8 +60305,7 @@
 	    var _this = this;
 
 	    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-	    _classCallCheck(this, Popper);
+	    classCallCheck(this, Popper);
 
 	    this.scheduleUpdate = function () {
 	      return requestAnimationFrame(_this.update);
@@ -64360,9 +60339,9 @@
 	      return _extends({
 	        name: name
 	      }, _this.options.modifiers[name]);
-	    }
+	    })
 	    // sort the modifiers by order
-	    ).sort(function (a, b) {
+	    .sort(function (a, b) {
 	      return a.order - b.order;
 	    });
 
@@ -64392,7 +60371,7 @@
 	  // class prototype and break stuff like Sinon stubs
 
 
-	  _createClass(Popper, [{
+	  createClass(Popper, [{
 	    key: 'update',
 	    value: function update$$1() {
 	      return update.call(this);
@@ -64438,7 +60417,6 @@
 	     */
 
 	  }]);
-
 	  return Popper;
 	}();
 
@@ -64475,7 +60453,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 492 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*!
@@ -64487,7 +60465,7 @@
 
 	'use strict';
 
-	var isPrimitive = __webpack_require__(493);
+	var isPrimitive = __webpack_require__(494);
 
 	module.exports = function isEqual(a, b) {
 	  if (!a && !b) { return true; }
@@ -64508,7 +60486,7 @@
 
 
 /***/ }),
-/* 493 */
+/* 494 */
 /***/ (function(module, exports) {
 
 	/*!
@@ -64527,7 +60505,7 @@
 
 
 /***/ }),
-/* 494 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64592,7 +60570,6 @@
 	  popper: _propTypes2.default.object.isRequired
 	};
 
-<<<<<<< HEAD
 	Arrow.propTypes = {
 	  component: _propTypes2.default.oneOfType([_propTypes2.default.node, _propTypes2.default.func]),
 	  innerRef: _propTypes2.default.func,
@@ -64602,15 +60579,7 @@
 	exports.default = Arrow;
 
 /***/ }),
-<<<<<<< HEAD
-/* 495 */
-=======
-/***/ }),
-/* 484 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 485 */
->>>>>>> Ran 'npm start build'
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64625,11 +60594,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
-=======
-	var _propTypes = __webpack_require__(468);
->>>>>>> First working draft of selectTime feature
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -64677,15 +60642,7 @@
 	exports.default = CodeExampleComponent;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 496 */
-=======
-/* 485 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 486 */
->>>>>>> Ran 'npm start build'
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64700,19 +60657,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -64787,15 +60736,7 @@
 	exports.default = CustomDateFormat;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 497 */
-=======
-/* 486 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 487 */
->>>>>>> Ran 'npm start build'
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64810,19 +60751,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -64887,15 +60820,7 @@
 	exports.default = CustomClassName;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 498 */
-=======
-/* 487 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 488 */
->>>>>>> Ran 'npm start build'
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64910,19 +60835,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -64987,9 +60904,7 @@
 	exports.default = CustomCalendarClassName;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 499 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65075,13 +60990,7 @@
 	exports.default = CustomDayClassNames;
 
 /***/ }),
-/* 500 */
-=======
-/* 488 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 489 */
->>>>>>> Ran 'npm start build'
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65095,11 +61004,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -65127,15 +61032,7 @@
 	}
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 501 */
-=======
-/* 489 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 490 */
->>>>>>> Ran 'npm start build'
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65150,19 +61047,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -65252,15 +61141,7 @@
 	exports.default = SpecificDateRange;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 502 */
-=======
-/* 490 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 491 */
->>>>>>> Ran 'npm start build'
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65275,11 +61156,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -65360,15 +61237,7 @@
 	exports.default = CustomStartDate;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 503 */
-=======
-/* 491 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 492 */
->>>>>>> Ran 'npm start build'
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65383,19 +61252,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -65476,15 +61337,7 @@
 	exports.default = ExcludeDates;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 504 */
-=======
-/* 492 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 493 */
->>>>>>> Ran 'npm start build'
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65499,19 +61352,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -65593,9 +61438,7 @@
 	exports.default = highlightDates;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 505 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65735,13 +61578,7 @@
 	exports.default = highlightDatesRanges;
 
 /***/ }),
-/* 506 */
-=======
-/* 493 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 494 */
->>>>>>> Ran 'npm start build'
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65756,19 +61593,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -65850,15 +61679,7 @@
 	exports.default = includeDates;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 507 */
-=======
-/* 494 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 495 */
->>>>>>> Ran 'npm start build'
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65873,11 +61694,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -65962,15 +61779,7 @@
 	exports.default = FilterDates;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 508 */
-=======
-/* 495 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 496 */
->>>>>>> Ran 'npm start build'
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65985,11 +61794,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -66068,15 +61873,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 509 */
-=======
-/* 496 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 497 */
->>>>>>> Ran 'npm start build'
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66091,19 +61888,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -66181,15 +61970,7 @@
 	exports.default = DisabledKeyboardNavigation;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 510 */
-=======
-/* 497 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 498 */
->>>>>>> Ran 'npm start build'
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66204,19 +61985,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -66282,15 +62055,7 @@
 	exports.default = ClearInput;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 511 */
-=======
-/* 498 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 499 */
->>>>>>> Ran 'npm start build'
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66305,11 +62070,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -66406,15 +62167,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 512 */
-=======
-/* 499 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 500 */
->>>>>>> Ran 'npm start build'
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66429,19 +62182,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -66517,15 +62262,7 @@
 	exports.default = ConfigurePopper;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 513 */
-=======
-/* 500 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 501 */
->>>>>>> Ran 'npm start build'
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66540,19 +62277,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -66644,15 +62373,7 @@
 	exports.default = DateRange;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 514 */
-=======
-/* 501 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 502 */
->>>>>>> Ran 'npm start build'
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66667,19 +62388,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -66744,14 +62457,7 @@
 	exports.default = TabIndex;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 515 */
-=======
-/* 502 */
-=======
-/* 503 */
->>>>>>> Ran 'npm start build'
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66766,269 +62472,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var YearDropdown = function (_React$Component) {
-	  _inherits(YearDropdown, _React$Component);
-
-	  function YearDropdown(props) {
-	    _classCallCheck(this, YearDropdown);
-
-	    var _this = _possibleConstructorReturn(this, (YearDropdown.__proto__ || Object.getPrototypeOf(YearDropdown)).call(this, props));
-
-	    _this.handleChange = function (date) {
-	      _this.setState({
-	        startDate: date
-	      });
-	    };
-
-	    _this.state = {
-	      startDate: (0, _moment2.default)()
-	    };
-	    return _this;
-	  }
-
-	  _createClass(YearDropdown, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'pre',
-	          { className: 'column example__code' },
-	          _react2.default.createElement(
-	            'code',
-	            { className: 'jsx' },
-	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    showYearDropdown\n    dateFormatCalendar="MMMM"\n    scrollableYearDropdown\n/>\n'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'column' },
-	          _react2.default.createElement(_reactDatepicker2.default, {
-	            selected: this.state.startDate,
-	            onChange: this.handleChange,
-	            showYearDropdown: true,
-	            dateFormatCalendar: 'MMMM',
-	            scrollableYearDropdown: true })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return YearDropdown;
-	}(_react2.default.Component);
-
-	exports.default = YearDropdown;
-
-/***/ }),
-/* 504 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MonthDropdown = function (_React$Component) {
-	  _inherits(MonthDropdown, _React$Component);
-
-	  function MonthDropdown(props) {
-	    _classCallCheck(this, MonthDropdown);
-
-	    var _this = _possibleConstructorReturn(this, (MonthDropdown.__proto__ || Object.getPrototypeOf(MonthDropdown)).call(this, props));
-
-	    _this.handleChange = function (date) {
-	      _this.setState({
-	        startDate: date
-	      });
-	    };
-
-	    _this.state = {
-	      startDate: (0, _moment2.default)()
-	    };
-	    return _this;
-	  }
-
-	  _createClass(MonthDropdown, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'pre',
-	          { className: 'column example__code' },
-	          _react2.default.createElement(
-	            'code',
-	            { className: 'jsx' },
-	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    showMonthDropdown\n/>\n'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'column' },
-	          _react2.default.createElement(_reactDatepicker2.default, {
-	            selected: this.state.startDate,
-	            onChange: this.handleChange,
-	            showMonthDropdown: true })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return MonthDropdown;
-	}(_react2.default.Component);
-
-	exports.default = MonthDropdown;
-
-/***/ }),
-/* 505 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var YearDropdown = function (_React$Component) {
-	  _inherits(YearDropdown, _React$Component);
-
-	  function YearDropdown(props) {
-	    _classCallCheck(this, YearDropdown);
-
-	    var _this = _possibleConstructorReturn(this, (YearDropdown.__proto__ || Object.getPrototypeOf(YearDropdown)).call(this, props));
-
-	    _this.handleChange = function (date) {
-	      _this.setState({
-	        startDate: date
-	      });
-	    };
-
-	    _this.state = {
-	      startDate: (0, _moment2.default)()
-	    };
-	    return _this;
-	  }
-
-	  _createClass(YearDropdown, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'pre',
-	          { className: 'column example__code' },
-	          _react2.default.createElement(
-	            'code',
-	            { className: 'jsx' },
-	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    peekNextMonth\n    showMonthDropdown\n    showYearDropdown\n    dropdownMode="select"\n/>\n'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'column' },
-	          _react2.default.createElement(_reactDatepicker2.default, {
-	            selected: this.state.startDate,
-	            onChange: this.handleChange,
-	            peekNextMonth: true,
-	            showMonthDropdown: true,
-	            showYearDropdown: true,
-	            dropdownMode: 'select' })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return YearDropdown;
-	}(_react2.default.Component);
-
-	exports.default = YearDropdown;
-
-/***/ }),
-<<<<<<< HEAD
-/* 505 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 506 */
->>>>>>> Ran 'npm start build'
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
@@ -67101,7 +62544,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 516 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67185,7 +62628,7 @@
 	exports.default = MonthDropdown;
 
 /***/ }),
-/* 517 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67272,7 +62715,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 518 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67292,13 +62735,6 @@
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -67363,15 +62799,7 @@
 	exports.default = Today;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 519 */
-=======
-/* 506 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 507 */
->>>>>>> Ran 'npm start build'
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67386,15 +62814,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _moment = __webpack_require__(349);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -67467,6 +62887,8 @@
 	            dateFormat: 'DD-MMM YYYY HH:mm',
 	            todayButton: todayTxt,
 	            selected: selected,
+	            minDate: moment('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset),
+	            maxDate: moment('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset),
 	            onChange: this.handleChange }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -67534,15 +62956,7 @@
 	exports.default = TimeZoneDate;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 520 */
-=======
-/* 507 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 508 */
->>>>>>> Ran 'npm start build'
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67557,19 +62971,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -67634,15 +63040,7 @@
 	exports.default = Inline;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 521 */
-=======
-/* 508 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 509 */
->>>>>>> Ran 'npm start build'
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67657,19 +63055,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -67737,15 +63127,7 @@
 	exports.default = OpenToDate;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 522 */
-=======
-/* 509 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 510 */
->>>>>>> Ran 'npm start build'
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67760,11 +63142,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
-=======
-	var _reactDatepicker = __webpack_require__(347);
->>>>>>> First working draft of selectTime feature
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -67838,15 +63216,7 @@
 	exports.default = FixedCalendar;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 523 */
-=======
-/* 510 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 511 */
->>>>>>> Ran 'npm start build'
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67861,19 +63231,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -67938,15 +63300,7 @@
 	exports.default = Default;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 524 */
-=======
-/* 511 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 512 */
->>>>>>> Ran 'npm start build'
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67961,7 +63315,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _propTypes = __webpack_require__(473);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -67971,17 +63324,6 @@
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _propTypes = __webpack_require__(468);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68077,15 +63419,7 @@
 	exports.default = CustomInput;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 525 */
-=======
-/* 512 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 513 */
->>>>>>> Ran 'npm start build'
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68100,19 +63434,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68177,15 +63503,7 @@
 	exports.default = MultiMonth;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 526 */
-=======
-/* 513 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 514 */
->>>>>>> Ran 'npm start build'
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68200,19 +63518,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68278,15 +63588,7 @@
 	exports.default = MultiMonthDrp;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 527 */
-=======
-/* 514 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 515 */
->>>>>>> Ran 'npm start build'
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68301,19 +63603,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68385,15 +63679,7 @@
 	exports.default = Children;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 528 */
-=======
-/* 515 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 516 */
->>>>>>> Ran 'npm start build'
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68408,19 +63694,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68485,15 +63763,7 @@
 	exports.default = WithPortal;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 529 */
-=======
-/* 516 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 517 */
->>>>>>> Ran 'npm start build'
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68508,19 +63778,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68596,15 +63858,7 @@
 	exports.default = InlinePortalVersion;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 530 */
-=======
-/* 517 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 518 */
->>>>>>> Ran 'npm start build'
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68619,19 +63873,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68708,14 +63954,7 @@
 	exports.default = RawChanges;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 531 */
-=======
-/* 518 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 519 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68730,11 +63969,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(347);
+	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(349);
+	var _moment = __webpack_require__(354);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68806,7 +64045,7 @@
 	exports.default = ShowTime;
 
 /***/ }),
-/* 520 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68821,11 +64060,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(347);
+	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(349);
+	var _moment = __webpack_require__(354);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -68908,7 +64147,7 @@
 	exports.default = ExcludeTimes;
 
 /***/ }),
-/* 521 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68923,11 +64162,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDatepicker = __webpack_require__(347);
+	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
-	var _moment = __webpack_require__(349);
+	var _moment = __webpack_require__(354);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -69013,28 +64252,15 @@
 	exports.default = ExcludeTimePeriod;
 
 /***/ }),
-/* 522 */
->>>>>>> Ran 'npm start build'
+/* 535 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 532 */
-531,
-/* 533 */
-=======
-/* 519 */
-518,
-/* 520 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 523 */
-522,
-/* 524 */
->>>>>>> Ran 'npm start build'
+/* 536 */
+535,
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69049,19 +64275,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-<<<<<<< HEAD
 	var _reactDatepicker = __webpack_require__(352);
 
 	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 	var _moment = __webpack_require__(354);
-=======
-	var _reactDatepicker = __webpack_require__(347);
-
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-	var _moment = __webpack_require__(349);
->>>>>>> First working draft of selectTime feature
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -69109,15 +64327,7 @@
 	exports.default = HeroExample;
 
 /***/ }),
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* 534 */
-=======
-/* 521 */
->>>>>>> First working draft of selectTime feature
-=======
-/* 525 */
->>>>>>> Ran 'npm start build'
+/* 538 */
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
