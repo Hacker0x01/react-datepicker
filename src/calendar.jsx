@@ -80,7 +80,8 @@ export default class Calendar extends React.Component {
     super(props)
     this.state = {
       date: this.localizeMoment(this.getDateInView()),
-      selectingDate: null
+      selectingDate: null,
+      monthRef: null
     }
   }
 
@@ -94,6 +95,12 @@ export default class Calendar extends React.Component {
         date: this.localizeMoment(nextProps.openToDate)
       })
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      monthRef: this.refs.monthContainer
+    })
   }
 
   handleClickOutside = (event) => {
@@ -277,7 +284,7 @@ export default class Calendar extends React.Component {
       var monthDate = this.state.date.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
-          <div key={monthKey} className="react-datepicker__month-container">
+          <div key={monthKey} ref="monthContainer" className="react-datepicker__month-container">
             <div className="react-datepicker__header">
               {this.renderCurrentMonth(monthDate)}
               <div
@@ -335,7 +342,8 @@ export default class Calendar extends React.Component {
             todayButton={this.props.todayButton}
             showMonthDropdown={this.props.showMonthDropdown}
             showYearDropdown={this.props.showYearDropdown}
-            withPortal={this.props.withPortal} />
+            withPortal={this.props.withPortal}
+            monthRef={this.state.monthRef} />
       )
     } else {
       return

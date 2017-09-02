@@ -14,7 +14,8 @@ export default class Time extends React.Component {
     withPortal: PropTypes.bool,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
-    excludeTimes: PropTypes.array
+    excludeTimes: PropTypes.array,
+    monthRef: PropTypes.object
   }
 
   static get defaultProps () {
@@ -90,6 +91,11 @@ export default class Time extends React.Component {
   }
 
   render () {
+    let height = null
+    if (this.props.monthRef) {
+      height = this.props.monthRef.clientHeight - 37
+    }
+
     return (
       <div className={`react-datepicker__time-container ${(this.props.todayButton) ? 'react-datepicker__time-container--with-today-button' : ''}`}>
         <div className="react-datepicker__header react-datepicker__header--time">
@@ -97,7 +103,7 @@ export default class Time extends React.Component {
         </div>
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
-            <ul className={this.ulClasses()} ref="timeList">
+            <ul className={this.ulClasses()} ref="timeList" style={height ? {height} : {}}>
               {this.renderTimes.bind(this)()}
             </ul>
           </div>
