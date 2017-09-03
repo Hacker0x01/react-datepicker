@@ -45,6 +45,7 @@ export default class Calendar extends React.Component {
     forceShowMonthNavigation: PropTypes.bool,
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
+    onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
@@ -63,8 +64,11 @@ export default class Calendar extends React.Component {
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
+    useWeekdaysShort: PropTypes.bool,
     withPortal: PropTypes.bool,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    weekLabel: PropTypes.string,
+    yearDropdownItemNumber: PropTypes.number
   }
 
   static get defaultProps () {
@@ -80,8 +84,7 @@ export default class Calendar extends React.Component {
     super(props)
     this.state = {
       date: this.localizeMoment(this.getDateInView()),
-      selectingDate: null,
-      monthRef: null
+      selectingDate: null
     }
   }
 
@@ -95,12 +98,6 @@ export default class Calendar extends React.Component {
         date: this.localizeMoment(nextProps.openToDate)
       })
     }
-  }
-
-  componentDidMount() {
-    this.setState({
-      monthRef: this.refs.monthContainer
-    })
   }
 
   handleClickOutside = (event) => {
@@ -343,7 +340,7 @@ export default class Calendar extends React.Component {
             showMonthDropdown={this.props.showMonthDropdown}
             showYearDropdown={this.props.showYearDropdown}
             withPortal={this.props.withPortal}
-            monthRef={this.state.monthRef} />
+            monthRef={this.refs.monthContainer} />
       )
     } else {
       return

@@ -79,7 +79,10 @@ export default class DatePicker extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
+    weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
+    yearDropdownItemNumber: PropTypes.number,
+    shouldCloseOnSelect: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
@@ -89,6 +92,7 @@ export default class DatePicker extends React.Component {
 
   static get defaultProps () {
     return {
+      allowSameDay: false,
       dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
@@ -104,6 +108,7 @@ export default class DatePicker extends React.Component {
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false,
+      shouldCloseOnSelect: true,
       showTimeSelect: false,
       timeIntervals: 30
     }
@@ -230,7 +235,6 @@ export default class DatePicker extends React.Component {
     } else if (!this.props.inline) {
       this.setOpen(false)
     }
-    if (!this.props.showTimeSelect) this.setOpen(false)
   }
 
   setSelected = (date, event, keepInput) => {
@@ -404,13 +408,15 @@ export default class DatePicker extends React.Component {
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
+        dayClassName={this.props.dayClassName}
         showTimeSelect={this.props.showTimeSelect}
         onTimeChange={this.handleTimeChange}
         timeIntervals={this.props.timeIntervals}
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
-        className={this.props.calendarClassName}>
+        className={this.props.calendarClassName}
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}
     </WrappedCalendar>
   }
