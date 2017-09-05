@@ -1116,7 +1116,7 @@
 
 /***/ }),
 /* 15 */
-[534, 6],
+[535, 6],
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5936,7 +5936,7 @@
 
 /***/ }),
 /* 50 */
-[534, 35],
+[535, 35],
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20468,7 +20468,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(533);
+	var _hero_example = __webpack_require__(534);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20767,9 +20767,13 @@
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(531);
+	var _dont_close_onSelect = __webpack_require__(531);
+
+	var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
 	__webpack_require__(532);
+
+	__webpack_require__(533);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20901,6 +20905,9 @@
 	    }, {
 	      title: 'Get raw input value on change',
 	      component: _react2.default.createElement(_raw_change2.default, null)
+	    }, {
+	      title: 'Don\'t hide calendar on date selection',
+	      component: _react2.default.createElement(_dont_close_onSelect2.default, null)
 	    }], _this.renderExamples = function () {
 	      return _this.examples.map(function (example, index) {
 	        return _react2.default.createElement(
@@ -38669,7 +38676,8 @@
 
 	        utcOffset: (0, _moment2.default)().utcOffset(),
 	        monthsShown: 1,
-	        withPortal: false
+	        withPortal: false,
+	        shouldCloseOnSelect: true
 	      };
 	    }
 	  }]);
@@ -38774,7 +38782,9 @@
 	        return _this.preventFocusTimeout;
 	      });
 	      _this.setSelected(date, event);
-	      if (!_this.props.inline) {
+	      if (!_this.props.shouldCloseOnSelect) {
+	        _this.setPreSelection(date);
+	      } else if (!_this.props.inline) {
 	        _this.setOpen(false);
 	      }
 	    };
@@ -38839,6 +38849,7 @@
 	        event.preventDefault();
 	        if (_moment2.default.isMoment(_this.state.preSelection) || _moment2.default.isDate(_this.state.preSelection)) {
 	          _this.handleSelect(copy, event);
+	          !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
 	        } else {
 	          _this.setOpen(false);
 	        }
@@ -38847,8 +38858,7 @@
 	        _this.setOpen(false);
 	      } else if (eventKey === 'Tab') {
 	        _this.setOpen(false);
-	      }
-	      if (!_this.props.disabledKeyboardNavigation) {
+	      } else if (!_this.props.disabledKeyboardNavigation) {
 	        var newSelection = void 0;
 	        switch (eventKey) {
 	          case 'ArrowLeft':
@@ -38991,7 +39001,9 @@
 	  _createClass(DatePicker, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.inline && !this.props.selected.isSame(nextProps.selected, 'month')) {
+	      var currentMonth = this.props.selected && this.props.selected.month();
+	      var nextMonth = nextProps.selected && nextProps.selected.month();
+	      if (this.props.inline && currentMonth !== nextMonth) {
 	        this.setPreSelection(nextProps.selected);
 	      }
 	    }
@@ -39109,7 +39121,8 @@
 	  value: _propTypes2.default.string,
 	  weekLabel: _propTypes2.default.string,
 	  withPortal: _propTypes2.default.bool,
-	  yearDropdownItemNumber: _propTypes2.default.number
+	  yearDropdownItemNumber: _propTypes2.default.number,
+	  shouldCloseOnSelect: _propTypes2.default.bool
 	};
 	exports.default = DatePicker;
 
@@ -57585,11 +57598,7 @@
 	            top = _this$state$data$offs.top,
 	            left = _this$state$data$offs.left;
 
-	        if (!left) {
-	          return { top: +top };
-	        } else {
-	          return { left: +left };
-	        }
+	        return { top: top, left: left };
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -57616,7 +57625,7 @@
 	        this._updatePopper();
 	      }
 
-	      if (lastProps.children !== this.props.children) {
+	      if (this._popper && lastProps.children !== this.props.children) {
 	        this._popper.scheduleUpdate();
 	      }
 	    }
@@ -57747,7 +57756,31 @@
 /* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
+	/* WEBPACK VAR INJECTION */(function(global) {/**!
+	 * @fileOverview Kickass library to create and place poppers near their reference elements.
+	 * @version 1.12.3
+	 * @license
+	 * Copyright (c) 2016 Federico Zivolo and contributors
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
+	(function (global, factory) {
 		 true ? module.exports = factory() :
 		typeof define === 'function' && define.amd ? define(factory) :
 		(global.Popper = factory());
@@ -57901,30 +57934,6 @@
 	  return getScrollParent(getParentNode(element));
 	}
 
-	function isOffsetContainer(element) {
-	  var nodeName = element.nodeName;
-
-	  if (nodeName === 'BODY') {
-	    return false;
-	  }
-	  return nodeName === 'HTML' || element.firstElementChild.offsetParent === element;
-	}
-
-	/**
-	 * Finds the root node (document, shadowDOM root) of the given element
-	 * @method
-	 * @memberof Popper.Utils
-	 * @argument {Element} node
-	 * @returns {Element} root node
-	 */
-	function getRoot(node) {
-	  if (node.parentNode !== null) {
-	    return getRoot(node.parentNode);
-	  }
-
-	  return node;
-	}
-
 	/**
 	 * Returns the offset parent of the given element
 	 * @method
@@ -57941,7 +57950,37 @@
 	    return window.document.documentElement;
 	  }
 
+	  // .offsetParent will return the closest TD or TABLE in case
+	  // no offsetParent is present, I hate this job...
+	  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+	    return getOffsetParent(offsetParent);
+	  }
+
 	  return offsetParent;
+	}
+
+	function isOffsetContainer(element) {
+	  var nodeName = element.nodeName;
+
+	  if (nodeName === 'BODY') {
+	    return false;
+	  }
+	  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+	}
+
+	/**
+	 * Finds the root node (document, shadowDOM root) of the given element
+	 * @method
+	 * @memberof Popper.Utils
+	 * @argument {Element} node
+	 * @returns {Element} root node
+	 */
+	function getRoot(node) {
+	  if (node.parentNode !== null) {
+	    return getRoot(node.parentNode);
+	  }
+
+	  return node;
 	}
 
 	/**
@@ -58066,7 +58105,7 @@
 	};
 
 	function getSize(axis, body, html, computedStyle) {
-	  return Math.max(body['offset' + axis], html['client' + axis], html['offset' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
+	  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
 	}
 
 	function getWindowSizes() {
@@ -58080,7 +58119,62 @@
 	  };
 	}
 
-	var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var classCallCheck = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+
+	var createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }
+
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
+	  };
+	}();
+
+
+
+
+
+	var defineProperty = function (obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+
+	  return target;
+	};
 
 	/**
 	 * Given element offsets, generate an output similar to getBoundingClientRect
@@ -58090,7 +58184,7 @@
 	 * @returns {Object} ClientRect like output
 	 */
 	function getClientRect(offsets) {
-	  return _extends$2({}, offsets, {
+	  return _extends({}, offsets, {
 	    right: offsets.left + offsets.width,
 	    bottom: offsets.top + offsets.height
 	  });
@@ -58294,8 +58388,6 @@
 	  return boundaries;
 	}
 
-	var _extends$1 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	function getArea(_ref) {
 	  var width = _ref.width,
 	      height = _ref.height;
@@ -58341,7 +58433,7 @@
 	  };
 
 	  var sortedAreas = Object.keys(rects).map(function (key) {
-	    return _extends$1({
+	    return _extends({
 	      key: key
 	    }, rects[key], {
 	      area: getArea(rects[key])
@@ -58539,6 +58631,7 @@
 	  var data = {
 	    instance: this,
 	    styles: {},
+	    arrowStyles: {},
 	    attributes: {},
 	    flipped: false,
 	    offsets: {}
@@ -58591,10 +58684,10 @@
 	 * @method
 	 * @memberof Popper.Utils
 	 * @argument {String} property (camelCase)
-	 * @returns {String} prefixed property (camelCase)
+	 * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
 	 */
 	function getSupportedPropertyName(property) {
-	  var prefixes = [false, 'ms', 'webkit', 'moz', 'o'];
+	  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
 	  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
 
 	  for (var i = 0; i < prefixes.length - 1; i++) {
@@ -58783,9 +58876,9 @@
 	  // they will be set as HTML attributes of the element
 	  setAttributes(data.instance.popper, data.attributes);
 
-	  // if the arrow style has been computed, apply the arrow style
-	  if (data.offsets.arrow) {
-	    setStyles(data.arrowElement, data.offsets.arrow);
+	  // if arrowElement is defined and arrowStyles has some properties
+	  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+	    setStyles(data.arrowElement, data.arrowStyles);
 	  }
 
 	  return data;
@@ -58818,8 +58911,6 @@
 
 	  return options;
 	}
-
-	var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	/**
 	 * @function
@@ -58907,9 +58998,10 @@
 	    'x-placement': data.placement
 	  };
 
-	  // Update attributes and styles of `data`
-	  data.attributes = attributes;
-	  data.styles = _extends$3({}, styles, data.styles);
+	  // Update `data` attributes, styles and arrowStyles
+	  data.attributes = _extends({}, attributes, data.attributes);
+	  data.styles = _extends({}, styles, data.styles);
+	  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
 
 	  return data;
 	}
@@ -58982,13 +59074,15 @@
 	  var isVertical = ['left', 'right'].indexOf(placement) !== -1;
 
 	  var len = isVertical ? 'height' : 'width';
-	  var side = isVertical ? 'top' : 'left';
+	  var sideCapitalized = isVertical ? 'Top' : 'Left';
+	  var side = sideCapitalized.toLowerCase();
 	  var altSide = isVertical ? 'left' : 'top';
 	  var opSide = isVertical ? 'bottom' : 'right';
 	  var arrowElementSize = getOuterSizes(arrowElement)[len];
 
 	  //
-	  // extends keepTogether behavior making sure the popper and its reference have enough pixels in conjuction
+	  // extends keepTogether behavior making sure the popper and its
+	  // reference have enough pixels in conjuction
 	  //
 
 	  // top/left side
@@ -59004,7 +59098,9 @@
 	  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
 
 	  // Compute the sideValue using the updated popper offsets
-	  var sideValue = center - getClientRect(data.offsets.popper)[side];
+	  // take popper margin in account because we don't have this info available
+	  var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace('px', '');
+	  var sideValue = center - getClientRect(data.offsets.popper)[side] - popperMarginSide;
 
 	  // prevent arrowElement from being placed not contiguously to its popper
 	  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
@@ -59086,8 +59182,6 @@
 	  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
 	  return counter ? arr.reverse() : arr;
 	}
-
-	var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var BEHAVIORS = {
 	  FLIP: 'flip',
@@ -59177,7 +59271,7 @@
 
 	      // this object contains `position`, we want to preserve it along with
 	      // any additional property we may add in the future
-	      data.offsets.popper = _extends$4({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+	      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
 
 	      data = runModifiers(data.instance.modifiers, data, 'flip');
 	    }
@@ -59327,9 +59421,9 @@
 	      } else {
 	        return a.concat(b);
 	      }
-	    }, []
+	    }, [])
 	    // Here we convert the string values into number values (in px)
-	    ).map(function (str) {
+	    .map(function (str) {
 	      return toValue(str, measurement, popperOffsets, referenceOffsets);
 	    });
 	  });
@@ -59388,10 +59482,6 @@
 	  return data;
 	}
 
-	var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	/**
 	 * @function
 	 * @memberof Modifiers
@@ -59421,7 +59511,7 @@
 	      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.max(popper[placement], boundaries[placement]);
 	      }
-	      return _defineProperty({}, placement, value);
+	      return defineProperty({}, placement, value);
 	    },
 	    secondary: function secondary(placement) {
 	      var mainSide = placement === 'right' ? 'left' : 'top';
@@ -59429,23 +59519,19 @@
 	      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
 	      }
-	      return _defineProperty({}, mainSide, value);
+	      return defineProperty({}, mainSide, value);
 	    }
 	  };
 
 	  order.forEach(function (placement) {
 	    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
-	    popper = _extends$5({}, popper, check[side](placement));
+	    popper = _extends({}, popper, check[side](placement));
 	  });
 
 	  data.offsets.popper = popper;
 
 	  return data;
 	}
-
-	var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty$1(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	/**
 	 * @function
@@ -59470,11 +59556,11 @@
 	    var measurement = isVertical ? 'width' : 'height';
 
 	    var shiftOffsets = {
-	      start: _defineProperty$1({}, side, reference[side]),
-	      end: _defineProperty$1({}, side, reference[side] + reference[measurement] - popper[measurement])
+	      start: defineProperty({}, side, reference[side]),
+	      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
 	    };
 
-	    data.offsets.popper = _extends$6({}, popper, shiftOffsets[shiftvariation]);
+	    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
 	  }
 
 	  return data;
@@ -59536,7 +59622,7 @@
 
 	  var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
 
-	  popper[isHoriz ? 'left' : 'top'] = reference[placement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+	  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
 
 	  data.placement = getOppositePlacement(placement);
 	  data.offsets.popper = getClientRect(popper);
@@ -59614,6 +59700,9 @@
 	   * '10 - 5vh + 3%'
 	   * '-10px + 5vh, 5px - 6%'
 	   * ```
+	   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+	   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+	   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
 	   *
 	   * @memberof modifiers
 	   * @inner
@@ -59876,6 +59965,7 @@
 	 * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
 	 * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
 	 * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
+	 * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
 	 * @property {Object} data.boundaries Offsets of the popper boundaries
 	 * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
 	 * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
@@ -59955,12 +60045,6 @@
 	 * @param {dataObject} data
 	 */
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	// Utils
 	// Methods
 	var Popper = function () {
@@ -59976,8 +60060,7 @@
 	    var _this = this;
 
 	    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-	    _classCallCheck(this, Popper);
+	    classCallCheck(this, Popper);
 
 	    this.scheduleUpdate = function () {
 	      return requestAnimationFrame(_this.update);
@@ -60011,9 +60094,9 @@
 	      return _extends({
 	        name: name
 	      }, _this.options.modifiers[name]);
-	    }
+	    })
 	    // sort the modifiers by order
-	    ).sort(function (a, b) {
+	    .sort(function (a, b) {
 	      return a.order - b.order;
 	    });
 
@@ -60043,7 +60126,7 @@
 	  // class prototype and break stuff like Sinon stubs
 
 
-	  _createClass(Popper, [{
+	  createClass(Popper, [{
 	    key: 'update',
 	    value: function update$$1() {
 	      return update.call(this);
@@ -60089,7 +60172,6 @@
 	     */
 
 	  }]);
-
 	  return Popper;
 	}();
 
@@ -63626,14 +63708,98 @@
 
 /***/ }),
 /* 531 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(352);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DontCloseOnSelect = function (_React$Component) {
+	  _inherits(DontCloseOnSelect, _React$Component);
+
+	  function DontCloseOnSelect(props) {
+	    _classCallCheck(this, DontCloseOnSelect);
+
+	    var _this = _possibleConstructorReturn(this, (DontCloseOnSelect.__proto__ || Object.getPrototypeOf(DontCloseOnSelect)).call(this, props));
+
+	    _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    };
+
+	    _this.state = {
+	      startDate: (0, _moment2.default)()
+	    };
+	    return _this;
+	  }
+
+	  _createClass(DontCloseOnSelect, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    shouldCloseOnSelect={false}\n/>\n'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            shouldCloseOnSelect: false })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DontCloseOnSelect;
+	}(_react2.default.Component);
+
+	exports.default = DontCloseOnSelect;
+
+/***/ }),
+/* 532 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 532 */
-531,
 /* 533 */
+532,
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63700,7 +63866,7 @@
 	exports.default = HeroExample;
 
 /***/ }),
-/* 534 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
