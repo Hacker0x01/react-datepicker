@@ -71,6 +71,7 @@ export default class DatePicker extends React.Component {
     showMonthDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
+    showPreviousMonths: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
     tabIndex: PropTypes.number,
@@ -374,6 +375,7 @@ export default class DatePicker extends React.Component {
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
+        showPreviousMonths={this.props.showPreviousMonths}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
