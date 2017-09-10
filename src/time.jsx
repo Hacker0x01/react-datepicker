@@ -7,11 +7,8 @@ export default class Time extends React.Component {
   static propTypes = {
     intervals: PropTypes.number,
     selected: PropTypes.object,
-    onTimeChange: PropTypes.func,
+    onChange: PropTypes.func,
     todayButton: PropTypes.string,
-    showMonthDropdown: PropTypes.bool,
-    showYearDropdown: PropTypes.bool,
-    withPortal: PropTypes.bool,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
@@ -28,10 +25,9 @@ export default class Time extends React.Component {
 
   componentDidMount () {
     // code to ensure selected time will always be in focus within time window when it first appears
-    let node = this.refs.timeList
     const multiplier = 60 / this.props.intervals
     const currH = (this.props.selected) ? this.props.selected.get('hours') : moment().get('hours')
-    node.scrollTop = 30 * (multiplier * currH)
+    this.list.scrollTop = 30 * (multiplier * currH)
   }
 
   handleClick = (time) => {
@@ -39,23 +35,7 @@ export default class Time extends React.Component {
       return
     }
 
-    this.props.onTimeChange(time)
-  }
-
-  ulClasses = () => {
-    let classes = ['react-datepicker__time-list']
-
-    if (this.props.showYearDropdown || this.props.showMonthDropdown) {
-      classes.push('react-datepicker__time-list--with-dropdowns')
-    }
-    if (this.props.todayButton) {
-      classes.push('react-datepicker__time-list--with-today-button')
-    }
-    if (this.props.withPortal) {
-      classes.push('react-datepicker__time-list--with-portal')
-    }
-
-    return classes.join(' ')
+    this.props.onChange(time)
   }
 
   liClasses = (time, currH, currM) => {
@@ -93,7 +73,7 @@ export default class Time extends React.Component {
   render () {
     let height = null
     if (this.props.monthRef) {
-      height = this.props.monthRef.clientHeight - 37
+      height = this.props.monthRef.clientHeight - 39
     }
 
     return (
@@ -103,7 +83,7 @@ export default class Time extends React.Component {
         </div>
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
-            <ul className={this.ulClasses()} ref="timeList" style={height ? {height} : {}}>
+            <ul className="react-datepicker__time-list" ref={list => { this.list = list }} style={height ? {height} : {}}>
               {this.renderTimes.bind(this)()}
             </ul>
           </div>

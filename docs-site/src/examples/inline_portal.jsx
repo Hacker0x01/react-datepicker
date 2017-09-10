@@ -64,6 +64,7 @@ toggleCalendar (e) {
                   selected={this.state.startDate}
                   onChange={this.handleChange}
                   withPortal
+                  showTimeSelect
                   inline />
             )
         }

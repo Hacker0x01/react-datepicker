@@ -32,6 +32,7 @@ export default class WithPortal extends React.Component {
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
+            showTimeSelect
             withPortal />
       </div>
     </div>

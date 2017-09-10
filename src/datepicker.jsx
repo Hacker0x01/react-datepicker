@@ -131,13 +131,16 @@ export default class DatePicker extends React.Component {
     this.clearPreventFocusTimeout()
   }
 
+  getPreSelection = () => (
+    this.props.openToDate ? moment(this.props.openToDate)
+    : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
+    : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
+    : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
+    : moment()
+  )
+
   calcInitialState = () => {
-    const defaultPreSelection =
-      this.props.openToDate ? moment(this.props.openToDate)
-      : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
-      : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
-      : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
-      : moment()
+    const defaultPreSelection = this.getPreSelection()
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const boundedPreSelection =
@@ -278,7 +281,7 @@ export default class DatePicker extends React.Component {
   }
 
   handleTimeChange = (time) => {
-    const selected = (this.props.selected) ? this.props.selected : moment()
+    const selected = (this.props.selected) ? this.props.selected : this.getPreSelection()
     let changedDate = selected.clone().set({
       hour: time.get('hours'),
       minute: time.get('minutes')

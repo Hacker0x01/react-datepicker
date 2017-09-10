@@ -147,7 +147,6 @@
 }
 
 .react-datepicker__month-container {
-  display: inline;
   float: left;
 }
 
@@ -183,16 +182,6 @@
         overflow-y: scroll;
         padding-right: 30px;
         width: 100%;
-
-        &--with-today-button, &--with-dropdowns {
-          height: calc(220px + calc(#{$datepicker__item-size} / 2));
-        }
-        &--with-portal {
-          height: 37%;
-        }
-        &--with-portal.react-datepicker__time-list--with-today-button, &--with-portal.react-datepicker__time-list--with-dropdowns {
-          height: 40%;
-        }
 
         li.react-datepicker__time-list-item {
           padding: 5px 10px;

@@ -84,7 +84,17 @@ export default class Calendar extends React.Component {
     super(props)
     this.state = {
       date: this.localizeMoment(this.getDateInView()),
-      selectingDate: null
+      selectingDate: null,
+      monthContainer: this.monthContainer
+    }
+  }
+
+  componentDidMount () {
+    /* monthContainer height is needed in time component to determine the height for the ul in the time component. setState here so height is given after final component layout is rendered */
+    if (this.props.showTimeSelect) {
+      this.assignMonthContainer = (() => {
+        this.setState({monthContainer: this.monthContainer})
+      })()
     }
   }
 
@@ -281,7 +291,7 @@ export default class Calendar extends React.Component {
       var monthDate = this.state.date.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
-          <div key={monthKey} ref="monthContainer" className="react-datepicker__month-container">
+          <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
             <div className="react-datepicker__header">
               {this.renderCurrentMonth(monthDate)}
               <div
@@ -331,7 +341,7 @@ export default class Calendar extends React.Component {
       return (
         <Time
             selected={this.props.selected}
-            onTimeChange={this.props.onTimeChange}
+            onChange={this.props.onTimeChange}
             intervals={this.props.timeIntervals}
             minTime={this.props.minTime}
             maxTime={this.props.maxTime}
@@ -340,7 +350,7 @@ export default class Calendar extends React.Component {
             showMonthDropdown={this.props.showMonthDropdown}
             showYearDropdown={this.props.showYearDropdown}
             withPortal={this.props.withPortal}
-            monthRef={this.refs.monthContainer} />
+            monthRef={this.state.monthContainer} />
       )
     } else {
       return
