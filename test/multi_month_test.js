@@ -3,6 +3,7 @@ import Calendar from '../src/calendar'
 import Month from '../src/month'
 import YearDropdown from '../src/year_dropdown'
 import { shallow } from 'enzyme'
+import moment from 'moment'
 
 describe('Multi month calendar', function () {
   var dateFormat = 'MMMM YYYY'
@@ -29,6 +30,13 @@ describe('Multi month calendar', function () {
     var calendar = getCalendar({monthsShown: 2, showYearDropdown: true})
     var datepickers = calendar.find(YearDropdown)
     expect(datepickers).to.have.length(1)
+  })
+
+  it('should render previous months', () => {
+    var calendar = getCalendar({monthsShown: 2, showPreviousMonths: true})
+    var monthDate = calendar.find(Month).first().prop('day')
+    var previousMonth = moment().subtract(1, 'M')
+    expect(previousMonth.isSame(monthDate, 'D')).to.be.true
   })
 })
 
