@@ -165,6 +165,10 @@
   }
 }
 
+.react-datepicker__day-names, .react-datepicker__week{
+  white-space: nowrap;
+}
+
 .react-datepicker__day-name,
 .react-datepicker__day {
   color: $datepicker__text-color;
