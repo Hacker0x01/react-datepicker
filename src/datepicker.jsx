@@ -73,6 +73,7 @@ export default class DatePicker extends React.Component {
     showYearDropdown: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
+    startOpen: PropTypes.bool,
     tabIndex: PropTypes.number,
     title: PropTypes.string,
     todayButton: PropTypes.string,
@@ -139,7 +140,7 @@ export default class DatePicker extends React.Component {
       : defaultPreSelection
 
     return {
-      open: false,
+      open: this.props.startOpen || false,
       preventFocus: false,
       preSelection: this.props.selected ? moment(this.props.selected) : boundedPreSelection
     }
