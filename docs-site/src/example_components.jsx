@@ -38,6 +38,7 @@ import Children from './examples/children'
 import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
+import YearSelectDropdownWithChange from './examples/year_select_dropdown_with_change'
 import DontCloseOnSelect from './examples/dont_close_onSelect'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -195,7 +196,12 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Don\'t hide calendar on date selection',
     component: <DontCloseOnSelect/>
-  }]
+  },
+  {
+    title: 'Disable date auto correction',
+    component: <DisableDateAutoCorrection />
+  }
+]
 
   renderExamples = () =>
     this.examples.map((example, index) =>

@@ -99,6 +99,7 @@ export default class DatePicker extends React.Component {
       onKeyDown () {},
       onSelect () {},
       onClickOutside () {},
+      onYearChange () {},
       onMonthChange () {},
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
@@ -385,6 +386,7 @@ export default class DatePicker extends React.Component {
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
         onDropdownFocus={this.handleDropdownFocus}
+        onYearChange={this.props.onYearChange}
         onMonthChange={this.props.onMonthChange}
         dayClassName={this.props.dayClassName}
         className={this.props.calendarClassName}

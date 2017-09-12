@@ -25,6 +25,7 @@ export default class Calendar extends React.Component {
       PropTypes.string,
       PropTypes.array
     ]).isRequired,
+
     dayClassName: PropTypes.func,
     dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: PropTypes.object,
@@ -140,6 +141,12 @@ export default class Calendar extends React.Component {
 
   handleMonthMouseLeave = () => this.setState({ selectingDate: null })
 
+  handleChangeYear (date) {
+    if (this.props.onYearChange) {
+      this.props.onYearChange(date)
+    }
+  },
+
   handleMonthChange = (date) => {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
@@ -149,7 +156,7 @@ export default class Calendar extends React.Component {
   changeYear = (year) => {
     this.setState({
       date: this.state.date.clone().set('year', year)
-    })
+    }, () => this.handleChangeYear(this.state.date))
   }
 
   changeMonth = (month) => {
