@@ -1116,7 +1116,7 @@
 
 /***/ }),
 /* 15 */
-[534, 6],
+[538, 6],
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5936,7 +5936,7 @@
 
 /***/ }),
 /* 50 */
-[534, 35],
+[538, 35],
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20468,7 +20468,7 @@
 
 	var _example_components2 = _interopRequireDefault(_example_components);
 
-	var _hero_example = __webpack_require__(533);
+	var _hero_example = __webpack_require__(537);
 
 	var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -20623,153 +20623,165 @@
 
 	var _default2 = _interopRequireDefault(_default);
 
-	var _code_example_component = __webpack_require__(495);
+	var _code_example_component = __webpack_require__(496);
 
 	var _code_example_component2 = _interopRequireDefault(_code_example_component);
 
-	var _custom_date_format = __webpack_require__(496);
+	var _custom_date_format = __webpack_require__(497);
 
 	var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-	var _custom_class_name = __webpack_require__(497);
+	var _custom_class_name = __webpack_require__(498);
 
 	var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-	var _custom_calendar_class_name = __webpack_require__(498);
+	var _custom_calendar_class_name = __webpack_require__(499);
 
 	var _custom_calendar_class_name2 = _interopRequireDefault(_custom_calendar_class_name);
 
-	var _custom_day_class_names = __webpack_require__(499);
+	var _custom_day_class_names = __webpack_require__(500);
 
 	var _custom_day_class_names2 = _interopRequireDefault(_custom_day_class_names);
 
-	var _placeholder_text = __webpack_require__(500);
+	var _placeholder_text = __webpack_require__(501);
 
 	var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-	var _specific_date_range = __webpack_require__(501);
+	var _specific_date_range = __webpack_require__(502);
 
 	var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-	var _locale = __webpack_require__(502);
+	var _locale = __webpack_require__(503);
 
 	var _locale2 = _interopRequireDefault(_locale);
 
-	var _exclude_dates = __webpack_require__(503);
+	var _exclude_dates = __webpack_require__(504);
 
 	var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-	var _highlight_dates = __webpack_require__(504);
+	var _highlight_dates = __webpack_require__(505);
 
 	var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-	var _highlight_dates_with_ranges = __webpack_require__(505);
+	var _highlight_dates_with_ranges = __webpack_require__(506);
 
 	var _highlight_dates_with_ranges2 = _interopRequireDefault(_highlight_dates_with_ranges);
 
-	var _include_dates = __webpack_require__(506);
+	var _include_dates = __webpack_require__(507);
 
 	var _include_dates2 = _interopRequireDefault(_include_dates);
 
-	var _filter_dates = __webpack_require__(507);
+	var _filter_dates = __webpack_require__(508);
 
 	var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-	var _disabled = __webpack_require__(508);
+	var _disabled = __webpack_require__(509);
 
 	var _disabled2 = _interopRequireDefault(_disabled);
 
-	var _disabled_keyboard_navigation = __webpack_require__(509);
+	var _disabled_keyboard_navigation = __webpack_require__(510);
 
 	var _disabled_keyboard_navigation2 = _interopRequireDefault(_disabled_keyboard_navigation);
 
-	var _clear_input = __webpack_require__(510);
+	var _clear_input = __webpack_require__(511);
 
 	var _clear_input2 = _interopRequireDefault(_clear_input);
 
-	var _on_blur_callbacks = __webpack_require__(511);
+	var _on_blur_callbacks = __webpack_require__(512);
 
 	var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-	var _configurePopper = __webpack_require__(512);
+	var _configurePopper = __webpack_require__(513);
 
 	var _configurePopper2 = _interopRequireDefault(_configurePopper);
 
-	var _date_range = __webpack_require__(513);
+	var _date_range = __webpack_require__(514);
 
 	var _date_range2 = _interopRequireDefault(_date_range);
 
-	var _tab_index = __webpack_require__(514);
+	var _tab_index = __webpack_require__(515);
 
 	var _tab_index2 = _interopRequireDefault(_tab_index);
 
-	var _year_dropdown = __webpack_require__(515);
+	var _year_dropdown = __webpack_require__(516);
 
 	var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-	var _month_dropdown = __webpack_require__(516);
+	var _month_dropdown = __webpack_require__(517);
 
 	var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-	var _year_select_dropdown = __webpack_require__(517);
+	var _year_select_dropdown = __webpack_require__(518);
 
 	var _year_select_dropdown2 = _interopRequireDefault(_year_select_dropdown);
 
-	var _today = __webpack_require__(518);
+	var _today = __webpack_require__(519);
 
 	var _today2 = _interopRequireDefault(_today);
 
-	var _timezone_date = __webpack_require__(519);
+	var _timezone_date = __webpack_require__(520);
 
 	var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-	var _inline = __webpack_require__(520);
+	var _inline = __webpack_require__(521);
 
 	var _inline2 = _interopRequireDefault(_inline);
 
-	var _open_to_date = __webpack_require__(521);
+	var _open_to_date = __webpack_require__(522);
 
 	var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-	var _fixed_calendar = __webpack_require__(522);
+	var _fixed_calendar = __webpack_require__(523);
 
 	var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-	var _week_numbers = __webpack_require__(523);
+	var _week_numbers = __webpack_require__(524);
 
 	var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-	var _custom_input = __webpack_require__(524);
+	var _custom_input = __webpack_require__(525);
 
 	var _custom_input2 = _interopRequireDefault(_custom_input);
 
-	var _multi_month = __webpack_require__(525);
+	var _multi_month = __webpack_require__(526);
 
 	var _multi_month2 = _interopRequireDefault(_multi_month);
 
-	var _multi_month_drp = __webpack_require__(526);
+	var _multi_month_drp = __webpack_require__(527);
 
 	var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-	var _children = __webpack_require__(527);
+	var _children = __webpack_require__(528);
 
 	var _children2 = _interopRequireDefault(_children);
 
-	var _portal = __webpack_require__(528);
+	var _portal = __webpack_require__(529);
 
 	var _portal2 = _interopRequireDefault(_portal);
 
-	var _inline_portal = __webpack_require__(529);
+	var _inline_portal = __webpack_require__(530);
 
 	var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-	var _raw_change = __webpack_require__(530);
+	var _raw_change = __webpack_require__(531);
 
 	var _raw_change2 = _interopRequireDefault(_raw_change);
 
-	__webpack_require__(531);
+	var _show_time = __webpack_require__(532);
 
-	__webpack_require__(532);
+	var _show_time2 = _interopRequireDefault(_show_time);
+
+	var _exclude_times = __webpack_require__(533);
+
+	var _exclude_times2 = _interopRequireDefault(_exclude_times);
+
+	var _exclude_time_period = __webpack_require__(534);
+
+	var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
+
+	__webpack_require__(535);
+
+	__webpack_require__(536);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20901,6 +20913,15 @@
 	    }, {
 	      title: 'Get raw input value on change',
 	      component: _react2.default.createElement(_raw_change2.default, null)
+	    }, {
+	      title: 'Select Time',
+	      component: _react2.default.createElement(_show_time2.default, null)
+	    }, {
+	      title: 'Exclude Times',
+	      component: _react2.default.createElement(_exclude_times2.default, null)
+	    }, {
+	      title: 'Specific Time Range',
+	      component: _react2.default.createElement(_exclude_time_period2.default, null)
 	    }], _this.renderExamples = function () {
 	      return _this.examples.map(function (example, index) {
 	        return _react2.default.createElement(
@@ -38610,7 +38631,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _popper_component = __webpack_require__(486);
+	var _popper_component = __webpack_require__(487);
 
 	var _popper_component2 = _interopRequireDefault(_popper_component);
 
@@ -38652,8 +38673,7 @@
 	    key: 'defaultProps',
 	    get: function get() {
 	      return {
-	        allowSameDay: false,
-	        dateFormat: 'L',
+	        dateFormat: 'LLL',
 	        dateFormatCalendar: 'MMMM YYYY',
 	        onChange: function onChange() {},
 
@@ -38669,7 +38689,9 @@
 
 	        utcOffset: (0, _moment2.default)().utcOffset(),
 	        monthsShown: 1,
-	        withPortal: false
+	        withPortal: false,
+	        showTimeSelect: false,
+	        timeIntervals: 30
 	      };
 	    }
 	  }]);
@@ -38774,9 +38796,12 @@
 	        return _this.preventFocusTimeout;
 	      });
 	      _this.setSelected(date, event);
-	      if (!_this.props.inline) {
+	      if (!_this.props.shouldCloseOnSelect) {
+	        _this.setPreSelection(date);
+	      } else if (!_this.props.inline) {
 	        _this.setOpen(false);
 	      }
+	      if (!_this.props.showTimeSelect) _this.setOpen(false);
 	    };
 
 	    _this.setSelected = function (date, event, keepInput) {
@@ -38819,6 +38844,20 @@
 	      }
 	    };
 
+	    _this.handleTimeChange = function (time) {
+	      var selected = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
+	      var changedDate = selected.clone().set({
+	        hour: time.get('hours'),
+	        minute: time.get('minutes')
+	      });
+
+	      _this.setState({
+	        preSelection: changedDate
+	      });
+
+	      _this.props.onChange(changedDate);
+	    };
+
 	    _this.onInputClick = function () {
 	      if (!_this.props.disabled) {
 	        _this.setOpen(true);
@@ -38839,6 +38878,7 @@
 	        event.preventDefault();
 	        if (_moment2.default.isMoment(_this.state.preSelection) || _moment2.default.isDate(_this.state.preSelection)) {
 	          _this.handleSelect(copy, event);
+	          !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
 	        } else {
 	          _this.setOpen(false);
 	        }
@@ -38847,8 +38887,7 @@
 	        _this.setOpen(false);
 	      } else if (eventKey === 'Tab') {
 	        _this.setOpen(false);
-	      }
-	      if (!_this.props.disabledKeyboardNavigation) {
+	      } else if (!_this.props.disabledKeyboardNavigation) {
 	        var newSelection = void 0;
 	        switch (eventKey) {
 	          case 'ArrowLeft':
@@ -38929,6 +38968,7 @@
 	          showMonthDropdown: _this.props.showMonthDropdown,
 	          showWeekNumbers: _this.props.showWeekNumbers,
 	          showYearDropdown: _this.props.showYearDropdown,
+	          withPortal: _this.props.withPortal,
 	          forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
 	          scrollableYearDropdown: _this.props.scrollableYearDropdown,
 	          todayButton: _this.props.todayButton,
@@ -38939,9 +38979,13 @@
 	          monthsShown: _this.props.monthsShown,
 	          onDropdownFocus: _this.handleDropdownFocus,
 	          onMonthChange: _this.props.onMonthChange,
-	          dayClassName: _this.props.dayClassName,
-	          className: _this.props.calendarClassName,
-	          yearDropdownItemNumber: _this.props.yearDropdownItemNumber },
+	          showTimeSelect: _this.props.showTimeSelect,
+	          onTimeChange: _this.handleTimeChange,
+	          timeIntervals: _this.props.timeIntervals,
+	          minTime: _this.props.minTime,
+	          maxTime: _this.props.maxTime,
+	          excludeTimes: _this.props.excludeTimes,
+	          className: _this.props.calendarClassName },
 	        _this.props.children
 	      );
 	    };
@@ -38991,7 +39035,9 @@
 	  _createClass(DatePicker, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.inline && !this.props.selected.isSame(nextProps.selected, 'month')) {
+	      var currentMonth = this.props.selected && this.props.selected.month();
+	      var nextMonth = nextProps.selected && nextProps.selected.month();
+	      if (this.props.inline && currentMonth !== nextMonth) {
 	        this.setPreSelection(nextProps.selected);
 	      }
 	    }
@@ -39107,9 +39153,12 @@
 	  useWeekdaysShort: _propTypes2.default.bool,
 	  utcOffset: _propTypes2.default.number,
 	  value: _propTypes2.default.string,
-	  weekLabel: _propTypes2.default.string,
 	  withPortal: _propTypes2.default.bool,
-	  yearDropdownItemNumber: _propTypes2.default.number
+	  showTimeSelect: _propTypes2.default.bool,
+	  timeIntervals: _propTypes2.default.number,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array
 	};
 	exports.default = DatePicker;
 
@@ -39140,6 +39189,10 @@
 	var _month = __webpack_require__(481);
 
 	var _month2 = _interopRequireDefault(_month);
+
+	var _time = __webpack_require__(486);
+
+	var _time2 = _interopRequireDefault(_time);
 
 	var _react = __webpack_require__(2);
 
@@ -39315,8 +39368,17 @@
 	      if (!_this.props.forceShowMonthNavigation && (0, _date_utils.allDaysDisabledAfter)(_this.state.date, 'month', _this.props)) {
 	        return;
 	      }
+
+	      var classes = ['react-datepicker__navigation', 'react-datepicker__navigation--next'];
+	      if (_this.props.showTimeSelect) {
+	        classes.push('react-datepicker__navigation--next--with-time');
+	      }
+	      if (_this.props.todayButton) {
+	        classes.push('react-datepicker__navigation--next--with-today-button');
+	      }
+
 	      return _react2.default.createElement('a', {
-	        className: 'react-datepicker__navigation react-datepicker__navigation--next',
+	        className: classes.join(' '),
 	        onClick: _this.increaseMonth });
 	    };
 
@@ -39440,6 +39502,24 @@
 	      return monthList;
 	    };
 
+	    _this.renderTimeSection = function () {
+	      if (_this.props.showTimeSelect) {
+	        return _react2.default.createElement(_time2.default, {
+	          selected: _this.props.selected,
+	          onTimeChange: _this.props.onTimeChange,
+	          intervals: _this.props.timeIntervals,
+	          minTime: _this.props.minTime,
+	          maxTime: _this.props.maxTime,
+	          excludeTimes: _this.props.excludeTimes,
+	          todayButton: _this.props.todayButton,
+	          showMonthDropdown: _this.props.showMonthDropdown,
+	          showYearDropdown: _this.props.showYearDropdown,
+	          withPortal: _this.props.withPortal });
+	      } else {
+	        return;
+	      }
+	    };
+
 	    _this.state = {
 	      date: _this.localizeMoment(_this.getDateInView()),
 	      selectingDate: null
@@ -39471,6 +39551,7 @@
 	        this.renderNextMonthButton(),
 	        this.renderMonths(),
 	        this.renderTodayButton(),
+	        this.renderTimeSection(),
 	        this.props.children
 	      );
 	    }
@@ -39502,7 +39583,12 @@
 	  forceShowMonthNavigation: _propTypes2.default.bool,
 	  onDropdownFocus: _propTypes2.default.func,
 	  onSelect: _propTypes2.default.func.isRequired,
-	  onWeekSelect: _propTypes2.default.func,
+	  showTimeSelect: _propTypes2.default.bool,
+	  timeIntervals: _propTypes2.default.number,
+	  onTimeChange: _propTypes2.default.func,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array,
 	  openToDate: _propTypes2.default.object,
 	  peekNextMonth: _propTypes2.default.bool,
 	  scrollableYearDropdown: _propTypes2.default.bool,
@@ -39515,10 +39601,8 @@
 	  showYearDropdown: _propTypes2.default.bool,
 	  startDate: _propTypes2.default.object,
 	  todayButton: _propTypes2.default.string,
-	  useWeekdaysShort: _propTypes2.default.bool,
-	  utcOffset: _propTypes2.default.number,
-	  weekLabel: _propTypes2.default.string,
-	  yearDropdownItemNumber: _propTypes2.default.number
+	  withPortal: _propTypes2.default.bool,
+	  utcOffset: _propTypes2.default.number
 	};
 	exports.default = Calendar;
 
@@ -56974,6 +57058,8 @@
 	exports.isSameUtcOffset = isSameUtcOffset;
 	exports.isDayInRange = isDayInRange;
 	exports.isDayDisabled = isDayDisabled;
+	exports.isTimeDisabled = isTimeDisabled;
+	exports.isTimeInDisabledRange = isTimeInDisabledRange;
 	exports.allDaysDisabledBefore = allDaysDisabledBefore;
 	exports.allDaysDisabledAfter = allDaysDisabledAfter;
 	exports.getEffectiveMinDate = getEffectiveMinDate;
@@ -57025,10 +57111,37 @@
 	  }) || filterDate && !filterDate(day.clone()) || false;
 	}
 
+	function isTimeDisabled(time, disabledTimes) {
+	  var l = disabledTimes.length;
+	  for (var i = 0; i < l; i++) {
+	    if (disabledTimes[i].get('hours') === time.get('hours') && disabledTimes[i].get('minutes') === time.get('minutes')) {
+	      return true;
+	    }
+	  }
+
+	  return false;
+	}
+
+	function isTimeInDisabledRange(time, _ref2) {
+	  var minTime = _ref2.minTime,
+	      maxTime = _ref2.maxTime;
+
+	  if (!minTime || !maxTime) {
+	    throw new Error('Both minTime and maxTime props required');
+	  }
+
+	  var base = (0, _moment2.default)().hours(0).minutes(0).seconds(0);
+	  var baseTime = base.clone().hours(time.get('hours')).minutes(time.get('minutes'));
+	  var min = base.clone().hours(minTime.get('hours')).minutes(minTime.get('minutes'));
+	  var max = base.clone().hours(maxTime.get('hours')).minutes(maxTime.get('minutes'));
+
+	  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
+	}
+
 	function allDaysDisabledBefore(day, unit) {
-	  var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-	      minDate = _ref2.minDate,
-	      includeDates = _ref2.includeDates;
+	  var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      minDate = _ref3.minDate,
+	      includeDates = _ref3.includeDates;
 
 	  var dateBefore = day.clone().subtract(1, unit);
 	  return minDate && dateBefore.isBefore(minDate, unit) || includeDates && includeDates.every(function (includeDate) {
@@ -57037,9 +57150,9 @@
 	}
 
 	function allDaysDisabledAfter(day, unit) {
-	  var _ref3 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-	      maxDate = _ref3.maxDate,
-	      includeDates = _ref3.includeDates;
+	  var _ref4 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      maxDate = _ref4.maxDate,
+	      includeDates = _ref4.includeDates;
 
 	  var dateAfter = day.clone().add(1, unit);
 	  return maxDate && dateAfter.isAfter(maxDate, unit) || includeDates && includeDates.every(function (includeDate) {
@@ -57047,9 +57160,9 @@
 	  }) || false;
 	}
 
-	function getEffectiveMinDate(_ref4) {
-	  var minDate = _ref4.minDate,
-	      includeDates = _ref4.includeDates;
+	function getEffectiveMinDate(_ref5) {
+	  var minDate = _ref5.minDate,
+	      includeDates = _ref5.includeDates;
 
 	  if (includeDates && minDate) {
 	    return _moment2.default.min(includeDates.filter(function (includeDate) {
@@ -57062,9 +57175,9 @@
 	  }
 	}
 
-	function getEffectiveMaxDate(_ref5) {
-	  var maxDate = _ref5.maxDate,
-	      includeDates = _ref5.includeDates;
+	function getEffectiveMaxDate(_ref6) {
+	  var maxDate = _ref6.maxDate,
+	      includeDates = _ref6.includeDates;
 
 	  if (includeDates && maxDate) {
 	    return _moment2.default.max(includeDates.filter(function (includeDate) {
@@ -57077,17 +57190,17 @@
 	  }
 	}
 
-	function parseDate(value, _ref6) {
-	  var dateFormat = _ref6.dateFormat,
-	      locale = _ref6.locale;
+	function parseDate(value, _ref7) {
+	  var dateFormat = _ref7.dateFormat,
+	      locale = _ref7.locale;
 
 	  var m = (0, _moment2.default)(value, dateFormat, locale || _moment2.default.locale(), true);
 	  return m.isValid() ? m : null;
 	}
 
-	function safeDateFormat(date, _ref7) {
-	  var dateFormat = _ref7.dateFormat,
-	      locale = _ref7.locale;
+	function safeDateFormat(date, _ref8) {
+	  var dateFormat = _ref8.dateFormat,
+	      locale = _ref8.locale;
 
 	  return date && date.clone().locale(locale || _moment2.default.locale()).format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || '';
 	}
@@ -57195,6 +57308,174 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(473);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _date_utils = __webpack_require__(484);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Time = function (_React$Component) {
+	  _inherits(Time, _React$Component);
+
+	  function Time() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, Time);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Time.__proto__ || Object.getPrototypeOf(Time)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (time) {
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) {
+	        return;
+	      }
+
+	      _this.props.onTimeChange(time);
+	    }, _this.ulClasses = function () {
+	      var classes = ['react-datepicker__time-list'];
+
+	      if (_this.props.showYearDropdown || _this.props.showMonthDropdown) {
+	        classes.push('react-datepicker__time-list--with-dropdowns');
+	      }
+	      if (_this.props.todayButton) {
+	        classes.push('react-datepicker__time-list--with-today-button');
+	      }
+	      if (_this.props.withPortal) {
+	        classes.push('react-datepicker__time-list--with-portal');
+	      }
+
+	      return classes.join(' ');
+	    }, _this.liClasses = function (time, currH, currM) {
+	      var classes = ['react-datepicker__time-list-item'];
+
+	      if (currH === time.get('hours') && currM === time.get('minutes')) {
+	        classes.push('react-datepicker__time-list-item--selected');
+	      }
+	      if ((_this.props.minTime || _this.props.maxTime) && (0, _date_utils.isTimeInDisabledRange)(time, _this.props) || _this.props.excludeTimes && (0, _date_utils.isTimeDisabled)(time, _this.props.excludeTimes)) {
+	        classes.push('react-datepicker__time-list-item--disabled');
+	      }
+
+	      return classes.join(' ');
+	    }, _this.renderTimes = function () {
+	      var times = [];
+	      var intervals = _this.props.intervals;
+	      var activeTime = _this.props.selected ? _this.props.selected : (0, _moment2.default)();
+	      var currH = activeTime.get('hours');
+	      var currM = activeTime.get('minutes');
+	      var base = (0, _moment2.default)().startOf('day');
+	      var multiplier = 1440 / intervals;
+	      for (var i = 0; i < multiplier; i++) {
+	        times.push(base.clone().add(i * intervals, 'minutes'));
+	      }
+
+	      return times.map(function (time, i) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: i, onClick: _this.handleClick.bind(_this, time), className: _this.liClasses(time, currH, currM) },
+	          time.format('hh:mm A')
+	        );
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(Time, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // code to ensure selected time will always be in focus within time window when it first appears
+	      var node = this.refs.timeList;
+	      var multiplier = 60 / this.props.intervals;
+	      var currH = this.props.selected ? this.props.selected.get('hours') : (0, _moment2.default)().get('hours');
+	      node.scrollTop = 30 * (multiplier * currH);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'react-datepicker__time-container ' + (this.props.todayButton ? 'react-datepicker__time-container--with-today-button' : '') },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'react-datepicker__header react-datepicker__header--time' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'react-datepicker-time__header' },
+	            'Time'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'react-datepicker__time' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'react-datepicker__time-box' },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: this.ulClasses(), ref: 'timeList' },
+	              this.renderTimes.bind(this)()
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }], [{
+	    key: 'defaultProps',
+	    get: function get() {
+	      return {
+	        intervals: 30,
+	        onTimeChange: function onTimeChange() {},
+	        todayButton: null
+	      };
+	    }
+	  }]);
+
+	  return Time;
+	}(_react2.default.Component);
+
+	Time.propTypes = {
+	  intervals: _propTypes2.default.number,
+	  selected: _propTypes2.default.object,
+	  onTimeChange: _propTypes2.default.func,
+	  todayButton: _propTypes2.default.string,
+	  showMonthDropdown: _propTypes2.default.bool,
+	  showYearDropdown: _propTypes2.default.bool,
+	  withPortal: _propTypes2.default.bool,
+	  minTime: _propTypes2.default.object,
+	  maxTime: _propTypes2.default.object,
+	  excludeTimes: _propTypes2.default.array
+	};
+	exports.default = Time;
+
+/***/ }),
+/* 487 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.popperPlacementPositions = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -57207,7 +57488,7 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _reactPopper = __webpack_require__(487);
+	var _reactPopper = __webpack_require__(488);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57287,7 +57568,7 @@
 	exports.default = PopperComponent;
 
 /***/ }),
-/* 487 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57297,19 +57578,19 @@
 	});
 	exports.Arrow = exports.Popper = exports.Target = exports.Manager = undefined;
 
-	var _Manager2 = __webpack_require__(488);
+	var _Manager2 = __webpack_require__(489);
 
 	var _Manager3 = _interopRequireDefault(_Manager2);
 
-	var _Target2 = __webpack_require__(489);
+	var _Target2 = __webpack_require__(490);
 
 	var _Target3 = _interopRequireDefault(_Target2);
 
-	var _Popper2 = __webpack_require__(490);
+	var _Popper2 = __webpack_require__(491);
 
 	var _Popper3 = _interopRequireDefault(_Popper2);
 
-	var _Arrow2 = __webpack_require__(494);
+	var _Arrow2 = __webpack_require__(495);
 
 	var _Arrow3 = _interopRequireDefault(_Arrow2);
 
@@ -57321,7 +57602,7 @@
 	exports.Arrow = _Arrow3.default;
 
 /***/ }),
-/* 488 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57412,7 +57693,7 @@
 	exports.default = Manager;
 
 /***/ }),
-/* 489 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57480,7 +57761,7 @@
 	exports.default = Target;
 
 /***/ }),
-/* 490 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57501,11 +57782,11 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _popper = __webpack_require__(491);
+	var _popper = __webpack_require__(492);
 
 	var _popper2 = _interopRequireDefault(_popper);
 
-	var _isEqualShallow = __webpack_require__(492);
+	var _isEqualShallow = __webpack_require__(493);
 
 	var _isEqualShallow2 = _interopRequireDefault(_isEqualShallow);
 
@@ -57585,11 +57866,7 @@
 	            top = _this$state$data$offs.top,
 	            left = _this$state$data$offs.left;
 
-	        if (!left) {
-	          return { top: +top };
-	        } else {
-	          return { left: +left };
-	        }
+	        return { top: top, left: left };
 	      }
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
@@ -57616,7 +57893,7 @@
 	        this._updatePopper();
 	      }
 
-	      if (lastProps.children !== this.props.children) {
+	      if (this._popper && lastProps.children !== this.props.children) {
 	        this._popper.scheduleUpdate();
 	      }
 	    }
@@ -57744,10 +58021,34 @@
 	exports.default = Popper;
 
 /***/ }),
-/* 491 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
+	/* WEBPACK VAR INJECTION */(function(global) {/**!
+	 * @fileOverview Kickass library to create and place poppers near their reference elements.
+	 * @version 1.12.3
+	 * @license
+	 * Copyright (c) 2016 Federico Zivolo and contributors
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in all
+	 * copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
+	(function (global, factory) {
 		 true ? module.exports = factory() :
 		typeof define === 'function' && define.amd ? define(factory) :
 		(global.Popper = factory());
@@ -57901,30 +58202,6 @@
 	  return getScrollParent(getParentNode(element));
 	}
 
-	function isOffsetContainer(element) {
-	  var nodeName = element.nodeName;
-
-	  if (nodeName === 'BODY') {
-	    return false;
-	  }
-	  return nodeName === 'HTML' || element.firstElementChild.offsetParent === element;
-	}
-
-	/**
-	 * Finds the root node (document, shadowDOM root) of the given element
-	 * @method
-	 * @memberof Popper.Utils
-	 * @argument {Element} node
-	 * @returns {Element} root node
-	 */
-	function getRoot(node) {
-	  if (node.parentNode !== null) {
-	    return getRoot(node.parentNode);
-	  }
-
-	  return node;
-	}
-
 	/**
 	 * Returns the offset parent of the given element
 	 * @method
@@ -57941,7 +58218,37 @@
 	    return window.document.documentElement;
 	  }
 
+	  // .offsetParent will return the closest TD or TABLE in case
+	  // no offsetParent is present, I hate this job...
+	  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+	    return getOffsetParent(offsetParent);
+	  }
+
 	  return offsetParent;
+	}
+
+	function isOffsetContainer(element) {
+	  var nodeName = element.nodeName;
+
+	  if (nodeName === 'BODY') {
+	    return false;
+	  }
+	  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+	}
+
+	/**
+	 * Finds the root node (document, shadowDOM root) of the given element
+	 * @method
+	 * @memberof Popper.Utils
+	 * @argument {Element} node
+	 * @returns {Element} root node
+	 */
+	function getRoot(node) {
+	  if (node.parentNode !== null) {
+	    return getRoot(node.parentNode);
+	  }
+
+	  return node;
 	}
 
 	/**
@@ -58066,7 +58373,7 @@
 	};
 
 	function getSize(axis, body, html, computedStyle) {
-	  return Math.max(body['offset' + axis], html['client' + axis], html['offset' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
+	  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
 	}
 
 	function getWindowSizes() {
@@ -58080,7 +58387,62 @@
 	  };
 	}
 
-	var _extends$2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var classCallCheck = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+
+	var createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }
+
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
+	  };
+	}();
+
+
+
+
+
+	var defineProperty = function (obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+
+	  return target;
+	};
 
 	/**
 	 * Given element offsets, generate an output similar to getBoundingClientRect
@@ -58090,7 +58452,7 @@
 	 * @returns {Object} ClientRect like output
 	 */
 	function getClientRect(offsets) {
-	  return _extends$2({}, offsets, {
+	  return _extends({}, offsets, {
 	    right: offsets.left + offsets.width,
 	    bottom: offsets.top + offsets.height
 	  });
@@ -58294,8 +58656,6 @@
 	  return boundaries;
 	}
 
-	var _extends$1 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	function getArea(_ref) {
 	  var width = _ref.width,
 	      height = _ref.height;
@@ -58341,7 +58701,7 @@
 	  };
 
 	  var sortedAreas = Object.keys(rects).map(function (key) {
-	    return _extends$1({
+	    return _extends({
 	      key: key
 	    }, rects[key], {
 	      area: getArea(rects[key])
@@ -58539,6 +58899,7 @@
 	  var data = {
 	    instance: this,
 	    styles: {},
+	    arrowStyles: {},
 	    attributes: {},
 	    flipped: false,
 	    offsets: {}
@@ -58591,10 +58952,10 @@
 	 * @method
 	 * @memberof Popper.Utils
 	 * @argument {String} property (camelCase)
-	 * @returns {String} prefixed property (camelCase)
+	 * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
 	 */
 	function getSupportedPropertyName(property) {
-	  var prefixes = [false, 'ms', 'webkit', 'moz', 'o'];
+	  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
 	  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
 
 	  for (var i = 0; i < prefixes.length - 1; i++) {
@@ -58783,9 +59144,9 @@
 	  // they will be set as HTML attributes of the element
 	  setAttributes(data.instance.popper, data.attributes);
 
-	  // if the arrow style has been computed, apply the arrow style
-	  if (data.offsets.arrow) {
-	    setStyles(data.arrowElement, data.offsets.arrow);
+	  // if arrowElement is defined and arrowStyles has some properties
+	  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+	    setStyles(data.arrowElement, data.arrowStyles);
 	  }
 
 	  return data;
@@ -58818,8 +59179,6 @@
 
 	  return options;
 	}
-
-	var _extends$3 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	/**
 	 * @function
@@ -58907,9 +59266,10 @@
 	    'x-placement': data.placement
 	  };
 
-	  // Update attributes and styles of `data`
-	  data.attributes = attributes;
-	  data.styles = _extends$3({}, styles, data.styles);
+	  // Update `data` attributes, styles and arrowStyles
+	  data.attributes = _extends({}, attributes, data.attributes);
+	  data.styles = _extends({}, styles, data.styles);
+	  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
 
 	  return data;
 	}
@@ -58982,13 +59342,15 @@
 	  var isVertical = ['left', 'right'].indexOf(placement) !== -1;
 
 	  var len = isVertical ? 'height' : 'width';
-	  var side = isVertical ? 'top' : 'left';
+	  var sideCapitalized = isVertical ? 'Top' : 'Left';
+	  var side = sideCapitalized.toLowerCase();
 	  var altSide = isVertical ? 'left' : 'top';
 	  var opSide = isVertical ? 'bottom' : 'right';
 	  var arrowElementSize = getOuterSizes(arrowElement)[len];
 
 	  //
-	  // extends keepTogether behavior making sure the popper and its reference have enough pixels in conjuction
+	  // extends keepTogether behavior making sure the popper and its
+	  // reference have enough pixels in conjuction
 	  //
 
 	  // top/left side
@@ -59004,7 +59366,9 @@
 	  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
 
 	  // Compute the sideValue using the updated popper offsets
-	  var sideValue = center - getClientRect(data.offsets.popper)[side];
+	  // take popper margin in account because we don't have this info available
+	  var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace('px', '');
+	  var sideValue = center - getClientRect(data.offsets.popper)[side] - popperMarginSide;
 
 	  // prevent arrowElement from being placed not contiguously to its popper
 	  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
@@ -59086,8 +59450,6 @@
 	  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
 	  return counter ? arr.reverse() : arr;
 	}
-
-	var _extends$4 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var BEHAVIORS = {
 	  FLIP: 'flip',
@@ -59177,7 +59539,7 @@
 
 	      // this object contains `position`, we want to preserve it along with
 	      // any additional property we may add in the future
-	      data.offsets.popper = _extends$4({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+	      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
 
 	      data = runModifiers(data.instance.modifiers, data, 'flip');
 	    }
@@ -59327,9 +59689,9 @@
 	      } else {
 	        return a.concat(b);
 	      }
-	    }, []
+	    }, [])
 	    // Here we convert the string values into number values (in px)
-	    ).map(function (str) {
+	    .map(function (str) {
 	      return toValue(str, measurement, popperOffsets, referenceOffsets);
 	    });
 	  });
@@ -59388,10 +59750,6 @@
 	  return data;
 	}
 
-	var _extends$5 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	/**
 	 * @function
 	 * @memberof Modifiers
@@ -59421,7 +59779,7 @@
 	      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.max(popper[placement], boundaries[placement]);
 	      }
-	      return _defineProperty({}, placement, value);
+	      return defineProperty({}, placement, value);
 	    },
 	    secondary: function secondary(placement) {
 	      var mainSide = placement === 'right' ? 'left' : 'top';
@@ -59429,23 +59787,19 @@
 	      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
 	        value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
 	      }
-	      return _defineProperty({}, mainSide, value);
+	      return defineProperty({}, mainSide, value);
 	    }
 	  };
 
 	  order.forEach(function (placement) {
 	    var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
-	    popper = _extends$5({}, popper, check[side](placement));
+	    popper = _extends({}, popper, check[side](placement));
 	  });
 
 	  data.offsets.popper = popper;
 
 	  return data;
 	}
-
-	var _extends$6 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _defineProperty$1(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	/**
 	 * @function
@@ -59470,11 +59824,11 @@
 	    var measurement = isVertical ? 'width' : 'height';
 
 	    var shiftOffsets = {
-	      start: _defineProperty$1({}, side, reference[side]),
-	      end: _defineProperty$1({}, side, reference[side] + reference[measurement] - popper[measurement])
+	      start: defineProperty({}, side, reference[side]),
+	      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
 	    };
 
-	    data.offsets.popper = _extends$6({}, popper, shiftOffsets[shiftvariation]);
+	    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
 	  }
 
 	  return data;
@@ -59536,7 +59890,7 @@
 
 	  var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
 
-	  popper[isHoriz ? 'left' : 'top'] = reference[placement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+	  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
 
 	  data.placement = getOppositePlacement(placement);
 	  data.offsets.popper = getClientRect(popper);
@@ -59614,6 +59968,9 @@
 	   * '10 - 5vh + 3%'
 	   * '-10px + 5vh, 5px - 6%'
 	   * ```
+	   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+	   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+	   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
 	   *
 	   * @memberof modifiers
 	   * @inner
@@ -59876,6 +60233,7 @@
 	 * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
 	 * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
 	 * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
+	 * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
 	 * @property {Object} data.boundaries Offsets of the popper boundaries
 	 * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
 	 * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
@@ -59955,12 +60313,6 @@
 	 * @param {dataObject} data
 	 */
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	// Utils
 	// Methods
 	var Popper = function () {
@@ -59976,8 +60328,7 @@
 	    var _this = this;
 
 	    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-	    _classCallCheck(this, Popper);
+	    classCallCheck(this, Popper);
 
 	    this.scheduleUpdate = function () {
 	      return requestAnimationFrame(_this.update);
@@ -60011,9 +60362,9 @@
 	      return _extends({
 	        name: name
 	      }, _this.options.modifiers[name]);
-	    }
+	    })
 	    // sort the modifiers by order
-	    ).sort(function (a, b) {
+	    .sort(function (a, b) {
 	      return a.order - b.order;
 	    });
 
@@ -60043,7 +60394,7 @@
 	  // class prototype and break stuff like Sinon stubs
 
 
-	  _createClass(Popper, [{
+	  createClass(Popper, [{
 	    key: 'update',
 	    value: function update$$1() {
 	      return update.call(this);
@@ -60089,7 +60440,6 @@
 	     */
 
 	  }]);
-
 	  return Popper;
 	}();
 
@@ -60126,7 +60476,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 492 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*!
@@ -60138,7 +60488,7 @@
 
 	'use strict';
 
-	var isPrimitive = __webpack_require__(493);
+	var isPrimitive = __webpack_require__(494);
 
 	module.exports = function isEqual(a, b) {
 	  if (!a && !b) { return true; }
@@ -60159,7 +60509,7 @@
 
 
 /***/ }),
-/* 493 */
+/* 494 */
 /***/ (function(module, exports) {
 
 	/*!
@@ -60178,7 +60528,7 @@
 
 
 /***/ }),
-/* 494 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60252,7 +60602,7 @@
 	exports.default = Arrow;
 
 /***/ }),
-/* 495 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60315,7 +60665,7 @@
 	exports.default = CodeExampleComponent;
 
 /***/ }),
-/* 496 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60409,7 +60759,7 @@
 	exports.default = CustomDateFormat;
 
 /***/ }),
-/* 497 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60493,7 +60843,7 @@
 	exports.default = CustomClassName;
 
 /***/ }),
-/* 498 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60577,7 +60927,7 @@
 	exports.default = CustomCalendarClassName;
 
 /***/ }),
-/* 499 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60663,7 +61013,7 @@
 	exports.default = CustomDayClassNames;
 
 /***/ }),
-/* 500 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60705,7 +61055,7 @@
 	}
 
 /***/ }),
-/* 501 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60814,7 +61164,7 @@
 	exports.default = SpecificDateRange;
 
 /***/ }),
-/* 502 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -60910,7 +61260,7 @@
 	exports.default = CustomStartDate;
 
 /***/ }),
-/* 503 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61010,7 +61360,7 @@
 	exports.default = ExcludeDates;
 
 /***/ }),
-/* 504 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61111,7 +61461,7 @@
 	exports.default = highlightDates;
 
 /***/ }),
-/* 505 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61251,7 +61601,7 @@
 	exports.default = highlightDatesRanges;
 
 /***/ }),
-/* 506 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61352,7 +61702,7 @@
 	exports.default = includeDates;
 
 /***/ }),
-/* 507 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61452,7 +61802,7 @@
 	exports.default = FilterDates;
 
 /***/ }),
-/* 508 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61546,7 +61896,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-/* 509 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61643,7 +61993,7 @@
 	exports.default = DisabledKeyboardNavigation;
 
 /***/ }),
-/* 510 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61728,7 +62078,7 @@
 	exports.default = ClearInput;
 
 /***/ }),
-/* 511 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61840,7 +62190,7 @@
 	exports.default = Disabled;
 
 /***/ }),
-/* 512 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61935,7 +62285,7 @@
 	exports.default = ConfigurePopper;
 
 /***/ }),
-/* 513 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62046,7 +62396,7 @@
 	exports.default = DateRange;
 
 /***/ }),
-/* 514 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62130,7 +62480,7 @@
 	exports.default = TabIndex;
 
 /***/ }),
-/* 515 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62217,7 +62567,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 516 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62301,7 +62651,7 @@
 	exports.default = MonthDropdown;
 
 /***/ }),
-/* 517 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62388,7 +62738,7 @@
 	exports.default = YearDropdown;
 
 /***/ }),
-/* 518 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62472,7 +62822,7 @@
 	exports.default = Today;
 
 /***/ }),
-/* 519 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62560,6 +62910,8 @@
 	            dateFormat: 'DD-MMM YYYY HH:mm',
 	            todayButton: todayTxt,
 	            selected: selected,
+	            minDate: moment('2016-11-05T00:00:00+00:00').utcOffset(this.state.utcOffset),
+	            maxDate: moment('2016-12-04T00:00:00-04:00').utcOffset(this.state.utcOffset),
 	            onChange: this.handleChange }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -62627,7 +62979,7 @@
 	exports.default = TimeZoneDate;
 
 /***/ }),
-/* 520 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62711,7 +63063,7 @@
 	exports.default = Inline;
 
 /***/ }),
-/* 521 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62798,7 +63150,7 @@
 	exports.default = OpenToDate;
 
 /***/ }),
-/* 522 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62887,7 +63239,7 @@
 	exports.default = FixedCalendar;
 
 /***/ }),
-/* 523 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62971,7 +63323,7 @@
 	exports.default = Default;
 
 /***/ }),
-/* 524 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63090,7 +63442,7 @@
 	exports.default = CustomInput;
 
 /***/ }),
-/* 525 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63174,7 +63526,7 @@
 	exports.default = MultiMonth;
 
 /***/ }),
-/* 526 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63259,7 +63611,7 @@
 	exports.default = MultiMonthDrp;
 
 /***/ }),
-/* 527 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63350,7 +63702,7 @@
 	exports.default = Children;
 
 /***/ }),
-/* 528 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63434,7 +63786,7 @@
 	exports.default = WithPortal;
 
 /***/ }),
-/* 529 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63529,7 +63881,7 @@
 	exports.default = InlinePortalVersion;
 
 /***/ }),
-/* 530 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63625,15 +63977,313 @@
 	exports.default = RawChanges;
 
 /***/ }),
-/* 531 */
+/* 532 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(352);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ShowTime = function (_React$Component) {
+	  _inherits(ShowTime, _React$Component);
+
+	  function ShowTime(props) {
+	    _classCallCheck(this, ShowTime);
+
+	    var _this = _possibleConstructorReturn(this, (ShowTime.__proto__ || Object.getPrototypeOf(ShowTime)).call(this, props));
+
+	    _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    };
+
+	    _this.state = {
+	      startDate: (0, _moment2.default)()
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ShowTime, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '    showTimeSelect\n    timeIntervals={15}\n/>\n'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            timeIntervals: 15 })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ShowTime;
+	}(_react2.default.Component);
+
+	exports.default = ShowTime;
+
+/***/ }),
+/* 533 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(352);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ExcludeTimes = function (_React$Component) {
+	  _inherits(ExcludeTimes, _React$Component);
+
+	  function ExcludeTimes() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ExcludeTimes);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExcludeTimes.__proto__ || Object.getPrototypeOf(ExcludeTimes)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      startDate: (0, _moment2.default)().hours(16).minutes(30)
+	    }, _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(ExcludeTimes, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '<DatePicker',
+	            _react2.default.createElement('br', null),
+	            '  selected={this.state.startDate}',
+	            _react2.default.createElement('br', null),
+	            '  onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '  showTimeSelect',
+	              _react2.default.createElement('br', null),
+	              '  excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}'
+	            ),
+	            _react2.default.createElement('br', null),
+	            '/>'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            excludeTimes: [(0, _moment2.default)().hours(17).minutes(0), (0, _moment2.default)().hours(18).minutes(30), (0, _moment2.default)().hours(19).minutes(30), (0, _moment2.default)().hours(17).minutes(30)] })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExcludeTimes;
+	}(_react2.default.Component);
+
+	exports.default = ExcludeTimes;
+
+/***/ }),
+/* 534 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatepicker = __webpack_require__(352);
+
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+	var _moment = __webpack_require__(354);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ExcludeTimePeriod = function (_React$Component) {
+	  _inherits(ExcludeTimePeriod, _React$Component);
+
+	  function ExcludeTimePeriod() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, ExcludeTimePeriod);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExcludeTimePeriod.__proto__ || Object.getPrototypeOf(ExcludeTimePeriod)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	      startDate: (0, _moment2.default)().hours(17).minutes(30)
+	    }, _this.handleChange = function (date) {
+	      _this.setState({
+	        startDate: date
+	      });
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(ExcludeTimePeriod, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'pre',
+	          { className: 'column example__code' },
+	          _react2.default.createElement(
+	            'code',
+	            { className: 'jsx' },
+	            '<DatePicker',
+	            _react2.default.createElement('br', null),
+	            '  selected={this.state.startDate}',
+	            _react2.default.createElement('br', null),
+	            '  onChange={this.handleChange}',
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '  showTimeSelect',
+	              _react2.default.createElement('br', null),
+	              '  minTime={moment().hours(17).minutes(0)}',
+	              _react2.default.createElement('br', null),
+	              '  maxTime={moment().hours(20).minutes(30)}'
+	            ),
+	            _react2.default.createElement('br', null),
+	            '/>'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'column' },
+	          _react2.default.createElement(_reactDatepicker2.default, {
+	            selected: this.state.startDate,
+	            onChange: this.handleChange,
+	            showTimeSelect: true,
+	            minTime: (0, _moment2.default)().hours(17).minutes(0),
+	            maxTime: (0, _moment2.default)().hours(20).minutes(30) })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ExcludeTimePeriod;
+	}(_react2.default.Component);
+
+	exports.default = ExcludeTimePeriod;
+
+/***/ }),
+/* 535 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 532 */
-531,
-/* 533 */
+/* 536 */
+535,
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63700,7 +64350,7 @@
 	exports.default = HeroExample;
 
 /***/ }),
-/* 534 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**

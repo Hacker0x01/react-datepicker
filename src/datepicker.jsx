@@ -82,7 +82,12 @@ export default class DatePicker extends React.Component {
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
     yearDropdownItemNumber: PropTypes.number,
-    shouldCloseOnSelect: PropTypes.bool
+    shouldCloseOnSelect: PropTypes.bool,
+    showTimeSelect: PropTypes.bool,
+    timeIntervals: PropTypes.number,
+    minTime: PropTypes.object,
+    maxTime: PropTypes.object,
+    excludeTimes: PropTypes.array
   }
 
   static get defaultProps () {
@@ -103,7 +108,9 @@ export default class DatePicker extends React.Component {
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
       withPortal: false,
-      shouldCloseOnSelect: true
+      shouldCloseOnSelect: true,
+      showTimeSelect: false,
+      timeIntervals: 30
     }
   }
 
@@ -124,13 +131,16 @@ export default class DatePicker extends React.Component {
     this.clearPreventFocusTimeout()
   }
 
+  getPreSelection = () => (
+    this.props.openToDate ? moment(this.props.openToDate)
+    : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
+    : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
+    : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
+    : moment()
+  )
+
   calcInitialState = () => {
-    const defaultPreSelection =
-      this.props.openToDate ? moment(this.props.openToDate)
-      : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
-      : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
-      : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
-      : moment()
+    const defaultPreSelection = this.getPreSelection()
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const boundedPreSelection =
@@ -270,6 +280,20 @@ export default class DatePicker extends React.Component {
     }
   }
 
+  handleTimeChange = (time) => {
+    const selected = (this.props.selected) ? this.props.selected : this.getPreSelection()
+    let changedDate = selected.clone().set({
+      hour: time.get('hours'),
+      minute: time.get('minutes')
+    })
+
+    this.setState({
+      preSelection: changedDate
+    })
+
+    this.props.onChange(changedDate)
+  }
+
   onInputClick = () => {
     if (!this.props.disabled) {
       this.setOpen(true)
@@ -376,6 +400,7 @@ export default class DatePicker extends React.Component {
         showMonthDropdown={this.props.showMonthDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        withPortal={this.props.withPortal}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
@@ -387,6 +412,12 @@ export default class DatePicker extends React.Component {
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
         dayClassName={this.props.dayClassName}
+        showTimeSelect={this.props.showTimeSelect}
+        onTimeChange={this.handleTimeChange}
+        timeIntervals={this.props.timeIntervals}
+        minTime={this.props.minTime}
+        maxTime={this.props.maxTime}
+        excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}

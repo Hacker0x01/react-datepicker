@@ -2,6 +2,7 @@ import moment from 'moment'
 import YearDropdown from './year_dropdown'
 import MonthDropdown from './month_dropdown'
 import Month from './month'
+import Time from './time'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
@@ -45,6 +46,12 @@ export default class Calendar extends React.Component {
     onDropdownFocus: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
     onWeekSelect: PropTypes.func,
+    showTimeSelect: PropTypes.bool,
+    timeIntervals: PropTypes.number,
+    onTimeChange: PropTypes.func,
+    minTime: PropTypes.object,
+    maxTime: PropTypes.object,
+    excludeTimes: PropTypes.array,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -58,6 +65,7 @@ export default class Calendar extends React.Component {
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
+    withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number
@@ -76,7 +84,17 @@ export default class Calendar extends React.Component {
     super(props)
     this.state = {
       date: this.localizeMoment(this.getDateInView()),
-      selectingDate: null
+      selectingDate: null,
+      monthContainer: this.monthContainer
+    }
+  }
+
+  componentDidMount () {
+    /* monthContainer height is needed in time component to determine the height for the ul in the time component. setState here so height is given after final component layout is rendered */
+    if (this.props.showTimeSelect) {
+      this.assignMonthContainer = (() => {
+        this.setState({monthContainer: this.monthContainer})
+      })()
     }
   }
 
@@ -194,8 +212,17 @@ export default class Calendar extends React.Component {
     if (!this.props.forceShowMonthNavigation && allDaysDisabledAfter(this.state.date, 'month', this.props)) {
       return
     }
+
+    let classes = ['react-datepicker__navigation', 'react-datepicker__navigation--next']
+    if (this.props.showTimeSelect) {
+      classes.push('react-datepicker__navigation--next--with-time')
+    }
+    if (this.props.todayButton) {
+      classes.push('react-datepicker__navigation--next--with-today-button')
+    }
+
     return <a
-        className="react-datepicker__navigation react-datepicker__navigation--next"
+        className={classes.join(' ')}
         onClick={this.increaseMonth} />
   }
 
@@ -264,7 +291,7 @@ export default class Calendar extends React.Component {
       var monthDate = this.state.date.clone().add(i, 'M')
       var monthKey = `month-${i}`
       monthList.push(
-          <div key={monthKey} className="react-datepicker__month-container">
+          <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
             <div className="react-datepicker__header">
               {this.renderCurrentMonth(monthDate)}
               <div
@@ -302,11 +329,32 @@ export default class Calendar extends React.Component {
                 startDate={this.props.startDate}
                 endDate={this.props.endDate}
                 peekNextMonth={this.props.peekNextMonth}
-                utcOffset={this.props.utcOffset}/>
+                utcOffset={this.props.utcOffset} />
           </div>
       )
     }
     return monthList
+  }
+
+  renderTimeSection = () => {
+    if (this.props.showTimeSelect) {
+      return (
+        <Time
+            selected={this.props.selected}
+            onChange={this.props.onTimeChange}
+            intervals={this.props.timeIntervals}
+            minTime={this.props.minTime}
+            maxTime={this.props.maxTime}
+            excludeTimes={this.props.excludeTimes}
+            todayButton={this.props.todayButton}
+            showMonthDropdown={this.props.showMonthDropdown}
+            showYearDropdown={this.props.showYearDropdown}
+            withPortal={this.props.withPortal}
+            monthRef={this.state.monthContainer} />
+      )
+    } else {
+      return
+    }
   }
 
   render () {
@@ -317,6 +365,7 @@ export default class Calendar extends React.Component {
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
+        {this.renderTimeSection()}
         {this.props.children}
       </div>
     )
