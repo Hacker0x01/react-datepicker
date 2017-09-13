@@ -38674,6 +38674,7 @@
 
 	        utcOffset: (0, _moment2.default)().utcOffset(),
 	        monthsShown: 1,
+	        showPreviousMonths: false,
 	        withPortal: false,
 	        shouldCloseOnSelect: true
 	      };
@@ -38945,6 +38946,7 @@
 	          outsideClickIgnoreClass: outsideClickIgnoreClass,
 	          fixedHeight: _this.props.fixedHeight,
 	          monthsShown: _this.props.monthsShown,
+	          showPreviousMonths: _this.props.showPreviousMonths,
 	          onDropdownFocus: _this.handleDropdownFocus,
 	          onMonthChange: _this.props.onMonthChange,
 	          dayClassName: _this.props.dayClassName,
@@ -39107,6 +39109,7 @@
 	  selectsEnd: _propTypes2.default.bool,
 	  selectsStart: _propTypes2.default.bool,
 	  showMonthDropdown: _propTypes2.default.bool,
+	  showPreviousMonths: _propTypes2.default.bool,
 	  showWeekNumbers: _propTypes2.default.bool,
 	  showYearDropdown: _propTypes2.default.bool,
 	  forceShowMonthNavigation: _propTypes2.default.bool,

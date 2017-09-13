@@ -69,6 +69,7 @@ export default class DatePicker extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showPreviousMonths: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
@@ -102,6 +103,7 @@ export default class DatePicker extends React.Component {
       onMonthChange () {},
       utcOffset: moment().utcOffset(),
       monthsShown: 1,
+      showPreviousMonths: false,
       withPortal: false,
       shouldCloseOnSelect: true
     }
@@ -384,6 +386,7 @@ export default class DatePicker extends React.Component {
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
+        showPreviousMonths={this.props.showPreviousMonths}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
         dayClassName={this.props.dayClassName}
