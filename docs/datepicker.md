@@ -70,4 +70,5 @@ General datepicker component.
 |`withPortal`|`bool`|`false`||
 |`yearDropdownItemNumber`|`number`|||
 |`hideHeader`|`bool`|`false`||
+|`hideArrows`|`bool`|`false`||
 

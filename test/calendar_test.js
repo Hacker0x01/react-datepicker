@@ -248,6 +248,55 @@ describe('Calendar', function () {
     expect(daysNamesMin.at(6).text()).to.equal('GG')
   })
 
+  it('should show header by default', () => {
+    var calendar = mount(
+      <Calendar
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__current-month').length).to.equal(1)
+  })
+
+  it('should show header specified in hideHeader props', () => {
+    var calendar = mount(
+      <Calendar
+          hideHeader={false}
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__current-month').length).to.equal(1)
+  })
+
+  it('should hide header specified in hideHeader props', () => {
+    var calendar = mount(
+      <Calendar
+          hideHeader
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__current-month').length).to.equal(0)
+  })
+
+  it('should show arrows by default', () => {
+    var calendar = mount(
+      <Calendar
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__navigation--previous').length).to.equal(1)
+    expect(calendar.find('.react-datepicker__navigation--next').length).to.equal(1)
+  })
+
+  it('should show arrows specified in hideArrows props', () => {
+    var calendar = mount(
+      <Calendar
+          hideArrows={false}
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__navigation--previous').length).to.equal(1)
+    expect(calendar.find('.react-datepicker__navigation--next').length).to.equal(1)
+  })
+
+  it('should hide arrows specified in hideArrows props', () => {
+    var calendar = mount(
+      <Calendar
+          hideArrows
+          dateFormat="MMMM YYYY"/>)
+    expect(calendar.find('.react-datepicker__navigation--previous').length).to.equal(0)
+    expect(calendar.find('.react-datepicker__navigation--next').length).to.equal(0)
+  })
+
   describe('onMonthChange', () => {
     let onMonthChangeSpy = sinon.spy()
     let calendar

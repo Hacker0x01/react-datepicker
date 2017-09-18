@@ -43,6 +43,7 @@ import ExcludeTimes from './examples/exclude_times'
 import ExcludeTimePeriod from './examples/exclude_time_period'
 import DontCloseOnSelect from './examples/dont_close_onSelect'
 import HideHeader from './examples/hide_header'
+import HideArrows from './examples/hide_arrows'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -215,7 +216,12 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Hide header',
     component: <HideHeader />
-  }]
+  },
+  {
+    title: 'Hide arrows',
+    component: <HideArrows />
+  }
+  ]
 
   renderExamples = () =>
     this.examples.map((example, index) =>
