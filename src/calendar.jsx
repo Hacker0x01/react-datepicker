@@ -68,7 +68,8 @@ export default class Calendar extends React.Component {
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    hideHeader: PropTypes.bool
   }
 
   static get defaultProps () {
@@ -293,7 +294,7 @@ export default class Calendar extends React.Component {
       monthList.push(
           <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
             <div className="react-datepicker__header">
-              {this.renderCurrentMonth(monthDate)}
+              {!this.props.hideHeader ? this.renderCurrentMonth(monthDate) : null}
               <div
                   className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
                   onFocus={this.handleDropdownFocus}>
@@ -358,11 +359,12 @@ export default class Calendar extends React.Component {
   }
 
   render () {
+    const {hideHeader} = this.props
     return (
       <div className={classnames('react-datepicker', this.props.className)}>
         <div className="react-datepicker__triangle" />
-        {this.renderPreviousMonthButton()}
-        {this.renderNextMonthButton()}
+        {!hideHeader ? this.renderPreviousMonthButton() : null}
+        {!hideHeader ? this.renderNextMonthButton() : null}
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
