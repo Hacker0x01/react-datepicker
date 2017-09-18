@@ -87,7 +87,9 @@ export default class DatePicker extends React.Component {
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
-    excludeTimes: PropTypes.array
+    excludeTimes: PropTypes.array,
+    hideHeader: PropTypes.bool,
+    hideArrows: PropTypes.bool
   }
 
   static get defaultProps () {
@@ -419,7 +421,9 @@ export default class DatePicker extends React.Component {
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        hideHeader={this.props.hideHeader}
+        hideArrows={this.props.hideArrows}>
       {this.props.children}
     </WrappedCalendar>
   }
