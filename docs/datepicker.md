@@ -20,6 +20,7 @@ General datepicker component.
 |`dropdownMode` (required)|`enum('scroll'\|'select')`|`'scroll'`||
 |`endDate`|`object`|||
 |`excludeDates`|`array`|||
+|`excludeTimes`|`array`|||
 |`filterDate`|`func`|||
 |`fixedHeight`|`bool`|||
 |`forceShowMonthNavigation`|`bool`|||
@@ -31,7 +32,9 @@ General datepicker component.
 |`isClearable`|`bool`|||
 |`locale`|`string`|||
 |`maxDate`|`object`|||
+|`maxTime`|`object`|||
 |`minDate`|`object`|||
+|`minTime`|`object`|||
 |`monthsShown`|`number`|`1`||
 |`name`|`string`|||
 |`onBlur`|`func`|`function() {}`||
@@ -57,10 +60,12 @@ General datepicker component.
 |`selectsStart`|`bool`|||
 |`shouldCloseOnSelect`|`bool`|`true`||
 |`showMonthDropdown`|`bool`|||
+|`showTimeSelect`|`bool`|`false`||
 |`showWeekNumbers`|`bool`|||
 |`showYearDropdown`|`bool`|||
 |`startDate`|`object`|||
 |`tabIndex`|`number`|||
+|`timeIntervals`|`number`|`30`||
 |`title`|`string`|||
 |`todayButton`|`string`|||
 |`useWeekdaysShort`|`bool`|||
