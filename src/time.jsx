@@ -67,7 +67,7 @@ export default class Time extends React.Component {
 
     return times.map((time, i) =>
       <li key={i} onClick={this.handleClick.bind(this, time)} className={this.liClasses(time, currH, currM)}>
-        {time.format(this.props.format)}
+        {time.format(format)}
       </li>
     )
   }
