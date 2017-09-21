@@ -5,6 +5,7 @@ import { isTimeInDisabledRange, isTimeDisabled } from './date_utils'
 
 export default class Time extends React.Component {
   static propTypes = {
+    format: PropTypes.string,
     intervals: PropTypes.number,
     selected: PropTypes.object,
     onChange: PropTypes.func,
@@ -65,7 +66,7 @@ export default class Time extends React.Component {
 
     return times.map((time, i) =>
       <li key={i} onClick={this.handleClick.bind(this, time)} className={this.liClasses(time, currH, currM)}>
-        {time.format('hh:mm A')}
+        {time.format(this.props.format)}
       </li>
     )
   }
