@@ -84,6 +84,7 @@ export default class DatePicker extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
+    timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
@@ -414,6 +415,7 @@ export default class DatePicker extends React.Component {
         dayClassName={this.props.dayClassName}
         showTimeSelect={this.props.showTimeSelect}
         onTimeChange={this.handleTimeChange}
+        timeFormat={this.props.timeFormat}
         timeIntervals={this.props.timeIntervals}
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}

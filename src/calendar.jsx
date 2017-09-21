@@ -47,6 +47,7 @@ export default class Calendar extends React.Component {
     onSelect: PropTypes.func.isRequired,
     onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
+    timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
     minTime: PropTypes.object,
@@ -342,6 +343,7 @@ export default class Calendar extends React.Component {
         <Time
             selected={this.props.selected}
             onChange={this.props.onTimeChange}
+            format={this.props.timeFormat}
             intervals={this.props.timeIntervals}
             minTime={this.props.minTime}
             maxTime={this.props.maxTime}

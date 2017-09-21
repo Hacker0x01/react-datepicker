@@ -24,6 +24,7 @@ export default class ShowTime extends React.Component {
     selected={this.state.startDate}
     onChange={this.handleChange}`}<br />
     <strong>{`    showTimeSelect
+    timeFormat="HH:mm"
     timeIntervals={15}
     dateFormat="LLL"
 />
@@ -35,6 +36,7 @@ export default class ShowTime extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             showTimeSelect
+            timeFormat="HH:mm"
             timeIntervals={15}
             dateFormat="LLL" />
       </div>
