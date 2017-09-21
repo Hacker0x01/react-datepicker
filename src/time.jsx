@@ -54,6 +54,7 @@ export default class Time extends React.Component {
 
   renderTimes = () => {
     let times = []
+    const format = (this.props.format) ? this.props.format : 'hh:mm A'
     const intervals = this.props.intervals
     const activeTime = (this.props.selected) ? this.props.selected : moment()
     const currH = activeTime.get('hours')
