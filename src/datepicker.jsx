@@ -88,13 +88,13 @@ export default class DatePicker extends React.Component {
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
-    excludeTimes: PropTypes.array
+    excludeTimes: PropTypes.array,
+    selectMonth: PropTypes.bool
   }
 
   static get defaultProps () {
     return {
       allowSameDay: false,
-      dateFormat: 'L',
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,
@@ -111,7 +111,8 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
-      timeIntervals: 30
+      timeIntervals: 30,
+      selectMonth: false
     }
   }
 
@@ -421,7 +422,8 @@ export default class DatePicker extends React.Component {
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        selectMonth={this.props.selectMonth}>
       {this.props.children}
     </WrappedCalendar>
   }
@@ -435,7 +437,7 @@ export default class DatePicker extends React.Component {
     const inputValue =
       typeof this.props.value === 'string' ? this.props.value
         : typeof this.state.inputValue === 'string' ? this.state.inputValue
-        : safeDateFormat(this.props.selected, this.props)
+        : safeDateFormat(this.props.selected, { dateFormat: this.props.dateFormat || (this.props.selectMonth ? 'MM/YYYY' : 'L'), locale: this.props.locale })
 
     return React.cloneElement(customInput, {
       ref: (input) => { this.input = input },

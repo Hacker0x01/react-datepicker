@@ -73,6 +73,22 @@
   }
 }
 
+.react-datepicker__current-month {
+  display: inline-block;
+}
+
+.react-datepicker__header--select-month {
+  border-bottom: none;
+  border-bottom-left-radius: $datepicker__border-radius;
+  border-bottom-right-radius: $datepicker__border-radius;
+  padding-bottom: 4px;
+  width: 200px;
+
+  .react-datepicker__current-month {
+    cursor: pointer;
+  }
+}
+
 .react-datepicker__year-dropdown-container--select,
 .react-datepicker__month-dropdown-container--select,
 .react-datepicker__year-dropdown-container--scroll,

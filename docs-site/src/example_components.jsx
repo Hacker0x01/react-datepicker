@@ -42,6 +42,7 @@ import ShowTime from './examples/show_time'
 import ExcludeTimes from './examples/exclude_times'
 import ExcludeTimePeriod from './examples/exclude_time_period'
 import DontCloseOnSelect from './examples/dont_close_onSelect'
+import MonthsOnly from './examples/months_only'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
@@ -210,6 +211,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Don\'t hide calendar on date selection',
     component: <DontCloseOnSelect />
+  },
+  {
+    title: 'Select month',
+    component: <MonthsOnly />
   }]
 
   renderExamples = () =>
