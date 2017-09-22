@@ -69,7 +69,8 @@ export default class Calendar extends React.Component {
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    selectMonth: PropTypes.bool
   }
 
   static get defaultProps () {
@@ -77,7 +78,8 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       utcOffset: moment.utc().utcOffset(),
       monthsShown: 1,
-      forceShowMonthNavigation: false
+      forceShowMonthNavigation: false,
+      selectMonth: false
     }
   }
 
@@ -237,7 +239,7 @@ export default class Calendar extends React.Component {
       classes.push('react-datepicker__current-month--hasMonthDropdown')
     }
     return (
-      <div className={classes.join(' ')}>
+      <div onClick={this.props.selectMonth ? (e) => this.props.onSelect(date, e) : null} className={classes.join(' ')}>
         {date.format(this.props.dateFormat)}
       </div>
     )
@@ -293,7 +295,7 @@ export default class Calendar extends React.Component {
       var monthKey = `month-${i}`
       monthList.push(
           <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
-            <div className="react-datepicker__header">
+            <div className={classnames('react-datepicker__header', {'react-datepicker__header--select-month': this.props.selectMonth})}>
               {this.renderCurrentMonth(monthDate)}
               <div
                   className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
@@ -301,36 +303,45 @@ export default class Calendar extends React.Component {
                 {this.renderMonthDropdown(i !== 0)}
                 {this.renderYearDropdown(i !== 0)}
               </div>
-              <div className="react-datepicker__day-names">
-                {this.header(monthDate)}
-              </div>
+              {
+                !this.props.selectMonth
+                ? <div className="react-datepicker__day-names">
+                    {this.header(monthDate)}
+                  </div>
+                : null
+              }
             </div>
-            <Month
-                day={monthDate}
-                dayClassName={this.props.dayClassName}
-                onDayClick={this.handleDayClick}
-                onDayMouseEnter={this.handleDayMouseEnter}
-                onMouseLeave={this.handleMonthMouseLeave}
-                onWeekSelect={this.props.onWeekSelect}
-                formatWeekNumber={this.props.formatWeekNumber}
-                minDate={this.props.minDate}
-                maxDate={this.props.maxDate}
-                excludeDates={this.props.excludeDates}
-                highlightDates={this.props.highlightDates}
-                selectingDate={this.state.selectingDate}
-                includeDates={this.props.includeDates}
-                inline={this.props.inline}
-                fixedHeight={this.props.fixedHeight}
-                filterDate={this.props.filterDate}
-                preSelection={this.props.preSelection}
-                selected={this.props.selected}
-                selectsStart={this.props.selectsStart}
-                selectsEnd={this.props.selectsEnd}
-                showWeekNumbers={this.props.showWeekNumbers}
-                startDate={this.props.startDate}
-                endDate={this.props.endDate}
-                peekNextMonth={this.props.peekNextMonth}
-                utcOffset={this.props.utcOffset} />
+            {
+              !this.props.selectMonth
+              ? <Month
+                  day={monthDate}
+                  dayClassName={this.props.dayClassName}
+                  onDayClick={this.handleDayClick}
+                  onDayMouseEnter={this.handleDayMouseEnter}
+                  onMouseLeave={this.handleMonthMouseLeave}
+                  onWeekSelect={this.props.onWeekSelect}
+                  formatWeekNumber={this.props.formatWeekNumber}
+                  minDate={this.props.minDate}
+                  maxDate={this.props.maxDate}
+                  excludeDates={this.props.excludeDates}
+                  highlightDates={this.props.highlightDates}
+                  selectingDate={this.state.selectingDate}
+                  includeDates={this.props.includeDates}
+                  inline={this.props.inline}
+                  fixedHeight={this.props.fixedHeight}
+                  filterDate={this.props.filterDate}
+                  preSelection={this.props.preSelection}
+                  selected={this.props.selected}
+                  selectsStart={this.props.selectsStart}
+                  selectsEnd={this.props.selectsEnd}
+                  showWeekNumbers={this.props.showWeekNumbers}
+                  startDate={this.props.startDate}
+                  endDate={this.props.endDate}
+                  peekNextMonth={this.props.peekNextMonth}
+                  utcOffset={this.props.utcOffset} />
+              : null
+            }
+
           </div>
       )
     }
