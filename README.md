@@ -77,7 +77,7 @@ See [here](https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datep
 
 ### Time picker
 
-You can also inlude a time picker by adding the showTimeSelect prop
+You can also include a time picker by adding the showTimeSelect prop
 
 ```js
 <DatePicker
@@ -142,7 +142,7 @@ The examples are hosted within the docs folder and are ran in the simple add tha
 * *PgDn*: Move to the next month.
 * *Home*: Move to the previous year.
 * *End*: Move to the next year.
-* *Enter/Esc/Tab*: close the calendar. (Enter & Esc calls preventDefautl)
+* *Enter/Esc/Tab*: close the calendar. (Enter & Esc calls preventDefault)
 
 ## License
 
