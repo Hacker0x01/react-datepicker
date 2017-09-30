@@ -128,21 +128,53 @@ export function newDateWithOffset (utcOffset) {
   return moment().utc().utcOffset(utcOffset)
 }
 
+function set (date, thing, to) {
+  return date.set(thing, to)
+}
+
 export function setTime (date, {hour, minute, second}) {
   date.set({hour, minute, second})
   return date
 }
 
+export function setMonth (date, month) {
+  return set(date, 'month', month)
+}
+
+export function setYear (date, year) {
+  return set(date, 'year', year)
+}
+
+export function add (date, amount, thing) {
+  return date.add(amount, thing)
+}
+
+export function subtract (date, amount, thing) {
+  return date.subtract(amount, thing)
+}
+
+function get (date, thing) {
+  return date.get(thing)
+}
+
 export function getHour (date) {
-  return date.hour()
+  return get(date, 'hour')
 }
 
 export function getMinute (date) {
-  return date.minute()
+  return get(date, 'minute')
 }
 
 export function getSecond (date) {
-  return date.second()
+  return get(date, 'second')
+}
+
+export function getMonth (date) {
+  return get(date, 'month')
+}
+
+export function getYear (date) {
+  return get(date, 'year')
 }
 
 export function isMoment (date) {
@@ -151,4 +183,40 @@ export function isMoment (date) {
 
 export function isDate (date) {
   return moment.isDate(date)
+}
+
+export function localizeDate (date, locale) {
+  return date.clone().locale(locale || moment.locale())
+}
+
+export function getStartOf (date, thing) {
+  return date.startOf(thing)
+}
+
+export function cloneDate (date) {
+  return date.clone()
+}
+
+export function formatDate (date, format) {
+  return date.format(format)
+}
+
+export function isBefore (date1, date2) {
+  return date1.isBefore(date2)
+}
+
+export function isAfter (date1, date2) {
+  return date1.isAfter(date2)
+}
+
+export function getLocaleData (date) {
+  return date.localeData()
+}
+
+export function getWeekdayMinInLocale (locale, date) {
+  return locale.weekdaysMin(date)
+}
+
+export function getWeekdayShortInLocale (locale, date) {
+  return locale.weekdaysShort(date)
 }
