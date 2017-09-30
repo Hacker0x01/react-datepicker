@@ -55,14 +55,14 @@ export default class Month extends React.Component {
 
   isWeekInMonth = (startOfWeek) => {
     const day = this.props.day
-    const endOfWeek = utils.add(utils.cloneDate(startOfWeek), 6, 'days')
+    const endOfWeek = utils.addDays(utils.cloneDate(startOfWeek), 6)
     return utils.isSameMonth(startOfWeek, day) || utils.isSameMonth(endOfWeek, day)
   }
 
   renderWeeks = () => {
     const weeks = []
     var isFixedHeight = this.props.fixedHeight
-    let currentWeekStart = utils.getStartOf(utils.getStartOf(utils.cloneDate(this.props.day), 'month'), 'week')
+    let currentWeekStart = utils.getStartOfWeek(utils.getStartOfMonth(utils.cloneDate(this.props.day)))
     let i = 0
     let breakAfterNextPush = false
 
@@ -96,7 +96,7 @@ export default class Month extends React.Component {
       if (breakAfterNextPush) break
 
       i++
-      currentWeekStart = utils.add(utils.cloneDate(currentWeekStart), 1, 'weeks')
+      currentWeekStart = utils.addWeeks(utils.cloneDate(currentWeekStart), 1)
 
       // If one of these conditions is true, we will either break on this week
       // or break on the next week

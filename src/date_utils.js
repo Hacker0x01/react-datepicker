@@ -116,6 +116,24 @@ export function getDayOfWeekCode (day) {
 
 // my stuff
 
+// These functions are not exported so
+// that we avoid magic strings like 'days'
+function set (date, thing, to) {
+  return date.set(thing, to)
+}
+
+function add (date, amount, thing) {
+  return date.add(amount, thing)
+}
+
+function subtract (date, amount, thing) {
+  return date.subtract(amount, thing)
+}
+
+function get (date, thing) {
+  return date.get(thing)
+}
+
 export function getUTCOffset () {
   return moment().utcOffset()
 }
@@ -126,10 +144,6 @@ export function newDate (date) {
 
 export function newDateWithOffset (utcOffset) {
   return moment().utc().utcOffset(utcOffset)
-}
-
-function set (date, thing, to) {
-  return date.set(thing, to)
 }
 
 export function setTime (date, {hour, minute, second}) {
@@ -143,18 +157,6 @@ export function setMonth (date, month) {
 
 export function setYear (date, year) {
   return set(date, 'year', year)
-}
-
-export function add (date, amount, thing) {
-  return date.add(amount, thing)
-}
-
-export function subtract (date, amount, thing) {
-  return date.subtract(amount, thing)
-}
-
-function get (date, thing) {
-  return date.get(thing)
 }
 
 export function getHour (date) {
@@ -177,6 +179,26 @@ export function getYear (date) {
   return get(date, 'year')
 }
 
+export function addMinutes (date, amount) {
+  return add(date, amount, 'minutes')
+}
+
+export function addDays (date, amount) {
+  return add(date, amount, 'days')
+}
+
+export function addWeeks (date, amount) {
+  return add(date, amount, 'weeks')
+}
+
+export function addMonths (date, amount) {
+  return add(date, amount, 'months')
+}
+
+export function subtractMonths (date, amount) {
+  return subtract(date, amount, 'months')
+}
+
 export function isMoment (date) {
   return moment.isMoment(date)
 }
@@ -189,8 +211,22 @@ export function localizeDate (date, locale) {
   return date.clone().locale(locale || moment.locale())
 }
 
-export function getStartOf (date, thing) {
+function getStartOf (date, thing) {
   return date.startOf(thing)
+}
+
+export function getStartOfWeek (date) {
+  return getStartOf(date, 'week')
+}
+export function getStartOfDay (date) {
+  return getStartOf(date, 'day')
+}
+export function getStartOfMonth (date) {
+  return getStartOf(date, 'month')
+}
+
+export function getStartOfDate (date) {
+  return getStartOf(date, 'date')
 }
 
 export function cloneDate (date) {

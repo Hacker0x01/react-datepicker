@@ -4,10 +4,10 @@ import {
   getHour,
   getMinute,
   newDate,
-  getStartOf,
+  getStartOfDay,
+  addMinutes,
   cloneDate,
   formatDate,
-  add,
 
   isTimeInDisabledRange,
   isTimeDisabled
@@ -69,10 +69,10 @@ export default class Time extends React.Component {
     const activeTime = (this.props.selected) ? this.props.selected : newDate()
     const currH = getHour(activeTime)
     const currM = getMinute(activeTime)
-    let base = getStartOf(newDate(), 'day')
+    let base = getStartOfDay(newDate())
     const multiplier = 1440 / intervals
     for (let i = 0; i < multiplier; i++) {
-      times.push(add(cloneDate(base), i * intervals, 'minutes'))
+      times.push(addMinutes(cloneDate(base), i * intervals))
     }
 
     return times.map((time, i) =>
