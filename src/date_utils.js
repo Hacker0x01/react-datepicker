@@ -138,8 +138,8 @@ export function getUTCOffset () {
   return moment().utcOffset()
 }
 
-export function newDate (date) {
-  return moment(date)
+export function newDate (point) {
+  return moment(point)
 }
 
 export function newDateWithOffset (utcOffset) {
@@ -257,12 +257,21 @@ export function getLocaleData (date) {
   return date.localeData()
 }
 
+export function getLocaleDataForLocale (locale) {
+  return moment.localeData(locale)
+}
+
 export function getWeekdayMinInLocale (locale, date) {
   return locale.weekdaysMin(date)
 }
 
 export function getWeekdayShortInLocale (locale, date) {
   return locale.weekdaysShort(date)
+}
+
+// TODO what is this format exactly?
+export function getMonthInLocale (locale, date, format) {
+  return locale.months(date, format)
 }
 
 function isSame (date1, date2, thing) {

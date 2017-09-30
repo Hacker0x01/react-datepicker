@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MonthDropdownOptions from './month_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
-import moment from 'moment'
+import * as utils from './date_utils'
 
 const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions)
 
@@ -68,9 +68,9 @@ export default class MonthDropdown extends React.Component {
   })
 
   render () {
-    const localeData = moment.localeData(this.props.locale)
+    const localeData = utils.getLocaleDataForLocale(this.props.locale)
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
-      (M) => localeData.months(moment({M}), this.props.dateFormat)
+      (M) => utils.getMonthInLocale(localeData, utils.newDate({M}), this.props.dateFormat)
     )
 
     let renderedDropdown
