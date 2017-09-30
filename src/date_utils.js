@@ -228,3 +228,7 @@ function isSame (date1, date2, thing) {
 export function isSameMonth (date1, date2) {
   return isSame(date1, date2, 'month')
 }
+
+export function getWeek (date) {
+  return get(date, 'week')
+}
