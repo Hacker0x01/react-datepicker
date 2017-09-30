@@ -171,12 +171,20 @@ export function getSecond (date) {
   return get(date, 'second')
 }
 
+export function getDay (date) {
+  return get(date, 'day')
+}
+
 export function getMonth (date) {
   return get(date, 'month')
 }
 
 export function getYear (date) {
   return get(date, 'year')
+}
+
+export function getDate (date) {
+  return get(date, 'date')
 }
 
 export function addMinutes (date, amount) {
