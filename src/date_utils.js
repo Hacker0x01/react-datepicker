@@ -220,3 +220,11 @@ export function getWeekdayMinInLocale (locale, date) {
 export function getWeekdayShortInLocale (locale, date) {
   return locale.weekdaysShort(date)
 }
+
+function isSame (date1, date2, thing) {
+  return date1.isSame(date2, thing)
+}
+
+export function isSameMonth (date1, date2) {
+  return isSame(date1, date2, 'month')
+}
