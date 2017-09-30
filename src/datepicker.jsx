@@ -3,8 +3,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import PopperComponent, { popperPlacementPositions } from './popper_component'
 import classnames from 'classnames'
-import { isSameDay, isDayDisabled, isDayInRange, getEffectiveMinDate, getEffectiveMaxDate, parseDate, safeDateFormat } from './date_utils'
-import moment from 'moment'
+import {
+  getUTCOffset,
+  newDate,
+  newDateWithOffset,
+  setTime,
+  getHour,
+  getMinute,
+  getSecond,
+  isMoment,
+  isDate,
+
+  isSameDay,
+  isDayDisabled,
+  isDayInRange,
+  getEffectiveMinDate,
+  getEffectiveMaxDate,
+  parseDate,
+  safeDateFormat
+} from './date_utils'
 import onClickOutside from 'react-onclickoutside'
 
 const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
@@ -106,7 +123,7 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
-      utcOffset: moment().utcOffset(),
+      utcOffset: getUTCOffset(),
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -133,11 +150,11 @@ export default class DatePicker extends React.Component {
   }
 
   getPreSelection = () => (
-    this.props.openToDate ? moment(this.props.openToDate)
-    : this.props.selectsEnd && this.props.startDate ? moment(this.props.startDate)
-    : this.props.selectsStart && this.props.endDate ? moment(this.props.endDate)
-    : (typeof this.props.utcOffset !== 'undefined') ? moment.utc().utcOffset(this.props.utcOffset)
-    : moment()
+    this.props.openToDate ? newDate(this.props.openToDate)
+    : this.props.selectsEnd && this.props.startDate ? newDate(this.props.startDate)
+    : this.props.selectsStart && this.props.endDate ? newDate(this.props.endDate)
+    : (typeof this.props.utcOffset !== 'undefined') ? newDateWithOffset(this.props.utcOffset)
+    : newDate()
   )
 
   calcInitialState = () => {
@@ -152,7 +169,7 @@ export default class DatePicker extends React.Component {
     return {
       open: false,
       preventFocus: false,
-      preSelection: this.props.selected ? moment(this.props.selected) : boundedPreSelection
+      preSelection: this.props.selected ? newDate(this.props.selected) : boundedPreSelection
     }
   }
 
@@ -251,10 +268,10 @@ export default class DatePicker extends React.Component {
     if (!isSameDay(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
         if (this.props.selected) {
-          changedDate = moment(changedDate).set({
-            hour: this.props.selected.hour(),
-            minute: this.props.selected.minute(),
-            second: this.props.selected.second()
+          changedDate = setTime(newDate(changedDate), {
+            hour: getHour(this.props.selected),
+            minute: getMinute(this.props.selected),
+            second: getSecond(this.props.selected)
           })
         }
         this.setState({
@@ -310,10 +327,10 @@ export default class DatePicker extends React.Component {
       }
       return
     }
-    const copy = moment(this.state.preSelection)
+    const copy = newDate(this.state.preSelection)
     if (eventKey === 'Enter') {
       event.preventDefault()
-      if (moment.isMoment(this.state.preSelection) || moment.isDate(this.state.preSelection)) {
+      if (isMoment(this.state.preSelection) || isDate(this.state.preSelection)) {
         this.handleSelect(copy, event)
         !this.props.shouldCloseOnSelect && this.setPreSelection(copy)
       } else {

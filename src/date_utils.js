@@ -113,3 +113,42 @@ const dayOfWeekCodes = {
 export function getDayOfWeekCode (day) {
   return dayOfWeekCodes[day.isoWeekday()]
 }
+
+// my stuff
+
+export function getUTCOffset () {
+  return moment().utcOffset()
+}
+
+export function newDate (date) {
+  return moment(date)
+}
+
+export function newDateWithOffset (utcOffset) {
+  return moment().utc().utcOffset(utcOffset)
+}
+
+export function setTime (date, {hour, minute, second}) {
+  date.set({hour, minute, second})
+  return date
+}
+
+export function getHour (date) {
+  return date.hour()
+}
+
+export function getMinute (date) {
+  return date.minute()
+}
+
+export function getSecond (date) {
+  return date.second()
+}
+
+export function isMoment (date) {
+  return moment.isMoment(date)
+}
+
+export function isDate (date) {
+  return moment.isDate(date)
+}
