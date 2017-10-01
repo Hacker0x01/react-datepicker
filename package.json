@@ -43,7 +43,7 @@
     "codecov.io": "^0.1.6",
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^3.0.0",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.4.1",
@@ -73,11 +73,9 @@
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.0",
-    "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
+    "react": "^16.0.0",
     "react-docgen": "^2.13.0",
-    "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.5.4",
+    "react-dom": "^16.0.0",
     "react-transform-hmr": "^1.0.4",
     "sass-loader": "^4.1.1",
     "sinon": "^2.3.2",
@@ -88,15 +86,15 @@
     "webpack-hot-middleware": "^2.16.1"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "moment": "^2.17.1",
-    "prop-types": "^15.5.8",
-    "react-onclickoutside": "^6.1.1",
-    "react-popper": "^0.7.2"
+    "prop-types": "^15.6.0",
+    "react-onclickoutside": "^6.6.0",
+    "react-popper": "^0.7.3"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
