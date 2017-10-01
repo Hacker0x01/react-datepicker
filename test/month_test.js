@@ -3,7 +3,10 @@ import moment from 'moment'
 import Month from '../src/month'
 import Day from '../src/day'
 import range from 'lodash/range'
-import { mount, shallow } from 'enzyme'
+import Enzyme, { mount, shallow } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('Month', () => {
   function assertDateRangeInclusive (month, start, end) {

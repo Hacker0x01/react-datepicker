@@ -2,8 +2,11 @@ import React from 'react'
 import range from 'lodash/range'
 import MonthDropdown from '../src/month_dropdown.jsx'
 import MonthDropdownOptions from '../src/month_dropdown_options.jsx'
-import { mount } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import moment from 'moment'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('MonthDropdown', () => {
   let monthDropdown

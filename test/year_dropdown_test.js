@@ -3,7 +3,10 @@ import range from 'lodash/range'
 import moment from 'moment'
 import YearDropdown from '../src/year_dropdown.jsx'
 import YearDropdownOptions from '../src/year_dropdown_options.jsx'
-import { mount } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('YearDropdown', () => {
   var yearDropdown

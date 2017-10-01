@@ -5,8 +5,11 @@ import Month from '../src/month'
 import Day from '../src/day'
 import YearDropdown from '../src/year_dropdown'
 import MonthDropdown from '../src/month_dropdown'
-import { shallow, mount } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('Calendar', function () {
   const dateFormat = 'MMMM YYYY'

@@ -2,7 +2,10 @@ import React from 'react'
 import Calendar from '../src/calendar'
 import Month from '../src/month'
 import YearDropdown from '../src/year_dropdown'
-import { shallow } from 'enzyme'
+import Enzyme, { shallow } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('Multi month calendar', function () {
   var dateFormat = 'MMMM YYYY'

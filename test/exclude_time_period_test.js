@@ -1,7 +1,10 @@
 import React from 'react'
 import moment from 'moment'
-import { mount } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import DatePicker from '../src/datepicker.jsx'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 describe('DatePicker', () => {
   let sandbox
