@@ -8,11 +8,23 @@ import {
   newDate,
   newDateWithOffset,
   setTime,
+  cloneDate,
   getHour,
   getMinute,
+  getMonth,
   getSecond,
   isMoment,
   isDate,
+  isBefore,
+  isAfter,
+  subtractDays,
+  addDays,
+  subtractWeeks,
+  addWeeks,
+  subtractMonths,
+  addMonths,
+  subtractYears,
+  addYears,
 
   isSameDay,
   isDayDisabled,
@@ -138,8 +150,8 @@ export default class DatePicker extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const currentMonth = this.props.selected && this.props.selected.month()
-    const nextMonth = nextProps.selected && nextProps.selected.month()
+    const currentMonth = this.props.selected && getMonth(this.props.selected)
+    const nextMonth = nextProps.selected && getMonth(nextProps.selected)
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected)
     }
@@ -162,8 +174,8 @@ export default class DatePicker extends React.Component {
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
     const boundedPreSelection =
-      minDate && defaultPreSelection.isBefore(minDate) ? minDate
-      : maxDate && defaultPreSelection.isAfter(maxDate) ? maxDate
+      minDate && isBefore(defaultPreSelection, minDate) ? minDate
+      : maxDate && isAfter(defaultPreSelection, maxDate) ? maxDate
       : defaultPreSelection
 
     return {
@@ -300,9 +312,9 @@ export default class DatePicker extends React.Component {
 
   handleTimeChange = (time) => {
     const selected = (this.props.selected) ? this.props.selected : this.getPreSelection()
-    let changedDate = selected.clone().set({
-      hour: time.get('hours'),
-      minute: time.get('minutes')
+    let changedDate = setTime(cloneDate(selected), {
+      hour: getHour(time),
+      minute: getMinute(time)
     })
 
     this.setState({
@@ -346,35 +358,35 @@ export default class DatePicker extends React.Component {
       switch (eventKey) {
         case 'ArrowLeft':
           event.preventDefault()
-          newSelection = copy.subtract(1, 'days')
+          newSelection = subtractDays(copy, 1)
           break
         case 'ArrowRight':
           event.preventDefault()
-          newSelection = copy.add(1, 'days')
+          newSelection = addDays(copy, 1)
           break
         case 'ArrowUp':
           event.preventDefault()
-          newSelection = copy.subtract(1, 'weeks')
+          newSelection = subtractWeeks(copy, 1)
           break
         case 'ArrowDown':
           event.preventDefault()
-          newSelection = copy.add(1, 'weeks')
+          newSelection = addWeeks(copy, 1)
           break
         case 'PageUp':
           event.preventDefault()
-          newSelection = copy.subtract(1, 'months')
+          newSelection = subtractMonths(copy, 1)
           break
         case 'PageDown':
           event.preventDefault()
-          newSelection = copy.add(1, 'months')
+          newSelection = addMonths(copy, 1)
           break
         case 'Home':
           event.preventDefault()
-          newSelection = copy.subtract(1, 'years')
+          newSelection = subtractYears(copy, 1)
           break
         case 'End':
           event.preventDefault()
-          newSelection = copy.add(1, 'years')
+          newSelection = addYears(copy, 1)
           break
       }
       this.setPreSelection(newSelection)
