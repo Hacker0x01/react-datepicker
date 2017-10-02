@@ -113,8 +113,7 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
-      timeIntervals: 30,
-      isOpen: false
+      timeIntervals: 30
     }
   }
 
@@ -129,7 +128,7 @@ export default class DatePicker extends React.Component {
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected)
     }
-    if (this.state.open !== nextProps.isOpen) {
+    if (typeof nextProps.isOpen !== 'undefined' && this.state.open !== nextProps.isOpen) {
       this.setOpen(nextProps.isOpen)
     }
   }

@@ -44,7 +44,7 @@ describe('DatePicker', () => {
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
-    expect(datePicker.state.open).to.be.false
+    expect(typeof datePicker.state.open).to.equal('undefined')
   })
 
   it('should keep the calendar shown when blurring the date input', (done) => {
@@ -106,7 +106,7 @@ describe('DatePicker', () => {
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
-    expect(datePicker.state.open).to.be.false
+    expect(typeof datePicker.state.open).to.equal('undefined')
   })
 
   it('should hide the calendar when clicking a day on the calendar', () => {
@@ -181,11 +181,11 @@ describe('DatePicker', () => {
     expect(datePicker.state.open).to.be.false
   })
 
-  it('should init open as false when isOpen is not defined', () => {
+  it('should init open as undefined when isOpen is not defined', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
-    expect(datePicker.state.open).to.be.false
+    expect(typeof datePicker.state.open).to.equal('undefined')
   })
 
   it('should not hide the calendar when clicking a day on the calendar and shouldCloseOnSelect prop is false', () => {
