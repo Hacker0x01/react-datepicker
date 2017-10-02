@@ -167,21 +167,21 @@ describe('DatePicker', () => {
     expect(setOpenSpy.called).to.be.false
   })
 
-  it('should init open as as true when isOpen prop is true', () => {
+  it('should init open as true when isOpen prop is true', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker isOpen/>
     )
     expect(datePicker.state.open).to.be.true
   })
 
-  it('should init open as as false when isOpen prop is false', () => {
+  it('should init open as false when isOpen prop is false', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker isOpen={false}/>
     )
     expect(datePicker.state.open).to.be.false
   })
 
-  it('should init open as as false when isOpen is not defined', () => {
+  it('should init open as false when isOpen is not defined', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     )
