@@ -74,3 +74,5 @@ General datepicker component.
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
 |`yearDropdownItemNumber`|`number`|||
+|`isOpen`|`boolean`|`false`|||
+|`setOpen`|`func`|||

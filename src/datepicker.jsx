@@ -88,7 +88,9 @@ export default class DatePicker extends React.Component {
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
-    excludeTimes: PropTypes.array
+    excludeTimes: PropTypes.array,
+    isOpen: PropTypes.bool,
+    setOpen: PropTypes.func
   }
 
   static get defaultProps () {
@@ -111,7 +113,8 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
-      timeIntervals: 30
+      timeIntervals: 30,
+      isOpen: false
     }
   }
 
@@ -125,6 +128,9 @@ export default class DatePicker extends React.Component {
     const nextMonth = nextProps.selected && nextProps.selected.month()
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected)
+    }
+    if (this.state.open !== nextProps.isOpen) {
+      this.setOpen(nextProps.isOpen)
     }
   }
 
@@ -150,7 +156,7 @@ export default class DatePicker extends React.Component {
       : defaultPreSelection
 
     return {
-      open: false,
+      open: this.props.isOpen,
       preventFocus: false,
       preSelection: this.props.selected ? moment(this.props.selected) : boundedPreSelection
     }
@@ -171,6 +177,9 @@ export default class DatePicker extends React.Component {
       open: open,
       preSelection: open && this.state.open ? this.state.preSelection : this.calcInitialState().preSelection
     })
+    if (this.props.setOpen) {
+      this.props.setOpen(open)
+    }
   }
 
   handleFocus = (event) => {

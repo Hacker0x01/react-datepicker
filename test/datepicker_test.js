@@ -120,6 +120,74 @@ describe('DatePicker', () => {
     expect(datePicker.calendar).to.not.exist
   })
 
+  it('should call setOpen with isOpen prop value when its changed to true', () => {
+    const setOpen = sandbox.spy()
+    let datePicker = mount(
+      <DatePicker isOpen={false} setOpen={setOpen}/>
+    )
+    datePicker.setProps({isOpen: true})
+    expect(setOpen.calledWithExactly(true)).to.be.true
+  })
+
+  it('should call setOpen with isOpen prop value when its changed to false', () => {
+    const setOpen = sandbox.spy()
+    let datePicker = mount(
+      <DatePicker isOpen setOpen={setOpen}/>
+    )
+    datePicker.setProps({isOpen: false})
+    expect(setOpen.calledWithExactly(false)).to.be.true
+  })
+
+  it('should not call setOpen when isOpen stayed with the same value', () => {
+    const setOpen = sandbox.spy()
+    let datePicker = mount(
+      <DatePicker isOpen setOpen={setOpen}/>
+    )
+    datePicker.setProps({isOpen: true})
+    expect(setOpen.called).to.be.false
+  })
+
+  it('should call setOpen prop when its defined and setOpen triggered', () => {
+    const setOpenSpy = sandbox.spy()
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker setOpen={setOpenSpy} />
+    )
+    var dateInput = datePicker.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(setOpenSpy.called).to.be.true
+  })
+
+  it('should not call setOpen prop when its not defined', () => {
+    const setOpenSpy = sandbox.spy()
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    const dateInput = datePicker.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(setOpenSpy.called).to.be.false
+  })
+
+  it('should init open as as true when isOpen prop is true', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker isOpen/>
+    )
+    expect(datePicker.state.open).to.be.true
+  })
+
+  it('should init open as as false when isOpen prop is false', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker isOpen={false}/>
+    )
+    expect(datePicker.state.open).to.be.false
+  })
+
+  it('should init open as as false when isOpen is not defined', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    )
+    expect(datePicker.state.open).to.be.false
+  })
+
   it('should not hide the calendar when clicking a day on the calendar and shouldCloseOnSelect prop is false', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker shouldCloseOnSelect={false}/>
