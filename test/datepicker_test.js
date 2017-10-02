@@ -151,10 +151,14 @@ describe('DatePicker', () => {
   })
 
   it('should update the preSelection state when a day is selected with mouse click', () => {
-    var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
+    // Note: We need monthsShown=2 so that today can still be clicked when
+    // ArrowLeft selects the previous month. (On the 1st 2 days of the month.)
+    var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false, monthsShown: 2})
+
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+
     var day = TestUtils.findRenderedDOMComponentWithClass(data.datePicker.calendar, 'react-datepicker__day--today')
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
 
     TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
@@ -322,6 +326,7 @@ describe('DatePicker', () => {
           filterDate={opts.filterDate}
           minDate={opts.minDate}
           maxDate={opts.maxDate}
+          monthsShown={opts.monthsShown}
           shouldCloseOnSelect={opts.shouldCloseOnSelect}/>
     )
     var dateInput = datePicker.input
