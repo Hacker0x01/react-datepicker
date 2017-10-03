@@ -5,6 +5,7 @@ import MonthDropdownOptions from '../src/month_dropdown_options.jsx'
 import Enzyme, { mount } from 'enzyme'
 import moment from 'moment'
 import Adapter from 'enzyme-adapter-react-16'
+import * as utils from '../src/date_utils'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -59,7 +60,7 @@ describe('MonthDropdown', () => {
     })
 
     it('closes the dropdown if outside is clicked', () => {
-      const monthNames = range(0, 12).map((M) => moment.localeData().months(moment({M})))
+      const monthNames = range(0, 12).map((M) => utils.getMonthInLocale(utils.getDefaultLocaleData(), utils.newDate({M})))
       const onCancelSpy = sandbox.spy()
       const monthDropdownOptionsInstance = mount(
         <MonthDropdownOptions onCancel={onCancelSpy} onChange={sandbox.spy()} month={11} monthNames={monthNames}/>

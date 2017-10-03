@@ -1,5 +1,6 @@
 import React from 'react'
 import DatePicker from '../src/datepicker.jsx'
+import * as utils from '../src/date_utils'
 
 class TimezoneDatePicker extends React.Component {
   constructor (props) {
@@ -13,7 +14,7 @@ class TimezoneDatePicker extends React.Component {
 
   render () {
     var selected = this.state.startDate &&
-                   this.state.startDate.clone().utcOffset(this.state.utcOffset)
+                   utils.setUTCOffset(utils.cloneDate(this.state.startDate), this.state.utcOffset)
 
     return <DatePicker
         utcOffset={this.state.utcOffset}

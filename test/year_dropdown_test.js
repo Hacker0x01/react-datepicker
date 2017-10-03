@@ -1,17 +1,17 @@
 import React from 'react'
 import range from 'lodash/range'
-import moment from 'moment'
 import YearDropdown from '../src/year_dropdown.jsx'
 import YearDropdownOptions from '../src/year_dropdown_options.jsx'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import { newDate } from '../src/date_utils'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('YearDropdown', () => {
   var yearDropdown
-
   var lastOnChangeValue
+
   function onChangeMock (value) {
     lastOnChangeValue = value
   }
@@ -83,8 +83,8 @@ describe('YearDropdown', () => {
     it('renders a select with min and max year range options', () => {
       yearDropdown = getYearDropdown({
         dropdownMode: 'select',
-        minDate: moment({y: 1988}),
-        maxDate: moment({y: 2016})
+        minDate: newDate('1988-01-01'),
+        maxDate: newDate('2016-01-01')
       })
       const select = yearDropdown.find('.react-datepicker__year-select')
       expect(select).to.have.length(1)
