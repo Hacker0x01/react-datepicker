@@ -1,9 +1,9 @@
 import React from 'react'
 import range from 'lodash/range'
-import YearDropdown from '../../src/year_dropdown.jsx'
-import YearDropdownOptions from '../../src/year_dropdown_options.jsx'
+import YearDropdown from '../src/year_dropdown.jsx'
+import YearDropdownOptions from '../src/year_dropdown_options.jsx'
 import { mount } from 'enzyme'
-import { newDate } from '../../src/date_utils'
+import { newDate } from '../src/date_utils'
 
 describe('YearDropdown', () => {
   var yearDropdown

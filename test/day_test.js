@@ -1,7 +1,7 @@
 import React from 'react'
-import Day from '../../src/day'
+import Day from '../src/day'
 import { shallow } from 'enzyme'
-import * as utils from '../../src/date_utils'
+import * as utils from '../src/date_utils'
 
 function renderDay (day, props = {}) {
   return shallow(

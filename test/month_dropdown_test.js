@@ -1,9 +1,9 @@
 import React from 'react'
 import range from 'lodash/range'
-import MonthDropdown from '../../src/month_dropdown.jsx'
-import MonthDropdownOptions from '../../src/month_dropdown_options.jsx'
+import MonthDropdown from '../src/month_dropdown.jsx'
+import MonthDropdownOptions from '../src/month_dropdown_options.jsx'
 import { mount } from 'enzyme'
-import * as utils from '../../src/date_utils'
+import * as utils from '../src/date_utils'
 
 describe('MonthDropdown', () => {
   let monthDropdown
