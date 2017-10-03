@@ -57,7 +57,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.DATE_BACKEND': JSON.stringify(process.env.DATE_BACKEND),
     })
   ]
 }

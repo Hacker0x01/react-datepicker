@@ -101,7 +101,9 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
     "start": "node server.js",
-    "test": "cross-env NODE_ENV=test grunt travis",
+    "test": "npm run test-moment && npm run test-date-fns",
+    "test-moment": "cross-env NODE_ENV=test DATE_BACKEND=moment grunt travis",
+    "test-date-fns": "cross-env NODE_ENV=test DATE_BACKEND=date-fns grunt travis",
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
