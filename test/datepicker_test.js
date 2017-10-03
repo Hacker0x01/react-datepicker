@@ -164,8 +164,8 @@ describe('DatePicker', () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Enter'))
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
-    data.copyM.add(2, 'weeks')
-    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+    utils.addWeeks(data.copyM, 2)
+    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(data.copyM, data.testFormat))
   })
 
   it('should update the preSelection state when a day is selected with mouse click', () => {
@@ -180,8 +180,8 @@ describe('DatePicker', () => {
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
-    data.copyM.add(1, 'weeks')
-    expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
+    utils.addWeeks(data.copyM, 1)
+    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(data.copyM, data.testFormat))
   })
 
   it('should hide the calendar when pressing enter in the date input', () => {
@@ -712,7 +712,7 @@ describe('DatePicker', () => {
   })
   it('should switch month in inline mode immediately', () => {
     const selected = utils.newDate()
-    const future = utils.newDate().add(100, 'day')
+    const future = utils.addDays(utils.newDate(), 100)
     const datePicker = mount(
       <DatePicker inline selected={selected}/>
     )
