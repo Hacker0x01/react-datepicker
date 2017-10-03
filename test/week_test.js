@@ -1,25 +1,25 @@
 import React from 'react'
-import moment from 'moment'
 import Week from '../src/week'
 import WeekNumber from '../src/week_number'
 import Day from '../src/day'
 import { shallow } from 'enzyme'
+import * as utils from '../src/date_utils'
 
 describe('Week', () => {
   it('should have the week CSS class', () => {
-    const week = shallow(<Week day={moment()} />)
+    const week = shallow(<Week day={utils.newDate()} />)
     expect(week.hasClass('react-datepicker__week')).to.equal(true)
   })
 
   it('should render the days of the week', () => {
-    const weekStart = moment('2015-12-20').startOf('week')
+    const weekStart = utils.getStartOfWeek(utils.newDate('2015-12-20'))
     const week = shallow(<Week day={weekStart} />)
 
     const days = week.find(Day)
     expect(days.length).to.equal(7)
     days.forEach((day, offset) => {
-      const expectedDay = weekStart.clone().add(offset, 'days')
-      assert(day.prop('day').isSame(expectedDay, 'day'))
+      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset)
+      assert(utils.isSameDay(day.prop('day'), expectedDay))
     })
 
     const weekNumber = week.find(WeekNumber)
@@ -27,14 +27,14 @@ describe('Week', () => {
   })
 
   it('should render the week number', () => {
-    const weekStart = moment('2015-12-20').startOf('week')
+    const weekStart = utils.getStartOfWeek(utils.newDate('2015-12-20'))
     const week = shallow(<Week showWeekNumber day={weekStart} />)
 
     const days = week.find(Day)
     expect(days.length).to.equal(7)
     days.forEach((day, offset) => {
-      const expectedDay = weekStart.clone().add(offset, 'days')
-      assert(day.prop('day').isSame(expectedDay, 'day'))
+      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset)
+      assert(utils.isSameDay(day.prop('day'), expectedDay))
     })
 
     const weekNumber = week.find(WeekNumber)
@@ -48,13 +48,13 @@ describe('Week', () => {
       dayClicked = day
     }
 
-    const weekStart = moment('2015-12-20')
+    const weekStart = utils.newDate('2015-12-20')
     const week = shallow(
       <Week day={weekStart} onDayClick={onDayClick} />
     )
     const day = week.find(Day).at(0)
     day.simulate('click')
-    assert(day.prop('day').isSame(dayClicked, 'day'))
+    assert(utils.isSameDay(day.prop('day'), dayClicked))
   })
 
   it('should call the provided onWeekSelect function and pass the first day of the week', () => {
@@ -64,13 +64,13 @@ describe('Week', () => {
       firstDayReceived = newFirstWeekDay
     }
 
-    const weekStart = moment('2015-12-20')
+    const weekStart = utils.newDate('2015-12-20')
     const week = shallow(
       <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
     )
     const weekNumberElement = week.find(WeekNumber)
     weekNumberElement.simulate('click')
-    expect(firstDayReceived.isSame(weekStart)).to.be.true
+    expect(utils.equals(firstDayReceived, weekStart)).to.be.true
   })
 
   it('should call the provided onWeekSelect function and pass the week number', () => {
@@ -80,8 +80,8 @@ describe('Week', () => {
       weekNumberReceived = newWeekNumber
     }
 
-    const weekStart = moment('2015-12-20')
-    const realWeekNumber = parseInt(weekStart.format('w'), 10)
+    const weekStart = utils.newDate('2015-12-20')
+    const realWeekNumber = utils.getWeek(weekStart)
     const week = shallow(
       <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
     )
@@ -98,13 +98,13 @@ describe('Week', () => {
       return 9
     }
 
-    const weekStart = moment('2015-12-20')
+    const weekStart = utils.newDate('2015-12-20')
     const week = shallow(
       <Week day={weekStart} showWeekNumber formatWeekNumber={weekNumberFormatter} />
     )
     const weekNumberElement = week.find(WeekNumber)
 
-    expect(firstDayReceived.isSame(weekStart)).to.be.true
+    expect(utils.equals(firstDayReceived, weekStart)).to.be.true
     expect(weekNumberElement.prop('weekNumber')).to.equal(9)
   })
 
@@ -115,10 +115,10 @@ describe('Week', () => {
       dayMouseEntered = day
     }
 
-    const weekStart = moment()
+    const weekStart = utils.newDate()
     const week = shallow(<Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />)
     const day = week.find(Day).first()
     day.simulate('mouseenter')
-    assert(day.prop('day').isSame(dayMouseEntered, 'day'))
+    assert(utils.isSameDay(day.prop('day'), dayMouseEntered))
   })
 })
