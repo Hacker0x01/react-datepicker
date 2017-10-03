@@ -110,6 +110,7 @@ export function getHour (date) {
   return get(date, 'hour')
 }
 
+// Returns day of week
 export function getDay (date) {
   return get(date, 'day')
 }
@@ -126,6 +127,7 @@ export function getYear (date) {
   return get(date, 'year')
 }
 
+// Returns day of month
 export function getDate (date) {
   return get(date, 'date')
 }
