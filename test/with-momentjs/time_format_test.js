@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import TimeComponent from '../src/time'
+import TimeComponent from '../../src/time'
 
 describe('TimeComponent', () => {
   let sandbox

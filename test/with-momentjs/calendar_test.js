@@ -1,12 +1,12 @@
 import React from 'react'
-import Calendar from '../src/calendar'
-import Month from '../src/month'
-import Day from '../src/day'
-import YearDropdown from '../src/year_dropdown'
-import MonthDropdown from '../src/month_dropdown'
+import Calendar from '../../src/calendar'
+import Month from '../../src/month'
+import Day from '../../src/day'
+import YearDropdown from '../../src/year_dropdown'
+import MonthDropdown from '../../src/month_dropdown'
 import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
-import * as utils from '../src/date_utils'
+import * as utils from '../../src/date_utils'
 
 // TODO Possibly rename
 const DATE_FORMAT = 'MM/DD/YYYY'

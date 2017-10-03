@@ -1,9 +1,9 @@
 import React from 'react'
-import Week from '../src/week'
-import WeekNumber from '../src/week_number'
-import Day from '../src/day'
+import Week from '../../src/week'
+import WeekNumber from '../../src/week_number'
+import Day from '../../src/day'
 import { shallow } from 'enzyme'
-import * as utils from '../src/date_utils'
+import * as utils from '../../src/date_utils'
 
 describe('Week', () => {
   it('should have the week CSS class', () => {

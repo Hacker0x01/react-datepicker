@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import { mount, ReactWrapper } from 'enzyme'
 import defer from 'lodash/defer'
-import DatePicker from '../src/datepicker.jsx'
-import Day from '../src/day'
-import PopperComponent from '../src/popper_component.jsx'
+import DatePicker from '../../src/datepicker.jsx'
+import Day from '../../src/day'
+import PopperComponent from '../../src/popper_component.jsx'
 import TimezoneDatePicker from './timezone_date_picker.jsx'
-import * as utils from '../src/date_utils'
+import * as utils from '../../src/date_utils'
 
 function getKey (key) {
   switch (key) {

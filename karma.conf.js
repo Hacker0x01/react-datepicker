@@ -14,11 +14,11 @@ module.exports = function (config) {
     singleRun: CONTINUOUS_INTEGRATION,
 
     files: [
-      'test/index.js'
+      'test/**/index.js'
     ],
 
     preprocessors: {
-      'test/index.js': ['webpack', 'sourcemap']
+      'test/**/index.js': ['webpack', 'sourcemap']
     },
 
     reporters: ['dots', 'coverage'],

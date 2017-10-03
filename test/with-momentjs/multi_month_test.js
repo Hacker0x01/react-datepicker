@@ -1,7 +1,7 @@
 import React from 'react'
-import Calendar from '../src/calendar'
-import Month from '../src/month'
-import YearDropdown from '../src/year_dropdown'
+import Calendar from '../../src/calendar'
+import Month from '../../src/month'
+import YearDropdown from '../../src/year_dropdown'
 import { shallow } from 'enzyme'
 
 describe('Multi month calendar', function () {

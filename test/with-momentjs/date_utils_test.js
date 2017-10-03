@@ -13,7 +13,7 @@ import {
   allDaysDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate
-} from '../src/date_utils'
+} from '../../src/date_utils'
 
 describe('date_utils', function () {
   describe('isSameDay', function () {
