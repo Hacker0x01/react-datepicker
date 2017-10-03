@@ -248,6 +248,10 @@ export function getDefaultLocale () {
   return moment.locale()
 }
 
+export function getDefaultLocaleData () {
+  return moment.localeData()
+}
+
 export function registerLocale (localeName, localeData) {
   moment.defineLocale(localeName, localeData)
 }
