@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import * as utils from '../src/date_utils'
 // import ReactDOM from 'react-dom'
 // import TestUtils from 'react-addons-test-utils'
 import { mount } from 'enzyme'
@@ -18,13 +18,14 @@ describe('DatePicker', () => {
   })
 
   it('should only display times between minTime and maxTime', () => {
+    var now = utils.newDate()
     var datePicker = mount(
       <DatePicker
           showTimeSelect
-          selected={moment()}
+          selected={now}
           onChange={() => null}
-          minTime={moment().hours(17).minutes(0)}
-          maxTime={moment().hours(18).minutes(0)} />
+          minTime={utils.setTime(utils.cloneDate(now), { hours: 17, minutes: 0 })}
+          maxTime={utils.setTime(utils.cloneDate(now), { hours: 18, minutes: 0 })} />
     )
     var times = datePicker.find('li.react-datepicker__time-list-item')
     expect(times).to.exist
