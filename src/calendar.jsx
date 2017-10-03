@@ -27,8 +27,8 @@ import {
   getWeekdayMinInLocale,
 
   isSameDay,
-  allDaysDisabledBefore,
-  allDaysDisabledAfter,
+  allDaysDisabledBeforeMonth,
+  allDaysDisabledAfterMonth,
   getEffectiveMinDate,
   getEffectiveMaxDate
 } from './date_utils'
@@ -227,7 +227,7 @@ export default class Calendar extends React.Component {
   }
 
   renderPreviousMonthButton = () => {
-    if (!this.props.forceShowMonthNavigation && allDaysDisabledBefore(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledBeforeMonth(this.state.date, this.props)) {
       return
     }
     return <a
@@ -236,7 +236,7 @@ export default class Calendar extends React.Component {
   }
 
   renderNextMonthButton = () => {
-    if (!this.props.forceShowMonthNavigation && allDaysDisabledAfter(this.state.date, 'month', this.props)) {
+    if (!this.props.forceShowMonthNavigation && allDaysDisabledAfterMonth(this.state.date, this.props)) {
       return
     }
 

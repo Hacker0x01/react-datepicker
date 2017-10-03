@@ -107,5 +107,8 @@
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
+  },
+  "optionalDependencies": {
+    "date-fns": "^1.28.5"
   }
 }

@@ -336,17 +336,17 @@ export function isTimeInDisabledRange (time, { minTime, maxTime }) {
   return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max))
 }
 
-export function allDaysDisabledBefore (day, unit, { minDate, includeDates } = {}) {
-  const dateBefore = day.clone().subtract(1, unit)
-  return (minDate && dateBefore.isBefore(minDate, unit)) ||
-    (includeDates && includeDates.every(includeDate => dateBefore.isBefore(includeDate, unit))) ||
+export function allDaysDisabledBeforeMonth (day, { minDate, includeDates } = {}) {
+  const dateBefore = day.clone().subtract(1, 'months')
+  return (minDate && dateBefore.isBefore(minDate, 'month')) ||
+    (includeDates && includeDates.every(includeDate => dateBefore.isBefore(includeDate, 'month'))) ||
     false
 }
 
-export function allDaysDisabledAfter (day, unit, { maxDate, includeDates } = {}) {
-  const dateAfter = day.clone().add(1, unit)
-  return (maxDate && dateAfter.isAfter(maxDate, unit)) ||
-    (includeDates && includeDates.every(includeDate => dateAfter.isAfter(includeDate, unit))) ||
+export function allDaysDisabledAfterMonth (day, { maxDate, includeDates } = {}) {
+  const dateAfter = day.clone().add(1, 'months')
+  return (maxDate && dateAfter.isAfter(maxDate, 'month')) ||
+    (includeDates && includeDates.every(includeDate => dateAfter.isAfter(includeDate, 'month'))) ||
     false
 }
 
