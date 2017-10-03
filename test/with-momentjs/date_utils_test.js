@@ -9,8 +9,8 @@ import {
   isSameDay,
   isSameUtcOffset,
   isDayDisabled,
-  allDaysDisabledBefore,
-  allDaysDisabledAfter,
+  allDaysDisabledBeforeMonth,
+  allDaysDisabledAfterMonth,
   getEffectiveMinDate,
   getEffectiveMaxDate
 } from '../../src/date_utils'
@@ -126,51 +126,51 @@ describe('date_utils', function () {
     })
   })
 
-  describe('allDaysDisabledBefore', () => {
+  describe('allDaysDisabledBeforeMonth', () => {
     it('should return false by default', () => {
-      expect(allDaysDisabledBefore(newDate(), 'month')).to.be.false
+      expect(allDaysDisabledBeforeMonth(newDate())).to.be.false
     })
 
     it('should return true if min date is in the same unit', () => {
       const day = newDate('2016-03-19')
       const minDate = newDate('2016-03-01')
-      expect(allDaysDisabledBefore(day, 'month', { minDate })).to.be.true
+      expect(allDaysDisabledBeforeMonth(day, { minDate })).to.be.true
     })
 
     it('should return false if min date is in the previous unit', () => {
       const day = newDate('2016-03-19')
       const minDate = newDate('2016-02-29')
-      expect(allDaysDisabledBefore(day, 'month', { minDate })).to.be.false
+      expect(allDaysDisabledBeforeMonth(day, { minDate })).to.be.false
     })
 
     it('should return true if previous unit is before include dates', () => {
       const day = newDate('2016-03-19')
       const includeDates = [newDate('2016-03-01')]
-      expect(allDaysDisabledBefore(day, 'month', { includeDates })).to.be.true
+      expect(allDaysDisabledBeforeMonth(day, { includeDates })).to.be.true
     })
   })
 
-  describe('allDaysDisabledAfter', () => {
+  describe('allDaysDisabledAfterMonth', () => {
     it('should return false by default', () => {
-      expect(allDaysDisabledAfter(newDate(), 'month')).to.be.false
+      expect(allDaysDisabledAfterMonth(newDate())).to.be.false
     })
 
     it('should return true if max date is in the same unit', () => {
       const day = newDate('2016-03-19')
       const maxDate = newDate('2016-03-31')
-      expect(allDaysDisabledAfter(day, 'month', { maxDate })).to.be.true
+      expect(allDaysDisabledAfterMonth(day, { maxDate })).to.be.true
     })
 
     it('should return false if max date is in the next unit', () => {
       const day = newDate('2016-03-19')
       const maxDate = newDate('2016-04-01')
-      expect(allDaysDisabledAfter(day, 'month', { maxDate })).to.be.false
+      expect(allDaysDisabledAfterMonth(day, { maxDate })).to.be.false
     })
 
     it('should return true if next unit is after include dates', () => {
       const day = newDate('2016-03-19')
       const includeDates = [newDate('2016-03-01')]
-      expect(allDaysDisabledAfter(day, 'month', { includeDates })).to.be.true
+      expect(allDaysDisabledAfterMonth(day, { includeDates })).to.be.true
     })
   })
 

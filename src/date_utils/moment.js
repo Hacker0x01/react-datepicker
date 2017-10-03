@@ -226,6 +226,13 @@ export function isAfter (date1, date2) {
   return date1.isAfter(date2)
 }
 
+export function isSameOrBefore (date1, date2) {
+  return equals(date1, date2) || isBefore(date1, date2)
+}
+export function isSameOrAfter (date1, date2) {
+  return equals(date1, date2) || isAfter(date1, date2)
+}
+
 export function equals (date1, date2) {
   return date1.isSame(date2)
 }

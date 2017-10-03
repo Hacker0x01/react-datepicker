@@ -105,7 +105,14 @@ export function cloneDate (date) {
   return _parse(date)
 }
 
+function parseMoment ({M}) {
+  return getStartOfMonth(setMonth(newDate(), M))
+}
+
 export function parseDate (value, _) {
+  if (value && typeof value === 'object') {
+    return parseMoment(value)
+  }
   return _parse(value)
   // const m = moment(value, dateFormat, locale || moment.locale(), true)
   // return m.isValid() ? m : null
@@ -170,7 +177,7 @@ export function setUTCOffset (date, offset) {
   // TODO since JS' Date is not capable of representing
   // time zones other than the host's, it's not really
   // obvious what to do here
-  return date.utcOffset(offset)
+  return date
 }
 
 // ** Date Getters **
@@ -309,7 +316,7 @@ function isBeforeMonth (date1, date2) {
   return isBefore(getStartOfMonth(date1), getStartOfMonth(date2))
 }
 
-function isSameOrBefore (date1, date2) {
+export function isSameOrBefore (date1, date2) {
   return equals(date1, date2) || isBefore(date1, date2)
 }
 
@@ -331,7 +338,7 @@ function isAfterDay (date1, date2) {
   return isAfter(getStartOfDay(date1), getStartOfDay(date2))
 }
 
-function isSameOrAfter (date1, date2) {
+export function isSameOrAfter (date1, date2) {
   return _isEqual(date1, date2) || isAfter(date1, date2)
 }
 
