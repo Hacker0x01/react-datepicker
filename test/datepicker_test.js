@@ -9,6 +9,24 @@ import PopperComponent from '../src/popper_component.jsx'
 import TimezoneDatePicker from './timezone_date_picker.jsx'
 import moment from 'moment'
 
+function getKey (key) {
+  switch (key) {
+    case 'Backspace': return { key, code: 8, which: 8 }
+    case 'Tab': return { key, code: 9, which: 9 }
+    case 'Enter': return { key, code: 13, which: 13 }
+    case 'Escape': return { key, code: 27, which: 27 }
+    case 'PageUp': return { key, keyCode: 33, which: 33 }
+    case 'PageDown': return { key, keyCode: 34, which: 34 }
+    case 'End': return { key, keyCode: 35, which: 35 }
+    case 'Home': return { key, keyCode: 36, which: 36 }
+    case 'ArrowLeft': return { key, code: 37, which: 37 }
+    case 'ArrowUp': return { key, code: 38, which: 38 }
+    case 'ArrowRight': return { key, code: 39, which: 39 }
+    case 'ArrowDown': return { key, code: 40, which: 40 }
+  }
+  throw new Error('Unknown key :' + key)
+}
+
 describe('DatePicker', () => {
   let sandbox
 
@@ -135,17 +153,17 @@ describe('DatePicker', () => {
     var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
     var dateInput = data.datePicker.input
 
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowUp'))
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Enter'))
     expect(data.datePicker.state.open).to.be.true
   })
 
   it('should update the preSelection state when a day is selected with Enter press', () => {
     var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false})
     var dateInput = data.datePicker.input
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Enter'))
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     data.copyM.add(2, 'weeks')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
@@ -155,13 +173,13 @@ describe('DatePicker', () => {
     // ArrowLeft selects the previous month. (On the 1st 2 days of the month.)
     var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false, monthsShown: 2})
 
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
 
     var day = TestUtils.findRenderedDOMComponentWithClass(data.datePicker.calendar, 'react-datepicker__day--today')
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
 
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     data.copyM.add(1, 'weeks')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
@@ -172,7 +190,7 @@ describe('DatePicker', () => {
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Enter' })
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Enter'))
     expect(datePicker.calendar).to.not.exist
   })
 
@@ -182,7 +200,7 @@ describe('DatePicker', () => {
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Escape' })
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Escape'))
     expect(datePicker.calendar).to.not.exist
   })
 
@@ -193,7 +211,7 @@ describe('DatePicker', () => {
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), { key: 'Tab' })
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Tab'))
     TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput))
     expect(datePicker.calendar).to.not.exist
     assert(onBlurSpy.calledOnce, 'should call onBlur')
@@ -338,62 +356,62 @@ describe('DatePicker', () => {
   }
   it('should handle onInputKeyDown ArrowLeft', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     data.copyM.subtract(1, 'days')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown ArrowRight', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowRight', keyCode: 39, which: 39})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowRight'))
     data.copyM.add(1, 'days')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown ArrowUp', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowUp'))
     data.copyM.subtract(1, 'weeks')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown ArrowDown', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     data.copyM.add(1, 'weeks')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown PageUp', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageUp', keyCode: 33, which: 33})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageUp'))
     data.copyM.subtract(1, 'months')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown PageDown', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageDown', keyCode: 34, which: 34})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageDown'))
     data.copyM.add(1, 'months')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown End', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('End'))
     data.copyM.add(1, 'years')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should handle onInputKeyDown Home', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('Home'))
     data.copyM.subtract(1, 'years')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should not preSelect date if not between minDate and maxDate', () => {
     var data = getOnInputKeyDownStuff({minDate: moment().subtract(1, 'day'), maxDate: moment().add(1, 'day')})
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(moment().format(data.testFormat))
   })
   describe('onInputKeyDown Enter', () => {
     it('should update the selected date', () => {
       var data = getOnInputKeyDownStuff()
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
       data.copyM.subtract(1, 'days')
       expect(data.callback.calledOnce).to.be.true
       var result = data.callback.args[0][0]
@@ -402,39 +420,39 @@ describe('DatePicker', () => {
     it('should update the selected date on manual input', () => {
       var data = getOnInputKeyDownStuff()
       TestUtils.Simulate.change(data.nodeInput, {target: {value: '02/02/2017'}})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
       data.copyM = moment('02/02/2017')
       expect(data.callback.args[0][0].format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
     })
     it('should not update the selected date if the date input manually it has something wrong', () => {
       var data = getOnInputKeyDownStuff()
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Backspace', keyCode: 8, which: 8})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Backspace'))
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
       expect(data.callback.calledOnce).to.be.false
     })
     it('should not select excludeDates', () => {
       var data = getOnInputKeyDownStuff({ excludeDates: [moment().subtract(1, 'days')] })
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
       expect(data.callback.calledOnce).to.be.false
     })
     it('should not select dates excluded from filterDate', () => {
       var data = getOnInputKeyDownStuff({ filterDate: date => date.day() !== moment().subtract(1, 'days').day() })
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
-      TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Enter', keyCode: 13, which: 13})
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
+      TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
       expect(data.callback.calledOnce).to.be.false
     })
   })
   it('should reset the keyboard selection when closed', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     data.datePicker.setOpen(false)
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
   })
   it('should retain the keyboard selection when already open', () => {
     var data = getOnInputKeyDownStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     data.datePicker.setOpen(true)
     data.copyM.subtract(1, 'days')
     expect(data.datePicker.state.preSelection.format(data.testFormat)).to.equal(data.copyM.format(data.testFormat))
@@ -443,7 +461,7 @@ describe('DatePicker', () => {
     var data = getOnInputKeyDownStuff()
     data.datePicker.setOpen(false)
     expect(data.datePicker.state.open).to.be.false
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     expect(data.datePicker.state.open).to.be.true
   })
   it('should autofocus the input given the autoFocus prop', () => {
@@ -485,42 +503,42 @@ describe('DatePicker', () => {
   }
   it('should not handle onInputKeyDown ArrowLeft', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowLeft', keyCode: 37, which: 37})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown ArrowRight', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowRight', keyCode: 39, which: 39})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowRight'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown ArrowUp', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowUp', keyCode: 38, which: 38})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowUp'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown ArrowDown', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'ArrowDown', keyCode: 40, which: 40})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown PageUp', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageUp', keyCode: 33, which: 33})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageUp'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown PageDown', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'PageDown', keyCode: 34, which: 34})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageDown'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown Home', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'Home', keyCode: 36, which: 36})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('Home'))
     expect(data.callback.called).to.be.false
   })
   it('should not handle onInputKeyDown End', () => {
     var data = getOnInputKeyDownDisabledKeyboardNavigationStuff()
-    TestUtils.Simulate.keyDown(data.nodeInput, {key: 'End', keyCode: 35, which: 35})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('End'))
     expect(data.callback.called).to.be.false
   })
 
