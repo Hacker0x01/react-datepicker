@@ -1,72 +1,72 @@
 import React from 'react'
-import moment from 'moment'
 import Month from '../src/month'
 import Day from '../src/day'
 import range from 'lodash/range'
 import { mount, shallow } from 'enzyme'
+import * as utils from '../src/date_utils'
 
 describe('Month', () => {
   function assertDateRangeInclusive (month, start, end) {
-    const dayCount = end.diff(start, 'days') + 1
+    const dayCount = utils.getDaysDiff(end, start) + 1
     const days = month.find(Day)
     expect(days).to.have.length(dayCount)
     range(0, dayCount).forEach(offset => {
       const day = days.get(offset)
-      const expectedDay = start.clone().add(offset, 'days')
+      const expectedDay = utils.addDays(utils.cloneDate(start), offset)
       assert(
-        day.props.day.isSame(expectedDay, 'day'),
+        utils.isSameDay(day.props.day, expectedDay),
         `Day ${(offset % 7) + 1} ` +
         `of week ${(Math.floor(offset / 7) + 1)} ` +
-        `should be "${expectedDay.format('YYYY-MM-DD')}" ` +
-        `but it is "${day.props.day.format('YYYY-MM-DD')}"`
+        `should be "${utils.formatDate(expectedDay, 'YYYY-MM-DD')}" ` +
+        `but it is "${utils.formatDate(day.props.day, 'YYYY-MM-DD')}"`
       )
     })
   }
 
   it('should have the month CSS class', () => {
-    const month = shallow(<Month day={moment()} />)
+    const month = shallow(<Month day={utils.newDate()} />)
     expect(month.hasClass('react-datepicker__month')).to.equal(true)
   })
 
   it('should render all days of the month and some days in neighboring months', () => {
-    const monthStart = moment('2015-12-01')
+    const monthStart = utils.newDate('2015-12-01')
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart}/>),
-      monthStart.clone().startOf('week'),
-      monthStart.clone().endOf('month').endOf('week')
+      utils.getStartOfWeek(utils.cloneDate(monthStart)),
+      utils.getEndOfWeek(utils.getEndOfMonth(utils.cloneDate(monthStart)))
     )
   })
 
   it('should render all days of the month and peek into the next month', () => {
-    const monthStart = moment('2015-12-01')
+    const monthStart = utils.newDate('2015-12-01')
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} peekNextMonth/>),
-      monthStart.clone().startOf('week'),
-      monthStart.clone().add(1, 'month').add(1, 'week').endOf('week')
+      utils.getStartOfWeek(utils.cloneDate(monthStart)),
+      utils.getEndOfWeek(utils.addWeeks(utils.addMonths(utils.cloneDate(monthStart), 1), 1))
     )
   })
 
   it('should render a calendar of fixed height', () => {
-    const monthStart = moment('2016-11-01')
-    const calendarStart = monthStart.clone().startOf('week')
+    const monthStart = utils.newDate('2016-11-01')
+    const calendarStart = utils.getStartOfWeek(utils.cloneDate(monthStart))
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} fixedHeight/>),
       calendarStart,
-      calendarStart.clone().add(5, 'weeks').endOf('week')
+      utils.getEndOfWeek(utils.addWeeks(utils.cloneDate(calendarStart), 5))
     )
   })
 
   it('should render a calendar of fixed height with peeking', () => {
-    const monthStart = moment('2016-11-01')
-    const calendarStart = monthStart.clone().startOf('week')
+    const monthStart = utils.newDate('2016-11-01')
+    const calendarStart = utils.getStartOfWeek(utils.cloneDate(monthStart))
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} fixedHeight peekNextMonth/>),
       calendarStart,
-      calendarStart.clone().add(6, 'weeks').endOf('week')
+      utils.getEndOfWeek(utils.addWeeks(utils.cloneDate(calendarStart), 6))
     )
   })
 
@@ -77,14 +77,14 @@ describe('Month', () => {
       dayClicked = day
     }
 
-    const monthStart = moment('2015-12-01')
+    const monthStart = utils.newDate('2015-12-01')
     const month = mount(
       <Month day={monthStart} onDayClick={onDayClick} />
     )
     const day = month.find(Day).at(0)
 
     day.simulate('click')
-    assert(day.prop('day').isSame(dayClicked, 'day'))
+    assert(utils.isSameDay(day.prop('day'), dayClicked))
   })
 
   it('should call the provided onMouseLeave function', () => {
@@ -94,7 +94,7 @@ describe('Month', () => {
       mouseLeaveCalled = true
     }
 
-    const month = shallow(<Month day={moment()} onMouseLeave={onMouseLeave} />)
+    const month = shallow(<Month day={utils.newDate()} onMouseLeave={onMouseLeave} />)
     month.simulate('mouseleave')
     expect(mouseLeaveCalled).to.be.true
   })
@@ -106,9 +106,9 @@ describe('Month', () => {
       dayMouseEntered = day
     }
 
-    const month = mount(<Month day={moment()} onDayMouseEnter={onDayMouseEnter} />)
+    const month = mount(<Month day={utils.newDate()} onDayMouseEnter={onDayMouseEnter} />)
     const day = month.find(Day).first()
     day.simulate('mouseenter')
-    assert(day.prop('day').isSame(dayMouseEntered, 'day'))
+    assert(utils.isSameDay(day.prop('day'), dayMouseEntered))
   })
 })

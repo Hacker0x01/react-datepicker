@@ -32,6 +32,14 @@ function getStartOf (date, unit) {
   return date.startOf(unit)
 }
 
+function getEndOf (date, unit) {
+  return date.endOf(unit)
+}
+
+function getDiff (date1, date2, unit) {
+  return date1.diff(date2, unit)
+}
+
 function isSame (date1, date2, unit) {
   return date1.isSame(date2, unit)
 }
@@ -92,6 +100,10 @@ export function setYear (date, year) {
   return set(date, 'year', year)
 }
 
+export function setUTCOffset (date, offset) {
+  return date.utcOffset(offset)
+}
+
 // ** Date Getters **
 
 export function getSecond (date) {
@@ -106,6 +118,7 @@ export function getHour (date) {
   return get(date, 'hour')
 }
 
+// Returns day of week
 export function getDay (date) {
   return get(date, 'day')
 }
@@ -122,6 +135,7 @@ export function getYear (date) {
   return get(date, 'year')
 }
 
+// Returns day of month
 export function getDate (date) {
   return get(date, 'date')
 }
@@ -149,6 +163,16 @@ export function getStartOfMonth (date) {
 
 export function getStartOfDate (date) {
   return getStartOf(date, 'date')
+}
+
+// *** End of ***
+
+export function getEndOfWeek (date) {
+  return getEndOf(date, 'week')
+}
+
+export function getEndOfMonth (date) {
+  return getEndOf(date, 'month')
 }
 
 // ** Date Math **
@@ -202,6 +226,10 @@ export function isAfter (date1, date2) {
   return date1.isAfter(date2)
 }
 
+export function equals (date1, date2) {
+  return date1.isSame(date2)
+}
+
 export function isSameMonth (date1, date2) {
   return isSame(date1, date2, 'month')
 }
@@ -228,10 +256,28 @@ export function isDayInRange (day, startDate, endDate) {
   return day.clone().startOf('day').isBetween(before, after)
 }
 
+// *** Diffing ***
+
+export function getDaysDiff (date1, date2) {
+  return getDiff(date1, date2, 'days')
+}
+
 // ** Date Localization **
 
 export function localizeDate (date, locale) {
   return date.clone().locale(locale || moment.locale())
+}
+
+export function getDefaultLocale () {
+  return moment.locale()
+}
+
+export function getDefaultLocaleData () {
+  return moment.localeData()
+}
+
+export function registerLocale (localeName, localeData) {
+  moment.defineLocale(localeName, localeData)
 }
 
 export function getLocaleData (date) {
