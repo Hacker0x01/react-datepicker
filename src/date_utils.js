@@ -92,6 +92,10 @@ export function setYear (date, year) {
   return set(date, 'year', year)
 }
 
+export function setUTCOffset (date, offset) {
+  return date.utcOffset(offset)
+}
+
 // ** Date Getters **
 
 export function getSecond (date) {
@@ -200,6 +204,10 @@ export function isBefore (date1, date2) {
 
 export function isAfter (date1, date2) {
   return date1.isAfter(date2)
+}
+
+export function equals (date1, date2) {
+  return date1.isSame(date2)
 }
 
 export function isSameMonth (date1, date2) {
