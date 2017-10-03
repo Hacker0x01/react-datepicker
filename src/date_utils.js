@@ -32,6 +32,14 @@ function getStartOf (date, unit) {
   return date.startOf(unit)
 }
 
+function getEndOf (date, unit) {
+  return date.endOf(unit)
+}
+
+function getDiff (date1, date2, unit) {
+  return date1.diff(date2, unit)
+}
+
 function isSame (date1, date2, unit) {
   return date1.isSame(date2, unit)
 }
@@ -157,6 +165,16 @@ export function getStartOfDate (date) {
   return getStartOf(date, 'date')
 }
 
+// *** End of ***
+
+export function getEndOfWeek (date) {
+  return getEndOf(date, 'week')
+}
+
+export function getEndOfMonth (date) {
+  return getEndOf(date, 'month')
+}
+
 // ** Date Math **
 
 // *** Addition ***
@@ -236,6 +254,12 @@ export function isDayInRange (day, startDate, endDate) {
   const before = startDate.clone().startOf('day').subtract(1, 'seconds')
   const after = endDate.clone().startOf('day').add(1, 'seconds')
   return day.clone().startOf('day').isBetween(before, after)
+}
+
+// *** Diffing ***
+
+export function getDaysDiff (date1, date2) {
+  return getDiff(date1, date2, 'days')
 }
 
 // ** Date Localization **
