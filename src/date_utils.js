@@ -234,6 +234,14 @@ export function localizeDate (date, locale) {
   return date.clone().locale(locale || moment.locale())
 }
 
+export function getDefaultLocale () {
+  return moment.locale()
+}
+
+export function registerLocale (localeName, localeData) {
+  moment.defineLocale(localeName, localeData)
+}
+
 export function getLocaleData (date) {
   return date.localeData()
 }
