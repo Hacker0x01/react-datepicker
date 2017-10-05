@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Day from './day'
 import WeekNumber from './week_number'
+import * as utils from './date_utils'
 
 export default class Week extends React.Component {
   static propTypes = {
@@ -52,11 +53,11 @@ export default class Week extends React.Component {
     if (this.props.formatWeekNumber) {
       return this.props.formatWeekNumber(startOfWeek)
     }
-    return parseInt(startOfWeek.format('w'), 10)
+    return utils.getWeek(startOfWeek)
   }
 
   renderDays = () => {
-    const startOfWeek = this.props.day.clone().startOf('week')
+    const startOfWeek = utils.getStartOfWeek(utils.cloneDate(this.props.day))
     const days = []
     const weekNumber = this.formatWeekNumber(startOfWeek)
     if (this.props.showWeekNumber) {
@@ -66,7 +67,7 @@ export default class Week extends React.Component {
       days.push(<WeekNumber key="W" weekNumber={weekNumber} onClick={onClickAction} />)
     }
     return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
-      const day = startOfWeek.clone().add(offset, 'days')
+      const day = utils.addDays(utils.cloneDate(startOfWeek), offset)
       return (
         <Day
             key={offset}

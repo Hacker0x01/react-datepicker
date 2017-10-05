@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import YearDropdownOptions from './year_dropdown_options'
 import onClickOutside from 'react-onclickoutside'
+import { getYear } from './date_utils'
 
 var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
@@ -21,8 +22,8 @@ export default class YearDropdown extends React.Component {
   }
 
   renderSelectOptions = () => {
-    const minYear = this.props.minDate ? this.props.minDate.year() : 1900
-    const maxYear = this.props.maxDate ? this.props.maxDate.year() : 2100
+    const minYear = this.props.minDate ? getYear(this.props.minDate) : 1900
+    const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : 2100
 
     const options = []
     for (let i = minYear; i <= maxYear; i++) {

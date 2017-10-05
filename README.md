@@ -75,6 +75,22 @@ You can use `onSelect` event handler which fires each time some calendar date ha
 
 See [here](https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
 
+### Time picker
+
+You can also include a time picker by adding the showTimeSelect prop
+
+```js
+<DatePicker
+  selected={this.state.date}
+  onChange={this.handleChange}
+  showTimeSelect
+  dateFormat="LLL" />
+```
+
+Times will be displayed in 30 minute intervals by default (default configurable via timeInterval prop)
+
+More examples of how to use the time picker are given on the [main website](https://hacker0x01.github.io/react-datepicker)
+
 ### Localization
 
 The date picker relies on [moment.js internationalization](http://momentjs.com/docs/#/i18n/) to localize its display components. By default, the date picker will use the locale globally set in moment, which is English. Locales can be changed in the following ways:
@@ -126,7 +142,7 @@ The examples are hosted within the docs folder and are ran in the simple add tha
 * *PgDn*: Move to the next month.
 * *Home*: Move to the previous year.
 * *End*: Move to the next year.
-* *Enter/Esc/Tab*: close the calendar. (Enter & Esc calls preventDefautl)
+* *Enter/Esc/Tab*: close the calendar. (Enter & Esc calls preventDefault)
 
 ## License
 
