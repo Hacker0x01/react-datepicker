@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import Enzyme, { mount } from 'enzyme'
 import * as utils from '../src/date_utils'
 import DatePicker from '../src/datepicker.jsx'

@@ -1,15 +1,13 @@
 import React from 'react'
-import moment from 'moment'
 import Enzyme, { mount } from 'enzyme'
 import DatePicker from '../src/datepicker.jsx'
 import Adapter from 'enzyme-adapter-react-16'
-import DatePicker from '../src/datepicker.jsx'
-import * as utils from '../src/date_utils'
+import { setTime, cloneDate, newDate } from '../src/date_utils'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 function cloneDateWithTime (date, time) {
-  return utils.setTime(utils.cloneDate(date), time)
+  return setTime(cloneDate(date), time)
 }
 
 describe('DatePicker', () => {
@@ -24,7 +22,7 @@ describe('DatePicker', () => {
   })
 
   it('should disable times specified in excludeTimes props', () => {
-    var now = utils.newDate()
+    var now = newDate()
     var datePicker = mount(
       <DatePicker
           showTimeSelect
