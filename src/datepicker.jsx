@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import PopperComponent, { popperPlacementPositions } from './popper_component'
 import classnames from 'classnames'
 import {
+  getDefaultLocaleData,
   newDate,
   newDateWithOffset,
   cloneDate,
@@ -138,7 +139,7 @@ export default class DatePicker extends React.Component {
       onMonthChange () {},
       utcOffset: getUTCOffset(),
       monthsShown: 1,
-      locale: 'en',
+      locale: getDefaultLocaleData(),
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
