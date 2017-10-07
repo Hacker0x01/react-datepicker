@@ -1,6 +1,7 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import fns from 'date-fns'
+// import fns from 'date-fns'
+import en from 'date-fns/locale/de'
 
 export default class HeroExample extends React.Component {
   constructor (props) {
@@ -19,6 +20,8 @@ export default class HeroExample extends React.Component {
   render () {
     return <DatePicker
         autoFocus
+        locale={en}
+        useWeekdaysShort
         selected={this.state.startDate}
         onChange={this.handleChange} />
   }

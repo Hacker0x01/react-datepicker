@@ -33,7 +33,7 @@ Firefox 56.0.0 (Mac OS X 10.12.0) DatePicker should correctly update the date in
 	@webpack:///test/datepicker_test.js:604:4 <- test/index.js:58714:6
 ~~~
 
-## No ide about those, probably bad test code
+## No idea about those, probably bad test code
 
 ~~~
 Firefox 56.0.0 (Mac OS X 10.12.0) Day in range should apply the in-range class if equal to end date FAILED

@@ -22,7 +22,7 @@ import {
   getYear,
   isBefore,
   isAfter,
-  getLocaleData,
+  getLocaleDataForLocale,
   getWeekdayShortInLocale,
   getWeekdayMinInLocale,
 
@@ -61,7 +61,7 @@ export default class Calendar extends React.Component {
     highlightDates: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
-    locale: PropTypes.string,
+    locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     monthsShown: PropTypes.number,
@@ -102,6 +102,7 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       utcOffset: getUTCOffset(),
       monthsShown: 1,
+      locale: 'en',
       forceShowMonthNavigation: false
     }
   }
@@ -214,7 +215,7 @@ export default class Calendar extends React.Component {
     }
     return dayNames.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = addDays(cloneDate(startOfWeek), offset)
-      const localeData = getLocaleData(day)
+      const localeData = getLocaleDataForLocale(this.props.locale)
       const weekDayName = this.props.useWeekdaysShort
           ? getWeekdayShortInLocale(localeData, day)
           : getWeekdayMinInLocale(localeData, day)
@@ -264,7 +265,7 @@ export default class Calendar extends React.Component {
     }
     return (
       <div className={classes.join(' ')}>
-        {formatDate(date, this.props.dateFormat)}
+        {formatDate(date, this.props.dateFormat, this.props.locale)}
       </div>
     )
   }

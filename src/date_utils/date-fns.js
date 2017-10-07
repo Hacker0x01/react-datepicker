@@ -130,8 +130,8 @@ export function isDate (date) {
 
 // ** Date Formatting **
 
-export function formatDate (date, format) {
-  return _format(date, format)
+export function formatDate (date, format, locale = getDefaultLocale()) {
+  return _format(date, format, {locale: normalizeLocale(locale)})
 }
 
 export function safeDateFormat (date, { dateFormat, locale }) {
@@ -142,9 +142,8 @@ export function safeDateFormat (date, { dateFormat, locale }) {
   if (!Array.isArray(dateFormat)) {
     dateFormat = [dateFormat]
   }
-  locale = locale || getDefaultLocale()
 
-  return formatDate(localizeDate(cloneDate(date), locale), dateFormat[0])
+  return formatDate(date, dateFormat[0], locale)
 }
 
 // ** Date Setters **
@@ -426,19 +425,23 @@ export function getLocaleData (date) {
 }
 
 export function getLocaleDataForLocale (locale) {
-  return LOCALE[locale]
+  return normalizeLocale(locale)
+}
+
+function normalizeLocale (locale) {
+  return typeof locale === 'string' ? (LOCALE[locale] || getDefaultLocaleData()) : locale
 }
 
 export function getWeekdayMinInLocale (locale, date) {
-  return formatDate(date, 'dd', {locale})
+  return _format(date, 'dd', { locale: normalizeLocale(locale) })
 }
 
 export function getWeekdayShortInLocale (locale, date) {
-  return formatDate(date, 'ddd', {locale})
+  return _format(date, 'ddd', { locale: normalizeLocale(locale) })
 }
 
 export function getMonthInLocale (locale, date) {
-  return formatDate(date, 'MMMM', { locale })
+  return _format(date, 'MMMM', { locale: normalizeLocale(locale) })
 }
 
 // ** Utils for some components **

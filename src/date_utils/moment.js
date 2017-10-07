@@ -75,8 +75,8 @@ export function isDate (date) {
 
 // ** Date Formatting **
 
-export function formatDate (date, format) {
-  return date.format(format)
+export function formatDate (date, format, locale) {
+  return localizeDate(date, locale).format(format)
 }
 
 export function safeDateFormat (date, { dateFormat, locale }) {
