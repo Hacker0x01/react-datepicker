@@ -47,7 +47,7 @@ function isSame (date1, date2, unit) {
 // ** Date Constructors **
 
 export function newDate (point) {
-  return moment(point)
+  return moment(point).locale(getDefaultLocale())
 }
 
 export function newDateWithOffset (utcOffset) {
@@ -59,7 +59,7 @@ export function cloneDate (date) {
 }
 
 export function parseDate (value, { dateFormat, locale }) {
-  const m = moment(value, dateFormat, locale || moment.locale(), true)
+  const m = moment(value, dateFormat, enforceStringLocale(locale), true)
   return m.isValid() ? m : null
 }
 
@@ -75,13 +75,23 @@ export function isDate (date) {
 
 // ** Date Formatting **
 
+function enforceStringLocale (locale) {
+  if (typeof locale === 'string') {
+    return moment.locale(locale)
+  }
+  if (locale && typeof locale === 'object') {
+    return moment.locale(locale._abbr)
+  }
+  return getDefaultLocale()
+}
+
 export function formatDate (date, format, locale) {
   return localizeDate(date, locale).format(format)
 }
 
 export function safeDateFormat (date, { dateFormat, locale }) {
   return date && date.clone()
-    .locale(locale || moment.locale())
+    .locale(enforceStringLocale(locale))
     .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || ''
 }
 
@@ -242,7 +252,8 @@ export function isSameMonth (date1, date2) {
 }
 
 export function isSameDay (moment1, moment2) {
-  if (moment1 && moment2) {
+  // Check for moment instance becasue `moment().isSame({}, 'day')` => true
+  if (isMoment(moment1) && isMoment(moment2)) {
     return moment1.isSame(moment2, 'day')
   } else {
     return !moment1 && !moment2
@@ -272,7 +283,7 @@ export function getDaysDiff (date1, date2) {
 // ** Date Localization **
 
 export function localizeDate (date, locale) {
-  return date.clone().locale(locale || moment.locale())
+  return date.clone().locale(enforceStringLocale(locale))
 }
 
 export function getDefaultLocale () {
@@ -280,19 +291,15 @@ export function getDefaultLocale () {
 }
 
 export function getDefaultLocaleData () {
-  return moment.localeData()
+  return moment.localeData(getDefaultLocale())
 }
 
 export function registerLocale (localeName, localeData) {
   moment.defineLocale(localeName, localeData)
 }
 
-export function getLocaleData (date) {
-  return date.localeData()
-}
-
 export function getLocaleDataForLocale (locale) {
-  return moment.localeData(locale)
+  return moment.localeData(enforceStringLocale(locale))
 }
 
 export function getWeekdayMinInLocale (locale, date) {

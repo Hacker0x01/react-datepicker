@@ -249,7 +249,7 @@ export default class DatePicker extends React.Component {
       }
     }
     this.setState({ inputValue: event.target.value })
-    const date = parseDate(event.target.value, this.props)
+    const date = parseDate(event.target.value, { dateFormat: this.props.dateFormat, locale: this.props.locale })
     if (date || !event.target.value) {
       this.setSelected(date, event, true)
     }

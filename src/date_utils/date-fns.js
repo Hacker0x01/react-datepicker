@@ -409,11 +409,6 @@ export function registerLocale (localeName, localeData) {
   LOCALE[localeName] = localeData
 }
 
-export function getLocaleData (date) {
-  // TODO no idea how to keep this
-  return LOCALE.en
-}
-
 export function getLocaleDataForLocale (locale) {
   return normalizeLocale(locale)
 }
