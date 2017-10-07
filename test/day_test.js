@@ -202,6 +202,7 @@ describe('Day', () => {
       const startDate = utils.subtractDays(utils.cloneDate(day), 1)
       const endDate = utils.cloneDate(day)
       const shallowDay = renderDay(day, { startDate, endDate })
+
       expect(shallowDay.hasClass(className)).to.equal(true)
     })
 

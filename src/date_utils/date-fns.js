@@ -41,7 +41,7 @@ import _setHour from 'date-fns/set_hours'
 import _setMonth from 'date-fns/set_month'
 import _setYear from 'date-fns/set_year'
 
-import _addSecond from 'date-fns/add_seconds'
+// import _addSecond from 'date-fns/add_seconds'
 import _addMinute from 'date-fns/add_minutes'
 // import _addHour from 'date-fns/add_hours'
 import _addDay from 'date-fns/add_days'
@@ -267,10 +267,6 @@ export function getEndOfMonth (date) {
 
 // *** Addition ***
 
-function addSeconds (date, amount) {
-  return _addSecond(date, amount)
-}
-
 export function addMinutes (date, amount) {
   return _addMinute(date, amount)
 }
@@ -363,10 +359,6 @@ export function equals (date1, date2) {
   return _isEqual(date1, date2)
 }
 
-function isBetween (date, date1, date2) {
-  return isAfter(date, date1) && isBefore(date, date2)
-}
-
 export function isSameMonth (date1, date2) {
   return _isSameMonth(date1, date2)
 }
@@ -388,9 +380,7 @@ export function isSameUtcOffset (date1, date2) {
 }
 
 export function isDayInRange (day, startDate, endDate) {
-  const before = subtractSeconds(getStartOfDay(startDate), 1)
-  const after = addSeconds(getStartOfDay(endDate), 1)
-  return isBetween(day, before, after)
+  return isSameOrAfter(day, startDate) && isSameOrBefore(day, endDate)
 }
 
 // *** Diffing ***
