@@ -51,7 +51,7 @@ import _addWeek from 'date-fns/add_weeks'
 import _addYear from 'date-fns/add_years'
 
 import _subSecond from 'date-fns/sub_seconds'
-// import _subMinute from 'date-fns/sub_minutes'
+import _subMinute from 'date-fns/sub_minutes'
 // import _subHour from 'date-fns/sub_hours'
 import _subDay from 'date-fns/sub_days'
 // import _subDate from 'date-fns/sub_date'
@@ -86,18 +86,16 @@ export function newDate (point) {
   return parseDate(point)
 }
 
-export function newDateWithOffset (utcOffset) {
+function normalizeOffset (offset) {
   // TODO I *think* that's what moment does?
-  if (utcOffset <= 12) {
-    utcOffset *= 60
+  if (Math.abs(offset) <= 12) {
+    offset *= 60
   }
+  return offset
+}
 
-  const d = newDate()
-  const currentToUTC = getUTCOffset(d)
-  const offset = currentToUTC + utcOffset
-
-  // TODO probably wrong
-  return addMinutes(d, offset)
+export function newDateWithOffset (utcOffset) {
+  return setUTCOffset(newDate(), utcOffset)
 }
 
 export function cloneDate (date) {
@@ -105,17 +103,17 @@ export function cloneDate (date) {
   return _parse(date)
 }
 
-function parseMoment ({M}) {
+function parseMoment ({ M }) {
   return getStartOfMonth(setMonth(newDate(), M))
 }
 
 export function parseDate (value, _) {
-  if (value && typeof value === 'object') {
+  if (value && !(value instanceof Date) && typeof value === 'object') {
     return parseMoment(value)
   }
-  return _parse(value)
-  // const m = moment(value, dateFormat, locale || moment.locale(), true)
-  // return m.isValid() ? m : null
+  // TODO date-fns doesn't have support for parsing formats, so we ignore it
+  const d = _parse(value)
+  return isNaN(d.valueOf()) ? null : d
 }
 
 // ** Date "Reflection" **
@@ -173,11 +171,30 @@ export function setYear (date, year) {
   return _setYear(date, year)
 }
 
+// Returns current TZ offset to UTC in minutes
+export function getUTCOffset (date = new Date()) {
+  if (typeof date.__utcOffset__ !== 'undefined') {
+    return date.__utcOffset__
+  }
+  return date.getTimezoneOffset() * -1
+}
+
+function getDateAsUTC (date) {
+  const actualOffset = getUTCOffset(date)
+  const fn = actualOffset > 0 ? _subMinute : addMinutes
+  const clone = fn(date, actualOffset)
+  return clone
+}
+
 export function setUTCOffset (date, offset) {
   // TODO since JS' Date is not capable of representing
   // time zones other than the host's, it's not really
   // obvious what to do here
-  return date
+  offset = normalizeOffset(offset)
+  const fn = offset > 0 ? _subMinute : addMinutes
+  const utc = fn(getDateAsUTC(date), offset)
+  Object.defineProperty(utc, '__utcOffset__', { value: offset })
+  return utc
 }
 
 // ** Date Getters **
@@ -214,11 +231,6 @@ export function getYear (date) {
 // Returns day of month
 export function getDate (date) {
   return _getDate(date)
-}
-
-// Returns current TZ offset to UTC in minutes
-export function getUTCOffset () {
-  return new Date().getTimezoneOffset() * -1
 }
 
 export function getDayOfWeekCode (day) {
@@ -392,7 +404,7 @@ export function getDaysDiff (date1, date2) {
 
 export function localizeDate (date, locale) {
   // TODO noop since JS Dates don't carry localization info
-  return date
+  return cloneDate(date)
 }
 
 export function getDefaultLocale () {

@@ -164,8 +164,8 @@ describe('DatePicker', () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
     TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('Enter'))
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
-    utils.addWeeks(data.copyM, 2)
-    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    var twoWeeksLater = utils.addWeeks(data.copyM, 2)
+    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(twoWeeksLater, data.testFormat))
   })
 
   it('should update the preSelection state when a day is selected with mouse click', () => {
@@ -180,8 +180,8 @@ describe('DatePicker', () => {
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day))
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
-    utils.addWeeks(data.copyM, 1)
-    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    var oneWeekLater = utils.addWeeks(data.copyM, 1)
+    expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(oneWeekLater, data.testFormat))
   })
 
   it('should hide the calendar when pressing enter in the date input', () => {
@@ -357,66 +357,66 @@ describe('DatePicker', () => {
   it('should handle onInputKeyDown ArrowLeft', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
-    utils.subtractDays(data.copyM, 1)
+    var oneDayBefore = utils.subtractDays(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneDayBefore, data.testFormat))
   })
   it('should handle onInputKeyDown ArrowRight', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowRight'))
-    utils.addDays(data.copyM, 1)
+    var oneDayLater = utils.addDays(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneDayLater, data.testFormat))
   })
   it('should handle onInputKeyDown ArrowUp', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowUp'))
-    utils.subtractWeeks(data.copyM, 1)
+    var oneWeekBefore = utils.subtractWeeks(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneWeekBefore, data.testFormat))
   })
   it('should handle onInputKeyDown ArrowDown', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowDown'))
-    utils.addWeeks(data.copyM, 1)
+    var oneWeekLater = utils.addWeeks(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneWeekLater, data.testFormat))
   })
   it('should handle onInputKeyDown PageUp', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageUp'))
-    utils.subtractMonths(data.copyM, 1)
+    var oneMonthBefore = utils.subtractMonths(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneMonthBefore, data.testFormat))
   })
   it('should handle onInputKeyDown PageDown', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('PageDown'))
-    utils.addMonths(data.copyM, 1)
+    var oneMonthLater = utils.addMonths(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneMonthLater, data.testFormat))
   })
   it('should handle onInputKeyDown End', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('End'))
-    utils.addYears(data.copyM, 1)
+    var oneYearLater = utils.addYears(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneYearLater, data.testFormat))
   })
   it('should handle onInputKeyDown Home', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('Home'))
-    utils.subtractYears(data.copyM, 1)
+    var oneYearBefore = utils.subtractYears(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneYearBefore, data.testFormat))
   })
   it('should not preSelect date if not between minDate and maxDate', () => {
     var data = getOnInputKeyDownStuff({
@@ -433,12 +433,12 @@ describe('DatePicker', () => {
       var data = getOnInputKeyDownStuff()
       TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
       TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
-      utils.subtractDays(data.copyM, 1)
+      var oneDayBefore = utils.subtractDays(data.copyM, 1)
       expect(data.callback.calledOnce).to.be.true
       var result = data.callback.args[0][0]
       expect(
         utils.formatDate(result, data.testFormat)
-      ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+      ).to.equal(utils.formatDate(oneDayBefore, data.testFormat))
     })
     it('should update the selected date on manual input', () => {
       var data = getOnInputKeyDownStuff()
@@ -487,10 +487,10 @@ describe('DatePicker', () => {
     var data = getOnInputKeyDownStuff()
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     data.datePicker.setOpen(true)
-    utils.subtractDays(data.copyM, 1)
+    var oneDayBefore = utils.subtractDays(data.copyM, 1)
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
-    ).to.equal(utils.formatDate(data.copyM, data.testFormat))
+    ).to.equal(utils.formatDate(oneDayBefore, data.testFormat))
   })
   it('should open the calendar when an arrow key is pressed', () => {
     var data = getOnInputKeyDownStuff()

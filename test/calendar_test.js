@@ -175,7 +175,7 @@ describe('Calendar', function () {
     const calendar = getCalendar({ todayButton: 'Vandaag' })
     const todayButton = calendar.find('.react-datepicker__today-button')
     todayButton.simulate('click')
-    expect(calendar.state().date.isSame(utils.newDate(), 'day'))
+    expect(utils.isSameDay(calendar.state().date, utils.newDate()))
   })
 
   it('should set custom today date when pressing todayButton', () => {

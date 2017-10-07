@@ -124,7 +124,7 @@ export default class DatePicker extends React.Component {
   static get defaultProps () {
     return {
       allowSameDay: false,
-      dateFormat: 'L',
+      dateFormat: 'YYYY-MM-DD', /* TODO breaking change */
       dateFormatCalendar: 'MMMM YYYY',
       onChange () {},
       disabled: false,

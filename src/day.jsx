@@ -7,7 +7,6 @@ import {
   getMonth,
   getDate,
   newDateWithOffset,
-  isMoment,
   isSameOrAfter,
   isSameOrBefore,
 
@@ -69,10 +68,8 @@ export default class Day extends React.Component {
     const classNames = {}
     for (let i = 0, len = highlightDates.length; i < len; i++) {
       const obj = highlightDates[i]
-      if (isMoment(obj)) {
-        if (isSameDay(day, obj)) {
-          classNames[defaultClassName] = true
-        }
+      if (isSameDay(day, obj)) {
+        classNames[defaultClassName] = true
       } else if (typeof obj === 'object') {
         const keys = Object.keys(obj)
         const arr = obj[keys[0]]
