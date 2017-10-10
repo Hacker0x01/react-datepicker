@@ -335,23 +335,18 @@ describe('DatePicker', () => {
     var m = utils.newDate()
     var copyM = utils.cloneDate(m)
     var testFormat = 'YYYY-MM-DD'
+    var exactishFormat = 'YYYY-MM-DD HH: ZZ'
     var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
           onChange={callback}
-          inline={opts.inline}
-          excludeDates={opts.excludeDates}
-          filterDate={opts.filterDate}
-          minDate={opts.minDate}
-          maxDate={opts.maxDate}
-          monthsShown={opts.monthsShown}
-          shouldCloseOnSelect={opts.shouldCloseOnSelect}/>
+          {...opts}/>
     )
     var dateInput = datePicker.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)
     TestUtils.Simulate.focus(nodeInput)
     return {
-      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+      m, copyM, testFormat, exactishFormat, callback, datePicker, dateInput, nodeInput
     }
   }
   it('should handle onInputKeyDown ArrowLeft', () => {
@@ -499,6 +494,17 @@ describe('DatePicker', () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     expect(data.datePicker.state.open).to.be.true
   })
+  it('should default to the current day on Enter', () => {
+    const data = getOnInputKeyDownStuff({selected: null})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
+    expect(data.callback.calledOnce).to.be.true
+    const selected = data.callback.getCall(0).args[0]
+    expect(
+      utils.formatDate(selected, data.exactishFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.exactishFormat))
+    expect(selected.isLocal()).to.equal(true)
+  })
+
   it('should autofocus the input given the autoFocus prop', () => {
     var div = document.createElement('div')
     document.body.appendChild(div)
