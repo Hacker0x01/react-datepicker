@@ -6,8 +6,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {
-  getUTCOffset,
-  newDateWithOffset,
+  now,
   setMonth,
   getMonth,
   addMonths,
@@ -100,7 +99,6 @@ export default class Calendar extends React.Component {
   static get defaultProps () {
     return {
       onDropdownFocus: () => {},
-      utcOffset: getUTCOffset(),
       monthsShown: 1,
       forceShowMonthNavigation: false
     }
@@ -150,7 +148,7 @@ export default class Calendar extends React.Component {
     const { preSelection, selected, openToDate, utcOffset } = this.props
     const minDate = getEffectiveMinDate(this.props)
     const maxDate = getEffectiveMaxDate(this.props)
-    const current = newDateWithOffset(utcOffset)
+    const current = now(utcOffset)
     const initialDate = openToDate || selected || preSelection
     if (initialDate) {
       return initialDate
@@ -306,7 +304,7 @@ export default class Calendar extends React.Component {
     return (
       <div
           className="react-datepicker__today-button"
-          onClick={e => this.props.onSelect(getStartOfDate(newDateWithOffset(this.props.utcOffset)), e)}>
+          onClick={e => this.props.onSelect(getStartOfDate(now(this.props.utcOffset)), e)}>
         {this.props.todayButton}
       </div>
     )

@@ -5,9 +5,8 @@ import PopperComponent, { popperPlacementPositions } from './popper_component'
 import classnames from 'classnames'
 import {
   newDate,
-  newDateWithOffset,
+  now,
   cloneDate,
-  getUTCOffset,
   isMoment,
   isDate,
   isBefore,
@@ -136,7 +135,6 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
-      utcOffset: getUTCOffset(),
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -166,8 +164,7 @@ export default class DatePicker extends React.Component {
     this.props.openToDate ? newDate(this.props.openToDate)
     : this.props.selectsEnd && this.props.startDate ? newDate(this.props.startDate)
     : this.props.selectsStart && this.props.endDate ? newDate(this.props.endDate)
-    : (typeof this.props.utcOffset !== 'undefined') ? newDateWithOffset(this.props.utcOffset)
-    : newDate()
+    : now(this.props.utcOffset)
   )
 
   calcInitialState = () => {
