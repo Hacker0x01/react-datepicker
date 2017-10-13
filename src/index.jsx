@@ -86,6 +86,7 @@ export default class DatePicker extends React.Component {
     onFocus: PropTypes.func,
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
+    onYearChange: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -138,6 +139,7 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
+      onYearChange () {},
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -456,6 +458,7 @@ export default class DatePicker extends React.Component {
       monthsShown={this.props.monthsShown}
       onDropdownFocus={this.handleDropdownFocus}
       onMonthChange={this.props.onMonthChange}
+      onYearChange={this.props.onYearChange}
       dayClassName={this.props.dayClassName}
       showTimeSelect={this.props.showTimeSelect}
       onTimeChange={this.handleTimeChange}
