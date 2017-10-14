@@ -2,11 +2,8 @@ import React from 'react'
 import Month from '../src/month'
 import Day from '../src/day'
 import range from 'lodash/range'
-import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import { mount, shallow } from 'enzyme'
 import * as utils from '../src/date_utils'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 describe('Month', () => {
   function assertDateRangeInclusive (month, start, end) {

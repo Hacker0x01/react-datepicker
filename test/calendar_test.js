@@ -4,12 +4,10 @@ import Month from '../src/month'
 import Day from '../src/day'
 import YearDropdown from '../src/year_dropdown'
 import MonthDropdown from '../src/month_dropdown'
-import Enzyme, { shallow, mount } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
-import Adapter from 'enzyme-adapter-react-16'
 import * as utils from '../src/date_utils'
 
-Enzyme.configure({ adapter: new Adapter() })
 // TODO Possibly rename
 const DATE_FORMAT = 'MM/DD/YYYY'
 

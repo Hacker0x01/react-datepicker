@@ -1,9 +1,6 @@
 import React from 'react'
 import WeekNumber from '../src/week_number'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-Enzyme.configure({ adapter: new Adapter() })
+import { shallow } from 'enzyme'
 
 function renderWeekNumber (weekNumber, props = {}) {
   return shallow(

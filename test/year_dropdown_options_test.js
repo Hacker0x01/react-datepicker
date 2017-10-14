@@ -1,9 +1,6 @@
 import React from 'react'
 import YearDropdownOptions from '../src/year_dropdown_options.jsx'
-import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-Enzyme.configure({ adapter: new Adapter() })
+import { mount, shallow, ReactWrapper } from 'enzyme'
 
 describe('YearDropdownOptions', () => {
   let yearDropdown,
@@ -45,7 +42,10 @@ describe('YearDropdownOptions', () => {
   })
 
   it("increments the available years when the 'upcoming years' button is clicked", () => {
-    yearDropdown.ref('upcoming').simulate('click')
+    const upcoming = yearDropdown.ref('upcoming')
+    console.log('HERE', yearDropdown.constructor, upcoming.constructor, upcoming.innerText)
+    const upcomingWrapper = new ReactWrapper(upcoming, upcoming)
+    upcomingWrapper.simulate('click')
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')

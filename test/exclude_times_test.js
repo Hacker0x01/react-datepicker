@@ -1,10 +1,7 @@
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
+import { mount } from 'enzyme'
 import DatePicker from '../src/datepicker.jsx'
-import Adapter from 'enzyme-adapter-react-16'
 import { setTime, cloneDate, newDate } from '../src/date_utils'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 function cloneDateWithTime (date, time) {
   return setTime(cloneDate(date), time)

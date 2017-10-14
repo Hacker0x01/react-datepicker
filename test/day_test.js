@@ -1,10 +1,7 @@
 import React from 'react'
 import Day from '../src/day'
-import Enzyme, { shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import { getDayOfWeekCode, newDate, getDate, cloneDate, addDays, subtractDays, getMonth, newDateWithOffset } from '../src/date_utils'
-import Adapter from 'enzyme-adapter-react-16'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 function renderDay (day, props = {}) {
   return shallow(

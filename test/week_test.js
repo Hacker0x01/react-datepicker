@@ -2,11 +2,8 @@ import React from 'react'
 import Week from '../src/week'
 import WeekNumber from '../src/week_number'
 import Day from '../src/day'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import { shallow } from 'enzyme'
 import * as utils from '../src/date_utils'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 describe('Week', () => {
   it('should have the week CSS class', () => {
