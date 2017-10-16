@@ -87,6 +87,7 @@ export default class DatePicker extends React.Component {
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
+    popperContainer: PropTypes.func,
     popperClassName: PropTypes.string, // <PopperComponent/> props
     popperModifiers: PropTypes.object, // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
@@ -534,6 +535,7 @@ export default class DatePicker extends React.Component {
               {this.renderClearButton()}
             </div>
           }
+          popperContainer={this.props.popperContainer}
           popperComponent={calendar}
           popperPlacement={this.props.popperPlacement}/>
     )

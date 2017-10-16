@@ -26,6 +26,7 @@ export default class PopperComponent extends React.Component {
     popperComponent: PropTypes.element,
     popperModifiers: PropTypes.object, // <datepicker/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
+    popperContainer: PropTypes.func,
     targetComponent: PropTypes.element
   }
 
@@ -52,20 +53,29 @@ export default class PopperComponent extends React.Component {
       targetComponent
     } = this.props
 
+    let popper
+
+    if (!hidePopper) {
+      popper = (
+        <Popper
+            className="react-datepicker-popper"
+            modifiers={popperModifiers}
+            placement={popperPlacement}>
+          {popperComponent}
+        </Popper>
+      )
+    }
+
+    if (this.props.popperContainer) {
+      popper = React.createElement(this.props.popperContainer, {}, popper)
+    }
+
     return (
       <Manager>
         <Target className="react-datepicker-wrapper">
           {targetComponent}
         </Target>
-        {
-          !hidePopper &&
-          <Popper
-              className="react-datepicker-popper"
-              modifiers={popperModifiers}
-              placement={popperPlacement}>
-            {popperComponent}
-          </Popper>
-        }
+        { popper }
       </Manager>
     )
   }
