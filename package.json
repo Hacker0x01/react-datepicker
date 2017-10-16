@@ -88,13 +88,13 @@
     "webpack-hot-middleware": "^2.16.1"
   },
   "peerDependencies": {
+    "moment": "^2.0.0",
+    "prop-types": "^15.0.0",
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "moment": "^2.17.1",
-    "prop-types": "^15.6.0",
     "react-onclickoutside": "^6.6.0",
     "react-popper": "^0.7.3"
   },
