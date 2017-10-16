@@ -265,6 +265,17 @@ describe('DatePicker', () => {
     expect(cleared).to.be.true
   })
 
+  it('should clear input value in the local state', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          selected={utils.newDate('2015-12-15')}
+          isClearable />
+    )
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
+    TestUtils.Simulate.click(clearButton)
+    expect(datePicker.state.inputValue).to.be.null
+  })
+
   it('should save time from the selected date', () => {
     const selected = utils.newDate('2015-12-20 10:11:12')
     let date
