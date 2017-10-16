@@ -15,6 +15,7 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script:
+  - yarn run install-peers
   - yarn test
 after_success:
   - yarn run codecov
