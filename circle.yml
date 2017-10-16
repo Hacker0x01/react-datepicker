@@ -10,4 +10,5 @@ dependencies:
 
 test:
   override:
+    - yarn run install-peers
     - yarn test
