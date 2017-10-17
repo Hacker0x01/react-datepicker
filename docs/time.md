@@ -5,6 +5,7 @@
 | name  | type  | default value  | description  |
 |---|---|---|---|
 |`excludeTimes`|`array`|||
+|`format`|`string`|||
 |`intervals`|`number`|`30`||
 |`maxTime`|`object`|||
 |`minTime`|`object`|||
