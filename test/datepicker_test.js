@@ -5,6 +5,7 @@ import { mount, ReactWrapper } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
+import TestWrapper from './test_wrapper.jsx'
 import PopperComponent from '../src/popper_component.jsx'
 import TimezoneDatePicker from './timezone_date_picker.jsx'
 import * as utils from '../src/date_utils'
@@ -45,6 +46,31 @@ describe('DatePicker', () => {
     var dateInput = datePicker.input
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
     expect(datePicker.calendar).to.exist
+  })
+
+  it('should allow the user to supply a wrapper component for the popper', () => {
+    var datePicker = mount(
+      <DatePicker popperContainer={TestWrapper} />
+    )
+
+    const dateInput = datePicker.instance().input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+
+    expect(datePicker.find('.test-wrapper').length).to.equal(1)
+    expect(datePicker.instance().calendar).to.exist
+  })
+
+  it('should pass a custom class to the popper container', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker popperClassName="some-class-name" />
+    )
+    var dateInput = datePicker.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+
+    const element = ReactDOM.findDOMNode(datePicker)
+    const popper = element.querySelector('.react-datepicker-popper')
+    expect(popper).to.exist
+    expect(popper.className).to.contain('some-class-name')
   })
 
   it('should show the calendar when clicking on the date input', () => {
@@ -252,6 +278,17 @@ describe('DatePicker', () => {
     expect(cleared).to.be.true
   })
 
+  it('should clear input value in the local state', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          selected={utils.newDate('2015-12-15')}
+          isClearable />
+    )
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
+    TestUtils.Simulate.click(clearButton)
+    expect(datePicker.state.inputValue).to.be.null
+  })
+
   it('should save time from the selected date', () => {
     const selected = utils.newDate('2015-12-20 10:11:12')
     let date
@@ -335,23 +372,18 @@ describe('DatePicker', () => {
     var m = utils.newDate()
     var copyM = utils.cloneDate(m)
     var testFormat = 'YYYY-MM-DD'
+    var exactishFormat = 'YYYY-MM-DD HH: ZZ'
     var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
           onChange={callback}
-          inline={opts.inline}
-          excludeDates={opts.excludeDates}
-          filterDate={opts.filterDate}
-          minDate={opts.minDate}
-          maxDate={opts.maxDate}
-          monthsShown={opts.monthsShown}
-          shouldCloseOnSelect={opts.shouldCloseOnSelect}/>
+          {...opts}/>
     )
     var dateInput = datePicker.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)
     TestUtils.Simulate.focus(nodeInput)
     return {
-      m, copyM, testFormat, callback, datePicker, dateInput, nodeInput
+      m, copyM, testFormat, exactishFormat, callback, datePicker, dateInput, nodeInput
     }
   }
   it('should handle onInputKeyDown ArrowLeft', () => {
@@ -499,6 +531,17 @@ describe('DatePicker', () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey('ArrowLeft'))
     expect(data.datePicker.state.open).to.be.true
   })
+  it('should default to the current day on Enter', () => {
+    const data = getOnInputKeyDownStuff({selected: null})
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey('Enter'))
+    expect(data.callback.calledOnce).to.be.true
+    const selected = data.callback.getCall(0).args[0]
+    expect(
+      utils.formatDate(selected, data.exactishFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.exactishFormat))
+    expect(selected.isLocal()).to.equal(true)
+  })
+
   it('should autofocus the input given the autoFocus prop', () => {
     var div = document.createElement('div')
     document.body.appendChild(div)

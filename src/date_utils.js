@@ -54,6 +54,13 @@ export function newDateWithOffset (utcOffset) {
   return moment().utc().utcOffset(utcOffset)
 }
 
+export function now (maybeFixedUtcOffset) {
+  if (maybeFixedUtcOffset == null) {
+    return newDate()
+  }
+  return newDateWithOffset(maybeFixedUtcOffset)
+}
+
 export function cloneDate (date) {
   return date.clone()
 }

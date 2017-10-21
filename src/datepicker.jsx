@@ -5,9 +5,8 @@ import PopperComponent, { popperPlacementPositions } from './popper_component'
 import classnames from 'classnames'
 import {
   newDate,
-  newDateWithOffset,
+  now,
   cloneDate,
-  getUTCOffset,
   isMoment,
   isDate,
   isBefore,
@@ -88,6 +87,7 @@ export default class DatePicker extends React.Component {
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
+    popperContainer: PropTypes.func,
     popperClassName: PropTypes.string, // <PopperComponent/> props
     popperModifiers: PropTypes.object, // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
@@ -136,7 +136,6 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
-      utcOffset: getUTCOffset(),
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -166,8 +165,7 @@ export default class DatePicker extends React.Component {
     this.props.openToDate ? newDate(this.props.openToDate)
     : this.props.selectsEnd && this.props.startDate ? newDate(this.props.startDate)
     : this.props.selectsStart && this.props.endDate ? newDate(this.props.endDate)
-    : (typeof this.props.utcOffset !== 'undefined') ? newDateWithOffset(this.props.utcOffset)
-    : newDate()
+    : now(this.props.utcOffset)
   )
 
   calcInitialState = () => {
@@ -397,6 +395,7 @@ export default class DatePicker extends React.Component {
   onClearClick = (event) => {
     event.preventDefault()
     this.props.onChange(null, event)
+    this.setState({ inputValue: null })
   }
 
   renderCalendar = () => {
@@ -537,6 +536,7 @@ export default class DatePicker extends React.Component {
               {this.renderClearButton()}
             </div>
           }
+          popperContainer={this.props.popperContainer}
           popperComponent={calendar}
           popperPlacement={this.props.popperPlacement}/>
     )

@@ -50,6 +50,7 @@ General datepicker component.
 |`peekNextMonth`|`bool`|||
 |`placeholderText`|`string`|||
 |`popperClassName`|`string`|||
+|`popperContainer`|`func`|||
 |`popperModifiers`|`object`|||
 |`popperPlacement`|`enumpopperPlacementPositions`|||
 |`readOnly`|`bool`|||
@@ -64,12 +65,14 @@ General datepicker component.
 |`showWeekNumbers`|`bool`|||
 |`showYearDropdown`|`bool`|||
 |`startDate`|`object`|||
+|`startOpen`|`bool`|||
 |`tabIndex`|`number`|||
+|`timeFormat`|`string`|||
 |`timeIntervals`|`number`|`30`||
 |`title`|`string`|||
 |`todayButton`|`string`|||
 |`useWeekdaysShort`|`bool`|||
-|`utcOffset`|`number`|`moment().utcOffset()`||
+|`utcOffset`|`number`|||
 |`value`|`string`|||
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||

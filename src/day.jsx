@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {
-  getUTCOffset,
   getDay,
   getMonth,
   getDate,
-  newDateWithOffset,
+  now,
   isMoment,
 
   isSameDay,
@@ -32,10 +31,6 @@ export default class Day extends React.Component {
     selectsStart: PropTypes.bool,
     startDate: PropTypes.object,
     utcOffset: PropTypes.number
-  }
-
-  static defaultProps = {
-    utcOffset: getUTCOffset()
   }
 
   handleClick = (event) => {
@@ -179,7 +174,7 @@ export default class Day extends React.Component {
       'react-datepicker__day--in-selecting-range': this.isInSelectingRange(),
       'react-datepicker__day--selecting-range-start': this.isSelectingRangeStart(),
       'react-datepicker__day--selecting-range-end': this.isSelectingRangeEnd(),
-      'react-datepicker__day--today': this.isSameDay(newDateWithOffset(this.props.utcOffset)),
+      'react-datepicker__day--today': this.isSameDay(now(this.props.utcOffset)),
       'react-datepicker__day--weekend': this.isWeekend(),
       'react-datepicker__day--outside-month': this.isOutsideMonth()
     }, this.getHighLightedClass('react-datepicker__day--highlighted'))
