@@ -44,7 +44,7 @@
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.1",
     "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.1",
+    "enzyme-adapter-react-16": "^1.0.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.4.1",
