@@ -23,6 +23,7 @@ export default class ConfigurePopper extends React.Component {
 <DatePicker
     selected={this.state.startDate}
     onChange={this.handleChange}
+    popperClassName="some-custom-class"
     popperPlacement="top-end"
     popperModifiers={{
       offset: {
@@ -43,6 +44,7 @@ export default class ConfigurePopper extends React.Component {
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
+            popperClassName="some-custom-class"
             popperPlacement="top-end"
             popperModifiers={{
               offset: {

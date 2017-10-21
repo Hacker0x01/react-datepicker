@@ -60,6 +60,19 @@ describe('DatePicker', () => {
     expect(datePicker.instance().calendar).to.exist
   })
 
+  it('should pass a custom class to the popper container', () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker popperClassName="some-class-name" />
+    )
+    var dateInput = datePicker.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+
+    const element = ReactDOM.findDOMNode(datePicker)
+    const popper = element.querySelector('.react-datepicker-popper')
+    expect(popper).to.exist
+    expect(popper.className).to.contain('some-class-name')
+  })
+
   it('should show the calendar when clicking on the date input', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />

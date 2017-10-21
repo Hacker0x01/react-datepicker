@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Manager, Target, Popper } from 'react-popper'
@@ -22,6 +23,7 @@ export const popperPlacementPositions = [
 
 export default class PopperComponent extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     hidePopper: PropTypes.bool,
     popperComponent: PropTypes.element,
     popperModifiers: PropTypes.object, // <datepicker/> props
@@ -46,6 +48,7 @@ export default class PopperComponent extends React.Component {
 
   render () {
     const {
+      className,
       hidePopper,
       popperComponent,
       popperModifiers,
@@ -56,9 +59,10 @@ export default class PopperComponent extends React.Component {
     let popper
 
     if (!hidePopper) {
+      const classes = classnames('react-datepicker-popper', className)
       popper = (
         <Popper
-            className="react-datepicker-popper"
+            className={classes}
             modifiers={popperModifiers}
             placement={popperPlacement}>
           {popperComponent}
