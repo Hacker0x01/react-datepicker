@@ -73,6 +73,7 @@ export default class Calendar extends React.Component {
     showTimeSelect: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
+    timeSelectCaption: PropTypes.string,
     onTimeChange: PropTypes.func,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
@@ -372,6 +373,7 @@ export default class Calendar extends React.Component {
             minTime={this.props.minTime}
             maxTime={this.props.maxTime}
             excludeTimes={this.props.excludeTimes}
+            timeSelectCaption={this.props.timeSelectCaption}
             todayButton={this.props.todayButton}
             showMonthDropdown={this.props.showMonthDropdown}
             showYearDropdown={this.props.showYearDropdown}
