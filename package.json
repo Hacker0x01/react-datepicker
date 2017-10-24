@@ -39,6 +39,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
+    "bundlesize": "^0.13.2",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "cross-env": "^3.2.4",
@@ -98,12 +99,25 @@
     "react-onclickoutside": "6.0.0",
     "react-popper": "^0.7.2"
   },
+
+  "bundlesize": [
+    {
+      "path": "./dist/react-datepicker.js",
+      "maxSize": "38 kB"
+    },
+    {
+      "path": "./dist/react-datepicker.css",
+      "maxSize": "2 kB"
+    }
+  ],
+
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test grunt travis",
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
-    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
+    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+    "bundlesize": "bundlesize"
   }
 }
