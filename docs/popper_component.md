@@ -4,6 +4,7 @@
 
 | name  | type  | default value  | description  |
 |---|---|---|---|
+|`className`|`string`|||
 |`hidePopper`|`bool`|`true`||
 |`popperComponent`|`element`|||
 |`popperContainer`|`func`|||
