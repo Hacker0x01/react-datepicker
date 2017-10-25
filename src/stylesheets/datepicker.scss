@@ -83,7 +83,7 @@
 
 .react-datepicker__current-month, .react-datepicker-time__header {
   margin-top: 0;
-  color: #000;
+  color: $datepicker__header-color;
   font-weight: bold;
   font-size: $datepicker__font-size * 1.18;
 }
