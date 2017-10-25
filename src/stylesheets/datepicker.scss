@@ -33,7 +33,7 @@
   }
 
   &[data-placement^="top"] {
-    margin-bottom: $datepicker__triangle-size - 2px;
+    margin-bottom: $datepicker__triangle-size + 2px;
 
     .react-datepicker__triangle {
       @extend %triangle-arrow-down;
