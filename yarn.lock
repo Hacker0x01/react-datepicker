@@ -4828,9 +4828,9 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-onclickoutside@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.0.0.tgz#f56f281206255cde91be211be2b19d8bf1fca2ef"
+react-onclickoutside@^6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.6.2.tgz#8446f665460ffda1c68b7f3aeeea3a217bfdf18f"
 
 react-popper@^0.7.2:
   version "0.7.2"

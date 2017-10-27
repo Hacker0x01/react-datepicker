@@ -95,7 +95,7 @@
     "classnames": "^2.2.5",
     "moment": "^2.17.1",
     "prop-types": "^15.5.8",
-    "react-onclickoutside": "6.0.0",
+    "react-onclickoutside": "^6.6.2",
     "react-popper": "^0.7.2"
   },
   "scripts": {
