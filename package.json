@@ -104,6 +104,7 @@
     "test": "cross-env NODE_ENV=test grunt travis",
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
+    "prepare": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
   }
 }
