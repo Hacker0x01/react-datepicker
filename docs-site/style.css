@@ -64,7 +64,7 @@
   .react-datepicker-popper[data-placement^="bottom"] {
     margin-top: 10px; }
   .react-datepicker-popper[data-placement^="top"] {
-    margin-bottom: 6px; }
+    margin-bottom: 10px; }
   .react-datepicker-popper[data-placement^="right"] {
     margin-left: 8px; }
     .react-datepicker-popper[data-placement^="right"] .react-datepicker__triangle {
