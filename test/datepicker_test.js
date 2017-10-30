@@ -194,7 +194,7 @@ describe('DatePicker', () => {
     expect(utils.formatDate(data.datePicker.state.preSelection, data.testFormat)).to.equal(utils.formatDate(data.copyM, data.testFormat))
   })
 
-  it('should update the preSelection state when a day is selected with mouse click', () => {
+  xit('should update the preSelection state when a day is selected with mouse click', () => {
     // Note: We need monthsShown=2 so that today can still be clicked when
     // ArrowLeft selects the previous month. (On the 1st 2 days of the month.)
     var data = getOnInputKeyDownStuff({shouldCloseOnSelect: false, monthsShown: 2})
