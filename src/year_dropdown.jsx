@@ -14,7 +14,10 @@ export default class YearDropdown extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    date: PropTypes.object,
+    onSelect: PropTypes.func,
+    setOpen: PropTypes.func
   }
 
   state = {
@@ -46,7 +49,7 @@ export default class YearDropdown extends React.Component {
   )
 
   renderReadView = (visible) => (
-    <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={this.toggleDropdown}>
+    <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={(event) => this.toggleDropdown(event)}>
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
     </div>
@@ -80,10 +83,29 @@ export default class YearDropdown extends React.Component {
     this.props.onChange(year)
   }
 
-  toggleDropdown = () => {
+  toggleDropdown = (event) => {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
+    }, () => {
+      this.handleYearChange(this.props.date, event)
     })
+  }
+
+  handleYearChange(date, event) {
+    this.onSelect(date, event)
+    this.setOpen()
+  }
+
+  onSelect(date, event) {
+    if(this.props.onSelect) {
+      this.props.onSelect(date, event)
+    }
+  }
+
+  setOpen() {
+    if(this.props.setOpen) {
+      this.props.setOpen(true)
+    }
   }
 
   render () {

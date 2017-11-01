@@ -93,7 +93,8 @@ export default class Calendar extends React.Component {
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    setOpen: PropTypes.func
   }
 
   static get defaultProps () {
@@ -186,6 +187,8 @@ export default class Calendar extends React.Component {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
     }
+    this.props.onSelect(date)
+    this.props.setOpen(true)
   }
 
   changeYear = (year) => {
@@ -278,6 +281,9 @@ export default class Calendar extends React.Component {
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           year={getYear(this.state.date)}
+          date={this.state.date}
+          onSelect={this.props.onSelect}
+          setOpen={this.props.setOpen}
           scrollableYearDropdown={this.props.scrollableYearDropdown}
           yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
     )

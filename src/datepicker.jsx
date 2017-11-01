@@ -388,6 +388,7 @@ export default class DatePicker extends React.Component {
           newSelection = addYears(copy, 1)
           break
       }
+      this.setSelected(newSelection)
       this.setPreSelection(newSelection)
     }
   }
@@ -450,6 +451,7 @@ export default class DatePicker extends React.Component {
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
         className={this.props.calendarClassName}
+        setOpen={this.setOpen}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}
     </WrappedCalendar>
