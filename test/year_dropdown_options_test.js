@@ -43,7 +43,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("increments the available years when the 'upcoming years' button is clicked", () => {
-    yearDropdown.ref('upcoming').click()
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -55,7 +55,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("decrements the available years when the 'previous years' button is clicked", () => {
-    yearDropdown.ref('previous').click()
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -67,7 +67,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it('calls the supplied onChange function when a year is clicked', () => {
-    yearDropdown.ref('2015').click
+    yearDropdown.find('.react-datepicker__year-option').filterWhere(e => e.text().includes('2015')).simulate('click')
     expect(handleChangeResult).to.equal(2015)
   })
 
@@ -163,7 +163,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(textContents.find(year => year === minDate.year())).to.be.undefined
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
 
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
       .map(node => node.text())
@@ -172,7 +172,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(0)
 
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
       .map(node => node.text())
@@ -202,7 +202,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
 
     expect(textContents.find(year => year === minDate.year())).to.be.undefined
 
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
 
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -234,7 +234,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
 
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
 
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
 
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
