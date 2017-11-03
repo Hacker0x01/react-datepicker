@@ -44,6 +44,7 @@ const isDropdownSelect = (element = {}) => {
 
 export default class Calendar extends React.Component {
   static propTypes = {
+    adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
     children: PropTypes.node,
     dateFormat: PropTypes.oneOfType([
@@ -187,8 +188,10 @@ export default class Calendar extends React.Component {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
     }
-    this.props.onSelect(date)
-    this.props.setOpen(true)
+    if(this.props.adjustDateOnChange) {
+      this.props.onSelect(date)
+      this.props.setOpen(true)
+    }
   }
 
   changeYear = (year) => {
@@ -276,6 +279,7 @@ export default class Calendar extends React.Component {
     }
     return (
       <YearDropdown
+          adjustDateOnChange={this.props.adjustDateOnChange}
           dropdownMode={this.props.dropdownMode}
           onChange={this.changeYear}
           minDate={this.props.minDate}

@@ -44,6 +44,7 @@ const WrappedCalendar = onClickOutside(Calendar)
 
 export default class DatePicker extends React.Component {
   static propTypes = {
+    adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
@@ -388,7 +389,7 @@ export default class DatePicker extends React.Component {
           newSelection = addYears(copy, 1)
           break
       }
-      this.setSelected(newSelection)
+      this.props.adjustDateOnChange ? this.setSelected(newSelection) : undefined
       this.setPreSelection(newSelection)
     }
   }
@@ -405,6 +406,7 @@ export default class DatePicker extends React.Component {
     }
     return <WrappedCalendar
         ref={(elem) => { this.calendar = elem }}
+        adjustDateOnChange={this.props.adjustDateOnChange}
         locale={this.props.locale}
         dateFormat={this.props.dateFormatCalendar}
         useWeekdaysShort={this.props.useWeekdaysShort}

@@ -8,6 +8,7 @@ var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
 
 export default class YearDropdown extends React.Component {
   static propTypes = {
+    adjustDateOnChange: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
@@ -87,7 +88,9 @@ export default class YearDropdown extends React.Component {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
     }, () => {
-      this.handleYearChange(this.props.date, event)
+      if(this.props.adjustDateOnChange) {
+        this.handleYearChange(this.props.date, event)
+      }
     })
   }
 
