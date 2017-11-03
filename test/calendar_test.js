@@ -225,7 +225,8 @@ describe('Calendar', function () {
     const month = calendar.find(Month).first()
     expect(month.prop('selectingDate')).to.exist
     month.simulate('mouseleave')
-    expect(month.prop('selectingDate')).not.to.exist
+    calendar.update()
+    expect(calendar.find(Month).first().prop('selectingDate')).not.to.exist
   })
 
   it('uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present', () => {

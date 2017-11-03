@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-dom/test-utils'
-import { mount, ReactWrapper } from 'enzyme'
+import { mount } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'
 import Day from '../src/day'
@@ -117,12 +117,11 @@ describe('DatePicker', () => {
           onBlur={onBlurSpy}/>
     )
     const dateInput = datePicker.instance().input
-    const dateInputWrapper = new ReactWrapper(dateInput, dateInput)
+    const dateInputWrapper = datePicker.find('input')
     const focusSpy = sandbox.spy(dateInput, 'focus')
 
     dateInputWrapper.simulate('focus')
-    const calendar = datePicker.instance().calendar
-    const calendarWrapper = new ReactWrapper(calendar, calendar)
+    const calendarWrapper = datePicker.find('Calendar')
     const yearSelect = calendarWrapper.find('.react-datepicker__year-select')
     dateInputWrapper.simulate('blur')
     yearSelect.simulate('focus')
@@ -661,13 +660,13 @@ describe('DatePicker', () => {
     const datePicker = mount(
       <DatePicker dateFormat={['YYYY-MM-DD', 'MM/DD/YYYY', 'MM/DD/YY']} onChange={onChange}/>
     )
-    const input = datePicker.find('input')
-    expect(input.prop('value')).to.equal('')
+    expect(datePicker.find('input').prop('value')).to.equal('')
 
     const str = '12/30/1982'
     str.split('').forEach((c, i) => {
-      input.simulate('change', {target: { value: input.prop('value') + c }})
-      expect(input.prop('value')).to.equal(str.substring(0, i + 1))
+      datePicker.find('input').simulate('change', {target: { value: datePicker.find('input').prop('value') + c }})
+      datePicker.update()
+      expect(datePicker.find('input').prop('value')).to.equal(str.substring(0, i + 1))
     })
     expect(utils.formatDate(datePicker.prop('selected'), 'YYYY-MM-DD')).to.equal('1982-12-30')
   })
@@ -689,12 +688,13 @@ describe('DatePicker', () => {
     const datePicker = mount(
       <DatePicker onChangeRaw={onChangeRaw} />
     )
-    const input = datePicker.find('input')
-    expect(input.prop('value')).to.equal('')
-    input.simulate('change', {target: { value: '3' }})
-    expect(input.prop('value')).to.equal('')
-    input.simulate('change', {target: { value: '1' }})
-    expect(input.prop('value')).to.equal('1')
+    expect(datePicker.find('input').prop('value')).to.equal('')
+    datePicker.find('input').simulate('change', {target: { value: '3' }})
+    datePicker.update()
+    expect(datePicker.find('input').prop('value')).to.equal('')
+    datePicker.find('input').simulate('change', {target: { value: '1' }})
+    datePicker.update()
+    expect(datePicker.find('input').prop('value')).to.equal('1')
   })
 
   it('should handle a click outside of the calendar', () => {
