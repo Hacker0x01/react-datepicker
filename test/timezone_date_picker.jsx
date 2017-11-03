@@ -1,5 +1,5 @@
 import React from 'react'
-import DatePicker from '../src/datepicker.jsx'
+import DatePicker from '../src/index.jsx'
 import * as utils from '../src/date_utils'
 
 class TimezoneDatePicker extends React.Component {
