@@ -207,8 +207,8 @@ describe('Calendar', function () {
           onSelect={() => {}}/>
     )
     const day = calendar.find(Day).first()
-    const month = calendar.find(Month).first()
     day.simulate('mouseenter')
+    const month = calendar.find(Month).first()
     expect(month.prop('selectingDate')).to.exist
     expect(utils.isSameDay(month.prop('selectingDate'), day.prop('day'))).to.be.true
   })

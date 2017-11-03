@@ -1,10 +1,7 @@
 import React from 'react'
-import * as utils from '../src/date_utils'
-// import ReactDOM from 'react-dom'
-// import TestUtils from 'react-addons-test-utils'
 import { mount } from 'enzyme'
+import * as utils from '../src/date_utils'
 import DatePicker from '../src/datepicker.jsx'
-// import Time from '../src/time.jsx'
 
 describe('DatePicker', () => {
   let sandbox

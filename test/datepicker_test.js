@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TestUtils from 'react-addons-test-utils'
+import TestUtils from 'react-dom/test-utils'
 import { mount, ReactWrapper } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/datepicker.jsx'

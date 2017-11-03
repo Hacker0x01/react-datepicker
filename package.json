@@ -44,7 +44,8 @@
     "codecov.io": "^0.1.6",
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.4.1",
@@ -74,11 +75,10 @@
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.0",
-    "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
-    "react-docgen": "^2.19.0",
-    "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.5.4",
+    "react": "^16.0.0",
+    "react-docgen": "^2.13.0",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0",
     "react-transform-hmr": "^1.0.4",
     "sass-loader": "^4.1.1",
     "sinon": "^2.3.2",
@@ -105,6 +105,7 @@
     "test": "cross-env NODE_ENV=test grunt travis",
     "eslint": "eslint **/*.jsx",
     "prepublish": "npm run build",
-    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js"
+    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+    "install-peers": "yarn add --peer moment prop-types"
   }
 }

@@ -43,7 +43,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("increments the available years when the 'upcoming years' button is clicked", () => {
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.ref('upcoming').click()
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -55,7 +55,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("decrements the available years when the 'previous years' button is clicked", () => {
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.ref('previous').click()
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -67,7 +67,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it('calls the supplied onChange function when a year is clicked', () => {
-    yearDropdown.ref('2015').simulate('click')
+    yearDropdown.ref('2015').click
     expect(handleChangeResult).to.equal(2015)
   })
 
