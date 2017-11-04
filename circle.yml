@@ -3,14 +3,14 @@ machine:
     version: 6.11.4
   environment:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  pre:
+    - npm i -g npm@latest
 
 dependencies:
   override:
     - yarn
   cache_directories:
     - ~/.cache/yarn
-pre:
-  - npm i -g npm@latest
 
 test:
   override:
