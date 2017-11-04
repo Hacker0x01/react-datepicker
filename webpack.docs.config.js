@@ -18,7 +18,7 @@ module.exports = {
     // normal setup.
     alias: {
       'react-datepicker/dist/react-datepicker.css': path.resolve('./src/stylesheets/datepicker.scss'),
-      'react-datepicker': path.resolve('./src/datepicker.jsx')
+      'react-datepicker': path.resolve('./src/index.jsx')
     }
   },
   module: {
