@@ -1,8 +1,6 @@
 machine:
   node:
-    version: 4.7.0
-  pre:
-    - npm i -g npm@latest
+    version: 7.4.0
 
 test:
   override:
