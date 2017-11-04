@@ -1,6 +1,6 @@
 machine:
-  # node:
-  #   version: 6.11.4
+  node:
+    version: 4.7.0
   pre:
     - npm i -g npm@latest
 
