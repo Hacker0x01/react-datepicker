@@ -108,7 +108,7 @@
     "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
     "lint": "run-p eslint sass-lint",
     "check": "npm run lint && npm run test",
-    "prepublish": "npm run build",
+    "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
     "prebuild": "rimraf es lib dist",
