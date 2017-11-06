@@ -2,7 +2,7 @@ import React from 'react'
 // import ReactDOM from 'react-dom'
 // import TestUtils from 'react-addons-test-utils'
 import { mount } from 'enzyme'
-import DatePicker from '../src/datepicker.jsx'
+import DatePicker from '../src/index.jsx'
 import TimeComponent from '../src/time'
 
 describe('DatePicker', () => {

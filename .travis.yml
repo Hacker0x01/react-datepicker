@@ -11,11 +11,11 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  - npm install -g grunt-cli
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - npm i -g npm@latest
 script:
-  - yarn test
+  - yarn check
 after_success:
   - yarn run codecov
 notifications:
