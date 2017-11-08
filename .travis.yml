@@ -16,6 +16,7 @@ before_install:
   - npm i -g npm@latest
 script:
   - yarn check
+  - yarn test
 after_success:
   - yarn run codecov
 notifications:
