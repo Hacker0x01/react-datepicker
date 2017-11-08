@@ -45,7 +45,7 @@
     "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
-    "cross-env": "^3.2.4",
+    "cross-env": "^5.1.1",
     "css-loader": "^0.26.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
