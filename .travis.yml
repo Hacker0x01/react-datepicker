@@ -14,7 +14,6 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
-  - yarn add --peer moment prop-types
   - npm i -g npm@latest
 script:
   - yarn lint
