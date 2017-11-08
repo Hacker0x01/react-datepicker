@@ -46,7 +46,7 @@
     "chai": "^3.5.0",
     "codecov.io": "^0.1.6",
     "cross-env": "^5.1.1",
-    "css-loader": "^0.26.1",
+    "css-loader": "^0.28.7",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^6.2.0",
