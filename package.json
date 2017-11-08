@@ -68,7 +68,7 @@
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.3",
-    "npm-run-all": "^4.1.1",
+    "npm-run-all": "^4.1.2",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
     "react-docgen": "^2.19.0",
