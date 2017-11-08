@@ -15,7 +15,8 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - npm i -g npm@latest
 script:
-  - yarn check
+  - yarn lint
+  - yarn test
 after_success:
   - yarn run codecov
 notifications:
