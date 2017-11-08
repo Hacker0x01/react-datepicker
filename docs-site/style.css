@@ -64,7 +64,7 @@
   .react-datepicker-popper[data-placement^="bottom"] {
     margin-top: 10px; }
   .react-datepicker-popper[data-placement^="top"] {
-    margin-bottom: 6px; }
+    margin-bottom: 10px; }
   .react-datepicker-popper[data-placement^="right"] {
     margin-left: 8px; }
     .react-datepicker-popper[data-placement^="right"] .react-datepicker__triangle {
@@ -164,7 +164,7 @@
       .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
         list-style: none;
         margin: 0;
-        height: calc(195px + calc(1.7rem / 2));
+        height: calc(195px + (1.7rem / 2));
         overflow-y: scroll;
         padding-right: 30px;
         width: 100%; }

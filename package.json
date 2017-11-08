@@ -2,10 +2,11 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.56.0",
+  "version": "0.59.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
-  "main": "dist/react-datepicker.min.js",
+  "main": "lib/datepicker",
+  "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
   "files": [
     "*.md",
@@ -93,8 +94,10 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "react-onclickoutside": "^6.6.0",
-    "react-popper": "^0.7.3"
+    "moment": "^2.17.1",
+    "prop-types": "^15.5.8",
+    "react-onclickoutside": "^6.6.2",
+    "react-popper": "^0.7.4"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production grunt build",
