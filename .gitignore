@@ -6,6 +6,7 @@ npm-debug.log
 .vscode
 dist
 lib
+es
 tmp
 coverage
 docs-site/bundle.js

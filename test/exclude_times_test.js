@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import DatePicker from '../src/datepicker.jsx'
 import { setTime, cloneDate, newDate } from '../src/date_utils'
+import DatePicker from '../src/index.jsx'
 
 function cloneDateWithTime (date, time) {
   return setTime(cloneDate(date), time)
