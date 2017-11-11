@@ -30,9 +30,9 @@ export default class Default extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            showWeekNumbers />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          showWeekNumbers />
       </div>
     </div>
   }

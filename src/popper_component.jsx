@@ -62,9 +62,9 @@ export default class PopperComponent extends React.Component {
       const classes = classnames('react-datepicker-popper', className)
       popper = (
         <Popper
-            className={classes}
-            modifiers={popperModifiers}
-            placement={popperPlacement}>
+          className={classes}
+          modifiers={popperModifiers}
+          placement={popperPlacement}>
           {popperComponent}
         </Popper>
       )

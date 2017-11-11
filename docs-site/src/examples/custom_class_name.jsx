@@ -30,9 +30,9 @@ export default class CustomClassName extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            className="red-border" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          className="red-border" />
       </div>
     </div>
   }

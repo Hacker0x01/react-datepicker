@@ -30,9 +30,9 @@ export default class CustomDayClassNames extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            dayClassName={date => date.date() < Math.random() * 31 ? 'random' : undefined} />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          dayClassName={date => date.date() < Math.random() * 31 ? 'random' : undefined} />
       </div>
     </div>
   }

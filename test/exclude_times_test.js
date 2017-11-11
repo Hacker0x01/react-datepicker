@@ -22,13 +22,13 @@ describe('DatePicker', () => {
     var now = newDate()
     var datePicker = mount(
       <DatePicker
-          showTimeSelect
-          excludeTimes={[
-            cloneDateWithTime(now, { hours: 17, minutes: 0 }),
-            cloneDateWithTime(now, { hours: 18, minutes: 30 }),
-            cloneDateWithTime(now, { hours: 19, minutes: 30 }),
-            cloneDateWithTime(now, { hours: 17, minutes: 30 })
-          ]} />
+        showTimeSelect
+        excludeTimes={[
+          cloneDateWithTime(now, { hours: 17, minutes: 0 }),
+          cloneDateWithTime(now, { hours: 18, minutes: 30 }),
+          cloneDateWithTime(now, { hours: 19, minutes: 30 }),
+          cloneDateWithTime(now, { hours: 17, minutes: 30 })
+        ]} />
     )
     expect(datePicker.find('.react-datepicker__time-list-item--disabled')).to.exist
   })

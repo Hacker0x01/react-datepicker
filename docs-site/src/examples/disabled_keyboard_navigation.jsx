@@ -21,18 +21,18 @@ export default class DisabledKeyboardNavigation extends React.Component {
       <pre className="column example__code">
         <code className="jsx">
           {'<DatePicker'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange}'}<br />
-              <strong>{'disabledKeyboardNavigation'}</strong><br />
-              {'placeholderText="This has disabled keyboard navigation" />'}
+          {'selected={this.state.startDate}'}<br />
+          {'onChange={this.handleChange}'}<br />
+          <strong>{'disabledKeyboardNavigation'}</strong><br />
+          {'placeholderText="This has disabled keyboard navigation" />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            disabledKeyboardNavigation
-            placeholderText="This has disabled keyboard navigation" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          disabledKeyboardNavigation
+          placeholderText="This has disabled keyboard navigation" />
       </div>
     </div>
   }

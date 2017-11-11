@@ -163,9 +163,9 @@ export default class DatePicker extends React.Component {
 
   getPreSelection = () => (
     this.props.openToDate ? newDate(this.props.openToDate)
-    : this.props.selectsEnd && this.props.startDate ? newDate(this.props.startDate)
-    : this.props.selectsStart && this.props.endDate ? newDate(this.props.endDate)
-    : now(this.props.utcOffset)
+      : this.props.selectsEnd && this.props.startDate ? newDate(this.props.startDate)
+        : this.props.selectsStart && this.props.endDate ? newDate(this.props.endDate)
+          : now(this.props.utcOffset)
   )
 
   calcInitialState = () => {
@@ -174,8 +174,8 @@ export default class DatePicker extends React.Component {
     const maxDate = getEffectiveMaxDate(this.props)
     const boundedPreSelection =
       minDate && isBefore(defaultPreSelection, minDate) ? minDate
-      : maxDate && isAfter(defaultPreSelection, maxDate) ? maxDate
-      : defaultPreSelection
+        : maxDate && isAfter(defaultPreSelection, maxDate) ? maxDate
+          : defaultPreSelection
 
     return {
       open: this.props.startOpen || false,
@@ -403,54 +403,54 @@ export default class DatePicker extends React.Component {
       return null
     }
     return <WrappedCalendar
-        ref={(elem) => { this.calendar = elem }}
-        locale={this.props.locale}
-        dateFormat={this.props.dateFormatCalendar}
-        useWeekdaysShort={this.props.useWeekdaysShort}
-        dropdownMode={this.props.dropdownMode}
-        selected={this.props.selected}
-        preSelection={this.state.preSelection}
-        onSelect={this.handleSelect}
-        onWeekSelect={this.props.onWeekSelect}
-        openToDate={this.props.openToDate}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selectsStart={this.props.selectsStart}
-        selectsEnd={this.props.selectsEnd}
-        startDate={this.props.startDate}
-        endDate={this.props.endDate}
-        excludeDates={this.props.excludeDates}
-        filterDate={this.props.filterDate}
-        onClickOutside={this.handleCalendarClickOutside}
-        formatWeekNumber={this.props.formatWeekNumber}
-        highlightDates={this.props.highlightDates}
-        includeDates={this.props.includeDates}
-        inline={this.props.inline}
-        peekNextMonth={this.props.peekNextMonth}
-        showMonthDropdown={this.props.showMonthDropdown}
-        showWeekNumbers={this.props.showWeekNumbers}
-        showYearDropdown={this.props.showYearDropdown}
-        withPortal={this.props.withPortal}
-        forceShowMonthNavigation={this.props.forceShowMonthNavigation}
-        scrollableYearDropdown={this.props.scrollableYearDropdown}
-        todayButton={this.props.todayButton}
-        weekLabel={this.props.weekLabel}
-        utcOffset={this.props.utcOffset}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
-        fixedHeight={this.props.fixedHeight}
-        monthsShown={this.props.monthsShown}
-        onDropdownFocus={this.handleDropdownFocus}
-        onMonthChange={this.props.onMonthChange}
-        dayClassName={this.props.dayClassName}
-        showTimeSelect={this.props.showTimeSelect}
-        onTimeChange={this.handleTimeChange}
-        timeFormat={this.props.timeFormat}
-        timeIntervals={this.props.timeIntervals}
-        minTime={this.props.minTime}
-        maxTime={this.props.maxTime}
-        excludeTimes={this.props.excludeTimes}
-        className={this.props.calendarClassName}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
+      ref={(elem) => { this.calendar = elem }}
+      locale={this.props.locale}
+      dateFormat={this.props.dateFormatCalendar}
+      useWeekdaysShort={this.props.useWeekdaysShort}
+      dropdownMode={this.props.dropdownMode}
+      selected={this.props.selected}
+      preSelection={this.state.preSelection}
+      onSelect={this.handleSelect}
+      onWeekSelect={this.props.onWeekSelect}
+      openToDate={this.props.openToDate}
+      minDate={this.props.minDate}
+      maxDate={this.props.maxDate}
+      selectsStart={this.props.selectsStart}
+      selectsEnd={this.props.selectsEnd}
+      startDate={this.props.startDate}
+      endDate={this.props.endDate}
+      excludeDates={this.props.excludeDates}
+      filterDate={this.props.filterDate}
+      onClickOutside={this.handleCalendarClickOutside}
+      formatWeekNumber={this.props.formatWeekNumber}
+      highlightDates={this.props.highlightDates}
+      includeDates={this.props.includeDates}
+      inline={this.props.inline}
+      peekNextMonth={this.props.peekNextMonth}
+      showMonthDropdown={this.props.showMonthDropdown}
+      showWeekNumbers={this.props.showWeekNumbers}
+      showYearDropdown={this.props.showYearDropdown}
+      withPortal={this.props.withPortal}
+      forceShowMonthNavigation={this.props.forceShowMonthNavigation}
+      scrollableYearDropdown={this.props.scrollableYearDropdown}
+      todayButton={this.props.todayButton}
+      weekLabel={this.props.weekLabel}
+      utcOffset={this.props.utcOffset}
+      outsideClickIgnoreClass={outsideClickIgnoreClass}
+      fixedHeight={this.props.fixedHeight}
+      monthsShown={this.props.monthsShown}
+      onDropdownFocus={this.handleDropdownFocus}
+      onMonthChange={this.props.onMonthChange}
+      dayClassName={this.props.dayClassName}
+      showTimeSelect={this.props.showTimeSelect}
+      onTimeChange={this.handleTimeChange}
+      timeFormat={this.props.timeFormat}
+      timeIntervals={this.props.timeIntervals}
+      minTime={this.props.minTime}
+      maxTime={this.props.maxTime}
+      excludeTimes={this.props.excludeTimes}
+      className={this.props.calendarClassName}
+      yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
       {this.props.children}
     </WrappedCalendar>
   }
@@ -464,7 +464,7 @@ export default class DatePicker extends React.Component {
     const inputValue =
       typeof this.props.value === 'string' ? this.props.value
         : typeof this.state.inputValue === 'string' ? this.state.inputValue
-        : safeDateFormat(this.props.selected, this.props)
+          : safeDateFormat(this.props.selected, this.props)
 
     return React.cloneElement(customInput, {
       ref: (input) => { this.input = input },
@@ -507,19 +507,19 @@ export default class DatePicker extends React.Component {
       return (
         <div>
           {
-          !this.props.inline
-          ? <div className="react-datepicker__input-container">
-              {this.renderDateInput()}
-              {this.renderClearButton()}
-            </div>
-          : null
+            !this.props.inline
+              ? <div className="react-datepicker__input-container">
+                {this.renderDateInput()}
+                {this.renderClearButton()}
+              </div>
+              : null
           }
           {
-          this.state.open || this.props.inline
-          ? <div className="react-datepicker__portal">
-              {calendar}
-            </div>
-          : null
+            this.state.open || this.props.inline
+              ? <div className="react-datepicker__portal">
+                {calendar}
+              </div>
+              : null
           }
         </div>
       )
@@ -527,18 +527,18 @@ export default class DatePicker extends React.Component {
 
     return (
       <PopperComponent
-          className={this.props.popperClassName}
-          hidePopper={(!this.state.open || this.props.disabled)}
-          popperModifiers={this.props.popperModifiers}
-          targetComponent={
-            <div className="react-datepicker__input-container">
-              {this.renderDateInput()}
-              {this.renderClearButton()}
-            </div>
-          }
-          popperContainer={this.props.popperContainer}
-          popperComponent={calendar}
-          popperPlacement={this.props.popperPlacement}/>
+        className={this.props.popperClassName}
+        hidePopper={(!this.state.open || this.props.disabled)}
+        popperModifiers={this.props.popperModifiers}
+        targetComponent={
+          <div className="react-datepicker__input-container">
+            {this.renderDateInput()}
+            {this.renderClearButton()}
+          </div>
+        }
+        popperContainer={this.props.popperContainer}
+        popperComponent={calendar}
+        popperPlacement={this.props.popperPlacement}/>
     )
   }
 }

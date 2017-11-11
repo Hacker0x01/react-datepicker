@@ -9,14 +9,14 @@ describe('Multi month calendar', function () {
 
   function getCalendar (extraProps) {
     return shallow(
-            <Calendar
-                dateFormat={dateFormat}
-                onSelect={() => {}}
-                onClickOutside={() => {}}
-                hideCalendar={() => {}}
-                dropdownMode="scroll"
-                {...extraProps}/>
-      )
+      <Calendar
+        dateFormat={dateFormat}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        dropdownMode="scroll"
+        {...extraProps}/>
+    )
   }
 
   it('should render multiple months if the months property is present', () => {
@@ -31,4 +31,3 @@ describe('Multi month calendar', function () {
     expect(datepickers).to.have.length(1)
   })
 })
-

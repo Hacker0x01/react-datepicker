@@ -41,10 +41,10 @@ handleChangeRaw(value) {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            placeholderText='Enter "tomorrow"'
-            onChangeRaw={(event) => this.handleChangeRaw(event.target.value)}/>
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          placeholderText='Enter "tomorrow"'
+          onChangeRaw={(event) => this.handleChangeRaw(event.target.value)}/>
       </div>
     </div>
   }

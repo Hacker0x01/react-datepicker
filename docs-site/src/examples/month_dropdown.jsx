@@ -30,9 +30,9 @@ export default class MonthDropdown extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            showMonthDropdown />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          showMonthDropdown />
       </div>
     </div>
   }

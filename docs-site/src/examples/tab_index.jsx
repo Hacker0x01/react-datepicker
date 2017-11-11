@@ -30,9 +30,9 @@ export default class TabIndex extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            tabIndex={1} />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          tabIndex={1} />
       </div>
     </div>
   }

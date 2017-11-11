@@ -30,10 +30,10 @@ export default class ClearInput extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            isClearable
-            placeholderText="I have been cleared!" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          isClearable
+          placeholderText="I have been cleared!" />
       </div>
     </div>
   }

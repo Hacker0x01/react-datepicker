@@ -17,12 +17,12 @@ describe('Calendar', function () {
   function getCalendar (extraProps) {
     return shallow(
       <Calendar
-          dateFormat={dateFormat}
-          onSelect={() => {}}
-          onClickOutside={() => {}}
-          hideCalendar={() => {}}
-          dropdownMode="scroll"
-          {...extraProps}/>
+        dateFormat={dateFormat}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        dropdownMode="scroll"
+        {...extraProps}/>
     )
   }
 
@@ -201,10 +201,10 @@ describe('Calendar', function () {
   it('should track the currently hovered day', () => {
     const calendar = mount(
       <Calendar
-          dateFormat={dateFormat}
-          dropdownMode="scroll"
-          onClickOutside={() => {}}
-          onSelect={() => {}}/>
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}/>
     )
     const day = calendar.find(Day).first()
     day.simulate('mouseenter')
@@ -216,10 +216,10 @@ describe('Calendar', function () {
   it('should clear the hovered day when the mouse leaves', () => {
     const calendar = mount(
       <Calendar
-          dateFormat={dateFormat}
-          dropdownMode="scroll"
-          onClickOutside={() => {}}
-          onSelect={() => {}}/>
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}/>
     )
     calendar.setState({ selectingDate: utils.newDate() })
     const month = calendar.find(Month).first()
@@ -260,15 +260,15 @@ describe('Calendar', function () {
       onMonthChangeSpy = sinon.spy()
       calendar = mount(
         <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearDropdown
-            showMonthDropdown
-            forceShowMonthNavigation
-            onMonthChange={onMonthChangeSpy}/>
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showMonthDropdown
+          forceShowMonthNavigation
+          onMonthChange={onMonthChangeSpy}/>
       )
     })
 
@@ -302,14 +302,14 @@ describe('Calendar', function () {
       onDropdownFocusSpy = sinon.spy()
       calendar = mount(
         <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearDropdown
-            showMonthDropdown
-            onDropdownFocus={onDropdownFocusSpy}/>
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showMonthDropdown
+          onDropdownFocus={onDropdownFocusSpy}/>
       )
     })
 

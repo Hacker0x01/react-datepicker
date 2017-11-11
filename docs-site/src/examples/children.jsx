@@ -33,8 +33,8 @@ export default class Children extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}>
+          selected={this.state.startDate}
+          onChange={this.handleChange}>
           <div style={{color: 'red'}}>
             Don't forget to check the weather!
           </div>

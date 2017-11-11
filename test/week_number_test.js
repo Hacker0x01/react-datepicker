@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 function renderWeekNumber (weekNumber, props = {}) {
   return shallow(
     <WeekNumber weekNumber={weekNumber} {...props} />
-)
+  )
 }
 
 describe('WeekNumber', () => {

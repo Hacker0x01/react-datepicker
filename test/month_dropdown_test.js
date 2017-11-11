@@ -17,11 +17,11 @@ describe('MonthDropdown', () => {
     const dateFormatCalendar = 'MMMM YYYY'
     return mount(
       <MonthDropdown
-          dropdownMode="scroll"
-          month={11}
-          dateFormat={dateFormatCalendar}
-          onChange={mockHandleChange}
-          {...overrideProps} />
+        dropdownMode="scroll"
+        month={11}
+        dateFormat={dateFormatCalendar}
+        onChange={mockHandleChange}
+        {...overrideProps} />
     )
   }
 

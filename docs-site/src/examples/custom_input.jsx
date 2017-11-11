@@ -13,9 +13,9 @@ class ExampleCustomInput extends React.Component {
   render () {
     return (
       <button
-          className="example-custom-input"
-          onClick={this.props.onClick}>
-          {this.props.value}
+        className="example-custom-input"
+        onClick={this.props.onClick}>
+        {this.props.value}
       </button>
     )
   }
@@ -68,9 +68,9 @@ ExampleCustomInput.propTypes = {
       </pre>
       <div className="column">
         <DatePicker
-            customInput={<ExampleCustomInput />}
-            selected={this.state.startDate}
-            onChange={this.handleChange} />
+          customInput={<ExampleCustomInput />}
+          selected={this.state.startDate}
+          onChange={this.handleChange} />
       </div>
     </div>
   }

@@ -111,10 +111,10 @@ describe('DatePicker', () => {
     const onBlurSpy = sandbox.spy()
     const datePicker = mount(
       <DatePicker
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          onBlur={onBlurSpy}/>
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        onBlur={onBlurSpy}/>
     )
     const dateInput = datePicker.instance().input
     const dateInputWrapper = datePicker.find('input')
@@ -145,7 +145,7 @@ describe('DatePicker', () => {
 
   it('should not set open state when it is disabled and gets clicked', function () {
     var datePicker = TestUtils.renderIntoDocument(
-        <DatePicker disabled/>
+      <DatePicker disabled/>
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
@@ -268,9 +268,9 @@ describe('DatePicker', () => {
     }
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2015-12-15')}
-          isClearable
-          onChange={handleChange} />
+        selected={utils.newDate('2015-12-15')}
+        isClearable
+        onChange={handleChange} />
     )
     var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
     TestUtils.Simulate.click(clearButton)
@@ -280,8 +280,8 @@ describe('DatePicker', () => {
   it('should clear input value in the local state', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2015-12-15')}
-          isClearable />
+        selected={utils.newDate('2015-12-15')}
+        isClearable />
     )
     var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
     TestUtils.Simulate.click(clearButton)
@@ -294,9 +294,9 @@ describe('DatePicker', () => {
 
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          inline
-          selected={selected}
-          onChange={(d) => { date = d }} />
+        inline
+        selected={selected}
+        onChange={(d) => { date = d }} />
     )
     var dayButton = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'react-datepicker__day')[0]
     TestUtils.Simulate.click(dayButton)
@@ -375,8 +375,8 @@ describe('DatePicker', () => {
     var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
-          onChange={callback}
-          {...opts}/>
+        onChange={callback}
+        {...opts}/>
     )
     var dateInput = datePicker.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)
@@ -630,8 +630,8 @@ describe('DatePicker', () => {
     }
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2016-11-22')}
-          onChange={handleChange} />
+        selected={utils.newDate('2016-11-22')}
+        onChange={handleChange} />
     )
     var input = ReactDOM.findDOMNode(datePicker.input)
     input.value = ''
@@ -674,7 +674,7 @@ describe('DatePicker', () => {
     const inputValue = 'test'
     const onChangeRawSpy = sandbox.spy()
     const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker selected={utils.newDate()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
+      <DatePicker selected={utils.newDate()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
     )
     expect(onChangeRawSpy.called).to.be.false
     const input = ReactDOM.findDOMNode(datePicker.input)
@@ -699,7 +699,7 @@ describe('DatePicker', () => {
 
   it('should handle a click outside of the calendar', () => {
     const datePicker = mount(
-        <DatePicker selected={utils.newDate()} withPortal/>
+      <DatePicker selected={utils.newDate()} withPortal/>
     ).instance()
     const openSpy = sandbox.spy(datePicker, 'setOpen')
     datePicker.handleCalendarClickOutside(sandbox.stub({preventDefault: () => {}}))
