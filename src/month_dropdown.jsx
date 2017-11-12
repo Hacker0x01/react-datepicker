@@ -39,12 +39,12 @@ export default class MonthDropdown extends React.Component {
 
   renderDropdown = monthNames => (
     <WrappedMonthDropdownOptions
-        key="dropdown"
-        ref="options"
-        month={this.props.month}
-        monthNames={monthNames}
-        onChange={this.onChange}
-        onCancel={this.toggleDropdown} />
+      key="dropdown"
+      ref="options"
+      month={this.props.month}
+      monthNames={monthNames}
+      onChange={this.onChange}
+      onCancel={this.toggleDropdown} />
   )
 
   renderScrollMode = (monthNames) => {
@@ -85,7 +85,7 @@ export default class MonthDropdown extends React.Component {
 
     return (
       <div
-          className={`react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--${this.props.dropdownMode}`}>
+        className={`react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--${this.props.dropdownMode}`}>
         {renderedDropdown}
       </div>
     )

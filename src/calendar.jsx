@@ -206,7 +206,7 @@ export default class Calendar extends React.Component {
     if (this.props.showWeekNumbers) {
       dayNames.push(
         <div key="W" className="react-datepicker__day-name">
-            {this.props.weekLabel || '#'}
+          {this.props.weekLabel || '#'}
         </div>
       )
     }
@@ -214,8 +214,8 @@ export default class Calendar extends React.Component {
       const day = addDays(cloneDate(startOfWeek), offset)
       const localeData = getLocaleData(day)
       const weekDayName = this.props.useWeekdaysShort
-          ? getWeekdayShortInLocale(localeData, day)
-          : getWeekdayMinInLocale(localeData, day)
+        ? getWeekdayShortInLocale(localeData, day)
+        : getWeekdayMinInLocale(localeData, day)
       return (
         <div key={offset} className="react-datepicker__day-name">
           {weekDayName}
@@ -229,8 +229,8 @@ export default class Calendar extends React.Component {
       return
     }
     return <a
-        className="react-datepicker__navigation react-datepicker__navigation--previous"
-        onClick={this.decreaseMonth} />
+      className="react-datepicker__navigation react-datepicker__navigation--previous"
+      onClick={this.decreaseMonth} />
   }
 
   renderNextMonthButton = () => {
@@ -247,8 +247,8 @@ export default class Calendar extends React.Component {
     }
 
     return <a
-        className={classes.join(' ')}
-        onClick={this.increaseMonth} />
+      className={classes.join(' ')}
+      onClick={this.increaseMonth} />
   }
 
   renderCurrentMonth = (date = this.state.date) => {
@@ -273,13 +273,13 @@ export default class Calendar extends React.Component {
     }
     return (
       <YearDropdown
-          dropdownMode={this.props.dropdownMode}
-          onChange={this.changeYear}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          year={getYear(this.state.date)}
-          scrollableYearDropdown={this.props.scrollableYearDropdown}
-          yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
+        dropdownMode={this.props.dropdownMode}
+        onChange={this.changeYear}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
+        year={getYear(this.state.date)}
+        scrollableYearDropdown={this.props.scrollableYearDropdown}
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
     )
   }
 
@@ -289,11 +289,11 @@ export default class Calendar extends React.Component {
     }
     return (
       <MonthDropdown
-          dropdownMode={this.props.dropdownMode}
-          locale={this.props.locale}
-          dateFormat={this.props.dateFormat}
-          onChange={this.changeMonth}
-          month={getMonth(this.state.date)} />
+        dropdownMode={this.props.dropdownMode}
+        locale={this.props.locale}
+        dateFormat={this.props.dateFormat}
+        onChange={this.changeMonth}
+        month={getMonth(this.state.date)} />
     )
   }
 
@@ -303,8 +303,8 @@ export default class Calendar extends React.Component {
     }
     return (
       <div
-          className="react-datepicker__today-button"
-          onClick={e => this.props.onSelect(getStartOfDate(now(this.props.utcOffset)), e)}>
+        className="react-datepicker__today-button"
+        onClick={e => this.props.onSelect(getStartOfDate(now(this.props.utcOffset)), e)}>
         {this.props.todayButton}
       </div>
     )
@@ -316,46 +316,46 @@ export default class Calendar extends React.Component {
       var monthDate = addMonths(cloneDate(this.state.date), i)
       var monthKey = `month-${i}`
       monthList.push(
-          <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
-            <div className="react-datepicker__header">
-              {this.renderCurrentMonth(monthDate)}
-              <div
-                  className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
-                  onFocus={this.handleDropdownFocus}>
-                {this.renderMonthDropdown(i !== 0)}
-                {this.renderYearDropdown(i !== 0)}
-              </div>
-              <div className="react-datepicker__day-names">
-                {this.header(monthDate)}
-              </div>
+        <div key={monthKey} ref={div => { this.monthContainer = div }} className="react-datepicker__month-container">
+          <div className="react-datepicker__header">
+            {this.renderCurrentMonth(monthDate)}
+            <div
+              className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
+              onFocus={this.handleDropdownFocus}>
+              {this.renderMonthDropdown(i !== 0)}
+              {this.renderYearDropdown(i !== 0)}
             </div>
-            <Month
-                day={monthDate}
-                dayClassName={this.props.dayClassName}
-                onDayClick={this.handleDayClick}
-                onDayMouseEnter={this.handleDayMouseEnter}
-                onMouseLeave={this.handleMonthMouseLeave}
-                onWeekSelect={this.props.onWeekSelect}
-                formatWeekNumber={this.props.formatWeekNumber}
-                minDate={this.props.minDate}
-                maxDate={this.props.maxDate}
-                excludeDates={this.props.excludeDates}
-                highlightDates={this.props.highlightDates}
-                selectingDate={this.state.selectingDate}
-                includeDates={this.props.includeDates}
-                inline={this.props.inline}
-                fixedHeight={this.props.fixedHeight}
-                filterDate={this.props.filterDate}
-                preSelection={this.props.preSelection}
-                selected={this.props.selected}
-                selectsStart={this.props.selectsStart}
-                selectsEnd={this.props.selectsEnd}
-                showWeekNumbers={this.props.showWeekNumbers}
-                startDate={this.props.startDate}
-                endDate={this.props.endDate}
-                peekNextMonth={this.props.peekNextMonth}
-                utcOffset={this.props.utcOffset} />
+            <div className="react-datepicker__day-names">
+              {this.header(monthDate)}
+            </div>
           </div>
+          <Month
+            day={monthDate}
+            dayClassName={this.props.dayClassName}
+            onDayClick={this.handleDayClick}
+            onDayMouseEnter={this.handleDayMouseEnter}
+            onMouseLeave={this.handleMonthMouseLeave}
+            onWeekSelect={this.props.onWeekSelect}
+            formatWeekNumber={this.props.formatWeekNumber}
+            minDate={this.props.minDate}
+            maxDate={this.props.maxDate}
+            excludeDates={this.props.excludeDates}
+            highlightDates={this.props.highlightDates}
+            selectingDate={this.state.selectingDate}
+            includeDates={this.props.includeDates}
+            inline={this.props.inline}
+            fixedHeight={this.props.fixedHeight}
+            filterDate={this.props.filterDate}
+            preSelection={this.props.preSelection}
+            selected={this.props.selected}
+            selectsStart={this.props.selectsStart}
+            selectsEnd={this.props.selectsEnd}
+            showWeekNumbers={this.props.showWeekNumbers}
+            startDate={this.props.startDate}
+            endDate={this.props.endDate}
+            peekNextMonth={this.props.peekNextMonth}
+            utcOffset={this.props.utcOffset} />
+        </div>
       )
     }
     return monthList
@@ -365,21 +365,21 @@ export default class Calendar extends React.Component {
     if (this.props.showTimeSelect) {
       return (
         <Time
-            selected={this.props.selected}
-            onChange={this.props.onTimeChange}
-            format={this.props.timeFormat}
-            intervals={this.props.timeIntervals}
-            minTime={this.props.minTime}
-            maxTime={this.props.maxTime}
-            excludeTimes={this.props.excludeTimes}
-            todayButton={this.props.todayButton}
-            showMonthDropdown={this.props.showMonthDropdown}
-            showYearDropdown={this.props.showYearDropdown}
-            withPortal={this.props.withPortal}
-            monthRef={this.state.monthContainer} />
+          selected={this.props.selected}
+          onChange={this.props.onTimeChange}
+          format={this.props.timeFormat}
+          intervals={this.props.timeIntervals}
+          minTime={this.props.minTime}
+          maxTime={this.props.maxTime}
+          excludeTimes={this.props.excludeTimes}
+          todayButton={this.props.todayButton}
+          showMonthDropdown={this.props.showMonthDropdown}
+          showYearDropdown={this.props.showYearDropdown}
+          withPortal={this.props.withPortal}
+          monthRef={this.state.monthContainer} />
       )
     } else {
-      return
+
     }
   }
 

@@ -17,10 +17,10 @@ class TimezoneDatePicker extends React.Component {
                    utils.setUTCOffset(utils.cloneDate(this.state.startDate), this.state.utcOffset)
 
     return <DatePicker
-        utcOffset={this.state.utcOffset}
-        dateFormat="YYYY-MM-DD HH:mm"
-        selected={selected}
-        onChange={this.handleChange} />
+      utcOffset={this.state.utcOffset}
+      dateFormat="YYYY-MM-DD HH:mm"
+      selected={selected}
+      onChange={this.handleChange} />
   }
 }
 

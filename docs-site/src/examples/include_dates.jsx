@@ -18,18 +18,18 @@ export default class includeDates extends React.Component {
       <pre className="column example__code">
         <code className="jsx">
           {'<DatePicker'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange}'}<br />
-              <strong>{'includeDates={[moment(), moment().add(1, "days")]}'}</strong><br />
-              {'placeholderText="This only includes today and tomorrow" />'}
+          {'selected={this.state.startDate}'}<br />
+          {'onChange={this.handleChange}'}<br />
+          <strong>{'includeDates={[moment(), moment().add(1, "days")]}'}</strong><br />
+          {'placeholderText="This only includes today and tomorrow" />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            includeDates={[moment(), moment().add(1, 'days')]}
-            placeholderText="This only includes today and tomorrow" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          includeDates={[moment(), moment().add(1, 'days')]}
+          placeholderText="This only includes today and tomorrow" />
       </div>
     </div>
   }

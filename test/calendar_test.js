@@ -17,12 +17,12 @@ describe('Calendar', function () {
   function getCalendar (extraProps) {
     return shallow(
       <Calendar
-          dateFormat={dateFormat}
-          onSelect={() => {}}
-          onClickOutside={() => {}}
-          hideCalendar={() => {}}
-          dropdownMode="scroll"
-          {...extraProps}/>
+        dateFormat={dateFormat}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        dropdownMode="scroll"
+        {...extraProps}/>
     )
   }
 
@@ -201,14 +201,14 @@ describe('Calendar', function () {
   it('should track the currently hovered day', () => {
     const calendar = mount(
       <Calendar
-          dateFormat={dateFormat}
-          dropdownMode="scroll"
-          onClickOutside={() => {}}
-          onSelect={() => {}}/>
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}/>
     )
     const day = calendar.find(Day).first()
-    const month = calendar.find(Month).first()
     day.simulate('mouseenter')
+    const month = calendar.find(Month).first()
     expect(month.prop('selectingDate')).to.exist
     expect(utils.isSameDay(month.prop('selectingDate'), day.prop('day'))).to.be.true
   })
@@ -216,16 +216,17 @@ describe('Calendar', function () {
   it('should clear the hovered day when the mouse leaves', () => {
     const calendar = mount(
       <Calendar
-          dateFormat={dateFormat}
-          dropdownMode="scroll"
-          onClickOutside={() => {}}
-          onSelect={() => {}}/>
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}/>
     )
     calendar.setState({ selectingDate: utils.newDate() })
     const month = calendar.find(Month).first()
     expect(month.prop('selectingDate')).to.exist
     month.simulate('mouseleave')
-    expect(month.prop('selectingDate')).not.to.exist
+    calendar.update()
+    expect(calendar.find(Month).first().prop('selectingDate')).not.to.exist
   })
 
   it('uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present', () => {
@@ -259,15 +260,15 @@ describe('Calendar', function () {
       onMonthChangeSpy = sinon.spy()
       calendar = mount(
         <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearDropdown
-            showMonthDropdown
-            forceShowMonthNavigation
-            onMonthChange={onMonthChangeSpy}/>
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showMonthDropdown
+          forceShowMonthNavigation
+          onMonthChange={onMonthChangeSpy}/>
       )
     })
 
@@ -301,14 +302,14 @@ describe('Calendar', function () {
       onDropdownFocusSpy = sinon.spy()
       calendar = mount(
         <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearDropdown
-            showMonthDropdown
-            onDropdownFocus={onDropdownFocusSpy}/>
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showMonthDropdown
+          onDropdownFocus={onDropdownFocusSpy}/>
       )
     })
 

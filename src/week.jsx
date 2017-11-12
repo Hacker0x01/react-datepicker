@@ -62,35 +62,35 @@ export default class Week extends React.Component {
     const weekNumber = this.formatWeekNumber(startOfWeek)
     if (this.props.showWeekNumber) {
       const onClickAction = this.props.onWeekSelect
-          ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
-          : undefined
+        ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
+        : undefined
       days.push(<WeekNumber key="W" weekNumber={weekNumber} onClick={onClickAction} />)
     }
     return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = utils.addDays(utils.cloneDate(startOfWeek), offset)
       return (
         <Day
-            key={offset}
-            day={day}
-            month={this.props.month}
-            onClick={this.handleDayClick.bind(this, day)}
-            onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            excludeDates={this.props.excludeDates}
-            includeDates={this.props.includeDates}
-            inline={this.props.inline}
-            highlightDates={this.props.highlightDates}
-            selectingDate={this.props.selectingDate}
-            filterDate={this.props.filterDate}
-            preSelection={this.props.preSelection}
-            selected={this.props.selected}
-            selectsStart={this.props.selectsStart}
-            selectsEnd={this.props.selectsEnd}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate}
-            dayClassName={this.props.dayClassName}
-            utcOffset={this.props.utcOffset}/>
+          key={offset}
+          day={day}
+          month={this.props.month}
+          onClick={this.handleDayClick.bind(this, day)}
+          onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
+          excludeDates={this.props.excludeDates}
+          includeDates={this.props.includeDates}
+          inline={this.props.inline}
+          highlightDates={this.props.highlightDates}
+          selectingDate={this.props.selectingDate}
+          filterDate={this.props.filterDate}
+          preSelection={this.props.preSelection}
+          selected={this.props.selected}
+          selectsStart={this.props.selectsStart}
+          selectsEnd={this.props.selectsEnd}
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          dayClassName={this.props.dayClassName}
+          utcOffset={this.props.utcOffset}/>
       )
     }))
   }

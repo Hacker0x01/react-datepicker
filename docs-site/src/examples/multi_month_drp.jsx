@@ -31,10 +31,10 @@ export default class MultiMonthDrp extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            monthsShown={2}
-            onChange={this.handleChange}
-            showYearDropdown
-            selected={this.state.startDate} />
+          monthsShown={2}
+          onChange={this.handleChange}
+          showYearDropdown
+          selected={this.state.startDate} />
       </div>
     </div>
   }

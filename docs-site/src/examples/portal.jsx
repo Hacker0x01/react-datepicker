@@ -30,9 +30,9 @@ export default class WithPortal extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            withPortal />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          withPortal />
       </div>
     </div>
   }

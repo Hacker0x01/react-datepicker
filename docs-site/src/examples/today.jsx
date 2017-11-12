@@ -30,9 +30,9 @@ export default class Today extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            todayButton="Vandaag"
-            selected={this.state.startDate}
-            onChange={this.handleChange} />
+          todayButton="Vandaag"
+          selected={this.state.startDate}
+          onChange={this.handleChange} />
       </div>
     </div>
   }

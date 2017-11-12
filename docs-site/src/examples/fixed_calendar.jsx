@@ -17,16 +17,16 @@ export default class FixedCalendar extends React.Component {
       <pre className="column example__code">
         <code className="jsx">
           {'<DatePicker'}<br />
-              {'fixedHeight'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange} />'}
+          {'fixedHeight'}<br />
+          {'selected={this.state.startDate}'}<br />
+          {'onChange={this.handleChange} />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            fixedHeight
-            selected={this.state.startDate}
-            onChange={this.handleChange} />
+          fixedHeight
+          selected={this.state.startDate}
+          onChange={this.handleChange} />
       </div>
     </div>
   }

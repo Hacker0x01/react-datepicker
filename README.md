@@ -18,7 +18,7 @@ The package can be installed via NPM:
 npm install react-datepicker --save
 ```
 
-You’ll need to install React and Moment.js separately since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
+You’ll need to install React, PropTypes and Moment.js separately since those dependencies aren’t included in the package. Below is a simple example on how to use the Datepicker in a React view. You will also need to require the css file from this package (or provide your own). The example below shows how to include the css from this package if your build system supports requiring css files (webpack is one that does).
 
 ```js
 import React from 'react';

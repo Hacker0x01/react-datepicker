@@ -59,13 +59,13 @@ toggleCalendar (e) {
           {this.state.startDate.format('DD-MM-YYYY')}
         </button>
         {
-            this.state.isOpen && (
-              <DatePicker
-                  selected={this.state.startDate}
-                  onChange={this.handleChange}
-                  withPortal
-                  inline />
-            )
+          this.state.isOpen && (
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleChange}
+              withPortal
+              inline />
+          )
         }
       </div>
     </div>

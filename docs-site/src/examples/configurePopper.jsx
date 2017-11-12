@@ -42,21 +42,21 @@ export default class ConfigurePopper extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            popperClassName="some-custom-class"
-            popperPlacement="top-end"
-            popperModifiers={{
-              offset: {
-                enabled: true,
-                offset: '5px, 10px'
-              },
-              preventOverflow: {
-                enabled: true,
-                escapeWithReference: false,
-                boundariesElement: 'viewport'
-              }
-            }}/>
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          popperClassName="some-custom-class"
+          popperPlacement="top-end"
+          popperModifiers={{
+            offset: {
+              enabled: true,
+              offset: '5px, 10px'
+            },
+            preventOverflow: {
+              enabled: true,
+              escapeWithReference: false,
+              boundariesElement: 'viewport'
+            }
+          }}/>
       </div>
     </div>
   }
