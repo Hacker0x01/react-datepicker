@@ -51,6 +51,8 @@
     "enzyme-adapter-react-16": "^1.0.4",
     "eslint": "^4.10.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -97,8 +99,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
     "react-onclickoutside": "^6.6.3",
