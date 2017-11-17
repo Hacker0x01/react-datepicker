@@ -339,7 +339,7 @@ export default class DatePicker extends React.Component {
       return
     }
     const copy = newDate(this.state.preSelection)
-    if (eventKey === 'Enter') {
+    if (eventKey === 'Enter' && !this.props.disabledKeyboardNavigation) {
       event.preventDefault()
       if (isMoment(this.state.preSelection) || isDate(this.state.preSelection)) {
         this.handleSelect(copy, event)
