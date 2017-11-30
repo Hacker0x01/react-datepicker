@@ -34,6 +34,7 @@ import {
   safeDateFormat
 } from './date_utils'
 import onClickOutside from 'react-onclickoutside'
+import FixedInput from 'react-input-fixer'
 
 const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside'
 const WrappedCalendar = onClickOutside(Calendar)
@@ -191,7 +192,7 @@ export default class DatePicker extends React.Component {
   }
 
   setFocus = () => {
-    this.input.focus()
+    this.input && this.input.focus && this.input.focus()
   }
 
   setOpen = (open) => {
@@ -460,7 +461,7 @@ export default class DatePicker extends React.Component {
       [outsideClickIgnoreClass]: this.state.open
     })
 
-    const customInput = this.props.customInput || <input type="text" />
+    const customInput = this.props.customInput || <FixedInput type="text" />
     const inputValue =
       typeof this.props.value === 'string' ? this.props.value
         : typeof this.state.inputValue === 'string' ? this.state.inputValue
@@ -508,18 +509,16 @@ export default class DatePicker extends React.Component {
         <div>
           {
             !this.props.inline
-              ? <div className="react-datepicker__input-container">
+              && <div className="react-datepicker__input-container">
                 {this.renderDateInput()}
                 {this.renderClearButton()}
               </div>
-              : null
           }
           {
             this.state.open || this.props.inline
-              ? <div className="react-datepicker__portal">
+              && <div className="react-datepicker__portal">
                 {calendar}
               </div>
-              : null
           }
         </div>
       )
