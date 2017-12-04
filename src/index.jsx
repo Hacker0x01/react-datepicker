@@ -509,16 +509,18 @@ export default class DatePicker extends React.Component {
         <div>
           {
             !this.props.inline
-              && <div className="react-datepicker__input-container">
+              ? <div className="react-datepicker__input-container">
                 {this.renderDateInput()}
                 {this.renderClearButton()}
               </div>
+              : null
           }
           {
             this.state.open || this.props.inline
-              && <div className="react-datepicker__portal">
+              ? <div className="react-datepicker__portal">
                 {calendar}
               </div>
+              : null
           }
         </div>
       )
