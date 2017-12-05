@@ -88,25 +88,25 @@ export default class YearDropdown extends React.Component {
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
     }, () => {
-      if(this.props.adjustDateOnChange) {
+      if (this.props.adjustDateOnChange) {
         this.handleYearChange(this.props.date, event)
       }
     })
   }
 
-  handleYearChange(date, event) {
+  handleYearChange = (date, event) => {
     this.onSelect(date, event)
     this.setOpen()
   }
 
-  onSelect(date, event) {
-    if(this.props.onSelect) {
+  onSelect = (date, event) => {
+    if (this.props.onSelect) {
       this.props.onSelect(date, event)
     }
   }
 
-  setOpen() {
-    if(this.props.setOpen) {
+  setOpen = () => {
+    if (this.props.setOpen) {
       this.props.setOpen(true)
     }
   }
