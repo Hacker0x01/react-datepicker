@@ -16,10 +16,10 @@ describe('YearDropdown', () => {
   function getYearDropdown (overrideProps) {
     return mount(
       <YearDropdown
-          dropdownMode="scroll"
-          year={2015}
-          onChange={onChangeMock}
-          {...overrideProps}/>
+        dropdownMode="scroll"
+        year={2015}
+        onChange={onChangeMock}
+        {...overrideProps}/>
     )
   }
 

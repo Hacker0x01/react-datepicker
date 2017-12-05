@@ -31,9 +31,9 @@ export default class Inline extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            inline
-            selected={this.state.startDate}
-            onChange={this.handleChange} />
+          inline
+          selected={this.state.startDate}
+          onChange={this.handleChange} />
       </div>
     </div>
   }

@@ -11,11 +11,14 @@ addons:
     packages:
       - g++-4.8
 before_install:
+  - npm i -g npm@latest
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm i -g npm@latest
+install:
+  - yarn install
 script:
-  - yarn check
+  - yarn lint
+  - yarn test
 after_success:
   - yarn run codecov
 notifications:

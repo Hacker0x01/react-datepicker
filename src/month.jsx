@@ -68,30 +68,30 @@ export default class Month extends React.Component {
 
     while (true) {
       weeks.push(<Week
-          key={i}
-          day={currentWeekStart}
-          month={utils.getMonth(this.props.day)}
-          onDayClick={this.handleDayClick}
-          onDayMouseEnter={this.handleDayMouseEnter}
-          onWeekSelect={this.props.onWeekSelect}
-          formatWeekNumber={this.props.formatWeekNumber}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          excludeDates={this.props.excludeDates}
-          includeDates={this.props.includeDates}
-          inline={this.props.inline}
-          highlightDates={this.props.highlightDates}
-          selectingDate={this.props.selectingDate}
-          filterDate={this.props.filterDate}
-          preSelection={this.props.preSelection}
-          selected={this.props.selected}
-          selectsStart={this.props.selectsStart}
-          selectsEnd={this.props.selectsEnd}
-          showWeekNumber={this.props.showWeekNumbers}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          dayClassName={this.props.dayClassName}
-          utcOffset={this.props.utcOffset}/>)
+        key={i}
+        day={currentWeekStart}
+        month={utils.getMonth(this.props.day)}
+        onDayClick={this.handleDayClick}
+        onDayMouseEnter={this.handleDayMouseEnter}
+        onWeekSelect={this.props.onWeekSelect}
+        formatWeekNumber={this.props.formatWeekNumber}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
+        excludeDates={this.props.excludeDates}
+        includeDates={this.props.includeDates}
+        inline={this.props.inline}
+        highlightDates={this.props.highlightDates}
+        selectingDate={this.props.selectingDate}
+        filterDate={this.props.filterDate}
+        preSelection={this.props.preSelection}
+        selected={this.props.selected}
+        selectsStart={this.props.selectsStart}
+        selectsEnd={this.props.selectsEnd}
+        showWeekNumber={this.props.showWeekNumbers}
+        startDate={this.props.startDate}
+        endDate={this.props.endDate}
+        dayClassName={this.props.dayClassName}
+        utcOffset={this.props.utcOffset}/>)
 
       if (breakAfterNextPush) break
 

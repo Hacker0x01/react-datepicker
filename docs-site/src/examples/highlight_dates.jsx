@@ -18,18 +18,18 @@ export default class highlightDates extends React.Component {
       <pre className="column example__code">
         <code className="jsx">
           {'<DatePicker'}<br />
-              {'selected={this.state.startDate}'}<br />
-              {'onChange={this.handleChange}'}<br />
-              <strong>{'highlightDates={[moment().subtract(7, "days"), moment().add(7, "days")]}'}</strong><br />
-              {'placeholderText="This highlights a week ago and a week from today" />'}
+          {'selected={this.state.startDate}'}<br />
+          {'onChange={this.handleChange}'}<br />
+          <strong>{'highlightDates={[moment().subtract(7, "days"), moment().add(7, "days")]}'}</strong><br />
+          {'placeholderText="This highlights a week ago and a week from today" />'}
         </code>
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            highlightDates={[moment().subtract(7, 'days'), moment().add(7, 'days')]}
-            placeholderText="This highlights a week ago and a week from today" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          highlightDates={[moment().subtract(7, 'days'), moment().add(7, 'days')]}
+          placeholderText="This highlights a week ago and a week from today" />
       </div>
     </div>
   }

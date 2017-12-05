@@ -30,9 +30,9 @@ export default class DontCloseOnSelect extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            shouldCloseOnSelect={false} />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          shouldCloseOnSelect={false} />
       </div>
     </div>
   }

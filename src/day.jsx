@@ -183,12 +183,12 @@ export default class Day extends React.Component {
   render () {
     return (
       <div
-          className={this.getClassNames(this.props.day)}
-          onClick={this.handleClick}
-          onMouseEnter={this.handleMouseEnter}
-          aria-label={`day-${getDate(this.props.day)}`}
-          role="option">
-          {getDate(this.props.day)}
+        className={this.getClassNames(this.props.day)}
+        onClick={this.handleClick}
+        onMouseEnter={this.handleMouseEnter}
+        aria-label={`day-${getDate(this.props.day)}`}
+        role="option">
+        {getDate(this.props.day)}
       </div>
     )
   }

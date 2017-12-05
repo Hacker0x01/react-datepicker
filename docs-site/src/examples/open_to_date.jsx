@@ -27,9 +27,9 @@ export default class OpenToDate extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            openToDate={moment('1993-09-28')}
-            selected={this.state.startDate}
-            onChange={this.handleChange} />
+          openToDate={moment('1993-09-28')}
+          selected={this.state.startDate}
+          onChange={this.handleChange} />
       </div>
     </div>
   }

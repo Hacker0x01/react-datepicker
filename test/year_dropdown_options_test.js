@@ -16,9 +16,9 @@ describe('YearDropdownOptions', () => {
     onCancelSpy = sandbox.spy()
     yearDropdown = mount(
       <YearDropdownOptions
-          year={2015}
-          onChange={mockHandleChange}
-          onCancel={onCancelSpy} />
+        year={2015}
+        onChange={mockHandleChange}
+        onCancel={onCancelSpy} />
     )
   })
 
@@ -43,7 +43,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("increments the available years when the 'upcoming years' button is clicked", () => {
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -55,7 +55,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it("decrements the available years when the 'previous years' button is clicked", () => {
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
 
     const textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -67,7 +67,7 @@ describe('YearDropdownOptions', () => {
   })
 
   it('calls the supplied onChange function when a year is clicked', () => {
-    yearDropdown.ref('2015').simulate('click')
+    yearDropdown.find('.react-datepicker__year-option').filterWhere(e => e.text().includes('2015')).simulate('click')
     expect(handleChangeResult).to.equal(2015)
   })
 
@@ -93,7 +93,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const onCancelSpy = sandbox.spy()
     const onChangeSpy = sandbox.spy()
     const yearDropdown = shallow(
-        <YearDropdownOptions onCancel={onCancelSpy} onChange={onChangeSpy} scrollableYearDropdown year={2015}/>
+      <YearDropdownOptions onCancel={onCancelSpy} onChange={onChangeSpy} scrollableYearDropdown year={2015}/>
     )
     expect(yearDropdown.state().yearsList.length).to.equal(21)
     expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(1)
@@ -107,12 +107,12 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const maxDate = moment().add(1, 'year')
     const yearDropdown = shallow(
       <YearDropdownOptions
-          onCancel={onCancelSpy}
-          onChange={onChangeSpy}
-          scrollableYearDropdown
-          year={moment().year()}
-          minDate={minDate}
-          maxDate={maxDate}/>
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={moment().year()}
+        minDate={minDate}
+        maxDate={maxDate}/>
     )
     expect(yearDropdown.state().yearsList.length).to.equal(2)
     expect(yearDropdown.state().yearsList).to.contain(minDate.year())
@@ -126,12 +126,12 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const maxDate = moment().add(1, 'year')
     const yearDropdown = mount(
       <YearDropdownOptions
-          onCancel={onCancelSpy}
-          onChange={onChangeSpy}
-          scrollableYearDropdown
-          year={moment().year()}
-          minDate={minDate}
-          maxDate={maxDate}/>
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={moment().year()}
+        minDate={minDate}
+        maxDate={maxDate}/>
     )
 
     expect(yearDropdown.find('.react-datepicker__navigation--years-upcoming').length).to.equal(0)
@@ -145,12 +145,12 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const maxDate = moment().add(11, 'y')
     const yearDropdown = mount(
       <YearDropdownOptions
-          onCancel={onCancelSpy}
-          onChange={onChangeSpy}
-          scrollableYearDropdown
-          year={moment().year()}
-          minDate={minDate}
-          maxDate={maxDate}/>
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={moment().year()}
+        minDate={minDate}
+        maxDate={maxDate}/>
     )
 
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
@@ -163,7 +163,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(textContents.find(year => year === minDate.year())).to.be.undefined
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
 
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
       .map(node => node.text())
@@ -172,7 +172,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(0)
 
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
       .map(node => node.text())
@@ -186,11 +186,11 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const minDate = moment().subtract(11, 'y')
     const yearDropdown = mount(
       <YearDropdownOptions
-          onCancel={onCancelSpy}
-          onChange={onChangeSpy}
-          scrollableYearDropdown
-          year={moment().year()}
-          minDate={minDate}/>
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={moment().year()}
+        minDate={minDate}/>
     )
 
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
@@ -202,7 +202,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
 
     expect(textContents.find(year => year === minDate.year())).to.be.undefined
 
-    yearDropdown.ref('previous').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-previous').simulate('click')
 
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -218,11 +218,11 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const maxDate = moment().add(11, 'y')
     const yearDropdown = mount(
       <YearDropdownOptions
-          onCancel={onCancelSpy}
-          onChange={onChangeSpy}
-          scrollableYearDropdown
-          year={moment().year()}
-          maxDate={maxDate}/>
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={moment().year()}
+        maxDate={maxDate}/>
     )
 
     expect(yearDropdown.find('.react-datepicker__navigation--years-previous').length).to.equal(1)
@@ -234,7 +234,7 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
 
     expect(textContents.find(year => year === maxDate.year())).to.be.undefined
 
-    yearDropdown.ref('upcoming').simulate('click')
+    yearDropdown.find('.react-datepicker__navigation--years-upcoming').simulate('click')
 
     textContents = yearDropdown
       .find('.react-datepicker__year-option')
@@ -249,12 +249,12 @@ describe('YearDropdownOptions with scrollable dropwdown', () => {
     const onCancelSpy = sandbox.spy()
     const onChangeSpy = sandbox.spy()
     const yearDropdown = shallow(
-        <YearDropdownOptions
-            onCancel={onCancelSpy}
-            onChange={onChangeSpy}
-            scrollableYearDropdown
-            year={2015}
-            yearDropdownItemNumber={25}/>
+      <YearDropdownOptions
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={2015}
+        yearDropdownItemNumber={25}/>
     )
     expect(yearDropdown.state().yearsList.length).to.equal(51)
   })

@@ -33,12 +33,12 @@ export default class YearDropdown extends React.Component {
       </pre>
       <div className="column">
         <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            peekNextMonth
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode="select" />
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select" />
       </div>
     </div>
   }

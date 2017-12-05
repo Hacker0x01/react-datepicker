@@ -87,9 +87,9 @@ export function formatDate (date, format) {
 }
 
 export function safeDateFormat (date, { dateFormat, locale }) {
-  return date && date.clone()
+  return (date && date.clone()
     .locale(locale || moment.locale())
-    .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat) || ''
+    .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat)) || ''
 }
 
 // ** Date Setters **

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TestUtils from 'react-addons-test-utils'
-import { mount, ReactWrapper } from 'enzyme'
+import TestUtils from 'react-dom/test-utils'
+import { mount } from 'enzyme'
 import defer from 'lodash/defer'
 import DatePicker from '../src/index.jsx'
 import Day from '../src/day'
@@ -111,18 +111,17 @@ describe('DatePicker', () => {
     const onBlurSpy = sandbox.spy()
     const datePicker = mount(
       <DatePicker
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          onBlur={onBlurSpy}/>
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        onBlur={onBlurSpy}/>
     )
     const dateInput = datePicker.instance().input
-    const dateInputWrapper = new ReactWrapper(dateInput, dateInput)
+    const dateInputWrapper = datePicker.find('input')
     const focusSpy = sandbox.spy(dateInput, 'focus')
 
     dateInputWrapper.simulate('focus')
-    const calendar = datePicker.instance().calendar
-    const calendarWrapper = new ReactWrapper(calendar, calendar)
+    const calendarWrapper = datePicker.find('Calendar')
     const yearSelect = calendarWrapper.find('.react-datepicker__year-select')
     dateInputWrapper.simulate('blur')
     yearSelect.simulate('focus')
@@ -146,7 +145,7 @@ describe('DatePicker', () => {
 
   it('should not set open state when it is disabled and gets clicked', function () {
     var datePicker = TestUtils.renderIntoDocument(
-        <DatePicker disabled/>
+      <DatePicker disabled/>
     )
     var dateInput = datePicker.input
     TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput))
@@ -269,9 +268,9 @@ describe('DatePicker', () => {
     }
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2015-12-15')}
-          isClearable
-          onChange={handleChange} />
+        selected={utils.newDate('2015-12-15')}
+        isClearable
+        onChange={handleChange} />
     )
     var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
     TestUtils.Simulate.click(clearButton)
@@ -281,8 +280,8 @@ describe('DatePicker', () => {
   it('should clear input value in the local state', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2015-12-15')}
-          isClearable />
+        selected={utils.newDate('2015-12-15')}
+        isClearable />
     )
     var clearButton = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'react-datepicker__close-icon')
     TestUtils.Simulate.click(clearButton)
@@ -295,9 +294,9 @@ describe('DatePicker', () => {
 
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          inline
-          selected={selected}
-          onChange={(d) => { date = d }} />
+        inline
+        selected={selected}
+        onChange={(d) => { date = d }} />
     )
     var dayButton = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'react-datepicker__day')[0]
     TestUtils.Simulate.click(dayButton)
@@ -376,8 +375,8 @@ describe('DatePicker', () => {
     var callback = sandbox.spy()
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m}
-          onChange={callback}
-          {...opts}/>
+        onChange={callback}
+        {...opts}/>
     )
     var dateInput = datePicker.input
     var nodeInput = ReactDOM.findDOMNode(dateInput)
@@ -631,8 +630,8 @@ describe('DatePicker', () => {
     }
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-          selected={utils.newDate('2016-11-22')}
-          onChange={handleChange} />
+        selected={utils.newDate('2016-11-22')}
+        onChange={handleChange} />
     )
     var input = ReactDOM.findDOMNode(datePicker.input)
     input.value = ''
@@ -661,13 +660,13 @@ describe('DatePicker', () => {
     const datePicker = mount(
       <DatePicker dateFormat={['YYYY-MM-DD', 'MM/DD/YYYY', 'MM/DD/YY']} onChange={onChange}/>
     )
-    const input = datePicker.find('input')
-    expect(input.prop('value')).to.equal('')
+    expect(datePicker.find('input').prop('value')).to.equal('')
 
     const str = '12/30/1982'
     str.split('').forEach((c, i) => {
-      input.simulate('change', {target: { value: input.prop('value') + c }})
-      expect(input.prop('value')).to.equal(str.substring(0, i + 1))
+      datePicker.find('input').simulate('change', {target: { value: datePicker.find('input').prop('value') + c }})
+      datePicker.update()
+      expect(datePicker.find('input').prop('value')).to.equal(str.substring(0, i + 1))
     })
     expect(utils.formatDate(datePicker.prop('selected'), 'YYYY-MM-DD')).to.equal('1982-12-30')
   })
@@ -675,7 +674,7 @@ describe('DatePicker', () => {
     const inputValue = 'test'
     const onChangeRawSpy = sandbox.spy()
     const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker selected={utils.newDate()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
+      <DatePicker selected={utils.newDate()} onChange={sandbox.spy()} onChangeRaw={onChangeRawSpy}/>
     )
     expect(onChangeRawSpy.called).to.be.false
     const input = ReactDOM.findDOMNode(datePicker.input)
@@ -689,17 +688,18 @@ describe('DatePicker', () => {
     const datePicker = mount(
       <DatePicker onChangeRaw={onChangeRaw} />
     )
-    const input = datePicker.find('input')
-    expect(input.prop('value')).to.equal('')
-    input.simulate('change', {target: { value: '3' }})
-    expect(input.prop('value')).to.equal('')
-    input.simulate('change', {target: { value: '1' }})
-    expect(input.prop('value')).to.equal('1')
+    expect(datePicker.find('input').prop('value')).to.equal('')
+    datePicker.find('input').simulate('change', {target: { value: '3' }})
+    datePicker.update()
+    expect(datePicker.find('input').prop('value')).to.equal('')
+    datePicker.find('input').simulate('change', {target: { value: '1' }})
+    datePicker.update()
+    expect(datePicker.find('input').prop('value')).to.equal('1')
   })
 
   it('should handle a click outside of the calendar', () => {
     const datePicker = mount(
-        <DatePicker selected={utils.newDate()} withPortal/>
+      <DatePicker selected={utils.newDate()} withPortal/>
     ).instance()
     const openSpy = sandbox.spy(datePicker, 'setOpen')
     datePicker.handleCalendarClickOutside(sandbox.stub({preventDefault: () => {}}))

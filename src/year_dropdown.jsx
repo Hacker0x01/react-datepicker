@@ -42,9 +42,9 @@ export default class YearDropdown extends React.Component {
 
   renderSelectMode = () => (
     <select
-        value={this.props.year}
-        className="react-datepicker__year-select"
-        onChange={this.onSelectChange}>
+      value={this.props.year}
+      className="react-datepicker__year-select"
+      onChange={this.onSelectChange}>
       {this.renderSelectOptions()}
     </select>
   )
@@ -58,15 +58,15 @@ export default class YearDropdown extends React.Component {
 
   renderDropdown = () => (
     <WrappedYearDropdownOptions
-        key="dropdown"
-        ref="options"
-        year={this.props.year}
-        onChange={this.onChange}
-        onCancel={this.toggleDropdown}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        scrollableYearDropdown={this.props.scrollableYearDropdown}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
+      key="dropdown"
+      ref="options"
+      year={this.props.year}
+      onChange={this.onChange}
+      onCancel={this.toggleDropdown}
+      minDate={this.props.minDate}
+      maxDate={this.props.maxDate}
+      scrollableYearDropdown={this.props.scrollableYearDropdown}
+      yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
   )
 
   renderScrollMode = () => {
@@ -124,7 +124,7 @@ export default class YearDropdown extends React.Component {
 
     return (
       <div
-          className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}>
+        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}>
         {renderedDropdown}
       </div>
     )

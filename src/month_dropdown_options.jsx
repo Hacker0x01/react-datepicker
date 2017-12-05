@@ -12,9 +12,9 @@ export default class MonthDropdownOptions extends React.Component {
   renderOptions = () => {
     return this.props.monthNames.map((month, i) =>
       <div className="react-datepicker__month-option"
-          key={month}
-          ref={month}
-          onClick={this.onChange.bind(this, i)}>
+        key={month}
+        ref={month}
+        onClick={this.onChange.bind(this, i)}>
         {this.props.month === i ? <span className="react-datepicker__month-option--selected">✓</span> : ''}
         {month}
       </div>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { setTime, cloneDate, newDate } from '../src/date_utils'
 import DatePicker from '../src/index.jsx'
-import * as utils from '../src/date_utils'
 
 function cloneDateWithTime (date, time) {
-  return utils.setTime(utils.cloneDate(date), time)
+  return setTime(cloneDate(date), time)
 }
 
 describe('DatePicker', () => {
@@ -19,16 +19,16 @@ describe('DatePicker', () => {
   })
 
   it('should disable times specified in excludeTimes props', () => {
-    var now = utils.newDate()
+    var now = newDate()
     var datePicker = mount(
       <DatePicker
-          showTimeSelect
-          excludeTimes={[
-            cloneDateWithTime(now, { hours: 17, minutes: 0 }),
-            cloneDateWithTime(now, { hours: 18, minutes: 30 }),
-            cloneDateWithTime(now, { hours: 19, minutes: 30 }),
-            cloneDateWithTime(now, { hours: 17, minutes: 30 })
-          ]} />
+        showTimeSelect
+        excludeTimes={[
+          cloneDateWithTime(now, { hours: 17, minutes: 0 }),
+          cloneDateWithTime(now, { hours: 18, minutes: 30 }),
+          cloneDateWithTime(now, { hours: 19, minutes: 30 }),
+          cloneDateWithTime(now, { hours: 17, minutes: 30 })
+        ]} />
     )
     expect(datePicker.find('.react-datepicker__time-list-item--disabled')).to.exist
   })
