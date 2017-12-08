@@ -189,8 +189,12 @@ export default class Calendar extends React.Component {
       this.props.onMonthChange(date)
     }
     if (this.props.adjustDateOnChange) {
-      this.props.onSelect(date)
-      this.props.setOpen(true)
+      if (this.props.onSelect) {
+        this.props.onSelect(date)
+      }
+      if (this.props.setOpen) {
+        this.props.setOpen(true)
+      }
     }
   }
 
