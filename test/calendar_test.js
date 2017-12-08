@@ -2,8 +2,11 @@ import React from 'react'
 import Calendar from '../src/calendar'
 import Month from '../src/month'
 import Day from '../src/day'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-dom/test-utils'
 import YearDropdown from '../src/year_dropdown'
 import MonthDropdown from '../src/month_dropdown'
+import DatePicker from '../src/index.jsx'
 import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
 import * as utils from '../src/date_utils'
@@ -250,6 +253,45 @@ describe('Calendar', function () {
     const daysNamesMin = calendarMin.find('.react-datepicker__day-name')
     expect(daysNamesMin.at(0).text()).to.equal('AA')
     expect(daysNamesMin.at(6).text()).to.equal('GG')
+  })
+
+  it('should set the date to the selected day of the previous month when previous button clicked', () => {
+    let date
+    const expectedDate = '28.06.2017'
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate('2017-07-28')} adjustDateOnChange onChange={(d) => { date = d }}/>
+    )
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input))
+    const calendar = TestUtils.scryRenderedComponentsWithType(datePicker.calendar, Calendar)[0]
+    const previousButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__navigation--previous')
+    TestUtils.Simulate.click(previousButton)
+    expect(utils.formatDate(date, 'DD.MM.YYYY')).to.equal(expectedDate)
+  })
+
+  it('should set the date to the selected day of the next when next button clicked', () => {
+    let date
+    const expectedDate = '28.08.2017'
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate('2017-07-28')} adjustDateOnChange onChange={(d) => { date = d }}/>
+    )
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input))
+    const calendar = TestUtils.scryRenderedComponentsWithType(datePicker.calendar, Calendar)[0]
+    const nextButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__navigation--next')
+    TestUtils.Simulate.click(nextButton)
+    expect(utils.formatDate(date, 'DD.MM.YYYY')).to.equal(expectedDate)
+  })
+
+  it('should set the date to the last possible day of the previous month when previous button clicked', () => {
+    let date
+    const expectedDate = '30.11.2017'
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate('2017-12-31')} adjustDateOnChange onChange={(d) => { date = d }}/>
+    )
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input))
+    const calendar = TestUtils.scryRenderedComponentsWithType(datePicker.calendar, Calendar)[0]
+    const previousButton = TestUtils.findRenderedDOMComponentWithClass(calendar, 'react-datepicker__navigation--previous')
+    TestUtils.Simulate.click(previousButton)
+    expect(utils.formatDate(date, 'DD.MM.YYYY')).to.equal(expectedDate)
   })
 
   describe('onMonthChange', () => {
