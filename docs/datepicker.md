@@ -12,6 +12,7 @@ General datepicker component.
 |`children`|`node`|||
 |`className`|`string`|||
 |`customInput`|`element`|||
+|`customInputRef`|`string`|`'ref'`|The property used to pass the ref callback|
 |`dateFormat`|`union(string\|array)`|`'L'`||
 |`dateFormatCalendar`|`string`|`'MMMM YYYY'`||
 |`dayClassName`|`func`|||

@@ -51,6 +51,7 @@ export default class DatePicker extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     customInput: PropTypes.element,
+    customInputRef: PropTypes.string,
     dateFormat: PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
       PropTypes.string,
       PropTypes.array
@@ -461,13 +462,14 @@ export default class DatePicker extends React.Component {
     })
 
     const customInput = this.props.customInput || <input type="text" />
+    const customInputRef = this.props.customInputRef || 'ref'
     const inputValue =
       typeof this.props.value === 'string' ? this.props.value
         : typeof this.state.inputValue === 'string' ? this.state.inputValue
           : safeDateFormat(this.props.selected, this.props)
 
     return React.cloneElement(customInput, {
-      ref: (input) => { this.input = input },
+      [customInputRef]: (input) => { this.input = input },
       value: inputValue,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
