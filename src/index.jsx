@@ -197,7 +197,9 @@ export default class DatePicker extends React.Component {
   }
 
   setFocus = () => {
-    this.input.focus()
+    if (this.input.focus) {
+      this.input.focus()
+    }
   }
 
   setOpen = (open) => {
@@ -268,7 +270,7 @@ export default class DatePicker extends React.Component {
       }
     )
     this.setSelected(date, event)
-    if (!this.props.shouldCloseOnSelect) {
+    if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date)
     } else if (!this.props.inline) {
       this.setOpen(false)
@@ -327,6 +329,7 @@ export default class DatePicker extends React.Component {
     })
 
     this.props.onChange(changedDate)
+    this.setOpen(false)
   }
 
   onInputClick = () => {
