@@ -5,6 +5,7 @@ General datepicker component.
 
 | name  | type  | default value  | description  |
 |---|---|---|---|
+|`adjustDateOnChange`|`bool`|||
 |`allowSameDay`|`bool`|`false`||
 |`autoComplete`|`string`|||
 |`autoFocus`|`bool`|||
