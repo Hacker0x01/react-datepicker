@@ -24,14 +24,14 @@ import {
   subtractMonths,
   subtractWeeks,
   subtractYears,
-
   isSameDay,
   isDayDisabled,
   isDayInRange,
   getEffectiveMinDate,
   getEffectiveMaxDate,
   parseDate,
-  safeDateFormat
+  safeDateFormat,
+  getHightLightDaysMap
 } from './date_utils'
 import onClickOutside from 'react-onclickoutside'
 
@@ -156,6 +156,9 @@ export default class DatePicker extends React.Component {
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected)
     }
+    if (this.props.highlightDates !== nextProps.highlightDates) {
+      this.setState({'highlightDates': getHightLightDaysMap(nextProps.highlightDates)})
+    }
   }
 
   componentWillUnmount () {
@@ -177,11 +180,13 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate) ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate) ? maxDate
           : defaultPreSelection
-
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
-      preSelection: this.props.selected ? newDate(this.props.selected) : boundedPreSelection
+      preSelection: this.props.selected ? newDate(this.props.selected) : boundedPreSelection,
+      // transforming highlighted days (perhaps nested array)
+      // to flat Map for faster access in day.jsx
+      highlightDates: getHightLightDaysMap(this.props.highlightDates)
     }
   }
 
@@ -424,7 +429,7 @@ export default class DatePicker extends React.Component {
       filterDate={this.props.filterDate}
       onClickOutside={this.handleCalendarClickOutside}
       formatWeekNumber={this.props.formatWeekNumber}
-      highlightDates={this.props.highlightDates}
+      highlightDates={this.state.highlightDates}
       includeDates={this.props.includeDates}
       inline={this.props.inline}
       peekNextMonth={this.props.peekNextMonth}

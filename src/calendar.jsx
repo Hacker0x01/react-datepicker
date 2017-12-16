@@ -57,7 +57,7 @@ export default class Calendar extends React.Component {
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
-    highlightDates: PropTypes.array,
+    highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
     locale: PropTypes.string,
@@ -114,7 +114,10 @@ export default class Calendar extends React.Component {
   }
 
   componentDidMount () {
-    /* monthContainer height is needed in time component to determine the height for the ul in the time component. setState here so height is given after final component layout is rendered */
+    // monthContainer height is needed in time component
+    // to determine the height for the ul in the time component
+    // setState here so height is given after final component
+    // layout is rendered
     if (this.props.showTimeSelect) {
       this.assignMonthContainer = (() => {
         this.setState({monthContainer: this.monthContainer})

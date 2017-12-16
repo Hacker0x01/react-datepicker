@@ -6,8 +6,6 @@ import {
   getMonth,
   getDate,
   now,
-  isMoment,
-
   isSameDay,
   isDayDisabled,
   isDayInRange,
@@ -19,7 +17,7 @@ export default class Day extends React.Component {
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
-    highlightDates: PropTypes.array,
+    highlightDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
@@ -56,30 +54,12 @@ export default class Day extends React.Component {
     const { day, highlightDates } = this.props
 
     if (!highlightDates) {
-      return {[defaultClassName]: false}
+      return false
     }
 
-    const classNames = {}
-    for (let i = 0, len = highlightDates.length; i < len; i++) {
-      const obj = highlightDates[i]
-      if (isMoment(obj)) {
-        if (isSameDay(day, obj)) {
-          classNames[defaultClassName] = true
-        }
-      } else if (typeof obj === 'object') {
-        const keys = Object.keys(obj)
-        const arr = obj[keys[0]]
-        if (typeof keys[0] === 'string' && arr.constructor === Array) {
-          for (let k = 0, len = arr.length; k < len; k++) {
-            if (isSameDay(day, arr[k])) {
-              classNames[keys[0]] = true
-            }
-          }
-        }
-      }
-    }
-
-    return classNames
+    // Looking for className in the Map of {'day string, 'className'}
+    const dayStr = day.format('MM.DD.YYYY')
+    return highlightDates.get(dayStr)
   }
 
   isInRange = () => {

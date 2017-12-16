@@ -12,7 +12,7 @@ export default class Week extends React.Component {
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
-    highlightDates: PropTypes.array,
+    highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
     maxDate: PropTypes.object,
