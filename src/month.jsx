@@ -15,7 +15,7 @@ export default class Month extends React.Component {
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
-    highlightDates: PropTypes.array,
+    highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
     maxDate: PropTypes.object,

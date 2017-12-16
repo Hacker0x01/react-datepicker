@@ -376,3 +376,37 @@ export function getEffectiveMaxDate ({ maxDate, includeDates }) {
     return maxDate
   }
 }
+
+export function getHightLightDaysMap (
+  highlightDates = [],
+  defaultClassName = 'react-datepicker__day--highlighted'
+) {
+  const dateClasses = new Map()
+  for (let i = 0, len = highlightDates.length; i < len; i++) {
+    const obj = highlightDates[i]
+    if (isMoment(obj)) {
+      const key = obj.format('MM.DD.YYYY')
+      const classNamesArr = dateClasses.get(key) || []
+      if (!classNamesArr.includes(defaultClassName)) {
+        classNamesArr.push(defaultClassName)
+        dateClasses.set(key, classNamesArr)
+      }
+    } else if (typeof obj === 'object') {
+      const keys = Object.keys(obj)
+      const className = keys[0]
+      const arrOfMoments = obj[keys[0]]
+      if (typeof className === 'string' && arrOfMoments.constructor === Array) {
+        for (let k = 0, len = arrOfMoments.length; k < len; k++) {
+          const key = arrOfMoments[k].format('MM.DD.YYYY')
+          const classNamesArr = dateClasses.get(key) || []
+          if (!classNamesArr.includes(className)) {
+            classNamesArr.push(className)
+            dateClasses.set(key, classNamesArr)
+          }
+        }
+      }
+    }
+  }
+
+  return dateClasses
+}
