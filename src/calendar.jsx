@@ -44,6 +44,7 @@ const isDropdownSelect = (element = {}) => {
 
 export default class Calendar extends React.Component {
   static propTypes = {
+    adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
     children: PropTypes.node,
     dateFormat: PropTypes.oneOfType([
@@ -93,7 +94,8 @@ export default class Calendar extends React.Component {
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    setOpen: PropTypes.func
   }
 
   static get defaultProps () {
@@ -189,6 +191,14 @@ export default class Calendar extends React.Component {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date)
     }
+    if (this.props.adjustDateOnChange) {
+      if (this.props.onSelect) {
+        this.props.onSelect(date)
+      }
+      if (this.props.setOpen) {
+        this.props.setOpen(true)
+      }
+    }
   }
 
   changeYear = (year) => {
@@ -276,6 +286,10 @@ export default class Calendar extends React.Component {
     }
     return (
       <YearDropdown
+        adjustDateOnChange={this.props.adjustDateOnChange}
+        date={this.state.date}
+        onSelect={this.props.onSelect}
+        setOpen={this.props.setOpen}
         dropdownMode={this.props.dropdownMode}
         onChange={this.changeYear}
         minDate={this.props.minDate}
