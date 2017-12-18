@@ -45,6 +45,7 @@ General datepicker component.
 |`onFocus`|`func`|`function() {}`||
 |`onKeyDown`|`func`|`function() {}`||
 |`onMonthChange`|`func`|`function() {}`||
+|`onYearChange`|`func`|`function() {}`||
 |`onSelect`|`func`|`function() {}`||
 |`onWeekSelect`|`func`|||
 |`openToDate`|`object`|||
