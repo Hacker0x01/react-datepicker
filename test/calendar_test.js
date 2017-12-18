@@ -336,6 +336,32 @@ describe('Calendar', function () {
     })
   })
 
+  describe('onYearChange', () => {
+    let onYearChangeSpy = sinon.spy()
+    let calendar
+
+    beforeEach(() => {
+      onYearChangeSpy = sinon.spy()
+      calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          onYearChange={onYearChangeSpy}/>
+      )
+    })
+
+    it('calls onYearChange prop when year changed from year dropdown', () => {
+      const select = calendar.find(YearDropdown).find('select')
+      select.simulate('change')
+
+      assert(onYearChangeSpy.called === true, 'onYearChange should be called')
+    })
+  })
+
   describe('onDropdownFocus', () => {
     let onDropdownFocusSpy = sinon.spy()
     let calendar

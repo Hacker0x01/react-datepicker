@@ -133,6 +133,27 @@ describe('DatePicker', () => {
     })
   })
 
+  it('should fire onYearChange when the year is selected', (done) => {
+    const onYearChangeSpy = sinon.spy()
+    const datePicker = mount(
+      <DatePicker
+        showYearDropdown
+        dropdownMode="select"
+        onYearChange={onYearChangeSpy}/>
+    )
+    const dateInputWrapper = datePicker.find('input')
+
+    dateInputWrapper.simulate('click')
+    const calendarWrapper = datePicker.find('Calendar')
+    const yearSelect = calendarWrapper.find('.react-datepicker__year-select')
+    yearSelect.simulate('change')
+
+    defer(() => {
+      assert(onYearChangeSpy.called === true, 'onYearChange should be called')
+      done()
+    })
+  })
+
   it('should keep the calendar shown when clicking the calendar', () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
