@@ -93,6 +93,7 @@ export default class DatePicker extends React.Component {
     popperClassName: PropTypes.string, // <PopperComponent/> props
     popperModifiers: PropTypes.object, // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
+    preventOpenOnFocus: PropTypes.bool,
     readOnly: PropTypes.bool,
     required: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -138,6 +139,7 @@ export default class DatePicker extends React.Component {
       onSelect () {},
       onClickOutside () {},
       onMonthChange () {},
+      preventOpenOnFocus: false,
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -213,7 +215,9 @@ export default class DatePicker extends React.Component {
   handleFocus = (event) => {
     if (!this.state.preventFocus) {
       this.props.onFocus(event)
-      this.setOpen(true)
+      if (!this.props.preventOpenOnFocus) {
+        this.setOpen(true)
+      }
     }
   }
 
@@ -342,7 +346,7 @@ export default class DatePicker extends React.Component {
   onInputKeyDown = (event) => {
     this.props.onKeyDown(event)
     const eventKey = event.key
-    if (!this.state.open && !this.props.inline) {
+    if (!this.state.open && !this.props.inline && !this.props.preventOpenOnFocus) {
       if (eventKey !== 'Enter' && eventKey !== 'Escape' && eventKey !== 'Tab') {
         this.onInputClick()
       }
