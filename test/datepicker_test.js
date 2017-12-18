@@ -784,4 +784,20 @@ describe('DatePicker', () => {
     datePicker.setProps({ selected: future })
     expect(utils.formatDate(datePicker.state('preSelection'), 'YYYY-MM-DD')).to.equal(utils.formatDate(future, 'YYYY-MM-DD'))
   })
+  it('should not set open state when focusing on the date input and the preventOpenOnFocus prop is set', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker preventOpenOnFocus />
+    )
+    const dateInput = datePicker.input
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput))
+    expect(datePicker.state.open).to.be.false
+  })
+  it('should not set open state onInputKeyDown when preventOpenOnFocus prop is set', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker preventOpenOnFocus />
+    )
+    const dateInput = datePicker.input
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey('ArrowLeft'))
+    expect(datePicker.state.open).to.be.false
+  })
 })
