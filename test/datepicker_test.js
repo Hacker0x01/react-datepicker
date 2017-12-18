@@ -137,16 +137,14 @@ describe('DatePicker', () => {
     const onYearChangeSpy = sinon.spy()
     const datePicker = mount(
       <DatePicker
-          showYearDropdown
-          dropdownMode="select"
-          onYearChange={onYearChangeSpy}/>
+        showYearDropdown
+        dropdownMode="select"
+        onYearChange={onYearChangeSpy}/>
     )
-    const dateInput = datePicker.instance().input
-    const dateInputWrapper = new ReactWrapper(dateInput, dateInput)
+    const dateInputWrapper = datePicker.find('input')
 
     dateInputWrapper.simulate('click')
-    const calendar = datePicker.instance().calendar
-    const calendarWrapper = new ReactWrapper(calendar, calendar)
+    const calendarWrapper = datePicker.find('Calendar')
     const yearSelect = calendarWrapper.find('.react-datepicker__year-select')
     yearSelect.simulate('change')
 

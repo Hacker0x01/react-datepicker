@@ -344,13 +344,13 @@ describe('Calendar', function () {
       onYearChangeSpy = sinon.spy()
       calendar = mount(
         <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearDropdown
-            onYearChange={onYearChangeSpy}/>
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          onYearChange={onYearChangeSpy}/>
       )
     })
 
