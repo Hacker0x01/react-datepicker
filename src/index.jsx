@@ -123,7 +123,7 @@ export default class DatePicker extends React.Component {
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
-    useShortMonthInDropdown: PropTypes.bool,
+    useShortMonthInDropdown: PropTypes.bool
   }
 
   static get defaultProps () {
