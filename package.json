@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.2",
     "babel-loader": "^6.2.10",
     "babel-plugin-add-react-displayname": "^0.0.4",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -49,13 +48,6 @@
     "css-loader": "^0.28.7",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
-    "eslint": "^4.10.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-react": "^7.4.0",
-    "eslint-plugin-standard": "^3.0.1",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "highlight.js": "^9.12.0",
@@ -68,11 +60,14 @@
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
+    "lint-staged": "^6.0.0",
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "moment": "^2.19.4",
     "node-sass": "^4.6.0",
     "npm-run-all": "^4.1.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "1.9.2",
     "react": "^16.1.0",
     "react-addons-test-utils": "^15.6.2",
     "react-docgen": "^2.20.0",
@@ -85,7 +80,6 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.6",
     "sinon": "^4.1.2",
     "style-loader": "^0.19.0",
@@ -106,11 +100,9 @@
     "react-popper": "^0.7.4"
   },
   "scripts": {
+    "prettier": "prettier \"*/**/*.js\" --ignore-path ./.prettierignore --write && git add . && git status",
     "start": "cross-env MODULES=false node server.js",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
-    "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
-    "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
-    "lint": "run-p eslint sass-lint",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
     "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
@@ -124,5 +116,8 @@
     "build:cjs": "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
     "build:umd:prod": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
     "build:umd:dev": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js"
-  }
+  },
+  "pre-commit": [
+    "prettier"
+  ]
 }

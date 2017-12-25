@@ -53,7 +53,7 @@ export default class DatePicker extends React.Component {
     className: PropTypes.string,
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
-    dateFormat: PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
+    dateFormat: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.array
     ]),

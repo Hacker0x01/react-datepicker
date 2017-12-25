@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
-/* eslint-disable react/no-multi-comp */
 class ExampleCustomInput extends React.Component {
   static propTypes = {
     onClick: PropTypes.func,
