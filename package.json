@@ -99,7 +99,7 @@
     "react-popper": "^0.7.4"
   },
   "scripts": {
-    "prettier": "prettier \"*/**/*.js\" --ignore-path ./.prettierignore --write && git add . && git status",
+    "prettier": "prettier \"*/**/*.{js,json,css,scss,md}\" --ignore-path ./.prettierignore --write && git add . && git status",
     "start": "cross-env MODULES=false node server.js",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
