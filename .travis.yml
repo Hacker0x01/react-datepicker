@@ -17,7 +17,6 @@ before_install:
 install:
   - yarn install
 script:
-  - yarn lint
   - yarn test
 after_success:
   - yarn run codecov
