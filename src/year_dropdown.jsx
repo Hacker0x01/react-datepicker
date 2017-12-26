@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import YearDropdownOptions from './year_dropdown_options'
-import onClickOutside from 'react-onclickoutside'
-import { getYear } from './date_utils'
+import React from "react";
+import PropTypes from "prop-types";
+import YearDropdownOptions from "./year_dropdown_options";
+import onClickOutside from "react-onclickoutside";
+import { getYear } from "./date_utils";
 
-var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
+var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
 
 export default class YearDropdown extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
-    dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
+    dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     onChange: PropTypes.func.isRequired,
@@ -19,26 +19,30 @@ export default class YearDropdown extends React.Component {
     date: PropTypes.object,
     onSelect: PropTypes.func,
     setOpen: PropTypes.func
-  }
+  };
 
   state = {
     dropdownVisible: false
-  }
+  };
 
   renderSelectOptions = () => {
-    const minYear = this.props.minDate ? getYear(this.props.minDate) : 1900
-    const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : 2100
+    const minYear = this.props.minDate ? getYear(this.props.minDate) : 1900;
+    const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : 2100;
 
-    const options = []
+    const options = [];
     for (let i = minYear; i <= maxYear; i++) {
-      options.push(<option key={i} value={i}>{i}</option>)
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
     }
-    return options
-  }
+    return options;
+  };
 
-  onSelectChange = (e) => {
-    this.onChange(e.target.value)
-  }
+  onSelectChange = e => {
+    this.onChange(e.target.value);
+  };
 
   renderSelectMode = () => (
     <select
@@ -47,14 +51,20 @@ export default class YearDropdown extends React.Component {
       onChange={this.onSelectChange}>
       {this.renderSelectOptions()}
     </select>
-  )
+  );
 
-  renderReadView = (visible) => (
-    <div key="read" style={{visibility: visible ? 'visible' : 'hidden'}} className="react-datepicker__year-read-view" onClick={(event) => this.toggleDropdown(event)}>
+  renderReadView = visible => (
+    <div
+      key="read"
+      style={{ visibility: visible ? "visible" : "hidden" }}
+      className="react-datepicker__year-read-view"
+      onClick={event => this.toggleDropdown(event)}>
       <span className="react-datepicker__year-read-view--down-arrow" />
-      <span className="react-datepicker__year-read-view--selected-year">{this.props.year}</span>
+      <span className="react-datepicker__year-read-view--selected-year">
+        {this.props.year}
+      </span>
     </div>
-  )
+  );
 
   renderDropdown = () => (
     <WrappedYearDropdownOptions
@@ -66,67 +76,72 @@ export default class YearDropdown extends React.Component {
       minDate={this.props.minDate}
       maxDate={this.props.maxDate}
       scrollableYearDropdown={this.props.scrollableYearDropdown}
-      yearDropdownItemNumber={this.props.yearDropdownItemNumber} />
-  )
+      yearDropdownItemNumber={this.props.yearDropdownItemNumber}/>
+  );
 
   renderScrollMode = () => {
-    const { dropdownVisible } = this.state
-    let result = [this.renderReadView(!dropdownVisible)]
+    const { dropdownVisible } = this.state;
+    let result = [this.renderReadView(!dropdownVisible)];
     if (dropdownVisible) {
-      result.unshift(this.renderDropdown())
+      result.unshift(this.renderDropdown());
     }
-    return result
-  }
+    return result;
+  };
 
-  onChange = (year) => {
-    this.toggleDropdown()
-    if (year === this.props.year) return
-    this.props.onChange(year)
-  }
+  onChange = year => {
+    this.toggleDropdown();
+    if (year === this.props.year) return;
+    this.props.onChange(year);
+  };
 
-  toggleDropdown = (event) => {
-    this.setState({
-      dropdownVisible: !this.state.dropdownVisible
-    }, () => {
-      if (this.props.adjustDateOnChange) {
-        this.handleYearChange(this.props.date, event)
+  toggleDropdown = event => {
+    this.setState(
+      {
+        dropdownVisible: !this.state.dropdownVisible
+      },
+      () => {
+        if (this.props.adjustDateOnChange) {
+          this.handleYearChange(this.props.date, event);
+        }
       }
-    })
-  }
+    );
+  };
 
   handleYearChange = (date, event) => {
-    this.onSelect(date, event)
-    this.setOpen()
-  }
+    this.onSelect(date, event);
+    this.setOpen();
+  };
 
   onSelect = (date, event) => {
     if (this.props.onSelect) {
-      this.props.onSelect(date, event)
+      this.props.onSelect(date, event);
     }
-  }
+  };
 
   setOpen = () => {
     if (this.props.setOpen) {
-      this.props.setOpen(true)
+      this.props.setOpen(true);
     }
-  }
+  };
 
-  render () {
-    let renderedDropdown
+  render() {
+    let renderedDropdown;
     switch (this.props.dropdownMode) {
-      case 'scroll':
-        renderedDropdown = this.renderScrollMode()
-        break
-      case 'select':
-        renderedDropdown = this.renderSelectMode()
-        break
+      case "scroll":
+        renderedDropdown = this.renderScrollMode();
+        break;
+      case "select":
+        renderedDropdown = this.renderSelectMode();
+        break;
     }
 
     return (
       <div
-        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}>
+        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${
+          this.props.dropdownMode
+        }`}>
         {renderedDropdown}
       </div>
-    )
+    );
   }
 }
