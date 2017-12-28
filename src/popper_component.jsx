@@ -1,25 +1,25 @@
-import classnames from 'classnames'
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Manager, Target, Popper } from 'react-popper'
+import classnames from "classnames";
+import React from "react";
+import PropTypes from "prop-types";
+import { Manager, Target, Popper } from "react-popper";
 
 export const popperPlacementPositions = [
-  'auto',
-  'auto-left',
-  'auto-right',
-  'bottom',
-  'bottom-end',
-  'bottom-start',
-  'left',
-  'left-end',
-  'left-start',
-  'right',
-  'right-end',
-  'right-start',
-  'top',
-  'top-end',
-  'top-start'
-]
+  "auto",
+  "auto-left",
+  "auto-right",
+  "bottom",
+  "bottom-end",
+  "bottom-start",
+  "left",
+  "left-end",
+  "left-start",
+  "right",
+  "right-end",
+  "right-start",
+  "top",
+  "top-end",
+  "top-start"
+];
 
 export default class PopperComponent extends React.Component {
   static propTypes = {
@@ -30,23 +30,23 @@ export default class PopperComponent extends React.Component {
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     targetComponent: PropTypes.element
-  }
+  };
 
-  static get defaultProps () {
+  static get defaultProps() {
     return {
       hidePopper: true,
       popperModifiers: {
         preventOverflow: {
           enabled: true,
           escapeWithReference: true,
-          boundariesElement: 'viewport'
+          boundariesElement: "viewport"
         }
       },
-      popperPlacement: 'bottom-start'
-    }
+      popperPlacement: "bottom-start"
+    };
   }
 
-  render () {
+  render() {
     const {
       className,
       hidePopper,
@@ -54,12 +54,12 @@ export default class PopperComponent extends React.Component {
       popperModifiers,
       popperPlacement,
       targetComponent
-    } = this.props
+    } = this.props;
 
-    let popper
+    let popper;
 
     if (!hidePopper) {
-      const classes = classnames('react-datepicker-popper', className)
+      const classes = classnames("react-datepicker-popper", className);
       popper = (
         <Popper
           className={classes}
@@ -67,20 +67,18 @@ export default class PopperComponent extends React.Component {
           placement={popperPlacement}>
           {popperComponent}
         </Popper>
-      )
+      );
     }
 
     if (this.props.popperContainer) {
-      popper = React.createElement(this.props.popperContainer, {}, popper)
+      popper = React.createElement(this.props.popperContainer, {}, popper);
     }
 
     return (
       <Manager>
-        <Target className="react-datepicker-wrapper">
-          {targetComponent}
-        </Target>
-        { popper }
+        <Target className="react-datepicker-wrapper">{targetComponent}</Target>
+        {popper}
       </Manager>
-    )
+    );
   }
 }
