@@ -11,6 +11,6 @@
 preventOverflow: {
 enabled: true,
 escapeWithReference: true,
-boundariesElement: 'viewport'
+boundariesElement: "viewport"
 }
-}`|| |`popperPlacement`|`enum('auto'\|'auto-left'\|'auto-right'\|'bottom'\|'bottom-end'\|'bottom-start'\|'left'\|'left-end'\|'left-start'\|'right'\|'right-end'\|'right-start'\|'top'\|'top-end'\|'top-start')`|`'bottom-start'`|| |`targetComponent`|`element`|||
+}`|| |`popperPlacement`|`enum("auto"\|"auto-left"\|"auto-right"\|"bottom"\|"bottom-end"\|"bottom-start"\|"left"\|"left-end"\|"left-start"\|"right"\|"right-end"\|"right-start"\|"top"\|"top-end"\|"top-start")`|`"bottom-start"`|| |`targetComponent`|`element`|||

@@ -13,12 +13,12 @@ General datepicker component.
 | `className`                  | `string`                       |                 |             |
 | `customInput`                | `element`                      |                 |             |
 | `customInputRef`             | `string`                       |                 |             |
-| `dateFormat`                 | `union(string\|array)`         | `'L'`           |             |
-| `dateFormatCalendar`         | `string`                       | `'MMMM YYYY'`   |             |
+| `dateFormat`                 | `union(string\|array)`         | `"L"`           |             |
+| `dateFormatCalendar`         | `string`                       | `"MMMM YYYY"`   |             |
 | `dayClassName`               | `func`                         |                 |             |
 | `disabled`                   | `bool`                         | `false`         |             |
 | `disabledKeyboardNavigation` | `bool`                         | `false`         |             |
-| `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |             |
+| `dropdownMode` (required)    | `enum("scroll"\|"select")`     | `"scroll"`      |             |
 | `endDate`                    | `object`                       |                 |             |
 | `excludeDates`               | `array`                        |                 |             |
 | `excludeTimes`               | `array`                        |                 |             |
@@ -47,6 +47,7 @@ General datepicker component.
 | `onMonthChange`              | `func`                         | `function() {}` |             |
 | `onSelect`                   | `func`                         | `function() {}` |             |
 | `onWeekSelect`               | `func`                         |                 |             |
+| `onYearChange`               | `func`                         | `function() {}` |             |
 | `openToDate`                 | `object`                       |                 |             |
 | `peekNextMonth`              | `bool`                         |                 |             |
 | `placeholderText`            | `string`                       |                 |             |
@@ -54,6 +55,7 @@ General datepicker component.
 | `popperContainer`            | `func`                         |                 |             |
 | `popperModifiers`            | `object`                       |                 |             |
 | `popperPlacement`            | `enumpopperPlacementPositions` |                 |             |
+| `preventOpenOnFocus`         | `bool`                         | `false`         |             |
 | `readOnly`                   | `bool`                         |                 |             |
 | `required`                   | `bool`                         |                 |             |
 | `scrollableYearDropdown`     | `bool`                         |                 |             |
