@@ -146,4 +146,4 @@ The examples are hosted within the docs folder and are ran in the simple add tha
 
 ## License
 
-Copyright (c) 2016 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
+Copyright (c) 2017 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
