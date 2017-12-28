@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/master/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](http://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
 
-A simple and reusable Datepicker component for React ([Demo](https://hacker0x01.github.io/react-datepicker/))
+A simple and reusable Datepicker component for React ([Demo](https://reactdatepicker.com/))
 
 ![](https://cloud.githubusercontent.com/assets/1412392/5339491/c40de124-7ee1-11e4-9f07-9276e2545f27.png)
 
