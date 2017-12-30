@@ -57,6 +57,7 @@
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "highlight.js": "^9.12.0",
+    "husky": "^0.14.3",
     "isparta-loader": "^2.0.0",
     "karma": "^1.7.1",
     "karma-chai": "^0.1.0",
@@ -66,12 +67,12 @@
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
+    "lint-staged": "^6.0.0",
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "moment": "^2.19.4",
     "node-sass": "^4.6.0",
     "npm-run-all": "^4.1.2",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.9.2",
     "react": "^16.1.0",
     "react-addons-test-utils": "^15.6.2",
@@ -106,8 +107,8 @@
     "react-popper": "^0.7.4"
   },
   "scripts": {
-    "prettier": "prettier \"*/**/*.{js,json,css,scss,md}\" --ignore-path ./.prettierignore --write && git add . && git status",
     "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
+    "precommit": "lint-staged",
     "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
     "lint": "run-p eslint sass-lint",
     "start": "cross-env MODULES=false node server.js",
@@ -126,7 +127,7 @@
     "build:umd:prod": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
     "build:umd:dev": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js"
   },
-  "pre-commit": [
-    "prettier"
-  ]
+  "lint-staged": {
+    "*.{js,json,css,scss,md}": ["prettier --write", "git add"]
+  }
 }
