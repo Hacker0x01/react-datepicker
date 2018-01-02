@@ -95,7 +95,8 @@ export default class Calendar extends React.Component {
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
-    setOpen: PropTypes.func
+    setOpen: PropTypes.func,
+    useShortMonthInDropdown: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -345,7 +346,8 @@ export default class Calendar extends React.Component {
         locale={this.props.locale}
         dateFormat={this.props.dateFormat}
         onChange={this.changeMonth}
-        month={getMonth(this.state.date)}/>
+        month={getMonth(this.state.date)}
+        useShortMonthInDropdown={this.props.useShortMonthInDropdown} />
     );
   };
 
