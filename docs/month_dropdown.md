@@ -7,3 +7,4 @@
 | `locale`                  | `string`                   |               |             |
 | `month` (required)        | `number`                   |               |             |
 | `onChange` (required)     | `func`                     |               |             |
+| `useShortMonthInDropdown` | `bool`                     |               |             |
