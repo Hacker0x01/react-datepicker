@@ -16,7 +16,7 @@ git pull
 
 find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -r {} \;
 
-cp -r $DIR/{bundle.js,index.html,style.css,images} ./
+cp -r $DIR/{bundle.js,index.html,style.css,images,CNAME} ./
 
 git add --all
 

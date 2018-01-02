@@ -3,6 +3,10 @@ import ExampleComponents from './example_components.jsx'
 import HeroExample from './hero_example.jsx'
 
 export default class Root extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render () {
     return (
       <div>
