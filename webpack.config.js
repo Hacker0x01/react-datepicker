@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/datepicker",
+  entry: "./src/index",
   output: {
     libraryTarget: "umd",
     library: "DatePicker",

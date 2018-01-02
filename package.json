@@ -122,7 +122,9 @@
     "build:umd:prod":
       "cross-env BABEL_ENV=es NODE_ENV=production rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
     "build:umd:dev":
-      "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js"
+      "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
+    "build:docs":
+      "cross-env MODULES=false webpack --config webpack.docs.config.js"
   },
   "lint-staged": {
     "*.{js,json,css,scss,md}": ["prettier --write", "git add"]
