@@ -76,6 +76,7 @@ General datepicker component.
 | `timeIntervals`               | `number`                       | `30`            |             |
 | `title`                       | `string`                       |                 |             |
 | `todayButton`                 | `string`                       |                 |             |
+| `useShortMonthInDropdown`     | `bool`                         |                 |             |
 | `useWeekdaysShort`            | `bool`                         |                 |             |
 | `utcOffset`                   | `number`                       |                 |             |
 | `value`                       | `string`                       |                 |             |

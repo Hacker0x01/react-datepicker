@@ -25,6 +25,7 @@ import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
 import MonthDropdown from './examples/month_dropdown'
 import MonthYearDropdown from './examples/month_year_dropdown'
+import MonthDropdownShort from './examples/month_dropdown_short'
 import YearSelectDropdown from './examples/year_select_dropdown'
 import Today from './examples/today'
 import TimeZoneDate from './examples/timezone_date'
@@ -168,6 +169,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Month dropdown',
     component: <MonthDropdown />
+  },
+  {
+    title: 'Month dropdown short month',
+    component: <MonthDropdownShort />
   },
   {
     title: 'MonthYear dropdown',
