@@ -557,7 +557,7 @@ export default class DatePicker extends React.Component {
       return (
         <a
           className="react-datepicker__close-icon"
-          href="#"
+          href="javascript:void(0)"
           onClick={this.onClearClick}/>
       );
     } else {
