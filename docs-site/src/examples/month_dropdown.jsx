@@ -34,6 +34,7 @@ export default class MonthDropdown extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
+            dropdownMode="select"
             showMonthDropdown/>
         </div>
       </div>

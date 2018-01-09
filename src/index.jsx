@@ -98,10 +98,12 @@ export default class DatePicker extends React.Component {
     readOnly: PropTypes.bool,
     required: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
+    scrollableMonthYearDropdown: PropTypes.bool,
     selected: PropTypes.object,
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
@@ -483,11 +485,13 @@ export default class DatePicker extends React.Component {
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
+        showMonthYearDropdown={this.props.showMonthYearDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
         withPortal={this.props.withPortal}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
+        scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
         todayButton={this.props.todayButton}
         weekLabel={this.props.weekLabel}
         utcOffset={this.props.utcOffset}

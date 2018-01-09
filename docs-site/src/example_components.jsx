@@ -24,6 +24,7 @@ import DateRange from './examples/date_range'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
 import MonthDropdown from './examples/month_dropdown'
+import MonthYearDropdown from './examples/month_year_dropdown'
 import YearSelectDropdown from './examples/year_select_dropdown'
 import Today from './examples/today'
 import TimeZoneDate from './examples/timezone_date'
@@ -167,6 +168,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Month dropdown',
     component: <MonthDropdown />
+  },
+  {
+    title: 'MonthYear dropdown',
+    component: <MonthYearDropdown />
   },
   {
     title: 'Year select dropdown',
