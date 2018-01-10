@@ -895,4 +895,11 @@ describe("DatePicker", () => {
     );
     expect(datePicker.state.open).to.be.false;
   });
+  it("should clear the input when clear() member function is called", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2015-12-15")} />
+    );
+    datePicker.clear();
+    expect(datePicker.state.inputValue).to.be.null;
+  });
 });
