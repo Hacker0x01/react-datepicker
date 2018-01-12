@@ -24,8 +24,8 @@ export default class MonthYearDropdown extends React.Component {
   selected={this.state.startDate}
   onChange={this.handleChange}
   dateFormatCalendar={"MMM YYYY"}
-  minDate={moment().subtract(1, "year")}
-  maxDate={moment().add(1, "year")}
+  minDate={moment().subtract(6, "month")}
+  maxDate={moment().add(6, "month")}
   showMonthYearDropdown
 />
 `}
@@ -36,8 +36,8 @@ export default class MonthYearDropdown extends React.Component {
           selected={this.state.startDate}
           onChange={this.handleChange}
           dateFormatCalendar={"MMM YYYY"}
-          minDate={moment().subtract(1, "year")}
-          maxDate={moment().add(1, "year")}
+          minDate={moment().subtract(6, "month")}
+          maxDate={moment().add(6, "month")}
           showMonthYearDropdown
         />
       </div>
