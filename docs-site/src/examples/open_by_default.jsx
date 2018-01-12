@@ -32,6 +32,7 @@ export default class OpenByDefault extends React.Component {
         </pre>
         <div className="column">
           <DatePicker
+            autoFocus
             selected={this.state.startDate}
             onChange={this.handleChange}/>
         </div>
