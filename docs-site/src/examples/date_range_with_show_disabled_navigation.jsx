@@ -23,7 +23,7 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
   onChange={this.handleChange}
   minDate={moment()}
   maxDate={moment().add(5, "months")}
-  showDisabledMonthNavigation={true} />
+  showDisabledMonthNavigation />
 </div>
 
 `}
@@ -35,7 +35,7 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
             onChange={this.handleChange}
             minDate={moment()}
             maxDate={moment().add(5, "months")}
-            showDisabledMonthNavigation={true} />
+            showDisabledMonthNavigation />
         </div>
       </div>
     );
