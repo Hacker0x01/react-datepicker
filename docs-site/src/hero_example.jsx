@@ -18,7 +18,12 @@ export default class HeroExample extends React.Component {
 
   render () {
     return <DatePicker
-      autoFocus
+      dateFormatIsSplit={true}
+      previousYearButtonText="Prev"
+      nextYearButtonText="Next"
+      previousMonthButtonText="Prev"
+      nextMonthButtonText="Next"
+      dateFormat="DD / MM / YYYY"
       selected={this.state.startDate}
       onChange={this.handleChange} />
   }

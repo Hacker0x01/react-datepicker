@@ -148,12 +148,14 @@
 }
 
 .react-datepicker__navigation {
+  background: none;
   line-height: 1.7rem;
   text-align: center;
   cursor: pointer;
   position: absolute;
   top: 10px;
   width: 0;
+  padding: 0;
   border: 0.45rem solid transparent;
   z-index: 1;
 }

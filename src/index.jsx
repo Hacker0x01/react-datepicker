@@ -58,6 +58,13 @@ export default class DatePicker extends React.Component {
       PropTypes.array
     ]),
     dateFormatCalendar: PropTypes.string,
+    dateFormatIsSplit: PropTypes.bool,
+    previousYearButtonText: PropTypes.string,
+    nextYearButtonText: PropTypes.string,
+    previousMonthButtonText: PropTypes.string,
+    nextMonthButtonText: PropTypes.string,
+    monthFormatCalendar: PropTypes.string,
+    yearFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
@@ -131,6 +138,9 @@ export default class DatePicker extends React.Component {
       allowSameDay: false,
       dateFormat: "L",
       dateFormatCalendar: "MMMM YYYY",
+      dateFormatIsSplit: false,
+      yearFormatCalendar: "YYYY",
+      monthFormatCalendar: "MMMM",
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
@@ -462,6 +472,13 @@ export default class DatePicker extends React.Component {
         adjustDateOnChange={this.props.adjustDateOnChange}
         setOpen={this.setOpen}
         dateFormat={this.props.dateFormatCalendar}
+        dateFormatIsSplit={this.props.dateFormatIsSplit}
+        previousYearButtonText={this.props.previousYearButtonText}
+        nextYearButtonText={this.props.nextYearButtonText}
+        previousMonthButtonText={this.props.previousMonthButtonText}
+        nextMonthButtonText={this.props.nextMonthButtonText}
+        yearFormat={this.props.yearFormatCalendar}
+        monthFormat={this.props.monthFormatCalendar}
         useWeekdaysShort={this.props.useWeekdaysShort}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}

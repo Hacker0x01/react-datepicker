@@ -122,6 +122,100 @@
     }
   }
 
+  &--previous-year {
+    left: 10px;
+    border-right-color: $datepicker__muted-color;
+
+    &:hover {
+      border-right-color: darken($datepicker__muted-color, 10%);
+    }
+  }
+
+  &--next-year {
+    right: 10px;
+    border-left-color: $datepicker__muted-color;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      border-left-color: darken($datepicker__muted-color, 10%);
+    }
+  }
+
+  &--previous-year-text {
+    left: 10px;
+    line-height: 0;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  &--next-year-text {
+    right: 35px;
+    line-height: 0;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  &--previous-month {
+    top: 50px;
+    left: 10px;
+    border-right-color: $datepicker__muted-color;
+
+    &:hover {
+      border-right-color: darken($datepicker__muted-color, 10%);
+    }
+  }
+
+  &--next-month {
+    top: 50px;
+    right: 10px;
+    border-left-color: $datepicker__muted-color;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      border-left-color: darken($datepicker__muted-color, 10%);
+    }
+  }
+
+  &--previous-month-text {
+    top: 50px;
+    left: 10px;
+    line-height: 0;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  &--next-month-text {
+    top: 50px;
+    right: 35px;
+    line-height: 0;
+    &--with-time:not(&--with-today-button) {
+      right: 80px;
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
   &--years {
     position: relative;
     top: 0;

@@ -9,7 +9,9 @@ import {
   now,
   setMonth,
   getMonth,
+  addYears,
   addMonths,
+  subtractYears,
   subtractMonths,
   getStartOfWeek,
   getStartOfDate,
@@ -50,6 +52,13 @@ export default class Calendar extends React.Component {
     children: PropTypes.node,
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
+    dateFormatIsSplit: PropTypes.bool,
+    previousYearButtonText: PropTypes.string,
+    nextYearButtonText: PropTypes.string,
+    previousMonthButtonText: PropTypes.string,
+    nextMonthButtonText: PropTypes.string,
+    monthFormat: PropTypes.string,
+    yearFormat: PropTypes.string,
     dayClassName: PropTypes.func,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     endDate: PropTypes.object,
@@ -176,12 +185,30 @@ export default class Calendar extends React.Component {
 
   localizeDate = date => localizeDate(date, this.props.locale);
 
+  increaseYear = () => {
+    this.setState(
+      {
+        date: addYears(cloneDate(this.state.date), 1)
+      },
+      () => this.handleYearChange(this.state.date)
+    );
+  };
+
   increaseMonth = () => {
     this.setState(
       {
         date: addMonths(cloneDate(this.state.date), 1)
       },
       () => this.handleMonthChange(this.state.date)
+    );
+  };
+
+  decreaseYear = () => {
+    this.setState(
+      {
+        date: subtractYears(cloneDate(this.state.date), 1)
+      },
+      () => this.handleYearChange(this.state.date)
     );
   };
 
@@ -264,6 +291,31 @@ export default class Calendar extends React.Component {
     );
   };
 
+  renderPreviousYearButton = () => {
+    if (
+      !this.props.forceShowMonthNavigation &&
+      allDaysDisabledBefore(this.state.date, "month", this.props)
+    ) {
+      return;
+    }
+
+    let previousButtonClassName = "react-datepicker__navigation react-datepicker__navigation--previous";
+    if (this.props.dateFormatIsSplit) {
+      previousButtonClassName += '-year';
+    }
+    if (this.props.nextMonthButtonText) {
+      previousButtonClassName += '-text';
+    }
+
+    return (
+      <button
+        className={previousButtonClassName}
+        onClick={this.decreaseYear}>
+        {this.props.previousYearButtonText}
+      </button>
+    );
+  };
+
   renderPreviousMonthButton = () => {
     if (
       !this.props.forceShowMonthNavigation &&
@@ -271,10 +323,56 @@ export default class Calendar extends React.Component {
     ) {
       return;
     }
+
+    let className = "react-datepicker__navigation react-datepicker__navigation--previous";
+    if (this.props.dateFormatIsSplit) {
+      className += '-month';
+    }
+    if (this.props.previousMonthButtonText) {
+      className += '-text';
+    }
+
     return (
       <button
-        className="react-datepicker__navigation react-datepicker__navigation--previous"
-        onClick={this.decreaseMonth}/>
+        className={className}
+        onClick={this.decreaseMonth}>
+        {this.props.previousMonthButtonText}
+      </button>
+    );
+  };
+
+  renderNextYearButton = () => {
+    if (
+      !this.props.forceShowMonthNavigation &&
+      allDaysDisabledAfter(this.state.date, "month", this.props)
+    ) {
+      return;
+    }
+
+    let classes = [
+      "react-datepicker__navigation"
+    ];
+
+    let nextButtonClassName = "react-datepicker__navigation react-datepicker__navigation--next";
+    if (this.props.dateFormatIsSplit) {
+      nextButtonClassName += '-year';
+    }
+    if (this.props.nextMonthButtonText) {
+      nextButtonClassName += '-text';
+    }
+    classes.push(nextButtonClassName);
+
+    if (this.props.showTimeSelect) {
+      classes.push("react-datepicker__navigation--next--with-time");
+    }
+    if (this.props.todayButton) {
+      classes.push("react-datepicker__navigation--next--with-today-button");
+    }
+
+    return (
+      <button className={classes.join(" ")} onClick={this.increaseYear} >
+        {this.props.nextYearButtonText}
+      </button>
     );
   };
 
@@ -287,9 +385,17 @@ export default class Calendar extends React.Component {
     }
 
     let classes = [
-      "react-datepicker__navigation",
-      "react-datepicker__navigation--next"
+      "react-datepicker__navigation"
     ];
+    let nextButtonClassName = "react-datepicker__navigation react-datepicker__navigation--next";
+    if (this.props.dateFormatIsSplit) {
+      nextButtonClassName += '-month';
+    }
+    if (this.props.nextMonthButtonText) {
+      nextButtonClassName += '-text';
+    }
+    classes.push(nextButtonClassName);
+
     if (this.props.showTimeSelect) {
       classes.push("react-datepicker__navigation--next--with-time");
     }
@@ -297,7 +403,11 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--next--with-today-button");
     }
 
-    return <button className={classes.join(" ")} onClick={this.increaseMonth} />;
+    return (
+      <button className={classes.join(" ")} onClick={this.increaseMonth} >
+        {this.props.nextMonthButtonText}
+      </button>
+    );
   };
 
   renderCurrentMonth = (date = this.state.date) => {
@@ -309,9 +419,24 @@ export default class Calendar extends React.Component {
     if (this.props.showMonthDropdown) {
       classes.push("react-datepicker__current-month--hasMonthDropdown");
     }
+
+    if (this.props.dateFormatIsSplit && this.props.yearFormat && this.props.monthFormat) {
+      const yearValue = formatDate(date, this.props.yearFormat);
+      const monthValue = formatDate(date, this.props.monthFormat);
+
+      return (
+        <div className={classes.join(" ")}>
+          <p>{yearValue}</p>
+          <p>{monthValue}</p>
+        </div>
+      );
+    }
+
+    const formattedDate = formatDate(date, this.props.dateFormat);
+
     return (
       <div className={classes.join(" ")}>
-        {formatDate(date, this.props.dateFormat)}
+        {formattedDate}
       </div>
     );
   };
@@ -448,7 +573,9 @@ export default class Calendar extends React.Component {
     return (
       <div className={classnames("react-datepicker", this.props.className)}>
         <div className="react-datepicker__triangle" />
+        {this.renderPreviousYearButton()}
         {this.renderPreviousMonthButton()}
+        {this.renderNextYearButton()}
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
