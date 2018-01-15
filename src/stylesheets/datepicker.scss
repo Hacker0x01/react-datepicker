@@ -90,12 +90,14 @@
 }
 
 .react-datepicker__navigation {
+  background: none;
   line-height: $datepicker__item-size;
   text-align: center;
   cursor: pointer;
   position: absolute;
   top: 10px;
   width: 0;
+  padding: 0;
   border: $datepicker__navigation-size solid transparent;
   z-index: 1;
 
