@@ -105,6 +105,7 @@ export default class DatePicker extends React.Component {
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
+    showDisabledMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
     startOpen: PropTypes.bool,
     tabIndex: PropTypes.number,
@@ -489,6 +490,7 @@ export default class DatePicker extends React.Component {
         showYearDropdown={this.props.showYearDropdown}
         withPortal={this.props.withPortal}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
+        showDisabledMonthNavigation={this.props.showDisabledMonthNavigation}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         weekLabel={this.props.weekLabel}
