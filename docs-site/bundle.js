@@ -47906,6 +47906,9 @@
                 allowSameDay: false,
                 dateFormat: "L",
                 dateFormatCalendar: "MMMM YYYY",
+                dateFormatIsSplit: false,
+                yearFormatCalendar: "YYYY",
+                monthFormatCalendar: "MMMM",
                 onChange: function onChange() {},
 
                 disabled: false,
@@ -48260,6 +48263,13 @@
                 adjustDateOnChange: _this.props.adjustDateOnChange,
                 setOpen: _this.setOpen,
                 dateFormat: _this.props.dateFormatCalendar,
+                dateFormatIsSplit: _this.props.dateFormatIsSplit,
+                previousYearButtonText: _this.props.previousYearButtonText,
+                nextYearButtonText: _this.props.nextYearButtonText,
+                previousMonthButtonText: _this.props.previousMonthButtonText,
+                nextMonthButtonText: _this.props.nextMonthButtonText,
+                yearFormat: _this.props.yearFormatCalendar,
+                monthFormat: _this.props.monthFormatCalendar,
                 useWeekdaysShort: _this.props.useWeekdaysShort,
                 dropdownMode: _this.props.dropdownMode,
                 selected: _this.props.selected,
@@ -48467,6 +48477,13 @@
           _propTypes2.default.array
         ]),
         dateFormatCalendar: _propTypes2.default.string,
+        dateFormatIsSplit: _propTypes2.default.bool,
+        previousYearButtonText: _propTypes2.default.string,
+        nextYearButtonText: _propTypes2.default.string,
+        previousMonthButtonText: _propTypes2.default.string,
+        nextMonthButtonText: _propTypes2.default.string,
+        monthFormatCalendar: _propTypes2.default.string,
+        yearFormatCalendar: _propTypes2.default.string,
         dayClassName: _propTypes2.default.func,
         disabled: _propTypes2.default.bool,
         disabledKeyboardNavigation: _propTypes2.default.bool,
@@ -48717,6 +48734,20 @@
             return (0, _date_utils.localizeDate)(date, _this.props.locale);
           };
 
+          _this.increaseYear = function() {
+            _this.setState(
+              {
+                date: (0, _date_utils.addYears)(
+                  (0, _date_utils.cloneDate)(_this.state.date),
+                  1
+                )
+              },
+              function() {
+                return _this.handleYearChange(_this.state.date);
+              }
+            );
+          };
+
           _this.increaseMonth = function() {
             _this.setState(
               {
@@ -48727,6 +48758,20 @@
               },
               function() {
                 return _this.handleMonthChange(_this.state.date);
+              }
+            );
+          };
+
+          _this.decreaseYear = function() {
+            _this.setState(
+              {
+                date: (0, _date_utils.subtractYears)(
+                  (0, _date_utils.cloneDate)(_this.state.date),
+                  1
+                )
+              },
+              function() {
+                return _this.handleYearChange(_this.state.date);
               }
             );
           };
@@ -48843,6 +48888,37 @@
             );
           };
 
+          _this.renderPreviousYearButton = function() {
+            if (
+              !_this.props.forceShowMonthNavigation &&
+              (0, _date_utils.allDaysDisabledBefore)(
+                _this.state.date,
+                "month",
+                _this.props
+              )
+            ) {
+              return;
+            }
+
+            var previousButtonClassName =
+              "react-datepicker__navigation react-datepicker__navigation--previous";
+            if (_this.props.dateFormatIsSplit) {
+              previousButtonClassName += "-year";
+            }
+            if (_this.props.nextMonthButtonText) {
+              previousButtonClassName += "-text";
+            }
+
+            return _react2.default.createElement(
+              "button",
+              {
+                className: previousButtonClassName,
+                onClick: _this.decreaseYear
+              },
+              _this.props.previousYearButtonText
+            );
+          };
+
           _this.renderPreviousMonthButton = function() {
             if (
               !_this.props.forceShowMonthNavigation &&
@@ -48854,11 +48930,64 @@
             ) {
               return;
             }
-            return _react2.default.createElement("button", {
-              className:
-                "react-datepicker__navigation react-datepicker__navigation--previous",
-              onClick: _this.decreaseMonth
-            });
+
+            var className =
+              "react-datepicker__navigation react-datepicker__navigation--previous";
+            if (_this.props.dateFormatIsSplit) {
+              className += "-month";
+            }
+            if (_this.props.previousMonthButtonText) {
+              className += "-text";
+            }
+
+            return _react2.default.createElement(
+              "button",
+              {
+                className: className,
+                onClick: _this.decreaseMonth
+              },
+              _this.props.previousMonthButtonText
+            );
+          };
+
+          _this.renderNextYearButton = function() {
+            if (
+              !_this.props.forceShowMonthNavigation &&
+              (0, _date_utils.allDaysDisabledAfter)(
+                _this.state.date,
+                "month",
+                _this.props
+              )
+            ) {
+              return;
+            }
+
+            var classes = ["react-datepicker__navigation"];
+
+            var nextButtonClassName =
+              "react-datepicker__navigation react-datepicker__navigation--next";
+            if (_this.props.dateFormatIsSplit) {
+              nextButtonClassName += "-year";
+            }
+            if (_this.props.nextMonthButtonText) {
+              nextButtonClassName += "-text";
+            }
+            classes.push(nextButtonClassName);
+
+            if (_this.props.showTimeSelect) {
+              classes.push("react-datepicker__navigation--next--with-time");
+            }
+            if (_this.props.todayButton) {
+              classes.push(
+                "react-datepicker__navigation--next--with-today-button"
+              );
+            }
+
+            return _react2.default.createElement(
+              "button",
+              { className: classes.join(" "), onClick: _this.increaseYear },
+              _this.props.nextYearButtonText
+            );
           };
 
           _this.renderNextMonthButton = function() {
@@ -48873,10 +49002,17 @@
               return;
             }
 
-            var classes = [
-              "react-datepicker__navigation",
-              "react-datepicker__navigation--next"
-            ];
+            var classes = ["react-datepicker__navigation"];
+            var nextButtonClassName =
+              "react-datepicker__navigation react-datepicker__navigation--next";
+            if (_this.props.dateFormatIsSplit) {
+              nextButtonClassName += "-month";
+            }
+            if (_this.props.nextMonthButtonText) {
+              nextButtonClassName += "-text";
+            }
+            classes.push(nextButtonClassName);
+
             if (_this.props.showTimeSelect) {
               classes.push("react-datepicker__navigation--next--with-time");
             }
@@ -48886,10 +49022,11 @@
               );
             }
 
-            return _react2.default.createElement("button", {
-              className: classes.join(" "),
-              onClick: _this.increaseMonth
-            });
+            return _react2.default.createElement(
+              "button",
+              { className: classes.join(" "), onClick: _this.increaseMonth },
+              _this.props.nextMonthButtonText
+            );
           };
 
           _this.renderCurrentMonth = function() {
@@ -48906,10 +49043,38 @@
             if (_this.props.showMonthDropdown) {
               classes.push("react-datepicker__current-month--hasMonthDropdown");
             }
+
+            if (
+              _this.props.dateFormatIsSplit &&
+              _this.props.yearFormat &&
+              _this.props.monthFormat
+            ) {
+              var yearValue = (0, _date_utils.formatDate)(
+                date,
+                _this.props.yearFormat
+              );
+              var monthValue = (0, _date_utils.formatDate)(
+                date,
+                _this.props.monthFormat
+              );
+
+              return _react2.default.createElement(
+                "div",
+                { className: classes.join(" ") },
+                _react2.default.createElement("p", null, yearValue),
+                _react2.default.createElement("p", null, monthValue)
+              );
+            }
+
+            var formattedDate = (0, _date_utils.formatDate)(
+              date,
+              _this.props.dateFormat
+            );
+
             return _react2.default.createElement(
               "div",
               { className: classes.join(" ") },
-              (0, _date_utils.formatDate)(date, _this.props.dateFormat)
+              formattedDate
             );
           };
 
@@ -49128,7 +49293,9 @@
             _react2.default.createElement("div", {
               className: "react-datepicker__triangle"
             }),
+            this.renderPreviousYearButton(),
             this.renderPreviousMonthButton(),
+            this.renderNextYearButton(),
             this.renderNextMonthButton(),
             this.renderMonths(),
             this.renderTodayButton(),
@@ -49148,6 +49315,13 @@
           _propTypes2.default.string,
           _propTypes2.default.array
         ]).isRequired,
+        dateFormatIsSplit: _propTypes2.default.bool,
+        previousYearButtonText: _propTypes2.default.string,
+        nextYearButtonText: _propTypes2.default.string,
+        previousMonthButtonText: _propTypes2.default.string,
+        nextMonthButtonText: _propTypes2.default.string,
+        monthFormat: _propTypes2.default.string,
+        yearFormat: _propTypes2.default.string,
         dayClassName: _propTypes2.default.func,
         dropdownMode: _propTypes2.default.oneOf(["scroll", "select"])
           .isRequired,
@@ -80908,7 +81082,12 @@
 
         HeroExample.prototype.render = function render() {
           return _react2.default.createElement(_reactDatepicker2.default, {
-            autoFocus: true,
+            dateFormatIsSplit: true,
+            previousYearButtonText: "Prev",
+            nextYearButtonText: "Next",
+            previousMonthButtonText: "Prev",
+            nextMonthButtonText: "Next",
+            dateFormat: "DD / MM / YYYY",
             selected: this.state.startDate,
             onChange: this.handleChange
           });

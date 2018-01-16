@@ -1,14 +1,14 @@
 {
   "author": "ivstefano",
-  "name": "react-datepicker-extended",
+  "name": "divsoft-react-datepicker",
   "description": "A reusable datepicker for React with more options",
   "version": "1.0.0",
   "license": "MIT",
   "homepage": "https://github.com/ivstefano/react-datepicker",
   "main": "lib",
   "module": "es",
-  "unpkg": "dist/react-datepicker.min.js",
-  "style": "dist/react-datepicker.min.css",
+  "unpkg": "dist/divsoft-react-datepicker.min.js",
+  "style": "dist/divsoft-react-datepicker.min.css",
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {
@@ -108,25 +108,31 @@
     "prebuild": "rimraf es lib dist",
     "build": "run-p build:** && run-p css:**",
     "css:prod":
-      "node-sass --output-style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
+      "node-sass --output-style compressed src/stylesheets/datepicker.scss > dist/divsoft-react-datepicker.min.css",
     "css:modules:prod":
-      "node-sass --output-style compressed src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.min.css",
+      "node-sass --output-style compressed src/stylesheets/datepicker-cssmodules.scss > dist/divsoft-react-datepicker-cssmodules.min.css",
     "css:dev":
-      "node-sass --output-style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
+      "node-sass --output-style expanded src/stylesheets/datepicker.scss > dist/divsoft-react-datepicker.css",
     "css:modules:dev":
-      "node-sass --output-style expanded src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.css",
+      "node-sass --output-style expanded src/stylesheets/datepicker-cssmodules.scss > dist/divsoft-react-datepicker-cssmodules.css",
     "build:es":
       "cross-env BABEL_ENV=es rollup -c -i src/index.jsx -o es/index.js",
     "build:cjs":
       "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
     "build:umd:prod":
-      "cross-env BABEL_ENV=es NODE_ENV=production rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
+      "cross-env BABEL_ENV=es NODE_ENV=production rollup -c rollup.umd.config.js -i src/index.jsx -o dist/divsoft-react-datepicker.min.js",
     "build:umd:dev":
-      "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
+      "cross-env BABEL_ENV=es NODE_ENV=development rollup -c rollup.umd.config.js -i src/index.jsx -o dist/divsoft-react-datepicker.js",
     "build:docs":
       "cross-env MODULES=false webpack --config webpack.docs.config.js"
   },
   "lint-staged": {
     "*.{js,json,css,scss,md}": ["prettier --write", "git add"]
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "lib": "lib",
+    "test": "test"
   }
 }

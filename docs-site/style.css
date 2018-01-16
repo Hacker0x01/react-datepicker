@@ -176,6 +176,84 @@
 .react-datepicker__navigation--next:hover {
   border-left-color: #b3b3b3;
 }
+.react-datepicker__navigation--previous-year {
+  left: 10px;
+  border-right-color: #ccc;
+}
+.react-datepicker__navigation--previous-year:hover {
+  border-right-color: #b3b3b3;
+}
+.react-datepicker__navigation--next-year {
+  right: 10px;
+  border-left-color: #ccc;
+}
+.react-datepicker__navigation--next-year--with-time:not(.react-datepicker__navigation--next-year--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--next-year:hover {
+  border-left-color: #b3b3b3;
+}
+.react-datepicker__navigation--previous-year-text {
+  left: 10px;
+  line-height: 0;
+}
+.react-datepicker__navigation--previous-year-text--with-time:not(.react-datepicker__navigation--previous-year-text--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--previous-year-text:hover {
+  font-weight: bold;
+}
+.react-datepicker__navigation--next-year-text {
+  right: 35px;
+  line-height: 0;
+}
+.react-datepicker__navigation--next-year-text--with-time:not(.react-datepicker__navigation--next-year-text--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--next-year-text:hover {
+  font-weight: bold;
+}
+.react-datepicker__navigation--previous-month {
+  top: 50px;
+  left: 10px;
+  border-right-color: #ccc;
+}
+.react-datepicker__navigation--previous-month:hover {
+  border-right-color: #b3b3b3;
+}
+.react-datepicker__navigation--next-month {
+  top: 50px;
+  right: 10px;
+  border-left-color: #ccc;
+}
+.react-datepicker__navigation--next-month--with-time:not(.react-datepicker__navigation--next-month--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--next-month:hover {
+  border-left-color: #b3b3b3;
+}
+.react-datepicker__navigation--previous-month-text {
+  top: 50px;
+  left: 10px;
+  line-height: 0;
+}
+.react-datepicker__navigation--previous-month-text--with-time:not(.react-datepicker__navigation--previous-month-text--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--previous-month-text:hover {
+  font-weight: bold;
+}
+.react-datepicker__navigation--next-month-text {
+  top: 50px;
+  right: 35px;
+  line-height: 0;
+}
+.react-datepicker__navigation--next-month-text--with-time:not(.react-datepicker__navigation--next-month-text--with-today-button) {
+  right: 80px;
+}
+.react-datepicker__navigation--next-month-text:hover {
+  font-weight: bold;
+}
 .react-datepicker__navigation--years {
   position: relative;
   top: 0;
