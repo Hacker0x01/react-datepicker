@@ -110,6 +110,12 @@
     &:hover {
       border-right-color: darken($datepicker__muted-color, 10%);
     }
+
+    &--disabled,
+    &--disabled:hover {
+      border-right-color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
   }
 
   &--next {
@@ -121,6 +127,12 @@
 
     &:hover {
       border-left-color: darken($datepicker__muted-color, 10%);
+    }
+
+    &--disabled,
+    &--disabled:hover {
+      border-left-color: $datepicker__navigation-disabled-color;
+      cursor: default;
     }
   }
 
@@ -501,6 +513,12 @@
     &:hover {
       border-right-color: darken($datepicker__muted-color, 10%);
     }
+
+    &--disabled,
+    &--disabled:hover {
+      border-right-color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
   }
 
   .react-datepicker__navigation--next {
@@ -509,5 +527,11 @@
     &:hover {
       border-left-color: darken($datepicker__muted-color, 10%);
     }
+
+    &--disabled,
+     &--disabled:hover {
+       border-left-color: $datepicker__navigation-disabled-color;
+       cursor: default;
+     }
   }
 }

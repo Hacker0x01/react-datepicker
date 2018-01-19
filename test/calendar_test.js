@@ -170,6 +170,123 @@ describe("Calendar", function() {
     expect(nextNavigationButton).to.have.length(1);
   });
 
+  describe("when showDisabledMonthNavigation is enabled", () => {
+    let onMonthChangeSpy = sinon.spy();
+
+    beforeEach(() => {
+      onMonthChangeSpy = sinon.spy();
+    });
+
+    it("should show disabled previous month navigation", function() {
+      const calendar = getCalendar({
+        minDate: utils.newDate(),
+        maxDate: utils.addMonths(utils.newDate(), 3),
+        showDisabledMonthNavigation: true
+      });
+      const prevDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--previous--disabled"
+      );
+
+      const nextDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--next--disabled"
+      );
+      expect(prevDisabledNavigationButton).to.have.length(1);
+      expect(nextDisabledNavigationButton).to.have.length(0);
+    });
+
+    it("should show disabled next month navigation", function() {
+      const calendar = getCalendar({
+        minDate: utils.subtractMonths(utils.newDate(), 3),
+        maxDate: utils.newDate(),
+        showDisabledMonthNavigation: true
+      });
+      const prevDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--previous--disabled"
+      );
+
+      const nextDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--next--disabled"
+      );
+      expect(prevDisabledNavigationButton).to.have.length(0);
+      expect(nextDisabledNavigationButton).to.have.length(1);
+    });
+
+    it("should not show disabled previous/next month navigation when next/previous month available", function() {
+      const calendar = getCalendar({
+        minDate: utils.subtractMonths(utils.newDate(), 3),
+        maxDate: utils.addMonths(utils.newDate(), 3),
+        showDisabledMonthNavigation: true
+      });
+      const prevDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--previous--disabled"
+      );
+
+      const nextDisabledNavigationButton = calendar.find(
+        ".react-datepicker__navigation--next--disabled"
+      );
+      expect(prevDisabledNavigationButton).to.have.length(0);
+      expect(nextDisabledNavigationButton).to.have.length(0);
+    });
+
+    it("when clicking disabled month navigation, should not change month", function() {
+
+      const calendar = getCalendar({
+        minDate: utils.newDate(),
+        maxDate: utils.newDate(),
+        showDisabledMonthNavigation: true,
+        onMonthChange: onMonthChangeSpy
+      });
+      const prevNavigationButton = calendar.find(
+        ".react-datepicker__navigation--previous"
+      );
+
+      const nextNavigationButton = calendar.find(
+        ".react-datepicker__navigation--next"
+      );
+
+      prevNavigationButton.simulate("click");
+
+      assert(
+        onMonthChangeSpy.called === false,
+        "onMonthChange should not be called"
+      );
+
+      nextNavigationButton.simulate("click");
+
+      assert(
+        onMonthChangeSpy.called === false,
+        "onMonthChange should not be called"
+      );
+    });
+
+    it("when clicking non-disabled month navigation, should change month", function() {
+
+      const calendar = getCalendar({
+        selected: utils.newDate(),
+        minDate: utils.subtractMonths(utils.newDate(), 3),
+        maxDate: utils.addMonths(utils.newDate(), 3),
+        showDisabledMonthNavigation: true,
+        onMonthChange: onMonthChangeSpy
+      });
+      const prevNavigationButton = calendar.find(
+        ".react-datepicker__navigation--previous"
+      );
+
+      const nextNavigationButton = calendar.find(
+        ".react-datepicker__navigation--next"
+      );
+
+      prevNavigationButton.simulate("click");
+      nextNavigationButton.simulate("click");
+
+      assert(
+        onMonthChangeSpy.callCount === 2,
+        "onMonthChange should be called 2 times"
+      );
+    });
+  });
+
+
   it("should not show the month dropdown menu by default", function() {
     const calendar = getCalendar();
     const monthReadView = calendar.find(MonthDropdown);

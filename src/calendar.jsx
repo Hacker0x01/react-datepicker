@@ -100,7 +100,8 @@ export default class Calendar extends React.Component {
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
+    showDisabledMonthNavigation: PropTypes.bool,
   };
 
   static get defaultProps() {
@@ -283,28 +284,49 @@ export default class Calendar extends React.Component {
   };
 
   renderPreviousMonthButton = () => {
+
+    const allPrevDaysDisabled = allDaysDisabledBefore(this.state.date, "month", this.props);
+
     if (
       !this.props.forceShowMonthNavigation &&
-      allDaysDisabledBefore(this.state.date, "month", this.props)
+      !this.props.showDisabledMonthNavigation &&
+      allPrevDaysDisabled
     ) {
       return;
     }
+
+    const classes = [
+      "react-datepicker__navigation",
+      "react-datepicker__navigation--previous"
+    ];
+
+    let clickHandler = this.decreaseMonth;
+
+    if (allPrevDaysDisabled && this.props.showDisabledMonthNavigation) {
+      classes.push("react-datepicker__navigation--previous--disabled");
+      clickHandler = null;
+    }
+
     return (
       <button
-        className="react-datepicker__navigation react-datepicker__navigation--previous"
-        onClick={this.decreaseMonth}/>
+        className={classes.join(" ")}
+        onClick={clickHandler}/>
     );
   };
 
   renderNextMonthButton = () => {
+
+    const allNextDaysDisabled = allDaysDisabledAfter(this.state.date, "month", this.props);
+
     if (
       !this.props.forceShowMonthNavigation &&
-      allDaysDisabledAfter(this.state.date, "month", this.props)
+      !this.props.showDisabledMonthNavigation &&
+      allNextDaysDisabled
     ) {
       return;
     }
 
-    let classes = [
+    const classes = [
       "react-datepicker__navigation",
       "react-datepicker__navigation--next"
     ];
@@ -315,7 +337,14 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--next--with-today-button");
     }
 
-    return <button className={classes.join(" ")} onClick={this.increaseMonth} />;
+    let clickHandler = this.increaseMonth;
+
+    if (allNextDaysDisabled && this.props.showDisabledMonthNavigation) {
+        classes.push("react-datepicker__navigation--next--disabled");
+        clickHandler = null;
+    }
+
+    return <button className={classes.join(" ")} onClick={clickHandler} />;
   };
 
   renderCurrentMonth = (date = this.state.date) => {

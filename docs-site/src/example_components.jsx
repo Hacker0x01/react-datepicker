@@ -21,6 +21,7 @@ import ClearInput from './examples/clear_input'
 import OnBlurCallbacks from './examples/on_blur_callbacks'
 import ConfigurePopper from './examples/configurePopper'
 import DateRange from './examples/date_range'
+import DateRangeWithShowDisabledNavigation from './examples/date_range_with_show_disabled_navigation'
 import TabIndex from './examples/tab_index'
 import YearDropdown from './examples/year_dropdown'
 import MonthDropdown from './examples/month_dropdown'
@@ -101,6 +102,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Specific date range',
     component: <SpecificDateRange />
+  },
+  {
+    title: 'Date Range with disabled navigation shown',
+    component: <DateRangeWithShowDisabledNavigation />
   },
   {
     title: 'Locale',
