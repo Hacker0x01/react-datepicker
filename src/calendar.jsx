@@ -61,6 +61,7 @@ export default class Calendar extends React.Component {
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    includeTimes: PropTypes.array,
     inline: PropTypes.bool,
     locale: PropTypes.string,
     maxDate: PropTypes.object,
@@ -500,6 +501,7 @@ export default class Calendar extends React.Component {
           selected={this.props.selected}
           onChange={this.props.onTimeChange}
           format={this.props.timeFormat}
+          includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}

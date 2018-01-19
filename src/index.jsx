@@ -70,6 +70,7 @@ export default class DatePicker extends React.Component {
     highlightDates: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
+    includeTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
     locale: PropTypes.string,
@@ -492,6 +493,7 @@ export default class DatePicker extends React.Component {
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
+        includeTimes={this.props.includeTimes}
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}

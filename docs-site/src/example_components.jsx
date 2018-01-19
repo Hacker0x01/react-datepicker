@@ -44,6 +44,7 @@ import RawChange from './examples/raw_change'
 import ShowTime from './examples/show_time'
 import ExcludeTimes from './examples/exclude_times'
 import ExcludeTimePeriod from './examples/exclude_time_period'
+import IncludeTimes from './examples/include_times'
 import DontCloseOnSelect from './examples/dont_close_onSelect'
 import OpenByDefault from './examples/open_by_default'
 
@@ -66,6 +67,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Exclude Times',
     component: <ExcludeTimes />
+  },
+  {
+    title: 'Include Times',
+    component: <IncludeTimes />
   },
   {
     title: 'Specific Time Range',
