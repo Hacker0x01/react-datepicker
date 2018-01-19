@@ -1,5 +1,6 @@
 import YearDropdown from "./year_dropdown";
 import MonthDropdown from "./month_dropdown";
+import MonthYearDropdown from "./month_year_dropdown";
 import Month from "./month";
 import Time from "./time";
 import React from "react";
@@ -33,7 +34,8 @@ import {
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__year-select",
-  "react-datepicker__month-select"
+  "react-datepicker__month-select",
+  "react-datepicker__month-year-select"
 ];
 
 const isDropdownSelect = (element = {}) => {
@@ -81,11 +83,13 @@ export default class Calendar extends React.Component {
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
+    scrollableMonthYearDropdown: PropTypes.bool,
     preSelection: PropTypes.object,
     selected: PropTypes.object,
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
@@ -220,6 +224,11 @@ export default class Calendar extends React.Component {
     }
   };
 
+  handleMonthYearChange = date => {
+    this.handleYearChange(date)
+    this.handleMonthChange(date)
+  };
+
   changeYear = year => {
     this.setState(
       {
@@ -235,6 +244,15 @@ export default class Calendar extends React.Component {
         date: setMonth(cloneDate(this.state.date), month)
       },
       () => this.handleMonthChange(this.state.date)
+    );
+  };
+
+  changeMonthYear = monthYear => {
+    this.setState(
+      {
+        date: setYear(setMonth(cloneDate(this.state.date), getMonth(monthYear)), getYear(monthYear))
+      },
+      () => this.handleMonthYearChange(this.state.date)
     );
   };
 
@@ -309,6 +327,9 @@ export default class Calendar extends React.Component {
     if (this.props.showMonthDropdown) {
       classes.push("react-datepicker__current-month--hasMonthDropdown");
     }
+    if (this.props.showMonthYearDropdown) {
+      classes.push("react-datepicker__current-month--hasMonthYearDropdown");
+    }
     return (
       <div className={classes.join(" ")}>
         {formatDate(date, this.props.dateFormat)}
@@ -351,6 +372,24 @@ export default class Calendar extends React.Component {
     );
   };
 
+  renderMonthYearDropdown = (overrideHide = false) => {
+    if (!this.props.showMonthYearDropdown) {
+      return;
+    }
+    return (
+      <MonthYearDropdown
+        dropdownMode={this.props.dropdownMode}
+        locale={this.props.locale}
+        dateFormat={this.props.dateFormat}
+        onChange={this.changeMonthYear}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
+        date={this.state.date}
+        scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+      />
+    );
+  };
+
   renderTodayButton = () => {
     if (!this.props.todayButton) {
       return;
@@ -386,6 +425,7 @@ export default class Calendar extends React.Component {
               }`}
               onFocus={this.handleDropdownFocus}>
               {this.renderMonthDropdown(i !== 0)}
+              {this.renderMonthYearDropdown(i !== 0)}
               {this.renderYearDropdown(i !== 0)}
             </div>
             <div className="react-datepicker__day-names">
@@ -437,6 +477,7 @@ export default class Calendar extends React.Component {
           excludeTimes={this.props.excludeTimes}
           todayButton={this.props.todayButton}
           showMonthDropdown={this.props.showMonthDropdown}
+          showMonthYearDropdown={this.props.showMonthYearDropdown}
           showYearDropdown={this.props.showYearDropdown}
           withPortal={this.props.withPortal}
           monthRef={this.state.monthContainer}/>

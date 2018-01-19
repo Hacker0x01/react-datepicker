@@ -542,7 +542,7 @@ describe("DatePicker", () => {
         target: { value: "02/02/2017" }
       });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
-      data.copyM = utils.newDate("02/02/2017");
+      data.copyM = utils.newDate("2017-02-02");
       expect(
         utils.formatDate(data.callback.args[0][0], data.testFormat)
       ).to.equal(utils.formatDate(data.copyM, data.testFormat));

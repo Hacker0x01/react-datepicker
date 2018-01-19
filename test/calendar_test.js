@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
+import MonthYearDropdown from "../src/month_year_dropdown";
 import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
@@ -179,6 +180,20 @@ describe("Calendar", function() {
     const calendar = getCalendar({ showMonthDropdown: true });
     const monthReadView = calendar.find(MonthDropdown);
     expect(monthReadView).to.have.length(1);
+  });
+
+  it("should not show the month-year dropdown menu by default", function() {
+    const calendar = getCalendar();
+    const monthYearReadView = calendar.find(MonthYearDropdown);
+    expect(monthYearReadView).to.have.length(0);
+  });
+
+  it("should show the month-year dropdown menu if toggled on", function() {
+    const calendar = getCalendar({ showMonthYearDropdown: true,
+                                   minDate: utils.subtractYears(utils.newDate(), 1),
+                                   maxDate: utils.addYears(utils.newDate(), 1) });
+    const monthYearReadView = calendar.find(MonthYearDropdown);
+    expect(monthYearReadView).to.have.length(1);
   });
 
   it("should not show the today button by default", function() {
@@ -435,6 +450,45 @@ describe("Calendar", function() {
     });
   });
 
+  describe("monthYearDropdown change", () => {
+    let onYearChangeSpy = sinon.spy();
+    let onMonthChangeSpy = sinon.spy();
+    let calendar;
+
+    beforeEach(() => {
+      onYearChangeSpy = sinon.spy();
+      onMonthChangeSpy = sinon.spy();
+      calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showMonthYearDropdown
+          minDate={utils.subtractYears(utils.newDate(), 1)}
+          maxDate={utils.addYears(utils.newDate(), 1)}
+          onYearChange={onYearChangeSpy}
+          onMonthChange={onMonthChangeSpy}
+        />
+      );
+    });
+
+    it("calls onYearChange prop when selection is changed from month-year dropdown", () => {
+      const option = calendar.find(MonthYearDropdown).find("select").find("option").at(3);
+      option.simulate("change");
+
+      assert(onYearChangeSpy.called === true, "onYearChange should be called");
+    });
+
+    it("calls onMonthChange prop when selection is changed from month-year dropdown", () => {
+      const option = calendar.find(MonthYearDropdown).find("select").find("option").at(3);
+      option.simulate("change");
+
+      assert(onMonthChangeSpy.called === true, "onMonthChange should be called");
+    });
+  });
+
   describe("onDropdownFocus", () => {
     let onDropdownFocusSpy = sinon.spy();
     let calendar;
@@ -450,6 +504,9 @@ describe("Calendar", function() {
           dropdownMode="select"
           showYearDropdown
           showMonthDropdown
+          showMonthYearDropdown
+          minDate={utils.subtractYears(utils.newDate(), 1)}
+          maxDate={utils.addYears(utils.newDate(), 1)}
           onDropdownFocus={onDropdownFocusSpy}
         />
       );
@@ -467,6 +524,16 @@ describe("Calendar", function() {
 
     it("calls onDropdownFocus prop when month select is focused", () => {
       const select = calendar.find(".react-datepicker__month-select");
+      select.simulate("focus");
+
+      assert(
+        onDropdownFocusSpy.called === true,
+        "onDropdownFocus should to be called"
+      );
+    });
+
+    it("calls onDropdownFocus prop when year-month select is focused", () => {
+      const select = calendar.find(".react-datepicker__month-year-select");
       select.simulate("focus");
 
       assert(

@@ -6,6 +6,8 @@ import {
   subtractDays,
   equals,
   isSameDay,
+  isSameMonth,
+  isSameYear,
   isSameUtcOffset,
   isDayDisabled,
   allDaysDisabledBefore,
@@ -32,6 +34,48 @@ describe("date_utils", function() {
 
     it("should return true for equal dates", function() {
       expect(isSameDay(newDate("2016-02-10"), newDate("2016-02-10"))).to.be
+        .true;
+    });
+  });
+
+  describe("isSameMonth", function() {
+    it("should return true for null dates", function() {
+      expect(isSameMonth(null, null)).to.be.true;
+    });
+
+    it("should return false for a null and non-null date", function() {
+      expect(isSameMonth(newDate(), null)).to.be.false;
+      expect(isSameMonth(null, newDate())).to.be.false;
+    });
+
+    it("should return false for non-equal months ", function() {
+      expect(isSameMonth(newDate("2016-02-10"), newDate("2016-03-10"))).to.be
+        .false;
+    });
+
+    it("should return true for equal months", function() {
+      expect(isSameMonth(newDate("2016-02-10"), newDate("2016-02-29"))).to.be
+        .true;
+    });
+  });
+
+  describe("isSameYear", function() {
+    it("should return true for null dates", function() {
+      expect(isSameYear(null, null)).to.be.true;
+    });
+
+    it("should return false for a null and non-null date", function() {
+      expect(isSameYear(newDate(), null)).to.be.false;
+      expect(isSameYear(null, newDate())).to.be.false;
+    });
+
+    it("should return false for non-equal years ", function() {
+      expect(isSameYear(newDate("2016-02-10"), newDate("2015-02-10"))).to.be
+        .false;
+    });
+
+    it("should return true for equal years", function() {
+      expect(isSameYear(newDate("2016-02-10"), newDate("2016-12-24"))).to.be
         .true;
     });
   });

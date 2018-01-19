@@ -75,8 +75,10 @@
 
 .react-datepicker__year-dropdown-container--select,
 .react-datepicker__month-dropdown-container--select,
+.react-datepicker__month-year-dropdown-container--select,
 .react-datepicker__year-dropdown-container--scroll,
-.react-datepicker__month-dropdown-container--scroll {
+.react-datepicker__month-dropdown-container--scroll,
+.react-datepicker__month-year-dropdown-container--scroll {
   display: inline-block;
   margin: 0 2px;
 }
@@ -325,7 +327,8 @@
 }
 
 .react-datepicker__year-read-view,
-.react-datepicker__month-read-view {
+.react-datepicker__month-read-view,
+.react-datepicker__month-year-read-view {
   border: 1px solid transparent;
   border-radius: $datepicker__border-radius;
 
@@ -350,7 +353,8 @@
 }
 
 .react-datepicker__year-dropdown,
-.react-datepicker__month-dropdown {
+.react-datepicker__month-dropdown,
+.react-datepicker__month-year-dropdown {
   background-color: $datepicker__background-color;
   position: absolute;
   width: 50%;
@@ -372,7 +376,8 @@
 }
 
 .react-datepicker__year-option,
-.react-datepicker__month-option {
+.react-datepicker__month-option,
+.react-datepicker__month-year-option {
   line-height: 20px;
   width: 100%;
   display: block;
