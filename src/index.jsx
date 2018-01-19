@@ -444,10 +444,18 @@ export default class DatePicker extends React.Component {
   };
 
   onClearClick = event => {
-    event.preventDefault();
-    this.props.onChange(null, event);
-    this.setState({ inputValue: null });
+  	if (event) {
+  		if (event.preventDefault) {
+  			event.preventDefault()
+  		}
+  	}
+  	this.props.onChange(null, event)
+  	this.setState({ inputValue: null })
   };
+
+  clear = () => {
+    this.onClearClick()
+  }
 
   renderCalendar = () => {
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
