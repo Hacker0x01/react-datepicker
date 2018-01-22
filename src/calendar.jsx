@@ -308,7 +308,7 @@ export default class Calendar extends React.Component {
     }
 
     return (
-      <button
+      <button type="button"
         className={classes.join(" ")}
         onClick={clickHandler}/>
     );
@@ -344,7 +344,7 @@ export default class Calendar extends React.Component {
         clickHandler = null;
     }
 
-    return <button className={classes.join(" ")} onClick={clickHandler} />;
+    return <button type="button" className={classes.join(" ")} onClick={clickHandler} />;
   };
 
   renderCurrentMonth = (date = this.state.date) => {
