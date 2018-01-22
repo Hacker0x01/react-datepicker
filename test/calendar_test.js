@@ -159,6 +159,13 @@ describe("Calendar", function() {
     expect(yearReadView).to.have.length(1);
   });
 
+
+  it("should show only one year dropdown menu if toggled on and multiple month mode on", function() {
+    const calendar = getCalendar({ showYearDropdown: true, monthsShown: 2 });
+    const monthReadView = calendar.find(YearDropdown);
+    expect(monthReadView).to.have.length(1);
+  });
+
   it("should show month navigation if toggled on", function() {
     const calendar = getCalendar({
       includeDates: [utils.newDate()],
@@ -299,6 +306,12 @@ describe("Calendar", function() {
     expect(monthReadView).to.have.length(1);
   });
 
+  it("should show only one month dropdown menu if toggled on and multiple month mode on", function() {
+    const calendar = getCalendar({ showMonthDropdown: true, monthsShown: 2 });
+    const monthReadView = calendar.find(MonthDropdown);
+    expect(monthReadView).to.have.length(1);
+  });
+
   it("should not show the month-year dropdown menu by default", function() {
     const calendar = getCalendar();
     const monthYearReadView = calendar.find(MonthYearDropdown);
@@ -312,6 +325,17 @@ describe("Calendar", function() {
     const monthYearReadView = calendar.find(MonthYearDropdown);
     expect(monthYearReadView).to.have.length(1);
   });
+
+
+  it("should show only one month-year dropdown menu if toggled on and multiple month mode on", function() {
+    const calendar = getCalendar({ showMonthYearDropdown: true,
+                                   minDate: utils.subtractYears(utils.newDate(), 1),
+                                   maxDate: utils.addYears(utils.newDate(), 1),
+                                   monthsShown: 2 });
+    const monthReadView = calendar.find(MonthYearDropdown);
+    expect(monthReadView).to.have.length(1);
+  });
+
 
   it("should not show the today button by default", function() {
     const calendar = getCalendar();
