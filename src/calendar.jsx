@@ -387,7 +387,7 @@ export default class Calendar extends React.Component {
   };
 
   renderMonthDropdown = (overrideHide = false) => {
-    if (!this.props.showMonthDropdown) {
+    if (!this.props.showMonthDropdown || overrideHide) {
       return;
     }
     return (
@@ -402,7 +402,7 @@ export default class Calendar extends React.Component {
   };
 
   renderMonthYearDropdown = (overrideHide = false) => {
-    if (!this.props.showMonthYearDropdown) {
+    if (!this.props.showMonthYearDropdown || overrideHide) {
       return;
     }
     return (
