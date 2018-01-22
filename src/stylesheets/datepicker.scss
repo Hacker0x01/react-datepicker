@@ -1,3 +1,4 @@
+@import "custom.scss";
 @import "variables.scss";
 @import "mixins.scss";
 
@@ -529,9 +530,9 @@
     }
 
     &--disabled,
-     &--disabled:hover {
-       border-left-color: $datepicker__navigation-disabled-color;
-       cursor: default;
-     }
+    &--disabled:hover {
+      border-left-color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
   }
 }
