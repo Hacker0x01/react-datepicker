@@ -336,8 +336,8 @@ export function getMonthInLocale(locale, date, format) {
   return locale.months(date, format);
 }
 
-export function getMonthShortInLocale (locale, date) {
-  return locale.monthsShort(date)
+export function getMonthShortInLocale(locale, date) {
+  return locale.monthsShort(date);
 }
 
 // ** Utils for some components **
