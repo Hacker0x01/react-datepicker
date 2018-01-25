@@ -106,7 +106,7 @@ _As of version 0.23, the `weekdays` and `weekStart` DatePicker props have been r
 
 ### React
 
-We're always trying to stay compatible with the latest version of React. We can't support all older versions of React, since React is still < 1.0 and introducing breaking changes every release.
+We're always trying to stay compatible with the latest version of React. We can't support all older versions of React.
 
 Latest compatible versions:
 - React 15.5 or newer: All above React-datepicker v.0.40.0
