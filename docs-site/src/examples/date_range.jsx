@@ -16,9 +16,7 @@ export default class DateRange extends React.Component {
     endDate = endDate || this.state.endDate
 
     if (startDate.isAfter(endDate)) {
-      var temp = startDate
-      startDate = endDate
-      endDate = temp
+      endDate = startDate
     }
 
     this.setState({ startDate, endDate })
