@@ -4,6 +4,7 @@
 | -------------- | -------- | ------------- | ----------- |
 | `excludeTimes` | `array`  |               |             |
 | `format`       | `string` |               |             |
+| `includeTimes` | `array`  |               |             |
 | `intervals`    | `number` | `30`          |             |
 | `maxTime`      | `object` |               |             |
 | `minTime`      | `object` |               |             |

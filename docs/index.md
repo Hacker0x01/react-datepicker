@@ -65,6 +65,7 @@ General datepicker component.
 | `selectsEnd`                  | `bool`                         |                 |             |
 | `selectsStart`                | `bool`                         |                 |             |
 | `shouldCloseOnSelect`         | `bool`                         | `true`          |             |
+| `showDisabledMonthNavigation` | `bool`                         |                 |             |
 | `showMonthDropdown`           | `bool`                         |                 |             |
 | `showMonthYearDropdown`       | `bool`                         |                 |             |
 | `showTimeSelect`              | `bool`                         | `false`         |             |
