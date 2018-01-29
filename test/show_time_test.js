@@ -19,4 +19,11 @@ describe("DatePicker", () => {
     var timeComponent = datePicker.find(TimeComponent);
     expect(timeComponent).to.exist;
   });
+
+  it("should have custom time caption", () => {
+    const timeComponent = mount(<TimeComponent timeCaption="Custom time" />);
+
+    const caption = timeComponent.find(".react-datepicker-time__header");
+    expect(caption.text()).to.equal("Custom time");
+  });
 });
