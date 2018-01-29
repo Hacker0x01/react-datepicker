@@ -8,6 +8,7 @@ import Day from "../src/day";
 import TestWrapper from "./test_wrapper.jsx";
 import PopperComponent from "../src/popper_component.jsx";
 import TimezoneDatePicker from "./timezone_date_picker.jsx";
+import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils";
 
 function getKey(key) {
@@ -791,7 +792,44 @@ describe("DatePicker", () => {
     datePicker.update();
     expect(datePicker.find("input").prop("value")).to.equal("1");
   });
-
+  it("should call onChangeRaw with all arguments", () => {
+    const inputValue = "test";
+    const onChangeRawSpy = sandbox.spy();
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={utils.newDate()}
+        onChange={sandbox.spy()}
+        customInput={<CustomInput />}
+        onChangeRaw={onChangeRawSpy}
+      />
+    );
+    expect(onChangeRawSpy.called).to.be.false;
+    const input = ReactDOM.findDOMNode(datePicker.input);
+    input.value = inputValue;
+    TestUtils.Simulate.change(input);
+    expect(onChangeRawSpy.calledOnce).to.be.true;
+    expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue);
+    expect(onChangeRawSpy.args[0][1]).to.equal("test");
+  });
+  it("should handle the lack of an 'event' object as the first argument to handleChange analogously to 'preventDefault' being called", () => {
+    const inputValue = "test";
+    const onChangeRawSpy = sandbox.spy();
+    let customInput = <CustomInput onChangeArgs={e => [e.target.value]} />;
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={utils.newDate()}
+        onChange={sandbox.spy()}
+        customInput={customInput}
+        onChangeRaw={onChangeRawSpy}
+      />
+    );
+    expect(onChangeRawSpy.called).to.be.false;
+    const input = ReactDOM.findDOMNode(datePicker.input);
+    input.value = inputValue;
+    TestUtils.Simulate.change(input);
+    expect(onChangeRawSpy.calledOnce).to.be.true;
+    expect(onChangeRawSpy.args[0][0]).to.equal("test");
+  });
   it("should handle a click outside of the calendar", () => {
     const datePicker = mount(
       <DatePicker selected={utils.newDate()} withPortal />
