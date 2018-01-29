@@ -30,6 +30,7 @@ export default class ShowTime extends React.Component {
     timeFormat="HH:mm"
     timeIntervals={15}
     dateFormat="LLL"
+    timeCaption="time"
 />
 `}</strong>
           </code>
@@ -41,6 +42,7 @@ export default class ShowTime extends React.Component {
             showTimeSelect
             timeFormat="HH:mm"
             timeIntervals={15}
+            timeCaption="time"
             dateFormat="LLL"/>
         </div>
       </div>

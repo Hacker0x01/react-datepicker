@@ -23,14 +23,16 @@ export default class Time extends React.Component {
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
-    monthRef: PropTypes.object
+    monthRef: PropTypes.object,
+    timeCaption: PropTypes.string,
   };
 
   static get defaultProps() {
     return {
       intervals: 30,
       onTimeChange: () => {},
-      todayButton: null
+      todayButton: null,
+      timeCaption: "Time",
     };
   }
 
@@ -111,7 +113,7 @@ export default class Time extends React.Component {
             : ""
         }`}>
         <div className="react-datepicker__header react-datepicker__header--time">
-          <div className="react-datepicker-time__header">Time</div>
+          <div className="react-datepicker-time__header">{this.props.timeCaption}</div>
         </div>
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">

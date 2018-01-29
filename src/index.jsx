@@ -112,6 +112,7 @@ export default class DatePicker extends React.Component {
     startDate: PropTypes.object,
     startOpen: PropTypes.bool,
     tabIndex: PropTypes.number,
+    timeCaption: PropTypes.string,
     title: PropTypes.string,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
@@ -151,7 +152,8 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
-      timeIntervals: 30
+      timeIntervals: 30,
+      timeCaption: "Time",
     };
   }
 
@@ -523,6 +525,7 @@ export default class DatePicker extends React.Component {
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
+        timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
         {this.props.children}
