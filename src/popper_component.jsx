@@ -46,11 +46,29 @@ export default class PopperComponent extends React.Component {
     };
   }
 
+  renderPopperComponent = ({
+    popperProps,
+    restProps,
+    scheduleUpdate,
+  }) => {
+    const wrapperPopperComponent =  React.cloneElement(this.props.popperComponent, {
+      scheduleUpdate,
+    });
+
+    return (
+      <div
+        {...popperProps}
+        {...restProps}
+        >
+        {wrapperPopperComponent}
+      </div>
+    );
+  };
+
   render() {
     const {
       className,
       hidePopper,
-      popperComponent,
       popperModifiers,
       popperPlacement,
       targetComponent
@@ -65,7 +83,7 @@ export default class PopperComponent extends React.Component {
           className={classes}
           modifiers={popperModifiers}
           placement={popperPlacement}>
-          {popperComponent}
+          {this.renderPopperComponent}
         </Popper>
       );
     }

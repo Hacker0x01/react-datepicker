@@ -103,13 +103,15 @@ export default class Calendar extends React.Component {
     setOpen: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
+    scheduleUpdate: PropTypes.func,
   };
 
   static get defaultProps() {
     return {
       onDropdownFocus: () => {},
       monthsShown: 1,
-      forceShowMonthNavigation: false
+      forceShowMonthNavigation: false,
+      scheduleUpdate: () => {},
     };
   }
 
@@ -210,6 +212,8 @@ export default class Calendar extends React.Component {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
     }
+
+    this.props.scheduleUpdate();
   };
 
   handleMonthChange = date => {
@@ -224,6 +228,8 @@ export default class Calendar extends React.Component {
         this.props.setOpen(true);
       }
     }
+
+    this.props.scheduleUpdate();
   };
 
   handleMonthYearChange = date => {
