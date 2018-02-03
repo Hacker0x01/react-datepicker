@@ -1,9 +1,8 @@
 {
-  "author": "littletower",
-  "name": "react-datepicker-timechange",
-  "description":
-    "A simple and reusable datepicker component for React - HackerOne fork",
-  "version": "1.0.4",
+  "author": "HackerOne",
+  "name": "react-datepicker",
+  "description": "A simple and reusable datepicker component for React",
+  "version": "1.1.0",
   "license": "MIT",
   "homepage": "https://github.com/littletower/react-datepicker",
   "main": "lib",
