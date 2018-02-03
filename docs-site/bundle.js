@@ -28222,7 +28222,7 @@
 
       var _example_components2 = _interopRequireDefault(_example_components);
 
-      var _hero_example = __webpack_require__(400);
+      var _hero_example = __webpack_require__(402);
 
       var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -28520,109 +28520,119 @@
 
       var _date_range2 = _interopRequireDefault(_date_range);
 
-      var _tab_index = __webpack_require__(374);
+      var _date_range_with_show_disabled_navigation = __webpack_require__(374);
+
+      var _date_range_with_show_disabled_navigation2 = _interopRequireDefault(
+        _date_range_with_show_disabled_navigation
+      );
+
+      var _tab_index = __webpack_require__(375);
 
       var _tab_index2 = _interopRequireDefault(_tab_index);
 
-      var _year_dropdown = __webpack_require__(375);
+      var _year_dropdown = __webpack_require__(376);
 
       var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-      var _month_dropdown = __webpack_require__(376);
+      var _month_dropdown = __webpack_require__(377);
 
       var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-      var _month_year_dropdown = __webpack_require__(377);
+      var _month_year_dropdown = __webpack_require__(378);
 
       var _month_year_dropdown2 = _interopRequireDefault(_month_year_dropdown);
 
-      var _month_dropdown_short = __webpack_require__(378);
+      var _month_dropdown_short = __webpack_require__(379);
 
       var _month_dropdown_short2 = _interopRequireDefault(
         _month_dropdown_short
       );
 
-      var _year_select_dropdown = __webpack_require__(379);
+      var _year_select_dropdown = __webpack_require__(380);
 
       var _year_select_dropdown2 = _interopRequireDefault(
         _year_select_dropdown
       );
 
-      var _today = __webpack_require__(380);
+      var _today = __webpack_require__(381);
 
       var _today2 = _interopRequireDefault(_today);
 
-      var _timezone_date = __webpack_require__(381);
+      var _timezone_date = __webpack_require__(382);
 
       var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-      var _inline = __webpack_require__(382);
+      var _inline = __webpack_require__(383);
 
       var _inline2 = _interopRequireDefault(_inline);
 
-      var _open_to_date = __webpack_require__(383);
+      var _open_to_date = __webpack_require__(384);
 
       var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-      var _fixed_calendar = __webpack_require__(384);
+      var _fixed_calendar = __webpack_require__(385);
 
       var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-      var _week_numbers = __webpack_require__(385);
+      var _week_numbers = __webpack_require__(386);
 
       var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-      var _custom_input = __webpack_require__(386);
+      var _custom_input = __webpack_require__(387);
 
       var _custom_input2 = _interopRequireDefault(_custom_input);
 
-      var _multi_month = __webpack_require__(387);
+      var _multi_month = __webpack_require__(388);
 
       var _multi_month2 = _interopRequireDefault(_multi_month);
 
-      var _multi_month_drp = __webpack_require__(388);
+      var _multi_month_drp = __webpack_require__(389);
 
       var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-      var _children = __webpack_require__(389);
+      var _children = __webpack_require__(390);
 
       var _children2 = _interopRequireDefault(_children);
 
-      var _portal = __webpack_require__(390);
+      var _portal = __webpack_require__(391);
 
       var _portal2 = _interopRequireDefault(_portal);
 
-      var _inline_portal = __webpack_require__(391);
+      var _inline_portal = __webpack_require__(392);
 
       var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-      var _raw_change = __webpack_require__(392);
+      var _raw_change = __webpack_require__(393);
 
       var _raw_change2 = _interopRequireDefault(_raw_change);
 
-      var _show_time = __webpack_require__(393);
+      var _show_time = __webpack_require__(394);
 
       var _show_time2 = _interopRequireDefault(_show_time);
 
-      var _exclude_times = __webpack_require__(394);
+      var _exclude_times = __webpack_require__(395);
 
       var _exclude_times2 = _interopRequireDefault(_exclude_times);
 
-      var _exclude_time_period = __webpack_require__(395);
+      var _exclude_time_period = __webpack_require__(396);
 
       var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-      var _dont_close_onSelect = __webpack_require__(396);
+      var _include_times = __webpack_require__(397);
+
+      var _include_times2 = _interopRequireDefault(_include_times);
+
+      var _dont_close_onSelect = __webpack_require__(398);
 
       var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
-      var _open_by_default = __webpack_require__(397);
+      var _open_by_default = __webpack_require__(399);
 
       var _open_by_default2 = _interopRequireDefault(_open_by_default);
 
-      __webpack_require__(398);
+      __webpack_require__(400);
 
-      __webpack_require__(399);
+      __webpack_require__(401);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -28711,6 +28721,13 @@
                 )
               },
               {
+                title: "Include Times",
+                component: _react2.default.createElement(
+                  _include_times2.default,
+                  null
+                )
+              },
+              {
                 title: "Specific Time Range",
                 component: _react2.default.createElement(
                   _exclude_time_period2.default,
@@ -28767,6 +28784,13 @@
                 title: "Specific date range",
                 component: _react2.default.createElement(
                   _specific_date_range2.default,
+                  null
+                )
+              },
+              {
+                title: "Date Range with disabled navigation shown",
+                component: _react2.default.createElement(
+                  _date_range_with_show_disabled_navigation2.default,
                   null
                 )
               },
@@ -48101,6 +48125,7 @@
             });
 
             _this.props.onChange(changedDate);
+            _this.props.onTimeChange(changedDate);
             _this.setOpen(false);
           };
 
@@ -48188,9 +48213,17 @@
           };
 
           _this.onClearClick = function(event) {
-            event.preventDefault();
+            if (event) {
+              if (event.preventDefault) {
+                event.preventDefault();
+              }
+            }
             _this.props.onChange(null, event);
             _this.setState({ inputValue: null });
+          };
+
+          _this.clear = function() {
+            _this.onClearClick();
           };
 
           _this.renderCalendar = function() {
@@ -48229,6 +48262,7 @@
                 formatWeekNumber: _this.props.formatWeekNumber,
                 highlightDates: _this.state.highlightDates,
                 includeDates: _this.props.includeDates,
+                includeTimes: _this.props.includeTimes,
                 inline: _this.props.inline,
                 peekNextMonth: _this.props.peekNextMonth,
                 showMonthDropdown: _this.props.showMonthDropdown,
@@ -48238,6 +48272,8 @@
                 showYearDropdown: _this.props.showYearDropdown,
                 withPortal: _this.props.withPortal,
                 forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
+                showDisabledMonthNavigation:
+                  _this.props.showDisabledMonthNavigation,
                 scrollableYearDropdown: _this.props.scrollableYearDropdown,
                 scrollableMonthYearDropdown:
                   _this.props.scrollableMonthYearDropdown,
@@ -48433,6 +48469,7 @@
         highlightDates: _propTypes2.default.array,
         id: _propTypes2.default.string,
         includeDates: _propTypes2.default.array,
+        includeTimes: _propTypes2.default.array,
         inline: _propTypes2.default.bool,
         isClearable: _propTypes2.default.bool,
         locale: _propTypes2.default.string,
@@ -48472,6 +48509,7 @@
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
         forceShowMonthNavigation: _propTypes2.default.bool,
+        showDisabledMonthNavigation: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
         startOpen: _propTypes2.default.bool,
         tabIndex: _propTypes2.default.number,
@@ -48490,7 +48528,8 @@
         minTime: _propTypes2.default.object,
         maxTime: _propTypes2.default.object,
         excludeTimes: _propTypes2.default.array,
-        useShortMonthInDropdown: _propTypes2.default.bool
+        useShortMonthInDropdown: _propTypes2.default.bool,
+        onTimeChange: _propTypes2.default.func
       };
       exports.default = DatePicker;
 
@@ -48826,31 +48865,53 @@
           };
 
           _this.renderPreviousMonthButton = function() {
+            var allPrevDaysDisabled = (0, _date_utils.allDaysDisabledBefore)(
+              _this.state.date,
+              "month",
+              _this.props
+            );
+
             if (
               !_this.props.forceShowMonthNavigation &&
-              (0, _date_utils.allDaysDisabledBefore)(
-                _this.state.date,
-                "month",
-                _this.props
-              )
+              !_this.props.showDisabledMonthNavigation &&
+              allPrevDaysDisabled
             ) {
               return;
             }
-            return _react2.default.createElement("a", {
-              className:
-                "react-datepicker__navigation react-datepicker__navigation--previous",
-              onClick: _this.decreaseMonth
+
+            var classes = [
+              "react-datepicker__navigation",
+              "react-datepicker__navigation--previous"
+            ];
+
+            var clickHandler = _this.decreaseMonth;
+
+            if (
+              allPrevDaysDisabled &&
+              _this.props.showDisabledMonthNavigation
+            ) {
+              classes.push("react-datepicker__navigation--previous--disabled");
+              clickHandler = null;
+            }
+
+            return _react2.default.createElement("button", {
+              type: "button",
+              className: classes.join(" "),
+              onClick: clickHandler
             });
           };
 
           _this.renderNextMonthButton = function() {
+            var allNextDaysDisabled = (0, _date_utils.allDaysDisabledAfter)(
+              _this.state.date,
+              "month",
+              _this.props
+            );
+
             if (
               !_this.props.forceShowMonthNavigation &&
-              (0, _date_utils.allDaysDisabledAfter)(
-                _this.state.date,
-                "month",
-                _this.props
-              )
+              !_this.props.showDisabledMonthNavigation &&
+              allNextDaysDisabled
             ) {
               return;
             }
@@ -48868,9 +48929,20 @@
               );
             }
 
-            return _react2.default.createElement("a", {
+            var clickHandler = _this.increaseMonth;
+
+            if (
+              allNextDaysDisabled &&
+              _this.props.showDisabledMonthNavigation
+            ) {
+              classes.push("react-datepicker__navigation--next--disabled");
+              clickHandler = null;
+            }
+
+            return _react2.default.createElement("button", {
+              type: "button",
               className: classes.join(" "),
-              onClick: _this.increaseMonth
+              onClick: clickHandler
             });
           };
 
@@ -48930,7 +49002,7 @@
                 ? arguments[0]
                 : false;
 
-            if (!_this.props.showMonthDropdown) {
+            if (!_this.props.showMonthDropdown || overrideHide) {
               return;
             }
             return _react2.default.createElement(_month_dropdown2.default, {
@@ -48949,7 +49021,7 @@
                 ? arguments[0]
                 : false;
 
-            if (!_this.props.showMonthYearDropdown) {
+            if (!_this.props.showMonthYearDropdown || overrideHide) {
               return;
             }
             return _react2.default.createElement(
@@ -49068,6 +49140,7 @@
                 selected: _this.props.selected,
                 onChange: _this.props.onTimeChange,
                 format: _this.props.timeFormat,
+                includeTimes: _this.props.includeTimes,
                 intervals: _this.props.timeIntervals,
                 minTime: _this.props.minTime,
                 maxTime: _this.props.maxTime,
@@ -49172,6 +49245,7 @@
         formatWeekNumber: _propTypes2.default.func,
         highlightDates: _propTypes2.default.instanceOf(Map),
         includeDates: _propTypes2.default.array,
+        includeTimes: _propTypes2.default.array,
         inline: _propTypes2.default.bool,
         locale: _propTypes2.default.string,
         maxDate: _propTypes2.default.object,
@@ -49211,7 +49285,8 @@
         weekLabel: _propTypes2.default.string,
         yearDropdownItemNumber: _propTypes2.default.number,
         setOpen: _propTypes2.default.func,
-        useShortMonthInDropdown: _propTypes2.default.bool
+        useShortMonthInDropdown: _propTypes2.default.bool,
+        showDisabledMonthNavigation: _propTypes2.default.bool
       };
       exports.default = Calendar;
 
@@ -50837,6 +50912,22 @@
       var touchEvents = ["touchstart", "touchmove"];
       var IGNORE_CLASS_NAME = "ignore-react-onclickoutside";
       /**
+       * Options for addEventHandler and removeEventHandler
+       */
+
+      function getEventHandlerOptions(instance, eventName) {
+        var handlerOptions = null;
+        var isTouchEvent = touchEvents.indexOf(eventName) !== -1;
+
+        if (isTouchEvent && passiveEventSupport) {
+          handlerOptions = {
+            passive: !instance.props.preventDefault
+          };
+        }
+
+        return handlerOptions;
+      }
+      /**
        * This function generates the HOC function that you'll use
        * in order to impart onOutsideClick listening to an
        * arbitrary component. It gets called at the end of the
@@ -50931,19 +51022,10 @@
                   };
 
                   events.forEach(function(eventName) {
-                    var handlerOptions = null;
-                    var isTouchEvent = touchEvents.indexOf(eventName) !== -1;
-
-                    if (isTouchEvent && passiveEventSupport) {
-                      handlerOptions = {
-                        passive: !_this.props.preventDefault
-                      };
-                    }
-
                     document.addEventListener(
                       eventName,
                       handlersMap[_this._uid],
-                      handlerOptions
+                      getEventHandlerOptions(_this, eventName)
                     );
                   });
                 };
@@ -50960,7 +51042,11 @@
                     }
 
                     events.forEach(function(eventName) {
-                      return document.removeEventListener(eventName, fn);
+                      return document.removeEventListener(
+                        eventName,
+                        fn,
+                        getEventHandlerOptions(_this, eventName)
+                      );
                     });
                     delete handlersMap[_this._uid];
                   }
@@ -71530,6 +71616,11 @@
                   (0, _date_utils.isTimeDisabled)(
                     time,
                     _this.props.excludeTimes
+                  )) ||
+                (_this.props.includeTimes &&
+                  !(0, _date_utils.isTimeDisabled)(
+                    time,
+                    _this.props.includeTimes
                   ))
               ) {
                 return;
@@ -71553,6 +71644,11 @@
                   (0, _date_utils.isTimeDisabled)(
                     time,
                     _this.props.excludeTimes
+                  )) ||
+                (_this.props.includeTimes &&
+                  !(0, _date_utils.isTimeDisabled)(
+                    time,
+                    _this.props.includeTimes
                   ))
               ) {
                 classes.push("react-datepicker__time-list-item--disabled");
@@ -71677,6 +71773,7 @@
 
       Time.propTypes = {
         format: _propTypes2.default.string,
+        includeTimes: _propTypes2.default.array,
         intervals: _propTypes2.default.number,
         selected: _propTypes2.default.object,
         onChange: _propTypes2.default.func,
@@ -72630,7 +72727,7 @@
       /* WEBPACK VAR INJECTION */ (function(global) {
         /**!
          * @fileOverview Kickass library to create and place poppers near their reference elements.
-         * @version 1.12.9
+         * @version 1.12.6
          * @license
          * Copyright (c) 2016 Federico Zivolo and contributors
          *
@@ -72662,7 +72759,8 @@
           "use strict";
 
           var isBrowser =
-            typeof window !== "undefined" && typeof document !== "undefined";
+            typeof window !== "undefined" &&
+            typeof window.document !== "undefined";
           var longerTimeoutBrowsers = ["Edge", "Trident", "Firefox"];
           var timeoutDuration = 0;
           for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
@@ -72682,7 +72780,7 @@
                 return;
               }
               called = true;
-              window.Promise.resolve().then(function() {
+              Promise.resolve().then(function() {
                 called = false;
                 fn();
               });
@@ -72742,7 +72840,7 @@
               return [];
             }
             // NOTE: 1 DOM access here
-            var css = getComputedStyle(element, null);
+            var css = window.getComputedStyle(element, null);
             return property ? css[property] : css;
           }
 
@@ -72770,7 +72868,7 @@
           function getScrollParent(element) {
             // Return body, `getScroll` will take care to get the correct `scrollTop` from it
             if (!element) {
-              return document.body;
+              return window.document.body;
             }
 
             switch (element.nodeName) {
@@ -72812,7 +72910,7 @@
                 return element.ownerDocument.documentElement;
               }
 
-              return document.documentElement;
+              return window.document.documentElement;
             }
 
             // .offsetParent will return the closest TD or TABLE in case
@@ -72870,7 +72968,7 @@
               !element2 ||
               !element2.nodeType
             ) {
-              return document.documentElement;
+              return window.document.documentElement;
             }
 
             // Here we make sure to give as "start" the element that comes first in the DOM
@@ -72976,8 +73074,8 @@
             var sideB = sideA === "Left" ? "Right" : "Bottom";
 
             return (
-              parseFloat(styles["border" + sideA + "Width"], 10) +
-              parseFloat(styles["border" + sideB + "Width"], 10)
+              +styles["border" + sideA + "Width"].split("px")[0] +
+              +styles["border" + sideB + "Width"].split("px")[0]
             );
           }
 
@@ -73016,9 +73114,9 @@
           }
 
           function getWindowSizes() {
-            var body = document.body;
-            var html = document.documentElement;
-            var computedStyle = isIE10$1() && getComputedStyle(html);
+            var body = window.document.body;
+            var html = window.document.documentElement;
+            var computedStyle = isIE10$1() && window.getComputedStyle(html);
 
             return {
               height: getSize("Height", body, html, computedStyle),
@@ -73164,8 +73262,8 @@
             var scrollParent = getScrollParent(children);
 
             var styles = getStyleComputedProperty(parent);
-            var borderTopWidth = parseFloat(styles.borderTopWidth, 10);
-            var borderLeftWidth = parseFloat(styles.borderLeftWidth, 10);
+            var borderTopWidth = +styles.borderTopWidth.split("px")[0];
+            var borderLeftWidth = +styles.borderLeftWidth.split("px")[0];
 
             var offsets = getClientRect({
               top: childrenRect.top - parentRect.top - borderTopWidth,
@@ -73181,8 +73279,8 @@
             // differently when margins are applied to it. The margins are included in
             // the box of the documentElement, in the other cases not.
             if (!isIE10 && isHTML) {
-              var marginTop = parseFloat(styles.marginTop, 10);
-              var marginLeft = parseFloat(styles.marginLeft, 10);
+              var marginTop = +styles.marginTop.split("px")[0];
+              var marginLeft = +styles.marginLeft.split("px")[0];
 
               offsets.top -= borderTopWidth - marginTop;
               offsets.bottom -= borderTopWidth - marginTop;
@@ -73276,7 +73374,7 @@
               // Handle other cases based on DOM element used as boundaries
               var boundariesNode = void 0;
               if (boundariesElement === "scrollParent") {
-                boundariesNode = getScrollParent(getParentNode(reference));
+                boundariesNode = getScrollParent(getParentNode(popper));
                 if (boundariesNode.nodeName === "BODY") {
                   boundariesNode = popper.ownerDocument.documentElement;
                 }
@@ -73436,7 +73534,7 @@
            * @returns {Object} object containing width and height properties
            */
           function getOuterSizes(element) {
-            var styles = getComputedStyle(element);
+            var styles = window.getComputedStyle(element);
             var x =
               parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
             var y =
@@ -73689,7 +73787,7 @@
             for (var i = 0; i < prefixes.length - 1; i++) {
               var prefix = prefixes[i];
               var toCheck = prefix ? "" + prefix + upperProp : property;
-              if (typeof document.body.style[toCheck] !== "undefined") {
+              if (typeof window.document.body.style[toCheck] !== "undefined") {
                 return toCheck;
               }
             }
@@ -73835,7 +73933,7 @@
            */
           function disableEventListeners() {
             if (this.state.eventsEnabled) {
-              cancelAnimationFrame(this.scheduleUpdate);
+              window.cancelAnimationFrame(this.scheduleUpdate);
               this.state = removeEventListeners(this.reference, this.state);
             }
           }
@@ -74127,8 +74225,6 @@
            * @returns {Object} The data object, properly modified
            */
           function arrow(data, options) {
-            var _data$offsets$arrow;
-
             // arrow depends on keepTogether in order to work
             if (
               !isModifierRequired(
@@ -74190,7 +74286,6 @@
               data.offsets.popper[side] +=
                 reference[side] + arrowElementSize - popper[opSide];
             }
-            data.offsets.popper = getClientRect(data.offsets.popper);
 
             // compute center of the popper
             var center =
@@ -74198,20 +74293,14 @@
 
             // Compute the sideValue using the updated popper offsets
             // take popper margin in account because we don't have this info available
-            var css = getStyleComputedProperty(data.instance.popper);
-            var popperMarginSide = parseFloat(
-              css["margin" + sideCapitalized],
-              10
-            );
-            var popperBorderSide = parseFloat(
-              css["border" + sideCapitalized + "Width"],
-              10
-            );
+            var popperMarginSide = getStyleComputedProperty(
+              data.instance.popper,
+              "margin" + sideCapitalized
+            ).replace("px", "");
             var sideValue =
               center -
-              data.offsets.popper[side] -
-              popperMarginSide -
-              popperBorderSide;
+              getClientRect(data.offsets.popper)[side] -
+              popperMarginSide;
 
             // prevent arrowElement from being placed not contiguously to its popper
             sideValue = Math.max(
@@ -74220,10 +74309,9 @@
             );
 
             data.arrowElement = arrowElement;
-            data.offsets.arrow = ((_data$offsets$arrow = {}),
-            defineProperty(_data$offsets$arrow, side, Math.round(sideValue)),
-            defineProperty(_data$offsets$arrow, altSide, ""),
-            _data$offsets$arrow);
+            data.offsets.arrow = {};
+            data.offsets.arrow[side] = Math.round(sideValue);
+            data.offsets.arrow[altSide] = ""; // make sure to unset any eventual altSide value from the DOM node
 
             return data;
           }
@@ -78102,6 +78190,135 @@
             : (subClass.__proto__ = superClass);
       }
 
+      var DateRangeWithShowDisabledNavigation = (function(_React$Component) {
+        _inherits(DateRangeWithShowDisabledNavigation, _React$Component);
+
+        function DateRangeWithShowDisabledNavigation() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, DateRangeWithShowDisabledNavigation);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.state = {
+              startDate: null
+            }),
+            (_this.handleChange = function(date) {
+              _this.setState({
+                startDate: date
+              });
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        DateRangeWithShowDisabledNavigation.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                '\n<DatePicker\n  selected={this.state.startDate}\n  onChange={this.handleChange}\n  minDate={moment()}\n  maxDate={moment().add(5, "months")}\n  showDisabledMonthNavigation />\n</div>\n\n'
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                minDate: (0, _moment2.default)(),
+                maxDate: (0, _moment2.default)().add(5, "months"),
+                showDisabledMonthNavigation: true
+              })
+            )
+          );
+        };
+
+        return DateRangeWithShowDisabledNavigation;
+      })(_react2.default.Component);
+
+      exports.default = DateRangeWithShowDisabledNavigation;
+
+      /***/
+    },
+    /* 375 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(208);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _moment = __webpack_require__(218);
+
+      var _moment2 = _interopRequireDefault(_moment);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
       var TabIndex = (function(_React$Component) {
         _inherits(TabIndex, _React$Component);
 
@@ -78157,7 +78374,7 @@
 
       /***/
     },
-    /* 375 */
+    /* 376 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78275,7 +78492,7 @@
 
       /***/
     },
-    /* 376 */
+    /* 377 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78390,7 +78607,7 @@
 
       /***/
     },
-    /* 377 */
+    /* 378 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78508,7 +78725,7 @@
 
       /***/
     },
-    /* 378 */
+    /* 379 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78624,7 +78841,7 @@
 
       /***/
     },
-    /* 379 */
+    /* 380 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78742,7 +78959,7 @@
 
       /***/
     },
-    /* 380 */
+    /* 381 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -78857,7 +79074,7 @@
 
       /***/
     },
-    /* 381 */
+    /* 382 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79072,7 +79289,7 @@
 
       /***/
     },
-    /* 382 */
+    /* 383 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79187,7 +79404,7 @@
 
       /***/
     },
-    /* 383 */
+    /* 384 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79314,7 +79531,7 @@
 
       /***/
     },
-    /* 384 */
+    /* 385 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79443,7 +79660,7 @@
 
       /***/
     },
-    /* 385 */
+    /* 386 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79558,7 +79775,7 @@
 
       /***/
     },
-    /* 386 */
+    /* 387 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79712,7 +79929,7 @@
 
       /***/
     },
-    /* 387 */
+    /* 388 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79827,7 +80044,7 @@
 
       /***/
     },
-    /* 388 */
+    /* 389 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -79943,7 +80160,7 @@
 
       /***/
     },
-    /* 389 */
+    /* 390 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80065,7 +80282,7 @@
 
       /***/
     },
-    /* 390 */
+    /* 391 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80180,7 +80397,7 @@
 
       /***/
     },
-    /* 391 */
+    /* 392 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80310,7 +80527,7 @@
 
       /***/
     },
-    /* 392 */
+    /* 393 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80447,7 +80664,7 @@
 
       /***/
     },
-    /* 393 */
+    /* 394 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80571,7 +80788,7 @@
 
       /***/
     },
-    /* 394 */
+    /* 395 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80735,7 +80952,7 @@
 
       /***/
     },
-    /* 395 */
+    /* 396 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -80889,7 +81106,171 @@
 
       /***/
     },
-    /* 396 */
+    /* 397 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(208);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _moment = __webpack_require__(218);
+
+      var _moment2 = _interopRequireDefault(_moment);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var IncludeTimes = (function(_React$Component) {
+        _inherits(IncludeTimes, _React$Component);
+
+        function IncludeTimes() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, IncludeTimes);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.state = {
+              startDate: (0, _moment2.default)()
+                .hours(16)
+                .minutes(30)
+            }),
+            (_this.handleChange = function(date) {
+              _this.setState({
+                startDate: date
+              });
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        IncludeTimes.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                "<DatePicker",
+                _react2.default.createElement("br", null),
+                "  selected={this.state.startDate}",
+                _react2.default.createElement("br", null),
+                "  onChange={this.handleChange}",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  "  showTimeSelect",
+                  _react2.default.createElement("br", null),
+                  "  includeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}"
+                ),
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  '  dateFormat="LLL"'
+                ),
+                _react2.default.createElement("br", null),
+                "/>"
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                showTimeSelect: true,
+                includeTimes: [
+                  (0, _moment2.default)()
+                    .hours(17)
+                    .minutes(0),
+                  (0, _moment2.default)()
+                    .hours(18)
+                    .minutes(30),
+                  (0, _moment2.default)()
+                    .hours(19)
+                    .minutes(30),
+                  (0, _moment2.default)()
+                    .hours(17)
+                    .minutes(30)
+                ],
+                dateFormat: "LLL"
+              })
+            )
+          );
+        };
+
+        return IncludeTimes;
+      })(_react2.default.Component);
+
+      exports.default = IncludeTimes;
+
+      /***/
+    },
+    /* 398 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -81004,7 +81385,7 @@
 
       /***/
     },
-    /* 397 */
+    /* 399 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -81104,6 +81485,7 @@
               "div",
               { className: "column" },
               _react2.default.createElement(_reactDatepicker2.default, {
+                autoFocus: true,
                 selected: this.state.startDate,
                 onChange: this.handleChange
               })
@@ -81118,14 +81500,14 @@
 
       /***/
     },
-    /* 398 */
+    /* 400 */
     /***/ function(module, exports) {
       // removed by extract-text-webpack-plugin
       /***/
     },
-    /* 399 */
-    398,
-    /* 400 */
+    /* 401 */
+    400,
+    /* 402 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
