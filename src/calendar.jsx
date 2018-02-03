@@ -81,6 +81,7 @@ export default class Calendar extends React.Component {
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
+    timeCaption: PropTypes.string,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
@@ -109,7 +110,8 @@ export default class Calendar extends React.Component {
     return {
       onDropdownFocus: () => {},
       monthsShown: 1,
-      forceShowMonthNavigation: false
+      forceShowMonthNavigation: false,
+      timeCaption: "Time",
     };
   }
 
@@ -506,6 +508,7 @@ export default class Calendar extends React.Component {
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
+          timeCaption={this.props.timeCaption}
           todayButton={this.props.todayButton}
           showMonthDropdown={this.props.showMonthDropdown}
           showMonthYearDropdown={this.props.showMonthYearDropdown}
