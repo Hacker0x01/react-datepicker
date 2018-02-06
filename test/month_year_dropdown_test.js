@@ -48,12 +48,14 @@ describe("MonthYearDropdown", () => {
   });
 
   describe("scroll mode", () => {
+    let selectedDate;
     beforeEach(function() {
-      monthYearDropdown = getMonthYearDropdown();
+      selectedDate = newDate("2018-01");
+      monthYearDropdown = getMonthYearDropdown({ date: selectedDate });
     });
 
     it("shows the selected month year in the initial view", () => {
-      const selected_month_year_name = formatDate(newDate(), "MMMM YYYY");
+      const selected_month_year_name = formatDate(selectedDate, "MMMM YYYY");
       expect(monthYearDropdown.text()).to.contain(selected_month_year_name);
     });
 
