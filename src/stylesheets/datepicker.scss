@@ -450,7 +450,7 @@
   vertical-align: middle;
 
   &::after {
-    background-color: $datepicker__selected-color;
+    background-color: rgb(117, 117, 117);
     border-radius: 50%;
     bottom: 0;
     box-sizing: border-box;
