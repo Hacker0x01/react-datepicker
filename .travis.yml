@@ -12,8 +12,10 @@ node_js:
 #       - g++-4.8
 before_install:
   - npm i -g npm@latest
-  # - export DISPLAY=:99.0
-  # - sh -e /etc/init.d/xvfb start
+
+  # Needed for Karma test runner
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 # install:
 #   - yarn install
 script:
