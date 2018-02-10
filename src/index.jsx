@@ -273,10 +273,11 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  handleChange = event => {
+  handleChange = (...allArgs) => {
+    let event = allArgs[0];
     if (this.props.onChangeRaw) {
-      this.props.onChangeRaw(event);
-      if (event.isDefaultPrevented()) {
+      this.props.onChangeRaw.apply(this, allArgs);
+      if (typeof event.isDefaultPrevented !== "function" || event.isDefaultPrevented()) {
         return;
       }
     }
