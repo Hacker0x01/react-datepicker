@@ -210,6 +210,7 @@
         overflow-y: scroll;
         padding-right: 30px;
         width: 100%;
+        box-sizing: content-box;
 
         li.react-datepicker__time-list-item {
           padding: 5px 10px;
