@@ -286,7 +286,7 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderPreviousMonthButton = () => {
+  renderLeftArrowButton = () => {
 
     const allPrevDaysDisabled = allDaysDisabledBefore(this.state.date, "month", this.props);
 
@@ -303,7 +303,12 @@ export default class Calendar extends React.Component {
       "react-datepicker__navigation--previous"
     ];
 
-    let clickHandler = this.decreaseMonth;
+    let clickHandler;
+	if(this.props.locale === 'he' || this.props.locale === 'ar') {
+		clickHandler = this.increaseMonth;
+	} else {
+		clickHandler = this.decreaseMonth;
+	}
 
     if (allPrevDaysDisabled && this.props.showDisabledMonthNavigation) {
       classes.push("react-datepicker__navigation--previous--disabled");
@@ -317,7 +322,7 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderNextMonthButton = () => {
+  renderRightArrowButton = () => {
 
     const allNextDaysDisabled = allDaysDisabledAfter(this.state.date, "month", this.props);
 
@@ -339,8 +344,13 @@ export default class Calendar extends React.Component {
     if (this.props.todayButton) {
       classes.push("react-datepicker__navigation--next--with-today-button");
     }
-
-    let clickHandler = this.increaseMonth;
+	
+	let clickHandler;
+	if(this.props.locale === 'he' || this.props.locale === 'ar') {
+		clickHandler = this.decreaseMonth;
+	} else {
+		clickHandler = this.increaseMonth;
+	}
 
     if (allNextDaysDisabled && this.props.showDisabledMonthNavigation) {
         classes.push("react-datepicker__navigation--next--disabled");
@@ -523,8 +533,8 @@ export default class Calendar extends React.Component {
     return (
       <div className={classnames("react-datepicker", this.props.className)}>
         <div className="react-datepicker__triangle" />
-        {this.renderPreviousMonthButton()}
-        {this.renderNextMonthButton()}
+        {this.renderLeftArrowButton()}
+        {this.renderRightArrowButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
