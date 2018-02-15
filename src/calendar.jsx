@@ -32,6 +32,8 @@ import {
   getEffectiveMaxDate
 } from "./date_utils";
 
+import { isLocaleRtl } from "./locale_utils";
+
 const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__year-select",
   "react-datepicker__month-select",
@@ -304,7 +306,7 @@ export default class Calendar extends React.Component {
     ];
 
     let clickHandler;
-	if(this.props.locale === 'he' || this.props.locale === 'ar') {
+	if(isLocaleRtl(this.props.locale)) {
 		clickHandler = this.increaseMonth;
 	} else {
 		clickHandler = this.decreaseMonth;
@@ -346,7 +348,7 @@ export default class Calendar extends React.Component {
     }
 	
 	let clickHandler;
-	if(this.props.locale === 'he' || this.props.locale === 'ar') {
+	if(isLocaleRtl(this.props.locale)) {
 		clickHandler = this.decreaseMonth;
 	} else {
 		clickHandler = this.increaseMonth;
