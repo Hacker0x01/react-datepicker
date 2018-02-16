@@ -74,6 +74,7 @@ General datepicker component.
 | `startDate`                   | `object`                       |                 |             |
 | `startOpen`                   | `bool`                         |                 |             |
 | `tabIndex`                    | `number`                       |                 |             |
+| `timeCaption`                 | `string`                       | `"Time"`        |             |
 | `timeFormat`                  | `string`                       |                 |             |
 | `timeIntervals`               | `number`                       | `30`            |             |
 | `title`                       | `string`                       |                 |             |

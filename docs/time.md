@@ -12,4 +12,5 @@
 | `onChange`     | `func`   |               |             |
 | `onTimeChange` |          | `() => {}`    |             |
 | `selected`     | `object` |               |             |
+| `timeCaption`  | `string` | `"Time"`      |             |
 | `todayButton`  | `string` | `null`        |             |
