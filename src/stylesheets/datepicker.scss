@@ -21,11 +21,18 @@
   left: 50px;
 }
 
+.popper-custom-wrapper {
+  position: relative;
+}
+
 .react-datepicker-popper {
+  transform: none !important;
+  top: auto !important;
   z-index: 1;
 
   &[data-placement^="bottom"] {
     margin-top: $datepicker__triangle-size + 2px;
+    top: 0;
 
     .react-datepicker__triangle {
       @extend %triangle-arrow-up;
@@ -34,6 +41,7 @@
 
   &[data-placement^="top"] {
     margin-bottom: $datepicker__triangle-size + 2px;
+    bottom: 100%;
 
     .react-datepicker__triangle {
       @extend %triangle-arrow-down;

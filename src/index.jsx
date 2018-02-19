@@ -4,34 +4,34 @@ import PropTypes from "prop-types";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import {
-  newDate,
-  now,
-  cloneDate,
-  isMoment,
-  isDate,
-  isBefore,
-  isAfter,
-  setTime,
-  getSecond,
-  getMinute,
-  getHour,
-  getMonth,
   addDays,
   addMonths,
   addWeeks,
   addYears,
+  cloneDate,
+  getEffectiveMaxDate,
+  getEffectiveMinDate,
+  getHightLightDaysMap,
+  getHour,
+  getMinute,
+  getMonth,
+  getSecond,
+  isAfter,
+  isBefore,
+  isDate,
+  isDayDisabled,
+  isDayInRange,
+  isMoment,
+  isSameDay,
+  newDate,
+  now,
+  parseDate,
+  safeDateFormat,
+  setTime,
   subtractDays,
   subtractMonths,
   subtractWeeks,
-  subtractYears,
-  isSameDay,
-  isDayDisabled,
-  isDayInRange,
-  getEffectiveMinDate,
-  getEffectiveMaxDate,
-  parseDate,
-  safeDateFormat,
-  getHightLightDaysMap
+  subtractYears
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -136,18 +136,26 @@ export default class DatePicker extends React.Component {
       allowSameDay: false,
       dateFormat: "L",
       dateFormatCalendar: "MMMM YYYY",
-      onChange() {},
+      onChange() {
+      },
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll",
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onSelect() {},
-      onClickOutside() {},
-      onMonthChange() {},
+      onFocus() {
+      },
+      onBlur() {
+      },
+      onKeyDown() {
+      },
+      onSelect() {
+      },
+      onClickOutside() {
+      },
+      onMonthChange() {
+      },
       preventOpenOnFocus: false,
-      onYearChange() {},
+      onYearChange() {
+      },
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -183,10 +191,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? newDate(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate
-        ? newDate(this.props.startDate)
-        : this.props.selectsStart && this.props.endDate
-          ? newDate(this.props.endDate)
-          : now(this.props.utcOffset);
+      ? newDate(this.props.startDate)
+      : this.props.selectsStart && this.props.endDate
+        ? newDate(this.props.endDate)
+        : now(this.props.utcOffset);
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -196,8 +204,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -451,13 +459,13 @@ export default class DatePicker extends React.Component {
   };
 
   onClearClick = event => {
-  	if (event) {
-  		if (event.preventDefault) {
-  			event.preventDefault()
-  		}
-  	}
-  	this.props.onChange(null, event)
-  	this.setState({ inputValue: null })
+    if (event) {
+      if (event.preventDefault) {
+        event.preventDefault()
+      }
+    }
+    this.props.onChange(null, event)
+    this.setState({ inputValue: null })
   };
 
   clear = () => {
@@ -545,8 +553,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
@@ -578,7 +586,7 @@ export default class DatePicker extends React.Component {
         <a
           className="react-datepicker__close-icon"
           href="javascript:void(0)"
-          onClick={this.onClearClick}/>
+          onClick={this.onClearClick} />
       );
     } else {
       return null;
@@ -609,19 +617,21 @@ export default class DatePicker extends React.Component {
     }
 
     return (
-      <PopperComponent
-        className={this.props.popperClassName}
-        hidePopper={!this.state.open || this.props.disabled}
-        popperModifiers={this.props.popperModifiers}
-        targetComponent={
-          <div className="react-datepicker__input-container">
-            {this.renderDateInput()}
-            {this.renderClearButton()}
-          </div>
-        }
-        popperContainer={this.props.popperContainer}
-        popperComponent={calendar}
-        popperPlacement={this.props.popperPlacement}/>
+      <div className="popper-custom-wrapper">
+        <PopperComponent
+          className={this.props.popperClassName}
+          hidePopper={!this.state.open || this.props.disabled}
+          popperModifiers={this.props.popperModifiers}
+          targetComponent={
+            <div className="react-datepicker__input-container">
+              {this.renderDateInput()}
+              {this.renderClearButton()}
+            </div>
+          }
+          popperContainer={this.props.popperContainer}
+          popperComponent={calendar}
+          popperPlacement={this.props.popperPlacement} />
+      </div>
     );
   }
 }
