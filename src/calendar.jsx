@@ -75,6 +75,7 @@ export default class Calendar extends React.Component {
     onSelect: PropTypes.func.isRequired,
     onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
+    showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
@@ -291,9 +292,10 @@ export default class Calendar extends React.Component {
     const allPrevDaysDisabled = allDaysDisabledBefore(this.state.date, "month", this.props);
 
     if (
-      !this.props.forceShowMonthNavigation &&
+      (!this.props.forceShowMonthNavigation &&
       !this.props.showDisabledMonthNavigation &&
-      allPrevDaysDisabled
+      allPrevDaysDisabled) ||
+      this.props.showTimeSelectOnly
     ) {
       return;
     }
@@ -322,9 +324,10 @@ export default class Calendar extends React.Component {
     const allNextDaysDisabled = allDaysDisabledAfter(this.state.date, "month", this.props);
 
     if (
-      !this.props.forceShowMonthNavigation &&
+      (!this.props.forceShowMonthNavigation &&
       !this.props.showDisabledMonthNavigation &&
-      allNextDaysDisabled
+      allNextDaysDisabled) ||
+      this.props.showTimeSelectOnly
     ) {
       return;
     }
@@ -423,7 +426,7 @@ export default class Calendar extends React.Component {
   };
 
   renderTodayButton = () => {
-    if (!this.props.todayButton) {
+    if (!this.props.todayButton || this.props.showTimeSelectOnly) {
       return;
     }
     return (
@@ -438,6 +441,10 @@ export default class Calendar extends React.Component {
   };
 
   renderMonths = () => {
+    if (this.props.showTimeSelectOnly) {
+      return;
+    }
+
     var monthList = [];
     for (var i = 0; i < this.props.monthsShown; ++i) {
       var monthDate = addMonths(cloneDate(this.state.date), i);
@@ -521,7 +528,9 @@ export default class Calendar extends React.Component {
 
   render() {
     return (
-      <div className={classnames("react-datepicker", this.props.className)}>
+      <div className={classnames("react-datepicker", this.props.className, {
+        "react-datepicker--time-only": this.props.showTimeSelectOnly
+      })}>
         <div className="react-datepicker__triangle" />
         {this.renderPreviousMonthButton()}
         {this.renderNextMonthButton()}
