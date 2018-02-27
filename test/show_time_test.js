@@ -26,4 +26,10 @@ describe("DatePicker", () => {
     const caption = timeComponent.find(".react-datepicker-time__header");
     expect(caption.text()).to.equal("Custom time");
   });
+
+  it("should not show date component when showTimeSelectOnly prop is present", () => {
+    var datePicker = mount(<DatePicker showTimeSelect showTimeSelectOnly />);
+    var monthContainer = datePicker.find(".react-datepicker__month-container");
+    expect(monthContainer.length).to.equal(0);
+  });
 });
