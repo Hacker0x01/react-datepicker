@@ -18,7 +18,7 @@ General datepicker component.
 | `dayClassName`                | `func`                         |                 |             |
 | `disabled`                    | `bool`                         | `false`         |             |
 | `disabledKeyboardNavigation`  | `bool`                         | `false`         |             |
-| `dropdownMode` (required)     | `enum("scroll"\|"select")`     | `"scroll"`      |             |
+| `dropdownMode`                | `enum("scroll"\|"select")`     | `"scroll"`      |             |
 | `endDate`                     | `object`                       |                 |             |
 | `excludeDates`                | `array`                        |                 |             |
 | `excludeTimes`                | `array`                        |                 |             |
@@ -40,7 +40,7 @@ General datepicker component.
 | `monthsShown`                 | `number`                       | `1`             |             |
 | `name`                        | `string`                       |                 |             |
 | `onBlur`                      | `func`                         | `function() {}` |             |
-| `onChange` (required)         | `func`                         | `function() {}` |             |
+| `onChange`                    | `func`                         | `function() {}` |             |
 | `onChangeRaw`                 | `func`                         |                 |             |
 | `onClickOutside`              | `func`                         | `function() {}` |             |
 | `onFocus`                     | `func`                         | `function() {}` |             |
