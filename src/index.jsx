@@ -319,10 +319,13 @@ export default class DatePicker extends React.Component {
     ) {
       if (changedDate !== null) {
         if (this.props.selected) {
+          let selected = this.props.selected;
+          if(keepInput)
+            selected = newDate(changedDate);
           changedDate = setTime(newDate(changedDate), {
-            hour: getHour(this.props.selected),
-            minute: getMinute(this.props.selected),
-            second: getSecond(this.props.selected)
+            hour: getHour(selected),
+            minute: getMinute(selected),
+            second: getSecond(selected)
           });
         }
         this.setState({
@@ -369,6 +372,7 @@ export default class DatePicker extends React.Component {
 
     this.props.onChange(changedDate);
     this.setOpen(false);
+    this.setState({ inputValue: changedDate.format(this.props.dateFormat) });
   };
 
   onInputClick = () => {
