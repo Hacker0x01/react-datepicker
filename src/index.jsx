@@ -116,6 +116,7 @@ export default class DatePicker extends React.Component {
     title: PropTypes.string,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
+    formatWeekDay: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
@@ -482,6 +483,7 @@ export default class DatePicker extends React.Component {
         setOpen={this.setOpen}
         dateFormat={this.props.dateFormatCalendar}
         useWeekdaysShort={this.props.useWeekdaysShort}
+        formatWeekDay={this.props.formatWeekDay}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         preSelection={this.state.preSelection}
