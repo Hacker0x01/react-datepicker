@@ -116,7 +116,7 @@ export default class DatePicker extends React.Component {
     title: PropTypes.string,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
-    formatWeekDay: PropTypes.bool,
+    formatWeekDay: PropTypes.func,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
