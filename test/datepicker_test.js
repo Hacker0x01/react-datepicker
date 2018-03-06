@@ -743,14 +743,11 @@ describe("DatePicker", () => {
   it("should preserve user input as they are typing", () => {
     const onChange = date => datePicker.setProps({ selected: date });
     const datePicker = mount(
-      <DatePicker
-        dateFormat={["YYYY-MM-DD", "MM/DD/YYYY", "MM/DD/YY"]}
-        onChange={onChange}
-      />
+      <DatePicker dateFormat={"YYYY-MM-DD"} onChange={onChange} />
     );
     expect(datePicker.find("input").prop("value")).to.equal("");
 
-    const str = "12/30/1982";
+    const str = "1982-12-30";
     str.split("").forEach((c, i) => {
       datePicker.find("input").simulate("change", {
         target: { value: datePicker.find("input").prop("value") + c }

@@ -173,6 +173,7 @@ export default class DatePicker extends React.Component {
         highlightDates: getHightLightDaysMap(nextProps.highlightDates)
       });
     }
+    this.setState({ inputValue: null });
   }
 
   componentWillUnmount() {
@@ -372,7 +373,7 @@ export default class DatePicker extends React.Component {
 
     this.props.onChange(changedDate);
     this.setOpen(false);
-    this.setState({ inputValue: changedDate.format(this.props.dateFormat) });
+    this.setState({ inputValue: null });
   };
 
   onInputClick = () => {
