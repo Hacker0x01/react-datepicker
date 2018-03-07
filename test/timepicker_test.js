@@ -7,20 +7,22 @@ import Time from "../src/time";
 
 describe("TimePicker", () => {
   let datePicker;
+  let div;
+  let onChangeMoment;
+
+  beforeEach(() => {
+    div = document.createElement("div");
+  });
 
   it("should update on input time change", () => {
-    let onChangeMoment = null;
-    const onChange = m => {
-      onChangeMoment = m;
-    };
-    makeDatePicker(onChange);
+    renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
     expect(onChangeMoment.format("LLL")).to.equal("February 28, 2018 4:45 PM");
   });
 
   it("should allow time changes after input change", () => {
-    makeDatePicker();
+    renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
@@ -29,7 +31,16 @@ describe("TimePicker", () => {
     expect(getInputString()).to.equal("February 28, 2018 12:00 AM");
   });
 
+  it("should allow for injected moment if input does not have focus", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    setManually("February 28, 2018 4:45 PM");
+    TestUtils.Simulate.blur(datePicker.input);
+    renderDatePicker("February 28, 2018 4:43 PM");
+    expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
+  });
+
   function setManually(string) {
+    TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });
   }
 
@@ -37,15 +48,25 @@ describe("TimePicker", () => {
     return ReactDOM.findDOMNode(datePicker.input).value;
   }
 
-  function makeDatePicker(onChange) {
-    datePicker = TestUtils.renderIntoDocument(
+  function renderDatePicker(string) {
+    return renderDatePickerFor(moment(string, "LLL", true));
+  }
+
+  function renderDatePickerFor(selected) {
+    datePicker = ReactDOM.render(
       <DatePicker
-        selected={moment("February 28, 2018 4:43 PM", "LLL", true)}
+        selected={selected}
         dateFormat={"LLL"}
         allowSameDay
         onChange={onChange}
         showTimeSelect
-      />
+      />,
+      div
     );
+  }
+
+  function onChange(m) {
+    onChangeMoment = m;
+    renderDatePicker(m);
   }
 });
