@@ -173,6 +173,8 @@ export default class DatePicker extends React.Component {
         highlightDates: getHightLightDaysMap(nextProps.highlightDates)
       });
     }
+    if(!this.state.focused)
+      this.setState({ inputValue: null });
   }
 
   componentWillUnmount() {
@@ -206,7 +208,8 @@ export default class DatePicker extends React.Component {
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      highlightDates: getHightLightDaysMap(this.props.highlightDates)
+      highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      focused: false
     };
   };
 
@@ -239,6 +242,7 @@ export default class DatePicker extends React.Component {
         this.setOpen(true);
       }
     }
+    this.setState({focused: true});
   };
 
   cancelFocusInput = () => {
@@ -261,6 +265,7 @@ export default class DatePicker extends React.Component {
     } else {
       this.props.onBlur(event);
     }
+    this.setState({focused: false});
   };
 
   handleCalendarClickOutside = event => {
@@ -372,7 +377,7 @@ export default class DatePicker extends React.Component {
 
     this.props.onChange(changedDate);
     this.setOpen(false);
-    this.setState({ inputValue: changedDate.format(this.props.dateFormat) });
+    this.setState({ inputValue: null });
   };
 
   onInputClick = () => {

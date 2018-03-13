@@ -751,6 +751,7 @@ describe("DatePicker", () => {
     expect(datePicker.find("input").prop("value")).to.equal("");
 
     const str = "12/30/1982";
+    datePicker.find("input").simulate("focus");
     str.split("").forEach((c, i) => {
       datePicker.find("input").simulate("change", {
         target: { value: datePicker.find("input").prop("value") + c }
