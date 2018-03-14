@@ -104,6 +104,7 @@ export default class Calendar extends React.Component {
     setOpen: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
+    renderChildrenForDate: PropTypes.func,
   };
 
   static get defaultProps() {
@@ -489,7 +490,8 @@ export default class Calendar extends React.Component {
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
-            utcOffset={this.props.utcOffset}/>
+            utcOffset={this.props.utcOffset}
+            renderChildrenForDate={this.props.renderChildrenForDate}/>
         </div>
       );
     }

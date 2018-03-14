@@ -540,4 +540,18 @@ describe("Day", () => {
       expect(onMouseEnterCalled).to.be.true;
     });
   });
+
+  describe("render children for specific date", () => {
+    it("should call renderChildrenForDate if this prop is present", () => {
+      var renderChildrenForDateCalled, date;
+      function renderChildrenForDate(date_) {
+        date = date_;
+        renderChildrenForDateCalled = true;
+      }
+      var renderDate = newDate();
+      const shallowDay = renderDay(renderDate, { renderChildrenForDate });
+      expect(renderChildrenForDateCalled).to.be.true;
+      expect(date).to.equal(renderDate);
+    });
+  });
 });
