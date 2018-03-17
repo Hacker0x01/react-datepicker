@@ -42,6 +42,7 @@ import Portal from './examples/portal'
 import InlinePortal from './examples/inline_portal'
 import RawChange from './examples/raw_change'
 import ShowTime from './examples/show_time'
+import ShowTimeOnly from './examples/show_time_only'
 import ExcludeTimes from './examples/exclude_times'
 import ExcludeTimePeriod from './examples/exclude_time_period'
 import IncludeTimes from './examples/include_times'
@@ -63,6 +64,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Select Time',
     component: <ShowTime />
+  },
+  {
+    title: 'Select Time Only',
+    component: <ShowTimeOnly />
   },
   {
     title: 'Exclude Times',

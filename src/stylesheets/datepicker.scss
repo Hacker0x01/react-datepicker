@@ -16,6 +16,24 @@
   position: relative;
 }
 
+.react-datepicker--time-only {
+  .react-datepicker__triangle {
+    left: 35px;
+  }
+
+  .react-datepicker__time-container {
+    border-left: 0;
+  }
+
+  .react-datepicker__time {
+    border-radius: 0.3rem;
+  }
+
+  .react-datepicker__time-box {
+    border-radius: 0.3rem;
+  }
+}
+
 .react-datepicker__triangle {
   position: absolute;
   left: 50px;
