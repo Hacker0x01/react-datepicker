@@ -128,7 +128,8 @@ export default class DatePicker extends React.Component {
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
+    clearButtonTitle: PropTypes.string
   };
 
   static get defaultProps() {
@@ -588,7 +589,7 @@ export default class DatePicker extends React.Component {
           className="react-datepicker__close-icon"
           href="javascript:void(0)"
           onClick={this.onClearClick}
-          title="Clear date"/>
+          title={this.props.clearButtonTitle}/>
       );
     } else {
       return null;
