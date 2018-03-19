@@ -128,6 +128,6 @@
       "cross-env MODULES=false webpack --config webpack.docs.config.js"
   },
   "lint-staged": {
-    "*.{js,json,css,scss,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,scss,md}": ["prettier --write", "git add"]
   }
 }
