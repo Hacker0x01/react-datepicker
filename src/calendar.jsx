@@ -32,6 +32,8 @@ import {
   getEffectiveMaxDate
 } from "./date_utils";
 
+import { isLocaleRtl } from "./locale_utils";
+
 const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__year-select",
   "react-datepicker__month-select",
@@ -287,7 +289,7 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderPreviousMonthButton = () => {
+  renderLeftArrowButton = () => {
 
     const allPrevDaysDisabled = allDaysDisabledBefore(this.state.date, "month", this.props);
 
@@ -305,7 +307,12 @@ export default class Calendar extends React.Component {
       "react-datepicker__navigation--previous"
     ];
 
-    let clickHandler = this.decreaseMonth;
+    let clickHandler;
+	if(isLocaleRtl(this.props.locale)) {
+		clickHandler = this.increaseMonth;
+	} else {
+		clickHandler = this.decreaseMonth;
+	}
 
     if (allPrevDaysDisabled && this.props.showDisabledMonthNavigation) {
       classes.push("react-datepicker__navigation--previous--disabled");
@@ -319,7 +326,7 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderNextMonthButton = () => {
+  renderRightArrowButton = () => {
 
     const allNextDaysDisabled = allDaysDisabledAfter(this.state.date, "month", this.props);
 
@@ -342,8 +349,13 @@ export default class Calendar extends React.Component {
     if (this.props.todayButton) {
       classes.push("react-datepicker__navigation--next--with-today-button");
     }
-
-    let clickHandler = this.increaseMonth;
+	
+	let clickHandler;
+	if(isLocaleRtl(this.props.locale)) {
+		clickHandler = this.decreaseMonth;
+	} else {
+		clickHandler = this.increaseMonth;
+	}
 
     if (allNextDaysDisabled && this.props.showDisabledMonthNavigation) {
         classes.push("react-datepicker__navigation--next--disabled");
@@ -532,8 +544,8 @@ export default class Calendar extends React.Component {
         "react-datepicker--time-only": this.props.showTimeSelectOnly
       })}>
         <div className="react-datepicker__triangle" />
-        {this.renderPreviousMonthButton()}
-        {this.renderNextMonthButton()}
+        {this.renderLeftArrowButton()}
+        {this.renderRightArrowButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
