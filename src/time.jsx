@@ -24,7 +24,7 @@ export default class Time extends React.Component {
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
-    timeCaption: PropTypes.string,
+    timeCaption: PropTypes.string
   };
 
   static get defaultProps() {
@@ -32,7 +32,7 @@ export default class Time extends React.Component {
       intervals: 30,
       onTimeChange: () => {},
       todayButton: null,
-      timeCaption: "Time",
+      timeCaption: "Time"
     };
   }
 
@@ -49,8 +49,10 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes && !isTimeDisabled(time, this.props.includeTimes))
+      (this.props.excludeTimes &&
+        isTimeDisabled(time, this.props.excludeTimes)) ||
+      (this.props.includeTimes &&
+        !isTimeDisabled(time, this.props.includeTimes))
     ) {
       return;
     }
@@ -67,8 +69,10 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes && isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes && !isTimeDisabled(time, this.props.includeTimes))
+      (this.props.excludeTimes &&
+        isTimeDisabled(time, this.props.excludeTimes)) ||
+      (this.props.includeTimes &&
+        !isTimeDisabled(time, this.props.includeTimes))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
@@ -93,7 +97,8 @@ export default class Time extends React.Component {
       <li
         key={i}
         onClick={this.handleClick.bind(this, time)}
-        className={this.liClasses(time, currH, currM)}>
+        className={this.liClasses(time, currH, currM)}
+      >
         {formatDate(time, format)}
       </li>
     ));
@@ -111,9 +116,12 @@ export default class Time extends React.Component {
           this.props.todayButton
             ? "react-datepicker__time-container--with-today-button"
             : ""
-        }`}>
+        }`}
+      >
         <div className="react-datepicker__header react-datepicker__header--time">
-          <div className="react-datepicker-time__header">{this.props.timeCaption}</div>
+          <div className="react-datepicker-time__header">
+            {this.props.timeCaption}
+          </div>
         </div>
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
@@ -122,7 +130,8 @@ export default class Time extends React.Component {
               ref={list => {
                 this.list = list;
               }}
-              style={height ? { height } : {}}>
+              style={height ? { height } : {}}
+            >
               {this.renderTimes.bind(this)()}
             </ul>
           </div>

@@ -31,7 +31,8 @@ export default class MonthDropdown extends React.Component {
     <select
       value={this.props.month}
       className="react-datepicker__month-select"
-      onChange={e => this.onChange(e.target.value)}>
+      onChange={e => this.onChange(e.target.value)}
+    >
       {this.renderSelectOptions(monthNames)}
     </select>
   );
@@ -41,7 +42,8 @@ export default class MonthDropdown extends React.Component {
       key="read"
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__month-read-view"
-      onClick={this.toggleDropdown}>
+      onClick={this.toggleDropdown}
+    >
       <span className="react-datepicker__month-read-view--down-arrow" />
       <span className="react-datepicker__month-read-view--selected-month">
         {monthNames[this.props.month]}
@@ -56,7 +58,8 @@ export default class MonthDropdown extends React.Component {
       month={this.props.month}
       monthNames={monthNames}
       onChange={this.onChange}
-      onCancel={this.toggleDropdown}/>
+      onCancel={this.toggleDropdown}
+    />
   );
 
   renderScrollMode = monthNames => {
@@ -80,12 +83,17 @@ export default class MonthDropdown extends React.Component {
       dropdownVisible: !this.state.dropdownVisible
     });
 
-  render () {
-    const localeData = utils.getLocaleDataForLocale(this.props.locale)
+  render() {
+    const localeData = utils.getLocaleDataForLocale(this.props.locale);
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
-        ? (M) => utils.getMonthShortInLocale(localeData, utils.newDate({M}))
-        : (M) => utils.getMonthInLocale(localeData, utils.newDate({M}), this.props.dateFormat)
+        ? M => utils.getMonthShortInLocale(localeData, utils.newDate({ M }))
+        : M =>
+            utils.getMonthInLocale(
+              localeData,
+              utils.newDate({ M }),
+              this.props.dateFormat
+            )
     );
 
     let renderedDropdown;
@@ -102,7 +110,8 @@ export default class MonthDropdown extends React.Component {
       <div
         className={`react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--${
           this.props.dropdownMode
-        }`}>
+        }`}
+      >
         {renderedDropdown}
       </div>
     );

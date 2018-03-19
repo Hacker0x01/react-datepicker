@@ -64,7 +64,8 @@ export default class PopperComponent extends React.Component {
         <Popper
           className={classes}
           modifiers={popperModifiers}
-          placement={popperPlacement}>
+          placement={popperPlacement}
+        >
           {popperComponent}
         </Popper>
       );
