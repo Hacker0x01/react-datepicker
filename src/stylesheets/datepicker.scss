@@ -5,6 +5,33 @@
   display: inline-block;
 }
 
+.header-slide {
+  position: relative;
+
+  .react-datepicker__navigation {
+    top: 3px;
+  }
+}
+
+.react-datepicker__month-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.react-datepicker__month-button {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin: 5px;
+  text-align: center;
+  width: calc((100% - 30px) / 3);
+
+  &.--selected_month {
+    background-color: #525151;
+    color: #fff;
+  }
+}
+
 .react-datepicker {
   font-family: $datepicker__font-family;
   font-size: $datepicker__font-size;

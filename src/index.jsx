@@ -107,6 +107,8 @@ export default class DatePicker extends React.Component {
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
+    showWeekly: PropTypes.bool,
+    showMonthly: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
@@ -117,6 +119,8 @@ export default class DatePicker extends React.Component {
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
+    weeklyType: PropTypes.bool,
+    weeklyDays: PropTypes.array,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
@@ -128,7 +132,8 @@ export default class DatePicker extends React.Component {
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
+    useShortMonth: PropTypes.bool,
   };
 
   static get defaultProps() {
@@ -510,9 +515,12 @@ export default class DatePicker extends React.Component {
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
+        useShortMonth={this.props.useShortMonth}
         showMonthYearDropdown={this.props.showMonthYearDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        showWeekly={this.props.showWeekly}
+        showMonthly={this.props.showMonthly}
         withPortal={this.props.withPortal}
         forceShowMonthNavigation={this.props.forceShowMonthNavigation}
         showDisabledMonthNavigation={this.props.showDisabledMonthNavigation}
@@ -521,6 +529,8 @@ export default class DatePicker extends React.Component {
         todayButton={this.props.todayButton}
         weekLabel={this.props.weekLabel}
         utcOffset={this.props.utcOffset}
+        weeklyType={this.props.weeklyType}
+        weeklyDays={this.props.weeklyDays}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}

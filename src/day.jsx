@@ -28,7 +28,9 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    weeklyType: PropTypes.bool,
+    weeklyDays: PropTypes.array,
   };
 
   handleClick = event => {
@@ -50,7 +52,17 @@ export default class Day extends React.Component {
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);
 
-  isDisabled = () => isDayDisabled(this.props.day, this.props);
+  isWeeklyDay = () => {
+    const { day, weeklyDays, weeklyType} = this.props;
+    if (!weeklyType) {
+      return false;
+    }
+
+    const dayStr = day.format("MM.DD.YYYY");
+    return weeklyDays ? weeklyDays.every(weeklyDay => weeklyDay !== dayStr) : false
+  }
+
+  isDisabled = () => isDayDisabled(this.props.day, this.props) || this.isWeeklyDay();
 
   getHighLightedClass = defaultClassName => {
     const { day, highlightDates } = this.props;

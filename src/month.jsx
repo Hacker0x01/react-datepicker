@@ -32,7 +32,9 @@ export default class Month extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    weeklyType: PropTypes.bool,
+    weeklyDays: PropTypes.array,
   };
 
   handleDayClick = (day, event) => {
@@ -96,7 +98,9 @@ export default class Month extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
-          utcOffset={this.props.utcOffset}/>
+          utcOffset={this.props.utcOffset}
+          weeklyType={this.props.weeklyType}
+          weeklyDays={this.props.weeklyDays}/>
       );
 
       if (breakAfterNextPush) break;

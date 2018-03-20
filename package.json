@@ -1,10 +1,10 @@
 {
-  "author": "HackerOne",
-  "name": "react-datepicker",
+  "author": "TungNguyen",
+  "name": "tn-react-datepicker",
   "description": "A simple and reusable datepicker component for React",
   "version": "1.2.2",
   "license": "MIT",
-  "homepage": "https://github.com/Hacker0x01/react-datepicker",
+  "homepage": "https://github.com/tungnguyen216/react-datepicker",
   "main": "lib",
   "module": "es",
   "unpkg": "dist/react-datepicker.min.js",
@@ -13,10 +13,7 @@
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Hacker0x01/react-datepicker.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Hacker0x01/react-datepicker/issues"
+    "url": "git@github.com:tungnguyen216/react-datepicker.git"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

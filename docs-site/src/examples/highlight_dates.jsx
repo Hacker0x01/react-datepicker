@@ -43,6 +43,7 @@ export default class highlightDates extends React.Component {
               moment().subtract(7, "days"),
               moment().add(7, "days")
             ]}
+            weeklyType
             placeholderText="This highlights a week ago and a week from today"/>
         </div>
       </div>
