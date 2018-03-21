@@ -44,6 +44,7 @@
     "eslint-plugin-react": "^7.4.0",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^1.0.1",
+    "flow-bin": "^0.68.0",
     "highlight.js": "^9.12.0",
     "husky": "^0.14.3",
     "isparta-loader": "^2.0.0",
@@ -95,10 +96,11 @@
   },
   "scripts": {
     "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
+    "flow": "flow",
     "precommit": "lint-staged",
     "sass-lint":
       "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
-    "lint": "run-p eslint sass-lint",
+    "lint": "run-p eslint flow sass-lint",
     "start": "cross-env MODULES=false node server.js",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
