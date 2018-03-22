@@ -89,6 +89,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "luxon": "^0.5.8",
     "prop-types": "^15.6.0",
     "react-onclickoutside": "^6.7.1",
     "react-popper": "^0.8.3"
