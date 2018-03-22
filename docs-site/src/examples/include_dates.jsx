@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class includeDates extends React.Component {
   state = {
@@ -25,7 +25,9 @@ export default class includeDates extends React.Component {
             {"onChange={this.handleChange}"}
             <br />
             <strong>
-              {'includeDates={[moment(), moment().add(1, "days")]}'}
+              {
+                'includeDates={[DateTime.local(), DateTime.local().plus(1, "days")]}'
+              }
             </strong>
             <br />
             {'placeholderText="This only includes today and tomorrow" />'}
@@ -35,8 +37,9 @@ export default class includeDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            includeDates={[moment(), moment().add(1, "days")]}
-            placeholderText="This only includes today and tomorrow"/>
+            includeDates={[DateTime.local(), DateTime.local().plus(1, "days")]}
+            placeholderText="This only includes today and tomorrow"
+          />
         </div>
       </div>
     );

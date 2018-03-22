@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class ExcludeDates extends React.Component {
   state = {
@@ -25,7 +25,9 @@ export default class ExcludeDates extends React.Component {
             {"  onChange={this.handleChange}"}
             <br />
             <strong>
-              {'  excludeDates={[moment(), moment().subtract(1, "days")]}'}
+              {
+                '  excludeDates={[DateTime.local(), DateTime.local().minus(1, "days")]}'
+              }
             </strong>
             <br />
             {
@@ -37,8 +39,9 @@ export default class ExcludeDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            excludeDates={[moment(), moment().subtract(1, "days")]}
-            placeholderText="Select a date other than today or yesterday"/>
+            excludeDates={[DateTime.local(), DateTime.local().minus(1, "days")]}
+            placeholderText="Select a date other than today or yesterday"
+          />
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class DateRangeWithShowDisabledNavigation extends React.Component {
   state = {
@@ -17,12 +17,13 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
     return (
       <div className="row">
         <pre className="column example__code">
-          <code className="jsx">{`
+          <code className="jsx">
+            {`
 <DatePicker
   selected={this.state.startDate}
   onChange={this.handleChange}
-  minDate={moment()}
-  maxDate={moment().add(5, "months")}
+  minDate={DateTime.local()}
+  maxDate={DateTime.local().plus(5, "months")}
   showDisabledMonthNavigation />
 </div>
 
@@ -33,9 +34,10 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            minDate={moment()}
-            maxDate={moment().add(5, "months")}
-            showDisabledMonthNavigation />
+            minDate={DateTime.local()}
+            maxDate={DateTime.local().plus(5, "months")}
+            showDisabledMonthNavigation
+          />
         </div>
       </div>
     );

@@ -1,25 +1,27 @@
-import React from 'react'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
+import React from "react";
+import DatePicker from "react-datepicker";
+import { DateTime } from "luxon";
 
 export default class MonthDropdownShort extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      startDate: moment()
-    }
+      startDate: DateTime.local()
+    };
   }
 
-  handleChange = (date) => {
+  handleChange = date => {
     this.setState({
       startDate: date
-    })
-  }
+    });
+  };
 
-  render () {
-    return <div className="row">
-      <pre className="column example__code">
-        <code className="jsx">{`
+  render() {
+    return (
+      <div className="row">
+        <pre className="column example__code">
+          <code className="jsx">
+            {`
 <DatePicker
     selected={this.state.startDate}
     onChange={this.handleChange}
@@ -27,15 +29,17 @@ export default class MonthDropdownShort extends React.Component {
     useShortMonthInDropdown
 />
 `}
-        </code>
-      </pre>
-      <div className="column">
-        <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-          showMonthDropdown
-          useShortMonthInDropdown />
+          </code>
+        </pre>
+        <div className="column">
+          <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleChange}
+            showMonthDropdown
+            useShortMonthInDropdown
+          />
+        </div>
       </div>
-    </div>
+    );
   }
 }

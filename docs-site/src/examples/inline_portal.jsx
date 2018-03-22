@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class InlinePortalVersion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment(),
+      startDate: DateTime.local(),
       isOpen: false
     };
   }
@@ -59,15 +59,17 @@ toggleCalendar (e) {
         <div className="column">
           <button
             className="example-custom-input"
-            onClick={this.toggleCalendar}>
-            {this.state.startDate.format("DD-MM-YYYY")}
+            onClick={this.toggleCalendar}
+          >
+            {this.state.startDate.toFormat("DD-MM-YYYY")}
           </button>
           {this.state.isOpen && (
             <DatePicker
               selected={this.state.startDate}
               onChange={this.handleChange}
               withPortal
-              inline/>
+              inline
+            />
           )}
         </div>
       </div>

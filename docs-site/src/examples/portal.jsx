@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class WithPortal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: DateTime.local()
     };
   }
 
@@ -34,7 +34,8 @@ export default class WithPortal extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            withPortal/>
+            withPortal
+          />
         </div>
       </div>
     );

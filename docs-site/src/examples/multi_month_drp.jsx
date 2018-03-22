@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class MultiMonthDrp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: DateTime.local()
     };
   }
 
@@ -36,7 +36,8 @@ export default class MultiMonthDrp extends React.Component {
             monthsShown={2}
             onChange={this.handleChange}
             showYearDropdown
-            selected={this.state.startDate}/>
+            selected={this.state.startDate}
+          />
         </div>
       </div>
     );

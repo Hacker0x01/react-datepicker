@@ -1,12 +1,13 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class IncludeTimes extends React.Component {
   state = {
-    startDate: moment()
-      .hours(16)
-      .minutes(30)
+    startDate: DateTime.local().set({
+      hours: 16,
+      minutes: 30
+    })
   };
 
   handleChange = date => {
@@ -30,7 +31,7 @@ export default class IncludeTimes extends React.Component {
               {"  showTimeSelect"}
               <br />
               {
-                "  includeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}"
+                "  includeTimes={[DateTime.local().hours(17).minutes(0), DateTime.local().hours(18).minutes(30), DateTime.local().hours(19).minutes(30)], DateTime.local().hours(17).minutes(30)}"
               }
             </strong>
             <br />
@@ -45,20 +46,25 @@ export default class IncludeTimes extends React.Component {
             onChange={this.handleChange}
             showTimeSelect
             includeTimes={[
-              moment()
-                .hours(17)
-                .minutes(0),
-              moment()
-                .hours(18)
-                .minutes(30),
-              moment()
-                .hours(19)
-                .minutes(30),
-              moment()
-                .hours(17)
-                .minutes(30)
+              DateTime.local().set({
+                hours: 17,
+                minutes: 0
+              }),
+              DateTime.local().set({
+                hours: 18,
+                minutes: 30
+              }),
+              DateTime.local().set({
+                hours: 19,
+                minutes: 30
+              }),
+              DateTime.local().set({
+                hours: 17,
+                minutes: 30
+              })
             ]}
-            dateFormat="LLL"/>
+            dateFormat="LLL"
+          />
         </div>
       </div>
     );

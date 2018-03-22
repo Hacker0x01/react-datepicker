@@ -65,14 +65,16 @@ export default class TimeZoneDate extends React.Component {
             showTimeSelect
             todayButton={todayTxt}
             selected={selected}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+          />
           <br />
           <label className="example__timezone-label">
             Timezone Offset:
             <select
               className="example__timezone-selector"
               value={this.state.utcOffset}
-              onChange={this.handleTmzChange}>
+              onChange={this.handleTmzChange}
+            >
               <option value="10">GMT+10:00</option>
               <option value="8">GMT+08:00</option>
               <option value="4">GMT+04:00</option>

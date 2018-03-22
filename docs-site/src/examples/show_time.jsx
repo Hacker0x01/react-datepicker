@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class ShowTime extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: DateTime.local()
     };
   }
 
@@ -43,7 +43,8 @@ export default class ShowTime extends React.Component {
             timeFormat="HH:mm"
             timeIntervals={15}
             timeCaption="time"
-            dateFormat="LLL"/>
+            dateFormat="LLL"
+          />
         </div>
       </div>
     );
