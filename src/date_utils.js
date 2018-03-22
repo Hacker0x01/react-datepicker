@@ -380,11 +380,8 @@ export function getWeekdayShortInLocale(locale, date) {
   return formatDate(localizeDate(date, locale), "ccccc");
 }
 
-// TODO what is this format exactly?
 export function getMonthInLocale(locale, date, format) {
-  throw new Error(
-    "refactor all usages of this, why is there both a format and a locale"
-  );
+  return formatDate(localizeDate(date, locale), format || "LLLL");
 }
 
 export function getMonthShortInLocale(locale, date) {
