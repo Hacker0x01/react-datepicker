@@ -110,16 +110,16 @@ export function isDate(date) {
 // ** Date Formatting **
 
 export function formatDate(date, format) {
-  return date.format(format);
+  return date.toFormat(format);
 }
 
 export function safeDateFormat(date, { dateFormat, locale }) {
   return (
     (date &&
-      date
-        .clone()
-        .locale(locale || moment.locale())
-        .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat)) ||
+      formatDate(
+        localizeDate(date, locale),
+        Array.isArray(dateFormat) ? dateFormat[0] : dateFormat
+      )) ||
     ""
   );
 }
@@ -344,45 +344,51 @@ export function getDaysDiff(date1, date2) {
 
 // ** Date Localization **
 
-export function localizeDate(date, locale) {
-  return date.clone().locale(locale || moment.locale());
-}
-
-export function getDefaultLocale() {
-  return moment.locale();
-}
-
+// Deprecated, doesn't work with luxon
 export function getDefaultLocaleData() {
   return moment.localeData();
 }
 
+// Deprecated, doesn't work with luxon
 export function registerLocale(localeName, localeData) {
   moment.defineLocale(localeName, localeData);
 }
 
-export function getLocaleData(date) {
-  return date.localeData();
-}
-
+// Deprecated, doesn't work with luxon
 export function getLocaleDataForLocale(locale) {
   return moment.localeData(locale);
 }
 
+export function getDefaultLocale() {
+  // TODO auto-detect somehow?
+  return "en-US";
+}
+
+export function getLocale(date) {
+  return date.locale;
+}
+
+export function localizeDate(date, locale) {
+  return date.setLocale(locale || getDefaultLocale());
+}
+
 export function getWeekdayMinInLocale(locale, date) {
-  return locale.weekdaysMin(date);
+  return formatDate(localizeDate(date, locale), "ccc");
 }
 
 export function getWeekdayShortInLocale(locale, date) {
-  return locale.weekdaysShort(date);
+  return formatDate(localizeDate(date, locale), "ccccc");
 }
 
 // TODO what is this format exactly?
 export function getMonthInLocale(locale, date, format) {
-  return locale.months(date, format);
+  throw new Error(
+    "refactor all usages of this, why is there both a format and a locale"
+  );
 }
 
 export function getMonthShortInLocale(locale, date) {
-  return locale.monthsShort(date);
+  return formatDate(localizeDate(date, locale), "LLL");
 }
 
 // ** Utils for some components **

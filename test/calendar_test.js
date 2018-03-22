@@ -714,7 +714,7 @@ describe("Calendar", function() {
 
       const firstDateOfWeek = utils.getStartOfWeek(utils.cloneDate(localized));
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
-        utils.getLocaleData(firstDateOfWeek),
+        utils.getLocale(firstDateOfWeek),
         firstDateOfWeek
       );
       const firstHeader = calendar.find(".react-datepicker__day-name").at(0);

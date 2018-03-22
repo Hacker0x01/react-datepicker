@@ -22,7 +22,7 @@ import {
   getYear,
   isBefore,
   isAfter,
-  getLocaleData,
+  getLocale,
   getWeekdayShortInLocale,
   getWeekdayMinInLocale,
   isSameDay,
@@ -277,10 +277,10 @@ export default class Calendar extends React.Component {
     return dayNames.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(cloneDate(startOfWeek), offset);
-        const localeData = getLocaleData(day);
+        const locale = getLocale(day);
         const weekDayName = this.props.useWeekdaysShort
-          ? getWeekdayShortInLocale(localeData, day)
-          : getWeekdayMinInLocale(localeData, day);
+          ? getWeekdayShortInLocale(locale, day)
+          : getWeekdayMinInLocale(locale, day);
         return (
           <div key={offset} className="react-datepicker__day-name">
             {weekDayName}
