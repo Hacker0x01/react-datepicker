@@ -53,10 +53,8 @@ export default class DatePicker extends React.Component {
     className: PropTypes.string,
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
-    dateFormat: PropTypes.oneOfType([ // eslint-disable-line react/no-unused-prop-types
-      PropTypes.string,
-      PropTypes.array
-    ]),
+    // eslint-disable-next-line react/no-unused-prop-types
+    dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
     disabled: PropTypes.bool,
@@ -123,6 +121,7 @@ export default class DatePicker extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
+    showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
@@ -154,7 +153,7 @@ export default class DatePicker extends React.Component {
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       timeIntervals: 30,
-      timeCaption: "Time",
+      timeCaption: "Time"
     };
   }
 
@@ -174,8 +173,7 @@ export default class DatePicker extends React.Component {
         highlightDates: getHightLightDaysMap(nextProps.highlightDates)
       });
     }
-    if(!this.state.focused)
-      this.setState({ inputValue: null });
+    if (!this.state.focused) this.setState({ inputValue: null });
   }
 
   componentWillUnmount() {
@@ -243,7 +241,7 @@ export default class DatePicker extends React.Component {
         this.setOpen(true);
       }
     }
-    this.setState({focused: true});
+    this.setState({ focused: true });
   };
 
   cancelFocusInput = () => {
@@ -266,7 +264,7 @@ export default class DatePicker extends React.Component {
     } else {
       this.props.onBlur(event);
     }
-    this.setState({focused: false});
+    this.setState({ focused: false });
   };
 
   handleCalendarClickOutside = event => {
@@ -283,7 +281,10 @@ export default class DatePicker extends React.Component {
     let event = allArgs[0];
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw.apply(this, allArgs);
-      if (typeof event.isDefaultPrevented !== "function" || event.isDefaultPrevented()) {
+      if (
+        typeof event.isDefaultPrevented !== "function" ||
+        event.isDefaultPrevented()
+      ) {
         return;
       }
     }
@@ -326,8 +327,7 @@ export default class DatePicker extends React.Component {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
-          if(keepInput)
-            selected = newDate(changedDate);
+          if (keepInput) selected = newDate(changedDate);
           changedDate = setTime(newDate(changedDate), {
             hour: getHour(selected),
             minute: getMinute(selected),
@@ -461,18 +461,18 @@ export default class DatePicker extends React.Component {
   };
 
   onClearClick = event => {
-  	if (event) {
-  		if (event.preventDefault) {
-  			event.preventDefault()
-  		}
-  	}
-  	this.props.onChange(null, event)
-  	this.setState({ inputValue: null })
+    if (event) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+    }
+    this.props.onChange(null, event);
+    this.setState({ inputValue: null });
   };
 
   clear = () => {
-    this.onClearClick()
-  }
+    this.onClearClick();
+  };
 
   renderCalendar = () => {
     if (!this.props.inline && (!this.state.open || this.props.disabled)) {
@@ -530,6 +530,7 @@ export default class DatePicker extends React.Component {
         onYearChange={this.props.onYearChange}
         dayClassName={this.props.dayClassName}
         showTimeSelect={this.props.showTimeSelect}
+        showTimeSelectOnly={this.props.showTimeSelectOnly}
         onTimeChange={this.handleTimeChange}
         timeFormat={this.props.timeFormat}
         timeIntervals={this.props.timeIntervals}
@@ -538,7 +539,8 @@ export default class DatePicker extends React.Component {
         excludeTimes={this.props.excludeTimes}
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
-        yearDropdownItemNumber={this.props.yearDropdownItemNumber}>
+        yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+      >
         {this.props.children}
       </WrappedCalendar>
     );
@@ -589,7 +591,8 @@ export default class DatePicker extends React.Component {
           className="react-datepicker__close-icon"
           onClick={this.onClearClick}
           title={this.props.clearButtonTitle}
-          tabIndex={-1}/>
+          tabIndex={-1}
+        />
       );
     } else {
       return null;
@@ -632,7 +635,8 @@ export default class DatePicker extends React.Component {
         }
         popperContainer={this.props.popperContainer}
         popperComponent={calendar}
-        popperPlacement={this.props.popperPlacement}/>
+        popperPlacement={this.props.popperPlacement}
+      />
     );
   }
 }

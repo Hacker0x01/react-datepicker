@@ -96,7 +96,8 @@ export default class Month extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
-          utcOffset={this.props.utcOffset}/>
+          utcOffset={this.props.utcOffset}
+        />
       );
 
       if (breakAfterNextPush) break;
@@ -136,7 +137,8 @@ export default class Month extends React.Component {
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
-        role="listbox">
+        role="listbox"
+      >
         {this.renderWeeks()}
       </div>
     );
