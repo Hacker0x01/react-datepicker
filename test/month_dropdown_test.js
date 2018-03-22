@@ -3,11 +3,7 @@ import range from "lodash/range";
 import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
 import { mount } from "enzyme";
-import {
-  newDate,
-  getMonthInLocale,
-  getDefaultLocaleData
-} from "../src/date_utils";
+import { newDate, getDefaultLocale } from "../src/date_utils";
 
 describe("MonthDropdown", () => {
   let monthDropdown;
@@ -69,7 +65,7 @@ describe("MonthDropdown", () => {
 
     it("closes the dropdown if outside is clicked", () => {
       const monthNames = range(0, 12).map(M =>
-        getMonthInLocale(getDefaultLocaleData(), newDate({ M }))
+        getMonthInLocale(getDefaultLocale(), newDate({ M }))
       );
       const onCancelSpy = sandbox.spy();
       const monthDropdownOptionsInstance = mount(

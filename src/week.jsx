@@ -57,7 +57,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(utils.cloneDate(this.props.day));
+    const startOfWeek = utils.getStartOfWeek(this.props.day);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {
@@ -70,7 +70,7 @@ export default class Week extends React.Component {
     }
     return days.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
-        const day = utils.addDays(utils.cloneDate(startOfWeek), offset);
+        const day = utils.addDays(startOfWeek, offset);
         return (
           <Day
             key={offset}
