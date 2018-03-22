@@ -1,3 +1,5 @@
+import { expect, assert } from "chai";
+
 import {
   newDate,
   setUTCOffset,
@@ -13,10 +15,30 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  offsetMinutesToZone
 } from "../src/date_utils";
 
 describe("date_utils", function() {
+  describe("offsetMinutesToZone", function() {
+    it("handles no offset", function() {
+      expect(offsetMinutesToZone(0)).to.equal("UTC+00:00");
+    });
+    it("treats small values as hours", function() {
+      expect(offsetMinutesToZone(-7)).to.equal("UTC-07:00");
+      expect(offsetMinutesToZone(8)).to.equal("UTC+08:00");
+      expect(offsetMinutesToZone(-12)).to.equal("UTC-12:00");
+      expect(offsetMinutesToZone(12)).to.equal("UTC+12:00");
+    });
+    it("treats other values as minutes", function() {
+      expect(offsetMinutesToZone(180)).to.equal("UTC+03:00");
+      expect(offsetMinutesToZone(-450)).to.equal("UTC-07:30");
+    });
+    it("does not allow offsets larger than 12 hours", function() {
+      expect(offsetMinutesToZone(12 * 60 + 1)).to.equal("UTC+12:00");
+      expect(offsetMinutesToZone(-12 * 60 - 1)).to.equal("UTC-12:00");
+    });
+  });
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
@@ -90,7 +112,7 @@ describe("date_utils", function() {
       expect(isSameUtcOffset(null, newDate())).to.be.false;
     });
 
-    it("should return true for non-equal utc offsets, but same dates", function() {
+    it("should return false for non-equal utc offsets, but same dates", function() {
       expect(
         isSameUtcOffset(
           setUTCOffset(newDate("2016-02-10"), -3),

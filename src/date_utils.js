@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import moment from "moment";
 
 const dayOfWeekCodes = {
@@ -13,19 +14,19 @@ const dayOfWeekCodes = {
 // These functions are not exported so
 // that we avoid magic strings like 'days'
 function set(date, unit, to) {
-  return date.set(unit, to);
+  return date.set({ [unit]: to });
 }
 
 function add(date, amount, unit) {
-  return date.add(amount, unit);
+  return date.plus({ [unit]: amount });
 }
 
 function subtract(date, amount, unit) {
-  return date.subtract(amount, unit);
+  return date.minus({ [unit]: amount });
 }
 
 function get(date, unit) {
-  return date.get(unit);
+  return date[unit];
 }
 
 function getStartOf(date, unit) {
@@ -41,19 +42,43 @@ function getDiff(date1, date2, unit) {
 }
 
 function isSame(date1, date2, unit) {
-  return date1.isSame(date2, unit);
+  return date1.hasSame(date2, unit);
+}
+
+function leftPad(number, digits) {
+  // TODO browser support?
+  return number.toLocaleString({}, { minimumIntegerDigits: digits });
+}
+
+export function offsetMinutesToZone(utcOffsetMinutes) {
+  // Mimick moment.js behavior
+  // Interpret values between -12 and 12 as hours and convert to minutes
+  if (Math.abs(utcOffsetMinutes) <= 12) {
+    utcOffsetMinutes *= 60;
+  }
+  // Clip to +/- 12 hours
+  utcOffsetMinutes = Math.max(-12 * 60, Math.min(utcOffsetMinutes, 12 * 60));
+  const negative = utcOffsetMinutes < 0;
+  const roundingFn = negative ? Math.ceil : Math.floor;
+  const hours = leftPad(Math.abs(roundingFn(utcOffsetMinutes / 60)), 2);
+  const minutes = leftPad(Math.abs(utcOffsetMinutes % 60), 2);
+  return `UTC${negative ? "-" : "+"}${hours}:${minutes}`;
 }
 
 // ** Date Constructors **
 
 export function newDate(point) {
-  return moment(point);
+  if (typeof point === "string") {
+    return DateTime.fromISO(point);
+  }
+  if (typeof point === "undefined") {
+    point = {};
+  }
+  return DateTime.fromObject(point);
 }
 
 export function newDateWithOffset(utcOffset) {
-  return moment()
-    .utc()
-    .utcOffset(utcOffset);
+  return newDate({ zone: offsetMinutesToZone(utcOffset) });
 }
 
 export function now(maybeFixedUtcOffset) {
@@ -64,7 +89,7 @@ export function now(maybeFixedUtcOffset) {
 }
 
 export function cloneDate(date) {
-  return date.clone();
+  return date;
 }
 
 export function parseDate(value, { dateFormat, locale }) {
@@ -102,8 +127,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
 // ** Date Setters **
 
 export function setTime(date, { hour, minute, second }) {
-  date.set({ hour, minute, second });
-  return date;
+  return date.set({ hour, minute, second });
 }
 
 export function setMonth(date, month) {
@@ -115,7 +139,7 @@ export function setYear(date, year) {
 }
 
 export function setUTCOffset(date, offset) {
-  return date.utcOffset(offset);
+  return date.setZone(offsetMinutesToZone(offset));
 }
 
 // ** Date Getters **
@@ -232,21 +256,25 @@ export function subtractYears(date, amount) {
 
 // ** Date Comparison **
 
-export function isBefore(date1, date2) {
-  return date1.isBefore(date2);
+export function isBefore(date1, date2, unit) {
+  const startOfDate1 = unit !== undefined ? getStartOf(date1, unit) : date1;
+  const startOfDate2 = unit !== undefined ? getStartOf(date2, unit) : date2;
+  return startOfDate1 < startOfDate2;
 }
 
-export function isAfter(date1, date2) {
-  return date1.isAfter(date2);
+export function isAfter(date1, date2, unit) {
+  const startOfDate1 = unit !== undefined ? getStartOf(date1, unit) : date1;
+  const startOfDate2 = unit !== undefined ? getStartOf(date2, unit) : date2;
+  return startOfDate1 > startOfDate2;
 }
 
 export function equals(date1, date2) {
-  return date1.isSame(date2);
+  return +date1 === +date2;
 }
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
-    return date1.isSame(date2, "year");
+    return isSame(date1, date2, "year");
   } else {
     return !date1 && !date2;
   }
@@ -254,41 +282,58 @@ export function isSameYear(date1, date2) {
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return date1.isSame(date2, "month");
+    return isSame(date1, date2, "month");
   } else {
     return !date1 && !date2;
   }
 }
 
-export function isSameDay(moment1, moment2) {
-  if (moment1 && moment2) {
-    return moment1.isSame(moment2, "day");
+export function isSameDay(date1, date2) {
+  if (date1 && date2) {
+    return isSame(date1, date2, "day");
   } else {
-    return !moment1 && !moment2;
+    return !date1 && !date2;
   }
 }
 
-export function isSameUtcOffset(moment1, moment2) {
-  if (moment1 && moment2) {
-    return moment1.utcOffset() === moment2.utcOffset();
+export function isSameUtcOffset(date1, date2) {
+  if (date1 && date2) {
+    // Note: This returns false for fixed-offset and IANA TZs that
+    // may have the same UTC offset and this instant.
+    return date1.zoneName === date2.zoneName;
   } else {
-    return !moment1 && !moment2;
+    return !date1 && !date2;
   }
 }
 
 export function isDayInRange(day, startDate, endDate) {
-  const before = startDate
-    .clone()
-    .startOf("day")
-    .subtract(1, "seconds");
-  const after = endDate
-    .clone()
-    .startOf("day")
-    .add(1, "seconds");
-  return day
-    .clone()
-    .startOf("day")
-    .isBetween(before, after);
+  const before = subtract(getStartOf(startDate, "day"), 1, "second");
+  const after = add(getStartOf(endDate, "day"), 1, "second");
+  return isBetween(getStartOf(day, "day"), before, after);
+}
+
+export function minimum(dates) {
+  return dates.reduce((min, date) => (date < min ? date : min), dates[0]);
+}
+
+export function maximum(dates) {
+  return dates.reduce((max, date) => (date > max ? date : max), dates[0]);
+}
+
+export function isSameOrAfter(date1, date2, unit) {
+  const startOfDate1 = unit !== undefined ? getStartOf(date1, unit) : date1;
+  const startOfDate2 = unit !== undefined ? getStartOf(date2, unit) : date2;
+  return startOfDate1 >= startOfDate2;
+}
+
+export function isSameOrBefore(date1, date2, unit) {
+  const startOfDate1 = unit !== undefined ? getStartOf(date1, unit) : date1;
+  const startOfDate2 = unit !== undefined ? getStartOf(date2, unit) : date2;
+  return startOfDate1 <= startOfDate2;
+}
+
+export function isBetween(date, min, max) {
+  return isSameOrAfter(date, min) && isSameOrBefore(date, max);
 }
 
 // *** Diffing ***
@@ -347,13 +392,13 @@ export function isDayDisabled(
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
-    (minDate && day.isBefore(minDate, "day")) ||
-    (maxDate && day.isAfter(maxDate, "day")) ||
+    (minDate && isBefore(day, minDate, "day")) ||
+    (maxDate && isAfter(day, maxDate, "day")) ||
     (excludeDates &&
       excludeDates.some(excludeDate => isSameDay(day, excludeDate))) ||
     (includeDates &&
       !includeDates.some(includeDate => isSameDay(day, includeDate))) ||
-    (filterDate && !filterDate(day.clone())) ||
+    (filterDate && !filterDate(day)) ||
     false
   );
 }
@@ -362,8 +407,8 @@ export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {
     if (
-      disabledTimes[i].get("hours") === time.get("hours") &&
-      disabledTimes[i].get("minutes") === time.get("minutes")
+      get(disabledTimes[i], "hour") === get(time, "hour") &&
+      get(disabledTimes[i], "minute") === get(time, "minutes")
     ) {
       return true;
     }
@@ -377,24 +422,25 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     throw new Error("Both minTime and maxTime props required");
   }
 
-  const base = moment()
-    .hours(0)
-    .minutes(0)
-    .seconds(0);
-  const baseTime = base
-    .clone()
-    .hours(time.get("hours"))
-    .minutes(time.get("minutes"));
-  const min = base
-    .clone()
-    .hours(minTime.get("hours"))
-    .minutes(minTime.get("minutes"));
-  const max = base
-    .clone()
-    .hours(maxTime.get("hours"))
-    .minutes(maxTime.get("minutes"));
+  const base = setTime(newDate(), {
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+  const baseTime = setTime(base, {
+    hours: get(time, "hour"),
+    minutes: get(time, "minute")
+  });
+  const min = setTime(minTime, {
+    hours: get(minTime, "hour"),
+    minutes: get(minTime, "minute")
+  });
+  const max = setTime(maxTime, {
+    hours: get(maxTime, "hour"),
+    minutes: get(maxTime, "minute")
+  });
 
-  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
+  return !(isSameOrAfter(baseTime, min) && isSameOrBefore(baseTime, max));
 }
 
 export function allDaysDisabledBefore(
@@ -402,12 +448,12 @@ export function allDaysDisabledBefore(
   unit,
   { minDate, includeDates } = {}
 ) {
-  const dateBefore = day.clone().subtract(1, unit);
+  const dateBefore = subtract(day, 1, unit);
   return (
-    (minDate && dateBefore.isBefore(minDate, unit)) ||
+    (minDate && isBefore(dateBefore, minDate, unit)) ||
     (includeDates &&
       includeDates.every(includeDate =>
-        dateBefore.isBefore(includeDate, unit)
+        isBefore(dateBefore, includeDate, unit)
       )) ||
     false
   );
@@ -418,12 +464,12 @@ export function allDaysDisabledAfter(
   unit,
   { maxDate, includeDates } = {}
 ) {
-  const dateAfter = day.clone().add(1, unit);
+  const dateAfter = add(day, 1, unit);
   return (
-    (maxDate && dateAfter.isAfter(maxDate, unit)) ||
+    (maxDate && isAfter(dateAfter, maxDate, unit)) ||
     (includeDates &&
       includeDates.every(includeDate =>
-        dateAfter.isAfter(includeDate, unit)
+        isAfter(dateAfter, includeDate, unit)
       )) ||
     false
   );
@@ -431,13 +477,13 @@ export function allDaysDisabledAfter(
 
 export function getEffectiveMinDate({ minDate, includeDates }) {
   if (includeDates && minDate) {
-    return moment.min(
+    return minimum(
       includeDates.filter(includeDate =>
-        minDate.isSameOrBefore(includeDate, "day")
+        isSameOrBefore(minDate, includeDate, "day")
       )
     );
   } else if (includeDates) {
-    return moment.min(includeDates);
+    return minimum(includeDates);
   } else {
     return minDate;
   }
@@ -445,13 +491,13 @@ export function getEffectiveMinDate({ minDate, includeDates }) {
 
 export function getEffectiveMaxDate({ maxDate, includeDates }) {
   if (includeDates && maxDate) {
-    return moment.max(
+    return maximum(
       includeDates.filter(includeDate =>
-        maxDate.isSameOrAfter(includeDate, "day")
+        isSameOrAfter(maxDate, includeDate, "day")
       )
     );
   } else if (includeDates) {
-    return moment.max(includeDates);
+    return maximum(includeDates);
   } else {
     return maxDate;
   }
