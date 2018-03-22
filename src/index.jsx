@@ -7,8 +7,7 @@ import {
   newDate,
   now,
   cloneDate,
-  isMoment,
-  isDate,
+  isValid,
   isBefore,
   isAfter,
   setTime,
@@ -31,7 +30,9 @@ import {
   getEffectiveMaxDate,
   parseDate,
   safeDateFormat,
-  getHightLightDaysMap
+  getHightLightDaysMap,
+  getDefaultLocale,
+  momentFormatToLuxon
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -133,12 +134,13 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: "L",
-      dateFormatCalendar: "MMMM YYYY",
+      dateFormat: momentFormatToLuxon("L"),
+      dateFormatCalendar: momentFormatToLuxon("MMMM YYYY"),
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll",
+      locale: getDefaultLocale(),
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
@@ -167,11 +169,12 @@ export default class DatePicker extends React.Component {
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected);
     }
-    if (this.props.highlightDates !== nextProps.highlightDates) {
-      this.setState({
-        highlightDates: getHightLightDaysMap(nextProps.highlightDates)
-      });
-    }
+    // TODO
+    // if (this.props.highlightDates !== nextProps.highlightDates) {
+    //   this.setState({
+    //     highlightDates: getHightLightDaysMap(nextProps.highlightDates)
+    //   });
+    // }
     if (!this.state.focused) this.setState({ inputValue: null });
   }
 
@@ -206,7 +209,8 @@ export default class DatePicker extends React.Component {
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      // TODO
+      // highlightDates: getHightLightDaysMap(this.props.highlightDates),
       focused: false
     };
   };
@@ -402,10 +406,7 @@ export default class DatePicker extends React.Component {
     const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
-      if (
-        isMoment(this.state.preSelection) ||
-        isDate(this.state.preSelection)
-      ) {
+      if (isValid(this.state.preSelection)) {
         this.handleSelect(copy, event);
         !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
       } else {

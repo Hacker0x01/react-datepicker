@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import moment from "moment";
 
 const dayOfWeekCodes = {
   1: "mon",
@@ -93,18 +92,16 @@ export function cloneDate(date) {
 }
 
 export function parseDate(value, { dateFormat, locale }) {
-  const m = moment(value, dateFormat, locale || moment.locale(), true);
-  return m.isValid() ? m : null;
+  const date = DateTime.fromFormat(value, dateFormat, {
+    locale: locale || getDefaultLocale()
+  });
+  return date.isValid ? date : null;
 }
 
 // ** Date "Reflection" **
 
-export function isMoment(date) {
-  return moment.isMoment(date);
-}
-
-export function isDate(date) {
-  return moment.isDate(date);
+export function isValid(date) {
+  return date.isValid; // TODO a bit easy to game
 }
 
 // ** Date Formatting **
@@ -122,6 +119,13 @@ export function safeDateFormat(date, { dateFormat, locale }) {
       )) ||
     ""
   );
+}
+
+export function momentFormatToLuxon(format) {
+  return {
+    L: DateTime.DATE_FULL,
+    "MMMM YYYY": "MMMM y"
+  }[format];
 }
 
 // ** Date Setters **
@@ -179,11 +183,11 @@ export function getDate(date) {
 }
 
 export function getUTCOffset() {
-  return moment().utcOffset();
+  return newDate().zone.offset;
 }
 
 export function getDayOfWeekCode(day) {
-  return dayOfWeekCodes[day.isoWeekday()];
+  return dayOfWeekCodes[formatDate(day, "c")];
 }
 
 // *** Start of ***
@@ -346,17 +350,17 @@ export function getDaysDiff(date1, date2) {
 
 // Deprecated, doesn't work with luxon
 export function getDefaultLocaleData() {
-  return moment.localeData();
+  // return moment.localeData();
 }
 
 // Deprecated, doesn't work with luxon
 export function registerLocale(localeName, localeData) {
-  moment.defineLocale(localeName, localeData);
+  // moment.defineLocale(localeName, localeData);
 }
 
 // Deprecated, doesn't work with luxon
 export function getLocaleDataForLocale(locale) {
-  return moment.localeData(locale);
+  // return moment.localeData(locale);
 }
 
 export function getDefaultLocale() {
@@ -510,32 +514,32 @@ export function getHightLightDaysMap(
   highlightDates = [],
   defaultClassName = "react-datepicker__day--highlighted"
 ) {
-  const dateClasses = new Map();
-  for (let i = 0, len = highlightDates.length; i < len; i++) {
-    const obj = highlightDates[i];
-    if (isMoment(obj)) {
-      const key = obj.format("MM.DD.YYYY");
-      const classNamesArr = dateClasses.get(key) || [];
-      if (!classNamesArr.includes(defaultClassName)) {
-        classNamesArr.push(defaultClassName);
-        dateClasses.set(key, classNamesArr);
-      }
-    } else if (typeof obj === "object") {
-      const keys = Object.keys(obj);
-      const className = keys[0];
-      const arrOfMoments = obj[keys[0]];
-      if (typeof className === "string" && arrOfMoments.constructor === Array) {
-        for (let k = 0, len = arrOfMoments.length; k < len; k++) {
-          const key = arrOfMoments[k].format("MM.DD.YYYY");
-          const classNamesArr = dateClasses.get(key) || [];
-          if (!classNamesArr.includes(className)) {
-            classNamesArr.push(className);
-            dateClasses.set(key, classNamesArr);
-          }
-        }
-      }
-    }
-  }
-
-  return dateClasses;
+  // TODO
+  //   const dateClasses = new Map();
+  //   for (let i = 0, len = highlightDates.length; i < len; i++) {
+  //     const obj = highlightDates[i];
+  //     if (isMoment(obj)) {
+  //       const key = obj.format("MM.DD.YYYY");
+  //       const classNamesArr = dateClasses.get(key) || [];
+  //       if (!classNamesArr.includes(defaultClassName)) {
+  //         classNamesArr.push(defaultClassName);
+  //         dateClasses.set(key, classNamesArr);
+  //       }
+  //     } else if (typeof obj === "object") {
+  //       const keys = Object.keys(obj);
+  //       const className = keys[0];
+  //       const arrOfMoments = obj[keys[0]];
+  //       if (typeof className === "string" && arrOfMoments.constructor === Array) {
+  //         for (let k = 0, len = arrOfMoments.length; k < len; k++) {
+  //           const key = arrOfMoments[k].format("MM.DD.YYYY");
+  //           const classNamesArr = dateClasses.get(key) || [];
+  //           if (!classNamesArr.includes(className)) {
+  //             classNamesArr.push(className);
+  //             dateClasses.set(key, classNamesArr);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return dateClasses;
 }
