@@ -69,6 +69,7 @@ General datepicker component.
 | `showMonthDropdown`           | `bool`                         |                 |             |
 | `showMonthYearDropdown`       | `bool`                         |                 |             |
 | `showTimeSelect`              | `bool`                         | `false`         |             |
+| `showTimeSelectOnly`          | `bool`                         |                 |             |
 | `showWeekNumbers`             | `bool`                         |                 |             |
 | `showYearDropdown`            | `bool`                         |                 |             |
 | `startDate`                   | `object`                       |                 |             |
