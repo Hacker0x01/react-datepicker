@@ -29,46 +29,46 @@ describe("date_utils", function() {
         "2017-05-22"
       );
     });
-    describe("isTimeDisabled", function() {
-      it("returns false if time not in disabled array", function() {
-        const time = setTime(newDate(), {
-          hour: 15,
-          minute: 30
-        });
-        const disabled = [
-          setTime(newDate(), {
-            hour: 15,
-            minute: 15
-          }),
-          setTime(newDate(), {
-            hour: 16,
-            minute: 30
-          })
-        ];
-        expect(isTimeDisabled(time, disabled)).to.be.false;
-      });
-      it("returns true if time is in disabled array", function() {
-        const time = setTime(newDate(), {
-          hour: 15,
-          minute: 30
-        });
-        const disabled = [
-          setTime(newDate(), {
-            hour: 15,
-            minute: 30
-          }),
-          setTime(newDate(), {
-            hour: 16,
-            minute: 30
-          })
-        ];
-        expect(isTimeDisabled(time, disabled)).to.be.true;
-      });
-    });
     it("handles timestamp", function() {
-      expect(formatDate(newDate(1514761200000), "yyyy-MM-dd")).to.equal(
-        "2018-01-01"
-      );
+      expect(
+        formatDate(newDate(1514761200000, { zone: "UTC+01:00" }), "yyyy-MM-dd")
+      ).to.equal("2018-01-01");
+    });
+  });
+  describe("isTimeDisabled", function() {
+    it("returns false if time not in disabled array", function() {
+      const time = setTime(newDate(), {
+        hour: 15,
+        minute: 30
+      });
+      const disabled = [
+        setTime(newDate(), {
+          hour: 15,
+          minute: 15
+        }),
+        setTime(newDate(), {
+          hour: 16,
+          minute: 30
+        })
+      ];
+      expect(isTimeDisabled(time, disabled)).to.be.false;
+    });
+    it("returns true if time is in disabled array", function() {
+      const time = setTime(newDate(), {
+        hour: 15,
+        minute: 30
+      });
+      const disabled = [
+        setTime(newDate(), {
+          hour: 15,
+          minute: 30
+        }),
+        setTime(newDate(), {
+          hour: 16,
+          minute: 30
+        })
+      ];
+      expect(isTimeDisabled(time, disabled)).to.be.true;
     });
   });
   describe("offsetMinutesToZone", function() {

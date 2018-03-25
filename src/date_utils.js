@@ -66,12 +66,12 @@ export function offsetMinutesToZone(utcOffsetMinutes) {
 
 // ** Date Constructors **
 
-export function newDate(point) {
+export function newDate(point, options = {}) {
   if (typeof point === "string") {
-    return DateTime.fromISO(point);
+    return DateTime.fromISO(point, options);
   }
   if (typeof point === "number") {
-    return DateTime.fromMillis(point);
+    return DateTime.fromMillis(point, options);
   }
   if (typeof point === "undefined") {
     point = {};
