@@ -29,7 +29,7 @@ import {
   getEffectiveMaxDate,
   safeParseDate,
   safeFormatDate,
-  getHightLightDaysMap,
+  getHighLightDaysMap,
   getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
@@ -166,12 +166,11 @@ export default class DatePicker extends React.Component {
     if (this.props.inline && currentMonth !== nextMonth) {
       this.setPreSelection(nextProps.selected);
     }
-    // TODO
-    // if (this.props.highlightDates !== nextProps.highlightDates) {
-    //   this.setState({
-    //     highlightDates: getHightLightDaysMap(nextProps.highlightDates)
-    //   });
-    // }
+    if (this.props.highlightDates !== nextProps.highlightDates) {
+      this.setState({
+        highlightDates: getHighLightDaysMap(nextProps.highlightDates)
+      });
+    }
     if (!this.state.focused) this.setState({ inputValue: null });
   }
 
@@ -206,8 +205,7 @@ export default class DatePicker extends React.Component {
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      // TODO
-      // highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      highlightDates: getHighLightDaysMap(this.props.highlightDates),
       focused: false
     };
   };

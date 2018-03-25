@@ -94,8 +94,12 @@ export function cloneDate(date) {
   return date;
 }
 
+export function isDate(value) {
+  return value instanceof DateTime;
+}
+
 export function parseDate(value, format, locale = getDefaultLocale()) {
-  if (value instanceof DateTime) {
+  if (isDate(value)) {
     return value;
   }
   return DateTime.fromFormat(value, format, {
@@ -504,36 +508,35 @@ export function getEffectiveMaxDate({ maxDate, includeDates }) {
   }
 }
 
-export function getHightLightDaysMap(
+export function getHighLightDaysMap(
   highlightDates = [],
   defaultClassName = "react-datepicker__day--highlighted"
 ) {
-  // TODO
-  //   const dateClasses = new Map();
-  //   for (let i = 0, len = highlightDates.length; i < len; i++) {
-  //     const obj = highlightDates[i];
-  //     if (isMoment(obj)) {
-  //       const key = obj.format("MM.DD.YYYY");
-  //       const classNamesArr = dateClasses.get(key) || [];
-  //       if (!classNamesArr.includes(defaultClassName)) {
-  //         classNamesArr.push(defaultClassName);
-  //         dateClasses.set(key, classNamesArr);
-  //       }
-  //     } else if (typeof obj === "object") {
-  //       const keys = Object.keys(obj);
-  //       const className = keys[0];
-  //       const arrOfMoments = obj[keys[0]];
-  //       if (typeof className === "string" && arrOfMoments.constructor === Array) {
-  //         for (let k = 0, len = arrOfMoments.length; k < len; k++) {
-  //           const key = arrOfMoments[k].format("MM.DD.YYYY");
-  //           const classNamesArr = dateClasses.get(key) || [];
-  //           if (!classNamesArr.includes(className)) {
-  //             classNamesArr.push(className);
-  //             dateClasses.set(key, classNamesArr);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return dateClasses;
+  const dateClasses = new Map();
+  for (let i = 0, len = highlightDates.length; i < len; i++) {
+    const obj = highlightDates[i];
+    if (isDate(obj)) {
+      const key = formatDate(obj, "MM.dd.yyyy");
+      const classNamesArr = dateClasses.get(key) || [];
+      if (!classNamesArr.includes(defaultClassName)) {
+        classNamesArr.push(defaultClassName);
+        dateClasses.set(key, classNamesArr);
+      }
+    } else if (typeof obj === "object") {
+      const keys = Object.keys(obj);
+      const className = keys[0];
+      const arrOfMoments = obj[className];
+      if (typeof className === "string" && Array.isArray(arrOfMoments)) {
+        for (let k = 0, len = arrOfMoments.length; k < len; k++) {
+          const key = formatDate(arrOfMoments[k], "MM.dd.yyyy");
+          const classNamesArr = dateClasses.get(key) || [];
+          if (!classNamesArr.includes(className)) {
+            classNamesArr.push(className);
+            dateClasses.set(key, classNamesArr);
+          }
+        }
+      }
+    }
+  }
+  return dateClasses;
 }

@@ -5,6 +5,7 @@ import {
   getDay,
   getMonth,
   getWeekDay,
+  formatDate,
   now,
   isSameDay,
   isSameOrBefore,
@@ -62,7 +63,7 @@ export default class Day extends React.Component {
     }
 
     // Looking for className in the Map of {'day string, 'className'}
-    const dayStr = day.format("MM.DD.YYYY");
+    const dayStr = formatDate(day, "MM.dd.yyyy");
     return highlightDates.get(dayStr);
   };
 
