@@ -8,18 +8,18 @@ export default class highlightDatesRanges extends React.Component {
     this.highlightWithRanges = [
       {
         "react-datepicker__day--highlighted-custom-1": [
-          DateTime.local().minus(4, "days"),
-          DateTime.local().minus(3, "days"),
-          DateTime.local().minus(2, "days"),
-          DateTime.local().minus(1, "days")
+          DateTime.local().minus({ days: 4 }),
+          DateTime.local().minus({ days: 3 }),
+          DateTime.local().minus({ days: 2 }),
+          DateTime.local().minus({ days: 1 })
         ]
       },
       {
         "react-datepicker__day--highlighted-custom-2": [
-          DateTime.local().plus(1, "days"),
-          DateTime.local().plus(2, "days"),
-          DateTime.local().plus(3, "days"),
-          DateTime.local().plus(4, "days")
+          DateTime.local().plus({ days: 1 }),
+          DateTime.local().plus({ days: 2 }),
+          DateTime.local().plus({ days: 3 }),
+          DateTime.local().plus({ days: 4 })
         ]
       }
     ];
@@ -48,25 +48,25 @@ export default class highlightDatesRanges extends React.Component {
             <br />
             {'    { "react-datepicker__day--highlighted-custom-1": ['}
             <br />
-            {'      DateTime.local().minus(4, "days"),'}
+            {"      DateTime.local().minus({days: 4}),"}
             <br />
-            {'      DateTime.local().minus(3, "days"),'}
+            {"      DateTime.local().minus({days: 3}),"}
             <br />
-            {'      DateTime.local().minus(2, "days"),'}
+            {"      DateTime.local().minus({days: 2}),"}
             <br />
-            {'      DateTime.local().minus(1, "days") ]'}
+            {"      DateTime.local().minus({days: 1}) ]"}
             <br />
             {"    },"}
             <br />
             {'    { "react-datepicker__day--highlighted-custom-2": ['}
             <br />
-            {'      DateTime.local().plus(1, "days"),'}
+            {"      DateTime.local().plus({days: 1}),"}
             <br />
-            {'      DateTime.local().plus(2, "days"),'}
+            {"      DateTime.local().plus({days: 2}),"}
             <br />
-            {'      DateTime.local().plus(3, "days"),'}
+            {"      DateTime.local().plus({days: 3}),"}
             <br />
-            {'      DateTime.local().plus(4, "days") ]'}
+            {"      DateTime.local().plus({days: 4}) ]"}
             <br />
             {"    }"}
             <br />

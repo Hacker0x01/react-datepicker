@@ -15,7 +15,7 @@ export default class RawChanges extends React.Component {
 
   handleChangeRaw = value => {
     if (value === "tomorrow") {
-      this.handleChange(DateTime.local().plus(1, "day"));
+      this.handleChange(DateTime.local().plus({ day: 1 }));
     }
   };
 
@@ -27,7 +27,7 @@ export default class RawChanges extends React.Component {
             {`
 handleChangeRaw(value) {
   if(value === "tomorrow") {
-    const tomorrow = DateTime.local().plus(1, "day")
+    const tomorrow = DateTime.local().plus({ day: 1 })
     this.handleChange(tomorrow)
   }
 }

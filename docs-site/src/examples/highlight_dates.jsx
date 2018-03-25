@@ -26,7 +26,7 @@ export default class highlightDates extends React.Component {
             <br />
             <strong>
               {
-                'highlightDates={[DateTime.local().minus(7, "days"), DateTime.local().plus(7, "days")]}'
+                "highlightDates={[DateTime.local().minus({ days: 7 }), DateTime.local().plus({ days: 7 })]}"
               }
             </strong>
             <br />
@@ -40,8 +40,8 @@ export default class highlightDates extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             highlightDates={[
-              DateTime.local().minus(7, "days"),
-              DateTime.local().plus(7, "days")
+              DateTime.local().minus({ days: 7 }),
+              DateTime.local().plus({ days: 7 })
             ]}
             placeholderText="This highlights a week ago and a week from today"
           />

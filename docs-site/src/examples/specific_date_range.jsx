@@ -26,7 +26,7 @@ export default class SpecificDateRange extends React.Component {
             <br />
             <strong>{"  minDate={DateTime.local()}"}</strong>
             <br />
-            <strong>{'  maxDate={DateTime.local().plus(5, "days")}'}</strong>
+            <strong>{"  maxDate={DateTime.local().plus({ days: 5 })}"}</strong>
             <br />
             {
               '  placeholderText="Select a date between today and 5 days in the future"'
@@ -40,7 +40,7 @@ export default class SpecificDateRange extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             minDate={DateTime.local()}
-            maxDate={DateTime.local().plus(5, "days")}
+            maxDate={DateTime.local().plus({ days: 5 })}
             placeholderText="Select a date between today and 5 days in the future"
           />
         </div>

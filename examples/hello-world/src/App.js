@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -8,7 +8,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      startDate: moment()
+      startDate: DateTime.local()
     };
   }
 

@@ -23,7 +23,7 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
   selected={this.state.startDate}
   onChange={this.handleChange}
   minDate={DateTime.local()}
-  maxDate={DateTime.local().plus(5, "months")}
+  maxDate={DateTime.local().plus({months: 5})}
   showDisabledMonthNavigation />
 </div>
 
@@ -35,7 +35,7 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
             selected={this.state.startDate}
             onChange={this.handleChange}
             minDate={DateTime.local()}
-            maxDate={DateTime.local().plus(5, "months")}
+            maxDate={DateTime.local().plus({ months: 5 })}
             showDisabledMonthNavigation
           />
         </div>

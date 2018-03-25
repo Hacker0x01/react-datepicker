@@ -26,7 +26,7 @@ export default class includeDates extends React.Component {
             <br />
             <strong>
               {
-                'includeDates={[DateTime.local(), DateTime.local().plus(1, "days")]}'
+                "includeDates={[DateTime.local(), DateTime.local().plus({ days: 1 })]}"
               }
             </strong>
             <br />
@@ -37,7 +37,10 @@ export default class includeDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            includeDates={[DateTime.local(), DateTime.local().plus(1, "days")]}
+            includeDates={[
+              DateTime.local(),
+              DateTime.local().plus({ days: 1 })
+            ]}
             placeholderText="This only includes today and tomorrow"
           />
         </div>

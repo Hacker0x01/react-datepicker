@@ -26,7 +26,7 @@ export default class ExcludeDates extends React.Component {
             <br />
             <strong>
               {
-                '  excludeDates={[DateTime.local(), DateTime.local().minus(1, "days")]}'
+                "  excludeDates={[DateTime.local(), DateTime.local().minus({ days: 1 })]}"
               }
             </strong>
             <br />
@@ -39,7 +39,10 @@ export default class ExcludeDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            excludeDates={[DateTime.local(), DateTime.local().minus(1, "days")]}
+            excludeDates={[
+              DateTime.local(),
+              DateTime.local().minus({ days: 1 })
+            ]}
             placeholderText="Select a date other than today or yesterday"
           />
         </div>
