@@ -45,7 +45,6 @@ export default class MonthYearDropdown extends React.Component {
 
     let option = cloneDate(currDate);
     while (!isAfter(option, lastDate)) {
-      console.log(option, lastDate);
       const timepoint = getValue(option);
       options.push(
         <option key={timepoint} value={timepoint}>

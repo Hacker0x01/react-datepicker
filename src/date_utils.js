@@ -37,7 +37,7 @@ function getEndOf(date, unit) {
 }
 
 function getDiff(date1, date2, unit) {
-  return date1.diff(date2, unit);
+  return date1.diff(date2, unit)[unit];
 }
 
 function isSame(date1, date2, unit) {
@@ -94,16 +94,35 @@ export function cloneDate(date) {
   return date;
 }
 
-export function parseDate(value, { dateFormat, locale }) {
-  const date = DateTime.fromFormat(value, dateFormat, {
-    locale: locale || getDefaultLocale()
+export function parseDate(value, format, locale = getDefaultLocale()) {
+  if (value instanceof DateTime) {
+    return value;
+  }
+  return DateTime.fromFormat(value, format, {
+    locale
   });
-  return date.isValid ? date : null;
+}
+
+// Like parseDate(), but deals with multiple formats
+export function safeParseDate(value, { dateFormat, locale }) {
+  if (!Array.isArray(dateFormat)) {
+    dateFormat = [dateFormat];
+  }
+  for (const format of dateFormat) {
+    const date = parseDate(value, format, locale);
+    if (date.isValid) {
+      return date;
+    }
+  }
+  return null;
 }
 
 // ** Date "Reflection" **
 
 export function isValid(date) {
+  if (typeof date === "undefined") {
+    return false;
+  }
   return date.isValid; // TODO a bit easy to game
 }
 
@@ -113,7 +132,7 @@ export function formatDate(date, format) {
   return date.toFormat(format);
 }
 
-export function safeDateFormat(date, { dateFormat, locale }) {
+export function safeFormatDate(date, { dateFormat, locale }) {
   return (
     (date &&
       formatDate(
@@ -124,12 +143,8 @@ export function safeDateFormat(date, { dateFormat, locale }) {
   );
 }
 
-// TODO not sure if it's worth the effort
-export function momentFormatToLuxon(format) {
-  return {
-    L: "MM/dd/yyyy",
-    "MMMM YYYY": "MMMM yyyy"
-  }[format];
+export function isLocal(date) {
+  return date.zone.type === "local";
 }
 
 // ** Date Setters **
@@ -352,21 +367,6 @@ export function getDaysDiff(date1, date2) {
 
 // ** Date Localization **
 
-// Deprecated, doesn't work with luxon
-export function getDefaultLocaleData() {
-  console.warn("ACCESS OF DEPRECATED FUNCTION getDefaultLocaleData");
-}
-
-// Deprecated, doesn't work with luxon
-export function registerLocale(localeName, localeData) {
-  console.warn("ACCESS OF DEPRECATED FUNCTION registerLocale");
-}
-
-// Deprecated, doesn't work with luxon
-export function getLocaleDataForLocale(locale) {
-  console.warn("ACCESS OF DEPRECATED FUNCTION getLocaleDataForLocale");
-}
-
 export function getDefaultLocale() {
   // TODO auto-detect somehow?
   return "en-US";
@@ -381,7 +381,7 @@ export function localizeDate(date, locale) {
 }
 
 export function getWeekdayMinInLocale(locale, date) {
-  return formatDate(localizeDate(date, locale), "EEE");
+  return get(localizeDate(date, locale), "weekdayShort");
 }
 
 export function getMonthInLocale(locale, date, format) {
@@ -411,17 +411,11 @@ export function isDayDisabled(
 }
 
 export function isTimeDisabled(time, disabledTimes) {
-  const l = disabledTimes.length;
-  for (let i = 0; i < l; i++) {
-    if (
-      get(disabledTimes[i], "hour") === get(time, "hour") &&
-      get(disabledTimes[i], "minute") === get(time, "minutes")
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  return !!disabledTimes.find(
+    disabledTime =>
+      getHour(disabledTime) === getHour(time) &&
+      getMinute(disabledTime) === getMinute(time)
+  );
 }
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {

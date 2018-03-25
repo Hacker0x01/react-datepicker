@@ -48,7 +48,7 @@ describe("Week", () => {
       dayClicked = day;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
     const week = shallow(<Week day={weekStart} onDayClick={onDayClick} />);
     const day = week.find(Day).at(0);
     day.simulate("click");
@@ -62,7 +62,7 @@ describe("Week", () => {
       firstDayReceived = newFirstWeekDay;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
     const week = shallow(
       <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
     );
@@ -78,7 +78,7 @@ describe("Week", () => {
       weekNumberReceived = newWeekNumber;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
     const realWeekNumber = utils.getWeek(weekStart);
     const week = shallow(
       <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
@@ -96,7 +96,7 @@ describe("Week", () => {
       return 9;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
     const week = shallow(
       <Week
         day={weekStart}

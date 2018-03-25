@@ -1,14 +1,16 @@
 import React from "react";
 import DatePicker from "../src/index.jsx";
-import moment from "moment";
+import * as utils from "../src/date_utils";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import Time from "../src/time";
 
+const DATE_FORMAT = "MMMM dd, yyyy h:mm a";
+
 describe("TimePicker", () => {
   let datePicker;
   let div;
-  let onChangeMoment;
+  let onChangeDate;
 
   beforeEach(() => {
     div = document.createElement("div");
@@ -18,7 +20,9 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    expect(onChangeMoment.format("LLL")).to.equal("February 28, 2018 4:45 PM");
+    expect(utils.formatDate(onChangeDate, DATE_FORMAT)).to.equal(
+      "February 28, 2018 4:45 PM"
+    );
   });
 
   it("should allow time changes after input change", () => {
@@ -49,14 +53,14 @@ describe("TimePicker", () => {
   }
 
   function renderDatePicker(string) {
-    return renderDatePickerFor(moment(string, "LLL", true));
+    return renderDatePickerFor(utils.parseDate(string, DATE_FORMAT));
   }
 
   function renderDatePickerFor(selected) {
     datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
-        dateFormat={"LLL"}
+        dateFormat={DATE_FORMAT}
         allowSameDay
         onChange={onChange}
         showTimeSelect
@@ -66,7 +70,7 @@ describe("TimePicker", () => {
   }
 
   function onChange(m) {
-    onChangeMoment = m;
+    onChangeDate = m;
     renderDatePicker(m);
   }
 });

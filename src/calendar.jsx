@@ -29,8 +29,7 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate,
-  momentFormatToLuxon
+  getEffectiveMaxDate
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -108,7 +107,7 @@ export default class Calendar extends React.Component {
   static get defaultProps() {
     return {
       onDropdownFocus: () => {},
-      dateFormat: momentFormatToLuxon("MMMM YYYY"),
+      dateFormat: "MMMM yyyy",
       monthsShown: 1,
       forceShowMonthNavigation: false,
       timeCaption: "Time"

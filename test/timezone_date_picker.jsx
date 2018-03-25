@@ -23,7 +23,7 @@ class TimezoneDatePicker extends React.Component {
     return (
       <DatePicker
         utcOffset={this.state.utcOffset}
-        dateFormat="YYYY-MM-DD HH:mm"
+        dateFormat="yyyy-MM-dd HH:mm"
         selected={selected}
         onChange={this.handleChange}
       />

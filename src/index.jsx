@@ -27,11 +27,10 @@ import {
   isDayInRange,
   getEffectiveMinDate,
   getEffectiveMaxDate,
-  parseDate,
-  safeDateFormat,
+  safeParseDate,
+  safeFormatDate,
   getHightLightDaysMap,
-  getDefaultLocale,
-  momentFormatToLuxon
+  getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -132,8 +131,8 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: momentFormatToLuxon("L"),
-      dateFormatCalendar: momentFormatToLuxon("MMMM YYYY"),
+      dateFormat: "MM/dd/yyyy",
+      dateFormatCalendar: "MMMM yyyy",
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
@@ -290,7 +289,7 @@ export default class DatePicker extends React.Component {
       }
     }
     this.setState({ inputValue: event.target.value });
-    const date = parseDate(event.target.value, this.props);
+    const date = safeParseDate(event.target.value, this.props);
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
     }
@@ -555,7 +554,7 @@ export default class DatePicker extends React.Component {
         ? this.props.value
         : typeof this.state.inputValue === "string"
           ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+          : safeFormatDate(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {

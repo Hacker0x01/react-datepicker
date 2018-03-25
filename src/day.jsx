@@ -7,6 +7,8 @@ import {
   getWeekDay,
   now,
   isSameDay,
+  isSameOrBefore,
+  isSameOrAfter,
   isDayDisabled,
   isDayInRange,
   getDayOfWeekCode
@@ -86,11 +88,11 @@ export default class Day extends React.Component {
       return false;
     }
 
-    if (selectsStart && endDate && selectingDate.isSameOrBefore(endDate)) {
+    if (selectsStart && endDate && isSameOrBefore(selectingDate, endDate)) {
       return isDayInRange(day, selectingDate, endDate);
     }
 
-    if (selectsEnd && startDate && selectingDate.isSameOrAfter(startDate)) {
+    if (selectsEnd && startDate && isSameOrAfter(selectingDate, startDate)) {
       return isDayInRange(day, startDate, selectingDate);
     }
 
@@ -143,7 +145,7 @@ export default class Day extends React.Component {
 
   isWeekend = () => {
     const weekday = getWeekDay(this.props.day);
-    return weekday === 0 || weekday === 6;
+    return weekday === 6 || weekday === 7;
   };
 
   isOutsideMonth = () => {

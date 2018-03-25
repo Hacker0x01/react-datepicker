@@ -8,6 +8,7 @@ import {
   subtractMonths,
   formatDate,
   cloneDate,
+  getValue,
   isAfter
 } from "../src/date_utils";
 
@@ -112,7 +113,7 @@ describe("MonthYearDropdown", () => {
     });
 
     it("calls the supplied onChange function when a different month year is clicked", () => {
-      const expected_date = newDate("2017-12");
+      const expected_date = newDate("2017-12-01");
 
       monthYearDropdown
         .find(".react-datepicker__month-year-read-view")
@@ -134,38 +135,38 @@ describe("MonthYearDropdown", () => {
 
       dropdownDateFormat = getMonthYearDropdown({ locale: "fi" });
 
-      expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
+      expect(dropdownDateFormat.text()).to.eq("tammikuuta 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
         locale: "fi",
         showMonthYearDropwdown: true
       });
-      expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
+      expect(dropdownDateFormat.text()).to.eq("tammikuuta 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "YYYY MMM",
+        dateFormat: "yyyy MMM",
         locale: "fi"
       });
-      expect(dropdownDateFormat.text()).to.eq("2018 tammi");
+      expect(dropdownDateFormat.text()).to.eq("2018 tammik.");
       dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "YYYY MMM",
+        dateFormat: "yyyy MMM",
         locale: "fi",
         showMonthYearDropwdown: true
       });
-      expect(dropdownDateFormat.text()).to.eq("2018 tammi");
+      expect(dropdownDateFormat.text()).to.eq("2018 tammik.");
     });
   });
 
   describe("select mode", () => {
     it("renders a select", () => {
       const expected_date = newDate("2018-01-01");
-      let currentMonth = newDate("2017-07");
-      const maxMonth = newDate("2018-06");
+      let currentMonth = newDate("2017-07-01");
+      const maxMonth = newDate("2018-06-01");
 
       const expected_values = [];
 
       while (!isAfter(currentMonth, maxMonth)) {
-        expected_values.push(currentMonth.valueOf());
+        expected_values.push(getValue(currentMonth));
 
         currentMonth = addMonths(currentMonth, 1);
       }
@@ -175,7 +176,7 @@ describe("MonthYearDropdown", () => {
         ".react-datepicker__month-year-select"
       );
       expect(select).to.have.length(1);
-      expect(select.prop("value")).to.eq(expected_date.valueOf());
+      expect(select.prop("value")).to.eq(getValue(expected_date));
       var options = select.find("option");
       expect(options.map(o => o.prop("value"))).to.eql(expected_values);
     });
@@ -183,7 +184,6 @@ describe("MonthYearDropdown", () => {
     it("renders month options with default locale", () => {
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
       var options = monthYearDropdown.find("option");
-
       expect(options.map(o => o.text())).to.eql([
         "July 2017",
         "August 2017",
@@ -206,24 +206,24 @@ describe("MonthYearDropdown", () => {
         locale: "fi"
       });
       var options = monthYearDropdown.find("option");
-      expect(options.map(o => o.text())).to.eql([
-        "heinäkuu 2017",
-        "elokuu 2017",
-        "syyskuu 2017",
-        "lokakuu 2017",
-        "marraskuu 2017",
-        "joulukuu 2017",
-        "tammikuu 2018",
-        "helmikuu 2018",
-        "maaliskuu 2018",
-        "huhtikuu 2018",
-        "toukokuu 2018",
-        "kesäkuu 2018"
+      expect(options.map(o => o.text())).to.deep.equal([
+        "heinäkuuta 2017",
+        "elokuuta 2017",
+        "syyskuuta 2017",
+        "lokakuuta 2017",
+        "marraskuuta 2017",
+        "joulukuuta 2017",
+        "tammikuuta 2018",
+        "helmikuuta 2018",
+        "maaliskuuta 2018",
+        "huhtikuuta 2018",
+        "toukokuuta 2018",
+        "kesäkuuta 2018"
       ]);
     });
 
     it("does not call the supplied onChange function when the same month is clicked", () => {
-      const selectedMonth = newDate("2017-11");
+      const selectedMonth = newDate("2017-11-01");
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
         date: selectedMonth
@@ -231,13 +231,13 @@ describe("MonthYearDropdown", () => {
       var select = monthYearDropdown.find(
         ".react-datepicker__month-year-select"
       );
-      select.simulate("change", { target: { value: selectedMonth.valueOf() } });
+      select.simulate("change", { target: { value: getValue(selectedMonth) } });
       expect(handleChangeResult).to.not.exist;
     });
 
     it("calls the supplied onChange function when a different month is clicked", () => {
-      const selectedMonth = newDate("2017-11");
-      const monthToClick = newDate("2017-09");
+      const selectedMonth = newDate("2017-11-01");
+      const monthToClick = newDate("2017-09-01");
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
         month: selectedMonth
@@ -245,8 +245,8 @@ describe("MonthYearDropdown", () => {
       var select = monthYearDropdown.find(
         ".react-datepicker__month-year-select"
       );
-      select.simulate("change", { target: { value: monthToClick.valueOf() } });
-      expect(handleChangeResult.valueOf()).to.equal(monthToClick.valueOf());
+      select.simulate("change", { target: { value: getValue(monthToClick) } });
+      expect(getValue(handleChangeResult)).to.equal(getValue(monthToClick));
     });
   });
 });

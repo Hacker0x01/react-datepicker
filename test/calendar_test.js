@@ -91,7 +91,7 @@ describe("Calendar", function() {
   });
 
   it("should start with the open to date in view if given and no selected/min/max dates given", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
+    const openToDate = utils.safeParseDate("09/28/1993", {
       dateFormat: DATE_FORMAT
     });
     const calendar = getCalendar({ openToDate });
@@ -99,45 +99,57 @@ describe("Calendar", function() {
   });
 
   it("should start with the open to date in view if given and after a min date", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
+    const openToDate = utils.safeParseDate("09/28/1993", {
       dateFormat: DATE_FORMAT
     });
-    const minDate = utils.parseDate("01/01/1993", { dateFormat: DATE_FORMAT });
+    const minDate = utils.safeParseDate("01/01/1993", {
+      dateFormat: DATE_FORMAT
+    });
     const calendar = getCalendar({ openToDate, minDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should start with the open to date in view if given and before a max date", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
+    const openToDate = utils.safeParseDate("09/28/1993", {
       dateFormat: DATE_FORMAT
     });
-    const maxDate = utils.parseDate("12/31/1993", { dateFormat: DATE_FORMAT });
+    const maxDate = utils.safeParseDate("12/31/1993", {
+      dateFormat: DATE_FORMAT
+    });
     const calendar = getCalendar({ openToDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should start with the open to date in view if given and in range of the min/max dates", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
+    const openToDate = utils.safeParseDate("09/28/1993", {
       dateFormat: DATE_FORMAT
     });
-    const minDate = utils.parseDate("01/01/1993", { dateFormat: DATE_FORMAT });
-    const maxDate = utils.parseDate("12/31/1993", { dateFormat: DATE_FORMAT });
+    const minDate = utils.safeParseDate("01/01/1993", {
+      dateFormat: DATE_FORMAT
+    });
+    const maxDate = utils.safeParseDate("12/31/1993", {
+      dateFormat: DATE_FORMAT
+    });
     const calendar = getCalendar({ openToDate, minDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should open on openToDate date rather than selected date when both are specified", function() {
-    var openToDate = utils.parseDate("09/28/1993", { dateFormat: DATE_FORMAT });
-    var selected = utils.parseDate("09/28/1995", { dateFormat: DATE_FORMAT });
+    var openToDate = utils.safeParseDate("09/28/1993", {
+      dateFormat: DATE_FORMAT
+    });
+    var selected = utils.safeParseDate("09/28/1995", {
+      dateFormat: DATE_FORMAT
+    });
     var calendar = getCalendar({ openToDate, selected });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should trigger date change when openToDate prop is set after calcInitialState()", () => {
-    const openToDate = utils.parseDate("09/28/1993", {
+    const openToDate = utils.safeParseDate("09/28/1993", {
       dateFormat: DATE_FORMAT
     });
-    const oneMonthFromOpenToDate = utils.parseDate("10/28/1993", {
+    const oneMonthFromOpenToDate = utils.safeParseDate("10/28/1993", {
       dateFormat: DATE_FORMAT
     });
     const calendar = getCalendar({ openToDate });
