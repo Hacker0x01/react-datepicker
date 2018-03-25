@@ -162,7 +162,7 @@ export function getHour(date) {
 
 // Returns day of week
 export function getDay(date) {
-  return get(date, "day");
+  return get(date, "weekday");
 }
 
 export function getWeek(date) {
@@ -179,7 +179,7 @@ export function getYear(date) {
 
 // Returns day of month
 export function getDate(date) {
-  return get(date, "date");
+  return get(date, "day");
 }
 
 export function getUTCOffset() {
@@ -187,7 +187,7 @@ export function getUTCOffset() {
 }
 
 export function getDayOfWeekCode(day) {
-  return dayOfWeekCodes[formatDate(day, "c")];
+  return dayOfWeekCodes[getDay(day)];
 }
 
 // *** Start of ***
