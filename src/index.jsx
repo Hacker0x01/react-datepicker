@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import {
-  newDate,
   now,
   cloneDate,
   isValid,
@@ -55,7 +54,7 @@ export default class DatePicker extends React.Component {
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
     // eslint-disable-next-line react/no-unused-prop-types
-    dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     dateFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
     disabled: PropTypes.bool,
@@ -114,7 +113,6 @@ export default class DatePicker extends React.Component {
     timeCaption: PropTypes.string,
     title: PropTypes.string,
     todayButton: PropTypes.string,
-    useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
@@ -184,11 +182,11 @@ export default class DatePicker extends React.Component {
 
   getPreSelection = () =>
     this.props.openToDate
-      ? newDate(this.props.openToDate)
+      ? cloneDate(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate
-        ? newDate(this.props.startDate)
+        ? cloneDate(this.props.startDate)
         : this.props.selectsStart && this.props.endDate
-          ? newDate(this.props.endDate)
+          ? cloneDate(this.props.endDate)
           : now(this.props.utcOffset);
 
   calcInitialState = () => {
@@ -205,7 +203,7 @@ export default class DatePicker extends React.Component {
       open: this.props.startOpen || false,
       preventFocus: false,
       preSelection: this.props.selected
-        ? newDate(this.props.selected)
+        ? cloneDate(this.props.selected)
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
@@ -330,8 +328,8 @@ export default class DatePicker extends React.Component {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
-          if (keepInput) selected = newDate(changedDate);
-          changedDate = setTime(newDate(changedDate), {
+          if (keepInput) selected = cloneDate(changedDate);
+          changedDate = setTime(cloneDate(changedDate), {
             hour: getHour(selected),
             minute: getMinute(selected),
             second: getSecond(selected)
@@ -403,7 +401,7 @@ export default class DatePicker extends React.Component {
       }
       return;
     }
-    const copy = newDate(this.state.preSelection);
+    const copy = cloneDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
       if (isValid(this.state.preSelection)) {
@@ -487,7 +485,6 @@ export default class DatePicker extends React.Component {
         adjustDateOnChange={this.props.adjustDateOnChange}
         setOpen={this.setOpen}
         dateFormat={this.props.dateFormatCalendar}
-        useWeekdaysShort={this.props.useWeekdaysShort}
         dropdownMode={this.props.dropdownMode}
         selected={this.props.selected}
         preSelection={this.state.preSelection}

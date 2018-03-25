@@ -8,6 +8,7 @@ import {
   getStartOfMonth,
   isAfter,
   isSameMonth,
+  getValue,
   isSameYear
 } from "./date_utils";
 
@@ -47,7 +48,7 @@ export default class MonthYearDropdownOptions extends React.Component {
 
   renderOptions = () => {
     return this.state.monthYearsList.map(monthYear => {
-      const monthYearPoint = monthYear.valueOf();
+      const monthYearPoint = getValue(monthYear);
 
       const isSameMonthYear =
         isSameYear(this.props.date, monthYear) &&

@@ -9,8 +9,9 @@ import {
   isAfter,
   isSameMonth,
   isSameYear,
+  getValue,
   localizeDate,
-  newDate
+  cloneDate
 } from "./date_utils";
 
 var WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions);
@@ -42,7 +43,7 @@ export default class MonthYearDropdown extends React.Component {
     const options = [];
 
     while (!isAfter(currDate, lastDate)) {
-      const timepoint = currDate.valueOf();
+      const timepoint = getValue(currDate);
       options.push(
         <option key={timepoint} value={timepoint}>
           {formatDate(currDate, this.props.dateFormat)}
@@ -61,7 +62,7 @@ export default class MonthYearDropdown extends React.Component {
 
   renderSelectMode = () => (
     <select
-      value={getStartOfMonth(this.props.date).valueOf()}
+      value={getValue(getStartOfMonth(this.props.date))}
       className="react-datepicker__month-year-select"
       onChange={this.onSelectChange}
     >
@@ -71,7 +72,7 @@ export default class MonthYearDropdown extends React.Component {
 
   renderReadView = visible => {
     const yearMonth = formatDate(
-      localizeDate(newDate(this.props.date), this.props.locale),
+      localizeDate(cloneDate(this.props.date), this.props.locale),
       this.props.dateFormat
     );
 

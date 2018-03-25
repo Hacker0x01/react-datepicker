@@ -13,10 +13,10 @@ import sinon from "sinon";
 import * as utils from "../src/date_utils";
 
 // TODO Possibly rename
-const DATE_FORMAT = "MM/DD/YYYY";
+const DATE_FORMAT = "MM/dd/yyyy";
 
 describe("Calendar", function() {
-  const dateFormat = "MMMM YYYY";
+  const dateFormat = "MMMM yyyy";
 
   function getCalendar(extraProps) {
     return shallow(
@@ -352,7 +352,7 @@ describe("Calendar", function() {
     const calendar = getCalendar({ todayButton: "Vandaag" });
     const todayButton = calendar.find(".react-datepicker__today-button");
     todayButton.simulate("click");
-    expect(calendar.state().date.isSame(utils.newDate(), "day"));
+    utils.isSameDay(calendar.state().date, utils.newDate());
   });
 
   it("should set custom today date when pressing todayButton", () => {
@@ -414,27 +414,6 @@ describe("Calendar", function() {
     ).not.to.exist;
   });
 
-  it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
-    utils.registerLocale("weekDaysLocale", {
-      parentLocale: "en",
-      weekdaysMin: "AA_BB_CC_DD_EE_FF_GG".split("_"),
-      weekdaysShort: "AAA_BBB_CCC_DDD_EEE_FFF_GGG".split("_")
-    });
-
-    const calendarShort = mount(
-      <Calendar locale="weekDaysLocale" useWeekdaysShort />
-    );
-    const calendarMin = mount(<Calendar locale="weekDaysLocale" />);
-
-    const daysNamesShort = calendarShort.find(".react-datepicker__day-name");
-    expect(daysNamesShort.at(0).text()).to.equal("AAA");
-    expect(daysNamesShort.at(6).text()).to.equal("GGG");
-
-    const daysNamesMin = calendarMin.find(".react-datepicker__day-name");
-    expect(daysNamesMin.at(0).text()).to.equal("AA");
-    expect(daysNamesMin.at(6).text()).to.equal("GG");
-  });
-
   it("should set the date to the selected day of the previous month when previous button clicked", () => {
     let date;
     const expectedDate = "28.06.2017";
@@ -457,7 +436,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--previous"
     );
     TestUtils.Simulate.click(previousButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   it("should set the date to the selected day of the next when next button clicked", () => {
@@ -482,7 +461,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--next"
     );
     TestUtils.Simulate.click(nextButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   it("should set the date to the last possible day of the previous month when previous button clicked", () => {
@@ -507,7 +486,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--previous"
     );
     TestUtils.Simulate.click(previousButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   describe("onMonthChange", () => {

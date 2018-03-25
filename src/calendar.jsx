@@ -12,8 +12,8 @@ import {
   getMonth,
   addMonths,
   subtractMonths,
+  getStartOfDay,
   getStartOfWeek,
-  getStartOfDate,
   addDays,
   cloneDate,
   formatDate,
@@ -29,7 +29,8 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  momentFormatToLuxon
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -50,8 +51,7 @@ export default class Calendar extends React.Component {
     adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
     children: PropTypes.node,
-    dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
-      .isRequired,
+    dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     dayClassName: PropTypes.func,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.object,
@@ -97,7 +97,6 @@ export default class Calendar extends React.Component {
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
-    useWeekdaysShort: PropTypes.bool,
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
@@ -110,6 +109,7 @@ export default class Calendar extends React.Component {
   static get defaultProps() {
     return {
       onDropdownFocus: () => {},
+      dateFormat: momentFormatToLuxon("MMMM YYYY"),
       monthsShown: 1,
       forceShowMonthNavigation: false,
       timeCaption: "Time"
@@ -278,9 +278,7 @@ export default class Calendar extends React.Component {
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(cloneDate(startOfWeek), offset);
         const locale = getLocale(day);
-        const weekDayName = this.props.useWeekdaysShort
-          ? getWeekdayShortInLocale(locale, day)
-          : getWeekdayMinInLocale(locale, day);
+        const weekDayName = getWeekdayMinInLocale(locale, day);
         return (
           <div key={offset} className="react-datepicker__day-name">
             {weekDayName}
@@ -452,7 +450,7 @@ export default class Calendar extends React.Component {
       <div
         className="react-datepicker__today-button"
         onClick={e =>
-          this.props.onSelect(getStartOfDate(now(this.props.utcOffset)), e)
+          this.props.onSelect(getStartOfDay(now(this.props.utcOffset)), e)
         }
       >
         {this.props.todayButton}

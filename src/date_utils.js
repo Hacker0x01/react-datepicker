@@ -121,10 +121,11 @@ export function safeDateFormat(date, { dateFormat, locale }) {
   );
 }
 
+// TODO not sure if it's worth the effort
 export function momentFormatToLuxon(format) {
   return {
-    L: DateTime.DATE_FULL,
-    "MMMM YYYY": "MMMM y"
+    L: "MM/dd/yyyy",
+    "MMMM YYYY": "MMMM yyyy"
   }[format];
 }
 
@@ -148,6 +149,10 @@ export function setUTCOffset(date, offset) {
 
 // ** Date Getters **
 
+export function getValue(date) {
+  return +date;
+}
+
 export function getSecond(date) {
   return get(date, "second");
 }
@@ -161,7 +166,7 @@ export function getHour(date) {
 }
 
 // Returns day of week
-export function getDay(date) {
+export function getWeekDay(date) {
   return get(date, "weekday");
 }
 
@@ -178,7 +183,7 @@ export function getYear(date) {
 }
 
 // Returns day of month
-export function getDate(date) {
+export function getDay(date) {
   return get(date, "day");
 }
 
@@ -187,7 +192,7 @@ export function getUTCOffset() {
 }
 
 export function getDayOfWeekCode(day) {
-  return dayOfWeekCodes[getDay(day)];
+  return dayOfWeekCodes[getWeekDay(day)];
 }
 
 // *** Start of ***
@@ -201,10 +206,6 @@ export function getStartOfWeek(date) {
 }
 export function getStartOfMonth(date) {
   return getStartOf(date, "month");
-}
-
-export function getStartOfDate(date) {
-  return getStartOf(date, "date");
 }
 
 // *** End of ***
@@ -350,17 +351,17 @@ export function getDaysDiff(date1, date2) {
 
 // Deprecated, doesn't work with luxon
 export function getDefaultLocaleData() {
-  // return moment.localeData();
+  console.warn("ACCESS OF DEPRECATED FUNCTION getDefaultLocaleData");
 }
 
 // Deprecated, doesn't work with luxon
 export function registerLocale(localeName, localeData) {
-  // moment.defineLocale(localeName, localeData);
+  console.warn("ACCESS OF DEPRECATED FUNCTION registerLocale");
 }
 
 // Deprecated, doesn't work with luxon
 export function getLocaleDataForLocale(locale) {
-  // return moment.localeData(locale);
+  console.warn("ACCESS OF DEPRECATED FUNCTION getLocaleDataForLocale");
 }
 
 export function getDefaultLocale() {
@@ -377,19 +378,15 @@ export function localizeDate(date, locale) {
 }
 
 export function getWeekdayMinInLocale(locale, date) {
-  return formatDate(localizeDate(date, locale), "ccc");
-}
-
-export function getWeekdayShortInLocale(locale, date) {
-  return formatDate(localizeDate(date, locale), "ccccc");
+  return formatDate(localizeDate(date, locale), "EEE");
 }
 
 export function getMonthInLocale(locale, date, format) {
-  return formatDate(localizeDate(date, locale), format || "LLLL");
+  return formatDate(localizeDate(date, locale), format || "MMMM");
 }
 
 export function getMonthShortInLocale(locale, date) {
-  return formatDate(localizeDate(date, locale), "LLL");
+  return formatDate(localizeDate(date, locale), "MMM");
 }
 
 // ** Utils for some components **

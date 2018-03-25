@@ -15,11 +15,19 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
+  formatDate,
   getEffectiveMaxDate,
   offsetMinutesToZone
 } from "../src/date_utils";
 
 describe("date_utils", function() {
+  describe("newDate", function() {
+    it("handles ISO format", function() {
+      expect(formatDate(newDate("2017-05-22"), "yyyy-MM-dd")).to.equal(
+        "2017-05-22"
+      );
+    });
+  });
   describe("offsetMinutesToZone", function() {
     it("handles no offset", function() {
       expect(offsetMinutesToZone(0)).to.equal("UTC+00:00");
