@@ -70,6 +70,9 @@ export function newDate(point) {
   if (typeof point === "string") {
     return DateTime.fromISO(point);
   }
+  if (typeof point === "number") {
+    return DateTime.fromMillis(point);
+  }
   if (typeof point === "undefined") {
     point = {};
   }

@@ -4,7 +4,6 @@ import classnames from "classnames";
 import {
   getDay,
   getMonth,
-  getDate,
   getWeekDay,
   now,
   isSameDay,

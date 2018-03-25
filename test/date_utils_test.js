@@ -27,6 +27,11 @@ describe("date_utils", function() {
         "2017-05-22"
       );
     });
+    it("handles timestamp", function() {
+      expect(formatDate(newDate(1514761200000), "yyyy-MM-dd")).to.equal(
+        "2018-01-01"
+      );
+    });
   });
   describe("offsetMinutesToZone", function() {
     it("handles no offset", function() {

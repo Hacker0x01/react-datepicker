@@ -20,8 +20,8 @@ describe("MonthYearDropdown", () => {
   let sandbox;
 
   function getMonthYearDropdown(overrideProps) {
-    const dateFormatCalendar = "MMMM YYYY";
-    const date = newDate("2018-01");
+    const dateFormatCalendar = "MMMM yyyy";
+    const date = newDate("2018-01-01");
     const minDate = newDate("2017-07-01");
     const maxDate = newDate("2018-06-30");
 
@@ -50,12 +50,12 @@ describe("MonthYearDropdown", () => {
   describe("scroll mode", () => {
     let selectedDate;
     beforeEach(function() {
-      selectedDate = newDate("2018-01");
+      selectedDate = newDate("2018-01-01");
       monthYearDropdown = getMonthYearDropdown({ date: selectedDate });
     });
 
     it("shows the selected month year in the initial view", () => {
-      const selected_month_year_name = formatDate(selectedDate, "MMMM YYYY");
+      const selected_month_year_name = formatDate(selectedDate, "MMMM yyyy");
       expect(monthYearDropdown.text()).to.contain(selected_month_year_name);
     });
 
@@ -82,7 +82,7 @@ describe("MonthYearDropdown", () => {
 
     it("closes the dropdown if outside is clicked", () => {
       const date = newDate();
-      const dateFormatCalendar = "MMMM YYYY";
+      const dateFormatCalendar = "MMMM yyyy";
 
       const onCancelSpy = sandbox.spy();
       const monthYearDropdownOptionsInstance = mount(
@@ -127,7 +127,7 @@ describe("MonthYearDropdown", () => {
 
     it("should use dateFormat to display date in dropdown", () => {
       let dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "MMMM YYYY"
+        dateFormat: "MMMM yyyy"
       });
 
       expect(dropdownDateFormat.text()).to.eq("January 2018");
@@ -158,8 +158,8 @@ describe("MonthYearDropdown", () => {
 
   describe("select mode", () => {
     it("renders a select", () => {
-      const expected_date = newDate("2018-01");
-      const currentMonth = newDate("2017-07");
+      const expected_date = newDate("2018-01-01");
+      let currentMonth = newDate("2017-07");
       const maxMonth = newDate("2018-06");
 
       const expected_values = [];
@@ -167,7 +167,7 @@ describe("MonthYearDropdown", () => {
       while (!isAfter(currentMonth, maxMonth)) {
         expected_values.push(currentMonth.valueOf());
 
-        addMonths(currentMonth, 1);
+        currentMonth = addMonths(currentMonth, 1);
       }
 
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });

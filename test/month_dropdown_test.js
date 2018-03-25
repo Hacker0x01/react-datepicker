@@ -14,7 +14,7 @@ describe("MonthDropdown", () => {
   let sandbox;
 
   function getMonthDropdown(overrideProps) {
-    const dateFormatCalendar = "MMMM YYYY";
+    const dateFormatCalendar = "MMMM yyyy";
     return mount(
       <MonthDropdown
         dropdownMode="scroll"

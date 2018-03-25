@@ -4,6 +4,7 @@ import MonthYearDropdownOptions from "./month_year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
 import {
   addMonths,
+  newDate,
   formatDate,
   getStartOfMonth,
   isAfter,
@@ -42,15 +43,17 @@ export default class MonthYearDropdown extends React.Component {
 
     const options = [];
 
-    while (!isAfter(currDate, lastDate)) {
-      const timepoint = getValue(currDate);
+    let option = cloneDate(currDate);
+    while (!isAfter(option, lastDate)) {
+      console.log(option, lastDate);
+      const timepoint = getValue(option);
       options.push(
         <option key={timepoint} value={timepoint}>
-          {formatDate(currDate, this.props.dateFormat)}
+          {formatDate(option, this.props.dateFormat)}
         </option>
       );
 
-      addMonths(currDate, 1);
+      option = addMonths(option, 1);
     }
 
     return options;

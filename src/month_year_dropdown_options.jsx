@@ -18,10 +18,11 @@ function generateMonthYears(minDate, maxDate) {
   const currDate = getStartOfMonth(cloneDate(minDate));
   const lastDate = getStartOfMonth(cloneDate(maxDate));
 
-  while (!isAfter(currDate, lastDate)) {
-    list.push(cloneDate(currDate));
+  let listItem = cloneDate(currDate);
+  while (!isAfter(listItem, lastDate)) {
+    list.push(listItem);
 
-    addMonths(currDate, 1);
+    listItem = addMonths(listItem, 1);
   }
 
   return list;

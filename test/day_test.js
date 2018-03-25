@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import {
   getDayOfWeekCode,
   newDate,
-  getDate,
+  getDay,
   cloneDate,
   addDays,
   subtractDays,
@@ -23,7 +23,7 @@ describe("Day", () => {
       const day = newDate();
       const shallowDay = renderDay(day);
       expect(shallowDay.hasClass("react-datepicker__day")).to.equal(true);
-      expect(shallowDay.text()).to.equal(getDate(day) + "");
+      expect(shallowDay.text()).to.equal(getDay(day) + "");
     });
 
     it("should apply the day of week class", () => {
