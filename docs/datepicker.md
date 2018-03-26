@@ -29,6 +29,7 @@ General datepicker component.
 | `id`                         | `string`                       |                 |                                            |
 | `includeDates`               | `array`                        |                 |                                            |
 | `includeTimes`               | `array`                        |                 |                                            |
+| `injectTimes`                | `array`                        |                 |                                            |
 | `inline`                     | `bool`                         |                 |                                            |
 | `isClearable`                | `bool`                         |                 |                                            |
 | `locale`                     | `string`                       |                 |                                            |

@@ -5,6 +5,7 @@
 | `excludeTimes` | `array`  |               |             |
 | `format`       | `string` |               |             |
 | `includeTimes` | `array`  |               |             |
+| `injectTimes`  | `array`  |               |             |
 | `intervals`    | `number` | `30`          |             |
 | `maxTime`      | `object` |               |             |
 | `minTime`      | `object` |               |             |
