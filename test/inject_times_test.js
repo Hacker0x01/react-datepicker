@@ -36,4 +36,23 @@ describe("TimeComponent", () => {
     );
     expect(disabledItems).to.have.length(3);
   });
+
+  it("should not affect existing time intervals", () => {
+    const today = utils.getStartOfDay(utils.newDate());
+    const timeComponent = mount(
+      <TimeComponent
+        timeIntervals={60}
+        injectTimes={[
+          utils.addMinutes(cloneDate(today), 0),
+          utils.addMinutes(cloneDate(today), 60),
+          utils.addMinutes(cloneDate(today), 1440)
+        ]}
+      />
+    );
+
+    const disabledItems = timeComponent.find(
+      ".react-datepicker__time-list-item--injected"
+    );
+    expect(disabledItems).to.have.length(0);
+  });
 });
