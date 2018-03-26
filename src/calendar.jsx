@@ -62,6 +62,7 @@ export default class Calendar extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeTimes: PropTypes.array,
+    injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     locale: PropTypes.string,
     maxDate: PropTypes.object,
@@ -545,6 +546,7 @@ export default class Calendar extends React.Component {
           showYearDropdown={this.props.showYearDropdown}
           withPortal={this.props.withPortal}
           monthRef={this.state.monthContainer}
+          injectTimes={this.props.injectTimes}
         />
       );
     }

@@ -197,6 +197,10 @@ export function addMinutes(date, amount) {
   return add(date, amount, "minutes");
 }
 
+export function addHours(date, amount) {
+  return add(date, amount, "hours");
+}
+
 export function addDays(date, amount) {
   return add(date, amount, "days");
 }
@@ -489,4 +493,30 @@ export function getHightLightDaysMap(
   }
 
   return dateClasses;
+}
+
+export function timeToInjectAfter(
+  startOfDay,
+  currentTime,
+  currentMultiplier,
+  intervals,
+  injectedTimes
+) {
+  const l = injectedTimes.length;
+  for (let i = 0; i < l; i++) {
+    const injectedTime = addMinutes(
+      addHours(cloneDate(startOfDay), getHour(injectedTimes[i])),
+      getMinute(injectedTimes[i])
+    );
+    const nextTime = addMinutes(
+      cloneDate(startOfDay),
+      (currentMultiplier + 1) * intervals
+    );
+
+    if (injectedTime.isBetween(currentTime, nextTime)) {
+      return injectedTimes[i];
+    }
+  }
+
+  return false;
 }

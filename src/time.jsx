@@ -9,7 +9,8 @@ import {
   cloneDate,
   formatDate,
   isTimeInDisabledRange,
-  isTimeDisabled
+  isTimeDisabled,
+  timeToInjectAfter
 } from "./date_utils";
 
 export default class Time extends React.Component {
@@ -24,7 +25,8 @@ export default class Time extends React.Component {
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
-    timeCaption: PropTypes.string
+    timeCaption: PropTypes.string,
+    injectTimes: PropTypes.array
   };
 
   static get defaultProps() {
@@ -76,6 +78,12 @@ export default class Time extends React.Component {
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
+    if (
+      this.props.injectTimes &&
+      (getHour(time) * 60 + getMinute(time)) % this.props.intervals !== 0
+    ) {
+      classes.push("react-datepicker__time-list-item--injected");
+    }
 
     return classes.join(" ");
   };
@@ -90,7 +98,21 @@ export default class Time extends React.Component {
     let base = getStartOfDay(newDate());
     const multiplier = 1440 / intervals;
     for (let i = 0; i < multiplier; i++) {
-      times.push(addMinutes(cloneDate(base), i * intervals));
+      const currentTime = addMinutes(cloneDate(base), i * intervals);
+      times.push(currentTime);
+
+      if (this.props.injectTimes) {
+        const timeToInject = timeToInjectAfter(
+          base,
+          currentTime,
+          i,
+          intervals,
+          this.props.injectTimes
+        );
+        if (timeToInject) {
+          times.push(timeToInject);
+        }
+      }
     }
 
     return times.map((time, i) => (

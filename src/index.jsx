@@ -69,6 +69,7 @@ export default class DatePicker extends React.Component {
     id: PropTypes.string,
     includeDates: PropTypes.array,
     includeTimes: PropTypes.array,
+    injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
     locale: PropTypes.string,
@@ -506,6 +507,7 @@ export default class DatePicker extends React.Component {
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
         includeTimes={this.props.includeTimes}
+        injectTimes={this.props.injectTimes}
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
