@@ -97,17 +97,22 @@ export default class Time extends React.Component {
     const currM = getMinute(activeTime);
     let base = getStartOfDay(newDate());
     const multiplier = 1440 / intervals;
+    const sortedInjectTimes =
+      this.props.injectTimes &&
+      this.props.injectTimes.sort(function(a, b) {
+        return a - b;
+      });
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(cloneDate(base), i * intervals);
       times.push(currentTime);
 
-      if (this.props.injectTimes) {
+      if (sortedInjectTimes) {
         const timesToInject = timesToInjectAfter(
           base,
           currentTime,
           i,
           intervals,
-          this.props.injectTimes
+          sortedInjectTimes
         );
         times = times.concat(timesToInject);
       }

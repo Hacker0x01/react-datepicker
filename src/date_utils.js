@@ -504,9 +504,6 @@ export function timesToInjectAfter(
 ) {
   const l = injectedTimes.length;
   const times = [];
-  injectedTimes.sort(function(a, b) {
-    return a - b;
-  });
   for (let i = 0; i < l; i++) {
     const injectedTime = addMinutes(
       addHours(cloneDate(startOfDay), getHour(injectedTimes[i])),
