@@ -10,7 +10,7 @@ import {
   formatDate,
   isTimeInDisabledRange,
   isTimeDisabled,
-  timeToInjectAfter
+  timesToInjectAfter
 } from "./date_utils";
 
 export default class Time extends React.Component {
@@ -102,16 +102,14 @@ export default class Time extends React.Component {
       times.push(currentTime);
 
       if (this.props.injectTimes) {
-        const timeToInject = timeToInjectAfter(
+        const timesToInject = timesToInjectAfter(
           base,
           currentTime,
           i,
           intervals,
           this.props.injectTimes
         );
-        if (timeToInject) {
-          times.push(timeToInject);
-        }
+        times = times.concat(timesToInject);
       }
     }
 
