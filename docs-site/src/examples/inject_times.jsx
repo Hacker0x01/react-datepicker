@@ -27,7 +27,11 @@ export default class InjectTimes extends React.Component {
             <br />
             <strong>{`    showTimeSelect
     timeFormat="HH:mm"
-    injectTimes={[moment().hours(0).minutes(1), moment().hours(12).minutes(5), moment().hours(23).minutes(59)]}
+    injectTimes={[
+      moment().hours(0).minutes(1),
+      moment().hours(12).minutes(5),
+      moment().hours(23).minutes(59)
+    ]}
     dateFormat="LLL"
 />
 `}</strong>
