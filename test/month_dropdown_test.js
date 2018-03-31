@@ -184,7 +184,7 @@ describe("MonthDropdown", () => {
     });
 
     // Failing on Travis CI.
-    xit("renders month options with specified locale", () => {
+    it("renders month options with specified locale", () => {
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
         locale: "zh-cn"
