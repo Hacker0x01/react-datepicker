@@ -31,10 +31,10 @@ describe("TimeComponent", () => {
       />
     );
 
-    const disabledItems = timeComponent.find(
+    const injectedItems = timeComponent.find(
       ".react-datepicker__time-list-item--injected"
     );
-    expect(disabledItems).to.have.length(3);
+    expect(injectedItems).to.have.length(3);
   });
 
   it("should not affect existing time intervals", () => {
@@ -50,9 +50,51 @@ describe("TimeComponent", () => {
       />
     );
 
-    const disabledItems = timeComponent.find(
+    const injectedItems = timeComponent.find(
       ".react-datepicker__time-list-item--injected"
     );
-    expect(disabledItems).to.have.length(0);
+    expect(injectedItems).to.have.length(0);
+  });
+
+  it("should allow multiple injected times per interval", () => {
+    const today = utils.getStartOfDay(utils.newDate());
+    const timeComponent = mount(
+      <TimeComponent
+        timeIntervals={60}
+        injectTimes={[
+          utils.addMinutes(cloneDate(today), 1),
+          utils.addMinutes(cloneDate(today), 2),
+          utils.addMinutes(cloneDate(today), 3)
+        ]}
+      />
+    );
+
+    const injectedItems = timeComponent.find(
+      ".react-datepicker__time-list-item--injected"
+    );
+    expect(injectedItems).to.have.length(3);
+  });
+
+  it("should sort injected times automatically", () => {
+    const today = utils.getStartOfDay(utils.newDate());
+    const timeComponent = mount(
+      <TimeComponent
+        timeIntervals={60}
+        injectTimes={[
+          utils.addMinutes(cloneDate(today), 3),
+          utils.addMinutes(cloneDate(today), 1),
+          utils.addMinutes(cloneDate(today), 2)
+        ]}
+      />
+    );
+
+    const injectedItems = timeComponent.find(
+      ".react-datepicker__time-list-item--injected"
+    );
+    expect(injectedItems.map(node => node.text())).eql([
+      "12:01 AM",
+      "12:02 AM",
+      "12:03 AM"
+    ]);
   });
 });

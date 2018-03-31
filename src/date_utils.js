@@ -495,7 +495,7 @@ export function getHightLightDaysMap(
   return dateClasses;
 }
 
-export function timeToInjectAfter(
+export function timesToInjectAfter(
   startOfDay,
   currentTime,
   currentMultiplier,
@@ -503,6 +503,7 @@ export function timeToInjectAfter(
   injectedTimes
 ) {
   const l = injectedTimes.length;
+  const times = [];
   for (let i = 0; i < l; i++) {
     const injectedTime = addMinutes(
       addHours(cloneDate(startOfDay), getHour(injectedTimes[i])),
@@ -514,9 +515,9 @@ export function timeToInjectAfter(
     );
 
     if (injectedTime.isBetween(currentTime, nextTime)) {
-      return injectedTimes[i];
+      times.push(injectedTimes[i]);
     }
   }
 
-  return false;
+  return times;
 }
