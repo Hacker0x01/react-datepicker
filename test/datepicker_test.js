@@ -337,6 +337,21 @@ describe("DatePicker", () => {
     expect(datePicker.state.inputValue).to.be.null;
   });
 
+  it("should set the title attribute on the clear button if clearButtonTitle is supplied", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={utils.newDate("2018-03-19")}
+        isClearable
+        clearButtonTitle="clear button"
+      />
+    );
+    const clearButtonText = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__close-icon"
+    ).getAttribute("title");
+    expect(clearButtonText).to.equal("clear button");
+  });
+
   it("should save time from the selected date", () => {
     const selected = utils.newDate("2015-12-20 10:11:12");
     let date;
