@@ -227,7 +227,7 @@ describe("DatePicker", () => {
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
 
-  xit("should update the preSelection state when a day is selected with mouse click", () => {
+  it("should update the preSelection state when a day is selected with mouse click", () => {
     // Note: We need monthsShown=2 so that today can still be clicked when
     // ArrowLeft selects the previous month. (On the 1st 2 days of the month.)
     var data = getOnInputKeyDownStuff({
