@@ -11,6 +11,7 @@ General datepicker component.
 | `calendarClassName`           | `string`                       |                 |             |
 | `children`                    | `node`                         |                 |             |
 | `className`                   | `string`                       |                 |             |
+| `clearButtonTitle`            | `string`                       |                 |             |
 | `customInput`                 | `element`                      |                 |             |
 | `customInputRef`              | `string`                       |                 |             |
 | `dateFormat`                  | `union(string\|array)`         | `"L"`           |             |
