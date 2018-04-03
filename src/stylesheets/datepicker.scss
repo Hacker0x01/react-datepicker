@@ -162,6 +162,61 @@
     }
   }
 
+  &--previous-year {
+    left: 0px;
+    color: #ccc;
+    line-height: 0;
+    font-size: 1.7rem;
+    top: 8px;
+
+    &:before {
+      content: "\00ab";
+    }
+
+    color: $datepicker__muted-color;
+
+    &:hover {
+      color: darken($datepicker__muted-color, 10%);
+    }
+
+    &--disabled,
+    &--disabled:hover {
+      color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
+  }
+
+  &--previous-year ~ &--previous {
+    left: 20px;
+  }
+
+  &--next-year {
+    right: 16px;
+    line-height: 0;
+    font-size: 1.7rem;
+    top: 8px;
+
+    &:before {
+      content: "\00bb";
+    }
+
+    color: $datepicker__muted-color;
+
+    &:hover {
+      color: darken($datepicker__muted-color, 10%);
+    }
+
+    &--disabled,
+    &--disabled:hover {
+      color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
+  }
+
+  &--next-year ~ &--next {
+    right: 20px;
+  }
+
   &--years {
     position: relative;
     top: 0;
@@ -551,7 +606,35 @@
     }
   }
 
+  .react-datepicker__navigation--previous-year {
+    border-right-color: $datepicker__muted-color;
+
+    &:hover {
+      border-right-color: darken($datepicker__muted-color, 10%);
+    }
+
+    &--disabled,
+    &--disabled:hover {
+      border-right-color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
+  }
+
   .react-datepicker__navigation--next {
+    border-left-color: $datepicker__muted-color;
+
+    &:hover {
+      border-left-color: darken($datepicker__muted-color, 10%);
+    }
+
+    &--disabled,
+    &--disabled:hover {
+      border-left-color: $datepicker__navigation-disabled-color;
+      cursor: default;
+    }
+  }
+
+  .react-datepicker__navigation--next-year {
     border-left-color: $datepicker__muted-color;
 
     &:hover {

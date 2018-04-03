@@ -28,6 +28,7 @@ import MonthDropdown from "./examples/month_dropdown";
 import MonthYearDropdown from "./examples/month_year_dropdown";
 import MonthDropdownShort from "./examples/month_dropdown_short";
 import YearSelectDropdown from "./examples/year_select_dropdown";
+import YearButtons from "./examples/year_buttons";
 import Today from "./examples/today";
 import TimeZoneDate from "./examples/timezone_date";
 import Inline from "./examples/inline";
@@ -202,6 +203,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Year select dropdown",
       component: <YearSelectDropdown />
+    },
+    {
+      title: "Year buttons",
+      component: <YearButtons />
     },
     {
       title: "Inline version",
