@@ -930,6 +930,18 @@ describe("DatePicker", () => {
       utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
     ).to.equal(utils.formatDate(future, "YYYY-MM-DD"));
   });
+  it("should switch month in inline mode immediately, when year is updated", () => {
+    const selected = utils.newDate();
+    const future = utils.addYears(utils.newDate(), 1);
+    const datePicker = mount(<DatePicker inline selected={selected} />);
+    expect(
+      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+    datePicker.setProps({ selected: future });
+    expect(
+      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+    ).to.equal(utils.formatDate(future, "YYYY-MM-DD"));
+  });
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker preventOpenOnFocus />
