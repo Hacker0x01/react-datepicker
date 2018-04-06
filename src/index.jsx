@@ -220,7 +220,7 @@ export default class DatePicker extends React.Component {
   };
 
   setFocus = () => {
-    if (this.input.focus) {
+    if (this.input && this.input.focus) {
       this.input.focus();
     }
   };
