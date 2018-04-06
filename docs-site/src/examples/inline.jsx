@@ -35,7 +35,8 @@ export default class Inline extends React.Component {
           <DatePicker
             inline
             selected={this.state.startDate}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+          />
         </div>
       </div>
     );

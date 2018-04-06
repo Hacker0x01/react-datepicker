@@ -15,7 +15,6 @@ import {
   getSecond,
   getMinute,
   getHour,
-  getMonth,
   addDays,
   addMonths,
   addWeeks,
@@ -31,12 +30,25 @@ import {
   getEffectiveMaxDate,
   parseDate,
   safeDateFormat,
-  getHightLightDaysMap
+  getHightLightDaysMap,
+  getYear,
+  getMonth
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);
+
+// Compares dates year+month combinations
+function hasPreSelectionChanged(date1, date2) {
+  if (date1 && date2) {
+    return (
+      getMonth(date1) !== getMonth(date2) || getYear(date1) !== getYear(date2)
+    );
+  }
+
+  return date1 !== date2;
+}
 
 /**
  * General datepicker component.
@@ -164,9 +176,10 @@ export default class DatePicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const currentMonth = this.props.selected && getMonth(this.props.selected);
-    const nextMonth = nextProps.selected && getMonth(nextProps.selected);
-    if (this.props.inline && currentMonth !== nextMonth) {
+    if (
+      this.props.inline &&
+      hasPreSelectionChanged(this.props.selected, nextProps.selected)
+    ) {
       this.setPreSelection(nextProps.selected);
     }
     if (this.props.highlightDates !== nextProps.highlightDates) {
