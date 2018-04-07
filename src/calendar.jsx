@@ -23,6 +23,7 @@ import {
   isBefore,
   isAfter,
   getLocaleData,
+  getFormattedWeekdayInLocale,
   getWeekdayShortInLocale,
   getWeekdayMinInLocale,
   isSameDay,
@@ -99,6 +100,7 @@ export default class Calendar extends React.Component {
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
+    formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
     utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
@@ -279,9 +281,8 @@ export default class Calendar extends React.Component {
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(cloneDate(startOfWeek), offset);
         const localeData = getLocaleData(day);
-        const weekDayName = this.props.useWeekdaysShort
-          ? getWeekdayShortInLocale(localeData, day)
-          : getWeekdayMinInLocale(localeData, day);
+        const weekDayName = this.formatWeekday(localeData, day);
+
         return (
           <div key={offset} className="react-datepicker__day-name">
             {weekDayName}
@@ -289,6 +290,15 @@ export default class Calendar extends React.Component {
         );
       })
     );
+  };
+
+  formatWeekday = (localeData, day) => {
+      if (this.props.formatWeekDay) {
+          return getFormattedWeekdayInLocale(localeData, day, this.props.formatWeekDay);
+      }
+      return this.props.useWeekdaysShort
+          ? getWeekdayShortInLocale(localeData, day)
+          : getWeekdayMinInLocale(localeData, day);
   };
 
   renderPreviousMonthButton = () => {

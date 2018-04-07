@@ -327,6 +327,10 @@ export function getLocaleDataForLocale(locale) {
   return moment.localeData(locale);
 }
 
+export function getFormattedWeekdayInLocale(locale, date, formatFunc) {
+  return formatFunc(locale.weekdays(date));
+}
+
 export function getWeekdayMinInLocale(locale, date) {
   return locale.weekdaysMin(date);
 }

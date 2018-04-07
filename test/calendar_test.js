@@ -176,6 +176,13 @@ describe("Calendar", function() {
     expect(nextNavigationButton).to.have.length(1);
   });
 
+  it("should correctly format weekday using formatWeekDay prop", function() {
+    const calendar = getCalendar({ formatWeekDay: day => day[0] });
+    calendar
+      .find(".react-datepicker__day-name")
+      .forEach(dayName => expect(dayName.text()).to.have.length(1));
+  });
+
   describe("when showDisabledMonthNavigation is enabled", () => {
     let onMonthChangeSpy = sinon.spy();
 
