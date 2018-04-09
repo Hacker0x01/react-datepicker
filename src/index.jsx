@@ -605,6 +605,7 @@ export default class DatePicker extends React.Component {
     if (this.props.isClearable && this.props.selected != null) {
       return (
         <button
+          type="button"
           className="react-datepicker__close-icon"
           onClick={this.onClearClick}
           title={this.props.clearButtonTitle}
