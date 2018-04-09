@@ -303,6 +303,17 @@ describe("DatePicker", () => {
     );
   });
 
+  it("should set the type attribute on the clear button to button", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2015-12-15")} isClearable />
+    );
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__close-icon"
+    );
+    expect(clearButton.type).to.equal("button");
+  });
+
   it("should allow clearing the date when isClearable is true", () => {
     var cleared = false;
     function handleChange(d) {
