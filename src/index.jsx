@@ -53,6 +53,7 @@ function hasPreSelectionChanged(date1, date2) {
 /**
  * General datepicker component.
  */
+const INPUT_ERR_1 = "Date input not valid.";
 
 export default class DatePicker extends React.Component {
   static propTypes = {
@@ -99,6 +100,7 @@ export default class DatePicker extends React.Component {
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
     onYearChange: PropTypes.func,
+    onInputError: PropTypes.func,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -162,6 +164,7 @@ export default class DatePicker extends React.Component {
       onMonthChange() {},
       preventOpenOnFocus: false,
       onYearChange() {},
+      onInputError() {},
       monthsShown: 1,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -248,6 +251,8 @@ export default class DatePicker extends React.Component {
           : this.calcInitialState().preSelection
     });
   };
+  inputOk = () =>
+    isMoment(this.state.preSelection) || isDate(this.state.preSelection);
 
   handleFocus = event => {
     if (!this.state.preventFocus) {
@@ -418,18 +423,19 @@ export default class DatePicker extends React.Component {
     const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
-      if (
-        isMoment(this.state.preSelection) ||
-        isDate(this.state.preSelection)
-      ) {
+      if (this.inputOk()) {
         this.handleSelect(copy, event);
         !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
       } else {
         this.setOpen(false);
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
     } else if (eventKey === "Escape") {
       event.preventDefault();
       this.setOpen(false);
+      if (!this.inputOk()) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+      }
     } else if (eventKey === "Tab") {
       this.setOpen(false);
     } else if (!this.props.disabledKeyboardNavigation) {
