@@ -143,6 +143,49 @@
       cursor: default;
     }
   }
+  &--previous-year {
+    &:before {
+      content: '<<';
+    }
+    font-weight: bold;
+    left: 28px;
+    line-height: 1;
+    border: 0;
+    ~ .react-datepicker__navigation--previous {
+      &:before {
+        content: '<';
+      }
+      font-weight: bold;
+      right: 46px;
+      line-height: 1;
+      border: 0;
+    }
+  }
+  &--next-year {
+    &:before {
+      content: '>>';
+    }
+    color: $datepicker__muted-color;
+    &:hover {
+      color: darken($datepicker__muted-color, 10%);
+    }
+    font-weight: bold;
+    right: 28px;
+    line-height: 1;
+    border: 0;
+    ~ .react-datepicker__navigation--next {
+      &:before {
+        content: '>';
+      }
+      &--with-time:not(&--with-today-button) {
+        right: 98px;
+      }
+      font-weight: bold;
+      right: 46px;
+      line-height: 1;
+      border: 0;
+    }
+  }
 
   &--next {
     right: 10px;
