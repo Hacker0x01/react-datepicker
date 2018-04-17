@@ -28,7 +28,8 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    renderDayContents: PropTypes.func
   };
 
   handleClick = event => {
@@ -190,7 +191,9 @@ export default class Day extends React.Component {
         aria-label={`day-${getDate(this.props.day)}`}
         role="option"
       >
-        {getDate(this.props.day)}
+        {this.props.renderDayContents
+          ? this.props.renderDayContents(getDate(this.props.day))
+          : getDate(this.props.day)}
       </div>
     );
   }

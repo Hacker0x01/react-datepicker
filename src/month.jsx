@@ -32,7 +32,8 @@ export default class Month extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    renderDayContents: PropTypes.func
   };
 
   handleDayClick = (day, event) => {
@@ -97,6 +98,7 @@ export default class Month extends React.Component {
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
           utcOffset={this.props.utcOffset}
+          renderDayContents={this.props.renderDayContents}
         />
       );
 
