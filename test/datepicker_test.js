@@ -953,6 +953,24 @@ describe("DatePicker", () => {
       utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
     ).to.equal(utils.formatDate(future, "YYYY-MM-DD"));
   });
+
+  it("should not switch months in inline mode when a day is clicked", () => {
+    const selected = utils.newDate();
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline selected={selected} monthsShown={2} />
+    );
+    expect(
+      utils.formatDate(datePicker.state.preSelection, "YYYY-MM-DD")
+    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+
+    let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+    let nextMonthDay = days.find(d => d.props.month !== selected.month());
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(nextMonthDay));
+    expect(
+      utils.formatDate(datePicker.state.preSelection, "YYYY-MM-DD")
+    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+  });
+
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker preventOpenOnFocus />
