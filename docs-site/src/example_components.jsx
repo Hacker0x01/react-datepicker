@@ -37,6 +37,7 @@ import WeekNumbers from "./examples/week_numbers";
 import CustomInput from "./examples/custom_input";
 import MultiMonth from "./examples/multi_month";
 import MultiMonthDrp from "./examples/multi_month_drp";
+import MultiMonthInline from "./examples/multi_month_inline";
 import Children from "./examples/children";
 import Portal from "./examples/portal";
 import InlinePortal from "./examples/inline_portal";
@@ -230,6 +231,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Multiple months with year dropdown",
       component: <MultiMonthDrp />
+    },
+    {
+      title: "Multiple months inline",
+      component: <MultiMonthInline />
     },
     {
       title: "Children",
