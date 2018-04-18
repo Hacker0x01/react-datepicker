@@ -349,9 +349,11 @@ export default class DatePicker extends React.Component {
             second: getSecond(selected)
           });
         }
-        this.setState({
-          preSelection: changedDate
-        });
+        if (!this.props.inline) {
+          this.setState({
+            preSelection: changedDate
+          });
+        }
       }
       this.props.onChange(changedDate, event);
     }
