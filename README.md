@@ -14,20 +14,20 @@ A simple and reusable Datepicker component for React ([Demo](https://reactdatepi
 The package can be installed via NPM:
 
 ```
-npm install react-datepicker --save
+npm install tn-react-datepicker --save
 ```
 
 You’ll need to install React, PropTypes, and Moment.js separately since those dependencies aren’t included in the package. Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
 
 ```js
 import React from "react";
-import DatePicker from "react-datepicker";
+import DatePicker from "tn-react-datepicker";
 import moment from "moment";
 
-import "react-datepicker/dist/react-datepicker.css";
+import "tn-react-datepicker/dist/tn-react-datepicker.css";
 
 // CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+// import 'tn-react-datepicker/dist/tn-react-datepicker-cssmodules.css';
 
 class Example extends React.Component {
   constructor(props) {
@@ -97,8 +97,8 @@ More examples of how to use the time picker are given on the [main website](http
 
 The date picker relies on [moment.js internationalization](http://momentjs.com/docs/#/i18n/) to localize its display components. By default, the date picker will use the locale globally set in moment, which is English. Locales can be changed in the following ways:
 
-* **Globally** by calling `moment.locale(lang)`
-* **Picker-specific** by providing the `locale` prop
+**Globally** by calling `moment.locale(lang)`
+**Picker-specific** by providing the `locale` prop
 
 Locales can be further configured in moment with various [customization options](http://momentjs.com/docs/#/customization/).
 

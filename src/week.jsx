@@ -34,7 +34,6 @@ export default class Week extends React.Component {
   };
 
   handleDayClick = (day, event) => {
-    console.log('click', day)
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event);
     }

@@ -39,7 +39,6 @@ export default class Monthly extends React.Component {
   );
 
   onChange= month => {
-    console.log('m', month)
     if (month !== this.props.month) {
       this.props.onChange(month);
     }
