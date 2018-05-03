@@ -6595,7 +6595,7 @@
 
       var _example_components2 = _interopRequireDefault(_example_components);
 
-      var _hero_example = __webpack_require__(394);
+      var _hero_example = __webpack_require__(398);
 
       var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -6807,205 +6807,213 @@
 
       var _default2 = _interopRequireDefault(_default);
 
-      var _code_example_component = __webpack_require__(347);
+      var _code_example_component = __webpack_require__(349);
 
       var _code_example_component2 = _interopRequireDefault(
         _code_example_component
       );
 
-      var _custom_date_format = __webpack_require__(348);
+      var _custom_date_format = __webpack_require__(350);
 
       var _custom_date_format2 = _interopRequireDefault(_custom_date_format);
 
-      var _custom_class_name = __webpack_require__(349);
+      var _custom_class_name = __webpack_require__(351);
 
       var _custom_class_name2 = _interopRequireDefault(_custom_class_name);
 
-      var _custom_calendar_class_name = __webpack_require__(350);
+      var _custom_calendar_class_name = __webpack_require__(352);
 
       var _custom_calendar_class_name2 = _interopRequireDefault(
         _custom_calendar_class_name
       );
 
-      var _custom_day_class_names = __webpack_require__(351);
+      var _custom_day_class_names = __webpack_require__(353);
 
       var _custom_day_class_names2 = _interopRequireDefault(
         _custom_day_class_names
       );
 
-      var _placeholder_text = __webpack_require__(352);
+      var _placeholder_text = __webpack_require__(354);
 
       var _placeholder_text2 = _interopRequireDefault(_placeholder_text);
 
-      var _specific_date_range = __webpack_require__(353);
+      var _specific_date_range = __webpack_require__(355);
 
       var _specific_date_range2 = _interopRequireDefault(_specific_date_range);
 
-      var _locale = __webpack_require__(354);
+      var _locale = __webpack_require__(356);
 
       var _locale2 = _interopRequireDefault(_locale);
 
-      var _exclude_dates = __webpack_require__(355);
+      var _exclude_dates = __webpack_require__(357);
 
       var _exclude_dates2 = _interopRequireDefault(_exclude_dates);
 
-      var _highlight_dates = __webpack_require__(356);
+      var _highlight_dates = __webpack_require__(358);
 
       var _highlight_dates2 = _interopRequireDefault(_highlight_dates);
 
-      var _highlight_dates_with_ranges = __webpack_require__(357);
+      var _highlight_dates_with_ranges = __webpack_require__(359);
 
       var _highlight_dates_with_ranges2 = _interopRequireDefault(
         _highlight_dates_with_ranges
       );
 
-      var _include_dates = __webpack_require__(358);
+      var _include_dates = __webpack_require__(360);
 
       var _include_dates2 = _interopRequireDefault(_include_dates);
 
-      var _filter_dates = __webpack_require__(359);
+      var _filter_dates = __webpack_require__(361);
 
       var _filter_dates2 = _interopRequireDefault(_filter_dates);
 
-      var _disabled = __webpack_require__(360);
+      var _disabled = __webpack_require__(362);
 
       var _disabled2 = _interopRequireDefault(_disabled);
 
-      var _disabled_keyboard_navigation = __webpack_require__(361);
+      var _disabled_keyboard_navigation = __webpack_require__(363);
 
       var _disabled_keyboard_navigation2 = _interopRequireDefault(
         _disabled_keyboard_navigation
       );
 
-      var _clear_input = __webpack_require__(362);
+      var _clear_input = __webpack_require__(364);
 
       var _clear_input2 = _interopRequireDefault(_clear_input);
 
-      var _on_blur_callbacks = __webpack_require__(363);
+      var _on_blur_callbacks = __webpack_require__(365);
 
       var _on_blur_callbacks2 = _interopRequireDefault(_on_blur_callbacks);
 
-      var _configurePopper = __webpack_require__(364);
+      var _configurePopper = __webpack_require__(366);
 
       var _configurePopper2 = _interopRequireDefault(_configurePopper);
 
-      var _date_range = __webpack_require__(365);
+      var _date_range = __webpack_require__(367);
 
       var _date_range2 = _interopRequireDefault(_date_range);
 
-      var _date_range_with_show_disabled_navigation = __webpack_require__(366);
+      var _date_range_with_show_disabled_navigation = __webpack_require__(368);
 
       var _date_range_with_show_disabled_navigation2 = _interopRequireDefault(
         _date_range_with_show_disabled_navigation
       );
 
-      var _tab_index = __webpack_require__(367);
+      var _tab_index = __webpack_require__(369);
 
       var _tab_index2 = _interopRequireDefault(_tab_index);
 
-      var _year_dropdown = __webpack_require__(368);
+      var _year_dropdown = __webpack_require__(370);
 
       var _year_dropdown2 = _interopRequireDefault(_year_dropdown);
 
-      var _month_dropdown = __webpack_require__(369);
+      var _month_dropdown = __webpack_require__(371);
 
       var _month_dropdown2 = _interopRequireDefault(_month_dropdown);
 
-      var _month_year_dropdown = __webpack_require__(370);
+      var _month_year_dropdown = __webpack_require__(372);
 
       var _month_year_dropdown2 = _interopRequireDefault(_month_year_dropdown);
 
-      var _month_dropdown_short = __webpack_require__(371);
+      var _month_dropdown_short = __webpack_require__(373);
 
       var _month_dropdown_short2 = _interopRequireDefault(
         _month_dropdown_short
       );
 
-      var _year_select_dropdown = __webpack_require__(372);
+      var _year_select_dropdown = __webpack_require__(374);
 
       var _year_select_dropdown2 = _interopRequireDefault(
         _year_select_dropdown
       );
 
-      var _today = __webpack_require__(373);
+      var _weekly = __webpack_require__(375);
+
+      var _weekly2 = _interopRequireDefault(_weekly);
+
+      var _monthly = __webpack_require__(376);
+
+      var _monthly2 = _interopRequireDefault(_monthly);
+
+      var _today = __webpack_require__(377);
 
       var _today2 = _interopRequireDefault(_today);
 
-      var _timezone_date = __webpack_require__(374);
+      var _timezone_date = __webpack_require__(378);
 
       var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-      var _inline = __webpack_require__(375);
+      var _inline = __webpack_require__(379);
 
       var _inline2 = _interopRequireDefault(_inline);
 
-      var _open_to_date = __webpack_require__(376);
+      var _open_to_date = __webpack_require__(380);
 
       var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-      var _fixed_calendar = __webpack_require__(377);
+      var _fixed_calendar = __webpack_require__(381);
 
       var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-      var _week_numbers = __webpack_require__(378);
+      var _week_numbers = __webpack_require__(382);
 
       var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-      var _custom_input = __webpack_require__(379);
+      var _custom_input = __webpack_require__(383);
 
       var _custom_input2 = _interopRequireDefault(_custom_input);
 
-      var _multi_month = __webpack_require__(380);
+      var _multi_month = __webpack_require__(384);
 
       var _multi_month2 = _interopRequireDefault(_multi_month);
 
-      var _multi_month_drp = __webpack_require__(381);
+      var _multi_month_drp = __webpack_require__(385);
 
       var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-      var _children = __webpack_require__(382);
+      var _children = __webpack_require__(386);
 
       var _children2 = _interopRequireDefault(_children);
 
-      var _portal = __webpack_require__(383);
+      var _portal = __webpack_require__(387);
 
       var _portal2 = _interopRequireDefault(_portal);
 
-      var _inline_portal = __webpack_require__(384);
+      var _inline_portal = __webpack_require__(388);
 
       var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-      var _raw_change = __webpack_require__(385);
+      var _raw_change = __webpack_require__(389);
 
       var _raw_change2 = _interopRequireDefault(_raw_change);
 
-      var _show_time = __webpack_require__(386);
+      var _show_time = __webpack_require__(390);
 
       var _show_time2 = _interopRequireDefault(_show_time);
 
-      var _exclude_times = __webpack_require__(387);
+      var _exclude_times = __webpack_require__(391);
 
       var _exclude_times2 = _interopRequireDefault(_exclude_times);
 
-      var _exclude_time_period = __webpack_require__(388);
+      var _exclude_time_period = __webpack_require__(392);
 
       var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-      var _include_times = __webpack_require__(389);
+      var _include_times = __webpack_require__(393);
 
       var _include_times2 = _interopRequireDefault(_include_times);
 
-      var _dont_close_onSelect = __webpack_require__(390);
+      var _dont_close_onSelect = __webpack_require__(394);
 
       var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
-      var _open_by_default = __webpack_require__(391);
+      var _open_by_default = __webpack_require__(395);
 
       var _open_by_default2 = _interopRequireDefault(_open_by_default);
 
-      __webpack_require__(392);
+      __webpack_require__(396);
 
-      __webpack_require__(393);
+      __webpack_require__(397);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -7298,6 +7306,17 @@
                 title: "Year select dropdown",
                 component: _react2.default.createElement(
                   _year_select_dropdown2.default,
+                  null
+                )
+              },
+              {
+                title: "Weekly",
+                component: _react2.default.createElement(_weekly2.default, null)
+              },
+              {
+                title: "Monthly",
+                component: _react2.default.createElement(
+                  _monthly2.default,
                   null
                 )
               },
@@ -26175,7 +26194,7 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
-      var _popper_component = __webpack_require__(340);
+      var _popper_component = __webpack_require__(342);
 
       var _popper_component2 = _interopRequireDefault(_popper_component);
 
@@ -26657,9 +26676,12 @@
                 peekNextMonth: _this.props.peekNextMonth,
                 showMonthDropdown: _this.props.showMonthDropdown,
                 useShortMonthInDropdown: _this.props.useShortMonthInDropdown,
+                useShortMonth: _this.props.useShortMonth,
                 showMonthYearDropdown: _this.props.showMonthYearDropdown,
                 showWeekNumbers: _this.props.showWeekNumbers,
                 showYearDropdown: _this.props.showYearDropdown,
+                showWeekly: _this.props.showWeekly,
+                showMonthly: _this.props.showMonthly,
                 withPortal: _this.props.withPortal,
                 forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
                 showDisabledMonthNavigation:
@@ -26670,6 +26692,8 @@
                 todayButton: _this.props.todayButton,
                 weekLabel: _this.props.weekLabel,
                 utcOffset: _this.props.utcOffset,
+                weeklyType: _this.props.weeklyType,
+                weeklyDays: _this.props.weeklyDays,
                 outsideClickIgnoreClass: outsideClickIgnoreClass,
                 fixedHeight: _this.props.fixedHeight,
                 monthsShown: _this.props.monthsShown,
@@ -26900,6 +26924,8 @@
         showMonthYearDropdown: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
+        showWeekly: _propTypes2.default.bool,
+        showMonthly: _propTypes2.default.bool,
         forceShowMonthNavigation: _propTypes2.default.bool,
         showDisabledMonthNavigation: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
@@ -26910,6 +26936,8 @@
         todayButton: _propTypes2.default.string,
         useWeekdaysShort: _propTypes2.default.bool,
         utcOffset: _propTypes2.default.number,
+        weeklyType: _propTypes2.default.bool,
+        weeklyDays: _propTypes2.default.array,
         value: _propTypes2.default.string,
         weekLabel: _propTypes2.default.string,
         withPortal: _propTypes2.default.bool,
@@ -26921,7 +26949,8 @@
         minTime: _propTypes2.default.object,
         maxTime: _propTypes2.default.object,
         excludeTimes: _propTypes2.default.array,
-        useShortMonthInDropdown: _propTypes2.default.bool
+        useShortMonthInDropdown: _propTypes2.default.bool,
+        useShortMonth: _propTypes2.default.bool
       };
       exports.default = DatePicker;
 
@@ -26962,11 +26991,15 @@
 
       var _month_year_dropdown2 = _interopRequireDefault(_month_year_dropdown);
 
-      var _month = __webpack_require__(335);
+      var _monthly = __webpack_require__(335);
+
+      var _monthly2 = _interopRequireDefault(_monthly);
+
+      var _month = __webpack_require__(337);
 
       var _month2 = _interopRequireDefault(_month);
 
-      var _time = __webpack_require__(339);
+      var _time = __webpack_require__(341);
 
       var _time2 = _interopRequireDefault(_time);
 
@@ -26983,6 +27016,24 @@
       var _classnames2 = _interopRequireDefault(_classnames);
 
       var _date_utils = __webpack_require__(208);
+
+      var utils = _interopRequireWildcard(_date_utils);
+
+      function _interopRequireWildcard(obj) {
+        if (obj && obj.__esModule) {
+          return obj;
+        } else {
+          var newObj = {};
+          if (obj != null) {
+            for (var key in obj) {
+              if (Object.prototype.hasOwnProperty.call(obj, key))
+                newObj[key] = obj[key];
+            }
+          }
+          newObj.default = obj;
+          return newObj;
+        }
+      }
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -27055,6 +27106,7 @@
                 onDropdownFocus: function onDropdownFocus() {},
                 monthsShown: 1,
                 forceShowMonthNavigation: false,
+                forceShowYearNavigation: false,
                 timeCaption: "Time"
               };
             }
@@ -27123,6 +27175,20 @@
             );
           };
 
+          _this.increaseYear = function() {
+            _this.setState(
+              {
+                date: (0, _date_utils.addYears)(
+                  (0, _date_utils.cloneDate)(_this.state.date),
+                  1
+                )
+              },
+              function() {
+                return _this.handleYearChange(_this.state.date);
+              }
+            );
+          };
+
           _this.decreaseMonth = function() {
             _this.setState(
               {
@@ -27133,6 +27199,20 @@
               },
               function() {
                 return _this.handleMonthChange(_this.state.date);
+              }
+            );
+          };
+
+          _this.decreaseYear = function() {
+            _this.setState(
+              {
+                date: (0, _date_utils.subtractYears)(
+                  (0, _date_utils.cloneDate)(_this.state.date),
+                  1
+                )
+              },
+              function() {
+                return _this.handleYearChange(_this.state.date);
               }
             );
           };
@@ -27294,6 +27374,41 @@
             });
           };
 
+          _this.renderPreviousYearButton = function() {
+            var allPrevDaysDisabled = (0, _date_utils.allDaysDisabledBefore)(
+              _this.state.date,
+              "year",
+              _this.props
+            );
+
+            if (
+              !_this.props.forceShowYearNavigation &&
+              !_this.props.showDisabledYearNavigation &&
+              allPrevDaysDisabled
+            ) {
+              return;
+            }
+
+            var classes = [
+              "react-datepicker__navigation",
+              "react-datepicker__navigation--year",
+              "react-datepicker__navigation--previous"
+            ];
+
+            var clickHandler = _this.decreaseYear;
+
+            if (allPrevDaysDisabled && _this.props.showDisabledYearNavigation) {
+              classes.push("react-datepicker__navigation--previous--disabled");
+              clickHandler = null;
+            }
+
+            return _react2.default.createElement("button", {
+              type: "button",
+              className: classes.join(" "),
+              onClick: clickHandler
+            });
+          };
+
           _this.renderNextMonthButton = function() {
             var allNextDaysDisabled = (0, _date_utils.allDaysDisabledAfter)(
               _this.state.date,
@@ -27328,6 +27443,49 @@
               allNextDaysDisabled &&
               _this.props.showDisabledMonthNavigation
             ) {
+              classes.push("react-datepicker__navigation--next--disabled");
+              clickHandler = null;
+            }
+
+            return _react2.default.createElement("button", {
+              type: "button",
+              className: classes.join(" "),
+              onClick: clickHandler
+            });
+          };
+
+          _this.renderNextYearButton = function() {
+            var allNextDaysDisabled = (0, _date_utils.allDaysDisabledAfter)(
+              _this.state.date,
+              "year",
+              _this.props
+            );
+
+            if (
+              !_this.props.forceShowYearNavigation &&
+              !_this.props.showDisabledYearNavigation &&
+              allNextDaysDisabled
+            ) {
+              return;
+            }
+
+            var classes = [
+              "react-datepicker__navigation",
+              "react-datepicker__navigation--year",
+              "react-datepicker__navigation--next"
+            ];
+            if (_this.props.showTimeSelect) {
+              classes.push("react-datepicker__navigation--next--with-time");
+            }
+            if (_this.props.todayButton) {
+              classes.push(
+                "react-datepicker__navigation--next--with-today-button"
+              );
+            }
+
+            var clickHandler = _this.increaseYear;
+
+            if (allNextDaysDisabled && _this.props.showDisabledYearNavigation) {
               classes.push("react-datepicker__navigation--next--disabled");
               clickHandler = null;
             }
@@ -27433,6 +27591,79 @@
             );
           };
 
+          _this.renderWeekly = function() {
+            var overrideHide =
+              arguments.length > 0 && arguments[0] !== undefined
+                ? arguments[0]
+                : false;
+            var monthDate = arguments[1];
+
+            if (!_this.props.showWeekly || overrideHide) {
+              return;
+            }
+
+            return _react2.default.createElement(
+              "div",
+              null,
+              _react2.default.createElement(
+                "div",
+                { className: "header-slide" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "year" },
+                  (0, _date_utils.getYear)(_this.state.date)
+                ),
+                _this.renderPreviousYearButton(),
+                _this.renderNextYearButton()
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "header-slide" },
+                _this.renderCurrentMonth(monthDate),
+                _this.renderPreviousMonthButton(),
+                _this.renderNextMonthButton()
+              )
+            );
+          };
+
+          _this.renderMonthly = function() {
+            var overrideHide =
+              arguments.length > 0 && arguments[0] !== undefined
+                ? arguments[0]
+                : false;
+
+            if (!_this.props.showMonthly || overrideHide) {
+              return;
+            }
+
+            return _react2.default.createElement(
+              "div",
+              { className: "monthly" },
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker__header" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "header-slide" },
+                  _react2.default.createElement(
+                    "div",
+                    { className: "year" },
+                    (0, _date_utils.getYear)(_this.state.date)
+                  ),
+                  _this.renderPreviousYearButton(),
+                  _this.renderNextYearButton()
+                )
+              ),
+              _react2.default.createElement(_monthly2.default, {
+                locale: _this.props.locale,
+                dateFormat: _this.props.dateFormat,
+                onChange: _this.changeMonth,
+                month: (0, _date_utils.getMonth)(_this.state.date),
+                useShortMonth: _this.props.useShortMonth
+              })
+            );
+          };
+
           _this.renderTodayButton = function() {
             if (!_this.props.todayButton) {
               return;
@@ -27472,55 +27703,63 @@
                     },
                     className: "react-datepicker__month-container"
                   },
-                  _react2.default.createElement(
-                    "div",
-                    { className: "react-datepicker__header" },
-                    _this.renderCurrentMonth(monthDate),
+                  !_this.props.showMonthly &&
                     _react2.default.createElement(
                       "div",
-                      {
-                        className:
-                          "react-datepicker__header__dropdown react-datepicker__header__dropdown--" +
-                          _this.props.dropdownMode,
-                        onFocus: _this.handleDropdownFocus
-                      },
-                      _this.renderMonthDropdown(i !== 0),
-                      _this.renderMonthYearDropdown(i !== 0),
-                      _this.renderYearDropdown(i !== 0)
+                      { className: "react-datepicker__header" },
+                      !_this.props.showWeekly &&
+                        _this.renderCurrentMonth(monthDate),
+                      _react2.default.createElement(
+                        "div",
+                        {
+                          className:
+                            "react-datepicker__header__dropdown react-datepicker__header__dropdown--" +
+                            _this.props.dropdownMode,
+                          onFocus: _this.handleDropdownFocus
+                        },
+                        _this.renderMonthDropdown(i !== 0),
+                        _this.renderMonthYearDropdown(i !== 0),
+                        _this.renderYearDropdown(i !== 0),
+                        _this.renderWeekly(i !== 0, monthDate)
+                      ),
+                      !_this.props.showMonthly &&
+                        _react2.default.createElement(
+                          "div",
+                          { className: "react-datepicker__day-names" },
+                          _this.header(monthDate)
+                        )
                     ),
-                    _react2.default.createElement(
-                      "div",
-                      { className: "react-datepicker__day-names" },
-                      _this.header(monthDate)
-                    )
-                  ),
-                  _react2.default.createElement(_month2.default, {
-                    day: monthDate,
-                    dayClassName: _this.props.dayClassName,
-                    onDayClick: _this.handleDayClick,
-                    onDayMouseEnter: _this.handleDayMouseEnter,
-                    onMouseLeave: _this.handleMonthMouseLeave,
-                    onWeekSelect: _this.props.onWeekSelect,
-                    formatWeekNumber: _this.props.formatWeekNumber,
-                    minDate: _this.props.minDate,
-                    maxDate: _this.props.maxDate,
-                    excludeDates: _this.props.excludeDates,
-                    highlightDates: _this.props.highlightDates,
-                    selectingDate: _this.state.selectingDate,
-                    includeDates: _this.props.includeDates,
-                    inline: _this.props.inline,
-                    fixedHeight: _this.props.fixedHeight,
-                    filterDate: _this.props.filterDate,
-                    preSelection: _this.props.preSelection,
-                    selected: _this.props.selected,
-                    selectsStart: _this.props.selectsStart,
-                    selectsEnd: _this.props.selectsEnd,
-                    showWeekNumbers: _this.props.showWeekNumbers,
-                    startDate: _this.props.startDate,
-                    endDate: _this.props.endDate,
-                    peekNextMonth: _this.props.peekNextMonth,
-                    utcOffset: _this.props.utcOffset
-                  })
+                  _this.renderMonthly(i !== 0),
+                  !_this.props.showMonthly &&
+                    _react2.default.createElement(_month2.default, {
+                      day: monthDate,
+                      dayClassName: _this.props.dayClassName,
+                      onDayClick: _this.handleDayClick,
+                      onDayMouseEnter: _this.handleDayMouseEnter,
+                      onMouseLeave: _this.handleMonthMouseLeave,
+                      onWeekSelect: _this.props.onWeekSelect,
+                      formatWeekNumber: _this.props.formatWeekNumber,
+                      minDate: _this.props.minDate,
+                      maxDate: _this.props.maxDate,
+                      excludeDates: _this.props.excludeDates,
+                      highlightDates: _this.props.highlightDates,
+                      selectingDate: _this.state.selectingDate,
+                      includeDates: _this.props.includeDates,
+                      inline: _this.props.inline,
+                      fixedHeight: _this.props.fixedHeight,
+                      filterDate: _this.props.filterDate,
+                      preSelection: _this.props.preSelection,
+                      selected: _this.props.selected,
+                      selectsStart: _this.props.selectsStart,
+                      selectsEnd: _this.props.selectsEnd,
+                      showWeekNumbers: _this.props.showWeekNumbers,
+                      startDate: _this.props.startDate,
+                      endDate: _this.props.endDate,
+                      peekNextMonth: _this.props.peekNextMonth,
+                      utcOffset: _this.props.utcOffset,
+                      weeklyType: _this.props.weeklyType,
+                      weeklyDays: _this.props.weeklyDays
+                    })
                 )
               );
             }
@@ -27543,6 +27782,8 @@
                 showMonthDropdown: _this.props.showMonthDropdown,
                 showMonthYearDropdown: _this.props.showMonthYearDropdown,
                 showYearDropdown: _this.props.showYearDropdown,
+                showWeekly: _this.props.showWeekly,
+                showMonthly: _this.props.showMonthly,
                 withPortal: _this.props.withPortal,
                 monthRef: _this.state.monthContainer
               });
@@ -27609,8 +27850,8 @@
             _react2.default.createElement("div", {
               className: "react-datepicker__triangle"
             }),
-            this.renderPreviousMonthButton(),
-            this.renderNextMonthButton(),
+            !this.props.showWeekly && this.renderPreviousMonthButton(),
+            !this.props.showWeekly && this.renderNextMonthButton(),
             this.renderMonths(),
             this.renderTodayButton(),
             this.renderTimeSection(),
@@ -27648,6 +27889,7 @@
         onMonthChange: _propTypes2.default.func,
         onYearChange: _propTypes2.default.func,
         forceShowMonthNavigation: _propTypes2.default.bool,
+        forceShowYearNavigation: _propTypes2.default.bool,
         onDropdownFocus: _propTypes2.default.func,
         onSelect: _propTypes2.default.func.isRequired,
         onWeekSelect: _propTypes2.default.func,
@@ -27671,16 +27913,22 @@
         showMonthYearDropdown: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
+        showWeekly: _propTypes2.default.bool,
+        showMonthly: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
         todayButton: _propTypes2.default.string,
         useWeekdaysShort: _propTypes2.default.bool,
         withPortal: _propTypes2.default.bool,
         utcOffset: _propTypes2.default.number,
+        weeklyType: _propTypes2.default.bool,
+        weeklyDays: _propTypes2.default.array,
         weekLabel: _propTypes2.default.string,
         yearDropdownItemNumber: _propTypes2.default.number,
         setOpen: _propTypes2.default.func,
         useShortMonthInDropdown: _propTypes2.default.bool,
-        showDisabledMonthNavigation: _propTypes2.default.bool
+        useShortMonth: _propTypes2.default.bool,
+        showDisabledMonthNavigation: _propTypes2.default.bool,
+        showDisabledYearNavigation: _propTypes2.default.bool
       };
       exports.default = Calendar;
 
@@ -48576,11 +48824,332 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
+      var _monthly_buttons = __webpack_require__(336);
+
+      var _monthly_buttons2 = _interopRequireDefault(_monthly_buttons);
+
+      var _reactOnclickoutside = __webpack_require__(207);
+
+      var _reactOnclickoutside2 = _interopRequireDefault(_reactOnclickoutside);
+
+      var _date_utils = __webpack_require__(208);
+
+      var utils = _interopRequireWildcard(_date_utils);
+
+      function _interopRequireWildcard(obj) {
+        if (obj && obj.__esModule) {
+          return obj;
+        } else {
+          var newObj = {};
+          if (obj != null) {
+            for (var key in obj) {
+              if (Object.prototype.hasOwnProperty.call(obj, key))
+                newObj[key] = obj[key];
+            }
+          }
+          newObj.default = obj;
+          return newObj;
+        }
+      }
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var WrappedMonthlyButtons = (0, _reactOnclickoutside2.default)(
+        _monthly_buttons2.default
+      );
+
+      var Monthly = (function(_React$Component) {
+        _inherits(Monthly, _React$Component);
+
+        function Monthly() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, Monthly);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.state = {
+              buttonWrapperVisible: false
+            }),
+            (_this.renderSelectMode = function(monthNames) {
+              return _react2.default.createElement(
+                "div",
+                {
+                  value: _this.props.month,
+                  className: "react-datepicker__month-list",
+                  onChange: function onChange(e) {
+                    return _this.onChange(e.target.value);
+                  }
+                },
+                _this.renderMonthButtons(monthNames)
+              );
+            }),
+            (_this.renderMonthButtons = function(monthNames) {
+              return _react2.default.createElement(WrappedMonthlyButtons, {
+                month: _this.props.month,
+                monthNames: monthNames,
+                onChange: _this.onChange,
+                onCancel: _this.toggleButtonWrapper
+              });
+            }),
+            (_this.onChange = function(month) {
+              if (month !== _this.props.month) {
+                _this.props.onChange(month);
+              }
+            }),
+            (_this.toggleButtonWrapper = function() {
+              return _this.setState({
+                buttonWrapperVisible: !_this.state.buttonWrapperVisible
+              });
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        Monthly.prototype.render = function render() {
+          var _this2 = this;
+
+          var localeData = utils.getLocaleDataForLocale(this.props.locale);
+          var monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
+            this.props.useShortMonth
+              ? function(M) {
+                  return utils.getMonthShortInLocale(
+                    localeData,
+                    utils.newDate({ M: M })
+                  );
+                }
+              : function(M) {
+                  return utils.getMonthInLocale(
+                    localeData,
+                    utils.newDate({ M: M }),
+                    _this2.props.dateFormat
+                  );
+                }
+          );
+
+          return _react2.default.createElement(
+            "div",
+            { className: "react-datepicker__monthly-container" },
+            this.renderSelectMode(monthNames)
+          );
+        };
+
+        return Monthly;
+      })(_react2.default.Component);
+
+      Monthly.propTypes = {
+        locale: _propTypes2.default.string,
+        dateFormat: _propTypes2.default.string.isRequired,
+        month: _propTypes2.default.number.isRequired,
+        onChange: _propTypes2.default.func.isRequired,
+        useShortMonth: _propTypes2.default.bool
+        // availableMonths: PropTypes.array,
+      };
+      exports.default = Monthly;
+
+      /***/
+    },
+    /* 336 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _propTypes = __webpack_require__(201);
+
+      var _propTypes2 = _interopRequireDefault(_propTypes);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var MonthlyButtons = (function(_React$Component) {
+        _inherits(MonthlyButtons, _React$Component);
+
+        function MonthlyButtons() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, MonthlyButtons);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.renderButtons = function() {
+              return _this.props.monthNames.map(function(month, i) {
+                return _react2.default.createElement(
+                  "div",
+                  {
+                    className:
+                      _this.props.month === i
+                        ? "react-datepicker__month-button --selected_month"
+                        : "react-datepicker__month-button",
+                    key: month,
+                    ref: month,
+                    onClick: _this.onChange.bind(_this, i)
+                  },
+                  month
+                );
+              });
+            }),
+            (_this.onChange = function(month) {
+              return _this.props.onChange(month);
+            }),
+            (_this.handleClickOutside = function() {
+              return _this.props.onCancel();
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        MonthlyButtons.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "react-datepicker__month-buttons" },
+            this.renderButtons()
+          );
+        };
+
+        return MonthlyButtons;
+      })(_react2.default.Component);
+
+      MonthlyButtons.propTypes = {
+        onCancel: _propTypes2.default.func.isRequired,
+        onChange: _propTypes2.default.func.isRequired,
+        month: _propTypes2.default.number.isRequired,
+        monthNames: _propTypes2.default.arrayOf(
+          _propTypes2.default.string.isRequired
+        ).isRequired
+      };
+      exports.default = MonthlyButtons;
+
+      /***/
+    },
+    /* 337 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _propTypes = __webpack_require__(201);
+
+      var _propTypes2 = _interopRequireDefault(_propTypes);
+
       var _classnames = __webpack_require__(206);
 
       var _classnames2 = _interopRequireDefault(_classnames);
 
-      var _week = __webpack_require__(336);
+      var _week = __webpack_require__(338);
 
       var _week2 = _interopRequireDefault(_week);
 
@@ -48728,7 +49297,9 @@
                     startDate: _this.props.startDate,
                     endDate: _this.props.endDate,
                     dayClassName: _this.props.dayClassName,
-                    utcOffset: _this.props.utcOffset
+                    utcOffset: _this.props.utcOffset,
+                    weeklyType: _this.props.weeklyType,
+                    weeklyDays: _this.props.weeklyDays
                   })
                 );
 
@@ -48814,13 +49385,15 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.number,
+        weeklyType: _propTypes2.default.bool,
+        weeklyDays: _propTypes2.default.array
       };
       exports.default = Month;
 
       /***/
     },
-    /* 336 */
+    /* 338 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -48834,11 +49407,11 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
-      var _day = __webpack_require__(337);
+      var _day = __webpack_require__(339);
 
       var _day2 = _interopRequireDefault(_day);
 
-      var _week_number = __webpack_require__(338);
+      var _week_number = __webpack_require__(340);
 
       var _week_number2 = _interopRequireDefault(_week_number);
 
@@ -48989,7 +49562,9 @@
                     startDate: _this.props.startDate,
                     endDate: _this.props.endDate,
                     dayClassName: _this.props.dayClassName,
-                    utcOffset: _this.props.utcOffset
+                    utcOffset: _this.props.utcOffset,
+                    weeklyType: _this.props.weeklyType,
+                    weeklyDays: _this.props.weeklyDays
                   });
                 })
               );
@@ -49033,13 +49608,15 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumber: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.number,
+        weeklyType: _propTypes2.default.bool,
+        weeklyDays: _propTypes2.default.array
       };
       exports.default = Week;
 
       /***/
     },
-    /* 337 */
+    /* 339 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -49143,16 +49720,33 @@
                 _this.isSameDay(_this.props.preSelection)
               );
             }),
+            (_this.isWeeklyDay = function() {
+              var _this$props = _this.props,
+                day = _this$props.day,
+                weeklyDays = _this$props.weeklyDays,
+                weeklyType = _this$props.weeklyType;
+
+              if (!weeklyType) {
+                return false;
+              }
+
+              var dayStr = day.format("MM.DD.YYYY");
+              return weeklyDays
+                ? weeklyDays.every(function(weeklyDay) {
+                    return weeklyDay !== dayStr;
+                  })
+                : false;
+            }),
             (_this.isDisabled = function() {
-              return (0, _date_utils.isDayDisabled)(
-                _this.props.day,
-                _this.props
+              return (
+                (0, _date_utils.isDayDisabled)(_this.props.day, _this.props) ||
+                _this.isWeeklyDay()
               );
             }),
             (_this.getHighLightedClass = function(defaultClassName) {
-              var _this$props = _this.props,
-                day = _this$props.day,
-                highlightDates = _this$props.highlightDates;
+              var _this$props2 = _this.props,
+                day = _this$props2.day,
+                highlightDates = _this$props2.highlightDates;
 
               if (!highlightDates) {
                 return false;
@@ -49163,10 +49757,10 @@
               return highlightDates.get(dayStr);
             }),
             (_this.isInRange = function() {
-              var _this$props2 = _this.props,
-                day = _this$props2.day,
-                startDate = _this$props2.startDate,
-                endDate = _this$props2.endDate;
+              var _this$props3 = _this.props,
+                day = _this$props3.day,
+                startDate = _this$props3.startDate,
+                endDate = _this$props3.endDate;
 
               if (!startDate || !endDate) {
                 return false;
@@ -49174,13 +49768,13 @@
               return (0, _date_utils.isDayInRange)(day, startDate, endDate);
             }),
             (_this.isInSelectingRange = function() {
-              var _this$props3 = _this.props,
-                day = _this$props3.day,
-                selectsStart = _this$props3.selectsStart,
-                selectsEnd = _this$props3.selectsEnd,
-                selectingDate = _this$props3.selectingDate,
-                startDate = _this$props3.startDate,
-                endDate = _this$props3.endDate;
+              var _this$props4 = _this.props,
+                day = _this$props4.day,
+                selectsStart = _this$props4.selectsStart,
+                selectsEnd = _this$props4.selectsEnd,
+                selectingDate = _this$props4.selectingDate,
+                startDate = _this$props4.startDate,
+                endDate = _this$props4.endDate;
 
               if (
                 !(selectsStart || selectsEnd) ||
@@ -49221,11 +49815,11 @@
                 return false;
               }
 
-              var _this$props4 = _this.props,
-                day = _this$props4.day,
-                selectingDate = _this$props4.selectingDate,
-                startDate = _this$props4.startDate,
-                selectsStart = _this$props4.selectsStart;
+              var _this$props5 = _this.props,
+                day = _this$props5.day,
+                selectingDate = _this$props5.selectingDate,
+                startDate = _this$props5.startDate,
+                selectsStart = _this$props5.selectsStart;
 
               if (selectsStart) {
                 return (0, _date_utils.isSameDay)(day, selectingDate);
@@ -49238,11 +49832,11 @@
                 return false;
               }
 
-              var _this$props5 = _this.props,
-                day = _this$props5.day,
-                selectingDate = _this$props5.selectingDate,
-                endDate = _this$props5.endDate,
-                selectsEnd = _this$props5.selectsEnd;
+              var _this$props6 = _this.props,
+                day = _this$props6.day,
+                selectingDate = _this$props6.selectingDate,
+                endDate = _this$props6.endDate,
+                selectsEnd = _this$props6.selectsEnd;
 
               if (selectsEnd) {
                 return (0, _date_utils.isSameDay)(day, selectingDate);
@@ -49251,10 +49845,10 @@
               }
             }),
             (_this.isRangeStart = function() {
-              var _this$props6 = _this.props,
-                day = _this$props6.day,
-                startDate = _this$props6.startDate,
-                endDate = _this$props6.endDate;
+              var _this$props7 = _this.props,
+                day = _this$props7.day,
+                startDate = _this$props7.startDate,
+                endDate = _this$props7.endDate;
 
               if (!startDate || !endDate) {
                 return false;
@@ -49262,10 +49856,10 @@
               return (0, _date_utils.isSameDay)(startDate, day);
             }),
             (_this.isRangeEnd = function() {
-              var _this$props7 = _this.props,
-                day = _this$props7.day,
-                startDate = _this$props7.startDate,
-                endDate = _this$props7.endDate;
+              var _this$props8 = _this.props,
+                day = _this$props8.day,
+                startDate = _this$props8.startDate,
+                endDate = _this$props8.endDate;
 
               if (!startDate || !endDate) {
                 return false;
@@ -49349,13 +49943,15 @@
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.number,
+        weeklyType: _propTypes2.default.bool,
+        weeklyDays: _propTypes2.default.array
       };
       exports.default = Day;
 
       /***/
     },
-    /* 338 */
+    /* 340 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -49474,7 +50070,7 @@
 
       /***/
     },
-    /* 339 */
+    /* 341 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -49752,7 +50348,7 @@
 
       /***/
     },
-    /* 340 */
+    /* 342 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -49788,7 +50384,7 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
-      var _reactPopper = __webpack_require__(341);
+      var _reactPopper = __webpack_require__(343);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -49944,7 +50540,7 @@
 
       /***/
     },
-    /* 341 */
+    /* 343 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -49952,7 +50548,7 @@
         value: true
       });
 
-      var _Manager = __webpack_require__(342);
+      var _Manager = __webpack_require__(344);
 
       Object.defineProperty(exports, "Manager", {
         enumerable: true,
@@ -49961,7 +50557,7 @@
         }
       });
 
-      var _Target = __webpack_require__(343);
+      var _Target = __webpack_require__(345);
 
       Object.defineProperty(exports, "Target", {
         enumerable: true,
@@ -49970,7 +50566,7 @@
         }
       });
 
-      var _Popper = __webpack_require__(344);
+      var _Popper = __webpack_require__(346);
 
       Object.defineProperty(exports, "Popper", {
         enumerable: true,
@@ -49979,7 +50575,7 @@
         }
       });
 
-      var _Arrow = __webpack_require__(346);
+      var _Arrow = __webpack_require__(348);
 
       Object.defineProperty(exports, "Arrow", {
         enumerable: true,
@@ -49994,7 +50590,7 @@
 
       /***/
     },
-    /* 342 */
+    /* 344 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -50171,7 +50767,7 @@
 
       /***/
     },
-    /* 343 */
+    /* 345 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -50269,7 +50865,7 @@
 
       /***/
     },
-    /* 344 */
+    /* 346 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -50314,7 +50910,7 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
-      var _popper = __webpack_require__(345);
+      var _popper = __webpack_require__(347);
 
       var _popper2 = _interopRequireDefault(_popper);
 
@@ -50652,7 +51248,7 @@
 
       /***/
     },
-    /* 345 */
+    /* 347 */
     /***/ function(module, exports, __webpack_require__) {
       /* WEBPACK VAR INJECTION */ (function(global) {
         /**!
@@ -53515,7 +54111,7 @@
 
       /***/
     },
-    /* 346 */
+    /* 348 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -53620,7 +54216,7 @@
 
       /***/
     },
-    /* 347 */
+    /* 349 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -53717,7 +54313,7 @@
 
       /***/
     },
-    /* 348 */
+    /* 350 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -53842,7 +54438,7 @@
 
       /***/
     },
-    /* 349 */
+    /* 351 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -53957,7 +54553,7 @@
 
       /***/
     },
-    /* 350 */
+    /* 352 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54072,7 +54668,7 @@
 
       /***/
     },
-    /* 351 */
+    /* 353 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54191,7 +54787,7 @@
 
       /***/
     },
-    /* 352 */
+    /* 354 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54235,7 +54831,7 @@
 
       /***/
     },
-    /* 353 */
+    /* 355 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54385,7 +54981,7 @@
 
       /***/
     },
-    /* 354 */
+    /* 356 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54521,7 +55117,7 @@
 
       /***/
     },
-    /* 355 */
+    /* 357 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54664,7 +55260,7 @@
 
       /***/
     },
-    /* 356 */
+    /* 358 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54794,6 +55390,7 @@
                   (0, _moment2.default)().subtract(7, "days"),
                   (0, _moment2.default)().add(7, "days")
                 ],
+                weeklyType: true,
                 placeholderText:
                   "This highlights a week ago and a week from today"
               })
@@ -54808,7 +55405,7 @@
 
       /***/
     },
-    /* 357 */
+    /* 359 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -54993,7 +55590,7 @@
 
       /***/
     },
-    /* 358 */
+    /* 360 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55136,7 +55733,7 @@
 
       /***/
     },
-    /* 359 */
+    /* 361 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55276,7 +55873,7 @@
 
       /***/
     },
-    /* 360 */
+    /* 362 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55401,7 +55998,7 @@
 
       /***/
     },
-    /* 361 */
+    /* 363 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55529,7 +56126,7 @@
 
       /***/
     },
-    /* 362 */
+    /* 364 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55645,7 +56242,7 @@
 
       /***/
     },
-    /* 363 */
+    /* 365 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55797,7 +56394,7 @@
 
       /***/
     },
-    /* 364 */
+    /* 366 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55924,7 +56521,7 @@
 
       /***/
     },
-    /* 365 */
+    /* 367 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56065,7 +56662,7 @@
 
       /***/
     },
-    /* 366 */
+    /* 368 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56194,7 +56791,7 @@
 
       /***/
     },
-    /* 367 */
+    /* 369 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56309,7 +56906,7 @@
 
       /***/
     },
-    /* 368 */
+    /* 370 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56427,7 +57024,7 @@
 
       /***/
     },
-    /* 369 */
+    /* 371 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56542,7 +57139,7 @@
 
       /***/
     },
-    /* 370 */
+    /* 372 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56660,7 +57257,7 @@
 
       /***/
     },
-    /* 371 */
+    /* 373 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56776,7 +57373,7 @@
 
       /***/
     },
-    /* 372 */
+    /* 374 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -56894,7 +57491,246 @@
 
       /***/
     },
-    /* 373 */
+    /* 375 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(198);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _moment = __webpack_require__(209);
+
+      var _moment2 = _interopRequireDefault(_moment);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var Weekly = (function(_React$Component) {
+        _inherits(Weekly, _React$Component);
+
+        function Weekly(props) {
+          _classCallCheck(this, Weekly);
+
+          var _this = _possibleConstructorReturn(
+            this,
+            _React$Component.call(this, props)
+          );
+
+          _this.handleChange = function(date) {
+            _this.setState({
+              startDate: date
+            });
+          };
+
+          _this.state = {
+            startDate: (0, _moment2.default)()
+          };
+          return _this;
+        }
+
+        Weekly.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                "\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    dateFormatCalendar=\"MMMM\"\n    peekNextMonth\n    showWeekly\n    weeklyType\n    weeklyDays={[\n      '03.21.2018',\n      '03.22.2018',\n    ]}}\n    dateFormat=\"DD MMMM YYYY\"\n/>\n"
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                dateFormatCalendar: "MMMM",
+                peekNextMonth: true,
+                showWeekly: true,
+                weeklyType: true,
+                weeklyDays: ["03.21.2018", "03.22.2018"],
+                dateFormat: "DD MMMM YYYY"
+              })
+            )
+          );
+        };
+
+        return Weekly;
+      })(_react2.default.Component);
+
+      exports.default = Weekly;
+
+      /***/
+    },
+    /* 376 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(198);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _moment = __webpack_require__(209);
+
+      var _moment2 = _interopRequireDefault(_moment);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var Monthly = (function(_React$Component) {
+        _inherits(Monthly, _React$Component);
+
+        function Monthly(props) {
+          _classCallCheck(this, Monthly);
+
+          var _this = _possibleConstructorReturn(
+            this,
+            _React$Component.call(this, props)
+          );
+
+          _this.handleChange = function(date) {
+            _this.setState({
+              startDate: date
+            });
+          };
+
+          _this.state = {
+            startDate: (0, _moment2.default)()
+          };
+          return _this;
+        }
+
+        Monthly.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    dateFormatCalendar="MMMM"\n    peekNextMonth\n    showMonthly\n    useShortMonth\n/>\n'
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                dateFormatCalendar: "MMMM",
+                peekNextMonth: true,
+                showMonthly: true,
+                useShortMonth: true,
+                dateFormat: "MMMM YYYY"
+              })
+            )
+          );
+        };
+
+        return Monthly;
+      })(_react2.default.Component);
+
+      exports.default = Monthly;
+
+      /***/
+    },
+    /* 377 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57009,7 +57845,7 @@
 
       /***/
     },
-    /* 374 */
+    /* 378 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57224,7 +58060,7 @@
 
       /***/
     },
-    /* 375 */
+    /* 379 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57339,7 +58175,7 @@
 
       /***/
     },
-    /* 376 */
+    /* 380 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57466,7 +58302,7 @@
 
       /***/
     },
-    /* 377 */
+    /* 381 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57595,7 +58431,7 @@
 
       /***/
     },
-    /* 378 */
+    /* 382 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57710,7 +58546,7 @@
 
       /***/
     },
-    /* 379 */
+    /* 383 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57864,7 +58700,7 @@
 
       /***/
     },
-    /* 380 */
+    /* 384 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57979,7 +58815,7 @@
 
       /***/
     },
-    /* 381 */
+    /* 385 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58095,7 +58931,7 @@
 
       /***/
     },
-    /* 382 */
+    /* 386 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58217,7 +59053,7 @@
 
       /***/
     },
-    /* 383 */
+    /* 387 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58332,7 +59168,7 @@
 
       /***/
     },
-    /* 384 */
+    /* 388 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58462,7 +59298,7 @@
 
       /***/
     },
-    /* 385 */
+    /* 389 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58599,7 +59435,7 @@
 
       /***/
     },
-    /* 386 */
+    /* 390 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58724,7 +59560,7 @@
 
       /***/
     },
-    /* 387 */
+    /* 391 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58888,7 +59724,7 @@
 
       /***/
     },
-    /* 388 */
+    /* 392 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59042,7 +59878,7 @@
 
       /***/
     },
-    /* 389 */
+    /* 393 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59206,7 +60042,7 @@
 
       /***/
     },
-    /* 390 */
+    /* 394 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59321,7 +60157,7 @@
 
       /***/
     },
-    /* 391 */
+    /* 395 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59436,14 +60272,14 @@
 
       /***/
     },
-    /* 392 */
+    /* 396 */
     /***/ function(module, exports) {
       // removed by extract-text-webpack-plugin
       /***/
     },
-    /* 393 */
-    392,
-    /* 394 */
+    /* 397 */
+    396,
+    /* 398 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
