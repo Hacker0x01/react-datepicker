@@ -2,7 +2,7 @@
   "author": "TungNguyen",
   "name": "tn-react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "license": "MIT",
   "homepage": "https://github.com/tungnguyen216/react-datepicker",
   "main": "lib",
