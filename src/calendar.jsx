@@ -238,9 +238,29 @@ export default class Calendar extends React.Component {
   };
 
   changeYear = year => {
+    let newDate = setYear(cloneDate(this.state.date), year);
+    const newDateMonth = getMonth(newDate);
+    const newDateYear = getYear(newDate);
+
+    if (
+      this.props.minDate &&
+      getYear(this.props.minDate) === newDateYear &&
+      getMonth(this.props.minDate) > newDateMonth
+    ) {
+      newDate = setMonth(cloneDate(newDate), getMonth(this.props.minDate));
+    }
+
+    if (
+      this.props.maxDate &&
+      getYear(this.props.maxDate) === newDateYear &&
+      getMonth(this.props.maxDate) < newDateMonth
+    ) {
+      newDate = setMonth(cloneDate(newDate), getMonth(this.props.maxDate));
+    }
+
     this.setState(
       {
-        date: setYear(cloneDate(this.state.date), year)
+        date: newDate
       },
       () => this.handleYearChange(this.state.date)
     );
@@ -293,12 +313,16 @@ export default class Calendar extends React.Component {
   };
 
   formatWeekday = (localeData, day) => {
-      if (this.props.formatWeekDay) {
-          return getFormattedWeekdayInLocale(localeData, day, this.props.formatWeekDay);
-      }
-      return this.props.useWeekdaysShort
-          ? getWeekdayShortInLocale(localeData, day)
-          : getWeekdayMinInLocale(localeData, day);
+    if (this.props.formatWeekDay) {
+      return getFormattedWeekdayInLocale(
+        localeData,
+        day,
+        this.props.formatWeekDay
+      );
+    }
+    return this.props.useWeekdaysShort
+      ? getWeekdayShortInLocale(localeData, day)
+      : getWeekdayMinInLocale(localeData, day);
   };
 
   renderPreviousMonthButton = () => {
@@ -431,7 +455,10 @@ export default class Calendar extends React.Component {
         locale={this.props.locale}
         dateFormat={this.props.dateFormat}
         onChange={this.changeMonth}
+        minDate={this.props.minDate}
+        maxDate={this.props.maxDate}
         month={getMonth(this.state.date)}
+        year={getYear(this.state.date)}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
       />
     );

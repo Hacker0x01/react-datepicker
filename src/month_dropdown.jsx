@@ -11,6 +11,9 @@ export default class MonthDropdown extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     locale: PropTypes.string,
     dateFormat: PropTypes.string.isRequired,
+    maxDate: PropTypes.object,
+    minDate: PropTypes.object,
+    year: PropTypes.number.isRequired,
     month: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     useShortMonthInDropdown: PropTypes.bool
@@ -20,12 +23,44 @@ export default class MonthDropdown extends React.Component {
     dropdownVisible: false
   };
 
-  renderSelectOptions = monthNames =>
-    monthNames.map((M, i) => (
-      <option key={i} value={i}>
-        {M}
-      </option>
-    ));
+  renderSelectOptions = monthNames => {
+    let minMonth = 0;
+    let maxMonth = 11;
+
+    if (this.props.minDate) {
+      const minYear = this.props.minDate
+        ? utils.getYear(this.props.minDate)
+        : 1900;
+      minMonth =
+        minYear < this.props.year
+          ? 0
+          : minYear === this.props.year
+            ? utils.getMonth(this.props.minDate)
+            : 12;
+    }
+
+    if (this.props.maxDate) {
+      const maxYear = this.props.maxDate
+        ? utils.getYear(this.props.maxDate)
+        : 2100;
+      maxMonth =
+        maxYear > this.props.year
+          ? 11
+          : maxYear === this.props.year
+            ? utils.getMonth(this.props.maxDate)
+            : -1;
+    }
+
+    const options = [];
+    for (let i = minMonth; i <= maxMonth; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {monthNames[i]}
+        </option>
+      );
+    }
+    return options;
+  };
 
   renderSelectMode = monthNames => (
     <select
@@ -55,7 +90,10 @@ export default class MonthDropdown extends React.Component {
     <WrappedMonthDropdownOptions
       key="dropdown"
       ref="options"
+      minDate={this.props.minDate}
+      maxDate={this.props.maxDate}
       month={this.props.month}
+      year={this.props.year}
       monthNames={monthNames}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}

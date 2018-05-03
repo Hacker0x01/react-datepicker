@@ -23,6 +23,7 @@ describe("MonthDropdown", () => {
       <MonthDropdown
         dropdownMode="scroll"
         month={11}
+        year={2018}
         dateFormat={dateFormatCalendar}
         onChange={mockHandleChange}
         {...overrideProps}
@@ -77,6 +78,7 @@ describe("MonthDropdown", () => {
           onCancel={onCancelSpy}
           onChange={sandbox.spy()}
           month={11}
+          year={2018}
           monthNames={monthNames}
         />
       ).instance();
