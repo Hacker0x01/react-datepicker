@@ -34,7 +34,6 @@ export default class Weekly extends React.Component {
       '03.22.2018',
     ]}}
     minYear={'2014'}
-    maxYear={'2018'}
     dateFormat="DD MMMM YYYY"
 />
 `}
@@ -53,7 +52,6 @@ export default class Weekly extends React.Component {
               '03.22.2018',
             ]}
             minYear={'2014'}
-            maxYear={'2018'}
             dateFormat="DD MMMM YYYY"
           />
         </div>

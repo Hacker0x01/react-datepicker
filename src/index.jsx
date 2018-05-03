@@ -76,7 +76,6 @@ export default class DatePicker extends React.Component {
     locale: PropTypes.string,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
-    maxYear: PropTypes.string,
     minYear: PropTypes.string,
     monthsShown: PropTypes.number,
     name: PropTypes.string,
@@ -503,7 +502,6 @@ export default class DatePicker extends React.Component {
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         minYear={this.props.minYear}
-        maxYear={this.props.maxYear}
         selectsStart={this.props.selectsStart}
         selectsEnd={this.props.selectsEnd}
         startDate={this.props.startDate}

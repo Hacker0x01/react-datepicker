@@ -71,7 +71,6 @@ export default class Calendar extends React.Component {
     locale: PropTypes.string,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
-    maxYear: PropTypes.string,
     minYear: PropTypes.string,
     monthsShown: PropTypes.number,
     onClickOutside: PropTypes.func.isRequired,
@@ -340,7 +339,7 @@ export default class Calendar extends React.Component {
     let clickHandler = this.decreaseMonth;
 
     if ((allPrevDaysDisabled && this.props.showDisabledMonthNavigation) || isPreviousYearDisabled) {
-      classes.push("react-datepicker__navigation--previous--disabled");
+      classes.push("react-datepicker__navigation--previous--disabled disabled");
       clickHandler = null;
     }
 
@@ -374,7 +373,7 @@ export default class Calendar extends React.Component {
     let clickHandler = this.decreaseYear;
 
     if ((allPrevDaysDisabled && this.props.showDisabledYearNavigation) || isPreviousYearDisabled) {
-      classes.push("react-datepicker__navigation--previous--disabled");
+      classes.push("react-datepicker__navigation--previous--disabled disabled");
       clickHandler = null;
     }
 
@@ -388,8 +387,7 @@ export default class Calendar extends React.Component {
   renderNextMonthButton = () => {
     const currentDate = this.state.date
     const allNextDaysDisabled = allDaysDisabledAfter(currentDate, "month", this.props);
-    const maxYear = this.props.maxYear || '2100';
-    const isNextYearDisabled = currentDate.format('YYYY') === maxYear && currentDate.format('MM') === '12';
+    const isNextYearDisabled = currentDate.format('YYYYMM') === moment().format('YYYYMM') && this.props.weeklyType;
 
     if (
       !this.props.forceShowMonthNavigation &&
@@ -413,7 +411,7 @@ export default class Calendar extends React.Component {
     let clickHandler = this.increaseMonth;
 
     if ((allNextDaysDisabled && this.props.showDisabledMonthNavigation) || isNextYearDisabled) {
-        classes.push("react-datepicker__navigation--next--disabled");
+        classes.push("react-datepicker__navigation--next--disabled disabled");
         clickHandler = null;
     }
 
@@ -423,8 +421,7 @@ export default class Calendar extends React.Component {
   renderNextYearButton = () => {
     const currentDate = this.state.date
     const allNextDaysDisabled = allDaysDisabledAfter(currentDate, "year", this.props);
-    const maxYear = this.props.maxYear || '2100'
-    const isNextYearDisabled = currentDate.format('YYYY') === maxYear
+    const isNextYearDisabled = currentDate.format('YYYY') === moment().format('YYYY') && this.props.weeklyType;
 
     if (
       !this.props.forceShowYearNavigation &&
@@ -449,7 +446,7 @@ export default class Calendar extends React.Component {
     let clickHandler = this.increaseYear;
 
     if ((allNextDaysDisabled && this.props.showDisabledYearNavigation) || isNextYearDisabled) {
-        classes.push("react-datepicker__navigation--next--disabled");
+        classes.push("react-datepicker__navigation--next--disabled disabled");
         clickHandler = null;
     }
 
@@ -634,8 +631,7 @@ export default class Calendar extends React.Component {
             formatWeekNumber={this.props.formatWeekNumber}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
-            minYear={this.props.minDate}
-            maxYear={this.props.maxDate}
+            minYear={this.props.minYear}
             excludeDates={this.props.excludeDates}
             highlightDates={this.props.highlightDates}
             selectingDate={this.state.selectingDate}
