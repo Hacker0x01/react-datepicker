@@ -274,7 +274,7 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open) {
+    if (this.state.open && !this.props.withPortal) {
       this.deferFocusInput();
     } else {
       this.props.onBlur(event);
