@@ -39,6 +39,7 @@ import MultiMonth from "./examples/multi_month";
 import MultiMonthDrp from "./examples/multi_month_drp";
 import MultiMonthInline from "./examples/multi_month_inline";
 import Children from "./examples/children";
+import CalendarContainer from "./examples/calendar_container";
 import Portal from "./examples/portal";
 import InlinePortal from "./examples/inline_portal";
 import RawChange from "./examples/raw_change";
@@ -239,6 +240,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Children",
       component: <Children />
+    },
+    {
+      title: "Calendar container",
+      component: <CalendarContainer />
     },
     {
       title: "Get raw input value on change",

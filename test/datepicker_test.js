@@ -69,6 +69,17 @@ describe("DatePicker", () => {
     expect(datePicker.instance().calendar).to.exist;
   });
 
+  it("should allow the user to pass a wrapper component for the calendar", () => {
+    var datePicker = mount(<DatePicker calendarContainer={TestWrapper} />);
+
+    let dateInput = datePicker.instance().input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    datePicker.update();
+    expect(datePicker.find(".test-wrapper").length).to.equal(1);
+    expect(datePicker.instance().calendar).to.exist;
+  });
+
   it("should pass a custom class to the popper container", () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker popperClassName="some-class-name" />
