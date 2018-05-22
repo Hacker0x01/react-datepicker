@@ -36,6 +36,8 @@ import {
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
+export { default as CalendarContainer } from "./calendar_container";
+
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);
 
@@ -61,6 +63,7 @@ export default class DatePicker extends React.Component {
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
+    calendarContainer: PropTypes.func,
     children: PropTypes.node,
     className: PropTypes.string,
     customInput: PropTypes.element,
@@ -558,6 +561,7 @@ export default class DatePicker extends React.Component {
         excludeTimes={this.props.excludeTimes}
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
+        container={this.props.calendarContainer}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
       >
         {this.props.children}
