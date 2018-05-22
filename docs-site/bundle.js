@@ -6595,7 +6595,7 @@
 
       var _example_components2 = _interopRequireDefault(_example_components);
 
-      var _hero_example = __webpack_require__(398);
+      var _hero_example = __webpack_require__(399);
 
       var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -6927,93 +6927,97 @@
         _year_select_dropdown
       );
 
-      var _weekly = __webpack_require__(375);
+      var _month_year_slide = __webpack_require__(375);
+
+      var _month_year_slide2 = _interopRequireDefault(_month_year_slide);
+
+      var _weekly = __webpack_require__(376);
 
       var _weekly2 = _interopRequireDefault(_weekly);
 
-      var _monthly = __webpack_require__(376);
+      var _monthly = __webpack_require__(377);
 
       var _monthly2 = _interopRequireDefault(_monthly);
 
-      var _today = __webpack_require__(377);
+      var _today = __webpack_require__(378);
 
       var _today2 = _interopRequireDefault(_today);
 
-      var _timezone_date = __webpack_require__(378);
+      var _timezone_date = __webpack_require__(379);
 
       var _timezone_date2 = _interopRequireDefault(_timezone_date);
 
-      var _inline = __webpack_require__(379);
+      var _inline = __webpack_require__(380);
 
       var _inline2 = _interopRequireDefault(_inline);
 
-      var _open_to_date = __webpack_require__(380);
+      var _open_to_date = __webpack_require__(381);
 
       var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-      var _fixed_calendar = __webpack_require__(381);
+      var _fixed_calendar = __webpack_require__(382);
 
       var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-      var _week_numbers = __webpack_require__(382);
+      var _week_numbers = __webpack_require__(383);
 
       var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-      var _custom_input = __webpack_require__(383);
+      var _custom_input = __webpack_require__(384);
 
       var _custom_input2 = _interopRequireDefault(_custom_input);
 
-      var _multi_month = __webpack_require__(384);
+      var _multi_month = __webpack_require__(385);
 
       var _multi_month2 = _interopRequireDefault(_multi_month);
 
-      var _multi_month_drp = __webpack_require__(385);
+      var _multi_month_drp = __webpack_require__(386);
 
       var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-      var _children = __webpack_require__(386);
+      var _children = __webpack_require__(387);
 
       var _children2 = _interopRequireDefault(_children);
 
-      var _portal = __webpack_require__(387);
+      var _portal = __webpack_require__(388);
 
       var _portal2 = _interopRequireDefault(_portal);
 
-      var _inline_portal = __webpack_require__(388);
+      var _inline_portal = __webpack_require__(389);
 
       var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-      var _raw_change = __webpack_require__(389);
+      var _raw_change = __webpack_require__(390);
 
       var _raw_change2 = _interopRequireDefault(_raw_change);
 
-      var _show_time = __webpack_require__(390);
+      var _show_time = __webpack_require__(391);
 
       var _show_time2 = _interopRequireDefault(_show_time);
 
-      var _exclude_times = __webpack_require__(391);
+      var _exclude_times = __webpack_require__(392);
 
       var _exclude_times2 = _interopRequireDefault(_exclude_times);
 
-      var _exclude_time_period = __webpack_require__(392);
+      var _exclude_time_period = __webpack_require__(393);
 
       var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-      var _include_times = __webpack_require__(393);
+      var _include_times = __webpack_require__(394);
 
       var _include_times2 = _interopRequireDefault(_include_times);
 
-      var _dont_close_onSelect = __webpack_require__(394);
+      var _dont_close_onSelect = __webpack_require__(395);
 
       var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
-      var _open_by_default = __webpack_require__(395);
+      var _open_by_default = __webpack_require__(396);
 
       var _open_by_default2 = _interopRequireDefault(_open_by_default);
 
-      __webpack_require__(396);
-
       __webpack_require__(397);
+
+      __webpack_require__(398);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -7306,6 +7310,13 @@
                 title: "Year select dropdown",
                 component: _react2.default.createElement(
                   _year_select_dropdown2.default,
+                  null
+                )
+              },
+              {
+                title: "Month Year Slide",
+                component: _react2.default.createElement(
+                  _month_year_slide2.default,
                   null
                 )
               },
@@ -26662,7 +26673,6 @@
                 minDate: _this.props.minDate,
                 maxDate: _this.props.maxDate,
                 minYear: _this.props.minYear,
-                maxYear: _this.props.maxYear,
                 selectsStart: _this.props.selectsStart,
                 selectsEnd: _this.props.selectsEnd,
                 startDate: _this.props.startDate,
@@ -26682,7 +26692,7 @@
                 showMonthYearDropdown: _this.props.showMonthYearDropdown,
                 showWeekNumbers: _this.props.showWeekNumbers,
                 showYearDropdown: _this.props.showYearDropdown,
-                showWeekly: _this.props.showWeekly,
+                monthYearSlide: _this.props.monthYearSlide,
                 showMonthly: _this.props.showMonthly,
                 withPortal: _this.props.withPortal,
                 forceShowMonthNavigation: _this.props.forceShowMonthNavigation,
@@ -26893,7 +26903,6 @@
         locale: _propTypes2.default.string,
         maxDate: _propTypes2.default.object,
         minDate: _propTypes2.default.object,
-        maxYear: _propTypes2.default.string,
         minYear: _propTypes2.default.string,
         monthsShown: _propTypes2.default.number,
         name: _propTypes2.default.string,
@@ -26928,7 +26937,7 @@
         showMonthYearDropdown: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
-        showWeekly: _propTypes2.default.bool,
+        monthYearSlide: _propTypes2.default.bool,
         showMonthly: _propTypes2.default.bool,
         forceShowMonthNavigation: _propTypes2.default.bool,
         showDisabledMonthNavigation: _propTypes2.default.bool,
@@ -27356,13 +27365,6 @@
             var isPreviousYearDisabled =
               currentDate.format("YYYY") === minYear &&
               currentDate.format("MM") === "01";
-            if (
-              !_this.props.forceShowMonthNavigation &&
-              !_this.props.showDisabledMonthNavigation &&
-              allPrevDaysDisabled
-            ) {
-              return;
-            }
 
             var classes = [
               "react-datepicker__navigation",
@@ -27373,10 +27375,13 @@
 
             if (
               (allPrevDaysDisabled &&
-                _this.props.showDisabledMonthNavigation) ||
+                !_this.props.showDisabledMonthNavigation &&
+                !_this.props.forceShowMonthNavigation) ||
               isPreviousYearDisabled
             ) {
-              classes.push("react-datepicker__navigation--previous--disabled");
+              classes.push(
+                "react-datepicker__navigation--previous--disabled disabled"
+              );
               clickHandler = null;
             }
 
@@ -27397,16 +27402,6 @@
             var minYear = _this.props.minYear || "1900";
             var isPreviousYearDisabled = currentDate.format("YYYY") === minYear;
 
-            console.log("min", minYear, currentDate.format("YYYY"));
-
-            if (
-              !_this.props.forceShowYearNavigation &&
-              !_this.props.showDisabledYearNavigation &&
-              allPrevDaysDisabled
-            ) {
-              return;
-            }
-
             var classes = [
               "react-datepicker__navigation",
               "react-datepicker__navigation--year",
@@ -27416,10 +27411,14 @@
             var clickHandler = _this.decreaseYear;
 
             if (
-              (allPrevDaysDisabled && _this.props.showDisabledYearNavigation) ||
+              (allPrevDaysDisabled &&
+                !_this.props.showDisabledYearNavigation &&
+                !_this.props.forceShowMonthNavigation) ||
               isPreviousYearDisabled
             ) {
-              classes.push("react-datepicker__navigation--previous--disabled");
+              classes.push(
+                "react-datepicker__navigation--previous--disabled disabled"
+              );
               clickHandler = null;
             }
 
@@ -27437,18 +27436,10 @@
               "month",
               _this.props
             );
-            var maxYear = _this.props.maxYear || "2100";
             var isNextYearDisabled =
-              currentDate.format("YYYY") === maxYear &&
-              currentDate.format("MM") === "12";
-
-            if (
-              !_this.props.forceShowMonthNavigation &&
-              !_this.props.showDisabledMonthNavigation &&
-              allNextDaysDisabled
-            ) {
-              return;
-            }
+              currentDate.format("YYYYMM") ===
+                (0, _moment2.default)().format("YYYYMM") &&
+              _this.props.weeklyType;
 
             var classes = [
               "react-datepicker__navigation",
@@ -27467,10 +27458,13 @@
 
             if (
               (allNextDaysDisabled &&
-                _this.props.showDisabledMonthNavigation) ||
+                !_this.props.showDisabledMonthNavigation &&
+                !_this.props.forceShowMonthNavigation) ||
               isNextYearDisabled
             ) {
-              classes.push("react-datepicker__navigation--next--disabled");
+              classes.push(
+                "react-datepicker__navigation--next--disabled disabled"
+              );
               clickHandler = null;
             }
 
@@ -27488,18 +27482,10 @@
               "year",
               _this.props
             );
-            var maxYear = _this.props.maxYear || "2100";
-            var isNextYearDisabled = currentDate.format("YYYY") === maxYear;
-
-            console.log("max", maxYear, currentDate.format("YYYY"));
-
-            if (
-              !_this.props.forceShowYearNavigation &&
-              !_this.props.showDisabledYearNavigation &&
-              allNextDaysDisabled
-            ) {
-              return;
-            }
+            var isNextYearDisabled =
+              currentDate.format("YYYY") ===
+                (0, _moment2.default)().format("YYYY") &&
+              _this.props.weeklyType;
 
             var classes = [
               "react-datepicker__navigation",
@@ -27518,10 +27504,14 @@
             var clickHandler = _this.increaseYear;
 
             if (
-              (allNextDaysDisabled && _this.props.showDisabledYearNavigation) ||
+              (allNextDaysDisabled &&
+                !_this.props.showDisabledYearNavigation &&
+                !_this.props.forceShowMonthNavigation) ||
               isNextYearDisabled
             ) {
-              classes.push("react-datepicker__navigation--next--disabled");
+              classes.push(
+                "react-datepicker__navigation--next--disabled disabled"
+              );
               clickHandler = null;
             }
 
@@ -27626,14 +27616,14 @@
             );
           };
 
-          _this.renderWeekly = function() {
+          _this.renderMonthYearSlide = function() {
             var overrideHide =
               arguments.length > 0 && arguments[0] !== undefined
                 ? arguments[0]
                 : false;
             var monthDate = arguments[1];
 
-            if (!_this.props.showWeekly || overrideHide) {
+            if (!_this.props.monthYearSlide || overrideHide) {
               return;
             }
 
@@ -27742,7 +27732,7 @@
                     _react2.default.createElement(
                       "div",
                       { className: "react-datepicker__header" },
-                      !_this.props.showWeekly &&
+                      !_this.props.monthYearSlide &&
                         _this.renderCurrentMonth(monthDate),
                       _react2.default.createElement(
                         "div",
@@ -27755,7 +27745,7 @@
                         _this.renderMonthDropdown(i !== 0),
                         _this.renderMonthYearDropdown(i !== 0),
                         _this.renderYearDropdown(i !== 0),
-                        _this.renderWeekly(i !== 0, monthDate)
+                        _this.renderMonthYearSlide(i !== 0, monthDate)
                       ),
                       !_this.props.showMonthly &&
                         _react2.default.createElement(
@@ -27777,7 +27767,6 @@
                       minDate: _this.props.minDate,
                       maxDate: _this.props.maxDate,
                       minYear: _this.props.minYear,
-                      maxYear: _this.props.maxYear,
                       excludeDates: _this.props.excludeDates,
                       highlightDates: _this.props.highlightDates,
                       selectingDate: _this.state.selectingDate,
@@ -27819,7 +27808,7 @@
                 showMonthDropdown: _this.props.showMonthDropdown,
                 showMonthYearDropdown: _this.props.showMonthYearDropdown,
                 showYearDropdown: _this.props.showYearDropdown,
-                showWeekly: _this.props.showWeekly,
+                monthYearSlide: _this.props.monthYearSlide,
                 showMonthly: _this.props.showMonthly,
                 withPortal: _this.props.withPortal,
                 monthRef: _this.state.monthContainer
@@ -27887,8 +27876,8 @@
             _react2.default.createElement("div", {
               className: "react-datepicker__triangle"
             }),
-            !this.props.showWeekly && this.renderPreviousMonthButton(),
-            !this.props.showWeekly && this.renderNextMonthButton(),
+            !this.props.monthYearSlide && this.renderPreviousMonthButton(),
+            !this.props.monthYearSlide && this.renderNextMonthButton(),
             this.renderMonths(),
             this.renderTodayButton(),
             this.renderTimeSection(),
@@ -27921,7 +27910,6 @@
         locale: _propTypes2.default.string,
         maxDate: _propTypes2.default.object,
         minDate: _propTypes2.default.object,
-        maxYear: _propTypes2.default.string,
         minYear: _propTypes2.default.string,
         monthsShown: _propTypes2.default.number,
         onClickOutside: _propTypes2.default.func.isRequired,
@@ -27952,7 +27940,7 @@
         showMonthYearDropdown: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
-        showWeekly: _propTypes2.default.bool,
+        monthYearSlide: _propTypes2.default.bool,
         showMonthly: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
         todayButton: _propTypes2.default.string,
@@ -57590,6 +57578,126 @@
             : (subClass.__proto__ = superClass);
       }
 
+      var MonthYearSlide = (function(_React$Component) {
+        _inherits(MonthYearSlide, _React$Component);
+
+        function MonthYearSlide(props) {
+          _classCallCheck(this, MonthYearSlide);
+
+          var _this = _possibleConstructorReturn(
+            this,
+            _React$Component.call(this, props)
+          );
+
+          _this.handleChange = function(date) {
+            _this.setState({
+              startDate: date
+            });
+          };
+
+          _this.state = {
+            startDate: (0, _moment2.default)()
+          };
+          return _this;
+        }
+
+        MonthYearSlide.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                '\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    dateFormatCalendar="MMMM"\n    peekNextMonth\n    monthYearSlide\n    minDate={moment().subtract(2, "years")}\n    maxDate={moment()}\n    dateFormat="DD MMMM YYYY"\n/>\n'
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                dateFormatCalendar: "MMMM",
+                peekNextMonth: true,
+                monthYearSlide: true,
+                minDate: (0, _moment2.default)().subtract(2, "years"),
+                maxDate: (0, _moment2.default)(),
+                dateFormat: "DD MMMM YYYY"
+              })
+            )
+          );
+        };
+
+        return MonthYearSlide;
+      })(_react2.default.Component);
+
+      exports.default = MonthYearSlide;
+
+      /***/
+    },
+    /* 376 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(2);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(198);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _moment = __webpack_require__(200);
+
+      var _moment2 = _interopRequireDefault(_moment);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
       var Weekly = (function(_React$Component) {
         _inherits(Weekly, _React$Component);
 
@@ -57623,7 +57731,7 @@
               _react2.default.createElement(
                 "code",
                 { className: "jsx" },
-                "\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    dateFormatCalendar=\"MMMM\"\n    peekNextMonth\n    showWeekly\n    weeklyType\n    weeklyDays={[\n      '03.21.2018',\n      '03.22.2018',\n    ]}}\n    minYear={'2014'}\n    maxYear={'2018'}\n    dateFormat=\"DD MMMM YYYY\"\n/>\n"
+                "\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    dateFormatCalendar=\"MMMM\"\n    peekNextMonth\n    monthYearSlide\n    weeklyType\n    weeklyDays={[\n      '03.21.2018',\n      '03.22.2018',\n    ]}}\n    minYear={'2014'}\n    dateFormat=\"DD MMMM YYYY\"\n/>\n"
               )
             ),
             _react2.default.createElement(
@@ -57634,11 +57742,10 @@
                 onChange: this.handleChange,
                 dateFormatCalendar: "MMMM",
                 peekNextMonth: true,
-                showWeekly: true,
+                monthYearSlide: true,
                 weeklyType: true,
                 weeklyDays: ["03.21.2018", "03.22.2018"],
                 minYear: "2014",
-                maxYear: "2018",
                 dateFormat: "DD MMMM YYYY"
               })
             )
@@ -57652,7 +57759,7 @@
 
       /***/
     },
-    /* 376 */
+    /* 377 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57771,7 +57878,7 @@
 
       /***/
     },
-    /* 377 */
+    /* 378 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -57886,7 +57993,7 @@
 
       /***/
     },
-    /* 378 */
+    /* 379 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58101,7 +58208,7 @@
 
       /***/
     },
-    /* 379 */
+    /* 380 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58216,7 +58323,7 @@
 
       /***/
     },
-    /* 380 */
+    /* 381 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58343,7 +58450,7 @@
 
       /***/
     },
-    /* 381 */
+    /* 382 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58472,7 +58579,7 @@
 
       /***/
     },
-    /* 382 */
+    /* 383 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58587,7 +58694,7 @@
 
       /***/
     },
-    /* 383 */
+    /* 384 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58741,7 +58848,7 @@
 
       /***/
     },
-    /* 384 */
+    /* 385 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58856,7 +58963,7 @@
 
       /***/
     },
-    /* 385 */
+    /* 386 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -58972,7 +59079,7 @@
 
       /***/
     },
-    /* 386 */
+    /* 387 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59094,7 +59201,7 @@
 
       /***/
     },
-    /* 387 */
+    /* 388 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59209,7 +59316,7 @@
 
       /***/
     },
-    /* 388 */
+    /* 389 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59339,7 +59446,7 @@
 
       /***/
     },
-    /* 389 */
+    /* 390 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59476,7 +59583,7 @@
 
       /***/
     },
-    /* 390 */
+    /* 391 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59601,7 +59708,7 @@
 
       /***/
     },
-    /* 391 */
+    /* 392 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59765,7 +59872,7 @@
 
       /***/
     },
-    /* 392 */
+    /* 393 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -59919,7 +60026,7 @@
 
       /***/
     },
-    /* 393 */
+    /* 394 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -60083,7 +60190,7 @@
 
       /***/
     },
-    /* 394 */
+    /* 395 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -60198,7 +60305,7 @@
 
       /***/
     },
-    /* 395 */
+    /* 396 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -60313,14 +60420,14 @@
 
       /***/
     },
-    /* 396 */
+    /* 397 */
     /***/ function(module, exports) {
       // removed by extract-text-webpack-plugin
       /***/
     },
-    /* 397 */
-    396,
     /* 398 */
+    397,
+    /* 399 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 

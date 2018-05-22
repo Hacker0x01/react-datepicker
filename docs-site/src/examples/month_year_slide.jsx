@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-export default class Weekly extends React.Component {
+export default class MonthYearSlide extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,12 +28,8 @@ export default class Weekly extends React.Component {
     dateFormatCalendar="MMMM"
     peekNextMonth
     monthYearSlide
-    weeklyType
-    weeklyDays={[
-      '03.21.2018',
-      '03.22.2018',
-    ]}}
-    minYear={'2014'}
+    minDate={moment().subtract(2, "years")}
+    maxDate={moment()}
     dateFormat="DD MMMM YYYY"
 />
 `}
@@ -46,12 +42,8 @@ export default class Weekly extends React.Component {
             dateFormatCalendar="MMMM"
             peekNextMonth
             monthYearSlide 
-            weeklyType
-            weeklyDays={[
-              '03.21.2018',
-              '03.22.2018',
-            ]}
-            minYear={'2014'}
+            minDate={moment().subtract(2, "years")}
+            maxDate={moment()}
             dateFormat="DD MMMM YYYY"
           />
         </div>

@@ -101,7 +101,7 @@ export default class Calendar extends React.Component {
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
-    showWeekly: PropTypes.bool,
+    monthYearSlide: PropTypes.bool,
     showMonthly: PropTypes.bool,
     startDate: PropTypes.object,
     todayButton: PropTypes.string,
@@ -323,13 +323,6 @@ export default class Calendar extends React.Component {
     const allPrevDaysDisabled = allDaysDisabledBefore(currentDate, "month", this.props);
     const minYear = this.props.minYear || '1900'
     const isPreviousYearDisabled = currentDate.format('YYYY') === minYear && currentDate.format('MM') === '01'
-    if (
-      !this.props.forceShowMonthNavigation &&
-      !this.props.showDisabledMonthNavigation &&
-      allPrevDaysDisabled
-    ) {
-      return;
-    }
 
     const classes = [
       "react-datepicker__navigation",
@@ -338,7 +331,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.decreaseMonth;
 
-    if ((allPrevDaysDisabled && this.props.showDisabledMonthNavigation) || isPreviousYearDisabled) {
+    if ((allPrevDaysDisabled && !this.props.showDisabledMonthNavigation && !this.props.forceShowMonthNavigation) || isPreviousYearDisabled) {
       classes.push("react-datepicker__navigation--previous--disabled disabled");
       clickHandler = null;
     }
@@ -356,14 +349,6 @@ export default class Calendar extends React.Component {
     const minYear = this.props.minYear || '1900'
     const isPreviousYearDisabled = currentDate.format('YYYY') === minYear
 
-    if (
-      !this.props.forceShowYearNavigation &&
-      !this.props.showDisabledYearNavigation &&
-      allPrevDaysDisabled
-    ) {
-      return;
-    }
-
     const classes = [
       "react-datepicker__navigation",
       "react-datepicker__navigation--year",
@@ -372,7 +357,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.decreaseYear;
 
-    if ((allPrevDaysDisabled && this.props.showDisabledYearNavigation) || isPreviousYearDisabled) {
+    if ((allPrevDaysDisabled && !this.props.showDisabledYearNavigation && !this.props.forceShowMonthNavigation) || isPreviousYearDisabled) {
       classes.push("react-datepicker__navigation--previous--disabled disabled");
       clickHandler = null;
     }
@@ -389,14 +374,6 @@ export default class Calendar extends React.Component {
     const allNextDaysDisabled = allDaysDisabledAfter(currentDate, "month", this.props);
     const isNextYearDisabled = currentDate.format('YYYYMM') === moment().format('YYYYMM') && this.props.weeklyType;
 
-    if (
-      !this.props.forceShowMonthNavigation &&
-      !this.props.showDisabledMonthNavigation &&
-      allNextDaysDisabled
-    ) {
-      return;
-    }
-
     const classes = [
       "react-datepicker__navigation",
       "react-datepicker__navigation--next"
@@ -410,7 +387,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.increaseMonth;
 
-    if ((allNextDaysDisabled && this.props.showDisabledMonthNavigation) || isNextYearDisabled) {
+    if ((allNextDaysDisabled && !this.props.showDisabledMonthNavigation && !this.props.forceShowMonthNavigation) || isNextYearDisabled) {
         classes.push("react-datepicker__navigation--next--disabled disabled");
         clickHandler = null;
     }
@@ -422,14 +399,6 @@ export default class Calendar extends React.Component {
     const currentDate = this.state.date
     const allNextDaysDisabled = allDaysDisabledAfter(currentDate, "year", this.props);
     const isNextYearDisabled = currentDate.format('YYYY') === moment().format('YYYY') && this.props.weeklyType;
-
-    if (
-      !this.props.forceShowYearNavigation &&
-      !this.props.showDisabledYearNavigation &&
-      allNextDaysDisabled
-    ) {
-      return;
-    }
 
     const classes = [
       "react-datepicker__navigation",
@@ -445,7 +414,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.increaseYear;
 
-    if ((allNextDaysDisabled && this.props.showDisabledYearNavigation) || isNextYearDisabled) {
+    if ((allNextDaysDisabled && !this.props.showDisabledYearNavigation && !this.props.forceShowMonthNavigation) || isNextYearDisabled) {
         classes.push("react-datepicker__navigation--next--disabled disabled");
         clickHandler = null;
     }
@@ -525,8 +494,8 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderWeekly = (overrideHide = false, monthDate) => {
-    if (!this.props.showWeekly || overrideHide) {
+  renderMonthYearSlide = (overrideHide = false, monthDate) => {
+    if (!this.props.monthYearSlide || overrideHide) {
       return;
     }
 
@@ -604,7 +573,7 @@ export default class Calendar extends React.Component {
           className="react-datepicker__month-container">
           {!this.props.showMonthly && <div className="react-datepicker__header">
 
-            {!this.props.showWeekly && this.renderCurrentMonth(monthDate)}
+            {!this.props.monthYearSlide && this.renderCurrentMonth(monthDate)}
 
             <div
               className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
@@ -614,7 +583,7 @@ export default class Calendar extends React.Component {
               {this.renderMonthDropdown(i !== 0)}
               {this.renderMonthYearDropdown(i !== 0)}
               {this.renderYearDropdown(i !== 0)}
-              {this.renderWeekly(i !== 0, monthDate)}
+              {this.renderMonthYearSlide(i !== 0, monthDate)}
             </div>
             {!this.props.showMonthly && <div className="react-datepicker__day-names">
               {this.header(monthDate)}
@@ -673,7 +642,7 @@ export default class Calendar extends React.Component {
           showMonthDropdown={this.props.showMonthDropdown}
           showMonthYearDropdown={this.props.showMonthYearDropdown}
           showYearDropdown={this.props.showYearDropdown}
-          showWeekly={this.props.showWeekly}
+          monthYearSlide={this.props.monthYearSlide}
           showMonthly={this.props.showMonthly}
           withPortal={this.props.withPortal}
           monthRef={this.state.monthContainer}/>
@@ -685,8 +654,8 @@ export default class Calendar extends React.Component {
     return (
       <div className={classnames("react-datepicker", this.props.className)}>
         <div className="react-datepicker__triangle" />
-        {!this.props.showWeekly && this.renderPreviousMonthButton()}
-        {!this.props.showWeekly && this.renderNextMonthButton()}
+        {!this.props.monthYearSlide && this.renderPreviousMonthButton()}
+        {!this.props.monthYearSlide && this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}

@@ -28,6 +28,7 @@ import MonthDropdown from './examples/month_dropdown'
 import MonthYearDropdown from './examples/month_year_dropdown'
 import MonthDropdownShort from './examples/month_dropdown_short'
 import YearSelectDropdown from './examples/year_select_dropdown'
+import MonthYearSlide from './examples/month_year_slide'
 import Weekly from './examples/weekly'
 import Monthly from './examples/monthly'
 import Today from './examples/today'
@@ -193,6 +194,10 @@ export default class exampleComponents extends React.Component {
   {
     title: 'Year select dropdown',
     component: <YearSelectDropdown />
+  },
+  {
+    title: 'Month Year Slide',
+    component: <MonthYearSlide />
   },
   {
     title: 'Weekly',
