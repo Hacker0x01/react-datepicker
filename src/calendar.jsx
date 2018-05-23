@@ -6,6 +6,7 @@ import Time from "./time";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import CalendarContainer from "./calendar_container";
 import {
   now,
   setMonth,
@@ -51,6 +52,7 @@ export default class Calendar extends React.Component {
     adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
     children: PropTypes.node,
+    container: PropTypes.func,
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
@@ -590,20 +592,21 @@ export default class Calendar extends React.Component {
   };
 
   render() {
+    const Container = this.props.container || CalendarContainer;
+
     return (
-      <div
+      <Container
         className={classnames("react-datepicker", this.props.className, {
           "react-datepicker--time-only": this.props.showTimeSelectOnly
         })}
       >
-        <div className="react-datepicker__triangle" />
         {this.renderPreviousMonthButton()}
         {this.renderNextMonthButton()}
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
         {this.props.children}
-      </div>
+      </Container>
     );
   }
 }
