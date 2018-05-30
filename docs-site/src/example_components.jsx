@@ -50,7 +50,6 @@ import ExcludeTimePeriod from "./examples/exclude_time_period";
 import IncludeTimes from "./examples/include_times";
 import InjectTimes from "./examples/inject_times";
 import DontCloseOnSelect from "./examples/dont_close_onSelect";
-import OpenByDefault from "./examples/open_by_default";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
@@ -252,10 +251,6 @@ export default class exampleComponents extends React.Component {
     {
       title: "Don't hide calendar on date selection",
       component: <DontCloseOnSelect />
-    },
-    {
-      title: "Open calendar by default",
-      component: <OpenByDefault />
     }
   ];
 
