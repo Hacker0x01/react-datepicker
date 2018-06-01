@@ -252,10 +252,10 @@ describe("DatePicker", () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
 
-    var day = TestUtils.findRenderedDOMComponentWithClass(
+    var day = TestUtils.scryRenderedDOMComponentsWithClass(
       data.datePicker.calendar,
       "react-datepicker__day--today"
-    );
+    )[0];
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
