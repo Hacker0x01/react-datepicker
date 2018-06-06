@@ -415,13 +415,7 @@ export default class DatePicker extends React.Component {
       !this.props.inline &&
       !this.props.preventOpenOnFocus
     ) {
-      if (
-        eventKey !== "Enter" &&
-        eventKey !== "Escape" &&
-        eventKey !== "Tab" &&
-        eventKey !== "ArrowLeft" &&
-        eventKey !== "ArrowRight"
-      ) {
+      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         this.onInputClick();
       }
       return;
