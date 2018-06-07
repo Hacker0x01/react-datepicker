@@ -40,11 +40,12 @@ export default class Time extends React.Component {
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
-    const multiplier = 60 / this.props.intervals;
-    const currH = this.props.selected
-      ? getHour(this.props.selected)
-      : getHour(newDate());
-    this.list.scrollTop = 30 * (multiplier * currH);
+    var list_elms = this.list.children;
+    for (var i = 0; i < list_elms.length; i++) {
+      if (list_elms[i].innerText === this.props.selected._i) {
+        list_elms[i].scrollIntoView();
+      }
+    }
   }
 
   handleClick = time => {
