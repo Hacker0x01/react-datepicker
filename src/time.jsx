@@ -45,6 +45,7 @@ export default class Time extends React.Component {
       for (var i = 0; i < list_elms.length; i++) {
         if (list_elms[i].innerText === this.props.selected._i) {
           list_elms[i].scrollIntoView();
+          return;
         }
       }
     }
