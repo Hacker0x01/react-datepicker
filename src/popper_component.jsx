@@ -22,16 +22,6 @@ export const popperPlacementPositions = [
 ];
 
 export default class PopperComponent extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    hidePopper: PropTypes.bool,
-    popperComponent: PropTypes.element,
-    popperModifiers: PropTypes.object, // <datepicker/> props
-    popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
-    popperContainer: PropTypes.func,
-    targetComponent: PropTypes.element
-  };
-
   static get defaultProps() {
     return {
       hidePopper: true,
@@ -45,6 +35,16 @@ export default class PopperComponent extends React.Component {
       popperPlacement: "bottom-start"
     };
   }
+
+  static propTypes = {
+    className: PropTypes.string,
+    hidePopper: PropTypes.bool,
+    popperComponent: PropTypes.element,
+    popperModifiers: PropTypes.object, // <datepicker/> props
+    popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
+    popperContainer: PropTypes.func,
+    targetComponent: PropTypes.element
+  };
 
   render() {
     const {

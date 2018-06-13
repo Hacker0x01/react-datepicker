@@ -57,6 +57,32 @@ function hasPreSelectionChanged(date1, date2) {
  */
 
 export default class DatePicker extends React.Component {
+  static get defaultProps() {
+    return {
+      allowSameDay: false,
+      dateFormat: "L",
+      dateFormatCalendar: "MMMM YYYY",
+      onChange() {},
+      disabled: false,
+      disabledKeyboardNavigation: false,
+      dropdownMode: "scroll",
+      onFocus() {},
+      onBlur() {},
+      onKeyDown() {},
+      onSelect() {},
+      onClickOutside() {},
+      onMonthChange() {},
+      preventOpenOnFocus: false,
+      onYearChange() {},
+      monthsShown: 1,
+      withPortal: false,
+      shouldCloseOnSelect: true,
+      showTimeSelect: false,
+      timeIntervals: 30,
+      timeCaption: "Time"
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
@@ -148,38 +174,12 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string
   };
 
-  static get defaultProps() {
-    return {
-      allowSameDay: false,
-      dateFormat: "L",
-      dateFormatCalendar: "MMMM YYYY",
-      onChange() {},
-      disabled: false,
-      disabledKeyboardNavigation: false,
-      dropdownMode: "scroll",
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onSelect() {},
-      onClickOutside() {},
-      onMonthChange() {},
-      preventOpenOnFocus: false,
-      onYearChange() {},
-      monthsShown: 1,
-      withPortal: false,
-      shouldCloseOnSelect: true,
-      showTimeSelect: false,
-      timeIntervals: 30,
-      timeCaption: "Time"
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = this.calcInitialState();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.inline &&
       hasPreSelectionChanged(this.props.selected, nextProps.selected)
