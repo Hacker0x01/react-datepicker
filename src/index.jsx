@@ -313,7 +313,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  handleSelect = (date, event) => {
+  preventFocus = () => {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
     this.setState({ preventFocus: true }, () => {
@@ -323,6 +323,10 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
+  };
+
+  handleSelect = (date, event) => {
+    this.preventFocus();
     this.setSelected(date, event);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
@@ -384,6 +388,7 @@ export default class DatePicker extends React.Component {
   };
 
   handleTimeChange = time => {
+    this.preventFocus();
     const selected = this.props.selected
       ? this.props.selected
       : this.getPreSelection();
