@@ -631,12 +631,19 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
-  it("should open the calendar when an arrow key is pressed", () => {
+  it("should open the calendar when the down arrow key is pressed", () => {
+    var data = getOnInputKeyDownStuff();
+    data.datePicker.setOpen(false);
+    expect(data.datePicker.state.open).to.be.false;
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    expect(data.datePicker.state.open).to.be.true;
+  });
+  it("should not open the calendar when the left arrow key is pressed", () => {
     var data = getOnInputKeyDownStuff();
     data.datePicker.setOpen(false);
     expect(data.datePicker.state.open).to.be.false;
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
-    expect(data.datePicker.state.open).to.be.true;
+    expect(data.datePicker.state.open).to.be.false;
   });
   it("should default to the current day on Enter", () => {
     const data = getOnInputKeyDownStuff({ selected: null });
