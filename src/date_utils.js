@@ -40,10 +40,6 @@ function getDiff(date1, date2, unit) {
   return date1.diff(date2, unit);
 }
 
-function isSame(date1, date2, unit) {
-  return date1.isSame(date2, unit);
-}
-
 // ** Date Constructors **
 
 export function newDate(point) {
