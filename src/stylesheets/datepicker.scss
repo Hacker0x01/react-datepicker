@@ -126,15 +126,17 @@
   top: 10px;
   width: 0;
   padding: 0;
+  height: 10px;
   border: $datepicker__navigation-size solid transparent;
   z-index: 1;
+  overflow: hidden;
 
   &--previous {
     left: 10px;
-    border-right-color: $datepicker__muted-color;
+    border-right-color: $datepicker__text-color;
 
     &:hover {
-      border-right-color: darken($datepicker__muted-color, 10%);
+      border-right-color: lighten($datepicker__text-color, 33%);
     }
 
     &--disabled,
@@ -146,13 +148,13 @@
 
   &--next {
     right: 10px;
-    border-left-color: $datepicker__muted-color;
+    border-left-color: $datepicker__text-color;
     &--with-time:not(&--with-today-button) {
       right: 80px;
     }
 
     &:hover {
-      border-left-color: darken($datepicker__muted-color, 10%);
+      border-left-color: lighten($datepicker__text-color, 33%);
     }
 
     &--disabled,
@@ -366,6 +368,10 @@
 .react-datepicker__input-container {
   position: relative;
   display: inline-block;
+
+  .keyboard-nav-description {
+    display: none;
+  }
 }
 
 .react-datepicker__year-read-view,
@@ -538,10 +544,10 @@
   }
 
   .react-datepicker__navigation--previous {
-    border-right-color: $datepicker__muted-color;
+    border-right-color: $datepicker__text-color;
 
     &:hover {
-      border-right-color: darken($datepicker__muted-color, 10%);
+      border-right-color: lighten($datepicker__text-color, 10%);
     }
 
     &--disabled,
@@ -552,10 +558,10 @@
   }
 
   .react-datepicker__navigation--next {
-    border-left-color: $datepicker__muted-color;
+    border-left-color: $datepicker__text-color;
 
     &:hover {
-      border-left-color: darken($datepicker__muted-color, 10%);
+      border-left-color: lighten($datepicker__text-color, 10%);
     }
 
     &--disabled,

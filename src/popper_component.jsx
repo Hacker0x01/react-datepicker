@@ -65,6 +65,7 @@ export default class PopperComponent extends React.Component {
           className={classes}
           modifiers={popperModifiers}
           placement={popperPlacement}
+          aria-hidden="true"
         >
           {popperComponent}
         </Popper>

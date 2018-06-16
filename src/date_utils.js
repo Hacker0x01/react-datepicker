@@ -193,6 +193,18 @@ export function addMinutes(date, amount) {
   return add(date, amount, "minutes");
 }
 
+export function increaseMinutes(date, interval) {
+  date = date.seconds(0);
+  var diff = intervalMinutesDiffInc(date, interval);
+  return addMinutes(date, diff);
+}
+
+export function decreaseMinutes(date, interval) {
+  date = date.seconds(0);
+  var diff = intervalMinutesDiffDec(date, interval);
+  return subtractMinutes(date, diff);
+}
+
 export function addHours(date, amount) {
   return add(date, amount, "hours");
 }
@@ -214,6 +226,14 @@ export function addYears(date, amount) {
 }
 
 // *** Subtraction ***
+export function subtractMinutes(date, amount) {
+  return subtract(date, amount, "minutes");
+}
+
+export function subtractHours(date, amount) {
+  return subtract(date, amount, "hours");
+}
+
 export function subtractDays(date, amount) {
   return subtract(date, amount, "days");
 }
@@ -297,6 +317,28 @@ export function getDaysDiff(date1, date2) {
   return getDiff(date1, date2, "days");
 }
 
+export function intervalMinutesDiffInc(date, interval) {
+  var minute = date.minute();
+  var newMinute = Math.ceil(date.minute() / interval) * interval;
+  var diff = Math.abs(newMinute - minute);
+
+  if (diff == 0) {
+    return interval;
+  }
+  return diff;
+}
+
+export function intervalMinutesDiffDec(date, interval) {
+  var minute = date.minute();
+  var newMinute = Math.floor(date.minute() / interval) * interval;
+  var diff = Math.abs(newMinute - minute);
+
+  if (diff == 0) {
+    return interval;
+  }
+  return diff;
+}
+
 // ** Date Localization **
 
 export function localizeDate(date, locale) {
@@ -333,6 +375,10 @@ export function getWeekdayMinInLocale(locale, date) {
 
 export function getWeekdayShortInLocale(locale, date) {
   return locale.weekdaysShort(date);
+}
+
+export function getWeedayLongInLocale(locale, date) {
+  return moment.localeData().weekdays(date);
 }
 
 // TODO what is this format exactly?

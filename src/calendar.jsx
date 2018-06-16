@@ -31,7 +31,8 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  getWeedayLongInLocale
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -109,7 +110,9 @@ export default class Calendar extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
-    showDisabledMonthNavigation: PropTypes.bool
+    showDisabledMonthNavigation: PropTypes.bool,
+    navigationNextText: PropTypes.string,
+    navigationPreviousText: PropTypes.string
   };
 
   static get defaultProps() {
@@ -117,7 +120,9 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       monthsShown: 1,
       forceShowMonthNavigation: false,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      navigationNextText: "Next month",
+      navigationPreviousText: "Previous month"
     };
   }
 
@@ -284,10 +289,11 @@ export default class Calendar extends React.Component {
         const day = addDays(cloneDate(startOfWeek), offset);
         const localeData = getLocaleData(day);
         const weekDayName = this.formatWeekday(localeData, day);
+        const weekDayNameLong = getWeedayLongInLocale(localeData, day);
 
         return (
           <div key={offset} className="react-datepicker__day-name">
-            {weekDayName}
+            <abbr title={weekDayNameLong}>{weekDayName}</abbr>
           </div>
         );
       })
@@ -340,7 +346,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.navigationPreviousText}
+      </button>
     );
   };
 
@@ -383,7 +391,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.navigationNextText}
+      </button>
     );
   };
 

@@ -190,15 +190,17 @@
   top: 10px;
   width: 0;
   padding: 0;
+  height: 10px;
   border: 0.45rem solid transparent;
   z-index: 1;
+  overflow: hidden;
 }
 .react-datepicker__navigation--previous {
   left: 10px;
-  border-right-color: #ccc;
+  border-right-color: #000;
 }
 .react-datepicker__navigation--previous:hover {
-  border-right-color: #b3b3b3;
+  border-right-color: #545454;
 }
 .react-datepicker__navigation--previous--disabled,
 .react-datepicker__navigation--previous--disabled:hover {
@@ -207,13 +209,13 @@
 }
 .react-datepicker__navigation--next {
   right: 10px;
-  border-left-color: #ccc;
+  border-left-color: #000;
 }
 .react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {
   right: 80px;
 }
 .react-datepicker__navigation--next:hover {
-  border-left-color: #b3b3b3;
+  border-left-color: #545454;
 }
 .react-datepicker__navigation--next--disabled,
 .react-datepicker__navigation--next--disabled:hover {
@@ -431,6 +433,9 @@
   position: relative;
   display: inline-block;
 }
+.react-datepicker__input-container .keyboard-nav-description {
+  display: none;
+}
 
 .react-datepicker__year-read-view,
 .react-datepicker__month-read-view,
@@ -620,10 +625,10 @@
   border: 0.81rem solid transparent;
 }
 .react-datepicker__portal .react-datepicker__navigation--previous {
-  border-right-color: #ccc;
+  border-right-color: #000;
 }
 .react-datepicker__portal .react-datepicker__navigation--previous:hover {
-  border-right-color: #b3b3b3;
+  border-right-color: #1a1a1a;
 }
 .react-datepicker__portal .react-datepicker__navigation--previous--disabled,
 .react-datepicker__portal
@@ -632,10 +637,10 @@
   cursor: default;
 }
 .react-datepicker__portal .react-datepicker__navigation--next {
-  border-left-color: #ccc;
+  border-left-color: #000;
 }
 .react-datepicker__portal .react-datepicker__navigation--next:hover {
-  border-left-color: #b3b3b3;
+  border-left-color: #1a1a1a;
 }
 .react-datepicker__portal .react-datepicker__navigation--next--disabled,
 .react-datepicker__portal .react-datepicker__navigation--next--disabled:hover {

@@ -39,6 +39,24 @@ describe("TimePicker", () => {
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
   });
 
+  it("should set the time to the previous interval when ArrowUp is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(datePicker.input), {
+      key: "ArrowUp"
+    });
+    expect(getInputString()).to.equal("February 28, 2018 4:30 PM");
+  });
+
+  it("should set the time to the previous interval when ArrowDown is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(datePicker.input), {
+      key: "ArrowDown"
+    });
+    expect(getInputString()).to.equal("February 28, 2018 5:00 PM");
+  });
+
   function setManually(string) {
     TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });

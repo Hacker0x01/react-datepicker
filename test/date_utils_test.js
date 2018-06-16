@@ -13,7 +13,13 @@ import {
   allDaysDisabledBefore,
   allDaysDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  increaseMinutes,
+  decreaseMinutes,
+  subtractMinutes,
+  intervalMinutesDiffInc,
+  intervalMinutesDiffDec,
+  getWeedayLongInLocale
 } from "../src/date_utils";
 
 describe("date_utils", function() {
@@ -271,6 +277,37 @@ describe("date_utils", function() {
     });
   });
 
+  describe("increaseMinutes", () => {
+    it("should jump to the next interval value if at a non-interval minute", () => {
+      const date = newDate("1985-12-12 09:25:00");
+      expect(increaseMinutes(date, 15).minutes()).to.eq(30);
+    });
+
+    it("should jump to the next interval value if at an interval minute", () => {
+      const date = newDate("1985-12-12 09:15:00");
+      expect(increaseMinutes(date, 15).minutes()).to.eq(30);
+    });
+  });
+
+  describe("decreaseMinutes", () => {
+    it("should jump to the previous interval value if at a non-interval minute", () => {
+      const date = newDate("1985-12-12 09:25:00");
+      expect(decreaseMinutes(date, 15).minutes()).to.eq(15);
+    });
+
+    it("should jump to the previous interval value if at an interval minute", () => {
+      const date = newDate("1985-12-12 09:30:00");
+      expect(decreaseMinutes(date, 15).minutes()).to.eq(15);
+    });
+  });
+
+  describe("subtractMinutes", () => {
+    it("should subtract the date by the specificed number of minutes", () => {
+      const date = newDate("1985-12-12 09:30:00");
+      expect(subtractMinutes(date, 2).minutes()).to.eq(28);
+    });
+  });
+
   describe("getEffectiveMaxDate", () => {
     it("should return null by default", () => {
       expect(getEffectiveMaxDate({})).to.not.exist;
@@ -294,6 +331,39 @@ describe("date_utils", function() {
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
       assert(equals(getEffectiveMaxDate({ maxDate, includeDates }), date1));
+    });
+  });
+
+  describe("intervalMinutesDiffInc", () => {
+    describe("should calculate the time difference to the next interval", () => {
+      it("if not at an interval time", () => {
+        const date = newDate("1985-12-12 09:25:00");
+        expect(intervalMinutesDiffInc(date, 15)).to.eq(5);
+      });
+      it("if at an interval time", () => {
+        const date = newDate("1985-12-12 09:30:00");
+        expect(intervalMinutesDiffInc(date, 15)).to.eq(15);
+      });
+    });
+  });
+
+  describe("intervalMinutesDiffDec", () => {
+    describe("should calculate the time difference to the previous interval", () => {
+      it("if not at an interval time", () => {
+        const date = newDate("1985-12-12 09:25:00");
+        expect(intervalMinutesDiffDec(date, 15)).to.eq(10);
+      });
+      it("if at an interval time", () => {
+        const date = newDate("1985-12-12 09:30:00");
+        expect(intervalMinutesDiffDec(date, 15)).to.eq(15);
+      });
+    });
+  });
+
+  describe("getWeedayLongInLocale", () => {
+    it("should return the weekday", () => {
+      const date = newDate("2018-06-18");
+      expect(getWeedayLongInLocale(date.localeData(), date)).to.eq("Monday");
     });
   });
 });

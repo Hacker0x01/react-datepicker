@@ -23,6 +23,9 @@ import {
   subtractMonths,
   subtractWeeks,
   subtractYears,
+  addMinutes,
+  minutesInterval,
+  subtractMinutes,
   isSameDay,
   isDayDisabled,
   isDayInRange,
@@ -32,7 +35,9 @@ import {
   safeDateFormat,
   getHightLightDaysMap,
   getYear,
-  getMonth
+  getMonth,
+  increaseMinutes,
+  decreaseMinutes
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -145,7 +150,11 @@ export default class DatePicker extends React.Component {
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
-    clearButtonTitle: PropTypes.string
+    clearButtonTitle: PropTypes.string,
+    ariaLiveInterruption: PropTypes.string,
+    ariaDescriptionContent: PropTypes.string,
+    navigationNextText: PropTypes.string,
+    navigationPreviousText: PropTypes.string
   };
 
   static get defaultProps() {
@@ -170,7 +179,15 @@ export default class DatePicker extends React.Component {
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       timeIntervals: 30,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      ariaLiveInterruption: "polite",
+      id:
+        "react-datepicker-" +
+        Math.random()
+          .toString(36)
+          .substr(2),
+      navigationNextText: "Next month",
+      navigationPreviousText: "Previous month"
     };
   }
 
@@ -393,7 +410,8 @@ export default class DatePicker extends React.Component {
       : this.getPreSelection();
     let changedDate = setTime(cloneDate(selected), {
       hour: getHour(time),
-      minute: getMinute(time)
+      minute: getMinute(time),
+      second: 0
     });
 
     this.setState({
@@ -402,6 +420,14 @@ export default class DatePicker extends React.Component {
 
     this.props.onChange(changedDate);
     this.setOpen(false);
+    this.setState({ inputValue: null });
+  };
+
+  handleKeyboardTimeChange = date => {
+    this.setState({
+      preSelection: date
+    });
+    this.props.onChange(date);
     this.setState({ inputValue: null });
   };
 
@@ -414,6 +440,8 @@ export default class DatePicker extends React.Component {
   onInputKeyDown = event => {
     this.props.onKeyDown(event);
     const eventKey = event.key;
+    const shiftDown = event.shiftKey;
+    const ctrlDown = event.ctrlKey;
     if (
       !this.state.open &&
       !this.props.inline &&
@@ -444,32 +472,59 @@ export default class DatePicker extends React.Component {
       this.setOpen(false);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
-      switch (eventKey) {
-        case "ArrowLeft":
-          newSelection = subtractDays(copy, 1);
-          break;
-        case "ArrowRight":
-          newSelection = addDays(copy, 1);
-          break;
-        case "ArrowUp":
-          newSelection = subtractWeeks(copy, 1);
-          break;
-        case "ArrowDown":
-          newSelection = addWeeks(copy, 1);
-          break;
-        case "PageUp":
-          newSelection = subtractMonths(copy, 1);
-          break;
-        case "PageDown":
-          newSelection = addMonths(copy, 1);
-          break;
-        case "Home":
-          newSelection = subtractYears(copy, 1);
-          break;
-        case "End":
-          newSelection = addYears(copy, 1);
-          break;
+      if (shiftDown == true) {
+        // Navigate the date picker
+        // We are using shift+key here in order to prevent conflicts with the
+        // default functionalities of the keys.
+        event.preventDefault();
+        switch (eventKey) {
+          case "ArrowLeft":
+            newSelection = subtractDays(copy, 1);
+            break;
+
+          case "ArrowRight":
+            newSelection = addDays(copy, 1);
+            break;
+
+          case "ArrowUp":
+            newSelection = subtractWeeks(copy, 1);
+            break;
+
+          case "ArrowDown":
+            newSelection = addWeeks(copy, 1);
+            break;
+
+          case "PageUp":
+            newSelection = subtractMonths(copy, 1);
+            break;
+
+          case "PageDown":
+            newSelection = addMonths(copy, 1);
+            break;
+
+          case "Home":
+            newSelection = subtractYears(copy, 1);
+            break;
+
+          case "End":
+            newSelection = addYears(copy, 1);
+            break;
+        }
+      } else if (this.props.showTimeSelect == true) {
+        // Navigate time picker using shift+LeftArrow and shift+RightArrow.
+        switch (eventKey) {
+          case "ArrowUp":
+            newSelection = decreaseMinutes(copy, this.props.timeIntervals);
+            this.handleKeyboardTimeChange(newSelection);
+            break;
+
+          case "ArrowDown":
+            newSelection = increaseMinutes(copy, this.props.timeIntervals);
+            this.handleKeyboardTimeChange(newSelection);
+            break;
+        }
       }
+
       if (!newSelection) return; // Let the input component handle this keydown
       event.preventDefault();
       this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
@@ -563,6 +618,8 @@ export default class DatePicker extends React.Component {
         className={this.props.calendarClassName}
         container={this.props.calendarContainer}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        navigationNextText={this.props.navigationNextText}
+        navigationPreviousText={this.props.navigationPreviousText}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -587,6 +644,8 @@ export default class DatePicker extends React.Component {
       [customInputRef]: input => {
         this.input = input;
       },
+      "aria-live": this.props.ariaLiveInterruption,
+      "aria-describedby": this.props.id + "-aria-description",
       value: inputValue,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
@@ -605,6 +664,58 @@ export default class DatePicker extends React.Component {
       required: this.props.required,
       tabIndex: this.props.tabIndex
     });
+  };
+
+  renderAriaDescription = () => {
+    if (typeof this.props.ariaDescriptionContent == "undefined") {
+      return this.ariaDescriptionContent();
+    }
+    return (
+      <div
+        className="keyboard-nav-description"
+        id={this.props.id + "-aria-description"}
+      >
+        {this.props.ariaDescriptionContent}
+      </div>
+    );
+  };
+
+  ariaDescriptionContent = () => {
+    return (
+      <div
+        className="keyboard-nav-description"
+        id={this.props.id + "-aria-description"}
+      >
+        <p>Date picker. Facilitates the selection of valid dates.</p>
+        <p>
+          <strong>Manual editing:</strong>{" "}
+          <span>
+            The text field may be edited manually with a valid date and time.
+          </span>
+        </p>
+        <p>
+          <strong>Mouse navigation:</strong>{" "}
+          <span>
+            Click the relevant date and time to select. Click the right and left
+            arrow icons to switch between months.
+          </span>
+        </p>
+        <div>
+          <strong>Keyboard navigation:</strong>
+          <ul>
+            <li>
+              Use Shift + Left Arrow or Shift + Right Arrow to navigatebetween
+              weekdays.
+            </li>
+            <li>Shift + Up or Down Arrow to navigate between weeks.</li>
+            <li>Shift + Page Up or Page Down navigate between months.</li>
+            <li>Shift + End and Home navigate between years.</li>
+            <li>Press enter to select the highlighted date and time.</li>
+            <li>Up and Down Arrow navigate between time intervals.</li>
+          </ul>
+        </div>
+      </div>
+    );
   };
 
   renderClearButton = () => {
@@ -636,6 +747,7 @@ export default class DatePicker extends React.Component {
           {!this.props.inline ? (
             <div className="react-datepicker__input-container">
               {this.renderDateInput()}
+              {this.renderAriaDescription()}
               {this.renderClearButton()}
             </div>
           ) : null}
@@ -654,6 +766,7 @@ export default class DatePicker extends React.Component {
         targetComponent={
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
+            {this.renderAriaDescription()}
             {this.renderClearButton()}
           </div>
         }

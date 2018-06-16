@@ -26,7 +26,8 @@ export default class Time extends React.Component {
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array
+    injectTimes: PropTypes.array,
+    id: PropTypes.string
   };
 
   static get defaultProps() {
@@ -34,7 +35,12 @@ export default class Time extends React.Component {
       intervals: 30,
       onTimeChange: () => {},
       todayButton: null,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      id:
+        "react-datepicker__time-" +
+        Math.random()
+          .toString(36)
+          .substr(2)
     };
   }
 
@@ -137,6 +143,8 @@ export default class Time extends React.Component {
 
     return (
       <div
+        id={this.props.id}
+        role="listbox"
         className={`react-datepicker__time-container ${
           this.props.todayButton
             ? "react-datepicker__time-container--with-today-button"
@@ -144,12 +152,18 @@ export default class Time extends React.Component {
         }`}
       >
         <div className="react-datepicker__header react-datepicker__header--time">
-          <div className="react-datepicker-time__header">
+          <div
+            id={this.props.id + "-header"}
+            className="react-datepicker-time__header"
+          >
             {this.props.timeCaption}
           </div>
         </div>
         <div className="react-datepicker__time">
-          <div className="react-datepicker__time-box">
+          <div
+            aria-labelledby={this.props.id + "-header"}
+            className="react-datepicker__time-box"
+          >
             <ul
               className="react-datepicker__time-list"
               ref={list => {
