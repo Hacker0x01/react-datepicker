@@ -57,7 +57,7 @@ export default class YearDropdownOptions extends React.Component {
       <div
         className={
           selectedYear === year
-            ? "react-datepicker__year-option --selected_year"
+            ? "react-datepicker__year-option react-datepicker__year-option--selected_year"
             : "react-datepicker__year-option"
         }
         key={year}
