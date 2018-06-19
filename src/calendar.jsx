@@ -48,6 +48,15 @@ const isDropdownSelect = (element = {}) => {
 };
 
 export default class Calendar extends React.Component {
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      forceShowMonthNavigation: false,
+      timeCaption: "Time"
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
@@ -112,15 +121,6 @@ export default class Calendar extends React.Component {
     showDisabledMonthNavigation: PropTypes.bool
   };
 
-  static get defaultProps() {
-    return {
-      onDropdownFocus: () => {},
-      monthsShown: 1,
-      forceShowMonthNavigation: false,
-      timeCaption: "Time"
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -142,7 +142,7 @@ export default class Calendar extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.preSelection &&
       !isSameDay(nextProps.preSelection, this.props.preSelection)

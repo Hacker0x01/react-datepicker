@@ -57,6 +57,32 @@ function hasPreSelectionChanged(date1, date2) {
  */
 
 export default class DatePicker extends React.Component {
+  static get defaultProps() {
+    return {
+      allowSameDay: false,
+      dateFormat: "L",
+      dateFormatCalendar: "MMMM YYYY",
+      onChange() {},
+      disabled: false,
+      disabledKeyboardNavigation: false,
+      dropdownMode: "scroll",
+      onFocus() {},
+      onBlur() {},
+      onKeyDown() {},
+      onSelect() {},
+      onClickOutside() {},
+      onMonthChange() {},
+      preventOpenOnFocus: false,
+      onYearChange() {},
+      monthsShown: 1,
+      withPortal: false,
+      shouldCloseOnSelect: true,
+      showTimeSelect: false,
+      timeIntervals: 30,
+      timeCaption: "Time"
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
@@ -148,38 +174,12 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string
   };
 
-  static get defaultProps() {
-    return {
-      allowSameDay: false,
-      dateFormat: "L",
-      dateFormatCalendar: "MMMM YYYY",
-      onChange() {},
-      disabled: false,
-      disabledKeyboardNavigation: false,
-      dropdownMode: "scroll",
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onSelect() {},
-      onClickOutside() {},
-      onMonthChange() {},
-      preventOpenOnFocus: false,
-      onYearChange() {},
-      monthsShown: 1,
-      withPortal: false,
-      shouldCloseOnSelect: true,
-      showTimeSelect: false,
-      timeIntervals: 30,
-      timeCaption: "Time"
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = this.calcInitialState();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.inline &&
       hasPreSelectionChanged(this.props.selected, nextProps.selected)
@@ -317,7 +317,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  handleSelect = (date, event) => {
+  preventFocus = () => {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
     this.setState({ preventFocus: true }, () => {
@@ -327,6 +327,10 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
+  };
+
+  handleSelect = (date, event) => {
+    this.preventFocus();
     this.setSelected(date, event);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
@@ -388,6 +392,7 @@ export default class DatePicker extends React.Component {
   };
 
   handleTimeChange = time => {
+    this.preventFocus();
     const selected = this.props.selected
       ? this.props.selected
       : this.getPreSelection();

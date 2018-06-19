@@ -14,6 +14,15 @@ import {
 } from "./date_utils";
 
 export default class Time extends React.Component {
+  static get defaultProps() {
+    return {
+      intervals: 30,
+      onTimeChange: () => {},
+      todayButton: null,
+      timeCaption: "Time"
+    };
+  }
+
   static propTypes = {
     format: PropTypes.string,
     includeTimes: PropTypes.array,
@@ -28,15 +37,6 @@ export default class Time extends React.Component {
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array
   };
-
-  static get defaultProps() {
-    return {
-      intervals: 30,
-      onTimeChange: () => {},
-      todayButton: null,
-      timeCaption: "Time"
-    };
-  }
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
