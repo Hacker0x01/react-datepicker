@@ -37,6 +37,8 @@ function getKey(key) {
       return { key, code: 39, which: 39 };
     case "ArrowDown":
       return { key, code: 40, which: 40 };
+    case "x":
+      return { key, code: 88, which: 88 };
   }
   throw new Error("Unknown key :" + key);
 }
@@ -565,6 +567,13 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
+  it("should not clear the preSelect date when a pressed key is not a navigation key", () => {
+    var data = getOnInputKeyDownStuff();
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("x"));
+    expect(data.datePicker.state.preSelection.valueOf()).to.equal(
+      data.copyM.valueOf()
+    );
+  });
   describe("onInputKeyDown Enter", () => {
     it("should update the selected date", () => {
       var data = getOnInputKeyDownStuff();
@@ -592,6 +601,9 @@ describe("DatePicker", () => {
       var data = getOnInputKeyDownStuff();
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Backspace"));
+      TestUtils.Simulate.change(data.nodeInput, {
+        target: { value: data.nodeInput.value.slice(0, -1) }
+      });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       expect(data.callback.calledOnce).to.be.false;
     });
