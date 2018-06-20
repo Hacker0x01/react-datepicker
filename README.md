@@ -66,8 +66,8 @@ You can use `onSelect` event handler which fires each time some calendar date ha
 
 ```js
 <DatePicker selected={this.state.date}
-  onSelect={this.handleSelect //when day is clicked}
-  onChange={this.handleChange //only when value has changed}
+  onSelect={this.handleSelect} //when day is clicked
+  onChange={this.handleChange} //only when value has changed
 />
 ```
 

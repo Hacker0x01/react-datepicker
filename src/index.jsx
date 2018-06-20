@@ -36,6 +36,8 @@ import {
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
+export { default as CalendarContainer } from "./calendar_container";
+
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);
 
@@ -62,6 +64,7 @@ export default class DatePicker extends React.Component {
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
+    calendarContainer: PropTypes.func,
     children: PropTypes.node,
     className: PropTypes.string,
     customInput: PropTypes.element,
@@ -248,7 +251,8 @@ export default class DatePicker extends React.Component {
       preSelection:
         open && this.state.open
           ? this.state.preSelection
-          : this.calcInitialState().preSelection
+          : this.calcInitialState().preSelection,
+      lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
     });
   };
   inputOk = () =>
@@ -279,7 +283,7 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open) {
+    if (this.state.open && !this.props.withPortal) {
       this.deferFocusInput();
     } else {
       this.props.onBlur(event);
@@ -308,7 +312,10 @@ export default class DatePicker extends React.Component {
         return;
       }
     }
-    this.setState({ inputValue: event.target.value });
+    this.setState({
+      inputValue: event.target.value,
+      lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT
+    });
     const date = parseDate(event.target.value, this.props);
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
@@ -354,9 +361,11 @@ export default class DatePicker extends React.Component {
             second: getSecond(selected)
           });
         }
-        this.setState({
-          preSelection: changedDate
-        });
+        if (!this.props.inline) {
+          this.setState({
+            preSelection: changedDate
+          });
+        }
       }
       this.props.onChange(changedDate, event);
     }
@@ -415,7 +424,7 @@ export default class DatePicker extends React.Component {
       !this.props.inline &&
       !this.props.preventOpenOnFocus
     ) {
-      if (eventKey !== "Enter" && eventKey !== "Escape" && eventKey !== "Tab") {
+      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         this.onInputClick();
       }
       return;
@@ -423,7 +432,9 @@ export default class DatePicker extends React.Component {
     const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
-      if (this.inputOk()) {
+      if (this.inputOk() &&
+        this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
+      ) {
         this.handleSelect(copy, event);
         !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
       } else {
@@ -442,38 +453,33 @@ export default class DatePicker extends React.Component {
       let newSelection;
       switch (eventKey) {
         case "ArrowLeft":
-          event.preventDefault();
           newSelection = subtractDays(copy, 1);
           break;
         case "ArrowRight":
-          event.preventDefault();
           newSelection = addDays(copy, 1);
           break;
         case "ArrowUp":
-          event.preventDefault();
           newSelection = subtractWeeks(copy, 1);
           break;
         case "ArrowDown":
-          event.preventDefault();
           newSelection = addWeeks(copy, 1);
           break;
         case "PageUp":
-          event.preventDefault();
           newSelection = subtractMonths(copy, 1);
           break;
         case "PageDown":
-          event.preventDefault();
           newSelection = addMonths(copy, 1);
           break;
         case "Home":
-          event.preventDefault();
           newSelection = subtractYears(copy, 1);
           break;
         case "End":
-          event.preventDefault();
           newSelection = addYears(copy, 1);
           break;
       }
+      if (!newSelection) return; // Let the input component handle this keydown
+      event.preventDefault();
+      this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
       if (this.props.adjustDateOnChange) {
         this.setSelected(newSelection);
       }
@@ -562,6 +568,7 @@ export default class DatePicker extends React.Component {
         excludeTimes={this.props.excludeTimes}
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
+        container={this.props.calendarContainer}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
       >
         {this.props.children}
@@ -664,3 +671,6 @@ export default class DatePicker extends React.Component {
     );
   }
 }
+
+const PRESELECT_CHANGE_VIA_INPUT = "input";
+const PRESELECT_CHANGE_VIA_NAVIGATE = "navigate";
