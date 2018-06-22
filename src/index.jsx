@@ -11,6 +11,7 @@ import {
   isDate,
   isBefore,
   isAfter,
+  equals,
   setTime,
   getSecond,
   getMinute,
@@ -50,6 +51,14 @@ function hasPreSelectionChanged(date1, date2) {
   }
 
   return date1 !== date2;
+}
+
+function hasSelectionChanged(date1, date2) {
+  if (date1 && date2) {
+    return !equals(date1, date2);
+  }
+
+  return false;
 }
 
 /**
@@ -179,19 +188,24 @@ export default class DatePicker extends React.Component {
     this.state = this.calcInitialState();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.inline &&
-      hasPreSelectionChanged(this.props.selected, nextProps.selected)
+      prevProps.inline &&
+      hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
-      this.setPreSelection(nextProps.selected);
+      this.setPreSelection(this.props.selected);
     }
-    if (this.props.highlightDates !== nextProps.highlightDates) {
+    if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHightLightDaysMap(nextProps.highlightDates)
+        highlightDates: getHightLightDaysMap(this.props.highlightDates)
       });
     }
-    if (!this.state.focused) this.setState({ inputValue: null });
+    if (
+      !prevState.focused &&
+      hasSelectionChanged(prevProps.selected, this.props.selected)
+    ) {
+      this.setState({ inputValue: null });
+    }
   }
 
   componentWillUnmount() {
