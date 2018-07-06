@@ -187,6 +187,13 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).to.be.false;
   });
 
+  it("should not set open state when it is readOnly and gets clicked", function() {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker readOnly />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.state.open).to.be.false;
+  });
+
   it("should hide the calendar when clicking a day on the calendar", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;

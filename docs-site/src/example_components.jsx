@@ -43,6 +43,7 @@ import CalendarContainer from "./examples/calendar_container";
 import Portal from "./examples/portal";
 import InlinePortal from "./examples/inline_portal";
 import RawChange from "./examples/raw_change";
+import ReadOnly from "./examples/read_only";
 import ShowTime from "./examples/show_time";
 import ShowTimeOnly from "./examples/show_time_only";
 import ExcludeTimes from "./examples/exclude_times";
@@ -159,6 +160,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Disable keyboard navigation",
       component: <DisabledKeyboardNavigation />
+    },
+    {
+      title: "Read only datepicker",
+      component: <ReadOnly />
     },
     {
       title: "Clear datepicker input",
