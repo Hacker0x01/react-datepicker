@@ -109,7 +109,9 @@ export default class Calendar extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
-    showDisabledMonthNavigation: PropTypes.bool
+    showDisabledMonthNavigation: PropTypes.bool,
+    previousMonthButtonLabel: PropTypes.string,
+    nextMonthButtonLabel: PropTypes.string
   };
 
   static get defaultProps() {
@@ -117,7 +119,9 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       monthsShown: 1,
       forceShowMonthNavigation: false,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      previousMonthButtonLabel: "Previous Month",
+      previousMonthButtonLabel: "Next Month"
     };
   }
 
@@ -340,7 +344,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.previousMonthButtonLabel}
+      </button>
     );
   };
 
@@ -383,7 +389,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.nextMonthButtonLabel}
+      </button>
     );
   };
 
