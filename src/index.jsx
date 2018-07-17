@@ -175,6 +175,7 @@ export default class DatePicker extends React.Component {
       preventOpenOnFocus: false,
       onYearChange() {},
       monthsShown: 1,
+      readOnly: false,
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
@@ -270,7 +271,7 @@ export default class DatePicker extends React.Component {
   handleFocus = event => {
     if (!this.state.preventFocus) {
       this.props.onFocus(event);
-      if (!this.props.preventOpenOnFocus) {
+      if (!this.props.preventOpenOnFocus && !this.props.readOnly) {
         this.setOpen(true);
       }
     }
@@ -420,7 +421,7 @@ export default class DatePicker extends React.Component {
   };
 
   onInputClick = () => {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.props.readOnly) {
       this.setOpen(true);
     }
   };
@@ -509,7 +510,10 @@ export default class DatePicker extends React.Component {
   };
 
   renderCalendar = () => {
-    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
+    if (
+      !this.props.inline &&
+      (!this.state.open || this.props.disabled || this.props.readOnly)
+    ) {
       return null;
     }
     return (
@@ -663,7 +667,9 @@ export default class DatePicker extends React.Component {
     return (
       <PopperComponent
         className={this.props.popperClassName}
-        hidePopper={!this.state.open || this.props.disabled}
+        hidePopper={
+          !this.state.open || this.props.disabled || this.props.readOnly
+        }
         popperModifiers={this.props.popperModifiers}
         targetComponent={
           <div className="react-datepicker__input-container">
