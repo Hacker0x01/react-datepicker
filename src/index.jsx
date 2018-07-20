@@ -420,7 +420,9 @@ export default class DatePicker extends React.Component {
     });
 
     this.props.onChange(changedDate);
-    this.setOpen(false);
+    setTimeout(() => {
+      this.setOpen(false);
+    }, 60);
     this.setState({ inputValue: null });
   };
 
