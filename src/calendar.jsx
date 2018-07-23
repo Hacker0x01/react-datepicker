@@ -48,6 +48,15 @@ const isDropdownSelect = (element = {}) => {
 };
 
 export default class Calendar extends React.Component {
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      forceShowMonthNavigation: false,
+      timeCaption: "Time"
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
@@ -108,18 +117,10 @@ export default class Calendar extends React.Component {
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool
   };
-
-  static get defaultProps() {
-    return {
-      onDropdownFocus: () => {},
-      monthsShown: 1,
-      forceShowMonthNavigation: false,
-      timeCaption: "Time"
-    };
-  }
 
   constructor(props) {
     super(props);
@@ -536,6 +537,8 @@ export default class Calendar extends React.Component {
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
             utcOffset={this.props.utcOffset}
+            setOpen={this.props.setOpen}
+            shouldCloseOnSelect={this.props.shouldCloseOnSelect}
           />
         </div>
       );
