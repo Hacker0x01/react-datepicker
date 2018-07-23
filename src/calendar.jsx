@@ -119,9 +119,21 @@ export default class Calendar extends React.Component {
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
     useShortMonthInDropdown: PropTypes.bool,
-    showDisabledMonthNavigation: PropTypes.bool
+    showDisabledMonthNavigation: PropTypes.bool,
+    previousMonthButtonLabel: PropTypes.string,
+    nextMonthButtonLabel: PropTypes.string
   };
 
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      forceShowMonthNavigation: false,
+      timeCaption: "Time",
+      previousMonthButtonLabel: "Previous Month",
+      previousMonthButtonLabel: "Next Month"
+    };
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -341,7 +353,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.previousMonthButtonLabel}
+      </button>
     );
   };
 
@@ -384,7 +398,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.nextMonthButtonLabel}
+      </button>
     );
   };
 
