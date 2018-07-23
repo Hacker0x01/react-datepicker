@@ -86,7 +86,6 @@ describe("Week", () => {
 
   it("should call the provided onWeekSelect function and call the setopen function", () => {
     const weekStart = utils.newDate("2015-12-20");
-    const setOpenSpy = sinon.spy();
 
     const week = shallow(
       <Week
@@ -105,7 +104,6 @@ describe("Week", () => {
 
   it("should call the provided onWeekSelect function and not call the setopen function when 'shouldCloseOnSelect' is false", () => {
     const weekStart = utils.newDate("2015-12-20");
-    const setOpenSpy = sinon.spy();
 
     const week = shallow(
       <Week
