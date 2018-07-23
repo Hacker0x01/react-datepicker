@@ -5,6 +5,11 @@ import WeekNumber from "./week_number";
 import * as utils from "./date_utils";
 
 export default class Week extends React.Component {
+  static get defaultProps() {
+    return {
+      shouldCloseOnSelect: true
+    };
+  }
   static propTypes = {
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
