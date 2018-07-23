@@ -7,6 +7,12 @@ import sinon from "sinon";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
+  const setOpenSpy = sinon.spy();
+
+  afterEach(() => {
+    setOpenSpy.resetHistory();
+  });
+
   it("should have the week CSS class", () => {
     const week = shallow(<Week day={utils.newDate()} />);
     expect(week.hasClass("react-datepicker__week")).to.equal(true);
@@ -95,6 +101,25 @@ describe("Week", () => {
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
     sinon.assert.calledOnce(setOpenSpy);
+  });
+
+  it("should call the provided onWeekSelect function and not call the setopen function when 'shouldCloseOnSelect' is false", () => {
+    const weekStart = utils.newDate("2015-12-20");
+    const setOpenSpy = sinon.spy();
+
+    const week = shallow(
+      <Week
+        day={weekStart}
+        showWeekNumber
+        shouldCloseOnSelect={false}
+        onWeekSelect={() => {}}
+        setOpen={setOpenSpy}
+      />
+    );
+
+    const weekNumberElement = week.find(WeekNumber);
+    weekNumberElement.simulate("click");
+    sinon.assert.notCalled(setOpenSpy);
   });
 
   it("should call the provided onWeekSelect function and pass the week number", () => {

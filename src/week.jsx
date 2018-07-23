@@ -54,7 +54,6 @@ export default class Week extends React.Component {
     if (typeof this.props.onWeekSelect === "function") {
       this.props.onWeekSelect(day, weekNumber, event);
     }
-
     if (this.props.shouldCloseOnSelect) {
       this.props.setOpen(false);
     }
