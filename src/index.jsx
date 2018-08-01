@@ -320,7 +320,7 @@ export default class DatePicker extends React.Component {
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw.apply(this, allArgs);
       if (
-        typeof event.isDefaultPrevented !== "function" ||
+        typeof event.isDefaultPrevented === "function" ||
         event.isDefaultPrevented()
       ) {
         return;
