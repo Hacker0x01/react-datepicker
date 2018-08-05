@@ -466,11 +466,14 @@
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  display: inline-block;
-  height: 0;
   outline: 0;
   padding: 0;
   vertical-align: middle;
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: 25%;
+  right: 7px;
 
   &::after {
     background-color: $datepicker__selected-color;
@@ -487,9 +490,8 @@
     margin: -8px auto 0;
     padding: 2px;
     position: absolute;
-    right: 7px;
+    right: 0px;
     text-align: center;
-    top: 50%;
   }
 }
 
