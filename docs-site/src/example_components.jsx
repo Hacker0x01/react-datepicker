@@ -256,6 +256,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Don't hide calendar on date selection",
       component: <DontCloseOnSelect />
+    },
+    {
+      title: "Percentage Width",
+      component: <OneHundredPercentWidth />
     }
   ];
 
