@@ -51,6 +51,7 @@ import ExcludeTimePeriod from "./examples/exclude_time_period";
 import IncludeTimes from "./examples/include_times";
 import InjectTimes from "./examples/inject_times";
 import DontCloseOnSelect from "./examples/dont_close_onSelect";
+import OneHundredPercentWidth from "./examples/one_hundred_percent_width";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";

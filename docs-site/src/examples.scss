@@ -112,3 +112,21 @@
 .example__timezone-selector {
   margin-left: 10px;
 }
+
+///////////////////////////////////////////////////////
+// CSS for example: one_hundred_percent_width
+
+.myDatePickerContainer {
+  padding: 0px 20px 0px 0px;
+  // width: 50%;
+}
+
+.myDatePickerContainer .react-datepicker-manager,
+.myDatePickerContainer .react-datepicker-wrapper,
+.myDatePickerContainer .react-datepicker__input-container,
+.myDatePickerContainer .react-datepicker__input-container input {
+  width: 100%;
+}
+
+// End of CSS for example: one_hundred_percent_width
+///////////////////////////////////////////////////////
