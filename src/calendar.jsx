@@ -125,12 +125,36 @@ export default class Calendar extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (
+      props.preSelection &&
+      !isSameDay(props.preSelection, state.preSelection)
+    ) {
+      return {
+        date: localizeDate(props.preSelection, props.locale),
+        preSelection: props.preSelection
+      };
+    } else if (
+      props.openToDate &&
+      !isSameDay(props.openToDate, state.openToDate)
+    ) {
+      return {
+        date: localizeDate(props.openToDate, props.locale),
+        openToDate: props.openToDate
+      };
+    } else {
+      return null;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       date: this.localizeDate(this.getDateInView()),
       selectingDate: null,
-      monthContainer: this.monthContainer
+      monthContainer: this.monthContainer,
+      preSelection: props.preSelection,
+      openToDate: props.openToDate
     };
   }
 
@@ -143,24 +167,6 @@ export default class Calendar extends React.Component {
       this.assignMonthContainer = (() => {
         this.setState({ monthContainer: this.monthContainer });
       })();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.preSelection &&
-      !isSameDay(this.props.preSelection, prevProps.preSelection)
-    ) {
-      this.setState({
-        date: this.localizeDate(this.props.preSelection)
-      });
-    } else if (
-      this.props.openToDate &&
-      !isSameDay(this.props.openToDate, prevProps.openToDate)
-    ) {
-      this.setState({
-        date: this.localizeDate(this.props.openToDate)
-      });
     }
   }
 

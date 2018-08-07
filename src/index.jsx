@@ -61,6 +61,23 @@ function hasSelectionChanged(date1, date2) {
   return false;
 }
 
+function makePreSelectionState(props, date) {
+  const isDateRangePresent =
+    typeof props.minDate !== "undefined" &&
+    typeof props.maxDate !== "undefined";
+  const isValidDateSelection =
+    isDateRangePresent && date
+      ? isDayInRange(date, props.minDate, props.maxDate)
+      : true;
+  if (isValidDateSelection) {
+    return {
+      preSelection: date
+    };
+  } else {
+    return null;
+  }
+}
+
 /**
  * General datepicker component.
  */
@@ -188,29 +205,35 @@ export default class DatePicker extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    let newState = {};
+    if (
+      props.inline &&
+      hasPreSelectionChanged(state.preSelection, props.selected)
+    ) {
+      newState = {
+        ...newState,
+        ...makePreSelectionState(props, props.selected)
+      };
+    }
+    if (state.highlightDates !== props.highlightDates) {
+      newState = {
+        ...newState,
+        highlightDates: getHightLightDaysMap(props.highlightDates)
+      };
+    }
+    if (
+      !state.focused &&
+      hasSelectionChanged(state.preSelection, props.selected)
+    ) {
+      newState = { ...newState, inputValue: null };
+    }
+    return newState;
+  }
+
   constructor(props) {
     super(props);
     this.state = this.calcInitialState();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.inline &&
-      hasPreSelectionChanged(prevProps.selected, this.props.selected)
-    ) {
-      this.setPreSelection(this.props.selected);
-    }
-    if (prevProps.highlightDates !== this.props.highlightDates) {
-      this.setState({
-        highlightDates: getHightLightDaysMap(this.props.highlightDates)
-      });
-    }
-    if (
-      !prevState.focused &&
-      hasSelectionChanged(prevProps.selected, this.props.selected)
-    ) {
-      this.setState({ inputValue: null });
-    }
   }
 
   componentWillUnmount() {
@@ -348,7 +371,7 @@ export default class DatePicker extends React.Component {
     });
     this.setSelected(date, event);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
-      this.setPreSelection(date);
+      this.setState(makePreSelectionState(this.props, date));
     } else if (!this.props.inline) {
       this.setOpen(false);
     }
@@ -388,21 +411,6 @@ export default class DatePicker extends React.Component {
 
     if (!keepInput) {
       this.setState({ inputValue: null });
-    }
-  };
-
-  setPreSelection = date => {
-    const isDateRangePresent =
-      typeof this.props.minDate !== "undefined" &&
-      typeof this.props.maxDate !== "undefined";
-    const isValidDateSelection =
-      isDateRangePresent && date
-        ? isDayInRange(date, this.props.minDate, this.props.maxDate)
-        : true;
-    if (isValidDateSelection) {
-      this.setState({
-        preSelection: date
-      });
     }
   };
 
@@ -452,7 +460,8 @@ export default class DatePicker extends React.Component {
         this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
       ) {
         this.handleSelect(copy, event);
-        !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
+        !this.props.shouldCloseOnSelect &&
+          this.setState(makePreSelectionState(this.props, copy));
       } else {
         this.setOpen(false);
       }
@@ -495,7 +504,7 @@ export default class DatePicker extends React.Component {
       if (this.props.adjustDateOnChange) {
         this.setSelected(newSelection);
       }
-      this.setPreSelection(newSelection);
+      this.setState(makePreSelectionState(this.props, newSelection));
     }
   };
 
