@@ -66,6 +66,8 @@ function hasSelectionChanged(date1, date2) {
  */
 
 export default class DatePicker extends React.Component {
+  static currentWindow = null;
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
@@ -193,6 +195,10 @@ export default class DatePicker extends React.Component {
     this.state = this.calcInitialState();
   }
 
+  componentDidMount() {
+    document.body.addEventListener("click", this.handleCalendarClickOutside);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.inline &&
@@ -216,6 +222,8 @@ export default class DatePicker extends React.Component {
   componentWillUnmount() {
     this.clearPreventFocusTimeout();
   }
+
+  $DOMcalendar = null;
 
   getPreSelection = () =>
     this.props.openToDate
@@ -262,6 +270,17 @@ export default class DatePicker extends React.Component {
   };
 
   setOpen = open => {
+    if (open) {
+      if (DatePicker.currentPicker != null) {
+        DatePicker.currentPicker.setOpen(false);
+      }
+      DatePicker.currentPicker = this;
+    } else {
+      if (DatePicker.currentPicker == this) {
+        DatePicker.currentPicker = null;
+      }
+    }
+
     this.setState({
       open: open,
       preSelection:
@@ -279,6 +298,7 @@ export default class DatePicker extends React.Component {
         this.setOpen(true);
       }
     }
+
     this.setState({ focused: true });
   };
 
@@ -297,21 +317,25 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open && !this.props.withPortal) {
+    /*if (this.state.open && !this.props.withPortal) {
       this.deferFocusInput();
     } else {
       this.props.onBlur(event);
     }
-    this.setState({ focused: false });
+    this.setState({ focused: false });*/
   };
 
   handleCalendarClickOutside = event => {
-    if (!this.props.inline) {
-      this.setOpen(false);
-    }
-    this.props.onClickOutside(event);
-    if (this.props.withPortal) {
-      event.preventDefault();
+    const target = event.target;
+
+    if (
+      this.$DOMcalendar == null ||
+      (target != this.$DOMcalendar && !this.$DOMcalendar.contains(target))
+    ) {
+      if (!this.props.inline) {
+        this.setOpen(false);
+      }
+      this.props.onClickOutside(event);
     }
   };
 
@@ -326,6 +350,7 @@ export default class DatePicker extends React.Component {
         return;
       }
     }
+
     this.setState({
       inputValue: event.target.value,
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT
@@ -545,7 +570,7 @@ export default class DatePicker extends React.Component {
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
         filterDate={this.props.filterDate}
-        onClickOutside={this.handleCalendarClickOutside}
+        onClickOutside={() => {}}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
@@ -648,9 +673,14 @@ export default class DatePicker extends React.Component {
   };
 
   render() {
-    const calendar = this.renderCalendar();
+    const calendar = (
+      <div ref={DOMcalendar => (this.$DOMcalendar = DOMcalendar)}>
+        {this.renderCalendar()}
+      </div>
+    );
 
     if (this.props.inline && !this.props.withPortal) {
+      //We need a reference to a DOM element, so wrap in a div!
       return calendar;
     }
 
