@@ -144,6 +144,8 @@ export default class Calendar extends React.Component {
         this.setState({ monthContainer: this.monthContainer });
       })();
     }
+
+    document.body.addEventListener("click", this.handleClickOutsideWindow);
   }
 
   componentDidUpdate(prevProps) {
@@ -164,9 +166,24 @@ export default class Calendar extends React.Component {
     }
   }
 
-  handleClickOutside = event => {
-    this.props.onClickOutside(event);
+  componentWillUnmount() {
+    document.body.removeEventListener("click", this.handleClickOutsideWindow);
+  }
+
+  $DOMcalendar = null;
+
+  handleClickOutsideWindow = event => {
+    const target = event.target;
+
+    if (
+      this.$DOMcalendar == null ||
+      (target != this.$DOMcalendar && !this.$DOMcalendar.contains(target))
+    ) {
+      this.props.onClickOutside(event);
+    }
   };
+
+  handleClickOutside = event => {};
 
   handleDropdownFocus = event => {
     if (isDropdownSelect(event.target)) {
@@ -580,18 +597,20 @@ export default class Calendar extends React.Component {
     const Container = this.props.container || CalendarContainer;
 
     return (
-      <Container
-        className={classnames("react-datepicker", this.props.className, {
-          "react-datepicker--time-only": this.props.showTimeSelectOnly
-        })}
-      >
-        {this.renderPreviousMonthButton()}
-        {this.renderNextMonthButton()}
-        {this.renderMonths()}
-        {this.renderTodayButton()}
-        {this.renderTimeSection()}
-        {this.props.children}
-      </Container>
+      <div ref={DOMcalendar => (this.$DOMcalendar = DOMcalendar)}>
+        <Container
+          className={classnames("react-datepicker", this.props.className, {
+            "react-datepicker--time-only": this.props.showTimeSelectOnly
+          })}
+        >
+          {this.renderPreviousMonthButton()}
+          {this.renderNextMonthButton()}
+          {this.renderMonths()}
+          {this.renderTodayButton()}
+          {this.renderTimeSection()}
+          {this.props.children}
+        </Container>
+      </div>
     );
   }
 }

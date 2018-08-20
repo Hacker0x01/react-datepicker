@@ -36461,8 +36461,6 @@
             _React$Component.call(this, props)
           );
 
-          _this.$DOMcalendar = null;
-
           _this.getPreSelection = function() {
             return _this.props.openToDate
               ? (0, _date_utils.newDate)(_this.props.openToDate)
@@ -36570,18 +36568,10 @@
           };
 
           _this.handleCalendarClickOutside = function(event) {
-            var target = event.target;
-
-            if (
-              _this.$DOMcalendar == null ||
-              (target != _this.$DOMcalendar &&
-                !_this.$DOMcalendar.contains(target))
-            ) {
-              if (!_this.props.inline) {
-                _this.setOpen(false);
-              }
-              _this.props.onClickOutside(event);
+            if (!_this.props.inline) {
+              _this.setOpen(false);
             }
+            _this.props.onClickOutside(event);
           };
 
           _this.handleChange = function() {
@@ -36848,7 +36838,7 @@
                 endDate: _this.props.endDate,
                 excludeDates: _this.props.excludeDates,
                 filterDate: _this.props.filterDate,
-                onClickOutside: function onClickOutside() {},
+                onClickOutside: _this.handleCalendarClickOutside,
                 formatWeekNumber: _this.props.formatWeekNumber,
                 highlightDates: _this.state.highlightDates,
                 includeDates: _this.props.includeDates,
@@ -36967,10 +36957,7 @@
         }
 
         DatePicker.prototype.componentDidMount = function componentDidMount() {
-          document.body.addEventListener(
-            "click",
-            this.handleCalendarClickOutside
-          );
+          //document.body.addEventListener("click", this.handleCalendarClickOutside);
         };
 
         DatePicker.prototype.componentDidUpdate = function componentDidUpdate(
@@ -37003,17 +36990,7 @@
         };
 
         DatePicker.prototype.render = function render() {
-          var _this2 = this;
-
-          var calendar = _react2.default.createElement(
-            "div",
-            {
-              ref: function ref(DOMcalendar) {
-                return (_this2.$DOMcalendar = DOMcalendar);
-              }
-            },
-            this.renderCalendar()
-          );
+          var calendar = this.renderCalendar();
 
           if (this.props.inline && !this.props.withPortal) {
             //We need a reference to a DOM element, so wrap in a div!
@@ -37445,9 +37422,21 @@
             _React$Component.call(this, props)
           );
 
-          _this.handleClickOutside = function(event) {
-            _this.props.onClickOutside(event);
+          _this.$DOMcalendar = null;
+
+          _this.handleClickOutsideWindow = function(event) {
+            var target = event.target;
+
+            if (
+              _this.$DOMcalendar == null ||
+              (target != _this.$DOMcalendar &&
+                !_this.$DOMcalendar.contains(target))
+            ) {
+              _this.props.onClickOutside(event);
+            }
           };
+
+          _this.handleClickOutside = function(event) {};
 
           _this.handleDropdownFocus = function(event) {
             if (isDropdownSelect(event.target)) {
@@ -37972,6 +37961,11 @@
               _this2.setState({ monthContainer: _this2.monthContainer });
             })();
           }
+
+          document.body.addEventListener(
+            "click",
+            this.handleClickOutsideWindow
+          );
         };
 
         Calendar.prototype.componentDidUpdate = function componentDidUpdate(
@@ -38000,26 +37994,43 @@
           }
         };
 
+        Calendar.prototype.componentWillUnmount = function componentWillUnmount() {
+          document.body.removeEventListener(
+            "click",
+            this.handleClickOutsideWindow
+          );
+        };
+
         Calendar.prototype.render = function render() {
+          var _this3 = this;
+
           var Container = this.props.container || _calendar_container2.default;
 
           return _react2.default.createElement(
-            Container,
+            "div",
             {
-              className: (0, _classnames2.default)(
-                "react-datepicker",
-                this.props.className,
-                {
-                  "react-datepicker--time-only": this.props.showTimeSelectOnly
-                }
-              )
+              ref: function ref(DOMcalendar) {
+                return (_this3.$DOMcalendar = DOMcalendar);
+              }
             },
-            this.renderPreviousMonthButton(),
-            this.renderNextMonthButton(),
-            this.renderMonths(),
-            this.renderTodayButton(),
-            this.renderTimeSection(),
-            this.props.children
+            _react2.default.createElement(
+              Container,
+              {
+                className: (0, _classnames2.default)(
+                  "react-datepicker",
+                  this.props.className,
+                  {
+                    "react-datepicker--time-only": this.props.showTimeSelectOnly
+                  }
+                )
+              },
+              this.renderPreviousMonthButton(),
+              this.renderNextMonthButton(),
+              this.renderMonths(),
+              this.renderTodayButton(),
+              this.renderTimeSection(),
+              this.props.children
+            )
           );
         };
 

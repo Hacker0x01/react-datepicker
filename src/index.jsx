@@ -196,7 +196,7 @@ export default class DatePicker extends React.Component {
   }
 
   componentDidMount() {
-    document.body.addEventListener("click", this.handleCalendarClickOutside);
+    //document.body.addEventListener("click", this.handleCalendarClickOutside);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -222,8 +222,6 @@ export default class DatePicker extends React.Component {
   componentWillUnmount() {
     this.clearPreventFocusTimeout();
   }
-
-  $DOMcalendar = null;
 
   getPreSelection = () =>
     this.props.openToDate
@@ -326,17 +324,10 @@ export default class DatePicker extends React.Component {
   };
 
   handleCalendarClickOutside = event => {
-    const target = event.target;
-
-    if (
-      this.$DOMcalendar == null ||
-      (target != this.$DOMcalendar && !this.$DOMcalendar.contains(target))
-    ) {
-      if (!this.props.inline) {
-        this.setOpen(false);
-      }
-      this.props.onClickOutside(event);
+    if (!this.props.inline) {
+      this.setOpen(false);
     }
+    this.props.onClickOutside(event);
   };
 
   handleChange = (...allArgs) => {
@@ -570,7 +561,7 @@ export default class DatePicker extends React.Component {
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
         filterDate={this.props.filterDate}
-        onClickOutside={() => {}}
+        onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
@@ -673,11 +664,7 @@ export default class DatePicker extends React.Component {
   };
 
   render() {
-    const calendar = (
-      <div ref={DOMcalendar => (this.$DOMcalendar = DOMcalendar)}>
-        {this.renderCalendar()}
-      </div>
-    );
+    const calendar = this.renderCalendar();
 
     if (this.props.inline && !this.props.withPortal) {
       //We need a reference to a DOM element, so wrap in a div!
