@@ -121,7 +121,7 @@ export default class Calendar extends React.Component {
       forceShowMonthNavigation: false,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
-      previousMonthButtonLabel: "Next Month"
+      nextMonthButtonLabel: "Next Month"
     };
   }
 
