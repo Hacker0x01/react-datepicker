@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Manager, Reference, Popper } from "react-popper";
 
@@ -24,6 +25,7 @@ export default class PopperComponent extends React.Component {
     hidePopper: PropTypes.bool,
     popperComponent: PropTypes.element,
     popperModifiers: PropTypes.object, // <datepicker/> props
+    popperReactPortal: PropTypes.bool,
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
@@ -81,6 +83,10 @@ export default class PopperComponent extends React.Component {
 
     if (this.props.popperContainer) {
       popper = React.createElement(this.props.popperContainer, {}, popper);
+    }
+    
+    if (this.props.popperReactPortal) {
+      popper = ReactDOM.createPortal(popper, window.document.body);
     }
 
     return (

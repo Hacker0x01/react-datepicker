@@ -124,6 +124,7 @@ export default class DatePicker extends React.Component {
     popperModifiers: PropTypes.object, // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
     popperProps: PropTypes.object,
+    popperReactPortal: PropTypes.bool,
     preventOpenOnFocus: PropTypes.bool,
     readOnly: PropTypes.bool,
     required: PropTypes.bool,
@@ -742,6 +743,7 @@ export default class DatePicker extends React.Component {
         className={this.props.popperClassName}
         hidePopper={!this.isCalendarOpen()}
         popperModifiers={this.props.popperModifiers}
+        popperReactPortal={this.props.popperReactPortal}
         targetComponent={
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
