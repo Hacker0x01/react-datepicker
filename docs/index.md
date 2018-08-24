@@ -12,7 +12,7 @@
 | `className`                  | `string`                       |                    |             |
 | `clearButtonTitle`           | `string`                       |                    |             |
 | `customInput`                | `element`                      |                    |             |
-| `customInputRef`             | `string`                       |                    |             |
+| `customInputRef`             | `object`                       | `React.createRef()`|             |
 | `dateFormat`                 | `union(string\|array)`         | `"MM/dd/yyyy"`     |             |
 | `dateFormatCalendar`         | `string`                       | `"LLLL yyyy"`      |             |
 | `dayClassName`               | `func`                         |                    |             |

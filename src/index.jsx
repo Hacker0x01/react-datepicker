@@ -80,7 +80,7 @@ export default class DatePicker extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     customInput: PropTypes.element,
-    customInputRef: PropTypes.string,
+    customInputRef: PropTypes.object,
     // eslint-disable-next-line react/no-unused-prop-types
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
@@ -187,6 +187,7 @@ export default class DatePicker extends React.Component {
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll",
+      customInputRef: React.createRef(),
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
@@ -291,8 +292,11 @@ export default class DatePicker extends React.Component {
   };
 
   setFocus = () => {
-    if (this.input && this.input.focus) {
-      this.input.focus();
+    if (
+      this.props.customInputRef.current &&
+      this.props.customInputRef.current.focus
+    ) {
+      this.props.customInputRef.current.focus();
     }
   };
 
@@ -712,7 +716,6 @@ export default class DatePicker extends React.Component {
     });
 
     const customInput = this.props.customInput || <input type="text" />;
-    const customInputRef = this.props.customInputRef || "ref";
     const inputValue =
       typeof this.props.value === "string"
         ? this.props.value
@@ -721,9 +724,7 @@ export default class DatePicker extends React.Component {
           : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
-      [customInputRef]: input => {
-        this.input = input;
-      },
+      ref: this.props.customInputRef,
       value: inputValue,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
