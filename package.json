@@ -69,15 +69,16 @@
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^7.2.2",
+    "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "node-sass": "^4.9.4",
     "npm-run-all": "^4.1.2",
-    "prettier": "^1.9.2",
-    "react": "^16.1.0",
+    "prettier": "^1.14.2",
+    "react": "^16.4.2",
     "react-docgen": "^2.20.0",
-    "react-dom": "^16.1.0",
-    "react-test-renderer": "^16.1.0",
+    "react-dom": "^16.4.2",
+    "react-test-renderer": "^16.4.2",
     "react-transform-hmr": "^1.0.4",
     "rimraf": "^2.6.2",
     "rollup": "^0.51.3",
@@ -95,8 +96,9 @@
     "webpack-hot-middleware": "^2.20.0"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "moment": "^2.20.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -115,7 +117,7 @@
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
-    "codecov": "cat coverage/*/lcov.info | ./node_modules/.bin/codecov",
+    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
     "prebuild": "rimraf es lib dist",
     "build": "cross-env NODE_ENV=production run-p build:** && run-p css:**",
     "build-dev": "cross-env NODE_ENV=development run-p build:** && run-p css:**",
@@ -130,9 +132,16 @@
     "build:docs": "cross-env MODULES=false webpack --config webpack.docs.config.js"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,scss,md}": [
-      "prettier --write",
-      "git add"
+    "linters": {
+      "*.{js,jsx,json,css,scss,md}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "**/dist/**/*",
+      "**/es/**/*",
+      "**/lib/**/*"
     ]
   }
 }
