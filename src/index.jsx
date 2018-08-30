@@ -156,7 +156,8 @@ export default class DatePicker extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
-    nextMonthButtonLabel: PropTypes.string
+    nextMonthButtonLabel: PropTypes.string,
+    renderCustomHeader: PropTypes.func
   };
 
   static get defaultProps() {
@@ -313,6 +314,8 @@ export default class DatePicker extends React.Component {
     if (this.props.withPortal) {
       event.preventDefault();
     }
+
+    this.handleBlur(event);
   };
 
   handleChange = (...allArgs) => {
@@ -350,6 +353,9 @@ export default class DatePicker extends React.Component {
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
+      this.cancelFocusInput();
+      this.props.onBlur(event);
+
       this.setOpen(false);
     }
   };
@@ -588,6 +594,7 @@ export default class DatePicker extends React.Component {
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+        renderCustomHeader={this.props.renderCustomHeader}
       >
         {this.props.children}
       </WrappedCalendar>
