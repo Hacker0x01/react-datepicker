@@ -80,8 +80,8 @@ export default class PopperComponent extends React.Component {
       <div>
         <Manager>
           <Reference>
-            {({ ref, style }) => (
-              <div ref={ref} style={style} className="react-datepicker-wrapper">
+            {({ ref }) => (
+              <div ref={ref} className="react-datepicker-wrapper">
                 {targetComponent}
               </div>
             )}
