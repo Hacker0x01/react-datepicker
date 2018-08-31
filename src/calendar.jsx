@@ -6,6 +6,7 @@ import Time from "./time";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import FocusTrap from "focus-trap-react";
 import CalendarContainer from "./calendar_container";
 import {
   now,
@@ -111,7 +112,9 @@ export default class Calendar extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     previousMonthButtonLabel: PropTypes.string,
-    nextMonthButtonLabel: PropTypes.string
+    nextMonthButtonLabel: PropTypes.string,
+    updateSelection: PropTypes.func.isRequired,
+    accessibleMode: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -544,6 +547,8 @@ export default class Calendar extends React.Component {
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
             utcOffset={this.props.utcOffset}
+            updateSelection={this.props.updateSelection}
+            accessibleMode={this.props.accessibleMode}
           />
         </div>
       );
@@ -578,8 +583,7 @@ export default class Calendar extends React.Component {
 
   render() {
     const Container = this.props.container || CalendarContainer;
-
-    return (
+    const calendar = (
       <Container
         className={classnames("react-datepicker", this.props.className, {
           "react-datepicker--time-only": this.props.showTimeSelectOnly
@@ -592,6 +596,18 @@ export default class Calendar extends React.Component {
         {this.renderTimeSection()}
         {this.props.children}
       </Container>
+    );
+
+    return this.props.accessibleMode ? (
+      <FocusTrap
+        focusTrapOptions={{
+          onDeactivate: () => this.props.setOpen(false)
+        }}
+      >
+        {calendar}
+      </FocusTrap>
+    ) : (
+      calendar
     );
   }
 }

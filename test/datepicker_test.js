@@ -1037,4 +1037,8 @@ describe("DatePicker", () => {
     datePicker.clear();
     expect(datePicker.state.inputValue).to.be.null;
   });
+
+  describe("accessibleMode", () => {
+    expect(true).to.be.true;
+  });
 });

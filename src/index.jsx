@@ -156,7 +156,8 @@ export default class DatePicker extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
-    nextMonthButtonLabel: PropTypes.string
+    nextMonthButtonLabel: PropTypes.string,
+    accessibleMode: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -297,6 +298,11 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
+    if (this.props.accessibleMode === true) {
+      // allow normal de-focusing in a11y mode
+      return;
+    }
+
     if (this.state.open && !this.props.withPortal) {
       this.deferFocusInput();
     } else {
@@ -352,6 +358,13 @@ export default class DatePicker extends React.Component {
     } else if (!this.props.inline) {
       this.setOpen(false);
     }
+  };
+
+  updateSelection = newSelection => {
+    if (this.props.adjustDateOnChange) {
+      this.setSelected(newSelection);
+    }
+    this.setPreSelection(newSelection);
   };
 
   setSelected = (date, event, keepInput) => {
@@ -432,6 +445,7 @@ export default class DatePicker extends React.Component {
 
   onInputKeyDown = event => {
     this.props.onKeyDown(event);
+
     const eventKey = event.key;
     if (
       !this.state.open &&
@@ -492,10 +506,7 @@ export default class DatePicker extends React.Component {
       if (!newSelection) return; // Let the input component handle this keydown
       event.preventDefault();
       this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
-      if (this.props.adjustDateOnChange) {
-        this.setSelected(newSelection);
-      }
-      this.setPreSelection(newSelection);
+      this.updateSelection(newSelection);
     }
   };
 
@@ -587,6 +598,8 @@ export default class DatePicker extends React.Component {
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        updateSelection={this.updateSelection}
+        accessibleMode={this.props.accessibleMode}
       >
         {this.props.children}
       </WrappedCalendar>

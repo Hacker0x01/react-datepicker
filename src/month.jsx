@@ -32,7 +32,9 @@ export default class Month extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    updateSelection: PropTypes.func.isRequired,
+    accessibleMode: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -51,6 +53,41 @@ export default class Month extends React.Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave();
     }
+  };
+
+  onInputKeyDown = event => {
+    const eventKey = event.key;
+    const copy = utils.newDate(this.props.preSelection);
+    let newSelection;
+    switch (eventKey) {
+      case "ArrowLeft":
+        newSelection = utils.subtractDays(copy, 1);
+        break;
+      case "ArrowRight":
+        newSelection = utils.addDays(copy, 1);
+        break;
+      case "ArrowUp":
+        newSelection = utils.subtractWeeks(copy, 1);
+        break;
+      case "ArrowDown":
+        newSelection = utils.addWeeks(copy, 1);
+        break;
+      case "PageUp":
+        newSelection = utils.subtractMonths(copy, 1);
+        break;
+      case "PageDown":
+        newSelection = utils.addMonths(copy, 1);
+        break;
+      case "Home":
+        newSelection = utils.subtractYears(copy, 1);
+        break;
+      case "End":
+        newSelection = utils.addYears(copy, 1);
+        break;
+    }
+    if (!newSelection) return; // Let the input component handle this keydown
+    event.preventDefault();
+    this.props.updateSelection(newSelection);
   };
 
   isWeekInMonth = startOfWeek => {
@@ -137,7 +174,8 @@ export default class Month extends React.Component {
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
-        role="listbox"
+        tabIndex={this.props.accessibleMode ? 0 : -1}
+        onKeyDown={this.onInputKeyDown}
       >
         {this.renderWeeks()}
       </div>
