@@ -8,6 +8,7 @@ const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
 export default class Month extends React.Component {
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -97,6 +98,7 @@ export default class Month extends React.Component {
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
           utcOffset={this.props.utcOffset}
+          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         />
       );
 
