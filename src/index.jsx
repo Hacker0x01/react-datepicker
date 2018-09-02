@@ -108,9 +108,11 @@ export default class DatePicker extends React.Component {
     onClickOutside: PropTypes.func,
     onChangeRaw: PropTypes.func,
     onFocus: PropTypes.func,
+    onInputClick: PropTypes.func,
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
     onYearChange: PropTypes.func,
+    open: PropTypes.bool,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -171,6 +173,7 @@ export default class DatePicker extends React.Component {
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
+      onInputClick() {},
       onSelect() {},
       onClickOutside() {},
       onMonthChange() {},
@@ -271,6 +274,11 @@ export default class DatePicker extends React.Component {
       lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
     });
   };
+
+  isCalendarOpen = () =>
+    this.props.open === undefined
+      ? this.state.open && !this.props.disabled && !this.props.readOnly
+      : this.props.open;
 
   handleFocus = event => {
     if (!this.state.preventFocus) {
@@ -428,6 +436,8 @@ export default class DatePicker extends React.Component {
     if (!this.props.disabled && !this.props.readOnly) {
       this.setOpen(true);
     }
+
+    this.props.onInputClick();
   };
 
   onInputKeyDown = event => {
@@ -514,10 +524,7 @@ export default class DatePicker extends React.Component {
   };
 
   renderCalendar = () => {
-    if (
-      !this.props.inline &&
-      (!this.state.open || this.props.disabled || this.props.readOnly)
-    ) {
+    if (!this.props.inline && !this.isCalendarOpen()) {
       return null;
     }
     return (
@@ -673,9 +680,7 @@ export default class DatePicker extends React.Component {
     return (
       <PopperComponent
         className={this.props.popperClassName}
-        hidePopper={
-          !this.state.open || this.props.disabled || this.props.readOnly
-        }
+        hidePopper={!this.isCalendarOpen()}
         popperModifiers={this.props.popperModifiers}
         targetComponent={
           <div className="react-datepicker__input-container">
