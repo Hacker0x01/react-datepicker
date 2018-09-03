@@ -109,7 +109,9 @@ export default class Calendar extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
-    showDisabledMonthNavigation: PropTypes.bool
+    showDisabledMonthNavigation: PropTypes.bool,
+    previousMonthButtonLabel: PropTypes.string,
+    nextMonthButtonLabel: PropTypes.string
   };
 
   static get defaultProps() {
@@ -117,7 +119,9 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       monthsShown: 1,
       forceShowMonthNavigation: false,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      previousMonthButtonLabel: "Previous Month",
+      nextMonthButtonLabel: "Next Month"
     };
   }
 
@@ -142,20 +146,20 @@ export default class Calendar extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.preSelection &&
-      !isSameDay(nextProps.preSelection, this.props.preSelection)
+      this.props.preSelection &&
+      !isSameDay(this.props.preSelection, prevProps.preSelection)
     ) {
       this.setState({
-        date: this.localizeDate(nextProps.preSelection)
+        date: this.localizeDate(this.props.preSelection)
       });
     } else if (
-      nextProps.openToDate &&
-      !isSameDay(nextProps.openToDate, this.props.openToDate)
+      this.props.openToDate &&
+      !isSameDay(this.props.openToDate, prevProps.openToDate)
     ) {
       this.setState({
-        date: this.localizeDate(nextProps.openToDate)
+        date: this.localizeDate(this.props.openToDate)
       });
     }
   }
@@ -340,7 +344,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.previousMonthButtonLabel}
+      </button>
     );
   };
 
@@ -383,7 +389,9 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-      />
+      >
+        {this.props.nextMonthButtonLabel}
+      </button>
     );
   };
 

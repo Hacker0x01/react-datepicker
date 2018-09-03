@@ -11,6 +11,7 @@ import {
   isDate,
   isBefore,
   isAfter,
+  equals,
   setTime,
   getSecond,
   getMinute,
@@ -50,6 +51,14 @@ function hasPreSelectionChanged(date1, date2) {
   }
 
   return date1 !== date2;
+}
+
+function hasSelectionChanged(date1, date2) {
+  if (date1 && date2) {
+    return !equals(date1, date2);
+  }
+
+  return false;
 }
 
 /**
@@ -147,7 +156,9 @@ export default class DatePicker extends React.Component {
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
-    clearButtonTitle: PropTypes.string
+    clearButtonTitle: PropTypes.string,
+    previousMonthButtonLabel: PropTypes.string,
+    nextMonthButtonLabel: PropTypes.string
   };
 
   static get defaultProps() {
@@ -169,11 +180,14 @@ export default class DatePicker extends React.Component {
       onYearChange() {},
       onInputError() {},
       monthsShown: 1,
+      readOnly: false,
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       timeIntervals: 30,
-      timeCaption: "Time"
+      timeCaption: "Time",
+      previousMonthButtonLabel: "Previous Month",
+      nextMonthButtonLabel: "Next month"
     };
   }
 
@@ -182,19 +196,24 @@ export default class DatePicker extends React.Component {
     this.state = this.calcInitialState();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.inline &&
-      hasPreSelectionChanged(this.props.selected, nextProps.selected)
+      prevProps.inline &&
+      hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
-      this.setPreSelection(nextProps.selected);
+      this.setPreSelection(this.props.selected);
     }
-    if (this.props.highlightDates !== nextProps.highlightDates) {
+    if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHightLightDaysMap(nextProps.highlightDates)
+        highlightDates: getHightLightDaysMap(this.props.highlightDates)
       });
     }
-    if (!this.state.focused) this.setState({ inputValue: null });
+    if (
+      !prevState.focused &&
+      hasSelectionChanged(prevProps.selected, this.props.selected)
+    ) {
+      this.setState({ inputValue: null });
+    }
   }
 
   componentWillUnmount() {
@@ -261,7 +280,7 @@ export default class DatePicker extends React.Component {
   handleFocus = event => {
     if (!this.state.preventFocus) {
       this.props.onFocus(event);
-      if (!this.props.preventOpenOnFocus) {
+      if (!this.props.preventOpenOnFocus && !this.props.readOnly) {
         this.setOpen(true);
       }
     }
@@ -411,7 +430,7 @@ export default class DatePicker extends React.Component {
   };
 
   onInputClick = () => {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.props.readOnly) {
       this.setOpen(true);
     }
   };
@@ -502,7 +521,10 @@ export default class DatePicker extends React.Component {
   };
 
   renderCalendar = () => {
-    if (!this.props.inline && (!this.state.open || this.props.disabled)) {
+    if (
+      !this.props.inline &&
+      (!this.state.open || this.props.disabled || this.props.readOnly)
+    ) {
       return null;
     }
     return (
@@ -570,6 +592,8 @@ export default class DatePicker extends React.Component {
         className={this.props.calendarClassName}
         container={this.props.calendarContainer}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        previousMonthButtonLabel={this.props.previousMonthButtonLabel}
+        nextMonthButtonLabel={this.props.nextMonthButtonLabel}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -656,7 +680,9 @@ export default class DatePicker extends React.Component {
     return (
       <PopperComponent
         className={this.props.popperClassName}
-        hidePopper={!this.state.open || this.props.disabled}
+        hidePopper={
+          !this.state.open || this.props.disabled || this.props.readOnly
+        }
         popperModifiers={this.props.popperModifiers}
         targetComponent={
           <div className="react-datepicker__input-container">

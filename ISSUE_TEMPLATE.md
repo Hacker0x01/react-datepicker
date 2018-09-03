@@ -2,4 +2,4 @@
 
 ### Actual behavior
 
-### Steps to reprodcue
+### Steps to reproduce
