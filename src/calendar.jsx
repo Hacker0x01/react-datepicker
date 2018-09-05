@@ -583,7 +583,7 @@ export default class Calendar extends React.Component {
 
   render() {
     const Container = this.props.container || CalendarContainer;
-    const calendar = (
+    return (
       <Container
         className={classnames("react-datepicker", this.props.className, {
           "react-datepicker--time-only": this.props.showTimeSelectOnly
@@ -596,18 +596,6 @@ export default class Calendar extends React.Component {
         {this.renderTimeSection()}
         {this.props.children}
       </Container>
-    );
-
-    return this.props.accessibleMode ? (
-      <FocusTrap
-        focusTrapOptions={{
-          onDeactivate: () => this.props.setOpen(false)
-        }}
-      >
-        {calendar}
-      </FocusTrap>
-    ) : (
-      calendar
     );
   }
 }

@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
+import FocusTrap from "focus-trap-react";
 import {
   newDate,
   now,
@@ -185,7 +186,8 @@ export default class DatePicker extends React.Component {
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next month"
+      nextMonthButtonLabel: "Next month",
+      accessibleMode: true
     };
   }
 
@@ -531,7 +533,8 @@ export default class DatePicker extends React.Component {
     ) {
       return null;
     }
-    return (
+
+    const calendar = (
       <WrappedCalendar
         ref={elem => {
           this.calendar = elem;
@@ -604,6 +607,21 @@ export default class DatePicker extends React.Component {
         {this.props.children}
       </WrappedCalendar>
     );
+
+    if (this.props.accessibleMode && !this.props.inline) {
+      return (
+        <FocusTrap
+          focusTrapOptions={{
+            onDeactivate: () => this.setOpen(false),
+            initialFocus: ".react-datepicker__month--accessible"
+          }}
+        >
+          {calendar}
+        </FocusTrap>
+      );
+    } else {
+      return calendar;
+    }
   };
 
   renderDateInput = () => {

@@ -84,6 +84,11 @@ export default class Month extends React.Component {
       case "End":
         newSelection = utils.addYears(copy, 1);
         break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        this.handleDayClick(this.props.preSelection, event);
+        break;
     }
     if (!newSelection) return; // Let the input component handle this keydown
     event.preventDefault();
@@ -164,6 +169,8 @@ export default class Month extends React.Component {
   getClassNames = () => {
     const { selectingDate, selectsStart, selectsEnd } = this.props;
     return classnames("react-datepicker__month", {
+      "react-datepicker__month--accessible":
+        this.props.accessibleMode && !this.props.inline,
       "react-datepicker__month--selecting-range":
         selectingDate && (selectsStart || selectsEnd)
     });
