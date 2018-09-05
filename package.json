@@ -9,8 +9,20 @@
   "module": "es",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
-  "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
-  "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
+  "files": [
+    "*.md",
+    "dist",
+    "lib",
+    "es",
+    "src/stylesheets"
+  ],
+  "keywords": [
+    "react",
+    "datepicker",
+    "calendar",
+    "date",
+    "react-component"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
@@ -99,39 +111,30 @@
     "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
     "flow": "flow",
     "precommit": "lint-staged",
-    "sass-lint":
-      "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
+    "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
     "lint": "run-p eslint flow sass-lint",
     "start": "cross-env MODULES=false node server.js",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
-    "codecov":
-      "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
+    "codecov": "cat coverage/*/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js",
     "prebuild": "rimraf es lib dist",
     "build": "cross-env NODE_ENV=production run-p build:** && run-p css:**",
-    "build-dev":
-      "cross-env NODE_ENV=development run-p build:** && run-p css:**",
-    "css:prod":
-      "node-sass --output-style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
-    "css:modules:prod":
-      "node-sass --output-style compressed src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.min.css",
-    "css:dev":
-      "node-sass --output-style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
-    "css:modules:dev":
-      "node-sass --output-style expanded src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.css",
-    "build:es":
-      "cross-env BABEL_ENV=es rollup -c -i src/index.jsx -o es/index.js",
-    "build:cjs":
-      "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
-    "build:umd:dev":
-      "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
-    "build:umd:prod":
-      "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
-    "build:docs":
-      "cross-env MODULES=false webpack --config webpack.docs.config.js"
+    "build-dev": "cross-env NODE_ENV=development run-p build:** && run-p css:**",
+    "css:prod": "node-sass --output-style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
+    "css:modules:prod": "node-sass --output-style compressed src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.min.css",
+    "css:dev": "node-sass --output-style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
+    "css:modules:dev": "node-sass --output-style expanded src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.css",
+    "build:es": "cross-env BABEL_ENV=es rollup -c -i src/index.jsx -o es/index.js",
+    "build:cjs": "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
+    "build:umd:dev": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
+    "build:umd:prod": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
+    "build:docs": "cross-env MODULES=false webpack --config webpack.docs.config.js"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,scss,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,scss,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
