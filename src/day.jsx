@@ -14,6 +14,7 @@ import {
 
 export default class Day extends React.Component {
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -46,6 +47,7 @@ export default class Day extends React.Component {
   isSameDay = other => isSameDay(this.props.day, other);
 
   isKeyboardSelected = () =>
+    !this.props.disabledKeyboardNavigation &&
     !this.props.inline &&
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);

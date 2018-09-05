@@ -56,6 +56,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
@@ -544,6 +545,7 @@ export default class Calendar extends React.Component {
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
             utcOffset={this.props.utcOffset}
+            disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         </div>
       );
