@@ -235,6 +235,7 @@
         box-sizing: content-box;
 
         li.react-datepicker__time-list-item {
+          height: 30px;
           padding: 5px 10px;
           &:hover {
             cursor: pointer;

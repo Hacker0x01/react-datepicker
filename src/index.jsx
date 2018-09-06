@@ -587,6 +587,7 @@ export default class DatePicker extends React.Component {
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
       >
         {this.props.children}
       </WrappedCalendar>
