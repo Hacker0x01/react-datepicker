@@ -240,6 +240,9 @@
             cursor: pointer;
             background-color: $datepicker__background-color;
           }
+          &--preselected {
+            background-color: $datepicker__background-color;
+          }
           &--selected {
             background-color: $datepicker__selected-color;
             color: white;
@@ -570,4 +573,13 @@
       cursor: default;
     }
   }
+}
+
+.screenReaderOnly {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }

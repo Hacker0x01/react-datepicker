@@ -576,6 +576,7 @@ export default class Calendar extends React.Component {
           withPortal={this.props.withPortal}
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
+          accessibleMode={this.props.accessibleMode}
         />
       );
     }

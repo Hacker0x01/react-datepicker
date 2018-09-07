@@ -609,11 +609,14 @@ export default class DatePicker extends React.Component {
     );
 
     if (this.props.accessibleMode && !this.props.inline) {
+      const initialFocusTarget = this.props.showTimeSelectOnly
+        ? ".react-datepicker__time-box--accessible"
+        : ".react-datepicker__month--accessible";
       return (
         <FocusTrap
           focusTrapOptions={{
             onDeactivate: () => this.setOpen(false),
-            initialFocus: ".react-datepicker__month--accessible"
+            initialFocus: initialFocusTarget
           }}
         >
           {calendar}
