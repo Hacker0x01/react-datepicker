@@ -60,15 +60,12 @@ export default class PopperComponent extends React.Component {
       popper = (
         <Popper modifiers={popperModifiers} placement={popperPlacement}>
           {({ ref, style, placement, arrowProps }) => (
-            <div>
-              <div
-                {...{ ref, style }}
-                className={classes}
-                data-placement={placement}
-              >
-                <div className="react-datepicker__triangle" {...arrowProps} />
-                {popperComponent}
-              </div>
+            <div
+              {...{ ref, style }}
+              className={classes}
+              data-placement={placement}
+            >
+              {React.cloneElement(popperComponent, { arrowProps })}
             </div>
           )}
         </Popper>
