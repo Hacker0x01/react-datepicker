@@ -2,12 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 export default function CalendarContainer({ className, children }) {
-  return (
-    <div className={className}>
-      <div className="react-datepicker__triangle" />
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 CalendarContainer.propTypes = {

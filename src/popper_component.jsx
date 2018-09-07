@@ -1,12 +1,9 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Target, Popper } from "react-popper";
+import { Manager, Reference, Popper } from "react-popper";
 
 export const popperPlacementPositions = [
-  "auto",
-  "auto-left",
-  "auto-right",
   "bottom",
   "bottom-end",
   "bottom-start",
@@ -61,12 +58,19 @@ export default class PopperComponent extends React.Component {
     if (!hidePopper) {
       const classes = classnames("react-datepicker-popper", className);
       popper = (
-        <Popper
-          className={classes}
-          modifiers={popperModifiers}
-          placement={popperPlacement}
-        >
-          {popperComponent}
+        <Popper modifiers={popperModifiers} placement={popperPlacement}>
+          {({ ref, style, placement, arrowProps }) => (
+            <div>
+              <div
+                {...{ ref, style }}
+                className={classes}
+                data-placement={placement}
+              >
+                <div className="react-datepicker__triangle" {...arrowProps} />
+                {popperComponent}
+              </div>
+            </div>
+          )}
         </Popper>
       );
     }
@@ -77,7 +81,13 @@ export default class PopperComponent extends React.Component {
 
     return (
       <Manager>
-        <Target className="react-datepicker-wrapper">{targetComponent}</Target>
+        <Reference>
+          {({ ref, style }) => (
+            <div ref={ref} style={style} className="react-datepicker-wrapper">
+              {targetComponent}
+            </div>
+          )}
+        </Reference>
         {popper}
       </Manager>
     );
