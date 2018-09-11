@@ -13,11 +13,50 @@ export default class MonthDropdown extends React.Component {
     dateFormat: PropTypes.string.isRequired,
     month: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
+    accessibleMode: PropTypes.bool
   };
 
   state = {
     dropdownVisible: false
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.accessibleMode && // in accessibleMode
+      prevState.dropdownVisible !== this.state.dropdownVisible && // dropdown visibility changed
+      this.state.dropdownVisible === false // dropdown is no longer visible
+    ) {
+      this.readViewref.focus();
+    }
+  }
+
+  setReadViewRef = ref => {
+    this.readViewref = ref;
+  };
+
+  onReadViewKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
+  };
+
+  onDropDownKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
   };
 
   renderSelectOptions = monthNames =>
@@ -40,9 +79,12 @@ export default class MonthDropdown extends React.Component {
   renderReadView = (visible, monthNames) => (
     <div
       key="read"
+      ref={this.setReadViewRef}
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__month-read-view"
       onClick={this.toggleDropdown}
+      onKeyDown={this.onReadViewKeyDown}
+      tabIndex={this.props.accessibleMode ? "0" : undefined}
     >
       <span className="react-datepicker__month-read-view--down-arrow" />
       <span className="react-datepicker__month-read-view--selected-month">
@@ -59,6 +101,7 @@ export default class MonthDropdown extends React.Component {
       monthNames={monthNames}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
+      accessibleMode={this.props.accessibleMode}
     />
   );
 

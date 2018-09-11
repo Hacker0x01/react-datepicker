@@ -447,7 +447,8 @@
     border-bottom-right-radius: $datepicker__border-radius;
   }
 
-  &:hover {
+  &:hover,
+  &--preselected {
     background-color: $datepicker__muted-color;
 
     .react-datepicker__navigation--years-upcoming {

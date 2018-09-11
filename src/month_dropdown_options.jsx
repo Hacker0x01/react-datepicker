@@ -1,22 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FocusTrap from "focus-trap-react";
+import classnames from "classnames";
 
 export default class MonthDropdownOptions extends React.Component {
   static propTypes = {
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     month: PropTypes.number.isRequired,
-    monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+    monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    accessibleMode: PropTypes.bool
   };
+
+  constructor(...args) {
+    super(...args);
+
+    this.state = { preSelection: this.props.month };
+  }
 
   renderOptions = () => {
     return this.props.monthNames.map((month, i) => (
       <div
-        className={
-          this.props.month === i
-            ? "react-datepicker__month-option --selected_month"
-            : "react-datepicker__month-option"
-        }
+        className={classnames("react-datepicker__month-option", {
+          "--selected_month": this.props.month === i,
+          "react-datepicker__month-option--preselected":
+            this.props.accessibleMode && this.state.preSelection === i
+        })}
         key={month}
         ref={month}
         onClick={this.onChange.bind(this, i)}
@@ -35,11 +44,59 @@ export default class MonthDropdownOptions extends React.Component {
 
   handleClickOutside = () => this.props.onCancel();
 
+  onInputKeyDown = event => {
+    const eventKey = event.key;
+    let selectionChange = 0;
+    switch (eventKey) {
+      case "ArrowUp":
+        event.preventDefault();
+        event.stopPropagation();
+        selectionChange = -1;
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        event.stopPropagation();
+        selectionChange = 1;
+        break;
+      case "Escape":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onCancel();
+        break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onChange(this.state.preSelection);
+        break;
+    }
+    if (selectionChange) {
+      this.setState(({ preSelection }) => {
+        let nextSelection = preSelection + selectionChange;
+        if (nextSelection < 0) nextSelection = 11;
+        if (nextSelection === 12) nextSelection = 0;
+        return { preSelection: nextSelection };
+      });
+    }
+  };
+
   render() {
-    return (
+    const result = this.props.accessibleMode ? (
+      <FocusTrap>
+        <div
+          className="react-datepicker__month-dropdown"
+          tabIndex="0"
+          onKeyDown={this.onInputKeyDown}
+        >
+          {this.renderOptions()}
+        </div>
+      </FocusTrap>
+    ) : (
       <div className="react-datepicker__month-dropdown">
         {this.renderOptions()}
       </div>
     );
+
+    return result;
   }
 }

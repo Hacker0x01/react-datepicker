@@ -450,6 +450,7 @@ export default class Calendar extends React.Component {
         onChange={this.changeMonth}
         month={getMonth(this.state.date)}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
+        accessibleMode={this.props.accessibleMode}
       />
     );
   };
