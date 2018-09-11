@@ -1,6 +1,8 @@
 import React from "react";
+import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import FocusTrap from "focus-trap-react";
 
 function generateYears(year, noOfYear, minDate, maxDate) {
   var list = [];
@@ -32,7 +34,8 @@ export default class YearDropdownOptions extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    accessibleMode: PropTypes.bool
   };
 
   constructor(props) {
@@ -47,19 +50,45 @@ export default class YearDropdownOptions extends React.Component {
         noOfYear,
         this.props.minDate,
         this.props.maxDate
-      )
+      ),
+      preSelection: this.props.year
     };
+  }
+
+  componentDidMount() {
+    findDOMNode(this)
+      .querySelector(".react-datepicker__year-option--preselected")
+      .scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "nearest"
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.accessibleMode &&
+      prevState.preSelection !== this.state.preSelection
+    ) {
+      findDOMNode(this)
+        .querySelector(".react-datepicker__year-option--preselected")
+        .scrollIntoView({
+          behavior: "instant",
+          block: "nearest",
+          inline: "nearest"
+        });
+    }
   }
 
   renderOptions = () => {
     var selectedYear = this.props.year;
     var options = this.state.yearsList.map(year => (
       <div
-        className={
-          selectedYear === year
-            ? "react-datepicker__year-option react-datepicker__year-option--selected_year"
-            : "react-datepicker__year-option"
-        }
+        className={classNames("react-datepicker__year-option", {
+          "react-datepicker__year-option--selected_year": selectedYear === year,
+          "react-datepicker__year-option--preselected":
+            this.props.accessibleMode && this.state.preSelection === year
+        })}
         key={year}
         ref={year}
         onClick={this.onChange.bind(this, year)}
@@ -131,6 +160,44 @@ export default class YearDropdownOptions extends React.Component {
     return this.shiftYears(-1);
   };
 
+  onInputKeyDown = event => {
+    const eventKey = event.key;
+    let selectionChange = 0;
+    switch (eventKey) {
+      case "ArrowUp":
+        event.preventDefault();
+        event.stopPropagation();
+        selectionChange = 1;
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        event.stopPropagation();
+        selectionChange = -1;
+        break;
+      case "Escape":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onCancel();
+        break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onChange(this.state.preSelection);
+        break;
+    }
+    if (selectionChange) {
+      this.setState(({ preSelection }) => {
+        const maxYear = this.state.yearsList[0];
+        const minYear = this.state.yearsList[this.state.yearsList.length - 1];
+        let nextSelection = preSelection + selectionChange;
+        if (nextSelection < minYear) nextSelection = maxYear;
+        if (nextSelection > maxYear) nextSelection = minYear;
+        return { preSelection: nextSelection };
+      });
+    }
+  };
+
   render() {
     let dropdownClass = classNames({
       "react-datepicker__year-dropdown": true,
@@ -138,6 +205,18 @@ export default class YearDropdownOptions extends React.Component {
         .scrollableYearDropdown
     });
 
-    return <div className={dropdownClass}>{this.renderOptions()}</div>;
+    return this.props.accessibleMode ? (
+      <FocusTrap>
+        <div
+          className={dropdownClass}
+          tabIndex="0"
+          onKeyDown={this.onInputKeyDown}
+        >
+          {this.renderOptions()}
+        </div>
+      </FocusTrap>
+    ) : (
+      <div className={dropdownClass}>{this.renderOptions()}</div>
+    );
   }
 }

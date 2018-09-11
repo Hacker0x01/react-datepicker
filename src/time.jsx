@@ -71,8 +71,8 @@ export default class Time extends React.Component {
       // an element matches the selected time, scroll to it
       selectedElement.scrollIntoView({
         behavior: "instant",
-        block: "center",
-        inline: "center"
+        block: "nearest",
+        inline: "nearest"
       });
     } else {
       // no element is pre-selected, find the nearest interval and scroll to it

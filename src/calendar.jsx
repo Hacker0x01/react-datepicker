@@ -434,6 +434,7 @@ export default class Calendar extends React.Component {
         year={getYear(this.state.date)}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        accessibleMode={this.props.accessibleMode}
       />
     );
   };
@@ -469,6 +470,7 @@ export default class Calendar extends React.Component {
         maxDate={this.props.maxDate}
         date={this.state.date}
         scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+        accessibleMode={this.props.accessibleMode}
       />
     );
   };

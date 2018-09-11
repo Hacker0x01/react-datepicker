@@ -18,11 +18,50 @@ export default class YearDropdown extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     date: PropTypes.object,
     onSelect: PropTypes.func,
-    setOpen: PropTypes.func
+    setOpen: PropTypes.func,
+    accessibleMode: PropTypes.bool
   };
 
   state = {
     dropdownVisible: false
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.accessibleMode && // in accessibleMode
+      prevState.dropdownVisible !== this.state.dropdownVisible && // dropdown visibility changed
+      this.state.dropdownVisible === false // dropdown is no longer visible
+    ) {
+      this.readViewref.focus();
+    }
+  }
+
+  setReadViewRef = ref => {
+    this.readViewref = ref;
+  };
+
+  onReadViewKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
+  };
+
+  onDropDownKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
   };
 
   renderSelectOptions = () => {
@@ -57,9 +96,12 @@ export default class YearDropdown extends React.Component {
   renderReadView = visible => (
     <div
       key="read"
+      ref={this.setReadViewRef}
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
       onClick={event => this.toggleDropdown(event)}
+      onKeyDown={this.onReadViewKeyDown}
+      tabIndex={this.props.accessibleMode ? "0" : undefined}
     >
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">
@@ -79,6 +121,7 @@ export default class YearDropdown extends React.Component {
       maxDate={this.props.maxDate}
       scrollableYearDropdown={this.props.scrollableYearDropdown}
       yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+      accessibleMode={this.props.accessibleMode}
     />
   );
 

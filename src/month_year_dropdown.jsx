@@ -24,11 +24,50 @@ export default class MonthYearDropdown extends React.Component {
     minDate: PropTypes.object.isRequired,
     date: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
-    scrollableMonthYearDropdown: PropTypes.bool
+    scrollableMonthYearDropdown: PropTypes.bool,
+    accessibleMode: PropTypes.bool
   };
 
   state = {
     dropdownVisible: false
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.accessibleMode && // in accessibleMode
+      prevState.dropdownVisible !== this.state.dropdownVisible && // dropdown visibility changed
+      this.state.dropdownVisible === false // dropdown is no longer visible
+    ) {
+      this.readViewref.focus();
+    }
+  }
+
+  setReadViewRef = ref => {
+    this.readViewref = ref;
+  };
+
+  onReadViewKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
+  };
+
+  onDropDownKeyDown = event => {
+    const eventKey = event.key;
+    switch (eventKey) {
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleDropdown();
+        break;
+    }
   };
 
   renderSelectOptions = () => {
@@ -78,9 +117,12 @@ export default class MonthYearDropdown extends React.Component {
     return (
       <div
         key="read"
+        ref={this.setReadViewRef}
         style={{ visibility: visible ? "visible" : "hidden" }}
         className="react-datepicker__month-year-read-view"
         onClick={event => this.toggleDropdown(event)}
+        onKeyDown={this.onReadViewKeyDown}
+        tabIndex={this.props.accessibleMode ? "0" : undefined}
       >
         <span className="react-datepicker__month-year-read-view--down-arrow" />
         <span className="react-datepicker__month-year-read-view--selected-month-year">
@@ -101,6 +143,7 @@ export default class MonthYearDropdown extends React.Component {
       minDate={localizeDate(this.props.minDate, this.props.locale)}
       maxDate={localizeDate(this.props.maxDate, this.props.locale)}
       scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+      accessibleMode={this.props.accessibleMode}
     />
   );
 

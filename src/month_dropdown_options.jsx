@@ -81,7 +81,7 @@ export default class MonthDropdownOptions extends React.Component {
   };
 
   render() {
-    const result = this.props.accessibleMode ? (
+    return this.props.accessibleMode ? (
       <FocusTrap>
         <div
           className="react-datepicker__month-dropdown"
@@ -96,7 +96,5 @@ export default class MonthDropdownOptions extends React.Component {
         {this.renderOptions()}
       </div>
     );
-
-    return result;
   }
 }

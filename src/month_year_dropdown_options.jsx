@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FocusTrap from "focus-trap-react";
 import classNames from "classnames";
 import {
   addMonths,
@@ -8,8 +9,10 @@ import {
   getStartOfMonth,
   isAfter,
   isSameMonth,
-  isSameYear
+  isSameYear,
+  isBefore
 } from "./date_utils";
+import { findDOMNode } from "react-dom";
 
 function generateMonthYears(minDate, maxDate) {
   const list = [];
@@ -34,15 +37,45 @@ export default class MonthYearDropdownOptions extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableMonthYearDropdown: PropTypes.bool,
     date: PropTypes.object.isRequired,
-    dateFormat: PropTypes.string.isRequired
+    dateFormat: PropTypes.string.isRequired,
+    accessibleMode: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      monthYearsList: generateMonthYears(this.props.minDate, this.props.maxDate)
+      monthYearsList: generateMonthYears(
+        this.props.minDate,
+        this.props.maxDate
+      ),
+      preSelection: getStartOfMonth(cloneDate(this.props.date))
     };
+  }
+
+  componentDidMount() {
+    findDOMNode(this)
+      .querySelector(".react-datepicker__month-year-option--preselected")
+      .scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "nearest"
+      });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.accessibleMode &&
+      prevState.preSelection !== this.state.preSelection
+    ) {
+      findDOMNode(this)
+        .querySelector(".react-datepicker__month-year-option--preselected")
+        .scrollIntoView({
+          behavior: "instant",
+          block: "nearest",
+          inline: "nearest"
+        });
+    }
   }
 
   renderOptions = () => {
@@ -53,13 +86,17 @@ export default class MonthYearDropdownOptions extends React.Component {
         isSameYear(this.props.date, monthYear) &&
         isSameMonth(this.props.date, monthYear);
 
+      const isPreselectionSameMonthYear =
+        isSameYear(this.state.preSelection, monthYear) &&
+        isSameMonth(this.state.preSelection, monthYear);
+
       return (
         <div
-          className={
-            isSameMonthYear
-              ? "react-datepicker__month-year-option --selected_month-year"
-              : "react-datepicker__month-year-option"
-          }
+          className={classNames("react-datepicker__month-year-option", {
+            "--selected_month-year": isSameMonthYear,
+            "react-datepicker__month-year-option--preselected":
+              this.props.accessibleMode && isPreselectionSameMonthYear
+          })}
           key={monthYearPoint}
           ref={monthYearPoint}
           onClick={this.onChange.bind(this, monthYearPoint)}
@@ -83,12 +120,63 @@ export default class MonthYearDropdownOptions extends React.Component {
     this.props.onCancel();
   };
 
+  onInputKeyDown = event => {
+    const eventKey = event.key;
+    let newSelection;
+    switch (eventKey) {
+      case "ArrowUp":
+        event.preventDefault();
+        event.stopPropagation();
+        newSelection = addMonths(cloneDate(this.state.preSelection), -1);
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        event.stopPropagation();
+        newSelection = addMonths(cloneDate(this.state.preSelection), 1);
+        break;
+      case "Escape":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onCancel();
+        break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onChange(this.state.preSelection.valueOf());
+        break;
+    }
+    if (newSelection) {
+      const minMonthYear = this.state.monthYearsList[0];
+      const maxMonthYear = this.state.monthYearsList[
+        this.state.monthYearsList.length - 1
+      ];
+      if (isBefore(newSelection, minMonthYear)) newSelection = maxMonthYear;
+      if (isAfter(newSelection, maxMonthYear)) newSelection = minMonthYear;
+      this.setState({ preSelection: newSelection });
+    }
+  };
+
   render() {
     let dropdownClass = classNames({
       "react-datepicker__month-year-dropdown": true,
       "react-datepicker__month-year-dropdown--scrollable": this.props
         .scrollableMonthYearDropdown
     });
+
+    return this.props.accessibleMode ? (
+      <FocusTrap>
+        <div
+          className={dropdownClass}
+          tabIndex="0"
+          onKeyDown={this.onInputKeyDown}
+        >
+          {this.renderOptions()}
+        </div>
+      </FocusTrap>
+    ) : (
+      <div className={dropdownClass}>{this.renderOptions()}</div>
+    );
 
     return <div className={dropdownClass}>{this.renderOptions()}</div>;
   }
