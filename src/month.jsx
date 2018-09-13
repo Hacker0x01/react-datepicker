@@ -139,6 +139,7 @@ export default class Month extends React.Component {
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
           utcOffset={this.props.utcOffset}
+          accessibleMode={this.props.accessibleMode}
         />
       );
 

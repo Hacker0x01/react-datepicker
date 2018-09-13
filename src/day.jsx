@@ -28,7 +28,8 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    accessibleMode: PropTypes.bool
   };
 
   handleClick = event => {
@@ -46,7 +47,7 @@ export default class Day extends React.Component {
   isSameDay = other => isSameDay(this.props.day, other);
 
   isKeyboardSelected = () =>
-    !this.props.inline &&
+    (!this.props.inline || this.props.accessibleMode) &&
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);
 

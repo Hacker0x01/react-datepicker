@@ -28,7 +28,8 @@ export default class Week extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.number,
+    accessibleMode: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -94,6 +95,7 @@ export default class Week extends React.Component {
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
             utcOffset={this.props.utcOffset}
+            accessibleMode={this.props.accessibleMode}
           />
         );
       })
