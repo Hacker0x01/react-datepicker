@@ -16,6 +16,7 @@ import {
   subtractMonths,
   getStartOfWeek,
   getStartOfDate,
+  getStartOfMonth,
   addDays,
   cloneDate,
   formatDate,
@@ -238,6 +239,9 @@ export default class Calendar extends React.Component {
       if (this.props.setOpen) {
         this.props.setOpen(true);
       }
+    }
+    if (this.props.accessibleMode) {
+      this.props.updateSelection(getStartOfMonth(cloneDate(date)));
     }
   };
 
