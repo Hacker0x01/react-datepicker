@@ -20,7 +20,7 @@ export default class Time extends React.Component {
     intervals: PropTypes.number,
     selected: PropTypes.object,
     onChange: PropTypes.func,
-    todayButton: PropTypes.string,
+    todayButton: PropTypes.node,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
