@@ -77,7 +77,6 @@ export default class PopperComponent extends React.Component {
     }
 
     return (
-      <div>
         <Manager>
           <Reference>
             {({ ref, style }) => (
@@ -88,7 +87,6 @@ export default class PopperComponent extends React.Component {
           </Reference>
           {popper}
         </Manager>
-      </div>
     );
   }
 }
