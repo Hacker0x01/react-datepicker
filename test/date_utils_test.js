@@ -109,6 +109,12 @@ describe("date_utils", function() {
           setUTCOffset(newDate("2016-02-10"), -210)
         )
       ).to.be.false;
+      expect(
+        isSameUtcOffset(
+          setUTCOffset(newDate("2016-02-10"), "-05:45"),
+          setUTCOffset(newDate("2016-02-10"), "+01:00")
+        )
+      ).to.be.false;
     });
 
     it("should return true for equal utc offsets, regardless of dates", function() {
@@ -124,6 +130,18 @@ describe("date_utils", function() {
         isSameUtcOffset(
           setUTCOffset(newDate("2016-12-10"), 6),
           setUTCOffset(newDate("2016-02-15"), 6)
+        )
+      ).to.be.true;
+      expect(
+        isSameUtcOffset(
+          setUTCOffset(newDate("2016-12-10"), "+04:00"),
+          setUTCOffset(newDate("2016-02-15"), "+04:00")
+        )
+      ).to.be.true;
+      expect(
+        isSameUtcOffset(
+          setUTCOffset(newDate("2016-12-10"), "-02:00"),
+          setUTCOffset(newDate("2016-02-15"), "-0200")
         )
       ).to.be.true;
     });

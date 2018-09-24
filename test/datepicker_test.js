@@ -799,6 +799,22 @@ describe("DatePicker", () => {
     expect(tmzDatePicker.find("input").prop("value")).to.equal(
       "2016-11-22 06:00"
     );
+
+    // using string offsets
+    tmzDatePicker.setState({ startDate: date, utcOffset: "-06:00" });
+
+    expect(tmzDatePicker.find("input").prop("value")).to.equal(
+      "2016-11-21 18:00"
+    );
+
+    tmzDatePicker.setState({
+      utcOffset: "+06:00",
+      startDate: utils.setUTCOffset(utils.cloneDate(date), 6)
+    });
+
+    expect(tmzDatePicker.find("input").prop("value")).to.equal(
+      "2016-11-22 06:00"
+    );
   });
   it("should correctly update the input when the value prop changes", () => {
     const datePicker = mount(<DatePicker />);

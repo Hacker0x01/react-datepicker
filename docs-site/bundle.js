@@ -35899,7 +35899,10 @@
         todayButton: _propTypes2.default.string,
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
-        utcOffset: _propTypes2.default.number,
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ]),
         value: _propTypes2.default.string,
         weekLabel: _propTypes2.default.string,
         withPortal: _propTypes2.default.bool,
@@ -35929,6 +35932,21 @@
       "use strict";
 
       exports.__esModule = true;
+
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
       exports.default = CalendarContainer;
 
       var _propTypes = __webpack_require__(525);
@@ -35945,21 +35963,25 @@
 
       function CalendarContainer(_ref) {
         var className = _ref.className,
-          children = _ref.children;
+          children = _ref.children,
+          _ref$arrowProps = _ref.arrowProps,
+          arrowProps = _ref$arrowProps === undefined ? {} : _ref$arrowProps;
 
         return _react2.default.createElement(
           "div",
           { className: className },
-          _react2.default.createElement("div", {
-            className: "react-datepicker__triangle"
-          }),
+          _react2.default.createElement(
+            "div",
+            _extends({ className: "react-datepicker__triangle" }, arrowProps)
+          ),
           children
         );
       }
 
       CalendarContainer.propTypes = {
         className: _propTypes2.default.string,
-        children: _propTypes2.default.node
+        children: _propTypes2.default.node,
+        arrowProps: _propTypes2.default.object // react-popper arrow props
       };
 
       /***/
@@ -36838,7 +36860,10 @@
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
         withPortal: _propTypes2.default.bool,
-        utcOffset: _propTypes2.default.number,
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ]),
         weekLabel: _propTypes2.default.string,
         yearDropdownItemNumber: _propTypes2.default.number,
         setOpen: _propTypes2.default.func,
@@ -57827,7 +57852,10 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Month;
 
@@ -58049,7 +58077,10 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumber: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Week;
 
@@ -58367,7 +58398,10 @@
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Day;
 
@@ -58802,6 +58836,20 @@
       exports.__esModule = true;
       exports.popperPlacementPositions = undefined;
 
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
       var _createClass = (function() {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -58876,9 +58924,6 @@
       }
 
       var popperPlacementPositions = (exports.popperPlacementPositions = [
-        "auto",
-        "auto-left",
-        "auto-right",
         "bottom",
         "bottom-end",
         "bottom-start",
@@ -58923,12 +58968,26 @@
             );
             popper = _react2.default.createElement(
               _reactPopper.Popper,
-              {
-                className: classes,
-                modifiers: popperModifiers,
-                placement: popperPlacement
-              },
-              popperComponent
+              { modifiers: popperModifiers, placement: popperPlacement },
+              function(_ref) {
+                var ref = _ref.ref,
+                  style = _ref.style,
+                  placement = _ref.placement,
+                  arrowProps = _ref.arrowProps;
+                return _react2.default.createElement(
+                  "div",
+                  _extends(
+                    { ref: ref, style: style },
+                    {
+                      className: classes,
+                      "data-placement": placement
+                    }
+                  ),
+                  _react2.default.cloneElement(popperComponent, {
+                    arrowProps: arrowProps
+                  })
+                );
+              }
             );
           }
 
@@ -58941,14 +59000,30 @@
           }
 
           return _react2.default.createElement(
-            _reactPopper.Manager,
+            "div",
             null,
             _react2.default.createElement(
-              _reactPopper.Target,
-              { className: "react-datepicker-wrapper" },
-              targetComponent
-            ),
-            popper
+              _reactPopper.Manager,
+              null,
+              _react2.default.createElement(
+                _reactPopper.Reference,
+                null,
+                function(_ref2) {
+                  var ref = _ref2.ref,
+                    style = _ref2.style;
+                  return _react2.default.createElement(
+                    "div",
+                    {
+                      ref: ref,
+                      style: style,
+                      className: "react-datepicker-wrapper"
+                    },
+                    targetComponent
+                  );
+                }
+              ),
+              popper
+            )
           );
         };
 
