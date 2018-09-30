@@ -24371,7 +24371,8 @@
     },
     /* 416 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // TODO support filter tags like :javascript, support inline HTML
+      module.exports = function(hljs) {
+        // TODO support filter tags like :javascript, support inline HTML
         return {
           case_insensitive: true,
           contains: [
@@ -30311,7 +30312,8 @@
     },
     /* 475 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
+      module.exports = function(hljs) {
+        // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
         var STRINGS = {
           // PB IDE color: #0080FF (Azure Radiance)
           className: "string",
@@ -35929,6 +35931,21 @@
       "use strict";
 
       exports.__esModule = true;
+
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
       exports.default = CalendarContainer;
 
       var _propTypes = __webpack_require__(525);
@@ -35945,21 +35962,25 @@
 
       function CalendarContainer(_ref) {
         var className = _ref.className,
-          children = _ref.children;
+          children = _ref.children,
+          _ref$arrowProps = _ref.arrowProps,
+          arrowProps = _ref$arrowProps === undefined ? {} : _ref$arrowProps;
 
         return _react2.default.createElement(
           "div",
           { className: className },
-          _react2.default.createElement("div", {
-            className: "react-datepicker__triangle"
-          }),
+          _react2.default.createElement(
+            "div",
+            _extends({ className: "react-datepicker__triangle" }, arrowProps)
+          ),
           children
         );
       }
 
       CalendarContainer.propTypes = {
         className: _propTypes2.default.string,
-        children: _propTypes2.default.node
+        children: _propTypes2.default.node,
+        arrowProps: _propTypes2.default.object // react-popper arrow props
       };
 
       /***/
@@ -57792,7 +57813,8 @@
             {
               className: this.getClassNames(),
               onMouseLeave: this.handleMouseLeave,
-              role: "listbox"
+              role: "listbox",
+              "aria-label": "month-" + this.props.day.format("YYYY-MM")
             },
             this.renderWeeks()
           );
@@ -58802,6 +58824,20 @@
       exports.__esModule = true;
       exports.popperPlacementPositions = undefined;
 
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
       var _createClass = (function() {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -58876,9 +58912,6 @@
       }
 
       var popperPlacementPositions = (exports.popperPlacementPositions = [
-        "auto",
-        "auto-left",
-        "auto-right",
         "bottom",
         "bottom-end",
         "bottom-start",
@@ -58923,12 +58956,26 @@
             );
             popper = _react2.default.createElement(
               _reactPopper.Popper,
-              {
-                className: classes,
-                modifiers: popperModifiers,
-                placement: popperPlacement
-              },
-              popperComponent
+              { modifiers: popperModifiers, placement: popperPlacement },
+              function(_ref) {
+                var ref = _ref.ref,
+                  style = _ref.style,
+                  placement = _ref.placement,
+                  arrowProps = _ref.arrowProps;
+                return _react2.default.createElement(
+                  "div",
+                  _extends(
+                    { ref: ref, style: style },
+                    {
+                      className: classes,
+                      "data-placement": placement
+                    }
+                  ),
+                  _react2.default.cloneElement(popperComponent, {
+                    arrowProps: arrowProps
+                  })
+                );
+              }
             );
           }
 
@@ -58941,14 +58988,30 @@
           }
 
           return _react2.default.createElement(
-            _reactPopper.Manager,
+            "div",
             null,
             _react2.default.createElement(
-              _reactPopper.Target,
-              { className: "react-datepicker-wrapper" },
-              targetComponent
-            ),
-            popper
+              _reactPopper.Manager,
+              null,
+              _react2.default.createElement(
+                _reactPopper.Reference,
+                null,
+                function(_ref2) {
+                  var ref = _ref2.ref,
+                    style = _ref2.style;
+                  return _react2.default.createElement(
+                    "div",
+                    {
+                      ref: ref,
+                      style: style,
+                      className: "react-datepicker-wrapper"
+                    },
+                    targetComponent
+                  );
+                }
+              ),
+              popper
+            )
           );
         };
 
@@ -70321,8 +70384,7 @@
       });
 
       for (
-        var es6Symbols = // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
-          "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(
+        var es6Symbols = "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split( // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
             ","
           ),
           j = 0;

@@ -140,6 +140,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
+        aria-label={"month-" + this.props.day.format("YYYY-MM")}
       >
         {this.renderWeeks()}
       </div>
