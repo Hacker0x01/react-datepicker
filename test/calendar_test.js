@@ -11,11 +11,12 @@ import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";
+import "dayjs/locale/fr";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/DD/YYYY";
 
-describe.only("Calendar", function() {
+describe("Calendar", function() {
   const dateFormat = "MMMM YYYY";
 
   function getCalendar(extraProps) {
