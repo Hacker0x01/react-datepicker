@@ -162,7 +162,7 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: "MM-DD-YYYY",
+      dateFormat: "MM/DD/YYYY",
       dateFormatCalendar: "MMMM YYYY",
       onChange() {},
       disabled: false,

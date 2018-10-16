@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class ExcludeTimePeriod extends React.Component {
   state = {
-    startDate: moment()
-      .hours(17)
-      .minutes(30)
+    startDate: dayjs()
+      .set("hour", 17)
+      .set("minute", 30)
   };
 
   handleChange = date => {
@@ -29,11 +29,11 @@ export default class ExcludeTimePeriod extends React.Component {
             <strong>
               {"  showTimeSelect"}
               <br />
-              {"  minTime={moment().hours(17).minutes(0)}"}
+              {"  minTime={dayjs().set('hour', 17).set('minute', 0)}"}
               <br />
-              {"  maxTime={moment().hours(20).minutes(30)}"}
+              {"  maxTime={dayjs().set('hour', 20).set('minute', 30)}"}
               <br />
-              {'  dateFormat="LLL"'}
+              {'  dateFormat="MMMM DD, YYYY"'}
             </strong>
             <br />
             {"/>"}
@@ -44,13 +44,14 @@ export default class ExcludeTimePeriod extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             showTimeSelect
-            minTime={moment()
-              .hours(17)
-              .minutes(0)}
-            maxTime={moment()
-              .hours(20)
-              .minutes(30)}
-            dateFormat="LLL"/>
+            minTime={dayjs()
+              .set("hour", 17)
+              .set("minute", 0)}
+            maxTime={dayjs()
+              .set("hour", 20)
+              .set("minute", 30)}
+            dateFormat="MMMM DD, YYYY h:mm A"
+          />
         </div>
       </div>
     );

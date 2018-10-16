@@ -3,13 +3,13 @@ import DatePicker, {
   CalendarContainer as OriginalContainer
 } from "react-datepicker";
 import PropTypes from "prop-types";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class CalendarContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: dayjs()
     };
   }
 

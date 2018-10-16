@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class highlightDatesRanges extends React.Component {
   constructor(props) {
@@ -8,18 +8,18 @@ export default class highlightDatesRanges extends React.Component {
     this.highlightWithRanges = [
       {
         "react-datepicker__day--highlighted-custom-1": [
-          moment().subtract(4, "days"),
-          moment().subtract(3, "days"),
-          moment().subtract(2, "days"),
-          moment().subtract(1, "days")
+          dayjs().subtract(4, "days"),
+          dayjs().subtract(3, "days"),
+          dayjs().subtract(2, "days"),
+          dayjs().subtract(1, "days")
         ]
       },
       {
         "react-datepicker__day--highlighted-custom-2": [
-          moment().add(1, "days"),
-          moment().add(2, "days"),
-          moment().add(3, "days"),
-          moment().add(4, "days")
+          dayjs().add(1, "days"),
+          dayjs().add(2, "days"),
+          dayjs().add(3, "days"),
+          dayjs().add(4, "days")
         ]
       }
     ];
@@ -48,25 +48,25 @@ export default class highlightDatesRanges extends React.Component {
             <br />
             {'    { "react-datepicker__day--highlighted-custom-1": ['}
             <br />
-            {'      moment().subtract(4, "days"),'}
+            {'      dayjs().subtract(4, "days"),'}
             <br />
-            {'      moment().subtract(3, "days"),'}
+            {'      dayjs().subtract(3, "days"),'}
             <br />
-            {'      moment().subtract(2, "days"),'}
+            {'      dayjs().subtract(2, "days"),'}
             <br />
-            {'      moment().subtract(1, "days") ]'}
+            {'      dayjs().subtract(1, "days") ]'}
             <br />
             {"    },"}
             <br />
             {'    { "react-datepicker__day--highlighted-custom-2": ['}
             <br />
-            {'      moment().add(1, "days"),'}
+            {'      dayjs().add(1, "days"),'}
             <br />
-            {'      moment().add(2, "days"),'}
+            {'      dayjs().add(2, "days"),'}
             <br />
-            {'      moment().add(3, "days"),'}
+            {'      dayjs().add(3, "days"),'}
             <br />
-            {'      moment().add(4, "days") ]'}
+            {'      dayjs().add(4, "days") ]'}
             <br />
             {"    }"}
             <br />
@@ -94,7 +94,8 @@ export default class highlightDatesRanges extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             highlightDates={this.highlightWithRanges}
-            placeholderText="This highlight two ranges with custom classes"/>
+            placeholderText="This highlight two ranges with custom classes"
+          />
         </div>
       </div>
     );

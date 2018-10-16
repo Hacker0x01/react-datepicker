@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class InlinePortalVersion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment(),
+      startDate: dayjs(),
       isOpen: false
     };
   }
@@ -59,7 +59,8 @@ toggleCalendar (e) {
         <div className="column">
           <button
             className="example-custom-input"
-            onClick={this.toggleCalendar}>
+            onClick={this.toggleCalendar}
+          >
             {this.state.startDate.format("DD-MM-YYYY")}
           </button>
           {this.state.isOpen && (
@@ -67,7 +68,8 @@ toggleCalendar (e) {
               selected={this.state.startDate}
               onChange={this.handleChange}
               withPortal
-              inline/>
+              inline
+            />
           )}
         </div>
       </div>

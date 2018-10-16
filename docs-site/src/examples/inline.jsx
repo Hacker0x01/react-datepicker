@@ -1,13 +1,13 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class Inline extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      startDate: moment()
+      startDate: dayjs()
     };
   }
 

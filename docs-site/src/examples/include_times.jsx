@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class IncludeTimes extends React.Component {
   state = {
-    startDate: moment()
-      .hours(16)
-      .minutes(30)
+    startDate: dayjs()
+      .set("hour", 16)
+      .set("minute", 30)
   };
 
   handleChange = date => {
@@ -30,11 +30,11 @@ export default class IncludeTimes extends React.Component {
               {"  showTimeSelect"}
               <br />
               {
-                "  includeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}"
+                "  includeTimes={[dayjs().set('hour', 17).set('minute', 0), dayjs().set('hour', 18).set('minute', 30), dayjs().set('hour', 19).set('minute', 30)], dayjs().set('hour', 17).set('minute', 30)}"
               }
             </strong>
             <br />
-            <strong>{'  dateFormat="LLL"'}</strong>
+            <strong>{'  dateFormat="MMMM DD, YYYY h:mm A"'}</strong>
             <br />
             {"/>"}
           </code>
@@ -45,20 +45,21 @@ export default class IncludeTimes extends React.Component {
             onChange={this.handleChange}
             showTimeSelect
             includeTimes={[
-              moment()
-                .hours(17)
-                .minutes(0),
-              moment()
-                .hours(18)
-                .minutes(30),
-              moment()
-                .hours(19)
-                .minutes(30),
-              moment()
-                .hours(17)
-                .minutes(30)
+              dayjs()
+                .set("hour", 17)
+                .set("minute", 0),
+              dayjs()
+                .set("hour", 18)
+                .set("minute", 30),
+              dayjs()
+                .set("hour", 19)
+                .set("minute", 30),
+              dayjs()
+                .set("hour", 17)
+                .set("minute", 30)
             ]}
-            dateFormat="LLL"/>
+            dateFormat="MMMM DD, YYYY h:mm A"
+          />
         </div>
       </div>
     );

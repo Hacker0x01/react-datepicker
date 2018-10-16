@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class Default extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: dayjs()
     };
   }
 
@@ -32,7 +32,8 @@ export default class Default extends React.Component {
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+          />
         </div>
       </div>
     );

@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default class YearDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: dayjs()
     };
   }
 
@@ -40,7 +40,8 @@ export default class YearDropdown extends React.Component {
             showYearDropdown
             dateFormatCalendar="MMMM"
             yearDropdownItemNumber={15}
-            scrollableYearDropdown/>
+            scrollableYearDropdown
+          />
         </div>
       </div>
     );
