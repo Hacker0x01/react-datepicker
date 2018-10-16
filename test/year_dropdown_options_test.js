@@ -1,7 +1,7 @@
 import React from "react";
 import YearDropdownOptions from "../src/year_dropdown_options.jsx";
 import { mount, shallow } from "enzyme";
-import moment from "moment";
+import dayjs from "dayjs";
 
 describe("YearDropdownOptions", () => {
   let yearDropdown, handleChangeResult;
@@ -155,14 +155,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should generate years between minDate and maxDate if prop scrollableYearDropdown is true", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const minDate = moment();
-    const maxDate = moment().add(1, "year");
+    const minDate = dayjs();
+    const maxDate = dayjs().add(1, "year");
     const yearDropdown = shallow(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={moment().year()}
+        year={dayjs().year()}
         minDate={minDate}
         maxDate={maxDate}
       />
@@ -175,14 +175,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should hide arrows to add years, if not between minDate and maxDate", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const minDate = moment();
-    const maxDate = moment().add(1, "year");
+    const minDate = dayjs();
+    const maxDate = dayjs().add(1, "year");
     const yearDropdown = mount(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={moment().year()}
+        year={dayjs().year()}
         minDate={minDate}
         maxDate={maxDate}
       />
@@ -199,14 +199,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add years, if actual years list contains years between minDate and maxDate", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const minDate = moment().subtract(11, "y");
-    const maxDate = moment().add(11, "y");
+    const minDate = dayjs().subtract(11, "y");
+    const maxDate = dayjs().add(11, "y");
     const yearDropdown = mount(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={moment().year()}
+        year={dayjs().year()}
         minDate={minDate}
         maxDate={maxDate}
       />
@@ -252,13 +252,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add previous years, if actual years list does not contain minDate year, if only minDate is provided", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const minDate = moment().subtract(11, "y");
+    const minDate = dayjs().subtract(11, "y");
     const yearDropdown = mount(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={moment().year()}
+        year={dayjs().year()}
         minDate={minDate}
       />
     );
@@ -295,13 +295,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add upcoming years, if actual years list does not contain maxDate year, if only maxDate is provided", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const maxDate = moment().add(11, "y");
+    const maxDate = dayjs().add(11, "y");
     const yearDropdown = mount(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={moment().year()}
+        year={dayjs().year()}
         maxDate={maxDate}
       />
     );

@@ -15,7 +15,7 @@ import * as utils from "../src/date_utils";
 // TODO Possibly rename
 const DATE_FORMAT = "MM/DD/YYYY";
 
-describe("Calendar", function() {
+describe.only("Calendar", function() {
   const dateFormat = "MMMM YYYY";
 
   function getCalendar(extraProps) {
@@ -196,6 +196,7 @@ describe("Calendar", function() {
         maxDate: utils.addMonths(utils.newDate(), 3),
         showDisabledMonthNavigation: true
       });
+
       const prevDisabledNavigationButton = calendar.find(
         ".react-datepicker__navigation--previous--disabled"
       );
@@ -423,7 +424,29 @@ describe("Calendar", function() {
 
   it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
     utils.registerLocale("weekDaysLocale", {
-      parentLocale: "en",
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      weekdays: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
       weekdaysMin: "AA_BB_CC_DD_EE_FF_GG".split("_"),
       weekdaysShort: "AAA_BBB_CCC_DDD_EEE_FFF_GGG".split("_")
     });

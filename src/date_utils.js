@@ -1,14 +1,13 @@
-import moment from "moment";
+import dayjs from "dayjs";
+import dayjsPluginUTC from "dayjs-plugin-utc";
+import isBetween from "dayjs/plugin/isBetween";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import min from "date-fns/min";
+import max from "date-fns/max";
 
-const dayOfWeekCodes = {
-  1: "mon",
-  2: "tue",
-  3: "wed",
-  4: "thu",
-  5: "fri",
-  6: "sat",
-  7: "sun"
-};
+dayjs.extend(dayjsPluginUTC);
+dayjs.extend(weekOfYear);
+dayjs.extend(isBetween);
 
 // These functions are not exported so
 // that we avoid magic strings like 'days'
@@ -25,7 +24,24 @@ function subtract(date, amount, unit) {
 }
 
 function get(date, unit) {
-  return date.get(unit);
+  switch (unit) {
+    case "year":
+      return date.year();
+    case "month":
+      return date.month();
+    case "day":
+      return date.day();
+    case "hour":
+      return date.hour();
+    case "minute":
+      return date.minute();
+    case "second":
+      return date.second();
+    case "millisecond":
+      return date.millisecond();
+    default:
+      return date;
+  }
 }
 
 function getStartOf(date, unit) {
@@ -43,39 +59,38 @@ function getDiff(date1, date2, unit) {
 // ** Date Constructors **
 
 export function newDate(point) {
-  return moment(point);
+  const d = dayjs(point);
+  return d.isValid() ? d : null;
 }
 
 export function newDateWithOffset(utcOffset) {
-  return moment()
-    .utc()
-    .utcOffset(utcOffset);
+  return dayjs().utcOffset(utcOffset);
 }
 
 export function now(maybeFixedUtcOffset) {
   if (maybeFixedUtcOffset == null) {
     return newDate();
   }
-  return newDateWithOffset(maybeFixedUtcOffset);
+  return newDateWithOffset(maybeFixedUtcOffset).local();
 }
 
 export function cloneDate(date) {
-  return date.clone();
+  return dayjs(date);
 }
 
-export function parseDate(value, { dateFormat, locale }) {
-  const m = moment(value, dateFormat, locale || moment.locale(), true);
-  return m.isValid() ? m : null;
+export function parseDate(value, { locale }) {
+  const d = dayjs(value, { locale: locale || dayjs().$L });
+  return d.isValid() ? d : null;
 }
 
 // ** Date "Reflection" **
 
-export function isMoment(date) {
-  return moment.isMoment(date);
+export function isDayjs(date) {
+  return dayjs.isDayjs(date);
 }
 
 export function isDate(date) {
-  return moment.isDate(date);
+  return date.isValid();
 }
 
 // ** Date Formatting **
@@ -85,21 +100,23 @@ export function formatDate(date, format) {
 }
 
 export function safeDateFormat(date, { dateFormat, locale }) {
-  return (
+  let returnVal =
     (date &&
       date
         .clone()
-        .locale(locale || moment.locale())
+        .locale(locale || dayjs().$L)
         .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat)) ||
-    ""
-  );
+    "";
+  return returnVal;
 }
 
 // ** Date Setters **
 
-export function setTime(date, { hour, minute, second }) {
-  date.set({ hour, minute, second });
-  return date;
+export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
+  return date
+    .set("hour", hour)
+    .set("minute", minute)
+    .set("second", second);
 }
 
 export function setMonth(date, month) {
@@ -117,45 +134,45 @@ export function setUTCOffset(date, offset) {
 // ** Date Getters **
 
 export function getSecond(date) {
-  return get(date, "second");
+  return date.second();
 }
 
 export function getMinute(date) {
-  return get(date, "minute");
+  return date.minute();
 }
 
 export function getHour(date) {
-  return get(date, "hour");
+  return date.hour();
 }
 
 // Returns day of week
 export function getDay(date) {
-  return get(date, "day");
+  return date.day();
 }
 
 export function getWeek(date) {
-  return get(date, "week");
+  return date.week();
 }
 
 export function getMonth(date) {
-  return get(date, "month");
+  return date.month();
 }
 
 export function getYear(date) {
-  return get(date, "year");
+  return date.year();
 }
 
 // Returns day of month
 export function getDate(date) {
-  return get(date, "date");
+  return date.date();
 }
 
 export function getUTCOffset() {
-  return moment().utcOffset();
+  return dayjs().utcOffset();
 }
 
 export function getDayOfWeekCode(day) {
-  return dayOfWeekCodes[day.isoWeekday()];
+  return dayjs(day).format("ddd");
 }
 
 // *** Start of ***
@@ -190,44 +207,44 @@ export function getEndOfMonth(date) {
 // *** Addition ***
 
 export function addMinutes(date, amount) {
-  return add(date, amount, "minutes");
+  return add(date, amount, "minute");
 }
 
 export function addHours(date, amount) {
-  return add(date, amount, "hours");
+  return add(date, amount, "hour");
 }
 
 export function addDays(date, amount) {
-  return add(date, amount, "days");
+  return add(date, amount, "day");
 }
 
 export function addWeeks(date, amount) {
-  return add(date, amount, "weeks");
+  return add(date, amount, "week");
 }
 
 export function addMonths(date, amount) {
-  return add(date, amount, "months");
+  return add(date, amount, "month");
 }
 
 export function addYears(date, amount) {
-  return add(date, amount, "years");
+  return add(date, amount, "year");
 }
 
 // *** Subtraction ***
 export function subtractDays(date, amount) {
-  return subtract(date, amount, "days");
+  return subtract(date, amount, "day");
 }
 
 export function subtractWeeks(date, amount) {
-  return subtract(date, amount, "weeks");
+  return subtract(date, amount, "week");
 }
 
 export function subtractMonths(date, amount) {
-  return subtract(date, amount, "months");
+  return subtract(date, amount, "month");
 }
 
 export function subtractYears(date, amount) {
-  return subtract(date, amount, "years");
+  return subtract(date, amount, "year");
 }
 
 // ** Date Comparison **
@@ -246,7 +263,7 @@ export function equals(date1, date2) {
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
-    return date1.isSame(date2, "year");
+    return date1.diff(date2, "years") === 0;
   } else {
     return !date1 && !date2;
   }
@@ -254,7 +271,7 @@ export function isSameYear(date1, date2) {
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return date1.isSame(date2, "month");
+    return date1.diff(date2, "months") === 0;
   } else {
     return !date1 && !date2;
   }
@@ -262,7 +279,7 @@ export function isSameMonth(date1, date2) {
 
 export function isSameDay(moment1, moment2) {
   if (moment1 && moment2) {
-    return moment1.isSame(moment2, "day");
+    return moment1.diff(moment2, "days") === 0;
   } else {
     return !moment1 && !moment2;
   }
@@ -300,48 +317,62 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function localizeDate(date, locale) {
-  return date.clone().locale(locale || moment.locale());
+  return dayjs(date).locale(locale || dayjs().$L);
 }
 
 export function getDefaultLocale() {
-  return moment.locale();
+  return dayjs().$L;
 }
 
 export function getDefaultLocaleData() {
-  return moment.localeData();
+  return dayjs().$locale();
 }
 
 export function registerLocale(localeName, localeData) {
-  moment.defineLocale(localeName, localeData);
+  dayjs.locale(localeName, localeData);
 }
 
 export function getLocaleData(date) {
-  return date.localeData();
+  return date.$L;
 }
 
-export function getLocaleDataForLocale(locale) {
-  return moment.localeData(locale);
+export function getLocaleDataForLocale(locale = "en") {
+  return dayjs()
+    .locale(locale)
+    .$locale();
 }
 
 export function getFormattedWeekdayInLocale(locale, date, formatFunc) {
-  return formatFunc(locale.weekdays(date));
+  return formatFunc(
+    dayjs(date)
+      .locale(locale)
+      .format("dddd")
+  );
 }
 
 export function getWeekdayMinInLocale(locale, date) {
-  return locale.weekdaysMin(date);
+  return dayjs(date)
+    .locale(locale)
+    .format("dd");
 }
 
 export function getWeekdayShortInLocale(locale, date) {
-  return locale.weekdaysShort(date);
+  return dayjs(date)
+    .locale(locale)
+    .format("ddd");
 }
 
 // TODO what is this format exactly?
 export function getMonthInLocale(locale, date, format) {
-  return locale.months(date, format);
+  return dayjs(date)
+    .locale(locale)
+    .format(format);
 }
 
 export function getMonthShortInLocale(locale, date) {
-  return locale.monthsShort(date);
+  return dayjs(date)
+    .locale(locale)
+    .format("MMM");
 }
 
 // ** Utils for some components **
@@ -366,8 +397,8 @@ export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {
     if (
-      disabledTimes[i].get("hours") === time.get("hours") &&
-      disabledTimes[i].get("minutes") === time.get("minutes")
+      disabledTimes[i].hour() === time.hour() &&
+      disabledTimes[i].minute() === time.minute()
     ) {
       return true;
     }
@@ -381,53 +412,43 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     throw new Error("Both minTime and maxTime props required");
   }
 
-  const base = moment()
-    .hours(0)
-    .minutes(0)
-    .seconds(0);
-  const baseTime = base
-    .clone()
-    .hours(time.get("hours"))
-    .minutes(time.get("minutes"));
-  const min = base
-    .clone()
-    .hours(minTime.get("hours"))
-    .minutes(minTime.get("minutes"));
-  const max = base
-    .clone()
-    .hours(maxTime.get("hours"))
-    .minutes(maxTime.get("minutes"));
-
-  return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
+  const base = dayjs()
+    .set("hour", 0)
+    .set("minute", 0)
+    .set("second", 0);
+  const baseTime = base.set("hour", time.hour()).set("minute", time.minute());
+  const min = base.set("hour", minTime.hour()).set("minute", minTime.minute());
+  const max = base.set("hour", maxTime.hour()).set("minute", maxTime.minute());
+  return !(baseTime.diff(min) >= 0 && baseTime.diff(max) <= 0);
 }
 
-export function allDaysDisabledBefore(
-  day,
-  unit,
-  { minDate, includeDates } = {}
-) {
-  const dateBefore = day.clone().subtract(1, unit);
+export function monthDisabledBefore(day, { minDate, includeDates } = {}) {
+  const dateBefore = day.subtract(1, "month");
   return (
-    (minDate && dateBefore.isBefore(minDate, unit)) ||
+    (minDate &&
+      dateBefore.isBefore(minDate) &&
+      dateBefore.month() !== minDate.month()) ||
     (includeDates &&
-      includeDates.every(includeDate =>
-        dateBefore.isBefore(includeDate, unit)
+      includeDates.every(
+        includeDate =>
+          dateBefore.isBefore(includeDate) &&
+          dateBefore.month() !== includeDate.month()
       )) ||
     false
   );
 }
 
-export function allDaysDisabledAfter(
-  day,
-  unit,
-  { maxDate, includeDates } = {}
-) {
-  const dateAfter = day.clone().add(1, unit);
+export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
+  const dateAfter = day.add(1, "month");
   return (
-    (maxDate && dateAfter.isAfter(maxDate, unit)) ||
+    (maxDate &&
+      dateAfter.isAfter(maxDate) &&
+      dateAfter.month() !== maxDate.month()) ||
     (includeDates &&
-      includeDates.every(includeDate =>
-        dateAfter.isAfter(includeDate, unit)
+      includeDates.every(
+        includeDate =>
+          dateAfter.isAfter(includeDate) &&
+          dateAfter.month() !== includeDate.month()
       )) ||
     false
   );
@@ -435,13 +456,12 @@ export function allDaysDisabledAfter(
 
 export function getEffectiveMinDate({ minDate, includeDates }) {
   if (includeDates && minDate) {
-    return moment.min(
-      includeDates.filter(includeDate =>
-        minDate.isSameOrBefore(includeDate, "day")
-      )
+    let minDates = includeDates.filter(
+      includeDate => minDate.diff(includeDate, "days") <= 0
     );
+    return dayjs(min(...minDates));
   } else if (includeDates) {
-    return moment.min(includeDates);
+    return dayjs(min(...includeDates));
   } else {
     return minDate;
   }
@@ -449,13 +469,12 @@ export function getEffectiveMinDate({ minDate, includeDates }) {
 
 export function getEffectiveMaxDate({ maxDate, includeDates }) {
   if (includeDates && maxDate) {
-    return moment.max(
-      includeDates.filter(includeDate =>
-        maxDate.isSameOrAfter(includeDate, "day")
-      )
+    let maxDates = includeDates.filter(
+      includeDate => maxDate.diff(includeDate, "days") >= 0
     );
+    return dayjs(max(...maxDates));
   } else if (includeDates) {
-    return moment.max(includeDates);
+    return dayjs(max(...includeDates));
   } else {
     return maxDate;
   }
@@ -468,7 +487,7 @@ export function getHightLightDaysMap(
   const dateClasses = new Map();
   for (let i = 0, len = highlightDates.length; i < len; i++) {
     const obj = highlightDates[i];
-    if (isMoment(obj)) {
+    if (isDayjs(obj)) {
       const key = obj.format("MM.DD.YYYY");
       const classNamesArr = dateClasses.get(key) || [];
       if (!classNamesArr.includes(defaultClassName)) {
@@ -478,10 +497,10 @@ export function getHightLightDaysMap(
     } else if (typeof obj === "object") {
       const keys = Object.keys(obj);
       const className = keys[0];
-      const arrOfMoments = obj[keys[0]];
-      if (typeof className === "string" && arrOfMoments.constructor === Array) {
-        for (let k = 0, len = arrOfMoments.length; k < len; k++) {
-          const key = arrOfMoments[k].format("MM.DD.YYYY");
+      const arrOfDayjs = obj[keys[0]];
+      if (typeof className === "string" && arrOfDayjs.constructor === Array) {
+        for (let k = 0, len = arrOfDayjs.length; k < len; k++) {
+          const key = arrOfDayjs[k].format("MM.DD.YYYY");
           const classNamesArr = dateClasses.get(key) || [];
           if (!classNamesArr.includes(className)) {
             classNamesArr.push(className);

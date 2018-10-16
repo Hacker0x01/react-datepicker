@@ -28,8 +28,8 @@ import {
   getWeekdayShortInLocale,
   getWeekdayMinInLocale,
   isSameDay,
-  allDaysDisabledBefore,
-  allDaysDisabledAfter,
+  monthDisabledBefore,
+  monthDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate
 } from "./date_utils";
@@ -198,7 +198,7 @@ export default class Calendar extends React.Component {
   increaseMonth = () => {
     this.setState(
       {
-        date: addMonths(cloneDate(this.state.date), 1)
+        date: addMonths(this.state.date, 1)
       },
       () => this.handleMonthChange(this.state.date)
     );
@@ -207,7 +207,7 @@ export default class Calendar extends React.Component {
   decreaseMonth = () => {
     this.setState(
       {
-        date: subtractMonths(cloneDate(this.state.date), 1)
+        date: subtractMonths(this.state.date, 1)
       },
       () => this.handleMonthChange(this.state.date)
     );
@@ -275,7 +275,7 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(cloneDate(date));
+    const startOfWeek = getStartOfWeek(date);
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -286,7 +286,7 @@ export default class Calendar extends React.Component {
     }
     return dayNames.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
-        const day = addDays(cloneDate(startOfWeek), offset);
+        const day = addDays(startOfWeek, offset);
         const localeData = getLocaleData(day);
         const weekDayName = this.formatWeekday(localeData, day);
 
@@ -313,9 +313,8 @@ export default class Calendar extends React.Component {
   };
 
   renderPreviousMonthButton = () => {
-    const allPrevDaysDisabled = allDaysDisabledBefore(
+    const allPrevDaysDisabled = monthDisabledBefore(
       this.state.date,
-      "month",
       this.props
     );
 
@@ -352,11 +351,7 @@ export default class Calendar extends React.Component {
   };
 
   renderNextMonthButton = () => {
-    const allNextDaysDisabled = allDaysDisabledAfter(
-      this.state.date,
-      "month",
-      this.props
-    );
+    const allNextDaysDisabled = monthDisabledAfter(this.state.date, this.props);
 
     if (
       (!this.props.forceShowMonthNavigation &&
@@ -493,7 +488,7 @@ export default class Calendar extends React.Component {
 
     var monthList = [];
     for (var i = 0; i < this.props.monthsShown; ++i) {
-      var monthDate = addMonths(cloneDate(this.state.date), i);
+      var monthDate = addMonths(this.state.date, i);
       var monthKey = `month-${i}`;
       monthList.push(
         <div

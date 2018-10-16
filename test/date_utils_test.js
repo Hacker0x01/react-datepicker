@@ -10,8 +10,8 @@ import {
   isSameYear,
   isSameUtcOffset,
   isDayDisabled,
-  allDaysDisabledBefore,
-  allDaysDisabledAfter,
+  monthDisabledBefore,
+  monthDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate
 } from "../src/date_utils";
@@ -197,51 +197,51 @@ describe("date_utils", function() {
     });
   });
 
-  describe("allDaysDisabledBefore", () => {
+  describe("monthDisabledBefore", () => {
     it("should return false by default", () => {
-      expect(allDaysDisabledBefore(newDate(), "month")).to.be.false;
+      expect(monthDisabledBefore(newDate())).to.be.false;
     });
 
-    it("should return true if min date is in the same unit", () => {
+    it("should return true if min date is in the same month", () => {
       const day = newDate("2016-03-19");
       const minDate = newDate("2016-03-01");
-      expect(allDaysDisabledBefore(day, "month", { minDate })).to.be.true;
+      expect(monthDisabledBefore(day, { minDate })).to.be.true;
     });
 
-    it("should return false if min date is in the previous unit", () => {
+    it("should return false if min date is in the previous month", () => {
       const day = newDate("2016-03-19");
       const minDate = newDate("2016-02-29");
-      expect(allDaysDisabledBefore(day, "month", { minDate })).to.be.false;
+      expect(monthDisabledBefore(day, { minDate })).to.be.false;
     });
 
-    it("should return true if previous unit is before include dates", () => {
+    it("should return true if previous month is before include dates", () => {
       const day = newDate("2016-03-19");
       const includeDates = [newDate("2016-03-01")];
-      expect(allDaysDisabledBefore(day, "month", { includeDates })).to.be.true;
+      expect(monthDisabledBefore(day, { includeDates })).to.be.true;
     });
   });
 
-  describe("allDaysDisabledAfter", () => {
+  describe("monthDisabledAfter", () => {
     it("should return false by default", () => {
-      expect(allDaysDisabledAfter(newDate(), "month")).to.be.false;
+      expect(monthDisabledAfter(newDate())).to.be.false;
     });
 
-    it("should return true if max date is in the same unit", () => {
+    it("should return true if max date is in the same month", () => {
       const day = newDate("2016-03-19");
       const maxDate = newDate("2016-03-31");
-      expect(allDaysDisabledAfter(day, "month", { maxDate })).to.be.true;
+      expect(monthDisabledAfter(day, { maxDate })).to.be.true;
     });
 
-    it("should return false if max date is in the next unit", () => {
+    it("should return false if max date is in the next month", () => {
       const day = newDate("2016-03-19");
       const maxDate = newDate("2016-04-01");
-      expect(allDaysDisabledAfter(day, "month", { maxDate })).to.be.false;
+      expect(monthDisabledAfter(day, { maxDate })).to.be.false;
     });
 
-    it("should return true if next unit is after include dates", () => {
+    it("should return true if next month is after include dates", () => {
       const day = newDate("2016-03-19");
       const includeDates = [newDate("2016-03-01")];
-      expect(allDaysDisabledAfter(day, "month", { includeDates })).to.be.true;
+      expect(monthDisabledAfter(day, { includeDates })).to.be.true;
     });
   });
 
@@ -252,7 +252,8 @@ describe("date_utils", function() {
 
     it("should return the min date", () => {
       const minDate = newDate("2016-03-30");
-      assert(equals(getEffectiveMinDate({ minDate }), minDate));
+      const result = getEffectiveMinDate({ minDate });
+      assert(equals(minDate, result));
     });
 
     it("should return the minimum include date", () => {

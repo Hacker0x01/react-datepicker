@@ -6,7 +6,6 @@ import {
   newDate,
   getStartOfDay,
   addMinutes,
-  cloneDate,
   formatDate,
   isTimeInDisabledRange,
   isTimeDisabled,
@@ -58,7 +57,6 @@ export default class Time extends React.Component {
     ) {
       return;
     }
-
     this.props.onChange(time);
   };
 
@@ -103,7 +101,7 @@ export default class Time extends React.Component {
         return a - b;
       });
     for (let i = 0; i < multiplier; i++) {
-      const currentTime = addMinutes(cloneDate(base), i * intervals);
+      const currentTime = addMinutes(base, i * intervals);
       times.push(currentTime);
 
       if (sortedInjectTimes) {

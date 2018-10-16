@@ -235,13 +235,15 @@ describe("DatePicker", () => {
   it("should update the preSelection state when a day is selected with Enter press", () => {
     var data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
     var dateInput = data.datePicker.input;
+
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
     TestUtils.Simulate.keyDown(
       ReactDOM.findDOMNode(dateInput),
       getKey("Enter")
     );
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
-    utils.addWeeks(data.copyM, 2);
+
+    data.copyM = utils.addWeeks(data.copyM, 2);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -268,7 +270,7 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
-    utils.addWeeks(data.copyM, 1);
+    data.copyM = utils.addWeeks(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -503,7 +505,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowLeft", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
-    utils.subtractDays(data.copyM, 1);
+    data.copyM = utils.subtractDays(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -511,7 +513,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowRight", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowRight"));
-    utils.addDays(data.copyM, 1);
+    data.copyM = utils.addDays(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -519,7 +521,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowUp", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
-    utils.subtractWeeks(data.copyM, 1);
+    data.copyM = utils.subtractWeeks(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -527,7 +529,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowDown", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
-    utils.addWeeks(data.copyM, 1);
+    data.copyM = utils.addWeeks(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -535,7 +537,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown PageUp", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("PageUp"));
-    utils.subtractMonths(data.copyM, 1);
+    data.copyM = utils.subtractMonths(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -543,7 +545,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown PageDown", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("PageDown"));
-    utils.addMonths(data.copyM, 1);
+    data.copyM = utils.addMonths(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -551,7 +553,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown End", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("End"));
-    utils.addYears(data.copyM, 1);
+    data.copyM = utils.addYears(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -559,7 +561,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown Home", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("Home"));
-    utils.subtractYears(data.copyM, 1);
+    data.copyM = utils.subtractYears(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -586,7 +588,7 @@ describe("DatePicker", () => {
       var data = getOnInputKeyDownStuff();
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
-      utils.subtractDays(data.copyM, 1);
+      data.copyM = utils.subtractDays(data.copyM, 1);
       expect(data.callback.calledOnce).to.be.true;
       var result = data.callback.args[0][0];
       expect(utils.formatDate(result, data.testFormat)).to.equal(
@@ -604,7 +606,7 @@ describe("DatePicker", () => {
         utils.formatDate(data.callback.args[0][0], data.testFormat)
       ).to.equal(utils.formatDate(data.copyM, data.testFormat));
     });
-    it("should not update the selected date if the date input manually it has something wrong", () => {
+    it("should not update the selected date if the manual date input is invalid", () => {
       var data = getOnInputKeyDownStuff();
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Backspace"));
@@ -645,7 +647,7 @@ describe("DatePicker", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
     data.datePicker.setOpen(true);
-    utils.subtractDays(data.copyM, 1);
+    data.copyM = utils.subtractDays(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -761,7 +763,6 @@ describe("DatePicker", () => {
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("End"));
     expect(data.callback.called).to.be.false;
   });
-
   it("should correctly clear date with empty input string", () => {
     var cleared = false;
     function handleChange(d) {
@@ -783,12 +784,12 @@ describe("DatePicker", () => {
     expect(cleared).to.be.true;
   });
   it("should correctly update the date input when utcOffset is all that changes on the selected date", () => {
-    var date = utils.setUTCOffset(utils.newDate("2016-11-22T00:00:00Z"), -6);
+    var date = utils.newDate("2016-06-22T00:00:00Z");
     var tmzDatePicker = mount(<TimezoneDatePicker />);
     tmzDatePicker.setState({ startDate: date, utcOffset: -6 });
 
     expect(tmzDatePicker.find("input").prop("value")).to.equal(
-      "2016-11-21 18:00"
+      "2016-06-21 18:00"
     );
 
     tmzDatePicker.setState({
@@ -797,7 +798,7 @@ describe("DatePicker", () => {
     });
 
     expect(tmzDatePicker.find("input").prop("value")).to.equal(
-      "2016-11-22 06:00"
+      "2016-06-22 06:00"
     );
   });
   it("should correctly update the input when the value prop changes", () => {

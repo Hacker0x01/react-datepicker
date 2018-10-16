@@ -7,7 +7,7 @@ import {
   newDate,
   now,
   cloneDate,
-  isMoment,
+  isDayjs,
   isDate,
   isBefore,
   isAfter,
@@ -162,7 +162,7 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: "L",
+      dateFormat: "MM-DD-YYYY",
       dateFormatCalendar: "MMMM YYYY",
       onChange() {},
       disabled: false,
@@ -410,7 +410,7 @@ export default class DatePicker extends React.Component {
     const selected = this.props.selected
       ? this.props.selected
       : this.getPreSelection();
-    let changedDate = setTime(cloneDate(selected), {
+    let changedDate = setTime(selected, {
       hour: getHour(time),
       minute: getMinute(time)
     });
@@ -447,8 +447,7 @@ export default class DatePicker extends React.Component {
     if (eventKey === "Enter") {
       event.preventDefault();
       if (
-        (isMoment(this.state.preSelection) ||
-          isDate(this.state.preSelection)) &&
+        (isDayjs(this.state.preSelection) || isDate(this.state.preSelection)) &&
         this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
       ) {
         this.handleSelect(copy, event);

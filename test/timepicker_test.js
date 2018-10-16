@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "../src/index.jsx";
-import moment from "moment";
+import dayjs from "dayjs";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import Time from "../src/time";
@@ -18,7 +18,9 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    expect(onChangeMoment.format("LLL")).to.equal("February 28, 2018 4:45 PM");
+    expect(onChangeMoment.format("MMMM D, YYYY h:m A")).to.equal(
+      "February 28, 2018 4:45 PM"
+    );
   });
 
   it("should allow time changes after input change", () => {
@@ -27,11 +29,11 @@ describe("TimePicker", () => {
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
-    TestUtils.Simulate.click(lis[0]);
-    expect(getInputString()).to.equal("February 28, 2018 12:00 AM");
+    TestUtils.Simulate.click(lis[1]);
+    expect(getInputString()).to.equal("February 28, 2018 12:30 AM");
   });
 
-  it("should allow for injected moment if input does not have focus", () => {
+  it("should allow for injected date if input does not have focus", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
     TestUtils.Simulate.blur(datePicker.input);
@@ -49,14 +51,14 @@ describe("TimePicker", () => {
   }
 
   function renderDatePicker(string) {
-    return renderDatePickerFor(moment(string, "LLL", true));
+    return renderDatePickerFor(dayjs(string));
   }
 
   function renderDatePickerFor(selected) {
     datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
-        dateFormat={"LLL"}
+        dateFormat={"MMMM D, YYYY h:mm A"}
         allowSameDay
         onChange={onChange}
         showTimeSelect
@@ -66,7 +68,7 @@ describe("TimePicker", () => {
   }
 
   function onChange(m) {
-    onChangeMoment = m;
+    onChangeMoment = dayjs(m);
     renderDatePicker(m);
   }
 });
