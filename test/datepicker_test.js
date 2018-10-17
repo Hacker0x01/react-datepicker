@@ -1053,4 +1053,26 @@ describe("DatePicker", () => {
     datePicker.clear();
     expect(datePicker.state.inputValue).to.be.null;
   });
+  it("should not open when open is false and input is focused", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker open={false} />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.calendar).to.not.exist;
+  });
+  it("should open when open is true", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker open />);
+    expect(datePicker.calendar).to.exist;
+  });
+  it("should fire onInputClick when input is clicked", () => {
+    const onInputClickSpy = sinon.spy();
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker onInputClick={onInputClickSpy} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    defer(() => {
+      assert(onInputClickSpy.calledOnce, "should fire onInputClick");
+      done();
+    });
+  });
 });
