@@ -38,8 +38,15 @@ describe("Calendar", function() {
   });
 
   it("should start with the today date with specified time zone", function() {
-    const utcOffset = 12;
-    const calendar = getCalendar({ utcOffset });
+    let utcOffset = 12;
+    let calendar = getCalendar({ utcOffset });
+    assert(
+      utils.isSameDay(calendar.state().date, utils.newDateWithOffset(utcOffset))
+    );
+
+    // using string offsets
+    utcOffset = "+12:00";
+    calendar = getCalendar({ utcOffset });
     assert(
       utils.isSameDay(calendar.state().date, utils.newDateWithOffset(utcOffset))
     );

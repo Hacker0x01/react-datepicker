@@ -105,7 +105,7 @@ export default class Calendar extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
-    utcOffset: PropTypes.number,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,

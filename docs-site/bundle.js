@@ -35901,7 +35901,10 @@
         todayButton: _propTypes2.default.string,
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
-        utcOffset: _propTypes2.default.number,
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ]),
         value: _propTypes2.default.string,
         weekLabel: _propTypes2.default.string,
         withPortal: _propTypes2.default.bool,
@@ -36859,7 +36862,10 @@
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
         withPortal: _propTypes2.default.bool,
-        utcOffset: _propTypes2.default.number,
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ]),
         weekLabel: _propTypes2.default.string,
         yearDropdownItemNumber: _propTypes2.default.number,
         setOpen: _propTypes2.default.func,
@@ -57849,7 +57855,10 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Month;
 
@@ -58071,7 +58080,10 @@
         selectsStart: _propTypes2.default.bool,
         showWeekNumber: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Week;
 
@@ -58389,7 +58401,10 @@
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        utcOffset: _propTypes2.default.number
+        utcOffset: _propTypes2.default.oneOfType([
+          _propTypes2.default.number,
+          _propTypes2.default.string
+        ])
       };
       exports.default = Day;
 

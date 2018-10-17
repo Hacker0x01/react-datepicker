@@ -88,7 +88,7 @@ General datepicker component.
 | `todayButton`                 | `string`                       |                    |             |
 | `useShortMonthInDropdown`     | `bool`                         |                    |             |
 | `useWeekdaysShort`            | `bool`                         |                    |             |
-| `utcOffset`                   | `number`                       |                    |             |
+| `utcOffset`                   | `union(number\|string)`        |                    |             |
 | `value`                       | `string`                       |                    |             |
 | `weekLabel`                   | `string`                       |                    |             |
 | `withPortal`                  | `bool`                         | `false`            |             |
