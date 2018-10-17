@@ -20,10 +20,10 @@ import {
   addMonths,
   addWeeks,
   addYears,
-  subtractDays,
-  subtractMonths,
-  subtractWeeks,
-  subtractYears,
+  subDays,
+  subMonths,
+  subWeeks,
+  subYears,
   isSameDay,
   isDayDisabled,
   isDayInRange,
@@ -464,25 +464,25 @@ export default class DatePicker extends React.Component {
       let newSelection;
       switch (eventKey) {
         case "ArrowLeft":
-          newSelection = subtractDays(copy, 1);
+          newSelection = subDays(copy, 1);
           break;
         case "ArrowRight":
           newSelection = addDays(copy, 1);
           break;
         case "ArrowUp":
-          newSelection = subtractWeeks(copy, 1);
+          newSelection = subWeeks(copy, 1);
           break;
         case "ArrowDown":
           newSelection = addWeeks(copy, 1);
           break;
         case "PageUp":
-          newSelection = subtractMonths(copy, 1);
+          newSelection = subMonths(copy, 1);
           break;
         case "PageDown":
           newSelection = addMonths(copy, 1);
           break;
         case "Home":
-          newSelection = subtractYears(copy, 1);
+          newSelection = subYears(copy, 1);
           break;
         case "End":
           newSelection = addYears(copy, 1);

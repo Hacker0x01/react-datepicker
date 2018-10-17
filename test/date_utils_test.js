@@ -3,7 +3,7 @@ import {
   setUTCOffset,
   cloneDate,
   addDays,
-  subtractDays,
+  subDays,
   equals,
   isSameDay,
   isSameMonth,
@@ -16,7 +16,7 @@ import {
   getEffectiveMaxDate
 } from "../src/date_utils";
 
-describe("date_utils", function() {
+describe.only("date_utils", function() {
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
@@ -153,7 +153,7 @@ describe("date_utils", function() {
 
     it("should be disabled if after the max date", () => {
       const day = newDate();
-      const maxDate = subtractDays(cloneDate(day), 1);
+      const maxDate = subDays(cloneDate(day), 1);
       expect(isDayDisabled(day, { maxDate })).to.be.true;
     });
 

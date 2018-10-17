@@ -252,7 +252,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add previous years, if actual years list does not contain minDate year, if only minDate is provided", () => {
     const onCancelSpy = sandbox.spy();
     const onChangeSpy = sandbox.spy();
-    const minDate = dayjs().subtract(11, "y");
+    const minDate = dayjs().sub(11, "y");
     const yearDropdown = mount(
       <YearDropdownOptions
         onCancel={onCancelSpy}

@@ -12,7 +12,7 @@ import {
   setMonth,
   getMonth,
   addMonths,
-  subtractMonths,
+  subMonths,
   getStartOfWeek,
   getStartOfToday,
   addDays,
@@ -127,7 +127,7 @@ export default class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(`locale: ${this.props.locale}`);
+
     this.state = {
       date: this.localizeDate(this.getDateInView(), this.props.locale),
       selectingDate: null,
@@ -207,7 +207,7 @@ export default class Calendar extends React.Component {
   decreaseMonth = () => {
     this.setState(
       {
-        date: subtractMonths(this.state.date, 1)
+        date: subMonths(this.state.date, 1)
       },
       () => this.handleMonthChange(this.state.date)
     );

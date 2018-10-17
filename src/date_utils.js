@@ -1,13 +1,20 @@
-import dayjs from "dayjs";
-import dayjsPluginUTC from "dayjs-plugin-utc";
-import isBetween from "dayjs/plugin/isBetween";
 import {
-  addMonths as addmonths,
-  addDays as adddays,
-  addWeeks as addweeks,
+  parse,
+  isDate,
+  isValid,
+  format,
+  addMinutes,
   addHours,
-  addMinutes as addminutes,
-  addYears as addyears,
+  addDays,
+  addWeeks,
+  addMonths,
+  addYears,
+  subMinutes,
+  subHours,
+  subDays,
+  subWeeks,
+  subMonths,
+  subYears,
   min,
   max,
   isSameDay as issameday,
@@ -25,109 +32,126 @@ import {
   isBefore as isbefore
 } from "date-fns";
 
-dayjs.extend(dayjsPluginUTC);
-
-dayjs.extend(isBetween);
-
 // These functions are not exported so
 // that we avoid magic strings like 'days'
-function set(date, unit, to) {
-  return date.set(unit, to);
-}
+// function set(date, unit, to) {
+//   return date.set(unit, to);
+// }
+//
+// function add(date, amount, unit) {
+//   return date.add(amount, unit);
+// }
+//
+// function subtract(date, amount, unit) {
+//   return date.subtract(amount, unit);
+// }
+//
+// function get(date, unit) {
+//   switch (unit) {
+//     case "year":
+//       return date.year();
+//     case "month":
+//       return date.month();
+//     case "day":
+//       return date.day();
+//     case "hour":
+//       return date.hour();
+//     case "minute":
+//       return date.minute();
+//     case "second":
+//       return date.second();
+//     case "millisecond":
+//       return date.millisecond();
+//     default:
+//       return date;
+//   }
+// }
 
-function add(date, amount, unit) {
-  return date.add(amount, unit);
-}
-
-function subtract(date, amount, unit) {
-  return date.subtract(amount, unit);
-}
-
-function get(date, unit) {
-  switch (unit) {
-    case "year":
-      return date.year();
-    case "month":
-      return date.month();
-    case "day":
-      return date.day();
-    case "hour":
-      return date.hour();
-    case "minute":
-      return date.minute();
-    case "second":
-      return date.second();
-    case "millisecond":
-      return date.millisecond();
-    default:
-      return date;
-  }
-}
-
-function getStartOf(date, unit) {
-  return date.startOf(unit);
-}
-
-function getEndOf(date, unit) {
-  return date.endOf(unit);
-}
-
-function getDiff(date1, date2, unit) {
-  return date1.diff(date2, unit);
-}
+// function getStartOf(date, unit) {
+//   return date.startOf(unit);
+// }
+//
+// function getEndOf(date, unit) {
+//   return date.endOf(unit);
+// }
+//
+// function getDiff(date1, date2, unit) {
+//   return date1.diff(date2, unit);
+// }
 
 // ** Date Constructors **
 
 export function newDate(point) {
-  const d = dayjs(point);
-  return d.isValid() ? d : null;
-}
-
-export function newDateWithOffset(utcOffset) {
-  return dayjs().utcOffset(utcOffset);
-}
-
-export function now(maybeFixedUtcOffset) {
-  if (maybeFixedUtcOffset == null) {
-    return newDate();
-  }
-  return newDateWithOffset(maybeFixedUtcOffset).local();
+  const d = point ? parse(point) : new Date();
+  return isValid(d) ? d : null;
 }
 
 export function cloneDate(date) {
-  return dayjs(date);
+  return parse(date);
 }
 
-export function parseDate(value, { locale }) {
-  const d = dayjs(value, { locale: locale || dayjs().$L });
+export function parseDate(value, { locale = "en" }) {
+  // date-fns does not support locale parsing right now
+  const d = parse(value, { locale: locale });
   return d.isValid() ? d : null;
+}
+
+// ** UTC Constructors **
+
+export function createDateAsUTC(date) {
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    )
+  );
+}
+
+export function convertDateToUTC(date) {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+}
+
+export function now(maybeFixedUtcOffset) {
+  return maybeFixedUtcOffset
+    ? newDateWithOffset(maybeFixedUtcOffset)
+    : newDate();
+}
+
+export function newDateWithOffset(utcOffset) {
+  const d = new Date();
+  const utc = d.getTime() + d.getTimezoneOffset() * 60000;
+  return new Date(utc + 3600000 * utcOffset);
 }
 
 // ** Date "Reflection" **
 
-export function isDayjs(date) {
-  return dayjs.isDayjs(date);
-}
-
-export function isDate(date) {
-  return date.isValid();
-}
+export { isDate, isValid };
 
 // ** Date Formatting **
 
 export function formatDate(date, format) {
-  return date.format(format);
+  return format(date, format);
 }
 
-export function safeDateFormat(date, { dateFormat, locale }) {
-  let returnVal =
+export function safeDateFormat(date, { dateFormat, locale = "en" }) {
+  return (
     (date &&
-      date
-        .clone()
-        .locale(locale || dayjs().$L)
-        .format(Array.isArray(dateFormat) ? dateFormat[0] : dateFormat)) ||
-    "";
-  return returnVal;
+      format(date, Array.isArray(dateFormat) ? dateFormat[0] : dateFormat, {
+        locale: locale
+      })) ||
+    ""
+  );
 }
 
 // ** Date Setters **
@@ -148,7 +172,8 @@ export function setYear(date, year) {
 }
 
 export function setUTCOffset(date, offset) {
-  return date.utcOffset(offset);
+  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+  return new Date(utc + 3600000 * offset);
 }
 
 // ** Date Getters **
@@ -231,42 +256,11 @@ export function getEndOfMonth(date) {
 
 // *** Addition ***
 
-export function addMinutes(date, amount) {
-  return dayjs(addminutes(date, amount));
-}
-
-export function addDays(date, amount) {
-  return dayjs(adddays(date, amount));
-}
-
-export function addWeeks(date, amount) {
-  return dayjs(addweeks(date, amount));
-}
-
-export function addMonths(date, amount) {
-  return dayjs(addmonths(date, amount));
-}
-
-export function addYears(date, amount) {
-  return dayjs(addyears(date, amount));
-}
+export { addMinutes, addDays, addWeeks, addMonths, addYears };
 
 // *** Subtraction ***
-export function subtractDays(date, amount) {
-  return subtract(date, amount, "day");
-}
 
-export function subtractWeeks(date, amount) {
-  return subtract(date, amount, "week");
-}
-
-export function subtractMonths(date, amount) {
-  return subtract(date, amount, "month");
-}
-
-export function subtractYears(date, amount) {
-  return subtract(date, amount, "year");
-}
+export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
@@ -338,10 +332,7 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function localizeDate(date, locale = "en") {
-  let returnVal = dayjs(date).locale(locale);
-  console.log(locale);
-  console.log(returnVal);
-  return returnVal;
+  return dayjs(date).locale(locale);
 }
 
 export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {

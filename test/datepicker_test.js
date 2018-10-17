@@ -505,7 +505,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowLeft", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
-    data.copyM = utils.subtractDays(data.copyM, 1);
+    data.copyM = utils.subDays(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -521,7 +521,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown ArrowUp", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
-    data.copyM = utils.subtractWeeks(data.copyM, 1);
+    data.copyM = utils.subWeeks(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -537,7 +537,7 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown PageUp", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("PageUp"));
-    data.copyM = utils.subtractMonths(data.copyM, 1);
+    data.copyM = utils.subMonths(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
@@ -561,14 +561,14 @@ describe("DatePicker", () => {
   it("should handle onInputKeyDown Home", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("Home"));
-    data.copyM = utils.subtractYears(data.copyM, 1);
+    data.copyM = utils.subYears(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
   it("should not preSelect date if not between minDate and maxDate", () => {
     var data = getOnInputKeyDownStuff({
-      minDate: utils.subtractDays(utils.newDate(), 1),
+      minDate: utils.subDays(utils.newDate(), 1),
       maxDate: utils.addDays(utils.newDate(), 1)
     });
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
@@ -588,7 +588,7 @@ describe("DatePicker", () => {
       var data = getOnInputKeyDownStuff();
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
-      data.copyM = utils.subtractDays(data.copyM, 1);
+      data.copyM = utils.subDays(data.copyM, 1);
       expect(data.callback.calledOnce).to.be.true;
       var result = data.callback.args[0][0];
       expect(utils.formatDate(result, data.testFormat)).to.equal(
@@ -618,7 +618,7 @@ describe("DatePicker", () => {
     });
     it("should not select excludeDates", () => {
       var data = getOnInputKeyDownStuff({
-        excludeDates: [utils.subtractDays(utils.newDate(), 1)]
+        excludeDates: [utils.subDays(utils.newDate(), 1)]
       });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
@@ -627,8 +627,7 @@ describe("DatePicker", () => {
     it("should not select dates excluded from filterDate", () => {
       var data = getOnInputKeyDownStuff({
         filterDate: date =>
-          utils.getDay(date) !==
-          utils.getDay(utils.subtractDays(utils.newDate(), 1))
+          utils.getDay(date) !== utils.getDay(utils.subDays(utils.newDate(), 1))
       });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
@@ -647,7 +646,7 @@ describe("DatePicker", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
     data.datePicker.setOpen(true);
-    data.copyM = utils.subtractDays(data.copyM, 1);
+    data.copyM = utils.subDays(data.copyM, 1);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));

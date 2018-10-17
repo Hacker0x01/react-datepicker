@@ -5,7 +5,7 @@ import { mount } from "enzyme";
 import {
   newDate,
   addMonths,
-  subtractMonths,
+  subMonths,
   formatDate,
   cloneDate,
   isAfter
@@ -92,7 +92,7 @@ describe("MonthYearDropdown", () => {
           onChange={sandbox.spy()}
           dateFormat={dateFormatCalendar}
           date={date}
-          minDate={subtractMonths(cloneDate(date), 6)}
+          minDate={subMonths(cloneDate(date), 6)}
           maxDate={addMonths(cloneDate(date), 6)}
         />
       ).instance();

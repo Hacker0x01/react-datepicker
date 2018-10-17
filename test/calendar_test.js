@@ -61,7 +61,7 @@ describe("Calendar", function() {
 
   it("should start with the current date in view if in date range", function() {
     const now = utils.newDate();
-    const minDate = utils.subtractYears(utils.cloneDate(now), 1);
+    const minDate = utils.subYears(utils.cloneDate(now), 1);
     const maxDate = utils.addYears(utils.cloneDate(now), 1);
     const calendar = getCalendar({ minDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, now));
@@ -80,13 +80,13 @@ describe("Calendar", function() {
   });
 
   it("should start with the max date in view if before the current date", function() {
-    const maxDate = utils.subtractYears(utils.newDate(), 1);
+    const maxDate = utils.subYears(utils.newDate(), 1);
     const calendar = getCalendar({ maxDate });
     assert(utils.isSameDay(calendar.state().date, maxDate));
   });
 
   it("should start with the max include date in view if before the current date", function() {
-    const maxDate = utils.subtractYears(utils.newDate(), 1);
+    const maxDate = utils.subYears(utils.newDate(), 1);
     const calendar = getCalendar({ includeDates: [maxDate] });
     assert(utils.isSameDay(calendar.state().date, maxDate));
   });
@@ -211,7 +211,7 @@ describe("Calendar", function() {
 
     it("should show disabled next month navigation", function() {
       const calendar = getCalendar({
-        minDate: utils.subtractMonths(utils.newDate(), 3),
+        minDate: utils.subMonths(utils.newDate(), 3),
         maxDate: utils.newDate(),
         showDisabledMonthNavigation: true
       });
@@ -228,7 +228,7 @@ describe("Calendar", function() {
 
     it("should not show disabled previous/next month navigation when next/previous month available", function() {
       const calendar = getCalendar({
-        minDate: utils.subtractMonths(utils.newDate(), 3),
+        minDate: utils.subMonths(utils.newDate(), 3),
         maxDate: utils.addMonths(utils.newDate(), 3),
         showDisabledMonthNavigation: true
       });
@@ -276,7 +276,7 @@ describe("Calendar", function() {
     it("when clicking non-disabled month navigation, should change month", function() {
       const calendar = getCalendar({
         selected: utils.newDate(),
-        minDate: utils.subtractMonths(utils.newDate(), 3),
+        minDate: utils.subMonths(utils.newDate(), 3),
         maxDate: utils.addMonths(utils.newDate(), 3),
         showDisabledMonthNavigation: true,
         onMonthChange: onMonthChangeSpy
@@ -326,7 +326,7 @@ describe("Calendar", function() {
   it("should show the month-year dropdown menu if toggled on", function() {
     const calendar = getCalendar({
       showMonthYearDropdown: true,
-      minDate: utils.subtractYears(utils.newDate(), 1),
+      minDate: utils.subYears(utils.newDate(), 1),
       maxDate: utils.addYears(utils.newDate(), 1)
     });
     const monthYearReadView = calendar.find(MonthYearDropdown);
@@ -336,7 +336,7 @@ describe("Calendar", function() {
   it("should show only one month-year dropdown menu if toggled on and multiple month mode on", function() {
     const calendar = getCalendar({
       showMonthYearDropdown: true,
-      minDate: utils.subtractYears(utils.newDate(), 1),
+      minDate: utils.subYears(utils.newDate(), 1),
       maxDate: utils.addYears(utils.newDate(), 1),
       monthsShown: 2
     });
@@ -606,7 +606,7 @@ describe("Calendar", function() {
           hideCalendar={() => {}}
           dropdownMode="select"
           showMonthYearDropdown
-          minDate={utils.subtractYears(utils.newDate(), 1)}
+          minDate={utils.subYears(utils.newDate(), 1)}
           maxDate={utils.addYears(utils.newDate(), 1)}
           onYearChange={onYearChangeSpy}
           onMonthChange={onMonthChangeSpy}
@@ -656,7 +656,7 @@ describe("Calendar", function() {
           showYearDropdown
           showMonthDropdown
           showMonthYearDropdown
-          minDate={utils.subtractYears(utils.newDate(), 1)}
+          minDate={utils.subYears(utils.newDate(), 1)}
           maxDate={utils.addYears(utils.newDate(), 1)}
           onDropdownFocus={onDropdownFocusSpy}
         />
