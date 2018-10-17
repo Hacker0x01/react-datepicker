@@ -424,46 +424,16 @@ describe("Calendar", function() {
   });
 
   it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
-    utils.registerLocale("weekDaysLocale", {
-      months: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ],
-      weekdays: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      weekdaysMin: "AA_BB_CC_DD_EE_FF_GG".split("_"),
-      weekdaysShort: "AAA_BBB_CCC_DDD_EEE_FFF_GGG".split("_")
-    });
-
-    const calendarShort = mount(
-      <Calendar locale="weekDaysLocale" useWeekdaysShort />
-    );
-    const calendarMin = mount(<Calendar locale="weekDaysLocale" />);
+    const calendarShort = mount(<Calendar locale="en" useWeekdaysShort />);
+    const calendarMin = mount(<Calendar locale="en" />);
 
     const daysNamesShort = calendarShort.find(".react-datepicker__day-name");
-    expect(daysNamesShort.at(0).text()).to.equal("AAA");
-    expect(daysNamesShort.at(6).text()).to.equal("GGG");
+    expect(daysNamesShort.at(0).text()).to.equal("Sun");
+    expect(daysNamesShort.at(6).text()).to.equal("Sat");
 
     const daysNamesMin = calendarMin.find(".react-datepicker__day-name");
-    expect(daysNamesMin.at(0).text()).to.equal("AA");
-    expect(daysNamesMin.at(6).text()).to.equal("GG");
+    expect(daysNamesMin.at(0).text()).to.equal("Su");
+    expect(daysNamesMin.at(6).text()).to.equal("Sa");
   });
 
   it("should set the date to the selected day of the previous month when previous button clicked", () => {
@@ -743,19 +713,19 @@ describe("Calendar", function() {
         utils.formatDate(localized, dateFormat)
       );
 
-      const firstDateOfWeek = utils.getStartOfWeek(utils.cloneDate(localized));
+      const firstDateOfWeek = utils.getStartOfWeek(localized);
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
-        utils.getLocaleData(firstDateOfWeek),
-        firstDateOfWeek
+        firstDateOfWeek,
+        locale
       );
       const firstHeader = calendar.find(".react-datepicker__day-name").at(0);
       expect(firstHeader.text()).to.equal(firstWeekDayMin);
     }
 
-    it("should use the globally-defined locale by default", function() {
+    it("should use the 'en' locale by default", function() {
       const selected = utils.newDate();
       const calendar = getCalendar({ selected });
-      testLocale(calendar, selected, utils.getDefaultLocale());
+      testLocale(calendar, selected);
     });
 
     it("should use the locale specified as a prop", function() {
@@ -763,12 +733,6 @@ describe("Calendar", function() {
       const selected = utils.localizeDate(utils.newDate(), locale);
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
-    });
-
-    it("should override the locale of the date with the globally-defined locale", function() {
-      const selected = utils.localizeDate(utils.newDate(), "fr");
-      const calendar = getCalendar({ selected });
-      testLocale(calendar, selected, utils.getDefaultLocale());
     });
 
     it("should override the locale of the date with the locale prop", function() {

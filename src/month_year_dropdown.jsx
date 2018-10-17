@@ -32,7 +32,7 @@ export default class MonthYearDropdown extends React.Component {
   };
 
   renderSelectOptions = () => {
-    const currDate = getStartOfMonth(
+    let currDate = getStartOfMonth(
       localizeDate(this.props.minDate, this.props.locale)
     );
     const lastDate = getStartOfMonth(
@@ -49,7 +49,7 @@ export default class MonthYearDropdown extends React.Component {
         </option>
       );
 
-      addMonths(currDate, 1);
+      currDate = addMonths(currDate, 1);
     }
 
     return options;

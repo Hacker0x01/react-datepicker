@@ -127,6 +127,7 @@ export default class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(`locale: ${this.props.locale}`);
     this.state = {
       date: this.localizeDate(this.getDateInView(), this.props.locale),
       selectingDate: null,
@@ -301,8 +302,8 @@ export default class Calendar extends React.Component {
       return getFormattedWeekdayInLocale(day, locale, this.props.formatWeekDay);
     }
     return this.props.useWeekdaysShort
-      ? getWeekdayShortInLocale(locale, day)
-      : getWeekdayMinInLocale(locale, day);
+      ? getWeekdayShortInLocale(day, locale)
+      : getWeekdayMinInLocale(day, locale);
   };
 
   renderPreviousMonthButton = () => {

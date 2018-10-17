@@ -338,7 +338,10 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function localizeDate(date, locale = "en") {
-  return dayjs(date).locale(locale);
+  let returnVal = dayjs(date).locale(locale);
+  console.log(locale);
+  console.log(returnVal);
+  return returnVal;
 }
 
 export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {
@@ -349,26 +352,26 @@ export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {
   );
 }
 
-export function getWeekdayMinInLocale(locale = "en", date) {
+export function getWeekdayMinInLocale(date, locale = "en") {
   return dayjs(date)
     .locale(locale)
     .format("dd");
 }
 
-export function getWeekdayShortInLocale(locale = "en", date) {
+export function getWeekdayShortInLocale(date, locale = "en") {
   return dayjs(date)
     .locale(locale)
     .format("ddd");
 }
 
-export function getMonthInLocale(locale = "en", month) {
+export function getMonthInLocale(month, locale = "en") {
   return dayjs()
     .set("month", month)
     .locale(locale)
     .format("MMMM");
 }
 
-export function getMonthShortInLocale(locale = "en", month) {
+export function getMonthShortInLocale(month, locale = "en") {
   return dayjs()
     .set("month", month)
     .locale(locale)
