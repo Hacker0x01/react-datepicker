@@ -101,7 +101,7 @@ export default class Calendar extends React.Component {
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
-    todayButton: PropTypes.string,
+    todayButton: PropTypes.node,
     useWeekdaysShort: PropTypes.bool,
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
