@@ -38,13 +38,20 @@ export default class Time extends React.Component {
     };
   }
 
+  static calcCenterPosition = (listHeight, centerLiRef) => {
+    return (
+      centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
+    );
+  };
+
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
-    const multiplier = 60 / this.props.intervals;
-    const currH = this.props.selected
-      ? getHour(this.props.selected)
-      : getHour(newDate());
-    this.list.scrollTop = 30 * (multiplier * currH);
+    this.list.scrollTop = Time.calcCenterPosition(
+      this.props.monthRef
+        ? this.props.monthRef.clientHeight - this.header.clientHeight
+        : this.list.clientHeight,
+      this.centerLi
+    );
   }
 
   handleClick = time => {
@@ -123,6 +130,14 @@ export default class Time extends React.Component {
         key={i}
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
+        ref={li => {
+          if (
+            (currH === getHour(time) && currM === getMinute(time)) ||
+            (currH === getHour(time) && !this.centerLi)
+          ) {
+            this.centerLi = li;
+          }
+        }}
       >
         {formatDate(time, format)}
       </li>
@@ -131,8 +146,8 @@ export default class Time extends React.Component {
 
   render() {
     let height = null;
-    if (this.props.monthRef) {
-      height = this.props.monthRef.clientHeight - 39;
+    if (this.props.monthRef && this.header) {
+      height = this.props.monthRef.clientHeight - this.header.clientHeight;
     }
 
     return (
@@ -143,7 +158,12 @@ export default class Time extends React.Component {
             : ""
         }`}
       >
-        <div className="react-datepicker__header react-datepicker__header--time">
+        <div
+          className="react-datepicker__header react-datepicker__header--time"
+          ref={header => {
+            this.header = header;
+          }}
+        >
           <div className="react-datepicker-time__header">
             {this.props.timeCaption}
           </div>

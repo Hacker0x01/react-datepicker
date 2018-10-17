@@ -132,7 +132,7 @@ export default class Calendar extends React.Component {
     this.state = {
       date: this.localizeDate(this.getDateInView()),
       selectingDate: null,
-      monthContainer: this.monthContainer
+      monthContainer: null
     };
   }
 
@@ -607,7 +607,10 @@ export default class Calendar extends React.Component {
   };
 
   renderTimeSection = () => {
-    if (this.props.showTimeSelect) {
+    if (
+      this.props.showTimeSelect &&
+      (this.state.monthContainer || this.props.showTimeSelectOnly)
+    ) {
       return (
         <Time
           selected={this.props.selected}
