@@ -14,13 +14,13 @@ import {
 function generateMonthYears(minDate, maxDate) {
   const list = [];
 
-  const currDate = getStartOfMonth(cloneDate(minDate));
-  const lastDate = getStartOfMonth(cloneDate(maxDate));
+  let currDate = getStartOfMonth(minDate);
+  const lastDate = getStartOfMonth(maxDate);
 
   while (!isAfter(currDate, lastDate)) {
     list.push(cloneDate(currDate));
 
-    addMonths(currDate, 1);
+    currDate = addMonths(currDate, 1);
   }
 
   return list;

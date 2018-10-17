@@ -23,7 +23,6 @@ import {
   getYear,
   isBefore,
   isAfter,
-  getLocaleData,
   getFormattedWeekdayInLocale,
   getWeekdayShortInLocale,
   getWeekdayMinInLocale,
@@ -129,7 +128,7 @@ export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: this.localizeDate(this.getDateInView()),
+      date: this.localizeDate(this.getDateInView(), this.props.locale),
       selectingDate: null,
       monthContainer: this.monthContainer
     };
@@ -153,14 +152,14 @@ export default class Calendar extends React.Component {
       !isSameDay(this.props.preSelection, prevProps.preSelection)
     ) {
       this.setState({
-        date: this.localizeDate(this.props.preSelection)
+        date: this.localizeDate(this.props.preSelection, this.props.locale)
       });
     } else if (
       this.props.openToDate &&
       !isSameDay(this.props.openToDate, prevProps.openToDate)
     ) {
       this.setState({
-        date: this.localizeDate(this.props.openToDate)
+        date: this.localizeDate(this.props.openToDate, this.props.locale)
       });
     }
   }
@@ -287,9 +286,7 @@ export default class Calendar extends React.Component {
     return dayNames.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(startOfWeek, offset);
-        const localeData = getLocaleData(day);
-        const weekDayName = this.formatWeekday(localeData, day);
-
+        const weekDayName = this.formatWeekday(day, this.props.locale);
         return (
           <div key={offset} className="react-datepicker__day-name">
             {weekDayName}
@@ -299,17 +296,13 @@ export default class Calendar extends React.Component {
     );
   };
 
-  formatWeekday = (localeData, day) => {
+  formatWeekday = (day, locale) => {
     if (this.props.formatWeekDay) {
-      return getFormattedWeekdayInLocale(
-        localeData,
-        day,
-        this.props.formatWeekDay
-      );
+      return getFormattedWeekdayInLocale(day, locale, this.props.formatWeekDay);
     }
     return this.props.useWeekdaysShort
-      ? getWeekdayShortInLocale(localeData, day)
-      : getWeekdayMinInLocale(localeData, day);
+      ? getWeekdayShortInLocale(locale, day)
+      : getWeekdayMinInLocale(locale, day);
   };
 
   renderPreviousMonthButton = () => {

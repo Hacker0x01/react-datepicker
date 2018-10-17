@@ -2,11 +2,17 @@ import dayjs from "dayjs";
 import dayjsPluginUTC from "dayjs-plugin-utc";
 import isBetween from "dayjs/plugin/isBetween";
 import {
+  addMonths as addmonths,
+  addDays as adddays,
+  addWeeks as addweeks,
+  addHours,
+  addMinutes as addminutes,
+  addYears as addyears,
   min,
   max,
-  isSameDay as isTheSameDay,
-  isSameMonth as isTheSameMonth,
-  isSameYear as isTheSameYear,
+  isSameDay as issameday,
+  isSameMonth as issamemonth,
+  isSameYear as issameyear,
   differenceInCalendarWeeks,
   setDayOfYear,
   startOfToday,
@@ -14,7 +20,9 @@ import {
   startOfWeek,
   startOfMonth,
   endOfWeek,
-  isSameWeek
+  isSameWeek,
+  isAfter as isafter,
+  isBefore as isbefore
 } from "date-fns";
 
 dayjs.extend(dayjsPluginUTC);
@@ -224,27 +232,23 @@ export function getEndOfMonth(date) {
 // *** Addition ***
 
 export function addMinutes(date, amount) {
-  return add(date, amount, "minute");
-}
-
-export function addHours(date, amount) {
-  return add(date, amount, "hour");
+  return dayjs(addminutes(date, amount));
 }
 
 export function addDays(date, amount) {
-  return add(date, amount, "day");
+  return dayjs(adddays(date, amount));
 }
 
 export function addWeeks(date, amount) {
-  return add(date, amount, "week");
+  return dayjs(addweeks(date, amount));
 }
 
 export function addMonths(date, amount) {
-  return add(date, amount, "month");
+  return dayjs(addmonths(date, amount));
 }
 
 export function addYears(date, amount) {
-  return add(date, amount, "year");
+  return dayjs(addyears(date, amount));
 }
 
 // *** Subtraction ***
@@ -267,11 +271,11 @@ export function subtractYears(date, amount) {
 // ** Date Comparison **
 
 export function isBefore(date1, date2) {
-  return date1.isBefore(date2);
+  return isbefore(date1, date2);
 }
 
 export function isAfter(date1, date2) {
-  return date1.isAfter(date2);
+  return isafter(date1, date2);
 }
 
 export function equals(date1, date2) {
@@ -280,7 +284,7 @@ export function equals(date1, date2) {
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
-    return isTheSameYear(date1, date2);
+    return issameyear(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -288,7 +292,7 @@ export function isSameYear(date1, date2) {
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return isTheSameMonth(date1, date2);
+    return issamemonth(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -296,7 +300,7 @@ export function isSameMonth(date1, date2) {
 
 export function isSameDay(date1, date2) {
   if (date1 && date2) {
-    return isTheSameDay(date1, date2);
+    return issameday(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -333,28 +337,11 @@ export function getDaysDiff(date1, date2) {
 
 // ** Date Localization **
 
-export function localizeDate(date, locale) {
-  let returnVal = dayjs(date).locale(locale || dayjs().$L);
-  return returnVal;
+export function localizeDate(date, locale = "en") {
+  return dayjs(date).locale(locale);
 }
 
-export function getDefaultLocale() {
-  return dayjs().$L;
-}
-
-export function getDefaultLocaleData() {
-  return dayjs().$locale();
-}
-
-export function registerLocale(localeName, localeData) {
-  dayjs.locale(localeName, localeData);
-}
-
-export function getLocaleData(date) {
-  return date.$L;
-}
-
-export function getFormattedWeekdayInLocale(locale, date, formatFunc) {
+export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {
   return formatFunc(
     dayjs(date)
       .locale(locale)
@@ -362,13 +349,13 @@ export function getFormattedWeekdayInLocale(locale, date, formatFunc) {
   );
 }
 
-export function getWeekdayMinInLocale(locale, date) {
+export function getWeekdayMinInLocale(locale = "en", date) {
   return dayjs(date)
     .locale(locale)
     .format("dd");
 }
 
-export function getWeekdayShortInLocale(locale, date) {
+export function getWeekdayShortInLocale(locale = "en", date) {
   return dayjs(date)
     .locale(locale)
     .format("ddd");

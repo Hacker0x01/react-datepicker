@@ -12,7 +12,7 @@ import {
 } from "../src/date_utils";
 import "dayjs/locale/es";
 
-describe.only("MonthYearDropdown", () => {
+describe("MonthYearDropdown", () => {
   let monthYearDropdown;
   let handleChangeResult;
   const mockHandleChange = function(changeInput) {

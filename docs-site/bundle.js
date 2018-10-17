@@ -64401,9 +64401,7 @@
             return dayNames.concat(
               [0, 1, 2, 3, 4, 5, 6].map(function(offset) {
                 var day = (0, _date_utils.addDays)(startOfWeek, offset);
-                var localeData = (0, _date_utils.getLocaleData)(day);
-                var weekDayName = _this.formatWeekday(localeData, day);
-
+                var weekDayName = _this.formatWeekday(day, _this.props.locale);
                 return _react2.default.createElement(
                   "div",
                   { key: offset, className: "react-datepicker__day-name" },
@@ -64413,17 +64411,17 @@
             );
           };
 
-          _this.formatWeekday = function(localeData, day) {
+          _this.formatWeekday = function(day, locale) {
             if (_this.props.formatWeekDay) {
               return (0, _date_utils.getFormattedWeekdayInLocale)(
-                localeData,
                 day,
+                locale,
                 _this.props.formatWeekDay
               );
             }
             return _this.props.useWeekdaysShort
-              ? (0, _date_utils.getWeekdayShortInLocale)(localeData, day)
-              : (0, _date_utils.getWeekdayMinInLocale)(localeData, day);
+              ? (0, _date_utils.getWeekdayShortInLocale)(locale, day)
+              : (0, _date_utils.getWeekdayMinInLocale)(locale, day);
           };
 
           _this.renderPreviousMonthButton = function() {
@@ -64728,7 +64726,7 @@
           };
 
           _this.state = {
-            date: _this.localizeDate(_this.getDateInView()),
+            date: _this.localizeDate(_this.getDateInView(), _this.props.locale),
             selectingDate: null,
             monthContainer: _this.monthContainer
           };
@@ -64760,7 +64758,10 @@
             )
           ) {
             this.setState({
-              date: this.localizeDate(this.props.preSelection)
+              date: this.localizeDate(
+                this.props.preSelection,
+                this.props.locale
+              )
             });
           } else if (
             this.props.openToDate &&
@@ -64770,7 +64771,7 @@
             )
           ) {
             this.setState({
-              date: this.localizeDate(this.props.openToDate)
+              date: this.localizeDate(this.props.openToDate, this.props.locale)
             });
           }
         };
@@ -65885,7 +65886,6 @@
       exports.getEndOfWeek = getEndOfWeek;
       exports.getEndOfMonth = getEndOfMonth;
       exports.addMinutes = addMinutes;
-      exports.addHours = addHours;
       exports.addDays = addDays;
       exports.addWeeks = addWeeks;
       exports.addMonths = addMonths;
@@ -65904,10 +65904,6 @@
       exports.isDayInRange = isDayInRange;
       exports.getDaysDiff = getDaysDiff;
       exports.localizeDate = localizeDate;
-      exports.getDefaultLocale = getDefaultLocale;
-      exports.getDefaultLocaleData = getDefaultLocaleData;
-      exports.registerLocale = registerLocale;
-      exports.getLocaleData = getLocaleData;
       exports.getFormattedWeekdayInLocale = getFormattedWeekdayInLocale;
       exports.getWeekdayMinInLocale = getWeekdayMinInLocale;
       exports.getWeekdayShortInLocale = getWeekdayShortInLocale;
@@ -66171,27 +66167,23 @@
       // *** Addition ***
 
       function addMinutes(date, amount) {
-        return add(date, amount, "minute");
-      }
-
-      function addHours(date, amount) {
-        return add(date, amount, "hour");
+        return (0, _dayjs2.default)((0, _dateFns.addMinutes)(date, amount));
       }
 
       function addDays(date, amount) {
-        return add(date, amount, "day");
+        return (0, _dayjs2.default)((0, _dateFns.addDays)(date, amount));
       }
 
       function addWeeks(date, amount) {
-        return add(date, amount, "week");
+        return (0, _dayjs2.default)((0, _dateFns.addWeeks)(date, amount));
       }
 
       function addMonths(date, amount) {
-        return add(date, amount, "month");
+        return (0, _dayjs2.default)((0, _dateFns.addMonths)(date, amount));
       }
 
       function addYears(date, amount) {
-        return add(date, amount, "year");
+        return (0, _dayjs2.default)((0, _dateFns.addYears)(date, amount));
       }
 
       // *** Subtraction ***
@@ -66214,11 +66206,11 @@
       // ** Date Comparison **
 
       function isBefore(date1, date2) {
-        return date1.isBefore(date2);
+        return (0, _dateFns.isBefore)(date1, date2);
       }
 
       function isAfter(date1, date2) {
-        return date1.isAfter(date2);
+        return (0, _dateFns.isAfter)(date1, date2);
       }
 
       function equals(date1, date2) {
@@ -66280,30 +66272,22 @@
 
       // ** Date Localization **
 
-      function localizeDate(date, locale) {
-        var returnVal = (0, _dayjs2.default)(date).locale(
-          locale || (0, _dayjs2.default)().$L
-        );
-        return returnVal;
+      function localizeDate(date) {
+        var locale =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : "en";
+
+        return (0, _dayjs2.default)(date).locale(locale);
       }
 
-      function getDefaultLocale() {
-        return (0, _dayjs2.default)().$L;
-      }
+      function getFormattedWeekdayInLocale(date) {
+        var locale =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : "en";
+        var formatFunc = arguments[2];
 
-      function getDefaultLocaleData() {
-        return (0, _dayjs2.default)().$locale();
-      }
-
-      function registerLocale(localeName, localeData) {
-        _dayjs2.default.locale(localeName, localeData);
-      }
-
-      function getLocaleData(date) {
-        return date.$L;
-      }
-
-      function getFormattedWeekdayInLocale(locale, date, formatFunc) {
         return formatFunc(
           (0, _dayjs2.default)(date)
             .locale(locale)
@@ -66311,13 +66295,25 @@
         );
       }
 
-      function getWeekdayMinInLocale(locale, date) {
+      function getWeekdayMinInLocale() {
+        var locale =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : "en";
+        var date = arguments[1];
+
         return (0, _dayjs2.default)(date)
           .locale(locale)
           .format("dd");
       }
 
-      function getWeekdayShortInLocale(locale, date) {
+      function getWeekdayShortInLocale() {
+        var locale =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : "en";
+        var date = arguments[1];
+
         return (0, _dayjs2.default)(date)
           .locale(locale)
           .format("ddd");
@@ -66557,7 +66553,10 @@
         var times = [];
         for (var i = 0; i < l; i++) {
           var injectedTime = addMinutes(
-            addHours(cloneDate(startOfDay), getHour(injectedTimes[i])),
+            (0, _dateFns.addHours)(
+              cloneDate(startOfDay),
+              getHour(injectedTimes[i])
+            ),
             getMinute(injectedTimes[i])
           );
           var nextTime = addMinutes(
@@ -74896,17 +74895,13 @@
       function generateMonthYears(minDate, maxDate) {
         var list = [];
 
-        var currDate = (0, _date_utils.getStartOfMonth)(
-          (0, _date_utils.cloneDate)(minDate)
-        );
-        var lastDate = (0, _date_utils.getStartOfMonth)(
-          (0, _date_utils.cloneDate)(maxDate)
-        );
+        var currDate = (0, _date_utils.getStartOfMonth)(minDate);
+        var lastDate = (0, _date_utils.getStartOfMonth)(maxDate);
 
         while (!(0, _date_utils.isAfter)(currDate, lastDate)) {
           list.push((0, _date_utils.cloneDate)(currDate));
 
-          (0, _date_utils.addMonths)(currDate, 1);
+          currDate = (0, _date_utils.addMonths)(currDate, 1);
         }
 
         return list;
