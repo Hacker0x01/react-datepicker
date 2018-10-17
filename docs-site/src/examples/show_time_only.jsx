@@ -29,7 +29,7 @@ export default class ShowTimeOnly extends React.Component {
             <strong>{`    showTimeSelect
     showTimeSelectOnly
     timeIntervals={15}
-    dateFormat="h:mm"
+    dateFormat="h:mm A"
     timeCaption="Time"
 />
 `}</strong>
@@ -43,7 +43,7 @@ export default class ShowTimeOnly extends React.Component {
             showTimeSelectOnly
             timeIntervals={15}
             timeCaption="Time"
-            dateFormat="h:mm"
+            dateFormat="h:mm A"
           />
         </div>
       </div>

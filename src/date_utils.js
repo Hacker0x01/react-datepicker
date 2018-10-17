@@ -1,12 +1,24 @@
 import dayjs from "dayjs";
 import dayjsPluginUTC from "dayjs-plugin-utc";
 import isBetween from "dayjs/plugin/isBetween";
-import weekOfYear from "dayjs/plugin/weekOfYear";
-import min from "date-fns/min";
-import max from "date-fns/max";
+import {
+  min,
+  max,
+  isSameDay as isTheSameDay,
+  isSameMonth as isTheSameMonth,
+  isSameYear as isTheSameYear,
+  differenceInCalendarWeeks,
+  setDayOfYear,
+  startOfToday,
+  startOfDay,
+  startOfWeek,
+  startOfMonth,
+  endOfWeek,
+  isSameWeek
+} from "date-fns";
 
 dayjs.extend(dayjsPluginUTC);
-dayjs.extend(weekOfYear);
+
 dayjs.extend(isBetween);
 
 // These functions are not exported so
@@ -151,7 +163,11 @@ export function getDay(date) {
 }
 
 export function getWeek(date) {
-  return date.week();
+  let firstDayOfYear = dayjs(setDayOfYear(date, 1));
+  if (!isSameYear(endOfWeek(date.utc()), date.utc())) {
+    return 1;
+  }
+  return differenceInCalendarWeeks(date.utc(), firstDayOfYear.utc()) + 1;
 }
 
 export function getMonth(date) {
@@ -178,18 +194,19 @@ export function getDayOfWeekCode(day) {
 // *** Start of ***
 
 export function getStartOfDay(date) {
-  return getStartOf(date, "day");
+  return dayjs(startOfDay(date));
 }
 
 export function getStartOfWeek(date) {
-  return getStartOf(date, "week");
-}
-export function getStartOfMonth(date) {
-  return getStartOf(date, "month");
+  return dayjs(startOfWeek(date));
 }
 
-export function getStartOfDate(date) {
-  return getStartOf(date, "date");
+export function getStartOfMonth(date) {
+  return dayjs(startOfMonth(date));
+}
+
+export function getStartOfToday() {
+  return dayjs(startOfToday());
 }
 
 // *** End of ***
@@ -263,7 +280,7 @@ export function equals(date1, date2) {
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
-    return date1.diff(date2, "years") === 0;
+    return isTheSameYear(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -271,25 +288,25 @@ export function isSameYear(date1, date2) {
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return date1.diff(date2, "months") === 0;
+    return isTheSameMonth(date1, date2);
   } else {
     return !date1 && !date2;
   }
 }
 
-export function isSameDay(moment1, moment2) {
-  if (moment1 && moment2) {
-    return moment1.diff(moment2, "days") === 0;
+export function isSameDay(date1, date2) {
+  if (date1 && date2) {
+    return isTheSameDay(date1, date2);
   } else {
-    return !moment1 && !moment2;
+    return !date1 && !date2;
   }
 }
 
-export function isSameUtcOffset(moment1, moment2) {
-  if (moment1 && moment2) {
-    return moment1.utcOffset() === moment2.utcOffset();
+export function isSameUtcOffset(date1, date2) {
+  if (date1 && date2) {
+    return date1.utcOffset() === date2.utcOffset();
   } else {
-    return !moment1 && !moment2;
+    return !date1 && !date2;
   }
 }
 
@@ -317,7 +334,8 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function localizeDate(date, locale) {
-  return dayjs(date).locale(locale || dayjs().$L);
+  let returnVal = dayjs(date).locale(locale || dayjs().$L);
+  return returnVal;
 }
 
 export function getDefaultLocale() {

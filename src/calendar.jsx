@@ -14,7 +14,7 @@ import {
   addMonths,
   subtractMonths,
   getStartOfWeek,
-  getStartOfDate,
+  getStartOfToday,
   addDays,
   cloneDate,
   formatDate,
@@ -472,9 +472,7 @@ export default class Calendar extends React.Component {
     return (
       <div
         className="react-datepicker__today-button"
-        onClick={e =>
-          this.props.onSelect(getStartOfDate(now(this.props.utcOffset)), e)
-        }
+        onClick={e => this.props.onSelect(getStartOfToday(), e)}
       >
         {this.props.todayButton}
       </div>
