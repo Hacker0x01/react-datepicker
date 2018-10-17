@@ -354,12 +354,6 @@ export function getLocaleData(date) {
   return date.$L;
 }
 
-export function getLocaleDataForLocale(locale = "en") {
-  return dayjs()
-    .locale(locale)
-    .$locale();
-}
-
 export function getFormattedWeekdayInLocale(locale, date, formatFunc) {
   return formatFunc(
     dayjs(date)
@@ -380,15 +374,16 @@ export function getWeekdayShortInLocale(locale, date) {
     .format("ddd");
 }
 
-// TODO what is this format exactly?
-export function getMonthInLocale(locale, date, format) {
-  return dayjs(date)
+export function getMonthInLocale(locale = "en", month) {
+  return dayjs()
+    .set("month", month)
     .locale(locale)
-    .format(format);
+    .format("MMMM");
 }
 
-export function getMonthShortInLocale(locale, date) {
-  return dayjs(date)
+export function getMonthShortInLocale(locale = "en", month) {
+  return dayjs()
+    .set("month", month)
     .locale(locale)
     .format("MMM");
 }

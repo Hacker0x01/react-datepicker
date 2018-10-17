@@ -439,7 +439,6 @@ export default class Calendar extends React.Component {
       <MonthDropdown
         dropdownMode={this.props.dropdownMode}
         locale={this.props.locale}
-        dateFormat={this.props.dateFormat}
         onChange={this.changeMonth}
         month={getMonth(this.state.date)}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}

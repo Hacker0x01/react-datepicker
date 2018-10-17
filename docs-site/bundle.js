@@ -64578,7 +64578,6 @@
             return _react2.default.createElement(_month_dropdown2.default, {
               dropdownMode: _this.props.dropdownMode,
               locale: _this.props.locale,
-              dateFormat: _this.props.dateFormat,
               onChange: _this.changeMonth,
               month: (0, _date_utils.getMonth)(_this.state.date),
               useShortMonthInDropdown: _this.props.useShortMonthInDropdown
@@ -65909,7 +65908,6 @@
       exports.getDefaultLocaleData = getDefaultLocaleData;
       exports.registerLocale = registerLocale;
       exports.getLocaleData = getLocaleData;
-      exports.getLocaleDataForLocale = getLocaleDataForLocale;
       exports.getFormattedWeekdayInLocale = getFormattedWeekdayInLocale;
       exports.getWeekdayMinInLocale = getWeekdayMinInLocale;
       exports.getWeekdayShortInLocale = getWeekdayShortInLocale;
@@ -66305,17 +66303,6 @@
         return date.$L;
       }
 
-      function getLocaleDataForLocale() {
-        var locale =
-          arguments.length > 0 && arguments[0] !== undefined
-            ? arguments[0]
-            : "en";
-
-        return (0, _dayjs2.default)()
-          .locale(locale)
-          .$locale();
-      }
-
       function getFormattedWeekdayInLocale(locale, date, formatFunc) {
         return formatFunc(
           (0, _dayjs2.default)(date)
@@ -66336,15 +66323,28 @@
           .format("ddd");
       }
 
-      // TODO what is this format exactly?
-      function getMonthInLocale(locale, date, format) {
-        return (0, _dayjs2.default)(date)
+      function getMonthInLocale() {
+        var locale =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : "en";
+        var month = arguments[1];
+
+        return (0, _dayjs2.default)()
+          .set("month", month)
           .locale(locale)
-          .format(format);
+          .format("MMMM");
       }
 
-      function getMonthShortInLocale(locale, date) {
-        return (0, _dayjs2.default)(date)
+      function getMonthShortInLocale() {
+        var locale =
+          arguments.length > 0 && arguments[0] !== undefined
+            ? arguments[0]
+            : "en";
+        var month = arguments[1];
+
+        return (0, _dayjs2.default)()
+          .set("month", month)
           .locale(locale)
           .format("MMM");
       }
@@ -74369,21 +74369,13 @@
         MonthDropdown.prototype.render = function render() {
           var _this2 = this;
 
-          var localeData = utils.getLocaleDataForLocale(this.props.locale);
           var monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
             this.props.useShortMonthInDropdown
               ? function(M) {
-                  return utils.getMonthShortInLocale(
-                    localeData,
-                    utils.newDate({ M: M })
-                  );
+                  return utils.getMonthShortInLocale(_this2.props.locale, M);
                 }
               : function(M) {
-                  return utils.getMonthInLocale(
-                    localeData,
-                    utils.newDate({ M: M }),
-                    _this2.props.dateFormat
-                  );
+                  return utils.getMonthInLocale(_this2.props.locale, M);
                 }
           );
 
@@ -74415,7 +74407,6 @@
         dropdownMode: _propTypes2.default.oneOf(["scroll", "select"])
           .isRequired,
         locale: _propTypes2.default.string,
-        dateFormat: _propTypes2.default.string.isRequired,
         month: _propTypes2.default.number.isRequired,
         onChange: _propTypes2.default.func.isRequired,
         useShortMonthInDropdown: _propTypes2.default.bool
@@ -74690,7 +74681,7 @@
 
                 (0, _date_utils.addMonths)(currDate, 1);
               }
-              console.log(options);
+
               return options;
             }),
             (_this.onSelectChange = function(e) {
