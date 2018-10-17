@@ -11,6 +11,7 @@ export default class Week extends React.Component {
     };
   }
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -33,9 +34,9 @@ export default class Week extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number,
     setOpen: PropTypes.func,
-    shouldCloseOnSelect: PropTypes.bool
+    shouldCloseOnSelect: PropTypes.bool,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   };
 
   handleDayClick = (day, event) => {
@@ -104,6 +105,7 @@ export default class Week extends React.Component {
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
             utcOffset={this.props.utcOffset}
+            disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         );
       })

@@ -362,6 +362,13 @@ export function isDayDisabled(
   );
 }
 
+export function isOutOfBounds(day, { minDate, maxDate } = {}) {
+  return (
+    (minDate && day.isBefore(minDate, "day")) ||
+    (maxDate && day.isAfter(maxDate, "day"))
+  );
+}
+
 export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {

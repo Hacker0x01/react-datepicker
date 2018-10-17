@@ -8,6 +8,7 @@ const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
 export default class Month extends React.Component {
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -34,7 +35,8 @@ export default class Month extends React.Component {
     startDate: PropTypes.object,
     utcOffset: PropTypes.number,
     setOpen: PropTypes.func,
-    shouldCloseOnSelect: PropTypes.bool
+    shouldCloseOnSelect: PropTypes.bool,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   };
 
   handleDayClick = (day, event) => {
@@ -101,6 +103,7 @@ export default class Month extends React.Component {
           utcOffset={this.props.utcOffset}
           setOpen={this.props.setOpen}
           shouldCloseOnSelect={this.props.shouldCloseOnSelect}
+          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         />
       );
 
@@ -142,6 +145,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
+        aria-label={"month-" + this.props.day.format("YYYY-MM")}
       >
         {this.renderWeeks()}
       </div>

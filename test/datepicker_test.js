@@ -799,6 +799,22 @@ describe("DatePicker", () => {
     expect(tmzDatePicker.find("input").prop("value")).to.equal(
       "2016-11-22 06:00"
     );
+
+    // using string offsets
+    tmzDatePicker.setState({ startDate: date, utcOffset: "-06:00" });
+
+    expect(tmzDatePicker.find("input").prop("value")).to.equal(
+      "2016-11-21 18:00"
+    );
+
+    tmzDatePicker.setState({
+      utcOffset: "+06:00",
+      startDate: utils.setUTCOffset(utils.cloneDate(date), 6)
+    });
+
+    expect(tmzDatePicker.find("input").prop("value")).to.equal(
+      "2016-11-22 06:00"
+    );
   });
   it("should correctly update the input when the value prop changes", () => {
     const datePicker = mount(<DatePicker />);
@@ -1036,5 +1052,27 @@ describe("DatePicker", () => {
     );
     datePicker.clear();
     expect(datePicker.state.inputValue).to.be.null;
+  });
+  it("should not open when open is false and input is focused", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker open={false} />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.calendar).to.not.exist;
+  });
+  it("should open when open is true", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker open />);
+    expect(datePicker.calendar).to.exist;
+  });
+  it("should fire onInputClick when input is clicked", () => {
+    const onInputClickSpy = sinon.spy();
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker onInputClick={onInputClickSpy} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    defer(() => {
+      assert(onInputClickSpy.calledOnce, "should fire onInputClick");
+      done();
+    });
   });
 });
