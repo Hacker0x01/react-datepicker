@@ -56,6 +56,16 @@ class Example extends React.Component {
 }
 ```
 
+### CDN
+The folks at [CDNJS](https://cdnjs.com/) graciously provide CDN support for React Datepicker's CSS and JavaScript: [https://cdnjs.com/libraries/react-datepicker](https://cdnjs.com/libraries/react-datepicker)
+```html
+<!-- Latest minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/<VERSION>/react-datepicker.min.css" crossorigin="anonymous">
+
+<!-- Latest minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/<VERSION>/react-datepicker.min.js" crossorigin="anonymous"></script>
+```
+
 ## Configuration
 
 The most basic use of the DatePicker can be described with:
