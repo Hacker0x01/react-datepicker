@@ -26,6 +26,7 @@ import {
   subtractYears,
   isSameDay,
   isDayDisabled,
+  isOutOfBounds,
   isDayInRange,
   getEffectiveMinDate,
   getEffectiveMaxDate,
@@ -362,6 +363,12 @@ export default class DatePicker extends React.Component {
     let changedDate = date;
 
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+      if (isOutOfBounds(changedDate, this.props)) {
+        this.props.onChange(date, event);
+        this.props.onSelect(changedDate, event);
+        this.setState({ inputValue: changedDate, preSelection: changedDate });
+      }
+
       return;
     }
 
@@ -609,7 +616,7 @@ export default class DatePicker extends React.Component {
   };
 
   renderDateInput = () => {
-    var className = classnames(this.props.className, {
+    const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open
     });
 
