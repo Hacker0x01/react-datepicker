@@ -6,16 +6,15 @@ import classnames from "classnames";
 import {
   newDate,
   now,
-  cloneDate,
   isDayjs,
   isDate,
   isBefore,
   isAfter,
   equals,
   setTime,
-  getSecond,
-  getMinute,
-  getHour,
+  getSeconds,
+  getMinutes,
+  getHours,
   addDays,
   addMonths,
   addWeeks,
@@ -370,9 +369,9 @@ export default class DatePicker extends React.Component {
           let selected = this.props.selected;
           if (keepInput) selected = newDate(changedDate);
           changedDate = setTime(newDate(changedDate), {
-            hour: getHour(selected),
-            minute: getMinute(selected),
-            second: getSecond(selected)
+            hour: getHours(selected),
+            minute: getMinutes(selected),
+            second: getSeconds(selected)
           });
         }
         if (!this.props.inline) {
@@ -411,8 +410,8 @@ export default class DatePicker extends React.Component {
       ? this.props.selected
       : this.getPreSelection();
     let changedDate = setTime(selected, {
-      hour: getHour(time),
-      minute: getMinute(time)
+      hour: getHours(time),
+      minute: getMinutes(time)
     });
 
     this.setState({

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  getHour,
-  getMinute,
+  getHours,
+  getMinutes,
   newDate,
   getStartOfDay,
   addMinutes,
@@ -41,8 +41,8 @@ export default class Time extends React.Component {
     // code to ensure selected time will always be in focus within time window when it first appears
     const multiplier = 60 / this.props.intervals;
     const currH = this.props.selected
-      ? getHour(this.props.selected)
-      : getHour(newDate());
+      ? getHours(this.props.selected)
+      : getHours(newDate());
     this.list.scrollTop = 30 * (multiplier * currH);
   }
 
@@ -63,7 +63,7 @@ export default class Time extends React.Component {
   liClasses = (time, currH, currM) => {
     let classes = ["react-datepicker__time-list-item"];
 
-    if (currH === getHour(time) && currM === getMinute(time)) {
+    if (currH === getHours(time) && currM === getMinutes(time)) {
       classes.push("react-datepicker__time-list-item--selected");
     }
     if (
@@ -78,7 +78,7 @@ export default class Time extends React.Component {
     }
     if (
       this.props.injectTimes &&
-      (getHour(time) * 60 + getMinute(time)) % this.props.intervals !== 0
+      (getHours(time) * 60 + getMinutes(time)) % this.props.intervals !== 0
     ) {
       classes.push("react-datepicker__time-list-item--injected");
     }
@@ -91,8 +91,8 @@ export default class Time extends React.Component {
     const format = this.props.format ? this.props.format : "hh:mm A";
     const intervals = this.props.intervals;
     const activeTime = this.props.selected ? this.props.selected : newDate();
-    const currH = getHour(activeTime);
-    const currM = getMinute(activeTime);
+    const currH = getHours(activeTime);
+    const currM = getMinutes(activeTime);
     let base = getStartOfDay(newDate());
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =

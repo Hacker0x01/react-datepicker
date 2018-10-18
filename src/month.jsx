@@ -66,7 +66,7 @@ export default class Month extends React.Component {
     const weeks = [];
     var isFixedHeight = this.props.fixedHeight;
     let currentWeekStart = utils.getStartOfWeek(
-      utils.getStartOfMonth(utils.cloneDate(this.props.day))
+      utils.getStartOfMonth(this.props.day)
     );
     let i = 0;
     let breakAfterNextPush = false;

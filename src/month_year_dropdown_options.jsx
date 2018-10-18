@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
   addMonths,
-  cloneDate,
   formatDate,
   getStartOfMonth,
+  newDate,
   isAfter,
   isSameMonth,
   isSameYear
@@ -18,7 +18,7 @@ function generateMonthYears(minDate, maxDate) {
   const lastDate = getStartOfMonth(maxDate);
 
   while (!isAfter(currDate, lastDate)) {
-    list.push(cloneDate(currDate));
+    list.push(newDate(currDate));
 
     currDate = addMonths(currDate, 1);
   }

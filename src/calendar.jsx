@@ -16,7 +16,6 @@ import {
   getStartOfWeek,
   getStartOfToday,
   addDays,
-  cloneDate,
   formatDate,
   localizeDate,
   setYear,
@@ -247,7 +246,7 @@ export default class Calendar extends React.Component {
   changeYear = year => {
     this.setState(
       {
-        date: setYear(cloneDate(this.state.date), year)
+        date: setYear(this.state.date, year)
       },
       () => this.handleYearChange(this.state.date)
     );
@@ -256,7 +255,7 @@ export default class Calendar extends React.Component {
   changeMonth = month => {
     this.setState(
       {
-        date: setMonth(cloneDate(this.state.date), month)
+        date: setMonth(this.state.date, month)
       },
       () => this.handleMonthChange(this.state.date)
     );
@@ -266,7 +265,7 @@ export default class Calendar extends React.Component {
     this.setState(
       {
         date: setYear(
-          setMonth(cloneDate(this.state.date), getMonth(monthYear)),
+          setMonth(this.state.date, getMonth(monthYear)),
           getYear(monthYear)
         )
       },

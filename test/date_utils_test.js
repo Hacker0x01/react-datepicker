@@ -1,7 +1,6 @@
 import {
   newDate,
   setUTCOffset,
-  cloneDate,
   addDays,
   subDays,
   equals,
@@ -142,7 +141,7 @@ describe.only("date_utils", function() {
 
     it("should be disabled if before the min date", () => {
       const day = newDate();
-      const minDate = addDays(cloneDate(day), 1);
+      const minDate = addDays(day, 1);
       expect(isDayDisabled(day, { minDate })).to.be.true;
     });
 
@@ -153,7 +152,7 @@ describe.only("date_utils", function() {
 
     it("should be disabled if after the max date", () => {
       const day = newDate();
-      const maxDate = subDays(cloneDate(day), 1);
+      const maxDate = subDays(day, 1);
       expect(isDayDisabled(day, { maxDate })).to.be.true;
     });
 
@@ -169,7 +168,7 @@ describe.only("date_utils", function() {
 
     it("should be disabled if not in included dates", () => {
       const day = newDate();
-      const includeDates = [addDays(cloneDate(day), 1)];
+      const includeDates = [addDays(day, 1)];
       expect(isDayDisabled(day, { includeDates })).to.be.true;
     });
 
@@ -187,7 +186,7 @@ describe.only("date_utils", function() {
 
     it("should not allow date filter to modify input date", () => {
       const day = newDate();
-      const dayClone = cloneDate(day);
+      const dayClone = newDate(day);
       const filterDate = d => {
         addDays(d, 1);
         return true;

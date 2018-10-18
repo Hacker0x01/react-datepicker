@@ -15,79 +15,45 @@ import {
   subWeeks,
   subMonths,
   subYears,
+  getSeconds,
+  getMinutes,
+  getHours,
+  getDay,
+  getDate,
+  getMonth,
+  getYear,
+  setSeconds,
+  setMinutes,
+  setHours,
+  setMonth,
+  setYear,
   min,
   max,
   isSameDay as issameday,
   isSameMonth as issamemonth,
   isSameYear as issameyear,
+  differenceInCalendarDays,
   differenceInCalendarWeeks,
+  differenceInCalendarMonths,
   setDayOfYear,
   startOfToday,
   startOfDay,
   startOfWeek,
   startOfMonth,
   endOfWeek,
+  endOfMonth,
+  isEqual,
   isSameWeek,
   isAfter as isafter,
-  isBefore as isbefore
+  isBefore as isbefore,
+  isWithinRange
 } from "date-fns";
-
-// These functions are not exported so
-// that we avoid magic strings like 'days'
-// function set(date, unit, to) {
-//   return date.set(unit, to);
-// }
-//
-// function add(date, amount, unit) {
-//   return date.add(amount, unit);
-// }
-//
-// function subtract(date, amount, unit) {
-//   return date.subtract(amount, unit);
-// }
-//
-// function get(date, unit) {
-//   switch (unit) {
-//     case "year":
-//       return date.year();
-//     case "month":
-//       return date.month();
-//     case "day":
-//       return date.day();
-//     case "hour":
-//       return date.hour();
-//     case "minute":
-//       return date.minute();
-//     case "second":
-//       return date.second();
-//     case "millisecond":
-//       return date.millisecond();
-//     default:
-//       return date;
-//   }
-// }
-
-// function getStartOf(date, unit) {
-//   return date.startOf(unit);
-// }
-//
-// function getEndOf(date, unit) {
-//   return date.endOf(unit);
-// }
-//
-// function getDiff(date1, date2, unit) {
-//   return date1.diff(date2, unit);
-// }
 
 // ** Date Constructors **
 
 export function newDate(point) {
   const d = point ? parse(point) : new Date();
   return isValid(d) ? d : null;
-}
-
-export function cloneDate(date) {
-  return parse(date);
 }
 
 export function parseDate(value, { locale = "en" }) {
@@ -140,8 +106,8 @@ export { isDate, isValid };
 
 // ** Date Formatting **
 
-export function formatDate(date, format) {
-  return format(date, format);
+export function formatDate(date, format, locale = "en") {
+  return format(date, format, { locale: locale });
 }
 
 export function safeDateFormat(date, { dateFormat, locale = "en" }) {
@@ -157,19 +123,10 @@ export function safeDateFormat(date, { dateFormat, locale = "en" }) {
 // ** Date Setters **
 
 export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
-  return date
-    .set("hour", hour)
-    .set("minute", minute)
-    .set("second", second);
+  return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
-export function setMonth(date, month) {
-  return set(date, "month", month);
-}
-
-export function setYear(date, year) {
-  return set(date, "year", year);
-}
+export { setMonth, setYear };
 
 export function setUTCOffset(date, offset) {
   const utc = date.getTime() + date.getTimezoneOffset() * 60000;
@@ -178,78 +135,58 @@ export function setUTCOffset(date, offset) {
 
 // ** Date Getters **
 
-export function getSecond(date) {
-  return date.second();
-}
-
-export function getMinute(date) {
-  return date.minute();
-}
-
-export function getHour(date) {
-  return date.hour();
-}
-
-// Returns day of week
-export function getDay(date) {
-  return date.day();
-}
+// getDay Returns day of week, getDate returns day of month
+export { getSeconds, getMinutes, getHours, getMonth, getYear, getDay, getDate };
 
 export function getWeek(date) {
-  let firstDayOfYear = dayjs(setDayOfYear(date, 1));
-  if (!isSameYear(endOfWeek(date.utc()), date.utc())) {
+  let firstDayOfYear = setDayOfYear(date, 1);
+  if (!isSameYear(endOfWeek(date), date)) {
     return 1;
   }
-  return differenceInCalendarWeeks(date.utc(), firstDayOfYear.utc()) + 1;
+  return differenceInCalendarWeeks(date, firstDayOfYear) + 1;
 }
 
-export function getMonth(date) {
-  return date.month();
+export function getUTCOffset(date) {
+  var sign = date.getTimezoneOffset() > 0 ? "-" : "+";
+  var offset = Math.abs(date.getTimezoneOffset());
+  var hours = Math.floor(offset / 60);
+  var minutes = offset % 60;
+  return `${sign}${hours
+    .toString()
+    .padStart(2, 0)}:${minutes.toString().padStart(2, 0)}`;
 }
 
-export function getYear(date) {
-  return date.year();
-}
-
-// Returns day of month
-export function getDate(date) {
-  return date.date();
-}
-
-export function getUTCOffset() {
-  return dayjs().utcOffset();
-}
-
+// should this take locale?
 export function getDayOfWeekCode(day) {
-  return dayjs(day).format("ddd");
+  return day.format("ddd");
 }
 
 // *** Start of ***
 
 export function getStartOfDay(date) {
-  return dayjs(startOfDay(date));
+  return startOfDay(date);
 }
 
 export function getStartOfWeek(date) {
-  return dayjs(startOfWeek(date));
+  return startOfWeek(date);
 }
 
 export function getStartOfMonth(date) {
-  return dayjs(startOfMonth(date));
+  return startOfMonth(date);
 }
 
 export function getStartOfToday() {
-  return dayjs(startOfToday());
+  return startOfToday();
 }
 
 // *** End of ***
 
 export function getEndOfWeek(date) {
-  return getEndOf(date, "week");
+  return endOfWeek(date);
 }
 
 export function getEndOfMonth(date) {
-  return getEndOf(date, "month");
+  return endOfMonth(date);
 }
 
 // ** Date Math **
@@ -273,7 +210,7 @@ export function isAfter(date1, date2) {
 }
 
 export function equals(date1, date2) {
-  return date1.isSame(date2);
+  return isEqual(date1, date2);
 }
 
 export function isSameYear(date1, date2) {
@@ -302,71 +239,47 @@ export function isSameDay(date1, date2) {
 
 export function isSameUtcOffset(date1, date2) {
   if (date1 && date2) {
-    return date1.utcOffset() === date2.utcOffset();
+    return getUTCOffset(date1) === getUTCOffset(date2);
   } else {
     return !date1 && !date2;
   }
 }
 
 export function isDayInRange(day, startDate, endDate) {
-  const before = startDate
-    .clone()
-    .startOf("day")
-    .subtract(1, "seconds");
-  const after = endDate
-    .clone()
-    .startOf("day")
-    .add(1, "seconds");
-  return day
-    .clone()
-    .startOf("day")
-    .isBetween(before, after);
+  return isWithinRange(day, startDate, endDate);
 }
 
 // *** Diffing ***
 
 export function getDaysDiff(date1, date2) {
-  return getDiff(date1, date2, "days");
+  return differenceInCalendarDays(date1, date2);
 }
 
 // ** Date Localization **
 
+// TODO: what does this output?
 export function localizeDate(date, locale = "en") {
   return dayjs(date).locale(locale);
 }
 
 export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {
-  return formatFunc(
-    dayjs(date)
-      .locale(locale)
-      .format("dddd")
-  );
+  return formatFunc(formatDate(date, "dddd", { locale: locale }));
 }
 
 export function getWeekdayMinInLocale(date, locale = "en") {
-  return dayjs(date)
-    .locale(locale)
-    .format("dd");
+  return formatDate(date, "dd", { locale: locale });
 }
 
 export function getWeekdayShortInLocale(date, locale = "en") {
-  return dayjs(date)
-    .locale(locale)
-    .format("ddd");
+  return formatDate(date, "ddd", { locale: locale });
 }
 
 export function getMonthInLocale(month, locale = "en") {
-  return dayjs()
-    .set("month", month)
-    .locale(locale)
-    .format("MMMM");
+  return formatDate(date, "MMMM", { locale: locale });
 }
 
 export function getMonthShortInLocale(month, locale = "en") {
-  return dayjs()
-    .set("month", month)
-    .locale(locale)
-    .format("MMM");
+  return formatDate(date, "MMM", { locale: locale });
 }
 
 // ** Utils for some components **
@@ -376,14 +289,20 @@ export function isDayDisabled(
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
-    (minDate && day.isBefore(minDate, "day")) ||
-    (maxDate && day.isAfter(maxDate, "day")) ||
+    isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
       excludeDates.some(excludeDate => isSameDay(day, excludeDate))) ||
     (includeDates &&
       !includeDates.some(includeDate => isSameDay(day, includeDate))) ||
-    (filterDate && !filterDate(day.clone())) ||
+    (filterDate && !filterDate(parse(day))) ||
     false
+  );
+}
+
+export function isOutOfBounds(day, { minDate, maxDate } = {}) {
+  return (
+    (minDate && differenceInCalendarDays(day, minDate) < 0) ||
+    (maxDate && differenceInCalendarDays(day, maxDate) > 0)
   );
 }
 
@@ -391,8 +310,8 @@ export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {
     if (
-      disabledTimes[i].hour() === time.hour() &&
-      disabledTimes[i].minute() === time.minute()
+      getHours(disabledTimes[i]) === getHours(time) &&
+      getMinutes(disabledTimes[i]) === getMinutes(time)
     ) {
       return true;
     }
@@ -406,43 +325,39 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     throw new Error("Both minTime and maxTime props required");
   }
 
-  const base = dayjs()
-    .set("hour", 0)
-    .set("minute", 0)
-    .set("second", 0);
-  const baseTime = base.set("hour", time.hour()).set("minute", time.minute());
-  const min = base.set("hour", minTime.hour()).set("minute", minTime.minute());
-  const max = base.set("hour", maxTime.hour()).set("minute", maxTime.minute());
-  return !(baseTime.diff(min) >= 0 && baseTime.diff(max) <= 0);
+  const base = newDate();
+  const baseTime = setHours(setMinutes(base, getMinutes(time)), getHours(time));
+  const min = setHours(
+    setMinutes(base, getMinutes(minTime)),
+    getHours(minTime)
+  );
+  const max = setHours(
+    setMinutes(base, getMinutes(maxTime)),
+    getHours(maxTime)
+  );
+  return isWithinRange(baseTime, min, max);
 }
 
 export function monthDisabledBefore(day, { minDate, includeDates } = {}) {
-  const dateBefore = day.subtract(1, "month");
+  const previousMonth = subMonths(day, 1);
   return (
-    (minDate &&
-      dateBefore.isBefore(minDate) &&
-      dateBefore.month() !== minDate.month()) ||
+    (minDate && differenceInCalendarMonths(minDate, previousMonth) > 0) ||
     (includeDates &&
       includeDates.every(
         includeDate =>
-          dateBefore.isBefore(includeDate) &&
-          dateBefore.month() !== includeDate.month()
+          differenceInCalendarMonths(includeDate, previousMonth) > 0
       )) ||
     false
   );
 }
 
 export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
-  const dateAfter = day.add(1, "month");
+  const nextMonth = addMonths(day, 1);
   return (
-    (maxDate &&
-      dateAfter.isAfter(maxDate) &&
-      dateAfter.month() !== maxDate.month()) ||
+    (maxDate && differenceInCalendarMonths(nextMonth, maxDate) > 0) ||
     (includeDates &&
       includeDates.every(
-        includeDate =>
-          dateAfter.isAfter(includeDate) &&
-          dateAfter.month() !== includeDate.month()
+        includeDate => differenceInCalendarMonths(nextMonth, includeDate) > 0
       )) ||
     false
   );
@@ -451,11 +366,11 @@ export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
 export function getEffectiveMinDate({ minDate, includeDates }) {
   if (includeDates && minDate) {
     let minDates = includeDates.filter(
-      includeDate => minDate.diff(includeDate, "days") <= 0
+      includeDate => differenceInCalendarDays(includeDate, minDate) >= 0
     );
-    return dayjs(min(...minDates));
+    return min(...minDates);
   } else if (includeDates) {
-    return dayjs(min(...includeDates));
+    return min(...includeDates);
   } else {
     return minDate;
   }
@@ -464,11 +379,11 @@ export function getEffectiveMinDate({ minDate, includeDates }) {
 export function getEffectiveMaxDate({ maxDate, includeDates }) {
   if (includeDates && maxDate) {
     let maxDates = includeDates.filter(
-      includeDate => maxDate.diff(includeDate, "days") >= 0
+      includeDate => differenceInCalendarDays(includeDate, maxDate) <= 0
     );
-    return dayjs(max(...maxDates));
+    return max(...maxDates);
   } else if (includeDates) {
-    return dayjs(max(...includeDates));
+    return max(...includeDates);
   } else {
     return maxDate;
   }
@@ -482,7 +397,7 @@ export function getHightLightDaysMap(
   for (let i = 0, len = highlightDates.length; i < len; i++) {
     const obj = highlightDates[i];
     if (isDayjs(obj)) {
-      const key = obj.format("MM.DD.YYYY");
+      const key = formatDate(obj, "MM.DD.YYYY");
       const classNamesArr = dateClasses.get(key) || [];
       if (!classNamesArr.includes(defaultClassName)) {
         classNamesArr.push(defaultClassName);
@@ -494,7 +409,7 @@ export function getHightLightDaysMap(
       const arrOfDayjs = obj[keys[0]];
       if (typeof className === "string" && arrOfDayjs.constructor === Array) {
         for (let k = 0, len = arrOfDayjs.length; k < len; k++) {
-          const key = arrOfDayjs[k].format("MM.DD.YYYY");
+          const key = formatDate(arrOfDayjs[k], "MM.DD.YYYY");
           const classNamesArr = dateClasses.get(key) || [];
           if (!classNamesArr.includes(className)) {
             classNamesArr.push(className);
@@ -519,11 +434,11 @@ export function timesToInjectAfter(
   const times = [];
   for (let i = 0; i < l; i++) {
     const injectedTime = addMinutes(
-      addHours(cloneDate(startOfDay), getHour(injectedTimes[i])),
-      getMinute(injectedTimes[i])
+      addHours(startOfDay, getHours(injectedTimes[i])),
+      getMinutes(injectedTimes[i])
     );
     const nextTime = addMinutes(
-      cloneDate(startOfDay),
+      startOfDay,
       (currentMultiplier + 1) * intervals
     );
 
