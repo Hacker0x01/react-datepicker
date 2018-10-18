@@ -266,15 +266,36 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  setOpen = open => {
-    this.setState({
-      open: open,
-      preSelection:
-        open && this.state.open
-          ? this.state.preSelection
-          : this.calcInitialState().preSelection,
-      lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
-    });
+  setBlur = () => {
+    if (this.input && this.input.blur) {
+      this.input.blur();
+    }
+
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+
+    this.cancelFocusInput();
+  };
+
+  setOpen = (open, skipSetBlur = false) => {
+    this.setState(
+      {
+        open: open,
+        preSelection:
+          open && this.state.open
+            ? this.state.preSelection
+            : this.calcInitialState().preSelection,
+        lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
+      },
+      () => {
+        if (!open && !skipSetBlur) {
+          this.setState({ focused: false }, () => {
+            this.setBlur();
+          });
+        }
+      }
+    );
   };
 
   isCalendarOpen = () =>
@@ -360,9 +381,6 @@ export default class DatePicker extends React.Component {
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
-      this.props.onBlur(date);
-      this.cancelFocusInput();
-
       this.setOpen(false);
     }
   };
@@ -475,22 +493,14 @@ export default class DatePicker extends React.Component {
         this.handleSelect(copy, event);
         !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
       } else {
-        this.input.blur();
-        this.props.onBlur(copy);
-        this.cancelFocusInput();
-
         this.setOpen(false);
       }
     } else if (eventKey === "Escape") {
       event.preventDefault();
 
-      this.input.blur();
-      this.props.onBlur(copy);
-      this.cancelFocusInput();
-
       this.setOpen(false);
     } else if (eventKey === "Tab") {
-      this.setOpen(false);
+      this.setOpen(false, true);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
