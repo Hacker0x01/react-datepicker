@@ -35321,6 +35321,10 @@
               _this.input.blur();
             }
 
+            if (_this.props.onBlur) {
+              _this.props.onBlur();
+            }
+
             _this.cancelFocusInput();
           };
 
@@ -35340,10 +35344,19 @@
                 lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
               },
               function() {
-                if (!open && !skipSetBlur) {
-                  _this.setState({ focused: false }, function() {
-                    _this.setBlur();
-                  });
+                if (!open) {
+                  _this.setState(
+                    function(prev) {
+                      return {
+                        focused: skipSetBlur ? prev.focused : false
+                      };
+                    },
+                    function() {
+                      !skipSetBlur && _this.setBlur();
+
+                      _this.setState({ inputValue: null, preSelection: null });
+                    }
+                  );
                 }
               }
             );
@@ -35464,10 +35477,6 @@
               if ((0, _date_utils.isOutOfBounds)(changedDate, _this.props)) {
                 _this.props.onChange(date, event);
                 _this.props.onSelect(changedDate, event);
-                _this.setState({
-                  inputValue: changedDate,
-                  preSelection: changedDate
-                });
               }
 
               return;

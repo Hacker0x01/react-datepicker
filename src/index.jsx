@@ -289,10 +289,17 @@ export default class DatePicker extends React.Component {
         lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
       },
       () => {
-        if (!open && !skipSetBlur) {
-          this.setState({ focused: false }, () => {
-            this.setBlur();
-          });
+        if (!open) {
+          this.setState(
+            prev => ({
+              focused: skipSetBlur ? prev.focused : false
+            }),
+            () => {
+              !skipSetBlur && this.setBlur();
+
+              this.setState({ inputValue: null });
+            }
+          );
         }
       }
     );
@@ -392,7 +399,6 @@ export default class DatePicker extends React.Component {
       if (isOutOfBounds(changedDate, this.props)) {
         this.props.onChange(date, event);
         this.props.onSelect(changedDate, event);
-        this.setState({ inputValue: changedDate, preSelection: changedDate });
       }
 
       return;
