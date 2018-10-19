@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import Week from "./week";
 import * as utils from "./date_utils";
+import { ScreenReaderOnly } from "./screen_reader_only";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -37,6 +38,15 @@ export default class Month extends React.Component {
     accessibleMode: PropTypes.bool
   };
 
+  constructor(props) {
+    super(props);
+
+    this.dayFormat = "MMMM D, YYYY.";
+    this.state = {
+      readInstructions: false
+    };
+  }
+
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event);
@@ -53,6 +63,10 @@ export default class Month extends React.Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave();
     }
+  };
+
+  onFocus = () => {
+    this.setState({ readInstructions: true });
   };
 
   onInputKeyDown = event => {
@@ -178,13 +192,30 @@ export default class Month extends React.Component {
   };
 
   render() {
+    let screenReaderInstructions;
+    if (this.state.readInstructions) {
+      screenReaderInstructions = (
+        <p aria-live>
+          You are focused on a calendar. Use the arrow keys to navigate the days
+          in the month. Use the page up and down keys to navigate from month to
+          month. Use the home and end keys to navigate from year to year.
+          {utils.formatDate(this.props.preSelection, this.dayFormat)} is the
+          currently focused date.
+        </p>
+      );
+    }
+
     return (
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         tabIndex={this.props.accessibleMode ? 0 : -1}
         onKeyDown={this.onInputKeyDown}
+        onFocus={this.onFocus}
       >
+        <ScreenReaderOnly>
+          <span>{screenReaderInstructions}</span>
+        </ScreenReaderOnly>
         {this.renderWeeks()}
       </div>
     );
