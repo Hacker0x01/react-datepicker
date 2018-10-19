@@ -53,11 +53,11 @@ import {
 
 export function newDate(value) {
   const d = value ? parse(value) : new Date();
-  return isValid(d) ? d : null;
+  return isValid(d) && isAfter(d, new Date("1/1/1000")) ? d : null;
 }
 
 export function parseDate(value) {
-  return newDate(value);
+  return value ? newDate(value) : null;
 }
 
 // ** Date "Reflection" **

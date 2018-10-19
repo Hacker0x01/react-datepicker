@@ -236,7 +236,7 @@ export default class DatePicker extends React.Component {
       open: this.props.startOpen || false,
       preventFocus: false,
       preSelection: this.props.selected
-        ? newDate(this.props.selected)
+        ? parseDate(this.props.selected)
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
@@ -364,8 +364,8 @@ export default class DatePicker extends React.Component {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
-          if (keepInput) selected = newDate(changedDate);
-          changedDate = setTime(newDate(changedDate), {
+          if (keepInput) selected = parseDate(changedDate);
+          changedDate = setTime(parseDate(changedDate), {
             hour: getHours(selected),
             minute: getMinutes(selected),
             second: getSeconds(selected)
@@ -439,7 +439,7 @@ export default class DatePicker extends React.Component {
       }
       return;
     }
-    const copy = newDate(this.state.preSelection);
+    const copy = parseDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
       if (

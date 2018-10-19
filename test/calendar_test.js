@@ -688,7 +688,7 @@ describe("Calendar", function() {
     });
   });
 
-  describe.only("localization", function() {
+  describe("localization", function() {
     function testLocale(calendar, selected, locale) {
       const calendarText = calendar.find(".react-datepicker__current-month");
       expect(calendarText.text()).to.equal(

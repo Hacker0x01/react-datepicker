@@ -406,9 +406,9 @@ describe("DatePicker", () => {
     )[0];
     TestUtils.Simulate.click(dayButton);
 
-    expect(utils.getHour(date)).to.equal(10);
-    expect(utils.getMinute(date)).to.equal(11);
-    expect(utils.getSecond(date)).to.equal(12);
+    expect(utils.getHours(date)).to.equal(10);
+    expect(utils.getMinutes(date)).to.equal(11);
+    expect(utils.getSeconds(date)).to.equal(12);
   });
 
   it("should mount and unmount properly", done => {
@@ -672,7 +672,6 @@ describe("DatePicker", () => {
     expect(utils.formatDate(selected, data.exactishFormat)).to.equal(
       utils.formatDate(data.copyM, data.exactishFormat)
     );
-    expect(selected.isLocal()).to.equal(true);
   });
 
   it("should autofocus the input given the autoFocus prop", () => {
@@ -985,7 +984,9 @@ describe("DatePicker", () => {
     ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
 
     let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
-    let nextMonthDay = days.find(d => d.props.month !== selected.month());
+    let nextMonthDay = days.find(
+      d => d.props.month !== utils.getMonth(selected)
+    );
     TestUtils.Simulate.click(ReactDOM.findDOMNode(nextMonthDay));
     expect(
       utils.formatDate(datePicker.state.preSelection, "YYYY-MM-DD")
