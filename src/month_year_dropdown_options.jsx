@@ -48,7 +48,8 @@ export default class MonthYearDropdownOptions extends React.Component {
   renderOptions = () => {
     return this.state.monthYearsList.map(monthYear => {
       const monthYearPoint = monthYear.valueOf();
-
+      console.log(`monthYear: ${monthYear}`);
+      console.log(`monthYearPoint: ${monthYearPoint}`);
       const isSameMonthYear =
         isSameYear(this.props.date, monthYear) &&
         isSameMonth(this.props.date, monthYear);

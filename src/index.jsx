@@ -8,7 +8,7 @@ import {
   isDate,
   isBefore,
   isAfter,
-  equals,
+  isEqual,
   setTime,
   getSeconds,
   getMinutes,
@@ -52,7 +52,7 @@ function hasPreSelectionChanged(date1, date2) {
 
 function hasSelectionChanged(date1, date2) {
   if (date1 && date2) {
-    return !equals(date1, date2);
+    return !isEqual(date1, date2);
   }
 
   return false;

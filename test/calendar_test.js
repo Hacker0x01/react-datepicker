@@ -715,6 +715,7 @@ describe("Calendar", function() {
 
       const calendar = getCalendar({ selected });
       testLocale(calendar, selected, "fi");
+      utils.setDefaultLocale("");
     });
 
     it("should use the locale specified as a prop", function() {
@@ -732,6 +733,7 @@ describe("Calendar", function() {
 
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
+      utils.setDefaultLocale("");
     });
   });
 });

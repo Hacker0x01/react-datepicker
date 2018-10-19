@@ -40,7 +40,7 @@ export default class MonthYearDropdown extends React.Component {
       const timepoint = currDate.valueOf();
       options.push(
         <option key={timepoint} value={timepoint}>
-          {formatDate(currDate, this.props.dateFormat)}
+          {formatDate(currDate, this.props.dateFormat, this.props.locale)}
         </option>
       );
 
@@ -93,8 +93,8 @@ export default class MonthYearDropdown extends React.Component {
       dateFormat={this.props.dateFormat}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
-      minDate={localizeDate(this.props.minDate, this.props.locale)}
-      maxDate={localizeDate(this.props.maxDate, this.props.locale)}
+      minDate={this.props.minDate}
+      maxDate={this.props.maxDate}
       scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
     />
   );

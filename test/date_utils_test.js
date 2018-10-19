@@ -2,7 +2,7 @@ import {
   newDate,
   addDays,
   subDays,
-  equals,
+  isEqual,
   isSameDay,
   isSameMonth,
   isSameYear,
@@ -123,13 +123,13 @@ describe("date_utils", function() {
 
     it("should be enabled if date filter returns true", () => {
       const day = newDate();
-      const filterDate = d => equals(d, day);
+      const filterDate = d => isEqual(d, day);
       expect(isDayDisabled(day, { filterDate })).to.be.false;
     });
 
     it("should be disabled if date filter returns false", () => {
       const day = newDate();
-      const filterDate = d => !equals(d, day);
+      const filterDate = d => !isEqual(d, day);
       expect(isDayDisabled(day, { filterDate })).to.be.true;
     });
 
@@ -141,7 +141,7 @@ describe("date_utils", function() {
         return true;
       };
       isDayDisabled(day, { filterDate });
-      expect(equals(day, dayClone)).to.be.true;
+      expect(isEqual(day, dayClone)).to.be.true;
     });
   });
 
@@ -201,14 +201,14 @@ describe("date_utils", function() {
     it("should return the min date", () => {
       const minDate = newDate("2016-03-30");
       const result = getEffectiveMinDate({ minDate });
-      assert(equals(minDate, result));
+      assert(isEqual(minDate, result));
     });
 
     it("should return the minimum include date", () => {
       const date1 = newDate("2016-03-30");
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
-      assert(equals(getEffectiveMinDate({ includeDates }), date1));
+      assert(isEqual(getEffectiveMinDate({ includeDates }), date1));
     });
 
     it("should return the minimum include date satisfying the min date", () => {
@@ -216,7 +216,7 @@ describe("date_utils", function() {
       const date1 = newDate("2016-03-30");
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
-      assert(equals(getEffectiveMinDate({ minDate, includeDates }), date2));
+      assert(isEqual(getEffectiveMinDate({ minDate, includeDates }), date2));
     });
   });
 
@@ -227,14 +227,14 @@ describe("date_utils", function() {
 
     it("should return the max date", () => {
       const maxDate = newDate("2016-03-30");
-      assert(equals(getEffectiveMaxDate({ maxDate }), maxDate));
+      assert(isEqual(getEffectiveMaxDate({ maxDate }), maxDate));
     });
 
     it("should return the maximum include date", () => {
       const date1 = newDate("2016-03-30");
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
-      assert(equals(getEffectiveMaxDate({ includeDates }), date2));
+      assert(isEqual(getEffectiveMaxDate({ includeDates }), date2));
     });
 
     it("should return the maximum include date satisfying the max date", () => {
@@ -242,7 +242,7 @@ describe("date_utils", function() {
       const date1 = newDate("2016-03-30");
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
-      assert(equals(getEffectiveMaxDate({ maxDate, includeDates }), date1));
+      assert(isEqual(getEffectiveMaxDate({ maxDate, includeDates }), date1));
     });
   });
 });

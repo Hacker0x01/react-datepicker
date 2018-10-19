@@ -3,11 +3,9 @@ import range from "lodash/range";
 import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
 import { mount } from "enzyme";
-import {
-  newDate,
-  getMonthInLocale,
-  getDefaultLocaleData
-} from "../src/date_utils";
+import { newDate, getMonthInLocale, registerLocale } from "../src/date_utils";
+import zh_cn from "date-fns/locale/zh_cn";
+import el from "date-fns/locale/el";
 
 describe("MonthDropdown", () => {
   let monthDropdown;
@@ -68,9 +66,7 @@ describe("MonthDropdown", () => {
     });
 
     it("closes the dropdown if outside is clicked", () => {
-      const monthNames = range(0, 12).map(M =>
-        getMonthInLocale(getDefaultLocaleData(), newDate({ M }))
-      );
+      const monthNames = range(0, 12).map(M => getMonthInLocale(M));
       const onCancelSpy = sandbox.spy();
       const monthDropdownOptionsInstance = mount(
         <MonthDropdownOptions
@@ -107,6 +103,7 @@ describe("MonthDropdown", () => {
     });
 
     it("should use dateFormat property to determine nominative or genitive display of month names", () => {
+      registerLocale("el", el);
       let dropdownDateFormat = getMonthDropdown({ dateFormat: "DD/MM/YYYY" });
       expect(dropdownDateFormat.text()).to.contain("December");
 
@@ -185,6 +182,7 @@ describe("MonthDropdown", () => {
 
     // Failing on Travis CI.
     it("renders month options with specified locale", () => {
+      registerLocale("zh-cn", zh_cn);
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
         locale: "zh-cn"

@@ -170,11 +170,7 @@ export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
-export { isBefore, isAfter };
-
-export function equals(date1, date2) {
-  return isEqual(date1, date2);
-}
+export { isBefore, isAfter, isEqual };
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
@@ -239,12 +235,12 @@ export function getWeekdayShortInLocale(date, locale) {
   return formatDate(date, "ddd", { locale: locale });
 }
 
-export function getMonthInLocale(date, locale) {
-  return formatDate(date, "MMMM", { locale: locale });
+export function getMonthInLocale(month, locale) {
+  return formatDate(setMonth(new Date(), month), "MMMM", locale);
 }
 
-export function getMonthShortInLocale(date, locale) {
-  return formatDate(date, "MMM", { locale: locale });
+export function getMonthShortInLocale(month, locale) {
+  return formatDate(setMonth(new Date(), month), "MMM", locale);
 }
 
 // ** Utils for some components **
@@ -407,7 +403,10 @@ export function timesToInjectAfter(
       (currentMultiplier + 1) * intervals
     );
 
-    if (injectedTime.isBetween(currentTime, nextTime)) {
+    if (
+      isAfter(injectedTime, currentTime) &&
+      isBefore(injectedTime, nextTime)
+    ) {
       times.push(injectedTimes[i]);
     }
   }

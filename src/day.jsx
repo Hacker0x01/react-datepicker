@@ -9,6 +9,9 @@ import {
   isSameDay,
   isDayDisabled,
   isDayInRange,
+  isEqual,
+  isBefore,
+  isAfter,
   getDayOfWeekCode,
   formatDate
 } from "./date_utils";
@@ -88,11 +91,19 @@ export default class Day extends React.Component {
       return false;
     }
 
-    if (selectsStart && endDate && selectingDate.isSameOrBefore(endDate)) {
+    if (
+      selectsStart &&
+      endDate &&
+      (isBefore(selectingDate, endDate) || isEqual(selectingDate, endDate))
+    ) {
       return isDayInRange(day, selectingDate, endDate);
     }
 
-    if (selectsEnd && startDate && selectingDate.isSameOrAfter(startDate)) {
+    if (
+      selectsEnd &&
+      startDate &&
+      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
+    ) {
       return isDayInRange(day, startDate, selectingDate);
     }
 
