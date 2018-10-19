@@ -32,7 +32,8 @@ export default class Default extends React.Component {
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+          />
         </div>
       </div>
     );

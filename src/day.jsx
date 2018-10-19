@@ -29,7 +29,7 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   };
 
   handleClick = event => {
