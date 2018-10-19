@@ -1,13 +1,11 @@
 import {
   newDate,
-  setUTCOffset,
   addDays,
   subDays,
   equals,
   isSameDay,
   isSameMonth,
   isSameYear,
-  isSameUtcOffset,
   isDayDisabled,
   monthDisabledBefore,
   monthDisabledAfter,
@@ -15,7 +13,7 @@ import {
   getEffectiveMaxDate
 } from "../src/date_utils";
 
-describe.only("date_utils", function() {
+describe("date_utils", function() {
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
@@ -76,55 +74,6 @@ describe.only("date_utils", function() {
     it("should return true for equal years", function() {
       expect(isSameYear(newDate("2016-02-10"), newDate("2016-12-24"))).to.be
         .true;
-    });
-  });
-
-  describe("isSameUtcOffset", function() {
-    it("should return true for null dates", function() {
-      expect(isSameUtcOffset(null, null)).to.be.true;
-    });
-
-    it("should return false for a null and a non-null date", function() {
-      expect(isSameUtcOffset(newDate(), null)).to.be.false;
-      expect(isSameUtcOffset(null, newDate())).to.be.false;
-    });
-
-    it("should return true for non-equal utc offsets, but same dates", function() {
-      expect(
-        isSameUtcOffset(
-          setUTCOffset(newDate("2016-02-10"), -3),
-          setUTCOffset(newDate("2016-02-10"), 5)
-        )
-      ).to.be.false;
-      expect(
-        isSameUtcOffset(
-          setUTCOffset(newDate("2016-02-10"), 3),
-          setUTCOffset(newDate("2016-02-10"), -5)
-        )
-      ).to.be.false;
-      expect(
-        isSameUtcOffset(
-          setUTCOffset(newDate("2016-02-10"), 180),
-          setUTCOffset(newDate("2016-02-10"), -210)
-        )
-      ).to.be.false;
-    });
-
-    it("should return true for equal utc offsets, regardless of dates", function() {
-      expect(isSameUtcOffset(newDate("2016-02-10"), newDate("2016-02-10"))).to
-        .be.true;
-      expect(
-        isSameUtcOffset(
-          setUTCOffset(newDate("2016-02-10"), -3),
-          setUTCOffset(newDate("2016-05-10"), -3)
-        )
-      ).to.be.true;
-      expect(
-        isSameUtcOffset(
-          setUTCOffset(newDate("2016-12-10"), 6),
-          setUTCOffset(newDate("2016-02-15"), 6)
-        )
-      ).to.be.true;
     });
   });
 

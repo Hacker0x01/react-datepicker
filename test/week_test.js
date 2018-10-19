@@ -18,7 +18,7 @@ describe("Week", () => {
     const days = week.find(Day);
     expect(days.length).to.equal(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset);
+      const expectedDay = utils.addDays(weekStart, offset);
       assert(utils.isSameDay(day.prop("day"), expectedDay));
     });
 
@@ -33,7 +33,7 @@ describe("Week", () => {
     const days = week.find(Day);
     expect(days.length).to.equal(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset);
+      const expectedDay = utils.addDays(weekStart, offset);
       assert(utils.isSameDay(day.prop("day"), expectedDay));
     });
 

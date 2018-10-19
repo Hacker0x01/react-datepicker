@@ -5,8 +5,6 @@ import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import {
   newDate,
-  now,
-  isDayjs,
   isDate,
   isBefore,
   isAfter,
@@ -139,7 +137,6 @@ export default class DatePicker extends React.Component {
     todayButton: PropTypes.string,
     useWeekdaysShort: PropTypes.bool,
     formatWeekDay: PropTypes.func,
-    utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
@@ -223,7 +220,7 @@ export default class DatePicker extends React.Component {
         ? newDate(this.props.startDate)
         : this.props.selectsStart && this.props.endDate
           ? newDate(this.props.endDate)
-          : now(this.props.utcOffset);
+          : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -446,7 +443,7 @@ export default class DatePicker extends React.Component {
     if (eventKey === "Enter") {
       event.preventDefault();
       if (
-        (isDayjs(this.state.preSelection) || isDate(this.state.preSelection)) &&
+        isDate(this.state.preSelection) &&
         this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
       ) {
         this.handleSelect(copy, event);
@@ -563,7 +560,6 @@ export default class DatePicker extends React.Component {
         scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
         todayButton={this.props.todayButton}
         weekLabel={this.props.weekLabel}
-        utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}

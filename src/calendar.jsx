@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import CalendarContainer from "./calendar_container";
 import {
-  now,
+  newDate,
   setMonth,
   getMonth,
   addMonths,
@@ -17,7 +17,6 @@ import {
   getStartOfToday,
   addDays,
   formatDate,
-  localizeDate,
   setYear,
   getYear,
   isBefore,
@@ -103,7 +102,6 @@ export default class Calendar extends React.Component {
     useWeekdaysShort: PropTypes.bool,
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
-    utcOffset: PropTypes.number,
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
@@ -128,7 +126,7 @@ export default class Calendar extends React.Component {
     super(props);
 
     this.state = {
-      date: this.localizeDate(this.getDateInView(), this.props.locale),
+      date: this.getDateInView(),
       selectingDate: null,
       monthContainer: this.monthContainer
     };
@@ -152,14 +150,14 @@ export default class Calendar extends React.Component {
       !isSameDay(this.props.preSelection, prevProps.preSelection)
     ) {
       this.setState({
-        date: this.localizeDate(this.props.preSelection, this.props.locale)
+        date: this.props.preSelection
       });
     } else if (
       this.props.openToDate &&
       !isSameDay(this.props.openToDate, prevProps.openToDate)
     ) {
       this.setState({
-        date: this.localizeDate(this.props.openToDate, this.props.locale)
+        date: this.props.openToDate
       });
     }
   }
@@ -175,10 +173,10 @@ export default class Calendar extends React.Component {
   };
 
   getDateInView = () => {
-    const { preSelection, selected, openToDate, utcOffset } = this.props;
+    const { preSelection, selected, openToDate } = this.props;
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
-    const current = now(utcOffset);
+    const current = newDate();
     const initialDate = openToDate || selected || preSelection;
     if (initialDate) {
       return initialDate;
@@ -191,8 +189,6 @@ export default class Calendar extends React.Component {
     }
     return current;
   };
-
-  localizeDate = date => localizeDate(date, this.props.locale);
 
   increaseMonth = () => {
     this.setState(
@@ -298,7 +294,7 @@ export default class Calendar extends React.Component {
 
   formatWeekday = (day, locale) => {
     if (this.props.formatWeekDay) {
-      return getFormattedWeekdayInLocale(day, locale, this.props.formatWeekDay);
+      return getFormattedWeekdayInLocale(day, this.props.formatWeekDay, locale);
     }
     return this.props.useWeekdaysShort
       ? getWeekdayShortInLocale(day, locale)
@@ -398,7 +394,7 @@ export default class Calendar extends React.Component {
     }
     return (
       <div className={classes.join(" ")}>
-        {formatDate(date, this.props.dateFormat)}
+        {formatDate(date, this.props.dateFormat, this.props.locale)}
       </div>
     );
   };
@@ -529,7 +525,6 @@ export default class Calendar extends React.Component {
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
-            utcOffset={this.props.utcOffset}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         </div>

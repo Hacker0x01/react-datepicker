@@ -1,11 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
-import { setTime, cloneDate, newDate } from "../src/date_utils";
+import { setTime, newDate } from "../src/date_utils";
 import DatePicker from "../src/index.jsx";
-
-function cloneDateWithTime(date, time) {
-  return setTime(cloneDate(date), time);
-}
 
 describe("DatePicker", () => {
   let sandbox;
@@ -24,10 +20,10 @@ describe("DatePicker", () => {
       <DatePicker
         showTimeSelect
         excludeTimes={[
-          cloneDateWithTime(now, { hours: 17, minutes: 0 }),
-          cloneDateWithTime(now, { hours: 18, minutes: 30 }),
-          cloneDateWithTime(now, { hours: 19, minutes: 30 }),
-          cloneDateWithTime(now, { hours: 17, minutes: 30 })
+          setTime(now, { hours: 17, minutes: 0 }),
+          setTime(now, { hours: 18, minutes: 30 }),
+          setTime(now, { hours: 19, minutes: 30 }),
+          setTime(now, { hours: 17, minutes: 30 })
         ]}
       />
     );

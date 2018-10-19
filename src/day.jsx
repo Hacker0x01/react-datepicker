@@ -5,11 +5,12 @@ import {
   getDay,
   getMonth,
   getDate,
-  now,
+  newDate,
   isSameDay,
   isDayDisabled,
   isDayInRange,
-  getDayOfWeekCode
+  getDayOfWeekCode,
+  formatDate
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -28,8 +29,7 @@ export default class Day extends React.Component {
     selectingDate: PropTypes.object,
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
-    startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    startDate: PropTypes.object
   };
 
   handleClick = event => {
@@ -62,7 +62,7 @@ export default class Day extends React.Component {
     }
 
     // Looking for className in the Map of {'day string, 'className'}
-    const dayStr = day.format("MM.DD.YYYY");
+    const dayStr = formatDate(day, "MM.DD.YYYY");
     return highlightDates.get(dayStr);
   };
 
@@ -173,9 +173,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
         "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(
-          now(this.props.utcOffset)
-        ),
+        "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth()
       },

@@ -9,7 +9,6 @@ import {
   isAfter,
   isSameMonth,
   isSameYear,
-  localizeDate,
   newDate
 } from "./date_utils";
 
@@ -32,12 +31,8 @@ export default class MonthYearDropdown extends React.Component {
   };
 
   renderSelectOptions = () => {
-    let currDate = getStartOfMonth(
-      localizeDate(this.props.minDate, this.props.locale)
-    );
-    const lastDate = getStartOfMonth(
-      localizeDate(this.props.maxDate, this.props.locale)
-    );
+    let currDate = getStartOfMonth(this.props.minDate);
+    const lastDate = getStartOfMonth(this.props.maxDate);
 
     const options = [];
 
@@ -71,7 +66,7 @@ export default class MonthYearDropdown extends React.Component {
 
   renderReadView = visible => {
     const yearMonth = formatDate(
-      localizeDate(newDate(this.props.date), this.props.locale),
+      newDate(this.props.date),
       this.props.dateFormat
     );
 

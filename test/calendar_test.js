@@ -11,7 +11,7 @@ import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";
-import "dayjs/locale/fr";
+import fi from "date-fns/locale/fi";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/DD/YYYY";
@@ -38,14 +38,6 @@ describe("Calendar", function() {
     assert(utils.isSameDay(calendar.state().date, now));
   });
 
-  it("should start with the today date with specified time zone", function() {
-    const utcOffset = 12;
-    const calendar = getCalendar({ utcOffset });
-    assert(
-      utils.isSameDay(calendar.state().date, utils.newDateWithOffset(utcOffset))
-    );
-  });
-
   it("should start with the selected date in view if provided", function() {
     const selected = utils.addYears(utils.newDate(), 1);
     const calendar = getCalendar({ selected });
@@ -61,8 +53,8 @@ describe("Calendar", function() {
 
   it("should start with the current date in view if in date range", function() {
     const now = utils.newDate();
-    const minDate = utils.subYears(utils.cloneDate(now), 1);
-    const maxDate = utils.addYears(utils.cloneDate(now), 1);
+    const minDate = utils.subYears(now, 1);
+    const maxDate = utils.addYears(now, 1);
     const calendar = getCalendar({ minDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, now));
   });
@@ -361,15 +353,7 @@ describe("Calendar", function() {
     const calendar = getCalendar({ todayButton: "Vandaag" });
     const todayButton = calendar.find(".react-datepicker__today-button");
     todayButton.simulate("click");
-    expect(calendar.state().date.isSame(utils.newDate(), "day"));
-  });
-
-  it("should set custom today date when pressing todayButton", () => {
-    const todayInAuckland = utils.newDateWithOffset(12);
-    const calendar = getCalendar({ todayButton: "Vandaag", utcOffset: 12 });
-    const todayButton = calendar.find(".react-datepicker__today-button");
-    todayButton.simulate("click");
-    expect(utils.isSameDay(calendar.state().date, todayInAuckland));
+    expect(utils.isSameDay(calendar.state().date, utils.newDate()));
   });
 
   it("should use a hash for week label if weekLabel is NOT provided", () => {
@@ -704,16 +688,13 @@ describe("Calendar", function() {
     });
   });
 
-  describe("localization", function() {
+  describe.only("localization", function() {
     function testLocale(calendar, selected, locale) {
-      const localized = utils.localizeDate(selected, locale);
-
       const calendarText = calendar.find(".react-datepicker__current-month");
       expect(calendarText.text()).to.equal(
-        utils.formatDate(localized, dateFormat)
+        utils.formatDate(selected, dateFormat, locale)
       );
-
-      const firstDateOfWeek = utils.getStartOfWeek(localized);
+      const firstDateOfWeek = utils.getStartOfWeek(selected);
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
         firstDateOfWeek,
         locale
@@ -728,16 +709,27 @@ describe("Calendar", function() {
       testLocale(calendar, selected);
     });
 
+    it("should use the default locale when set", function() {
+      const selected = utils.newDate();
+      utils.setDefaultLocale("fi");
+
+      const calendar = getCalendar({ selected });
+      testLocale(calendar, selected, "fi");
+    });
+
     it("should use the locale specified as a prop", function() {
-      const locale = "fr";
-      const selected = utils.localizeDate(utils.newDate(), locale);
+      utils.registerLocale("fi", fi);
+      const locale = "fi";
+      const selected = utils.newDate();
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
     });
 
-    it("should override the locale of the date with the locale prop", function() {
-      const locale = "fr";
+    it("should override the default locale with the locale prop", function() {
+      const locale = "en";
       const selected = utils.newDate();
+      utils.setDefaultLocale("fi");
+
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
     });

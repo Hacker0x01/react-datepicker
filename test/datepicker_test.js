@@ -7,7 +7,6 @@ import DatePicker from "../src/index.jsx";
 import Day from "../src/day";
 import TestWrapper from "./test_wrapper.jsx";
 import PopperComponent from "../src/popper_component.jsx";
-import TimezoneDatePicker from "./timezone_date_picker.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils";
 
@@ -254,7 +253,7 @@ describe("DatePicker", () => {
     // ArrowLeft selects the previous month. (On the 1st 2 days of the month.)
     // On the last week of the month, when the next month includes the current
     // week, we need monthsShown=1 to prevent today from appearing twice.
-    const dayOfMonth = utils.getDate(utils.now());
+    const dayOfMonth = utils.getDate(utils.newDate());
     var data = getOnInputKeyDownStuff({
       shouldCloseOnSelect: false,
       monthsShown: dayOfMonth < 15 ? 2 : 1
@@ -481,7 +480,7 @@ describe("DatePicker", () => {
   function getOnInputKeyDownStuff(opts) {
     opts = opts || {};
     var m = utils.newDate();
-    var copyM = utils.cloneDate(m);
+    var copyM = utils.newDate(m);
     var testFormat = "YYYY-MM-DD";
     var exactishFormat = "YYYY-MM-DD HH: ZZ";
     var callback = sandbox.spy();
@@ -703,7 +702,7 @@ describe("DatePicker", () => {
 
   function getOnInputKeyDownDisabledKeyboardNavigationStuff() {
     var m = utils.newDate();
-    var copyM = utils.cloneDate(m);
+    var copyM = utils.newDate(m);
     var testFormat = "YYYY-MM-DD";
     var callback = sandbox.spy();
     var datePicker = TestUtils.renderIntoDocument(
@@ -781,24 +780,6 @@ describe("DatePicker", () => {
     input.value = "";
     TestUtils.Simulate.change(input);
     expect(cleared).to.be.true;
-  });
-  it("should correctly update the date input when utcOffset is all that changes on the selected date", () => {
-    var date = utils.newDate("2016-06-22T00:00:00Z");
-    var tmzDatePicker = mount(<TimezoneDatePicker />);
-    tmzDatePicker.setState({ startDate: date, utcOffset: -6 });
-
-    expect(tmzDatePicker.find("input").prop("value")).to.equal(
-      "2016-06-21 18:00"
-    );
-
-    tmzDatePicker.setState({
-      utcOffset: 6,
-      startDate: utils.setUTCOffset(utils.cloneDate(date), 6)
-    });
-
-    expect(tmzDatePicker.find("input").prop("value")).to.equal(
-      "2016-06-22 06:00"
-    );
   });
   it("should correctly update the input when the value prop changes", () => {
     const datePicker = mount(<DatePicker />);

@@ -7,10 +7,11 @@ import {
   addMonths,
   subMonths,
   formatDate,
-  cloneDate,
-  isAfter
+  isAfter,
+  registerLocale
 } from "../src/date_utils";
-import "dayjs/locale/es";
+import fi from "date-fns/locale/fi";
+registerLocale("fi", fi);
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown;
@@ -92,8 +93,8 @@ describe("MonthYearDropdown", () => {
           onChange={sandbox.spy()}
           dateFormat={dateFormatCalendar}
           date={date}
-          minDate={subMonths(cloneDate(date), 6)}
-          maxDate={addMonths(cloneDate(date), 6)}
+          minDate={subMonths(date, 6)}
+          maxDate={addMonths(date, 6)}
         />
       ).instance();
       monthYearDropdownOptionsInstance.handleClickOutside();
@@ -204,22 +205,22 @@ describe("MonthYearDropdown", () => {
     it("renders month options with specified locale", () => {
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
-        locale: "es"
+        locale: "fi"
       });
       var options = monthYearDropdown.find("option");
       expect(options.map(o => o.text())).to.eql([
-        "Julio 2017",
-        "Agosto 2017",
-        "Septiembre 2017",
-        "Octubre 2017",
-        "Noviembre 2017",
-        "Diciembre 2017",
-        "Enero 2018",
-        "Febrero 2018",
-        "Marzo 2018",
-        "Abril 2018",
-        "Mayo 2018",
-        "Julio 2018"
+        "heinäkuu 2017",
+        "elokuu 2017",
+        "syyskuu 2017",
+        "lokakuu 2017",
+        "marraskuu 2017",
+        "joulukuu 2017",
+        "tammikuu 2018",
+        "helmikuu 2018",
+        "maaliskuu 2018",
+        "huhtikuu 2018",
+        "toukokuu 2018",
+        "kesäkuu 2018"
       ]);
     });
 

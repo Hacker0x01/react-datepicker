@@ -5,7 +5,6 @@ import {
   getDayOfWeekCode,
   newDate,
   getDate,
-  cloneDate,
   addDays,
   subDays,
   getMonth,
@@ -32,7 +31,7 @@ describe("Day", () => {
         const className = "react-datepicker__day--" + getDayOfWeekCode(day);
         const shallowDay = renderDay(day);
         expect(shallowDay.hasClass(className)).to.equal(true);
-        day = addDays(cloneDate(day), 1);
+        day = addDays(day, 1);
       }
     });
   });
@@ -48,7 +47,7 @@ describe("Day", () => {
 
     it("should not apply the selected class if not selected", () => {
       const day = newDate();
-      const selected = addDays(cloneDate(day), 1);
+      const selected = addDays(day, 1);
       const shallowDay = renderDay(day, { selected });
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
@@ -59,7 +58,7 @@ describe("Day", () => {
 
     it("should apply the keyboard-selected class when pre-selected and another day is selected", () => {
       const day = newDate();
-      const selected = addDays(cloneDate(day), 1);
+      const selected = addDays(day, 1);
       const shallowDay = renderDay(day, { selected, preSelection: day });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
@@ -72,15 +71,15 @@ describe("Day", () => {
 
     it("should not apply the keyboard-selected class when another day is pre-selected", () => {
       const day = newDate();
-      const selected = addDays(cloneDate(day), 1);
-      const preSelection = addDays(cloneDate(day), 2);
+      const selected = addDays(day, 1);
+      const preSelection = addDays(day, 2);
       const shallowDay = renderDay(day, { selected, preSelection });
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
 
     it("should not apply the keyboard-selected class if in inline mode", () => {
       const day = newDate();
-      const selected = addDays(cloneDate(day), 1);
+      const selected = addDays(day, 1);
       const shallowDay = renderDay(day, {
         selected,
         preSelection: day,
@@ -95,8 +94,8 @@ describe("Day", () => {
 
     it("should apply the highlighted class if in highlighted array", () => {
       const day = newDate();
-      const highlightDay1 = cloneDate(day);
-      const highlightDay2 = addDays(cloneDate(day), 1);
+      const highlightDay1 = newDate(day);
+      const highlightDay2 = addDays(day, 1);
       const highlightDates = [highlightDay1, highlightDay2];
       const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
@@ -105,8 +104,8 @@ describe("Day", () => {
 
     it("should not apply the highlighted class if not in highlighted array", () => {
       const day = newDate();
-      const highlightDay1 = subDays(cloneDate(day), 1);
-      const highlightDay2 = addDays(cloneDate(day), 1);
+      const highlightDay1 = subDays(day, 1);
+      const highlightDay2 = addDays(day, 1);
       const highlightDates = [highlightDay1, highlightDay2];
       const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
@@ -117,10 +116,10 @@ describe("Day", () => {
       it("should apply the highlighted class if in highlighted", () => {
         const day = newDate();
         const highlightDay1 = {
-          testClassName: [addDays(cloneDate(day), 1), cloneDate(day)]
+          testClassName: [addDays(day, 1), newDate(day)]
         };
-        const highlightDay2 = addDays(cloneDate(day), 2);
-        const highlightDay3 = addDays(cloneDate(day), 3);
+        const highlightDay2 = addDays(day, 2);
+        const highlightDay3 = addDays(day, 3);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
         const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
@@ -132,13 +131,10 @@ describe("Day", () => {
       it("should not apply the highlighted class if not in highlighted array", () => {
         const day = newDate();
         const highlightDay1 = {
-          testClassName: [
-            addDays(cloneDate(day), 1),
-            addDays(cloneDate(day), 2)
-          ]
+          testClassName: [addDays(day, 1), addDays(day, 2)]
         };
-        const highlightDay2 = addDays(cloneDate(day), 3);
-        const highlightDay3 = addDays(cloneDate(day), 4);
+        const highlightDay2 = addDays(day, 3);
+        const highlightDay3 = addDays(day, 4);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
         const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
@@ -149,9 +145,9 @@ describe("Day", () => {
 
       it("should apply the highlighted classes even if the same day in highlighted array", () => {
         const day = newDate();
-        const highlightDay1 = { fooClassName: [cloneDate(day)] };
-        const highlightDay2 = { barClassName: [cloneDate(day)] };
-        const highlightDay3 = cloneDate(day);
+        const highlightDay1 = { fooClassName: [newDate(day)] };
+        const highlightDay2 = { barClassName: [newDate(day)] };
+        const highlightDay3 = newDate(day);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
         const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
@@ -205,46 +201,46 @@ describe("Day", () => {
 
     it("should apply the in-range class if in range", () => {
       const day = newDate();
-      const startDate = subDays(cloneDate(day), 1);
-      const endDate = addDays(cloneDate(day), 1);
+      const startDate = subDays(day, 1);
+      const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { startDate, endDate });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
 
     it("should not apply the in-range class if not in range", () => {
       const day = newDate();
-      const startDate = addDays(cloneDate(day), 1);
-      const endDate = addDays(cloneDate(day), 2);
+      const startDate = addDays(day, 1);
+      const endDate = addDays(day, 2);
       const shallowDay = renderDay(day, { startDate, endDate });
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
 
     it("should apply the in-range class if equal to start date", () => {
       const day = newDate();
-      const startDate = cloneDate(day);
-      const endDate = addDays(cloneDate(day), 1);
+      const startDate = newDate(day);
+      const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { startDate, endDate });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
 
     it("should apply the in-range class if equal to end date", () => {
       const day = newDate();
-      const startDate = subDays(cloneDate(day), 1);
-      const endDate = cloneDate(day);
+      const startDate = subDays(day, 1);
+      const endDate = newDate(day);
       const shallowDay = renderDay(day, { startDate, endDate });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
 
     it("should not apply the in-range class if start date missing", () => {
       const day = newDate();
-      const startDate = subDays(cloneDate(day), 1);
+      const startDate = subDays(day, 1);
       const shallowDay = renderDay(day, { startDate });
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
 
     it("should not apply the in-range class if end date missing", () => {
       const day = newDate();
-      const endDate = addDays(cloneDate(day), 1);
+      const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { endDate });
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
@@ -258,8 +254,8 @@ describe("Day", () => {
 
     function createDateRange(beforeDays, afterDays, day = newDate()) {
       return {
-        startDate: subDays(cloneDate(day), beforeDays),
-        endDate: addDays(cloneDate(day), afterDays),
+        startDate: subDays(day, beforeDays),
+        endDate: addDays(day, afterDays),
         day
       };
     }
@@ -270,7 +266,7 @@ describe("Day", () => {
 
         // All these should highlight: today, yesterday (startDate), the day before
         for (let daysFromEnd = 1; daysFromEnd <= 3; daysFromEnd++) {
-          const selectingDate = subDays(cloneDate(endDate), daysFromEnd);
+          const selectingDate = subDays(endDate, daysFromEnd);
           const shallowDay = renderDay(selectingDate, {
             startDate,
             endDate,
@@ -283,8 +279,8 @@ describe("Day", () => {
 
       it("should have a class if it is a start or end date", () => {
         const endDate = newDate();
-        const midRangeDate = subDays(cloneDate(endDate), 1);
-        const selectingDate = subDays(cloneDate(endDate), 2);
+        const midRangeDate = subDays(endDate, 1);
+        const selectingDate = subDays(endDate, 2);
 
         const shallowStartDay = renderDay(selectingDate, {
           endDate,
@@ -311,7 +307,7 @@ describe("Day", () => {
 
       it("should not highlight for days after the end date", () => {
         const { day, startDate, endDate } = createDateRange(-1, 1);
-        const selectingDate = addDays(cloneDate(endDate), 1);
+        const selectingDate = addDays(endDate, 1);
         const shallowDay = renderDay(day, {
           startDate,
           endDate,
@@ -323,7 +319,7 @@ describe("Day", () => {
 
       it("should not highlight if there is no end date selected", () => {
         const startDate = newDate();
-        const selectingDate = subDays(cloneDate(startDate), 1);
+        const selectingDate = subDays(startDate, 1);
         const shallowDay = renderDay(selectingDate, {
           startDate,
           selectingDate,
@@ -334,7 +330,7 @@ describe("Day", () => {
 
       it("should not highlight for disabled dates", () => {
         const endDate = newDate();
-        const selectingDate = subDays(cloneDate(endDate), 1);
+        const selectingDate = subDays(endDate, 1);
         const shallowDay = renderDay(selectingDate, {
           selectingDate,
           endDate,
@@ -351,7 +347,7 @@ describe("Day", () => {
 
         // All these should highlight: today, tomorrow (endDate), the day after
         for (let daysFromStart = 1; daysFromStart <= 3; daysFromStart++) {
-          const day = addDays(cloneDate(startDate), daysFromStart);
+          const day = addDays(startDate, daysFromStart);
           const shallowDay = renderDay(day, {
             startDate,
             endDate,
@@ -364,8 +360,8 @@ describe("Day", () => {
 
       it("should have a class if it is a start or end date", () => {
         const startDate = newDate();
-        const midRangeDate = addDays(cloneDate(startDate), 1);
-        const selectingDate = addDays(cloneDate(startDate), 2);
+        const midRangeDate = addDays(startDate, 1);
+        const selectingDate = addDays(startDate, 2);
 
         const shallowStartDay = renderDay(startDate, {
           startDate,
@@ -392,7 +388,7 @@ describe("Day", () => {
 
       it("should not highlight for days before the start date", () => {
         const startDate = newDate();
-        const selectingDate = subDays(cloneDate(startDate), 1);
+        const selectingDate = subDays(startDate, 1);
         const shallowDay = renderDay(selectingDate, {
           startDate,
           selectingDate,
@@ -403,7 +399,7 @@ describe("Day", () => {
 
       it("should not highlight if there is no start date selected", () => {
         const { day, endDate } = createDateRange(-1, 1);
-        const selectingDate = addDays(cloneDate(endDate), 1);
+        const selectingDate = addDays(endDate, 1);
         const shallowDay = renderDay(day, {
           endDate,
           selectingDate,
@@ -414,7 +410,7 @@ describe("Day", () => {
 
       it("should not highlight for disabled dates", () => {
         const startDate = newDate();
-        const selectingDate = addDays(cloneDate(startDate), 1);
+        const selectingDate = addDays(startDate, 1);
         const shallowDay = renderDay(selectingDate, {
           startDate,
           selectingDate,
@@ -437,11 +433,6 @@ describe("Day", () => {
     it("should not apply the today class if not today", () => {
       const shallowDay = renderDay(addDays(newDate(), 1));
       expect(shallowDay.hasClass(className)).to.equal(false);
-    });
-
-    it("should apply the today class if custom utcOffset is provided", () => {
-      const shallowDay = renderDay(newDateWithOffset(720));
-      expect(shallowDay.hasClass(className)).to.equal(true);
     });
   });
 

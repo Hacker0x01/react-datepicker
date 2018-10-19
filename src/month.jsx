@@ -32,8 +32,7 @@ export default class Month extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
-    startDate: PropTypes.object,
-    utcOffset: PropTypes.number
+    startDate: PropTypes.object
   };
 
   handleDayClick = (day, event) => {
@@ -97,7 +96,6 @@ export default class Month extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
-          utcOffset={this.props.utcOffset}
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         />
       );
@@ -140,7 +138,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={"month-" + this.props.day.format("YYYY-MM")}
+        aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
       >
         {this.renderWeeks()}
       </div>

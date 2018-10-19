@@ -29,9 +29,6 @@ import {
   setYear,
   min,
   max,
-  isSameDay as issameday,
-  isSameMonth as issamemonth,
-  isSameYear as issameyear,
   differenceInCalendarDays,
   differenceInCalendarWeeks,
   differenceInCalendarMonths,
@@ -44,60 +41,23 @@ import {
   endOfMonth,
   isEqual,
   isSameWeek,
-  isAfter as isafter,
-  isBefore as isbefore,
+  isSameDay as dfIsSameDay,
+  isSameMonth as dfIsSameMonth,
+  isSameYear as dfIsSameYear,
+  isAfter,
+  isBefore,
   isWithinRange
 } from "date-fns";
 
 // ** Date Constructors **
 
-export function newDate(point) {
-  const d = point ? parse(point) : new Date();
+export function newDate(value) {
+  const d = value ? parse(value) : new Date();
   return isValid(d) ? d : null;
 }
 
-export function parseDate(value, { locale = "en" }) {
-  // date-fns does not support locale parsing right now
-  const d = parse(value, { locale: locale });
-  return d.isValid() ? d : null;
-}
-
-// ** UTC Constructors **
-
-export function createDateAsUTC(date) {
-  return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds()
-    )
-  );
-}
-
-export function convertDateToUTC(date) {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds()
-  );
-}
-
-export function now(maybeFixedUtcOffset) {
-  return maybeFixedUtcOffset
-    ? newDateWithOffset(maybeFixedUtcOffset)
-    : newDate();
-}
-
-export function newDateWithOffset(utcOffset) {
-  const d = new Date();
-  const utc = d.getTime() + d.getTimezoneOffset() * 60000;
-  return new Date(utc + 3600000 * utcOffset);
+export function parseDate(value) {
+  return newDate(value);
 }
 
 // ** Date "Reflection" **
@@ -106,14 +66,39 @@ export { isDate, isValid };
 
 // ** Date Formatting **
 
-export function formatDate(date, format, locale = "en") {
-  return format(date, format, { locale: locale });
+export function formatDate(date, formatStr, locale) {
+  if (locale === "en") {
+    return format(date, formatStr);
+  }
+
+  let localeObj;
+  // if locale is an actual locale object use that
+  // otherwise look for a registered locale match
+  if (typeof locale === "object") {
+    localeObj = locale;
+  } else if (window.__localeData__ && window.__localeData__[locale]) {
+    localeObj = window.__localeData__[locale];
+  }
+
+  if (locale && !localeObj) {
+    console.warn(`The provided locale ["${locale}"] was not found.`);
+  }
+
+  if (
+    !localeObj &&
+    window.__localeData__ &&
+    window.__localeData__[window.__localeId__]
+  ) {
+    localeObj = window.__localeData__[window.__localeId__];
+  }
+
+  return format(date, formatStr, { locale: localeObj ? localeObj : null });
 }
 
-export function safeDateFormat(date, { dateFormat, locale = "en" }) {
+export function safeDateFormat(date, { dateFormat, locale }) {
   return (
     (date &&
-      format(date, Array.isArray(dateFormat) ? dateFormat[0] : dateFormat, {
+      formatDate(date, Array.isArray(dateFormat) ? dateFormat[0] : dateFormat, {
         locale: locale
       })) ||
     ""
@@ -128,11 +113,6 @@ export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
 
 export { setMonth, setYear };
 
-export function setUTCOffset(date, offset) {
-  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-  return new Date(utc + 3600000 * offset);
-}
-
 // ** Date Getters **
 
 // getDay Returns day of week, getDate returns day of month
@@ -146,19 +126,8 @@ export function getWeek(date) {
   return differenceInCalendarWeeks(date, firstDayOfYear) + 1;
 }
 
-export function getUTCOffset(date) {
-  var sign = date.getTimezoneOffset() > 0 ? "-" : "+";
-  var offset = Math.abs(date.getTimezoneOffset());
-  var hours = Math.floor(offset / 60);
-  var minutes = offset % 60;
-  return `${sign}${hours
-    .toString()
-    .padStart(2, 0)}:${minutes.toString().padStart(2, 0)}`;
-}
-
-// should this take locale?
-export function getDayOfWeekCode(day) {
-  return day.format("ddd");
+export function getDayOfWeekCode(day, locale) {
+  return formatDate(day, "ddd", (locale: locale));
 }
 
 // *** Start of ***
@@ -201,13 +170,7 @@ export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
-export function isBefore(date1, date2) {
-  return isbefore(date1, date2);
-}
-
-export function isAfter(date1, date2) {
-  return isafter(date1, date2);
-}
+export { isBefore, isAfter };
 
 export function equals(date1, date2) {
   return isEqual(date1, date2);
@@ -215,7 +178,7 @@ export function equals(date1, date2) {
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
-    return issameyear(date1, date2);
+    return dfIsSameYear(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -223,7 +186,7 @@ export function isSameYear(date1, date2) {
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return issamemonth(date1, date2);
+    return dfIsSameMonth(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -231,15 +194,7 @@ export function isSameMonth(date1, date2) {
 
 export function isSameDay(date1, date2) {
   if (date1 && date2) {
-    return issameday(date1, date2);
-  } else {
-    return !date1 && !date2;
-  }
-}
-
-export function isSameUtcOffset(date1, date2) {
-  if (date1 && date2) {
-    return getUTCOffset(date1) === getUTCOffset(date2);
+    return dfIsSameDay(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -257,28 +212,38 @@ export function getDaysDiff(date1, date2) {
 
 // ** Date Localization **
 
-// TODO: what does this output?
-export function localizeDate(date, locale = "en") {
-  return dayjs(date).locale(locale);
+export function registerLocale(localeName, localeData) {
+  if (!window.__localeData__) {
+    window.__localeData__ = {};
+  }
+  window.__localeData__[localeName] = localeData;
 }
 
-export function getFormattedWeekdayInLocale(date, locale = "en", formatFunc) {
+export function setDefaultLocale(localeName) {
+  window.__localeId__ = localeName;
+}
+
+export function getDefaultLocale() {
+  return window.__localeId__;
+}
+
+export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
   return formatFunc(formatDate(date, "dddd", { locale: locale }));
 }
 
-export function getWeekdayMinInLocale(date, locale = "en") {
+export function getWeekdayMinInLocale(date, locale) {
   return formatDate(date, "dd", { locale: locale });
 }
 
-export function getWeekdayShortInLocale(date, locale = "en") {
+export function getWeekdayShortInLocale(date, locale) {
   return formatDate(date, "ddd", { locale: locale });
 }
 
-export function getMonthInLocale(month, locale = "en") {
+export function getMonthInLocale(date, locale) {
   return formatDate(date, "MMMM", { locale: locale });
 }
 
-export function getMonthShortInLocale(month, locale = "en") {
+export function getMonthShortInLocale(date, locale) {
   return formatDate(date, "MMM", { locale: locale });
 }
 
@@ -396,7 +361,7 @@ export function getHightLightDaysMap(
   const dateClasses = new Map();
   for (let i = 0, len = highlightDates.length; i < len; i++) {
     const obj = highlightDates[i];
-    if (isDayjs(obj)) {
+    if (isDate(obj)) {
       const key = formatDate(obj, "MM.DD.YYYY");
       const classNamesArr = dateClasses.get(key) || [];
       if (!classNamesArr.includes(defaultClassName)) {
@@ -406,10 +371,10 @@ export function getHightLightDaysMap(
     } else if (typeof obj === "object") {
       const keys = Object.keys(obj);
       const className = keys[0];
-      const arrOfDayjs = obj[keys[0]];
-      if (typeof className === "string" && arrOfDayjs.constructor === Array) {
-        for (let k = 0, len = arrOfDayjs.length; k < len; k++) {
-          const key = formatDate(arrOfDayjs[k], "MM.DD.YYYY");
+      const arrOfDates = obj[keys[0]];
+      if (typeof className === "string" && arrOfDates.constructor === Array) {
+        for (let k = 0, len = arrOfDates.length; k < len; k++) {
+          const key = formatDate(arrOfDates[k], "MM.DD.YYYY");
           const classNamesArr = dateClasses.get(key) || [];
           if (!classNamesArr.includes(className)) {
             classNamesArr.push(className);

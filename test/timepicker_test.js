@@ -1,9 +1,9 @@
 import React from "react";
 import DatePicker from "../src/index.jsx";
-import dayjs from "dayjs";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import Time from "../src/time";
+import { newDate, formatDate } from "../src/date_utils";
 
 describe("TimePicker", () => {
   let datePicker;
@@ -18,7 +18,7 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    expect(onChangeMoment.format("MMMM D, YYYY h:m A")).to.equal(
+    expect(formatDate(onChangeMoment, "MMMM D, YYYY h:m A")).to.equal(
       "February 28, 2018 4:45 PM"
     );
   });
@@ -51,7 +51,7 @@ describe("TimePicker", () => {
   }
 
   function renderDatePicker(string) {
-    return renderDatePickerFor(dayjs(string));
+    return renderDatePickerFor(newDate(string));
   }
 
   function renderDatePickerFor(selected) {
@@ -68,7 +68,7 @@ describe("TimePicker", () => {
   }
 
   function onChange(m) {
-    onChangeMoment = dayjs(m);
+    onChangeMoment = newDate(m);
     renderDatePicker(m);
   }
 });
