@@ -89,8 +89,6 @@ export default class MonthDropdownOptions extends React.Component {
   };
 
   render() {
-    console.log(this.props.monthNames);
-
     let screenReaderInstructions;
     if (this.state.readInstructions) {
       screenReaderInstructions = (
