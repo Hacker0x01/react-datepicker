@@ -17,9 +17,25 @@ export default class MonthDropdown extends React.Component {
     accessibleMode: PropTypes.bool
   };
 
-  state = {
-    dropdownVisible: false
-  };
+  constructor(props) {
+    super(props);
+    this.localeData = utils.getLocaleDataForLocale(this.props.locale);
+    this.monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
+      this.props.useShortMonthInDropdown
+        ? M =>
+            utils.getMonthShortInLocale(this.localeData, utils.newDate({ M }))
+        : M =>
+            utils.getMonthInLocale(
+              this.localeData,
+              utils.newDate({ M }),
+              this.props.dateFormat
+            )
+    );
+
+    this.state = {
+      dropdownVisible: false
+    };
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -85,6 +101,9 @@ export default class MonthDropdown extends React.Component {
       onClick={this.toggleDropdown}
       onKeyDown={this.onReadViewKeyDown}
       tabIndex={this.props.accessibleMode ? "0" : undefined}
+      aria-label={`Button. Open the month selector. ${
+        monthNames[this.props.month]
+      } is currently selected.`}
     >
       <span className="react-datepicker__month-read-view--down-arrow" />
       <span className="react-datepicker__month-read-view--selected-month">
@@ -127,25 +146,13 @@ export default class MonthDropdown extends React.Component {
     });
 
   render() {
-    const localeData = utils.getLocaleDataForLocale(this.props.locale);
-    const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
-      this.props.useShortMonthInDropdown
-        ? M => utils.getMonthShortInLocale(localeData, utils.newDate({ M }))
-        : M =>
-            utils.getMonthInLocale(
-              localeData,
-              utils.newDate({ M }),
-              this.props.dateFormat
-            )
-    );
-
     let renderedDropdown;
     switch (this.props.dropdownMode) {
       case "scroll":
-        renderedDropdown = this.renderScrollMode(monthNames);
+        renderedDropdown = this.renderScrollMode(this.monthNames);
         break;
       case "select":
-        renderedDropdown = this.renderSelectMode(monthNames);
+        renderedDropdown = this.renderSelectMode(this.monthNames);
         break;
     }
 

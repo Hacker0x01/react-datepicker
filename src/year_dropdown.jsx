@@ -102,6 +102,9 @@ export default class YearDropdown extends React.Component {
       onClick={event => this.toggleDropdown(event)}
       onKeyDown={this.onReadViewKeyDown}
       tabIndex={this.props.accessibleMode ? "0" : undefined}
+      aria-label={`Button. Open the year selector. ${
+        this.props.year
+      } is currently selected.`}
     >
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">
