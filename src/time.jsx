@@ -45,6 +45,9 @@ export default class Time extends React.Component {
   };
 
   componentDidMount() {
+    // Set the height explicitly
+    this.list.style.height = this.props.monthRef.clientHeight - this.header.clientHeight;
+    
     // code to ensure selected time will always be in focus within time window when it first appears
     this.list.scrollTop = Time.calcCenterPosition(
       this.props.monthRef
