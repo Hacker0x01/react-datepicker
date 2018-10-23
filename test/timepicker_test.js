@@ -18,7 +18,7 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    expect(formatDate(onChangeMoment, "MMMM D, YYYY h:m A")).to.equal(
+    expect(formatDate(onChangeMoment, "PPpp")).to.equal(
       "February 28, 2018 4:45 PM"
     );
   });
@@ -58,7 +58,7 @@ describe("TimePicker", () => {
     datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
-        dateFormat={"MMMM D, YYYY h:mm A"}
+        dateFormat={"PPpp"}
         allowSameDay
         onChange={onChange}
         showTimeSelect

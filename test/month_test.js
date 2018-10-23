@@ -18,8 +18,8 @@ describe("Month", () => {
         utils.isSameDay(day.props.day, expectedDay),
         `Day ${(offset % 7) + 1} ` +
           `of week ${Math.floor(offset / 7) + 1} ` +
-          `should be "${utils.formatDate(expectedDay, "YYYY-MM-DD")}" ` +
-          `but it is "${utils.formatDate(day.props.day, "YYYY-MM-DD")}"`
+          `should be "${utils.formatDate(expectedDay, "yyyy-MM-dd")}" ` +
+          `but it is "${utils.formatDate(day.props.day, "yyyy-MM-dd")}"`
       );
     });
   }

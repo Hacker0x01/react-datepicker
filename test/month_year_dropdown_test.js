@@ -22,7 +22,7 @@ describe("MonthYearDropdown", () => {
   let sandbox;
 
   function getMonthYearDropdown(overrideProps) {
-    const dateFormatCalendar = "MMMM YYYY";
+    const dateFormatCalendar = "LLLL yyyy";
     const date = newDate("2018-01");
     const minDate = newDate("2017-07-01");
     const maxDate = newDate("2018-06-30");
@@ -57,7 +57,7 @@ describe("MonthYearDropdown", () => {
     });
 
     it("shows the selected month year in the initial view", () => {
-      const selected_month_year_name = formatDate(selectedDate, "MMMM YYYY");
+      const selected_month_year_name = formatDate(selectedDate, "LLLL yyyy");
       expect(monthYearDropdown.text()).to.contain(selected_month_year_name);
     });
 
@@ -84,7 +84,7 @@ describe("MonthYearDropdown", () => {
 
     it("closes the dropdown if outside is clicked", () => {
       const date = newDate();
-      const dateFormatCalendar = "MMMM YYYY";
+      const dateFormatCalendar = "LLLL yyyy";
 
       const onCancelSpy = sandbox.spy();
       const monthYearDropdownOptionsInstance = mount(
@@ -129,7 +129,7 @@ describe("MonthYearDropdown", () => {
 
     it("should use dateFormat to display date in dropdown", () => {
       let dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "MMMM YYYY"
+        dateFormat: "LLLL yyyy"
       });
 
       expect(dropdownDateFormat.text()).to.eq("January 2018");
@@ -145,12 +145,12 @@ describe("MonthYearDropdown", () => {
       expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "YYYY MMM",
+        dateFormat: "yyyy LLL",
         locale: "es"
       });
       expect(dropdownDateFormat.text()).to.eq("2018 tammi");
       dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "YYYY MMM",
+        dateFormat: "yyyy LLL",
         locale: "es",
         showMonthYearDropwdown: true
       });

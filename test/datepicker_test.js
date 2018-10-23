@@ -481,8 +481,8 @@ describe("DatePicker", () => {
     opts = opts || {};
     var m = utils.newDate();
     var copyM = utils.newDate(m);
-    var testFormat = "YYYY-MM-DD";
-    var exactishFormat = "YYYY-MM-DD HH: ZZ";
+    var testFormat = "yyyy-MM-dd";
+    var exactishFormat = "yyyy-MM-dd hh: zzzz";
     var callback = sandbox.spy();
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m} onChange={callback} {...opts} />
@@ -702,7 +702,7 @@ describe("DatePicker", () => {
   function getOnInputKeyDownDisabledKeyboardNavigationStuff() {
     var m = utils.newDate();
     var copyM = utils.newDate(m);
-    var testFormat = "YYYY-MM-DD";
+    var testFormat = "yyyy-MM-dd";
     var callback = sandbox.spy();
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={m} onChange={callback} disabledKeyboardNavigation />
@@ -790,7 +790,7 @@ describe("DatePicker", () => {
     const onChange = date => datePicker.setProps({ selected: date });
     const datePicker = mount(
       <DatePicker
-        dateFormat={["YYYY-MM-DD", "MM/DD/YYYY", "MM/DD/YY"]}
+        dateFormat={["yyyy-MM-dd", "MM/dd/yyyy", "MM/dd/yy"]}
         onChange={onChange}
       />
     );
@@ -808,7 +808,7 @@ describe("DatePicker", () => {
       );
     });
     expect(
-      utils.formatDate(datePicker.prop("selected"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.prop("selected"), "yyyy-MM-dd")
     ).to.equal("1982-12-30");
   });
   it("should invoke provided onChangeRaw function on manual input change", () => {
@@ -893,7 +893,7 @@ describe("DatePicker", () => {
       <DatePicker selected={utils.newDate("1988-12-30")} />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("1988-12-30");
   });
   it("should default to the start date when selecting an end date", () => {
@@ -901,7 +901,7 @@ describe("DatePicker", () => {
       <DatePicker startDate={utils.newDate("1988-11-30")} selectsEnd />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("1988-11-30");
   });
   it("should default to the end date when selecting a start date", () => {
@@ -909,7 +909,7 @@ describe("DatePicker", () => {
       <DatePicker endDate={utils.newDate("1988-12-31")} selectsStart />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("1988-12-31");
   });
   it("should default to a date <= maxDate", () => {
@@ -917,7 +917,7 @@ describe("DatePicker", () => {
       <DatePicker maxDate={utils.newDate("1982-01-01")} />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("1982-01-01");
   });
   it("should default to a date >= minDate", () => {
@@ -925,7 +925,7 @@ describe("DatePicker", () => {
       <DatePicker minDate={utils.newDate("2063-04-05")} />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("2063-04-05");
   });
   it("should default to the openToDate if there is one", () => {
@@ -933,14 +933,14 @@ describe("DatePicker", () => {
       <DatePicker openToDate={utils.newDate("2020-01-23")} />
     );
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal("2020-01-23");
   });
   it("should otherwise default to the current date", () => {
     const datePicker = mount(<DatePicker />);
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(utils.newDate(), "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(utils.newDate(), "yyyy-MM-dd"));
   });
   it("should support an initial null `selected` value in inline mode", () => {
     const datePicker = mount(<DatePicker inline selected={null} />);
@@ -954,24 +954,24 @@ describe("DatePicker", () => {
     const future = utils.addDays(utils.newDate(), 100);
     const datePicker = mount(<DatePicker inline selected={selected} />);
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
     datePicker.setProps({ selected: future });
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(future, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(future, "yyyy-MM-dd"));
   });
   it("should switch month in inline mode immediately, when year is updated", () => {
     const selected = utils.newDate();
     const future = utils.addYears(utils.newDate(), 1);
     const datePicker = mount(<DatePicker inline selected={selected} />);
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
     datePicker.setProps({ selected: future });
     expect(
-      utils.formatDate(datePicker.state("preSelection"), "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(future, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(future, "yyyy-MM-dd"));
   });
 
   it("should not switch months in inline mode when a day is clicked", () => {
@@ -980,8 +980,8 @@ describe("DatePicker", () => {
       <DatePicker inline selected={selected} monthsShown={2} />
     );
     expect(
-      utils.formatDate(datePicker.state.preSelection, "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state.preSelection, "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
 
     let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
     let nextMonthDay = days.find(
@@ -989,8 +989,8 @@ describe("DatePicker", () => {
     );
     TestUtils.Simulate.click(ReactDOM.findDOMNode(nextMonthDay));
     expect(
-      utils.formatDate(datePicker.state.preSelection, "YYYY-MM-DD")
-    ).to.equal(utils.formatDate(selected, "YYYY-MM-DD"));
+      utils.formatDate(datePicker.state.preSelection, "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
   });
 
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {

@@ -14,10 +14,11 @@ import * as utils from "../src/date_utils";
 import fi from "date-fns/locale/fi";
 
 // TODO Possibly rename
-const DATE_FORMAT = "MM/DD/YYYY";
+const DATE_FORMAT = "MM/dd/yyyy";
 
 describe("Calendar", function() {
-  const dateFormat = "MMMM YYYY";
+  const dateFormat = "MMMM yyyy";
+  utils.registerLocale("fi", fi);
 
   function getCalendar(extraProps) {
     return shallow(
@@ -84,55 +85,43 @@ describe("Calendar", function() {
   });
 
   it("should start with the open to date in view if given and no selected/min/max dates given", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
     const calendar = getCalendar({ openToDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should start with the open to date in view if given and after a min date", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
-    const minDate = utils.parseDate("01/01/1993", { dateFormat: DATE_FORMAT });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    const minDate = utils.parseDate("01/01/1993", DATE_FORMAT);
     const calendar = getCalendar({ openToDate, minDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should start with the open to date in view if given and before a max date", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
-    const maxDate = utils.parseDate("12/31/1993", { dateFormat: DATE_FORMAT });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    const maxDate = utils.parseDate("12/31/1993", DATE_FORMAT);
     const calendar = getCalendar({ openToDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should start with the open to date in view if given and in range of the min/max dates", function() {
-    const openToDate = utils.parseDate("09/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
-    const minDate = utils.parseDate("01/01/1993", { dateFormat: DATE_FORMAT });
-    const maxDate = utils.parseDate("12/31/1993", { dateFormat: DATE_FORMAT });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    const minDate = utils.parseDate("01/01/1993", DATE_FORMAT);
+    const maxDate = utils.parseDate("12/31/1993", DATE_FORMAT);
     const calendar = getCalendar({ openToDate, minDate, maxDate });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should open on openToDate date rather than selected date when both are specified", function() {
-    var openToDate = utils.parseDate("09/28/1993", { dateFormat: DATE_FORMAT });
-    var selected = utils.parseDate("09/28/1995", { dateFormat: DATE_FORMAT });
+    var openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    var selected = utils.parseDate("09/28/1995", DATE_FORMAT);
     var calendar = getCalendar({ openToDate, selected });
     assert(utils.isSameDay(calendar.state().date, openToDate));
   });
 
   it("should trigger date change when openToDate prop is set after calcInitialState()", () => {
-    const openToDate = utils.parseDate("09/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
-    const oneMonthFromOpenToDate = utils.parseDate("10/28/1993", {
-      dateFormat: DATE_FORMAT
-    });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    const oneMonthFromOpenToDate = utils.parseDate("10/28/1993", DATE_FORMAT);
     const calendar = getCalendar({ openToDate });
 
     assert(utils.isSameDay(calendar.state().date, openToDate));
@@ -408,8 +397,23 @@ describe("Calendar", function() {
   });
 
   it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
-    const calendarShort = mount(<Calendar locale="en" useWeekdaysShort />);
-    const calendarMin = mount(<Calendar locale="en" />);
+    const calendarShort = mount(
+      <Calendar
+        locale="en"
+        dateFormat={dateFormat}
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        useWeekdaysShort
+      />
+    );
+    const calendarMin = mount(
+      <Calendar
+        locale="en"
+        dateFormat={dateFormat}
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+      />
+    );
 
     const daysNamesShort = calendarShort.find(".react-datepicker__day-name");
     expect(daysNamesShort.at(0).text()).to.equal("Sun");
@@ -442,7 +446,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--previous"
     );
     TestUtils.Simulate.click(previousButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   it("should set the date to the selected day of the next when next button clicked", () => {
@@ -467,7 +471,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--next"
     );
     TestUtils.Simulate.click(nextButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   it("should set the date to the last possible day of the previous month when previous button clicked", () => {
@@ -492,7 +496,7 @@ describe("Calendar", function() {
       "react-datepicker__navigation--previous"
     );
     TestUtils.Simulate.click(previousButton);
-    expect(utils.formatDate(date, "DD.MM.YYYY")).to.equal(expectedDate);
+    expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
   describe("onMonthChange", () => {

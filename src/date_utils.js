@@ -1,7 +1,6 @@
 import {
-  parse,
   isDate,
-  isValid,
+  isValid as isValidDate,
   format,
   addMinutes,
   addHours,
@@ -30,10 +29,8 @@ import {
   min,
   max,
   differenceInCalendarDays,
-  differenceInCalendarWeeks,
   differenceInCalendarMonths,
   setDayOfYear,
-  startOfToday,
   startOfDay,
   startOfWeek,
   startOfMonth,
@@ -46,29 +43,49 @@ import {
   isSameYear as dfIsSameYear,
   isAfter,
   isBefore,
-  isWithinRange
+  isWithinInterval,
+  toDate,
+  parse
 } from "date-fns";
 
 // ** Date Constructors **
 
 export function newDate(value) {
-  const d = value ? parse(value) : new Date();
-  return isValid(d) && isAfter(d, new Date("1/1/1000")) ? d : null;
+  const d = value ? toDate(value) : new Date();
+  return isValid(d) ? d : null;
 }
 
-export function parseDate(value) {
-  return value ? newDate(value) : null;
+export function parseDate(value, dateFormat, locale) {
+  let parsedDate = null;
+  let localeObject = getLocaleObject(locale);
+
+  if (Array.isArray(dateFormat)) {
+    dateFormat.forEach(df => {
+      let tryParseDate = parse(value, df, new Date(), localeObject);
+      if (isValid(tryParseDate)) {
+        parsedDate = tryParseDate;
+      }
+    });
+    return parsedDate;
+  }
+
+  parsedDate = parse(value, dateFormat, new Date(), localeObject);
+  return isValid(parsedDate) ? parsedDate : null;
 }
 
 // ** Date "Reflection" **
 
-export { isDate, isValid };
+export { isDate };
+
+export function isValid(date) {
+  return isValidDate(date) && isAfter(date, new Date("1/1/1000"));
+}
 
 // ** Date Formatting **
 
 export function formatDate(date, formatStr, locale) {
   if (locale === "en") {
-    return format(date, formatStr);
+    return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
 
   let localeObj;
@@ -92,15 +109,20 @@ export function formatDate(date, formatStr, locale) {
     localeObj = window.__localeData__[window.__localeId__];
   }
 
-  return format(date, formatStr, { locale: localeObj ? localeObj : null });
+  return format(date, formatStr, {
+    locale: localeObj ? localeObj : null,
+    awareOfUnicodeTokens: true
+  });
 }
 
 export function safeDateFormat(date, { dateFormat, locale }) {
   return (
     (date &&
-      formatDate(date, Array.isArray(dateFormat) ? dateFormat[0] : dateFormat, {
-        locale: locale
-      })) ||
+      formatDate(
+        date,
+        Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
+        (locale: locale)
+      )) ||
     ""
   );
 }
@@ -123,7 +145,7 @@ export function getWeek(date) {
   if (!isSameYear(endOfWeek(date), date)) {
     return 1;
   }
-  return differenceInCalendarWeeks(date, firstDayOfYear) + 1;
+  return formatDate(date, "w");
 }
 
 export function getDayOfWeekCode(day, locale) {
@@ -145,7 +167,7 @@ export function getStartOfMonth(date) {
 }
 
 export function getStartOfToday() {
-  return startOfToday();
+  return startOfDay(newDate());
 }
 
 // *** End of ***
@@ -197,7 +219,7 @@ export function isSameDay(date1, date2) {
 }
 
 export function isDayInRange(day, startDate, endDate) {
-  return isWithinRange(day, startDate, endDate);
+  return isWithinInterval(day, { start: startDate, end: endDate });
 }
 
 // *** Diffing ***
@@ -223,24 +245,28 @@ export function getDefaultLocale() {
   return window.__localeId__;
 }
 
+export function getLocaleObject(localeName) {
+  return window.__localeData__[localeName];
+}
+
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return formatFunc(formatDate(date, "dddd", { locale: locale }));
+  return formatFunc(formatDate(date, "dddd", locale));
 }
 
 export function getWeekdayMinInLocale(date, locale) {
-  return formatDate(date, "dd", { locale: locale });
+  return formatDate(date, "EEEEEE", locale);
 }
 
 export function getWeekdayShortInLocale(date, locale) {
-  return formatDate(date, "ddd", { locale: locale });
+  return formatDate(date, "EEE", locale);
 }
 
 export function getMonthInLocale(month, locale) {
-  return formatDate(setMonth(new Date(), month), "MMMM", locale);
+  return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
-export function getMonthShortInLocale(month, locale) {
-  return formatDate(setMonth(new Date(), month), "MMM", locale);
+export function getMonthShortInLocale(month, dateFormat, locale) {
+  return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
 // ** Utils for some components **
@@ -255,7 +281,7 @@ export function isDayDisabled(
       excludeDates.some(excludeDate => isSameDay(day, excludeDate))) ||
     (includeDates &&
       !includeDates.some(includeDate => isSameDay(day, includeDate))) ||
-    (filterDate && !filterDate(parse(day))) ||
+    (filterDate && !filterDate(newDate(day))) ||
     false
   );
 }
@@ -296,7 +322,7 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     setMinutes(base, getMinutes(maxTime)),
     getHours(maxTime)
   );
-  return isWithinRange(baseTime, min, max);
+  return isWithinInterval(baseTime, min, max);
 }
 
 export function monthDisabledBefore(day, { minDate, includeDates } = {}) {
@@ -329,9 +355,9 @@ export function getEffectiveMinDate({ minDate, includeDates }) {
     let minDates = includeDates.filter(
       includeDate => differenceInCalendarDays(includeDate, minDate) >= 0
     );
-    return min(...minDates);
+    return min(minDates);
   } else if (includeDates) {
-    return min(...includeDates);
+    return min(includeDates);
   } else {
     return minDate;
   }
@@ -342,9 +368,9 @@ export function getEffectiveMaxDate({ maxDate, includeDates }) {
     let maxDates = includeDates.filter(
       includeDate => differenceInCalendarDays(includeDate, maxDate) <= 0
     );
-    return max(...maxDates);
+    return max(maxDates);
   } else if (includeDates) {
-    return max(...includeDates);
+    return max(includeDates);
   } else {
     return maxDate;
   }

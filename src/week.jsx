@@ -7,7 +7,7 @@ import * as utils from "./date_utils";
 export default class Week extends React.Component {
   static propTypes = {
     disabledKeyboardNavigation: PropTypes.bool,
-    day: PropTypes.object.isRequired,
+    day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
@@ -16,8 +16,8 @@ export default class Week extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
-    maxDate: PropTypes.object,
-    minDate: PropTypes.object,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
     onDayClick: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
@@ -28,7 +28,7 @@ export default class Week extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
-    startDate: PropTypes.object
+    startDate: PropTypes.instanceOf(Date)
   };
 
   handleDayClick = (day, event) => {

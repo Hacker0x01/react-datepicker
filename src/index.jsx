@@ -158,8 +158,8 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: "MM/DD/YYYY",
-      dateFormatCalendar: "MMMM YYYY",
+      dateFormat: "MM/dd/yyyy",
+      dateFormatCalendar: "LLLL y",
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
@@ -236,7 +236,7 @@ export default class DatePicker extends React.Component {
       open: this.props.startOpen || false,
       preventFocus: false,
       preSelection: this.props.selected
-        ? parseDate(this.props.selected)
+        ? newDate(this.props.selected)
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
@@ -326,7 +326,11 @@ export default class DatePicker extends React.Component {
       inputValue: event.target.value,
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT
     });
-    const date = parseDate(event.target.value, this.props);
+    const date = parseDate(
+      event.target.value,
+      this.props.dateFormat,
+      this.props.locale
+    );
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
     }
@@ -364,8 +368,8 @@ export default class DatePicker extends React.Component {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
-          if (keepInput) selected = parseDate(changedDate);
-          changedDate = setTime(parseDate(changedDate), {
+          if (keepInput) selected = newDate(changedDate);
+          changedDate = setTime(changedDate, {
             hour: getHours(selected),
             minute: getMinutes(selected),
             second: getSeconds(selected)
@@ -439,7 +443,7 @@ export default class DatePicker extends React.Component {
       }
       return;
     }
-    const copy = parseDate(this.state.preSelection);
+    const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
       if (
