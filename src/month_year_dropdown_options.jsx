@@ -8,7 +8,8 @@ import {
   newDate,
   isAfter,
   isSameMonth,
-  isSameYear
+  isSameYear,
+  getTime
 } from "./date_utils";
 
 function generateMonthYears(minDate, maxDate) {
@@ -22,7 +23,6 @@ function generateMonthYears(minDate, maxDate) {
 
     currDate = addMonths(currDate, 1);
   }
-
   return list;
 }
 
@@ -47,7 +47,7 @@ export default class MonthYearDropdownOptions extends React.Component {
 
   renderOptions = () => {
     return this.state.monthYearsList.map(monthYear => {
-      const monthYearPoint = monthYear.valueOf();
+      const monthYearPoint = getTime(monthYear);
       const isSameMonthYear =
         isSameYear(this.props.date, monthYear) &&
         isSameMonth(this.props.date, monthYear);

@@ -11,7 +11,6 @@ import {
   registerLocale
 } from "../src/date_utils";
 import fi from "date-fns/locale/fi";
-registerLocale("fi", fi);
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown;
@@ -128,31 +127,32 @@ describe("MonthYearDropdown", () => {
     });
 
     it("should use dateFormat to display date in dropdown", () => {
+      registerLocale("fi", fi);
       let dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "LLLL yyyy"
       });
 
       expect(dropdownDateFormat.text()).to.eq("January 2018");
 
-      dropdownDateFormat = getMonthYearDropdown({ locale: "es" });
+      dropdownDateFormat = getMonthYearDropdown({ locale: "fi" });
 
       expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
-        locale: "es",
-        showMonthYearDropwdown: true
+        locale: "fi",
+        showMonthYearDropdown: true
       });
       expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
-        locale: "es"
+        locale: "fi"
       });
       expect(dropdownDateFormat.text()).to.eq("2018 tammi");
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
-        locale: "es",
-        showMonthYearDropwdown: true
+        locale: "fi",
+        showMonthYearDropdown: true
       });
       expect(dropdownDateFormat.text()).to.eq("2018 tammi");
     });
@@ -161,7 +161,7 @@ describe("MonthYearDropdown", () => {
   describe("select mode", () => {
     it("renders a select", () => {
       const expected_date = newDate("2018-01");
-      const currentMonth = newDate("2017-07");
+      let currentMonth = newDate("2017-07");
       const maxMonth = newDate("2018-06");
 
       const expected_values = [];
@@ -169,7 +169,7 @@ describe("MonthYearDropdown", () => {
       while (!isAfter(currentMonth, maxMonth)) {
         expected_values.push(currentMonth.valueOf());
 
-        addMonths(currentMonth, 1);
+        currentMonth = addMonths(currentMonth, 1);
       }
 
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
@@ -203,6 +203,7 @@ describe("MonthYearDropdown", () => {
     });
 
     it("renders month options with specified locale", () => {
+      registerLocale("fi", fi);
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
         locale: "fi"

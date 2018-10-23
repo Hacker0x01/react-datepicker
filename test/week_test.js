@@ -68,7 +68,7 @@ describe("Week", () => {
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    expect(utils.equals(firstDayReceived, weekStart)).to.be.true;
+    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
   });
 
   it("should call the provided onWeekSelect function and pass the week number", () => {
@@ -106,7 +106,7 @@ describe("Week", () => {
     );
     const weekNumberElement = week.find(WeekNumber);
 
-    expect(utils.equals(firstDayReceived, weekStart)).to.be.true;
+    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
     expect(weekNumberElement.prop("weekNumber")).to.equal(9);
   });
 

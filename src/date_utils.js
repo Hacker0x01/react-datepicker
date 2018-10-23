@@ -21,6 +21,7 @@ import {
   getDate,
   getMonth,
   getYear,
+  getTime,
   setSeconds,
   setMinutes,
   setHours,
@@ -70,6 +71,9 @@ export function parseDate(value, dateFormat, locale) {
   }
 
   parsedDate = parse(value, dateFormat, new Date(), localeObject);
+  if (!isValid(parsedDate)) {
+    parsedDate = new Date(value);
+  }
   return isValid(parsedDate) ? parsedDate : null;
 }
 
@@ -138,7 +142,16 @@ export { setMonth, setYear };
 // ** Date Getters **
 
 // getDay Returns day of week, getDate returns day of month
-export { getSeconds, getMinutes, getHours, getMonth, getYear, getDay, getDate };
+export {
+  getSeconds,
+  getMinutes,
+  getHours,
+  getMonth,
+  getYear,
+  getDay,
+  getDate,
+  getTime
+};
 
 export function getWeek(date) {
   let firstDayOfYear = setDayOfYear(date, 1);

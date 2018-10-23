@@ -17,8 +17,9 @@ describe("TimePicker", () => {
   it("should update on input time change", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
+
     setManually("February 28, 2018 4:45 PM");
-    expect(formatDate(onChangeMoment, "PPpp")).to.equal(
+    expect(formatDate(onChangeMoment, "MMMM d, yyyy p")).to.equal(
       "February 28, 2018 4:45 PM"
     );
   });
@@ -51,14 +52,14 @@ describe("TimePicker", () => {
   }
 
   function renderDatePicker(string) {
-    return renderDatePickerFor(newDate(string));
+    return renderDatePickerFor(new Date(string));
   }
 
   function renderDatePickerFor(selected) {
     datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
-        dateFormat={"PPpp"}
+        dateFormat={"MMMM d, yyyy p"}
         allowSameDay
         onChange={onChange}
         showTimeSelect
