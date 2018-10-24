@@ -81,7 +81,7 @@ export default class DatePicker extends React.Component {
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
-    endDate: PropTypes.object,
+    endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
@@ -94,8 +94,8 @@ export default class DatePicker extends React.Component {
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
     locale: PropTypes.string,
-    maxDate: PropTypes.object,
-    minDate: PropTypes.object,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
     name: PropTypes.string,
     onBlur: PropTypes.func,
@@ -108,7 +108,7 @@ export default class DatePicker extends React.Component {
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
     onYearChange: PropTypes.func,
-    openToDate: PropTypes.object,
+    openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
     popperContainer: PropTypes.func,
@@ -120,7 +120,7 @@ export default class DatePicker extends React.Component {
     required: PropTypes.bool,
     scrollableYearDropdown: PropTypes.bool,
     scrollableMonthYearDropdown: PropTypes.bool,
-    selected: PropTypes.object,
+    selected: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
@@ -129,7 +129,7 @@ export default class DatePicker extends React.Component {
     showYearDropdown: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
-    startDate: PropTypes.object,
+    startDate: PropTypes.instanceOf(Date),
     startOpen: PropTypes.bool,
     tabIndex: PropTypes.number,
     timeCaption: PropTypes.string,
@@ -146,8 +146,8 @@ export default class DatePicker extends React.Component {
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
-    minTime: PropTypes.object,
-    maxTime: PropTypes.object,
+    minTime: PropTypes.instanceOf(Date),
+    maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
@@ -215,11 +215,11 @@ export default class DatePicker extends React.Component {
 
   getPreSelection = () =>
     this.props.openToDate
-      ? newDate(this.props.openToDate)
+      ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? newDate(this.props.startDate)
+        ? this.props.startDate
         : this.props.selectsStart && this.props.endDate
-          ? newDate(this.props.endDate)
+          ? this.props.endDate
           : newDate();
 
   calcInitialState = () => {
