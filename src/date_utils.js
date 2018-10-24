@@ -61,7 +61,6 @@ export function newDate(value) {
 export function parseDate(value, dateFormat, locale) {
   let parsedDate = null;
   let localeObject = getLocaleObject(locale);
-
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
       let tryParseDate = parse(value, df, new Date(), localeObject);
@@ -71,7 +70,6 @@ export function parseDate(value, dateFormat, locale) {
     });
     return parsedDate;
   }
-
   parsedDate = parse(value, dateFormat, new Date(), localeObject);
   if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
@@ -93,13 +91,12 @@ export function formatDate(date, formatStr, locale) {
   if (locale === "en") {
     return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
-
   let localeObj = getLocaleObject(locale);
-
   if (locale && !localeObj) {
-    console.warn(`The provided locale ["${locale}"] was not found.`);
+    console.warn(
+      `A locale object was not found for the provided string ["${locale}"].`
+    );
   }
-
   if (
     !localeObj &&
     !!getDefaultLocale() &&
@@ -107,7 +104,6 @@ export function formatDate(date, formatStr, locale) {
   ) {
     localeObj = getLocaleObject(getDefaultLocale());
   }
-
   return format(date, formatStr, {
     locale: localeObj ? localeObj : null,
     awareOfUnicodeTokens: true
@@ -319,7 +315,6 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
   }
-
   const base = newDate();
   const baseTime = setHours(setMinutes(base, getMinutes(time)), getHours(time));
   const min = setHours(
@@ -330,7 +325,7 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     setMinutes(base, getMinutes(maxTime)),
     getHours(maxTime)
   );
-  return isWithinInterval(baseTime, min, max);
+  return !isWithinInterval(baseTime, { start: min, end: max });
 }
 
 export function monthDisabledBefore(day, { minDate, includeDates } = {}) {

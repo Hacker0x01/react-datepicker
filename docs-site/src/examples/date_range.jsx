@@ -6,8 +6,8 @@ export default class DateRange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date("2014-02-08"),
-      endDate: new Date("2014-02-10")
+      startDate: new Date("2014/02/08"),
+      endDate: new Date("2014/02/10")
     };
   }
 

@@ -319,7 +319,7 @@
     },
     /* 3 */
     [
-      882,
+      881,
       4,
       5,
       6,
@@ -375,7 +375,7 @@
       /***/
     },
     /* 6 */
-    [883, 7],
+    [882, 7],
     /* 7 */
     /***/ function(module, exports) {
       module.exports = function(exec) {
@@ -453,11 +453,11 @@
       /***/
     },
     /* 10 */
-    [884, 11, 17, 6],
+    [883, 11, 17, 6],
     /* 11 */
-    [885, 12, 14, 16, 6],
+    [884, 12, 14, 16, 6],
     /* 12 */
-    [886, 13],
+    [885, 13],
     /* 13 */
     /***/ function(module, exports) {
       module.exports = function(it) {
@@ -467,11 +467,11 @@
       /***/
     },
     /* 14 */
-    [887, 6, 7, 15],
+    [886, 6, 7, 15],
     /* 15 */
-    [888, 13, 4],
+    [887, 13, 4],
     /* 16 */
-    [889, 13],
+    [888, 13],
     /* 17 */
     /***/ function(module, exports) {
       module.exports = function(bitmap, value) {
@@ -538,7 +538,7 @@
       /***/
     },
     /* 20 */
-    [890, 21],
+    [889, 21],
     /* 21 */
     /***/ function(module, exports) {
       module.exports = function(it) {
@@ -550,9 +550,9 @@
       /***/
     },
     /* 22 */
-    [891, 19, 13, 5, 11, 7],
+    [890, 19, 13, 5, 11, 7],
     /* 23 */
-    [892, 9, 4, 24],
+    [891, 9, 4, 24],
     /* 24 */
     /***/ function(module, exports) {
       module.exports = false;
@@ -560,23 +560,23 @@
       /***/
     },
     /* 25 */
-    [893, 11, 5, 26],
+    [892, 11, 5, 26],
     /* 26 */
-    [894, 23, 19, 4],
+    [893, 23, 19, 4],
     /* 27 */
-    [895, 26],
+    [894, 26],
     /* 28 */
-    [896, 4, 9, 24, 27, 11],
+    [895, 4, 9, 24, 27, 11],
     /* 29 */
-    [897, 30, 42, 43],
+    [896, 30, 42, 43],
     /* 30 */
-    [898, 31, 41],
+    [897, 31, 41],
     /* 31 */
-    [899, 5, 32, 36, 40],
+    [898, 5, 32, 36, 40],
     /* 32 */
-    [900, 33, 35],
+    [899, 33, 35],
     /* 33 */
-    [901, 34],
+    [900, 34],
     /* 34 */
     /***/ function(module, exports) {
       var toString = {}.toString;
@@ -598,9 +598,9 @@
       /***/
     },
     /* 36 */
-    [902, 32, 37, 39],
+    [901, 32, 37, 39],
     /* 37 */
-    [903, 38],
+    [902, 38],
     /* 38 */
     /***/ function(module, exports) {
       // 7.1.4 ToInteger
@@ -613,9 +613,9 @@
       /***/
     },
     /* 39 */
-    [904, 38],
+    [903, 38],
     /* 40 */
-    [905, 23, 19],
+    [904, 23, 19],
     /* 41 */
     /***/ function(module, exports) {
       // IE 8- don't enum bug keys
@@ -638,21 +638,21 @@
       /***/
     },
     /* 44 */
-    [906, 34],
+    [905, 34],
     /* 45 */
-    [907, 12, 46, 41, 40, 15, 47],
+    [906, 12, 46, 41, 40, 15, 47],
     /* 46 */
-    [908, 11, 12, 30, 6],
+    [907, 11, 12, 30, 6],
     /* 47 */
-    [909, 4],
+    [908, 4],
     /* 48 */
-    [910, 32, 49],
+    [909, 32, 49],
     /* 49 */
-    [911, 31, 41],
+    [910, 31, 41],
     /* 50 */
-    [912, 43, 17, 32, 16, 5, 14, 6],
+    [911, 43, 17, 32, 16, 5, 14, 6],
     /* 51 */
-    [913, 8, 45],
+    [912, 8, 45],
     /* 52 */
     /***/ function(module, exports, __webpack_require__) {
       var $export = __webpack_require__(8);
@@ -725,9 +725,9 @@
       /***/
     },
     /* 57 */
-    [914, 35],
+    [913, 35],
     /* 58 */
-    [915, 5, 57, 40],
+    [914, 5, 57, 40],
     /* 59 */
     /***/ function(module, exports, __webpack_require__) {
       // 19.1.2.14 Object.keys(O)
@@ -841,9 +841,9 @@
       /***/
     },
     /* 67 */
-    [916, 8, 68],
+    [915, 8, 68],
     /* 68 */
-    [917, 30, 42, 43, 57, 33, 7],
+    [916, 30, 42, 43, 57, 33, 7],
     /* 69 */
     /***/ function(module, exports, __webpack_require__) {
       // 19.1.3.10 Object.is(value1, value2)
@@ -865,9 +865,9 @@
       /***/
     },
     /* 71 */
-    [918, 8, 72],
+    [917, 8, 72],
     /* 72 */
-    [919, 13, 12, 20, 50],
+    [918, 13, 12, 20, 50],
     /* 73 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -2045,11 +2045,11 @@
       /***/
     },
     /* 126 */
-    [920, 127, 128],
+    [919, 127, 128],
     /* 127 */
-    [921, 38, 35],
+    [920, 38, 35],
     /* 128 */
-    [922, 24, 8, 18, 10, 129, 130, 25, 58, 26],
+    [921, 24, 8, 18, 10, 129, 130, 25, 58, 26],
     /* 129 */
     /***/ function(module, exports) {
       module.exports = {};
@@ -2057,7 +2057,7 @@
       /***/
     },
     /* 130 */
-    [923, 45, 17, 25, 10, 26],
+    [922, 45, 17, 25, 10, 26],
     /* 131 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -3418,7 +3418,7 @@
       /***/
     },
     /* 194 */
-    [924, 187, 195, 129, 32, 128],
+    [923, 187, 195, 129, 32, 128],
     /* 195 */
     /***/ function(module, exports) {
       module.exports = function(done, value) {
@@ -6888,9 +6888,9 @@
       /***/
     },
     /* 265 */
-    [925, 28],
+    [924, 28],
     /* 266 */
-    [926, 28],
+    [925, 28],
     /* 267 */
     /***/ function(module, exports, __webpack_require__) {
       // https://github.com/tc39/proposal-object-getownpropertydescriptors
@@ -42647,7 +42647,7 @@
 
       var _example_components2 = _interopRequireDefault(_example_components);
 
-      var _hero_example = __webpack_require__(881);
+      var _hero_example = __webpack_require__(880);
 
       var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -42983,97 +42983,93 @@
 
       var _today2 = _interopRequireDefault(_today);
 
-      var _timezone_date = __webpack_require__(857);
-
-      var _timezone_date2 = _interopRequireDefault(_timezone_date);
-
-      var _inline = __webpack_require__(858);
+      var _inline = __webpack_require__(857);
 
       var _inline2 = _interopRequireDefault(_inline);
 
-      var _open_to_date = __webpack_require__(859);
+      var _open_to_date = __webpack_require__(858);
 
       var _open_to_date2 = _interopRequireDefault(_open_to_date);
 
-      var _fixed_calendar = __webpack_require__(860);
+      var _fixed_calendar = __webpack_require__(859);
 
       var _fixed_calendar2 = _interopRequireDefault(_fixed_calendar);
 
-      var _week_numbers = __webpack_require__(861);
+      var _week_numbers = __webpack_require__(860);
 
       var _week_numbers2 = _interopRequireDefault(_week_numbers);
 
-      var _custom_input = __webpack_require__(862);
+      var _custom_input = __webpack_require__(861);
 
       var _custom_input2 = _interopRequireDefault(_custom_input);
 
-      var _multi_month = __webpack_require__(863);
+      var _multi_month = __webpack_require__(862);
 
       var _multi_month2 = _interopRequireDefault(_multi_month);
 
-      var _multi_month_drp = __webpack_require__(864);
+      var _multi_month_drp = __webpack_require__(863);
 
       var _multi_month_drp2 = _interopRequireDefault(_multi_month_drp);
 
-      var _multi_month_inline = __webpack_require__(865);
+      var _multi_month_inline = __webpack_require__(864);
 
       var _multi_month_inline2 = _interopRequireDefault(_multi_month_inline);
 
-      var _children = __webpack_require__(866);
+      var _children = __webpack_require__(865);
 
       var _children2 = _interopRequireDefault(_children);
 
-      var _calendar_container = __webpack_require__(867);
+      var _calendar_container = __webpack_require__(866);
 
       var _calendar_container2 = _interopRequireDefault(_calendar_container);
 
-      var _portal = __webpack_require__(868);
+      var _portal = __webpack_require__(867);
 
       var _portal2 = _interopRequireDefault(_portal);
 
-      var _inline_portal = __webpack_require__(869);
+      var _inline_portal = __webpack_require__(868);
 
       var _inline_portal2 = _interopRequireDefault(_inline_portal);
 
-      var _raw_change = __webpack_require__(870);
+      var _raw_change = __webpack_require__(869);
 
       var _raw_change2 = _interopRequireDefault(_raw_change);
 
-      var _read_only = __webpack_require__(871);
+      var _read_only = __webpack_require__(870);
 
       var _read_only2 = _interopRequireDefault(_read_only);
 
-      var _show_time = __webpack_require__(872);
+      var _show_time = __webpack_require__(871);
 
       var _show_time2 = _interopRequireDefault(_show_time);
 
-      var _show_time_only = __webpack_require__(873);
+      var _show_time_only = __webpack_require__(872);
 
       var _show_time_only2 = _interopRequireDefault(_show_time_only);
 
-      var _exclude_times = __webpack_require__(874);
+      var _exclude_times = __webpack_require__(873);
 
       var _exclude_times2 = _interopRequireDefault(_exclude_times);
 
-      var _exclude_time_period = __webpack_require__(875);
+      var _exclude_time_period = __webpack_require__(874);
 
       var _exclude_time_period2 = _interopRequireDefault(_exclude_time_period);
 
-      var _include_times = __webpack_require__(876);
+      var _include_times = __webpack_require__(875);
 
       var _include_times2 = _interopRequireDefault(_include_times);
 
-      var _inject_times = __webpack_require__(877);
+      var _inject_times = __webpack_require__(876);
 
       var _inject_times2 = _interopRequireDefault(_inject_times);
 
-      var _dont_close_onSelect = __webpack_require__(878);
+      var _dont_close_onSelect = __webpack_require__(877);
 
       var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
-      __webpack_require__(879);
+      __webpack_require__(878);
 
-      __webpack_require__(880);
+      __webpack_require__(879);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -43220,13 +43216,6 @@
               {
                 title: "Today button",
                 component: _react2.default.createElement(_today2.default, null)
-              },
-              {
-                title: "TimeZone date",
-                component: _react2.default.createElement(
-                  _timezone_date2.default,
-                  null
-                )
               },
               {
                 title: "Placeholder text",
@@ -71131,31 +71120,17 @@
             awareOfUnicodeTokens: true
           });
         }
-
-        var localeObj = void 0;
-        // if locale is an actual locale object use that
-        // otherwise look for a registered locale match
-        if (
-          (typeof locale === "undefined" ? "undefined" : _typeof(locale)) ===
-          "object"
-        ) {
-          localeObj = locale;
-        } else if (window.__localeData__ && window.__localeData__[locale]) {
-          localeObj = window.__localeData__[locale];
-        }
-
+        var localeObj = getLocaleObject(locale);
         if (locale && !localeObj) {
           console.warn('The provided locale ["' + locale + '"] was not found.');
         }
-
         if (
           !localeObj &&
-          window.__localeData__ &&
-          window.__localeData__[window.__localeId__]
+          !!getDefaultLocale() &&
+          !!getLocaleObject(getDefaultLocale())
         ) {
-          localeObj = window.__localeData__[window.__localeId__];
+          localeObj = getLocaleObject(getDefaultLocale());
         }
-
         return (0, _dateFns.format)(date, formatStr, {
           locale: localeObj ? localeObj : null,
           awareOfUnicodeTokens: true
@@ -71335,9 +71310,7 @@
       }
 
       function getLocaleObject(localeName) {
-        return window.__localeData__
-          ? window.__localeData__[localeName]
-          : undefined;
+        return window.__localeData__ ? window.__localeData__[localeName] : null;
       }
 
       function getFormattedWeekdayInLocale(date, formatFunc, locale) {
@@ -71434,7 +71407,6 @@
         if (!minTime || !maxTime) {
           throw new Error("Both minTime and maxTime props required");
         }
-
         var base = newDate();
         var baseTime = (0, _dateFns.setHours)(
           (0, _dateFns.setMinutes)(base, (0, _dateFns.getMinutes)(time)),
@@ -71448,7 +71420,10 @@
           (0, _dateFns.setMinutes)(base, (0, _dateFns.getMinutes)(maxTime)),
           (0, _dateFns.getHours)(maxTime)
         );
-        return (0, _dateFns.isWithinInterval)(baseTime, min, max);
+        return !(0, _dateFns.isWithinInterval)(baseTime, {
+          start: min,
+          end: max
+        });
       }
 
       function monthDisabledBefore(day) {
@@ -90470,7 +90445,7 @@
       /***/
     },
     /* 739 */
-    [916, 740, 756],
+    [915, 740, 756],
     /* 740 */
     /***/ function(module, exports, __webpack_require__) {
       var global = __webpack_require__(741);
@@ -90560,57 +90535,57 @@
     /* 742 */
     9,
     /* 743 */
-    [890, 744],
+    [889, 744],
     /* 744 */
     21,
     /* 745 */
-    [884, 746, 754, 750],
+    [883, 746, 754, 750],
     /* 746 */
-    [885, 747, 749, 753, 750],
+    [884, 747, 749, 753, 750],
     /* 747 */
-    [886, 748],
+    [885, 748],
     /* 748 */
     13,
     /* 749 */
-    [887, 750, 751, 752],
+    [886, 750, 751, 752],
     /* 750 */
-    [883, 751],
+    [882, 751],
     /* 751 */
     7,
     /* 752 */
-    [888, 748, 741],
+    [887, 748, 741],
     /* 753 */
-    [889, 748],
+    [888, 748],
     /* 754 */
     17,
     /* 755 */
     5,
     /* 756 */
-    [917, 757, 772, 773, 774, 760, 751],
+    [916, 757, 772, 773, 774, 760, 751],
     /* 757 */
-    [898, 758, 771],
+    [897, 758, 771],
     /* 758 */
-    [899, 755, 759, 763, 767],
+    [898, 755, 759, 763, 767],
     /* 759 */
-    [900, 760, 762],
+    [899, 760, 762],
     /* 760 */
-    [901, 761],
+    [900, 761],
     /* 761 */
     34,
     /* 762 */
     35,
     /* 763 */
-    [902, 759, 764, 766],
+    [901, 759, 764, 766],
     /* 764 */
-    [903, 765],
+    [902, 765],
     /* 765 */
     38,
     /* 766 */
-    [904, 765],
+    [903, 765],
     /* 767 */
-    [905, 768, 770],
+    [904, 768, 770],
     /* 768 */
-    [892, 742, 741, 769],
+    [891, 742, 741, 769],
     /* 769 */
     /***/ function(module, exports) {
       module.exports = true;
@@ -90626,7 +90601,7 @@
     /* 773 */
     43,
     /* 774 */
-    [914, 762],
+    [913, 762],
     /* 775 */
     /***/ function(module, exports) {
       "use strict";
@@ -90740,11 +90715,11 @@
       /***/
     },
     /* 780 */
-    [920, 781, 782],
+    [919, 781, 782],
     /* 781 */
-    [921, 765, 762],
+    [920, 765, 762],
     /* 782 */
-    [922, 769, 740, 783, 745, 784, 785, 789, 791, 790],
+    [921, 769, 740, 783, 745, 784, 785, 789, 791, 790],
     /* 783 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(745);
@@ -90754,19 +90729,19 @@
     /* 784 */
     129,
     /* 785 */
-    [923, 786, 754, 789, 745, 790],
+    [922, 786, 754, 789, 745, 790],
     /* 786 */
-    [907, 747, 787, 771, 767, 752, 788],
+    [906, 747, 787, 771, 767, 752, 788],
     /* 787 */
-    [908, 746, 747, 757, 750],
+    [907, 746, 747, 757, 750],
     /* 788 */
-    [909, 741],
+    [908, 741],
     /* 789 */
-    [893, 746, 755, 790],
+    [892, 746, 755, 790],
     /* 790 */
-    [894, 768, 770, 741],
+    [893, 768, 770, 741],
     /* 791 */
-    [915, 755, 774, 767],
+    [914, 755, 774, 767],
     /* 792 */
     /***/ function(module, exports, __webpack_require__) {
       __webpack_require__(793);
@@ -90794,7 +90769,7 @@
       /***/
     },
     /* 793 */
-    [924, 794, 795, 784, 759, 782],
+    [923, 794, 795, 784, 759, 782],
     /* 794 */
     /***/ function(module, exports) {
       module.exports = function() {
@@ -90806,7 +90781,7 @@
     /* 795 */
     195,
     /* 796 */
-    [895, 790],
+    [894, 790],
     /* 797 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = { default: __webpack_require__(798), __esModule: true };
@@ -90825,7 +90800,7 @@
     },
     /* 799 */
     [
-      882,
+      881,
       741,
       755,
       750,
@@ -90858,27 +90833,27 @@
       745
     ],
     /* 800 */
-    [891, 770, 748, 755, 746, 751],
+    [890, 770, 748, 755, 746, 751],
     /* 801 */
-    [896, 741, 742, 769, 796, 746],
+    [895, 741, 742, 769, 796, 746],
     /* 802 */
-    [897, 757, 772, 773],
+    [896, 757, 772, 773],
     /* 803 */
-    [906, 761],
+    [905, 761],
     /* 804 */
-    [910, 759, 805],
+    [909, 759, 805],
     /* 805 */
-    [911, 758, 771],
+    [910, 758, 771],
     /* 806 */
-    [912, 773, 754, 759, 753, 755, 749, 750],
+    [911, 773, 754, 759, 753, 755, 749, 750],
     /* 807 */
     /***/ function(module, exports) {
       /***/
     },
     /* 808 */
-    [925, 801],
+    [924, 801],
     /* 809 */
-    [926, 801],
+    [925, 801],
     /* 810 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -90944,9 +90919,9 @@
       /***/
     },
     /* 813 */
-    [918, 740, 814],
+    [917, 740, 814],
     /* 814 */
-    [919, 748, 747, 743, 806],
+    [918, 748, 747, 743, 806],
     /* 815 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = { default: __webpack_require__(816), __esModule: true };
@@ -90964,7 +90939,7 @@
       /***/
     },
     /* 817 */
-    [913, 740, 786],
+    [912, 740, 786],
     /* 818 */
     /***/ function(module, exports, __webpack_require__) {
       /* WEBPACK VAR INJECTION */ (function(global) {
@@ -95217,6 +95192,8 @@
 
       var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
+      var _dateFns = __webpack_require__(543);
+
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
       }
@@ -95292,7 +95269,7 @@
               _react2.default.createElement(
                 "code",
                 { className: "jsx" },
-                "\n<DatePicker\n  selected={this.state.startDate}\n  onChange={this.handleChange}\n  dayClassName={date => date.date() < Math.random() * 31 ? 'random' : undefined} />\n/>\n"
+                "\n<DatePicker\n  selected={this.state.startDate}\n  onChange={this.handleChange}\n  dayClassName={date => getDate(date) < Math.random() * 31 ? 'random' : undefined} />\n/>\n"
               )
             ),
             _react2.default.createElement(
@@ -95302,7 +95279,7 @@
                 selected: this.state.startDate,
                 onChange: this.handleChange,
                 dayClassName: function dayClassName(date) {
-                  return date.date() < Math.random() * 31
+                  return (0, _dateFns.getDate)(date) < Math.random() * 31
                     ? "random"
                     : undefined;
                 }
@@ -95617,6 +95594,11 @@
               _react2.default.createElement(
                 "code",
                 { className: "jsx" },
+                "import enGB from 'date-fns/locale/en-GB';",
+                _react2.default.createElement("br", null),
+                "registerLocale('en-GB', enGB);",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("br", null),
                 "<DatePicker",
                 _react2.default.createElement("br", null),
                 "  selected={this.state.startDate}",
@@ -96389,6 +96371,8 @@
 
       var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
+      var _dateFns = __webpack_require__(543);
+
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
       }
@@ -96462,7 +96446,7 @@
               });
             }),
             (_this.isWeekday = function(date) {
-              var day = date.day();
+              var day = (0, _dateFns.getDay)(date);
               return day !== 0 && day !== 6;
             }),
             _temp)),
@@ -97248,8 +97232,8 @@
           };
 
           _this.state = {
-            startDate: new Date("2014-02-08"),
-            endDate: new Date("2014-02-10")
+            startDate: new Date("2014/02/08"),
+            endDate: new Date("2014/02/10")
           };
           return _this;
         }
@@ -98267,221 +98251,6 @@
             : (subClass.__proto__ = superClass);
       }
 
-      var TimeZoneDate = (function(_React$Component) {
-        _inherits(TimeZoneDate, _React$Component);
-
-        function TimeZoneDate() {
-          var _temp, _this, _ret;
-
-          _classCallCheck(this, TimeZoneDate);
-
-          for (
-            var _len = arguments.length, args = Array(_len), _key = 0;
-            _key < _len;
-            _key++
-          ) {
-            args[_key] = arguments[_key];
-          }
-
-          return (
-            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
-              this,
-              _React$Component.call.apply(_React$Component, [this].concat(args))
-            )),
-            _this)),
-            (_this.state = {
-              startDate: null,
-              utcOffset: -4
-            }),
-            (_this.timezoneNames = [
-              { name: "GMT+10", value: 10 },
-              { name: "GMT+8", value: 8 },
-              { name: "GMT+4", value: 4 },
-              { name: "GMT+1", value: 1 },
-              { name: "GMT", value: 0 },
-              { name: "GMT-3", value: -3 },
-              { name: "GMT-4", value: -4 },
-              { name: "GMT-8", value: -8 },
-              { name: "GMT-10", value: -10 }
-            ]),
-            (_this.handleChange = function(date) {
-              _this.setState({
-                startDate: date
-              });
-            }),
-            (_this.handleTmzChange = function(event) {
-              _this.setState({
-                utcOffset: parseInt(event.target.value, 10)
-              });
-            }),
-            (_this.getOffsetLabel = function(tmz) {
-              var obj = _this.timezoneNames.find(function(_ref) {
-                var value = _ref.value;
-                return value === tmz;
-              });
-              return (obj && obj.name) || "";
-            }),
-            _temp)),
-            _possibleConstructorReturn(_this, _ret)
-          );
-        }
-
-        TimeZoneDate.prototype.render = function render() {
-          var selected =
-            this.state.startDate &&
-            this.state.startDate.clone().utcOffset(this.state.utcOffset);
-          var utcText = this.getOffsetLabel(this.state.utcOffset);
-          var todayTxt = "Today in " + utcText;
-
-          return _react2.default.createElement(
-            "div",
-            { className: "row" },
-            _react2.default.createElement(
-              "pre",
-              { className: "column example__code" },
-              _react2.default.createElement(
-                "code",
-                { className: "jsx" },
-                '\n<DatePicker\n    utcOffset=-4\n    dateFormat="DD-MMM HH:mm"\n    todayButton="Today in Puerto Rico"\n    onChange={this.handleChange}\n/>\n'
-              )
-            ),
-            _react2.default.createElement(
-              "div",
-              { className: "column" },
-              _react2.default.createElement(_reactDatepicker2.default, {
-                utcOffset: this.state.utcOffset * 60,
-                dateFormat: "DD-MMM YYYY HH:mm",
-                showTimeSelect: true,
-                todayButton: todayTxt,
-                selected: selected,
-                onChange: this.handleChange
-              }),
-              _react2.default.createElement("br", null),
-              _react2.default.createElement(
-                "label",
-                { className: "example__timezone-label" },
-                "Timezone Offset:",
-                _react2.default.createElement(
-                  "select",
-                  {
-                    className: "example__timezone-selector",
-                    value: this.state.utcOffset,
-                    onChange: this.handleTmzChange
-                  },
-                  _react2.default.createElement(
-                    "option",
-                    { value: "10" },
-                    "GMT+10:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "8" },
-                    "GMT+08:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "4" },
-                    "GMT+04:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "1" },
-                    "GMT+01:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "0" },
-                    "GMT"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "-3" },
-                    "GMT-03:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "-4" },
-                    "GMT-04:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "-8" },
-                    "GMT-08:00"
-                  ),
-                  _react2.default.createElement(
-                    "option",
-                    { value: "-10" },
-                    "GMT-10:00"
-                  )
-                )
-              )
-            )
-          );
-        };
-
-        return TimeZoneDate;
-      })(_react2.default.Component);
-
-      exports.default = TimeZoneDate;
-
-      /***/
-    },
-    /* 858 */
-    /***/ function(module, exports, __webpack_require__) {
-      "use strict";
-
-      exports.__esModule = true;
-
-      var _react = __webpack_require__(328);
-
-      var _react2 = _interopRequireDefault(_react);
-
-      var _reactDatepicker = __webpack_require__(533);
-
-      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { default: obj };
-      }
-
-      function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-
-      function _possibleConstructorReturn(self, call) {
-        if (!self) {
-          throw new ReferenceError(
-            "this hasn't been initialised - super() hasn't been called"
-          );
-        }
-        return call && (typeof call === "object" || typeof call === "function")
-          ? call
-          : self;
-      }
-
-      function _inherits(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError(
-            "Super expression must either be null or a function, not " +
-              typeof superClass
-          );
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-          constructor: {
-            value: subClass,
-            enumerable: false,
-            writable: true,
-            configurable: true
-          }
-        });
-        if (superClass)
-          Object.setPrototypeOf
-            ? Object.setPrototypeOf(subClass, superClass)
-            : (subClass.__proto__ = superClass);
-      }
-
       var Inline = (function(_React$Component) {
         _inherits(Inline, _React$Component);
 
@@ -98537,7 +98306,7 @@
 
       /***/
     },
-    /* 859 */
+    /* 858 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -98638,14 +98407,14 @@
               _react2.default.createElement(
                 "code",
                 { className: "jsx" },
-                '\n<DatePicker\n    openToDate={new Date("1993-09-28")}\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n/>\n'
+                '\n<DatePicker\n    openToDate={new Date("1993/09/28")}\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n/>\n'
               )
             ),
             _react2.default.createElement(
               "div",
               { className: "column" },
               _react2.default.createElement(_reactDatepicker2.default, {
-                openToDate: new Date("1993-09-28"),
+                openToDate: new Date("1993/09/28"),
                 selected: this.state.startDate,
                 onChange: this.handleChange
               })
@@ -98660,7 +98429,7 @@
 
       /***/
     },
-    /* 860 */
+    /* 859 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -98789,7 +98558,7 @@
 
       /***/
     },
-    /* 861 */
+    /* 860 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -98900,7 +98669,7 @@
 
       /***/
     },
-    /* 862 */
+    /* 861 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99047,7 +98816,7 @@
 
       /***/
     },
-    /* 863 */
+    /* 862 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99158,7 +98927,7 @@
 
       /***/
     },
-    /* 864 */
+    /* 863 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99270,7 +99039,7 @@
 
       /***/
     },
-    /* 865 */
+    /* 864 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99382,7 +99151,7 @@
 
       /***/
     },
-    /* 866 */
+    /* 865 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99500,7 +99269,7 @@
 
       /***/
     },
-    /* 867 */
+    /* 866 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99645,7 +99414,7 @@
 
       /***/
     },
-    /* 868 */
+    /* 867 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99756,7 +99525,7 @@
 
       /***/
     },
-    /* 869 */
+    /* 868 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -99884,7 +99653,7 @@
 
       /***/
     },
-    /* 870 */
+    /* 869 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100019,7 +99788,7 @@
 
       /***/
     },
-    /* 871 */
+    /* 870 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100144,7 +99913,7 @@
 
       /***/
     },
-    /* 872 */
+    /* 871 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100265,7 +100034,7 @@
 
       /***/
     },
-    /* 873 */
+    /* 872 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100386,7 +100155,7 @@
 
       /***/
     },
-    /* 874 */
+    /* 873 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100553,7 +100322,7 @@
 
       /***/
     },
-    /* 875 */
+    /* 874 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100708,7 +100477,7 @@
 
       /***/
     },
-    /* 876 */
+    /* 875 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -100875,7 +100644,7 @@
 
       /***/
     },
-    /* 877 */
+    /* 876 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -101025,7 +100794,7 @@
 
       /***/
     },
-    /* 878 */
+    /* 877 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -101136,14 +100905,14 @@
 
       /***/
     },
-    /* 879 */
+    /* 878 */
     /***/ function(module, exports) {
       // removed by extract-text-webpack-plugin
       /***/
     },
+    /* 879 */
+    878,
     /* 880 */
-    879,
-    /* 881 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -101237,7 +101006,7 @@
 
       /***/
     },
-    /* 882 */
+    /* 881 */
     /***/ function(
       module,
       exports,
@@ -101637,7 +101406,7 @@
 
       /***/
     },
-    /* 883 */
+    /* 882 */
     /***/ function(
       module,
       exports,
@@ -101659,7 +101428,7 @@
 
       /***/
     },
-    /* 884 */
+    /* 883 */
     /***/ function(
       module,
       exports,
@@ -101685,7 +101454,7 @@
 
       /***/
     },
-    /* 885 */
+    /* 884 */
     /***/ function(
       module,
       exports,
@@ -101726,7 +101495,7 @@
 
       /***/
     },
-    /* 886 */
+    /* 885 */
     /***/ function(
       module,
       exports,
@@ -101743,7 +101512,7 @@
 
       /***/
     },
-    /* 887 */
+    /* 886 */
     /***/ function(
       module,
       exports,
@@ -101774,7 +101543,7 @@
 
       /***/
     },
-    /* 888 */
+    /* 887 */
     /***/ function(
       module,
       exports,
@@ -101795,7 +101564,7 @@
 
       /***/
     },
-    /* 889 */
+    /* 888 */
     /***/ function(
       module,
       exports,
@@ -101833,7 +101602,7 @@
 
       /***/
     },
-    /* 890 */
+    /* 889 */
     /***/ function(
       module,
       exports,
@@ -101868,7 +101637,7 @@
 
       /***/
     },
-    /* 891 */
+    /* 890 */
     /***/ function(
       module,
       exports,
@@ -101952,7 +101721,7 @@
 
       /***/
     },
-    /* 892 */
+    /* 891 */
     /***/ function(
       module,
       exports,
@@ -101978,7 +101747,7 @@
 
       /***/
     },
-    /* 893 */
+    /* 892 */
     /***/ function(
       module,
       exports,
@@ -102000,7 +101769,7 @@
 
       /***/
     },
-    /* 894 */
+    /* 893 */
     /***/ function(
       module,
       exports,
@@ -102030,7 +101799,7 @@
 
       /***/
     },
-    /* 895 */
+    /* 894 */
     /***/ function(
       module,
       exports,
@@ -102041,7 +101810,7 @@
 
       /***/
     },
-    /* 896 */
+    /* 895 */
     /***/ function(
       module,
       exports,
@@ -102068,7 +101837,7 @@
 
       /***/
     },
-    /* 897 */
+    /* 896 */
     /***/ function(
       module,
       exports,
@@ -102097,7 +101866,7 @@
 
       /***/
     },
-    /* 898 */
+    /* 897 */
     /***/ function(
       module,
       exports,
@@ -102119,7 +101888,7 @@
 
       /***/
     },
-    /* 899 */
+    /* 898 */
     /***/ function(
       module,
       exports,
@@ -102156,7 +101925,7 @@
 
       /***/
     },
-    /* 900 */
+    /* 899 */
     /***/ function(
       module,
       exports,
@@ -102173,7 +101942,7 @@
 
       /***/
     },
-    /* 901 */
+    /* 900 */
     /***/ function(
       module,
       exports,
@@ -102191,7 +101960,7 @@
 
       /***/
     },
-    /* 902 */
+    /* 901 */
     /***/ function(
       module,
       exports,
@@ -102237,7 +102006,7 @@
 
       /***/
     },
-    /* 903 */
+    /* 902 */
     /***/ function(
       module,
       exports,
@@ -102255,7 +102024,7 @@
 
       /***/
     },
-    /* 904 */
+    /* 903 */
     /***/ function(
       module,
       exports,
@@ -102274,7 +102043,7 @@
 
       /***/
     },
-    /* 905 */
+    /* 904 */
     /***/ function(
       module,
       exports,
@@ -102292,7 +102061,7 @@
 
       /***/
     },
-    /* 906 */
+    /* 905 */
     /***/ function(
       module,
       exports,
@@ -102309,7 +102078,7 @@
 
       /***/
     },
-    /* 907 */
+    /* 906 */
     /***/ function(
       module,
       exports,
@@ -102381,7 +102150,7 @@
 
       /***/
     },
-    /* 908 */
+    /* 907 */
     /***/ function(
       module,
       exports,
@@ -102413,7 +102182,7 @@
 
       /***/
     },
-    /* 909 */
+    /* 908 */
     /***/ function(
       module,
       exports,
@@ -102426,7 +102195,7 @@
 
       /***/
     },
-    /* 910 */
+    /* 909 */
     /***/ function(
       module,
       exports,
@@ -102462,7 +102231,7 @@
 
       /***/
     },
-    /* 911 */
+    /* 910 */
     /***/ function(
       module,
       exports,
@@ -102484,7 +102253,7 @@
 
       /***/
     },
-    /* 912 */
+    /* 911 */
     /***/ function(
       module,
       exports,
@@ -102529,7 +102298,7 @@
 
       /***/
     },
-    /* 913 */
+    /* 912 */
     /***/ function(
       module,
       exports,
@@ -102545,7 +102314,7 @@
 
       /***/
     },
-    /* 914 */
+    /* 913 */
     /***/ function(
       module,
       exports,
@@ -102560,7 +102329,7 @@
 
       /***/
     },
-    /* 915 */
+    /* 914 */
     /***/ function(
       module,
       exports,
@@ -102595,7 +102364,7 @@
 
       /***/
     },
-    /* 916 */
+    /* 915 */
     /***/ function(
       module,
       exports,
@@ -102612,7 +102381,7 @@
 
       /***/
     },
-    /* 917 */
+    /* 916 */
     /***/ function(
       module,
       exports,
@@ -102676,7 +102445,7 @@
 
       /***/
     },
-    /* 918 */
+    /* 917 */
     /***/ function(
       module,
       exports,
@@ -102694,7 +102463,7 @@
 
       /***/
     },
-    /* 919 */
+    /* 918 */
     /***/ function(
       module,
       exports,
@@ -102750,7 +102519,7 @@
 
       /***/
     },
-    /* 920 */
+    /* 919 */
     /***/ function(
       module,
       exports,
@@ -102785,7 +102554,7 @@
 
       /***/
     },
-    /* 921 */
+    /* 920 */
     /***/ function(
       module,
       exports,
@@ -102823,7 +102592,7 @@
 
       /***/
     },
-    /* 922 */
+    /* 921 */
     /***/ function(
       module,
       exports,
@@ -102959,7 +102728,7 @@
 
       /***/
     },
-    /* 923 */
+    /* 922 */
     /***/ function(
       module,
       exports,
@@ -102998,7 +102767,7 @@
 
       /***/
     },
-    /* 924 */
+    /* 923 */
     /***/ function(
       module,
       exports,
@@ -103060,7 +102829,7 @@
 
       /***/
     },
-    /* 925 */
+    /* 924 */
     /***/ function(
       module,
       exports,
@@ -103073,7 +102842,7 @@
 
       /***/
     },
-    /* 926 */
+    /* 925 */
     /***/ function(
       module,
       exports,

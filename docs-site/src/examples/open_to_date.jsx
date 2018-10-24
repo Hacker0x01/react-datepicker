@@ -19,7 +19,7 @@ export default class OpenToDate extends React.Component {
           <code className="jsx">
             {`
 <DatePicker
-    openToDate={new Date("1993-09-28")}
+    openToDate={new Date("1993/09/28")}
     selected={this.state.startDate}
     onChange={this.handleChange}
 />
@@ -28,7 +28,7 @@ export default class OpenToDate extends React.Component {
         </pre>
         <div className="column">
           <DatePicker
-            openToDate={new Date("1993-09-28")}
+            openToDate={new Date("1993/09/28")}
             selected={this.state.startDate}
             onChange={this.handleChange}
           />

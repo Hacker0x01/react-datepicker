@@ -20,6 +20,11 @@ export default class CustomStartDate extends React.Component {
       <div className="row">
         <pre className="column example__code">
           <code className="jsx">
+            {"import enGB from 'date-fns/locale/en-GB';"}
+            <br />
+            {"registerLocale('en-GB', enGB);"}
+            <br />
+            <br />
             {"<DatePicker"}
             <br />
             {"  selected={this.state.startDate}"}
