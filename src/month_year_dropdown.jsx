@@ -66,7 +66,7 @@ export default class MonthYearDropdown extends React.Component {
 
   renderReadView = visible => {
     const yearMonth = formatDate(
-      newDate(this.props.date),
+      this.props.date,
       this.props.dateFormat,
       this.props.locale
     );

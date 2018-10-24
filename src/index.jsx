@@ -236,7 +236,7 @@ export default class DatePicker extends React.Component {
       open: this.props.startOpen || false,
       preventFocus: false,
       preSelection: this.props.selected
-        ? newDate(this.props.selected)
+        ? this.props.selected
         : boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx

@@ -31,10 +31,12 @@ import {
   max,
   differenceInCalendarDays,
   differenceInCalendarMonths,
+  differenceInCalendarWeeks,
   setDayOfYear,
   startOfDay,
   startOfWeek,
   startOfMonth,
+  startOfYear,
   endOfWeek,
   endOfMonth,
   isEqual,
@@ -158,7 +160,7 @@ export function getWeek(date) {
   if (!isSameYear(endOfWeek(date), date)) {
     return 1;
   }
-  return formatDate(date, "w");
+  return differenceInCalendarWeeks(date, startOfYear(date)) + 1;
 }
 
 export function getDayOfWeekCode(day, locale) {
