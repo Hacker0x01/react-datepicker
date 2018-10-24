@@ -16,6 +16,7 @@ export default class Week extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
+    locale: PropTypes.string,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
@@ -57,7 +58,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(this.props.day);
+    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {

@@ -270,7 +270,7 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(date);
+    const startOfWeek = getStartOfWeek(date, this.props.locale);
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -508,6 +508,7 @@ export default class Calendar extends React.Component {
             onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}
             formatWeekNumber={this.props.formatWeekNumber}
+            locale={this.props.locale}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}

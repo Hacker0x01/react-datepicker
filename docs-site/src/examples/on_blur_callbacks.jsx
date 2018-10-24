@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 
 export default class Disabled extends React.Component {
   state = {
@@ -13,11 +13,12 @@ export default class Disabled extends React.Component {
     });
   };
 
-  handleOnBlur = date => {
-    if (date === null) {
-      console.log("selected date: %s", date);
-    } else {
+  handleOnBlur = event => {
+    const date = new Date(event.target.value);
+    if (isValid(date)) {
       console.log("selected date: %s", format(date, "dd/MM/yyyy"));
+    } else {
+      console.log("selected date: %s", event.target.value);
     }
   };
 
@@ -28,11 +29,11 @@ export default class Disabled extends React.Component {
           <code className="js">
             {`
 handleOnBlur: function (date) {
-    if (date === null) {
-        console.log("selected date: %s", date);
-    }
-    else {
-        console.log("selected date: %s", format(date, "dd/MM/yyyy"));
+    const date = new Date(event.target.value);
+    if (isValid(date)) {
+      console.log("selected date: %s", format(date, "dd/MM/yyyy"));
+    } else {
+      console.log("selected date: %s", event.target.value);
     }
 };'}
 `}

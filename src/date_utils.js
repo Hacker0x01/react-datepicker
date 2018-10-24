@@ -162,8 +162,8 @@ export function getStartOfDay(date) {
   return startOfDay(date);
 }
 
-export function getStartOfWeek(date) {
-  return startOfWeek(date);
+export function getStartOfWeek(date, locale) {
+  return startOfWeek(date, { locale: getLocaleObject(locale) });
 }
 
 export function getStartOfMonth(date) {

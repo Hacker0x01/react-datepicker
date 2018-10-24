@@ -69951,7 +69951,10 @@
                 ? arguments[0]
                 : _this.state.date;
 
-            var startOfWeek = (0, _date_utils.getStartOfWeek)(date);
+            var startOfWeek = (0, _date_utils.getStartOfWeek)(
+              date,
+              _this.props.locale
+            );
             var dayNames = [];
             if (_this.props.showWeekNumbers) {
               dayNames.push(
@@ -70243,6 +70246,7 @@
                     onMouseLeave: _this.handleMonthMouseLeave,
                     onWeekSelect: _this.props.onWeekSelect,
                     formatWeekNumber: _this.props.formatWeekNumber,
+                    locale: _this.props.locale,
                     minDate: _this.props.minDate,
                     maxDate: _this.props.maxDate,
                     excludeDates: _this.props.excludeDates,
@@ -71074,7 +71078,6 @@
       function parseDate(value, dateFormat, locale) {
         var parsedDate = null;
         var localeObject = getLocaleObject(locale);
-
         if (Array.isArray(dateFormat)) {
           dateFormat.forEach(function(df) {
             var tryParseDate = (0, _dateFns.parse)(
@@ -71089,7 +71092,6 @@
           });
           return parsedDate;
         }
-
         parsedDate = (0, _dateFns.parse)(
           value,
           dateFormat,
@@ -71122,7 +71124,11 @@
         }
         var localeObj = getLocaleObject(locale);
         if (locale && !localeObj) {
-          console.warn('The provided locale ["' + locale + '"] was not found.');
+          console.warn(
+            'A locale object was not found for the provided string ["' +
+              locale +
+              '"].'
+          );
         }
         if (
           !localeObj &&
@@ -71209,8 +71215,10 @@
         return (0, _dateFns.startOfDay)(date);
       }
 
-      function getStartOfWeek(date) {
-        return (0, _dateFns.startOfWeek)(date);
+      function getStartOfWeek(date, locale) {
+        return (0, _dateFns.startOfWeek)(date, {
+          locale: getLocaleObject(locale)
+        });
       }
 
       function getStartOfMonth(date) {
@@ -88783,7 +88791,8 @@
               var weeks = [];
               var isFixedHeight = _this.props.fixedHeight;
               var currentWeekStart = utils.getStartOfWeek(
-                utils.getStartOfMonth(_this.props.day)
+                utils.getStartOfMonth(_this.props.day),
+                _this.props.locale
               );
               var i = 0;
               var breakAfterNextPush = false;
@@ -88798,6 +88807,7 @@
                     onDayMouseEnter: _this.handleDayMouseEnter,
                     onWeekSelect: _this.props.onWeekSelect,
                     formatWeekNumber: _this.props.formatWeekNumber,
+                    locale: _this.props.locale,
                     minDate: _this.props.minDate,
                     maxDate: _this.props.maxDate,
                     excludeDates: _this.props.excludeDates,
@@ -88887,6 +88897,7 @@
         highlightDates: _propTypes2.default.instanceOf(Map),
         includeDates: _propTypes2.default.array,
         inline: _propTypes2.default.bool,
+        locale: _propTypes2.default.string,
         maxDate: _propTypes2.default.instanceOf(Date),
         minDate: _propTypes2.default.instanceOf(Date),
         onDayClick: _propTypes2.default.func,
@@ -89034,7 +89045,10 @@
               return utils.getWeek(startOfWeek);
             }),
             (_this.renderDays = function() {
-              var startOfWeek = utils.getStartOfWeek(_this.props.day);
+              var startOfWeek = utils.getStartOfWeek(
+                _this.props.day,
+                _this.props.locale
+              );
               var days = [];
               var weekNumber = _this.formatWeekNumber(startOfWeek);
               if (_this.props.showWeekNumber) {
@@ -89106,6 +89120,7 @@
         highlightDates: _propTypes2.default.instanceOf(Map),
         includeDates: _propTypes2.default.array,
         inline: _propTypes2.default.bool,
+        locale: _propTypes2.default.string,
         maxDate: _propTypes2.default.instanceOf(Date),
         minDate: _propTypes2.default.instanceOf(Date),
         month: _propTypes2.default.number,
@@ -96948,14 +96963,15 @@
                 startDate: date
               });
             }),
-            (_this.handleOnBlur = function(date) {
-              if (date === null) {
-                console.log("selected date: %s", date);
-              } else {
+            (_this.handleOnBlur = function(event) {
+              var date = new Date(event.target.value);
+              if ((0, _dateFns.isValid)(date)) {
                 console.log(
                   "selected date: %s",
                   (0, _dateFns.format)(date, "dd/MM/yyyy")
                 );
+              } else {
+                console.log("selected date: %s", event.target.value);
               }
             }),
             _temp)),
@@ -96973,7 +96989,7 @@
               _react2.default.createElement(
                 "code",
                 { className: "js" },
-                '\nhandleOnBlur: function (date) {\n    if (date === null) {\n        console.log("selected date: %s", date);\n    }\n    else {\n        console.log("selected date: %s", format(date, "dd/MM/yyyy"));\n    }\n};\'}\n'
+                '\nhandleOnBlur: function (date) {\n    const date = new Date(event.target.value);\n    if (isValid(date)) {\n      console.log("selected date: %s", format(date, "dd/MM/yyyy"));\n    } else {\n      console.log("selected date: %s", event.target.value);\n    }\n};\'}\n'
               ),
               _react2.default.createElement("br", null),
               _react2.default.createElement(
