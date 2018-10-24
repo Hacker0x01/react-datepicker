@@ -1,12 +1,10 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { setMinutes, setHours } from "date-fns";
 
 export default class InjectTimes extends React.Component {
   state = {
-    startDate: dayjs()
-      .set("hour", 16)
-      .set("minute", 30)
+    startDate: setHours(setMinutes(new Date(), 30), 16)
   };
 
   handleChange = date => {
@@ -28,11 +26,11 @@ export default class InjectTimes extends React.Component {
             <strong>{`    showTimeSelect
     timeFormat="HH:mm"
     injectTimes={[
-      dayjs().set('hour', 0).set('minute', 1),
-      dayjs().set('hour', 12).set('minute', 5),
-      dayjs().set('hour', 23).set('minute', 59)
+      setHours(setMinutes(new Date(), 1), 0),
+      setHours(setMinutes(new Date(), 5), 12),
+      setHours(setMinutes(new Date(), 59), 23)
     ]}
-    dateFormat="MMMM DD, YYYY h:mm A"
+    dateFormat="MMMM dd, yyyy h:mm aa"
 />
 `}</strong>
           </code>
@@ -44,17 +42,11 @@ export default class InjectTimes extends React.Component {
             showTimeSelect
             timeFormat="HH:mm"
             injectTimes={[
-              dayjs()
-                .set("hour", 0)
-                .set("minute", 1),
-              dayjs()
-                .set("hour", 12)
-                .set("minute", 5),
-              dayjs()
-                .set("hour", 23)
-                .set("minute", 59)
+              setHours(setMinutes(new Date(), 1), 0),
+              setHours(setMinutes(new Date(), 5), 12),
+              setHours(setMinutes(new Date(), 59), 23)
             ]}
-            dateFormat="MMMM DD, YYYY h:mm A"
+            dateFormat="MMMM dd, yyyy h:mm aa"
           />
         </div>
       </div>

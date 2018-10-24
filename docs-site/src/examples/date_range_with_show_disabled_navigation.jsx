@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addMonths } from "date-fns";
 
 export default class DateRangeWithShowDisabledNavigation extends React.Component {
   state = {
@@ -22,8 +22,8 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
 <DatePicker
   selected={this.state.startDate}
   onChange={this.handleChange}
-  minDate={dayjs()}
-  maxDate={dayjs().add(5, "months")}
+  minDate={new Date()}
+  maxDate={addMonths(new Date(), 5)}
   showDisabledMonthNavigation />
 </div>
 
@@ -34,8 +34,8 @@ export default class DateRangeWithShowDisabledNavigation extends React.Component
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            minDate={dayjs()}
-            maxDate={dayjs().add(5, "months")}
+            minDate={new Date()}
+            maxDate={addMonths(new Date(), 5)}
             showDisabledMonthNavigation
           />
         </div>

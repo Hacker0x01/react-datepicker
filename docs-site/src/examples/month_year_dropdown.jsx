@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addMonths, subMonths } from "date-fns";
 
 export default class MonthYearDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs()
+      startDate: new Date()
     };
   }
 
@@ -26,8 +26,8 @@ export default class MonthYearDropdown extends React.Component {
   selected={this.state.startDate}
   onChange={this.handleChange}
   dateFormatCalendar={"MMM YYYY"}
-  minDate={dayjs().subtract(6, "month")}
-  maxDate={dayjs().add(6, "month")}
+  minDate={subMonths(new Date(), 6)}
+  maxDate={addMonths(new Date(), 6)}
   showMonthYearDropdown
 />
 `}
@@ -38,8 +38,8 @@ export default class MonthYearDropdown extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             dateFormatCalendar={"MMM YYYY"}
-            minDate={dayjs().subtract(6, "month")}
-            maxDate={dayjs().add(6, "month")}
+            minDate={subMonths(new Date(), 6)}
+            maxDate={addMonths(new Date(), 6)}
             showMonthYearDropdown
           />
         </div>

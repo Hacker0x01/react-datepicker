@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addDays, subDays } from "date-fns";
 
 export default class highlightDates extends React.Component {
   state = {
@@ -26,7 +26,7 @@ export default class highlightDates extends React.Component {
             <br />
             <strong>
               {
-                'highlightDates={[dayjs().subtract(7, "days"), dayjs().add(7, "days")]}'
+                "highlightDates={[subDays(new Date(), 7), addDays(new Date(), 7)]}"
               }
             </strong>
             <br />
@@ -39,10 +39,7 @@ export default class highlightDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            highlightDates={[
-              dayjs().subtract(7, "days"),
-              dayjs().add(7, "days")
-            ]}
+            highlightDates={[subDays(new Date(), 7), addDays(new Date(), 7)]}
             placeholderText="This highlights a week ago and a week from today"
           />
         </div>

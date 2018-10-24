@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
 
 export default class CustomClassName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs()
+      startDate: new Date()
     };
   }
 

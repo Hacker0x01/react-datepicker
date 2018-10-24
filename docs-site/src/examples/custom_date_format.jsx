@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
 
 export default class CustomDateFormat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs()
+      startDate: new Date()
     };
   }
 
@@ -23,7 +22,7 @@ export default class CustomDateFormat extends React.Component {
           <code className="jsx">
             {"<DatePicker"}
             <br />
-            <strong>{'dateFormat="YYYY/MM/DD"'}</strong>
+            <strong>{'dateFormat="yyyy/MM/dd"'}</strong>
             <br />
             {"selected={this.state.startDate}"}
             <br />
@@ -32,7 +31,7 @@ export default class CustomDateFormat extends React.Component {
         </pre>
         <div className="column">
           <DatePicker
-            dateFormat="YYYY/MM/DD"
+            dateFormat="yyyy/MM/dd"
             selected={this.state.startDate}
             onChange={this.handleChange}
           />

@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
 
 export default class ShowTime extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs()
+      startDate: new Date()
     };
   }
 
@@ -29,7 +28,7 @@ export default class ShowTime extends React.Component {
             <strong>{`    showTimeSelect
     timeFormat="HH:mm"
     timeIntervals={15}
-    dateFormat="MMMM DD, YYYY h:mm A"
+    dateFormat="MMMM dd, yyyy h:mm aa"
     timeCaption="time"
 />
 `}</strong>
@@ -43,7 +42,7 @@ export default class ShowTime extends React.Component {
             timeFormat="HH:mm"
             timeIntervals={15}
             timeCaption="time"
-            dateFormat="MMMM DD, YYYY h:mm A"
+            dateFormat="MMMM dd, yyyy h:mm aa"
           />
         </div>
       </div>

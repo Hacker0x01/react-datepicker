@@ -1,13 +1,13 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { isAfter } from "date-fns";
 
 export default class DateRange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs("2014-02-08"),
-      endDate: dayjs("2014-02-10")
+      startDate: new Date("2014-02-08"),
+      endDate: new Date("2014-02-10")
     };
   }
 
@@ -15,7 +15,7 @@ export default class DateRange extends React.Component {
     startDate = startDate || this.state.startDate;
     endDate = endDate || this.state.endDate;
 
-    if (startDate.isAfter(endDate)) {
+    if (isAfter(startDate, endDate)) {
       endDate = startDate;
     }
 

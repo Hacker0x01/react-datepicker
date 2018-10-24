@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
 
 /* eslint-disable react/no-multi-comp */
 class ExampleCustomInput extends React.Component {
@@ -23,7 +22,7 @@ export default class CustomInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs()
+      startDate: new Date()
     };
   }
 

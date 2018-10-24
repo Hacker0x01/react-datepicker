@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addDays } from "date-fns";
 
 export default class includeDates extends React.Component {
   state = {
@@ -25,7 +25,7 @@ export default class includeDates extends React.Component {
             {"onChange={this.handleChange}"}
             <br />
             <strong>
-              {'includeDates={[dayjs(), dayjs().add(1, "days")]}'}
+              {"includeDates={[new Date(), addDays(new Date(), 1)]}"}
             </strong>
             <br />
             {'placeholderText="This only includes today and tomorrow" />'}
@@ -35,7 +35,7 @@ export default class includeDates extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            includeDates={[dayjs(), dayjs().add(1, "days")]}
+            includeDates={[new Date(), addDays(new Date(), 1)]}
             placeholderText="This only includes today and tomorrow"
           />
         </div>

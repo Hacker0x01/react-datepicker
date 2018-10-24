@@ -94,14 +94,7 @@ export function formatDate(date, formatStr, locale) {
     return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
 
-  let localeObj;
-  // if locale is an actual locale object use that
-  // otherwise look for a registered locale match
-  if (typeof locale === "object") {
-    localeObj = locale;
-  } else if (window.__localeData__ && window.__localeData__[locale]) {
-    localeObj = window.__localeData__[locale];
-  }
+  let localeObj = getLocaleObject(locale);
 
   if (locale && !localeObj) {
     console.warn(`The provided locale ["${locale}"] was not found.`);
@@ -109,10 +102,10 @@ export function formatDate(date, formatStr, locale) {
 
   if (
     !localeObj &&
-    window.__localeData__ &&
-    window.__localeData__[window.__localeId__]
+    !!getDefaultLocale() &&
+    !!getLocaleObject(getDefaultLocale())
   ) {
-    localeObj = window.__localeData__[window.__localeId__];
+    localeObj = getLocaleObject(getDefaultLocale());
   }
 
   return format(date, formatStr, {
@@ -261,7 +254,7 @@ export function getDefaultLocale() {
 }
 
 export function getLocaleObject(localeName) {
-  return window.__localeData__[localeName];
+  return window.__localeData__ ? window.__localeData__[localeName] : null;
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {

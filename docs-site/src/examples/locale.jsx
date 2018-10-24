@@ -1,5 +1,8 @@
 import React from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+import enGB from "date-fns/locale/en-GB";
+
+registerLocale("en-GB", enGB);
 
 export default class CustomStartDate extends React.Component {
   state = {
@@ -23,7 +26,7 @@ export default class CustomStartDate extends React.Component {
             <br />
             {"  onChange={this.handleChange}"}
             <br />
-            <strong>{'  locale="en-gb"'}</strong>
+            <strong>{'  locale="en-GB"'}</strong>
             <br />
             {'  placeholderText="Weeks start on Monday" />'}
           </code>
@@ -32,8 +35,9 @@ export default class CustomStartDate extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            locale="en-gb"
-            placeholderText="Weeks start on Monday"/>
+            locale="en-GB"
+            placeholderText="Weeks start on Monday"
+          />
         </div>
       </div>
     );

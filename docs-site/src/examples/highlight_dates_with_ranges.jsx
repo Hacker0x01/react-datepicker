@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addDays, subDays } from "date-fns";
 
 export default class highlightDatesRanges extends React.Component {
   constructor(props) {
@@ -8,18 +8,18 @@ export default class highlightDatesRanges extends React.Component {
     this.highlightWithRanges = [
       {
         "react-datepicker__day--highlighted-custom-1": [
-          dayjs().subtract(4, "days"),
-          dayjs().subtract(3, "days"),
-          dayjs().subtract(2, "days"),
-          dayjs().subtract(1, "days")
+          subDays(new Date(), 4),
+          subDays(new Date(), 3),
+          subDays(new Date(), 2),
+          subDays(new Date(), 1)
         ]
       },
       {
         "react-datepicker__day--highlighted-custom-2": [
-          dayjs().add(1, "days"),
-          dayjs().add(2, "days"),
-          dayjs().add(3, "days"),
-          dayjs().add(4, "days")
+          addDays(new Date(), 1),
+          addDays(new Date(), 2),
+          addDays(new Date(), 3),
+          addDays(new Date(), 4)
         ]
       }
     ];
@@ -48,25 +48,25 @@ export default class highlightDatesRanges extends React.Component {
             <br />
             {'    { "react-datepicker__day--highlighted-custom-1": ['}
             <br />
-            {'      dayjs().subtract(4, "days"),'}
+            {"      subDays(new Date(), 4),"}
             <br />
-            {'      dayjs().subtract(3, "days"),'}
+            {"      subDays(new Date(), 3),"}
             <br />
-            {'      dayjs().subtract(2, "days"),'}
+            {"      subDays(new Date(), 2),"}
             <br />
-            {'      dayjs().subtract(1, "days") ]'}
+            {"      subDays(new Date(), 1) ]"}
             <br />
             {"    },"}
             <br />
             {'    { "react-datepicker__day--highlighted-custom-2": ['}
             <br />
-            {'      dayjs().add(1, "days"),'}
+            {"      addDays(new Date(), 1),"}
             <br />
-            {'      dayjs().add(2, "days"),'}
+            {"      addDays(new Date(), 2),"}
             <br />
-            {'      dayjs().add(3, "days"),'}
+            {"      addDays(new Date(), 3),"}
             <br />
-            {'      dayjs().add(4, "days") ]'}
+            {"      addDays(new Date(), 4) ]"}
             <br />
             {"    }"}
             <br />

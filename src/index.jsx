@@ -1,6 +1,6 @@
-import Calendar from "./calendar";
 import React from "react";
 import PropTypes from "prop-types";
+import Calendar from "./calendar";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import {
@@ -30,11 +30,16 @@ import {
   safeDateFormat,
   getHightLightDaysMap,
   getYear,
-  getMonth
+  getMonth,
+  registerLocale,
+  setDefaultLocale,
+  getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
 export { default as CalendarContainer } from "./calendar_container";
+
+export { registerLocale, setDefaultLocale, getDefaultLocale };
 
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);

@@ -1,12 +1,10 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { setMinutes, setHours } from "date-fns";
 
 export default class ExcludeTimes extends React.Component {
   state = {
-    startDate: dayjs()
-      .set("hour", 16)
-      .set("minute", 30)
+    startDate: setHours(setMinutes(new Date(), 30), 16)
   };
 
   handleChange = date => {
@@ -30,11 +28,11 @@ export default class ExcludeTimes extends React.Component {
               {"  showTimeSelect"}
               <br />
               {
-                "  excludeTimes={[dayjs().set('hour', 17).set('minute', 0), dayjs().set('hour', 18).set('minute', 30), dayjs().set('hour', 19).set('minute', 30)], dayjs().set('hour', 17).set('minute', 30)}"
+                "  excludeTimes={[setHours(setMinutes(new Date(), 0), 17), setHours(setMinutes(new Date(), 30), 18), setHours(setMinutes(new Date(), 30), 19), setHours(setMinutes(new Date(), 30), 17)]}"
               }
             </strong>
             <br />
-            <strong>{'  dateFormat="MMMM DD, YYYY h:mm A"'}</strong>
+            <strong>{'  dateFormat="MMMM dd, yyyy h:mm aa"'}</strong>
             <br />
             {"/>"}
           </code>
@@ -45,20 +43,12 @@ export default class ExcludeTimes extends React.Component {
             onChange={this.handleChange}
             showTimeSelect
             excludeTimes={[
-              dayjs()
-                .set("hour", 17)
-                .set("minute", 0),
-              dayjs()
-                .set("hour", 18)
-                .set("minute", 30),
-              dayjs()
-                .set("hour", 19)
-                .set("minute", 30),
-              dayjs()
-                .set("hour", 17)
-                .set("minute", 30)
+              setHours(setMinutes(new Date(), 0), 17),
+              setHours(setMinutes(new Date(), 30), 18),
+              setHours(setMinutes(new Date(), 30), 19),
+              setHours(setMinutes(new Date(), 30), 17)
             ]}
-            dateFormat="MMMM DD, YYYY h:mm A"
+            dateFormat="MMMM dd, yyyy h:mm aa"
           />
         </div>
       </div>

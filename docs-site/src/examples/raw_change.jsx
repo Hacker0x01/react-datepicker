@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { addDays } from "date-fns";
 
 export default class RawChanges extends React.Component {
   state = {
@@ -15,7 +15,7 @@ export default class RawChanges extends React.Component {
 
   handleChangeRaw = value => {
     if (value === "tomorrow") {
-      this.handleChange(dayjs().add(1, "day"));
+      this.handleChange(addDays(new Date(), 1));
     }
   };
 
@@ -27,7 +27,7 @@ export default class RawChanges extends React.Component {
             {`
 handleChangeRaw(value) {
   if(value === "tomorrow") {
-    const tomorrow = dayjs().add(1, "day")
+    const tomorrow = addDays(new Date(), 1)
     this.handleChange(tomorrow)
   }
 }

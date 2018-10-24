@@ -1,12 +1,12 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { format } from "date-fns";
 
 export default class InlinePortalVersion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: dayjs(),
+      startDate: new Date(),
       isOpen: false
     };
   }
@@ -41,7 +41,7 @@ toggleCalendar (e) {
     <button
         className="example-custom-input"
         onClick={this.toggleCalendar}>
-        {this.state.startDate.format("DD-MM-YYYY")}
+        {format(this.state.startDate, "dd-MM-yyyy")}
     </button>
     {
         this.state.isOpen && (
@@ -61,7 +61,7 @@ toggleCalendar (e) {
             className="example-custom-input"
             onClick={this.toggleCalendar}
           >
-            {this.state.startDate.format("DD-MM-YYYY")}
+            {format(this.state.startDate, "dd-MM-yyyy")}
           </button>
           {this.state.isOpen && (
             <DatePicker

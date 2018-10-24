@@ -1,6 +1,5 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
 
 export default class OpenToDate extends React.Component {
   state = {
@@ -20,7 +19,7 @@ export default class OpenToDate extends React.Component {
           <code className="jsx">
             {`
 <DatePicker
-    openToDate={dayjs("1993-09-28")}
+    openToDate={new Date("1993-09-28")}
     selected={this.state.startDate}
     onChange={this.handleChange}
 />
@@ -29,7 +28,7 @@ export default class OpenToDate extends React.Component {
         </pre>
         <div className="column">
           <DatePicker
-            openToDate={dayjs("1993-09-28")}
+            openToDate={new Date("1993-09-28")}
             selected={this.state.startDate}
             onChange={this.handleChange}
           />

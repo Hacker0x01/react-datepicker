@@ -1,12 +1,10 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+import { setMinutes, setHours } from "date-fns";
 
 export default class ExcludeTimePeriod extends React.Component {
   state = {
-    startDate: dayjs()
-      .set("hour", 17)
-      .set("minute", 30)
+    startDate: setHours(setMinutes(new Date(), 30), 17)
   };
 
   handleChange = date => {
@@ -29,11 +27,11 @@ export default class ExcludeTimePeriod extends React.Component {
             <strong>
               {"  showTimeSelect"}
               <br />
-              {"  minTime={dayjs().set('hour', 17).set('minute', 0)}"}
+              {"  minTime={setHours(setMinutes(new Date(), 0), 17)}"}
               <br />
-              {"  maxTime={dayjs().set('hour', 20).set('minute', 30)}"}
+              {"  maxTime={setHours(setMinutes(new Date(), 30), 20)}"}
               <br />
-              {'  dateFormat="MMMM DD, YYYY"'}
+              {'  dateFormat="MMMM dd, yyyy"'}
             </strong>
             <br />
             {"/>"}
@@ -44,13 +42,9 @@ export default class ExcludeTimePeriod extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             showTimeSelect
-            minTime={dayjs()
-              .set("hour", 17)
-              .set("minute", 0)}
-            maxTime={dayjs()
-              .set("hour", 20)
-              .set("minute", 30)}
-            dateFormat="MMMM DD, YYYY h:mm A"
+            minTime={setHours(setMinutes(new Date(), 0), 17)}
+            maxTime={setHours(setMinutes(new Date(), 30), 20)}
+            dateFormat="MMMM dd, yyyy h:mm aa"
           />
         </div>
       </div>
