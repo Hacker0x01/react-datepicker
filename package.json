@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "lib",
@@ -93,7 +93,7 @@
     "classnames": "^2.2.5",
     "prop-types": "^15.6.0",
     "react-onclickoutside": "^6.7.1",
-    "react-popper": "^0.9.1"
+    "react-popper": "^1.0.2"
   },
   "scripts": {
     "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",

@@ -14,4 +14,4 @@
 | `onTimeChange` |          | `() => {}`    |             |
 | `selected`     | `object` |               |             |
 | `timeCaption`  | `string` | `"Time"`      |             |
-| `todayButton`  | `string` | `null`        |             |
+| `todayButton`  | `node`   | `null`        |             |
