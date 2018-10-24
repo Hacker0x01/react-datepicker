@@ -481,8 +481,15 @@ describe("DatePicker", () => {
     var testFormat = "YYYY-MM-DD";
     var exactishFormat = "YYYY-MM-DD HH: ZZ";
     var callback = sandbox.spy();
+    var onInputErrorCallback = sandbox.spy();
+
     var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker selected={m} onChange={callback} {...opts} />
+      <DatePicker
+        selected={m}
+        onChange={callback}
+        onInputError={onInputErrorCallback}
+        {...opts}
+      />
     );
     var dateInput = datePicker.input;
     var nodeInput = ReactDOM.findDOMNode(dateInput);
@@ -493,6 +500,7 @@ describe("DatePicker", () => {
       testFormat,
       exactishFormat,
       callback,
+      onInputErrorCallback,
       datePicker,
       dateInput,
       nodeInput
@@ -611,6 +619,7 @@ describe("DatePicker", () => {
       });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       expect(data.callback.calledOnce).to.be.false;
+      expect(data.onInputErrorCallback.calledOnce).to.be.true;
     });
     it("should not select excludeDates", () => {
       var data = getOnInputKeyDownStuff({
@@ -629,6 +638,28 @@ describe("DatePicker", () => {
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       expect(data.callback.calledOnce).to.be.false;
+    });
+  });
+  describe("onInputKeyDown Escape", () => {
+    it("should not update the selected date if the date input manually it has something wrong", () => {
+      var data = getOnInputKeyDownStuff();
+      TestUtils.Simulate.keyDown(data.nodeInput, {
+        key: "ArrowDown",
+        keyCode: 40,
+        which: 40
+      });
+      TestUtils.Simulate.keyDown(data.nodeInput, {
+        key: "Backspace",
+        keyCode: 8,
+        which: 8
+      });
+      TestUtils.Simulate.keyDown(data.nodeInput, {
+        key: "Escape",
+        keyCode: 27,
+        which: 27
+      });
+      expect(data.callback.calledOnce).to.be.false;
+      expect(data.onInputErrorCallback.calledOnce).to.be.true;
     });
   });
   it("should reset the keyboard selection when closed", () => {

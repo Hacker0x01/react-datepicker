@@ -1,8 +1,8 @@
-import Calendar from "./calendar";
-import React from "react";
-import PropTypes from "prop-types";
-import PopperComponent, { popperPlacementPositions } from "./popper_component";
-import classnames from "classnames";
+import Calendar from './calendar';
+import React from 'react';
+import PropTypes from 'prop-types';
+import PopperComponent, { popperPlacementPositions } from './popper_component';
+import classnames from 'classnames';
 import {
   newDate,
   now,
@@ -34,13 +34,13 @@ import {
   safeDateFormat,
   getHightLightDaysMap,
   getYear,
-  getMonth
-} from "./date_utils";
-import onClickOutside from "react-onclickoutside";
+  getMonth,
+} from './date_utils';
+import onClickOutside from 'react-onclickoutside';
 
-export { default as CalendarContainer } from "./calendar_container";
+export { default as CalendarContainer } from './calendar_container';
 
-const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
+const outsideClickIgnoreClass = 'react-datepicker-ignore-onclickoutside';
 const WrappedCalendar = onClickOutside(Calendar);
 
 // Compares dates year+month combinations
@@ -65,6 +65,7 @@ function hasSelectionChanged(date1, date2) {
 /**
  * General datepicker component.
  */
+const INPUT_ERR_1 = 'Date input not valid.';
 
 export default class DatePicker extends React.Component {
   static propTypes = {
@@ -84,7 +85,7 @@ export default class DatePicker extends React.Component {
     dayClassName: PropTypes.func,
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
-    dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
+    dropdownMode: PropTypes.oneOf(['scroll', 'select']).isRequired,
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
@@ -113,6 +114,7 @@ export default class DatePicker extends React.Component {
     onKeyDown: PropTypes.func,
     onMonthChange: PropTypes.func,
     onYearChange: PropTypes.func,
+    onInputError: PropTypes.func,
     open: PropTypes.bool,
     openToDate: PropTypes.object,
     peekNextMonth: PropTypes.bool,
@@ -166,12 +168,12 @@ export default class DatePicker extends React.Component {
   static get defaultProps() {
     return {
       allowSameDay: false,
-      dateFormat: "L",
-      dateFormatCalendar: "MMMM YYYY",
+      dateFormat: 'L',
+      dateFormatCalendar: 'MMMM YYYY',
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
-      dropdownMode: "scroll",
+      dropdownMode: 'scroll',
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
@@ -181,15 +183,16 @@ export default class DatePicker extends React.Component {
       onMonthChange() {},
       preventOpenOnFocus: false,
       onYearChange() {},
+      onInputError() {},
       monthsShown: 1,
       readOnly: false,
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       timeIntervals: 30,
-      timeCaption: "Time",
-      previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next month"
+      timeCaption: 'Time',
+      previousMonthButtonLabel: 'Previous Month',
+      nextMonthButtonLabel: 'Next month',
     };
   }
 
@@ -207,7 +210,7 @@ export default class DatePicker extends React.Component {
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHightLightDaysMap(this.props.highlightDates)
+        highlightDates: getHightLightDaysMap(this.props.highlightDates),
       });
     }
     if (
@@ -250,7 +253,7 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
-      focused: false
+      focused: false,
     };
   };
 
@@ -273,9 +276,11 @@ export default class DatePicker extends React.Component {
         open && this.state.open
           ? this.state.preSelection
           : this.calcInitialState().preSelection,
-      lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
+      lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE,
     });
   };
+  inputOk = () =>
+    isMoment(this.state.preSelection) || isDate(this.state.preSelection);
 
   isCalendarOpen = () =>
     this.props.open === undefined
@@ -330,7 +335,7 @@ export default class DatePicker extends React.Component {
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw.apply(this, allArgs);
       if (
-        typeof event.isDefaultPrevented !== "function" ||
+        typeof event.isDefaultPrevented !== 'function' ||
         event.isDefaultPrevented()
       ) {
         return;
@@ -338,7 +343,7 @@ export default class DatePicker extends React.Component {
     }
     this.setState({
       inputValue: event.target.value,
-      lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT
+      lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT,
     });
     const date = parseDate(event.target.value, this.props);
     if (date || !event.target.value) {
@@ -352,7 +357,7 @@ export default class DatePicker extends React.Component {
     this.setState({ preventFocus: true }, () => {
       this.preventFocusTimeout = setTimeout(
         () => this.setState({ preventFocus: false }),
-        50
+        50,
       );
       return this.preventFocusTimeout;
     });
@@ -391,12 +396,12 @@ export default class DatePicker extends React.Component {
           changedDate = setTime(newDate(changedDate), {
             hour: getHour(selected),
             minute: getMinute(selected),
-            second: getSecond(selected)
+            second: getSecond(selected),
           });
         }
         if (!this.props.inline) {
           this.setState({
-            preSelection: changedDate
+            preSelection: changedDate,
           });
         }
       }
@@ -412,15 +417,15 @@ export default class DatePicker extends React.Component {
 
   setPreSelection = date => {
     const isDateRangePresent =
-      typeof this.props.minDate !== "undefined" &&
-      typeof this.props.maxDate !== "undefined";
+      typeof this.props.minDate !== 'undefined' &&
+      typeof this.props.maxDate !== 'undefined';
     const isValidDateSelection =
       isDateRangePresent && date
         ? isDayInRange(date, this.props.minDate, this.props.maxDate)
         : true;
     if (isValidDateSelection) {
       this.setState({
-        preSelection: date
+        preSelection: date,
       });
     }
   };
@@ -431,11 +436,11 @@ export default class DatePicker extends React.Component {
       : this.getPreSelection();
     let changedDate = setTime(cloneDate(selected), {
       hour: getHour(time),
-      minute: getMinute(time)
+      minute: getMinute(time),
     });
 
     this.setState({
-      preSelection: changedDate
+      preSelection: changedDate,
     });
 
     this.props.onChange(changedDate);
@@ -459,17 +464,16 @@ export default class DatePicker extends React.Component {
       !this.props.inline &&
       !this.props.preventOpenOnFocus
     ) {
-      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
+      if (eventKey === 'ArrowDown' || eventKey === 'ArrowUp') {
         this.onInputClick();
       }
       return;
     }
     const copy = newDate(this.state.preSelection);
-    if (eventKey === "Enter") {
+    if (eventKey === 'Enter') {
       event.preventDefault();
       if (
-        (isMoment(this.state.preSelection) ||
-          isDate(this.state.preSelection)) &&
+        this.inputOk() &&
         this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
       ) {
         this.handleSelect(copy, event);
@@ -481,7 +485,7 @@ export default class DatePicker extends React.Component {
 
         this.setOpen(false);
       }
-    } else if (eventKey === "Escape") {
+    } else if (eventKey === 'Escape') {
       event.preventDefault();
 
       this.input.blur();
@@ -489,37 +493,45 @@ export default class DatePicker extends React.Component {
       this.cancelFocusInput();
 
       this.setOpen(false);
-    } else if (eventKey === "Tab") {
+      if (!this.inputOk()) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+      }
+    } else if (eventKey === 'Tab') {
       this.setOpen(false);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
           newSelection = subtractDays(copy, 1);
           break;
-        case "ArrowRight":
+        case 'ArrowRight':
           newSelection = addDays(copy, 1);
           break;
-        case "ArrowUp":
+        case 'ArrowUp':
           newSelection = subtractWeeks(copy, 1);
           break;
-        case "ArrowDown":
+        case 'ArrowDown':
           newSelection = addWeeks(copy, 1);
           break;
-        case "PageUp":
+        case 'PageUp':
           newSelection = subtractMonths(copy, 1);
           break;
-        case "PageDown":
+        case 'PageDown':
           newSelection = addMonths(copy, 1);
           break;
-        case "Home":
+        case 'Home':
           newSelection = subtractYears(copy, 1);
           break;
-        case "End":
+        case 'End':
           newSelection = addYears(copy, 1);
           break;
       }
-      if (!newSelection) return; // Let the input component handle this keydown
+      if (!newSelection) {
+        if (this.props.onInputError) {
+          this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+        }
+        return; // Let the input component handle this keydown
+      }
       event.preventDefault();
       this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
       if (this.props.adjustDateOnChange) {
@@ -628,11 +640,11 @@ export default class DatePicker extends React.Component {
     });
 
     const customInput = this.props.customInput || <input type="text" />;
-    const customInputRef = this.props.customInputRef || "ref";
+    const customInputRef = this.props.customInputRef || 'ref';
     const inputValue =
-      typeof this.props.value === "string"
+      typeof this.props.value === 'string'
         ? this.props.value
-        : typeof this.state.inputValue === "string"
+        : typeof this.state.inputValue === 'string'
           ? this.state.inputValue
           : safeDateFormat(this.props.selected, this.props);
 
@@ -656,7 +668,7 @@ export default class DatePicker extends React.Component {
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
-      tabIndex: this.props.tabIndex
+      tabIndex: this.props.tabIndex,
     });
   };
 
@@ -718,5 +730,5 @@ export default class DatePicker extends React.Component {
   }
 }
 
-const PRESELECT_CHANGE_VIA_INPUT = "input";
-const PRESELECT_CHANGE_VIA_NAVIGATE = "navigate";
+const PRESELECT_CHANGE_VIA_INPUT = 'input';
+const PRESELECT_CHANGE_VIA_NAVIGATE = 'navigate';
