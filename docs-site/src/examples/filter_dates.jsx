@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { getDay } from "date-fns";
+import getDay from "date-fns/getDay";
 
 export default class FilterDates extends React.Component {
   state = {

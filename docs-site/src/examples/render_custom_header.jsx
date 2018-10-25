@@ -1,7 +1,8 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import range from "lodash/range";
-import { getYear, getMonth } from "date-fns";
+import getYear from "date-fns/getYear";
+import getMonth from "date-fns/getMonth";
 
 const years = range(1990, getYear(new Date()) + 1, 1);
 const months = [

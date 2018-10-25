@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { getDate } from "date-fns";
+import getDate from "date-fns/getDate";
 
 export default class CustomDayClassNames extends React.Component {
   constructor(props) {

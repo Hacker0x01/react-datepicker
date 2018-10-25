@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { addDays, subDays } from "date-fns";
+import addDays from "date-fns/addDays";
+import subDays from "date-fns/subDays";
 
 export default class highlightDates extends React.Component {
   state = {

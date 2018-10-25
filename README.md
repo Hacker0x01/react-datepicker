@@ -88,7 +88,7 @@ You can also include a time picker by adding the showTimeSelect prop
   selected={this.state.date}
   onChange={this.handleChange}
   showTimeSelect
-  dateFormat="LLL"
+  dateFormat="Pp"
 />
 ```
 
@@ -150,4 +150,4 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 
 ## License
 
-Copyright (c) 2017 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
+Copyright (c) 2018 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.

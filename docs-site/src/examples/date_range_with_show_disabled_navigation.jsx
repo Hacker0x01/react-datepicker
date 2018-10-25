@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { addMonths } from "date-fns";
+import addMonths from "date-fns/addMonths";
 
 export default class DateRangeWithShowDisabledNavigation extends React.Component {
   state = {

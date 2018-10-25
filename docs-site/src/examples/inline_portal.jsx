@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { format } from "date-fns";
+import format from "date-fns/format";
 
 export default class InlinePortalVersion extends React.Component {
   constructor(props) {

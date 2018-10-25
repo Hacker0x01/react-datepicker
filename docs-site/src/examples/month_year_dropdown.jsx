@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { addMonths, subMonths } from "date-fns";
+import addMonths from "date-fns/addMonths";
+import subMonths from "date-fns/subMonths";
 
 export default class MonthYearDropdown extends React.Component {
   constructor(props) {

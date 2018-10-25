@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { format, isValid } from "date-fns";
+import format from "date-fns/format";
+import isValid from "date-fns/isValid";
 
 export default class Disabled extends React.Component {
   state = {

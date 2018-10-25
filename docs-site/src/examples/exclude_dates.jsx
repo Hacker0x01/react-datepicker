@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { subDays } from "date-fns";
+import subDays from "date-fns/subDays";
 
 export default class ExcludeDates extends React.Component {
   state = {

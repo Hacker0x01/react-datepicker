@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
+import addDays from "date-fns/addDays";
 
 export default class SpecificDateRange extends React.Component {
   state = {
