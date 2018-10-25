@@ -163,7 +163,10 @@ export function getStartOfDay(date) {
 }
 
 export function getStartOfWeek(date, locale) {
-  return startOfWeek(date, { locale: getLocaleObject(locale) });
+  let localeObj = locale
+    ? getLocaleObject(locale)
+    : getLocaleObject(getDefaultLocale());
+  return startOfWeek(date, { locale: localeObj });
 }
 
 export function getStartOfMonth(date) {

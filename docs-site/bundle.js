@@ -319,7 +319,7 @@
     },
     /* 3 */
     [
-      881,
+      902,
       4,
       5,
       6,
@@ -375,7 +375,7 @@
       /***/
     },
     /* 6 */
-    [882, 7],
+    [903, 7],
     /* 7 */
     /***/ function(module, exports) {
       module.exports = function(exec) {
@@ -453,11 +453,11 @@
       /***/
     },
     /* 10 */
-    [883, 11, 17, 6],
+    [904, 11, 17, 6],
     /* 11 */
-    [884, 12, 14, 16, 6],
+    [905, 12, 14, 16, 6],
     /* 12 */
-    [885, 13],
+    [906, 13],
     /* 13 */
     /***/ function(module, exports) {
       module.exports = function(it) {
@@ -467,11 +467,11 @@
       /***/
     },
     /* 14 */
-    [886, 6, 7, 15],
+    [907, 6, 7, 15],
     /* 15 */
-    [887, 13, 4],
+    [908, 13, 4],
     /* 16 */
-    [888, 13],
+    [909, 13],
     /* 17 */
     /***/ function(module, exports) {
       module.exports = function(bitmap, value) {
@@ -538,7 +538,7 @@
       /***/
     },
     /* 20 */
-    [889, 21],
+    [910, 21],
     /* 21 */
     /***/ function(module, exports) {
       module.exports = function(it) {
@@ -550,9 +550,9 @@
       /***/
     },
     /* 22 */
-    [890, 19, 13, 5, 11, 7],
+    [911, 19, 13, 5, 11, 7],
     /* 23 */
-    [891, 9, 4, 24],
+    [912, 9, 4, 24],
     /* 24 */
     /***/ function(module, exports) {
       module.exports = false;
@@ -560,23 +560,23 @@
       /***/
     },
     /* 25 */
-    [892, 11, 5, 26],
+    [913, 11, 5, 26],
     /* 26 */
-    [893, 23, 19, 4],
+    [914, 23, 19, 4],
     /* 27 */
-    [894, 26],
+    [915, 26],
     /* 28 */
-    [895, 4, 9, 24, 27, 11],
+    [916, 4, 9, 24, 27, 11],
     /* 29 */
-    [896, 30, 42, 43],
+    [917, 30, 42, 43],
     /* 30 */
-    [897, 31, 41],
+    [918, 31, 41],
     /* 31 */
-    [898, 5, 32, 36, 40],
+    [919, 5, 32, 36, 40],
     /* 32 */
-    [899, 33, 35],
+    [920, 33, 35],
     /* 33 */
-    [900, 34],
+    [921, 34],
     /* 34 */
     /***/ function(module, exports) {
       var toString = {}.toString;
@@ -598,9 +598,9 @@
       /***/
     },
     /* 36 */
-    [901, 32, 37, 39],
+    [922, 32, 37, 39],
     /* 37 */
-    [902, 38],
+    [923, 38],
     /* 38 */
     /***/ function(module, exports) {
       // 7.1.4 ToInteger
@@ -613,9 +613,9 @@
       /***/
     },
     /* 39 */
-    [903, 38],
+    [924, 38],
     /* 40 */
-    [904, 23, 19],
+    [925, 23, 19],
     /* 41 */
     /***/ function(module, exports) {
       // IE 8- don't enum bug keys
@@ -638,21 +638,21 @@
       /***/
     },
     /* 44 */
-    [905, 34],
+    [926, 34],
     /* 45 */
-    [906, 12, 46, 41, 40, 15, 47],
+    [927, 12, 46, 41, 40, 15, 47],
     /* 46 */
-    [907, 11, 12, 30, 6],
+    [928, 11, 12, 30, 6],
     /* 47 */
-    [908, 4],
+    [929, 4],
     /* 48 */
-    [909, 32, 49],
+    [930, 32, 49],
     /* 49 */
-    [910, 31, 41],
+    [931, 31, 41],
     /* 50 */
-    [911, 43, 17, 32, 16, 5, 14, 6],
+    [932, 43, 17, 32, 16, 5, 14, 6],
     /* 51 */
-    [912, 8, 45],
+    [933, 8, 45],
     /* 52 */
     /***/ function(module, exports, __webpack_require__) {
       var $export = __webpack_require__(8);
@@ -725,9 +725,9 @@
       /***/
     },
     /* 57 */
-    [913, 35],
+    [934, 35],
     /* 58 */
-    [914, 5, 57, 40],
+    [935, 5, 57, 40],
     /* 59 */
     /***/ function(module, exports, __webpack_require__) {
       // 19.1.2.14 Object.keys(O)
@@ -841,9 +841,9 @@
       /***/
     },
     /* 67 */
-    [915, 8, 68],
+    [936, 8, 68],
     /* 68 */
-    [916, 30, 42, 43, 57, 33, 7],
+    [937, 30, 42, 43, 57, 33, 7],
     /* 69 */
     /***/ function(module, exports, __webpack_require__) {
       // 19.1.3.10 Object.is(value1, value2)
@@ -865,9 +865,9 @@
       /***/
     },
     /* 71 */
-    [917, 8, 72],
+    [938, 8, 72],
     /* 72 */
-    [918, 13, 12, 20, 50],
+    [939, 13, 12, 20, 50],
     /* 73 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -2045,11 +2045,11 @@
       /***/
     },
     /* 126 */
-    [919, 127, 128],
+    [940, 127, 128],
     /* 127 */
-    [920, 38, 35],
+    [941, 38, 35],
     /* 128 */
-    [921, 24, 8, 18, 10, 129, 130, 25, 58, 26],
+    [942, 24, 8, 18, 10, 129, 130, 25, 58, 26],
     /* 129 */
     /***/ function(module, exports) {
       module.exports = {};
@@ -2057,7 +2057,7 @@
       /***/
     },
     /* 130 */
-    [922, 45, 17, 25, 10, 26],
+    [943, 45, 17, 25, 10, 26],
     /* 131 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -3418,7 +3418,7 @@
       /***/
     },
     /* 194 */
-    [923, 187, 195, 129, 32, 128],
+    [944, 187, 195, 129, 32, 128],
     /* 195 */
     /***/ function(module, exports) {
       module.exports = function(done, value) {
@@ -6888,9 +6888,9 @@
       /***/
     },
     /* 265 */
-    [924, 28],
+    [945, 28],
     /* 266 */
-    [925, 28],
+    [946, 28],
     /* 267 */
     /***/ function(module, exports, __webpack_require__) {
       // https://github.com/tc39/proposal-object-getownpropertydescriptors
@@ -42647,7 +42647,7 @@
 
       var _example_components2 = _interopRequireDefault(_example_components);
 
-      var _hero_example = __webpack_require__(880);
+      var _hero_example = __webpack_require__(901);
 
       var _hero_example2 = _interopRequireDefault(_hero_example);
 
@@ -43067,9 +43067,15 @@
 
       var _dont_close_onSelect2 = _interopRequireDefault(_dont_close_onSelect);
 
-      __webpack_require__(878);
+      var _render_custom_header = __webpack_require__(878);
 
-      __webpack_require__(879);
+      var _render_custom_header2 = _interopRequireDefault(
+        _render_custom_header
+      );
+
+      __webpack_require__(899);
+
+      __webpack_require__(900);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -43457,6 +43463,13 @@
                 title: "Don't hide calendar on date selection",
                 component: _react2.default.createElement(
                   _dont_close_onSelect2.default,
+                  null
+                )
+              },
+              {
+                title: "Custom header",
+                component: _react2.default.createElement(
+                  _render_custom_header2.default,
                   null
                 )
               }
@@ -67951,6 +67964,7 @@
       /**
        * General datepicker component.
        */
+      var INPUT_ERR_1 = "Date input not valid.";
 
       var DatePicker = (function(_React$Component) {
         _inherits(DatePicker, _React$Component);
@@ -67962,7 +67976,7 @@
               return {
                 allowSameDay: false,
                 dateFormat: "MM/dd/yyyy",
-                dateFormatCalendar: "LLLL y",
+                dateFormatCalendar: "LLLL yyyy",
                 onChange: function onChange() {},
 
                 disabled: false,
@@ -67971,12 +67985,14 @@
                 onFocus: function onFocus() {},
                 onBlur: function onBlur() {},
                 onKeyDown: function onKeyDown() {},
+                onInputClick: function onInputClick() {},
                 onSelect: function onSelect() {},
                 onClickOutside: function onClickOutside() {},
                 onMonthChange: function onMonthChange() {},
 
                 preventOpenOnFocus: false,
                 onYearChange: function onYearChange() {},
+                onInputError: function onInputError() {},
 
                 monthsShown: 1,
                 readOnly: false,
@@ -68057,6 +68073,18 @@
                   : _this.calcInitialState().preSelection,
               lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
             });
+          };
+
+          _this.inputOk = function() {
+            return (0, _date_utils.isDate)(_this.state.preSelection);
+          };
+
+          _this.isCalendarOpen = function() {
+            return _this.props.open === undefined
+              ? _this.state.open &&
+                  !_this.props.disabled &&
+                  !_this.props.readOnly
+              : _this.props.open;
           };
 
           _this.handleFocus = function(event) {
@@ -68153,6 +68181,9 @@
             ) {
               _this.setPreSelection(date);
             } else if (!_this.props.inline) {
+              _this.props.onBlur(date);
+              _this.cancelFocusInput();
+
               _this.setOpen(false);
             }
           };
@@ -68164,6 +68195,15 @@
               changedDate !== null &&
               (0, _date_utils.isDayDisabled)(changedDate, _this.props)
             ) {
+              if ((0, _date_utils.isOutOfBounds)(changedDate, _this.props)) {
+                _this.props.onChange(date, event);
+                _this.props.onSelect(changedDate, event);
+                _this.setState({
+                  inputValue: changedDate,
+                  preSelection: changedDate
+                });
+              }
+
               return;
             }
 
@@ -68239,6 +68279,8 @@
             if (!_this.props.disabled && !_this.props.readOnly) {
               _this.setOpen(true);
             }
+
+            _this.props.onInputClick();
           };
 
           _this.onInputKeyDown = function(event) {
@@ -68258,18 +68300,30 @@
             if (eventKey === "Enter") {
               event.preventDefault();
               if (
-                (0, _date_utils.isDate)(_this.state.preSelection) &&
+                _this.inputOk() &&
                 _this.state.lastPreSelectChange ===
                   PRESELECT_CHANGE_VIA_NAVIGATE
               ) {
                 _this.handleSelect(copy, event);
                 !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
               } else {
+                _this.input.blur();
+                _this.props.onBlur(copy);
+                _this.cancelFocusInput();
+
                 _this.setOpen(false);
               }
             } else if (eventKey === "Escape") {
               event.preventDefault();
+
+              _this.input.blur();
+              _this.props.onBlur(copy);
+              _this.cancelFocusInput();
+
               _this.setOpen(false);
+              if (!_this.inputOk()) {
+                _this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+              }
             } else if (eventKey === "Tab") {
               _this.setOpen(false);
             } else if (!_this.props.disabledKeyboardNavigation) {
@@ -68300,7 +68354,12 @@
                   newSelection = (0, _date_utils.addYears)(copy, 1);
                   break;
               }
-              if (!newSelection) return; // Let the input component handle this keydown
+              if (!newSelection) {
+                if (_this.props.onInputError) {
+                  _this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+                }
+                return; // Let the input component handle this keydown
+              }
               event.preventDefault();
               _this.setState({
                 lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
@@ -68327,12 +68386,7 @@
           };
 
           _this.renderCalendar = function() {
-            if (
-              !_this.props.inline &&
-              (!_this.state.open ||
-                _this.props.disabled ||
-                _this.props.readOnly)
-            ) {
+            if (!_this.props.inline && !_this.isCalendarOpen()) {
               return null;
             }
             return _react2.default.createElement(
@@ -68405,7 +68459,8 @@
                 previousMonthButtonLabel: _this.props.previousMonthButtonLabel,
                 nextMonthButtonLabel: _this.props.nextMonthButtonLabel,
                 disabledKeyboardNavigation:
-                  _this.props.disabledKeyboardNavigation
+                  _this.props.disabledKeyboardNavigation,
+                renderCustomHeader: _this.props.renderCustomHeader
               },
               _this.props.children
             );
@@ -68540,8 +68595,7 @@
 
           return _react2.default.createElement(_popper_component2.default, {
             className: this.props.popperClassName,
-            hidePopper:
-              !this.state.open || this.props.disabled || this.props.readOnly,
+            hidePopper: !this.isCalendarOpen(),
             popperModifiers: this.props.popperModifiers,
             targetComponent: _react2.default.createElement(
               "div",
@@ -68604,9 +68658,12 @@
         onClickOutside: _propTypes2.default.func,
         onChangeRaw: _propTypes2.default.func,
         onFocus: _propTypes2.default.func,
+        onInputClick: _propTypes2.default.func,
         onKeyDown: _propTypes2.default.func,
         onMonthChange: _propTypes2.default.func,
         onYearChange: _propTypes2.default.func,
+        onInputError: _propTypes2.default.func,
+        open: _propTypes2.default.bool,
         openToDate: _propTypes2.default.instanceOf(Date),
         peekNextMonth: _propTypes2.default.bool,
         placeholderText: _propTypes2.default.string,
@@ -68635,7 +68692,7 @@
         tabIndex: _propTypes2.default.number,
         timeCaption: _propTypes2.default.string,
         title: _propTypes2.default.string,
-        todayButton: _propTypes2.default.string,
+        todayButton: _propTypes2.default.node,
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
         value: _propTypes2.default.string,
@@ -68653,7 +68710,8 @@
         useShortMonthInDropdown: _propTypes2.default.bool,
         clearButtonTitle: _propTypes2.default.string,
         previousMonthButtonLabel: _propTypes2.default.string,
-        nextMonthButtonLabel: _propTypes2.default.string
+        nextMonthButtonLabel: _propTypes2.default.string,
+        renderCustomHeader: _propTypes2.default.func
       };
       exports.default = DatePicker;
 
@@ -69670,6 +69728,20 @@
 
       exports.__esModule = true;
 
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
       var _createClass = (function() {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -69992,6 +70064,10 @@
           };
 
           _this.renderPreviousMonthButton = function() {
+            if (_this.props.renderCustomHeader) {
+              return;
+            }
+
             var allPrevDaysDisabled = (0, _date_utils.monthDisabledBefore)(
               _this.state.date,
               _this.props
@@ -70033,6 +70109,10 @@
           };
 
           _this.renderNextMonthButton = function() {
+            if (_this.props.renderCustomHeader) {
+              return;
+            }
+
             var allNextDaysDisabled = (0, _date_utils.monthDisabledAfter)(
               _this.state.date,
               _this.props
@@ -70197,6 +70277,76 @@
             );
           };
 
+          _this.renderDefaultHeader = function(_ref) {
+            var monthDate = _ref.monthDate,
+              i = _ref.i;
+            return _react2.default.createElement(
+              "div",
+              { className: "react-datepicker__header" },
+              _this.renderCurrentMonth(monthDate),
+              _react2.default.createElement(
+                "div",
+                {
+                  className:
+                    "react-datepicker__header__dropdown react-datepicker__header__dropdown--" +
+                    _this.props.dropdownMode,
+                  onFocus: _this.handleDropdownFocus
+                },
+                _this.renderMonthDropdown(i !== 0),
+                _this.renderMonthYearDropdown(i !== 0),
+                _this.renderYearDropdown(i !== 0)
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker__day-names" },
+                _this.header(monthDate)
+              )
+            );
+          };
+
+          _this.renderCustomHeader = function(_ref2) {
+            var monthDate = _ref2.monthDate,
+              i = _ref2.i;
+
+            if (i !== 0) {
+              return null;
+            }
+
+            var prevMonthButtonDisabled = (0, _date_utils.monthDisabledBefore)(
+              _this.state.date,
+              _this.props
+            );
+
+            var nextMonthButtonDisabled = (0, _date_utils.monthDisabledAfter)(
+              _this.state.date,
+              _this.props
+            );
+
+            return _react2.default.createElement(
+              "div",
+              {
+                className:
+                  "react-datepicker__header react-datepicker__header--custom",
+                onFocus: _this.props.onDropdownFocus
+              },
+              _this.props.renderCustomHeader(
+                _extends({}, _this.state, {
+                  changeMonth: _this.changeMonth,
+                  changeYear: _this.changeYear,
+                  decreaseMonth: _this.decreaseMonth,
+                  increaseMonth: _this.increaseMonth,
+                  prevMonthButtonDisabled: prevMonthButtonDisabled,
+                  nextMonthButtonDisabled: nextMonthButtonDisabled
+                })
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker__day-names" },
+                _this.header(monthDate)
+              )
+            );
+          };
+
           _this.renderMonths = function() {
             if (_this.props.showTimeSelectOnly) {
               return;
@@ -70216,28 +70366,9 @@
                     },
                     className: "react-datepicker__month-container"
                   },
-                  _react2.default.createElement(
-                    "div",
-                    { className: "react-datepicker__header" },
-                    _this.renderCurrentMonth(monthDate),
-                    _react2.default.createElement(
-                      "div",
-                      {
-                        className:
-                          "react-datepicker__header__dropdown react-datepicker__header__dropdown--" +
-                          _this.props.dropdownMode,
-                        onFocus: _this.handleDropdownFocus
-                      },
-                      _this.renderMonthDropdown(i !== 0),
-                      _this.renderMonthYearDropdown(i !== 0),
-                      _this.renderYearDropdown(i !== 0)
-                    ),
-                    _react2.default.createElement(
-                      "div",
-                      { className: "react-datepicker__day-names" },
-                      _this.header(monthDate)
-                    )
-                  ),
+                  _this.props.renderCustomHeader
+                    ? _this.renderCustomHeader({ monthDate: monthDate, i: i })
+                    : _this.renderDefaultHeader({ monthDate: monthDate, i: i }),
                   _react2.default.createElement(_month2.default, {
                     day: monthDate,
                     dayClassName: _this.props.dayClassName,
@@ -70274,7 +70405,10 @@
           };
 
           _this.renderTimeSection = function() {
-            if (_this.props.showTimeSelect) {
+            if (
+              _this.props.showTimeSelect &&
+              (_this.state.monthContainer || _this.props.showTimeSelectOnly)
+            ) {
               return _react2.default.createElement(_time2.default, {
                 selected: _this.props.selected,
                 onChange: _this.props.onTimeChange,
@@ -70299,7 +70433,7 @@
           _this.state = {
             date: _this.getDateInView(),
             selectingDate: null,
-            monthContainer: _this.monthContainer
+            monthContainer: null
           };
           return _this;
         }
@@ -70435,7 +70569,8 @@
         useShortMonthInDropdown: _propTypes2.default.bool,
         showDisabledMonthNavigation: _propTypes2.default.bool,
         previousMonthButtonLabel: _propTypes2.default.string,
-        nextMonthButtonLabel: _propTypes2.default.string
+        nextMonthButtonLabel: _propTypes2.default.string,
+        renderCustomHeader: _propTypes2.default.func
       };
       exports.default = Calendar;
 
@@ -71216,9 +71351,10 @@
       }
 
       function getStartOfWeek(date, locale) {
-        return (0, _dateFns.startOfWeek)(date, {
-          locale: getLocaleObject(locale)
-        });
+        var localeObj = locale
+          ? getLocaleObject(locale)
+          : getLocaleObject(getDefaultLocale());
+        return (0, _dateFns.startOfWeek)(date, { locale: localeObj });
       }
 
       function getStartOfMonth(date) {
@@ -89773,7 +89909,17 @@
                   {
                     key: i,
                     onClick: _this.handleClick.bind(_this, time),
-                    className: _this.liClasses(time, currH, currM)
+                    className: _this.liClasses(time, currH, currM),
+                    ref: function ref(li) {
+                      if (
+                        (currH === (0, _date_utils.getHours)(time) &&
+                          currM === (0, _date_utils.getMinutes)(time)) ||
+                        (currH === (0, _date_utils.getHours)(time) &&
+                          !_this.centerLi)
+                      ) {
+                        _this.centerLi = li;
+                      }
+                    }
                   },
                   (0, _date_utils.formatDate)(time, format)
                 );
@@ -89786,19 +89932,21 @@
 
         Time.prototype.componentDidMount = function componentDidMount() {
           // code to ensure selected time will always be in focus within time window when it first appears
-          var multiplier = 60 / this.props.intervals;
-          var currH = this.props.selected
-            ? (0, _date_utils.getHours)(this.props.selected)
-            : (0, _date_utils.getHours)((0, _date_utils.newDate)());
-          this.list.scrollTop = 30 * (multiplier * currH);
+          this.list.scrollTop = Time.calcCenterPosition(
+            this.props.monthRef
+              ? this.props.monthRef.clientHeight - this.header.clientHeight
+              : this.list.clientHeight,
+            this.centerLi
+          );
         };
 
         Time.prototype.render = function render() {
           var _this2 = this;
 
           var height = null;
-          if (this.props.monthRef) {
-            height = this.props.monthRef.clientHeight - 39;
+          if (this.props.monthRef && this.header) {
+            height =
+              this.props.monthRef.clientHeight - this.header.clientHeight;
           }
 
           return _react2.default.createElement(
@@ -89814,7 +89962,10 @@
               "div",
               {
                 className:
-                  "react-datepicker__header react-datepicker__header--time"
+                  "react-datepicker__header react-datepicker__header--time",
+                ref: function ref(header) {
+                  _this2.header = header;
+                }
               },
               _react2.default.createElement(
                 "div",
@@ -89867,7 +90018,7 @@
         intervals: _propTypes2.default.number,
         selected: _propTypes2.default.instanceOf(Date),
         onChange: _propTypes2.default.func,
-        todayButton: _propTypes2.default.string,
+        todayButton: _propTypes2.default.node,
         minTime: _propTypes2.default.instanceOf(Date),
         maxTime: _propTypes2.default.instanceOf(Date),
         excludeTimes: _propTypes2.default.array,
@@ -89875,6 +90026,14 @@
         timeCaption: _propTypes2.default.string,
         injectTimes: _propTypes2.default.array
       };
+
+      Time.calcCenterPosition = function(listHeight, centerLiRef) {
+        return (
+          centerLiRef.offsetTop -
+          (listHeight / 2 - centerLiRef.clientHeight / 2)
+        );
+      };
+
       exports.default = Time;
 
       /***/
@@ -90050,30 +90209,21 @@
           }
 
           return _react2.default.createElement(
-            "div",
+            _reactPopper.Manager,
             null,
             _react2.default.createElement(
-              _reactPopper.Manager,
+              _reactPopper.Reference,
               null,
-              _react2.default.createElement(
-                _reactPopper.Reference,
-                null,
-                function(_ref2) {
-                  var ref = _ref2.ref,
-                    style = _ref2.style;
-                  return _react2.default.createElement(
-                    "div",
-                    {
-                      ref: ref,
-                      style: style,
-                      className: "react-datepicker-wrapper"
-                    },
-                    targetComponent
-                  );
-                }
-              ),
-              popper
-            )
+              function(_ref2) {
+                var ref = _ref2.ref;
+                return _react2.default.createElement(
+                  "div",
+                  { ref: ref, className: "react-datepicker-wrapper" },
+                  targetComponent
+                );
+              }
+            ),
+            popper
           );
         };
 
@@ -90460,7 +90610,7 @@
       /***/
     },
     /* 739 */
-    [915, 740, 756],
+    [936, 740, 756],
     /* 740 */
     /***/ function(module, exports, __webpack_require__) {
       var global = __webpack_require__(741);
@@ -90550,57 +90700,57 @@
     /* 742 */
     9,
     /* 743 */
-    [889, 744],
+    [910, 744],
     /* 744 */
     21,
     /* 745 */
-    [883, 746, 754, 750],
+    [904, 746, 754, 750],
     /* 746 */
-    [884, 747, 749, 753, 750],
+    [905, 747, 749, 753, 750],
     /* 747 */
-    [885, 748],
+    [906, 748],
     /* 748 */
     13,
     /* 749 */
-    [886, 750, 751, 752],
+    [907, 750, 751, 752],
     /* 750 */
-    [882, 751],
+    [903, 751],
     /* 751 */
     7,
     /* 752 */
-    [887, 748, 741],
+    [908, 748, 741],
     /* 753 */
-    [888, 748],
+    [909, 748],
     /* 754 */
     17,
     /* 755 */
     5,
     /* 756 */
-    [916, 757, 772, 773, 774, 760, 751],
+    [937, 757, 772, 773, 774, 760, 751],
     /* 757 */
-    [897, 758, 771],
+    [918, 758, 771],
     /* 758 */
-    [898, 755, 759, 763, 767],
+    [919, 755, 759, 763, 767],
     /* 759 */
-    [899, 760, 762],
+    [920, 760, 762],
     /* 760 */
-    [900, 761],
+    [921, 761],
     /* 761 */
     34,
     /* 762 */
     35,
     /* 763 */
-    [901, 759, 764, 766],
+    [922, 759, 764, 766],
     /* 764 */
-    [902, 765],
+    [923, 765],
     /* 765 */
     38,
     /* 766 */
-    [903, 765],
+    [924, 765],
     /* 767 */
-    [904, 768, 770],
+    [925, 768, 770],
     /* 768 */
-    [891, 742, 741, 769],
+    [912, 742, 741, 769],
     /* 769 */
     /***/ function(module, exports) {
       module.exports = true;
@@ -90616,7 +90766,7 @@
     /* 773 */
     43,
     /* 774 */
-    [913, 762],
+    [934, 762],
     /* 775 */
     /***/ function(module, exports) {
       "use strict";
@@ -90730,11 +90880,11 @@
       /***/
     },
     /* 780 */
-    [919, 781, 782],
+    [940, 781, 782],
     /* 781 */
-    [920, 765, 762],
+    [941, 765, 762],
     /* 782 */
-    [921, 769, 740, 783, 745, 784, 785, 789, 791, 790],
+    [942, 769, 740, 783, 745, 784, 785, 789, 791, 790],
     /* 783 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = __webpack_require__(745);
@@ -90744,19 +90894,19 @@
     /* 784 */
     129,
     /* 785 */
-    [922, 786, 754, 789, 745, 790],
+    [943, 786, 754, 789, 745, 790],
     /* 786 */
-    [906, 747, 787, 771, 767, 752, 788],
+    [927, 747, 787, 771, 767, 752, 788],
     /* 787 */
-    [907, 746, 747, 757, 750],
+    [928, 746, 747, 757, 750],
     /* 788 */
-    [908, 741],
+    [929, 741],
     /* 789 */
-    [892, 746, 755, 790],
+    [913, 746, 755, 790],
     /* 790 */
-    [893, 768, 770, 741],
+    [914, 768, 770, 741],
     /* 791 */
-    [914, 755, 774, 767],
+    [935, 755, 774, 767],
     /* 792 */
     /***/ function(module, exports, __webpack_require__) {
       __webpack_require__(793);
@@ -90784,7 +90934,7 @@
       /***/
     },
     /* 793 */
-    [923, 794, 795, 784, 759, 782],
+    [944, 794, 795, 784, 759, 782],
     /* 794 */
     /***/ function(module, exports) {
       module.exports = function() {
@@ -90796,7 +90946,7 @@
     /* 795 */
     195,
     /* 796 */
-    [894, 790],
+    [915, 790],
     /* 797 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = { default: __webpack_require__(798), __esModule: true };
@@ -90815,7 +90965,7 @@
     },
     /* 799 */
     [
-      881,
+      902,
       741,
       755,
       750,
@@ -90848,27 +90998,27 @@
       745
     ],
     /* 800 */
-    [890, 770, 748, 755, 746, 751],
+    [911, 770, 748, 755, 746, 751],
     /* 801 */
-    [895, 741, 742, 769, 796, 746],
+    [916, 741, 742, 769, 796, 746],
     /* 802 */
-    [896, 757, 772, 773],
+    [917, 757, 772, 773],
     /* 803 */
-    [905, 761],
+    [926, 761],
     /* 804 */
-    [909, 759, 805],
+    [930, 759, 805],
     /* 805 */
-    [910, 758, 771],
+    [931, 758, 771],
     /* 806 */
-    [911, 773, 754, 759, 753, 755, 749, 750],
+    [932, 773, 754, 759, 753, 755, 749, 750],
     /* 807 */
     /***/ function(module, exports) {
       /***/
     },
     /* 808 */
-    [924, 801],
+    [945, 801],
     /* 809 */
-    [925, 801],
+    [946, 801],
     /* 810 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
@@ -90934,9 +91084,9 @@
       /***/
     },
     /* 813 */
-    [917, 740, 814],
+    [938, 740, 814],
     /* 814 */
-    [918, 748, 747, 743, 806],
+    [939, 748, 747, 743, 806],
     /* 815 */
     /***/ function(module, exports, __webpack_require__) {
       module.exports = { default: __webpack_require__(816), __esModule: true };
@@ -90954,7 +91104,7 @@
       /***/
     },
     /* 817 */
-    [912, 740, 786],
+    [933, 740, 786],
     /* 818 */
     /***/ function(module, exports, __webpack_require__) {
       /* WEBPACK VAR INJECTION */ (function(global) {
@@ -96963,15 +97113,13 @@
                 startDate: date
               });
             }),
-            (_this.handleOnBlur = function(event) {
-              var date = new Date(event.target.value);
+            (_this.handleOnBlur = function(date) {
+              var selectedDate = new Date(date);
               if ((0, _dateFns.isValid)(date)) {
                 console.log(
                   "selected date: %s",
-                  (0, _dateFns.format)(date, "dd/MM/yyyy")
+                  (0, _dateFns.format)(selectedDate, "dd/MM/yyyy")
                 );
-              } else {
-                console.log("selected date: %s", event.target.value);
               }
             }),
             _temp)),
@@ -100922,13 +101070,962 @@
       /***/
     },
     /* 878 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(328);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(533);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+      var _range = __webpack_require__(879);
+
+      var _range2 = _interopRequireDefault(_range);
+
+      var _dateFns = __webpack_require__(543);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var years = (0, _range2.default)(
+        1990,
+        (0, _dateFns.getYear)(new Date()) + 1,
+        1
+      );
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      var Default = (function(_React$Component) {
+        _inherits(Default, _React$Component);
+
+        function Default(props) {
+          _classCallCheck(this, Default);
+
+          var _this = _possibleConstructorReturn(
+            this,
+            _React$Component.call(this, props)
+          );
+
+          _this.handleChange = function(date) {
+            _this.setState({
+              startDate: date
+            });
+          };
+
+          _this.state = {
+            startDate: new Date()
+          };
+          return _this;
+        }
+
+        Default.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                "\n<DatePicker\n    selected={this.state.startDate}\n    onChange={this.handleChange}\n    renderCustomHeader={({\n              date,\n              changeYear,\n              changeMonth,\n              decreaseMonth,\n              increaseMonth,\n              prevMonthButtonDisabled,\n              nextMonthButtonDisabled\n            }) => {}}\n/>\n"
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                renderCustomHeader: function renderCustomHeader(_ref) {
+                  var date = _ref.date,
+                    changeYear = _ref.changeYear,
+                    changeMonth = _ref.changeMonth,
+                    decreaseMonth = _ref.decreaseMonth,
+                    increaseMonth = _ref.increaseMonth,
+                    prevMonthButtonDisabled = _ref.prevMonthButtonDisabled,
+                    nextMonthButtonDisabled = _ref.nextMonthButtonDisabled;
+                  return _react2.default.createElement(
+                    "div",
+                    {
+                      style: {
+                        margin: 10,
+                        display: "flex",
+                        justifyContent: "center"
+                      }
+                    },
+                    _react2.default.createElement(
+                      "button",
+                      {
+                        onClick: decreaseMonth,
+                        disabled: prevMonthButtonDisabled
+                      },
+                      "<"
+                    ),
+                    _react2.default.createElement(
+                      "select",
+                      {
+                        value: (0, _dateFns.getYear)(date),
+                        onChange: function onChange(_ref2) {
+                          var value = _ref2.target.value;
+                          return changeYear(value);
+                        }
+                      },
+                      years.map(function(option) {
+                        return _react2.default.createElement(
+                          "option",
+                          { key: option, value: option },
+                          option
+                        );
+                      })
+                    ),
+                    _react2.default.createElement(
+                      "select",
+                      {
+                        value: months[(0, _dateFns.getMonth)(date)],
+                        onChange: function onChange(_ref3) {
+                          var value = _ref3.target.value;
+                          return changeMonth(value);
+                        }
+                      },
+                      months.map(function(option) {
+                        return _react2.default.createElement(
+                          "option",
+                          { key: option, value: option },
+                          option
+                        );
+                      })
+                    ),
+                    _react2.default.createElement(
+                      "button",
+                      {
+                        onClick: increaseMonth,
+                        disabled: nextMonthButtonDisabled
+                      },
+                      ">"
+                    )
+                  );
+                },
+                selected: this.state.startDate,
+                onChange: this.handleChange
+              })
+            )
+          );
+        };
+
+        return Default;
+      })(_react2.default.Component);
+
+      exports.default = Default;
+
+      /***/
+    },
+    /* 879 */
+    /***/ function(module, exports, __webpack_require__) {
+      var createRange = __webpack_require__(880);
+
+      /**
+       * Creates an array of numbers (positive and/or negative) progressing from
+       * `start` up to, but not including, `end`. A step of `-1` is used if a negative
+       * `start` is specified without an `end` or `step`. If `end` is not specified,
+       * it's set to `start` with `start` then set to `0`.
+       *
+       * **Note:** JavaScript follows the IEEE-754 standard for resolving
+       * floating-point values which can produce unexpected results.
+       *
+       * @static
+       * @since 0.1.0
+       * @memberOf _
+       * @category Util
+       * @param {number} [start=0] The start of the range.
+       * @param {number} end The end of the range.
+       * @param {number} [step=1] The value to increment or decrement by.
+       * @returns {Array} Returns the range of numbers.
+       * @see _.inRange, _.rangeRight
+       * @example
+       *
+       * _.range(4);
+       * // => [0, 1, 2, 3]
+       *
+       * _.range(-4);
+       * // => [0, -1, -2, -3]
+       *
+       * _.range(1, 5);
+       * // => [1, 2, 3, 4]
+       *
+       * _.range(0, 20, 5);
+       * // => [0, 5, 10, 15]
+       *
+       * _.range(0, -4, -1);
+       * // => [0, -1, -2, -3]
+       *
+       * _.range(1, 4, 0);
+       * // => [1, 1, 1]
+       *
+       * _.range(0);
+       * // => []
+       */
+      var range = createRange();
+
+      module.exports = range;
+
+      /***/
+    },
+    /* 880 */
+    /***/ function(module, exports, __webpack_require__) {
+      var baseRange = __webpack_require__(881),
+        isIterateeCall = __webpack_require__(882),
+        toFinite = __webpack_require__(895);
+
+      /**
+       * Creates a `_.range` or `_.rangeRight` function.
+       *
+       * @private
+       * @param {boolean} [fromRight] Specify iterating from right to left.
+       * @returns {Function} Returns the new range function.
+       */
+      function createRange(fromRight) {
+        return function(start, end, step) {
+          if (
+            step &&
+            typeof step != "number" &&
+            isIterateeCall(start, end, step)
+          ) {
+            end = step = undefined;
+          }
+          // Ensure the sign of `-0` is preserved.
+          start = toFinite(start);
+          if (end === undefined) {
+            end = start;
+            start = 0;
+          } else {
+            end = toFinite(end);
+          }
+          step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
+          return baseRange(start, end, step, fromRight);
+        };
+      }
+
+      module.exports = createRange;
+
+      /***/
+    },
+    /* 881 */
+    /***/ function(module, exports) {
+      /* Built-in method references for those with the same name as other `lodash` methods. */
+      var nativeCeil = Math.ceil,
+        nativeMax = Math.max;
+
+      /**
+       * The base implementation of `_.range` and `_.rangeRight` which doesn't
+       * coerce arguments.
+       *
+       * @private
+       * @param {number} start The start of the range.
+       * @param {number} end The end of the range.
+       * @param {number} step The value to increment or decrement by.
+       * @param {boolean} [fromRight] Specify iterating from right to left.
+       * @returns {Array} Returns the range of numbers.
+       */
+      function baseRange(start, end, step, fromRight) {
+        var index = -1,
+          length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
+          result = Array(length);
+
+        while (length--) {
+          result[fromRight ? length : ++index] = start;
+          start += step;
+        }
+        return result;
+      }
+
+      module.exports = baseRange;
+
+      /***/
+    },
+    /* 882 */
+    /***/ function(module, exports, __webpack_require__) {
+      var eq = __webpack_require__(883),
+        isArrayLike = __webpack_require__(884),
+        isIndex = __webpack_require__(894),
+        isObject = __webpack_require__(892);
+
+      /**
+       * Checks if the given arguments are from an iteratee call.
+       *
+       * @private
+       * @param {*} value The potential iteratee value argument.
+       * @param {*} index The potential iteratee index or key argument.
+       * @param {*} object The potential iteratee object argument.
+       * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
+       *  else `false`.
+       */
+      function isIterateeCall(value, index, object) {
+        if (!isObject(object)) {
+          return false;
+        }
+        var type = typeof index;
+        if (
+          type == "number"
+            ? isArrayLike(object) && isIndex(index, object.length)
+            : type == "string" && index in object
+        ) {
+          return eq(object[index], value);
+        }
+        return false;
+      }
+
+      module.exports = isIterateeCall;
+
+      /***/
+    },
+    /* 883 */
+    /***/ function(module, exports) {
+      /**
+       * Performs a
+       * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+       * comparison between two values to determine if they are equivalent.
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to compare.
+       * @param {*} other The other value to compare.
+       * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+       * @example
+       *
+       * var object = { 'a': 1 };
+       * var other = { 'a': 1 };
+       *
+       * _.eq(object, object);
+       * // => true
+       *
+       * _.eq(object, other);
+       * // => false
+       *
+       * _.eq('a', 'a');
+       * // => true
+       *
+       * _.eq('a', Object('a'));
+       * // => false
+       *
+       * _.eq(NaN, NaN);
+       * // => true
+       */
+      function eq(value, other) {
+        return value === other || (value !== value && other !== other);
+      }
+
+      module.exports = eq;
+
+      /***/
+    },
+    /* 884 */
+    /***/ function(module, exports, __webpack_require__) {
+      var isFunction = __webpack_require__(885),
+        isLength = __webpack_require__(893);
+
+      /**
+       * Checks if `value` is array-like. A value is considered array-like if it's
+       * not a function and has a `value.length` that's an integer greater than or
+       * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+       * @example
+       *
+       * _.isArrayLike([1, 2, 3]);
+       * // => true
+       *
+       * _.isArrayLike(document.body.children);
+       * // => true
+       *
+       * _.isArrayLike('abc');
+       * // => true
+       *
+       * _.isArrayLike(_.noop);
+       * // => false
+       */
+      function isArrayLike(value) {
+        return value != null && isLength(value.length) && !isFunction(value);
+      }
+
+      module.exports = isArrayLike;
+
+      /***/
+    },
+    /* 885 */
+    /***/ function(module, exports, __webpack_require__) {
+      var baseGetTag = __webpack_require__(886),
+        isObject = __webpack_require__(892);
+
+      /** `Object#toString` result references. */
+      var asyncTag = "[object AsyncFunction]",
+        funcTag = "[object Function]",
+        genTag = "[object GeneratorFunction]",
+        proxyTag = "[object Proxy]";
+
+      /**
+       * Checks if `value` is classified as a `Function` object.
+       *
+       * @static
+       * @memberOf _
+       * @since 0.1.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+       * @example
+       *
+       * _.isFunction(_);
+       * // => true
+       *
+       * _.isFunction(/abc/);
+       * // => false
+       */
+      function isFunction(value) {
+        if (!isObject(value)) {
+          return false;
+        }
+        // The use of `Object#toString` avoids issues with the `typeof` operator
+        // in Safari 9 which returns 'object' for typed arrays and other constructors.
+        var tag = baseGetTag(value);
+        return (
+          tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag
+        );
+      }
+
+      module.exports = isFunction;
+
+      /***/
+    },
+    /* 886 */
+    /***/ function(module, exports, __webpack_require__) {
+      var Symbol = __webpack_require__(887),
+        getRawTag = __webpack_require__(890),
+        objectToString = __webpack_require__(891);
+
+      /** `Object#toString` result references. */
+      var nullTag = "[object Null]",
+        undefinedTag = "[object Undefined]";
+
+      /** Built-in value references. */
+      var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+      /**
+       * The base implementation of `getTag` without fallbacks for buggy environments.
+       *
+       * @private
+       * @param {*} value The value to query.
+       * @returns {string} Returns the `toStringTag`.
+       */
+      function baseGetTag(value) {
+        if (value == null) {
+          return value === undefined ? undefinedTag : nullTag;
+        }
+        return symToStringTag && symToStringTag in Object(value)
+          ? getRawTag(value)
+          : objectToString(value);
+      }
+
+      module.exports = baseGetTag;
+
+      /***/
+    },
+    /* 887 */
+    /***/ function(module, exports, __webpack_require__) {
+      var root = __webpack_require__(888);
+
+      /** Built-in value references. */
+      var Symbol = root.Symbol;
+
+      module.exports = Symbol;
+
+      /***/
+    },
+    /* 888 */
+    /***/ function(module, exports, __webpack_require__) {
+      var freeGlobal = __webpack_require__(889);
+
+      /** Detect free variable `self`. */
+      var freeSelf =
+        typeof self == "object" && self && self.Object === Object && self;
+
+      /** Used as a reference to the global object. */
+      var root = freeGlobal || freeSelf || Function("return this")();
+
+      module.exports = root;
+
+      /***/
+    },
+    /* 889 */
+    /***/ function(module, exports) {
+      /* WEBPACK VAR INJECTION */ (function(global) {
+        /** Detect free variable `global` from Node.js. */
+        var freeGlobal =
+          typeof global == "object" &&
+          global &&
+          global.Object === Object &&
+          global;
+
+        module.exports = freeGlobal;
+
+        /* WEBPACK VAR INJECTION */
+      }.call(
+        exports,
+        (function() {
+          return this;
+        })()
+      ));
+
+      /***/
+    },
+    /* 890 */
+    /***/ function(module, exports, __webpack_require__) {
+      var Symbol = __webpack_require__(887);
+
+      /** Used for built-in method references. */
+      var objectProto = Object.prototype;
+
+      /** Used to check objects for own properties. */
+      var hasOwnProperty = objectProto.hasOwnProperty;
+
+      /**
+       * Used to resolve the
+       * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+       * of values.
+       */
+      var nativeObjectToString = objectProto.toString;
+
+      /** Built-in value references. */
+      var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+      /**
+       * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+       *
+       * @private
+       * @param {*} value The value to query.
+       * @returns {string} Returns the raw `toStringTag`.
+       */
+      function getRawTag(value) {
+        var isOwn = hasOwnProperty.call(value, symToStringTag),
+          tag = value[symToStringTag];
+
+        try {
+          value[symToStringTag] = undefined;
+          var unmasked = true;
+        } catch (e) {}
+
+        var result = nativeObjectToString.call(value);
+        if (unmasked) {
+          if (isOwn) {
+            value[symToStringTag] = tag;
+          } else {
+            delete value[symToStringTag];
+          }
+        }
+        return result;
+      }
+
+      module.exports = getRawTag;
+
+      /***/
+    },
+    /* 891 */
+    /***/ function(module, exports) {
+      /** Used for built-in method references. */
+      var objectProto = Object.prototype;
+
+      /**
+       * Used to resolve the
+       * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+       * of values.
+       */
+      var nativeObjectToString = objectProto.toString;
+
+      /**
+       * Converts `value` to a string using `Object.prototype.toString`.
+       *
+       * @private
+       * @param {*} value The value to convert.
+       * @returns {string} Returns the converted string.
+       */
+      function objectToString(value) {
+        return nativeObjectToString.call(value);
+      }
+
+      module.exports = objectToString;
+
+      /***/
+    },
+    /* 892 */
+    /***/ function(module, exports) {
+      /**
+       * Checks if `value` is the
+       * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+       * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+       *
+       * @static
+       * @memberOf _
+       * @since 0.1.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+       * @example
+       *
+       * _.isObject({});
+       * // => true
+       *
+       * _.isObject([1, 2, 3]);
+       * // => true
+       *
+       * _.isObject(_.noop);
+       * // => true
+       *
+       * _.isObject(null);
+       * // => false
+       */
+      function isObject(value) {
+        var type = typeof value;
+        return value != null && (type == "object" || type == "function");
+      }
+
+      module.exports = isObject;
+
+      /***/
+    },
+    /* 893 */
+    /***/ function(module, exports) {
+      /** Used as references for various `Number` constants. */
+      var MAX_SAFE_INTEGER = 9007199254740991;
+
+      /**
+       * Checks if `value` is a valid array-like length.
+       *
+       * **Note:** This method is loosely based on
+       * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+       * @example
+       *
+       * _.isLength(3);
+       * // => true
+       *
+       * _.isLength(Number.MIN_VALUE);
+       * // => false
+       *
+       * _.isLength(Infinity);
+       * // => false
+       *
+       * _.isLength('3');
+       * // => false
+       */
+      function isLength(value) {
+        return (
+          typeof value == "number" &&
+          value > -1 &&
+          value % 1 == 0 &&
+          value <= MAX_SAFE_INTEGER
+        );
+      }
+
+      module.exports = isLength;
+
+      /***/
+    },
+    /* 894 */
+    /***/ function(module, exports) {
+      /** Used as references for various `Number` constants. */
+      var MAX_SAFE_INTEGER = 9007199254740991;
+
+      /** Used to detect unsigned integer values. */
+      var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+      /**
+       * Checks if `value` is a valid array-like index.
+       *
+       * @private
+       * @param {*} value The value to check.
+       * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+       * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+       */
+      function isIndex(value, length) {
+        var type = typeof value;
+        length = length == null ? MAX_SAFE_INTEGER : length;
+
+        return (
+          !!length &&
+          (type == "number" || (type != "symbol" && reIsUint.test(value))) &&
+          (value > -1 && value % 1 == 0 && value < length)
+        );
+      }
+
+      module.exports = isIndex;
+
+      /***/
+    },
+    /* 895 */
+    /***/ function(module, exports, __webpack_require__) {
+      var toNumber = __webpack_require__(896);
+
+      /** Used as references for various `Number` constants. */
+      var INFINITY = 1 / 0,
+        MAX_INTEGER = 1.7976931348623157e308;
+
+      /**
+       * Converts `value` to a finite number.
+       *
+       * @static
+       * @memberOf _
+       * @since 4.12.0
+       * @category Lang
+       * @param {*} value The value to convert.
+       * @returns {number} Returns the converted number.
+       * @example
+       *
+       * _.toFinite(3.2);
+       * // => 3.2
+       *
+       * _.toFinite(Number.MIN_VALUE);
+       * // => 5e-324
+       *
+       * _.toFinite(Infinity);
+       * // => 1.7976931348623157e+308
+       *
+       * _.toFinite('3.2');
+       * // => 3.2
+       */
+      function toFinite(value) {
+        if (!value) {
+          return value === 0 ? value : 0;
+        }
+        value = toNumber(value);
+        if (value === INFINITY || value === -INFINITY) {
+          var sign = value < 0 ? -1 : 1;
+          return sign * MAX_INTEGER;
+        }
+        return value === value ? value : 0;
+      }
+
+      module.exports = toFinite;
+
+      /***/
+    },
+    /* 896 */
+    /***/ function(module, exports, __webpack_require__) {
+      var isObject = __webpack_require__(892),
+        isSymbol = __webpack_require__(897);
+
+      /** Used as references for various `Number` constants. */
+      var NAN = 0 / 0;
+
+      /** Used to match leading and trailing whitespace. */
+      var reTrim = /^\s+|\s+$/g;
+
+      /** Used to detect bad signed hexadecimal string values. */
+      var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+      /** Used to detect binary string values. */
+      var reIsBinary = /^0b[01]+$/i;
+
+      /** Used to detect octal string values. */
+      var reIsOctal = /^0o[0-7]+$/i;
+
+      /** Built-in method references without a dependency on `root`. */
+      var freeParseInt = parseInt;
+
+      /**
+       * Converts `value` to a number.
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to process.
+       * @returns {number} Returns the number.
+       * @example
+       *
+       * _.toNumber(3.2);
+       * // => 3.2
+       *
+       * _.toNumber(Number.MIN_VALUE);
+       * // => 5e-324
+       *
+       * _.toNumber(Infinity);
+       * // => Infinity
+       *
+       * _.toNumber('3.2');
+       * // => 3.2
+       */
+      function toNumber(value) {
+        if (typeof value == "number") {
+          return value;
+        }
+        if (isSymbol(value)) {
+          return NAN;
+        }
+        if (isObject(value)) {
+          var other =
+            typeof value.valueOf == "function" ? value.valueOf() : value;
+          value = isObject(other) ? other + "" : other;
+        }
+        if (typeof value != "string") {
+          return value === 0 ? value : +value;
+        }
+        value = value.replace(reTrim, "");
+        var isBinary = reIsBinary.test(value);
+        return isBinary || reIsOctal.test(value)
+          ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+          : reIsBadHex.test(value)
+            ? NAN
+            : +value;
+      }
+
+      module.exports = toNumber;
+
+      /***/
+    },
+    /* 897 */
+    /***/ function(module, exports, __webpack_require__) {
+      var baseGetTag = __webpack_require__(886),
+        isObjectLike = __webpack_require__(898);
+
+      /** `Object#toString` result references. */
+      var symbolTag = "[object Symbol]";
+
+      /**
+       * Checks if `value` is classified as a `Symbol` primitive or object.
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+       * @example
+       *
+       * _.isSymbol(Symbol.iterator);
+       * // => true
+       *
+       * _.isSymbol('abc');
+       * // => false
+       */
+      function isSymbol(value) {
+        return (
+          typeof value == "symbol" ||
+          (isObjectLike(value) && baseGetTag(value) == symbolTag)
+        );
+      }
+
+      module.exports = isSymbol;
+
+      /***/
+    },
+    /* 898 */
+    /***/ function(module, exports) {
+      /**
+       * Checks if `value` is object-like. A value is object-like if it's not `null`
+       * and has a `typeof` result of "object".
+       *
+       * @static
+       * @memberOf _
+       * @since 4.0.0
+       * @category Lang
+       * @param {*} value The value to check.
+       * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+       * @example
+       *
+       * _.isObjectLike({});
+       * // => true
+       *
+       * _.isObjectLike([1, 2, 3]);
+       * // => true
+       *
+       * _.isObjectLike(_.noop);
+       * // => false
+       *
+       * _.isObjectLike(null);
+       * // => false
+       */
+      function isObjectLike(value) {
+        return value != null && typeof value == "object";
+      }
+
+      module.exports = isObjectLike;
+
+      /***/
+    },
+    /* 899 */
     /***/ function(module, exports) {
       // removed by extract-text-webpack-plugin
       /***/
     },
-    /* 879 */
-    878,
-    /* 880 */
+    /* 900 */
+    899,
+    /* 901 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -101022,7 +102119,7 @@
 
       /***/
     },
-    /* 881 */
+    /* 902 */
     /***/ function(
       module,
       exports,
@@ -101422,7 +102519,7 @@
 
       /***/
     },
-    /* 882 */
+    /* 903 */
     /***/ function(
       module,
       exports,
@@ -101444,7 +102541,7 @@
 
       /***/
     },
-    /* 883 */
+    /* 904 */
     /***/ function(
       module,
       exports,
@@ -101470,7 +102567,7 @@
 
       /***/
     },
-    /* 884 */
+    /* 905 */
     /***/ function(
       module,
       exports,
@@ -101511,7 +102608,7 @@
 
       /***/
     },
-    /* 885 */
+    /* 906 */
     /***/ function(
       module,
       exports,
@@ -101528,7 +102625,7 @@
 
       /***/
     },
-    /* 886 */
+    /* 907 */
     /***/ function(
       module,
       exports,
@@ -101559,7 +102656,7 @@
 
       /***/
     },
-    /* 887 */
+    /* 908 */
     /***/ function(
       module,
       exports,
@@ -101580,7 +102677,7 @@
 
       /***/
     },
-    /* 888 */
+    /* 909 */
     /***/ function(
       module,
       exports,
@@ -101618,7 +102715,7 @@
 
       /***/
     },
-    /* 889 */
+    /* 910 */
     /***/ function(
       module,
       exports,
@@ -101653,7 +102750,7 @@
 
       /***/
     },
-    /* 890 */
+    /* 911 */
     /***/ function(
       module,
       exports,
@@ -101737,7 +102834,7 @@
 
       /***/
     },
-    /* 891 */
+    /* 912 */
     /***/ function(
       module,
       exports,
@@ -101763,7 +102860,7 @@
 
       /***/
     },
-    /* 892 */
+    /* 913 */
     /***/ function(
       module,
       exports,
@@ -101785,7 +102882,7 @@
 
       /***/
     },
-    /* 893 */
+    /* 914 */
     /***/ function(
       module,
       exports,
@@ -101815,7 +102912,7 @@
 
       /***/
     },
-    /* 894 */
+    /* 915 */
     /***/ function(
       module,
       exports,
@@ -101826,7 +102923,7 @@
 
       /***/
     },
-    /* 895 */
+    /* 916 */
     /***/ function(
       module,
       exports,
@@ -101853,7 +102950,7 @@
 
       /***/
     },
-    /* 896 */
+    /* 917 */
     /***/ function(
       module,
       exports,
@@ -101882,7 +102979,7 @@
 
       /***/
     },
-    /* 897 */
+    /* 918 */
     /***/ function(
       module,
       exports,
@@ -101904,7 +103001,7 @@
 
       /***/
     },
-    /* 898 */
+    /* 919 */
     /***/ function(
       module,
       exports,
@@ -101941,7 +103038,7 @@
 
       /***/
     },
-    /* 899 */
+    /* 920 */
     /***/ function(
       module,
       exports,
@@ -101958,7 +103055,7 @@
 
       /***/
     },
-    /* 900 */
+    /* 921 */
     /***/ function(
       module,
       exports,
@@ -101976,7 +103073,7 @@
 
       /***/
     },
-    /* 901 */
+    /* 922 */
     /***/ function(
       module,
       exports,
@@ -102022,7 +103119,7 @@
 
       /***/
     },
-    /* 902 */
+    /* 923 */
     /***/ function(
       module,
       exports,
@@ -102040,7 +103137,7 @@
 
       /***/
     },
-    /* 903 */
+    /* 924 */
     /***/ function(
       module,
       exports,
@@ -102059,7 +103156,7 @@
 
       /***/
     },
-    /* 904 */
+    /* 925 */
     /***/ function(
       module,
       exports,
@@ -102077,7 +103174,7 @@
 
       /***/
     },
-    /* 905 */
+    /* 926 */
     /***/ function(
       module,
       exports,
@@ -102094,7 +103191,7 @@
 
       /***/
     },
-    /* 906 */
+    /* 927 */
     /***/ function(
       module,
       exports,
@@ -102166,7 +103263,7 @@
 
       /***/
     },
-    /* 907 */
+    /* 928 */
     /***/ function(
       module,
       exports,
@@ -102198,7 +103295,7 @@
 
       /***/
     },
-    /* 908 */
+    /* 929 */
     /***/ function(
       module,
       exports,
@@ -102211,7 +103308,7 @@
 
       /***/
     },
-    /* 909 */
+    /* 930 */
     /***/ function(
       module,
       exports,
@@ -102247,7 +103344,7 @@
 
       /***/
     },
-    /* 910 */
+    /* 931 */
     /***/ function(
       module,
       exports,
@@ -102269,7 +103366,7 @@
 
       /***/
     },
-    /* 911 */
+    /* 932 */
     /***/ function(
       module,
       exports,
@@ -102314,7 +103411,7 @@
 
       /***/
     },
-    /* 912 */
+    /* 933 */
     /***/ function(
       module,
       exports,
@@ -102330,7 +103427,7 @@
 
       /***/
     },
-    /* 913 */
+    /* 934 */
     /***/ function(
       module,
       exports,
@@ -102345,7 +103442,7 @@
 
       /***/
     },
-    /* 914 */
+    /* 935 */
     /***/ function(
       module,
       exports,
@@ -102380,7 +103477,7 @@
 
       /***/
     },
-    /* 915 */
+    /* 936 */
     /***/ function(
       module,
       exports,
@@ -102397,7 +103494,7 @@
 
       /***/
     },
-    /* 916 */
+    /* 937 */
     /***/ function(
       module,
       exports,
@@ -102461,7 +103558,7 @@
 
       /***/
     },
-    /* 917 */
+    /* 938 */
     /***/ function(
       module,
       exports,
@@ -102479,7 +103576,7 @@
 
       /***/
     },
-    /* 918 */
+    /* 939 */
     /***/ function(
       module,
       exports,
@@ -102535,7 +103632,7 @@
 
       /***/
     },
-    /* 919 */
+    /* 940 */
     /***/ function(
       module,
       exports,
@@ -102570,7 +103667,7 @@
 
       /***/
     },
-    /* 920 */
+    /* 941 */
     /***/ function(
       module,
       exports,
@@ -102608,7 +103705,7 @@
 
       /***/
     },
-    /* 921 */
+    /* 942 */
     /***/ function(
       module,
       exports,
@@ -102744,7 +103841,7 @@
 
       /***/
     },
-    /* 922 */
+    /* 943 */
     /***/ function(
       module,
       exports,
@@ -102783,7 +103880,7 @@
 
       /***/
     },
-    /* 923 */
+    /* 944 */
     /***/ function(
       module,
       exports,
@@ -102845,7 +103942,7 @@
 
       /***/
     },
-    /* 924 */
+    /* 945 */
     /***/ function(
       module,
       exports,
@@ -102858,7 +103955,7 @@
 
       /***/
     },
-    /* 925 */
+    /* 946 */
     /***/ function(
       module,
       exports,

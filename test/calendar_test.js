@@ -165,6 +165,238 @@ describe("Calendar", function() {
       .forEach(dayName => expect(dayName.text()).to.have.length(1));
   });
 
+  describe("custom header", function() {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    const renderCustomHeader = params => {
+      const {
+        date,
+        changeYear,
+        changeMonth,
+        decreaseMonth,
+        increaseMonth,
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled
+      } = params;
+
+      return (
+        <div className="custom-header">
+          <button
+            className="prevMonth"
+            onClick={decreaseMonth}
+            disabled={prevMonthButtonDisabled}
+          >
+            {"<"}
+          </button>
+
+          <select
+            value={utils.getYear(date)}
+            className="year-select"
+            onChange={({ target: { value } }) => changeYear(value)}
+          >
+            {[2017, 2018, 2019].map(year => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="month-select"
+            value={months[utils.getMonth(date)]}
+            onChange={({ target: { value } }) => changeMonth(value)}
+          >
+            {months.map(option => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+
+          <button
+            className="nextMonth"
+            onClick={increaseMonth}
+            disabled={nextMonthButtonDisabled}
+          >
+            {"<"}
+          </button>
+        </div>
+      );
+    };
+
+    it("should call render custom header function and returns parameters", function() {
+      const renderCustomHeader = sinon.spy();
+
+      getCalendar({ renderCustomHeader });
+
+      const match = {
+        changeMonth: sinon.match.func,
+        changeYear: sinon.match.func,
+        date: sinon.match.instanceOf(Date),
+        decreaseMonth: sinon.match.func,
+        increaseMonth: sinon.match.func,
+        nextMonthButtonDisabled: sinon.match.bool,
+        prevMonthButtonDisabled: sinon.match.bool
+      };
+
+      expect(renderCustomHeader.calledWithMatch(match)).to.be.true;
+    });
+
+    it("should render only custom header", function() {
+      const calendar = getCalendar({ renderCustomHeader });
+
+      const nextMontButton = calendar.find(
+        ".react-datepicker__navigation--next"
+      );
+      const prevMontButton = calendar.find(
+        ".react-datepicker__navigation--previous"
+      );
+
+      expect(nextMontButton).to.have.length(0);
+      expect(prevMontButton).to.have.length(0);
+    });
+
+    it("should render custom header with selects and buttons", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+      expect(calendar.find(".custom-header")).to.have.length(1);
+
+      const yearSelect = calendar.find(".year-select");
+      const monthSelect = calendar.find(".month-select");
+      const prevMonth = calendar.find(".prevMonth");
+      const nextMonth = calendar.find(".nextMonth");
+
+      expect(yearSelect).to.have.length(1);
+      expect(monthSelect).to.have.length(1);
+      expect(prevMonth).to.have.length(1);
+      expect(nextMonth).to.have.length(1);
+    });
+
+    it("should go to previous month", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      const selected = utils.newDate(calendar.state().date);
+      const prevMonth = calendar.find(".prevMonth");
+
+      prevMonth.simulate("click");
+
+      expect(utils.getMonth(selected)).to.be.equal(
+        utils.getMonth(calendar.state().date) + 1
+      );
+    });
+
+    it("should go to next month", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      const selected = utils.newDate(calendar.state().date);
+      const nextMonth = calendar.find(".nextMonth");
+
+      nextMonth.simulate("click");
+
+      expect(utils.getMonth(selected)).to.be.equal(
+        utils.getMonth(calendar.state().date) - 1
+      );
+    });
+
+    it("nextMonthButtonDisabled flag should be true", function() {
+      const renderCustomHeader = sinon.spy();
+
+      getCalendar({
+        renderCustomHeader,
+        minDate: utils.subMonths(utils.newDate(), 1),
+        maxDate: utils.newDate()
+      });
+
+      const {
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled
+      } = renderCustomHeader.getCall(0).args[0];
+
+      assert(
+        prevMonthButtonDisabled === false,
+        "prevMonthButtonDisabled should be set to false"
+      );
+      assert(
+        nextMonthButtonDisabled === true,
+        "nextMonthButtonDisabled  should be set to true"
+      );
+    });
+
+    it("prevMonthButtonDisabled flag should be true", function() {
+      const renderCustomHeader = sinon.spy();
+
+      getCalendar({
+        renderCustomHeader,
+        minDate: utils.newDate(),
+        maxDate: utils.addMonths(utils.newDate(), 1)
+      });
+
+      const {
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled
+      } = renderCustomHeader.getCall(0).args[0];
+
+      assert(
+        prevMonthButtonDisabled === true,
+        "prevMonthButtonDisabled should be set to true"
+      );
+      assert(
+        nextMonthButtonDisabled === false,
+        "nextMonthButtonDisabled  should be set to false"
+      );
+    });
+
+    it("should select april from month select", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      const monthSelect = calendar.find(".month-select");
+
+      monthSelect.simulate("change", { target: { value: 4 } });
+
+      const selected = utils.newDate(calendar.state().date);
+
+      expect(utils.getMonth(selected)).to.be.equal(4);
+    });
+
+    it("should select 2017 from month select", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      const yearSelect = calendar.find(".year-select");
+
+      yearSelect.simulate("change", { target: { value: 2017 } });
+
+      const selected = utils.newDate(calendar.state().date);
+
+      expect(utils.getYear(selected)).to.be.equal(2017);
+    });
+  });
+
   describe("when showDisabledMonthNavigation is enabled", () => {
     let onMonthChangeSpy = sinon.spy();
 
@@ -698,7 +930,7 @@ describe("Calendar", function() {
       expect(calendarText.text()).to.equal(
         utils.formatDate(selected, dateFormat, locale)
       );
-      const firstDateOfWeek = utils.getStartOfWeek(selected);
+      const firstDateOfWeek = utils.getStartOfWeek(selected, locale);
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
         firstDateOfWeek,
         locale
@@ -738,6 +970,13 @@ describe("Calendar", function() {
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
       utils.setDefaultLocale("");
+    });
+
+    it("should render empty custom header", function() {
+      const calendar = getCalendar({ renderCustomHeader: () => {} });
+
+      const header = calendar.find(".react-datepicker__header--custom");
+      expect(header).to.have.length(1);
     });
   });
 });

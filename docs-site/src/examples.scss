@@ -15,6 +15,15 @@
   }
 }
 
+@supports (position: sticky) {
+  .examples__navigation {
+    overflow-y: scroll;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+}
+
 .examples__navigation-item {
   border-bottom: 1px solid #e4e4e4;
 

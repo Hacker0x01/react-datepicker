@@ -13,12 +13,10 @@ export default class Disabled extends React.Component {
     });
   };
 
-  handleOnBlur = event => {
-    const date = new Date(event.target.value);
+  handleOnBlur = date => {
+    const selectedDate = new Date(date);
     if (isValid(date)) {
-      console.log("selected date: %s", format(date, "dd/MM/yyyy"));
-    } else {
-      console.log("selected date: %s", event.target.value);
+      console.log("selected date: %s", format(selectedDate, "dd/MM/yyyy"));
     }
   };
 

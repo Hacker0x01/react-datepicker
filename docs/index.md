@@ -49,11 +49,13 @@ General datepicker component.
 | `onChangeRaw`                 | `func`                         |                    |             |
 | `onClickOutside`              | `func`                         | `function() {}`    |             |
 | `onFocus`                     | `func`                         | `function() {}`    |             |
+| `onInputClick`                | `func`                         | `function() {}`    |             |
 | `onKeyDown`                   | `func`                         | `function() {}`    |             |
 | `onMonthChange`               | `func`                         | `function() {}`    |             |
 | `onSelect`                    | `func`                         | `function() {}`    |             |
 | `onWeekSelect`                | `func`                         |                    |             |
 | `onYearChange`                | `func`                         | `function() {}`    |             |
+| `open`                        | `bool`                         |                    |             |
 | `openToDate`                  | `object`                       |                    |             |
 | `peekNextMonth`               | `bool`                         |                    |             |
 | `placeholderText`             | `string`                       |                    |             |
@@ -64,6 +66,7 @@ General datepicker component.
 | `preventOpenOnFocus`          | `bool`                         | `false`            |             |
 | `previousMonthButtonLabel`    | `string`                       | `"Previous Month"` |             |
 | `readOnly`                    | `bool`                         | `false`            |             |
+| `renderCustomHeader`          | `func`                         |                    |             |
 | `required`                    | `bool`                         |                    |             |
 | `scrollableMonthYearDropdown` | `bool`                         |                    |             |
 | `scrollableYearDropdown`      | `bool`                         |                    |             |
@@ -85,10 +88,10 @@ General datepicker component.
 | `timeFormat`                  | `string`                       |                    |             |
 | `timeIntervals`               | `number`                       | `30`               |             |
 | `title`                       | `string`                       |                    |             |
-| `todayButton`                 | `string`                       |                    |             |
+| `todayButton`                 | `node`                         |                    |             |
 | `useShortMonthInDropdown`     | `bool`                         |                    |             |
 | `useWeekdaysShort`            | `bool`                         |                    |             |
-| `utcOffset`                   | `number`                       |                    |             |
+| `utcOffset`                   | `union(number\|string)`        |                    |             |
 | `value`                       | `string`                       |                    |             |
 | `weekLabel`                   | `string`                       |                    |             |
 | `withPortal`                  | `bool`                         | `false`            |             |
