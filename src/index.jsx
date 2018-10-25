@@ -125,6 +125,7 @@ export default class DatePicker extends React.Component {
     popperClassName: PropTypes.string, // <PopperComponent/> props
     popperModifiers: PropTypes.object, // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
+    popperProps: PropTypes.object,
     preventOpenOnFocus: PropTypes.bool,
     readOnly: PropTypes.bool,
     required: PropTypes.bool,
@@ -631,6 +632,7 @@ export default class DatePicker extends React.Component {
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
+        popperProps={this.props.popperProps}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -728,6 +730,7 @@ export default class DatePicker extends React.Component {
         popperContainer={this.props.popperContainer}
         popperComponent={calendar}
         popperPlacement={this.props.popperPlacement}
+        popperProps={this.props.popperProps}
       />
     );
   }
