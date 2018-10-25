@@ -37,14 +37,6 @@ module.exports = {
       }
     },
     {
-      moment: {
-        root: "moment",
-        commonjs2: "moment",
-        commonjs: "moment",
-        amd: "moment"
-      }
-    },
-    {
       "react-onclickoutside": {
         root: "onClickOutside",
         commonjs2: "react-onclickoutside",

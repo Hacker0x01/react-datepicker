@@ -21,7 +21,7 @@ General datepicker component.
 | `disabled`                    | `bool`                         | `false`            |             |
 | `disabledKeyboardNavigation`  | `bool`                         | `false`            |             |
 | `dropdownMode`                | `enum("scroll"\|"select")`     | `"scroll"`         |             |
-| `endDate`                     | `object`                       |                    |             |
+| `endDate`                     | `instanceOf(Date)`             |                    |             |
 | `excludeDates`                | `array`                        |                    |             |
 | `excludeTimes`                | `array`                        |                    |             |
 | `filterDate`                  | `func`                         |                    |             |
@@ -37,10 +37,10 @@ General datepicker component.
 | `inline`                      | `bool`                         |                    |             |
 | `isClearable`                 | `bool`                         |                    |             |
 | `locale`                      | `string`                       |                    |             |
-| `maxDate`                     | `object`                       |                    |             |
-| `maxTime`                     | `object`                       |                    |             |
-| `minDate`                     | `object`                       |                    |             |
-| `minTime`                     | `object`                       |                    |             |
+| `maxDate`                     | `instanceOf(Date)`             |                    |             |
+| `maxTime`                     | `instanceOf(Date)`             |                    |             |
+| `minDate`                     | `instanceOf(Date)`             |                    |             |
+| `minTime`                     | `instanceOf(Date)`             |                    |             |
 | `monthsShown`                 | `number`                       | `1`                |             |
 | `name`                        | `string`                       |                    |             |
 | `nextMonthButtonLabel`        | `string`                       | `"Next month"`     |             |
@@ -56,7 +56,7 @@ General datepicker component.
 | `onWeekSelect`                | `func`                         |                    |             |
 | `onYearChange`                | `func`                         | `function() {}`    |             |
 | `open`                        | `bool`                         |                    |             |
-| `openToDate`                  | `object`                       |                    |             |
+| `openToDate`                  | `instanceOf(Date)`             |                    |             |
 | `peekNextMonth`               | `bool`                         |                    |             |
 | `placeholderText`             | `string`                       |                    |             |
 | `popperClassName`             | `string`                       |                    |             |
@@ -70,7 +70,7 @@ General datepicker component.
 | `required`                    | `bool`                         |                    |             |
 | `scrollableMonthYearDropdown` | `bool`                         |                    |             |
 | `scrollableYearDropdown`      | `bool`                         |                    |             |
-| `selected`                    | `object`                       |                    |             |
+| `selected`                    | `instanceOf(Date)`             |                    |             |
 | `selectsEnd`                  | `bool`                         |                    |             |
 | `selectsStart`                | `bool`                         |                    |             |
 | `shouldCloseOnSelect`         | `bool`                         | `true`             |             |
@@ -81,7 +81,7 @@ General datepicker component.
 | `showTimeSelectOnly`          | `bool`                         |                    |             |
 | `showWeekNumbers`             | `bool`                         |                    |             |
 | `showYearDropdown`            | `bool`                         |                    |             |
-| `startDate`                   | `object`                       |                    |             |
+| `startDate`                   | `instanceOf(Date)`             |                    |             |
 | `startOpen`                   | `bool`                         |                    |             |
 | `tabIndex`                    | `number`                       |                    |             |
 | `timeCaption`                 | `string`                       | `"Time"`           |             |
