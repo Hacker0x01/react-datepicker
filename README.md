@@ -20,7 +20,7 @@ The package can be installed via NPM:
 npm install react-datepicker --save
 ```
 
-You’ll need to install React, PropTypes, and date-fns (for localization support if needed) separately since those dependencies aren’t included in the package. Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
+You’ll need to install React and PropTypes separately since those dependencies aren’t included in the package. If you need to use a locale other than the default en-US, you'll also need to import that into your project from date-fns (see Localization section below). Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
 
 ```js
 import React from 'react';
@@ -98,9 +98,20 @@ More examples of how to use the time picker are given on the [main website](http
 
 ### Localization
 
-The date picker relies on [date-fns internationalization](https://date-fns.org/v2.0.0-alpha.18/docs/I18n) to localize its display components. By default, the date picker will use the locale globally set, which is English. Locales can be changed in the following ways:
+The date picker relies on [date-fns internationalization](https://date-fns.org/v2.0.0-alpha.18/docs/I18n) to localize its display components. By default, the date picker will use the locale globally set, which is English. Provided are 3 helper methods to set the locale:
 
-- **First** - import the helper methods you need: `import { registerLocale, setDefaultLocale, getDefaultLocale } from DatePicker;` - import the locale from date-fns: `import fi from 'date-fns/locale/fi';` - register the locale: `registerLocale('fi', fi);`
+- **registerLocale** (string, object): loads an imported locale object from date-fns
+- **setDefaultLocale** (string): sets a registered locale as the default for all datepicker instances
+- **getDefaultLocale**: returns a string showing the currently set default locale
+
+To load an alternate locale:
+
+- Import the helper methods you need: `import { registerLocale, setDefaultLocale } from DatePicker;`
+- Import the locale from date-fns: `import fi from 'date-fns/locale/fi';`
+- Register the locale: `registerLocale('fi', fi);`
+
+Locales can be changed in the following ways:
+
 - **Globally** - `setDefaultLocale('fi');`
 - **Picker-specific** by providing the `locale` prop - `<DatePicker locale='fi' ... />`
 
