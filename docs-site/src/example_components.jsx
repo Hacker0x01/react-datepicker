@@ -37,10 +37,13 @@ import WeekNumbers from "./examples/week_numbers";
 import CustomInput from "./examples/custom_input";
 import MultiMonth from "./examples/multi_month";
 import MultiMonthDrp from "./examples/multi_month_drp";
+import MultiMonthInline from "./examples/multi_month_inline";
 import Children from "./examples/children";
+import CalendarContainer from "./examples/calendar_container";
 import Portal from "./examples/portal";
 import InlinePortal from "./examples/inline_portal";
 import RawChange from "./examples/raw_change";
+import ReadOnly from "./examples/read_only";
 import ShowTime from "./examples/show_time";
 import ShowTimeOnly from "./examples/show_time_only";
 import ExcludeTimes from "./examples/exclude_times";
@@ -48,7 +51,7 @@ import ExcludeTimePeriod from "./examples/exclude_time_period";
 import IncludeTimes from "./examples/include_times";
 import InjectTimes from "./examples/inject_times";
 import DontCloseOnSelect from "./examples/dont_close_onSelect";
-import OpenByDefault from "./examples/open_by_default";
+import RenderCustomHeader from "./examples/render_custom_header";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
@@ -160,6 +163,10 @@ export default class exampleComponents extends React.Component {
       component: <DisabledKeyboardNavigation />
     },
     {
+      title: "Read only datepicker",
+      component: <ReadOnly />
+    },
+    {
       title: "Clear datepicker input",
       component: <ClearInput />
     },
@@ -232,8 +239,16 @@ export default class exampleComponents extends React.Component {
       component: <MultiMonthDrp />
     },
     {
+      title: "Multiple months inline",
+      component: <MultiMonthInline />
+    },
+    {
       title: "Children",
       component: <Children />
+    },
+    {
+      title: "Calendar container",
+      component: <CalendarContainer />
     },
     {
       title: "Get raw input value on change",
@@ -244,8 +259,8 @@ export default class exampleComponents extends React.Component {
       component: <DontCloseOnSelect />
     },
     {
-      title: "Open calendar by default",
-      component: <OpenByDefault />
+      title: "Custom header",
+      component: <RenderCustomHeader />
     }
   ];
 

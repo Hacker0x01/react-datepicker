@@ -4,6 +4,7 @@ import Day from "../src/day";
 import range from "lodash/range";
 import { mount, shallow } from "enzyme";
 import * as utils from "../src/date_utils";
+import TestUtils from "react-dom/test-utils";
 
 describe("Month", () => {
   function assertDateRangeInclusive(month, start, end) {
@@ -26,6 +27,17 @@ describe("Month", () => {
   it("should have the month CSS class", () => {
     const month = shallow(<Month day={utils.newDate()} />);
     expect(month.hasClass("react-datepicker__month")).to.equal(true);
+  });
+
+  it("should have the month aria-label", () => {
+    const month = TestUtils.renderIntoDocument(
+      <Month day={utils.newDate("2015-12-01")} />
+    );
+    const month_dom = TestUtils.findRenderedDOMComponentWithClass(
+      month,
+      "react-datepicker__month"
+    );
+    expect(month_dom.getAttribute("aria-label")).to.equal("month-2015-12");
   });
 
   it("should render all days of the month and some days in neighboring months", () => {

@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 
-export default class OpenByDefault extends React.Component {
+export default class ReadOnly extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: null
     };
   }
 
@@ -21,20 +20,24 @@ export default class OpenByDefault extends React.Component {
       <div className="row">
         <pre className="column example__code">
           <code className="jsx">
-            {`
-          <DatePicker
-            autoFocus
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-          />
-          `}
+            {"<DatePicker"}
+            <br />
+            {"  selected={this.state.startDate}"}
+            <br />
+            {"  onChange={this.handleChange}"}
+            <br />
+            <strong>{"  readOnly={true}"}</strong>
+            <br />
+            {'  placeholderText="This is readOnly"'} />
           </code>
         </pre>
         <div className="column">
           <DatePicker
-            autoFocus
             selected={this.state.startDate}
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}
+            placeholderText="This is readOnly"
+            readOnly
+          />
         </div>
       </div>
     );

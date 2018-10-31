@@ -40,10 +40,6 @@ function getDiff(date1, date2, unit) {
   return date1.diff(date2, unit);
 }
 
-function isSame(date1, date2, unit) {
-  return date1.isSame(date2, unit);
-}
-
 // ** Date Constructors **
 
 export function newDate(point) {
@@ -363,6 +359,13 @@ export function isDayDisabled(
       !includeDates.some(includeDate => isSameDay(day, includeDate))) ||
     (filterDate && !filterDate(day.clone())) ||
     false
+  );
+}
+
+export function isOutOfBounds(day, { minDate, maxDate } = {}) {
+  return (
+    (minDate && day.isBefore(minDate, "day")) ||
+    (maxDate && day.isAfter(maxDate, "day"))
   );
 }
 

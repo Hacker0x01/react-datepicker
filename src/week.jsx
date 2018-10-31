@@ -6,6 +6,7 @@ import * as utils from "./date_utils";
 
 export default class Week extends React.Component {
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -28,7 +29,7 @@ export default class Week extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     renderDayContents: PropTypes.func
   };
 
@@ -96,6 +97,7 @@ export default class Week extends React.Component {
             dayClassName={this.props.dayClassName}
             utcOffset={this.props.utcOffset}
             renderDayContents={this.props.renderDayContents}
+            disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         );
       })

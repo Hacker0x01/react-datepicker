@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-export default class Default extends React.Component {
+export default class MultiMonthInline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,15 +24,19 @@ export default class Default extends React.Component {
             {`
 <DatePicker
     selected={this.state.startDate}
+    inline
     onChange={this.handleChange}
+    monthsShown={2}
 />
 `}
           </code>
         </pre>
         <div className="column">
           <DatePicker
-            selected={this.state.startDate}
+            monthsShown={2}
+            inline
             onChange={this.handleChange}
+            selected={this.state.startDate}
           />
         </div>
       </div>
