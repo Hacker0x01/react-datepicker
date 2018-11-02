@@ -244,8 +244,6 @@ export default class Time extends React.Component {
   };
 
   render() {
-    console.log(this.state.preSelection);
-
     let height = null;
     if (this.props.monthRef) {
       height = this.props.monthRef.clientHeight - 39;
