@@ -661,7 +661,8 @@ export default class DatePicker extends React.Component {
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
-      tabIndex: this.props.tabIndex
+      tabIndex: this.props.tabIndex,
+      "aria-label": inputValue
     });
   };
 

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FocusTrap from "focus-trap-react";
 import classNames from "classnames";
+import { ScreenReaderOnly } from "./screen_reader_only";
 import {
   addMonths,
   cloneDate,
@@ -49,7 +50,8 @@ export default class MonthYearDropdownOptions extends React.Component {
         this.props.minDate,
         this.props.maxDate
       ),
-      preSelection: getStartOfMonth(cloneDate(this.props.date))
+      preSelection: getStartOfMonth(cloneDate(this.props.date)),
+      readInstructions: false
     };
   }
 
@@ -114,6 +116,10 @@ export default class MonthYearDropdownOptions extends React.Component {
     });
   };
 
+  onFocus = () => {
+    this.setState({ readInstructions: true });
+  };
+
   onChange = monthYear => this.props.onChange(monthYear);
 
   handleClickOutside = () => {
@@ -164,13 +170,30 @@ export default class MonthYearDropdownOptions extends React.Component {
         .scrollableMonthYearDropdown
     });
 
+    let screenReaderInstructions;
+    if (this.state.readInstructions) {
+      screenReaderInstructions = (
+        <p aria-live>
+          You are focused on a month / year selector menu. Use the up and down
+          arrows to select a month / year combination, then hit enter to confirm
+          your selection.
+          {formatDate(this.state.preSelection, this.props.dateFormat)} is the
+          currently focused month / year.
+        </p>
+      );
+    }
+
     return this.props.accessibleMode ? (
       <FocusTrap>
         <div
           className={dropdownClass}
           tabIndex="0"
           onKeyDown={this.onInputKeyDown}
+          onFocus={this.onFocus}
         >
+          <ScreenReaderOnly>
+            <span>{screenReaderInstructions}</span>
+          </ScreenReaderOnly>
           {this.renderOptions()}
         </div>
       </FocusTrap>

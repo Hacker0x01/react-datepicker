@@ -3,6 +3,7 @@ import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import FocusTrap from "focus-trap-react";
+import { ScreenReaderOnly } from "./screen_reader_only";
 
 function generateYears(year, noOfYear, minDate, maxDate) {
   var list = [];
@@ -51,7 +52,8 @@ export default class YearDropdownOptions extends React.Component {
         this.props.minDate,
         this.props.maxDate
       ),
-      preSelection: this.props.year
+      preSelection: this.props.year,
+      readInstructions: false
     };
   }
 
@@ -134,6 +136,10 @@ export default class YearDropdownOptions extends React.Component {
     return options;
   };
 
+  onFocus = () => {
+    this.setState({ readInstructions: true });
+  };
+
   onChange = year => {
     this.props.onChange(year);
   };
@@ -205,13 +211,28 @@ export default class YearDropdownOptions extends React.Component {
         .scrollableYearDropdown
     });
 
+    let screenReaderInstructions;
+    if (this.state.readInstructions) {
+      screenReaderInstructions = (
+        <p aria-live>
+          You are focused on a year selector menu. Use the up and down arrows to
+          select a year, then hit enter to confirm your selection.
+          {this.state.preSelection} is the currently focused year.
+        </p>
+      );
+    }
+
     return this.props.accessibleMode ? (
       <FocusTrap>
         <div
           className={dropdownClass}
           tabIndex="0"
           onKeyDown={this.onInputKeyDown}
+          onFocus={this.onFocus}
         >
+          <ScreenReaderOnly>
+            <span>{screenReaderInstructions}</span>
+          </ScreenReaderOnly>
           {this.renderOptions()}
         </div>
       </FocusTrap>

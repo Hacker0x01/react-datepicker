@@ -2,6 +2,7 @@ import React from "react";
 import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { ScreenReaderOnly } from "./screen_reader_only";
 import {
   getHour,
   getMinute,
@@ -59,7 +60,11 @@ export default class Time extends React.Component {
       }
     }, null);
 
-    this.state = { preSelection };
+    this.timeFormat = "hh:mm A";
+    this.state = {
+      preSelection,
+      readInstructions: false
+    };
   }
 
   componentDidMount() {
@@ -120,6 +125,10 @@ export default class Time extends React.Component {
       });
     }
   }
+
+  onFocus = () => {
+    this.setState({ readInstructions: true });
+  };
 
   onInputKeyDown = event => {
     const eventKey = event.key;
@@ -220,12 +229,14 @@ export default class Time extends React.Component {
   renderTimes = () => {
     const times = this.generateTimes();
     const activeTime = this.props.selected ? this.props.selected : newDate();
-    const format = this.props.format ? this.props.format : "hh:mm A";
+    const format = this.props.format ? this.props.format : this.timeFormat;
     return times.map((time, i) => (
       <li
         key={i}
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, activeTime)}
+        role="option"
+        id={i}
       >
         {formatDate(time, format)}
       </li>
@@ -247,18 +258,34 @@ export default class Time extends React.Component {
       "react-datepicker__time-box--accessible": this.props.accessibleMode
     });
 
+    let screenReaderInstructions;
+    if (this.state.readInstructions) {
+      screenReaderInstructions = (
+        <p aria-live>
+          You are a in a time selector. Use the up and down keys to select from
+          other common times then press enter to confirm.
+          {formatDate(this.state.preSelection, this.timeFormat)} is currently
+          focused.
+        </p>
+      );
+    }
+
     return (
       <div className={classNames}>
         <div className="react-datepicker__header react-datepicker__header--time">
           <div className="react-datepicker-time__header">
             {this.props.timeCaption}
           </div>
+          <ScreenReaderOnly>
+            <span>{screenReaderInstructions}</span>
+          </ScreenReaderOnly>
         </div>
         <div className="react-datepicker__time">
           <div
             className={timeBoxClassNames}
             tabIndex={this.props.accessibleMode ? 0 : -1}
             onKeyDown={this.onInputKeyDown}
+            onFocus={this.onFocus}
           >
             <ul
               className="react-datepicker__time-list"
@@ -266,6 +293,7 @@ export default class Time extends React.Component {
                 this.list = list;
               }}
               style={height ? { height } : {}}
+              role="listbox"
             >
               {this.renderTimes.bind(this)()}
             </ul>
