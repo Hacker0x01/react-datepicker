@@ -163,7 +163,8 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
-    renderCustomHeader: PropTypes.func
+    renderCustomHeader: PropTypes.func,
+    renderDayContents: PropTypes.func
   };
 
   static get defaultProps() {
@@ -193,7 +194,10 @@ export default class DatePicker extends React.Component {
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next month"
+      nextMonthButtonLabel: "Next month",
+      renderDayContents(date) {
+        return date;
+      }
     };
   }
 
@@ -630,6 +634,7 @@ export default class DatePicker extends React.Component {
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
+        renderDayContents={this.props.renderDayContents}
       >
         {this.props.children}
       </WrappedCalendar>

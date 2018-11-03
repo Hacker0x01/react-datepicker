@@ -113,7 +113,8 @@ export default class Calendar extends React.Component {
     showDisabledMonthNavigation: PropTypes.bool,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
-    renderCustomHeader: PropTypes.func
+    renderCustomHeader: PropTypes.func,
+    renderDayContents: PropTypes.func
   };
 
   static get defaultProps() {
@@ -598,6 +599,7 @@ export default class Calendar extends React.Component {
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
             utcOffset={this.props.utcOffset}
+            renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         </div>
