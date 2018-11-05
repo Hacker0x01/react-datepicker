@@ -187,7 +187,7 @@ export default class DatePicker extends React.Component {
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
-      accessibleMode: true
+      accessibleMode: false
     };
   }
 
