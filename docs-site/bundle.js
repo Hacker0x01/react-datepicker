@@ -35218,6 +35218,7 @@
       /**
        * General datepicker component.
        */
+      var INPUT_ERR_1 = "Date input not valid.";
 
       var DatePicker = (function(_React$Component) {
         _inherits(DatePicker, _React$Component);
@@ -35238,12 +35239,14 @@
                 onFocus: function onFocus() {},
                 onBlur: function onBlur() {},
                 onKeyDown: function onKeyDown() {},
+                onInputClick: function onInputClick() {},
                 onSelect: function onSelect() {},
                 onClickOutside: function onClickOutside() {},
                 onMonthChange: function onMonthChange() {},
 
                 preventOpenOnFocus: false,
                 onYearChange: function onYearChange() {},
+                onInputError: function onInputError() {},
 
                 monthsShown: 1,
                 readOnly: false,
@@ -35253,7 +35256,10 @@
                 timeIntervals: 30,
                 timeCaption: "Time",
                 previousMonthButtonLabel: "Previous Month",
-                nextMonthButtonLabel: "Next month"
+                nextMonthButtonLabel: "Next month",
+                renderDayContents: function renderDayContents(date) {
+                  return date;
+                }
               };
             }
           }
@@ -35315,15 +35321,65 @@
             }
           };
 
+          _this.setBlur = function() {
+            if (_this.input && _this.input.blur) {
+              _this.input.blur();
+            }
+
+            if (_this.props.onBlur) {
+              _this.props.onBlur();
+            }
+
+            _this.cancelFocusInput();
+          };
+
           _this.setOpen = function(open) {
-            _this.setState({
-              open: open,
-              preSelection:
-                open && _this.state.open
-                  ? _this.state.preSelection
-                  : _this.calcInitialState().preSelection,
-              lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
-            });
+            var skipSetBlur =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : false;
+
+            _this.setState(
+              {
+                open: open,
+                preSelection:
+                  open && _this.state.open
+                    ? _this.state.preSelection
+                    : _this.calcInitialState().preSelection,
+                lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
+              },
+              function() {
+                if (!open) {
+                  _this.setState(
+                    function(prev) {
+                      return {
+                        focused: skipSetBlur ? prev.focused : false
+                      };
+                    },
+                    function() {
+                      !skipSetBlur && _this.setBlur();
+
+                      _this.setState({ inputValue: null });
+                    }
+                  );
+                }
+              }
+            );
+          };
+
+          _this.inputOk = function() {
+            return (
+              (0, _date_utils.isMoment)(_this.state.preSelection) ||
+              (0, _date_utils.isDate)(_this.state.preSelection)
+            );
+          };
+
+          _this.isCalendarOpen = function() {
+            return _this.props.open === undefined
+              ? _this.state.open &&
+                  !_this.props.disabled &&
+                  !_this.props.readOnly
+              : _this.props.open;
           };
 
           _this.handleFocus = function(event) {
@@ -35419,9 +35475,6 @@
             ) {
               _this.setPreSelection(date);
             } else if (!_this.props.inline) {
-              _this.props.onBlur(date);
-              _this.cancelFocusInput();
-
               _this.setOpen(false);
             }
           };
@@ -35436,10 +35489,6 @@
               if ((0, _date_utils.isOutOfBounds)(changedDate, _this.props)) {
                 _this.props.onChange(date, event);
                 _this.props.onSelect(changedDate, event);
-                _this.setState({
-                  inputValue: changedDate,
-                  preSelection: changedDate
-                });
               }
 
               return;
@@ -35515,7 +35564,9 @@
             });
 
             _this.props.onChange(changedDate);
-            _this.setOpen(false);
+            if (_this.props.shouldCloseOnSelect) {
+              _this.setOpen(false);
+            }
             _this.setState({ inputValue: null });
           };
 
@@ -35523,6 +35574,8 @@
             if (!_this.props.disabled && !_this.props.readOnly) {
               _this.setOpen(true);
             }
+
+            _this.props.onInputClick();
           };
 
           _this.onInputKeyDown = function(event) {
@@ -35542,30 +35595,24 @@
             if (eventKey === "Enter") {
               event.preventDefault();
               if (
-                ((0, _date_utils.isMoment)(_this.state.preSelection) ||
-                  (0, _date_utils.isDate)(_this.state.preSelection)) &&
+                _this.inputOk() &&
                 _this.state.lastPreSelectChange ===
                   PRESELECT_CHANGE_VIA_NAVIGATE
               ) {
                 _this.handleSelect(copy, event);
                 !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
               } else {
-                _this.input.blur();
-                _this.props.onBlur(copy);
-                _this.cancelFocusInput();
-
                 _this.setOpen(false);
               }
             } else if (eventKey === "Escape") {
               event.preventDefault();
 
-              _this.input.blur();
-              _this.props.onBlur(copy);
-              _this.cancelFocusInput();
-
               _this.setOpen(false);
+              if (!_this.inputOk()) {
+                _this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+              }
             } else if (eventKey === "Tab") {
-              _this.setOpen(false);
+              _this.setOpen(false, true);
             } else if (!_this.props.disabledKeyboardNavigation) {
               var newSelection = void 0;
               switch (eventKey) {
@@ -35594,7 +35641,12 @@
                   newSelection = (0, _date_utils.addYears)(copy, 1);
                   break;
               }
-              if (!newSelection) return; // Let the input component handle this keydown
+              if (!newSelection) {
+                if (_this.props.onInputError) {
+                  _this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+                }
+                return; // Let the input component handle this keydown
+              }
               event.preventDefault();
               _this.setState({
                 lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
@@ -35621,12 +35673,7 @@
           };
 
           _this.renderCalendar = function() {
-            if (
-              !_this.props.inline &&
-              (!_this.state.open ||
-                _this.props.disabled ||
-                _this.props.readOnly)
-            ) {
+            if (!_this.props.inline && !_this.isCalendarOpen()) {
               return null;
             }
             return _react2.default.createElement(
@@ -35701,7 +35748,9 @@
                 nextMonthButtonLabel: _this.props.nextMonthButtonLabel,
                 disabledKeyboardNavigation:
                   _this.props.disabledKeyboardNavigation,
-                renderCustomHeader: _this.props.renderCustomHeader
+                renderCustomHeader: _this.props.renderCustomHeader,
+                popperProps: _this.props.popperProps,
+                renderDayContents: _this.props.renderDayContents
               },
               _this.props.children
             );
@@ -35836,8 +35885,7 @@
 
           return _react2.default.createElement(_popper_component2.default, {
             className: this.props.popperClassName,
-            hidePopper:
-              !this.state.open || this.props.disabled || this.props.readOnly,
+            hidePopper: !this.isCalendarOpen(),
             popperModifiers: this.props.popperModifiers,
             targetComponent: _react2.default.createElement(
               "div",
@@ -35847,7 +35895,8 @@
             ),
             popperContainer: this.props.popperContainer,
             popperComponent: calendar,
-            popperPlacement: this.props.popperPlacement
+            popperPlacement: this.props.popperPlacement,
+            popperProps: this.props.popperProps
           });
         };
 
@@ -35900,9 +35949,12 @@
         onClickOutside: _propTypes2.default.func,
         onChangeRaw: _propTypes2.default.func,
         onFocus: _propTypes2.default.func,
+        onInputClick: _propTypes2.default.func,
         onKeyDown: _propTypes2.default.func,
         onMonthChange: _propTypes2.default.func,
         onYearChange: _propTypes2.default.func,
+        onInputError: _propTypes2.default.func,
+        open: _propTypes2.default.bool,
         openToDate: _propTypes2.default.object,
         peekNextMonth: _propTypes2.default.bool,
         placeholderText: _propTypes2.default.string,
@@ -35912,6 +35964,7 @@
         popperPlacement: _propTypes2.default.oneOf(
           _popper_component.popperPlacementPositions
         ), // <PopperComponent/> props
+        popperProps: _propTypes2.default.object,
         preventOpenOnFocus: _propTypes2.default.bool,
         readOnly: _propTypes2.default.bool,
         required: _propTypes2.default.bool,
@@ -35931,7 +35984,7 @@
         tabIndex: _propTypes2.default.number,
         timeCaption: _propTypes2.default.string,
         title: _propTypes2.default.string,
-        todayButton: _propTypes2.default.string,
+        todayButton: _propTypes2.default.node,
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
         utcOffset: _propTypes2.default.oneOfType([
@@ -35954,7 +36007,8 @@
         clearButtonTitle: _propTypes2.default.string,
         previousMonthButtonLabel: _propTypes2.default.string,
         nextMonthButtonLabel: _propTypes2.default.string,
-        renderCustomHeader: _propTypes2.default.func
+        renderCustomHeader: _propTypes2.default.func,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = DatePicker;
 
@@ -36807,6 +36861,7 @@
                     endDate: _this.props.endDate,
                     peekNextMonth: _this.props.peekNextMonth,
                     utcOffset: _this.props.utcOffset,
+                    renderDayContents: _this.props.renderDayContents,
                     disabledKeyboardNavigation:
                       _this.props.disabledKeyboardNavigation
                   })
@@ -36817,7 +36872,10 @@
           };
 
           _this.renderTimeSection = function() {
-            if (_this.props.showTimeSelect) {
+            if (
+              _this.props.showTimeSelect &&
+              (_this.state.monthContainer || _this.props.showTimeSelectOnly)
+            ) {
               return _react2.default.createElement(_time2.default, {
                 selected: _this.props.selected,
                 onChange: _this.props.onTimeChange,
@@ -36842,7 +36900,7 @@
           _this.state = {
             date: _this.localizeDate(_this.getDateInView()),
             selectingDate: null,
-            monthContainer: _this.monthContainer
+            monthContainer: null
           };
           return _this;
         }
@@ -36968,7 +37026,7 @@
         showWeekNumbers: _propTypes2.default.bool,
         showYearDropdown: _propTypes2.default.bool,
         startDate: _propTypes2.default.object,
-        todayButton: _propTypes2.default.string,
+        todayButton: _propTypes2.default.node,
         useWeekdaysShort: _propTypes2.default.bool,
         formatWeekDay: _propTypes2.default.func,
         withPortal: _propTypes2.default.bool,
@@ -36983,7 +37041,8 @@
         showDisabledMonthNavigation: _propTypes2.default.bool,
         previousMonthButtonLabel: _propTypes2.default.string,
         nextMonthButtonLabel: _propTypes2.default.string,
-        renderCustomHeader: _propTypes2.default.func
+        renderCustomHeader: _propTypes2.default.func,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Calendar;
 
@@ -57893,7 +57952,8 @@
                     dayClassName: _this.props.dayClassName,
                     utcOffset: _this.props.utcOffset,
                     disabledKeyboardNavigation:
-                      _this.props.disabledKeyboardNavigation
+                      _this.props.disabledKeyboardNavigation,
+                    renderDayContents: _this.props.renderDayContents
                   })
                 );
 
@@ -57984,7 +58044,8 @@
         utcOffset: _propTypes2.default.oneOfType([
           _propTypes2.default.number,
           _propTypes2.default.string
-        ])
+        ]),
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Month;
 
@@ -58160,6 +58221,7 @@
                     endDate: _this.props.endDate,
                     dayClassName: _this.props.dayClassName,
                     utcOffset: _this.props.utcOffset,
+                    renderDayContents: _this.props.renderDayContents,
                     disabledKeyboardNavigation:
                       _this.props.disabledKeyboardNavigation
                   });
@@ -58209,7 +58271,8 @@
         utcOffset: _propTypes2.default.oneOfType([
           _propTypes2.default.number,
           _propTypes2.default.string
-        ])
+        ]),
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Week;
 
@@ -58504,7 +58567,11 @@
               "aria-label": "day-" + (0, _date_utils.getDate)(this.props.day),
               role: "option"
             },
-            (0, _date_utils.getDate)(this.props.day)
+            this.props.renderDayContents
+              ? this.props.renderDayContents(
+                  (0, _date_utils.getDate)(this.props.day)
+                )
+              : (0, _date_utils.getDate)(this.props.day)
           );
         };
 
@@ -58530,7 +58597,8 @@
         utcOffset: _propTypes2.default.oneOfType([
           _propTypes2.default.number,
           _propTypes2.default.string
-        ])
+        ]),
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Day;
 
@@ -58852,7 +58920,17 @@
                   {
                     key: i,
                     onClick: _this.handleClick.bind(_this, time),
-                    className: _this.liClasses(time, currH, currM)
+                    className: _this.liClasses(time, currH, currM),
+                    ref: function ref(li) {
+                      if (
+                        (currH === (0, _date_utils.getHour)(time) &&
+                          currM === (0, _date_utils.getMinute)(time)) ||
+                        (currH === (0, _date_utils.getHour)(time) &&
+                          !_this.centerLi)
+                      ) {
+                        _this.centerLi = li;
+                      }
+                    }
                   },
                   (0, _date_utils.formatDate)(time, format)
                 );
@@ -58865,19 +58943,21 @@
 
         Time.prototype.componentDidMount = function componentDidMount() {
           // code to ensure selected time will always be in focus within time window when it first appears
-          var multiplier = 60 / this.props.intervals;
-          var currH = this.props.selected
-            ? (0, _date_utils.getHour)(this.props.selected)
-            : (0, _date_utils.getHour)((0, _date_utils.newDate)());
-          this.list.scrollTop = 30 * (multiplier * currH);
+          this.list.scrollTop = Time.calcCenterPosition(
+            this.props.monthRef
+              ? this.props.monthRef.clientHeight - this.header.clientHeight
+              : this.list.clientHeight,
+            this.centerLi
+          );
         };
 
         Time.prototype.render = function render() {
           var _this2 = this;
 
           var height = null;
-          if (this.props.monthRef) {
-            height = this.props.monthRef.clientHeight - 39;
+          if (this.props.monthRef && this.header) {
+            height =
+              this.props.monthRef.clientHeight - this.header.clientHeight;
           }
 
           return _react2.default.createElement(
@@ -58893,7 +58973,10 @@
               "div",
               {
                 className:
-                  "react-datepicker__header react-datepicker__header--time"
+                  "react-datepicker__header react-datepicker__header--time",
+                ref: function ref(header) {
+                  _this2.header = header;
+                }
               },
               _react2.default.createElement(
                 "div",
@@ -58946,7 +59029,7 @@
         intervals: _propTypes2.default.number,
         selected: _propTypes2.default.object,
         onChange: _propTypes2.default.func,
-        todayButton: _propTypes2.default.string,
+        todayButton: _propTypes2.default.node,
         minTime: _propTypes2.default.object,
         maxTime: _propTypes2.default.object,
         excludeTimes: _propTypes2.default.array,
@@ -58954,6 +59037,14 @@
         timeCaption: _propTypes2.default.string,
         injectTimes: _propTypes2.default.array
       };
+
+      Time.calcCenterPosition = function(listHeight, centerLiRef) {
+        return (
+          centerLiRef.offsetTop -
+          (listHeight / 2 - centerLiRef.clientHeight / 2)
+        );
+      };
+
       exports.default = Time;
 
       /***/
@@ -59086,6 +59177,7 @@
             popperComponent = _props.popperComponent,
             popperModifiers = _props.popperModifiers,
             popperPlacement = _props.popperPlacement,
+            popperProps = _props.popperProps,
             targetComponent = _props.targetComponent;
 
           var popper = void 0;
@@ -59097,7 +59189,13 @@
             );
             popper = _react2.default.createElement(
               _reactPopper.Popper,
-              { modifiers: popperModifiers, placement: popperPlacement },
+              _extends(
+                {
+                  modifiers: popperModifiers,
+                  placement: popperPlacement
+                },
+                popperProps
+              ),
               function(_ref) {
                 var ref = _ref.ref,
                   style = _ref.style,
@@ -59129,25 +59227,21 @@
           }
 
           return _react2.default.createElement(
-            "div",
+            _reactPopper.Manager,
             null,
             _react2.default.createElement(
-              _reactPopper.Manager,
+              _reactPopper.Reference,
               null,
-              _react2.default.createElement(
-                _reactPopper.Reference,
-                null,
-                function(_ref2) {
-                  var ref = _ref2.ref;
-                  return _react2.default.createElement(
-                    "div",
-                    { ref: ref, className: "react-datepicker-wrapper" },
-                    targetComponent
-                  );
-                }
-              ),
-              popper
-            )
+              function(_ref2) {
+                var ref = _ref2.ref;
+                return _react2.default.createElement(
+                  "div",
+                  { ref: ref, className: "react-datepicker-wrapper" },
+                  targetComponent
+                );
+              }
+            ),
+            popper
           );
         };
 
@@ -59164,6 +59258,7 @@
                     boundariesElement: "viewport"
                   }
                 },
+                popperProps: {},
                 popperPlacement: "bottom-start"
               };
             }
@@ -59180,6 +59275,7 @@
         popperModifiers: _propTypes2.default.object, // <datepicker/> props
         popperPlacement: _propTypes2.default.oneOf(popperPlacementPositions), // <datepicker/> props
         popperContainer: _propTypes2.default.func,
+        popperProps: _propTypes2.default.object,
         targetComponent: _propTypes2.default.element
       };
       exports.default = PopperComponent;

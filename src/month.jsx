@@ -33,10 +33,10 @@ export default class Month extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number,
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
-    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    renderDayContents: PropTypes.func
   };
 
   handleDayClick = (day, event) => {
@@ -104,6 +104,7 @@ export default class Month extends React.Component {
           setOpen={this.props.setOpen}
           shouldCloseOnSelect={this.props.shouldCloseOnSelect}
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+          renderDayContents={this.props.renderDayContents}
         />
       );
 
