@@ -3,6 +3,7 @@ import Week from "../src/week";
 import WeekNumber from "../src/week_number";
 import Day from "../src/day";
 import { shallow } from "enzyme";
+import sinon from "sinon";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
@@ -63,12 +64,56 @@ describe("Week", () => {
     }
 
     const weekStart = utils.newDate("2015-12-20");
+    const setOpenSpy = sinon.spy();
     const week = shallow(
-      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+      <Week
+        day={weekStart}
+        showWeekNumber
+        onWeekSelect={onWeekClick}
+        setOpen={setOpenSpy}
+      />
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
     expect(utils.equals(firstDayReceived, weekStart)).to.be.true;
+  });
+
+  it("should call the provided onWeekSelect function and call the setopen function", () => {
+    const weekStart = utils.newDate("2015-12-20");
+    const setOpenSpy = sinon.spy();
+
+    const week = shallow(
+      <Week
+        day={weekStart}
+        showWeekNumber
+        shouldCloseOnSelect
+        onWeekSelect={() => {}}
+        setOpen={setOpenSpy}
+      />
+    );
+
+    const weekNumberElement = week.find(WeekNumber);
+    weekNumberElement.simulate("click");
+    sinon.assert.calledOnce(setOpenSpy);
+  });
+
+  it("should call the provided onWeekSelect function and not call the setopen function when 'shouldCloseOnSelect' is false", () => {
+    const weekStart = utils.newDate("2015-12-20");
+    const setOpenSpy = sinon.spy();
+
+    const week = shallow(
+      <Week
+        day={weekStart}
+        showWeekNumber
+        shouldCloseOnSelect={false}
+        onWeekSelect={() => {}}
+        setOpen={setOpenSpy}
+      />
+    );
+
+    const weekNumberElement = week.find(WeekNumber);
+    weekNumberElement.simulate("click");
+    sinon.assert.notCalled(setOpenSpy);
   });
 
   it("should call the provided onWeekSelect function and pass the week number", () => {
@@ -81,7 +126,12 @@ describe("Week", () => {
     const weekStart = utils.newDate("2015-12-20");
     const realWeekNumber = utils.getWeek(weekStart);
     const week = shallow(
-      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+      <Week
+        day={weekStart}
+        showWeekNumber
+        shouldCloseOnSelect={false}
+        onWeekSelect={onWeekClick}
+      />
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
