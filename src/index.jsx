@@ -158,7 +158,8 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
-    accessibleMode: PropTypes.bool
+    accessibleMode: PropTypes.bool,
+    accessibleModeButton: PropTypes.node
   };
 
   static get defaultProps() {
@@ -187,7 +188,8 @@ export default class DatePicker extends React.Component {
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
-      accessibleMode: false
+      accessibleMode: true,
+      accessibleModeButton: <span>📅</span>
     };
   }
 
@@ -278,7 +280,10 @@ export default class DatePicker extends React.Component {
   handleFocus = event => {
     if (!this.state.preventFocus) {
       this.props.onFocus(event);
-      if (!this.props.preventOpenOnFocus && !this.props.readOnly) {
+      if (
+        !this.props.preventOpenOnFocus &&
+        !this.props.readOnly & !this.props.accessibleMode
+      ) {
         this.setOpen(true);
       }
     }
@@ -442,6 +447,14 @@ export default class DatePicker extends React.Component {
   onInputClick = () => {
     if (!this.props.disabled && !this.props.readOnly) {
       this.setOpen(true);
+    }
+  };
+
+  onAccessibleModeButtonKeyDown = event => {
+    const eventKey = event.key;
+    if (eventKey === " " || eventKey === "Enter") {
+      event.preventDefault();
+      this.onInputClick();
     }
   };
 
@@ -682,6 +695,22 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  renderAccessibleButton = () => {
+    if (this.props.accessibleModeButton != null) {
+      return React.cloneElement(this.props.accessibleModeButton, {
+        onClick: this.onInputClick,
+        onKeyDown: this.onAccessibleModeButtonKeyDown,
+        className: classnames(
+          this.props.accessibleModeButton.props.className,
+          "react-datepicker__accessible-icon"
+        ),
+        tabIndex: 0
+      });
+    } else {
+      return null;
+    }
+  };
+
   render() {
     const calendar = this.renderCalendar();
 
@@ -696,6 +725,7 @@ export default class DatePicker extends React.Component {
             <div className="react-datepicker__input-container">
               {this.renderDateInput()}
               {this.renderClearButton()}
+              {this.renderAccessibleButton()}
             </div>
           ) : null}
           {this.state.open || this.props.inline ? (
@@ -716,6 +746,7 @@ export default class DatePicker extends React.Component {
           <div className="react-datepicker__input-container">
             {this.renderDateInput()}
             {this.renderClearButton()}
+            {this.renderAccessibleButton()}
           </div>
         }
         popperContainer={this.props.popperContainer}

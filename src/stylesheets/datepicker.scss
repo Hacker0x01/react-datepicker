@@ -499,6 +499,18 @@
   }
 }
 
+.react-datepicker__accessible-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 7px;
+}
+
+.react-datepicker__close-icon + .react-datepicker__accessible-icon {
+  right: 25px;
+}
+
 .react-datepicker__today-button {
   background: $datepicker__background-color;
   border-top: 1px solid $datepicker__border-color;
