@@ -672,18 +672,34 @@ export default class Calendar extends React.Component {
       ? ".react-datepicker__time-box--accessible"
       : ".react-datepicker__month--accessible";
 
-    return (
-      <Container
-        className={classnames("react-datepicker", this.props.className, {
-          "react-datepicker--time-only": this.props.showTimeSelectOnly
-        })}
-      >
-        <FocusTrap
-          active={trapFocus}
-          focusTrapOptions={{
-            onDeactivate: () => this.props.setOpen(false),
-            initialFocus: trapFocus ? initialFocusTarget : undefined
-          }}
+    if (trapFocus) {
+      return (
+        <Container
+          className={classnames("react-datepicker", this.props.className, {
+            "react-datepicker--time-only": this.props.showTimeSelectOnly
+          })}
+        >
+          <FocusTrap
+            focusTrapOptions={{
+              onDeactivate: () => this.props.setOpen(false),
+              initialFocus: initialFocusTarget
+            }}
+          >
+            {this.renderPreviousMonthButton()}
+            {this.renderNextMonthButton()}
+            {this.renderMonths()}
+            {this.renderTodayButton()}
+            {this.renderTimeSection()}
+            {this.props.children}
+          </FocusTrap>
+        </Container>
+      );
+    } else {
+      return (
+        <Container
+          className={classnames("react-datepicker", this.props.className, {
+            "react-datepicker--time-only": this.props.showTimeSelectOnly
+          })}
         >
           {this.renderPreviousMonthButton()}
           {this.renderNextMonthButton()}
@@ -691,8 +707,8 @@ export default class Calendar extends React.Component {
           {this.renderTodayButton()}
           {this.renderTimeSection()}
           {this.props.children}
-        </FocusTrap>
-      </Container>
-    );
+        </Container>
+      );
+    }
   }
 }

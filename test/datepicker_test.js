@@ -576,7 +576,6 @@ describe("DatePicker", () => {
       maxDate: utils.addDays(utils.newDate(), 1)
     });
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
-    console.log(data.datePicker.debug());
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
