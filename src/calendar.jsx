@@ -58,6 +58,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.object,
     excludeDates: PropTypes.array,
@@ -102,18 +103,21 @@ export default class Calendar extends React.Component {
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     startDate: PropTypes.object,
-    todayButton: PropTypes.string,
+    todayButton: PropTypes.node,
     useWeekdaysShort: PropTypes.bool,
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
-    utcOffset: PropTypes.number,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
+    renderCustomHeader: PropTypes.func,
+    renderDayContents: PropTypes.func,
     updateSelection: PropTypes.func.isRequired,
     accessibleMode: PropTypes.bool
   };
@@ -129,12 +133,21 @@ export default class Calendar extends React.Component {
     };
   }
 
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      forceShowMonthNavigation: false,
+      timeCaption: "Time"
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       date: this.localizeDate(this.getDateInView()),
       selectingDate: null,
-      monthContainer: this.monthContainer
+      monthContainer: null
     };
   }
 
@@ -319,6 +332,10 @@ export default class Calendar extends React.Component {
   };
 
   renderPreviousMonthButton = () => {
+    if (this.props.renderCustomHeader) {
+      return;
+    }
+
     const allPrevDaysDisabled = allDaysDisabledBefore(
       this.state.date,
       "month",
@@ -358,6 +375,10 @@ export default class Calendar extends React.Component {
   };
 
   renderNextMonthButton = () => {
+    if (this.props.renderCustomHeader) {
+      return;
+    }
+
     const allNextDaysDisabled = allDaysDisabledAfter(
       this.state.date,
       "month",
@@ -495,6 +516,63 @@ export default class Calendar extends React.Component {
     );
   };
 
+  renderDefaultHeader = ({ monthDate, i }) => (
+    <div className="react-datepicker__header">
+      {this.renderCurrentMonth(monthDate)}
+      <div
+        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
+          this.props.dropdownMode
+        }`}
+        onFocus={this.handleDropdownFocus}
+      >
+        {this.renderMonthDropdown(i !== 0)}
+        {this.renderMonthYearDropdown(i !== 0)}
+        {this.renderYearDropdown(i !== 0)}
+      </div>
+      <div className="react-datepicker__day-names">
+        {this.header(monthDate)}
+      </div>
+    </div>
+  );
+
+  renderCustomHeader = ({ monthDate, i }) => {
+    if (i !== 0) {
+      return null;
+    }
+
+    const prevMonthButtonDisabled = allDaysDisabledBefore(
+      this.state.date,
+      "month",
+      this.props
+    );
+
+    const nextMonthButtonDisabled = allDaysDisabledAfter(
+      this.state.date,
+      "month",
+      this.props
+    );
+
+    return (
+      <div
+        className="react-datepicker__header react-datepicker__header--custom"
+        onFocus={this.props.onDropdownFocus}
+      >
+        {this.props.renderCustomHeader({
+          ...this.state,
+          changeMonth: this.changeMonth,
+          changeYear: this.changeYear,
+          decreaseMonth: this.decreaseMonth,
+          increaseMonth: this.increaseMonth,
+          prevMonthButtonDisabled,
+          nextMonthButtonDisabled
+        })}
+        <div className="react-datepicker__day-names">
+          {this.header(monthDate)}
+        </div>
+      </div>
+    );
+  };
+
   renderMonths = () => {
     if (this.props.showTimeSelectOnly) {
       return;
@@ -512,22 +590,9 @@ export default class Calendar extends React.Component {
           }}
           className="react-datepicker__month-container"
         >
-          <div className="react-datepicker__header">
-            {this.renderCurrentMonth(monthDate)}
-            <div
-              className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
-                this.props.dropdownMode
-              }`}
-              onFocus={this.handleDropdownFocus}
-            >
-              {this.renderMonthDropdown(i !== 0)}
-              {this.renderMonthYearDropdown(i !== 0)}
-              {this.renderYearDropdown(i !== 0)}
-            </div>
-            <div className="react-datepicker__day-names">
-              {this.header(monthDate)}
-            </div>
-          </div>
+          {this.props.renderCustomHeader
+            ? this.renderCustomHeader({ monthDate, i })
+            : this.renderDefaultHeader({ monthDate, i })}
           <Month
             day={monthDate}
             dayClassName={this.props.dayClassName}
@@ -554,8 +619,6 @@ export default class Calendar extends React.Component {
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
             utcOffset={this.props.utcOffset}
-            updateSelection={this.props.updateSelection}
-            accessibleMode={this.props.accessibleMode}
           />
         </div>
       );
@@ -564,7 +627,10 @@ export default class Calendar extends React.Component {
   };
 
   renderTimeSection = () => {
-    if (this.props.showTimeSelect) {
+    if (
+      this.props.showTimeSelect &&
+      (this.state.monthContainer || this.props.showTimeSelectOnly)
+    ) {
       return (
         <Time
           selected={this.props.selected}

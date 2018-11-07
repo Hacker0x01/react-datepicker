@@ -1,12 +1,9 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Target, Popper } from "react-popper";
+import { Manager, Reference, Popper } from "react-popper";
 
 export const popperPlacementPositions = [
-  "auto",
-  "auto-left",
-  "auto-right",
   "bottom",
   "bottom-end",
   "bottom-start",
@@ -29,6 +26,7 @@ export default class PopperComponent extends React.Component {
     popperModifiers: PropTypes.object, // <datepicker/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
+    popperProps: PropTypes.object,
     targetComponent: PropTypes.element
   };
 
@@ -42,6 +40,7 @@ export default class PopperComponent extends React.Component {
           boundariesElement: "viewport"
         }
       },
+      popperProps: {},
       popperPlacement: "bottom-start"
     };
   }
@@ -53,6 +52,7 @@ export default class PopperComponent extends React.Component {
       popperComponent,
       popperModifiers,
       popperPlacement,
+      popperProps,
       targetComponent
     } = this.props;
 
@@ -62,11 +62,19 @@ export default class PopperComponent extends React.Component {
       const classes = classnames("react-datepicker-popper", className);
       popper = (
         <Popper
-          className={classes}
           modifiers={popperModifiers}
           placement={popperPlacement}
+          {...popperProps}
         >
-          {popperComponent}
+          {({ ref, style, placement, arrowProps }) => (
+            <div
+              {...{ ref, style }}
+              className={classes}
+              data-placement={placement}
+            >
+              {React.cloneElement(popperComponent, { arrowProps })}
+            </div>
+          )}
         </Popper>
       );
     }
@@ -77,7 +85,13 @@ export default class PopperComponent extends React.Component {
 
     return (
       <Manager>
-        <Target className="react-datepicker-wrapper">{targetComponent}</Target>
+        <Reference>
+          {({ ref }) => (
+            <div ref={ref} className="react-datepicker-wrapper">
+              {targetComponent}
+            </div>
+          )}
+        </Reference>
         {popper}
       </Manager>
     );

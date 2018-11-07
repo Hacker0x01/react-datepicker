@@ -230,11 +230,13 @@
         margin: 0;
         height: calc(195px + (#{$datepicker__item-size} / 2));
         overflow-y: scroll;
-        padding-right: 30px;
+        padding-right: 0px;
+        padding-left: 0px;
         width: 100%;
         box-sizing: content-box;
 
         li.react-datepicker__time-list-item {
+          height: 30px;
           padding: 5px 10px;
           &:hover {
             cursor: pointer;

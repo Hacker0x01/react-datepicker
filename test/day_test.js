@@ -35,6 +35,15 @@ describe("Day", () => {
         day = addDays(cloneDate(day), 1);
       }
     });
+
+    it("should render custom day contents", () => {
+      const day = newDate();
+      function renderDayContents(day) {
+        return <span>{day}</span>;
+      }
+      const shallowDay = renderDay(day, { renderDayContents });
+      expect(shallowDay.find("span"));
+    });
   });
 
   describe("selected", () => {

@@ -288,7 +288,8 @@
   margin: 0;
   height: calc(195px + (1.7rem / 2));
   overflow-y: scroll;
-  padding-right: 30px;
+  padding-right: 0px;
+  padding-left: 0px;
   width: 100%;
   box-sizing: content-box;
 }
@@ -297,6 +298,7 @@
   .react-datepicker__time-box
   ul.react-datepicker__time-list
   li.react-datepicker__time-list-item {
+  height: 30px;
   padding: 5px 10px;
 }
 .react-datepicker__time-container
@@ -996,6 +998,15 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
     background: #fff;
     border-radius: 4px;
     overflow: hidden;
+  }
+}
+
+@supports (position: sticky) {
+  .examples__navigation {
+    overflow-y: scroll;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
   }
 }
 

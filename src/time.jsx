@@ -30,7 +30,7 @@ export default class Time extends React.Component {
     intervals: PropTypes.number,
     selected: PropTypes.object,
     onChange: PropTypes.func,
-    todayButton: PropTypes.string,
+    todayButton: PropTypes.node,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
     excludeTimes: PropTypes.array,
@@ -48,6 +48,12 @@ export default class Time extends React.Component {
       timeCaption: "Time"
     };
   }
+
+  static calcCenterPosition = (listHeight, centerLiRef) => {
+    return (
+      centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
+    );
+  };
 
   constructor(...args) {
     super(...args);
@@ -69,6 +75,14 @@ export default class Time extends React.Component {
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
+    this.list.scrollTop = Time.calcCenterPosition(
+      this.props.monthRef
+        ? this.props.monthRef.clientHeight - this.header.clientHeight
+        : this.list.clientHeight,
+      this.centerLi
+    );
+
+    /*
     const selectedElement = findDOMNode(this).querySelector(
       ".react-datepicker__time-list-item--selected"
     );
@@ -103,8 +117,10 @@ export default class Time extends React.Component {
       });
       this.setState({ preSelection: closestTime });
     }
+     */
   }
 
+  /*
   componentDidUpdate() {
     // prefer scrolling to a preselected element, but if the preselected time
     // is the selected time, there is no preselected item
@@ -125,6 +141,7 @@ export default class Time extends React.Component {
       });
     }
   }
+   */
 
   onFocus = () => {
     this.setState({ readInstructions: true });
@@ -234,7 +251,15 @@ export default class Time extends React.Component {
       <li
         key={i}
         onClick={this.handleClick.bind(this, time)}
-        className={this.liClasses(time, activeTime)}
+        className={this.liClasses(time, currH, currM, activeTime)}
+        ref={li => {
+          if (
+            (currH === getHour(time) && currM === getMinute(time)) ||
+            (currH === getHour(time) && !this.centerLi)
+          ) {
+            this.centerLi = li;
+          }
+        }}
         role="option"
         id={i}
       >
@@ -245,8 +270,8 @@ export default class Time extends React.Component {
 
   render() {
     let height = null;
-    if (this.props.monthRef) {
-      height = this.props.monthRef.clientHeight - 39;
+    if (this.props.monthRef && this.header) {
+      height = this.props.monthRef.clientHeight - this.header.clientHeight;
     }
 
     const classNames = classnames("react-datepicker__time-container", {
@@ -272,7 +297,12 @@ export default class Time extends React.Component {
 
     return (
       <div className={classNames}>
-        <div className="react-datepicker__header react-datepicker__header--time">
+        <div
+          className="react-datepicker__header react-datepicker__header--time"
+          ref={header => {
+            this.header = header;
+          }}
+        >
           <div className="react-datepicker-time__header">
             {this.props.timeCaption}
           </div>

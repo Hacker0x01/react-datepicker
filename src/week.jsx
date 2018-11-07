@@ -5,7 +5,13 @@ import WeekNumber from "./week_number";
 import * as utils from "./date_utils";
 
 export default class Week extends React.Component {
+  static get defaultProps() {
+    return {
+      shouldCloseOnSelect: true
+    };
+  }
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -28,7 +34,10 @@ export default class Week extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number,
+    setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    renderDayContents: PropTypes.func,
     accessibleMode: PropTypes.bool
   };
 
@@ -47,6 +56,9 @@ export default class Week extends React.Component {
   handleWeekClick = (day, weekNumber, event) => {
     if (typeof this.props.onWeekSelect === "function") {
       this.props.onWeekSelect(day, weekNumber, event);
+    }
+    if (this.props.shouldCloseOnSelect) {
+      this.props.setOpen(false);
     }
   };
 
@@ -95,6 +107,8 @@ export default class Week extends React.Component {
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
             utcOffset={this.props.utcOffset}
+            renderDayContents={this.props.renderDayContents}
+            disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             accessibleMode={this.props.accessibleMode}
           />
         );

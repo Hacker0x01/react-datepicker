@@ -9,6 +9,7 @@ const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
 export default class Month extends React.Component {
   static propTypes = {
+    disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
@@ -33,7 +34,10 @@ export default class Month extends React.Component {
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.object,
-    utcOffset: PropTypes.number,
+    setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
+    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    renderDayContents: PropTypes.func,
     updateSelection: PropTypes.func.isRequired,
     accessibleMode: PropTypes.bool
   };
@@ -153,6 +157,10 @@ export default class Month extends React.Component {
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
           utcOffset={this.props.utcOffset}
+          setOpen={this.props.setOpen}
+          shouldCloseOnSelect={this.props.shouldCloseOnSelect}
+          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+          renderDayContents={this.props.renderDayContents}
           accessibleMode={this.props.accessibleMode}
         />
       );
@@ -209,6 +217,8 @@ export default class Month extends React.Component {
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
+        role="listbox"
+        aria-label={"month-" + this.props.day.format("YYYY-MM")}
         tabIndex={this.props.accessibleMode ? 0 : -1}
         onKeyDown={this.onInputKeyDown}
         onFocus={this.onFocus}
