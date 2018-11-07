@@ -18,6 +18,7 @@ import {
 } from "./date_utils";
 
 function doHoursAndMinutesAlign(time1, time2) {
+  if (time1 == null || time2 == null) return false;
   return (
     getHour(time1) === getHour(time2) && getMinute(time1) === getMinute(time2)
   );
@@ -82,30 +83,14 @@ export default class Time extends React.Component {
       this.centerLi
     );
 
-    /*
-    const selectedElement = findDOMNode(this).querySelector(
-      ".react-datepicker__time-list-item--selected"
-    );
-    if (selectedElement) {
-      // an element matches the selected time, scroll to it
-      selectedElement.scrollIntoView({
-        behavior: "instant",
-        block: "nearest",
-        inline: "nearest"
-      });
-    } else {
-      // no element is pre-selected, find the nearest interval and scroll to it
-      // const multiplier = 60 / this.props.intervals;
+    if (this.state.preSelection == null) {
+      // there is no pre-selection, find the element closest to the selected time and preselect it
       const currH = this.props.selected
         ? getHour(this.props.selected)
         : getHour(newDate());
       const currM = this.props.selected
         ? getMinute(this.props.selected)
         : getMinute(newDate());
-      // const elementHeight = findDOMNode(this).querySelector('.react-datepicker__time-list-item').offsetHeight;
-      // this.list.scrollTop = elementHeight * (multiplier * currH);
-
-      // there is no pre-selection, find the element closest to the selected time and preselect it
       const closestTimeIndex = Math.floor(
         (60 * currH + currM) / this.props.intervals
       );
@@ -117,20 +102,11 @@ export default class Time extends React.Component {
       });
       this.setState({ preSelection: closestTime });
     }
-     */
   }
 
-  /*
   componentDidUpdate() {
-    // prefer scrolling to a preselected element, but if the preselected time
-    // is the selected time, there is no preselected item
-    const scrollToElement =
-      findDOMNode(this).querySelector(
-        ".react-datepicker__time-list-item--preselected"
-      ) ||
-      findDOMNode(this).querySelector(
-        ".react-datepicker__time-list-item--selected"
-      );
+    // scroll to the preSelected time
+    const scrollToElement = this.preselectedLi;
 
     if (scrollToElement) {
       // an element matches the selected time, scroll to it
@@ -141,7 +117,6 @@ export default class Time extends React.Component {
       });
     }
   }
-   */
 
   onFocus = () => {
     if (this.props.accessibleMode) {
@@ -262,6 +237,15 @@ export default class Time extends React.Component {
             (currH === getHour(time) && !this.centerLi)
           ) {
             this.centerLi = li;
+          }
+
+          if (
+            li &&
+            li.classList.contains(
+              "react-datepicker__time-list-item--preselected"
+            )
+          ) {
+            this.preselectedLi = li;
           }
         }}
         role="option"

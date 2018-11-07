@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
-import FocusTrap from "focus-trap-react";
+
 import {
   newDate,
   now,
@@ -167,7 +167,7 @@ export default class DatePicker extends React.Component {
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     accessibleMode: PropTypes.bool,
-    accessibleModeButton: PropTypes.node
+    accessibleModeButton: PropTypes.element
   };
 
   static get defaultProps() {
@@ -200,7 +200,9 @@ export default class DatePicker extends React.Component {
       nextMonthButtonLabel: "Next month",
       renderDayContents(date) {
         return date;
-      }
+      },
+      accessibleMode: true,
+      accessibleModeButton: <span>📅</span>
     };
   }
 
@@ -686,23 +688,25 @@ export default class DatePicker extends React.Component {
       </WrappedCalendar>
     );
 
-    if (this.props.accessibleMode && !this.props.inline) {
-      const initialFocusTarget = this.props.showTimeSelectOnly
-        ? ".react-datepicker__time-box--accessible"
-        : ".react-datepicker__month--accessible";
-      return (
-        <FocusTrap
-          focusTrapOptions={{
-            onDeactivate: () => this.setOpen(false),
-            initialFocus: initialFocusTarget
-          }}
-        >
-          {calendar}
-        </FocusTrap>
-      );
-    } else {
-      return calendar;
-    }
+    return calendar;
+
+    // if (this.props.accessibleMode && !this.props.inline) {
+    //   const initialFocusTarget = this.props.showTimeSelectOnly
+    //     ? ".react-datepicker__time-box--accessible"
+    //     : ".react-datepicker__month--accessible";
+    //   return (
+    //     <FocusTrap
+    //       focusTrapOptions={{
+    //         onDeactivate: () => this.setOpen(false),
+    //         initialFocus: initialFocusTarget
+    //       }}
+    //     >
+    //       {calendar}
+    //     </FocusTrap>
+    //   );
+    // } else {
+    //   return calendar;
+    // }
   };
 
   renderDateInput = () => {

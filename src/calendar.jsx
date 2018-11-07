@@ -239,6 +239,9 @@ export default class Calendar extends React.Component {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
     }
+    if (this.props.accessibleMode) {
+      this.props.updateSelection(getStartOfMonth(cloneDate(date)));
+    }
   };
 
   handleMonthChange = date => {
@@ -663,18 +666,32 @@ export default class Calendar extends React.Component {
 
   render() {
     const Container = this.props.container || CalendarContainer;
+
+    const trapFocus = this.props.accessibleMode && !this.props.inline;
+    const initialFocusTarget = this.props.showTimeSelectOnly
+      ? ".react-datepicker__time-box--accessible"
+      : ".react-datepicker__month--accessible";
+
     return (
       <Container
         className={classnames("react-datepicker", this.props.className, {
           "react-datepicker--time-only": this.props.showTimeSelectOnly
         })}
       >
-        {this.renderPreviousMonthButton()}
-        {this.renderNextMonthButton()}
-        {this.renderMonths()}
-        {this.renderTodayButton()}
-        {this.renderTimeSection()}
-        {this.props.children}
+        <FocusTrap
+          active={trapFocus}
+          focusTrapOptions={{
+            onDeactivate: () => this.props.setOpen(false),
+            initialFocus: initialFocusTarget
+          }}
+        >
+          {this.renderPreviousMonthButton()}
+          {this.renderNextMonthButton()}
+          {this.renderMonths()}
+          {this.renderTodayButton()}
+          {this.renderTimeSection()}
+          {this.props.children}
+        </FocusTrap>
       </Container>
     );
   }
