@@ -13,7 +13,6 @@ import {
   isSameYear,
   isBefore
 } from "./date_utils";
-import { findDOMNode } from "react-dom";
 
 function generateMonthYears(minDate, maxDate) {
   const list = [];
@@ -56,27 +55,22 @@ export default class MonthYearDropdownOptions extends React.Component {
   }
 
   componentDidMount() {
-    findDOMNode(this)
-      .querySelector(".react-datepicker__month-year-option--preselected")
-      .scrollIntoView({
+    if (this.preSelectionDiv) {
+      this.preSelectionDiv.scrollIntoView({
         behavior: "instant",
         block: "nearest",
         inline: "nearest"
       });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.accessibleMode &&
-      prevState.preSelection !== this.state.preSelection
-    ) {
-      findDOMNode(this)
-        .querySelector(".react-datepicker__month-year-option--preselected")
-        .scrollIntoView({
-          behavior: "instant",
-          block: "nearest",
-          inline: "nearest"
-        });
+    if (this.preSelectionDiv) {
+      this.preSelectionDiv.scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "nearest"
+      });
     }
   }
 
@@ -100,7 +94,11 @@ export default class MonthYearDropdownOptions extends React.Component {
               this.props.accessibleMode && isPreselectionSameMonthYear
           })}
           key={monthYearPoint}
-          ref={monthYearPoint}
+          ref={div => {
+            if (this.props.accessibleMode && isPreselectionSameMonthYear) {
+              this.preSelectionDiv = div;
+            }
+          }}
           onClick={this.onChange.bind(this, monthYearPoint)}
         >
           {isSameMonthYear ? (

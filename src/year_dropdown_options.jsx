@@ -1,5 +1,4 @@
 import React from "react";
-import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import FocusTrap from "focus-trap-react";
@@ -58,27 +57,25 @@ export default class YearDropdownOptions extends React.Component {
   }
 
   componentDidMount() {
-    findDOMNode(this)
-      .querySelector(".react-datepicker__year-option--preselected")
-      .scrollIntoView({
+    if (this.preSelectionDiv) {
+      this.preSelectionDiv.scrollIntoView({
         behavior: "instant",
         block: "nearest",
         inline: "nearest"
       });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.accessibleMode &&
+      this.preSelectionDiv &&
       prevState.preSelection !== this.state.preSelection
     ) {
-      findDOMNode(this)
-        .querySelector(".react-datepicker__year-option--preselected")
-        .scrollIntoView({
-          behavior: "instant",
-          block: "nearest",
-          inline: "nearest"
-        });
+      this.preSelectionDiv.scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "nearest"
+      });
     }
   }
 
@@ -92,7 +89,11 @@ export default class YearDropdownOptions extends React.Component {
             this.props.accessibleMode && this.state.preSelection === year
         })}
         key={year}
-        ref={year}
+        ref={div => {
+          if (this.props.accessibleMode && this.state.preSelection === year) {
+            this.preSelectionDiv = div;
+          }
+        }}
         onClick={this.onChange.bind(this, year)}
       >
         {selectedYear === year ? (
