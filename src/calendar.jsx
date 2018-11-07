@@ -682,7 +682,7 @@ export default class Calendar extends React.Component {
           active={trapFocus}
           focusTrapOptions={{
             onDeactivate: () => this.props.setOpen(false),
-            initialFocus: initialFocusTarget
+            initialFocus: trapFocus ? initialFocusTarget : undefined
           }}
         >
           {this.renderPreviousMonthButton()}

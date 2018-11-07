@@ -200,9 +200,9 @@ export default class DatePicker extends React.Component {
       nextMonthButtonLabel: "Next month",
       renderDayContents(date) {
         return date;
-      },
-      accessibleMode: true,
-      accessibleModeButton: <span>📅</span>
+      }
+      // accessibleMode: true,
+      // accessibleModeButton: <span>📅</span>
     };
   }
 
