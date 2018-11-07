@@ -187,9 +187,7 @@ export default class DatePicker extends React.Component {
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next month",
-      accessibleMode: true,
-      accessibleModeButton: <span>📅</span>
+      nextMonthButtonLabel: "Next month"
     };
   }
 
