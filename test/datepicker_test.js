@@ -507,16 +507,18 @@ describe("DatePicker", () => {
     };
   }
 
-  it("should use React portal when popperReactPortal prop is set", () => {
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker popperReactPortal />
-    );
-    expect(function() {
-      TestUtils.findRenderedDOMComponentWithClass(
-        datePicker,
-        "body > react-datepicker__portal"
-      );
-    }).to.not.throw();
+  it.only("should use React portal when popperReactPortal prop is set", () => {
+    var div = document.createElement("div");
+    div.classList.add("pseudo-parent");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(<DatePicker popperReactPortal />, div);
+    console.log("find", ReactDOM.findDOMNode(datePicker));
+    console.log("parentNode", ReactDOM.findDOMNode(datePicker).parentNode);
+    console.log("children", div.children);
+
+    expect(ReactDOM.findDOMNode(datePicker).parentNode === document.body).to.be
+      .true;
+    expect(div.hasChildNodes(ReactDOM.findDOMNode(datePicker))).to.be.false;
   });
 
   it("should handle onInputKeyDown ArrowLeft", () => {
