@@ -506,6 +506,19 @@ describe("DatePicker", () => {
       nodeInput
     };
   }
+
+  it("should use React portal when popperReactPortal prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker popperReactPortal />
+    );
+    expect(function() {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "body > react-datepicker__portal"
+      );
+    }).to.not.throw();
+  });
+
   it("should handle onInputKeyDown ArrowLeft", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
