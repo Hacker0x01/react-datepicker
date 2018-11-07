@@ -144,7 +144,9 @@ export default class Time extends React.Component {
    */
 
   onFocus = () => {
-    this.setState({ readInstructions: true });
+    if (this.props.accessibleMode) {
+      this.setState({ readInstructions: true });
+    }
   };
 
   onInputKeyDown = event => {
@@ -247,11 +249,13 @@ export default class Time extends React.Component {
     const times = this.generateTimes();
     const activeTime = this.props.selected ? this.props.selected : newDate();
     const format = this.props.format ? this.props.format : this.timeFormat;
+    const currH = getHour(activeTime);
+    const currM = getMinute(activeTime);
     return times.map((time, i) => (
       <li
         key={i}
         onClick={this.handleClick.bind(this, time)}
-        className={this.liClasses(time, currH, currM, activeTime)}
+        className={this.liClasses(time, activeTime)}
         ref={li => {
           if (
             (currH === getHour(time) && currM === getMinute(time)) ||

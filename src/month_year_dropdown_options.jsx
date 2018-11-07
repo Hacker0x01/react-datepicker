@@ -117,7 +117,9 @@ export default class MonthYearDropdownOptions extends React.Component {
   };
 
   onFocus = () => {
-    this.setState({ readInstructions: true });
+    if (this.props.accessibleMode) {
+      this.setState({ readInstructions: true });
+    }
   };
 
   onChange = monthYear => this.props.onChange(monthYear);

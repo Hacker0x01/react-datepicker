@@ -70,7 +70,9 @@ export default class Month extends React.Component {
   };
 
   onFocus = () => {
-    this.setState({ readInstructions: true });
+    if (this.props.accessibleMode) {
+      this.setState({ readInstructions: true });
+    }
   };
 
   onInputKeyDown = event => {

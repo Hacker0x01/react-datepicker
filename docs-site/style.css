@@ -606,6 +606,18 @@
   text-align: center;
 }
 
+.react-datepicker__accessible-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 7px;
+}
+
+.react-datepicker__close-icon + .react-datepicker__accessible-icon {
+  right: 25px;
+}
+
 .react-datepicker__today-button {
   background: #f0f0f0;
   border-top: 1px solid #aeaeae;
