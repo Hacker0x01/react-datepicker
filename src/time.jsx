@@ -1,5 +1,4 @@
 import React from "react";
-import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { ScreenReaderOnly } from "./screen_reader_only";
