@@ -1,7 +1,7 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import setMinutes from 'date-fns/setMinutes';
+import setHours from 'date-fns/setHours';
 
 export default class InjectTimes extends React.Component {
   state = {
@@ -31,7 +31,7 @@ export default class InjectTimes extends React.Component {
       setHours(setMinutes(new Date(), 5), 12),
       setHours(setMinutes(new Date(), 59), 23)
     ]}
-    dateFormat="MMMM dd, yyyy h:mm aa"
+    dateFormat="MMMM d, yyyy h:mm aa"
 />
 `}</strong>
           </code>
@@ -47,7 +47,7 @@ export default class InjectTimes extends React.Component {
               setHours(setMinutes(new Date(), 5), 12),
               setHours(setMinutes(new Date(), 59), 23)
             ]}
-            dateFormat="MMMM dd, yyyy h:mm aa"
+            dateFormat="MMMM d, yyyy h:mm aa"
           />
         </div>
       </div>

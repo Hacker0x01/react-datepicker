@@ -93444,7 +93444,7 @@
                 _react2.default.createElement(
                   'strong',
                   null,
-                  '    showTimeSelect\n    timeFormat="HH:mm"\n    timeIntervals={15}\n    dateFormat="MMMM dd, yyyy h:mm aa"\n    timeCaption="time"\n/>\n'
+                  '    showTimeSelect\n    timeFormat="HH:mm"\n    timeIntervals={15}\n    dateFormat="MMMM d, yyyy h:mm aa"\n    timeCaption="time"\n/>\n'
                 )
               )
             ),
@@ -93458,7 +93458,7 @@
                 timeFormat: 'HH:mm',
                 timeIntervals: 15,
                 timeCaption: 'time',
-                dateFormat: 'MMMM dd, yyyy h:mm aa'
+                dateFormat: 'MMMM d, yyyy h:mm aa'
               })
             )
           );
@@ -93721,7 +93721,7 @@
                 _react2.default.createElement(
                   'strong',
                   null,
-                  '  dateFormat="MMMM dd, yyyy h:mm aa"'
+                  '  dateFormat="MMMM d, yyyy h:mm aa"'
                 ),
                 _react2.default.createElement('br', null),
                 '/>'
@@ -93752,7 +93752,7 @@
                     17
                   )
                 ],
-                dateFormat: 'MMMM dd, yyyy h:mm aa'
+                dateFormat: 'MMMM d, yyyy h:mm aa'
               })
             )
           );
@@ -93892,7 +93892,7 @@
                   _react2.default.createElement('br', null),
                   '  maxTime={setHours(setMinutes(new Date(), 30), 20)}',
                   _react2.default.createElement('br', null),
-                  '  dateFormat="MMMM dd, yyyy"'
+                  '  dateFormat="MMMM d, yyyy"'
                 ),
                 _react2.default.createElement('br', null),
                 '/>'
@@ -93913,7 +93913,7 @@
                   (0, _setMinutes2.default)(new Date(), 30),
                   20
                 ),
-                dateFormat: 'MMMM dd, yyyy h:mm aa'
+                dateFormat: 'MMMM d, yyyy h:mm aa'
               })
             )
           );
@@ -94055,7 +94055,7 @@
                 _react2.default.createElement(
                   'strong',
                   null,
-                  '  dateFormat="MMMM dd, yyyy h:mm aa"'
+                  '  dateFormat="MMMM d, yyyy h:mm aa"'
                 ),
                 _react2.default.createElement('br', null),
                 '/>'
@@ -94086,7 +94086,7 @@
                     17
                   )
                 ],
-                dateFormat: 'MMMM dd, yyyy h:mm aa'
+                dateFormat: 'MMMM d, yyyy h:mm aa'
               })
             )
           );
@@ -94216,7 +94216,7 @@
                 _react2.default.createElement(
                   'strong',
                   null,
-                  '    showTimeSelect\n    timeFormat="HH:mm"\n    injectTimes={[\n      setHours(setMinutes(new Date(), 1), 0),\n      setHours(setMinutes(new Date(), 5), 12),\n      setHours(setMinutes(new Date(), 59), 23)\n    ]}\n    dateFormat="MMMM dd, yyyy h:mm aa"\n/>\n'
+                  '    showTimeSelect\n    timeFormat="HH:mm"\n    injectTimes={[\n      setHours(setMinutes(new Date(), 1), 0),\n      setHours(setMinutes(new Date(), 5), 12),\n      setHours(setMinutes(new Date(), 59), 23)\n    ]}\n    dateFormat="MMMM d, yyyy h:mm aa"\n/>\n'
                 )
               )
             ),
@@ -94242,7 +94242,7 @@
                     23
                   )
                 ],
-                dateFormat: 'MMMM dd, yyyy h:mm aa'
+                dateFormat: 'MMMM d, yyyy h:mm aa'
               })
             )
           );

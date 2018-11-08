@@ -1,5 +1,5 @@
-import React from "react";
-import DatePicker from "react-datepicker";
+import React from 'react';
+import DatePicker from 'react-datepicker';
 
 export default class ShowTime extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class ShowTime extends React.Component {
             <strong>{`    showTimeSelect
     timeFormat="HH:mm"
     timeIntervals={15}
-    dateFormat="MMMM dd, yyyy h:mm aa"
+    dateFormat="MMMM d, yyyy h:mm aa"
     timeCaption="time"
 />
 `}</strong>
@@ -42,7 +42,7 @@ export default class ShowTime extends React.Component {
             timeFormat="HH:mm"
             timeIntervals={15}
             timeCaption="time"
-            dateFormat="MMMM dd, yyyy h:mm aa"
+            dateFormat="MMMM d, yyyy h:mm aa"
           />
         </div>
       </div>
