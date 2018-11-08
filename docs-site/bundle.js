@@ -68002,7 +68002,10 @@
                 timeIntervals: 30,
                 timeCaption: 'Time',
                 previousMonthButtonLabel: 'Previous Month',
-                nextMonthButtonLabel: 'Next month'
+                nextMonthButtonLabel: 'Next month',
+                renderDayContents: function renderDayContents(date) {
+                  return date;
+                }
               };
             }
           }
@@ -68064,15 +68067,50 @@
             }
           };
 
+          _this.setBlur = function() {
+            if (_this.input && _this.input.blur) {
+              _this.input.blur();
+            }
+
+            if (_this.props.onBlur) {
+              _this.props.onBlur();
+            }
+
+            _this.cancelFocusInput();
+          };
+
           _this.setOpen = function(open) {
-            _this.setState({
-              open: open,
-              preSelection:
-                open && _this.state.open
-                  ? _this.state.preSelection
-                  : _this.calcInitialState().preSelection,
-              lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
-            });
+            var skipSetBlur =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : false;
+
+            _this.setState(
+              {
+                open: open,
+                preSelection:
+                  open && _this.state.open
+                    ? _this.state.preSelection
+                    : _this.calcInitialState().preSelection,
+                lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
+              },
+              function() {
+                if (!open) {
+                  _this.setState(
+                    function(prev) {
+                      return {
+                        focused: skipSetBlur ? prev.focused : false
+                      };
+                    },
+                    function() {
+                      !skipSetBlur && _this.setBlur();
+
+                      _this.setState({ inputValue: null });
+                    }
+                  );
+                }
+              }
+            );
           };
 
           _this.inputOk = function() {
@@ -68181,9 +68219,6 @@
             ) {
               _this.setPreSelection(date);
             } else if (!_this.props.inline) {
-              _this.props.onBlur(date);
-              _this.cancelFocusInput();
-
               _this.setOpen(false);
             }
           };
@@ -68198,10 +68233,6 @@
               if ((0, _date_utils.isOutOfBounds)(changedDate, _this.props)) {
                 _this.props.onChange(date, event);
                 _this.props.onSelect(changedDate, event);
-                _this.setState({
-                  inputValue: changedDate,
-                  preSelection: changedDate
-                });
               }
 
               return;
@@ -68271,7 +68302,9 @@
             });
 
             _this.props.onChange(changedDate);
-            _this.setOpen(false);
+            if (_this.props.shouldCloseOnSelect) {
+              _this.setOpen(false);
+            }
             _this.setState({ inputValue: null });
           };
 
@@ -68307,25 +68340,17 @@
                 _this.handleSelect(copy, event);
                 !_this.props.shouldCloseOnSelect && _this.setPreSelection(copy);
               } else {
-                _this.input.blur();
-                _this.props.onBlur(copy);
-                _this.cancelFocusInput();
-
                 _this.setOpen(false);
               }
             } else if (eventKey === 'Escape') {
               event.preventDefault();
-
-              _this.input.blur();
-              _this.props.onBlur(copy);
-              _this.cancelFocusInput();
 
               _this.setOpen(false);
               if (!_this.inputOk()) {
                 _this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
               }
             } else if (eventKey === 'Tab') {
-              _this.setOpen(false);
+              _this.setOpen(false, true);
             } else if (!_this.props.disabledKeyboardNavigation) {
               var newSelection = void 0;
               switch (eventKey) {
@@ -68398,6 +68423,7 @@
                 locale: _this.props.locale,
                 adjustDateOnChange: _this.props.adjustDateOnChange,
                 setOpen: _this.setOpen,
+                shouldCloseOnSelect: _this.props.shouldCloseOnSelect,
                 dateFormat: _this.props.dateFormatCalendar,
                 useWeekdaysShort: _this.props.useWeekdaysShort,
                 formatWeekDay: _this.props.formatWeekDay,
@@ -68461,7 +68487,8 @@
                 disabledKeyboardNavigation:
                   _this.props.disabledKeyboardNavigation,
                 renderCustomHeader: _this.props.renderCustomHeader,
-                popperProps: _this.props.popperProps
+                popperProps: _this.props.popperProps,
+                renderDayContents: _this.props.renderDayContents
               },
               _this.props.children
             );
@@ -68714,7 +68741,8 @@
         clearButtonTitle: _propTypes2.default.string,
         previousMonthButtonLabel: _propTypes2.default.string,
         nextMonthButtonLabel: _propTypes2.default.string,
-        renderCustomHeader: _propTypes2.default.func
+        renderCustomHeader: _propTypes2.default.func,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = DatePicker;
 
@@ -69871,9 +69899,7 @@
                 onDropdownFocus: function onDropdownFocus() {},
                 monthsShown: 1,
                 forceShowMonthNavigation: false,
-                timeCaption: 'Time',
-                previousMonthButtonLabel: 'Previous Month',
-                nextMonthButtonLabel: 'Next Month'
+                timeCaption: 'Time'
               };
             }
           }
@@ -70398,6 +70424,9 @@
                     startDate: _this.props.startDate,
                     endDate: _this.props.endDate,
                     peekNextMonth: _this.props.peekNextMonth,
+                    setOpen: _this.props.setOpen,
+                    shouldCloseOnSelect: _this.props.shouldCloseOnSelect,
+                    renderDayContents: _this.props.renderDayContents,
                     disabledKeyboardNavigation:
                       _this.props.disabledKeyboardNavigation
                   })
@@ -70569,11 +70598,13 @@
         weekLabel: _propTypes2.default.string,
         yearDropdownItemNumber: _propTypes2.default.number,
         setOpen: _propTypes2.default.func,
+        shouldCloseOnSelect: _propTypes2.default.bool,
         useShortMonthInDropdown: _propTypes2.default.bool,
         showDisabledMonthNavigation: _propTypes2.default.bool,
         previousMonthButtonLabel: _propTypes2.default.string,
         nextMonthButtonLabel: _propTypes2.default.string,
-        renderCustomHeader: _propTypes2.default.func
+        renderCustomHeader: _propTypes2.default.func,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Calendar;
 
@@ -71883,7 +71914,7 @@
         for (var i = 0, len = highlightDates.length; i < len; i++) {
           var obj = highlightDates[i];
           if ((0, _isDate2.default)(obj)) {
-            var key = formatDate(obj, 'MM.DD.YYYY');
+            var key = formatDate(obj, 'MM.dd.yyyy');
             var classNamesArr = dateClasses.get(key) || [];
             if (!classNamesArr.includes(defaultClassName)) {
               classNamesArr.push(defaultClassName);
@@ -71901,7 +71932,7 @@
               arrOfDates.constructor === Array
             ) {
               for (var k = 0, _len = arrOfDates.length; k < _len; k++) {
-                var _key = formatDate(arrOfDates[k], 'MM.DD.YYYY');
+                var _key = formatDate(arrOfDates[k], 'MM.dd.yyyy');
                 var _classNamesArr = dateClasses.get(_key) || [];
                 if (!_classNamesArr.includes(className)) {
                   _classNamesArr.push(className);
@@ -82105,8 +82136,11 @@
                     startDate: _this.props.startDate,
                     endDate: _this.props.endDate,
                     dayClassName: _this.props.dayClassName,
+                    setOpen: _this.props.setOpen,
+                    shouldCloseOnSelect: _this.props.shouldCloseOnSelect,
                     disabledKeyboardNavigation:
-                      _this.props.disabledKeyboardNavigation
+                      _this.props.disabledKeyboardNavigation,
+                    renderDayContents: _this.props.renderDayContents
                   })
                 );
 
@@ -82192,7 +82226,10 @@
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
         showWeekNumbers: _propTypes2.default.bool,
-        startDate: _propTypes2.default.instanceOf(Date)
+        startDate: _propTypes2.default.instanceOf(Date),
+        setOpen: _propTypes2.default.func,
+        shouldCloseOnSelect: _propTypes2.default.bool,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Month;
 
@@ -82203,6 +82240,23 @@
       'use strict';
 
       exports.__esModule = true;
+
+      var _createClass = (function() {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function(Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      })();
 
       var _react = __webpack_require__(328);
 
@@ -82318,6 +82372,9 @@
               if (typeof _this.props.onWeekSelect === 'function') {
                 _this.props.onWeekSelect(day, weekNumber, event);
               }
+              if (_this.props.shouldCloseOnSelect) {
+                _this.props.setOpen(false);
+              }
             }),
             (_this.formatWeekNumber = function(startOfWeek) {
               if (_this.props.formatWeekNumber) {
@@ -82368,6 +82425,7 @@
                     startDate: _this.props.startDate,
                     endDate: _this.props.endDate,
                     dayClassName: _this.props.dayClassName,
+                    renderDayContents: _this.props.renderDayContents,
                     disabledKeyboardNavigation:
                       _this.props.disabledKeyboardNavigation
                   });
@@ -82386,6 +82444,17 @@
             this.renderDays()
           );
         };
+
+        _createClass(Week, null, [
+          {
+            key: 'defaultProps',
+            get: function get() {
+              return {
+                shouldCloseOnSelect: true
+              };
+            }
+          }
+        ]);
 
         return Week;
       })(_react2.default.Component);
@@ -82414,7 +82483,10 @@
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
         showWeekNumber: _propTypes2.default.bool,
-        startDate: _propTypes2.default.instanceOf(Date)
+        startDate: _propTypes2.default.instanceOf(Date),
+        setOpen: _propTypes2.default.func,
+        shouldCloseOnSelect: _propTypes2.default.bool,
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Week;
 
@@ -82541,7 +82613,7 @@
               }
 
               // Looking for className in the Map of {'day string, 'className'}
-              var dayStr = (0, _date_utils.formatDate)(day, 'MM.DD.YYYY');
+              var dayStr = (0, _date_utils.formatDate)(day, 'MM.dd.yyyy');
               return highlightDates.get(dayStr);
             }),
             (_this.isInRange = function() {
@@ -82711,7 +82783,11 @@
               'aria-label': 'day-' + (0, _date_utils.getDate)(this.props.day),
               role: 'option'
             },
-            (0, _date_utils.getDate)(this.props.day)
+            this.props.renderDayContents
+              ? this.props.renderDayContents(
+                  (0, _date_utils.getDate)(this.props.day)
+                )
+              : (0, _date_utils.getDate)(this.props.day)
           );
         };
 
@@ -82733,7 +82809,8 @@
         selectingDate: _propTypes2.default.instanceOf(Date),
         selectsEnd: _propTypes2.default.bool,
         selectsStart: _propTypes2.default.bool,
-        startDate: _propTypes2.default.instanceOf(Date)
+        startDate: _propTypes2.default.instanceOf(Date),
+        renderDayContents: _propTypes2.default.func
       };
       exports.default = Day;
 
@@ -91189,7 +91266,7 @@
               _react2.default.createElement(
                 'code',
                 { className: 'jsx' },
-                '\n<DatePicker\n  selected={this.state.startDate}\n  onChange={this.handleChange}\n  dateFormatCalendar={"MMM YYYY"}\n  minDate={subMonths(new Date(), 6)}\n  maxDate={addMonths(new Date(), 6)}\n  showMonthYearDropdown\n/>\n'
+                '\n<DatePicker\n  selected={this.state.startDate}\n  onChange={this.handleChange}\n  dateFormatCalendar={"MMM yyyy"}\n  minDate={subMonths(new Date(), 6)}\n  maxDate={addMonths(new Date(), 6)}\n  showMonthYearDropdown\n/>\n'
               )
             ),
             _react2.default.createElement(
@@ -91198,7 +91275,7 @@
               _react2.default.createElement(_reactDatepicker2.default, {
                 selected: this.state.startDate,
                 onChange: this.handleChange,
-                dateFormatCalendar: 'MMM YYYY',
+                dateFormatCalendar: 'MMM yyyy',
                 minDate: (0, _subMonths2.default)(new Date(), 6),
                 maxDate: (0, _addMonths2.default)(new Date(), 6),
                 showMonthYearDropdown: true

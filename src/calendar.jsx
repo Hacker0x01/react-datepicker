@@ -1,12 +1,12 @@
-import YearDropdown from "./year_dropdown";
-import MonthDropdown from "./month_dropdown";
-import MonthYearDropdown from "./month_year_dropdown";
-import Month from "./month";
-import Time from "./time";
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import CalendarContainer from "./calendar_container";
+import YearDropdown from './year_dropdown';
+import MonthDropdown from './month_dropdown';
+import MonthYearDropdown from './month_year_dropdown';
+import Month from './month';
+import Time from './time';
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import CalendarContainer from './calendar_container';
 import {
   newDate,
   setMonth,
@@ -29,16 +29,16 @@ import {
   monthDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate
-} from "./date_utils";
+} from './date_utils';
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
-  "react-datepicker__year-select",
-  "react-datepicker__month-select",
-  "react-datepicker__month-year-select"
+  'react-datepicker__year-select',
+  'react-datepicker__month-select',
+  'react-datepicker__month-year-select'
 ];
 
 const isDropdownSelect = (element = {}) => {
-  const classNames = (element.className || "").split(/\s+/);
+  const classNames = (element.className || '').split(/\s+/);
   return DROPDOWN_FOCUS_CLASSNAMES.some(
     testClassname => classNames.indexOf(testClassname) >= 0
   );
@@ -54,7 +54,7 @@ export default class Calendar extends React.Component {
       .isRequired,
     dayClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
-    dropdownMode: PropTypes.oneOf(["scroll", "select"]),
+    dropdownMode: PropTypes.oneOf(['scroll', 'select']),
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
@@ -105,11 +105,13 @@ export default class Calendar extends React.Component {
     weekLabel: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
-    renderCustomHeader: PropTypes.func
+    renderCustomHeader: PropTypes.func,
+    renderDayContents: PropTypes.func
   };
 
   static get defaultProps() {
@@ -117,9 +119,18 @@ export default class Calendar extends React.Component {
       onDropdownFocus: () => {},
       monthsShown: 1,
       forceShowMonthNavigation: false,
-      timeCaption: "Time",
-      previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month"
+      timeCaption: 'Time',
+      previousMonthButtonLabel: 'Previous Month',
+      nextMonthButtonLabel: 'Next Month'
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      forceShowMonthNavigation: false,
+      timeCaption: 'Time'
     };
   }
 
@@ -276,7 +287,7 @@ export default class Calendar extends React.Component {
     if (this.props.showWeekNumbers) {
       dayNames.push(
         <div key="W" className="react-datepicker__day-name">
-          {this.props.weekLabel || "#"}
+          {this.props.weekLabel || '#'}
         </div>
       );
     }
@@ -322,21 +333,21 @@ export default class Calendar extends React.Component {
     }
 
     const classes = [
-      "react-datepicker__navigation",
-      "react-datepicker__navigation--previous"
+      'react-datepicker__navigation',
+      'react-datepicker__navigation--previous'
     ];
 
     let clickHandler = this.decreaseMonth;
 
     if (allPrevDaysDisabled && this.props.showDisabledMonthNavigation) {
-      classes.push("react-datepicker__navigation--previous--disabled");
+      classes.push('react-datepicker__navigation--previous--disabled');
       clickHandler = null;
     }
 
     return (
       <button
         type="button"
-        className={classes.join(" ")}
+        className={classes.join(' ')}
         onClick={clickHandler}
       >
         {this.props.previousMonthButtonLabel}
@@ -361,27 +372,27 @@ export default class Calendar extends React.Component {
     }
 
     const classes = [
-      "react-datepicker__navigation",
-      "react-datepicker__navigation--next"
+      'react-datepicker__navigation',
+      'react-datepicker__navigation--next'
     ];
     if (this.props.showTimeSelect) {
-      classes.push("react-datepicker__navigation--next--with-time");
+      classes.push('react-datepicker__navigation--next--with-time');
     }
     if (this.props.todayButton) {
-      classes.push("react-datepicker__navigation--next--with-today-button");
+      classes.push('react-datepicker__navigation--next--with-today-button');
     }
 
     let clickHandler = this.increaseMonth;
 
     if (allNextDaysDisabled && this.props.showDisabledMonthNavigation) {
-      classes.push("react-datepicker__navigation--next--disabled");
+      classes.push('react-datepicker__navigation--next--disabled');
       clickHandler = null;
     }
 
     return (
       <button
         type="button"
-        className={classes.join(" ")}
+        className={classes.join(' ')}
         onClick={clickHandler}
       >
         {this.props.nextMonthButtonLabel}
@@ -390,19 +401,19 @@ export default class Calendar extends React.Component {
   };
 
   renderCurrentMonth = (date = this.state.date) => {
-    const classes = ["react-datepicker__current-month"];
+    const classes = ['react-datepicker__current-month'];
 
     if (this.props.showYearDropdown) {
-      classes.push("react-datepicker__current-month--hasYearDropdown");
+      classes.push('react-datepicker__current-month--hasYearDropdown');
     }
     if (this.props.showMonthDropdown) {
-      classes.push("react-datepicker__current-month--hasMonthDropdown");
+      classes.push('react-datepicker__current-month--hasMonthDropdown');
     }
     if (this.props.showMonthYearDropdown) {
-      classes.push("react-datepicker__current-month--hasMonthYearDropdown");
+      classes.push('react-datepicker__current-month--hasMonthYearDropdown');
     }
     return (
-      <div className={classes.join(" ")}>
+      <div className={classes.join(' ')}>
         {formatDate(date, this.props.dateFormat, this.props.locale)}
       </div>
     );
@@ -577,6 +588,9 @@ export default class Calendar extends React.Component {
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}
+            setOpen={this.props.setOpen}
+            shouldCloseOnSelect={this.props.shouldCloseOnSelect}
+            renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           />
         </div>
@@ -618,8 +632,8 @@ export default class Calendar extends React.Component {
 
     return (
       <Container
-        className={classnames("react-datepicker", this.props.className, {
-          "react-datepicker--time-only": this.props.showTimeSelectOnly
+        className={classnames('react-datepicker', this.props.className, {
+          'react-datepicker--time-only': this.props.showTimeSelectOnly
         })}
       >
         {this.renderPreviousMonthButton()}

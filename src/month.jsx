@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import Week from "./week";
-import * as utils from "./date_utils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import Week from './week';
+import * as utils from './date_utils';
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -33,7 +33,10 @@ export default class Month extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
-    startDate: PropTypes.instanceOf(Date)
+    startDate: PropTypes.instanceOf(Date),
+    setOpen: PropTypes.func,
+    shouldCloseOnSelect: PropTypes.bool,
+    renderDayContents: PropTypes.func
   };
 
   handleDayClick = (day, event) => {
@@ -99,7 +102,10 @@ export default class Month extends React.Component {
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
+          setOpen={this.props.setOpen}
+          shouldCloseOnSelect={this.props.shouldCloseOnSelect}
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+          renderDayContents={this.props.renderDayContents}
         />
       );
 
@@ -129,8 +135,8 @@ export default class Month extends React.Component {
 
   getClassNames = () => {
     const { selectingDate, selectsStart, selectsEnd } = this.props;
-    return classnames("react-datepicker__month", {
-      "react-datepicker__month--selecting-range":
+    return classnames('react-datepicker__month', {
+      'react-datepicker__month--selecting-range':
         selectingDate && (selectsStart || selectsEnd)
     });
   };
@@ -141,7 +147,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
+        aria-label={'month-' + utils.formatDate(this.props.day, 'YYYY-MM')}
       >
         {this.renderWeeks()}
       </div>

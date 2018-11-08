@@ -26,7 +26,7 @@ export default class MonthYearDropdown extends React.Component {
 <DatePicker
   selected={this.state.startDate}
   onChange={this.handleChange}
-  dateFormatCalendar={"MMM YYYY"}
+  dateFormatCalendar={"MMM yyyy"}
   minDate={subMonths(new Date(), 6)}
   maxDate={addMonths(new Date(), 6)}
   showMonthYearDropdown
@@ -38,7 +38,7 @@ export default class MonthYearDropdown extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            dateFormatCalendar={'MMM YYYY'}
+            dateFormatCalendar={'MMM yyyy'}
             minDate={subMonths(new Date(), 6)}
             maxDate={addMonths(new Date(), 6)}
             showMonthYearDropdown
