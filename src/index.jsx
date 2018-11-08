@@ -201,8 +201,6 @@ export default class DatePicker extends React.Component {
       renderDayContents(date) {
         return date;
       }
-      // accessibleMode: true,
-      // accessibleModeButton: <span>📅</span>
     };
   }
 
