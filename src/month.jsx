@@ -18,6 +18,7 @@ export default class Month extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
+    locale: PropTypes.string,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     onDayClick: PropTypes.func,
@@ -31,6 +32,7 @@ export default class Month extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
+    startOnSunday: PropTypes.bool,
     startDate: PropTypes.object,
     utcOffset: PropTypes.number,
     weeklyType: PropTypes.bool,
@@ -68,7 +70,12 @@ export default class Month extends React.Component {
     var isFixedHeight = this.props.fixedHeight;
     let currentWeekStart = utils.getStartOfWeek(
       utils.getStartOfMonth(utils.cloneDate(this.props.day))
-    );
+    ).add(1, 'day');
+
+    if (this.props.startOnSunday || (typeof this.props.locale === 'string' && this.props.locale.toLowerCase() === 'en-gb')) {
+        currentWeekStart.subtract(1, 'day')
+    }
+
     let i = 0;
     let breakAfterNextPush = false;
 
@@ -123,7 +130,7 @@ export default class Month extends React.Component {
         }
       }
     }
-
+    
     return weeks;
   };
 

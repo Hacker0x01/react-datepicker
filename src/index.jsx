@@ -114,6 +114,7 @@ export default class DatePicker extends React.Component {
     showDisabledMonthNavigation: PropTypes.bool,
     startDate: PropTypes.object,
     startOpen: PropTypes.bool,
+    startOnSunday: PropTypes.bool,
     tabIndex: PropTypes.number,
     timeCaption: PropTypes.string,
     title: PropTypes.string,
@@ -521,6 +522,7 @@ export default class DatePicker extends React.Component {
         showMonthYearDropdown={this.props.showMonthYearDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
         showYearDropdown={this.props.showYearDropdown}
+        startOnSunday={this.props.startOnSunday}
         monthYearSlide={this.props.monthYearSlide}
         showMonthly={this.props.showMonthly}
         withPortal={this.props.withPortal}

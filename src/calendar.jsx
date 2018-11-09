@@ -101,6 +101,7 @@ export default class Calendar extends React.Component {
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
+    startOnSunday: PropTypes.bool,
     monthYearSlide: PropTypes.bool,
     showMonthly: PropTypes.bool,
     startDate: PropTypes.object,
@@ -293,7 +294,12 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(cloneDate(date));
+    let startOfWeek = getStartOfWeek(cloneDate(date)).add(1, 'day') 
+
+    if (this.props.startOnSunday || (typeof this.props.locale === 'string' && this.props.locale.toLowerCase() === 'en-gb')) {
+      startOfWeek.subtract(1, 'day')
+    }
+
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -603,6 +609,7 @@ export default class Calendar extends React.Component {
             minYear={this.props.minYear}
             excludeDates={this.props.excludeDates}
             highlightDates={this.props.highlightDates}
+            locale={this.props.locale}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
             inline={this.props.inline}
@@ -613,6 +620,7 @@ export default class Calendar extends React.Component {
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
             showWeekNumbers={this.props.showWeekNumbers}
+            startOnSunday={this.props.startOnSunday}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             peekNextMonth={this.props.peekNextMonth}

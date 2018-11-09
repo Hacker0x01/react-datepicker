@@ -59,7 +59,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(utils.cloneDate(this.props.day));
+    const startOfWeek = utils.cloneDate(this.props.day);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {
