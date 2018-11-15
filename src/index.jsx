@@ -164,7 +164,8 @@ export default class DatePicker extends React.Component {
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    inlineFocusSelectedMonth: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -197,7 +198,8 @@ export default class DatePicker extends React.Component {
       nextMonthButtonLabel: "Next month",
       renderDayContents(date) {
         return date;
-      }
+      },
+      inlineFocusSelectedMonth: false
     };
   }
 
@@ -212,6 +214,12 @@ export default class DatePicker extends React.Component {
       hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
       this.setPreSelection(this.props.selected);
+    }
+    if (
+      this.state.monthSelectedIn !== undefined &&
+      prevProps.monthsShown !== this.props.monthsShown
+    ) {
+      this.setState({ monthSelectedIn: 0 });
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
@@ -234,10 +242,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? newDate(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate
-        ? newDate(this.props.startDate)
-        : this.props.selectsStart && this.props.endDate
-          ? newDate(this.props.endDate)
-          : now(this.props.utcOffset);
+      ? newDate(this.props.startDate)
+      : this.props.selectsStart && this.props.endDate
+      ? newDate(this.props.endDate)
+      : now(this.props.utcOffset);
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -247,8 +255,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -384,7 +392,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  handleSelect = (date, event) => {
+  handleSelect = (date, event, monthSelectedIn) => {
     // Preventing onFocus event to fix issue
     // https://github.com/Hacker0x01/react-datepicker/issues/628
     this.setState({ preventFocus: true }, () => {
@@ -394,7 +402,7 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
-    this.setSelected(date, event);
+    this.setSelected(date, event, undefined, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
@@ -402,7 +410,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  setSelected = (date, event, keepInput) => {
+  setSelected = (date, event, keepInput, monthSelectedIn) => {
     let changedDate = date;
 
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
@@ -432,6 +440,13 @@ export default class DatePicker extends React.Component {
           this.setState({
             preSelection: changedDate
           });
+        }
+        if (
+          this.props.inline &&
+          this.props.monthsShown > 1 &&
+          !this.props.inlineFocusSelectedMonth
+        ) {
+          this.setState({ monthSelectedIn: monthSelectedIn });
         }
       }
       this.props.onChange(changedDate, event);
@@ -632,6 +647,7 @@ export default class DatePicker extends React.Component {
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
+        monthSelectedIn={this.state.monthSelectedIn}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
         onYearChange={this.props.onYearChange}
@@ -671,8 +687,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {

@@ -12,6 +12,7 @@ export default class Month extends React.Component {
     day: PropTypes.object.isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.object,
+    orderInDisplay: PropTypes.number,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
@@ -41,7 +42,7 @@ export default class Month extends React.Component {
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day, event);
+      this.props.onDayClick(day, event, this.props.orderInDisplay);
     }
   };
 
