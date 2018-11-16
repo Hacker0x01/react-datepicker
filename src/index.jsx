@@ -158,6 +158,7 @@ export default class DatePicker extends React.Component {
     timeIntervals: PropTypes.number,
     minTime: PropTypes.object,
     maxTime: PropTypes.object,
+    defaultToMinTime: PropTypes.bool,
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
@@ -234,10 +235,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? newDate(this.props.openToDate)
       : this.props.selectsEnd && this.props.startDate
-        ? newDate(this.props.startDate)
-        : this.props.selectsStart && this.props.endDate
-          ? newDate(this.props.endDate)
-          : now(this.props.utcOffset);
+      ? newDate(this.props.startDate)
+      : this.props.selectsStart && this.props.endDate
+      ? newDate(this.props.endDate)
+      : now(this.props.utcOffset);
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -247,8 +248,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -643,6 +644,7 @@ export default class DatePicker extends React.Component {
         timeIntervals={this.props.timeIntervals}
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}
+        defaultToMinTime={this.props.defaultToMinTime}
         excludeTimes={this.props.excludeTimes}
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
@@ -671,8 +673,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
