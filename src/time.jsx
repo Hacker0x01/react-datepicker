@@ -25,7 +25,8 @@ export default class Time extends React.Component {
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array
+    injectTimes: PropTypes.array,
+    defaultToMinTime: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -97,7 +98,11 @@ export default class Time extends React.Component {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
-    const activeTime = this.props.selected ? this.props.selected : newDate();
+    const defaultTime =
+      this.props.defaultToMinTime && this.props.minTime
+        ? this.props.minTime
+        : newDate();
+    const activeTime = this.props.selected ? this.props.selected : defaultTime;
     const currH = getHours(activeTime);
     const currM = getMinutes(activeTime);
     let base = getStartOfDay(newDate());

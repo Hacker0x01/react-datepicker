@@ -54,6 +54,29 @@ describe('TimePicker', () => {
     expect(datePicker.state.open).to.be.true;
   });
 
+  it("should default to the minimum time if minTime and defaultToMinTime are supplied", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        showTimeSelect
+        minTime={moment("February 28, 2018 7:00 AM", "LLL", true)}
+        maxTime={moment("February 28, 2018 6:00 PM", "LLL", true)}
+        defaultToMinTime
+      />
+    );
+
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const listElems = time.list.querySelectorAll(
+      ".react-datepicker__time-list-item:not(.react-datepicker__time-list-item--disabled)"
+    );
+
+    expect(Array.from(listElems[0].classList)).to.include(
+      "react-datepicker__time-list-item--selected"
+    );
+  });
+
   function setManually(string) {
     TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });
