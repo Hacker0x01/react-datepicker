@@ -4,9 +4,6 @@ node_js:
 before_install:
   - npm i -g npm@latest
 
-  # Needed for Karma test runner
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
 # install:
 #   - yarn install
 script:
