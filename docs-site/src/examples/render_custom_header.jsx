@@ -1,16 +1,30 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 import range from "lodash/range";
+import getYear from "date-fns/getYear";
+import getMonth from "date-fns/getMonth";
 
-const years = range(1990, moment().year() + 1, 1);
-const months = moment.months();
+const years = range(1990, getYear(new Date()) + 1, 1);
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
 
 export default class Default extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: new Date()
     };
   }
 
@@ -67,7 +81,7 @@ export default class Default extends React.Component {
                   {"<"}
                 </button>
                 <select
-                  value={date.year()}
+                  value={getYear(date)}
                   onChange={({ target: { value } }) => changeYear(value)}
                 >
                   {years.map(option => (
@@ -78,7 +92,7 @@ export default class Default extends React.Component {
                 </select>
 
                 <select
-                  value={months[date.month()]}
+                  value={months[getMonth(date)]}
                   onChange={({ target: { value } }) => changeMonth(value)}
                 >
                   {months.map(option => (

@@ -10,13 +10,13 @@ export default class YearDropdown extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
-    maxDate: PropTypes.object,
-    minDate: PropTypes.object,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date),
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
     yearDropdownItemNumber: PropTypes.number,
-    date: PropTypes.object,
+    date: PropTypes.instanceOf(Date),
     onSelect: PropTypes.func,
     setOpen: PropTypes.func
   };

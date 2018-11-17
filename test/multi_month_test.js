@@ -5,7 +5,7 @@ import YearDropdown from "../src/year_dropdown";
 import { shallow } from "enzyme";
 
 describe("Multi month calendar", function() {
-  var dateFormat = "MMMM YYYY";
+  var dateFormat = "LLLL yyyy";
 
   function getCalendar(extraProps) {
     return shallow(

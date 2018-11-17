@@ -13,13 +13,13 @@ describe("Month", () => {
     expect(days).to.have.length(dayCount);
     range(0, dayCount).forEach(offset => {
       const day = days.get(offset);
-      const expectedDay = utils.addDays(utils.cloneDate(start), offset);
+      const expectedDay = utils.addDays(start, offset);
       assert(
         utils.isSameDay(day.props.day, expectedDay),
-        `Day ${offset % 7 + 1} ` +
+        `Day ${(offset % 7) + 1} ` +
           `of week ${Math.floor(offset / 7) + 1} ` +
-          `should be "${utils.formatDate(expectedDay, "YYYY-MM-DD")}" ` +
-          `but it is "${utils.formatDate(day.props.day, "YYYY-MM-DD")}"`
+          `should be "${utils.formatDate(expectedDay, "yyyy-MM-dd")}" ` +
+          `but it is "${utils.formatDate(day.props.day, "yyyy-MM-dd")}"`
       );
     });
   }
@@ -45,8 +45,8 @@ describe("Month", () => {
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} />),
-      utils.getStartOfWeek(utils.cloneDate(monthStart)),
-      utils.getEndOfWeek(utils.getEndOfMonth(utils.cloneDate(monthStart)))
+      utils.getStartOfWeek(monthStart),
+      utils.getEndOfWeek(utils.getEndOfMonth(monthStart))
     );
   });
 
@@ -55,32 +55,30 @@ describe("Month", () => {
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} peekNextMonth />),
-      utils.getStartOfWeek(utils.cloneDate(monthStart)),
-      utils.getEndOfWeek(
-        utils.addWeeks(utils.addMonths(utils.cloneDate(monthStart), 1), 1)
-      )
+      utils.getStartOfWeek(monthStart),
+      utils.getEndOfWeek(utils.addWeeks(utils.addMonths(monthStart, 1), 1))
     );
   });
 
   it("should render a calendar of fixed height", () => {
     const monthStart = utils.newDate("2016-11-01");
-    const calendarStart = utils.getStartOfWeek(utils.cloneDate(monthStart));
+    const calendarStart = utils.getStartOfWeek(monthStart);
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} fixedHeight />),
       calendarStart,
-      utils.getEndOfWeek(utils.addWeeks(utils.cloneDate(calendarStart), 5))
+      utils.getEndOfWeek(utils.addWeeks(calendarStart, 5))
     );
   });
 
   it("should render a calendar of fixed height with peeking", () => {
     const monthStart = utils.newDate("2016-11-01");
-    const calendarStart = utils.getStartOfWeek(utils.cloneDate(monthStart));
+    const calendarStart = utils.getStartOfWeek(monthStart);
 
     assertDateRangeInclusive(
       mount(<Month day={monthStart} fixedHeight peekNextMonth />),
       calendarStart,
-      utils.getEndOfWeek(utils.addWeeks(utils.cloneDate(calendarStart), 6))
+      utils.getEndOfWeek(utils.addWeeks(calendarStart, 6))
     );
   });
 

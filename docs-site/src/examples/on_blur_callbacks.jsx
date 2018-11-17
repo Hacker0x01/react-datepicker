@@ -1,5 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import format from "date-fns/format";
+import isValid from "date-fns/isValid";
 
 export default class Disabled extends React.Component {
   state = {
@@ -13,10 +15,9 @@ export default class Disabled extends React.Component {
   };
 
   handleOnBlur = date => {
-    if (date === null) {
-      console.log("selected date: %s", date);
-    } else {
-      console.log("selected date: %s", date.format("DD/MM/YYYY"));
+    const selectedDate = new Date(date);
+    if (isValid(date)) {
+      console.log("selected date: %s", format(selectedDate, "dd/MM/yyyy"));
     }
   };
 
@@ -27,11 +28,11 @@ export default class Disabled extends React.Component {
           <code className="js">
             {`
 handleOnBlur: function (date) {
-    if (date === null) {
-        console.log("selected date: %s", date);
-    }
-    else {
-        console.log("selected date: %s", date.format("DD/MM/YYYY"));
+    const date = new Date(event.target.value);
+    if (isValid(date)) {
+      console.log("selected date: %s", format(date, "dd/MM/yyyy"));
+    } else {
+      console.log("selected date: %s", event.target.value);
     }
 };'}
 `}
@@ -57,7 +58,8 @@ handleOnBlur: function (date) {
             selected={this.state.startDate}
             onChange={this.handleChange}
             onBlur={this.handleOnBlur}
-            placeholderText="View blur callbacks in console"/>
+            placeholderText="View blur callbacks in console"
+          />
         </div>
       </div>
     );

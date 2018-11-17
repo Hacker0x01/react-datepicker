@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 
 export default class DontCloseOnSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: new Date()
     };
   }
 
@@ -34,7 +33,8 @@ export default class DontCloseOnSelect extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            shouldCloseOnSelect={false}/>
+            shouldCloseOnSelect={false}
+          />
         </div>
       </div>
     );

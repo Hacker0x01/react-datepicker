@@ -1,35 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import {
   getDay,
   getMonth,
   getDate,
-  now,
+  newDate,
   isSameDay,
   isDayDisabled,
   isDayInRange,
-  getDayOfWeekCode
-} from "./date_utils";
+  isEqual,
+  isBefore,
+  isAfter,
+  getDayOfWeekCode,
+  formatDate
+} from './date_utils';
 
 export default class Day extends React.Component {
   static propTypes = {
     disabledKeyboardNavigation: PropTypes.bool,
-    day: PropTypes.object.isRequired,
+    day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
-    endDate: PropTypes.object,
+    endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
-    preSelection: PropTypes.object,
+    preSelection: PropTypes.instanceOf(Date),
     selected: PropTypes.object,
-    selectingDate: PropTypes.object,
+    selectingDate: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
-    startDate: PropTypes.object,
-    utcOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func
   };
 
@@ -63,7 +66,7 @@ export default class Day extends React.Component {
     }
 
     // Looking for className in the Map of {'day string, 'className'}
-    const dayStr = day.format("MM.DD.YYYY");
+    const dayStr = formatDate(day, 'MM.dd.yyyy');
     return highlightDates.get(dayStr);
   };
 
@@ -89,11 +92,19 @@ export default class Day extends React.Component {
       return false;
     }
 
-    if (selectsStart && endDate && selectingDate.isSameOrBefore(endDate)) {
+    if (
+      selectsStart &&
+      endDate &&
+      (isBefore(selectingDate, endDate) || isEqual(selectingDate, endDate))
+    ) {
       return isDayInRange(day, selectingDate, endDate);
     }
 
-    if (selectsEnd && startDate && selectingDate.isSameOrAfter(startDate)) {
+    if (
+      selectsEnd &&
+      startDate &&
+      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
+    ) {
       return isDayInRange(day, startDate, selectingDate);
     }
 
@@ -161,26 +172,24 @@ export default class Day extends React.Component {
       ? this.props.dayClassName(date)
       : undefined;
     return classnames(
-      "react-datepicker__day",
+      'react-datepicker__day',
       dayClassName,
-      "react-datepicker__day--" + getDayOfWeekCode(this.props.day),
+      'react-datepicker__day--' + getDayOfWeekCode(this.props.day),
       {
-        "react-datepicker__day--disabled": this.isDisabled(),
-        "react-datepicker__day--selected": this.isSameDay(this.props.selected),
-        "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
-        "react-datepicker__day--range-start": this.isRangeStart(),
-        "react-datepicker__day--range-end": this.isRangeEnd(),
-        "react-datepicker__day--in-range": this.isInRange(),
-        "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
-        "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
-        "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(
-          now(this.props.utcOffset)
-        ),
-        "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth()
+        'react-datepicker__day--disabled': this.isDisabled(),
+        'react-datepicker__day--selected': this.isSameDay(this.props.selected),
+        'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
+        'react-datepicker__day--range-start': this.isRangeStart(),
+        'react-datepicker__day--range-end': this.isRangeEnd(),
+        'react-datepicker__day--in-range': this.isInRange(),
+        'react-datepicker__day--in-selecting-range': this.isInSelectingRange(),
+        'react-datepicker__day--selecting-range-start': this.isSelectingRangeStart(),
+        'react-datepicker__day--selecting-range-end': this.isSelectingRangeEnd(),
+        'react-datepicker__day--today': this.isSameDay(newDate()),
+        'react-datepicker__day--weekend': this.isWeekend(),
+        'react-datepicker__day--outside-month': this.isOutsideMonth()
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass('react-datepicker__day--highlighted')
     );
   };
 
