@@ -1111,7 +1111,7 @@ describe("DatePicker", () => {
 
   it("should disable non-jumping if prop inlineFocusSelectedMonth is true", () => {
     var datePickerInline = TestUtils.renderIntoDocument(
-      <DatePicker inline monthsShown={2} inlineFocusSelectedMonth={true} />
+      <DatePicker inline monthsShown={2} inlineFocusSelectedMonth />
     );
     var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
       datePickerInline,
