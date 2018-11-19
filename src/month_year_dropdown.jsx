@@ -9,8 +9,8 @@ import {
   isAfter,
   isSameMonth,
   isSameYear,
-  localizeDate,
-  newDate
+  newDate,
+  getTime
 } from "./date_utils";
 
 var WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions);
@@ -20,9 +20,9 @@ export default class MonthYearDropdown extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     dateFormat: PropTypes.string.isRequired,
     locale: PropTypes.string,
-    maxDate: PropTypes.object.isRequired,
-    minDate: PropTypes.object.isRequired,
-    date: PropTypes.object.isRequired,
+    maxDate: PropTypes.instanceOf(Date).isRequired,
+    minDate: PropTypes.instanceOf(Date).isRequired,
+    date: PropTypes.instanceOf(Date).isRequired,
     onChange: PropTypes.func.isRequired,
     scrollableMonthYearDropdown: PropTypes.bool
   };
@@ -32,24 +32,19 @@ export default class MonthYearDropdown extends React.Component {
   };
 
   renderSelectOptions = () => {
-    const currDate = getStartOfMonth(
-      localizeDate(this.props.minDate, this.props.locale)
-    );
-    const lastDate = getStartOfMonth(
-      localizeDate(this.props.maxDate, this.props.locale)
-    );
-
+    let currDate = getStartOfMonth(this.props.minDate);
+    const lastDate = getStartOfMonth(this.props.maxDate);
     const options = [];
 
     while (!isAfter(currDate, lastDate)) {
-      const timepoint = currDate.valueOf();
+      const timepoint = getTime(currDate);
       options.push(
         <option key={timepoint} value={timepoint}>
-          {formatDate(currDate, this.props.dateFormat)}
+          {formatDate(currDate, this.props.dateFormat, this.props.locale)}
         </option>
       );
 
-      addMonths(currDate, 1);
+      currDate = addMonths(currDate, 1);
     }
 
     return options;
@@ -61,7 +56,7 @@ export default class MonthYearDropdown extends React.Component {
 
   renderSelectMode = () => (
     <select
-      value={getStartOfMonth(this.props.date).valueOf()}
+      value={getTime(getStartOfMonth(this.props.date))}
       className="react-datepicker__month-year-select"
       onChange={this.onSelectChange}
     >
@@ -71,8 +66,9 @@ export default class MonthYearDropdown extends React.Component {
 
   renderReadView = visible => {
     const yearMonth = formatDate(
-      localizeDate(newDate(this.props.date), this.props.locale),
-      this.props.dateFormat
+      this.props.date,
+      this.props.dateFormat,
+      this.props.locale
     );
 
     return (
@@ -98,8 +94,8 @@ export default class MonthYearDropdown extends React.Component {
       dateFormat={this.props.dateFormat}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
-      minDate={localizeDate(this.props.minDate, this.props.locale)}
-      maxDate={localizeDate(this.props.maxDate, this.props.locale)}
+      minDate={this.props.minDate}
+      maxDate={this.props.maxDate}
       scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
     />
   );

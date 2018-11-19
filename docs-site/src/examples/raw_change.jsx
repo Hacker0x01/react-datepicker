@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import addDays from "date-fns/addDays";
 
 export default class RawChanges extends React.Component {
   state = {
@@ -15,7 +15,7 @@ export default class RawChanges extends React.Component {
 
   handleChangeRaw = value => {
     if (value === "tomorrow") {
-      this.handleChange(moment().add(1, "day"));
+      this.handleChange(addDays(new Date(), 1));
     }
   };
 
@@ -27,7 +27,7 @@ export default class RawChanges extends React.Component {
             {`
 handleChangeRaw(value) {
   if(value === "tomorrow") {
-    const tomorrow = moment().add(1, "day")
+    const tomorrow = addDays(new Date(), 1)
     this.handleChange(tomorrow)
   }
 }
@@ -46,7 +46,8 @@ handleChangeRaw(value) {
             selected={this.state.startDate}
             onChange={this.handleChange}
             placeholderText="Enter &quot;tomorrow&quot;"
-            onChangeRaw={event => this.handleChangeRaw(event.target.value)}/>
+            onChangeRaw={event => this.handleChangeRaw(event.target.value)}
+          />
         </div>
       </div>
     );

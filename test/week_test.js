@@ -19,7 +19,7 @@ describe("Week", () => {
     const days = week.find(Day);
     expect(days.length).to.equal(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset);
+      const expectedDay = utils.addDays(weekStart, offset);
       assert(utils.isSameDay(day.prop("day"), expectedDay));
     });
 
@@ -34,7 +34,7 @@ describe("Week", () => {
     const days = week.find(Day);
     expect(days.length).to.equal(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(utils.cloneDate(weekStart), offset);
+      const expectedDay = utils.addDays(weekStart, offset);
       assert(utils.isSameDay(day.prop("day"), expectedDay));
     });
 
@@ -75,7 +75,7 @@ describe("Week", () => {
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    expect(utils.equals(firstDayReceived, weekStart)).to.be.true;
+    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
   });
 
   it("should call the provided onWeekSelect function and call the setopen function", () => {
@@ -156,7 +156,7 @@ describe("Week", () => {
     );
     const weekNumberElement = week.find(WeekNumber);
 
-    expect(utils.equals(firstDayReceived, weekStart)).to.be.true;
+    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
     expect(weekNumberElement.prop("weekNumber")).to.equal(9);
   });
 

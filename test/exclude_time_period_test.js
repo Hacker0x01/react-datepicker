@@ -21,8 +21,8 @@ describe("DatePicker", () => {
         showTimeSelect
         selected={now}
         onChange={() => null}
-        minTime={utils.setTime(utils.cloneDate(now), { hours: 17, minutes: 0 })}
-        maxTime={utils.setTime(utils.cloneDate(now), { hours: 18, minutes: 0 })}
+        minTime={utils.setTime(now, { hours: 17, minutes: 0 })}
+        maxTime={utils.setTime(now, { hours: 18, minutes: 0 })}
       />
     );
     var times = datePicker.find("li.react-datepicker__time-list-item");

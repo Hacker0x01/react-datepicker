@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 
 export default class ExcludeTimes extends React.Component {
   state = {
-    startDate: moment()
-      .hours(16)
-      .minutes(30)
+    startDate: setHours(setMinutes(new Date(), 30), 16)
   };
 
   handleChange = date => {
@@ -30,11 +29,11 @@ export default class ExcludeTimes extends React.Component {
               {"  showTimeSelect"}
               <br />
               {
-                "  excludeTimes={[moment().hours(17).minutes(0), moment().hours(18).minutes(30), moment().hours(19).minutes(30)], moment().hours(17).minutes(30)}"
+                "  excludeTimes={[setHours(setMinutes(new Date(), 0), 17), setHours(setMinutes(new Date(), 30), 18), setHours(setMinutes(new Date(), 30), 19), setHours(setMinutes(new Date(), 30), 17)]}"
               }
             </strong>
             <br />
-            <strong>{'  dateFormat="LLL"'}</strong>
+            <strong>{'  dateFormat="MMMM d, yyyy h:mm aa"'}</strong>
             <br />
             {"/>"}
           </code>
@@ -45,20 +44,13 @@ export default class ExcludeTimes extends React.Component {
             onChange={this.handleChange}
             showTimeSelect
             excludeTimes={[
-              moment()
-                .hours(17)
-                .minutes(0),
-              moment()
-                .hours(18)
-                .minutes(30),
-              moment()
-                .hours(19)
-                .minutes(30),
-              moment()
-                .hours(17)
-                .minutes(30)
+              setHours(setMinutes(new Date(), 0), 17),
+              setHours(setMinutes(new Date(), 30), 18),
+              setHours(setMinutes(new Date(), 30), 19),
+              setHours(setMinutes(new Date(), 30), 17)
             ]}
-            dateFormat="LLL"/>
+            dateFormat="MMMM d, yyyy h:mm aa"
+          />
         </div>
       </div>
     );

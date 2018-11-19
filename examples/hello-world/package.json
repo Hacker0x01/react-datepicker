@@ -6,7 +6,6 @@
     "react-scripts": "0.2.0"
   },
   "dependencies": {
-    "moment": "^2.15.1",
     "react": "^15.2.1",
     "react-datepicker": "^0.30.0",
     "react-dom": "^15.2.1"

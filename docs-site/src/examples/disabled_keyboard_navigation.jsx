@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 
 export default class DisabledKeyboardNavigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: new Date()
     };
   }
 
@@ -37,7 +36,8 @@ export default class DisabledKeyboardNavigation extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             disabledKeyboardNavigation
-            placeholderText="This has disabled keyboard navigation"/>
+            placeholderText="This has disabled keyboard navigation"
+          />
         </div>
       </div>
     );

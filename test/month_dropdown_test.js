@@ -3,11 +3,10 @@ import range from "lodash/range";
 import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
 import { mount } from "enzyme";
-import {
-  newDate,
-  getMonthInLocale,
-  getDefaultLocaleData
-} from "../src/date_utils";
+import { newDate, getMonthInLocale, registerLocale } from "../src/date_utils";
+import zh_cn from "date-fns/locale/zh-CN";
+import el from "date-fns/locale/el";
+import ru from "date-fns/locale/ru";
 
 describe("MonthDropdown", () => {
   let monthDropdown;
@@ -18,12 +17,10 @@ describe("MonthDropdown", () => {
   let sandbox;
 
   function getMonthDropdown(overrideProps) {
-    const dateFormatCalendar = "MMMM YYYY";
     return mount(
       <MonthDropdown
         dropdownMode="scroll"
         month={11}
-        dateFormat={dateFormatCalendar}
         onChange={mockHandleChange}
         {...overrideProps}
       />
@@ -68,9 +65,7 @@ describe("MonthDropdown", () => {
     });
 
     it("closes the dropdown if outside is clicked", () => {
-      const monthNames = range(0, 12).map(M =>
-        getMonthInLocale(getDefaultLocaleData(), newDate({ M }))
-      );
+      const monthNames = range(0, 12).map(M => getMonthInLocale(M));
       const onCancelSpy = sandbox.spy();
       const monthDropdownOptionsInstance = mount(
         <MonthDropdownOptions
@@ -106,29 +101,18 @@ describe("MonthDropdown", () => {
       expect(handleChangeResult).to.eq(2);
     });
 
-    it("should use dateFormat property to determine nominative or genitive display of month names", () => {
-      let dropdownDateFormat = getMonthDropdown({ dateFormat: "DD/MM/YYYY" });
+    it("should use locale stand-alone formatting to display month names", () => {
+      registerLocale("el", el);
+      registerLocale("ru", ru);
+
+      let dropdownDateFormat = getMonthDropdown();
       expect(dropdownDateFormat.text()).to.contain("December");
 
       dropdownDateFormat = getMonthDropdown({ locale: "el" });
       expect(dropdownDateFormat.text()).to.contain("Δεκέμβριος");
-      dropdownDateFormat = getMonthDropdown({
-        locale: "el",
-        showMonthDropwdown: true
-      });
-      expect(dropdownDateFormat.text()).to.contain("Δεκέμβριος");
 
-      dropdownDateFormat = getMonthDropdown({
-        dateFormat: "DMMMMYYYY",
-        locale: "el"
-      });
-      expect(dropdownDateFormat.text()).to.contain("Δεκεμβρίου");
-      dropdownDateFormat = getMonthDropdown({
-        dateFormat: "DMMMMYYYY",
-        locale: "el",
-        showMonthDropwdown: true
-      });
-      expect(dropdownDateFormat.text()).to.contain("Δεκεμβρίου");
+      dropdownDateFormat = getMonthDropdown({ locale: "ru" });
+      expect(dropdownDateFormat.text()).to.contain("декабрь");
     });
   });
 
@@ -185,6 +169,7 @@ describe("MonthDropdown", () => {
 
     // Failing on Travis CI.
     it("renders month options with specified locale", () => {
+      registerLocale("zh-cn", zh_cn);
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
         locale: "zh-cn"

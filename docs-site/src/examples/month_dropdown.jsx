@@ -1,12 +1,11 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 
 export default class MonthDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment()
+      startDate: new Date()
     };
   }
 
@@ -34,7 +33,8 @@ export default class MonthDropdown extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            showMonthDropdown/>
+            showMonthDropdown
+          />
         </div>
       </div>
     );

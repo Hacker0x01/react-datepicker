@@ -10,7 +10,6 @@ export default class MonthDropdown extends React.Component {
   static propTypes = {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     locale: PropTypes.string,
-    dateFormat: PropTypes.string.isRequired,
     month: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     useShortMonthInDropdown: PropTypes.bool
@@ -84,16 +83,10 @@ export default class MonthDropdown extends React.Component {
     });
 
   render() {
-    const localeData = utils.getLocaleDataForLocale(this.props.locale);
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
-        ? M => utils.getMonthShortInLocale(localeData, utils.newDate({ M }))
-        : M =>
-            utils.getMonthInLocale(
-              localeData,
-              utils.newDate({ M }),
-              this.props.dateFormat
-            )
+        ? M => utils.getMonthShortInLocale(M, this.props.locale)
+        : M => utils.getMonthInLocale(M, this.props.locale)
     );
 
     let renderedDropdown;

@@ -1,12 +1,8 @@
 import React from "react";
 import { mount } from "enzyme";
 import * as utils from "../src/date_utils";
-import { setTime, cloneDate, newDate } from "../src/date_utils";
+import { setTime, newDate } from "../src/date_utils";
 import TimeComponent from "../src/time";
-
-function cloneDateWithTime(date, time) {
-  return setTime(cloneDate(date), time);
-}
 
 describe("TimeComponent", () => {
   let sandbox;
@@ -24,9 +20,9 @@ describe("TimeComponent", () => {
     const timeComponent = mount(
       <TimeComponent
         injectTimes={[
-          utils.addMinutes(cloneDate(today), 1),
-          utils.addMinutes(cloneDate(today), 725),
-          utils.addMinutes(cloneDate(today), 1439)
+          utils.addMinutes(today, 1),
+          utils.addMinutes(today, 725),
+          utils.addMinutes(today, 1439)
         ]}
       />
     );
@@ -43,9 +39,9 @@ describe("TimeComponent", () => {
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
-          utils.addMinutes(cloneDate(today), 0),
-          utils.addMinutes(cloneDate(today), 60),
-          utils.addMinutes(cloneDate(today), 1440)
+          utils.addMinutes(today, 0),
+          utils.addMinutes(today, 60),
+          utils.addMinutes(today, 1440)
         ]}
       />
     );
@@ -62,9 +58,9 @@ describe("TimeComponent", () => {
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
-          utils.addMinutes(cloneDate(today), 1),
-          utils.addMinutes(cloneDate(today), 2),
-          utils.addMinutes(cloneDate(today), 3)
+          utils.addMinutes(today, 1),
+          utils.addMinutes(today, 2),
+          utils.addMinutes(today, 3)
         ]}
       />
     );
@@ -81,9 +77,9 @@ describe("TimeComponent", () => {
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
-          utils.addMinutes(cloneDate(today), 3),
-          utils.addMinutes(cloneDate(today), 1),
-          utils.addMinutes(cloneDate(today), 2)
+          utils.addMinutes(today, 3),
+          utils.addMinutes(today, 1),
+          utils.addMinutes(today, 2)
         ]}
       />
     );
