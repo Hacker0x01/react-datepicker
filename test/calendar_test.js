@@ -190,6 +190,21 @@ describe("Calendar", function() {
       .forEach(dayName => expect(dayName.text()).to.have.length(1));
   });
 
+  it("should render the months correctly adjusted by monthSelectedIn", () => {
+    const selected = utils.newDate("2018-11-19");
+    const calendar = getCalendar({ inline: true, monthsShown: 2, selected });
+    calendar.setProps({ monthSelectedIn: 1 }, () => {
+      const renderedMonths = calendar.find(Month);
+      assert.equal(
+        renderedMonths
+          .first()
+          .prop("day")
+          .month(),
+        9
+      );
+    });
+  });
+
   describe("custom header", function() {
     const months = [
       "January",

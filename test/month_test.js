@@ -16,7 +16,7 @@ describe("Month", () => {
       const expectedDay = utils.addDays(utils.cloneDate(start), offset);
       assert(
         utils.isSameDay(day.props.day, expectedDay),
-        `Day ${offset % 7 + 1} ` +
+        `Day ${(offset % 7) + 1} ` +
           `of week ${Math.floor(offset / 7) + 1} ` +
           `should be "${utils.formatDate(expectedDay, "YYYY-MM-DD")}" ` +
           `but it is "${utils.formatDate(day.props.day, "YYYY-MM-DD")}"`
@@ -126,5 +126,26 @@ describe("Month", () => {
     const day = month.find(Day).first();
     day.simulate("mouseenter");
     assert(utils.isSameDay(day.prop("day"), dayMouseEntered));
+  });
+
+  it("should use its month order in handleDayClick", () => {
+    const order = 2;
+    let orderValueMatched = false;
+
+    function onDayClick(day, event, monthSelectedIn) {
+      orderValueMatched = monthSelectedIn === order;
+    }
+
+    const month = mount(
+      <Month
+        day={utils.newDate()}
+        orderInDisplay={order}
+        onDayClick={onDayClick}
+      />
+    );
+    const day = month.find(Day).at(0);
+
+    day.simulate("click");
+    expect(orderValueMatched).to.be.true;
   });
 });
