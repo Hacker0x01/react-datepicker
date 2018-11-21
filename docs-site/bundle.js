@@ -68072,10 +68072,6 @@
               _this.input.blur();
             }
 
-            if (_this.props.onBlur) {
-              _this.props.onBlur();
-            }
-
             _this.cancelFocusInput();
           };
 
@@ -90372,13 +90368,15 @@
                 startDate: date
               });
             }),
-            (_this.handleOnBlur = function(date) {
-              var selectedDate = new Date(date);
+            (_this.handleOnBlur = function(event) {
+              var date = new Date(event.target.value);
               if ((0, _isValid2.default)(date)) {
                 console.log(
-                  'selected date: %s',
-                  (0, _format2.default)(selectedDate, 'dd/MM/yyyy')
+                  'date: %s',
+                  (0, _format2.default)(date, 'dd/MM/yyyy')
                 );
+              } else {
+                console.log('value: %s', date);
               }
             }),
             _temp)),
@@ -90396,7 +90394,7 @@
               _react2.default.createElement(
                 'code',
                 { className: 'js' },
-                '\nhandleOnBlur: function (date) {\n    const date = new Date(event.target.value);\n    if (isValid(date)) {\n      console.log("selected date: %s", format(date, "dd/MM/yyyy"));\n    } else {\n      console.log("selected date: %s", event.target.value);\n    }\n};\'}\n'
+                '\nhandleOnBlur: function (event) {\n    const date = new Date(event.target.value);\n    if (isValid(date)) {\n      console.log("date: %s", format(date, "dd/MM/yyyy"));\n    } else {\n      console.log("value: %s", date);\n    }\n};\'}\n'
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(
