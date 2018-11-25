@@ -280,10 +280,6 @@ export default class DatePicker extends React.Component {
       this.input.blur();
     }
 
-    if (this.props.onBlur) {
-      this.props.onBlur();
-    }
-
     this.cancelFocusInput();
   };
 
