@@ -18,7 +18,14 @@ export default class YearDropdown extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     date: PropTypes.instanceOf(Date),
     onSelect: PropTypes.func,
-    setOpen: PropTypes.func
+    setOpen: PropTypes.func,
+    onBeforeShow: PropTypes.func,
+    onAfterShow: PropTypes.func
+  };
+
+  static defaultProps = {
+    onBeforeShow: function() {},
+    onAfterShow: function() {}
   };
 
   state = {
@@ -98,6 +105,12 @@ export default class YearDropdown extends React.Component {
   };
 
   toggleDropdown = event => {
+    if (!this.state.dropdownVisible) {
+      this.props.onBeforeShow();
+    } else {
+      this.props.onAfterShow();
+    }
+
     this.setState(
       {
         dropdownVisible: !this.state.dropdownVisible

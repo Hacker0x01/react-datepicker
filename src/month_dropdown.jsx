@@ -12,7 +12,14 @@ export default class MonthDropdown extends React.Component {
     locale: PropTypes.string,
     month: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
+    onBeforeShow: PropTypes.func,
+    onAfterShow: PropTypes.func
+  };
+
+  static defaultProps = {
+    onBeforeShow: function() {},
+    onAfterShow: function() {}
   };
 
   state = {
@@ -77,10 +84,17 @@ export default class MonthDropdown extends React.Component {
     }
   };
 
-  toggleDropdown = () =>
+  toggleDropdown = () => {
+    if (!this.state.dropdownVisible) {
+      this.props.onBeforeShow();
+    } else {
+      this.props.onAfterShow();
+    }
+
     this.setState({
       dropdownVisible: !this.state.dropdownVisible
     });
+  };
 
   render() {
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(

@@ -436,6 +436,8 @@ export default class Calendar extends React.Component {
         year={getYear(this.state.date)}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        onBeforeShow={() => this.props.disableOnClickOutside()}
+        onAfterShow={() => this.props.enableOnClickOutside()}
       />
     );
   };
@@ -451,6 +453,8 @@ export default class Calendar extends React.Component {
         onChange={this.changeMonth}
         month={getMonth(this.state.date)}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
+        onBeforeShow={() => this.props.disableOnClickOutside()}
+        onAfterShow={() => this.props.enableOnClickOutside()}
       />
     );
   };
@@ -469,6 +473,8 @@ export default class Calendar extends React.Component {
         maxDate={this.props.maxDate}
         date={this.state.date}
         scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+        onBeforeShow={() => console.log("onBeforeShow")}
+        onAfterShow={() => this.props.enableOnClickOutside()}
       />
     );
   };
