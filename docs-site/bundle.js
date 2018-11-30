@@ -41568,7 +41568,6 @@
                 _this.input = input;
               }),
               (_React$cloneElement.value = inputValue),
-              (_React$cloneElement.onBlur = _this.handleBlur),
               (_React$cloneElement.onChange = _this.handleChange),
               (_React$cloneElement.onClick = _this.onInputClick),
               (_React$cloneElement.onFocus = _this.handleFocus),
@@ -42689,6 +42688,37 @@
             }
           };
 
+          _this.renderInputTimeSection = function() {
+            return _react2.default.createElement(
+              "div",
+              { className: "react-datepicker__input-time-container" },
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker-time__caption" },
+                "Starting time"
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker-time__input-container" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "react-datepicker-time__input" },
+                  _react2.default.createElement("input", { type: "text" })
+                ),
+                _react2.default.createElement(
+                  "div",
+                  { className: "react-datepicker-time__delimiter" },
+                  ":"
+                ),
+                _react2.default.createElement(
+                  "div",
+                  { className: "react-datepicker-time__input" },
+                  _react2.default.createElement("input", { type: "text" })
+                )
+              )
+            );
+          };
+
           _this.state = {
             date: _this.getDateInView(),
             selectingDate: null,
@@ -42756,6 +42786,7 @@
             this.renderMonths(),
             this.renderTodayButton(),
             this.renderTimeSection(),
+            this.renderInputTimeSection(),
             this.props.children
           );
         };
