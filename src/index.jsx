@@ -153,6 +153,7 @@ export default class DatePicker extends React.Component {
     withPortal: PropTypes.bool,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
+    showTimeInput: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -193,6 +194,7 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
+      showTimeInput: false,
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
@@ -350,10 +352,13 @@ export default class DatePicker extends React.Component {
 
   handleBlur = event => {
     if (this.state.open && !this.props.withPortal) {
+      console.log("in if");
       this.deferFocusInput();
     } else {
+      console.log("in else");
       this.props.onBlur(event);
     }
+    console.log("setting state");
     this.setState({ focused: false });
   };
 
@@ -669,6 +674,7 @@ export default class DatePicker extends React.Component {
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
         renderDayContents={this.props.renderDayContents}
+        showTimeInput={this.props.showTimeInput}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -694,7 +700,7 @@ export default class DatePicker extends React.Component {
         this.input = input;
       },
       value: inputValue,
-      onBlur: this.handleBlur,
+      // onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
       onFocus: this.handleFocus,
@@ -730,6 +736,7 @@ export default class DatePicker extends React.Component {
   };
 
   render() {
+    console.log(this.props.showTimeInput);
     const calendar = this.renderCalendar();
 
     if (this.props.inline && !this.props.withPortal) {

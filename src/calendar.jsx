@@ -3,6 +3,7 @@ import MonthDropdown from "./month_dropdown";
 import MonthYearDropdown from "./month_year_dropdown";
 import Month from "./month";
 import Time from "./time";
+import InputTime from "./inputTime";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -78,6 +79,7 @@ export default class Calendar extends React.Component {
     onSelect: PropTypes.func.isRequired,
     onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
+    showTimeInput: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
@@ -623,6 +625,13 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderInputTimeSection = () => {
+    console.log(this.props.showTimeInput);
+    if (this.props.showTimeInput) {
+      return <InputTime />;
+    }
+  };
+
   render() {
     const Container = this.props.container || CalendarContainer;
 
@@ -637,6 +646,7 @@ export default class Calendar extends React.Component {
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
+        {this.renderInputTimeSection()}
         {this.props.children}
       </Container>
     );
