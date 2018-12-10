@@ -1092,7 +1092,7 @@ describe("DatePicker", () => {
     var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
       datePickerInline,
       "react-datepicker__day"
-    )[40];
+    )[45];
     TestUtils.Simulate.click(dayButtonInline);
     assert.equal(datePickerInline.state.monthSelectedIn, 1);
 

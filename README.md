@@ -92,7 +92,7 @@ You can also include a time picker by adding the showTimeSelect prop
 />
 ```
 
-Times will be displayed at 30-minute intervals by default (default configurable via timeInterval prop)
+Times will be displayed at 30-minute intervals by default (default configurable via timeIntervals prop)
 
 More examples of how to use the time picker are given on the [main website](https://hacker0x01.github.io/react-datepicker)
 
