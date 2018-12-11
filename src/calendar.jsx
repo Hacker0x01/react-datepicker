@@ -127,16 +127,6 @@ export default class Calendar extends React.Component {
     };
   }
 
-  static get defaultProps() {
-    return {
-      onDropdownFocus: () => {},
-      monthsShown: 1,
-      monthSelectedIn: 0,
-      forceShowMonthNavigation: false,
-      timeCaption: "Time"
-    };
-  }
-
   constructor(props) {
     super(props);
 
