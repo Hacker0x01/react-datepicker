@@ -41,7 +41,7 @@
 | `minTime`                    | `instanceOfDate`               |                    |             |
 | `monthsShown`                | `number`                       | `1`                |             |
 | `name`                       | `string`                       |                    |             |
-| `nextMonthButtonLabel`       | `string`                       | `'Next month'`     |             |
+| `nextMonthButtonLabel`       | `node`                         | `'Next month'`     |             |
 | `onBlur`                     | `func`                         | `function() {}`    |             |
 | `onChange`                   | `func`                         | `function() {}`    |             |
 | `onChangeRaw`                | `func`                         |                    |             |
@@ -64,7 +64,7 @@
 | `popperPlacement`            | `enumpopperPlacementPositions` |                    |             |
 | `popperProps`                | `object`                       |                    |             |
 | `preventOpenOnFocus`         | `bool`                         | `false`            |             |
-| `previousMonthButtonLabel`   | `string`                       | `'Previous Month'` |             |
+| `previousMonthButtonLabel`   | `node`                         | `'Previous Month'` |             |
 | `readOnly`                   | `bool`                         | `false`            |             |
 | `renderCustomHeader`         | `func`                         |                    |             |
 | `renderDayContents`          | `func`                         | `function(date) {  |
