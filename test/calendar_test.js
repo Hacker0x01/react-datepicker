@@ -315,8 +315,9 @@ describe("Calendar", function() {
 
       nextMonth.simulate("click");
 
+      const month = utils.getMonth(calendar.state().date);
       expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) - 1
+        (month === 0 ? 12 : month) - 1
       );
     });
 
