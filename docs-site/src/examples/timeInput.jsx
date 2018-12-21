@@ -23,7 +23,9 @@ export default class TimeInput extends React.Component {
             {`
 <DatePicker
     selected={this.state.startDate}
+    timeInputLabel="Time:"
     onChange={this.handleChange}
+    dateFormat="MM/dd/yyyy h:mm aa"
     showTimeInput={true}
 />
 `}
@@ -32,7 +34,9 @@ export default class TimeInput extends React.Component {
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
+            timeInputLabel="Time:"
             onChange={this.handleChange}
+            dateFormat="MM/dd/yyyy h:mm aa"
             showTimeInput={true}
           />
         </div>

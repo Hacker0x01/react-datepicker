@@ -1,64 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  getHours,
-  getMinutes,
-  newDate,
-  getStartOfDay,
-  addMinutes,
-  formatDate,
-  isTimeInDisabledRange,
-  isTimeDisabled,
-  timesToInjectAfter
-} from "./date_utils";
 
 export default class inputTime extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      minutes: 0,
-      hour: 0
+      time: this.props.timeString
     };
   }
 
-  static propTypes = {};
-
-  static get defaultProps() {
-    return {};
-  }
-
-  isNumber = input => {
-    const re = /^[0-9\b]+$/;
-    return input === "" || re.test(input);
+  static propTypes = {
+    onChange: PropTypes.func,
+    timeString: PropTypes.string,
+    timeInputLabel: PropTypes.string
   };
 
-  onChangeHour = time => {};
-
-  onChangeMinute = time => {};
+  onTimeChange = time => {
+    this.setState({ time });
+    const date = new Date();
+    date.setHours(time.split(":")[0]);
+    date.setMinutes(time.split(":")[1]);
+    this.props.onChange(date);
+  };
 
   render() {
+    const { time } = this.state;
     return (
       <div className="react-datepicker__input-time-container">
-        <div className="react-datepicker-time__caption">Starting time</div>
+        <div className="react-datepicker-time__caption">
+          {this.props.timeInputLabel}
+        </div>
         <div className="react-datepicker-time__input-container">
           <div className="react-datepicker-time__input">
             <input
-              onChange={this.onChangeHour}
-              placeholder="h"
-              type="text"
-              name="hour"
-              maxLength="2"
-            />
-          </div>
-          <div className="react-datepicker-time__delimiter">:</div>
-          <div className="react-datepicker-time__input">
-            <input
-              onChange={this.onChangeMinute}
-              placeholder="m"
-              type="text"
-              name="minute"
-              maxLength="2"
+              type="time"
+              className="react-datepicker-time__input"
+              placeholder="Time"
+              name="time-input"
+              value={time}
+              onChange={ev => {
+                this.onTimeChange(ev.target.value);
+              }}
             />
           </div>
         </div>

@@ -217,19 +217,19 @@
       display: inline-block;
       margin-left: 10px;
       input {
-        width: 20px;
+        width: 85px;
       }
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
+      input[type="time"]::-webkit-inner-spin-button,
+      input[type="time"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
-      input[type="number"] {
+      input[type="time"] {
         -moz-appearance: textfield;
       }
     }
     .react-datepicker-time__delimiter {
-      margin-left: 10px;
+      margin-left: 5px;
       display: inline-block;
     }
   }
