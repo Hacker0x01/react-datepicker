@@ -324,9 +324,11 @@ describe("Calendar", function() {
 
       nextMonth.simulate("click");
 
-      expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) - 1
-      );
+      const newMonth = utils.getMonth(calendar.state().date) - 1;
+
+      const resultMonth = newMonth === -1 ? 11 : newMonth;
+
+      expect(utils.getMonth(selected)).to.be.equal(resultMonth);
     });
 
     it("nextMonthButtonDisabled flag should be true", function() {
