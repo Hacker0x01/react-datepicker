@@ -29,7 +29,8 @@ import {
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  addZero
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -630,15 +631,23 @@ export default class Calendar extends React.Component {
   };
 
   renderInputTimeSection = () => {
-    console.log(this.props.showTimeInput);
+    const time = new Date(this.props.selected);
+    const timeString = `${addZero(time.getHours())}:${addZero(
+      time.getMinutes()
+    )}`;
     if (this.props.showTimeInput) {
-      return <InputTime />;
+      return (
+        <InputTime
+          timeString={timeString}
+          timeInputLabel={this.props.timeInputLabel}
+          onChange={this.props.onTimeChange}
+        />
+      );
     }
   };
 
   render() {
     const Container = this.props.container || CalendarContainer;
-
     return (
       <Container
         className={classnames("react-datepicker", this.props.className, {

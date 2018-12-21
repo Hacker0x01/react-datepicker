@@ -165,6 +165,7 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
+    timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func
   };
@@ -198,6 +199,7 @@ export default class DatePicker extends React.Component {
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
+      timeInputLabel: "Time",
       renderDayContents(date) {
         return date;
       }
@@ -343,14 +345,15 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open && !this.props.withPortal) {
-      console.log("in if");
+    if (
+      this.state.open &&
+      !this.props.withPortal &&
+      !this.props.showTimeInput
+    ) {
       this.deferFocusInput();
     } else {
-      console.log("in else");
       this.props.onBlur(event);
     }
-    console.log("setting state");
     this.setState({ focused: false });
   };
 
@@ -480,6 +483,9 @@ export default class DatePicker extends React.Component {
     this.props.onChange(changedDate);
     if (this.props.shouldCloseOnSelect) {
       this.setOpen(false);
+    }
+    if (this.props.showTimeInput) {
+      this.setOpen(true);
     }
     this.setState({ inputValue: null });
   };
@@ -654,6 +660,7 @@ export default class DatePicker extends React.Component {
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        timeInputLabel={this.props.timeInputLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
@@ -684,7 +691,7 @@ export default class DatePicker extends React.Component {
         this.input = input;
       },
       value: inputValue,
-      // onBlur: this.handleBlur,
+      onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
       onFocus: this.handleFocus,
@@ -720,7 +727,6 @@ export default class DatePicker extends React.Component {
   };
 
   render() {
-    console.log(this.props.showTimeInput);
     const calendar = this.renderCalendar();
 
     if (this.props.inline && !this.props.withPortal) {
