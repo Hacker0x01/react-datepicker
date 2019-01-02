@@ -2,6 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default class inputTime extends React.Component {
+  static propTypes = {
+    onChange: PropTypes.func,
+    timeString: PropTypes.string,
+    timeInputLabel: PropTypes.string
+  };
+
   constructor(props) {
     super(props);
 
@@ -9,12 +15,6 @@ export default class inputTime extends React.Component {
       time: this.props.timeString
     };
   }
-
-  static propTypes = {
-    onChange: PropTypes.func,
-    timeString: PropTypes.string,
-    timeInputLabel: PropTypes.string
-  };
 
   onTimeChange = time => {
     this.setState({ time });
