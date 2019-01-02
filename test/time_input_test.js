@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import InputTimeComponent from "../src/inputTime";
 
@@ -26,5 +26,14 @@ describe("DatePicker", () => {
     );
     const caption = timeComponent.find(".react-datepicker-time__caption");
     expect(caption.text()).to.equal("Custom time");
+  });
+
+  it("should trigger onChange event", () => {
+    const timeComponent = shallow(
+      <InputTimeComponent onChange={console.log} />
+    );
+    const input = timeComponent.find("input");
+    input.simulate("change", { target: { value: "13:00" } });
+    expect(timeComponent.state("time")).to.equal("13:00");
   });
 });
