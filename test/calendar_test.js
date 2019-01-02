@@ -299,10 +299,8 @@ describe("Calendar", function() {
       const prevMonth = calendar.find(".prevMonth");
 
       prevMonth.simulate("click");
-
-      expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) + 1
-      );
+      const month = utils.getMonth(calendar.state().date) + 1;
+      expect(utils.getMonth(selected)).to.be.equal(month === 12 ? 0 : month);
     });
 
     it("should go to next month", function() {

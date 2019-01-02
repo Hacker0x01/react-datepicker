@@ -84,6 +84,7 @@ export default class Calendar extends React.Component {
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
+    timeInputLabel: PropTypes.string,
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,

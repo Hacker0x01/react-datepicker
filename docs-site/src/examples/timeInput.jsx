@@ -26,7 +26,7 @@ export default class TimeInput extends React.Component {
     timeInputLabel="Time:"
     onChange={this.handleChange}
     dateFormat="MM/dd/yyyy h:mm aa"
-    showTimeInput={true}
+    showTimeInput
 />
 `}
           </code>
@@ -37,7 +37,7 @@ export default class TimeInput extends React.Component {
             timeInputLabel="Time:"
             onChange={this.handleChange}
             dateFormat="MM/dd/yyyy h:mm aa"
-            showTimeInput={true}
+            showTimeInput
           />
         </div>
       </div>
