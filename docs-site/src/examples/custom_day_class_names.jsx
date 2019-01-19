@@ -1,6 +1,6 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import getDate from 'date-fns/getDate';
+import React from "react";
+import DatePicker from "react-datepicker";
+import getDate from "date-fns/getDate";
 
 export default class CustomDayClassNames extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ export default class CustomDayClassNames extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
             dayClassName={date =>
-              getDate(date) < Math.random() * 31 ? 'random' : undefined
+              getDate(date) < Math.random() * 31 ? "random" : undefined
             }
           />
         </div>

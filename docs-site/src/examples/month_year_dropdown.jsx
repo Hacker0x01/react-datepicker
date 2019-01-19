@@ -1,7 +1,7 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import addMonths from 'date-fns/addMonths';
-import subMonths from 'date-fns/subMonths';
+import React from "react";
+import DatePicker from "react-datepicker";
+import addMonths from "date-fns/addMonths";
+import subMonths from "date-fns/subMonths";
 
 export default class MonthYearDropdown extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ export default class MonthYearDropdown extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            dateFormatCalendar={'MMM yyyy'}
+            dateFormatCalendar={"MMM yyyy"}
             minDate={subMonths(new Date(), 6)}
             maxDate={addMonths(new Date(), 6)}
             showMonthYearDropdown

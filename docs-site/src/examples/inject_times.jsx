@@ -1,7 +1,7 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import setMinutes from 'date-fns/setMinutes';
-import setHours from 'date-fns/setHours';
+import React from "react";
+import DatePicker from "react-datepicker";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 
 export default class InjectTimes extends React.Component {
   state = {

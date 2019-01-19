@@ -1,53 +1,53 @@
-import isDate from 'date-fns/isDate';
-import isValidDate from 'date-fns/isValid';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
-import addHours from 'date-fns/addHours';
-import addDays from 'date-fns/addDays';
-import addWeeks from 'date-fns/addWeeks';
-import addMonths from 'date-fns/addMonths';
-import addYears from 'date-fns/addYears';
-import subMinutes from 'date-fns/subMinutes';
-import subHours from 'date-fns/subHours';
-import subDays from 'date-fns/subDays';
-import subWeeks from 'date-fns/subWeeks';
-import subMonths from 'date-fns/subMonths';
-import subYears from 'date-fns/subYears';
-import getSeconds from 'date-fns/getSeconds';
-import getMinutes from 'date-fns/getMinutes';
-import getHours from 'date-fns/getHours';
-import getDay from 'date-fns/getDay';
-import getDate from 'date-fns/getDate';
-import getMonth from 'date-fns/getMonth';
-import getYear from 'date-fns/getYear';
-import getTime from 'date-fns/getTime';
-import setSeconds from 'date-fns/setSeconds';
-import setMinutes from 'date-fns/setMinutes';
-import setHours from 'date-fns/setHours';
-import setMonth from 'date-fns/setMonth';
-import setYear from 'date-fns/setYear';
-import min from 'date-fns/min';
-import max from 'date-fns/max';
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
-import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
-import differenceInCalendarWeeks from 'date-fns/differenceInCalendarWeeks';
-import setDayOfYear from 'date-fns/setDayOfYear';
-import startOfDay from 'date-fns/startOfDay';
-import startOfWeek from 'date-fns/startOfWeek';
-import startOfMonth from 'date-fns/startOfMonth';
-import startOfYear from 'date-fns/startOfYear';
-import endOfWeek from 'date-fns/endOfWeek';
-import endOfMonth from 'date-fns/endOfMonth';
-import isEqual from 'date-fns/isEqual';
-import isSameWeek from 'date-fns/isSameWeek';
-import dfIsSameDay from 'date-fns/isSameDay';
-import dfIsSameMonth from 'date-fns/isSameMonth';
-import dfIsSameYear from 'date-fns/isSameYear';
-import isAfter from 'date-fns/isAfter';
-import isBefore from 'date-fns/isBefore';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import toDate from 'date-fns/toDate';
-import parse from 'date-fns/parse';
+import isDate from "date-fns/isDate";
+import isValidDate from "date-fns/isValid";
+import format from "date-fns/format";
+import addMinutes from "date-fns/addMinutes";
+import addHours from "date-fns/addHours";
+import addDays from "date-fns/addDays";
+import addWeeks from "date-fns/addWeeks";
+import addMonths from "date-fns/addMonths";
+import addYears from "date-fns/addYears";
+import subMinutes from "date-fns/subMinutes";
+import subHours from "date-fns/subHours";
+import subDays from "date-fns/subDays";
+import subWeeks from "date-fns/subWeeks";
+import subMonths from "date-fns/subMonths";
+import subYears from "date-fns/subYears";
+import getSeconds from "date-fns/getSeconds";
+import getMinutes from "date-fns/getMinutes";
+import getHours from "date-fns/getHours";
+import getDay from "date-fns/getDay";
+import getDate from "date-fns/getDate";
+import getMonth from "date-fns/getMonth";
+import getYear from "date-fns/getYear";
+import getTime from "date-fns/getTime";
+import setSeconds from "date-fns/setSeconds";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
+import setMonth from "date-fns/setMonth";
+import setYear from "date-fns/setYear";
+import min from "date-fns/min";
+import max from "date-fns/max";
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
+import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
+import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
+import setDayOfYear from "date-fns/setDayOfYear";
+import startOfDay from "date-fns/startOfDay";
+import startOfWeek from "date-fns/startOfWeek";
+import startOfMonth from "date-fns/startOfMonth";
+import startOfYear from "date-fns/startOfYear";
+import endOfWeek from "date-fns/endOfWeek";
+import endOfMonth from "date-fns/endOfMonth";
+import isEqual from "date-fns/isEqual";
+import isSameWeek from "date-fns/isSameWeek";
+import dfIsSameDay from "date-fns/isSameDay";
+import dfIsSameMonth from "date-fns/isSameMonth";
+import dfIsSameYear from "date-fns/isSameYear";
+import isAfter from "date-fns/isAfter";
+import isBefore from "date-fns/isBefore";
+import isWithinInterval from "date-fns/isWithinInterval";
+import toDate from "date-fns/toDate";
+import parse from "date-fns/parse";
 
 // ** Date Constructors **
 
@@ -80,13 +80,13 @@ export function parseDate(value, dateFormat, locale) {
 export { isDate };
 
 export function isValid(date) {
-  return isValidDate(date) && isAfter(date, new Date('1/1/1000'));
+  return isValidDate(date) && isAfter(date, new Date("1/1/1000"));
 }
 
 // ** Date Formatting **
 
 export function formatDate(date, formatStr, locale) {
-  if (locale === 'en') {
+  if (locale === "en") {
     return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
   let localeObj = getLocaleObject(locale);
@@ -116,7 +116,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
         Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
         (locale: locale)
       )) ||
-    ''
+    ""
   );
 }
 
@@ -151,7 +151,7 @@ export function getWeek(date) {
 }
 
 export function getDayOfWeekCode(day, locale) {
-  return formatDate(day, 'ddd', (locale: locale));
+  return formatDate(day, "ddd", (locale: locale));
 }
 
 // *** Start of ***
@@ -255,23 +255,23 @@ export function getLocaleObject(localeName) {
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return formatFunc(formatDate(date, 'dddd', locale));
+  return formatFunc(formatDate(date, "dddd", locale));
 }
 
 export function getWeekdayMinInLocale(date, locale) {
-  return formatDate(date, 'EEEEEE', locale);
+  return formatDate(date, "EEEEEE", locale);
 }
 
 export function getWeekdayShortInLocale(date, locale) {
-  return formatDate(date, 'EEE', locale);
+  return formatDate(date, "EEE", locale);
 }
 
 export function getMonthInLocale(month, locale) {
-  return formatDate(setMonth(newDate(), month), 'LLLL', locale);
+  return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
 export function getMonthShortInLocale(month, dateFormat, locale) {
-  return formatDate(setMonth(newDate(), month), 'LLL', locale);
+  return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
 // ** Utils for some components **
@@ -314,7 +314,7 @@ export function isTimeDisabled(time, disabledTimes) {
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {
   if (!minTime || !maxTime) {
-    throw new Error('Both minTime and maxTime props required');
+    throw new Error("Both minTime and maxTime props required");
   }
   const base = newDate();
   const baseTime = setHours(setMinutes(base, getMinutes(time)), getHours(time));
@@ -382,25 +382,25 @@ export function getEffectiveMaxDate({ maxDate, includeDates }) {
 
 export function getHightLightDaysMap(
   highlightDates = [],
-  defaultClassName = 'react-datepicker__day--highlighted'
+  defaultClassName = "react-datepicker__day--highlighted"
 ) {
   const dateClasses = new Map();
   for (let i = 0, len = highlightDates.length; i < len; i++) {
     const obj = highlightDates[i];
     if (isDate(obj)) {
-      const key = formatDate(obj, 'MM.dd.yyyy');
+      const key = formatDate(obj, "MM.dd.yyyy");
       const classNamesArr = dateClasses.get(key) || [];
       if (!classNamesArr.includes(defaultClassName)) {
         classNamesArr.push(defaultClassName);
         dateClasses.set(key, classNamesArr);
       }
-    } else if (typeof obj === 'object') {
+    } else if (typeof obj === "object") {
       const keys = Object.keys(obj);
       const className = keys[0];
       const arrOfDates = obj[keys[0]];
-      if (typeof className === 'string' && arrOfDates.constructor === Array) {
+      if (typeof className === "string" && arrOfDates.constructor === Array) {
         for (let k = 0, len = arrOfDates.length; k < len; k++) {
-          const key = formatDate(arrOfDates[k], 'MM.dd.yyyy');
+          const key = formatDate(arrOfDates[k], "MM.dd.yyyy");
           const classNamesArr = dateClasses.get(key) || [];
           if (!classNamesArr.includes(className)) {
             classNamesArr.push(className);
