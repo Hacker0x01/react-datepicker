@@ -258,7 +258,6 @@ export default class exampleComponents extends React.Component {
       title: "Custom header",
       component: <RenderCustomHeader />
     },
-    ,
     {
       title: "Input time",
       component: <TimeInput />
