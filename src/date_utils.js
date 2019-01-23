@@ -255,7 +255,7 @@ export function getLocaleObject(localeName) {
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return formatFunc(formatDate(date, "dddd", locale));
+  return formatFunc(formatDate(date, "EEEE", locale));
 }
 
 export function getWeekdayMinInLocale(date, locale) {
