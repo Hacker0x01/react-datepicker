@@ -165,6 +165,15 @@ describe("Calendar", function() {
       .forEach(dayName => expect(dayName.text()).to.have.length(1));
   });
 
+  it("should render the months correctly adjusted by monthSelectedIn", () => {
+    const selected = utils.newDate("2018-11-19");
+    const calendar = getCalendar({ inline: true, monthsShown: 2, selected });
+    calendar.setProps({ monthSelectedIn: 1 }, () => {
+      const renderedMonths = calendar.find(Month);
+      assert.equal(utils.getMonth(renderedMonths.first().prop("day")), 9);
+    });
+  });
+
   describe("custom header", function() {
     const months = [
       "January",
@@ -315,9 +324,11 @@ describe("Calendar", function() {
 
       nextMonth.simulate("click");
 
-      expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) - 1
-      );
+      const newMonth = utils.getMonth(calendar.state().date) - 1;
+
+      const resultMonth = newMonth === -1 ? 11 : newMonth;
+
+      expect(utils.getMonth(selected)).to.be.equal(resultMonth);
     });
 
     it("nextMonthButtonDisabled flag should be true", function() {

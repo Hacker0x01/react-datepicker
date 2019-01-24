@@ -1,5 +1,5 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
+import React from "react";
+import DatePicker from "react-datepicker";
 
 export default class Children extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ export default class Children extends React.Component {
             selected={this.state.startDate}
             onChange={this.handleChange}
           >
-            <div style={{ color: 'red' }}>
+            <div style={{ color: "red" }}>
               Don't forget to check the weather!
             </div>
           </DatePicker>

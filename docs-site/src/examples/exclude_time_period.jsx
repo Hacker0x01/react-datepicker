@@ -1,7 +1,7 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import setMinutes from 'date-fns/setMinutes';
-import setHours from 'date-fns/setHours';
+import React from "react";
+import DatePicker from "react-datepicker";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 
 export default class ExcludeTimePeriod extends React.Component {
   state = {
@@ -19,23 +19,23 @@ export default class ExcludeTimePeriod extends React.Component {
       <div className="row">
         <pre className="column example__code">
           <code className="jsx">
-            {'<DatePicker'}
+            {"<DatePicker"}
             <br />
-            {'  selected={this.state.startDate}'}
+            {"  selected={this.state.startDate}"}
             <br />
-            {'  onChange={this.handleChange}'}
+            {"  onChange={this.handleChange}"}
             <br />
             <strong>
-              {'  showTimeSelect'}
+              {"  showTimeSelect"}
               <br />
-              {'  minTime={setHours(setMinutes(new Date(), 0), 17)}'}
+              {"  minTime={setHours(setMinutes(new Date(), 0), 17)}"}
               <br />
-              {'  maxTime={setHours(setMinutes(new Date(), 30), 20)}'}
+              {"  maxTime={setHours(setMinutes(new Date(), 30), 20)}"}
               <br />
               {'  dateFormat="MMMM d, yyyy"'}
             </strong>
             <br />
-            {'/>'}
+            {"/>"}
           </code>
         </pre>
         <div className="column">

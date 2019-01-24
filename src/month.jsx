@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import Week from './week';
-import * as utils from './date_utils';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import Week from "./week";
+import * as utils from "./date_utils";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -12,6 +12,7 @@ export default class Month extends React.Component {
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
+    orderInDisplay: PropTypes.number,
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
@@ -41,7 +42,7 @@ export default class Month extends React.Component {
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day, event);
+      this.props.onDayClick(day, event, this.props.orderInDisplay);
     }
   };
 
@@ -135,8 +136,8 @@ export default class Month extends React.Component {
 
   getClassNames = () => {
     const { selectingDate, selectsStart, selectsEnd } = this.props;
-    return classnames('react-datepicker__month', {
-      'react-datepicker__month--selecting-range':
+    return classnames("react-datepicker__month", {
+      "react-datepicker__month--selecting-range":
         selectingDate && (selectsStart || selectsEnd)
     });
   };
@@ -147,7 +148,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={'month-' + utils.formatDate(this.props.day, 'YYYY-MM')}
+        aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
       >
         {this.renderWeeks()}
       </div>

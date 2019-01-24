@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 import {
   getDay,
   getMonth,
@@ -14,7 +14,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   formatDate
-} from './date_utils';
+} from "./date_utils";
 
 export default class Day extends React.Component {
   static propTypes = {
@@ -66,7 +66,7 @@ export default class Day extends React.Component {
     }
 
     // Looking for className in the Map of {'day string, 'className'}
-    const dayStr = formatDate(day, 'MM.dd.yyyy');
+    const dayStr = formatDate(day, "MM.dd.yyyy");
     return highlightDates.get(dayStr);
   };
 
@@ -172,24 +172,24 @@ export default class Day extends React.Component {
       ? this.props.dayClassName(date)
       : undefined;
     return classnames(
-      'react-datepicker__day',
+      "react-datepicker__day",
       dayClassName,
-      'react-datepicker__day--' + getDayOfWeekCode(this.props.day),
+      "react-datepicker__day--" + getDayOfWeekCode(this.props.day),
       {
-        'react-datepicker__day--disabled': this.isDisabled(),
-        'react-datepicker__day--selected': this.isSameDay(this.props.selected),
-        'react-datepicker__day--keyboard-selected': this.isKeyboardSelected(),
-        'react-datepicker__day--range-start': this.isRangeStart(),
-        'react-datepicker__day--range-end': this.isRangeEnd(),
-        'react-datepicker__day--in-range': this.isInRange(),
-        'react-datepicker__day--in-selecting-range': this.isInSelectingRange(),
-        'react-datepicker__day--selecting-range-start': this.isSelectingRangeStart(),
-        'react-datepicker__day--selecting-range-end': this.isSelectingRangeEnd(),
-        'react-datepicker__day--today': this.isSameDay(newDate()),
-        'react-datepicker__day--weekend': this.isWeekend(),
-        'react-datepicker__day--outside-month': this.isOutsideMonth()
+        "react-datepicker__day--disabled": this.isDisabled(),
+        "react-datepicker__day--selected": this.isSameDay(this.props.selected),
+        "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
+        "react-datepicker__day--range-start": this.isRangeStart(),
+        "react-datepicker__day--range-end": this.isRangeEnd(),
+        "react-datepicker__day--in-range": this.isInRange(),
+        "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
+        "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
+        "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
+        "react-datepicker__day--today": this.isSameDay(newDate()),
+        "react-datepicker__day--weekend": this.isWeekend(),
+        "react-datepicker__day--outside-month": this.isOutsideMonth()
       },
-      this.getHighLightedClass('react-datepicker__day--highlighted')
+      this.getHighLightedClass("react-datepicker__day--highlighted")
     );
   };
 

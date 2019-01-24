@@ -125,4 +125,25 @@ describe("Month", () => {
     day.simulate("mouseenter");
     assert(utils.isSameDay(day.prop("day"), dayMouseEntered));
   });
+
+  it("should use its month order in handleDayClick", () => {
+    const order = 2;
+    let orderValueMatched = false;
+
+    function onDayClick(day, event, monthSelectedIn) {
+      orderValueMatched = monthSelectedIn === order;
+    }
+
+    const month = mount(
+      <Month
+        day={utils.newDate()}
+        orderInDisplay={order}
+        onDayClick={onDayClick}
+      />
+    );
+    const day = month.find(Day).at(0);
+
+    day.simulate("click");
+    expect(orderValueMatched).to.be.true;
+  });
 });

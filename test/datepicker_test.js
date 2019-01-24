@@ -1070,4 +1070,54 @@ describe("DatePicker", () => {
       done();
     });
   });
+
+  it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
+    const datePicker = mount(<DatePicker monthsShown={2} inline />);
+    datePicker.setState({ monthSelectedIn: 1 }, () => {
+      assert.equal(datePicker.state("monthSelectedIn"), 1);
+      datePicker.setProps({ monthsShown: 1 }, () => {
+        assert.equal(datePicker.props().monthsShown, 1);
+        setTimeout(() => {
+          // Give setState in componentDidUpdate time to run
+          assert.equal(datePicker.state("monthSelectedIn"), 0);
+        }, 100);
+      });
+    });
+  });
+
+  it("should save monthSelectedIn only if calendar is inline", () => {
+    var datePickerInline = TestUtils.renderIntoDocument(
+      <DatePicker inline monthsShown={2} />
+    );
+    var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePickerInline,
+      "react-datepicker__day"
+    )[45];
+    TestUtils.Simulate.click(dayButtonInline);
+    assert.equal(datePickerInline.state.monthSelectedIn, 1);
+
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker monthsShown={2} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    var day = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Day
+    )[40];
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    assert.equal(datePicker.state.monthSelectedIn, undefined);
+  });
+
+  it("should disable non-jumping if prop inlineFocusSelectedMonth is true", () => {
+    var datePickerInline = TestUtils.renderIntoDocument(
+      <DatePicker inline monthsShown={2} inlineFocusSelectedMonth />
+    );
+    var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePickerInline,
+      "react-datepicker__day"
+    )[40];
+    TestUtils.Simulate.click(dayButtonInline);
+    assert.equal(datePickerInline.state.monthSelectedIn, undefined);
+  });
 });
