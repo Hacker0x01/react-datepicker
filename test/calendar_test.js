@@ -301,7 +301,7 @@ describe("Calendar", function() {
       prevMonth.simulate("click");
 
       expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) + 1
+        (utils.getMonth(calendar.state().date) + 1) % 12
       );
     });
 
