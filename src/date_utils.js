@@ -224,7 +224,13 @@ export function isSameDay(date1, date2) {
 }
 
 export function isDayInRange(day, startDate, endDate) {
-  return isWithinInterval(day, { start: startDate, end: endDate });
+  let valid;
+  try {
+    valid = isWithinInterval(day, { start: startDate, end: endDate });
+  } catch (err) {
+    valid = false;
+  }
+  return valid;
 }
 
 // *** Diffing ***
@@ -255,7 +261,7 @@ export function getLocaleObject(localeName) {
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return formatFunc(formatDate(date, "dddd", locale));
+  return formatFunc(formatDate(date, "EEEE", locale));
 }
 
 export function getWeekdayMinInLocale(date, locale) {
@@ -326,7 +332,14 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     setMinutes(base, getMinutes(maxTime)),
     getHours(maxTime)
   );
-  return !isWithinInterval(baseTime, { start: min, end: max });
+
+  let valid;
+  try {
+    valid = !isWithinInterval(baseTime, { start: min, end: max });
+  } catch (err) {
+    valid = false;
+  }
+  return valid;
 }
 
 export function monthDisabledBefore(day, { minDate, includeDates } = {}) {
