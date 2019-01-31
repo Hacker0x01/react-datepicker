@@ -10,8 +10,12 @@ import {
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  isTimeInDisabledRange,
+  isDayInRange
 } from "../src/date_utils";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 
 describe("date_utils", function() {
   describe("isSameDay", function() {
@@ -243,6 +247,55 @@ describe("date_utils", function() {
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
       assert(isEqual(getEffectiveMaxDate({ maxDate, includeDates }), date1));
+    });
+  });
+
+  describe("isTimeInDisabledRange", () => {
+    it("should tell if time is in disabled range", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 1);
+      const minTime = setHours(setMinutes(date, 30), 0);
+      const maxTime = setHours(setMinutes(date, 30), 5);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.false;
+    });
+
+    it("should tell if time is not in disabled range", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 0);
+      const minTime = setHours(setMinutes(date, 30), 1);
+      const maxTime = setHours(setMinutes(date, 30), 5);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.true;
+    });
+
+    it("should not throw an exception if max time is before min time", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 10);
+      const minTime = setHours(setMinutes(date, 30), 5);
+      const maxTime = setHours(setMinutes(date, 30), 0);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.false;
+    });
+  });
+
+  describe("isDayInRange", () => {
+    it("should tell if day is in range", () => {
+      const day = newDate("2016-02-15");
+      const startDate = newDate("2016-02-01");
+      const endDate = newDate("2016-03-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day is not in range", () => {
+      const day = newDate("2016-07-15");
+      const startDate = newDate("2016-02-15");
+      const endDate = newDate("2016-03-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+
+    it("should not throw exception if end date is before start date", () => {
+      const day = newDate("2016-02-01");
+      const startDate = newDate("2016-02-15");
+      const endDate = newDate("2016-01-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.false;
     });
   });
 });
