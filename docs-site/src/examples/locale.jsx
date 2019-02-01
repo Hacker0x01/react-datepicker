@@ -20,6 +20,12 @@ export default class CustomStartDate extends React.Component {
       <div className="row">
         <pre className="column example__code">
           <code className="jsx">
+            {"// Note: Make sure to npm install the right version of date-fns as"}
+            <br />
+            {"// specified in packaged.json. The default one may not be compatiable"}
+            <br />
+            {"// npm install --save date-fns@version"}
+            <br />
             {"import enGB from 'date-fns/locale/en-GB';"}
             <br />
             {"registerLocale('en-GB', enGB);"}
