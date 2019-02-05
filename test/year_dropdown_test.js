@@ -118,5 +118,23 @@ describe("YearDropdown", () => {
       select.simulate("change", { target: { value: 2014 } });
       expect(lastOnChangeValue).to.eq(2014);
     });
+
+    it("calls the supplied onChange function when a different year is clicked", () => {
+      let sandbox;
+      sandbox = sinon.sandbox.create();
+      var onSelectSpy = sandbox.spy();
+      var setOpenSpy = sandbox.spy();
+      yearDropdown = getYearDropdown({
+        dropdownMode: "select",
+        onSelect: onSelectSpy,
+        setOpen: setOpenSpy,
+        adjustDateOnChange: true
+      });
+      const select = yearDropdown.find(".react-datepicker__year-select");
+
+      select.simulate("change", { target: { value: 2014 } });
+      expect(onSelectSpy.calledOnce);
+      expect(setOpenSpy.calledOnce);
+    });
   });
 });
