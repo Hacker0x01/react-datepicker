@@ -49,6 +49,10 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 
+if (typeof window === 'undefined') {
+  global.window = {}
+}
+
 // ** Date Constructors **
 
 export function newDate(value) {
