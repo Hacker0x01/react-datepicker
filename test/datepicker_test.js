@@ -219,7 +219,7 @@ describe("DatePicker", () => {
 
   it("should set open to true if showTimeInput is true", () => {
     var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker shouldCloseOnSelect={false} showTimeInput={true} />
+      <DatePicker shouldCloseOnSelect={false} showTimeInput />
     );
     var handleTimeChange = datePicker.handleTimeChange;
     handleTimeChange("13:00");
