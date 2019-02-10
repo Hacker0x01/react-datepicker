@@ -217,6 +217,15 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).to.be.true;
   });
 
+  it("should set open to true if showTimeInput is true", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker shouldCloseOnSelect={false} showTimeInput={true} />
+    );
+    var handleTimeChange = datePicker.handleTimeChange;
+    handleTimeChange("13:00");
+    expect(datePicker.state.open).to.be.true;
+  });
+
   it("should not hide the calendar when selecting a day in the calendar with Enter press, and shouldCloseOnSelect prop is false", () => {
     var data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
     var dateInput = data.datePicker.input;
