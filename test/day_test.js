@@ -39,7 +39,8 @@ describe("Day", () => {
       const day = newDate();
       const date = Date();
       function renderDayContents(date) {
-        return <span>{date}</span>;
+        const tooltipText = `Tooltip for date: ${date}`;
+        return <span title={tooltipText}>{getDate(date)}</span>;
       }
       const shallowDay = renderDay(day, { renderDayContents });
       expect(shallowDay.find("span"));
