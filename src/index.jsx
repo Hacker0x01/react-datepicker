@@ -34,8 +34,7 @@ import {
   getMonth,
   registerLocale,
   setDefaultLocale,
-  getDefaultLocale,
-  getDate
+  getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 

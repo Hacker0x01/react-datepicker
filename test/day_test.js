@@ -45,6 +45,12 @@ describe("Day", () => {
       const shallowDay = renderDay(day, { renderDayContents });
       expect(shallowDay.find("span"));
     });
+
+    it("should render default day contents", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day);
+      expect(shallowDay.find("span"));
+    });
   });
 
   describe("selected", () => {
