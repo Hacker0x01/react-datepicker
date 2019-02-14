@@ -37,8 +37,9 @@ describe("Day", () => {
 
     it("should render custom day contents", () => {
       const day = newDate();
-      function renderDayContents(day) {
-        return <span>{day}</span>;
+      const date = Date();
+      function renderDayContents(date) {
+        return <span>{date}</span>;
       }
       const shallowDay = renderDay(day, { renderDayContents });
       expect(shallowDay.find("span"));
