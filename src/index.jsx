@@ -34,8 +34,7 @@ import {
   getMonth,
   registerLocale,
   setDefaultLocale,
-  getDefaultLocale,
-  getDate
+  getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -198,9 +197,6 @@ export default class DatePicker extends React.Component {
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
-      renderDayContents(date) {
-        return getDate(date);
-      },
       inlineFocusSelectedMonth: false
     };
   }

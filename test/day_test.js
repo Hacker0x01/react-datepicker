@@ -37,18 +37,11 @@ describe("Day", () => {
 
     it("should render custom day contents", () => {
       const day = newDate();
-      const date = Date();
       function renderDayContents(date) {
         const tooltipText = `Tooltip for date: ${date}`;
         return <span title={tooltipText}>{getDate(date)}</span>;
       }
       const shallowDay = renderDay(day, { renderDayContents });
-      expect(shallowDay.find("span"));
-    });
-
-    it("should render default day contents", () => {
-      const day = newDate();
-      const shallowDay = renderDay(day);
       expect(shallowDay.find("span"));
     });
   });
