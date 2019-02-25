@@ -26,6 +26,8 @@ export default class CustomStartDate extends React.Component {
             <br />
             {"// npm install --save date-fns@version"}
             <br />
+            {"import DatePicker, { registerLocale } from 'react-datepicker';"}
+            <br />
             {"import enGB from 'date-fns/locale/en-GB';"}
             <br />
             {"registerLocale('en-GB', enGB);"}
