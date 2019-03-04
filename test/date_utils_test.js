@@ -12,7 +12,8 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   isTimeInDisabledRange,
-  isDayInRange
+  isDayInRange,
+  parseDate
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -296,6 +297,36 @@ describe("date_utils", function() {
       const startDate = newDate("2016-02-15");
       const endDate = newDate("2016-01-15");
       expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+  });
+
+  describe("parseDate", () => {
+    it("should parse date that matches the format", () => {
+      const value = "2019-03-04";
+      const dateFormat = "yyyy-MM-dd";
+
+      expect(parseDate(value, dateFormat, null)).to.not.be.null;
+    });
+
+    it("should parse date that matches one of the formats", () => {
+      const value = "2019-03-04";
+      const dateFormat = ["yyyy-MM-dd", "MM-dd-yyyy"];
+
+      expect(parseDate(value, dateFormat, null)).to.not.be.null;
+    });
+
+    it("should not parse date that does not match the format", () => {
+      const value = "20-03-04";
+      const dateFormat = "yyyy-MM-dd";
+
+      expect(parseDate(value, dateFormat, null)).to.be.null;
+    });
+
+    it("should not parse date that does not match any of the formats", () => {
+      const value = "20-03-04";
+      const dateFormat = ["yyyy-MM-dd", "MM-dd-yyyy"];
+
+      expect(parseDate(value, dateFormat, null)).to.be.null;
     });
   });
 });
