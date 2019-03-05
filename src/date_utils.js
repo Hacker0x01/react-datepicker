@@ -62,7 +62,7 @@ export function parseDate(value, dateFormat, locale) {
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
       let tryParseDate = parse(value, df, new Date(), localeObject);
-      if (isValid(tryParseDate) && value === format(tryParseDate, df)) {
+      if (isValid(tryParseDate) && value === format(tryParseDate, df, { awareOfUnicodeTokens: true })) {
         parsedDate = tryParseDate;
       }
     });
@@ -72,7 +72,7 @@ export function parseDate(value, dateFormat, locale) {
   if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
   }
-  return isValid(parsedDate) && value === format(parsedDate, dateFormat) ? parsedDate : null;
+  return isValid(parsedDate) && value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true }) ? parsedDate : null;
 }
 
 // ** Date "Reflection" **
