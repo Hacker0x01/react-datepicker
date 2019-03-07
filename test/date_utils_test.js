@@ -302,31 +302,38 @@ describe("date_utils", function() {
 
   describe("parseDate", () => {
     it("should parse date that matches the format", () => {
-      const value = "2019-03-04";
-      const dateFormat = "yyyy-MM-dd";
+      const value = "01/15/2019";
+      const dateFormat = "MM/dd/yyyy";
 
-      expect(parseDate(value, dateFormat, null)).to.not.be.null;
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
     });
 
     it("should parse date that matches one of the formats", () => {
-      const value = "2019-03-04";
-      const dateFormat = ["yyyy-MM-dd", "MM-dd-yyyy"];
+      const value = "01/15/2019";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
 
-      expect(parseDate(value, dateFormat, null)).to.not.be.null;
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
     });
 
     it("should not parse date that does not match the format", () => {
-      const value = "20-03-04";
-      const dateFormat = "yyyy-MM-dd";
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
 
-      expect(parseDate(value, dateFormat, null)).to.be.null;
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
     });
 
     it("should not parse date that does not match any of the formats", () => {
-      const value = "20-03-04";
-      const dateFormat = ["yyyy-MM-dd", "MM-dd-yyyy"];
+      const value = "01/15/20";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
 
-      expect(parseDate(value, dateFormat, null)).to.be.null;
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+    });
+
+    it("should parse date without strict parsing", () => {
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
     });
   });
 });

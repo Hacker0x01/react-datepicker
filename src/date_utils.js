@@ -56,23 +56,35 @@ export function newDate(value) {
   return isValid(d) ? d : null;
 }
 
-export function parseDate(value, dateFormat, locale) {
+export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
   let localeObject = getLocaleObject(locale);
+  let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
       let tryParseDate = parse(value, df, new Date(), localeObject);
-      if (isValid(tryParseDate) && value === format(tryParseDate, df, { awareOfUnicodeTokens: true })) {
+      if (strictParsing) {
+        strictParsingValueMatch =
+          value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
+      }
+      if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
       }
     });
     return parsedDate;
   }
+
   parsedDate = parse(value, dateFormat, new Date(), localeObject);
   if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
   }
-  return isValid(parsedDate) && value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true }) ? parsedDate : null;
+
+  if (strictParsing) {
+    strictParsingValueMatch =
+      value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
+  }
+
+  return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
 }
 
 // ** Date "Reflection" **
