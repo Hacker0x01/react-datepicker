@@ -37,7 +37,7 @@ describe("Day", () => {
 
     it("should render custom day contents", () => {
       const day = newDate();
-      function renderDayContents(date) {
+      function renderDayContents(day, date) {
         const tooltipText = `Tooltip for date: ${date}`;
         return <span title={tooltipText}>{getDate(date)}</span>;
       }

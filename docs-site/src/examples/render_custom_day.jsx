@@ -16,7 +16,7 @@ export default class RenderCustomDay extends React.Component {
     });
   };
 
-  renderDayContents = date => {
+  renderDayContents = (day, date) => {
     const tooltipText = `Tooltip for date: ${date}`;
     return <span title={tooltipText}>{getDate(date)}</span>;
   };
