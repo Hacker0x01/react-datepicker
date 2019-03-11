@@ -256,8 +256,14 @@ export function getDefaultLocale() {
   return window.__localeId__;
 }
 
-export function getLocaleObject(localeName) {
-  return window.__localeData__ ? window.__localeData__[localeName] : null;
+export function getLocaleObject(localeSpec) {
+  if (typeof localeSpec === "string") {
+    // Treat it as a locale name registered by registerLocale
+    return window.__localeData__ ? window.__localeData__[localeSpec] : null;
+  } else {
+    // Treat it as a raw date-fns locale object
+    return localeSpec;
+  }
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
