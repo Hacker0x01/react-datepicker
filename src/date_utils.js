@@ -63,7 +63,7 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
       let tryParseDate = parse(value, df, new Date(), localeObject);
-      if (strictParsing) {
+      if (strictParsing && isValid(tryParseDate)) {
         strictParsingValueMatch =
           value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
       }
@@ -78,8 +78,10 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
   }
+  ("");
 
-  if (strictParsing) {
+  if (strictParsing && isValid(parsedDate)) {
+    debugger;
     strictParsingValueMatch =
       value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
   }
