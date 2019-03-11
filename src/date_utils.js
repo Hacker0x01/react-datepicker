@@ -78,10 +78,8 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
   }
-  ("");
 
   if (strictParsing && isValid(parsedDate)) {
-    debugger;
     strictParsingValueMatch =
       value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
   }
