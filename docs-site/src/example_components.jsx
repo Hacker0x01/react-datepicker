@@ -10,6 +10,7 @@ import CustomDayClassNames from "./examples/custom_day_class_names";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
 import Locale from "./examples/locale";
+import LocaleWithoutGlobalVariable from "./examples/locale_without_global_variable";
 import ExcludeDates from "./examples/exclude_dates";
 import HighlightDates from "./examples/highlight_dates";
 import HighlightDatesRanges from "./examples/highlight_dates_with_ranges";
@@ -124,6 +125,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Locale",
       component: <Locale />
+    },
+    {
+      title: "Locale without global variables",
+      component: <LocaleWithoutGlobalVariable />
     },
     {
       title: "Exclude dates",

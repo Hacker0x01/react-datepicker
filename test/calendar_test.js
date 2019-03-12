@@ -11,6 +11,7 @@ import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";
+import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
 
 // TODO Possibly rename
@@ -981,6 +982,20 @@ describe("Calendar", function() {
       const calendar = getCalendar({ selected, locale });
       testLocale(calendar, selected, locale);
       utils.setDefaultLocale("");
+    });
+
+    it("should accept a raw date-fns locale object", function() {
+      // Note that we explicitly do not call `registerLocale`, because that
+      // would create a global variable, which we want to avoid.
+      const locale = eo;
+      const selected = utils.newDate();
+
+      const calendar = getCalendar({ selected, locale });
+      testLocale(calendar, selected, locale);
+
+      // Other tests touch this global, so it will always be present, but at the
+      // very least we can make sure the test worked without 'eo' being added.
+      expect(window.__localeData__).not.to.haveOwnProperty("eo");
     });
 
     it("should render empty custom header", function() {
