@@ -52,6 +52,7 @@ import IncludeTimes from "./examples/include_times";
 import InjectTimes from "./examples/inject_times";
 import DontCloseOnSelect from "./examples/dont_close_onSelect";
 import RenderCustomHeader from "./examples/render_custom_header";
+import StrictParsing from "./examples/strict_parsing";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
@@ -261,6 +262,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom header",
       component: <RenderCustomHeader />
+    },
+    {
+      title: "Strict parsing",
+      component: <StrictParsing />
     }
   ];
 
