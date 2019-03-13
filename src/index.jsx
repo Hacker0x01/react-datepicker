@@ -172,7 +172,9 @@ export default class DatePicker extends React.Component {
     timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
-    inlineFocusSelectedMonth: PropTypes.bool
+    inlineFocusSelectedMonth: PropTypes.bool,
+    onDayMouseEnter: PropTypes.func,
+    onMonthMouseLeave: PropTypes.func
   };
 
   static get defaultProps() {
@@ -687,6 +689,8 @@ export default class DatePicker extends React.Component {
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
         renderDayContents={this.props.renderDayContents}
+        onDayMouseEnter={this.props.onDayMouseEnter}
+        onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
       >
         {this.props.children}
