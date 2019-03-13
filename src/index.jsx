@@ -157,6 +157,7 @@ export default class DatePicker extends React.Component {
     withPortal: PropTypes.bool,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
+    showTimeInput: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -168,6 +169,7 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
+    timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     inlineFocusSelectedMonth: PropTypes.bool
@@ -197,11 +199,13 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
+      showTimeInput: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
+      timeInputLabel: "Time",
       renderDayContents(date) {
         return date;
       },
@@ -354,7 +358,11 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open && !this.props.withPortal) {
+    if (
+      this.state.open &&
+      !this.props.withPortal &&
+      !this.props.showTimeInput
+    ) {
       this.deferFocusInput();
     } else {
       this.props.onBlur(event);
@@ -496,6 +504,9 @@ export default class DatePicker extends React.Component {
     this.props.onChange(changedDate);
     if (this.props.shouldCloseOnSelect) {
       this.setOpen(false);
+    }
+    if (this.props.showTimeInput) {
+      this.setOpen(true);
     }
     this.setState({ inputValue: null });
   };
@@ -671,10 +682,12 @@ export default class DatePicker extends React.Component {
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        timeInputLabel={this.props.timeInputLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
         renderDayContents={this.props.renderDayContents}
+        showTimeInput={this.props.showTimeInput}
       >
         {this.props.children}
       </WrappedCalendar>

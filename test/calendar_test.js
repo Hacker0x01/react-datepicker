@@ -1005,4 +1005,24 @@ describe("Calendar", function() {
       expect(header).to.have.length(1);
     });
   });
+
+  describe("renderInputTimeSection", function() {
+    it("should render InputTime component", function() {
+      let calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showTimeInput
+        />
+      );
+      const timeInputClassname = calendar.find(
+        ".react-datepicker__input-time-container"
+      );
+      expect(timeInputClassname).to.have.length(1);
+    });
+  });
 });

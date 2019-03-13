@@ -11,6 +11,7 @@ import {
   monthDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
+  addZero,
   isTimeInDisabledRange,
   isDayInRange,
   parseDate
@@ -248,6 +249,18 @@ describe("date_utils", function() {
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
       assert(isEqual(getEffectiveMaxDate({ maxDate, includeDates }), date1));
+    });
+  });
+
+  describe("addZero", () => {
+    it("should return the same number if greater than 10", () => {
+      const input = 11;
+      assert(isEqual(addZero(input), input));
+    });
+
+    it("should return the number prefixed with zero if less than 10", () => {
+      const input = 1;
+      assert(isEqual(addZero(input), "01"));
     });
   });
 
