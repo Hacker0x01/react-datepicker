@@ -202,6 +202,39 @@
   text-align: center;
 }
 
+.react-datepicker__input-time-container {
+  clear: both;
+  width: 100%;
+  float: left;
+  margin: 5px 0 10px 15px;
+  text-align: left;
+  .react-datepicker-time__caption {
+    display: inline-block;
+  }
+  .react-datepicker-time__input-container {
+    display: inline-block;
+    .react-datepicker-time__input {
+      display: inline-block;
+      margin-left: 10px;
+      input {
+        width: 85px;
+      }
+      input[type="time"]::-webkit-inner-spin-button,
+      input[type="time"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="time"] {
+        -moz-appearance: textfield;
+      }
+    }
+    .react-datepicker-time__delimiter {
+      margin-left: 5px;
+      display: inline-block;
+    }
+  }
+}
+
 .react-datepicker__time-container {
   float: right;
   border-left: 1px solid $datepicker__border-color;

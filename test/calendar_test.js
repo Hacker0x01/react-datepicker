@@ -11,6 +11,7 @@ import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";
+import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
 
 // TODO Possibly rename
@@ -983,11 +984,45 @@ describe("Calendar", function() {
       utils.setDefaultLocale("");
     });
 
+    it("should accept a raw date-fns locale object", function() {
+      // Note that we explicitly do not call `registerLocale`, because that
+      // would create a global variable, which we want to avoid.
+      const locale = eo;
+      const selected = utils.newDate();
+
+      const calendar = getCalendar({ selected, locale });
+      testLocale(calendar, selected, locale);
+
+      // Other tests touch this global, so it will always be present, but at the
+      // very least we can make sure the test worked without 'eo' being added.
+      expect(window.__localeData__).not.to.haveOwnProperty("eo");
+    });
+
     it("should render empty custom header", function() {
       const calendar = getCalendar({ renderCustomHeader: () => {} });
 
       const header = calendar.find(".react-datepicker__header--custom");
       expect(header).to.have.length(1);
+    });
+  });
+
+  describe("renderInputTimeSection", function() {
+    it("should render InputTime component", function() {
+      let calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showTimeInput
+        />
+      );
+      const timeInputClassname = calendar.find(
+        ".react-datepicker__input-time-container"
+      );
+      expect(timeInputClassname).to.have.length(1);
     });
   });
 });

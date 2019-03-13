@@ -100,7 +100,10 @@ export default class DatePicker extends React.Component {
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
-    locale: PropTypes.string,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ]),
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
@@ -138,6 +141,7 @@ export default class DatePicker extends React.Component {
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
+    strictParsing: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
@@ -153,6 +157,7 @@ export default class DatePicker extends React.Component {
     withPortal: PropTypes.bool,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
+    showTimeInput: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -164,6 +169,7 @@ export default class DatePicker extends React.Component {
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
+    timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     inlineFocusSelectedMonth: PropTypes.bool,
@@ -195,10 +201,13 @@ export default class DatePicker extends React.Component {
       withPortal: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
+      showTimeInput: false,
+      strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
+      timeInputLabel: "Time",
       renderDayContents(date) {
         return date;
       },
@@ -351,7 +360,11 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (this.state.open && !this.props.withPortal) {
+    if (
+      this.state.open &&
+      !this.props.withPortal &&
+      !this.props.showTimeInput
+    ) {
       this.deferFocusInput();
     } else {
       this.props.onBlur(event);
@@ -387,7 +400,8 @@ export default class DatePicker extends React.Component {
     const date = parseDate(
       event.target.value,
       this.props.dateFormat,
-      this.props.locale
+      this.props.locale,
+      this.props.strictParsing
     );
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
@@ -492,6 +506,9 @@ export default class DatePicker extends React.Component {
     this.props.onChange(changedDate);
     if (this.props.shouldCloseOnSelect) {
       this.setOpen(false);
+    }
+    if (this.props.showTimeInput) {
+      this.setOpen(true);
     }
     this.setState({ inputValue: null });
   };
@@ -667,12 +684,14 @@ export default class DatePicker extends React.Component {
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        timeInputLabel={this.props.timeInputLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
         renderDayContents={this.props.renderDayContents}
         onDayMouseEnter={this.props.onDayMouseEnter}
         onMonthMouseLeave={this.props.onMonthMouseLeave}
+        showTimeInput={this.props.showTimeInput}
       >
         {this.props.children}
       </WrappedCalendar>
