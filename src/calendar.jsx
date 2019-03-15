@@ -3,6 +3,7 @@ import MonthDropdown from "./month_dropdown";
 import MonthYearDropdown from "./month_year_dropdown";
 import Month from "./month";
 import Time from "./time";
+import InputTime from "./inputTime";
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
@@ -28,7 +29,8 @@ import {
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  addZero
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -65,7 +67,10 @@ export default class Calendar extends React.Component {
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
-    locale: PropTypes.string,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ]),
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
@@ -78,10 +83,12 @@ export default class Calendar extends React.Component {
     onSelect: PropTypes.func.isRequired,
     onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
+    showTimeInput: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
     onTimeChange: PropTypes.func,
+    timeInputLabel: PropTypes.string,
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
@@ -112,7 +119,9 @@ export default class Calendar extends React.Component {
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    onDayMouseEnter: PropTypes.func,
+    onMonthMouseLeave: PropTypes.func
   };
 
   static get defaultProps() {
@@ -216,9 +225,15 @@ export default class Calendar extends React.Component {
   handleDayClick = (day, event, monthSelectedIn) =>
     this.props.onSelect(day, event, monthSelectedIn);
 
-  handleDayMouseEnter = day => this.setState({ selectingDate: day });
+  handleDayMouseEnter = day => {
+    this.setState({ selectingDate: day });
+    this.props.onDayMouseEnter && this.props.onDayMouseEnter(day);
+  };
 
-  handleMonthMouseLeave = () => this.setState({ selectingDate: null });
+  handleMonthMouseLeave = () => {
+    this.setState({ selectingDate: null });
+    this.props.onMonthMouseLeave && this.props.onMonthMouseLeave();
+  };
 
   handleYearChange = date => {
     if (this.props.onYearChange) {
@@ -623,9 +638,24 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderInputTimeSection = () => {
+    const time = new Date(this.props.selected);
+    const timeString = `${addZero(time.getHours())}:${addZero(
+      time.getMinutes()
+    )}`;
+    if (this.props.showTimeInput) {
+      return (
+        <InputTime
+          timeString={timeString}
+          timeInputLabel={this.props.timeInputLabel}
+          onChange={this.props.onTimeChange}
+        />
+      );
+    }
+  };
+
   render() {
     const Container = this.props.container || CalendarContainer;
-
     return (
       <Container
         className={classnames("react-datepicker", this.props.className, {
@@ -637,6 +667,7 @@ export default class Calendar extends React.Component {
         {this.renderMonths()}
         {this.renderTodayButton()}
         {this.renderTimeSection()}
+        {this.renderInputTimeSection()}
         {this.props.children}
       </Container>
     );

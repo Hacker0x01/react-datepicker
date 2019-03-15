@@ -35,7 +35,7 @@
 | `inline`                     | `bool`                         |                    |             |
 | `inlineFocusSelectedMonth`   | `bool`                         | `false`            |             |
 | `isClearable`                | `bool`                         |                    |             |
-| `locale`                     | `string`                       |                    |             |
+| `locale`                     | `union(string\|shape)`         |                    |             |
 | `maxDate`                    | `instanceOfDate`               |                    |             |
 | `maxTime`                    | `instanceOfDate`               |                    |             |
 | `minDate`                    | `instanceOfDate`               |                    |             |
@@ -47,11 +47,13 @@
 | `onChange`                   | `func`                         | `function() {}`    |             |
 | `onChangeRaw`                | `func`                         |                    |             |
 | `onClickOutside`             | `func`                         | `function() {}`    |             |
+| `onDayMouseEnter`            | `func`                         |                    |             |
 | `onFocus`                    | `func`                         | `function() {}`    |             |
 | `onInputClick`               | `func`                         | `function() {}`    |             |
 | `onInputError`               | `func`                         | `function() {}`    |             |
 | `onKeyDown`                  | `func`                         | `function() {}`    |             |
 | `onMonthChange`              | `func`                         | `function() {}`    |             |
+| `onMonthMouseLeave`          | `func`                         |                    |             |
 | `onSelect`                   | `func`                         | `function() {}`    |             |
 | `onWeekSelect`               | `func`                         |                    |             |
 | `onYearChange`               | `func`                         | `function() {}`    |             |
@@ -71,4 +73,4 @@
 | `renderDayContents`          | `func`                         | `function(date) {  |
 
 return date;
-}`|| |`required`|`bool`||| |`scrollableMonthYearDropdown`|`bool`||| |`scrollableYearDropdown`|`bool`||| |`selected`|`instanceOfDate`||| |`selectsEnd`|`bool`||| |`selectsStart`|`bool`||| |`shouldCloseOnSelect`|`bool`|`true`|| |`showDisabledMonthNavigation`|`bool`||| |`showMonthDropdown`|`bool`||| |`showMonthYearDropdown`|`bool`||| |`showTimeSelect`|`bool`|`false`|| |`showTimeSelectOnly`|`bool`||| |`showWeekNumbers`|`bool`||| |`showYearDropdown`|`bool`||| |`startDate`|`instanceOfDate`||| |`startOpen`|`bool`||| |`tabIndex`|`number`||| |`timeCaption`|`string`|`"Time"`|| |`timeFormat`|`string`||| |`timeIntervals`|`number`|`30`|| |`title`|`string`||| |`todayButton`|`node`||| |`useShortMonthInDropdown`|`bool`||| |`useWeekdaysShort`|`bool`||| |`value`|`string`||| |`weekLabel`|`string`||| |`withPortal`|`bool`|`false`|| |`yearDropdownItemNumber`|`number`|||
+}`|| |`required`|`bool`||| |`scrollableMonthYearDropdown`|`bool`||| |`scrollableYearDropdown`|`bool`||| |`selected`|`instanceOfDate`||| |`selectsEnd`|`bool`||| |`selectsStart`|`bool`||| |`shouldCloseOnSelect`|`bool`|`true`|| |`showDisabledMonthNavigation`|`bool`||| |`showMonthDropdown`|`bool`||| |`showMonthYearDropdown`|`bool`||| |`showTimeInput`|`bool`|`false`|| |`showTimeSelect`|`bool`|`false`|| |`showTimeSelectOnly`|`bool`||| |`showWeekNumbers`|`bool`||| |`showYearDropdown`|`bool`||| |`startDate`|`instanceOfDate`||| |`startOpen`|`bool`||| |`strictParsing`|`bool`|`false`|| |`tabIndex`|`number`||| |`timeCaption`|`string`|`"Time"`|| |`timeFormat`|`string`||| |`timeInputLabel`|`string`|`"Time"`|| |`timeIntervals`|`number`|`30`|| |`title`|`string`||| |`todayButton`|`node`||| |`useShortMonthInDropdown`|`bool`||| |`useWeekdaysShort`|`bool`||| |`value`|`string`||| |`weekLabel`|`string`||| |`withPortal`|`bool`|`false`|| |`yearDropdownItemNumber`|`number`|||

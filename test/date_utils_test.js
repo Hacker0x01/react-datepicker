@@ -11,8 +11,10 @@ import {
   monthDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
+  addZero,
   isTimeInDisabledRange,
-  isDayInRange
+  isDayInRange,
+  parseDate
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -250,6 +252,18 @@ describe("date_utils", function() {
     });
   });
 
+  describe("addZero", () => {
+    it("should return the same number if greater than 10", () => {
+      const input = 11;
+      assert(isEqual(addZero(input), input));
+    });
+
+    it("should return the number prefixed with zero if less than 10", () => {
+      const input = 1;
+      assert(isEqual(addZero(input), "01"));
+    });
+  });
+
   describe("isTimeInDisabledRange", () => {
     it("should tell if time is in disabled range", () => {
       const date = newDate("2016-03-15");
@@ -296,6 +310,43 @@ describe("date_utils", function() {
       const startDate = newDate("2016-02-15");
       const endDate = newDate("2016-01-15");
       expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+  });
+
+  describe("parseDate", () => {
+    it("should parse date that matches the format", () => {
+      const value = "01/15/2019";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
+    });
+
+    it("should parse date that matches one of the formats", () => {
+      const value = "01/15/2019";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
+    });
+
+    it("should not parse date that does not match the format", () => {
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+    });
+
+    it("should not parse date that does not match any of the formats", () => {
+      const value = "01/15/20";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+    });
+
+    it("should parse date without strict parsing", () => {
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
     });
   });
 });

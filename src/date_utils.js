@@ -56,23 +56,36 @@ export function newDate(value) {
   return isValid(d) ? d : null;
 }
 
-export function parseDate(value, dateFormat, locale) {
+export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
   let localeObject = getLocaleObject(locale);
+  let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
       let tryParseDate = parse(value, df, new Date(), localeObject);
-      if (isValid(tryParseDate)) {
+      if (strictParsing) {
+        strictParsingValueMatch =
+          isValid(tryParseDate) &&
+          value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
+      }
+      if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
       }
     });
     return parsedDate;
   }
+
   parsedDate = parse(value, dateFormat, new Date(), localeObject);
-  if (!isValid(parsedDate)) {
+
+  if (strictParsing) {
+    strictParsingValueMatch =
+      isValid(parsedDate) &&
+      value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
+  } else if (!isValid(parsedDate)) {
     parsedDate = new Date(value);
   }
-  return isValid(parsedDate) ? parsedDate : null;
+
+  return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
 }
 
 // ** Date "Reflection" **
@@ -256,8 +269,14 @@ export function getDefaultLocale() {
   return window.__localeId__;
 }
 
-export function getLocaleObject(localeName) {
-  return window.__localeData__ ? window.__localeData__[localeName] : null;
+export function getLocaleObject(localeSpec) {
+  if (typeof localeSpec === "string") {
+    // Treat it as a locale name registered by registerLocale
+    return window.__localeData__ ? window.__localeData__[localeSpec] : null;
+  } else {
+    // Treat it as a raw date-fns locale object
+    return localeSpec;
+  }
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
@@ -455,4 +474,11 @@ export function timesToInjectAfter(
   }
 
   return times;
+}
+
+export function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }

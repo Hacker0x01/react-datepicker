@@ -1,10 +1,8 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import enGB from "date-fns/locale/en-GB";
+import fi from "date-fns/locale/fi";
 
-registerLocale("en-GB", enGB);
-
-export default class CustomStartDate extends React.Component {
+export default class LocaleWithoutGlobalVariable extends React.Component {
   state = {
     startDate: null
   };
@@ -30,11 +28,9 @@ export default class CustomStartDate extends React.Component {
             <br />
             {"// npm install --save date-fns@version"}
             <br />
-            {"import DatePicker, { registerLocale } from 'react-datepicker';"}
+            {"import DatePicker from 'react-datepicker';"}
             <br />
-            {"import enGB from 'date-fns/locale/en-GB';"}
-            <br />
-            {"registerLocale('en-GB', enGB);"}
+            {"import fi from 'date-fns/locale/fi';"}
             <br />
             <br />
             {"<DatePicker"}
@@ -43,17 +39,16 @@ export default class CustomStartDate extends React.Component {
             <br />
             {"  onChange={this.handleChange}"}
             <br />
-            <strong>{'  locale="en-GB"'}</strong>
+            <strong>{"  locale={fi}"}</strong>
             <br />
-            {'  placeholderText="Weeks start on Monday" />'}
+            {"/>"}
           </code>
         </pre>
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            locale="en-GB"
-            placeholderText="Weeks start on Monday"
+            locale={fi}
           />
         </div>
       </div>
