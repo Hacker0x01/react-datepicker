@@ -49,6 +49,8 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 
+let conf = {};
+
 // ** Date Constructors **
 
 export function newDate(value) {
@@ -255,24 +257,24 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function registerLocale(localeName, localeData) {
-  if (!window.__localeData__) {
-    window.__localeData__ = {};
+  if (!conf.__localeData__) {
+    conf.__localeData__ = {};
   }
-  window.__localeData__[localeName] = localeData;
+  conf.__localeData__[localeName] = localeData;
 }
 
 export function setDefaultLocale(localeName) {
-  window.__localeId__ = localeName;
+  conf.__localeId__ = localeName;
 }
 
 export function getDefaultLocale() {
-  return window.__localeId__;
+  return conf.__localeId__;
 }
 
 export function getLocaleObject(localeSpec) {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
-    return window.__localeData__ ? window.__localeData__[localeSpec] : null;
+    return conf.__localeData__ ? conf.__localeData__[localeSpec] : null;
   } else {
     // Treat it as a raw date-fns locale object
     return localeSpec;
