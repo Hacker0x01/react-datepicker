@@ -38,6 +38,7 @@ export default class inputTime extends React.Component {
               className="react-datepicker-time__input"
               placeholder="Time"
               name="time-input"
+              required
               value={time}
               onChange={ev => {
                 this.onTimeChange(ev.target.value);
