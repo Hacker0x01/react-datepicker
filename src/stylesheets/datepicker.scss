@@ -104,7 +104,8 @@
 }
 
 .react-datepicker__current-month,
-.react-datepicker-time__header {
+.react-datepicker-time__header,
+.react-datepicker-year-header {
   margin-top: 0;
   color: $datepicker__header-color;
   font-weight: bold;
@@ -200,6 +201,10 @@
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
+  .react-datepicker__month-text {
+    display: inline-block;
+    width: 4rem;
+  }
 }
 
 .react-datepicker__input-time-container {
@@ -329,7 +334,8 @@
   margin: $datepicker__day-margin;
 }
 
-.react-datepicker__day {
+.react-datepicker__day,
+.react-datepicker__month-text {
   cursor: pointer;
 
   &:hover {

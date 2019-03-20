@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import Week from "./week";
 import * as utils from "./date_utils";
+import { getHours } from "./date_utils";
+import { getMinutes } from "./date_utils";
+import { formatDate } from "./date_utils";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -137,6 +140,32 @@ export default class Month extends React.Component {
     return weeks;
   };
 
+  onMonthClick = e => {
+    // const date = new Date();
+  };
+
+  renderMonths = () => {
+    const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
+    return months.map((month, i) => (
+      <div key={i}>
+        {month.map((m, j) => (
+          <div
+            key={j}
+            onClick={ev => {
+              this.onMonthClick(ev.target);
+            }}
+            className={classnames(
+              "react-datepicker__month-text",
+              `react-datepicker__month-${month}`
+            )}
+          >
+            {utils.getMonthShortInLocale(m, this.props.locale)}
+          </div>
+        ))}
+      </div>
+    ));
+  };
+
   getClassNames = () => {
     const { selectingDate, selectsStart, selectsEnd } = this.props;
     return classnames("react-datepicker__month", {
@@ -146,6 +175,7 @@ export default class Month extends React.Component {
   };
 
   render() {
+    const { showMonthYearPicker } = this.props;
     return (
       <div
         className={this.getClassNames()}
@@ -153,7 +183,7 @@ export default class Month extends React.Component {
         role="listbox"
         aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
       >
-        {this.renderWeeks()}
+        {showMonthYearPicker ? this.renderMonths() : this.renderWeeks()}
       </div>
     );
   }
