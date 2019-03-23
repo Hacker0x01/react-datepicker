@@ -203,7 +203,7 @@ export default class DatePicker extends React.Component {
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       showTimeInput: false,
-      showMonthYearPicker: true,
+      showMonthYearPicker: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",

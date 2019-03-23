@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import Week from "./week";
 import * as utils from "./date_utils";
-import { getHours } from "./date_utils";
-import { getMinutes } from "./date_utils";
-import { formatDate } from "./date_utils";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -140,8 +137,8 @@ export default class Month extends React.Component {
     return weeks;
   };
 
-  onMonthClick = e => {
-    // const date = new Date();
+  onMonthClick = (e, m) => {
+    this.handleDayClick(utils.setMonth(this.props.day, m), e);
   };
 
   renderMonths = () => {
@@ -152,11 +149,11 @@ export default class Month extends React.Component {
           <div
             key={j}
             onClick={ev => {
-              this.onMonthClick(ev.target);
+              this.onMonthClick(ev.target, m);
             }}
             className={classnames(
               "react-datepicker__month-text",
-              `react-datepicker__month-${month}`
+              `react-datepicker__month-${m}`
             )}
           >
             {utils.getMonthShortInLocale(m, this.props.locale)}

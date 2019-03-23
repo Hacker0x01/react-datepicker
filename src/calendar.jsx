@@ -612,6 +612,7 @@ export default class Calendar extends React.Component {
               : this.renderDefaultHeader({ monthDate, i })
             : this.renderYearHeader({ monthDate, i })}
           <Month
+            onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
             onDayClick={this.handleDayClick}
