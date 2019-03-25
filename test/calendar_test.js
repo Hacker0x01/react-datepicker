@@ -1025,4 +1025,52 @@ describe("Calendar", function() {
       expect(timeInputClassname).to.have.length(1);
     });
   });
+
+  describe("when showMonthYearPicker is enabled", () => {
+    let calendar = mount(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        showMonthYearPicker
+      />
+    );
+    it("should change the next and previous labels", () => {
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Previous Year");
+      expect(next.text()).to.equal("Next Year");
+    });
+
+    it("calls decreaseYear when previous month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1992);
+    });
+
+    it("calls increaseYear when next month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1994);
+    });
+  });
 });

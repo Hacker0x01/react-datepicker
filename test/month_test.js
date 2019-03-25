@@ -16,7 +16,7 @@ describe("Month", () => {
       const expectedDay = utils.addDays(start, offset);
       assert(
         utils.isSameDay(day.props.day, expectedDay),
-        `Day ${(offset % 7) + 1} ` +
+        `Day ${offset % 7 + 1} ` +
           `of week ${Math.floor(offset / 7) + 1} ` +
           `should be "${utils.formatDate(expectedDay, "yyyy-MM-dd")}" ` +
           `but it is "${utils.formatDate(day.props.day, "yyyy-MM-dd")}"`
@@ -145,5 +145,26 @@ describe("Month", () => {
 
     day.simulate("click");
     expect(orderValueMatched).to.be.true;
+  });
+
+  it("should have the month picker CSS class", () => {
+    const month = shallow(<Month showMonthYearPicker day={utils.newDate()} />);
+    expect(month.hasClass("react-datepicker__monthPicker")).to.equal(true);
+  });
+
+  it("should call the provided onMonthClick function", () => {
+    let monthClicked = null;
+
+    function onDayClick(day) {
+      monthClicked = day;
+    }
+
+    const monthStart = utils.newDate("2015-12-01");
+    const monthComponent = mount(
+      <Month day={monthStart} showMonthYearPicker onDayClick={onDayClick} />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(6);
+    month.simulate("click");
+    expect(utils.getMonth(monthClicked)).to.be.equal(6);
   });
 });

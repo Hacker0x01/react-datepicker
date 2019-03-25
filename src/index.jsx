@@ -158,6 +158,7 @@ export default class DatePicker extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
+    showMonthYearPicker: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -202,6 +203,7 @@ export default class DatePicker extends React.Component {
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       showTimeInput: false,
+      showMonthYearPicker: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
@@ -254,10 +256,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-      ? this.props.startDate
-      : this.props.selectsStart && this.props.endDate
-      ? this.props.endDate
-      : newDate();
+        ? this.props.startDate
+        : this.props.selectsStart && this.props.endDate
+          ? this.props.endDate
+          : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -267,8 +269,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-        ? maxDate
-        : defaultPreSelection;
+          ? maxDate
+          : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -692,6 +694,7 @@ export default class DatePicker extends React.Component {
         onDayMouseEnter={this.props.onDayMouseEnter}
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
+        showMonthYearPicker={this.props.showMonthYearPicker}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -709,8 +712,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-        ? this.state.inputValue
-        : safeDateFormat(this.props.selected, this.props);
+          ? this.state.inputValue
+          : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {

@@ -40,7 +40,8 @@ export default class Month extends React.Component {
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    showMonthYearPicker: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -137,15 +138,53 @@ export default class Month extends React.Component {
     return weeks;
   };
 
+  onMonthClick = (e, m) => {
+    this.handleDayClick(
+      utils.getStartOfMonth(utils.setMonth(this.props.day, m), e)
+    );
+  };
+
+  renderMonths = () => {
+    const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
+    return months.map((month, i) => (
+      <div className="react-datepicker__month-wrapper" key={i}>
+        {month.map((m, j) => (
+          <div
+            key={j}
+            onClick={ev => {
+              this.onMonthClick(ev.target, m);
+            }}
+            className={classnames(
+              "react-datepicker__month-text",
+              `react-datepicker__month-${m}`
+            )}
+          >
+            {utils.getMonthShortInLocale(m, this.props.locale)}
+          </div>
+        ))}
+      </div>
+    ));
+  };
+
   getClassNames = () => {
-    const { selectingDate, selectsStart, selectsEnd } = this.props;
-    return classnames("react-datepicker__month", {
-      "react-datepicker__month--selecting-range":
-        selectingDate && (selectsStart || selectsEnd)
-    });
+    const {
+      selectingDate,
+      selectsStart,
+      selectsEnd,
+      showMonthYearPicker
+    } = this.props;
+    return classnames(
+      "react-datepicker__month",
+      {
+        "react-datepicker__month--selecting-range":
+          selectingDate && (selectsStart || selectsEnd)
+      },
+      { "react-datepicker__monthPicker": showMonthYearPicker }
+    );
   };
 
   render() {
+    const { showMonthYearPicker } = this.props;
     return (
       <div
         className={this.getClassNames()}
@@ -153,7 +192,7 @@ export default class Month extends React.Component {
         role="listbox"
         aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
       >
-        {this.renderWeeks()}
+        {showMonthYearPicker ? this.renderMonths() : this.renderWeeks()}
       </div>
     );
   }
