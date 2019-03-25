@@ -41981,6 +41981,8 @@
                 monthSelectedIn: 0,
                 forceShowMonthNavigation: false,
                 timeCaption: "Time",
+                previousYearButtonLabel: "Previous Year",
+                nextYearButtonLabel: "Next Year",
                 previousMonthButtonLabel: "Previous Month",
                 nextMonthButtonLabel: "Next Month"
               };
@@ -42233,7 +42235,9 @@
                 className: classes.join(" "),
                 onClick: clickHandler
               },
-              _this.props.previousMonthButtonLabel
+              _this.props.showMonthYearPicker
+                ? _this.props.previousYearButtonLabel
+                : _this.props.previousMonthButtonLabel
             );
           };
 
@@ -42301,7 +42305,9 @@
                 className: classes.join(" "),
                 onClick: clickHandler
               },
-              _this.props.nextMonthButtonLabel
+              _this.props.showMonthYearPicker
+                ? _this.props.nextYearButtonLabel
+                : _this.props.nextMonthButtonLabel
             );
           };
 
@@ -42763,6 +42769,8 @@
         showDisabledMonthNavigation: _propTypes2.default.bool,
         previousMonthButtonLabel: _propTypes2.default.string,
         nextMonthButtonLabel: _propTypes2.default.string,
+        previousYearButtonLabel: _propTypes2.default.string,
+        nextYearButtonLabel: _propTypes2.default.string,
         renderCustomHeader: _propTypes2.default.func,
         renderDayContents: _propTypes2.default.func,
         onDayMouseEnter: _propTypes2.default.func,
@@ -54376,14 +54384,16 @@
               return weeks;
             }),
             (_this.onMonthClick = function(e, m) {
-              _this.handleDayClick(utils.setMonth(_this.props.day, m), e);
+              _this.handleDayClick(
+                utils.getStartOfMonth(utils.setMonth(_this.props.day, m), e)
+              );
             }),
             (_this.renderMonths = function() {
               var months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
               return months.map(function(month, i) {
                 return _react2.default.createElement(
                   "div",
-                  { key: i },
+                  { className: "react-datepicker__month-wrapper", key: i },
                   month.map(function(m, j) {
                     return _react2.default.createElement(
                       "div",
@@ -54407,12 +54417,17 @@
               var _this$props = _this.props,
                 selectingDate = _this$props.selectingDate,
                 selectsStart = _this$props.selectsStart,
-                selectsEnd = _this$props.selectsEnd;
+                selectsEnd = _this$props.selectsEnd,
+                showMonthYearPicker = _this$props.showMonthYearPicker;
 
-              return (0, _classnames2.default)("react-datepicker__month", {
-                "react-datepicker__month--selecting-range":
-                  selectingDate && (selectsStart || selectsEnd)
-              });
+              return (0, _classnames2.default)(
+                "react-datepicker__month",
+                {
+                  "react-datepicker__month--selecting-range":
+                    selectingDate && (selectsStart || selectsEnd)
+                },
+                { "react-datepicker__monthPicker": showMonthYearPicker }
+              );
             }),
             _temp)),
             _possibleConstructorReturn(_this, _ret)
@@ -54471,7 +54486,8 @@
         startDate: _propTypes2.default.instanceOf(Date),
         setOpen: _propTypes2.default.func,
         shouldCloseOnSelect: _propTypes2.default.bool,
-        renderDayContents: _propTypes2.default.func
+        renderDayContents: _propTypes2.default.func,
+        showMonthYearPicker: _propTypes2.default.bool
       };
       exports.default = Month;
 

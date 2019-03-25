@@ -121,6 +121,8 @@ export default class Calendar extends React.Component {
     showDisabledMonthNavigation: PropTypes.bool,
     previousMonthButtonLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.string,
+    previousYearButtonLabel: PropTypes.string,
+    nextYearButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
@@ -134,6 +136,8 @@ export default class Calendar extends React.Component {
       monthSelectedIn: 0,
       forceShowMonthNavigation: false,
       timeCaption: "Time",
+      previousYearButtonLabel: "Previous Year",
+      nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month"
     };
@@ -375,7 +379,9 @@ export default class Calendar extends React.Component {
         className={classes.join(" ")}
         onClick={clickHandler}
       >
-        {this.props.previousMonthButtonLabel}
+        {this.props.showMonthYearPicker
+          ? this.props.previousYearButtonLabel
+          : this.props.previousMonthButtonLabel}
       </button>
     );
   };
@@ -433,7 +439,9 @@ export default class Calendar extends React.Component {
         className={classes.join(" ")}
         onClick={clickHandler}
       >
-        {this.props.nextMonthButtonLabel}
+        {this.props.showMonthYearPicker
+          ? this.props.nextYearButtonLabel
+          : this.props.nextMonthButtonLabel}
       </button>
     );
   };

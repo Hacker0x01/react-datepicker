@@ -40,7 +40,8 @@ export default class Month extends React.Component {
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    showMonthYearPicker: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -138,13 +139,15 @@ export default class Month extends React.Component {
   };
 
   onMonthClick = (e, m) => {
-    this.handleDayClick(utils.setMonth(this.props.day, m), e);
+    this.handleDayClick(
+      utils.getStartOfMonth(utils.setMonth(this.props.day, m), e)
+    );
   };
 
   renderMonths = () => {
     const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
     return months.map((month, i) => (
-      <div key={i}>
+      <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (
           <div
             key={j}
@@ -164,11 +167,20 @@ export default class Month extends React.Component {
   };
 
   getClassNames = () => {
-    const { selectingDate, selectsStart, selectsEnd } = this.props;
-    return classnames("react-datepicker__month", {
-      "react-datepicker__month--selecting-range":
-        selectingDate && (selectsStart || selectsEnd)
-    });
+    const {
+      selectingDate,
+      selectsStart,
+      selectsEnd,
+      showMonthYearPicker
+    } = this.props;
+    return classnames(
+      "react-datepicker__month",
+      {
+        "react-datepicker__month--selecting-range":
+          selectingDate && (selectsStart || selectsEnd)
+      },
+      { "react-datepicker__monthPicker": showMonthYearPicker }
+    );
   };
 
   render() {
