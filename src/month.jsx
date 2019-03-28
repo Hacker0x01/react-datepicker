@@ -144,6 +144,41 @@ export default class Month extends React.Component {
     );
   };
 
+  isMonthinRange = (startDate, endDate, m, day) => {
+    if (utils.getYear(startDate) === utils.getYear(endDate)) {
+      return utils.getMonth(startDate) <= m && m <= utils.getMonth(endDate);
+    } else if (utils.getYear(startDate) < utils.getYear(endDate)) {
+      return (
+        (utils.getYear(day) === utils.getYear(startDate) &&
+          (utils.getMonth(startDate) <= m || utils.getMonth(endDate) <= m)) ||
+        (utils.getYear(day) === utils.getYear(endDate) &&
+          (utils.getMonth(startDate) >= m || utils.getMonth(endDate) >= m)) ||
+        (utils.getYear(day) < utils.getYear(endDate) &&
+          utils.getYear(day) > utils.getYear(startDate))
+      );
+    }
+  };
+
+  getMonthClassNames = m => {
+    const { day, startDate, endDate, selected } = this.props;
+
+    return classnames(
+      "react-datepicker__month-text",
+      `react-datepicker__month-${m}`,
+      {
+        "react-datepicker__month--selected":
+          utils.getMonth(day) === m &&
+          utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__month--in-range": this.isMonthinRange(
+          startDate,
+          endDate,
+          m,
+          day
+        )
+      }
+    );
+  };
+
   renderMonths = () => {
     const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
     return months.map((month, i) => (
@@ -154,10 +189,7 @@ export default class Month extends React.Component {
             onClick={ev => {
               this.onMonthClick(ev.target, m);
             }}
-            className={classnames(
-              "react-datepicker__month-text",
-              `react-datepicker__month-${m}`
-            )}
+            className={this.getMonthClassNames(m)}
           >
             {utils.getMonthShortInLocale(m, this.props.locale)}
           </div>
