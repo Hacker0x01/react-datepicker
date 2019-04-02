@@ -43402,6 +43402,7 @@
       exports.getMonthInLocale = getMonthInLocale;
       exports.getMonthShortInLocale = getMonthShortInLocale;
       exports.isDayDisabled = isDayDisabled;
+      exports.isMonthinRange = isMonthinRange;
       exports.isOutOfBounds = isOutOfBounds;
       exports.isTimeDisabled = isTimeDisabled;
       exports.isTimeInDisabledRange = isTimeInDisabledRange;
@@ -43966,6 +43967,25 @@
           (filterDate && !filterDate(newDate(day))) ||
           false
         );
+      }
+
+      function isMonthinRange(startDate, endDate, m, day) {
+        var startDateYear = (0, _getYear2.default)(startDate);
+        var startDateMonth = (0, _getMonth2.default)(startDate);
+        var endDateYear = (0, _getYear2.default)(endDate);
+        var endDateMonth = (0, _getMonth2.default)(endDate);
+        var dayYear = (0, _getYear2.default)(day);
+        if (startDateYear === endDateYear && startDateYear === dayYear) {
+          return startDateMonth <= m && m <= endDateMonth;
+        } else if (startDateYear < endDateYear) {
+          return (
+            (dayYear === startDateYear &&
+              (startDateMonth <= m || endDateMonth < m)) ||
+            (dayYear === endDateYear &&
+              (startDateMonth > m || endDateMonth >= m)) ||
+            (dayYear < endDateYear && dayYear > startDateYear)
+          );
+        }
       }
 
       function isOutOfBounds(day) {
@@ -54399,27 +54419,6 @@
                 utils.getStartOfMonth(utils.setMonth(_this.props.day, m), e)
               );
             }),
-            (_this.isMonthinRange = function(startDate, endDate, m, day) {
-              if (
-                utils.getYear(startDate) === utils.getYear(endDate) &&
-                utils.getYear(startDate) === utils.getYear(day)
-              ) {
-                return (
-                  utils.getMonth(startDate) <= m && m <= utils.getMonth(endDate)
-                );
-              } else if (utils.getYear(startDate) < utils.getYear(endDate)) {
-                return (
-                  (utils.getYear(day) === utils.getYear(startDate) &&
-                    (utils.getMonth(startDate) <= m ||
-                      utils.getMonth(endDate) < m)) ||
-                  (utils.getYear(day) === utils.getYear(endDate) &&
-                    (utils.getMonth(startDate) > m ||
-                      utils.getMonth(endDate) >= m)) ||
-                  (utils.getYear(day) < utils.getYear(endDate) &&
-                    utils.getYear(day) > utils.getYear(startDate))
-                );
-              }
-            }),
             (_this.getMonthClassNames = function(m) {
               var _this$props = _this.props,
                 day = _this$props.day,
@@ -54436,11 +54435,11 @@
                   "react-datepicker__month--disabled":
                     minDate &&
                     maxDate &&
-                    !_this.isMonthinRange(minDate, maxDate, m, day),
+                    !utils.isMonthinRange(minDate, maxDate, m, day),
                   "react-datepicker__month--selected":
                     utils.getMonth(day) === m &&
                     utils.getYear(day) === utils.getYear(selected),
-                  "react-datepicker__month--in-range": _this.isMonthinRange(
+                  "react-datepicker__month--in-range": utils.isMonthinRange(
                     startDate,
                     endDate,
                     m,

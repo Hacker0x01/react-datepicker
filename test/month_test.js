@@ -167,4 +167,42 @@ describe("Month", () => {
     month.simulate("click");
     expect(utils.getMonth(monthClicked)).to.be.equal(6);
   });
+
+  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        minDate={utils.newDate("2016-02-01")}
+        maxDate={utils.newDate()}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(0);
+    expect(month.hasClass("react-datepicker__month--disabled")).to.equal(true);
+  });
+
+  it("should return selected class if month is selected", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-02-01")}
+        selected={utils.newDate("2015-02-01")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(1);
+    expect(month.hasClass("react-datepicker__month--selected")).to.equal(true);
+  });
+
+  it("should return month-in-range class if month is between the start date and end date", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-02-01")}
+        startDate={utils.newDate("2015-01-01")}
+        endDate={utils.newDate("2015-08-01")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(4);
+    expect(month.hasClass("react-datepicker__month--in-range")).to.equal(true);
+  });
 });
