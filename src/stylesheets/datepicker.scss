@@ -347,6 +347,14 @@
       background-color: darken($datepicker__selected-color, 5%);
     }
   }
+  &--disabled {
+    color: $datepicker__muted-color;
+    pointer-events: none;
+    &:hover {
+      cursor: default;
+      background-color: transparent;
+    }
+  }
 }
 
 .react-datepicker__day,

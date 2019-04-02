@@ -145,14 +145,17 @@ export default class Month extends React.Component {
   };
 
   isMonthinRange = (startDate, endDate, m, day) => {
-    if (utils.getYear(startDate) === utils.getYear(endDate)) {
+    if (
+      utils.getYear(startDate) === utils.getYear(endDate) &&
+      utils.getYear(startDate) === utils.getYear(day)
+    ) {
       return utils.getMonth(startDate) <= m && m <= utils.getMonth(endDate);
     } else if (utils.getYear(startDate) < utils.getYear(endDate)) {
       return (
         (utils.getYear(day) === utils.getYear(startDate) &&
-          (utils.getMonth(startDate) <= m || utils.getMonth(endDate) <= m)) ||
+          (utils.getMonth(startDate) <= m || utils.getMonth(endDate) < m)) ||
         (utils.getYear(day) === utils.getYear(endDate) &&
-          (utils.getMonth(startDate) >= m || utils.getMonth(endDate) >= m)) ||
+          (utils.getMonth(startDate) > m || utils.getMonth(endDate) >= m)) ||
         (utils.getYear(day) < utils.getYear(endDate) &&
           utils.getYear(day) > utils.getYear(startDate))
       );
@@ -160,12 +163,14 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = m => {
-    const { day, startDate, endDate, selected } = this.props;
+    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
 
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       {
+        "react-datepicker__month--disabled":
+          minDate && maxDate && !this.isMonthinRange(minDate, maxDate, m, day),
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
