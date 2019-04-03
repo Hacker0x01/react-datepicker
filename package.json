@@ -70,7 +70,6 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.5",
     "lint-staged": "^6.0.0",
-    "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "node-sass": "^4.9.4",
     "npm-run-all": "^4.1.2",
