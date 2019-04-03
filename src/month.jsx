@@ -144,6 +144,28 @@ export default class Month extends React.Component {
     );
   };
 
+  getMonthClassNames = m => {
+    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
+
+    return classnames(
+      "react-datepicker__month-text",
+      `react-datepicker__month-${m}`,
+      {
+        "react-datepicker__month--disabled":
+          minDate && maxDate && !utils.isMonthinRange(minDate, maxDate, m, day),
+        "react-datepicker__month--selected":
+          utils.getMonth(day) === m &&
+          utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__month--in-range": utils.isMonthinRange(
+          startDate,
+          endDate,
+          m,
+          day
+        )
+      }
+    );
+  };
+
   renderMonths = () => {
     const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
     return months.map((month, i) => (
@@ -154,10 +176,7 @@ export default class Month extends React.Component {
             onClick={ev => {
               this.onMonthClick(ev.target, m);
             }}
-            className={classnames(
-              "react-datepicker__month-text",
-              `react-datepicker__month-${m}`
-            )}
+            className={this.getMonthClassNames(m)}
           >
             {utils.getMonthShortInLocale(m, this.props.locale)}
           </div>

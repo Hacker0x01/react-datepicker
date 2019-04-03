@@ -36,4 +36,13 @@ describe("DatePicker", () => {
     input.simulate("change", { target: { value: "13:00" } });
     expect(timeComponent.state("time")).to.equal("13:00");
   });
+
+  it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
+    const timeComponent = shallow(
+      <InputTimeComponent timeString="13:00" onChange={console.log} />
+    );
+    const input = timeComponent.find("input");
+    input.simulate("change", { target: { value: "" } });
+    expect(timeComponent.state("time")).to.equal("13:00");
+  });
 });

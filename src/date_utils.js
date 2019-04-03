@@ -316,6 +316,24 @@ export function isDayDisabled(
   );
 }
 
+export function isMonthinRange(startDate, endDate, m, day) {
+  const startDateYear = getYear(startDate);
+  const startDateMonth = getMonth(startDate);
+  const endDateYear = getYear(endDate);
+  const endDateMonth = getMonth(endDate);
+  const dayYear = getYear(day);
+  if (startDateYear === endDateYear && startDateYear === dayYear) {
+    return startDateMonth <= m && m <= endDateMonth;
+  } else if (startDateYear < endDateYear) {
+    return (
+      (dayYear === startDateYear &&
+        (startDateMonth <= m || endDateMonth < m)) ||
+      (dayYear === endDateYear && (startDateMonth > m || endDateMonth >= m)) ||
+      (dayYear < endDateYear && dayYear > startDateYear)
+    );
+  }
+}
+
 export function isOutOfBounds(day, { minDate, maxDate } = {}) {
   return (
     (minDate && differenceInCalendarDays(day, minDate) < 0) ||

@@ -14,12 +14,19 @@ import {
   addZero,
   isTimeInDisabledRange,
   isDayInRange,
-  parseDate
+  parseDate,
+  isMonthinRange
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
 
 describe("date_utils", function() {
+  describe("newDate", function() {
+    it("should return null for invalid value passed", function() {
+      expect(newDate("21123asd")).to.be.null;
+    });
+  });
+
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
@@ -347,6 +354,24 @@ describe("date_utils", function() {
       const dateFormat = "MM/dd/yyyy";
 
       expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
+    });
+  });
+
+  describe("isMonthinRange", () => {
+    it("should return true if the month passed is in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isMonthinRange(startDate, endDate, 4, day)).to.be.true;
+    });
+
+    it("should return false if the month passed is not in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isMonthinRange(startDate, endDate, 9, day)).to.be.false;
     });
   });
 });

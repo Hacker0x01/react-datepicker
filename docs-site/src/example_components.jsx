@@ -56,6 +56,7 @@ import RenderCustomDay from "./examples/render_custom_day";
 import TimeInput from "./examples/timeInput";
 import StrictParsing from "./examples/strict_parsing";
 import MonthPicker from "./examples/month_picker";
+import RangeMonthPicker from "./examples/range_month_picker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
 
@@ -280,6 +281,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Month Picker",
       component: <MonthPicker />
+    },
+    {
+      title: "Range Month Picker",
+      component: <RangeMonthPicker />
     }
   ];
 
