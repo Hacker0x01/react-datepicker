@@ -175,7 +175,8 @@ export default class DatePicker extends React.Component {
     renderDayContents: PropTypes.func,
     inlineFocusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func
+    onMonthMouseLeave: PropTypes.func,
+    yearDropdownScrollToSelected: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -205,6 +206,7 @@ export default class DatePicker extends React.Component {
       showTimeInput: false,
       showMonthYearPicker: false,
       strictParsing: false,
+      yearDropdownScrollToSelected: false,
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
@@ -256,10 +258,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -269,8 +271,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -695,6 +697,7 @@ export default class DatePicker extends React.Component {
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
+        yearDropdownScrollToSelected={this.props.yearDropdownScrollToSelected}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -712,8 +715,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {

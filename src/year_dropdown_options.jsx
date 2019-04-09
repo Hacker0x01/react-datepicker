@@ -33,7 +33,8 @@ export default class YearDropdownOptions extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
+    yearDropdownScrollToSelected: PropTypes.bool
   };
 
   constructor(props) {
@@ -50,6 +51,12 @@ export default class YearDropdownOptions extends React.Component {
         this.props.maxDate
       )
     };
+  }
+
+  componentDidMount() {
+    if (this.props.yearDropdownScrollToSelected) {
+      this.scrollToSelectedYear();
+    }
   }
 
   renderOptions = () => {
@@ -132,6 +139,23 @@ export default class YearDropdownOptions extends React.Component {
     return this.shiftYears(-1);
   };
 
+  scrollToSelectedYear() {
+    const selectYear = this.props.year;
+
+    if (!selectYear) {
+      return;
+    }
+
+    const yearDropdownElement = this.refs["year-dropdown"];
+    const selectedYearElement = this.refs[selectYear];
+
+    if (!yearDropdownElement || !selectedYearElement) {
+      return;
+    }
+
+    yearDropdownElement.scrollTo(0, selectedYearElement.offsetTop);
+  }
+
   render() {
     let dropdownClass = classNames({
       "react-datepicker__year-dropdown": true,
@@ -139,6 +163,10 @@ export default class YearDropdownOptions extends React.Component {
         .scrollableYearDropdown
     });
 
-    return <div className={dropdownClass}>{this.renderOptions()}</div>;
+    return (
+      <div ref="year-dropdown" className={dropdownClass}>
+        {this.renderOptions()}
+      </div>
+    );
   }
 }

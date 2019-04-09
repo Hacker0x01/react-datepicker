@@ -126,7 +126,8 @@ export default class Calendar extends React.Component {
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func
+    onMonthMouseLeave: PropTypes.func,
+    yearDropdownScrollToSelected: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -482,6 +483,7 @@ export default class Calendar extends React.Component {
         year={getYear(this.state.date)}
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        yearDropdownScrollToSelected={this.props.yearDropdownScrollToSelected}
       />
     );
   };

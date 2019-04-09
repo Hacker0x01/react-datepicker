@@ -18,7 +18,8 @@ export default class YearDropdown extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     date: PropTypes.instanceOf(Date),
     onSelect: PropTypes.func,
-    setOpen: PropTypes.func
+    setOpen: PropTypes.func,
+    yearDropdownScrollToSelected: PropTypes.bool
   };
 
   state = {
@@ -79,6 +80,7 @@ export default class YearDropdown extends React.Component {
       maxDate={this.props.maxDate}
       scrollableYearDropdown={this.props.scrollableYearDropdown}
       yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+      yearDropdownScrollToSelected={this.props.yearDropdownScrollToSelected}
     />
   );
 
