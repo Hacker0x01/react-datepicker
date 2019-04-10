@@ -4,6 +4,7 @@ npm-debug.log
 .DS_Store
 .idea
 .vscode
+.history
 dist
 lib
 es

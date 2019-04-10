@@ -478,13 +478,18 @@ export default class DatePicker extends React.Component {
   };
 
   setPreSelection = date => {
-    const isDateRangePresent =
-      typeof this.props.minDate !== "undefined" &&
-      typeof this.props.maxDate !== "undefined";
-    const isValidDateSelection =
-      isDateRangePresent && date
-        ? isDayInRange(date, this.props.minDate, this.props.maxDate)
-        : true;
+    const hasMinDate = typeof this.props.minDate !== "undefined";
+    const hasMaxDate = typeof this.props.maxDate !== "undefined";
+    let isValidDateSelection = true;
+    if (date) {
+      if (hasMinDate && hasMaxDate) {
+        isValidDateSelection = isDayInRange(date, this.props.minDate, this.props.maxDate);
+      } else if (hasMinDate) {
+        isValidDateSelection = isAfter(date, this.props.minDate);
+      } else if (hasMaxDate) {
+        isValidDateSelection = isBefore(date, this.props.maxDate);
+      }
+    }
     if (isValidDateSelection) {
       this.setState({
         preSelection: date

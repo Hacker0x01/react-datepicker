@@ -9,6 +9,8 @@ import CustomCalendarClassName from "./examples/custom_calendar_class_name";
 import CustomDayClassNames from "./examples/custom_day_class_names";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
+import MinDate from "./examples/min_date";
+import MaxDate from "./examples/max_date";
 import Locale from "./examples/locale";
 import LocaleWithoutGlobalVariable from "./examples/locale_without_global_variable";
 import ExcludeDates from "./examples/exclude_dates";
@@ -121,6 +123,14 @@ export default class exampleComponents extends React.Component {
     {
       title: "Specific date range",
       component: <SpecificDateRange />
+    },
+    {
+      title: "Min date",
+      component: <MinDate />
+    },
+    {
+      title: "Max date",
+      component: <MaxDate />
     },
     {
       title: "Date Range with disabled navigation shown",
