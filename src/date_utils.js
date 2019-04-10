@@ -295,7 +295,7 @@ export function getMonthInLocale(month, locale) {
   return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
-export function getMonthShortInLocale(month, dateFormat, locale) {
+export function getMonthShortInLocale(month, locale) {
   return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
