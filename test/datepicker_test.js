@@ -601,6 +601,24 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
+  it("should not preSelect date if before minDate", () => {
+    var data = getOnInputKeyDownStuff({
+      minDate: utils.subDays(utils.newDate(), 1)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.testFormat));
+  });
+  it("should not preSelect date if not after maxDate", () => {
+    var data = getOnInputKeyDownStuff({
+      maxDate: utils.addDays(utils.newDate(), 1)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.testFormat));
+  });
   it("should not clear the preSelect date when a pressed key is not a navigation key", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("x"));
