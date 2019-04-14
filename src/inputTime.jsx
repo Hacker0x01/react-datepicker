@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
 
 export default class inputTime extends React.Component {
   static propTypes = {
@@ -43,9 +42,7 @@ export default class inputTime extends React.Component {
               required
               value={time}
               onChange={ev => {
-                this.onTimeChange(
-                  _.isEmpty(ev.target.value) ? timeString : ev.target.value
-                );
+                this.onTimeChange(ev.target.value || timeString);
               }}
             />
           </div>
