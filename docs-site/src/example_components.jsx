@@ -10,7 +10,9 @@ import CustomDayClassNames from "./examples/custom_day_class_names";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
 import MinDate from "./examples/min_date";
+import MinDateWithTime from "./examples/min_date_with_time";
 import MaxDate from "./examples/max_date";
+import MaxDateWithTime from "./examples/max_date_with_time";
 import Locale from "./examples/locale";
 import LocaleWithoutGlobalVariable from "./examples/locale_without_global_variable";
 import ExcludeDates from "./examples/exclude_dates";
@@ -129,8 +131,16 @@ export default class exampleComponents extends React.Component {
       component: <MinDate />
     },
     {
+      title: "Min date with time",
+      component: <MinDateWithTime />
+    },
+    {
       title: "Max date",
       component: <MaxDate />
+    },
+    {
+      title: "Max date with time",
+      component: <MaxDateWithTime />
     },
     {
       title: "Date Range with disabled navigation shown",

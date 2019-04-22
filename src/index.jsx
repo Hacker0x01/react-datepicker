@@ -90,6 +90,7 @@ export default class DatePicker extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
+    excludeOutOfBoundsTimes: PropTypes.bool,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
@@ -700,6 +701,7 @@ export default class DatePicker extends React.Component {
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
+        excludeOutOfBoundsTimes={this.props.excludeOutOfBoundsTimes}
       >
         {this.props.children}
       </WrappedCalendar>

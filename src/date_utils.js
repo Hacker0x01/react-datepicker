@@ -379,6 +379,16 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
   return valid;
 }
 
+export function isTimeInExcludedRange(time, { minDate, maxDate }) {
+  if (isDate(minDate) && getDate(minDate) === getDate(time) && getTime(minDate) > getTime(time)) {
+    return true;
+  }
+  if (isDate(maxDate) && getDate(maxDate) === getDate(time) && getTime(maxDate) < getTime(time)) {
+    return true;
+  }
+  return false;
+}
+
 export function monthDisabledBefore(day, { minDate, includeDates } = {}) {
   const previousMonth = subMonths(day, 1);
   return (

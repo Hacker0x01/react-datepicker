@@ -126,7 +126,8 @@ export default class Calendar extends React.Component {
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func
+    onMonthMouseLeave: PropTypes.func,
+    excludeOutOfBoundsTimes: PropTypes.bool
   };
 
   static get defaultProps() {
@@ -671,6 +672,8 @@ export default class Calendar extends React.Component {
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
@@ -682,6 +685,7 @@ export default class Calendar extends React.Component {
           withPortal={this.props.withPortal}
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
+          excludeOutOfBoundsTimes={this.props.excludeOutOfBoundsTimes}
         />
       );
     }

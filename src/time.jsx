@@ -8,6 +8,7 @@ import {
   addMinutes,
   formatDate,
   isTimeInDisabledRange,
+  isTimeInExcludedRange,
   isTimeDisabled,
   timesToInjectAfter
 } from "./date_utils";
@@ -20,9 +21,12 @@ export default class Time extends React.Component {
     selected: PropTypes.instanceOf(Date),
     onChange: PropTypes.func,
     todayButton: PropTypes.node,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date),
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    excludeOutOfBoundsTimes: PropTypes.bool,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array
@@ -31,7 +35,7 @@ export default class Time extends React.Component {
   static get defaultProps() {
     return {
       intervals: 30,
-      onTimeChange: () => {},
+      onTimeChange: () => { },
       todayButton: null,
       timeCaption: "Time"
     };
@@ -57,6 +61,9 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
+      (this.props.excludeOutOfBoundsTimes &&
+        (this.props.minDate || this.props.maxDate) &&
+        isTimeInExcludedRange(time, this.props)) ||
       (this.props.excludeTimes &&
         isTimeDisabled(time, this.props.excludeTimes)) ||
       (this.props.includeTimes &&
@@ -76,6 +83,9 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
+      (this.props.excludeOutOfBoundsTimes &&
+        (this.props.minDate || this.props.maxDate) &&
+        isTimeInExcludedRange(time, this.props)) ||
       (this.props.excludeTimes &&
         isTimeDisabled(time, this.props.excludeTimes)) ||
       (this.props.includeTimes &&
@@ -100,7 +110,7 @@ export default class Time extends React.Component {
     const activeTime = this.props.selected ? this.props.selected : newDate();
     const currH = getHours(activeTime);
     const currM = getMinutes(activeTime);
-    let base = getStartOfDay(newDate());
+    let base = getStartOfDay(activeTime);
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
