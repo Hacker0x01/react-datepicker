@@ -1,5 +1,5 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
+import React from "react";
+import DatePicker from "react-datepicker";
 
 export default class ConfigurePopper extends React.Component {
   constructor(props) {
@@ -50,12 +50,12 @@ export default class ConfigurePopper extends React.Component {
             popperModifiers={{
               offset: {
                 enabled: true,
-                offset: '5px, 10px'
+                offset: "5px, 10px"
               },
               preventOverflow: {
                 enabled: true,
                 escapeWithReference: false,
-                boundariesElement: 'viewport'
+                boundariesElement: "viewport"
               }
             }}
           />

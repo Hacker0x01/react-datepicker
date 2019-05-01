@@ -92,7 +92,7 @@ You can also include a time picker by adding the showTimeSelect prop
 />
 ```
 
-Times will be displayed at 30-minute intervals by default (default configurable via timeInterval prop)
+Times will be displayed at 30-minute intervals by default (default configurable via timeIntervals prop)
 
 More examples of how to use the time picker are given on the [main website](https://hacker0x01.github.io/react-datepicker)
 
@@ -100,20 +100,20 @@ More examples of how to use the time picker are given on the [main website](http
 
 The date picker relies on [date-fns internationalization](https://date-fns.org/v2.0.0-alpha.18/docs/I18n) to localize its display components. By default, the date picker will use the locale globally set, which is English. Provided are 3 helper methods to set the locale:
 
-* **registerLocale** (string, object): loads an imported locale object from date-fns
-* **setDefaultLocale** (string): sets a registered locale as the default for all datepicker instances
-* **getDefaultLocale**: returns a string showing the currently set default locale
+- **registerLocale** (string, object): loads an imported locale object from date-fns
+- **setDefaultLocale** (string): sets a registered locale as the default for all datepicker instances
+- **getDefaultLocale**: returns a string showing the currently set default locale
 
 To load an alternate locale:
 
-* Import the helper methods you need: `import { registerLocale, setDefaultLocale } from DatePicker;`
-* Import the locale from date-fns: `import fi from 'date-fns/locale/fi';`
-* Register the locale: `registerLocale('fi', fi);`
+- Import the helper methods you need: `import { registerLocale, setDefaultLocale } from DatePicker;`
+- Import the locale from date-fns: `import fi from 'date-fns/locale/fi';`
+- Register the locale: `registerLocale('fi', fi);`
 
 Locales can be changed in the following ways:
 
-* **Globally** - `setDefaultLocale('fi');`
-* **Picker-specific** by providing the `locale` prop - `<DatePicker locale='fi' ... />`
+- **Globally** - `setDefaultLocale('fi');`
+- **Picker-specific** by providing the `locale` prop - `<DatePicker locale='fi' ... />`
 
 ## Compatibility
 
@@ -123,11 +123,11 @@ We're always trying to stay compatible with the latest version of React. We can'
 
 Latest compatible versions:
 
-* React 15.5 or newer: All above React-datepicker v.0.40.0
-* React 15.4.1: needs React-datepicker v0.40.0, newer won't work (due to react-onclickoutside dependencies)
-* React 0.14 or newer: All above React-datepicker v0.13.0
-* React 0.13: React-datepicker v0.13.0
-* pre React 0.13: React-datepicker v0.6.2
+- React 15.5 or newer: All above React-datepicker v.0.40.0
+- React 15.4.1: needs React-datepicker v0.40.0, newer won't work (due to react-onclickoutside dependencies)
+- React 0.14 or newer: All above React-datepicker v0.13.0
+- React 0.13: React-datepicker v0.13.0
+- pre React 0.13: React-datepicker v0.6.2
 
 ### Moment.js
 
@@ -153,15 +153,15 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 
 ### Keyboard support
 
-* _Left_: Move to the previous day.
-* _Right_: Move to the next day.
-* _Up_: Move to the previous week.
-* _Down_: Move to the next week.
-* _PgUp_: Move to the previous month.
-* _PgDn_: Move to the next month.
-* _Home_: Move to the previous year.
-* _End_: Move to the next year.
-* _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
+- _Left_: Move to the previous day.
+- _Right_: Move to the next day.
+- _Up_: Move to the previous week.
+- _Down_: Move to the next week.
+- _PgUp_: Move to the previous month.
+- _PgDn_: Move to the next month.
+- _Home_: Move to the previous year.
+- _End_: Move to the next year.
+- _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
 
 ## License
 

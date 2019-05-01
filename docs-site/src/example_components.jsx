@@ -9,7 +9,10 @@ import CustomCalendarClassName from "./examples/custom_calendar_class_name";
 import CustomDayClassNames from "./examples/custom_day_class_names";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
+import MinDate from "./examples/min_date";
+import MaxDate from "./examples/max_date";
 import Locale from "./examples/locale";
+import LocaleWithoutGlobalVariable from "./examples/locale_without_global_variable";
 import ExcludeDates from "./examples/exclude_dates";
 import HighlightDates from "./examples/highlight_dates";
 import HighlightDatesRanges from "./examples/highlight_dates_with_ranges";
@@ -51,7 +54,11 @@ import IncludeTimes from "./examples/include_times";
 import InjectTimes from "./examples/inject_times";
 import DontCloseOnSelect from "./examples/dont_close_onSelect";
 import RenderCustomHeader from "./examples/render_custom_header";
-
+import RenderCustomDay from "./examples/render_custom_day";
+import TimeInput from "./examples/timeInput";
+import StrictParsing from "./examples/strict_parsing";
+import MonthPicker from "./examples/month_picker";
+import RangeMonthPicker from "./examples/range_month_picker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.scss";
 
@@ -118,12 +125,24 @@ export default class exampleComponents extends React.Component {
       component: <SpecificDateRange />
     },
     {
+      title: "Min date",
+      component: <MinDate />
+    },
+    {
+      title: "Max date",
+      component: <MaxDate />
+    },
+    {
       title: "Date Range with disabled navigation shown",
       component: <DateRangeWithShowDisabledNavigation />
     },
     {
       title: "Locale",
       component: <Locale />
+    },
+    {
+      title: "Locale without global variables",
+      component: <LocaleWithoutGlobalVariable />
     },
     {
       title: "Exclude dates",
@@ -256,6 +275,26 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom header",
       component: <RenderCustomHeader />
+    },
+    {
+      title: "Custom Day",
+      component: <RenderCustomDay />
+    },
+    {
+      title: "Input time",
+      component: <TimeInput />
+    },
+    {
+      title: "Strict parsing",
+      component: <StrictParsing />
+    },
+    {
+      title: "Month Picker",
+      component: <MonthPicker />
+    },
+    {
+      title: "Range Month Picker",
+      component: <RangeMonthPicker />
     }
   ];
 

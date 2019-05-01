@@ -14,10 +14,12 @@ export default class Disabled extends React.Component {
     });
   };
 
-  handleOnBlur = date => {
-    const selectedDate = new Date(date);
+  handleOnBlur = event => {
+    const date = new Date(event.target.value);
     if (isValid(date)) {
-      console.log("selected date: %s", format(selectedDate, "dd/MM/yyyy"));
+      console.log("date: %s", format(date, "dd/MM/yyyy"));
+    } else {
+      console.log("value: %s", date);
     }
   };
 
@@ -27,12 +29,12 @@ export default class Disabled extends React.Component {
         <pre className="column example__code">
           <code className="js">
             {`
-handleOnBlur: function (date) {
+handleOnBlur: function (event) {
     const date = new Date(event.target.value);
     if (isValid(date)) {
-      console.log("selected date: %s", format(date, "dd/MM/yyyy"));
+      console.log("date: %s", format(date, "dd/MM/yyyy"));
     } else {
-      console.log("selected date: %s", event.target.value);
+      console.log("value: %s", date);
     }
 };'}
 `}

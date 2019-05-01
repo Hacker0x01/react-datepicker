@@ -217,6 +217,26 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).to.be.true;
   });
 
+  it("should set open to true if showTimeInput is true", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker shouldCloseOnSelect={false} showTimeInput />
+    );
+    var handleTimeChange = datePicker.handleTimeChange;
+    handleTimeChange("13:00");
+    expect(datePicker.state.open).to.be.true;
+  });
+
+  it("should set inputFocusTimeout to null if showTimeInput is false", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal={false} showTimeInput={false} />
+    );
+    datePicker.deferFocusInput = sinon.spy();
+    datePicker.state.open = true;
+    var handleBlur = datePicker.handleBlur;
+    handleBlur({});
+    expect(datePicker.deferFocusInput.calledOnce).to.be.true;
+  });
+
   it("should not hide the calendar when selecting a day in the calendar with Enter press, and shouldCloseOnSelect prop is false", () => {
     var data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
     var dateInput = data.datePicker.input;
@@ -574,6 +594,24 @@ describe("DatePicker", () => {
   it("should not preSelect date if not between minDate and maxDate", () => {
     var data = getOnInputKeyDownStuff({
       minDate: utils.subDays(utils.newDate(), 1),
+      maxDate: utils.addDays(utils.newDate(), 1)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.testFormat));
+  });
+  it("should not preSelect date if before minDate", () => {
+    var data = getOnInputKeyDownStuff({
+      minDate: utils.subDays(utils.newDate(), 1)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.copyM, data.testFormat));
+  });
+  it("should not preSelect date if not after maxDate", () => {
+    var data = getOnInputKeyDownStuff({
       maxDate: utils.addDays(utils.newDate(), 1)
     });
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
@@ -1069,5 +1107,55 @@ describe("DatePicker", () => {
       assert(onInputClickSpy.calledOnce, "should fire onInputClick");
       done();
     });
+  });
+
+  it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
+    const datePicker = mount(<DatePicker monthsShown={2} inline />);
+    datePicker.setState({ monthSelectedIn: 1 }, () => {
+      assert.equal(datePicker.state("monthSelectedIn"), 1);
+      datePicker.setProps({ monthsShown: 1 }, () => {
+        assert.equal(datePicker.props().monthsShown, 1);
+        setTimeout(() => {
+          // Give setState in componentDidUpdate time to run
+          assert.equal(datePicker.state("monthSelectedIn"), 0);
+        }, 100);
+      });
+    });
+  });
+
+  it("should save monthSelectedIn only if calendar is inline", () => {
+    var datePickerInline = TestUtils.renderIntoDocument(
+      <DatePicker inline monthsShown={2} />
+    );
+    var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePickerInline,
+      "react-datepicker__day"
+    )[45];
+    TestUtils.Simulate.click(dayButtonInline);
+    assert.equal(datePickerInline.state.monthSelectedIn, 1);
+
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker monthsShown={2} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    var day = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Day
+    )[40];
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    assert.equal(datePicker.state.monthSelectedIn, undefined);
+  });
+
+  it("should disable non-jumping if prop inlineFocusSelectedMonth is true", () => {
+    var datePickerInline = TestUtils.renderIntoDocument(
+      <DatePicker inline monthsShown={2} inlineFocusSelectedMonth />
+    );
+    var dayButtonInline = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePickerInline,
+      "react-datepicker__day"
+    )[40];
+    TestUtils.Simulate.click(dayButtonInline);
+    assert.equal(datePickerInline.state.monthSelectedIn, undefined);
   });
 });

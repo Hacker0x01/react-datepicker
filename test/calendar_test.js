@@ -11,6 +11,7 @@ import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";
+import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
 
 // TODO Possibly rename
@@ -165,6 +166,15 @@ describe("Calendar", function() {
       .forEach(dayName => expect(dayName.text()).to.have.length(1));
   });
 
+  it("should render the months correctly adjusted by monthSelectedIn", () => {
+    const selected = utils.newDate("2018-11-19");
+    const calendar = getCalendar({ inline: true, monthsShown: 2, selected });
+    calendar.setProps({ monthSelectedIn: 1 }, () => {
+      const renderedMonths = calendar.find(Month);
+      assert.equal(utils.getMonth(renderedMonths.first().prop("day")), 9);
+    });
+  });
+
   describe("custom header", function() {
     const months = [
       "January",
@@ -301,7 +311,7 @@ describe("Calendar", function() {
       prevMonth.simulate("click");
 
       expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) + 1
+        (utils.getMonth(calendar.state().date) + 1) % 12
       );
     });
 
@@ -315,9 +325,11 @@ describe("Calendar", function() {
 
       nextMonth.simulate("click");
 
-      expect(utils.getMonth(selected)).to.be.equal(
-        utils.getMonth(calendar.state().date) - 1
-      );
+      const newMonth = utils.getMonth(calendar.state().date) - 1;
+
+      const resultMonth = newMonth === -1 ? 11 : newMonth;
+
+      expect(utils.getMonth(selected)).to.be.equal(resultMonth);
     });
 
     it("nextMonthButtonDisabled flag should be true", function() {
@@ -972,11 +984,93 @@ describe("Calendar", function() {
       utils.setDefaultLocale("");
     });
 
+    it("should accept a raw date-fns locale object", function() {
+      // Note that we explicitly do not call `registerLocale`, because that
+      // would create a global variable, which we want to avoid.
+      const locale = eo;
+      const selected = utils.newDate();
+
+      const calendar = getCalendar({ selected, locale });
+      testLocale(calendar, selected, locale);
+
+      // Other tests touch this global, so it will always be present, but at the
+      // very least we can make sure the test worked without 'eo' being added.
+      expect(window.__localeData__).not.to.haveOwnProperty("eo");
+    });
+
     it("should render empty custom header", function() {
       const calendar = getCalendar({ renderCustomHeader: () => {} });
 
       const header = calendar.find(".react-datepicker__header--custom");
       expect(header).to.have.length(1);
+    });
+  });
+
+  describe("renderInputTimeSection", function() {
+    it("should render InputTime component", function() {
+      let calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearDropdown
+          showTimeInput
+        />
+      );
+      const timeInputClassname = calendar.find(
+        ".react-datepicker__input-time-container"
+      );
+      expect(timeInputClassname).to.have.length(1);
+    });
+  });
+
+  describe("when showMonthYearPicker is enabled", () => {
+    let calendar = mount(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        showMonthYearPicker
+      />
+    );
+    it("should change the next and previous labels", () => {
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Previous Year");
+      expect(next.text()).to.equal("Next Year");
+    });
+
+    it("calls decreaseYear when previous month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1992);
+    });
+
+    it("calls increaseYear when next month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1994);
     });
   });
 });

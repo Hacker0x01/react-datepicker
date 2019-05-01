@@ -104,7 +104,8 @@
 }
 
 .react-datepicker__current-month,
-.react-datepicker-time__header {
+.react-datepicker-time__header,
+.react-datepicker-year-header {
   margin-top: 0;
   color: $datepicker__header-color;
   font-weight: bold;
@@ -200,6 +201,44 @@
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
+  .react-datepicker__month-text {
+    display: inline-block;
+    width: 4rem;
+    margin: 2px;
+  }
+}
+
+.react-datepicker__input-time-container {
+  clear: both;
+  width: 100%;
+  float: left;
+  margin: 5px 0 10px 15px;
+  text-align: left;
+  .react-datepicker-time__caption {
+    display: inline-block;
+  }
+  .react-datepicker-time__input-container {
+    display: inline-block;
+    .react-datepicker-time__input {
+      display: inline-block;
+      margin-left: 10px;
+      input {
+        width: 85px;
+      }
+      input[type="time"]::-webkit-inner-spin-button,
+      input[type="time"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="time"] {
+        -moz-appearance: textfield;
+      }
+    }
+    .react-datepicker-time__delimiter {
+      margin-left: 5px;
+      display: inline-block;
+    }
+  }
 }
 
 .react-datepicker__time-container {
@@ -296,7 +335,30 @@
   margin: $datepicker__day-margin;
 }
 
-.react-datepicker__day {
+.react-datepicker__month {
+  &--selected,
+  &--in-selecting-range,
+  &--in-range {
+    border-radius: $datepicker__border-radius;
+    background-color: $datepicker__selected-color;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($datepicker__selected-color, 5%);
+    }
+  }
+  &--disabled {
+    color: $datepicker__muted-color;
+    pointer-events: none;
+    &:hover {
+      cursor: default;
+      background-color: transparent;
+    }
+  }
+}
+
+.react-datepicker__day,
+.react-datepicker__month-text {
   cursor: pointer;
 
   &:hover {
@@ -366,6 +428,18 @@
     &:hover {
       background-color: transparent;
     }
+  }
+}
+
+.react-datepicker__month-text {
+  &.react-datepicker__month--selected,
+  &.react-datepicker__month--in-range {
+    &:hover {
+      background-color: $datepicker__selected-color;
+    }
+  }
+  &:hover {
+    background-color: $datepicker__background-color;
   }
 }
 

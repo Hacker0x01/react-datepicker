@@ -1,7 +1,8 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import getDate from "date-fns/getDate";
 
-export default class ClearInput extends React.Component {
+export default class RenderCustomDay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,25 +16,30 @@ export default class ClearInput extends React.Component {
     });
   };
 
+  renderDayContents = (day, date) => {
+    const tooltipText = `Tooltip for date: ${date}`;
+    return <span title={tooltipText}>{getDate(date)}</span>;
+  };
+
   render() {
     return (
       <div className="row">
         <pre className="column example__code">
-          <code className="jsx">{`
+          <code className="jsx">
+            {`
 <DatePicker
-  selected={this.state.startDate}
-  onChange={this.handleChange }
-  isClearable={true}
-  placeholderText="I have been cleared!"
+    selected={this.state.startDate}
+    onChange={this.handleChange}
+    renderDayContents={this.renderDayContents}
 />
-`}</code>
+`}
+          </code>
         </pre>
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            isClearable
-            placeholderText="I have been cleared!"
+            renderDayContents={this.renderDayContents}
           />
         </div>
       </div>
