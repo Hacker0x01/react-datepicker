@@ -45624,877 +45624,897 @@
     },
     /* 538 */
     /***/ function(module, exports, __webpack_require__) {
-      "use strict";
-
-      exports.__esModule = true;
-      exports.isEqual = exports.isAfter = exports.isBefore = exports.subYears = exports.subMonths = exports.subWeeks = exports.subDays = exports.subHours = exports.subMinutes = exports.addYears = exports.addMonths = exports.addWeeks = exports.addDays = exports.addMinutes = exports.getTime = exports.getDate = exports.getDay = exports.getYear = exports.getMonth = exports.getHours = exports.getMinutes = exports.getSeconds = exports.setYear = exports.setMonth = exports.isDate = undefined;
+      /* WEBPACK VAR INJECTION */ (function(global) {
+        "use strict";
+
+        exports.__esModule = true;
+        exports.isEqual = exports.isAfter = exports.isBefore = exports.subYears = exports.subMonths = exports.subWeeks = exports.subDays = exports.subHours = exports.subMinutes = exports.addYears = exports.addMonths = exports.addWeeks = exports.addDays = exports.addMinutes = exports.getTime = exports.getDate = exports.getDay = exports.getYear = exports.getMonth = exports.getHours = exports.getMinutes = exports.getSeconds = exports.setYear = exports.setMonth = exports.isDate = undefined;
+
+        var _typeof =
+          typeof Symbol === "function" && typeof Symbol.iterator === "symbol"
+            ? function(obj) {
+                return typeof obj;
+              }
+            : function(obj) {
+                return obj &&
+                  typeof Symbol === "function" &&
+                  obj.constructor === Symbol &&
+                  obj !== Symbol.prototype
+                  ? "symbol"
+                  : typeof obj;
+              };
 
-      var _typeof =
-        typeof Symbol === "function" && typeof Symbol.iterator === "symbol"
-          ? function(obj) {
-              return typeof obj;
-            }
-          : function(obj) {
-              return obj &&
-                typeof Symbol === "function" &&
-                obj.constructor === Symbol &&
-                obj !== Symbol.prototype
-                ? "symbol"
-                : typeof obj;
-            };
+        exports.newDate = newDate;
+        exports.parseDate = parseDate;
+        exports.isValid = isValid;
+        exports.formatDate = formatDate;
+        exports.safeDateFormat = safeDateFormat;
+        exports.setTime = setTime;
+        exports.getWeek = getWeek;
+        exports.getDayOfWeekCode = getDayOfWeekCode;
+        exports.getStartOfDay = getStartOfDay;
+        exports.getStartOfWeek = getStartOfWeek;
+        exports.getStartOfMonth = getStartOfMonth;
+        exports.getStartOfToday = getStartOfToday;
+        exports.getEndOfWeek = getEndOfWeek;
+        exports.getEndOfMonth = getEndOfMonth;
+        exports.isSameYear = isSameYear;
+        exports.isSameMonth = isSameMonth;
+        exports.isSameDay = isSameDay;
+        exports.isDayInRange = isDayInRange;
+        exports.getDaysDiff = getDaysDiff;
+        exports.registerLocale = registerLocale;
+        exports.setDefaultLocale = setDefaultLocale;
+        exports.getDefaultLocale = getDefaultLocale;
+        exports.getLocaleObject = getLocaleObject;
+        exports.getFormattedWeekdayInLocale = getFormattedWeekdayInLocale;
+        exports.getWeekdayMinInLocale = getWeekdayMinInLocale;
+        exports.getWeekdayShortInLocale = getWeekdayShortInLocale;
+        exports.getMonthInLocale = getMonthInLocale;
+        exports.getMonthShortInLocale = getMonthShortInLocale;
+        exports.isDayDisabled = isDayDisabled;
+        exports.isMonthinRange = isMonthinRange;
+        exports.isOutOfBounds = isOutOfBounds;
+        exports.isTimeDisabled = isTimeDisabled;
+        exports.isTimeInDisabledRange = isTimeInDisabledRange;
+        exports.monthDisabledBefore = monthDisabledBefore;
+        exports.monthDisabledAfter = monthDisabledAfter;
+        exports.getEffectiveMinDate = getEffectiveMinDate;
+        exports.getEffectiveMaxDate = getEffectiveMaxDate;
+        exports.getHightLightDaysMap = getHightLightDaysMap;
+        exports.timesToInjectAfter = timesToInjectAfter;
+        exports.addZero = addZero;
 
-      exports.newDate = newDate;
-      exports.parseDate = parseDate;
-      exports.isValid = isValid;
-      exports.formatDate = formatDate;
-      exports.safeDateFormat = safeDateFormat;
-      exports.setTime = setTime;
-      exports.getWeek = getWeek;
-      exports.getDayOfWeekCode = getDayOfWeekCode;
-      exports.getStartOfDay = getStartOfDay;
-      exports.getStartOfWeek = getStartOfWeek;
-      exports.getStartOfMonth = getStartOfMonth;
-      exports.getStartOfToday = getStartOfToday;
-      exports.getEndOfWeek = getEndOfWeek;
-      exports.getEndOfMonth = getEndOfMonth;
-      exports.isSameYear = isSameYear;
-      exports.isSameMonth = isSameMonth;
-      exports.isSameDay = isSameDay;
-      exports.isDayInRange = isDayInRange;
-      exports.getDaysDiff = getDaysDiff;
-      exports.registerLocale = registerLocale;
-      exports.setDefaultLocale = setDefaultLocale;
-      exports.getDefaultLocale = getDefaultLocale;
-      exports.getLocaleObject = getLocaleObject;
-      exports.getFormattedWeekdayInLocale = getFormattedWeekdayInLocale;
-      exports.getWeekdayMinInLocale = getWeekdayMinInLocale;
-      exports.getWeekdayShortInLocale = getWeekdayShortInLocale;
-      exports.getMonthInLocale = getMonthInLocale;
-      exports.getMonthShortInLocale = getMonthShortInLocale;
-      exports.isDayDisabled = isDayDisabled;
-      exports.isMonthinRange = isMonthinRange;
-      exports.isOutOfBounds = isOutOfBounds;
-      exports.isTimeDisabled = isTimeDisabled;
-      exports.isTimeInDisabledRange = isTimeInDisabledRange;
-      exports.monthDisabledBefore = monthDisabledBefore;
-      exports.monthDisabledAfter = monthDisabledAfter;
-      exports.getEffectiveMinDate = getEffectiveMinDate;
-      exports.getEffectiveMaxDate = getEffectiveMaxDate;
-      exports.getHightLightDaysMap = getHightLightDaysMap;
-      exports.timesToInjectAfter = timesToInjectAfter;
-      exports.addZero = addZero;
+        var _isDate = __webpack_require__(539);
 
-      var _isDate = __webpack_require__(539);
+        var _isDate2 = _interopRequireDefault(_isDate);
 
-      var _isDate2 = _interopRequireDefault(_isDate);
+        var _isValid = __webpack_require__(540);
 
-      var _isValid = __webpack_require__(540);
+        var _isValid2 = _interopRequireDefault(_isValid);
 
-      var _isValid2 = _interopRequireDefault(_isValid);
+        var _format = __webpack_require__(542);
 
-      var _format = __webpack_require__(542);
+        var _format2 = _interopRequireDefault(_format);
 
-      var _format2 = _interopRequireDefault(_format);
+        var _addMinutes = __webpack_require__(571);
 
-      var _addMinutes = __webpack_require__(571);
+        var _addMinutes2 = _interopRequireDefault(_addMinutes);
 
-      var _addMinutes2 = _interopRequireDefault(_addMinutes);
+        var _addHours = __webpack_require__(572);
 
-      var _addHours = __webpack_require__(572);
+        var _addHours2 = _interopRequireDefault(_addHours);
 
-      var _addHours2 = _interopRequireDefault(_addHours);
+        var _addDays = __webpack_require__(573);
 
-      var _addDays = __webpack_require__(573);
+        var _addDays2 = _interopRequireDefault(_addDays);
 
-      var _addDays2 = _interopRequireDefault(_addDays);
+        var _addWeeks = __webpack_require__(574);
 
-      var _addWeeks = __webpack_require__(574);
+        var _addWeeks2 = _interopRequireDefault(_addWeeks);
 
-      var _addWeeks2 = _interopRequireDefault(_addWeeks);
+        var _addMonths = __webpack_require__(575);
 
-      var _addMonths = __webpack_require__(575);
+        var _addMonths2 = _interopRequireDefault(_addMonths);
 
-      var _addMonths2 = _interopRequireDefault(_addMonths);
+        var _addYears = __webpack_require__(577);
 
-      var _addYears = __webpack_require__(577);
+        var _addYears2 = _interopRequireDefault(_addYears);
 
-      var _addYears2 = _interopRequireDefault(_addYears);
+        var _subMinutes = __webpack_require__(578);
 
-      var _subMinutes = __webpack_require__(578);
+        var _subMinutes2 = _interopRequireDefault(_subMinutes);
 
-      var _subMinutes2 = _interopRequireDefault(_subMinutes);
+        var _subHours = __webpack_require__(579);
 
-      var _subHours = __webpack_require__(579);
+        var _subHours2 = _interopRequireDefault(_subHours);
 
-      var _subHours2 = _interopRequireDefault(_subHours);
+        var _subDays = __webpack_require__(580);
 
-      var _subDays = __webpack_require__(580);
+        var _subDays2 = _interopRequireDefault(_subDays);
 
-      var _subDays2 = _interopRequireDefault(_subDays);
+        var _subWeeks = __webpack_require__(581);
 
-      var _subWeeks = __webpack_require__(581);
+        var _subWeeks2 = _interopRequireDefault(_subWeeks);
 
-      var _subWeeks2 = _interopRequireDefault(_subWeeks);
+        var _subMonths = __webpack_require__(582);
 
-      var _subMonths = __webpack_require__(582);
+        var _subMonths2 = _interopRequireDefault(_subMonths);
 
-      var _subMonths2 = _interopRequireDefault(_subMonths);
+        var _subYears = __webpack_require__(583);
 
-      var _subYears = __webpack_require__(583);
+        var _subYears2 = _interopRequireDefault(_subYears);
 
-      var _subYears2 = _interopRequireDefault(_subYears);
+        var _getSeconds = __webpack_require__(584);
 
-      var _getSeconds = __webpack_require__(584);
+        var _getSeconds2 = _interopRequireDefault(_getSeconds);
 
-      var _getSeconds2 = _interopRequireDefault(_getSeconds);
+        var _getMinutes = __webpack_require__(585);
 
-      var _getMinutes = __webpack_require__(585);
+        var _getMinutes2 = _interopRequireDefault(_getMinutes);
 
-      var _getMinutes2 = _interopRequireDefault(_getMinutes);
+        var _getHours = __webpack_require__(586);
 
-      var _getHours = __webpack_require__(586);
+        var _getHours2 = _interopRequireDefault(_getHours);
 
-      var _getHours2 = _interopRequireDefault(_getHours);
+        var _getDay = __webpack_require__(587);
 
-      var _getDay = __webpack_require__(587);
+        var _getDay2 = _interopRequireDefault(_getDay);
 
-      var _getDay2 = _interopRequireDefault(_getDay);
+        var _getDate = __webpack_require__(588);
 
-      var _getDate = __webpack_require__(588);
+        var _getDate2 = _interopRequireDefault(_getDate);
 
-      var _getDate2 = _interopRequireDefault(_getDate);
+        var _getMonth = __webpack_require__(589);
 
-      var _getMonth = __webpack_require__(589);
+        var _getMonth2 = _interopRequireDefault(_getMonth);
 
-      var _getMonth2 = _interopRequireDefault(_getMonth);
+        var _getYear = __webpack_require__(590);
 
-      var _getYear = __webpack_require__(590);
+        var _getYear2 = _interopRequireDefault(_getYear);
 
-      var _getYear2 = _interopRequireDefault(_getYear);
+        var _getTime = __webpack_require__(591);
 
-      var _getTime = __webpack_require__(591);
+        var _getTime2 = _interopRequireDefault(_getTime);
 
-      var _getTime2 = _interopRequireDefault(_getTime);
+        var _setSeconds = __webpack_require__(592);
 
-      var _setSeconds = __webpack_require__(592);
+        var _setSeconds2 = _interopRequireDefault(_setSeconds);
 
-      var _setSeconds2 = _interopRequireDefault(_setSeconds);
+        var _setMinutes = __webpack_require__(593);
 
-      var _setMinutes = __webpack_require__(593);
+        var _setMinutes2 = _interopRequireDefault(_setMinutes);
 
-      var _setMinutes2 = _interopRequireDefault(_setMinutes);
+        var _setHours = __webpack_require__(594);
 
-      var _setHours = __webpack_require__(594);
+        var _setHours2 = _interopRequireDefault(_setHours);
 
-      var _setHours2 = _interopRequireDefault(_setHours);
+        var _setMonth = __webpack_require__(595);
 
-      var _setMonth = __webpack_require__(595);
+        var _setMonth2 = _interopRequireDefault(_setMonth);
 
-      var _setMonth2 = _interopRequireDefault(_setMonth);
+        var _setYear = __webpack_require__(596);
 
-      var _setYear = __webpack_require__(596);
+        var _setYear2 = _interopRequireDefault(_setYear);
 
-      var _setYear2 = _interopRequireDefault(_setYear);
+        var _min = __webpack_require__(597);
 
-      var _min = __webpack_require__(597);
+        var _min2 = _interopRequireDefault(_min);
 
-      var _min2 = _interopRequireDefault(_min);
+        var _max = __webpack_require__(598);
 
-      var _max = __webpack_require__(598);
+        var _max2 = _interopRequireDefault(_max);
 
-      var _max2 = _interopRequireDefault(_max);
+        var _differenceInCalendarDays = __webpack_require__(599);
 
-      var _differenceInCalendarDays = __webpack_require__(599);
+        var _differenceInCalendarDays2 = _interopRequireDefault(
+          _differenceInCalendarDays
+        );
 
-      var _differenceInCalendarDays2 = _interopRequireDefault(
-        _differenceInCalendarDays
-      );
+        var _differenceInCalendarMonths = __webpack_require__(601);
 
-      var _differenceInCalendarMonths = __webpack_require__(601);
+        var _differenceInCalendarMonths2 = _interopRequireDefault(
+          _differenceInCalendarMonths
+        );
 
-      var _differenceInCalendarMonths2 = _interopRequireDefault(
-        _differenceInCalendarMonths
-      );
+        var _differenceInCalendarWeeks = __webpack_require__(602);
 
-      var _differenceInCalendarWeeks = __webpack_require__(602);
+        var _differenceInCalendarWeeks2 = _interopRequireDefault(
+          _differenceInCalendarWeeks
+        );
 
-      var _differenceInCalendarWeeks2 = _interopRequireDefault(
-        _differenceInCalendarWeeks
-      );
+        var _setDayOfYear = __webpack_require__(604);
 
-      var _setDayOfYear = __webpack_require__(604);
+        var _setDayOfYear2 = _interopRequireDefault(_setDayOfYear);
 
-      var _setDayOfYear2 = _interopRequireDefault(_setDayOfYear);
+        var _startOfDay = __webpack_require__(600);
 
-      var _startOfDay = __webpack_require__(600);
+        var _startOfDay2 = _interopRequireDefault(_startOfDay);
 
-      var _startOfDay2 = _interopRequireDefault(_startOfDay);
+        var _startOfWeek = __webpack_require__(603);
 
-      var _startOfWeek = __webpack_require__(603);
+        var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
 
-      var _startOfWeek2 = _interopRequireDefault(_startOfWeek);
+        var _startOfMonth = __webpack_require__(605);
 
-      var _startOfMonth = __webpack_require__(605);
+        var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
 
-      var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
+        var _startOfYear = __webpack_require__(606);
 
-      var _startOfYear = __webpack_require__(606);
+        var _startOfYear2 = _interopRequireDefault(_startOfYear);
 
-      var _startOfYear2 = _interopRequireDefault(_startOfYear);
+        var _endOfWeek = __webpack_require__(607);
 
-      var _endOfWeek = __webpack_require__(607);
+        var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
 
-      var _endOfWeek2 = _interopRequireDefault(_endOfWeek);
+        var _endOfMonth = __webpack_require__(608);
 
-      var _endOfMonth = __webpack_require__(608);
+        var _endOfMonth2 = _interopRequireDefault(_endOfMonth);
 
-      var _endOfMonth2 = _interopRequireDefault(_endOfMonth);
+        var _isEqual = __webpack_require__(609);
 
-      var _isEqual = __webpack_require__(609);
+        var _isEqual2 = _interopRequireDefault(_isEqual);
 
-      var _isEqual2 = _interopRequireDefault(_isEqual);
+        var _isSameWeek = __webpack_require__(610);
 
-      var _isSameWeek = __webpack_require__(610);
+        var _isSameWeek2 = _interopRequireDefault(_isSameWeek);
 
-      var _isSameWeek2 = _interopRequireDefault(_isSameWeek);
+        var _isSameDay = __webpack_require__(611);
 
-      var _isSameDay = __webpack_require__(611);
+        var _isSameDay2 = _interopRequireDefault(_isSameDay);
 
-      var _isSameDay2 = _interopRequireDefault(_isSameDay);
+        var _isSameMonth = __webpack_require__(612);
 
-      var _isSameMonth = __webpack_require__(612);
+        var _isSameMonth2 = _interopRequireDefault(_isSameMonth);
 
-      var _isSameMonth2 = _interopRequireDefault(_isSameMonth);
+        var _isSameYear = __webpack_require__(613);
 
-      var _isSameYear = __webpack_require__(613);
+        var _isSameYear2 = _interopRequireDefault(_isSameYear);
 
-      var _isSameYear2 = _interopRequireDefault(_isSameYear);
+        var _isAfter = __webpack_require__(614);
 
-      var _isAfter = __webpack_require__(614);
+        var _isAfter2 = _interopRequireDefault(_isAfter);
 
-      var _isAfter2 = _interopRequireDefault(_isAfter);
+        var _isBefore = __webpack_require__(615);
 
-      var _isBefore = __webpack_require__(615);
+        var _isBefore2 = _interopRequireDefault(_isBefore);
 
-      var _isBefore2 = _interopRequireDefault(_isBefore);
+        var _isWithinInterval = __webpack_require__(616);
 
-      var _isWithinInterval = __webpack_require__(616);
+        var _isWithinInterval2 = _interopRequireDefault(_isWithinInterval);
 
-      var _isWithinInterval2 = _interopRequireDefault(_isWithinInterval);
+        var _toDate = __webpack_require__(541);
 
-      var _toDate = __webpack_require__(541);
+        var _toDate2 = _interopRequireDefault(_toDate);
 
-      var _toDate2 = _interopRequireDefault(_toDate);
+        var _parse = __webpack_require__(617);
 
-      var _parse = __webpack_require__(617);
+        var _parse2 = _interopRequireDefault(_parse);
 
-      var _parse2 = _interopRequireDefault(_parse);
+        function _interopRequireDefault(obj) {
+          return obj && obj.__esModule ? obj : { default: obj };
+        }
 
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { default: obj };
-      }
+        // ** Date Constructors **
 
-      // ** Date Constructors **
+        function newDate(value) {
+          var d = value ? (0, _toDate2.default)(value) : new Date();
+          return isValid(d) ? d : null;
+        }
 
-      function newDate(value) {
-        var d = value ? (0, _toDate2.default)(value) : new Date();
-        return isValid(d) ? d : null;
-      }
+        function parseDate(value, dateFormat, locale, strictParsing) {
+          var parsedDate = null;
+          var localeObject = getLocaleObject(locale);
+          var strictParsingValueMatch = true;
+          if (Array.isArray(dateFormat)) {
+            dateFormat.forEach(function(df) {
+              var tryParseDate = (0, _parse2.default)(
+                value,
+                df,
+                new Date(),
+                localeObject
+              );
+              if (strictParsing) {
+                strictParsingValueMatch =
+                  isValid(tryParseDate) &&
+                  value ===
+                    (0, _format2.default)(tryParseDate, df, {
+                      awareOfUnicodeTokens: true
+                    });
+              }
+              if (isValid(tryParseDate) && strictParsingValueMatch) {
+                parsedDate = tryParseDate;
+              }
+            });
+            return parsedDate;
+          }
 
-      function parseDate(value, dateFormat, locale, strictParsing) {
-        var parsedDate = null;
-        var localeObject = getLocaleObject(locale);
-        var strictParsingValueMatch = true;
-        if (Array.isArray(dateFormat)) {
-          dateFormat.forEach(function(df) {
-            var tryParseDate = (0, _parse2.default)(
-              value,
-              df,
-              new Date(),
-              localeObject
+          parsedDate = (0, _parse2.default)(
+            value,
+            dateFormat,
+            new Date(),
+            localeObject
+          );
+
+          if (strictParsing) {
+            strictParsingValueMatch =
+              isValid(parsedDate) &&
+              value ===
+                (0, _format2.default)(parsedDate, dateFormat, {
+                  awareOfUnicodeTokens: true
+                });
+          } else if (!isValid(parsedDate)) {
+            parsedDate = new Date(value);
+          }
+
+          return isValid(parsedDate) && strictParsingValueMatch
+            ? parsedDate
+            : null;
+        }
+
+        // ** Date "Reflection" **
+
+        exports.isDate = _isDate2.default;
+        function isValid(date) {
+          return (
+            (0, _isValid2.default)(date) &&
+            (0, _isAfter2.default)(date, new Date("1/1/1000"))
+          );
+        }
+
+        // ** Date Formatting **
+
+        function formatDate(date, formatStr, locale) {
+          if (locale === "en") {
+            return (0, _format2.default)(date, formatStr, {
+              awareOfUnicodeTokens: true
+            });
+          }
+          var localeObj = getLocaleObject(locale);
+          if (locale && !localeObj) {
+            console.warn(
+              'A locale object was not found for the provided string ["' +
+                locale +
+                '"].'
             );
-            if (strictParsing) {
-              strictParsingValueMatch =
-                isValid(tryParseDate) &&
-                value ===
-                  (0, _format2.default)(tryParseDate, df, {
-                    awareOfUnicodeTokens: true
-                  });
-            }
-            if (isValid(tryParseDate) && strictParsingValueMatch) {
-              parsedDate = tryParseDate;
-            }
-          });
-          return parsedDate;
-        }
-
-        parsedDate = (0, _parse2.default)(
-          value,
-          dateFormat,
-          new Date(),
-          localeObject
-        );
-
-        if (strictParsing) {
-          strictParsingValueMatch =
-            isValid(parsedDate) &&
-            value ===
-              (0, _format2.default)(parsedDate, dateFormat, {
-                awareOfUnicodeTokens: true
-              });
-        } else if (!isValid(parsedDate)) {
-          parsedDate = new Date(value);
-        }
-
-        return isValid(parsedDate) && strictParsingValueMatch
-          ? parsedDate
-          : null;
-      }
-
-      // ** Date "Reflection" **
-
-      exports.isDate = _isDate2.default;
-      function isValid(date) {
-        return (
-          (0, _isValid2.default)(date) &&
-          (0, _isAfter2.default)(date, new Date("1/1/1000"))
-        );
-      }
-
-      // ** Date Formatting **
-
-      function formatDate(date, formatStr, locale) {
-        if (locale === "en") {
+          }
+          if (
+            !localeObj &&
+            !!getDefaultLocale() &&
+            !!getLocaleObject(getDefaultLocale())
+          ) {
+            localeObj = getLocaleObject(getDefaultLocale());
+          }
           return (0, _format2.default)(date, formatStr, {
+            locale: localeObj ? localeObj : null,
             awareOfUnicodeTokens: true
           });
         }
-        var localeObj = getLocaleObject(locale);
-        if (locale && !localeObj) {
-          console.warn(
-            'A locale object was not found for the provided string ["' +
-              locale +
-              '"].'
-          );
-        }
-        if (
-          !localeObj &&
-          !!getDefaultLocale() &&
-          !!getLocaleObject(getDefaultLocale())
-        ) {
-          localeObj = getLocaleObject(getDefaultLocale());
-        }
-        return (0, _format2.default)(date, formatStr, {
-          locale: localeObj ? localeObj : null,
-          awareOfUnicodeTokens: true
-        });
-      }
 
-      function safeDateFormat(date, _ref) {
-        var dateFormat = _ref.dateFormat,
-          locale = _ref.locale;
+        function safeDateFormat(date, _ref) {
+          var dateFormat = _ref.dateFormat,
+            locale = _ref.locale;
 
-        return (
-          (date &&
-            formatDate(
-              date,
-              Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
-              locale
-            )) ||
-          ""
-        );
-      }
-
-      // ** Date Setters **
-
-      function setTime(date, _ref2) {
-        var _ref2$hour = _ref2.hour,
-          hour = _ref2$hour === undefined ? 0 : _ref2$hour,
-          _ref2$minute = _ref2.minute,
-          minute = _ref2$minute === undefined ? 0 : _ref2$minute,
-          _ref2$second = _ref2.second,
-          second = _ref2$second === undefined ? 0 : _ref2$second;
-
-        return (0, _setHours2.default)(
-          (0, _setMinutes2.default)(
-            (0, _setSeconds2.default)(date, second),
-            minute
-          ),
-          hour
-        );
-      }
-
-      exports.setMonth = _setMonth2.default;
-      exports.setYear = _setYear2.default;
-
-      // ** Date Getters **
-
-      // getDay Returns day of week, getDate returns day of month
-
-      exports.getSeconds = _getSeconds2.default;
-      exports.getMinutes = _getMinutes2.default;
-      exports.getHours = _getHours2.default;
-      exports.getMonth = _getMonth2.default;
-      exports.getYear = _getYear2.default;
-      exports.getDay = _getDay2.default;
-      exports.getDate = _getDate2.default;
-      exports.getTime = _getTime2.default;
-      function getWeek(date) {
-        var firstDayOfYear = (0, _setDayOfYear2.default)(date, 1);
-        if (!isSameYear((0, _endOfWeek2.default)(date), date)) {
-          return 1;
-        }
-        return (
-          (0, _differenceInCalendarWeeks2.default)(
-            date,
-            (0, _startOfYear2.default)(date)
-          ) + 1
-        );
-      }
-
-      function getDayOfWeekCode(day, locale) {
-        return formatDate(day, "ddd", locale);
-      }
-
-      // *** Start of ***
-
-      function getStartOfDay(date) {
-        return (0, _startOfDay2.default)(date);
-      }
-
-      function getStartOfWeek(date, locale) {
-        var localeObj = locale
-          ? getLocaleObject(locale)
-          : getLocaleObject(getDefaultLocale());
-        return (0, _startOfWeek2.default)(date, { locale: localeObj });
-      }
-
-      function getStartOfMonth(date) {
-        return (0, _startOfMonth2.default)(date);
-      }
-
-      function getStartOfToday() {
-        return (0, _startOfDay2.default)(newDate());
-      }
-
-      // *** End of ***
-
-      function getEndOfWeek(date) {
-        return (0, _endOfWeek2.default)(date);
-      }
-
-      function getEndOfMonth(date) {
-        return (0, _endOfMonth2.default)(date);
-      }
-
-      // ** Date Math **
-
-      // *** Addition ***
-
-      exports.addMinutes = _addMinutes2.default;
-      exports.addDays = _addDays2.default;
-      exports.addWeeks = _addWeeks2.default;
-      exports.addMonths = _addMonths2.default;
-      exports.addYears = _addYears2.default;
-
-      // *** Subtraction ***
-
-      exports.subMinutes = _subMinutes2.default;
-      exports.subHours = _subHours2.default;
-      exports.subDays = _subDays2.default;
-      exports.subWeeks = _subWeeks2.default;
-      exports.subMonths = _subMonths2.default;
-      exports.subYears = _subYears2.default;
-
-      // ** Date Comparison **
-
-      exports.isBefore = _isBefore2.default;
-      exports.isAfter = _isAfter2.default;
-      exports.isEqual = _isEqual2.default;
-      function isSameYear(date1, date2) {
-        if (date1 && date2) {
-          return (0, _isSameYear2.default)(date1, date2);
-        } else {
-          return !date1 && !date2;
-        }
-      }
-
-      function isSameMonth(date1, date2) {
-        if (date1 && date2) {
-          return (0, _isSameMonth2.default)(date1, date2);
-        } else {
-          return !date1 && !date2;
-        }
-      }
-
-      function isSameDay(date1, date2) {
-        if (date1 && date2) {
-          return (0, _isSameDay2.default)(date1, date2);
-        } else {
-          return !date1 && !date2;
-        }
-      }
-
-      function isDayInRange(day, startDate, endDate) {
-        var valid = void 0;
-        try {
-          valid = (0, _isWithinInterval2.default)(day, {
-            start: startDate,
-            end: endDate
-          });
-        } catch (err) {
-          valid = false;
-        }
-        return valid;
-      }
-
-      // *** Diffing ***
-
-      function getDaysDiff(date1, date2) {
-        return (0, _differenceInCalendarDays2.default)(date1, date2);
-      }
-
-      // ** Date Localization **
-
-      function registerLocale(localeName, localeData) {
-        if (!window.__localeData__) {
-          window.__localeData__ = {};
-        }
-        window.__localeData__[localeName] = localeData;
-      }
-
-      function setDefaultLocale(localeName) {
-        window.__localeId__ = localeName;
-      }
-
-      function getDefaultLocale() {
-        return window.__localeId__;
-      }
-
-      function getLocaleObject(localeSpec) {
-        if (typeof localeSpec === "string") {
-          // Treat it as a locale name registered by registerLocale
-          return window.__localeData__
-            ? window.__localeData__[localeSpec]
-            : null;
-        } else {
-          // Treat it as a raw date-fns locale object
-          return localeSpec;
-        }
-      }
-
-      function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-        return formatFunc(formatDate(date, "EEEE", locale));
-      }
-
-      function getWeekdayMinInLocale(date, locale) {
-        return formatDate(date, "EEEEEE", locale);
-      }
-
-      function getWeekdayShortInLocale(date, locale) {
-        return formatDate(date, "EEE", locale);
-      }
-
-      function getMonthInLocale(month, locale) {
-        return formatDate(
-          (0, _setMonth2.default)(newDate(), month),
-          "LLLL",
-          locale
-        );
-      }
-
-      function getMonthShortInLocale(month, locale) {
-        return formatDate(
-          (0, _setMonth2.default)(newDate(), month),
-          "LLL",
-          locale
-        );
-      }
-
-      // ** Utils for some components **
-
-      function isDayDisabled(day) {
-        var _ref3 =
-            arguments.length > 1 && arguments[1] !== undefined
-              ? arguments[1]
-              : {},
-          minDate = _ref3.minDate,
-          maxDate = _ref3.maxDate,
-          excludeDates = _ref3.excludeDates,
-          includeDates = _ref3.includeDates,
-          filterDate = _ref3.filterDate;
-
-        return (
-          isOutOfBounds(day, { minDate: minDate, maxDate: maxDate }) ||
-          (excludeDates &&
-            excludeDates.some(function(excludeDate) {
-              return isSameDay(day, excludeDate);
-            })) ||
-          (includeDates &&
-            !includeDates.some(function(includeDate) {
-              return isSameDay(day, includeDate);
-            })) ||
-          (filterDate && !filterDate(newDate(day))) ||
-          false
-        );
-      }
-
-      function isMonthinRange(startDate, endDate, m, day) {
-        var startDateYear = (0, _getYear2.default)(startDate);
-        var startDateMonth = (0, _getMonth2.default)(startDate);
-        var endDateYear = (0, _getYear2.default)(endDate);
-        var endDateMonth = (0, _getMonth2.default)(endDate);
-        var dayYear = (0, _getYear2.default)(day);
-        if (startDateYear === endDateYear && startDateYear === dayYear) {
-          return startDateMonth <= m && m <= endDateMonth;
-        } else if (startDateYear < endDateYear) {
           return (
-            (dayYear === startDateYear &&
-              (startDateMonth <= m || endDateMonth < m)) ||
-            (dayYear === endDateYear &&
-              (startDateMonth > m || endDateMonth >= m)) ||
-            (dayYear < endDateYear && dayYear > startDateYear)
+            (date &&
+              formatDate(
+                date,
+                Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
+                locale
+              )) ||
+            ""
           );
         }
-      }
 
-      function isOutOfBounds(day) {
-        var _ref4 =
-            arguments.length > 1 && arguments[1] !== undefined
-              ? arguments[1]
-              : {},
-          minDate = _ref4.minDate,
-          maxDate = _ref4.maxDate;
+        // ** Date Setters **
 
-        return (
-          (minDate &&
-            (0, _differenceInCalendarDays2.default)(day, minDate) < 0) ||
-          (maxDate && (0, _differenceInCalendarDays2.default)(day, maxDate) > 0)
-        );
-      }
+        function setTime(date, _ref2) {
+          var _ref2$hour = _ref2.hour,
+            hour = _ref2$hour === undefined ? 0 : _ref2$hour,
+            _ref2$minute = _ref2.minute,
+            minute = _ref2$minute === undefined ? 0 : _ref2$minute,
+            _ref2$second = _ref2.second,
+            second = _ref2$second === undefined ? 0 : _ref2$second;
 
-      function isTimeDisabled(time, disabledTimes) {
-        var l = disabledTimes.length;
-        for (var i = 0; i < l; i++) {
-          if (
-            (0, _getHours2.default)(disabledTimes[i]) ===
-              (0, _getHours2.default)(time) &&
-            (0, _getMinutes2.default)(disabledTimes[i]) ===
-              (0, _getMinutes2.default)(time)
-          ) {
-            return true;
+          return (0, _setHours2.default)(
+            (0, _setMinutes2.default)(
+              (0, _setSeconds2.default)(date, second),
+              minute
+            ),
+            hour
+          );
+        }
+
+        exports.setMonth = _setMonth2.default;
+        exports.setYear = _setYear2.default;
+
+        // ** Date Getters **
+
+        // getDay Returns day of week, getDate returns day of month
+
+        exports.getSeconds = _getSeconds2.default;
+        exports.getMinutes = _getMinutes2.default;
+        exports.getHours = _getHours2.default;
+        exports.getMonth = _getMonth2.default;
+        exports.getYear = _getYear2.default;
+        exports.getDay = _getDay2.default;
+        exports.getDate = _getDate2.default;
+        exports.getTime = _getTime2.default;
+        function getWeek(date) {
+          var firstDayOfYear = (0, _setDayOfYear2.default)(date, 1);
+          if (!isSameYear((0, _endOfWeek2.default)(date), date)) {
+            return 1;
+          }
+          return (
+            (0, _differenceInCalendarWeeks2.default)(
+              date,
+              (0, _startOfYear2.default)(date)
+            ) + 1
+          );
+        }
+
+        function getDayOfWeekCode(day, locale) {
+          return formatDate(day, "ddd", locale);
+        }
+
+        // *** Start of ***
+
+        function getStartOfDay(date) {
+          return (0, _startOfDay2.default)(date);
+        }
+
+        function getStartOfWeek(date, locale) {
+          var localeObj = locale
+            ? getLocaleObject(locale)
+            : getLocaleObject(getDefaultLocale());
+          return (0, _startOfWeek2.default)(date, { locale: localeObj });
+        }
+
+        function getStartOfMonth(date) {
+          return (0, _startOfMonth2.default)(date);
+        }
+
+        function getStartOfToday() {
+          return (0, _startOfDay2.default)(newDate());
+        }
+
+        // *** End of ***
+
+        function getEndOfWeek(date) {
+          return (0, _endOfWeek2.default)(date);
+        }
+
+        function getEndOfMonth(date) {
+          return (0, _endOfMonth2.default)(date);
+        }
+
+        // ** Date Math **
+
+        // *** Addition ***
+
+        exports.addMinutes = _addMinutes2.default;
+        exports.addDays = _addDays2.default;
+        exports.addWeeks = _addWeeks2.default;
+        exports.addMonths = _addMonths2.default;
+        exports.addYears = _addYears2.default;
+
+        // *** Subtraction ***
+
+        exports.subMinutes = _subMinutes2.default;
+        exports.subHours = _subHours2.default;
+        exports.subDays = _subDays2.default;
+        exports.subWeeks = _subWeeks2.default;
+        exports.subMonths = _subMonths2.default;
+        exports.subYears = _subYears2.default;
+
+        // ** Date Comparison **
+
+        exports.isBefore = _isBefore2.default;
+        exports.isAfter = _isAfter2.default;
+        exports.isEqual = _isEqual2.default;
+        function isSameYear(date1, date2) {
+          if (date1 && date2) {
+            return (0, _isSameYear2.default)(date1, date2);
+          } else {
+            return !date1 && !date2;
           }
         }
 
-        return false;
-      }
-
-      function isTimeInDisabledRange(time, _ref5) {
-        var minTime = _ref5.minTime,
-          maxTime = _ref5.maxTime;
-
-        if (!minTime || !maxTime) {
-          throw new Error("Both minTime and maxTime props required");
+        function isSameMonth(date1, date2) {
+          if (date1 && date2) {
+            return (0, _isSameMonth2.default)(date1, date2);
+          } else {
+            return !date1 && !date2;
+          }
         }
-        var base = newDate();
-        var baseTime = (0, _setHours2.default)(
-          (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(time)),
-          (0, _getHours2.default)(time)
-        );
-        var min = (0, _setHours2.default)(
-          (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(minTime)),
-          (0, _getHours2.default)(minTime)
-        );
-        var max = (0, _setHours2.default)(
-          (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(maxTime)),
-          (0, _getHours2.default)(maxTime)
-        );
 
-        var valid = void 0;
-        try {
-          valid = !(0, _isWithinInterval2.default)(baseTime, {
-            start: min,
-            end: max
-          });
-        } catch (err) {
-          valid = false;
+        function isSameDay(date1, date2) {
+          if (date1 && date2) {
+            return (0, _isSameDay2.default)(date1, date2);
+          } else {
+            return !date1 && !date2;
+          }
         }
-        return valid;
-      }
 
-      function monthDisabledBefore(day) {
-        var _ref6 =
-            arguments.length > 1 && arguments[1] !== undefined
-              ? arguments[1]
-              : {},
-          minDate = _ref6.minDate,
-          includeDates = _ref6.includeDates;
+        function isDayInRange(day, startDate, endDate) {
+          var valid = void 0;
+          try {
+            valid = (0, _isWithinInterval2.default)(day, {
+              start: startDate,
+              end: endDate
+            });
+          } catch (err) {
+            valid = false;
+          }
+          return valid;
+        }
 
-        var previousMonth = (0, _subMonths2.default)(day, 1);
-        return (
-          (minDate &&
-            (0, _differenceInCalendarMonths2.default)(minDate, previousMonth) >
-              0) ||
-          (includeDates &&
-            includeDates.every(function(includeDate) {
-              return (
-                (0, _differenceInCalendarMonths2.default)(
-                  includeDate,
-                  previousMonth
-                ) > 0
-              );
-            })) ||
-          false
-        );
-      }
+        // *** Diffing ***
 
-      function monthDisabledAfter(day) {
-        var _ref7 =
-            arguments.length > 1 && arguments[1] !== undefined
-              ? arguments[1]
-              : {},
-          maxDate = _ref7.maxDate,
-          includeDates = _ref7.includeDates;
+        function getDaysDiff(date1, date2) {
+          return (0, _differenceInCalendarDays2.default)(date1, date2);
+        }
 
-        var nextMonth = (0, _addMonths2.default)(day, 1);
-        return (
-          (maxDate &&
-            (0, _differenceInCalendarMonths2.default)(nextMonth, maxDate) >
-              0) ||
-          (includeDates &&
-            includeDates.every(function(includeDate) {
-              return (
-                (0, _differenceInCalendarMonths2.default)(
-                  nextMonth,
-                  includeDate
-                ) > 0
-              );
-            })) ||
-          false
-        );
-      }
+        // ** Date Localization **
 
-      function getEffectiveMinDate(_ref8) {
-        var minDate = _ref8.minDate,
-          includeDates = _ref8.includeDates;
+        function registerLocale(localeName, localeData) {
+          var scope = window || global;
 
-        if (includeDates && minDate) {
-          var minDates = includeDates.filter(function(includeDate) {
+          if (!scope.__localeData__) {
+            scope.__localeData__ = {};
+          }
+          scope.__localeData__[localeName] = localeData;
+        }
+
+        function setDefaultLocale(localeName) {
+          var scope = window || global;
+
+          scope.__localeId__ = localeName;
+        }
+
+        function getDefaultLocale() {
+          var scope = window || global;
+
+          return scope.__localeId__;
+        }
+
+        function getLocaleObject(localeSpec) {
+          if (typeof localeSpec === "string") {
+            // Treat it as a locale name registered by registerLocale
+            var scope = window || global;
+            return scope.__localeData__
+              ? scope.__localeData__[localeSpec]
+              : null;
+          } else {
+            // Treat it as a raw date-fns locale object
+            return localeSpec;
+          }
+        }
+
+        function getFormattedWeekdayInLocale(date, formatFunc, locale) {
+          return formatFunc(formatDate(date, "EEEE", locale));
+        }
+
+        function getWeekdayMinInLocale(date, locale) {
+          return formatDate(date, "EEEEEE", locale);
+        }
+
+        function getWeekdayShortInLocale(date, locale) {
+          return formatDate(date, "EEE", locale);
+        }
+
+        function getMonthInLocale(month, locale) {
+          return formatDate(
+            (0, _setMonth2.default)(newDate(), month),
+            "LLLL",
+            locale
+          );
+        }
+
+        function getMonthShortInLocale(month, locale) {
+          return formatDate(
+            (0, _setMonth2.default)(newDate(), month),
+            "LLL",
+            locale
+          );
+        }
+
+        // ** Utils for some components **
+
+        function isDayDisabled(day) {
+          var _ref3 =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : {},
+            minDate = _ref3.minDate,
+            maxDate = _ref3.maxDate,
+            excludeDates = _ref3.excludeDates,
+            includeDates = _ref3.includeDates,
+            filterDate = _ref3.filterDate;
+
+          return (
+            isOutOfBounds(day, { minDate: minDate, maxDate: maxDate }) ||
+            (excludeDates &&
+              excludeDates.some(function(excludeDate) {
+                return isSameDay(day, excludeDate);
+              })) ||
+            (includeDates &&
+              !includeDates.some(function(includeDate) {
+                return isSameDay(day, includeDate);
+              })) ||
+            (filterDate && !filterDate(newDate(day))) ||
+            false
+          );
+        }
+
+        function isMonthinRange(startDate, endDate, m, day) {
+          var startDateYear = (0, _getYear2.default)(startDate);
+          var startDateMonth = (0, _getMonth2.default)(startDate);
+          var endDateYear = (0, _getYear2.default)(endDate);
+          var endDateMonth = (0, _getMonth2.default)(endDate);
+          var dayYear = (0, _getYear2.default)(day);
+          if (startDateYear === endDateYear && startDateYear === dayYear) {
+            return startDateMonth <= m && m <= endDateMonth;
+          } else if (startDateYear < endDateYear) {
             return (
-              (0, _differenceInCalendarDays2.default)(includeDate, minDate) >= 0
+              (dayYear === startDateYear &&
+                (startDateMonth <= m || endDateMonth < m)) ||
+              (dayYear === endDateYear &&
+                (startDateMonth > m || endDateMonth >= m)) ||
+              (dayYear < endDateYear && dayYear > startDateYear)
             );
-          });
-          return (0, _min2.default)(minDates);
-        } else if (includeDates) {
-          return (0, _min2.default)(includeDates);
-        } else {
-          return minDate;
+          }
         }
-      }
 
-      function getEffectiveMaxDate(_ref9) {
-        var maxDate = _ref9.maxDate,
-          includeDates = _ref9.includeDates;
+        function isOutOfBounds(day) {
+          var _ref4 =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : {},
+            minDate = _ref4.minDate,
+            maxDate = _ref4.maxDate;
 
-        if (includeDates && maxDate) {
-          var maxDates = includeDates.filter(function(includeDate) {
-            return (
-              (0, _differenceInCalendarDays2.default)(includeDate, maxDate) <= 0
-            );
-          });
-          return (0, _max2.default)(maxDates);
-        } else if (includeDates) {
-          return (0, _max2.default)(includeDates);
-        } else {
-          return maxDate;
+          return (
+            (minDate &&
+              (0, _differenceInCalendarDays2.default)(day, minDate) < 0) ||
+            (maxDate &&
+              (0, _differenceInCalendarDays2.default)(day, maxDate) > 0)
+          );
         }
-      }
 
-      function getHightLightDaysMap() {
-        var highlightDates =
-          arguments.length > 0 && arguments[0] !== undefined
-            ? arguments[0]
-            : [];
-        var defaultClassName =
-          arguments.length > 1 && arguments[1] !== undefined
-            ? arguments[1]
-            : "react-datepicker__day--highlighted";
-
-        var dateClasses = new Map();
-        for (var i = 0, len = highlightDates.length; i < len; i++) {
-          var obj = highlightDates[i];
-          if ((0, _isDate2.default)(obj)) {
-            var key = formatDate(obj, "MM.dd.yyyy");
-            var classNamesArr = dateClasses.get(key) || [];
-            if (!classNamesArr.includes(defaultClassName)) {
-              classNamesArr.push(defaultClassName);
-              dateClasses.set(key, classNamesArr);
-            }
-          } else if (
-            (typeof obj === "undefined" ? "undefined" : _typeof(obj)) ===
-            "object"
-          ) {
-            var keys = Object.keys(obj);
-            var className = keys[0];
-            var arrOfDates = obj[keys[0]];
+        function isTimeDisabled(time, disabledTimes) {
+          var l = disabledTimes.length;
+          for (var i = 0; i < l; i++) {
             if (
-              typeof className === "string" &&
-              arrOfDates.constructor === Array
+              (0, _getHours2.default)(disabledTimes[i]) ===
+                (0, _getHours2.default)(time) &&
+              (0, _getMinutes2.default)(disabledTimes[i]) ===
+                (0, _getMinutes2.default)(time)
             ) {
-              for (var k = 0, _len = arrOfDates.length; k < _len; k++) {
-                var _key = formatDate(arrOfDates[k], "MM.dd.yyyy");
-                var _classNamesArr = dateClasses.get(_key) || [];
-                if (!_classNamesArr.includes(className)) {
-                  _classNamesArr.push(className);
-                  dateClasses.set(_key, _classNamesArr);
+              return true;
+            }
+          }
+
+          return false;
+        }
+
+        function isTimeInDisabledRange(time, _ref5) {
+          var minTime = _ref5.minTime,
+            maxTime = _ref5.maxTime;
+
+          if (!minTime || !maxTime) {
+            throw new Error("Both minTime and maxTime props required");
+          }
+          var base = newDate();
+          var baseTime = (0, _setHours2.default)(
+            (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(time)),
+            (0, _getHours2.default)(time)
+          );
+          var min = (0, _setHours2.default)(
+            (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(minTime)),
+            (0, _getHours2.default)(minTime)
+          );
+          var max = (0, _setHours2.default)(
+            (0, _setMinutes2.default)(base, (0, _getMinutes2.default)(maxTime)),
+            (0, _getHours2.default)(maxTime)
+          );
+
+          var valid = void 0;
+          try {
+            valid = !(0, _isWithinInterval2.default)(baseTime, {
+              start: min,
+              end: max
+            });
+          } catch (err) {
+            valid = false;
+          }
+          return valid;
+        }
+
+        function monthDisabledBefore(day) {
+          var _ref6 =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : {},
+            minDate = _ref6.minDate,
+            includeDates = _ref6.includeDates;
+
+          var previousMonth = (0, _subMonths2.default)(day, 1);
+          return (
+            (minDate &&
+              (0, _differenceInCalendarMonths2.default)(
+                minDate,
+                previousMonth
+              ) > 0) ||
+            (includeDates &&
+              includeDates.every(function(includeDate) {
+                return (
+                  (0, _differenceInCalendarMonths2.default)(
+                    includeDate,
+                    previousMonth
+                  ) > 0
+                );
+              })) ||
+            false
+          );
+        }
+
+        function monthDisabledAfter(day) {
+          var _ref7 =
+              arguments.length > 1 && arguments[1] !== undefined
+                ? arguments[1]
+                : {},
+            maxDate = _ref7.maxDate,
+            includeDates = _ref7.includeDates;
+
+          var nextMonth = (0, _addMonths2.default)(day, 1);
+          return (
+            (maxDate &&
+              (0, _differenceInCalendarMonths2.default)(nextMonth, maxDate) >
+                0) ||
+            (includeDates &&
+              includeDates.every(function(includeDate) {
+                return (
+                  (0, _differenceInCalendarMonths2.default)(
+                    nextMonth,
+                    includeDate
+                  ) > 0
+                );
+              })) ||
+            false
+          );
+        }
+
+        function getEffectiveMinDate(_ref8) {
+          var minDate = _ref8.minDate,
+            includeDates = _ref8.includeDates;
+
+          if (includeDates && minDate) {
+            var minDates = includeDates.filter(function(includeDate) {
+              return (
+                (0, _differenceInCalendarDays2.default)(includeDate, minDate) >=
+                0
+              );
+            });
+            return (0, _min2.default)(minDates);
+          } else if (includeDates) {
+            return (0, _min2.default)(includeDates);
+          } else {
+            return minDate;
+          }
+        }
+
+        function getEffectiveMaxDate(_ref9) {
+          var maxDate = _ref9.maxDate,
+            includeDates = _ref9.includeDates;
+
+          if (includeDates && maxDate) {
+            var maxDates = includeDates.filter(function(includeDate) {
+              return (
+                (0, _differenceInCalendarDays2.default)(includeDate, maxDate) <=
+                0
+              );
+            });
+            return (0, _max2.default)(maxDates);
+          } else if (includeDates) {
+            return (0, _max2.default)(includeDates);
+          } else {
+            return maxDate;
+          }
+        }
+
+        function getHightLightDaysMap() {
+          var highlightDates =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : [];
+          var defaultClassName =
+            arguments.length > 1 && arguments[1] !== undefined
+              ? arguments[1]
+              : "react-datepicker__day--highlighted";
+
+          var dateClasses = new Map();
+          for (var i = 0, len = highlightDates.length; i < len; i++) {
+            var obj = highlightDates[i];
+            if ((0, _isDate2.default)(obj)) {
+              var key = formatDate(obj, "MM.dd.yyyy");
+              var classNamesArr = dateClasses.get(key) || [];
+              if (!classNamesArr.includes(defaultClassName)) {
+                classNamesArr.push(defaultClassName);
+                dateClasses.set(key, classNamesArr);
+              }
+            } else if (
+              (typeof obj === "undefined" ? "undefined" : _typeof(obj)) ===
+              "object"
+            ) {
+              var keys = Object.keys(obj);
+              var className = keys[0];
+              var arrOfDates = obj[keys[0]];
+              if (
+                typeof className === "string" &&
+                arrOfDates.constructor === Array
+              ) {
+                for (var k = 0, _len = arrOfDates.length; k < _len; k++) {
+                  var _key = formatDate(arrOfDates[k], "MM.dd.yyyy");
+                  var _classNamesArr = dateClasses.get(_key) || [];
+                  if (!_classNamesArr.includes(className)) {
+                    _classNamesArr.push(className);
+                    dateClasses.set(_key, _classNamesArr);
+                  }
                 }
               }
             }
           }
+
+          return dateClasses;
         }
 
-        return dateClasses;
-      }
-
-      function timesToInjectAfter(
-        startOfDay,
-        currentTime,
-        currentMultiplier,
-        intervals,
-        injectedTimes
-      ) {
-        var l = injectedTimes.length;
-        var times = [];
-        for (var i = 0; i < l; i++) {
-          var injectedTime = (0, _addMinutes2.default)(
-            (0, _addHours2.default)(
+        function timesToInjectAfter(
+          startOfDay,
+          currentTime,
+          currentMultiplier,
+          intervals,
+          injectedTimes
+        ) {
+          var l = injectedTimes.length;
+          var times = [];
+          for (var i = 0; i < l; i++) {
+            var injectedTime = (0, _addMinutes2.default)(
+              (0, _addHours2.default)(
+                startOfDay,
+                (0, _getHours2.default)(injectedTimes[i])
+              ),
+              (0, _getMinutes2.default)(injectedTimes[i])
+            );
+            var nextTime = (0, _addMinutes2.default)(
               startOfDay,
-              (0, _getHours2.default)(injectedTimes[i])
-            ),
-            (0, _getMinutes2.default)(injectedTimes[i])
-          );
-          var nextTime = (0, _addMinutes2.default)(
-            startOfDay,
-            (currentMultiplier + 1) * intervals
-          );
+              (currentMultiplier + 1) * intervals
+            );
 
-          if (
-            (0, _isAfter2.default)(injectedTime, currentTime) &&
-            (0, _isBefore2.default)(injectedTime, nextTime)
-          ) {
-            times.push(injectedTimes[i]);
+            if (
+              (0, _isAfter2.default)(injectedTime, currentTime) &&
+              (0, _isBefore2.default)(injectedTime, nextTime)
+            ) {
+              times.push(injectedTimes[i]);
+            }
           }
+
+          return times;
         }
 
-        return times;
-      }
-
-      function addZero(i) {
-        if (i < 10) {
-          i = "0" + i;
+        function addZero(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+          return i;
         }
-        return i;
-      }
+        /* WEBPACK VAR INJECTION */
+      }.call(
+        exports,
+        (function() {
+          return this;
+        })()
+      ));
 
       /***/
     },

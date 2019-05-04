@@ -61,7 +61,7 @@
     "highlight.js": "^9.13.1",
     "husky": "^0.14.3",
     "isparta-loader": "^2.0.0",
-    "karma": "^3.1.4",
+    "karma": "^4.1.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.2",
     "karma-firefox-launcher": "^1.0.1",
