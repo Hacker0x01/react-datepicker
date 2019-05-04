@@ -255,24 +255,31 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function registerLocale(localeName, localeData) {
-  if (!window.__localeData__) {
-    window.__localeData__ = {};
+  const scope = window || global;
+
+  if (!scope.__localeData__) {
+    scope.__localeData__ = {};
   }
-  window.__localeData__[localeName] = localeData;
+  scope.__localeData__[localeName] = localeData;
 }
 
 export function setDefaultLocale(localeName) {
-  window.__localeId__ = localeName;
+  const scope = window || global;
+
+  scope.__localeId__ = localeName;
 }
 
 export function getDefaultLocale() {
-  return window.__localeId__;
+  const scope = window || global;
+
+  return scope.__localeId__;
 }
 
 export function getLocaleObject(localeSpec) {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
-    return window.__localeData__ ? window.__localeData__[localeSpec] : null;
+    const scope = window || global;
+    return scope.__localeData__ ? scope.__localeData__[localeSpec] : null;
   } else {
     // Treat it as a raw date-fns locale object
     return localeSpec;
