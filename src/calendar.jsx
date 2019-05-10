@@ -126,7 +126,8 @@ export default class Calendar extends React.Component {
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func
+    onMonthMouseLeave: PropTypes.func,
+    onPressStart: PropTypes.func
   };
 
   static get defaultProps() {
@@ -710,6 +711,7 @@ export default class Calendar extends React.Component {
         className={classnames("react-datepicker", this.props.className, {
           "react-datepicker--time-only": this.props.showTimeSelectOnly
         })}
+        onPressStart={this.props.onPressStart}
       >
         {this.renderPreviousButton()}
         {this.renderNextButton()}

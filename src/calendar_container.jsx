@@ -4,10 +4,15 @@ import React from "react";
 export default function CalendarContainer({
   className,
   children,
-  arrowProps = {}
+  arrowProps = {},
+  onPressStart = null
 }) {
   return (
-    <div className={className}>
+    <div
+      className={className}
+      onTouchStart={onPressStart}
+      onMouseDown={onPressStart}
+    >
       <div className="react-datepicker__triangle" {...arrowProps} />
       {children}
     </div>
@@ -17,5 +22,6 @@ export default function CalendarContainer({
 CalendarContainer.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
-  arrowProps: PropTypes.object // react-popper arrow props
+  arrowProps: PropTypes.object, // react-popper arrow props
+  onPressStart: PropTypes.func
 };
