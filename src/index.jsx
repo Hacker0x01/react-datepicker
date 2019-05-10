@@ -628,6 +628,7 @@ export default class DatePicker extends React.Component {
         ref={elem => {
           this.calendar = elem;
         }}
+        eventTypes="click"
         locale={this.props.locale}
         adjustDateOnChange={this.props.adjustDateOnChange}
         setOpen={this.setOpen}
