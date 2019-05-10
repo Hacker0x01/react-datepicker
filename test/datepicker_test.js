@@ -111,11 +111,16 @@ describe("DatePicker", () => {
     var dateInput = datePicker.input;
     var focusSpy = sandbox.spy(dateInput, "focus");
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
 
     defer(() => {
       expect(datePicker.calendar).to.exist;
-      assert(focusSpy.calledOnce, "should refocus the date input");
+      TestUtils.Simulate.mouseDown(ReactDOM.findDOMNode(datePicker.calendar));
+      defer(() => {
+        assert(
+          focusSpy.calledOnce,
+          "should refocus the date input on calendar click"
+        );
+      });
       done();
     });
   });
@@ -232,6 +237,7 @@ describe("DatePicker", () => {
     );
     datePicker.deferFocusInput = sinon.spy();
     datePicker.state.open = true;
+    datePicker.justPressedCalendar = true;
     var handleBlur = datePicker.handleBlur;
     handleBlur({});
     expect(datePicker.deferFocusInput.calledOnce).to.be.true;
