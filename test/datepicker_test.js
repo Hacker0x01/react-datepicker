@@ -125,7 +125,7 @@ describe("DatePicker", () => {
     });
   });
 
-  it("should not re-focus the date input when focusing the year dropdown", done => {
+  it("should not re-focus the date input when clicking the year dropdown", done => {
     const onBlurSpy = sandbox.spy();
     const datePicker = mount(
       <DatePicker
@@ -142,6 +142,7 @@ describe("DatePicker", () => {
     dateInputWrapper.simulate("focus");
     const calendarWrapper = datePicker.find("Calendar");
     const yearSelect = calendarWrapper.find(".react-datepicker__year-select");
+    yearSelect.simulate("touchstart");
     dateInputWrapper.simulate("blur");
     yearSelect.simulate("focus");
 
