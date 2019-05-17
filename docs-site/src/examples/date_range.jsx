@@ -14,11 +14,6 @@ export default class DateRange extends React.Component {
   handleChange = ({ startDate, endDate }) => {
     startDate = startDate || this.state.startDate;
     endDate = endDate || this.state.endDate;
-
-    if (isAfter(startDate, endDate)) {
-      endDate = startDate;
-    }
-
     this.setState({ startDate, endDate });
   };
 
@@ -46,6 +41,7 @@ export default class DateRange extends React.Component {
     startDate={this.state.startDate}
     endDate={this.state.endDate}
     onChange={this.handleChangeEnd}
+    minDate={this.state.startDate}
 />
 `}
           </code>
@@ -64,6 +60,7 @@ export default class DateRange extends React.Component {
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             onChange={this.handleChangeEnd}
+            minDate={this.state.startDate}
           />
         </div>
       </div>
