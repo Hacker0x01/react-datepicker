@@ -18,6 +18,7 @@ export default class Time extends React.Component {
     includeTimes: PropTypes.array,
     intervals: PropTypes.number,
     selected: PropTypes.instanceOf(Date),
+    openToDate: PropTypes.instanceOf(Date),
     onChange: PropTypes.func,
     todayButton: PropTypes.node,
     minTime: PropTypes.instanceOf(Date),
@@ -97,7 +98,9 @@ export default class Time extends React.Component {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
-    const activeTime = this.props.selected ? this.props.selected : newDate();
+    const activeTime =
+      this.props.selected || this.props.openToDate || newDate();
+
     const currH = getHours(activeTime);
     const currM = getMinutes(activeTime);
     let base = getStartOfDay(newDate());

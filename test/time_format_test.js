@@ -29,7 +29,7 @@ describe("TimeComponent", () => {
     });
   });
 
-  describe("Initial position", () => {
+  describe.only("Initial position", () => {
     let spy;
     beforeEach(() => {
       spy = sandbox.spy(TimeComponent, "calcCenterPosition");
@@ -47,14 +47,32 @@ describe("TimeComponent", () => {
 
     it("should call calcCenterPosition with centerLi ref, closest to the selected time", () => {
       mount(
-        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:11")} />
+        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:11")} openToDate={new Date("1990-06-14 09:11")} />
       );
       expect(spy.args[0][1].innerHTML).to.eq("08:00");
     });
 
     it("should call calcCenterPosition with centerLi ref, which is selected", () => {
       mount(
-        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:00")} />
+        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:00")} openToDate={new Date("1990-06-14 09:00")} />
+      );
+      expect(
+        spy.args[0][1].classList.contains(
+          "react-datepicker__time-list-item--selected"
+        )
+      ).to.be.true;
+    });
+
+    it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {
+      mount(
+        <TimeComponent format="HH:mm" openToDate={new Date("1990-06-14 09:11")} />
+      );
+      expect(spy.args[0][1].innerHTML).to.eq("09:00");
+    });
+
+    it("when no selected time, should call calcCenterPosition with centerLi ref, which is the opened time", () => {
+      mount(
+        <TimeComponent format="HH:mm" openToDate={new Date("1990-06-14 09:00")} />
       );
       expect(
         spy.args[0][1].classList.contains(

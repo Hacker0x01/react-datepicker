@@ -667,6 +667,7 @@ export default class Calendar extends React.Component {
       return (
         <Time
           selected={this.props.selected}
+          openToDate={this.props.openToDate}
           onChange={this.props.onTimeChange}
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
