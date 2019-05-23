@@ -70,7 +70,7 @@ describe("TimeComponent", () => {
       expect(spy.args[0][1].innerHTML).to.eq("09:00");
     });
 
-    it("when no selected time, should call calcCenterPosition with centerLi ref, which is the opened time", () => {
+    it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", () => {
       mount(
         <TimeComponent format="HH:mm" openToDate={new Date("1990-06-14 09:00")} />
       );
@@ -78,7 +78,7 @@ describe("TimeComponent", () => {
         spy.args[0][1].classList.contains(
           "react-datepicker__time-list-item--selected"
         )
-      ).to.be.true;
+      ).to.be.false;
     });
 
     it("should calculate scroll for the first item of 4 (even) items list", () => {

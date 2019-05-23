@@ -71,7 +71,11 @@ export default class Time extends React.Component {
   liClasses = (time, currH, currM) => {
     let classes = ["react-datepicker__time-list-item"];
 
-    if (currH === getHours(time) && currM === getMinutes(time)) {
+    if (
+      this.props.selected &&
+      currH === getHours(time) &&
+      currM === getMinutes(time)
+    ) {
       classes.push("react-datepicker__time-list-item--selected");
     }
     if (
