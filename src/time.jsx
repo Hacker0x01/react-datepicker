@@ -136,10 +136,7 @@ export default class Time extends React.Component {
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
-          if (
-            (currH === getHours(time) && currM === getMinutes(time)) ||
-            (currH === getHours(time) && !this.centerLi)
-          ) {
+          if (currH === getHours(time) && currM >= getMinutes(time)) {
             this.centerLi = li;
           }
         }}
