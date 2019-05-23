@@ -377,6 +377,10 @@ export default class DatePicker extends React.Component {
   };
 
   handleCalendarClickOutside = event => {
+    if (event.target && event.target == this.input) {
+      return;
+    }
+
     if (!this.props.inline) {
       this.setOpen(false);
     }
@@ -724,9 +728,7 @@ export default class DatePicker extends React.Component {
   };
 
   renderDateInput = () => {
-    const className = classnames(this.props.className, {
-      [outsideClickIgnoreClass]: this.state.open
-    });
+    var className = classnames(this.props.className);
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
