@@ -313,7 +313,7 @@ export default class Calendar extends React.Component {
         const weekDayName = this.formatWeekday(day, this.props.locale);
         return (
           <div key={offset} className="react-datepicker__day-name">
-            {weekDayName}
+            {weekDayName.slice(0, 1)}
           </div>
         );
       })
