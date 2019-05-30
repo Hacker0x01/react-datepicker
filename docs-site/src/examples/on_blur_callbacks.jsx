@@ -36,7 +36,7 @@ handleOnBlur: function (event) {
     } else {
       console.log("value: %s", date);
     }
-};'}
+};
 `}
           </code>
           <br />
