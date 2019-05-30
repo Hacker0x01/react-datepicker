@@ -85,7 +85,7 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "sass-lint": "^1.12.1",
+    "sass-lint": "^1.13.1",
     "sass-loader": "^4.1.1",
     "sinon": "^4.1.2",
     "style-loader": "^0.19.0",
