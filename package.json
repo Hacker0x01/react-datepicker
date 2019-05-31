@@ -104,7 +104,8 @@
     "date-fns": "^2.0.0-alpha.23",
     "prop-types": "^15.6.0",
     "react-onclickoutside": "^6.7.1",
-    "react-popper": "^1.0.2"
+    "react-popper": "^1.0.2",
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "scripts": {
     "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
