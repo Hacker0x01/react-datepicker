@@ -30,13 +30,13 @@ export default class inputTime extends React.Component {
     return (
       <div className="react-datepicker__input-time-container">
         <div className="react-datepicker-time__caption">
-          {this.props.timeInputLabel}
+          {this.props.timeInputLabel.toUpperCase()}
         </div>
         <div className="react-datepicker-time__input-container">
-          <div className="react-datepicker-time__input">
+          <div className="react-datepicker-time__input_customDiv">
             <input
               type="time"
-              className="react-datepicker-time__input"
+              className="react-datepicker-time__input_custom"
               placeholder="Time"
               name="time-input"
               required
