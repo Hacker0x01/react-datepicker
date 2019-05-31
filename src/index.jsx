@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import smoothscroll from "smoothscroll-polyfill";
+import classnames from "classnames";
+import onClickOutside from "react-onclickoutside";
+
 import Calendar from "./calendar";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
-import classnames from "classnames";
 import {
   newDate,
   isDate,
@@ -36,7 +39,6 @@ import {
   setDefaultLocale,
   getDefaultLocale
 } from "./date_utils";
-import onClickOutside from "react-onclickoutside";
 
 export { default as CalendarContainer } from "./calendar_container";
 
@@ -44,6 +46,7 @@ export { registerLocale, setDefaultLocale, getDefaultLocale };
 
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);
+smoothscroll.polyfill();
 
 // Compares dates year+month combinations
 function hasPreSelectionChanged(date1, date2) {
