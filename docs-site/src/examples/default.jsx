@@ -32,6 +32,8 @@ export default class Default extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
+            dateFormat="dd/MM/yyyy h:mm:ss aa"
+            placeholderText="DD/MM/YYYY HH : MM : AM"
           />
         </div>
       </div>
