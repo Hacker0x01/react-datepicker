@@ -21,7 +21,6 @@ import {
   subMonths,
   subWeeks,
   subYears,
-  isSameDay,
   isDayDisabled,
   isOutOfBounds,
   isDayInRange,
@@ -54,14 +53,6 @@ function hasPreSelectionChanged(date1, date2) {
   }
 
   return date1 !== date2;
-}
-
-function hasSelectionChanged(date1, date2) {
-  if (date1 && date2) {
-    return !isEqual(date1, date2);
-  }
-
-  return false;
 }
 
 /**
@@ -242,7 +233,7 @@ export default class DatePicker extends React.Component {
     }
     if (
       !prevState.focused &&
-      hasSelectionChanged(prevProps.selected, this.props.selected)
+      !isEqual(prevProps.selected, this.props.selected)
     ) {
       this.setState({ inputValue: null });
     }
@@ -441,7 +432,7 @@ export default class DatePicker extends React.Component {
     }
 
     if (
-      !isSameDay(this.props.selected, changedDate) ||
+      !isEqual(this.props.selected, changedDate) ||
       this.props.allowSameDay
     ) {
       if (changedDate !== null) {

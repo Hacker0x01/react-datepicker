@@ -27,6 +27,42 @@ describe("date_utils", function() {
     });
   });
 
+  describe("isEqual", function() {
+    it("should return true for null dates", function() {
+      expect(isEqual(null, null)).to.be.true;
+    });
+
+    it("should return false for a null and non-null date", function() {
+      expect(isEqual(newDate(), null)).to.be.false;
+      expect(isEqual(null, newDate())).to.be.false;
+    });
+
+    it("should return false for non-equal dates", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11"))).to.be
+        .false;
+    });
+
+    it("should return false for non-equal date and date with time", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11 13:13"))).to.be
+        .false;
+    });
+
+    it("should return false for non-equal time", function() {
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-11 13:14"))).to.be
+        .false;
+    });
+
+    it("should return true for equal dates", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-10"))).to.be
+        .true;
+    });
+
+    it("should return true for equal time", function() {
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-10 13:13"))).to.be
+        .true;
+    });
+  });
+
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
