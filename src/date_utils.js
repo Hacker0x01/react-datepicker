@@ -38,8 +38,7 @@ import startOfMonth from "date-fns/startOfMonth";
 import startOfYear from "date-fns/startOfYear";
 import endOfWeek from "date-fns/endOfWeek";
 import endOfMonth from "date-fns/endOfMonth";
-import isEqual from "date-fns/isEqual";
-import isSameWeek from "date-fns/isSameWeek";
+import dfIsEqual from "date-fns/isEqual";
 import dfIsSameDay from "date-fns/isSameDay";
 import dfIsSameMonth from "date-fns/isSameMonth";
 import dfIsSameYear from "date-fns/isSameYear";
@@ -210,7 +209,7 @@ export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
-export { isBefore, isAfter, isEqual };
+export { isBefore, isAfter };
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
@@ -231,6 +230,14 @@ export function isSameMonth(date1, date2) {
 export function isSameDay(date1, date2) {
   if (date1 && date2) {
     return dfIsSameDay(date1, date2);
+  } else {
+    return !date1 && !date2;
+  }
+}
+
+export function isEqual(date1, date2) {
+  if (date1 && date2) {
+    return dfIsEqual(date1, date2);
   } else {
     return !date1 && !date2;
   }
