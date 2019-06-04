@@ -340,9 +340,8 @@ export function isMonthinRange(startDate, endDate, m, day) {
     return startDateMonth <= m && m <= endDateMonth;
   } else if (startDateYear < endDateYear) {
     return (
-      (dayYear === startDateYear &&
-        (startDateMonth <= m || endDateMonth < m)) ||
-      (dayYear === endDateYear && (startDateMonth > m || endDateMonth >= m)) ||
+      (dayYear === startDateYear && startDateMonth <= m) ||
+      (dayYear === endDateYear && endDateMonth >= m) ||
       (dayYear < endDateYear && dayYear > startDateYear)
     );
   }
