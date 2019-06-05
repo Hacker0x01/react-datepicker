@@ -209,7 +209,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
+        aria-label={"month-" + utils.formatDate(this.props.day, "yyyy-MM")}
       >
         {showMonthYearPicker ? this.renderMonths() : this.renderWeeks()}
       </div>
