@@ -38,8 +38,7 @@ describe("date_utils", function() {
     });
 
     it("should return false for non-equal dates", function() {
-      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11"))).to.be
-        .false;
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11"))).to.be.false;
     });
 
     it("should return false for non-equal date and date with time", function() {
@@ -48,18 +47,17 @@ describe("date_utils", function() {
     });
 
     it("should return false for non-equal time", function() {
-      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-11 13:14"))).to.be
-        .false;
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-11 13:14")))
+        .to.be.false;
     });
 
     it("should return true for equal dates", function() {
-      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-10"))).to.be
-        .true;
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-10"))).to.be.true;
     });
 
     it("should return true for equal time", function() {
-      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-10 13:13"))).to.be
-        .true;
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-10 13:13")))
+        .to.be.true;
     });
   });
 
@@ -408,6 +406,14 @@ describe("date_utils", function() {
       const endDate = newDate("2015-08-01");
 
       expect(isMonthinRange(startDate, endDate, 9, day)).to.be.false;
+    });
+
+    it("should return true if the month passed is in range and maxDate +1 year", () => {
+      const day = newDate("2019-06-04");
+      const startDate = newDate("2019-06-04");
+      const endDate = newDate("2020-02-01");
+
+      expect(isMonthinRange(startDate, endDate, 5, day)).to.be.true;
     });
   });
 });
