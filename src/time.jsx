@@ -25,7 +25,11 @@ export default class Time extends React.Component {
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array
+    injectTimes: PropTypes.array,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ])
   };
 
   static get defaultProps() {
@@ -45,7 +49,7 @@ export default class Time extends React.Component {
 
   state = {
     height: null
-  }
+  };
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
@@ -146,7 +150,7 @@ export default class Time extends React.Component {
           }
         }}
       >
-        {formatDate(time, format)}
+        {formatDate(time, format, this.props.locale)}
       </li>
     ));
   };
