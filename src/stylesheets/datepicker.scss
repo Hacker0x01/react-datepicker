@@ -671,16 +671,12 @@
 
 /* Below section contains DLS style */
 
-.react-datepicker-popper {
-}
-
 .react-datepicker {
   border: none;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   background-color: #ffffff;
   background-size: cover;
-  // border-top: none;
 }
 
 .react-datepicker__header {
@@ -882,4 +878,8 @@
 .react-datepicker__input-time-container
   .react-datepicker-time__input-container {
   padding: 8px;
+}
+
+.react-datepicker__month:last-child {
+  padding-bottom: 10px;
 }
