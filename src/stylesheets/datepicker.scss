@@ -548,7 +548,8 @@
   position: absolute;
   height: 16px;
   width: 16px;
-  top: 25%;
+  margin: -8px auto 0;
+  top: 50%;
   right: 7px;
 
   &::after {
@@ -563,7 +564,6 @@
     height: 16px;
     width: 16px;
     line-height: 1;
-    margin: -8px auto 0;
     padding: 2px;
     position: absolute;
     right: 0px;
