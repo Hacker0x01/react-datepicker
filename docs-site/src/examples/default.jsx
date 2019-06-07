@@ -5,13 +5,14 @@ export default class Default extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date()
+      startDate: null
     };
   }
 
   handleChange = date => {
     this.setState({
-      startDate: date
+      startDate: date,
+      isClearable: true
     });
   };
 
@@ -34,6 +35,8 @@ export default class Default extends React.Component {
             onChange={this.handleChange}
             dateFormat="dd/MM/yyyy h:mm:ss aa"
             placeholderText="DD/MM/YYYY HH : MM : AM"
+            DateTimePickerTitle="DATE AND TIME"
+            DateTimePickerRequired="Required"
           />
         </div>
       </div>

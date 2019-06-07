@@ -175,7 +175,9 @@ export default class DatePicker extends React.Component {
     renderDayContents: PropTypes.func,
     inlineFocusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func
+    onMonthMouseLeave: PropTypes.func,
+    DateTimePickerTitle: PropTypes.string,
+    DateTimePickerRequired: PropTypes.string
   };
 
   static get defaultProps() {
@@ -256,10 +258,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -269,8 +271,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -483,7 +485,11 @@ export default class DatePicker extends React.Component {
     let isValidDateSelection = true;
     if (date) {
       if (hasMinDate && hasMaxDate) {
-        isValidDateSelection = isDayInRange(date, this.props.minDate, this.props.maxDate);
+        isValidDateSelection = isDayInRange(
+          date,
+          this.props.minDate,
+          this.props.maxDate
+        );
       } else if (hasMinDate) {
         isValidDateSelection = isAfter(date, this.props.minDate);
       } else if (hasMaxDate) {
@@ -526,6 +532,17 @@ export default class DatePicker extends React.Component {
     }
 
     this.props.onInputClick();
+  };
+
+  onCalendarIconClick = () => {
+    if (!this.props.disabled && !this.props.readOnly) {
+      if (this.props.open === true) {
+        this.setOpen(false);
+      } else {
+        this.setOpen(true);
+      }
+    }
+    // this.props.onCalendarIconClick();
   };
 
   onInputKeyDown = event => {
@@ -707,9 +724,13 @@ export default class DatePicker extends React.Component {
   };
 
   renderDateInput = () => {
-    const className = classnames(this.props.className, {
-      [outsideClickIgnoreClass]: this.state.open
-    });
+    const className = classnames(
+      this.props.className,
+      {
+        [outsideClickIgnoreClass]: this.state.open
+      },
+      "entryFieldDatepicker"
+    );
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
@@ -717,8 +738,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
@@ -760,6 +781,29 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  // let icon =
+  renderCalendarIcon = () => {
+    return (
+      <span className="calendarIcon">
+        <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+          <g
+            id="Icon-/-Dark-/-Calendar"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            <path
+              d="M2.66666667,13.3333333 L13.3333333,13.3333333 L13.3333333,7.66666667 L2.66666667,7.66666667 L2.66666667,13.3333333 Z M14.6666667,2.66666667 L13.3333333,2.66666667 L13.3333333,0.666666667 C13.3333333,0.298 13.0353333,0 12.6666667,0 L11.3333333,0 C10.9653333,0 10.6666667,0.298 10.6666667,0.666666667 L10.6666667,2.66666667 L5.33333333,2.66666667 L5.33333333,0.666666667 C5.33333333,0.298 5.03533333,0 4.66666667,0 L3.33333333,0 C2.96533333,0 2.66666667,0.298 2.66666667,0.666666667 L2.66666667,2.66666667 L1.33333333,2.66666667 C0.597333333,2.66666667 0,3.26333333 0,4 L0,5.33333333 L0,7.66666667 L0,13.3333333 C0,14.804 1.19666667,16 2.66666667,16 L13.3333333,16 C14.804,16 16,14.804 16,13.3333333 L16,7.66666667 L16,5.33333333 L16,4 C16,3.26333333 15.4033333,2.66666667 14.6666667,2.66666667 Z"
+              id="Fill-426"
+              fill="#72808A"
+            />
+          </g>
+        </svg>
+      </span>
+    );
+  };
+
   render() {
     const calendar = this.renderCalendar();
 
@@ -790,8 +834,17 @@ export default class DatePicker extends React.Component {
         popperModifiers={this.props.popperModifiers}
         targetComponent={
           <div className="react-datepicker__input-container">
+            <div>
+              <span className="datetimepickerTitle">
+                {this.props.DateTimePickerTitle}
+              </span>
+              <span className="datetimepickerRequired">
+                {this.props.DateTimePickerRequired}
+              </span>
+            </div>
             {this.renderDateInput()}
             {this.renderClearButton()}
+            {this.renderCalendarIcon()}
           </div>
         }
         popperContainer={this.props.popperContainer}

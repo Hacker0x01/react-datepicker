@@ -883,3 +883,44 @@
 .react-datepicker__month:last-child {
   padding-bottom: 10px;
 }
+
+/* Section of the entryFieldDatepicker*/
+.entryFieldDatepicker {
+  width: 258px;
+  height: 36px;
+  padding: 0px 10px;
+  border: 1px solid #005eb8;
+  border-radius: 2px;
+  background-color: #ffffff;
+  background-size: cover;
+  font-family: Roboto;
+  font-size: 16px;
+  color: #a0aab1;
+  text-decoration: none solid rgb(160, 170, 177);
+}
+
+.datetimepickerTitle {
+  height: 22px;
+  font-family: Roboto;
+  font-size: 14px;
+  color: #72808a;
+  text-decoration: none solid rgb(114, 128, 138);
+  line-height: 22px;
+}
+
+.datetimepickerRequired {
+  height: 22px;
+  font-family: Roboto;
+  font-size: 10px;
+  color: #a0aab1;
+  text-decoration: none solid rgb(160, 170, 177);
+  line-height: 22px;
+  text-align: right;
+  float: right;
+}
+
+.calendarIcon {
+  position: absolute;
+  right: 10px;
+  margin-top: 10px;
+}
