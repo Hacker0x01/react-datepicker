@@ -12,6 +12,7 @@ import SpecificDateRange from "./examples/specific_date_range";
 import MinDate from "./examples/min_date";
 import MaxDate from "./examples/max_date";
 import Locale from "./examples/locale";
+import LocaleWithTime from "./examples/locale_with_time";
 import LocaleWithoutGlobalVariable from "./examples/locale_without_global_variable";
 import ExcludeDates from "./examples/exclude_dates";
 import HighlightDates from "./examples/highlight_dates";
@@ -139,6 +140,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Locale",
       component: <Locale />
+    },
+    {
+      title: "Locale with time",
+      component: <LocaleWithTime />
     },
     {
       title: "Locale without global variables",
