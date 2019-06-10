@@ -177,7 +177,10 @@ export default class DatePicker extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     DateTimePickerTitle: PropTypes.string,
-    DateTimePickerRequired: PropTypes.string
+    DateTimePickerRequired: PropTypes.string,
+    validationState: PropTypes.string,
+    styletypes: PropTypes.string,
+    helpText: PropTypes.string
   };
 
   static get defaultProps() {
@@ -729,7 +732,10 @@ export default class DatePicker extends React.Component {
       {
         [outsideClickIgnoreClass]: this.state.open
       },
-      "entryFieldDatepicker"
+      "entryFieldDatepicker",
+      this.props.disabled ? "entryFieldDisable" : "",
+      this.props.validationState === "error" ? "entryFieldError" : "",
+      this.props.styletypes === "medium" ? "medium" : ""
     );
 
     const customInput = this.props.customInput || <input type="text" />;
@@ -827,6 +833,11 @@ export default class DatePicker extends React.Component {
       );
     }
 
+    const classNameTitle = classnames(
+      "datetimepickerTitle",
+      this.props.disabled ? "entryFieldDisableTitle" : ""
+    );
+
     return (
       <PopperComponent
         className={this.props.popperClassName}
@@ -835,7 +846,7 @@ export default class DatePicker extends React.Component {
         targetComponent={
           <div className="react-datepicker__input-container">
             <div>
-              <span className="datetimepickerTitle">
+              <span className={classNameTitle}>
                 {this.props.DateTimePickerTitle}
               </span>
               <span className="datetimepickerRequired">
@@ -845,6 +856,9 @@ export default class DatePicker extends React.Component {
             {this.renderDateInput()}
             {this.renderClearButton()}
             {this.renderCalendarIcon()}
+            {this.props.helpText ? (
+              <div className="styleTypesHelpText">{this.props.helpText}</div>
+            ) : null}
           </div>
         }
         popperContainer={this.props.popperContainer}

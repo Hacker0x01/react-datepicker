@@ -889,32 +889,40 @@
   width: 258px;
   height: 36px;
   padding: 0px 10px;
-  border: 1px solid #005eb8;
   border-radius: 2px;
   background-color: #ffffff;
+  border: solid 1px #d0d4d8;
   background-size: cover;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 16px;
-  color: #a0aab1;
+  color: #2d343d;
   text-decoration: none solid rgb(160, 170, 177);
+  box-shadow: none;
+}
+
+.entryFieldDatepicker:focus {
+  border-color: #005eb8;
+  box-shadow: none;
 }
 
 .datetimepickerTitle {
-  height: 22px;
-  font-family: Roboto;
-  font-size: 14px;
+  height: 9px;
+  font-family: "Roboto";
+  // font-weight: bold;
+  font-size: 1.2rem;
   color: #72808a;
-  text-decoration: none solid rgb(114, 128, 138);
-  line-height: 22px;
+  line-height: 2rem;
+  letter-spacing: 1px;
+  border: none;
 }
 
 .datetimepickerRequired {
-  height: 22px;
-  font-family: Roboto;
-  font-size: 10px;
+  height: 11px;
+  font-family: "Roboto";
+  font-size: 1rem;
   color: #a0aab1;
-  text-decoration: none solid rgb(160, 170, 177);
-  line-height: 22px;
+  font-weight: Regular;
+  line-height: 2rem;
   text-align: right;
   float: right;
 }
@@ -923,4 +931,31 @@
   position: absolute;
   right: 10px;
   margin-top: 10px;
+}
+
+.entryFieldDisable {
+  color: #d0d4d8;
+  border-color: #d0d4d8;
+}
+
+.entryFieldDisableTitle {
+  color: #d0d4d8;
+  border: none;
+}
+
+.entryFieldError {
+  border-color: #e04e39;
+}
+
+.medium {
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.styleTypesHelpText {
+  font-family: "Roboto";
+  font-size: 1rem;
+  color: #e04e39;
+  font-weight: Regular;
+  line-height: 1.6rem;
 }
