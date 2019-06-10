@@ -669,7 +669,7 @@
   }
 }
 
-/* Below section contains DLS style */
+/* Below section contains DLS style of the DatePicker */
 
 .react-datepicker {
   border: none;
@@ -884,7 +884,7 @@
   padding-bottom: 10px;
 }
 
-/* Section of the entryFieldDatepicker*/
+/* Below CSS Section inludes the entryFieldDatepicker DLS stylinhg*/
 .entryFieldDatepicker {
   width: 258px;
   height: 36px;
@@ -903,6 +903,14 @@
 .entryFieldDatepicker:focus {
   border-color: #005eb8;
   box-shadow: none;
+}
+
+.entryFieldDatepicker::placeholder {
+  font-family: "Roboto";
+  font-size: 1.2rem;
+  color: #72808a;
+  font-weight: Regular;
+  line-height: 20px;
 }
 
 .datetimepickerTitle {
@@ -930,7 +938,7 @@
 .calendarIcon {
   position: absolute;
   right: 10px;
-  margin-top: 10px;
+  margin-top: 5%;
 }
 
 .entryFieldDisable {
@@ -949,7 +957,6 @@
 
 .medium {
   height: 44px;
-  box-sizing: border-box;
 }
 
 .styleTypesHelpText {
@@ -958,4 +965,14 @@
   color: #e04e39;
   font-weight: Regular;
   line-height: 1.6rem;
+}
+
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::before,
+.react-datepicker__year-read-view--down-arrow::before,
+.react-datepicker__month-read-view--down-arrow::before,
+.react-datepicker__month-year-read-view--down-arrow::before,
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::before {
+  border: none;
 }

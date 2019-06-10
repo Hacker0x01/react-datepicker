@@ -5,7 +5,7 @@ export default class ShowTime extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date()
+      startDate: null
     };
   }
 
@@ -43,6 +43,7 @@ export default class ShowTime extends React.Component {
             timeIntervals={15}
             timeCaption="time"
             dateFormat="MMMM d, yyyy h:mm aa"
+            placeholderText="DD/MM/YYYY HH : MM : AM"
           />
         </div>
       </div>
