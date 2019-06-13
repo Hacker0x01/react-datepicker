@@ -296,12 +296,16 @@ describe("date_utils", function() {
   describe("addZero", () => {
     it("should return the same number if greater than 10", () => {
       const input = 11;
-      assert(isEqual(addZero(input), input));
+      const expected = "11";
+      const result = addZero(input);
+      assert(result === expected);
     });
 
     it("should return the number prefixed with zero if less than 10", () => {
       const input = 1;
-      assert(isEqual(addZero(input), "01"));
+      const expected = "01";
+      const result = addZero(input);
+      assert(result === expected);
     });
   });
 

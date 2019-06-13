@@ -47,11 +47,16 @@ import isBefore from "date-fns/isBefore";
 import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
+import parseISO from "date-fns/parseISO";
 
 // ** Date Constructors **
 
 export function newDate(value) {
-  const d = value ? toDate(value) : new Date();
+  const d = value
+    ? typeof value === "string" || value instanceof String
+      ? parseISO(value)
+      : toDate(value)
+    : new Date();
   return isValid(d) ? d : null;
 }
 
@@ -508,8 +513,5 @@ export function timesToInjectAfter(
 }
 
 export function addZero(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
+  return i < 10 ? `0${i}` : `${i}`;
 }
