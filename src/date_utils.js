@@ -48,6 +48,11 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
+import longFormatters from "date-fns/_lib/format/longFormatters";
+
+// This RegExp catches symbols escaped by quotes, and also
+// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
+var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
 
 // ** Date Constructors **
 
@@ -62,11 +67,11 @@ export function newDate(value) {
 
 export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
-  let localeObject = getLocaleObject(locale);
+  let localeObject = getLocaleObject(locale) || getDefaultLocale();
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
-      let tryParseDate = parse(value, df, new Date(), localeObject);
+      let tryParseDate = parse(value, df, new Date(), { locale: localeObject });
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
@@ -79,14 +84,34 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat, new Date(), localeObject);
+  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
 
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
       value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
   } else if (!isValid(parsedDate)) {
-    parsedDate = new Date(value);
+    dateFormat = dateFormat
+      .match(longFormattingTokensRegExp)
+      .map(function(substring) {
+        var firstCharacter = substring[0];
+        if (firstCharacter === "p" || firstCharacter === "P") {
+          var longFormatter = longFormatters[firstCharacter];
+          return localeObject
+            ? longFormatter(substring, localeObject.formatLong)
+            : firstCharacter;
+        }
+        return substring;
+      })
+      .join("");
+
+    if (value.length > 0) {
+      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date());
+    }
+
+    if (!isValid(parsedDate)) {
+      parsedDate = new Date(value);
+    }
   }
 
   return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;

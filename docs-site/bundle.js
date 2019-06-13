@@ -22013,8 +22013,7 @@
     },
     /* 385 */
     /***/ function(module, exports) {
-      module.exports
-      /**
+      module.exports = /**
        * Known issues:
        *
        * - invalid hex string literals will be recognized as a double quoted strings
@@ -22028,7 +22027,7 @@
        *
        * - special token sequence rule is not strictly following D grammar (anything following #line
        *   up to the end of line is matched as special token sequence)
-       */ = function(hljs) {
+       */ function(hljs) {
         /**
          * Language keywords
          *
@@ -25798,7 +25797,8 @@
     },
     /* 419 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // TODO support filter tags like :javascript, support inline HTML
+      module.exports = function(hljs) {
+        // TODO support filter tags like :javascript, support inline HTML
         return {
           case_insensitive: true,
           contains: [
@@ -35552,7 +35552,8 @@
     },
     /* 482 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
+      module.exports = function(hljs) {
+        // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
         var STRINGS = {
           // PB IDE color: #0080FF (Azure Radiance)
           className: "string",
@@ -43524,12 +43525,9 @@
             return parsedDate;
           }
 
-          parsedDate = (0, _parse2.default)(
-            value,
-            dateFormat,
-            new Date(),
-            localeObject
-          );
+          parsedDate = (0, _parse2.default)(value, dateFormat, new Date(), {
+            locale: localeObject
+          });
 
           if (strictParsing) {
             strictParsingValueMatch =
@@ -44125,7 +44123,32 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = isDate;
+=======
+      exports["default"] = isDate;
+
+      function _typeof(obj) {
+        if (
+          typeof Symbol === "function" &&
+          typeof Symbol.iterator === "symbol"
+        ) {
+          _typeof = function _typeof(obj) {
+            return typeof obj;
+          };
+        } else {
+          _typeof = function _typeof(obj) {
+            return obj &&
+              typeof Symbol === "function" &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? "symbol"
+              : typeof obj;
+          };
+        }
+        return _typeof(obj);
+      }
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       /**
        * @name isDate
@@ -44172,7 +44195,11 @@
 
         return (
           value instanceof Date ||
+<<<<<<< HEAD
           (typeof value === "object" &&
+=======
+          (_typeof(value) === "object" &&
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             Object.prototype.toString.call(value) === "[object Date]")
         );
       }
@@ -44188,7 +44215,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = isValid;
+      exports["default"] = isValid;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -44260,7 +44287,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return !isNaN(date);
       }
 
@@ -44275,7 +44306,32 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = toDate;
+=======
+      exports["default"] = toDate;
+
+      function _typeof(obj) {
+        if (
+          typeof Symbol === "function" &&
+          typeof Symbol.iterator === "symbol"
+        ) {
+          _typeof = function _typeof(obj) {
+            return typeof obj;
+          };
+        } else {
+          _typeof = function _typeof(obj) {
+            return obj &&
+              typeof Symbol === "function" &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? "symbol"
+              : typeof obj;
+          };
+        }
+        return _typeof(obj);
+      }
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       /**
        * @name toDate
@@ -44318,7 +44374,11 @@
 
         if (
           argument instanceof Date ||
+<<<<<<< HEAD
           (typeof argument === "object" && argStr === "[object Date]")
+=======
+          (_typeof(argument) === "object" && argStr === "[object Date]")
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         ) {
           // Prevent the date to lose the milliseconds when passed to new Date() in IE10
           return new Date(argument.getTime());
@@ -44335,8 +44395,12 @@
             // eslint-disable-next-line no-console
             console.warn(
               "Starting with v2.0.0-beta.1 date-fns doesn't accept strings as arguments. Please use `parseISO` to parse strings. See: https://git.io/fjule"
+<<<<<<< HEAD
             ); // eslint-disable-next-line no-console
 
+=======
+            );
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             console.warn(new Error().stack);
           }
 
@@ -44355,7 +44419,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = format;
+      exports["default"] = format;
 
       var _index = _interopRequireDefault(__webpack_require__(544));
 
@@ -44715,17 +44779,29 @@
 
         var formatStr = String(dirtyFormatStr);
         var options = dirtyOptions || {};
+<<<<<<< HEAD
         var locale = options.locale || _index2.default;
+=======
+        var locale = options.locale || _index2["default"];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var localeFirstWeekContainsDate =
           locale.options && locale.options.firstWeekContainsDate;
         var defaultFirstWeekContainsDate =
           localeFirstWeekContainsDate == null
             ? 1
+<<<<<<< HEAD
             : (0, _index9.default)(localeFirstWeekContainsDate);
         var firstWeekContainsDate =
           options.firstWeekContainsDate == null
             ? defaultFirstWeekContainsDate
             : (0, _index9.default)(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+=======
+            : (0, _index9["default"])(localeFirstWeekContainsDate);
+        var firstWeekContainsDate =
+          options.firstWeekContainsDate == null
+            ? defaultFirstWeekContainsDate
+            : (0, _index9["default"])(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
           throw new RangeError(
@@ -44737,11 +44813,19 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
+<<<<<<< HEAD
             : (0, _index9.default)(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
             : (0, _index9.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index9["default"])(localeWeekStartsOn);
+        var weekStartsOn =
+          options.weekStartsOn == null
+            ? defaultWeekStartsOn
+            : (0, _index9["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -44757,16 +44841,27 @@
           throw new RangeError("locale must contain formatLong property");
         }
 
+<<<<<<< HEAD
         var originalDate = (0, _index4.default)(dirtyDate);
 
         if (!(0, _index.default)(originalDate)) {
+=======
+        var originalDate = (0, _index4["default"])(dirtyDate);
+
+        if (!(0, _index["default"])(originalDate)) {
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           throw new RangeError("Invalid time value");
         } // Convert the date in system timezone to the same date in UTC+00:00 timezone.
         // This ensures that when UTC functions will be implemented, locales will be compatible with them.
         // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
 
+<<<<<<< HEAD
         var timezoneOffset = (0, _index7.default)(originalDate);
         var utcDate = (0, _index3.default)(originalDate, timezoneOffset);
+=======
+        var timezoneOffset = (0, _index7["default"])(originalDate);
+        var utcDate = (0, _index3["default"])(originalDate, timezoneOffset);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var formatterOptions = {
           firstWeekContainsDate: firstWeekContainsDate,
           weekStartsOn: weekStartsOn,
@@ -44779,7 +44874,11 @@
             var firstCharacter = substring[0];
 
             if (firstCharacter === "p" || firstCharacter === "P") {
+<<<<<<< HEAD
               var longFormatter = _index6.default[firstCharacter];
+=======
+              var longFormatter = _index6["default"][firstCharacter];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
               return longFormatter(
                 substring,
                 locale.formatLong,
@@ -44803,7 +44902,11 @@
               return cleanEscapedString(substring);
             }
 
+<<<<<<< HEAD
             var formatter = _index5.default[firstCharacter];
+=======
+            var formatter = _index5["default"][firstCharacter];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
             if (formatter) {
               if (
@@ -44859,6 +44962,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
 
       var _index = _interopRequireDefault(__webpack_require__(548));
@@ -44867,6 +44971,16 @@
 
       var _index3 = _interopRequireDefault(__webpack_require__(551));
 
+=======
+      exports["default"] = void 0;
+
+      var _index = _interopRequireDefault(__webpack_require__(548));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(549));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(551));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index4 = _interopRequireDefault(__webpack_require__(552));
 
       var _index5 = _interopRequireDefault(__webpack_require__(554));
@@ -44885,11 +44999,19 @@
        * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
        */
       var locale = {
+<<<<<<< HEAD
         formatDistance: _index.default,
         formatLong: _index2.default,
         formatRelative: _index3.default,
         localize: _index4.default,
         match: _index5.default,
+=======
+        formatDistance: _index["default"],
+        formatLong: _index2["default"],
+        formatRelative: _index3["default"],
+        localize: _index4["default"],
+        match: _index5["default"],
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         options: {
           weekStartsOn: 0,
           /* Sunday */
@@ -44897,7 +45019,11 @@
         }
       };
       var _default = locale;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -44909,7 +45035,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = formatDistance;
+      exports["default"] = formatDistance;
       var formatDistanceLocale = {
         lessThanXSeconds: {
           one: "less than a second",
@@ -45003,7 +45129,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(550));
 
@@ -45030,6 +45160,7 @@
         short: "{{date}}, {{time}}"
       };
       var formatLong = {
+<<<<<<< HEAD
         date: (0, _index.default)({
           formats: dateFormats,
           defaultWidth: "full"
@@ -45039,12 +45170,27 @@
           defaultWidth: "full"
         }),
         dateTime: (0, _index.default)({
+=======
+        date: (0, _index["default"])({
+          formats: dateFormats,
+          defaultWidth: "full"
+        }),
+        time: (0, _index["default"])({
+          formats: timeFormats,
+          defaultWidth: "full"
+        }),
+        dateTime: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           formats: dateTimeFormats,
           defaultWidth: "full"
         })
       };
       var _default = formatLong;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -45056,7 +45202,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = buildFormatLongFn;
+=======
+      exports["default"] = buildFormatLongFn;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function buildFormatLongFn(args) {
         return function(dirtyOptions) {
@@ -45078,7 +45228,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = formatRelative;
+      exports["default"] = formatRelative;
       var formatRelativeLocale = {
         lastWeek: "'last' eeee 'at' p",
         yesterday: "'yesterday at' p",
@@ -45103,7 +45253,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(553));
 
@@ -45234,7 +45388,11 @@
         }
       };
 
+<<<<<<< HEAD
       function ordinalNumber(dirtyNumber, _dirtyOptions) {
+=======
+      function ordinalNumber(dirtyNumber, dirtyOptions) {
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var number = Number(dirtyNumber); // If ordinal numbers depend on context, for example,
         // if they are different for different grammatical genders,
         // use `options.unit`:
@@ -45265,17 +45423,26 @@
 
       var localize = {
         ordinalNumber: ordinalNumber,
+<<<<<<< HEAD
         era: (0, _index.default)({
           values: eraValues,
           defaultWidth: "wide"
         }),
         quarter: (0, _index.default)({
+=======
+        era: (0, _index["default"])({
+          values: eraValues,
+          defaultWidth: "wide"
+        }),
+        quarter: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: quarterValues,
           defaultWidth: "wide",
           argumentCallback: function(quarter) {
             return Number(quarter) - 1;
           }
         }),
+<<<<<<< HEAD
         month: (0, _index.default)({
           values: monthValues,
           defaultWidth: "wide"
@@ -45285,6 +45452,17 @@
           defaultWidth: "wide"
         }),
         dayPeriod: (0, _index.default)({
+=======
+        month: (0, _index["default"])({
+          values: monthValues,
+          defaultWidth: "wide"
+        }),
+        day: (0, _index["default"])({
+          values: dayValues,
+          defaultWidth: "wide"
+        }),
+        dayPeriod: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: dayPeriodValues,
           defaultWidth: "wide",
           formattingValues: formattingDayPeriodValues,
@@ -45292,7 +45470,11 @@
         })
       };
       var _default = localize;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -45304,7 +45486,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = buildLocalizeFn;
+=======
+      exports["default"] = buildLocalizeFn;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function buildLocalizeFn(args) {
         return function(dirtyIndex, dirtyOptions) {
@@ -45321,6 +45507,7 @@
               args.formattingValues[width] ||
               args.formattingValues[defaultWidth];
           } else {
+<<<<<<< HEAD
             var _defaultWidth = args.defaultWidth;
 
             var _width = options.width
@@ -45328,6 +45515,13 @@
               : args.defaultWidth;
 
             valuesArray = args.values[_width] || args.values[_defaultWidth];
+=======
+            var defaultWidth = args.defaultWidth;
+            var width = options.width
+              ? String(options.width)
+              : args.defaultWidth;
+            valuesArray = args.values[width] || args.values[defaultWidth];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           }
 
           var index = args.argumentCallback
@@ -45348,7 +45542,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(555));
 
@@ -45438,20 +45636,32 @@
         }
       };
       var match = {
+<<<<<<< HEAD
         ordinalNumber: (0, _index.default)({
+=======
+        ordinalNumber: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPattern: matchOrdinalNumberPattern,
           parsePattern: parseOrdinalNumberPattern,
           valueCallback: function(value) {
             return parseInt(value, 10);
           }
         }),
+<<<<<<< HEAD
         era: (0, _index2.default)({
+=======
+        era: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchEraPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseEraPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         quarter: (0, _index2.default)({
+=======
+        quarter: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchQuarterPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseQuarterPatterns,
@@ -45460,19 +45670,31 @@
             return index + 1;
           }
         }),
+<<<<<<< HEAD
         month: (0, _index2.default)({
+=======
+        month: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchMonthPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseMonthPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         day: (0, _index2.default)({
+=======
+        day: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchDayPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseDayPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         dayPeriod: (0, _index2.default)({
+=======
+        dayPeriod: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchDayPeriodPatterns,
           defaultMatchWidth: "any",
           parsePatterns: parseDayPeriodPatterns,
@@ -45480,7 +45702,11 @@
         })
       };
       var _default = match;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -45492,7 +45718,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = buildMatchPatternFn;
+=======
+      exports["default"] = buildMatchPatternFn;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function buildMatchPatternFn(args) {
         return function(dirtyString, dirtyOptions) {
@@ -45533,7 +45763,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = buildMatchFn;
+=======
+      exports["default"] = buildMatchFn;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function buildMatchFn(args) {
         return function(dirtyString, dirtyOptions) {
@@ -45585,6 +45819,94 @@
       }
 
       module.exports = exports.default;
+<<<<<<< HEAD
+=======
+
+      /***/
+    },
+    /* 557 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports["default"] = subMilliseconds;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(559));
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      /**
+       * @name subMilliseconds
+       * @category Millisecond Helpers
+       * @summary Subtract the specified number of milliseconds from the given date.
+       *
+       * @description
+       * Subtract the specified number of milliseconds from the given date.
+       *
+       * ### v2.0.0 breaking changes:
+       *
+       * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+       *
+       * @param {Date|Number} date - the date to be changed
+       * @param {Number} amount - the amount of milliseconds to be subtracted
+       * @returns {Date} the new date with the milliseconds subtracted
+       * @throws {TypeError} 2 arguments required
+       *
+       * @example
+       * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
+       * var result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+       * //=> Thu Jul 10 2014 12:45:29.250
+       */
+      function subMilliseconds(dirtyDate, dirtyAmount) {
+        if (arguments.length < 2) {
+          throw new TypeError(
+            "2 arguments required, but only " + arguments.length + " present"
+          );
+        }
+
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+      }
+
+      module.exports = exports.default;
+
+      /***/
+    },
+    /* 558 */
+    /***/ function(module, exports) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports["default"] = toInteger;
+
+      function toInteger(dirtyNumber) {
+        if (
+          dirtyNumber === null ||
+          dirtyNumber === true ||
+          dirtyNumber === false
+        ) {
+          return NaN;
+        }
+
+        var number = Number(dirtyNumber);
+
+        if (isNaN(number)) {
+          return number;
+        }
+
+        return number < 0 ? Math.ceil(number) : Math.floor(number);
+      }
+
+      module.exports = exports.default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       /***/
     },
@@ -45680,11 +46002,16 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addMilliseconds;
+=======
+      exports["default"] = addMilliseconds;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
       var _index2 = _interopRequireDefault(__webpack_require__(545));
+<<<<<<< HEAD
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -45742,6 +46069,73 @@
       var _index2 = _interopRequireDefault(__webpack_require__(563));
 
       var _index3 = _interopRequireDefault(__webpack_require__(564));
+=======
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      /**
+       * @name addMilliseconds
+       * @category Millisecond Helpers
+       * @summary Add the specified number of milliseconds to the given date.
+       *
+       * @description
+       * Add the specified number of milliseconds to the given date.
+       *
+       * ### v2.0.0 breaking changes:
+       *
+       * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
+       *
+       * @param {Date|Number} date - the date to be changed
+       * @param {Number} amount - the amount of milliseconds to be added
+       * @returns {Date} the new date with the milliseconds added
+       * @throws {TypeError} 2 arguments required
+       *
+       * @example
+       * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
+       * var result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+       * //=> Thu Jul 10 2014 12:45:30.750
+       */
+      function addMilliseconds(dirtyDate, dirtyAmount) {
+        if (arguments.length < 2) {
+          throw new TypeError(
+            "2 arguments required, but only " + arguments.length + " present"
+          );
+        }
+
+        var timestamp = (0, _index2["default"])(dirtyDate).getTime();
+        var amount = (0, _index["default"])(dirtyAmount);
+        return new Date(timestamp + amount);
+      }
+
+      module.exports = exports.default;
+
+      /***/
+    },
+    /* 560 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports["default"] = void 0;
+
+      var _index = _interopRequireDefault(__webpack_require__(561));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(563));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(564));
+
+      var _index4 = _interopRequireDefault(__webpack_require__(567));
+
+      var _index5 = _interopRequireDefault(__webpack_require__(568));
+
+      var _index6 = _interopRequireDefault(__webpack_require__(571));
+
+      var _index7 = _interopRequireDefault(__webpack_require__(562));
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index4 = _interopRequireDefault(__webpack_require__(567));
 
@@ -45850,18 +46244,30 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.y(date, token);
         },
         // Local week-numbering year
         Y: function(date, token, localize, options) {
           var signedWeekYear = (0, _index6.default)(date, options); // Returns 1 for 1 BC (which is year 0 in JavaScript)
+=======
+          return _index["default"].y(date, token);
+        },
+        // Local week-numbering year
+        Y: function Y(date, token, localize, options) {
+          var signedWeekYear = (0, _index6["default"])(date, options); // Returns 1 for 1 BC (which is year 0 in JavaScript)
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           var weekYear =
             signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear; // Two digit year
 
           if (token === "YY") {
             var twoDigitYear = weekYear % 100;
+<<<<<<< HEAD
             return (0, _index7.default)(twoDigitYear, 2);
+=======
+            return (0, _index7["default"])(twoDigitYear, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           } // Ordinal number
 
           if (token === "Yo") {
@@ -45870,6 +46276,7 @@
             });
           } // Padding
 
+<<<<<<< HEAD
           return (0, _index7.default)(weekYear, token.length);
         },
         // ISO week-numbering year
@@ -45877,6 +46284,15 @@
           var isoWeekYear = (0, _index4.default)(date); // Padding
 
           return (0, _index7.default)(isoWeekYear, token.length);
+=======
+          return (0, _index7["default"])(weekYear, token.length);
+        },
+        // ISO week-numbering year
+        R: function R(date, token) {
+          var isoWeekYear = (0, _index4["default"])(date); // Padding
+
+          return (0, _index7["default"])(isoWeekYear, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Extended year. This is a single number designating the year of this calendar system.
         // The main difference between `y` and `u` localizers are B.C. years:
@@ -45889,7 +46305,11 @@
         // while `uu` pads single digit years to 2 characters and returns other years unchanged.
         u: function(date, token) {
           var year = date.getUTCFullYear();
+<<<<<<< HEAD
           return (0, _index7.default)(year, token.length);
+=======
+          return (0, _index7["default"])(year, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Quarter
         Q: function(date, token, localize) {
@@ -45902,7 +46322,11 @@
             // 01, 02, 03, 04
 
             case "QQ":
+<<<<<<< HEAD
               return (0, _index7.default)(quarter, 2);
+=======
+              return (0, _index7["default"])(quarter, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, 3rd, 4th
 
             case "Qo":
@@ -45944,7 +46368,11 @@
             // 01, 02, 03, 04
 
             case "qq":
+<<<<<<< HEAD
               return (0, _index7.default)(quarter, 2);
+=======
+              return (0, _index7["default"])(quarter, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, 3rd, 4th
 
             case "qo":
@@ -45982,7 +46410,11 @@
           switch (token) {
             case "M":
             case "MM":
+<<<<<<< HEAD
               return _index.default.M(date, token);
+=======
+              return _index["default"].M(date, token);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, ..., 12th
 
             case "Mo":
@@ -46024,7 +46456,11 @@
             // 01, 02, ..., 12
 
             case "LL":
+<<<<<<< HEAD
               return (0, _index7.default)(month + 1, 2);
+=======
+              return (0, _index7["default"])(month + 1, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, ..., 12th
 
             case "Lo":
@@ -46056,8 +46492,13 @@
           }
         },
         // Local week of year
+<<<<<<< HEAD
         w: function(date, token, localize, options) {
           var week = (0, _index5.default)(date, options);
+=======
+        w: function w(date, token, localize, options) {
+          var week = (0, _index5["default"])(date, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (token === "wo") {
             return localize.ordinalNumber(week, {
@@ -46065,11 +46506,19 @@
             });
           }
 
+<<<<<<< HEAD
           return (0, _index7.default)(week, token.length);
         },
         // ISO week of year
         I: function(date, token, localize) {
           var isoWeek = (0, _index3.default)(date);
+=======
+          return (0, _index7["default"])(week, token.length);
+        },
+        // ISO week of year
+        I: function I(date, token, localize) {
+          var isoWeek = (0, _index3["default"])(date);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (token === "Io") {
             return localize.ordinalNumber(isoWeek, {
@@ -46077,7 +46526,11 @@
             });
           }
 
+<<<<<<< HEAD
           return (0, _index7.default)(isoWeek, token.length);
+=======
+          return (0, _index7["default"])(isoWeek, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Day of the month
         d: function(date, token, localize) {
@@ -46087,11 +46540,19 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.d(date, token);
         },
         // Day of year
         D: function(date, token, localize) {
           var dayOfYear = (0, _index2.default)(date);
+=======
+          return _index["default"].d(date, token);
+        },
+        // Day of year
+        D: function D(date, token, localize) {
+          var dayOfYear = (0, _index2["default"])(date);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (token === "Do") {
             return localize.ordinalNumber(dayOfYear, {
@@ -46099,7 +46560,11 @@
             });
           }
 
+<<<<<<< HEAD
           return (0, _index7.default)(dayOfYear, token.length);
+=======
+          return (0, _index7["default"])(dayOfYear, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Day of week
         E: function(date, token, localize) {
@@ -46150,7 +46615,11 @@
             // Padded numerical value
 
             case "ee":
+<<<<<<< HEAD
               return (0, _index7.default)(localDayOfWeek, 2);
+=======
+              return (0, _index7["default"])(localDayOfWeek, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, ..., 7th
 
             case "eo":
@@ -46199,7 +46668,11 @@
             // Padded numerical value
 
             case "cc":
+<<<<<<< HEAD
               return (0, _index7.default)(localDayOfWeek, token.length);
+=======
+              return (0, _index7["default"])(localDayOfWeek, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 1st, 2nd, ..., 7th
 
             case "co":
@@ -46248,7 +46721,11 @@
             // 02
 
             case "ii":
+<<<<<<< HEAD
               return (0, _index7.default)(isoDayOfWeek, token.length);
+=======
+              return (0, _index7["default"])(isoDayOfWeek, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             // 2nd
 
             case "io":
@@ -46398,7 +46875,11 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.h(date, token);
+=======
+          return _index["default"].h(date, token);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Hour [0-23]
         H: function(date, token, localize) {
@@ -46408,7 +46889,11 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.H(date, token);
+=======
+          return _index["default"].H(date, token);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Hour [0-11]
         K: function(date, token, localize) {
@@ -46420,7 +46905,11 @@
             });
           }
 
+<<<<<<< HEAD
           return (0, _index7.default)(hours, token.length);
+=======
+          return (0, _index7["default"])(hours, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Hour [1-24]
         k: function(date, token, localize) {
@@ -46433,7 +46922,11 @@
             });
           }
 
+<<<<<<< HEAD
           return (0, _index7.default)(hours, token.length);
+=======
+          return (0, _index7["default"])(hours, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Minute
         m: function(date, token, localize) {
@@ -46443,7 +46936,11 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.m(date, token);
+=======
+          return _index["default"].m(date, token);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Second
         s: function(date, token, localize) {
@@ -46453,11 +46950,19 @@
             });
           }
 
+<<<<<<< HEAD
           return _index.default.s(date, token);
         },
         // Fraction of second
         S: function(date, token) {
           return _index.default.S(date, token);
+=======
+          return _index["default"].s(date, token);
+        },
+        // Fraction of second
+        S: function S(date, token) {
+          return _index["default"].S(date, token);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
         X: function(date, token, _localize, options) {
@@ -46559,13 +47064,21 @@
         t: function(date, token, _localize, options) {
           var originalDate = options._originalDate || date;
           var timestamp = Math.floor(originalDate.getTime() / 1000);
+<<<<<<< HEAD
           return (0, _index7.default)(timestamp, token.length);
+=======
+          return (0, _index7["default"])(timestamp, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // Milliseconds timestamp
         T: function(date, token, _localize, options) {
           var originalDate = options._originalDate || date;
           var timestamp = originalDate.getTime();
+<<<<<<< HEAD
           return (0, _index7.default)(timestamp, token.length);
+=======
+          return (0, _index7["default"])(timestamp, token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         }
       };
 
@@ -46581,14 +47094,22 @@
 
         var delimiter = dirtyDelimiter || "";
         return (
+<<<<<<< HEAD
           sign + String(hours) + delimiter + (0, _index7.default)(minutes, 2)
+=======
+          sign + String(hours) + delimiter + (0, _index7["default"])(minutes, 2)
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         );
       }
 
       function formatTimezoneWithOptionalMinutes(offset, dirtyDelimiter) {
         if (offset % 60 === 0) {
           var sign = offset > 0 ? "-" : "+";
+<<<<<<< HEAD
           return sign + (0, _index7.default)(Math.abs(offset) / 60, 2);
+=======
+          return sign + (0, _index7["default"])(Math.abs(offset) / 60, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         }
 
         return formatTimezone(offset, dirtyDelimiter);
@@ -46598,13 +47119,22 @@
         var delimiter = dirtyDelimiter || "";
         var sign = offset > 0 ? "-" : "+";
         var absOffset = Math.abs(offset);
+<<<<<<< HEAD
         var hours = (0, _index7.default)(Math.floor(absOffset / 60), 2);
         var minutes = (0, _index7.default)(absOffset % 60, 2);
+=======
+        var hours = (0, _index7["default"])(Math.floor(absOffset / 60), 2);
+        var minutes = (0, _index7["default"])(absOffset % 60, 2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return sign + hours + delimiter + minutes;
       }
 
       var _default = formatters;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -46616,7 +47146,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(562));
 
@@ -46650,7 +47184,11 @@
           var signedYear = date.getUTCFullYear(); // Returns 1 for 1 BC (which is year 0 in JavaScript)
 
           var year = signedYear > 0 ? signedYear : 1 - signedYear;
+<<<<<<< HEAD
           return (0, _index.default)(
+=======
+          return (0, _index["default"])(
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             token === "yy" ? year % 100 : year,
             token.length
           );
@@ -46660,11 +47198,19 @@
           var month = date.getUTCMonth();
           return token === "M"
             ? String(month + 1)
+<<<<<<< HEAD
             : (0, _index.default)(month + 1, 2);
         },
         // Day of the month
         d: function(date, token) {
           return (0, _index.default)(date.getUTCDate(), token.length);
+=======
+            : (0, _index["default"])(month + 1, 2);
+        },
+        // Day of the month
+        d: function d(date, token) {
+          return (0, _index["default"])(date.getUTCDate(), token.length);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         },
         // AM or PM
         a: function(date, token) {
@@ -46685,13 +47231,19 @@
           }
         },
         // Hour [1-12]
+<<<<<<< HEAD
         h: function(date, token) {
           return (0, _index.default)(
+=======
+        h: function h(date, token) {
+          return (0, _index["default"])(
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             date.getUTCHours() % 12 || 12,
             token.length
           );
         },
         // Hour [0-23]
+<<<<<<< HEAD
         H: function(date, token) {
           return (0, _index.default)(date.getUTCHours(), token.length);
         },
@@ -46705,16 +47257,39 @@
         },
         // Fraction of second
         S: function(date, token) {
+=======
+        H: function H(date, token) {
+          return (0, _index["default"])(date.getUTCHours(), token.length);
+        },
+        // Minute
+        m: function m(date, token) {
+          return (0, _index["default"])(date.getUTCMinutes(), token.length);
+        },
+        // Second
+        s: function s(date, token) {
+          return (0, _index["default"])(date.getUTCSeconds(), token.length);
+        },
+        // Fraction of second
+        S: function S(date, token) {
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           var numberOfDigits = token.length;
           var milliseconds = date.getUTCMilliseconds();
           var fractionalSeconds = Math.floor(
             milliseconds * Math.pow(10, numberOfDigits - 3)
           );
+<<<<<<< HEAD
           return (0, _index.default)(fractionalSeconds, token.length);
         }
       };
       var _default = formatters;
       exports.default = _default;
+=======
+          return (0, _index["default"])(fractionalSeconds, token.length);
+        }
+      };
+      var _default = formatters;
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -46726,7 +47301,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addLeadingZeros;
+=======
+      exports["default"] = addLeadingZeros;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function addLeadingZeros(number, targetLength) {
         var sign = number < 0 ? "-" : "";
@@ -46750,7 +47329,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = getUTCDayOfYear;
+      exports["default"] = getUTCDayOfYear;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -46768,7 +47347,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var timestamp = date.getTime();
         date.setUTCMonth(0, 1);
         date.setUTCHours(0, 0, 0, 0);
@@ -46788,7 +47371,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getUTCISOWeek;
+=======
+      exports["default"] = getUTCISOWeek;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -46810,10 +47397,17 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
         var diff =
           (0, _index2.default)(date).getTime() -
           (0, _index3.default)(date).getTime(); // Round the number of days to the nearest integer
+=======
+        var date = (0, _index["default"])(dirtyDate);
+        var diff =
+          (0, _index2["default"])(date).getTime() -
+          (0, _index3["default"])(date).getTime(); // Round the number of days to the nearest integer
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // because the number of milliseconds in a week is not constant
         // (e.g. it's different in the week of the daylight saving time clock shift)
 
@@ -46831,7 +47425,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = startOfUTCISOWeek;
+=======
+      exports["default"] = startOfUTCISOWeek;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -46849,7 +47447,11 @@
         }
 
         var weekStartsOn = 1;
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var day = date.getUTCDay();
         var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
         date.setUTCDate(date.getUTCDate() - diff);
@@ -46868,7 +47470,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = startOfUTCISOWeekYear;
+      exports["default"] = startOfUTCISOWeekYear;
 
       var _index = _interopRequireDefault(__webpack_require__(567));
 
@@ -46887,11 +47489,19 @@
           );
         }
 
+<<<<<<< HEAD
         var year = (0, _index.default)(dirtyDate);
         var fourthOfJanuary = new Date(0);
         fourthOfJanuary.setUTCFullYear(year, 0, 4);
         fourthOfJanuary.setUTCHours(0, 0, 0, 0);
         var date = (0, _index2.default)(fourthOfJanuary);
+=======
+        var year = (0, _index["default"])(dirtyDate);
+        var fourthOfJanuary = new Date(0);
+        fourthOfJanuary.setUTCFullYear(year, 0, 4);
+        fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+        var date = (0, _index2["default"])(fourthOfJanuary);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date;
       }
 
@@ -46906,7 +47516,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getUTCISOWeekYear;
+=======
+      exports["default"] = getUTCISOWeekYear;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -46925,16 +47539,32 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var year = date.getUTCFullYear();
         var fourthOfJanuaryOfNextYear = new Date(0);
         fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
         fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
         var startOfNextYear = (0, _index2.default)(fourthOfJanuaryOfNextYear);
         var fourthOfJanuaryOfThisYear = new Date(0);
         fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
         fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
         var startOfThisYear = (0, _index2.default)(fourthOfJanuaryOfThisYear);
+=======
+        var startOfNextYear = (0, _index2["default"])(
+          fourthOfJanuaryOfNextYear
+        );
+        var fourthOfJanuaryOfThisYear = new Date(0);
+        fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+        fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+        var startOfThisYear = (0, _index2["default"])(
+          fourthOfJanuaryOfThisYear
+        );
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (date.getTime() >= startOfNextYear.getTime()) {
           return year + 1;
@@ -46956,7 +47586,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = getUTCWeek;
+      exports["default"] = getUTCWeek;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -46978,10 +47608,17 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
         var diff =
           (0, _index2.default)(date, options).getTime() -
           (0, _index3.default)(date, options).getTime(); // Round the number of days to the nearest integer
+=======
+        var date = (0, _index["default"])(dirtyDate);
+        var diff =
+          (0, _index2["default"])(date, options).getTime() -
+          (0, _index3["default"])(date, options).getTime(); // Round the number of days to the nearest integer
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // because the number of milliseconds in a week is not constant
         // (e.g. it's different in the week of the daylight saving time clock shift)
 
@@ -46999,7 +47636,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = startOfUTCWeek;
+      exports["default"] = startOfUTCWeek;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47025,11 +47662,19 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
+<<<<<<< HEAD
             : (0, _index.default)(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
             : (0, _index.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index["default"])(localeWeekStartsOn);
+        var weekStartsOn =
+          options.weekStartsOn == null
+            ? defaultWeekStartsOn
+            : (0, _index["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -47037,7 +47682,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var day = date.getUTCDay();
         var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
         date.setUTCDate(date.getUTCDate() - diff);
@@ -47056,12 +47705,18 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = startOfUTCWeekYear;
+      exports["default"] = startOfUTCWeekYear;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
+<<<<<<< HEAD
 
       var _index2 = _interopRequireDefault(__webpack_require__(571));
 
+=======
+
+      var _index2 = _interopRequireDefault(__webpack_require__(571));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index3 = _interopRequireDefault(__webpack_require__(569));
 
       function _interopRequireDefault(obj) {
@@ -47084,6 +47739,7 @@
         var defaultFirstWeekContainsDate =
           localeFirstWeekContainsDate == null
             ? 1
+<<<<<<< HEAD
             : (0, _index.default)(localeFirstWeekContainsDate);
         var firstWeekContainsDate =
           options.firstWeekContainsDate == null
@@ -47094,6 +47750,18 @@
         firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
         firstWeek.setUTCHours(0, 0, 0, 0);
         var date = (0, _index3.default)(firstWeek, dirtyOptions);
+=======
+            : (0, _index["default"])(localeFirstWeekContainsDate);
+        var firstWeekContainsDate =
+          options.firstWeekContainsDate == null
+            ? defaultFirstWeekContainsDate
+            : (0, _index["default"])(options.firstWeekContainsDate);
+        var year = (0, _index2["default"])(dirtyDate, dirtyOptions);
+        var firstWeek = new Date(0);
+        firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
+        firstWeek.setUTCHours(0, 0, 0, 0);
+        var date = (0, _index3["default"])(firstWeek, dirtyOptions);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date;
       }
 
@@ -47108,12 +47776,18 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = getUTCWeekYear;
+      exports["default"] = getUTCWeekYear;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
+<<<<<<< HEAD
 
       var _index2 = _interopRequireDefault(__webpack_require__(545));
 
+=======
+
+      var _index2 = _interopRequireDefault(__webpack_require__(545));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index3 = _interopRequireDefault(__webpack_require__(569));
 
       function _interopRequireDefault(obj) {
@@ -47129,7 +47803,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate, dirtyOptions);
+=======
+        var date = (0, _index2["default"])(dirtyDate, dirtyOptions);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var year = date.getUTCFullYear();
         var options = dirtyOptions || {};
         var locale = options.locale;
@@ -47138,11 +47816,19 @@
         var defaultFirstWeekContainsDate =
           localeFirstWeekContainsDate == null
             ? 1
+<<<<<<< HEAD
             : (0, _index.default)(localeFirstWeekContainsDate);
         var firstWeekContainsDate =
           options.firstWeekContainsDate == null
             ? defaultFirstWeekContainsDate
             : (0, _index.default)(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+=======
+            : (0, _index["default"])(localeFirstWeekContainsDate);
+        var firstWeekContainsDate =
+          options.firstWeekContainsDate == null
+            ? defaultFirstWeekContainsDate
+            : (0, _index["default"])(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
           throw new RangeError(
@@ -47153,14 +47839,22 @@
         var firstWeekOfNextYear = new Date(0);
         firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
         firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
         var startOfNextYear = (0, _index3.default)(
+=======
+        var startOfNextYear = (0, _index3["default"])(
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           firstWeekOfNextYear,
           dirtyOptions
         );
         var firstWeekOfThisYear = new Date(0);
         firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
         firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
         var startOfThisYear = (0, _index3.default)(
+=======
+        var startOfThisYear = (0, _index3["default"])(
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           firstWeekOfThisYear,
           dirtyOptions
         );
@@ -47185,7 +47879,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function dateLongFormatter(pattern, formatLong) {
         switch (pattern) {
@@ -47285,7 +47983,11 @@
         P: dateTimeLongFormatter
       };
       var _default = longFormatters;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -47297,7 +47999,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getTimezoneOffsetInMilliseconds;
+=======
+      exports["default"] = getTimezoneOffsetInMilliseconds;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var MILLISECONDS_IN_MINUTE = 60000;
       /**
        * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
@@ -47377,7 +48083,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addMinutes;
+=======
+      exports["default"] = addMinutes;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47418,8 +48128,16 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, amount * MILLISECONDS_IN_MINUTE);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(
+          dirtyDate,
+          amount * MILLISECONDS_IN_MINUTE
+        );
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47433,7 +48151,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addHours;
+=======
+      exports["default"] = addHours;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47474,8 +48196,16 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, amount * MILLISECONDS_IN_HOUR);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(
+          dirtyDate,
+          amount * MILLISECONDS_IN_HOUR
+        );
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47489,10 +48219,17 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addDays;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
+=======
+      exports["default"] = addDays;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index2 = _interopRequireDefault(__webpack_require__(545));
 
       function _interopRequireDefault(obj) {
@@ -47528,8 +48265,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var amount = (0, _index.default)(dirtyAmount);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var amount = (0, _index["default"])(dirtyAmount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setDate(date.getDate() + amount);
         return date;
       }
@@ -47545,7 +48287,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addWeeks;
+=======
+      exports["default"] = addWeeks;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47584,9 +48330,15 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         var days = amount * 7;
         return (0, _index2.default)(dirtyDate, days);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        var days = amount * 7;
+        return (0, _index2["default"])(dirtyDate, days);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47600,7 +48352,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = addMonths;
+=======
+      exports["default"] = addMonths;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47641,13 +48397,22 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var amount = (0, _index.default)(dirtyAmount);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var amount = (0, _index["default"])(dirtyAmount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var desiredMonth = date.getMonth() + amount;
         var dateWithDesiredMonth = new Date(0);
         dateWithDesiredMonth.setFullYear(date.getFullYear(), desiredMonth, 1);
         dateWithDesiredMonth.setHours(0, 0, 0, 0);
+<<<<<<< HEAD
         var daysInMonth = (0, _index3.default)(dateWithDesiredMonth); // Set the last day of the new month
+=======
+        var daysInMonth = (0, _index3["default"])(dateWithDesiredMonth); // Set the last day of the new month
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // if the original date was the last day of the longer month
 
         date.setMonth(desiredMonth, Math.min(daysInMonth, date.getDate()));
@@ -47665,7 +48430,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = getDaysInMonth;
+      exports["default"] = getDaysInMonth;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -47701,7 +48466,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var year = date.getFullYear();
         var monthIndex = date.getMonth();
         var lastDayOfMonth = new Date(0);
@@ -47721,7 +48490,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = addYears;
+      exports["default"] = addYears;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47760,8 +48529,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, amount * 12);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, amount * 12);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47775,7 +48549,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = subMinutes;
+      exports["default"] = subMinutes;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47814,8 +48588,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47829,7 +48608,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = subHours;
+      exports["default"] = subHours;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47868,8 +48647,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47883,7 +48667,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = subDays;
+      exports["default"] = subDays;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47922,8 +48706,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47937,7 +48726,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = subWeeks;
+      exports["default"] = subWeeks;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -47976,8 +48765,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -47991,10 +48785,17 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = subMonths;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
+=======
+      exports["default"] = subMonths;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index2 = _interopRequireDefault(__webpack_require__(579));
 
       function _interopRequireDefault(obj) {
@@ -48030,8 +48831,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -48045,7 +48851,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = subYears;
+=======
+      exports["default"] = subYears;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -48084,8 +48894,13 @@
           );
         }
 
+<<<<<<< HEAD
         var amount = (0, _index.default)(dirtyAmount);
         return (0, _index2.default)(dirtyDate, -amount);
+=======
+        var amount = (0, _index["default"])(dirtyAmount);
+        return (0, _index2["default"])(dirtyDate, -amount);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -48099,7 +48914,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getSeconds;
+=======
+      exports["default"] = getSeconds;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48135,7 +48954,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var seconds = date.getSeconds();
         return seconds;
       }
@@ -48151,7 +48974,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getMinutes;
+=======
+      exports["default"] = getMinutes;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48187,7 +49014,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var minutes = date.getMinutes();
         return minutes;
       }
@@ -48203,7 +49034,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getHours;
+=======
+      exports["default"] = getHours;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48239,7 +49074,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var hours = date.getHours();
         return hours;
       }
@@ -48255,7 +49094,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getDay;
+=======
+      exports["default"] = getDay;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48291,7 +49134,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var day = date.getDay();
         return day;
       }
@@ -48307,7 +49154,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getDate;
+=======
+      exports["default"] = getDate;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48343,7 +49194,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var dayOfMonth = date.getDate();
         return dayOfMonth;
       }
@@ -48359,7 +49214,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getMonth;
+=======
+      exports["default"] = getMonth;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48395,7 +49254,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var month = date.getMonth();
         return month;
       }
@@ -48411,7 +49274,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = getYear;
+=======
+      exports["default"] = getYear;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48447,7 +49314,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var year = date.getFullYear();
         return year;
       }
@@ -48463,7 +49334,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = getTime;
+      exports["default"] = getTime;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48499,7 +49370,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var timestamp = date.getTime();
         return timestamp;
       }
@@ -48515,7 +49390,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setSeconds;
+=======
+      exports["default"] = setSeconds;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -48554,8 +49433,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var seconds = (0, _index.default)(dirtySeconds);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var seconds = (0, _index["default"])(dirtySeconds);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setSeconds(seconds);
         return date;
       }
@@ -48571,7 +49455,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setMinutes;
+=======
+      exports["default"] = setMinutes;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -48610,8 +49498,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var minutes = (0, _index.default)(dirtyMinutes);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var minutes = (0, _index["default"])(dirtyMinutes);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setMinutes(minutes);
         return date;
       }
@@ -48627,10 +49520,17 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setHours;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
+=======
+      exports["default"] = setHours;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index2 = _interopRequireDefault(__webpack_require__(545));
 
       function _interopRequireDefault(obj) {
@@ -48666,8 +49566,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var hours = (0, _index.default)(dirtyHours);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var hours = (0, _index["default"])(dirtyHours);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setHours(hours);
         return date;
       }
@@ -48683,7 +49588,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setMonth;
+=======
+      exports["default"] = setMonth;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -48724,14 +49633,23 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var month = (0, _index.default)(dirtyMonth);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var month = (0, _index["default"])(dirtyMonth);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var year = date.getFullYear();
         var day = date.getDate();
         var dateWithDesiredMonth = new Date(0);
         dateWithDesiredMonth.setFullYear(year, month, 15);
         dateWithDesiredMonth.setHours(0, 0, 0, 0);
+<<<<<<< HEAD
         var daysInMonth = (0, _index3.default)(dateWithDesiredMonth); // Set the last day of the new month
+=======
+        var daysInMonth = (0, _index3["default"])(dateWithDesiredMonth); // Set the last day of the new month
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // if the original date was the last day of the longer month
 
         date.setMonth(month, Math.min(day, daysInMonth));
@@ -48749,7 +49667,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setYear;
+=======
+      exports["default"] = setYear;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -48788,8 +49710,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var year = (0, _index.default)(dirtyYear); // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var year = (0, _index["default"])(dirtyYear); // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (isNaN(date)) {
           return new Date(NaN);
@@ -48810,7 +49737,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = min;
+      exports["default"] = min;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48876,7 +49803,11 @@
 
         var result;
         datesArray.forEach(function(dirtyDate) {
+<<<<<<< HEAD
           var currentDate = (0, _index.default)(dirtyDate);
+=======
+          var currentDate = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (
             result === undefined ||
@@ -48900,7 +49831,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = max;
+      exports["default"] = max;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -48966,7 +49897,11 @@
 
         var result;
         datesArray.forEach(function(dirtyDate) {
+<<<<<<< HEAD
           var currentDate = (0, _index.default)(dirtyDate);
+=======
+          var currentDate = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (
             result === undefined ||
@@ -48990,7 +49925,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = differenceInCalendarDays;
+=======
+      exports["default"] = differenceInCalendarDays;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(573));
 
@@ -49043,12 +49982,21 @@
           );
         }
 
+<<<<<<< HEAD
         var startOfDayLeft = (0, _index2.default)(dirtyDateLeft);
         var startOfDayRight = (0, _index2.default)(dirtyDateRight);
         var timestampLeft =
           startOfDayLeft.getTime() - (0, _index.default)(startOfDayLeft);
         var timestampRight =
           startOfDayRight.getTime() - (0, _index.default)(startOfDayRight); // Round the number of days to the nearest integer
+=======
+        var startOfDayLeft = (0, _index2["default"])(dirtyDateLeft);
+        var startOfDayRight = (0, _index2["default"])(dirtyDateRight);
+        var timestampLeft =
+          startOfDayLeft.getTime() - (0, _index["default"])(startOfDayLeft);
+        var timestampRight =
+          startOfDayRight.getTime() - (0, _index["default"])(startOfDayRight); // Round the number of days to the nearest integer
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // because the number of milliseconds in a day is not constant
         // (e.g. it's different in the day of the daylight saving time clock shift)
 
@@ -49068,7 +50016,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = startOfDay;
+=======
+      exports["default"] = startOfDay;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49105,7 +50057,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setHours(0, 0, 0, 0);
         return date;
       }
@@ -49121,7 +50077,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = differenceInCalendarMonths;
+=======
+      exports["default"] = differenceInCalendarMonths;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49161,8 +50121,13 @@
           );
         }
 
+<<<<<<< HEAD
         var dateLeft = (0, _index.default)(dirtyDateLeft);
         var dateRight = (0, _index.default)(dirtyDateRight);
+=======
+        var dateLeft = (0, _index["default"])(dirtyDateLeft);
+        var dateRight = (0, _index["default"])(dirtyDateRight);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
         var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
         return yearDiff * 12 + monthDiff;
@@ -49179,7 +50144,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = differenceInCalendarWeeks;
+=======
+      exports["default"] = differenceInCalendarWeeks;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(607));
 
@@ -49241,15 +50210,28 @@
           );
         }
 
+<<<<<<< HEAD
         var startOfWeekLeft = (0, _index.default)(dirtyDateLeft, dirtyOptions);
         var startOfWeekRight = (0, _index.default)(
+=======
+        var startOfWeekLeft = (0, _index["default"])(
+          dirtyDateLeft,
+          dirtyOptions
+        );
+        var startOfWeekRight = (0, _index["default"])(
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           dirtyDateRight,
           dirtyOptions
         );
         var timestampLeft =
-          startOfWeekLeft.getTime() - (0, _index2.default)(startOfWeekLeft);
+          startOfWeekLeft.getTime() - (0, _index2["default"])(startOfWeekLeft);
         var timestampRight =
+<<<<<<< HEAD
           startOfWeekRight.getTime() - (0, _index2.default)(startOfWeekRight); // Round the number of days to the nearest integer
+=======
+          startOfWeekRight.getTime() -
+          (0, _index2["default"])(startOfWeekRight); // Round the number of days to the nearest integer
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         // because the number of milliseconds in a week is not constant
         // (e.g. it's different in the week of the daylight saving time clock shift)
 
@@ -49269,7 +50251,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = startOfWeek;
+      exports["default"] = startOfWeek;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49324,11 +50306,15 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
-            : (0, _index2.default)(localeWeekStartsOn);
+            : (0, _index2["default"])(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
+<<<<<<< HEAD
             : (0, _index2.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index2["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -49336,7 +50322,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var day = date.getDay();
         var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
         date.setDate(date.getDate() - diff);
@@ -49355,7 +50345,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = setDayOfYear;
+      exports["default"] = setDayOfYear;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -49394,8 +50384,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var dayOfYear = (0, _index.default)(dirtyDayOfYear);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var dayOfYear = (0, _index["default"])(dirtyDayOfYear);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setMonth(0);
         date.setDate(dayOfYear);
         return date;
@@ -49412,7 +50407,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = startOfMonth;
+=======
+      exports["default"] = startOfMonth;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49449,7 +50448,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setDate(1);
         date.setHours(0, 0, 0, 0);
         return date;
@@ -49466,7 +50469,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = startOfYear;
+=======
+      exports["default"] = startOfYear;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49503,7 +50510,11 @@
           );
         }
 
+<<<<<<< HEAD
         var cleanDate = (0, _index.default)(dirtyDate);
+=======
+        var cleanDate = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var date = new Date(0);
         date.setFullYear(cleanDate.getFullYear(), 0, 1);
         date.setHours(0, 0, 0, 0);
@@ -49521,7 +50532,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = endOfWeek;
+=======
+      exports["default"] = endOfWeek;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49576,11 +50591,15 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
-            : (0, _index2.default)(localeWeekStartsOn);
+            : (0, _index2["default"])(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
+<<<<<<< HEAD
             : (0, _index2.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index2["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -49588,7 +50607,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var day = date.getDay();
         var diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
         date.setDate(date.getDate() + diff);
@@ -49607,7 +50630,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = endOfMonth;
+=======
+      exports["default"] = endOfMonth;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49644,7 +50671,11 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var month = date.getMonth();
         date.setFullYear(date.getFullYear(), month + 1, 0);
         date.setHours(23, 59, 59, 999);
@@ -49662,7 +50693,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = isEqual;
+=======
+      exports["default"] = isEqual;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49702,8 +50737,13 @@
           );
         }
 
+<<<<<<< HEAD
         var dateLeft = (0, _index.default)(dirtyLeftDate);
         var dateRight = (0, _index.default)(dirtyRightDate);
+=======
+        var dateLeft = (0, _index["default"])(dirtyLeftDate);
+        var dateRight = (0, _index["default"])(dirtyRightDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return dateLeft.getTime() === dateRight.getTime();
       }
 
@@ -49718,7 +50758,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = isSameDay;
+=======
+      exports["default"] = isSameDay;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(604));
 
@@ -49755,8 +50799,13 @@
           );
         }
 
+<<<<<<< HEAD
         var dateLeftStartOfDay = (0, _index.default)(dirtyDateLeft);
         var dateRightStartOfDay = (0, _index.default)(dirtyDateRight);
+=======
+        var dateLeftStartOfDay = (0, _index["default"])(dirtyDateLeft);
+        var dateRightStartOfDay = (0, _index["default"])(dirtyDateRight);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime();
       }
 
@@ -49771,7 +50820,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = isSameMonth;
+      exports["default"] = isSameMonth;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49808,8 +50857,13 @@
           );
         }
 
+<<<<<<< HEAD
         var dateLeft = (0, _index.default)(dirtyDateLeft);
         var dateRight = (0, _index.default)(dirtyDateRight);
+=======
+        var dateLeft = (0, _index["default"])(dirtyDateLeft);
+        var dateRight = (0, _index["default"])(dirtyDateRight);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return (
           dateLeft.getFullYear() === dateRight.getFullYear() &&
           dateLeft.getMonth() === dateRight.getMonth()
@@ -49827,7 +50881,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = isSameYear;
+      exports["default"] = isSameYear;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49864,8 +50918,13 @@
           );
         }
 
+<<<<<<< HEAD
         var dateLeft = (0, _index.default)(dirtyDateLeft);
         var dateRight = (0, _index.default)(dirtyDateRight);
+=======
+        var dateLeft = (0, _index["default"])(dirtyDateLeft);
+        var dateRight = (0, _index["default"])(dirtyDateRight);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return dateLeft.getFullYear() === dateRight.getFullYear();
       }
 
@@ -49880,7 +50939,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = isAfter;
+      exports["default"] = isAfter;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49917,8 +50976,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
         var dateToCompare = (0, _index.default)(dirtyDateToCompare);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+        var dateToCompare = (0, _index["default"])(dirtyDateToCompare);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date.getTime() > dateToCompare.getTime();
       }
 
@@ -49933,7 +50997,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = isBefore;
+      exports["default"] = isBefore;
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -49970,8 +51034,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index.default)(dirtyDate);
         var dateToCompare = (0, _index.default)(dirtyDateToCompare);
+=======
+        var date = (0, _index["default"])(dirtyDate);
+        var dateToCompare = (0, _index["default"])(dirtyDateToCompare);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date.getTime() < dateToCompare.getTime();
       }
 
@@ -49986,7 +51055,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = isWithinInterval;
+=======
+      exports["default"] = isWithinInterval;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(545));
 
@@ -50067,9 +51140,15 @@
         }
 
         var interval = dirtyInterval || {};
+<<<<<<< HEAD
         var time = (0, _index.default)(dirtyDate).getTime();
         var startTime = (0, _index.default)(interval.start).getTime();
         var endTime = (0, _index.default)(interval.end).getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
+=======
+        var time = (0, _index["default"])(dirtyDate).getTime();
+        var startTime = (0, _index["default"])(interval.start).getTime();
+        var endTime = (0, _index["default"])(interval.end).getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(startTime <= endTime)) {
           throw new RangeError("Invalid interval");
@@ -50089,7 +51168,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = parse;
+      exports["default"] = parse;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -50356,6 +51435,7 @@
        *
        * 6. `YY` and `YYYY` tokens represent week-numbering years but they are often confused with years.
        *    You should enable `options.useAdditionalWeekYearTokens` to use them. See: https://git.io/fxCyr
+<<<<<<< HEAD
        *
        * 7. `D` and `DD` tokens represent days of the year but they are ofthen confused with days of the month.
        *    You should enable `options.useAdditionalDayOfYearTokens` to use them. See: https://git.io/fxCyr
@@ -50363,6 +51443,15 @@
        * 8. `P+` tokens do not have a defined priority since they are merely aliases to other tokens based
        *    on the given locale.
        *
+=======
+       *
+       * 7. `D` and `DD` tokens represent days of the year but they are ofthen confused with days of the month.
+       *    You should enable `options.useAdditionalDayOfYearTokens` to use them. See: https://git.io/fxCyr
+       *
+       * 8. `P+` tokens do not have a defined priority since they are merely aliases to other tokens based
+       *    on the given locale.
+       *
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
        *    using `en-US` locale: `P` => `MM/dd/yyyy`
        *    using `en-US` locale: `p` => `hh:mm a`
        *    using `pt-BR` locale: `P` => `dd/MM/yyyy`
@@ -50456,7 +51545,11 @@
         var dateString = String(dirtyDateString);
         var formatString = String(dirtyFormatString);
         var options = dirtyOptions || {};
+<<<<<<< HEAD
         var locale = options.locale || _index6.default;
+=======
+        var locale = options.locale || _index6["default"];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!locale.match) {
           throw new RangeError("locale must contain match property");
@@ -50467,11 +51560,19 @@
         var defaultFirstWeekContainsDate =
           localeFirstWeekContainsDate == null
             ? 1
+<<<<<<< HEAD
             : (0, _index.default)(localeFirstWeekContainsDate);
         var firstWeekContainsDate =
           options.firstWeekContainsDate == null
             ? defaultFirstWeekContainsDate
             : (0, _index.default)(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+=======
+            : (0, _index["default"])(localeFirstWeekContainsDate);
+        var firstWeekContainsDate =
+          options.firstWeekContainsDate == null
+            ? defaultFirstWeekContainsDate
+            : (0, _index["default"])(options.firstWeekContainsDate); // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
           throw new RangeError(
@@ -50483,11 +51584,19 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
+<<<<<<< HEAD
             : (0, _index.default)(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
             : (0, _index.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index["default"])(localeWeekStartsOn);
+        var weekStartsOn =
+          options.weekStartsOn == null
+            ? defaultWeekStartsOn
+            : (0, _index["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -50497,7 +51606,11 @@
 
         if (formatString === "") {
           if (dateString === "") {
+<<<<<<< HEAD
             return (0, _index4.default)(dirtyBaseDate);
+=======
+            return (0, _index4["default"])(dirtyBaseDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           } else {
             return new Date(NaN);
           }
@@ -50520,12 +51633,21 @@
           .match(longFormattingTokensRegExp)
           .map(function(substring) {
             var firstCharacter = substring[0];
+<<<<<<< HEAD
 
             if (firstCharacter === "p" || firstCharacter === "P") {
               var longFormatter = _index8.default[firstCharacter];
               return longFormatter(substring, locale.formatLong, subFnOptions);
             }
 
+=======
+
+            if (firstCharacter === "p" || firstCharacter === "P") {
+              var longFormatter = _index8["default"][firstCharacter];
+              return longFormatter(substring, locale.formatLong, subFnOptions);
+            }
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             return substring;
           })
           .join("")
@@ -50537,6 +51659,7 @@
           if (
             !options.useAdditionalWeekYearTokens &&
             (0, _index9.isProtectedWeekYearToken)(token)
+<<<<<<< HEAD
           ) {
             (0, _index9.throwProtectedError)(token);
           }
@@ -50550,6 +51673,21 @@
 
           var firstCharacter = token[0];
           var parser = _index7.default[firstCharacter];
+=======
+          ) {
+            (0, _index9.throwProtectedError)(token);
+          }
+
+          if (
+            !options.useAdditionalDayOfYearTokens &&
+            (0, _index9.isProtectedDayOfYearToken)(token)
+          ) {
+            (0, _index9.throwProtectedError)(token);
+          }
+
+          var firstCharacter = token[0];
+          var parser = _index7["default"][firstCharacter];
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
           if (parser) {
             var parseResult = parser.parse(
@@ -50618,13 +51756,26 @@
           .map(function(setterArray) {
             return setterArray[0];
           });
+<<<<<<< HEAD
         var date = (0, _index4.default)(dirtyBaseDate);
+=======
+        var date = (0, _index4["default"])(dirtyBaseDate);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (isNaN(date)) {
           return new Date(NaN);
         } // Convert the date in system timezone to the same date in UTC+00:00 timezone.
         // This ensures that when UTC functions will be implemented, locales will be compatible with them.
         // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/37
+<<<<<<< HEAD
+=======
+
+        var utcDate = (0, _index5["default"])(
+          date,
+          (0, _index3["default"])(date)
+        );
+        var flags = {};
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         var utcDate = (0, _index5.default)(date, (0, _index3.default)(date));
         var flags = {};
@@ -50643,7 +51794,11 @@
 
           if (result[0]) {
             utcDate = result[0];
+<<<<<<< HEAD
             (0, _index2.default)(flags, result[1]); // Result is date
+=======
+            (0, _index2["default"])(flags, result[1]); // Result is date
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           } else {
             utcDate = result;
           }
@@ -50689,7 +51844,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = assign;
+=======
+      exports["default"] = assign;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function assign(target, dirtyObject) {
         if (target == null) {
@@ -50720,6 +51879,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
 
       var _index = _interopRequireDefault(__webpack_require__(571));
@@ -50735,6 +51895,23 @@
       var _index6 = _interopRequireDefault(__webpack_require__(565));
 
       var _index7 = _interopRequireDefault(__webpack_require__(569));
+=======
+      exports["default"] = void 0;
+
+      var _index = _interopRequireDefault(__webpack_require__(571));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(623));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(624));
+
+      var _index4 = _interopRequireDefault(__webpack_require__(569));
+
+      var _index5 = _interopRequireDefault(__webpack_require__(625));
+
+      var _index6 = _interopRequireDefault(__webpack_require__(626));
+
+      var _index7 = _interopRequireDefault(__webpack_require__(565));
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -51107,8 +52284,13 @@
           validate: function(date, value, _options) {
             return value.isTwoDigitYear || value.year > 0;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             var currentYear = (0, _index.default)(date, options);
+=======
+          set: function set(date, flags, value, options) {
+            var currentYear = (0, _index["default"])(date, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
             if (value.isTwoDigitYear) {
               var normalizedTwoDigitYear = normalizeTwoDigitYear(
@@ -51168,13 +52350,21 @@
                 options.firstWeekContainsDate
               );
               date.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
               return (0, _index7.default)(date, options);
+=======
+              return (0, _index4["default"])(date, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             }
 
             var year = currentYear > 0 ? value.year : 1 - value.year;
             date.setUTCFullYear(year, 0, options.firstWeekContainsDate);
             date.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
             return (0, _index7.default)(date, options);
+=======
+            return (0, _index4["default"])(date, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           }
         },
         // ISO week-numbering year
@@ -51191,7 +52381,11 @@
             var firstWeekOfYear = new Date(0);
             firstWeekOfYear.setUTCFullYear(value, 0, 4);
             firstWeekOfYear.setUTCHours(0, 0, 0, 0);
+<<<<<<< HEAD
             return (0, _index6.default)(firstWeekOfYear);
+=======
+            return (0, _index7["default"])(firstWeekOfYear);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           }
         },
         // Extended year
@@ -51512,9 +52706,15 @@
           validate: function(_date, value, _options) {
             return value >= 1 && value <= 53;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             return (0, _index7.default)(
               (0, _index5.default)(date, value, options),
+=======
+          set: function set(date, flags, value, options) {
+            return (0, _index4["default"])(
+              (0, _index3["default"])(date, value, options),
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
               options
             );
           }
@@ -51539,9 +52739,15 @@
           validate: function(_date, value, _options) {
             return value >= 1 && value <= 53;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             return (0, _index6.default)(
               (0, _index4.default)(date, value, options),
+=======
+          set: function set(date, flags, value, options) {
+            return (0, _index7["default"])(
+              (0, _index6["default"])(date, value, options),
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
               options
             );
           }
@@ -51684,8 +52890,13 @@
           validate: function(_date, value, _options) {
             return value >= 0 && value <= 6;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             date = (0, _index2.default)(date, value, options);
+=======
+          set: function set(date, flags, value, options) {
+            date = (0, _index2["default"])(date, value, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             date.setUTCHours(0, 0, 0, 0);
             return date;
           }
@@ -51776,8 +52987,13 @@
           validate: function(_date, value, _options) {
             return value >= 0 && value <= 6;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             date = (0, _index2.default)(date, value, options);
+=======
+          set: function set(date, flags, value, options) {
+            date = (0, _index2["default"])(date, value, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             date.setUTCHours(0, 0, 0, 0);
             return date;
           }
@@ -51868,8 +53084,13 @@
           validate: function(_date, value, _options) {
             return value >= 0 && value <= 6;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             date = (0, _index2.default)(date, value, options);
+=======
+          set: function set(date, flags, value, options) {
+            date = (0, _index2["default"])(date, value, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             date.setUTCHours(0, 0, 0, 0);
             return date;
           }
@@ -51972,8 +53193,13 @@
           validate: function(_date, value, _options) {
             return value >= 1 && value <= 7;
           },
+<<<<<<< HEAD
           set: function(date, _flags, value, options) {
             date = (0, _index3.default)(date, value, options);
+=======
+          set: function set(date, flags, value, options) {
+            date = (0, _index5["default"])(date, value, options);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             date.setUTCHours(0, 0, 0, 0);
             return date;
           }
@@ -52388,7 +53614,11 @@
           parse: function(string, _token, _match, _options) {
             return parseAnyDigitsSigned(string);
           },
+<<<<<<< HEAD
           set: function(_date, _flags, value, _options) {
+=======
+          set: function set(date, flags, value, options) {
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             return [
               new Date(value * 1000),
               {
@@ -52403,7 +53633,11 @@
           parse: function(string, _token, _match, _options) {
             return parseAnyDigitsSigned(string);
           },
+<<<<<<< HEAD
           set: function(_date, _flags, value, _options) {
+=======
+          set: function set(date, flags, value, options) {
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             return [
               new Date(value),
               {
@@ -52414,7 +53648,11 @@
         }
       };
       var _default = parsers;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -52426,7 +53664,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = setUTCDay;
+      exports["default"] = setUTCDay;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
@@ -52452,11 +53690,19 @@
         var defaultWeekStartsOn =
           localeWeekStartsOn == null
             ? 0
+<<<<<<< HEAD
             : (0, _index.default)(localeWeekStartsOn);
         var weekStartsOn =
           options.weekStartsOn == null
             ? defaultWeekStartsOn
             : (0, _index.default)(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+=======
+            : (0, _index["default"])(localeWeekStartsOn);
+        var weekStartsOn =
+          options.weekStartsOn == null
+            ? defaultWeekStartsOn
+            : (0, _index["default"])(options.weekStartsOn); // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
         if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
           throw new RangeError(
@@ -52464,8 +53710,13 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var day = (0, _index.default)(dirtyDay);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var day = (0, _index["default"])(dirtyDay);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         var currentDay = date.getUTCDay();
         var remainder = day % 7;
         var dayIndex = (remainder + 7) % 7;
@@ -52485,11 +53736,21 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setUTCISODay;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
 
       var _index2 = _interopRequireDefault(__webpack_require__(545));
+=======
+      exports["default"] = setUTCWeek;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(545));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(568));
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -52504,6 +53765,7 @@
           );
         }
 
+<<<<<<< HEAD
         var day = (0, _index.default)(dirtyDay);
 
         if (day % 7 === 0) {
@@ -52517,6 +53779,12 @@
         var dayIndex = (remainder + 7) % 7;
         var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
         date.setUTCDate(date.getUTCDate() + diff);
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var week = (0, _index["default"])(dirtyWeek);
+        var diff = (0, _index3["default"])(date, options) - week;
+        date.setUTCDate(date.getUTCDate() - diff * 7);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date;
       }
 
@@ -52531,6 +53799,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setUTCISOWeek;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
@@ -52538,6 +53807,13 @@
       var _index2 = _interopRequireDefault(__webpack_require__(545));
 
       var _index3 = _interopRequireDefault(__webpack_require__(564));
+=======
+      exports["default"] = setUTCISODay;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(545));
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -52552,10 +53828,26 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var isoWeek = (0, _index.default)(dirtyISOWeek);
         var diff = (0, _index3.default)(date) - isoWeek;
         date.setUTCDate(date.getUTCDate() - diff * 7);
+=======
+        var day = (0, _index["default"])(dirtyDay);
+
+        if (day % 7 === 0) {
+          day = day - 7;
+        }
+
+        var weekStartsOn = 1;
+        var date = (0, _index2["default"])(dirtyDate);
+        var currentDay = date.getUTCDay();
+        var remainder = day % 7;
+        var dayIndex = (remainder + 7) % 7;
+        var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
+        date.setUTCDate(date.getUTCDate() + diff);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         return date;
       }
 
@@ -52570,6 +53862,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = setUTCWeek;
 
       var _index = _interopRequireDefault(__webpack_require__(558));
@@ -52577,6 +53870,15 @@
       var _index2 = _interopRequireDefault(__webpack_require__(545));
 
       var _index3 = _interopRequireDefault(__webpack_require__(568));
+=======
+      exports["default"] = setUTCISOWeek;
+
+      var _index = _interopRequireDefault(__webpack_require__(558));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(545));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(564));
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -52591,9 +53893,15 @@
           );
         }
 
+<<<<<<< HEAD
         var date = (0, _index2.default)(dirtyDate);
         var week = (0, _index.default)(dirtyWeek);
         var diff = (0, _index3.default)(date, options) - week;
+=======
+        var date = (0, _index2["default"])(dirtyDate);
+        var isoWeek = (0, _index["default"])(dirtyISOWeek);
+        var diff = (0, _index3["default"])(date) - isoWeek;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         date.setUTCDate(date.getUTCDate() - diff * 7);
         return date;
       }
@@ -55068,6 +56376,7 @@
       /***/
     },
     /* 637 */
+<<<<<<< HEAD
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -55081,6 +56390,170 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var inputTime = (function(_React$Component) {
+        _inherits(inputTime, _React$Component);
+
+        function inputTime(props) {
+          _classCallCheck(this, inputTime);
+
+          var _this = _possibleConstructorReturn(
+            this,
+            _React$Component.call(this, props)
+          );
+
+          _this.onTimeChange = function(time) {
+            _this.setState({ time: time });
+            var date = new Date();
+            date.setHours(time.split(":")[0]);
+            date.setMinutes(time.split(":")[1]);
+            _this.props.onChange(date);
+          };
+
+          _this.state = {
+            time: _this.props.timeString
+          };
+          return _this;
+        }
+
+        inputTime.prototype.render = function render() {
+          var _this2 = this;
+
+          var time = this.state.time;
+          var timeString = this.props.timeString;
+
+          return _react2.default.createElement(
+            "div",
+            { className: "react-datepicker__input-time-container" },
+            _react2.default.createElement(
+              "div",
+              { className: "react-datepicker-time__caption" },
+              this.props.timeInputLabel
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "react-datepicker-time__input-container" },
+              _react2.default.createElement(
+                "div",
+                { className: "react-datepicker-time__input" },
+                _react2.default.createElement("input", {
+                  type: "time",
+                  className: "react-datepicker-time__input",
+                  placeholder: "Time",
+                  name: "time-input",
+                  required: true,
+                  value: time,
+                  onChange: function onChange(ev) {
+                    _this2.onTimeChange(ev.target.value || timeString);
+                  }
+                })
+              )
+            )
+          );
+        };
+
+        return inputTime;
+      })(_react2.default.Component);
+
+      exports.default = inputTime;
+
+      /***/
+    },
+    /* 638 */
+=======
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+      exports.popperPlacementPositions = undefined;
+
+      var _extends =
+        Object.assign ||
+        function(target) {
+          for (var i = 1; i < arguments.length; i++) {
+            var source = arguments[i];
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+          return target;
+        };
+
+      var _createClass = (function() {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function(Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      })();
+
+      var _classnames = __webpack_require__(541);
+
+      var _classnames2 = _interopRequireDefault(_classnames);
+
+      var _react = __webpack_require__(327);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _propTypes = __webpack_require__(534);
+
+      var _propTypes2 = _interopRequireDefault(_propTypes);
+
+<<<<<<< HEAD
+=======
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
       }
@@ -55241,6 +56714,7 @@
 
       var _propTypes2 = _interopRequireDefault(_propTypes);
 
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _reactPopper = __webpack_require__(639);
 
       function _interopRequireDefault(obj) {
@@ -55410,8 +56884,21 @@
         value: true
       });
       exports.Reference = exports.Manager = exports.placements = exports.Popper = undefined;
+<<<<<<< HEAD
 
       var _Popper = __webpack_require__(640);
+=======
+
+      var _Popper = __webpack_require__(640);
+
+      var _Popper2 = _interopRequireDefault(_Popper);
+
+      var _Manager = __webpack_require__(724);
+
+      var _Popper = _interopRequireWildcard(__webpack_require__(638));
+
+      var _Reference = __webpack_require__(736);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _Popper2 = _interopRequireDefault(_Popper);
 
@@ -55446,6 +56933,8 @@
         value: true
       });
       exports.placements = exports.InnerPopper = undefined;
+<<<<<<< HEAD
+=======
 
       var _extends2 = __webpack_require__(641);
 
@@ -55456,13 +56945,37 @@
       var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
       var _possibleConstructorReturn2 = __webpack_require__(680);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
+      var _extends2 = __webpack_require__(641);
+
+      var _extends3 = _interopRequireDefault(_extends2);
+
+      var _classCallCheck2 = __webpack_require__(679);
+
+<<<<<<< HEAD
+      var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+=======
+      var _inherits2 = __webpack_require__(715);
+
+      var _inherits3 = _interopRequireDefault(_inherits2);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+
+      var _possibleConstructorReturn2 = __webpack_require__(680);
+
+<<<<<<< HEAD
       var _possibleConstructorReturn3 = _interopRequireDefault(
         _possibleConstructorReturn2
       );
+=======
+      var React = _interopRequireWildcard(_react);
+
+      var _popper = __webpack_require__(723);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _inherits2 = __webpack_require__(715);
 
+<<<<<<< HEAD
       var _inherits3 = _interopRequireDefault(_inherits2);
 
       exports.default = Popper;
@@ -55472,6 +56985,11 @@
       var React = _interopRequireWildcard(_react);
 
       var _popper = __webpack_require__(723);
+=======
+      var _Manager = __webpack_require__(724);
+
+      var _utils = __webpack_require__(735);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _popper2 = _interopRequireDefault(_popper);
 
@@ -55707,6 +57225,22 @@
     /* 641 */
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
+<<<<<<< HEAD
+=======
+
+      exports.__esModule = true;
+
+      var _assign = __webpack_require__(642);
+
+        for (i = 0; i < sourceKeys.length; i++) {
+          key = sourceKeys[i];
+          if (excluded.indexOf(key) >= 0) continue;
+          target[key] = source[key];
+        }
+
+        return target;
+      }
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       exports.__esModule = true;
 
@@ -55714,6 +57248,7 @@
 
       var _assign2 = _interopRequireDefault(_assign);
 
+<<<<<<< HEAD
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
       }
@@ -55752,6 +57287,512 @@
     /* 644 */
     [867, 645, 660],
     /* 645 */
+=======
+      /***/
+    },
+    /* 642 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = { default: __webpack_require__(643), __esModule: true };
+
+      /***/
+    },
+    /* 643 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(644);
+      module.exports = __webpack_require__(647).Object.assign;
+
+      /***/
+    },
+    /* 644 */
+    [867, 645, 660],
+    /* 645 */
+    /***/ function(module, exports, __webpack_require__) {
+      var global = __webpack_require__(646);
+      var core = __webpack_require__(647);
+      var ctx = __webpack_require__(648);
+      var hide = __webpack_require__(650);
+      var PROTOTYPE = "prototype";
+
+      var $export = function(type, name, source) {
+        var IS_FORCED = type & $export.F;
+        var IS_GLOBAL = type & $export.G;
+        var IS_STATIC = type & $export.S;
+        var IS_PROTO = type & $export.P;
+        var IS_BIND = type & $export.B;
+        var IS_WRAP = type & $export.W;
+        var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+        var expProto = exports[PROTOTYPE];
+        var target = IS_GLOBAL
+          ? global
+          : IS_STATIC
+          ? global[name]
+          : (global[name] || {})[PROTOTYPE];
+        var key, own, out;
+        if (IS_GLOBAL) source = name;
+        for (key in source) {
+          // contains in native
+          own = !IS_FORCED && target && target[key] !== undefined;
+          if (own && key in exports) continue;
+          // export native or passed
+          out = own ? target[key] : source[key];
+          // prevent global pollution for namespaces
+          exports[key] =
+            IS_GLOBAL && typeof target[key] != "function"
+              ? source[key]
+              : // bind timers to global for call from export context
+              IS_BIND && own
+              ? ctx(out, global)
+              : // wrap global constructors for prevent change them in library
+              IS_WRAP && target[key] == out
+              ? (function(C) {
+                  var F = function(a, b, c) {
+                    if (this instanceof C) {
+                      switch (arguments.length) {
+                        case 0:
+                          return new C();
+                        case 1:
+                          return new C(a);
+                        case 2:
+                          return new C(a, b);
+                      }
+                      return new C(a, b, c);
+                    }
+                    return C.apply(this, arguments);
+                  };
+                  F[PROTOTYPE] = C[PROTOTYPE];
+                  return F;
+                  // make static versions for prototype methods
+                })(out)
+              : IS_PROTO && typeof out == "function"
+              ? ctx(Function.call, out)
+              : out;
+          // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+          if (IS_PROTO) {
+            (exports.virtual || (exports.virtual = {}))[key] = out;
+            // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+            if (type & $export.R && expProto && !expProto[key])
+              hide(expProto, key, out);
+          }
+        }
+
+        return self;
+      }
+
+      module.exports = _assertThisInitialized;
+
+      /***/
+    },
+    /* 646 */
+    4,
+    /* 647 */
+    9,
+    /* 648 */
+    [841, 649],
+    /* 649 */
+    21,
+    /* 650 */
+    [835, 651, 659, 655],
+    /* 651 */
+    [836, 652, 654, 658, 655],
+    /* 652 */
+    [837, 653],
+    /* 653 */
+    13,
+    /* 654 */
+    [838, 655, 656, 657],
+    /* 655 */
+    [834, 656],
+    /* 656 */
+    7,
+    /* 657 */
+    [839, 653, 646],
+    /* 658 */
+    [840, 653],
+    /* 659 */
+    17,
+    /* 660 */
+    [868, 661, 676, 677, 678, 665, 656],
+    /* 661 */
+    [849, 662, 675],
+    /* 662 */
+    [850, 663, 664, 668, 672],
+    /* 663 */
+    5,
+    /* 664 */
+    [851, 665, 667],
+    /* 665 */
+    [852, 666],
+    /* 666 */
+    34,
+    /* 667 */
+    35,
+    /* 668 */
+    [853, 664, 669, 671],
+    /* 669 */
+    [854, 670],
+    /* 670 */
+    38,
+    /* 671 */
+    [855, 670],
+    /* 672 */
+    [856, 673, 674],
+    /* 673 */
+    [843, 646],
+    /* 674 */
+    19,
+    /* 675 */
+    41,
+    /* 676 */
+    42,
+    /* 677 */
+    43,
+    /* 678 */
+    [865, 667],
+    /* 679 */
+    /***/ function(module, exports) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      exports.default = function(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      };
+
+      /***/
+    },
+    /* 680 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _typeof2 = __webpack_require__(681);
+
+      var _typeof3 = _interopRequireDefault(_typeof2);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      exports.default = function(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+
+        return call &&
+          ((typeof call === "undefined"
+            ? "undefined"
+            : (0, _typeof3.default)(call)) === "object" ||
+            typeof call === "function")
+          ? call
+          : self;
+      };
+
+      /***/
+    },
+    /* 681 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _iterator = __webpack_require__(682);
+
+      var _iterator2 = _interopRequireDefault(_iterator);
+
+      var _symbol = __webpack_require__(702);
+
+      var _symbol2 = _interopRequireDefault(_symbol);
+
+      var _typeof =
+        typeof _symbol2.default === "function" &&
+        typeof _iterator2.default === "symbol"
+          ? function(obj) {
+              return typeof obj;
+            }
+          : function(obj) {
+              return obj &&
+                typeof _symbol2.default === "function" &&
+                obj.constructor === _symbol2.default &&
+                obj !== _symbol2.default.prototype
+                ? "symbol"
+                : typeof obj;
+            };
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      exports.default =
+        typeof _symbol2.default === "function" &&
+        _typeof(_iterator2.default) === "symbol"
+          ? function(obj) {
+              return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+            }
+          : function(obj) {
+              return obj &&
+                typeof _symbol2.default === "function" &&
+                obj.constructor === _symbol2.default &&
+                obj !== _symbol2.default.prototype
+                ? "symbol"
+                : typeof obj === "undefined"
+                ? "undefined"
+                : _typeof(obj);
+            };
+
+      /***/
+    },
+    /* 682 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = { default: __webpack_require__(683), __esModule: true };
+
+      /***/
+    },
+    /* 683 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(684);
+      __webpack_require__(697);
+      module.exports = __webpack_require__(701).f("iterator");
+
+      /***/
+    },
+    /* 684 */
+    [871, 685, 686],
+    /* 685 */
+    [872, 670, 667],
+    /* 686 */
+    [873, 687, 645, 688, 650, 663, 689, 690, 694, 696, 695],
+    /* 687 */
+    /***/ function(module, exports) {
+      module.exports = true;
+
+      /***/
+    },
+    /* 688 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = __webpack_require__(650);
+
+      /***/
+    },
+    /* 689 */
+    129,
+    /* 690 */
+    [874, 691, 659, 694, 650, 695],
+    /* 691 */
+    [858, 652, 692, 675, 672, 657, 693],
+    /* 692 */
+    [859, 651, 652, 661, 655],
+    /* 693 */
+    [860, 646],
+    /* 694 */
+    [844, 651, 663, 695],
+    /* 695 */
+    [845, 673, 674, 646],
+    /* 696 */
+    [866, 663, 678, 672],
+    /* 697 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(698);
+      var global = __webpack_require__(646);
+      var hide = __webpack_require__(650);
+      var Iterators = __webpack_require__(689);
+      var TO_STRING_TAG = __webpack_require__(695)("toStringTag");
+
+      var DOMIterables = (
+        "CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList," +
+        "DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement," +
+        "MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList," +
+        "SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList," +
+        "TextTrackList,TouchList"
+      ).split(",");
+
+      for (var i = 0; i < DOMIterables.length; i++) {
+        var NAME = DOMIterables[i];
+        var Collection = global[NAME];
+        var proto = Collection && Collection.prototype;
+        if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+        Iterators[NAME] = Iterators.Array;
+      }
+
+      /***/
+    },
+    /* 698 */
+    [875, 699, 700, 689, 664, 686],
+    /* 699 */
+    /***/ function(module, exports) {
+      module.exports = function() {
+        /* empty */
+      };
+
+      /***/
+    },
+    /* 700 */
+    195,
+    /* 701 */
+    [846, 695],
+    /* 702 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = { default: __webpack_require__(703), __esModule: true };
+
+      /***/
+    },
+    /* 703 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(704);
+      __webpack_require__(712);
+      __webpack_require__(713);
+      __webpack_require__(714);
+      module.exports = __webpack_require__(647).Symbol;
+
+      /***/
+    },
+    /* 704 */
+    [
+      833,
+      646,
+      663,
+      655,
+      645,
+      688,
+      705,
+      656,
+      673,
+      694,
+      674,
+      695,
+      701,
+      706,
+      707,
+      708,
+      652,
+      664,
+      658,
+      659,
+      691,
+      709,
+      711,
+      651,
+      661,
+      710,
+      677,
+      676,
+      687,
+      650
+    ],
+    /* 705 */
+    [842, 674, 653, 663, 651, 656],
+    /* 706 */
+    [847, 646, 647, 687, 701, 651],
+    /* 707 */
+    [848, 661, 676, 677],
+    /* 708 */
+    [857, 666],
+    /* 709 */
+    [861, 664, 710],
+    /* 710 */
+    [862, 662, 675],
+    /* 711 */
+    [863, 677, 659, 664, 658, 663, 654, 655],
+    /* 712 */
+    /***/ function(module, exports) {
+      /***/
+    },
+    /* 713 */
+    [876, 706],
+    /* 714 */
+    [877, 706],
+    /* 715 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _setPrototypeOf = __webpack_require__(716);
+
+      var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+      var _create = __webpack_require__(720);
+
+      var _create2 = _interopRequireDefault(_create);
+
+      var _typeof2 = __webpack_require__(681);
+
+      var _typeof3 = _interopRequireDefault(_typeof2);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      exports.default = function(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              (typeof superClass === "undefined"
+                ? "undefined"
+                : (0, _typeof3.default)(superClass))
+          );
+        }
+
+        subClass.prototype = (0, _create2.default)(
+          superClass && superClass.prototype,
+          {
+            constructor: {
+              value: subClass,
+              enumerable: false,
+              writable: true,
+              configurable: true
+            }
+          }
+        );
+        if (superClass)
+          _setPrototypeOf2.default
+            ? (0, _setPrototypeOf2.default)(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      };
+
+      /***/
+    },
+    /* 716 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = { default: __webpack_require__(717), __esModule: true };
+
+      /***/
+    },
+    /* 717 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(718);
+      module.exports = __webpack_require__(647).Object.setPrototypeOf;
+
+      /***/
+    },
+    /* 718 */
+    [869, 645, 719],
+    /* 719 */
+    [870, 653, 652, 648, 711],
+    /* 720 */
+    /***/ function(module, exports, __webpack_require__) {
+      module.exports = { default: __webpack_require__(721), __esModule: true };
+
+      /***/
+    },
+    /* 721 */
+    /***/ function(module, exports, __webpack_require__) {
+      __webpack_require__(722);
+      var $Object = __webpack_require__(647).Object;
+      module.exports = function create(P, D) {
+        return $Object.create(P, D);
+      };
+
+      /***/
+    },
+    /* 722 */
+    [864, 645, 691],
+    /* 723 */
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
     /***/ function(module, exports, __webpack_require__) {
       var global = __webpack_require__(646);
       var core = __webpack_require__(647);
@@ -59234,20 +61275,67 @@
         value: true
       });
       exports.ManagerContext = undefined;
+<<<<<<< HEAD
+=======
 
       var _extends2 = __webpack_require__(641);
 
       var _extends3 = _interopRequireDefault(_extends2);
 
       var _classCallCheck2 = __webpack_require__(679);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
+      var _extends2 = __webpack_require__(641);
+
+<<<<<<< HEAD
+      var _extends3 = _interopRequireDefault(_extends2);
+=======
+      var _possibleConstructorReturn2 = __webpack_require__(680);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+
+      var _classCallCheck2 = __webpack_require__(679);
+
+<<<<<<< HEAD
       var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+=======
+      var _inherits2 = __webpack_require__(715);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _possibleConstructorReturn2 = __webpack_require__(680);
 
+<<<<<<< HEAD
       var _possibleConstructorReturn3 = _interopRequireDefault(
         _possibleConstructorReturn2
       );
+=======
+      var _react = __webpack_require__(327);
+
+      var React = _interopRequireWildcard(_react);
+
+      var _createReactContext = __webpack_require__(725);
+
+      var _createReactContext2 = _interopRequireDefault(_createReactContext);
+
+      function _interopRequireWildcard(obj) {
+        if (obj && obj.__esModule) {
+          return obj;
+        } else {
+          var newObj = {};
+          if (obj != null) {
+            for (var key in obj) {
+              if (Object.prototype.hasOwnProperty.call(obj, key))
+                newObj[key] = obj[key];
+            }
+          }
+          newObj.default = obj;
+          return newObj;
+        }
+      }
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _inherits2 = __webpack_require__(715);
 
@@ -59805,6 +61893,14 @@
       });
 
       var _extends2 = __webpack_require__(641);
+<<<<<<< HEAD
+
+      var _extends3 = _interopRequireDefault(_extends2);
+
+      var _classCallCheck2 = __webpack_require__(679);
+
+      var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+=======
 
       var _extends3 = _interopRequireDefault(_extends2);
 
@@ -59813,24 +61909,44 @@
       var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
       var _possibleConstructorReturn2 = __webpack_require__(680);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+
+      var _possibleConstructorReturn2 = __webpack_require__(680);
 
       var _possibleConstructorReturn3 = _interopRequireDefault(
         _possibleConstructorReturn2
       );
 
       var _inherits2 = __webpack_require__(715);
+<<<<<<< HEAD
+=======
+
+      var _inherits3 = _interopRequireDefault(_inherits2);
+
+      exports.default = Reference;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _inherits3 = _interopRequireDefault(_inherits2);
 
       exports.default = Reference;
 
+<<<<<<< HEAD
       var _react = __webpack_require__(327);
+=======
+      var _warning = __webpack_require__(737);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var React = _interopRequireWildcard(_react);
 
+<<<<<<< HEAD
       var _warning = __webpack_require__(737);
 
       var _warning2 = _interopRequireDefault(_warning);
+=======
+      var _Manager = __webpack_require__(724);
+
+      var _utils = __webpack_require__(735);
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _Manager = __webpack_require__(724);
 
@@ -61181,7 +63297,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(548));
 
@@ -61206,11 +63326,19 @@
        * @author Alex [@glintik]{@link https://github.com/glintik}
        */
       var locale = {
+<<<<<<< HEAD
         formatDistance: _index.default,
         formatLong: _index2.default,
         formatRelative: _index3.default,
         localize: _index4.default,
         match: _index5.default,
+=======
+        formatDistance: _index["default"],
+        formatLong: _index2["default"],
+        formatRelative: _index3["default"],
+        localize: _index4["default"],
+        match: _index5["default"],
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         options: {
           weekStartsOn: 1,
           /* Monday */
@@ -61218,7 +63346,11 @@
         }
       };
       var _default = locale;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -61230,7 +63362,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(550));
 
@@ -61257,6 +63393,7 @@
         short: "{{date}}, {{time}}"
       };
       var formatLong = {
+<<<<<<< HEAD
         date: (0, _index.default)({
           formats: dateFormats,
           defaultWidth: "full"
@@ -61266,12 +63403,27 @@
           defaultWidth: "full"
         }),
         dateTime: (0, _index.default)({
+=======
+        date: (0, _index["default"])({
+          formats: dateFormats,
+          defaultWidth: "full"
+        }),
+        time: (0, _index["default"])({
+          formats: timeFormats,
+          defaultWidth: "full"
+        }),
+        dateTime: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           formats: dateTimeFormats,
           defaultWidth: "full"
         })
       };
       var _default = formatLong;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -61459,6 +63611,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
 
       var _index = _interopRequireDefault(__webpack_require__(752));
@@ -61467,6 +63620,16 @@
 
       var _index3 = _interopRequireDefault(__webpack_require__(754));
 
+=======
+      exports["default"] = void 0;
+
+      var _index = _interopRequireDefault(__webpack_require__(752));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(753));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(754));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index4 = _interopRequireDefault(__webpack_require__(755));
 
       var _index5 = _interopRequireDefault(__webpack_require__(756));
@@ -61485,11 +63648,19 @@
        * @author Yago Carballo [@yagocarballo]{@link https://github.com/YagoCarballo}
        */
       var locale = {
+<<<<<<< HEAD
         formatDistance: _index.default,
         formatLong: _index2.default,
         formatRelative: _index3.default,
         localize: _index4.default,
         match: _index5.default,
+=======
+        formatDistance: _index["default"],
+        formatLong: _index2["default"],
+        formatRelative: _index3["default"],
+        localize: _index4["default"],
+        match: _index5["default"],
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         options: {
           weekStartsOn: 0,
           /* Sunday */
@@ -61497,7 +63668,11 @@
         }
       };
       var _default = locale;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -61509,7 +63684,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = formatDistance;
+      exports["default"] = formatDistance;
       var formatDistanceLocale = {
         lessThanXSeconds: {
           one: "menos de um segundo",
@@ -61603,7 +63778,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(550));
 
@@ -61630,6 +63809,7 @@
         short: "{{date}}, {{time}}"
       };
       var formatLong = {
+<<<<<<< HEAD
         date: (0, _index.default)({
           formats: dateFormats,
           defaultWidth: "full"
@@ -61639,12 +63819,27 @@
           defaultWidth: "full"
         }),
         dateTime: (0, _index.default)({
+=======
+        date: (0, _index["default"])({
+          formats: dateFormats,
+          defaultWidth: "full"
+        }),
+        time: (0, _index["default"])({
+          formats: timeFormats,
+          defaultWidth: "full"
+        }),
+        dateTime: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           formats: dateTimeFormats,
           defaultWidth: "full"
         })
       };
       var _default = formatLong;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -61656,7 +63851,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = formatRelative;
+      exports["default"] = formatRelative;
       var formatRelativeLocale = {
         lastWeek: function(date, _baseDate, _options) {
           var weekday = date.getUTCDay();
@@ -61691,7 +63886,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(553));
 
@@ -61833,17 +64032,26 @@
 
       var localize = {
         ordinalNumber: ordinalNumber,
+<<<<<<< HEAD
         era: (0, _index.default)({
           values: eraValues,
           defaultWidth: "wide"
         }),
         quarter: (0, _index.default)({
+=======
+        era: (0, _index["default"])({
+          values: eraValues,
+          defaultWidth: "wide"
+        }),
+        quarter: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: quarterValues,
           defaultWidth: "wide",
           argumentCallback: function(quarter) {
             return Number(quarter) - 1;
           }
         }),
+<<<<<<< HEAD
         month: (0, _index.default)({
           values: monthValues,
           defaultWidth: "wide"
@@ -61853,6 +64061,17 @@
           defaultWidth: "wide"
         }),
         dayPeriod: (0, _index.default)({
+=======
+        month: (0, _index["default"])({
+          values: monthValues,
+          defaultWidth: "wide"
+        }),
+        day: (0, _index["default"])({
+          values: dayValues,
+          defaultWidth: "wide"
+        }),
+        dayPeriod: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: dayPeriodValues,
           defaultWidth: "wide",
           formattingValues: formattingDayPeriodValues,
@@ -61860,7 +64079,11 @@
         })
       };
       var _default = localize;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -61872,7 +64095,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(556));
 
@@ -61964,20 +64191,32 @@
         }
       };
       var match = {
+<<<<<<< HEAD
         ordinalNumber: (0, _index2.default)({
+=======
+        ordinalNumber: (0, _index2["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPattern: matchOrdinalNumberPattern,
           parsePattern: parseOrdinalNumberPattern,
           valueCallback: function(value) {
             return parseInt(value, 10);
           }
         }),
+<<<<<<< HEAD
         era: (0, _index.default)({
+=======
+        era: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchEraPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseEraPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         quarter: (0, _index.default)({
+=======
+        quarter: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchQuarterPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseQuarterPatterns,
@@ -61986,19 +64225,31 @@
             return index + 1;
           }
         }),
+<<<<<<< HEAD
         month: (0, _index.default)({
+=======
+        month: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchMonthPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseMonthPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         day: (0, _index.default)({
+=======
+        day: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchDayPatterns,
           defaultMatchWidth: "wide",
           parsePatterns: parseDayPatterns,
           defaultParseWidth: "any"
         }),
+<<<<<<< HEAD
         dayPeriod: (0, _index.default)({
+=======
+        dayPeriod: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           matchPatterns: matchDayPeriodPatterns,
           defaultMatchWidth: "any",
           parsePatterns: parseDayPeriodPatterns,
@@ -62006,7 +64257,11 @@
         })
       };
       var _default = match;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -62027,7 +64282,7 @@
 
       var _fi = __webpack_require__(758);
 
-      var _fi2 = _interopRequireDefault(_fi);
+      var _ptBR2 = _interopRequireDefault(_ptBR);
 
       function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
@@ -62071,13 +64326,15 @@
             : (subClass.__proto__ = superClass);
       }
 
-      var LocaleWithoutGlobalVariable = (function(_React$Component) {
-        _inherits(LocaleWithoutGlobalVariable, _React$Component);
+      (0, _reactDatepicker.registerLocale)("pt-BR", _ptBR2.default);
 
-        function LocaleWithoutGlobalVariable() {
+      var LocaleWithTime = (function(_React$Component) {
+        _inherits(LocaleWithTime, _React$Component);
+
+        function LocaleWithTime() {
           var _temp, _this, _ret;
 
-          _classCallCheck(this, LocaleWithoutGlobalVariable);
+          _classCallCheck(this, LocaleWithTime);
 
           for (
             var _len = arguments.length, args = Array(_len), _key = 0;
@@ -62106,7 +64363,7 @@
           );
         }
 
-        LocaleWithoutGlobalVariable.prototype.render = function render() {
+        LocaleWithTime.prototype.render = function render() {
           return _react2.default.createElement(
             "div",
             { className: "row" },
@@ -62116,15 +64373,11 @@
               _react2.default.createElement(
                 "code",
                 { className: "jsx" },
-                "// Note: Make sure to npm install the right version of date-fns as",
+                "import DatePicker, { registerLocale } from 'react-datepicker';",
                 _react2.default.createElement("br", null),
-                "// specified in packaged.json. The default one may not be compatiable",
+                "import ptBR from 'date-fns/locale/pt-BR';",
                 _react2.default.createElement("br", null),
-                "// npm install --save date-fns@version",
-                _react2.default.createElement("br", null),
-                "import DatePicker from 'react-datepicker';",
-                _react2.default.createElement("br", null),
-                "import fi from 'date-fns/locale/fi';",
+                "registerLocale('pt-BR', ptBR);",
                 _react2.default.createElement("br", null),
                 _react2.default.createElement("br", null),
                 "<DatePicker",
@@ -62133,7 +64386,35 @@
                 _react2.default.createElement("br", null),
                 "  onChange={this.handleChange}",
                 _react2.default.createElement("br", null),
-                _react2.default.createElement("strong", null, "  locale={fi}"),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  '  locale="pt-BR"'
+                ),
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  "  showTimeSelect"
+                ),
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  '  timeFormat="p"'
+                ),
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  "  timeIntervals={15}"
+                ),
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  '  dateFormat="Pp"'
+                ),
                 _react2.default.createElement("br", null),
                 "/>"
               )
@@ -62144,16 +64425,20 @@
               _react2.default.createElement(_reactDatepicker2.default, {
                 selected: this.state.startDate,
                 onChange: this.handleChange,
-                locale: _fi2.default
+                locale: "pt-BR",
+                showTimeSelect: true,
+                timeFormat: "p",
+                timeIntervals: 15,
+                dateFormat: "Pp"
               })
             )
           );
         };
 
-        return LocaleWithoutGlobalVariable;
+        return LocaleWithTime;
       })(_react2.default.Component);
 
-      exports.default = LocaleWithoutGlobalVariable;
+      exports.default = LocaleWithTime;
 
       /***/
     },
@@ -62164,6 +64449,7 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
 
       var _index = _interopRequireDefault(__webpack_require__(759));
@@ -62174,6 +64460,18 @@
 
       var _index4 = _interopRequireDefault(__webpack_require__(762));
 
+=======
+      exports["default"] = void 0;
+
+      var _index = _interopRequireDefault(__webpack_require__(759));
+
+      var _index2 = _interopRequireDefault(__webpack_require__(760));
+
+      var _index3 = _interopRequireDefault(__webpack_require__(761));
+
+      var _index4 = _interopRequireDefault(__webpack_require__(762));
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       var _index5 = _interopRequireDefault(__webpack_require__(763));
 
       function _interopRequireDefault(obj) {
@@ -62183,19 +64481,26 @@
       /**
        * @type {Locale}
        * @category Locales
-       * @summary Finnish locale.
-       * @language Finnish
-       * @iso-639-2 fin
-       * @author Pyry-Samuli Lahti [@Pyppe]{@link https://github.com/Pyppe}
-       * @author Edo Rivai [@mikolajgrzyb]{@link https://github.com/mikolajgrzyb}
-       * @author Samu Juvonen [@sjuvonen]{@link https://github.com/sjuvonen}
+       * @summary Portuguese locale (Brazil).
+       * @language Portuguese
+       * @iso-639-2 por
+       * @author Lucas Duailibe [@duailibe]{@link https://github.com/duailibe}
+       * @author Yago Carballo [@yagocarballo]{@link https://github.com/YagoCarballo}
        */
       var locale = {
+<<<<<<< HEAD
         formatDistance: _index.default,
         formatLong: _index2.default,
         formatRelative: _index3.default,
         localize: _index4.default,
         match: _index5.default,
+=======
+        formatDistance: _index["default"],
+        formatLong: _index2["default"],
+        formatRelative: _index3["default"],
+        localize: _index4["default"],
+        match: _index5["default"],
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
         options: {
           weekStartsOn: 1,
           /* Monday */
@@ -62203,7 +64508,11 @@
         }
       };
       var _default = locale;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -62215,7 +64524,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = formatDistance;
+=======
+      exports["default"] = formatDistance;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       function futureSeconds(text) {
         return text.replace(/sekuntia?/, "sekunnin");
@@ -62243,14 +64556,12 @@
 
       var formatDistanceLocale = {
         lessThanXSeconds: {
-          one: "alle sekunti",
-          other: "alle {{count}} sekuntia",
-          futureTense: futureSeconds
+          one: "menos de um segundo",
+          other: "menos de {{count}} segundos"
         },
         xSeconds: {
-          one: "sekunti",
-          other: "{{count}} sekuntia",
-          futureTense: futureSeconds
+          one: "1 segundo",
+          other: "{{count}} segundos"
         },
         halfAMinute: {
           one: "puoli minuuttia",
@@ -62260,59 +64571,48 @@
           }
         },
         lessThanXMinutes: {
-          one: "alle minuutti",
-          other: "alle {{count}} minuuttia",
-          futureTense: futureMinutes
+          one: "menos de um minuto",
+          other: "menos de {{count}} minutos"
         },
         xMinutes: {
-          one: "minuutti",
-          other: "{{count}} minuuttia",
-          futureTense: futureMinutes
+          one: "1 minuto",
+          other: "{{count}} minutos"
         },
         aboutXHours: {
-          one: "noin tunti",
-          other: "noin {{count}} tuntia",
-          futureTense: futureHours
+          one: "cerca de 1 hora",
+          other: "cerca de {{count}} horas"
         },
         xHours: {
-          one: "tunti",
-          other: "{{count}} tuntia",
-          futureTense: futureHours
+          one: "1 hora",
+          other: "{{count}} horas"
         },
         xDays: {
-          one: "päivä",
-          other: "{{count}} päivää",
-          futureTense: futureDays
+          one: "1 dia",
+          other: "{{count}} dias"
         },
         aboutXMonths: {
-          one: "noin kuukausi",
-          other: "noin {{count}} kuukautta",
-          futureTense: futureMonths
+          one: "cerca de 1 mês",
+          other: "cerca de {{count}} meses"
         },
         xMonths: {
-          one: "kuukausi",
-          other: "{{count}} kuukautta",
-          futureTense: futureMonths
+          one: "1 mês",
+          other: "{{count}} meses"
         },
         aboutXYears: {
-          one: "noin vuosi",
-          other: "noin {{count}} vuotta",
-          futureTense: futureYears
+          one: "cerca de 1 ano",
+          other: "cerca de {{count}} anos"
         },
         xYears: {
-          one: "vuosi",
-          other: "{{count}} vuotta",
-          futureTense: futureYears
+          one: "1 ano",
+          other: "{{count}} anos"
         },
         overXYears: {
-          one: "yli vuosi",
-          other: "yli {{count}} vuotta",
-          futureTense: futureYears
+          one: "mais de 1 ano",
+          other: "mais de {{count}} anos"
         },
         almostXYears: {
-          one: "lähes vuosi",
-          other: "lähes {{count}} vuotta",
-          futureTense: futureYears
+          one: "quase 1 ano",
+          other: "quase {{count}} anos"
         }
       };
 
@@ -62326,9 +64626,9 @@
 
         if (options.addSuffix) {
           if (options.comparison > 0) {
-            return distance.futureTense(result) + " kuluttua";
+            return "em " + result;
           } else {
-            return result + " sitten";
+            return "há " + result;
           }
         }
 
@@ -62346,7 +64646,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(550));
 
@@ -62355,24 +64659,25 @@
       }
 
       var dateFormats = {
-        full: "eeee d. MMMM y",
-        long: "d. MMMM y",
-        medium: "d. MMM y",
-        short: "d.M.y"
+        full: "EEEE, d 'de' MMMM 'de' y",
+        long: "d 'de' MMMM 'de' y",
+        medium: "d MMM y",
+        short: "dd/MM/yyyy"
       };
       var timeFormats = {
-        full: "HH.mm.ss zzzz",
-        long: "HH.mm.ss z",
-        medium: "HH.mm.ss",
-        short: "HH.mm"
+        full: "HH:mm:ss zzzz",
+        long: "HH:mm:ss z",
+        medium: "HH:mm:ss",
+        short: "HH:mm"
       };
       var dateTimeFormats = {
-        full: "{{date}} 'klo' {{time}}",
-        long: "{{date}} 'klo' {{time}}",
-        medium: "{{date}} {{time}}",
-        short: "{{date}} {{time}}"
+        full: "{{date}} 'às' {{time}}",
+        long: "{{date}} 'às' {{time}}",
+        medium: "{{date}}, {{time}}",
+        short: "{{date}}, {{time}}"
       };
       var formatLong = {
+<<<<<<< HEAD
         date: (0, _index.default)({
           formats: dateFormats,
           defaultWidth: "full"
@@ -62382,12 +64687,27 @@
           defaultWidth: "full"
         }),
         dateTime: (0, _index.default)({
+=======
+        date: (0, _index["default"])({
+          formats: dateFormats,
+          defaultWidth: "full"
+        }),
+        time: (0, _index["default"])({
+          formats: timeFormats,
+          defaultWidth: "full"
+        }),
+        dateTime: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           formats: dateTimeFormats,
           defaultWidth: "full"
         })
       };
       var _default = formatLong;
+<<<<<<< HEAD
       exports.default = _default;
+=======
+      exports["default"] = _default;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       module.exports = exports.default;
 
       /***/
@@ -62399,18 +64719,33 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
-      exports.default = formatRelative;
+      exports["default"] = formatRelative;
       var formatRelativeLocale = {
-        lastWeek: "'viime' eeee 'klo' p",
-        yesterday: "'eilen klo' p",
-        today: "'tänään klo' p",
-        tomorrow: "'huomenna klo' p",
-        nextWeek: "'ensi' eeee 'klo' p",
+        lastWeek: function lastWeek(date, baseDate, options) {
+          var weekday = date.getUTCDay();
+          var last = weekday === 0 || weekday === 6 ? "último" : "última";
+          return "'" + last + "' eeee 'às' p";
+        },
+        yesterday: "'ontem às' p",
+        today: "'hoje às' p",
+        tomorrow: "'amanhã às' p",
+        nextWeek: "eeee 'às' p",
         other: "P"
       };
 
+<<<<<<< HEAD
       function formatRelative(token, _date, _baseDate, _options) {
         return formatRelativeLocale[token];
+=======
+      function formatRelative(token, date, baseDate, options) {
+        var format = formatRelativeLocale[token];
+
+        if (typeof format === "function") {
+          return format(date, baseDate, options);
+        }
+
+        return format;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
       }
 
       module.exports = exports.default;
@@ -62424,7 +64759,11 @@
       Object.defineProperty(exports, "__esModule", {
         value: true
       });
+<<<<<<< HEAD
       exports.default = void 0;
+=======
+      exports["default"] = void 0;
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
 
       var _index = _interopRequireDefault(__webpack_require__(553));
 
@@ -62433,44 +64772,44 @@
       }
 
       var eraValues = {
-        narrow: ["eaa.", "jaa."],
-        abbreviated: ["eaa.", "jaa."],
-        wide: ["ennen ajanlaskun alkua", "jälkeen ajanlaskun alun"]
+        narrow: ["AC", "DC"],
+        abbreviated: ["AC", "DC"],
+        wide: ["antes de cristo", "depois de cristo"]
       };
       var quarterValues = {
         narrow: ["1", "2", "3", "4"],
-        abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-        wide: ["1. kvartaali", "2. kvartaali", "3. kvartaali", "4. kvartaali"]
+        abbreviated: ["T1", "T2", "T3", "T4"],
+        wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
       };
       var monthValues = {
-        narrow: ["T", "H", "M", "H", "T", "K", "H", "E", "S", "L", "M", "J"],
+        narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
         abbreviated: [
-          "tammi",
-          "helmi",
-          "maalis",
-          "huhti",
-          "touko",
-          "kesä",
-          "heinä",
-          "elo",
-          "syys",
-          "loka",
-          "marras",
-          "joulu"
+          "jan",
+          "fev",
+          "mar",
+          "abr",
+          "mai",
+          "jun",
+          "jul",
+          "ago",
+          "set",
+          "out",
+          "nov",
+          "dez"
         ],
         wide: [
-          "tammikuu",
-          "helmikuu",
-          "maaliskuu",
-          "huhtikuu",
-          "toukokuu",
-          "kesäkuu",
-          "heinäkuu",
-          "elokuu",
-          "syyskuu",
-          "lokakuu",
-          "marraskuu",
-          "joulukuu"
+          "janeiro",
+          "fevereiro",
+          "março",
+          "abril",
+          "maio",
+          "junho",
+          "julho",
+          "agosto",
+          "setembro",
+          "outubro",
+          "novembro",
+          "dezembro"
         ]
       };
       var formattingMonthValues = {
@@ -62481,30 +64820,22 @@
         })
       };
       var dayValues = {
-        narrow: ["S", "M", "T", "K", "T", "P", "L"],
-        short: ["su", "ma", "ti", "ke", "to", "pe", "la"],
-        abbreviated: [
-          "sunn.",
-          "maan.",
-          "tiis.",
-          "kesk.",
-          "torst.",
-          "perj.",
-          "la"
-        ],
+        narrow: ["do", "2º", "3º", "4º", "5º", "6º", "sá"],
+        short: ["do", "2º", "3º", "4º", "5º", "6º", "sá"],
+        abbreviated: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
         wide: [
-          "sunnuntai",
-          "maanantai",
-          "tiistai",
-          "keskiviikko",
-          "torstai",
-          "perjantai",
-          "lauantai"
+          "domingo",
+          "segunda",
+          "terça",
+          "quarta",
+          "quinta",
+          "sexta",
+          "sábado"
         ]
       };
       var formattingDayValues = {
         narrow: dayValues.narrow,
-        short: dayValues.short,
+        short: dayValues["short"],
         abbreviated: dayValues.abbreviated,
         wide: dayValues.wide.map(function(name) {
           return name + "na";
@@ -62512,71 +64843,130 @@
       };
       var dayPeriodValues = {
         narrow: {
-          am: "ap",
-          pm: "ip",
-          midnight: "keskiyö",
-          noon: "keskipäivä",
-          morning: "ap",
-          afternoon: "ip",
-          evening: "illalla",
-          night: "yöllä"
+          am: "a",
+          pm: "p",
+          midnight: "mn",
+          noon: "md",
+          morning: "manhã",
+          afternoon: "tarde",
+          evening: "tarde",
+          night: "noite"
         },
         abbreviated: {
-          am: "ap",
-          pm: "ip",
-          midnight: "keskiyö",
-          noon: "keskipäivä",
-          morning: "ap",
-          afternoon: "ip",
-          evening: "illalla",
-          night: "yöllä"
+          am: "AM",
+          pm: "PM",
+          midnight: "meia-noite",
+          noon: "meio-dia",
+          morning: "manhã",
+          afternoon: "tarde",
+          evening: "tarde",
+          night: "noite"
         },
         wide: {
-          am: "ap",
-          pm: "ip",
-          midnight: "keskiyöllä",
-          noon: "keskipäivällä",
-          morning: "aamupäivällä",
-          afternoon: "iltapäivällä",
-          evening: "illalla",
-          night: "yöllä"
+          am: "a.m.",
+          pm: "p.m.",
+          midnight: "meia-noite",
+          noon: "meio-dia",
+          morning: "manhã",
+          afternoon: "tarde",
+          evening: "tarde",
+          night: "noite"
+        }
+      };
+      var formattingDayPeriodValues = {
+        narrow: {
+          am: "a",
+          pm: "p",
+          midnight: "mn",
+          noon: "md",
+          morning: "da manhã",
+          afternoon: "da tarde",
+          evening: "da tarde",
+          night: "da noite"
+        },
+        abbreviated: {
+          am: "AM",
+          pm: "PM",
+          midnight: "meia-noite",
+          noon: "meio-dia",
+          morning: "da manhã",
+          afternoon: "da tarde",
+          evening: "da tarde",
+          night: "da noite"
+        },
+        wide: {
+          am: "a.m.",
+          pm: "p.m.",
+          midnight: "meia-noite",
+          noon: "meio-dia",
+          morning: "da manhã",
+          afternoon: "da tarde",
+          evening: "da tarde",
+          night: "da noite"
         }
       };
 
-      function ordinalNumber(dirtyNumber) {
+      function ordinalNumber(dirtyNumber, dirtyOptions) {
         var number = Number(dirtyNumber);
-        return number + ".";
+        var options = dirtyOptions || {};
+        var unit = String(options.unit);
+
+        if (unit === "week" || unit === "isoWeek") {
+          return number + "ª";
+        }
+        return number + "º";
       }
 
       var localize = {
         ordinalNumber: ordinalNumber,
+<<<<<<< HEAD
         era: (0, _index.default)({
           values: eraValues,
           defaultWidth: "wide"
         }),
         quarter: (0, _index.default)({
+=======
+        era: (0, _index["default"])({
+          values: eraValues,
+          defaultWidth: "wide"
+        }),
+        quarter: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: quarterValues,
           defaultWidth: "wide",
           argumentCallback: function(quarter) {
             return Number(quarter) - 1;
           }
         }),
+<<<<<<< HEAD
         month: (0, _index.default)({
+=======
+        month: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: monthValues,
-          formattingValues: formattingMonthValues,
           defaultWidth: "wide"
         }),
+<<<<<<< HEAD
         day: (0, _index.default)({
+=======
+        day: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: dayValues,
-          formattingValues: formattingDayValues,
           defaultWidth: "wide"
         }),
+<<<<<<< HEAD
         dayPeriod: (0, _index.default)({
+=======
+        dayPeriod: (0, _index["default"])({
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
           values: dayPeriodValues,
-          defaultWidth: "wide"
+          defaultWidth: "wide",
+          formattingValues: formattingDayPeriodValues,
+          defaultFormattingWidth: "wide"
         })
       };
       var _default = localize;
+<<<<<<< HEAD
       exports.default = _default;
       module.exports = exports.default;
 
@@ -62728,6 +65118,778 @@
       /***/
     },
     /* 765 */
+=======
+      exports["default"] = _default;
+      module.exports = exports.default;
+
+      /***/
+    },
+    /* 763 */
+    554,
+    /* 764 */
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(327);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(532);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+<<<<<<< HEAD
+=======
+      var _subDays = __webpack_require__(584);
+
+      var _fi2 = _interopRequireDefault(_fi);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var LocaleWithoutGlobalVariable = (function(_React$Component) {
+        _inherits(LocaleWithoutGlobalVariable, _React$Component);
+
+        function LocaleWithoutGlobalVariable() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, LocaleWithoutGlobalVariable);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.state = {
+              startDate: null
+            }),
+            (_this.handleChange = function(date) {
+              _this.setState({
+                startDate: date
+              });
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        LocaleWithoutGlobalVariable.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                "// Note: Make sure to npm install the right version of date-fns as",
+                _react2.default.createElement("br", null),
+                "// specified in packaged.json. The default one may not be compatiable",
+                _react2.default.createElement("br", null),
+                "// npm install --save date-fns@version",
+                _react2.default.createElement("br", null),
+                "import DatePicker from 'react-datepicker';",
+                _react2.default.createElement("br", null),
+                "import fi from 'date-fns/locale/fi';",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("br", null),
+                "<DatePicker",
+                _react2.default.createElement("br", null),
+                "  selected={this.state.startDate}",
+                _react2.default.createElement("br", null),
+                "  onChange={this.handleChange}",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("strong", null, "  locale={fi}"),
+                _react2.default.createElement("br", null),
+                "/>"
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                locale: _fi2.default
+              })
+            )
+          );
+        };
+
+        return LocaleWithoutGlobalVariable;
+      })(_react2.default.Component);
+
+      exports.default = LocaleWithoutGlobalVariable;
+
+      /***/
+    },
+    /* 674 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var _index = __webpack_require__(675);
+
+      var _index2 = _interopRequireDefault(_index);
+
+      var _index3 = __webpack_require__(676);
+
+      var _index4 = _interopRequireDefault(_index3);
+
+      var _index5 = __webpack_require__(677);
+
+      var _index6 = _interopRequireDefault(_index5);
+
+      var _index7 = __webpack_require__(678);
+
+      var _index8 = _interopRequireDefault(_index7);
+
+      var _index9 = __webpack_require__(679);
+
+      var _index10 = _interopRequireDefault(_index9);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      /**
+       * @type {Locale}
+       * @category Locales
+       * @summary Finnish locale.
+       * @language Finnish
+       * @iso-639-2 fin
+       * @author Pyry-Samuli Lahti [@Pyppe]{@link https://github.com/Pyppe}
+       * @author Edo Rivai [@mikolajgrzyb]{@link https://github.com/mikolajgrzyb}
+       * @author Samu Juvonen [@sjuvonen]{@link https://github.com/sjuvonen}
+       */
+      var locale = {
+        formatDistance: _index2.default,
+        formatLong: _index4.default,
+        formatRelative: _index6.default,
+        localize: _index8.default,
+        match: _index10.default,
+        options: {
+          weekStartsOn: 1 /* Monday */,
+          firstWeekContainsDate: 4
+        }
+      };
+
+      exports.default = locale;
+      module.exports = exports["default"];
+
+      /***/
+    },
+    /* 675 */
+    /***/ function(module, exports) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports.default = formatDistance;
+      function futureSeconds(text) {
+        return text.replace(/sekuntia?/, "sekunnin");
+      }
+
+      function futureMinutes(text) {
+        return text.replace(/minuuttia?/, "minuutin");
+      }
+
+      function futureHours(text) {
+        return text.replace(/tuntia?/, "tunnin");
+      }
+
+      function futureDays(text) {
+        return text.replace(/päivää?/, "päivän");
+      }
+
+      function futureMonths(text) {
+        return text.replace(/(kuukausi|kuukautta)/, "kuukauden");
+      }
+
+      function futureYears(text) {
+        return text.replace(/(vuosi|vuotta)/, "vuoden");
+      }
+
+      var formatDistanceLocale = {
+        lessThanXSeconds: {
+          one: "alle sekunti",
+          other: "alle {{count}} sekuntia",
+          futureTense: futureSeconds
+        },
+
+        xSeconds: {
+          one: "sekunti",
+          other: "{{count}} sekuntia",
+          futureTense: futureSeconds
+        },
+
+        halfAMinute: {
+          one: "puoli minuuttia",
+          other: "puoli minuuttia",
+          futureTense: function futureTense(text) {
+            return "puolen minuutin";
+          }
+        },
+
+        lessThanXMinutes: {
+          one: "alle minuutti",
+          other: "alle {{count}} minuuttia",
+          futureTense: futureMinutes
+        },
+
+        xMinutes: {
+          one: "minuutti",
+          other: "{{count}} minuuttia",
+          futureTense: futureMinutes
+        },
+
+        aboutXHours: {
+          one: "noin tunti",
+          other: "noin {{count}} tuntia",
+          futureTense: futureHours
+        },
+
+        xHours: {
+          one: "tunti",
+          other: "{{count}} tuntia",
+          futureTense: futureHours
+        },
+
+        xDays: {
+          one: "päivä",
+          other: "{{count}} päivää",
+          futureTense: futureDays
+        },
+
+        aboutXMonths: {
+          one: "noin kuukausi",
+          other: "noin {{count}} kuukautta",
+          futureTense: futureMonths
+        },
+
+        xMonths: {
+          one: "kuukausi",
+          other: "{{count}} kuukautta",
+          futureTense: futureMonths
+        },
+
+        aboutXYears: {
+          one: "noin vuosi",
+          other: "noin {{count}} vuotta",
+          futureTense: futureYears
+        },
+
+        xYears: {
+          one: "vuosi",
+          other: "{{count}} vuotta",
+          futureTense: futureYears
+        },
+
+        overXYears: {
+          one: "yli vuosi",
+          other: "yli {{count}} vuotta",
+          futureTense: futureYears
+        },
+
+        almostXYears: {
+          one: "lähes vuosi",
+          other: "lähes {{count}} vuotta",
+          futureTense: futureYears
+        }
+      };
+
+      function formatDistance(token, count, options) {
+        options = options || {};
+
+        var distance = formatDistanceLocale[token];
+        var result =
+          count === 1
+            ? distance.one
+            : distance.other.replace("{{count}}", count);
+
+        if (options.addSuffix) {
+          if (options.comparison > 0) {
+            return distance.futureTense(result) + " kuluttua";
+          } else {
+            return result + " sitten";
+          }
+        }
+
+        return result;
+      }
+      module.exports = exports["default"];
+
+      /***/
+    },
+    /* 676 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var _index = __webpack_require__(548);
+
+      var _index2 = _interopRequireDefault(_index);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      var dateFormats = {
+        full: "eeee d. MMMM y",
+        long: "d. MMMM y",
+        medium: "d. MMM y",
+        short: "d.M.y"
+      };
+
+      var timeFormats = {
+        full: "HH.mm.ss zzzz",
+        long: "HH.mm.ss z",
+        medium: "HH.mm.ss",
+        short: "HH.mm"
+      };
+
+      var dateTimeFormats = {
+        full: "{{date}} 'klo' {{time}}",
+        long: "{{date}} 'klo' {{time}}",
+        medium: "{{date}} {{time}}",
+        short: "{{date}} {{time}}"
+      };
+
+      var formatLong = {
+        date: (0, _index2.default)({
+          formats: dateFormats,
+          defaultWidth: "full"
+        }),
+
+        time: (0, _index2.default)({
+          formats: timeFormats,
+          defaultWidth: "full"
+        }),
+
+        dateTime: (0, _index2.default)({
+          formats: dateTimeFormats,
+          defaultWidth: "full"
+        })
+      };
+
+      exports.default = formatLong;
+      module.exports = exports["default"];
+
+      /***/
+    },
+    /* 677 */
+    /***/ function(module, exports) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+      exports.default = formatRelative;
+      var formatRelativeLocale = {
+        lastWeek: "'viime' eeee 'klo' p",
+        yesterday: "'eilen klo' p",
+        today: "'tänään klo' p",
+        tomorrow: "'huomenna klo' p",
+        nextWeek: "'ensi' eeee 'klo' p",
+        other: "P"
+      };
+
+      function formatRelative(token, date, baseDate, options) {
+        return formatRelativeLocale[token];
+      }
+      module.exports = exports["default"];
+
+      /***/
+    },
+    /* 678 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      Object.defineProperty(exports, "__esModule", {
+        value: true
+      });
+
+      var _index = __webpack_require__(551);
+
+      var _index2 = _interopRequireDefault(_index);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      var eraValues = {
+        narrow: ["eaa.", "jaa."],
+        abbreviated: ["eaa.", "jaa."],
+        wide: ["ennen ajanlaskun alkua", "jälkeen ajanlaskun alun"]
+      };
+
+      var quarterValues = {
+        narrow: ["1", "2", "3", "4"],
+        abbreviated: ["Q1", "Q2", "Q3", "Q4"],
+        wide: ["1. kvartaali", "2. kvartaali", "3. kvartaali", "4. kvartaali"]
+      };
+
+      var monthValues = {
+        narrow: ["T", "H", "M", "H", "T", "K", "H", "E", "S", "L", "M", "J"],
+        abbreviated: [
+          "tammi",
+          "helmi",
+          "maalis",
+          "huhti",
+          "touko",
+          "kesä",
+          "heinä",
+          "elo",
+          "syys",
+          "loka",
+          "marras",
+          "joulu"
+        ],
+        wide: [
+          "tammikuu",
+          "helmikuu",
+          "maaliskuu",
+          "huhtikuu",
+          "toukokuu",
+          "kesäkuu",
+          "heinäkuu",
+          "elokuu",
+          "syyskuu",
+          "lokakuu",
+          "marraskuu",
+          "joulukuu"
+        ]
+      };
+
+      var formattingMonthValues = {
+        narrow: monthValues.narrow,
+        abbreviated: monthValues.abbreviated,
+        wide: monthValues.wide.map(function(name) {
+          return name + "ta";
+        })
+      };
+
+      var dayValues = {
+        narrow: ["S", "M", "T", "K", "T", "P", "L"],
+        short: ["su", "ma", "ti", "ke", "to", "pe", "la"],
+        abbreviated: [
+          "sunn.",
+          "maan.",
+          "tiis.",
+          "kesk.",
+          "torst.",
+          "perj.",
+          "la"
+        ],
+        wide: [
+          "sunnuntai",
+          "maanantai",
+          "tiistai",
+          "keskiviikko",
+          "torstai",
+          "perjantai",
+          "lauantai"
+        ]
+      };
+
+      var formattingDayValues = {
+        narrow: dayValues.narrow,
+        short: dayValues.short,
+        abbreviated: dayValues.abbreviated,
+        wide: dayValues.wide.map(function(name) {
+          return name + "na";
+        })
+      };
+
+      var dayPeriodValues = {
+        narrow: {
+          am: "ap",
+          pm: "ip",
+          midnight: "keskiyö",
+          noon: "keskipäivä",
+          morning: "ap",
+          afternoon: "ip",
+          evening: "illalla",
+          night: "yöllä"
+        },
+        abbreviated: {
+          am: "ap",
+          pm: "ip",
+          midnight: "keskiyö",
+          noon: "keskipäivä",
+          morning: "ap",
+          afternoon: "ip",
+          evening: "illalla",
+          night: "yöllä"
+        },
+        wide: {
+          am: "ap",
+          pm: "ip",
+          midnight: "keskiyöllä",
+          noon: "keskipäivällä",
+          morning: "aamupäivällä",
+          afternoon: "iltapäivällä",
+          evening: "illalla",
+          night: "yöllä"
+        }
+      };
+
+      function ordinalNumber(dirtyNumber) {
+        var number = Number(dirtyNumber);
+        return number + ".";
+      }
+
+      var localize = {
+        ordinalNumber: ordinalNumber,
+
+        era: (0, _index2.default)({
+          values: eraValues,
+          defaultWidth: "wide"
+        }),
+
+        quarter: (0, _index2.default)({
+          values: quarterValues,
+          defaultWidth: "wide",
+          argumentCallback: function argumentCallback(quarter) {
+            return Number(quarter) - 1;
+          }
+        }),
+
+        month: (0, _index2.default)({
+          values: monthValues,
+          formattingValues: formattingMonthValues,
+          defaultWidth: "wide"
+        }),
+
+        day: (0, _index2.default)({
+          values: dayValues,
+          formattingValues: formattingDayValues,
+          defaultWidth: "wide"
+        }),
+
+        dayPeriod: (0, _index2.default)({
+          values: dayPeriodValues,
+          defaultWidth: "wide"
+        })
+      };
+
+      exports.default = localize;
+      module.exports = exports["default"];
+
+      /***/
+    },
+    /* 765 */
+    /***/ function(module, exports, __webpack_require__) {
+      "use strict";
+
+      exports.__esModule = true;
+
+      var _react = __webpack_require__(332);
+
+      var _react2 = _interopRequireDefault(_react);
+
+      var _reactDatepicker = __webpack_require__(529);
+
+      var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
+      var _addDays = __webpack_require__(577);
+
+      var _addDays2 = _interopRequireDefault(_addDays);
+
+      var _subDays = __webpack_require__(584);
+
+      var _subDays2 = _interopRequireDefault(_subDays);
+
+      function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : { default: obj };
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _possibleConstructorReturn(self, call) {
+        if (!self) {
+          throw new ReferenceError(
+            "this hasn't been initialised - super() hasn't been called"
+          );
+        }
+        return call && (typeof call === "object" || typeof call === "function")
+          ? call
+          : self;
+      }
+
+      function _inherits(subClass, superClass) {
+        if (typeof superClass !== "function" && superClass !== null) {
+          throw new TypeError(
+            "Super expression must either be null or a function, not " +
+              typeof superClass
+          );
+        }
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
+
+      var ExcludeDates = (function(_React$Component) {
+        _inherits(ExcludeDates, _React$Component);
+
+        function ExcludeDates() {
+          var _temp, _this, _ret;
+
+          _classCallCheck(this, ExcludeDates);
+
+          for (
+            var _len = arguments.length, args = Array(_len), _key = 0;
+            _key < _len;
+            _key++
+          ) {
+            args[_key] = arguments[_key];
+          }
+
+          return (
+            (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+              this,
+              _React$Component.call.apply(_React$Component, [this].concat(args))
+            )),
+            _this)),
+            (_this.state = {
+              startDate: null
+            }),
+            (_this.handleChange = function(date) {
+              _this.setState({
+                startDate: date
+              });
+            }),
+            _temp)),
+            _possibleConstructorReturn(_this, _ret)
+          );
+        }
+
+        ExcludeDates.prototype.render = function render() {
+          return _react2.default.createElement(
+            "div",
+            { className: "row" },
+            _react2.default.createElement(
+              "pre",
+              { className: "column example__code" },
+              _react2.default.createElement(
+                "code",
+                { className: "jsx" },
+                "<DatePicker",
+                _react2.default.createElement("br", null),
+                "  selected={this.state.startDate}",
+                _react2.default.createElement("br", null),
+                "  onChange={this.handleChange}",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement(
+                  "strong",
+                  null,
+                  "  excludeDates={[new Date(), subDays(new Date(), 1)]}"
+                ),
+                _react2.default.createElement("br", null),
+                '  placeholderText="Select a date other than today or yesterday" />'
+              )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "column" },
+              _react2.default.createElement(_reactDatepicker2.default, {
+                selected: this.state.startDate,
+                onChange: this.handleChange,
+                excludeDates: [
+                  new Date(),
+                  (0, _subDays2.default)(new Date(), 1)
+                ],
+                placeholderText: "Select a date other than today or yesterday"
+              })
+            )
+          );
+        };
+
+        return ExcludeDates;
+      })(_react2.default.Component);
+
+      exports.default = ExcludeDates;
+
+      /***/
+    },
+<<<<<<< HEAD
+    /* 766 */
+=======
+    /* 681 */
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
     /***/ function(module, exports, __webpack_require__) {
       "use strict";
 
@@ -62881,11 +66043,11 @@
 
       exports.__esModule = true;
 
-      var _react = __webpack_require__(327);
+      var _react = __webpack_require__(332);
 
       var _react2 = _interopRequireDefault(_react);
 
-      var _reactDatepicker = __webpack_require__(532);
+      var _reactDatepicker = __webpack_require__(529);
 
       var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
@@ -69735,8 +72897,12 @@
       });
 
       for (
+<<<<<<< HEAD
         var es6Symbols = // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
           "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(
+=======
+        var es6Symbols = "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split( // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+>>>>>>> 640f62a... Beware of p+ tokens in parseDate
             ","
           ),
           j = 0;
