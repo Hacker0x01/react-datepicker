@@ -699,7 +699,7 @@
 
 .react-datepicker__current-month {
   height: 52px;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 14px;
   color: #ffffff;
   text-decoration: none solid rgb(255, 255, 255);
@@ -719,12 +719,13 @@
 }
 
 .react-datepicker__day-name {
-  font-family: Roboto;
-  font-size: 11px;
+  font-family: "Roboto";
+  font-size: 13px;
   color: #a0aab1;
   text-decoration: none solid rgb(160, 170, 177);
   text-align: center;
-  padding: 2px 5px;
+  padding: 8px 5px;
+  width: 2.5rem;
 }
 
 .react-datepicker__month {
@@ -752,12 +753,13 @@
 
 .react-datepicker__day {
   cursor: pointer;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 14px;
   color: #2d343d;
   text-decoration: none solid rgb(45, 52, 61);
   text-align: center;
-  padding: 2px 5px;
+  padding: 5px 5px;
+  width: 2.5rem;
 }
 
 .react-datepicker__day--selected,
@@ -786,7 +788,7 @@
 }
 
 .react-datepicker__day--outside-month {
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 14px;
   color: #a0aab1;
   text-decoration: none solid rgb(160, 170, 177);
@@ -809,7 +811,7 @@
   li.react-datepicker__time-list-item--selected {
   background-color: #005eb8;
   color: #ffffff;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-weight: normal;
 }
 
@@ -820,7 +822,7 @@
   li.react-datepicker__time-list-item--selected:hover {
   background-color: #003d8a;
   color: #ffffff;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-weight: normal;
 }
 
@@ -837,7 +839,7 @@
 .react-datepicker__input-time-container .react-datepicker-time__caption {
   width: 141px;
   height: 24px;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-size: 12px;
   color: #72808a;
   text-decoration: none solid rgb(114, 128, 138);
@@ -845,11 +847,11 @@
   letter-spacing: 1px;
 }
 
-.react-datepicker-time__input_custom {
-  width: 82%;
-  font-family: Roboto;
-  font-size: 12px;
-}
+// .react-datepicker-time__input_custom {
+//   width: 82%;
+//   font-family: Roboto;
+//   font-size: 12px;
+// }
 
 .react-datepicker__input-time-container {
   margin: 16px 10px;
@@ -860,9 +862,9 @@
   display: block;
 }
 
-.react-datepicker__input-time-container .react-datepicker-time__caption {
-  padding: 10px;
-}
+// .react-datepicker__input-time-container .react-datepicker-time__caption {
+//   padding: 10px;
+// }
 
 .react-datepicker__input-time-container {
   margin: 0px 0px;
@@ -875,13 +877,13 @@
   background-size: cover;
 }
 
-.react-datepicker__input-time-container
-  .react-datepicker-time__input-container {
-  padding: 8px;
-}
+// .react-datepicker__input-time-container
+//   .react-datepicker-time__input-container {
+//   padding: 8px;
+// }
 
 .react-datepicker__month:last-child {
-  padding-bottom: 10px;
+  padding-bottom: 12px;
 }
 
 /* Below CSS Section inludes the entryFieldDatepicker DLS stylinhg*/
@@ -907,7 +909,7 @@
 
 .entryFieldDatepicker::placeholder {
   font-family: "Roboto";
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #72808a;
   font-weight: Regular;
   line-height: 20px;
@@ -916,7 +918,7 @@
 .datetimepickerTitle {
   height: 9px;
   font-family: "Roboto";
-  // font-weight: bold;
+  font-weight: bold;
   font-size: 1.2rem;
   color: #72808a;
   line-height: 2rem;
@@ -938,7 +940,7 @@
 .calendarIcon {
   position: absolute;
   right: 10px;
-  margin-top: 5%;
+  margin-top: 4%;
 }
 
 .entryFieldDisable {
@@ -975,4 +977,61 @@
 .react-datepicker-popper[data-placement^="bottom"]
   .react-datepicker__triangle::before {
   border: none;
+}
+
+/* Below Section includes the time field DLS style */
+.react-datepicker__input-time-container .react-datepicker-time__caption {
+  height: 9px;
+  font-family: "Roboto";
+  font-size: 1.1rem;
+  color: #72808a;
+  line-height: 2rem;
+  letter-spacing: 1px;
+  border: none;
+  padding: 8px 0px 12px 14px;
+  font-weight: bold;
+}
+
+.react-datepicker__input-time-container
+  .react-datepicker-time__input-container {
+  padding: 0px 0px 23px 14px;
+}
+
+.react-datepicker-time__input_custom {
+  width: 227px;
+  height: 36px;
+  padding: 0px 10px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  background-size: cover;
+  font-family: "Roboto";
+  font-size: 16px;
+  color: #2d343d;
+  text-decoration: none solid rgb(160, 170, 177);
+  box-shadow: none;
+  border: solid 1px #d0d4d8;
+}
+
+.react-datepicker-time__input_custom:focus {
+  border-color: #005eb8;
+  box-shadow: none;
+  border: solid 1px #d0d4d8;
+}
+
+input[type="time"]::-webkit-inner-spin-button {
+  // background: #005eb8 url("http://i.stack.imgur.com/YYySO.png") no-repeat 50% 50%;
+  width: 14px;
+  height: 14px;
+  padding: 4px;
+  position: relative;
+  border-radius: 28px;
+  margin-top: 8px;
+}
+
+.react-datepicker-time__input_custom::placeholder {
+  font-family: "Roboto";
+  font-size: 1.2rem;
+  color: #72808a;
+  font-weight: Regular;
+  line-height: 20px;
 }

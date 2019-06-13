@@ -790,7 +790,7 @@ export default class DatePicker extends React.Component {
   // let icon =
   renderCalendarIcon = () => {
     return (
-      <span className="calendarIcon">
+      <span className="calendarIcon" onClick={this.onCalendarIconClick}>
         <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
           <g
             id="Icon-/-Dark-/-Calendar"
