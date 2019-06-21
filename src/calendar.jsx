@@ -57,6 +57,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
@@ -668,6 +669,7 @@ export default class Calendar extends React.Component {
         <Time
           selected={this.props.selected}
           onChange={this.props.onTimeChange}
+          timeClassName={this.props.timeClassName}
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
