@@ -121,7 +121,7 @@ describe("YearDropdown", () => {
 
     it("calls the supplied onChange function when a different year is clicked", () => {
       let sandbox;
-      sandbox = sinon.createSandbox();
+      sandbox = sinon.sandbox.create();
       var onSelectSpy = sandbox.spy();
       var setOpenSpy = sandbox.spy();
       yearDropdown = getYearDropdown({

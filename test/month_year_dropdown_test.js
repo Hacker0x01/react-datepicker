@@ -41,7 +41,7 @@ describe("MonthYearDropdown", () => {
 
   beforeEach(() => {
     handleChangeResult = null;
-    sandbox = sinon.createSandbox();
+    sandbox = sinon.sandbox.create();
   });
 
   afterEach(() => {

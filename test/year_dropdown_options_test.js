@@ -11,7 +11,7 @@ describe("YearDropdownOptions", () => {
   let sandbox, onCancelSpy;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
+    sandbox = sinon.sandbox.create();
     onCancelSpy = sandbox.spy();
     yearDropdown = mount(
       <YearDropdownOptions
@@ -125,7 +125,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
+    sandbox = sinon.sandbox.create();
   });
 
   afterEach(() => {
