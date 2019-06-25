@@ -87,7 +87,7 @@
     "rollup-plugin-uglify": "^2.0.1",
     "sass-lint": "^1.13.1",
     "sass-loader": "^4.1.1",
-    "sinon": "^4.1.2",
+    "sinon": "^7.3.2",
     "style-loader": "^0.19.0",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.12.0",
