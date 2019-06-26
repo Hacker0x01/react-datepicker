@@ -246,10 +246,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -259,8 +259,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -294,7 +294,7 @@ export default class DatePicker extends React.Component {
     this.cancelFocusInput();
   };
 
-  setOpen = (open, skipSetBlur = false) => {
+  setOpen = open => {
     this.setState(
       {
         open: open,
@@ -306,16 +306,7 @@ export default class DatePicker extends React.Component {
       },
       () => {
         if (!open) {
-          this.setState(
-            prev => ({
-              focused: skipSetBlur ? prev.focused : false
-            }),
-            () => {
-              !skipSetBlur && this.setBlur();
-
-              this.setState({ inputValue: null });
-            }
-          );
+          this.setState({ inputValue: null });
         }
       }
     );
@@ -425,10 +416,7 @@ export default class DatePicker extends React.Component {
       return;
     }
 
-    if (
-      !isEqual(this.props.selected, changedDate) ||
-      this.props.allowSameDay
-    ) {
+    if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
@@ -468,7 +456,11 @@ export default class DatePicker extends React.Component {
     let isValidDateSelection = true;
     if (date) {
       if (hasMinDate && hasMaxDate) {
-        isValidDateSelection = isDayInRange(date, this.props.minDate, this.props.maxDate);
+        isValidDateSelection = isDayInRange(
+          date,
+          this.props.minDate,
+          this.props.maxDate
+        );
       } else if (hasMinDate) {
         isValidDateSelection = isAfter(date, this.props.minDate);
       } else if (hasMaxDate) {
@@ -546,7 +538,7 @@ export default class DatePicker extends React.Component {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
     } else if (eventKey === "Tab") {
-      this.setOpen(false, true);
+      this.setOpen(false);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
@@ -702,8 +694,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
