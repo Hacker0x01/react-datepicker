@@ -304,32 +304,16 @@ export default class DatePicker extends React.Component {
     this.cancelFocusInput();
   };
 
-  setOpen = (open, skipSetBlur = false) => {
-    this.setState(
-      {
-        open: open,
-        preSelection:
-          open && this.state.open
-            ? this.state.preSelection
-            : this.calcInitialState().preSelection,
-        lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
-      },
-      () => {
-        if (!open) {
-          this.setState(
-            prev => ({
-              focused: skipSetBlur ? prev.focused : false
-            }),
-            () => {
-              !skipSetBlur && this.setBlur();
+  setOpen = open =>
+    this.setState({
+      open: open,
+      preSelection:
+        open && this.state.open
+          ? this.state.preSelection
+          : this.calcInitialState().preSelection,
+      lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE
+    });
 
-              this.setState({ inputValue: null });
-            }
-          );
-        }
-      }
-    );
-  };
   inputOk = () => isDate(this.state.preSelection);
 
   isCalendarOpen = () =>
@@ -557,7 +541,7 @@ export default class DatePicker extends React.Component {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
     } else if (eventKey === "Tab") {
-      this.setOpen(false, true);
+      this.setOpen(false);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
