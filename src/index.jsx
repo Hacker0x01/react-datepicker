@@ -22,7 +22,6 @@ import {
   subWeeks,
   subYears,
   isDayDisabled,
-  isOutOfBounds,
   isDayInRange,
   getEffectiveMinDate,
   getEffectiveMaxDate,
@@ -247,10 +246,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
@@ -260,8 +259,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
         : maxDate && isAfter(defaultPreSelection, maxDate)
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -423,18 +422,10 @@ export default class DatePicker extends React.Component {
     let changedDate = date;
 
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-      if (isOutOfBounds(changedDate, this.props)) {
-        this.props.onChange(date, event);
-        this.props.onSelect(changedDate, event);
-      }
-
       return;
     }
 
-    if (
-      !isEqual(this.props.selected, changedDate) ||
-      this.props.allowSameDay
-    ) {
+    if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
@@ -474,7 +465,11 @@ export default class DatePicker extends React.Component {
     let isValidDateSelection = true;
     if (date) {
       if (hasMinDate && hasMaxDate) {
-        isValidDateSelection = isDayInRange(date, this.props.minDate, this.props.maxDate);
+        isValidDateSelection = isDayInRange(
+          date,
+          this.props.minDate,
+          this.props.maxDate
+        );
       } else if (hasMinDate) {
         isValidDateSelection = isAfter(date, this.props.minDate);
       } else if (hasMaxDate) {
@@ -708,8 +703,8 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: input => {
