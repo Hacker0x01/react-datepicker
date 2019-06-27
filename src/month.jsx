@@ -62,20 +62,20 @@ export default class Month extends React.Component {
     }
   };
 
-  isRangeStart = () => {
+  isRangeStart = m => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
     }
-    return utils.isSameMonth(startDate, day);
+    return utils.isSameMonth(utils.setMonth(day, m), startDate);
   };
 
-  isRangeEnd = () => {
+  isRangeEnd = m => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
     }
-    return utils.isSameMonth(endDate, day);
+    return utils.isSameMonth(utils.setMonth(day, m), endDate);
   };
 
   isWeekInMonth = startOfWeek => {
@@ -178,8 +178,8 @@ export default class Month extends React.Component {
           m,
           day
         ),
-        "react-datepicker__month--range-start": this.isRangeStart(),
-        "react-datepicker__month--range-end": this.isRangeEnd(),
+        "react-datepicker__month--range-start": this.isRangeStart(m),
+        "react-datepicker__month--range-end": this.isRangeEnd(m)
       }
     );
   };
