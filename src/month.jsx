@@ -162,7 +162,6 @@ export default class Month extends React.Component {
 
   getMonthClassNames = m => {
     const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
-    //console.log(utils.setMonth(this.props.day, m));
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
