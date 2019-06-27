@@ -92,11 +92,11 @@ export default class Default extends React.Component {
                 </select>
 
                 <select
-                  value={months[getMonth(date)]}
+                  value={getMonth(date)}
                   onChange={({ target: { value } }) => changeMonth(value)}
                 >
-                  {months.map(option => (
-                    <option key={option} value={option}>
+                  {months.map((option, index) => (
+                    <option key={index} value={index}>
                       {option}
                     </option>
                   ))}
