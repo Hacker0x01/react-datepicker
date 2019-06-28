@@ -10,10 +10,57 @@ import {
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
-  getEffectiveMaxDate
+  getEffectiveMaxDate,
+  addZero,
+  isTimeInDisabledRange,
+  isDayInRange,
+  parseDate,
+  isMonthinRange
 } from "../src/date_utils";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 
 describe("date_utils", function() {
+  describe("newDate", function() {
+    it("should return null for invalid value passed", function() {
+      expect(newDate("21123asd")).to.be.null;
+    });
+  });
+
+  describe("isEqual", function() {
+    it("should return true for null dates", function() {
+      expect(isEqual(null, null)).to.be.true;
+    });
+
+    it("should return false for a null and non-null date", function() {
+      expect(isEqual(newDate(), null)).to.be.false;
+      expect(isEqual(null, newDate())).to.be.false;
+    });
+
+    it("should return false for non-equal dates", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11"))).to.be.false;
+    });
+
+    it("should return false for non-equal date and date with time", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-11 13:13"))).to.be
+        .false;
+    });
+
+    it("should return false for non-equal time", function() {
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-11 13:14")))
+        .to.be.false;
+    });
+
+    it("should return true for equal dates", function() {
+      expect(isEqual(newDate("2016-02-10"), newDate("2016-02-10"))).to.be.true;
+    });
+
+    it("should return true for equal time", function() {
+      expect(isEqual(newDate("2016-02-10 13:13"), newDate("2016-02-10 13:13")))
+        .to.be.true;
+    });
+  });
+
   describe("isSameDay", function() {
     it("should return true for null dates", function() {
       expect(isSameDay(null, null)).to.be.true;
@@ -243,6 +290,130 @@ describe("date_utils", function() {
       const date2 = newDate("2016-04-01");
       const includeDates = [date1, date2];
       assert(isEqual(getEffectiveMaxDate({ maxDate, includeDates }), date1));
+    });
+  });
+
+  describe("addZero", () => {
+    it("should return the same number if greater than 10", () => {
+      const input = 11;
+      assert(isEqual(addZero(input), input));
+    });
+
+    it("should return the number prefixed with zero if less than 10", () => {
+      const input = 1;
+      assert(isEqual(addZero(input), "01"));
+    });
+  });
+
+  describe("isTimeInDisabledRange", () => {
+    it("should tell if time is in disabled range", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 1);
+      const minTime = setHours(setMinutes(date, 30), 0);
+      const maxTime = setHours(setMinutes(date, 30), 5);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.false;
+    });
+
+    it("should tell if time is not in disabled range", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 0);
+      const minTime = setHours(setMinutes(date, 30), 1);
+      const maxTime = setHours(setMinutes(date, 30), 5);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.true;
+    });
+
+    it("should not throw an exception if max time is before min time", () => {
+      const date = newDate("2016-03-15");
+      const time = setHours(setMinutes(date, 30), 10);
+      const minTime = setHours(setMinutes(date, 30), 5);
+      const maxTime = setHours(setMinutes(date, 30), 0);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).to.be.false;
+    });
+  });
+
+  describe("isDayInRange", () => {
+    it("should tell if day is in range", () => {
+      const day = newDate("2016-02-15");
+      const startDate = newDate("2016-02-01");
+      const endDate = newDate("2016-03-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day is not in range", () => {
+      const day = newDate("2016-07-15");
+      const startDate = newDate("2016-02-15");
+      const endDate = newDate("2016-03-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+
+    it("should not throw exception if end date is before start date", () => {
+      const day = newDate("2016-02-01");
+      const startDate = newDate("2016-02-15");
+      const endDate = newDate("2016-01-15");
+      expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+  });
+
+  describe("parseDate", () => {
+    it("should parse date that matches the format", () => {
+      const value = "01/15/2019";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
+    });
+
+    it("should parse date that matches one of the formats", () => {
+      const value = "01/15/2019";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
+    });
+
+    it("should not parse date that does not match the format", () => {
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+    });
+
+    it("should not parse date that does not match any of the formats", () => {
+      const value = "01/15/20";
+      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+
+      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+    });
+
+    it("should parse date without strict parsing", () => {
+      const value = "01/15/20";
+      const dateFormat = "MM/dd/yyyy";
+
+      expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
+    });
+  });
+
+  describe("isMonthinRange", () => {
+    it("should return true if the month passed is in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isMonthinRange(startDate, endDate, 4, day)).to.be.true;
+    });
+
+    it("should return false if the month passed is not in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isMonthinRange(startDate, endDate, 9, day)).to.be.false;
+    });
+
+    it("should return true if the month passed is in range and maxDate +1 year", () => {
+      const day = newDate("2019-06-04");
+      const startDate = newDate("2019-06-04");
+      const endDate = newDate("2020-02-01");
+
+      expect(isMonthinRange(startDate, endDate, 5, day)).to.be.true;
     });
   });
 });

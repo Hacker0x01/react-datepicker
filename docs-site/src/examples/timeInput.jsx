@@ -1,7 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 
-export default class ClearInput extends React.Component {
+export default class TimeInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,21 +19,25 @@ export default class ClearInput extends React.Component {
     return (
       <div className="row">
         <pre className="column example__code">
-          <code className="jsx">{`
+          <code className="jsx">
+            {`
 <DatePicker
-  selected={this.state.startDate}
-  onChange={this.handleChange }
-  isClearable={true}
-  placeholderText="I have been cleared!"
+    selected={this.state.startDate}
+    timeInputLabel="Time:"
+    onChange={this.handleChange}
+    dateFormat="MM/dd/yyyy h:mm aa"
+    showTimeInput
 />
-`}</code>
+`}
+          </code>
         </pre>
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
+            timeInputLabel="Time:"
             onChange={this.handleChange}
-            isClearable
-            placeholderText="I have been cleared!"
+            dateFormat="MM/dd/yyyy h:mm aa"
+            showTimeInput
           />
         </div>
       </div>

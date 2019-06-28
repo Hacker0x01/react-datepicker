@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Day from './day';
-import WeekNumber from './week_number';
-import * as utils from './date_utils';
+import React from "react";
+import PropTypes from "prop-types";
+import Day from "./day";
+import WeekNumber from "./week_number";
+import * as utils from "./date_utils";
 
 export default class Week extends React.Component {
   static get defaultProps() {
@@ -21,7 +21,10 @@ export default class Week extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
-    locale: PropTypes.string,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ]),
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
@@ -53,7 +56,7 @@ export default class Week extends React.Component {
   };
 
   handleWeekClick = (day, weekNumber, event) => {
-    if (typeof this.props.onWeekSelect === 'function') {
+    if (typeof this.props.onWeekSelect === "function") {
       this.props.onWeekSelect(day, weekNumber, event);
     }
     if (this.props.shouldCloseOnSelect) {
@@ -61,11 +64,11 @@ export default class Week extends React.Component {
     }
   };
 
-  formatWeekNumber = startOfWeek => {
+  formatWeekNumber = date => {
     if (this.props.formatWeekNumber) {
-      return this.props.formatWeekNumber(startOfWeek);
+      return this.props.formatWeekNumber(date);
     }
-    return utils.getWeek(startOfWeek);
+    return utils.getWeek(date);
   };
 
   renderDays = () => {

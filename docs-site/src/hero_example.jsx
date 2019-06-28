@@ -1,5 +1,5 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
+import React from "react";
+import DatePicker from "react-datepicker";
 
 export default class HeroExample extends React.Component {
   constructor(props) {

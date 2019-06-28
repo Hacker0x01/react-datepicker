@@ -1,11 +1,10 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
+import addDays from "date-fns/addDays";
 
-export default class ExcludeTimePeriod extends React.Component {
+export default class SpecificDateRange extends React.Component {
   state = {
-    startDate: setHours(setMinutes(new Date(), 30), 17)
+    startDate: null
   };
 
   handleChange = date => {
@@ -25,15 +24,11 @@ export default class ExcludeTimePeriod extends React.Component {
             <br />
             {"  onChange={this.handleChange}"}
             <br />
-            <strong>
-              {"  showTimeSelect"}
-              <br />
-              {"  minTime={setHours(setMinutes(new Date(), 0), 17)}"}
-              <br />
-              {"  maxTime={setHours(setMinutes(new Date(), 30), 20)}"}
-              <br />
-              {'  dateFormat="MMMM d, yyyy"'}
-            </strong>
+            <strong>{"  maxDate={addDays(new Date(), 5)}"}</strong>
+            <br />
+            {
+              '  placeholderText="Select a date before 5 days in the future"'
+            }
             <br />
             {"/>"}
           </code>
@@ -42,10 +37,8 @@ export default class ExcludeTimePeriod extends React.Component {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            showTimeSelect
-            minTime={setHours(setMinutes(new Date(), 0), 17)}
-            maxTime={setHours(setMinutes(new Date(), 30), 20)}
-            dateFormat="MMMM d, yyyy h:mm aa"
+            maxDate={addDays(new Date(), 5)}
+            placeholderText="Select a date before 5 days in the future"
           />
         </div>
       </div>

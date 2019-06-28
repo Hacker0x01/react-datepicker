@@ -1,10 +1,10 @@
 import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import enGB from "date-fns/locale/en-GB";
+import ptBR from "date-fns/locale/pt-BR";
 
-registerLocale("en-GB", enGB);
+registerLocale("pt-BR", ptBR);
 
-export default class CustomStartDate extends React.Component {
+export default class LocaleWithTime extends React.Component {
   state = {
     startDate: null
   };
@@ -20,21 +20,11 @@ export default class CustomStartDate extends React.Component {
       <div className="row">
         <pre className="column example__code">
           <code className="jsx">
-            {
-              "// Note: Make sure to npm install the right version of date-fns as"
-            }
-            <br />
-            {
-              "// specified in packaged.json. The default one may not be compatiable"
-            }
-            <br />
-            {"// npm install --save date-fns@version"}
-            <br />
             {"import DatePicker, { registerLocale } from 'react-datepicker';"}
             <br />
-            {"import enGB from 'date-fns/locale/en-GB';"}
+            {"import ptBR from 'date-fns/locale/pt-BR';"}
             <br />
-            {"registerLocale('en-GB', enGB);"}
+            {"registerLocale('pt-BR', ptBR);"}
             <br />
             <br />
             {"<DatePicker"}
@@ -43,17 +33,28 @@ export default class CustomStartDate extends React.Component {
             <br />
             {"  onChange={this.handleChange}"}
             <br />
-            <strong>{'  locale="en-GB"'}</strong>
+            <strong>{'  locale="pt-BR"'}</strong>
             <br />
-            {'  placeholderText="Weeks start on Monday" />'}
+            <strong>{"  showTimeSelect"}</strong>
+            <br />
+            <strong>{'  timeFormat="p"'}</strong>
+            <br />
+            <strong>{"  timeIntervals={15}"}</strong>
+            <br />
+            <strong>{'  dateFormat="Pp"'}</strong>
+            <br />
+            {"/>"}
           </code>
         </pre>
         <div className="column">
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            locale="en-GB"
-            placeholderText="Weeks start on Monday"
+            locale="pt-BR"
+            showTimeSelect
+            timeFormat="p"
+            timeIntervals={15}
+            dateFormat="Pp"
           />
         </div>
       </div>

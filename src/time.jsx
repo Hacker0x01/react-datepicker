@@ -25,7 +25,11 @@ export default class Time extends React.Component {
     excludeTimes: PropTypes.array,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array
+    injectTimes: PropTypes.array,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ])
   };
 
   static get defaultProps() {
@@ -43,6 +47,10 @@ export default class Time extends React.Component {
     );
   };
 
+  state = {
+    height: null
+  };
+
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
     this.list.scrollTop = Time.calcCenterPosition(
@@ -51,6 +59,11 @@ export default class Time extends React.Component {
         : this.list.clientHeight,
       this.centerLi
     );
+    if (this.props.monthRef && this.header) {
+      this.setState({
+        height: this.props.monthRef.clientHeight - this.header.clientHeight
+      });
+    }
   }
 
   handleClick = time => {
@@ -137,16 +150,13 @@ export default class Time extends React.Component {
           }
         }}
       >
-        {formatDate(time, format)}
+        {formatDate(time, format, this.props.locale)}
       </li>
     ));
   };
 
   render() {
-    let height = null;
-    if (this.props.monthRef && this.header) {
-      height = this.props.monthRef.clientHeight - this.header.clientHeight;
-    }
+    const { height } = this.state;
 
     return (
       <div

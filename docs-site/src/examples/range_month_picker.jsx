@@ -2,18 +2,23 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import isAfter from "date-fns/isAfter";
 
-export default class DateRange extends React.Component {
+export default class RangeMonthPicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       startDate: new Date("2014/02/08"),
-      endDate: new Date("2014/02/10")
+      endDate: new Date("2014/04/08")
     };
   }
 
   handleChange = ({ startDate, endDate }) => {
     startDate = startDate || this.state.startDate;
     endDate = endDate || this.state.endDate;
+
+    if (isAfter(startDate, endDate)) {
+      endDate = startDate;
+    }
+
     this.setState({ startDate, endDate });
   };
 
@@ -32,6 +37,8 @@ export default class DateRange extends React.Component {
     selectsStart
     startDate={this.state.startDate}
     endDate={this.state.endDate}
+    dateFormat="MM/yyyy"
+    showMonthYearPicker
     onChange={this.handleChangeStart}
 />
 
@@ -40,8 +47,9 @@ export default class DateRange extends React.Component {
     selectsEnd
     startDate={this.state.startDate}
     endDate={this.state.endDate}
+    dateFormat="MM/yyyy"
+    showMonthYearPicker
     onChange={this.handleChangeEnd}
-    minDate={this.state.startDate}
 />
 `}
           </code>
@@ -52,6 +60,8 @@ export default class DateRange extends React.Component {
             selectsStart
             startDate={this.state.startDate}
             endDate={this.state.endDate}
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
             onChange={this.handleChangeStart}
           />
           <DatePicker
@@ -59,8 +69,9 @@ export default class DateRange extends React.Component {
             selectsEnd
             startDate={this.state.startDate}
             endDate={this.state.endDate}
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
             onChange={this.handleChangeEnd}
-            minDate={this.state.startDate}
           />
         </div>
       </div>
