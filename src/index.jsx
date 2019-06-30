@@ -167,7 +167,6 @@ export default class DatePicker extends React.Component {
     inlineFocusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func
-
   };
 
   static get defaultProps() {
@@ -202,7 +201,7 @@ export default class DatePicker extends React.Component {
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next month",
       timeInputLabel: "Time",
-      
+
       renderDayContents(date) {
         return date;
       },
@@ -428,10 +427,7 @@ export default class DatePicker extends React.Component {
       return;
     }
 
-    if (
-      !isEqual(this.props.selected, changedDate) ||
-      this.props.allowSameDay
-    ) {
+    if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
         if (this.props.selected) {
           let selected = this.props.selected;
@@ -466,27 +462,22 @@ export default class DatePicker extends React.Component {
   };
 
   setPreSelection = date => {
-
-    const isDateRangePresent =
-      typeof this.props.minDate !== "undefined" &&
-      typeof this.props.maxDate !== "undefined";
-    const isValidDateSelection =
-      isDateRangePresent && date
-        ? isDayInRange(date, this.props.minDate, this.props.maxDate)
-        : true;
     const hasMinDate = typeof this.props.minDate !== "undefined";
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
       if (hasMinDate && hasMaxDate) {
-        isValidDateSelection = isDayInRange(date, this.props.minDate, this.props.maxDate);
+        isValidDateSelection = isDayInRange(
+          date,
+          this.props.minDate,
+          this.props.maxDate
+        );
       } else if (hasMinDate) {
         isValidDateSelection = isAfter(date, this.props.minDate);
       } else if (hasMaxDate) {
         isValidDateSelection = isBefore(date, this.props.maxDate);
       }
     }
-
     if (isValidDateSelection) {
       this.setState({
         preSelection: date
@@ -714,7 +705,6 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-
         ? this.state.inputValue
         : safeDateFormat(this.props.selected, this.props);
 
