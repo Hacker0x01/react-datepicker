@@ -743,6 +743,26 @@ describe("Calendar", function() {
     expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(expectedDate);
   });
 
+  it("should trigger onCalendarOpen and onCalendarClose", () => {
+    const onCalendarOpen = sinon.spy();
+    const onCalendarClose = sinon.spy();
+
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        onCalendarOpen={onCalendarOpen}
+        onCalendarClose={onCalendarClose}
+      />
+    );
+
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+
+    assert(onCalendarOpen.called === true, "onCalendarOpen should be called");
+
+    TestUtils.Simulate.blur(ReactDOM.findDOMNode(datePicker.input));
+
+    assert(onCalendarOpen.called === true, "onCalendarClose should be called");
+  });
+
   describe("onMonthChange", () => {
     let onMonthChangeSpy = sinon.spy();
     let calendar;

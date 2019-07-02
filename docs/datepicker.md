@@ -41,15 +41,17 @@ General datepicker component.
 | `monthsShown`                | `number`                       | `1`             |                                            |
 | `name`                       | `string`                       |                 |                                            |
 | `onBlur`                     | `func`                         | `function() {}` |                                            |
+| `onCalendarClose`            | `func`                         |                 |                                            |
+| `onCalendarOpen`             | `func`                         |                 |                                            |
 | `onChange` (required)        | `func`                         | `function() {}` |                                            |
 | `onChangeRaw`                | `func`                         |                 |                                            |
 | `onClickOutside`             | `func`                         | `function() {}` |                                            |
 | `onFocus`                    | `func`                         | `function() {}` |                                            |
 | `onKeyDown`                  | `func`                         | `function() {}` |                                            |
 | `onMonthChange`              | `func`                         | `function() {}` |                                            |
-| `onYearChange`               | `func`                         | `function() {}` |                                            |
 | `onSelect`                   | `func`                         | `function() {}` |                                            |
 | `onWeekSelect`               | `func`                         |                 |                                            |
+| `onYearChange`               | `func`                         | `function() {}` |                                            |
 | `openToDate`                 | `instanceOf(Date)`             |                 |                                            |
 | `peekNextMonth`              | `bool`                         |                 |                                            |
 | `placeholderText`            | `string`                       |                 |                                            |
