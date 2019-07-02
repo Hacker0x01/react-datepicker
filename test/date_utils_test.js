@@ -19,6 +19,10 @@ import {
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
+import ptBR from "date-fns/locale/pt-BR";
+import { registerLocale } from "../src/date_utils";
+
+registerLocale("pt-BR", ptBR);
 
 describe("date_utils", function() {
   describe("newDate", function() {
@@ -296,12 +300,16 @@ describe("date_utils", function() {
   describe("addZero", () => {
     it("should return the same number if greater than 10", () => {
       const input = 11;
-      assert(isEqual(addZero(input), input));
+      const expected = "11";
+      const result = addZero(input);
+      assert(result === expected);
     });
 
     it("should return the number prefixed with zero if less than 10", () => {
       const input = 1;
-      assert(isEqual(addZero(input), "01"));
+      const expected = "01";
+      const result = addZero(input);
+      assert(result === expected);
     });
   });
 
@@ -388,6 +396,25 @@ describe("date_utils", function() {
       const dateFormat = "MM/dd/yyyy";
 
       expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
+    });
+
+    it("should parse date based on locale", () => {
+      const value = "26/05/1995";
+      const dateFormat = "P";
+
+      const expected = new Date("05/26/1995");
+      const actual = parseDate(value, dateFormat, "pt-BR", false);
+
+      assert(isEqual(actual, expected));
+    });
+
+    it("should not parse date based on locale without a given locale", () => {
+      const value = "26/05/1995";
+      const dateFormat = "P";
+
+      const actual = parseDate(value, dateFormat, null, false);
+
+      expect(actual).to.be.null;
     });
   });
 

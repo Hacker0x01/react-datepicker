@@ -2137,9 +2137,10 @@ date-fns@^1.27.2:
   version "1.29.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
-date-fns@^2.0.0-alpha.23:
-  version "2.0.0-alpha.25"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.25.tgz#651a5d1f59a01af6cf0371e39b2ae29df5d521ee"
+date-fns@^v2.0.0-beta.1:
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-beta.1.tgz#6f3209ea8be559211be5160e0a6379a7eade227b"
+  integrity sha512-ls5W/PUZmrtck53HD3Sd0564NlnNoQtcxNCwWcIzULJMNNgAPVKHoylVXPau7vdyu5/JTd25ljtan+iWnnUKkw==
 
 date-format@^2.0.0:
   version "2.0.0"
