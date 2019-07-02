@@ -1,14 +1,14 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 
-export default class OnCalendarChangeStateCallbacks extends React.Component {
+export default class OnInputErrorCallback extends React.Component {
   state = {
     date: null
   };
 
   handleChange = date => {
     this.setState({
-      date: date
+      date
     });
   };
 
@@ -20,10 +20,9 @@ export default class OnCalendarChangeStateCallbacks extends React.Component {
           <code className="jsx">
             {`
 <DatePicker
-  selected={this.state.startDate}
+  selected={this.state.date}
   onChange={this.handleChange}
-  onCalendarOpen={() => console.log("Calendar is open")}
-  onCalendarClose={() => console.log("Calendar is close")}
+  onInputError={(error)=>console.log(error)}
 />
 `}
           </code>
@@ -32,8 +31,7 @@ export default class OnCalendarChangeStateCallbacks extends React.Component {
           <DatePicker
             selected={this.state.date}
             onChange={this.handleChange}
-            onCalendarOpen={() => console.log("Calendar is open")}
-            onCalendarClose={() => console.log("Calendar is close")}
+            onInputError={error => console.log(error)}
           />
         </div>
       </div>

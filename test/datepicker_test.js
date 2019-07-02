@@ -726,6 +726,57 @@ describe("DatePicker", () => {
       expect(data.onInputErrorCallback.calledOnce).to.be.true;
     });
   });
+
+  describe("should trigger onInputError", () => {
+    it("when date is out of bounds", () => {
+      const onInputErrorSpy = sandbox.spy();
+
+      const onChange = date => datePicker.setProps({ selected: date });
+      const datePicker = mount(
+        <DatePicker
+          onChange={onChange}
+          minDate={new Date(2019, 4, 4)}
+          onInputError={onInputErrorSpy}
+        />
+      );
+
+      datePicker.find("input").simulate("change", {
+        target: { value: "01/01/2018" }
+      });
+
+      expect(
+        onInputErrorSpy.calledWith({ code: 2, msg: "Date is out of bounds" })
+      ).to.be.true;
+    });
+
+    it("with custom message", () => {
+      const onInputErrorSpy = sandbox.spy();
+
+      const onChange = date => datePicker.setProps({ selected: date });
+      const datePicker = mount(
+        <DatePicker
+          onChange={onChange}
+          minDate={new Date(2019, 4, 4)}
+          onInputError={onInputErrorSpy}
+          errors={{
+            dateOutOfBounds: "Custom message out of bounds"
+          }}
+        />
+      );
+
+      datePicker.find("input").simulate("change", {
+        target: { value: "01/01/18" }
+      });
+
+      expect(
+        onInputErrorSpy.calledWith({
+          code: 2,
+          msg: "Custom message out of bounds"
+        })
+      ).to.be.true;
+    });
+  });
+
   it("should reset the keyboard selection when closed", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
@@ -779,17 +830,6 @@ describe("DatePicker", () => {
     var datePicker = ReactDOM.render(<DatePicker />, div);
     datePicker.setFocus();
     expect(div.querySelector("input")).to.equal(document.activeElement);
-  });
-  it("should clear preventFocus timeout id when component is unmounted", () => {
-    var div = document.createElement("div");
-    document.body.appendChild(div);
-    var datePicker = ReactDOM.render(<DatePicker inline />, div);
-    datePicker.clearPreventFocusTimeout = sinon.spy();
-    ReactDOM.unmountComponentAtNode(div);
-    assert(
-      datePicker.clearPreventFocusTimeout.calledOnce,
-      "should call clearPreventFocusTimeout"
-    );
   });
 
   function getOnInputKeyDownDisabledKeyboardNavigationStuff() {

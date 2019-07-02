@@ -32,7 +32,8 @@ import {
   getMonth,
   registerLocale,
   setDefaultLocale,
-  getDefaultLocale
+  getDefaultLocale,
+  isOutOfBounds
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -54,10 +55,15 @@ function hasPreSelectionChanged(date1, date2) {
   return date1 !== date2;
 }
 
+//errors
+const defaultErrors = {
+  dateInvalid: { code: 1, msg: "Date input not valid" },
+  dateOutOfBounds: { code: 2, msg: "Date is out of bounds" }
+};
+
 /**
  * General datepicker component.
  */
-const INPUT_ERR_1 = "Date input not valid.";
 
 export default class DatePicker extends React.Component {
   static propTypes = {
@@ -80,6 +86,10 @@ export default class DatePicker extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
+    errors: PropTypes.shape({
+      dateInvalid: PropTypes.string,
+      dateOutOfBounds: PropTypes.string
+    }),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
@@ -184,6 +194,7 @@ export default class DatePicker extends React.Component {
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll",
+      errors: {},
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
@@ -436,6 +447,10 @@ export default class DatePicker extends React.Component {
     let changedDate = date;
 
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+      if (isOutOfBounds(changedDate, this.props)) {
+        this.props.onInputError(this.getError("dateOutOfBounds"));
+      }
+
       return;
     }
 
@@ -558,7 +573,7 @@ export default class DatePicker extends React.Component {
 
       this.setOpen(false);
       if (!this.inputOk()) {
-        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+        this.props.onInputError(this.getError("dateInvalid"));
       }
     } else if (eventKey === "Tab") {
       this.setOpen(false);
@@ -592,7 +607,7 @@ export default class DatePicker extends React.Component {
       }
       if (!newSelection) {
         if (this.props.onInputError) {
-          this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+          this.props.onInputError(this.getError("dateInvalid"));
         }
         return; // Let the input component handle this keydown
       }
@@ -617,6 +632,18 @@ export default class DatePicker extends React.Component {
 
   clear = () => {
     this.onClearClick();
+  };
+
+  getError = errorKey => {
+    const { errors } = this.props;
+
+    const defaultError = defaultErrors[errorKey];
+    //overwrite default message from props
+    const msg = errors.hasOwnProperty(errorKey)
+      ? errors[errorKey]
+      : defaultError.msg;
+
+    return { ...defaultError, msg };
   };
 
   renderCalendar = () => {
