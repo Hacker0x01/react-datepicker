@@ -360,6 +360,21 @@ export function isDayDisabled(
   );
 }
 
+export function isMonthDisabled(
+  month,
+  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
+) {
+  return (
+    isOutOfBounds(month, { minDate, maxDate }) ||
+    (excludeDates &&
+      excludeDates.some(excludeDate => isSameMonth(month, excludeDate))) ||
+    (includeDates &&
+      !includeDates.some(includeDate => isSameMonth(month, includeDate))) ||
+    (filterDate && !filterDate(newDate(month))) ||
+    false
+  );
+}
+
 export function isMonthinRange(startDate, endDate, m, day) {
   const startDateYear = getYear(startDate);
   const startDateMonth = getMonth(startDate);

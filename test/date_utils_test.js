@@ -7,6 +7,7 @@ import {
   isSameMonth,
   isSameYear,
   isDayDisabled,
+  isMonthDisabled,
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
@@ -192,6 +193,74 @@ describe("date_utils", function() {
         return true;
       };
       isDayDisabled(day, { filterDate });
+      expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isMonthDisabled", function() {
+    it("should be enabled by default", () => {
+      const day = newDate();
+      expect(isMonthDisabled(day)).to.be.false;
+    });
+
+    it("should be enabled if on the min date", () => {
+      const day = newDate();
+      expect(isMonthDisabled(day, { minDate: day })).to.be.false;
+    });
+
+    it("should be disabled if before the min date", () => {
+      const day = newDate();
+      const minDate = addDays(day, 40);
+      expect(isMonthDisabled(day, { minDate })).to.be.true;
+    });
+
+    it("should be enabled if on the max date", () => {
+      const day = newDate();
+      expect(isMonthDisabled(day, { maxDate: day })).to.be.false;
+    });
+
+    it("should be disabled if after the max date", () => {
+      const day = newDate();
+      const maxDate = subDays(day, 40);
+      expect(isMonthDisabled(day, { maxDate })).to.be.true;
+    });
+
+    it("should be disabled if in excluded dates", () => {
+      const day = newDate();
+      expect(isMonthDisabled(day, { excludeDates: [day] })).to.be.true;
+    });
+
+    it("should be enabled if in included dates", () => {
+      const day = newDate();
+      expect(isMonthDisabled(day, { includeDates: [day] })).to.be.false;
+    });
+
+    it("should be disabled if not in included dates", () => {
+      const day = newDate();
+      const includeDates = [addDays(day, 40)];
+      expect(isMonthDisabled(day, { includeDates })).to.be.true;
+    });
+
+    it("should be enabled if date filter returns true", () => {
+      const day = newDate();
+      const filterDate = d => isEqual(d, day);
+      expect(isMonthDisabled(day, { filterDate })).to.be.false;
+    });
+
+    it("should be disabled if date filter returns false", () => {
+      const day = newDate();
+      const filterDate = d => !isEqual(d, day);
+      expect(isMonthDisabled(day, { filterDate })).to.be.true;
+    });
+
+    it("should not allow date filter to modify input date", () => {
+      const day = newDate();
+      const dayClone = newDate(day);
+      const filterDate = d => {
+        addDays(d, 40);
+        return true;
+      };
+      isMonthDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
     });
   });
