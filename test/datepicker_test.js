@@ -1158,4 +1158,40 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(dayButtonInline);
     assert.equal(datePickerInline.state.monthSelectedIn, undefined);
   });
+
+  it("custom time className", () => {
+    var handleTimeColors = (time, currH, currM) => {
+      if (!Number.isInteger(currH) || !Number.isInteger(currM)) {
+        return "wrong";
+      }
+      return time.getHours() < 12 ? "red" : "green";
+    };
+
+    var timePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        showTimeSelect
+        showTimeSelectOnly
+        timeClassName={handleTimeColors}
+        onChange={() => console.log("changed")}
+        open
+        focus
+      />
+    );
+
+    var redItems = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__time-list-item red"
+    );
+    var greenItems = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__time-list-item green"
+    );
+
+    assert.isTrue(
+      redItems !== undefined &&
+        redItems.length === 24 &&
+        greenItems !== undefined &&
+        greenItems.length === 24
+    );
+  });
 });
