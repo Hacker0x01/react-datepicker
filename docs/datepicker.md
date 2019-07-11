@@ -16,6 +16,7 @@ General datepicker component.
 | `dateFormat`                 | `union(string\|array)`         | `'L'`           |                                            |
 | `dateFormatCalendar`         | `string`                       | `'MMMM YYYY'`   |                                            |
 | `dayClassName`               | `func`                         |                 |                                            |
+| `timeClassName`              | `func`                         |                 |                                            |
 | `disabled`                   | `bool`                         | `false`         |                                            |
 | `disabledKeyboardNavigation` | `bool`                         | `false`         |                                            |
 | `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                            |
