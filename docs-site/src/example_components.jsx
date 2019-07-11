@@ -7,6 +7,7 @@ import CustomDateFormat from "./examples/custom_date_format";
 import CustomClassName from "./examples/custom_class_name";
 import CustomCalendarClassName from "./examples/custom_calendar_class_name";
 import CustomDayClassNames from "./examples/custom_day_class_names";
+import CustomTimeClassNames from "./examples/custom_time_class_names";
 import PlaceholderText from "./examples/placeholder_text";
 import SpecificDateRange from "./examples/specific_date_range";
 import MinDate from "./examples/min_date";
@@ -112,6 +113,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom day class names",
       component: <CustomDayClassNames />
+    },
+    {
+      title: "Custom time class names",
+      component: <CustomTimeClassNames />
     },
     {
       title: "Today button",
