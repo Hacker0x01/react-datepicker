@@ -705,7 +705,7 @@ export default class DatePicker extends React.Component {
       placeholder: this.props.placeholderText,
       disabled: this.props.disabled,
       autoComplete: this.props.autoComplete,
-      className: className,
+      className: customInput.props.className + " " + className,
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
