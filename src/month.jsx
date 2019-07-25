@@ -156,7 +156,8 @@ export default class Month extends React.Component {
 
   onMonthClick = (e, m) => {
     this.handleDayClick(
-      utils.getStartOfMonth(utils.setMonth(this.props.day, m), e)
+      utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
+      e
     );
   };
 
