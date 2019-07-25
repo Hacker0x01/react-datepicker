@@ -610,7 +610,7 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
-  it("should not preSelect date if not after maxDate", () => {
+  it("should not preSelect date if after maxDate", () => {
     var data = getOnInputKeyDownStuff({
       maxDate: utils.addDays(utils.newDate(), 1)
     });
@@ -625,6 +625,32 @@ describe("DatePicker", () => {
     expect(data.datePicker.state.preSelection.valueOf()).to.equal(
       data.copyM.valueOf()
     );
+  });
+  it("should not manual select date if before minDate", () => {
+    var minDate = utils.subDays(utils.newDate(), 1);
+    var data = getOnInputKeyDownStuff({
+      minDate: minDate
+    });
+    TestUtils.Simulate.change(data.nodeInput, {
+      target: {
+        value: utils.formatDate(utils.subDays(minDate, 1), data.testFormat)
+      }
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+    expect(data.callback.calledOnce).to.be.false;
+  });
+  it("should not manual select date if after maxDate", () => {
+    var maxDate = utils.addDays(utils.newDate(), 1);
+    var data = getOnInputKeyDownStuff({
+      maxDate: maxDate
+    });
+    TestUtils.Simulate.change(data.nodeInput, {
+      target: {
+        value: utils.formatDate(utils.addDays(maxDate, 1), data.testFormat)
+      }
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+    expect(data.callback.calledOnce).to.be.false;
   });
   describe("onInputKeyDown Enter", () => {
     it("should update the selected date", () => {

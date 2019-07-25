@@ -38,8 +38,7 @@ import startOfMonth from "date-fns/startOfMonth";
 import startOfYear from "date-fns/startOfYear";
 import endOfWeek from "date-fns/endOfWeek";
 import endOfMonth from "date-fns/endOfMonth";
-import isEqual from "date-fns/isEqual";
-import isSameWeek from "date-fns/isSameWeek";
+import dfIsEqual from "date-fns/isEqual";
 import dfIsSameDay from "date-fns/isSameDay";
 import dfIsSameMonth from "date-fns/isSameMonth";
 import dfIsSameYear from "date-fns/isSameYear";
@@ -48,21 +47,31 @@ import isBefore from "date-fns/isBefore";
 import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
+import parseISO from "date-fns/parseISO";
+import longFormatters from "date-fns/_lib/format/longFormatters";
+
+// This RegExp catches symbols escaped by quotes, and also
+// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
+var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
 
 // ** Date Constructors **
 
 export function newDate(value) {
-  const d = value ? toDate(value) : new Date();
+  const d = value
+    ? typeof value === "string" || value instanceof String
+      ? parseISO(value)
+      : toDate(value)
+    : new Date();
   return isValid(d) ? d : null;
 }
 
 export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
-  let localeObject = getLocaleObject(locale);
+  let localeObject = getLocaleObject(locale) || getDefaultLocale();
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
-      let tryParseDate = parse(value, df, new Date(), localeObject);
+      let tryParseDate = parse(value, df, new Date(), { locale: localeObject });
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
@@ -75,14 +84,34 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat, new Date(), localeObject);
+  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
 
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
       value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
   } else if (!isValid(parsedDate)) {
-    parsedDate = new Date(value);
+    dateFormat = dateFormat
+      .match(longFormattingTokensRegExp)
+      .map(function(substring) {
+        var firstCharacter = substring[0];
+        if (firstCharacter === "p" || firstCharacter === "P") {
+          var longFormatter = longFormatters[firstCharacter];
+          return localeObject
+            ? longFormatter(substring, localeObject.formatLong)
+            : firstCharacter;
+        }
+        return substring;
+      })
+      .join("");
+
+    if (value.length > 0) {
+      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date());
+    }
+
+    if (!isValid(parsedDate)) {
+      parsedDate = new Date(value);
+    }
   }
 
   return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
@@ -210,7 +239,7 @@ export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
-export { isBefore, isAfter, isEqual };
+export { isBefore, isAfter };
 
 export function isSameYear(date1, date2) {
   if (date1 && date2) {
@@ -236,6 +265,14 @@ export function isSameDay(date1, date2) {
   }
 }
 
+export function isEqual(date1, date2) {
+  if (date1 && date2) {
+    return dfIsEqual(date1, date2);
+  } else {
+    return !date1 && !date2;
+  }
+}
+
 export function isDayInRange(day, startDate, endDate) {
   let valid;
   try {
@@ -255,24 +292,31 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function registerLocale(localeName, localeData) {
-  if (!window.__localeData__) {
-    window.__localeData__ = {};
+  const scope = typeof window !== "undefined" ? window : global;
+
+  if (!scope.__localeData__) {
+    scope.__localeData__ = {};
   }
-  window.__localeData__[localeName] = localeData;
+  scope.__localeData__[localeName] = localeData;
 }
 
 export function setDefaultLocale(localeName) {
-  window.__localeId__ = localeName;
+  const scope = typeof window !== "undefined" ? window : global;
+
+  scope.__localeId__ = localeName;
 }
 
 export function getDefaultLocale() {
-  return window.__localeId__;
+  const scope = typeof window !== "undefined" ? window : global;
+
+  return scope.__localeId__;
 }
 
 export function getLocaleObject(localeSpec) {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
-    return window.__localeData__ ? window.__localeData__[localeSpec] : null;
+    const scope = typeof window !== "undefined" ? window : global;
+    return scope.__localeData__ ? scope.__localeData__[localeSpec] : null;
   } else {
     // Treat it as a raw date-fns locale object
     return localeSpec;
@@ -316,6 +360,21 @@ export function isDayDisabled(
   );
 }
 
+export function isMonthDisabled(
+  month,
+  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
+) {
+  return (
+    isOutOfBounds(month, { minDate, maxDate }) ||
+    (excludeDates &&
+      excludeDates.some(excludeDate => isSameMonth(month, excludeDate))) ||
+    (includeDates &&
+      !includeDates.some(includeDate => isSameMonth(month, includeDate))) ||
+    (filterDate && !filterDate(newDate(month))) ||
+    false
+  );
+}
+
 export function isMonthinRange(startDate, endDate, m, day) {
   const startDateYear = getYear(startDate);
   const startDateMonth = getMonth(startDate);
@@ -326,9 +385,8 @@ export function isMonthinRange(startDate, endDate, m, day) {
     return startDateMonth <= m && m <= endDateMonth;
   } else if (startDateYear < endDateYear) {
     return (
-      (dayYear === startDateYear &&
-        (startDateMonth <= m || endDateMonth < m)) ||
-      (dayYear === endDateYear && (startDateMonth > m || endDateMonth >= m)) ||
+      (dayYear === startDateYear && startDateMonth <= m) ||
+      (dayYear === endDateYear && endDateMonth >= m) ||
       (dayYear < endDateYear && dayYear > startDateYear)
     );
   }
@@ -495,8 +553,5 @@ export function timesToInjectAfter(
 }
 
 export function addZero(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
+  return i < 10 ? `0${i}` : `${i}`;
 }

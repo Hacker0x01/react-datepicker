@@ -104,16 +104,20 @@ The date picker relies on [date-fns internationalization](https://date-fns.org/v
 - **setDefaultLocale** (string): sets a registered locale as the default for all datepicker instances
 - **getDefaultLocale**: returns a string showing the currently set default locale
 
-To load an alternate locale:
+```js
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import es from 'date-fns/locale/es';
+registerLocale('es', es)
 
-- Import the helper methods you need: `import { registerLocale, setDefaultLocale } from DatePicker;`
-- Import the locale from date-fns: `import fi from 'date-fns/locale/fi';`
-- Register the locale: `registerLocale('fi', fi);`
+<DatePicker
+  locale="es"
+/>
+```
 
-Locales can be changed in the following ways:
+Locales can be changed in the following way:
 
-- **Globally** - `setDefaultLocale('fi');`
-- **Picker-specific** by providing the `locale` prop - `<DatePicker locale='fi' ... />`
+- **Globally** - `setDefaultLocale('es');`
+ 
 
 ## Compatibility
 

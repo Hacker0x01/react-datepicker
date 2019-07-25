@@ -62,6 +62,22 @@ export default class Month extends React.Component {
     }
   };
 
+  isRangeStart = m => {
+    const { day, startDate, endDate } = this.props;
+    if (!startDate || !endDate) {
+      return false;
+    }
+    return utils.isSameMonth(utils.setMonth(day, m), startDate);
+  };
+
+  isRangeEnd = m => {
+    const { day, startDate, endDate } = this.props;
+    if (!startDate || !endDate) {
+      return false;
+    }
+    return utils.isSameMonth(utils.setMonth(day, m), endDate);
+  };
+
   isWeekInMonth = startOfWeek => {
     const day = this.props.day;
     const endOfWeek = utils.addDays(startOfWeek, 6);
@@ -146,13 +162,13 @@ export default class Month extends React.Component {
 
   getMonthClassNames = m => {
     const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
-
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       {
         "react-datepicker__month--disabled":
-          minDate && maxDate && !utils.isMonthinRange(minDate, maxDate, m, day),
+          (minDate || maxDate) &&
+          utils.isMonthDisabled(utils.setMonth(day, m), this.props),
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
@@ -161,7 +177,9 @@ export default class Month extends React.Component {
           endDate,
           m,
           day
-        )
+        ),
+        "react-datepicker__month--range-start": this.isRangeStart(m),
+        "react-datepicker__month--range-end": this.isRangeEnd(m)
       }
     );
   };
@@ -209,7 +227,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={"month-" + utils.formatDate(this.props.day, "YYYY-MM")}
+        aria-label={"month-" + utils.formatDate(this.props.day, "yyyy-MM")}
       >
         {showMonthYearPicker ? this.renderMonths() : this.renderWeeks()}
       </div>

@@ -1,8 +1,12 @@
 import React from "react";
 import { mount } from "enzyme";
 import TimeComponent from "../src/time";
+import * as utils from "../src/date_utils";
+import ptBR from "date-fns/locale/pt-BR";
 
 describe("TimeComponent", () => {
+  utils.registerLocale("pt-BR", ptBR);
+
   let sandbox;
 
   beforeEach(() => {
@@ -19,6 +23,11 @@ describe("TimeComponent", () => {
   });
 
   describe("Format", () => {
+    let spy;
+    beforeEach(() => {
+      spy = sandbox.spy(TimeComponent, "calcCenterPosition");
+    });
+
     it("should forward the time format provided in timeFormat props", () => {
       var timeComponent = mount(<TimeComponent format="HH:mm" />);
 
@@ -26,6 +35,16 @@ describe("TimeComponent", () => {
         ".react-datepicker__time-list-item"
       );
       expect(timeListItem.at(0).text()).to.eq("00:00");
+    });
+
+    it("should format the time based on the default locale (en-US)", () => {
+      mount(<TimeComponent format="p" />);
+      expect(spy.args[0][1].innerHTML).to.eq("1:00 PM");
+    });
+
+    it("should format the time based on the pt-BR locale", () => {
+      mount(<TimeComponent format="p" locale="pt-BR" />);
+      expect(spy.args[0][1].innerHTML).to.eq("13:00");
     });
   });
 

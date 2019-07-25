@@ -539,35 +539,33 @@
 }
 
 .react-datepicker__close-icon {
+  cursor: pointer;
   background-color: transparent;
   border: 0;
-  cursor: pointer;
   outline: 0;
   padding: 0;
-  vertical-align: middle;
   position: absolute;
+  top: 50%;
+  right: 7px;
   height: 16px;
   width: 16px;
-  top: 25%;
-  right: 7px;
+  margin: -8px auto 0;
 
   &::after {
-    background-color: $datepicker__selected-color;
-    border-radius: 50%;
-    bottom: 0;
-    box-sizing: border-box;
-    color: #fff;
-    content: "\00d7";
     cursor: pointer;
-    font-size: 12px;
+    background-color: $datepicker__selected-color;
+    color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 16px;
     width: 16px;
-    line-height: 1;
-    margin: -8px auto 0;
     padding: 2px;
-    position: absolute;
-    right: 0px;
+    font-size: 12px;
+    line-height: 1;
     text-align: center;
+    content: "\00d7";
   }
 }
 
