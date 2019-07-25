@@ -193,7 +193,7 @@ export default class Month extends React.Component {
           <div
             key={j}
             onClick={ev => {
-              this.onMonthClick(ev.target, m);
+              this.onMonthClick(ev, m);
             }}
             className={this.getMonthClassNames(m)}
           >
