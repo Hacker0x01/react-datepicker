@@ -38,25 +38,26 @@ export default class inputTime extends React.Component {
     const { time } = this.state;
     const { timeString } = this.props;
 
-    let input = isSafari ? (
-      <TimeField
-        className="react-datepicker-time__input"
-        placeholder="Time"
-        name="time-input"
-        value={time}
-        onChange={value => this.onTimeChange(value || timeString)}
-      />
-    ) : (
-      <input
-        type="time"
-        className="react-datepicker-time__input"
-        placeholder="Time"
-        name="time-input"
-        required
-        value={time}
-        onChange={ev => this.onTimeChange(ev.target.value || timeString)}
-      />
-    );
+    let input =
+      isSafari && typeof window != "undefined" ? (
+        <TimeField
+          className="react-datepicker-time__input"
+          placeholder="Time"
+          name="time-input"
+          value={time}
+          onChange={value => this.onTimeChange(value || timeString)}
+        />
+      ) : (
+        <input
+          type="time"
+          className="react-datepicker-time__input"
+          placeholder="Time"
+          name="time-input"
+          required
+          value={time}
+          onChange={ev => this.onTimeChange(ev.target.value || timeString)}
+        />
+      );
 
     return (
       <div className="react-datepicker__input-time-container">
