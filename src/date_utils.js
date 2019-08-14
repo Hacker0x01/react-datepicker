@@ -360,6 +360,14 @@ export function isDayDisabled(
   );
 }
 
+export function isDayExcluded(day, { excludeDates } = {}) {
+  return (
+    (excludeDates &&
+      excludeDates.some(excludeDate => isSameDay(day, excludeDate))) ||
+    false
+  );
+}
+
 export function isMonthDisabled(
   month,
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}

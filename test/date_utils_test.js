@@ -7,6 +7,7 @@ import {
   isSameMonth,
   isSameYear,
   isDayDisabled,
+  isDayExcluded,
   isMonthDisabled,
   monthDisabledBefore,
   monthDisabledAfter,
@@ -194,6 +195,26 @@ describe("date_utils", function() {
       };
       isDayDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isDayExcluded", function() {
+    it("should not be excluded by default", () => {
+      const day = newDate();
+      expect(isDayExcluded(day)).to.be.false;
+    });
+
+    it("should be excluded if in excluded dates", () => {
+      const day = newDate();
+      expect(isDayExcluded(day, { excludeDates: [day] })).to.be.true;
+    });
+
+    it("should not be excluded if not in excluded dates", () => {
+      const day = newDate();
+      const excludedDay = newDate();
+      const currentMonth = excludedDay.getMonth();
+      excludedDay.setMonth(currentMonth === 11 ? 0 : currentMonth + 1);
+      expect(isDayExcluded(day, { excludeDates: [] }));
     });
   });
 
