@@ -135,7 +135,7 @@ Latest compatible versions:
 
 ### Moment.js
 
-Up until version 1.8.0, this package was using Moment.js. Starting v2.0.0, we switched to using native Date objects to reduce the size of the package. If you're switching from 1.8.0 to 2.0.0 or higher, please see the updated example above of check out the [examples site](https://reactdatepicker.com) for up to date examples.
+Up until version 1.8.0, this package was using Moment.js. Starting v2.0.0, we switched to using `date-fns`, which uses native Date objects, to reduce the size of the package. If you're switching from 1.8.0 to 2.0.0 or higher, please see the updated example above of check out the [examples site](https://reactdatepicker.com) for up to date examples.
 
 ### Browser Support
 
