@@ -1043,6 +1043,23 @@ describe("Calendar", function() {
       expect(next.text()).to.equal("Next Year");
     });
 
+    it("should render custom next and previous labels", function() {
+      var calendar = mount(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+          previousYearButtonLabel="Custom Previous Year Label"
+          nextYearButtonLabel="Custom Next Year Label"
+        />
+      );
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Custom Previous Year Label");
+      expect(next.text()).to.equal("Custom Next Year Label");
+    });
+
     it("calls decreaseYear when previous month button clicked", () => {
       var calendar = TestUtils.renderIntoDocument(
         <Calendar
