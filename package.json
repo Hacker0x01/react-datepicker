@@ -120,7 +120,6 @@
     "test:watch": "cross-env NODE_ENV=test karma start karma.conf.js --watch",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
-    "codecov": "codecov",
     "prebuild": "rimraf es lib dist",
     "build": "cross-env NODE_ENV=production run-p build:** && run-p css:**",
     "build-dev": "cross-env NODE_ENV=development run-p build:** && run-p css:**",
