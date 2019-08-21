@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.0.2",
+    "babel-eslint": "^10.0.2",
     "babel-loader": "^6.2.10",
     "babel-plugin-add-react-displayname": "^0.0.5",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -50,10 +50,10 @@
     "css-loader": "^0.28.7",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^4.10.0",
+    "eslint": "^6.2.1",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "express": "^4.16.4",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -106,7 +106,7 @@
     "react-popper": "^1.3.4"
   },
   "scripts": {
-    "eslint": "eslint {src,test,docs-site/src}/**/*.{js,jsx} *.js",
+    "eslint": "eslint --ext .js,.jsx src test docs-site/src",
     "flow": "flow",
     "precommit": "lint-staged",
     "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
