@@ -21,5 +21,3 @@ git push --tags
 npm publish
 
 yarn run build
-
-echo "reactdatepicker.com" > docs-site/CNAME
