@@ -14,7 +14,7 @@ module.exports = function(config) {
       "test/index.js": ["webpack", "sourcemap"]
     },
 
-    reporters: ["dots", "coverage"],
+    reporters: ["mocha", "coverage"],
 
     webpack: {
       mode: "development",
