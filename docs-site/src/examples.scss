@@ -1,0 +1,119 @@
+.examples__navigation {
+  display: none;
+
+  @include breakpoint(640px) {
+    width: 200px;
+    float: left;
+    display: block;
+    list-style: none;
+    margin: 0;
+    margin-right: 20px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+}
+
+@supports (position: sticky) {
+  .examples__navigation {
+    overflow-y: scroll;
+    max-height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+}
+
+.examples__navigation-item {
+  border-bottom: 1px solid #e4e4e4;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    padding: 10px;
+    color: inherit;
+    text-decoration: none;
+    display: block;
+
+    &:hover {
+      background: #f5f5f5;
+      text-decoration: underline;
+    }
+  }
+}
+
+.examples {
+  overflow: hidden;
+}
+
+.example {
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #e4e4e4;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  &__heading {
+    color: #216ba5;
+    font-weight: 400;
+    font-size: 18px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  &__code {
+    background-color: #f5f8fb;
+    padding: 20px;
+    margin: 0 -20px 20px;
+    border-top: 1px solid #d8e4ef;
+    border-bottom: 1px solid #d8e4ef;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    @include breakpoint(768px) {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-right: 1px solid #d8e4ef;
+      margin-bottom: 0;
+    }
+
+    code {
+      background: none;
+      border: 0;
+    }
+  }
+}
+
+.red-border {
+  border-color: #f00;
+}
+
+.rasta-stripes {
+  .react-datepicker__week:nth-child(3n + 1) {
+    background-color: #215005;
+  }
+  .react-datepicker__week:nth-child(3n + 2) {
+    background-color: #eea429;
+  }
+  .react-datepicker__week:nth-child(3n + 3) {
+    background-color: #a82a15;
+  }
+}
+
+.react-datepicker__day.random {
+  color: #f00;
+}
+
+.example-custom-input {
+  cursor: pointer;
+  padding: 5px 15px;
+  border: 0;
+  border-radius: 4px;
+  background-color: #216ba5;
+  font: inherit;
+  color: #fff;
+}

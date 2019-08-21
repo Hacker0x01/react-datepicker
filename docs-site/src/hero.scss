@@ -1,0 +1,43 @@
+.hero {
+  color: #fff;
+  background-color: #216ba5;
+
+  &__content {
+    @extend %container-styling;
+    text-align: center;
+    padding: 175px 0;
+  }
+
+  &__title {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0;
+    margin-bottom: 5px;
+  }
+
+  &__image {
+    height: 14px;
+  }
+
+  &__example {
+    margin: 0 auto;
+  }
+
+  &__crafted-by {
+    margin-bottom: 30px;
+  }
+
+  &__crafted-by-link {
+    color: #fff;
+  }
+}
+
+.github-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
