@@ -28,6 +28,7 @@ const config = {
         "@babel/plugin-external-helpers",
         "@babel/plugin-proposal-class-properties"
       ],
+      runtimeHelpers: true,
       externalHelpersWhitelist: babelHelpersList.filter(
         helperName => helperName !== "asyncGenerator"
       )

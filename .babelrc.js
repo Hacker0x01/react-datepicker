@@ -4,6 +4,7 @@ var MODULES = process.env.MODULES;
 var modules = MODULES === "false" || NODE_ENV === "test" ? "commonjs" : false;
 
 const presets = [
+  "airbnb",
   // ["@babel/preset-env", {
   //   loose: true,
   //   modules,
