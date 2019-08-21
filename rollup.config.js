@@ -19,7 +19,7 @@ const config = {
   },
   plugins: [
     nodeResolve({
-      jsnext: true,
+      mainFields: ["module"],
       extensions: [".js", ".jsx"]
     }),
     babel({
