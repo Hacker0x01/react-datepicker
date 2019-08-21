@@ -45,7 +45,7 @@ handleChangeRaw(value) {
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            placeholderText="Enter &quot;tomorrow&quot;"
+            placeholderText='Enter "tomorrow"'
             onChangeRaw={event => this.handleChangeRaw(event.target.value)}
           />
         </div>

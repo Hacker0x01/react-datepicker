@@ -22,3 +22,6 @@ docs/month.md
 docs/week.md
 docs/year_dropdown_options.md
 docs/year_dropdown.md
+
+# We are using Yarn
+package-lock.json
