@@ -3,43 +3,27 @@ var MODULES = process.env.MODULES;
 
 var modules = MODULES === "false" || NODE_ENV === "test" ? "commonjs" : false;
 
-var config = {
-  presets: [
-    [
-      "env",
-      {
-        loose: true,
-        modules: modules,
-        forceAllTransforms: NODE_ENV === "production"
-      }
-    ],
-    "stage-0",
-    "react"
-  ],
-  plugins: []
-};
+const presets = [
+  // ["@babel/preset-env", {
+  //   loose: true,
+  //   modules,
+  //   forceAllTransforms: NODE_ENV === "production"
+  // }],
+  "@babel/preset-react",
+  "@babel/preset-flow"
+];
+const plugins = [
+  "@babel/plugin-transform-react-jsx",
+  "@babel/plugin-proposal-class-properties"
+];
 
 if (NODE_ENV === "development") {
-  config.plugins = config.plugins.concat([
-    "transform-class-properties",
-    [
-      "react-transform",
-      {
-        transforms: [
-          {
-            transform: "react-transform-hmr",
-            imports: ["react"],
-            locals: ["module"]
-          }
-        ]
-      }
-    ],
-    "add-react-displayname"
-  ]);
+  plugins.push("@babel/plugin-proposal-class-properties");
+  plugins.push("@babel/plugin-transform-react-display-name");
 }
 
 if (NODE_ENV === "production") {
-  config.plugins = config.plugins.concat(["transform-react-remove-prop-types"]);
+  plugins.push("transform-react-remove-prop-types");
 }
 
-module.exports = config;
+module.exports = { presets, plugins };

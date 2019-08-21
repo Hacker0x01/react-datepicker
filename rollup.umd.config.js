@@ -1,5 +1,5 @@
 import config from "./rollup.config.js";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 
 const env = process.env.NODE_ENV;
 

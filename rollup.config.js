@@ -24,7 +24,10 @@ const config = {
     }),
     babel({
       exclude: "node_modules/**",
-      plugins: ["external-helpers"],
+      plugins: [
+        "@babel/plugin-external-helpers",
+        "@babel/plugin-proposal-class-properties"
+      ],
       externalHelpersWhitelist: babelHelpersList.filter(
         helperName => helperName !== "asyncGenerator"
       )
