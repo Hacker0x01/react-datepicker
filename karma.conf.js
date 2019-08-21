@@ -3,15 +3,11 @@
 var webpack = require("webpack");
 var path = require("path");
 
-var CONTINUOUS_INTEGRATION = process.env.CONTINUOUS_INTEGRATION === "true";
-
 module.exports = function(config) {
   config.set({
     frameworks: ["mocha", "sinon", "chai"],
 
     browsers: ["FirefoxHeadless"],
-
-    singleRun: CONTINUOUS_INTEGRATION,
 
     files: ["test/index.js"],
 
@@ -22,13 +18,14 @@ module.exports = function(config) {
     reporters: ["dots", "coverage"],
 
     webpack: {
+      mode: "development",
       devtool: "inline-source-map",
       module: {
-        loaders: [
+        rules: [
           {
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: "babel",
+            loader: "babel-loader",
             query: {
               presets: ["airbnb"]
             }
@@ -36,7 +33,9 @@ module.exports = function(config) {
           {
             test: /\.jsx?$/,
             include: path.resolve(__dirname, "src"),
-            loader: "isparta"
+            loader: "istanbul-instrumenter-loader",
+            enforce: "post",
+            options: { esModules: true }
           }
         ]
       },
@@ -46,7 +45,7 @@ module.exports = function(config) {
         })
       ],
       resolve: {
-        extensions: ["", ".jsx", ".js"]
+        extensions: [".jsx", ".js"]
       },
       externals: {
         cheerio: "window",

@@ -63,7 +63,7 @@
     "flow-bin": "^0.105.2",
     "highlight.js": "^9.15.10",
     "husky": "^3.0.4",
-    "isparta-loader": "^2.0.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^4.2.0",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^2.0.1",
