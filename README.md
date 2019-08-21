@@ -32,19 +32,15 @@ import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class Example extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: new Date()
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
+  state = {
+    startDate: new Date()
+  };
 
-  handleChange(date) {
+  handleChange = date => {
     this.setState({
       startDate: date
     });
-  }
+  };
 
   render() {
     return (
@@ -117,7 +113,6 @@ registerLocale('es', es)
 Locales can be changed in the following way:
 
 - **Globally** - `setDefaultLocale('es');`
- 
 
 ## Compatibility
 

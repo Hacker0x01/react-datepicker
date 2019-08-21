@@ -1,23 +1,23 @@
 import config from "./rollup.config.js";
 import { uglify } from "rollup-plugin-uglify";
 
-const env = process.env.NODE_ENV;
-
-const umdConfig = Object.assign({}, config, {
-  output: Object.assign({}, config.output, {
+const umdConfig = {
+  ...config,
+  output: {
+    ...config.output,
     format: "umd",
-    name: "DatePicker"
-  }),
-  globals: {
-    react: "React",
-    "prop-types": "PropTypes",
-    "react-onclickoutside": "onClickOutside",
-    "react-popper": "ReactPopper",
-    classnames: "classNames"
+    name: "DatePicker",
+    globals: {
+      react: "React",
+      "prop-types": "PropTypes",
+      "react-onclickoutside": "onClickOutside",
+      "react-popper": "ReactPopper",
+      classnames: "classNames"
+    }
   }
-});
+};
 
-if (env === "production") {
+if (process.env.NODE_ENV === "production") {
   config.plugins.push(
     uglify({
       compress: {

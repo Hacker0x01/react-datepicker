@@ -6,7 +6,7 @@
  */
 
 var fs = require('fs');
-var generateMarkdown = require('./generateMarkdown.sh');
+var generateMarkdown = require('./generateMarkdown');
 var path = require('path');
 
 var json = '';
