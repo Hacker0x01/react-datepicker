@@ -31,6 +31,10 @@
     "url": "https://github.com/Hacker0x01/react-datepicker/issues"
   },
   "devDependencies": {
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "@babel/core": "^7.5.5",
     "@babel/helpers": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -99,10 +103,6 @@
     "react-dom": "^16.9.0"
   },
   "dependencies": {
-    "@babel/plugin-external-helpers": "^7.2.0",
-    "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0",
     "prop-types": "^15.7.2",
@@ -120,7 +120,7 @@
     "test:watch": "cross-env NODE_ENV=test karma start karma.conf.js --watch",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prepare": "npm run build",
-    "codecov": "cat coverage/*/lcov.info | ./node_modules/.bin/codecov",
+    "codecov": "codecov",
     "prebuild": "rimraf es lib dist",
     "build": "cross-env NODE_ENV=production run-p build:** && run-p css:**",
     "build-dev": "cross-env NODE_ENV=development run-p build:** && run-p css:**",
