@@ -1,17 +1,17 @@
-var express = require("express");
-var webpack = require("webpack");
-var merge = require("lodash/merge");
-var config = merge({}, require("./webpack.docs.config"));
+const express = require("express");
+const webpack = require("webpack");
+const merge = require("lodash/merge");
+const config = require("./webpack.docs.config");
 
 config.devtool = "cheap-module-eval-source-map";
 config.entry.unshift("webpack-hot-middleware/client");
 config.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoEmitOnErrorsPlugin()
 );
 
-var app = express();
-var compiler = webpack(config);
+const app = express();
+const compiler = webpack(config);
 
 app.use(
   require("webpack-dev-middleware")(compiler, {
