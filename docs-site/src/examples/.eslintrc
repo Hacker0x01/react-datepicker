@@ -1,0 +1,17 @@
+{
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-no-undef": [
+            "error",
+            {
+                "allowGlobals": true
+            }
+        ],
+        "react/display-name": "off"
+    },
+    "globals": {
+        "useState": false,
+        "render": false,
+        "DatePicker": false
+    }
+}

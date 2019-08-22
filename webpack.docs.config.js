@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -27,7 +27,12 @@ module.exports = {
     rules: [
       {
         test: /\.js/,
-        exclude: /node_modules/,
+        include: /src\/examples\//,
+        use: "raw-loader"
+      },
+      {
+        test: /\.js/,
+        exclude: [/node_modules/, /src\/examples\//],
         use: {
           loader: "babel-loader"
         }
@@ -59,6 +64,16 @@ module.exports = {
     })
   ],
   optimization: {
-    minimizer: [new UglifyJsPlugin()]
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
   }
 };
