@@ -7,8 +7,11 @@ cache:
 script:
   - yarn lint
   - yarn test
+  - yarn build
 after_success:
   - yarn run codecov
+before_deploy:
+  - yarn run build:docs
 deploy:
   provider: pages
   skip_cleanup: true
