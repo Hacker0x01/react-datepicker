@@ -1,6 +1,5 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import isAfter from "date-fns/isAfter";
 
 export default class DateRange extends React.Component {
   constructor(props) {
