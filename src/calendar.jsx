@@ -213,18 +213,18 @@ export default class Calendar extends React.Component {
 
   increaseMonth = () => {
     this.setState(
-      {
-        date: addMonths(this.state.date, 1)
-      },
+      ({ date }) => ({
+        date: addMonths(date, 1)
+      }),
       () => this.handleMonthChange(this.state.date)
     );
   };
 
   decreaseMonth = () => {
     this.setState(
-      {
-        date: subMonths(this.state.date, 1)
-      },
+      ({ date }) => ({
+        date: subMonths(date, 1)
+      }),
       () => this.handleMonthChange(this.state.date)
     );
   };
@@ -269,30 +269,27 @@ export default class Calendar extends React.Component {
 
   changeYear = year => {
     this.setState(
-      {
-        date: setYear(this.state.date, year)
-      },
+      ({ date }) => ({
+        date: setYear(date, year)
+      }),
       () => this.handleYearChange(this.state.date)
     );
   };
 
   changeMonth = month => {
     this.setState(
-      {
-        date: setMonth(this.state.date, month)
-      },
+      ({ date }) => ({
+        date: setMonth(date, month)
+      }),
       () => this.handleMonthChange(this.state.date)
     );
   };
 
   changeMonthYear = monthYear => {
     this.setState(
-      {
-        date: setYear(
-          setMonth(this.state.date, getMonth(monthYear)),
-          getYear(monthYear)
-        )
-      },
+      ({ date }) => ({
+        date: setYear(setMonth(date, getMonth(monthYear)), getYear(monthYear))
+      }),
       () => this.handleMonthYearChange(this.state.date)
     );
   };
@@ -331,9 +328,9 @@ export default class Calendar extends React.Component {
 
   decreaseYear = () => {
     this.setState(
-      {
-        date: subYears(this.state.date, 1)
-      },
+      ({ date }) => ({
+        date: subYears(date, 1)
+      }),
       () => this.handleYearChange(this.state.date)
     );
   };
@@ -537,9 +534,7 @@ export default class Calendar extends React.Component {
     <div className="react-datepicker__header">
       {this.renderCurrentMonth(monthDate)}
       <div
-        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
-          this.props.dropdownMode
-        }`}
+        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
       >
         {this.renderMonthDropdown(i !== 0)}
