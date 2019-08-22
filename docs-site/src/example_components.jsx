@@ -1,5 +1,6 @@
 import React from "react";
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/highlight";
+import hljsJavaScriptLanguage from "highlight.js/lib/languages/javascript";
 import Default from "./examples/default";
 import CodeExampleComponent from "./code_example_component";
 
@@ -66,6 +67,7 @@ import "./style.scss";
 export default class exampleComponents extends React.Component {
   componentDidMount() {
     hljs.initHighlightingOnLoad();
+    hljs.registerLanguage("javascript", hljsJavaScriptLanguage);
   }
 
   examples = [
