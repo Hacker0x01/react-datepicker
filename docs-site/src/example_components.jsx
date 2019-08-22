@@ -114,51 +114,51 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom day class names",
       component: CustomDayClassNames
+    },
+    {
+      title: "Today button",
+      component: Today
+    },
+    {
+      title: "Placeholder text",
+      component: PlaceholderText
+    },
+    {
+      title: "Specific date range",
+      component: SpecificDateRange
+    },
+    {
+      title: "Min date",
+      component: MinDate
+    },
+    {
+      title: "Max date",
+      component: MaxDate
+    },
+    {
+      title: "Date Range with disabled navigation shown",
+      component: DateRangeWithShowDisabledNavigation
+    },
+    {
+      title: "Locale",
+      component: Locale
+    },
+    {
+      title: "Locale with time",
+      component: LocaleWithTime
+    },
+    {
+      title: "Locale without global variables",
+      component: LocaleWithoutGlobalVariable
+    },
+    {
+      title: "Exclude dates",
+      component: ExcludeDates
+    },
+    {
+      title: "Highlight dates",
+      component: HighlightDates
     }
-    // {
-    //   title: "Today button",
-    //   component: <Today />
-    // },
-    // {
-    //   title: "Placeholder text",
-    //   component: <PlaceholderText />
-    // },
-    // {
-    //   title: "Specific date range",
-    //   component: <SpecificDateRange />
-    // },
-    // {
-    //   title: "Min date",
-    //   component: <MinDate />
-    // },
-    // {
-    //   title: "Max date",
-    //   component: <MaxDate />
-    // },
-    // {
-    //   title: "Date Range with disabled navigation shown",
-    //   component: <DateRangeWithShowDisabledNavigation />
-    // },
-    // {
-    //   title: "Locale",
-    //   component: <Locale />
-    // },
-    // {
-    //   title: "Locale with time",
-    //   component: <LocaleWithTime />
-    // },
-    // {
-    //   title: "Locale without global variables",
-    //   component: <LocaleWithoutGlobalVariable />
-    // },
-    // {
-    //   title: "Exclude dates",
-    //   component: <ExcludeDates />
-    // },
-    // {
-    //   title: "Highlight dates",
-    //   component: <HighlightDates />
-    // },
     // {
     //   title: "Highlight dates with custom class names and ranges",
     //   component: <HighlightDatesRanges />
