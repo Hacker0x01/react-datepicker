@@ -31,7 +31,6 @@ import max from "date-fns/max";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
 import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
-import setDayOfYear from "date-fns/setDayOfYear";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
@@ -185,7 +184,6 @@ export {
 };
 
 export function getWeek(date) {
-  let firstDayOfYear = setDayOfYear(date, 1);
   if (!isSameYear(endOfWeek(date), date)) {
     return 1;
   }
@@ -356,6 +354,14 @@ export function isDayDisabled(
     (includeDates &&
       !includeDates.some(includeDate => isSameDay(day, includeDate))) ||
     (filterDate && !filterDate(newDate(day))) ||
+    false
+  );
+}
+
+export function isDayExcluded(day, { excludeDates } = {}) {
+  return (
+    (excludeDates &&
+      excludeDates.some(excludeDate => isSameDay(day, excludeDate))) ||
     false
   );
 }

@@ -1,17 +1,27 @@
 language: node_js
 node_js:
   - "node"
-before_install:
-  - npm i -g npm@latest
-
-# install:
-#   - yarn install
+cache:
+  - npm
+  - yarn
 script:
   - yarn lint
   - yarn test
+  - yarn build
 after_success:
   - yarn run codecov
+before_deploy:
+  - yarn run build:docs
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: false
+  local_dir: docs-site
+  on:
+    branch: master
+addons:
+  firefox: latest
 notifications:
   slack:
     secure: kAmrLltV0ZLuhl6rKk26fDLGuoCch6AYaObRQje4UZlxVQjR2467k430vOZLqv39Mr3U5XmYl6VLcCGmBr3tjM/9c1zjoXnRT8MRy4eIYaUr/thXeh2FlfHKOk8rXnNOoRZ1kBsCzCDFCNDYZZA4jya8S5ITcQyGyYcOqBWVy1w=
-cache: yarn

@@ -26,9 +26,7 @@ export default class SpecificDateRange extends React.Component {
             <br />
             <strong>{"  maxDate={addDays(new Date(), 5)}"}</strong>
             <br />
-            {
-              '  placeholderText="Select a date before 5 days in the future"'
-            }
+            {'  placeholderText="Select a date before 5 days in the future"'}
             <br />
             {"/>"}
           </code>

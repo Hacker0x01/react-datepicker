@@ -2,18 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 class CustomInput extends React.Component {
-  onChange(e) {
+  onChange = e => {
     var args = [e, e.target.value];
     if (this.props.onChangeArgs) {
       args = this.props.onChangeArgs(e);
     }
     this.props.onChange.apply(this, args);
-  }
+  };
 
   render() {
     let { ...props } = this.props;
     delete props.onChangeArgs;
-    return <input {...props} onChange={this.onChange.bind(this)} />;
+    return <input {...props} onChange={this.onChange} />;
   }
 }
 

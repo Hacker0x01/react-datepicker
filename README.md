@@ -32,19 +32,15 @@ import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 class Example extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: new Date()
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
+  state = {
+    startDate: new Date()
+  };
 
-  handleChange(date) {
+  handleChange = date => {
     this.setState({
       startDate: date
     });
-  }
+  };
 
   render() {
     return (
@@ -117,7 +113,6 @@ registerLocale('es', es)
 Locales can be changed in the following way:
 
 - **Globally** - `setDefaultLocale('es');`
- 
 
 ## Compatibility
 
@@ -135,7 +130,7 @@ Latest compatible versions:
 
 ### Moment.js
 
-Up until version 1.8.0, this package was using Moment.js. Starting v2.0.0, we switched to using native Date objects to reduce the size of the package. If you're switching from 1.8.0 to 2.0.0 or higher, please see the updated example above of check out the [examples site](https://reactdatepicker.com) for up to date examples.
+Up until version 1.8.0, this package was using Moment.js. Starting v2.0.0, we switched to using `date-fns`, which uses native Date objects, to reduce the size of the package. If you're switching from 1.8.0 to 2.0.0 or higher, please see the updated example above of check out the [examples site](https://reactdatepicker.com) for up to date examples.
 
 ### Browser Support
 
@@ -169,4 +164,4 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 
 ## License
 
-Copyright (c) 2018 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
+Copyright (c) 2019 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.

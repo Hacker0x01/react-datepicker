@@ -1,5 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Root from './root'
+import "core-js/stable";
 
-ReactDOM.render(<Root />, document.getElementById('app'))
+import React from "react";
+import ReactDOM from "react-dom";
+import Root from "./root";
+
+ReactDOM.render(<Root />, document.getElementById("app"));

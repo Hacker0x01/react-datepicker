@@ -26,9 +26,7 @@ export default class SpecificDateRange extends React.Component {
             <br />
             <strong>{"  minDate={subDays(new Date(), 5)}"}</strong>
             <br />
-            {
-              '  placeholderText="Select a date after 5 days ago"'
-            }
+            {'  placeholderText="Select a date after 5 days ago"'}
             <br />
             {"/>"}
           </code>
