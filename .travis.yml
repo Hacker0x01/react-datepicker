@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - "node"
-cache: yarn
+cache:
+  - npm
+  - yarn
 script:
   - yarn lint
   - yarn test
@@ -15,6 +17,8 @@ deploy:
   local_dir: docs-site
   on:
     branch: master
+addons:
+  firefox: latest
 notifications:
   slack:
     secure: kAmrLltV0ZLuhl6rKk26fDLGuoCch6AYaObRQje4UZlxVQjR2467k430vOZLqv39Mr3U5XmYl6VLcCGmBr3tjM/9c1zjoXnRT8MRy4eIYaUr/thXeh2FlfHKOk8rXnNOoRZ1kBsCzCDFCNDYZZA4jya8S5ITcQyGyYcOqBWVy1w=

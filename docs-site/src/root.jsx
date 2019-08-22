@@ -17,7 +17,7 @@ export default class Root extends React.Component {
               <a href="https://hackerone.com" className="hero__crafted-by-link">
                 Crafted by{" "}
                 <img
-                  src="images/logo.png"
+                  src="src/images/logo.png"
                   className="hero__image"
                   alt="HackerOne"
                   title="HackerOne"
@@ -71,6 +71,10 @@ export default class Root extends React.Component {
           <p>
             <code>npm install react-datepicker --save</code>
           </p>
+          <p>Or by using Yarn:</p>
+          <p>
+            <code>yarn add react-datepicker</code>
+          </p>
         </div>
         <div className="wrapper">
           <ExampleComponents />
@@ -79,7 +83,7 @@ export default class Root extends React.Component {
         <a href="https://github.com/Hacker0x01/react-datepicker/">
           <img
             className="github-ribbon"
-            src="images/ribbon.png"
+            src="src/images/ribbon.png"
             alt="Fork me on GitHub"
           />
         </a>

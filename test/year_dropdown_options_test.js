@@ -11,7 +11,7 @@ describe("YearDropdownOptions", () => {
   let sandbox, onCancelSpy;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     onCancelSpy = sandbox.spy();
     yearDropdown = mount(
       <YearDropdownOptions
@@ -125,7 +125,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
@@ -234,9 +234,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     textContents = yearDropdown
       .find(".react-datepicker__year-option")
       .map(node => node.text());
-
-    expect(textContents.find(year => year === utils.getYear(minDate))).to.be
-      .defined;
+    const x = textContents.find(year => year === utils.getYear(minDate));
+    expect(x).to.be.undefined;
+    console.log(
+      "kektus",
+      x,
+      textContents.find(year => year === utils.getYear(minDate))
+    );
     expect(textContents.find(year => year === utils.getYear(maxDate))).to.be
       .undefined;
     expect(
@@ -250,9 +254,9 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       .find(".react-datepicker__year-option")
       .map(node => node.text());
     expect(textContents.find(year => year === utils.getYear(minDate))).to.be
-      .defined;
+      .undefined;
     expect(textContents.find(year => year === utils.getYear(maxDate))).to.be
-      .defined;
+      .undefined;
   });
 
   it("should show arrows to add previous years, if actual years list does not contain minDate year, if only minDate is provided", () => {
@@ -291,7 +295,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       .find(".react-datepicker__year-option")
       .map(node => node.text());
     expect(textContents.find(year => year === utils.getYear(minDate))).to.be
-      .defined;
+      .undefined;
     expect(
       yearDropdown.find(".react-datepicker__navigation--years-upcoming").length
     ).to.equal(1);
@@ -337,7 +341,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       .map(node => node.text());
 
     expect(textContents.find(year => year === utils.getYear(maxDate))).to.be
-      .defined;
+      .undefined;
     expect(
       yearDropdown.find(".react-datepicker__navigation--years-upcoming").length
     ).to.equal(0);

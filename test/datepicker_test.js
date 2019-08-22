@@ -46,7 +46,7 @@ describe("DatePicker", () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
@@ -1124,15 +1124,10 @@ describe("DatePicker", () => {
   });
   it("should fire onInputClick when input is clicked", () => {
     const onInputClickSpy = sinon.spy();
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker onInputClick={onInputClickSpy} />
-    );
-    var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
-    defer(() => {
-      assert(onInputClickSpy.calledOnce, "should fire onInputClick");
-      done();
-    });
+    var datePicker = mount(<DatePicker onInputClick={onInputClickSpy} />)
+      .find("input")
+      .simulate("click");
+    assert(onInputClickSpy.callCount, 1);
   });
 
   it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
