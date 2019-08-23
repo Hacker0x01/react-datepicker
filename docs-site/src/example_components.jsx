@@ -1,6 +1,7 @@
 import React from "react";
 import hljs from "highlight.js/lib/highlight";
 import hljsJavaScriptLanguage from "highlight.js/lib/languages/javascript";
+import slugify from "slugify";
 import Default from "./examples/default";
 import CodeExampleComponent from "./code_example_component";
 
@@ -158,23 +159,23 @@ export default class exampleComponents extends React.Component {
     {
       title: "Highlight dates",
       component: HighlightDates
+    },
+    {
+      title: "Highlight dates with custom class names and ranges",
+      component: HighlightDatesRanges
+    },
+    {
+      title: "Include dates",
+      component: IncludeDates
+    },
+    {
+      title: "Filter dates",
+      component: FilterDates
+    },
+    {
+      title: "Date Range",
+      component: DateRange
     }
-    // {
-    //   title: "Highlight dates with custom class names and ranges",
-    //   component: <HighlightDatesRanges />
-    // },
-    // {
-    //   title: "Include dates",
-    //   component: <IncludeDates />
-    // },
-    // {
-    //   title: "Filter dates",
-    //   component: <FilterDates />
-    // },
-    // {
-    //   title: "Date Range",
-    //   component: <DateRange />
-    // },
     // {
     //   title: "Disable datepicker",
     //   component: <Disabled />
@@ -307,17 +308,15 @@ export default class exampleComponents extends React.Component {
 
   renderExamples = () =>
     this.examples.map((example, index) => (
-      <CodeExampleComponent
-        key={`example-${index}`}
-        id={index}
-        example={example}
-      />
+      <CodeExampleComponent key={index} example={example} />
     ));
 
   renderLeftColumn = () =>
     this.examples.map((example, index) => (
       <li className="examples__navigation-item" key={`link-${index}`}>
-        <a href={`#example-${index}`}>{example.title}</a>
+        <a href={`#example-${slugify(example.title, { lower: true })}`}>
+          {example.title}
+        </a>
       </li>
     ));
 

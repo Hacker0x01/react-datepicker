@@ -2,19 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import DatePicker, { registerLocale } from "react-datepicker";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
-import getDate from "date-fns/getDate";
-import addDays from "date-fns/addDays";
-import subDays from "date-fns/subDays";
-import addMonths from "date-fns/addMonths";
+import * as DateFNS from "date-fns/esm";
 import fi from "date-fns/locale/fi";
 import ptBR from "date-fns/locale/pt-BR";
+import slugify from "slugify";
 
 export default class CodeExampleComponent extends React.Component {
   static propTypes = {
-    example: PropTypes.object.isRequired,
-    id: PropTypes.number
+    example: PropTypes.object.isRequired
   };
   componentDidMount() {
     registerLocale("fi", fi);
@@ -25,8 +20,7 @@ export default class CodeExampleComponent extends React.Component {
     const { title, component } = this.props.example;
     return (
       <div
-        key={this.props.id}
-        id={`example-${this.props.id}`}
+        id={`example-${slugify(title, { lower: true })}`}
         className="example"
       >
         <h2 className="example__heading">{title}</h2>
@@ -36,12 +30,7 @@ export default class CodeExampleComponent extends React.Component {
             scope={{
               useState,
               DatePicker,
-              setHours,
-              setMinutes,
-              getDate,
-              addDays,
-              subDays,
-              addMonths,
+              ...DateFNS,
               fi
             }}
           >
