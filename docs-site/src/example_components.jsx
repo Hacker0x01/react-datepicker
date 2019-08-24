@@ -175,39 +175,39 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date Range",
       component: DateRange
+    },
+    {
+      title: "Disable datepicker",
+      component: Disabled
+    },
+    {
+      title: "Disable keyboard navigation",
+      component: DisabledKeyboardNavigation
+    },
+    {
+      title: "Read only datepicker",
+      component: ReadOnly
+    },
+    {
+      title: "Clear datepicker input",
+      component: ClearInput
+    },
+    {
+      title: "onBlur callbacks in console",
+      component: OnBlurCallbacks
+    },
+    {
+      title: "Configure Popper Properties",
+      component: ConfigurePopper
+    },
+    {
+      title: "Portal version",
+      component: Portal
+    },
+    {
+      title: "Inline portal version",
+      component: InlinePortal
     }
-    // {
-    //   title: "Disable datepicker",
-    //   component: <Disabled />
-    // },
-    // {
-    //   title: "Disable keyboard navigation",
-    //   component: <DisabledKeyboardNavigation />
-    // },
-    // {
-    //   title: "Read only datepicker",
-    //   component: <ReadOnly />
-    // },
-    // {
-    //   title: "Clear datepicker input",
-    //   component: <ClearInput />
-    // },
-    // {
-    //   title: "onBlur callbacks in console",
-    //   component: <OnBlurCallbacks />
-    // },
-    // {
-    //   title: "Configure Popper Properties",
-    //   component: <ConfigurePopper />
-    // },
-    // {
-    //   title: "Portal version",
-    //   component: <Portal />
-    // },
-    // {
-    //   title: "Inline portal version",
-    //   component: <InlinePortal />
-    // },
     // {
     //   title: "TabIndex",
     //   component: <TabIndex />
