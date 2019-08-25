@@ -71,7 +71,6 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^4.0.2",
     "lint-staged": "^9.2.3",
-    "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.0",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
@@ -91,7 +90,6 @@
     "sinon": "^7.4.1",
     "slugify": "^1.3.4",
     "style-loader": "^1.0.0",
-    "terser-webpack-plugin": "^1.4.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-middleware": "^3.7.0",
@@ -112,10 +110,10 @@
     "react-popper": "^1.3.4"
   },
   "scripts": {
-    "eslint": "eslint --ext .js,.jsx src test docs-site/src",
+    "eslint": "eslint --ext .js,.jsx src test",
     "flow": "flow",
     "precommit": "lint-staged",
-    "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss, docs-site/src/*.scss' -i 'docs-site/src/higlight.scss, docs-site/src/reset.scss'",
+    "sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss'",
     "lint": "run-p eslint flow sass-lint",
     "start": "cross-env MODULES=false node server.js",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
@@ -129,8 +127,7 @@
     "build:es": "cross-env BABEL_ENV=es rollup -c -i src/index.jsx -o es/index.js",
     "build:cjs": "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
     "build:umd:dev": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
-    "build:umd:prod": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js",
-    "build:docs": "cross-env MODULES=false webpack --config webpack.docs.config.js"
+    "build:umd:prod": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js"
   },
   "lint-staged": {
     "*.{js,jsx,json,css,scss,md}": [
