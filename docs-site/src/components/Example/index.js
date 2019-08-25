@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
-import DatePicker, { registerLocale, CalendarContainer } from "react-datepicker";
+import DatePicker, {
+  registerLocale,
+  CalendarContainer
+} from "react-datepicker";
 import * as DateFNS from "date-fns/esm";
 import fi from "date-fns/locale/fi";
 import ptBR from "date-fns/locale/pt-BR";
 import slugify from "slugify";
 import range from "lodash/range";
+import prismGitHubTheme from "prism-react-renderer/themes/github";
 
 export default class CodeExampleComponent extends React.Component {
   static propTypes = {
@@ -37,6 +41,7 @@ export default class CodeExampleComponent extends React.Component {
               range,
               fi
             }}
+            theme={prismGitHubTheme}
           >
             <pre className="column example__code">
               <LiveEditor />
