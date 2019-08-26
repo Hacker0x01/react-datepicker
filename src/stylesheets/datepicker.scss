@@ -279,6 +279,7 @@
         li.react-datepicker__time-list-item {
           height: 30px;
           padding: 5px 10px;
+          white-space: nowrap;
           &:hover {
             cursor: pointer;
             background-color: $datepicker__background-color;
