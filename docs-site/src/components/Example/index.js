@@ -11,6 +11,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import slugify from "slugify";
 import range from "lodash/range";
 import prismGitHubTheme from "prism-react-renderer/themes/github";
+import editIcon from "./edit-regular.svg";
 
 export default class CodeExampleComponent extends React.Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export default class CodeExampleComponent extends React.Component {
         <h2 className="example__heading">{title}</h2>
         <div className="row">
           <LiveProvider
-            code={component}
+            code={component.trim()}
             scope={{
               PropTypes,
               useState,
@@ -44,9 +45,14 @@ export default class CodeExampleComponent extends React.Component {
             theme={prismGitHubTheme}
           >
             <pre className="column example__code">
+              <img
+                src={editIcon}
+                className="example__code__edit_icon"
+                alt="edit icon"
+              />
               <LiveEditor />
             </pre>
-            <div className="column">
+            <div className="column example__preview">
               <LiveError />
               <LivePreview />
             </div>

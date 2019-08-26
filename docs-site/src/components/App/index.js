@@ -10,7 +10,7 @@ const Root = () => {
     <div>
       <div className="hero">
         <div className="hero__content">
-          <h1 className="hero__title">ReactJS Datepicker</h1>
+          <h1 className="hero__title">React Datepicker</h1>
           <div className="hero__crafted-by">
             <a href="https://hackerone.com" className="hero__crafted-by-link">
               Crafted by{" "}
@@ -25,7 +25,7 @@ const Root = () => {
           </div>
           <div className="hero__example">
             <DatePicker
-              autoFocus
+              open
               selected={startDate}
               onChange={date => setStartDate(date)}
             />
@@ -33,7 +33,7 @@ const Root = () => {
         </div>
       </div>
       <div className="wrapper">
-        <h1>ReactJS Datepicker</h1>
+        <h1>React Datepicker</h1>
         <p className="badges">
           <a href="https://npmjs.org/package/react-datepicker">
             <img
@@ -74,6 +74,10 @@ const Root = () => {
         <p>Or by using Yarn:</p>
         <p>
           <code>yarn add react-datepicker</code>
+        </p>
+        <p>
+          Below are examples which also can be edited directly via the editor on
+          the left side and will be rendered on the right.
         </p>
       </div>
       <div className="wrapper">
