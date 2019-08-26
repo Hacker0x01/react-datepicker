@@ -46,15 +46,16 @@ export default class CodeExampleComponent extends React.Component {
             }}
             theme={prismGitHubTheme}
           >
-            <pre className="column example__code">
+            <pre className="example__code">
               <img
                 src={editIcon}
                 className="example__code__edit_icon"
                 alt="edit icon"
+                title="Edit the code directly on the left side and and see the output on the right"
               />
               <LiveEditor />
             </pre>
-            <div className="column example__preview">
+            <div className="example__preview">
               <LiveError />
               <LivePreview />
             </div>
