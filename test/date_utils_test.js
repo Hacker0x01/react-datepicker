@@ -431,23 +431,37 @@ describe("date_utils", function() {
 
   describe("isDayInRange", () => {
     it("should tell if day is in range", () => {
-      const day = newDate("2016-02-15");
-      const startDate = newDate("2016-02-01");
-      const endDate = newDate("2016-03-15");
+      const day = newDate("2016-02-15 09:40");
+      const startDate = newDate("2016-02-01 09:40");
+      const endDate = newDate("2016-03-15 08:40");
+      expect(isDayInRange(day, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day is in range, max bound test", () => {
+      const day = newDate("2016-03-15 09:40");
+      const startDate = newDate("2016-02-01 09:40");
+      const endDate = newDate("2016-03-15 08:40");
+      expect(isDayInRange(day, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day is in range, min bound test", () => {
+      const day = newDate("2016-02-01 08:40");
+      const startDate = newDate("2016-02-01 09:40");
+      const endDate = newDate("2016-03-15 08:40");
       expect(isDayInRange(day, startDate, endDate)).to.be.true;
     });
 
     it("should tell if day is not in range", () => {
-      const day = newDate("2016-07-15");
-      const startDate = newDate("2016-02-15");
-      const endDate = newDate("2016-03-15");
+      const day = newDate("2016-07-15 09:40");
+      const startDate = newDate("2016-02-15 09:40");
+      const endDate = newDate("2016-03-15 08:40");
       expect(isDayInRange(day, startDate, endDate)).to.be.false;
     });
 
     it("should not throw exception if end date is before start date", () => {
-      const day = newDate("2016-02-01");
-      const startDate = newDate("2016-02-15");
-      const endDate = newDate("2016-01-15");
+      const day = newDate("2016-02-01 09:40");
+      const startDate = newDate("2016-02-15 09:40");
+      const endDate = newDate("2016-01-15 08:40");
       expect(isDayInRange(day, startDate, endDate)).to.be.false;
     });
   });

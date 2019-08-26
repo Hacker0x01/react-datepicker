@@ -35,6 +35,7 @@ import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
 import startOfYear from "date-fns/startOfYear";
+import endOfDay from "date-fns/endOfDay";
 import endOfWeek from "date-fns/endOfWeek";
 import endOfMonth from "date-fns/endOfMonth";
 import dfIsEqual from "date-fns/isEqual";
@@ -273,8 +274,11 @@ export function isEqual(date1, date2) {
 
 export function isDayInRange(day, startDate, endDate) {
   let valid;
+  const start = startOfDay(startDate);
+  const end = endOfDay(endDate);
+
   try {
-    valid = isWithinInterval(day, { start: startDate, end: endDate });
+    valid = isWithinInterval(day, { start, end });
   } catch (err) {
     valid = false;
   }
