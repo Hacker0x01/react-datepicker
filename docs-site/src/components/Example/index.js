@@ -8,6 +8,7 @@ import DatePicker, {
 import * as DateFNS from "date-fns/esm";
 import fi from "date-fns/locale/fi";
 import ptBR from "date-fns/locale/pt-BR";
+import enGB from "date-fns/locale/en-GB";
 import slugify from "slugify";
 import range from "lodash/range";
 import prismGitHubTheme from "prism-react-renderer/themes/github";
@@ -20,6 +21,7 @@ export default class CodeExampleComponent extends React.Component {
   componentDidMount() {
     registerLocale("fi", fi);
     registerLocale("pt-BR", ptBR);
+    registerLocale("en-GB", enGB);
   }
 
   render() {
