@@ -308,7 +308,7 @@ export default class exampleComponents extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <h1>Examples</h1>
         <ul className="examples__navigation">
           {this.examples.map((example, index) => (
@@ -324,7 +324,7 @@ export default class exampleComponents extends React.Component {
             <CodeExampleComponent key={index} example={example} />
           ))}
         </div>
-      </div>
+      </>
     );
   }
 }

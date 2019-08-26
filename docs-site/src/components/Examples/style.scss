@@ -93,16 +93,6 @@ strong {
   }
 }
 
-.column {
-  @include breakpoint(768px) {
-    width: 50%;
-
-    &:first-child {
-      margin-right: 20px;
-    }
-  }
-}
-
 input {
   font-size: 13px;
   border-radius: 4px;
