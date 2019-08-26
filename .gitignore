@@ -67,7 +67,6 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -101,9 +100,6 @@ tmp
 .vscode
 *.iml
 .idea
-
-docs-site/*bundle.js
-docs-site/style.css
 
 docs/calendar.md
 docs/date_input.md

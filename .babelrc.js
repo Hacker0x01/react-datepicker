@@ -1,6 +1,4 @@
-const { NODE_ENV, MODULES } = process.env;
-
-const modules = MODULES === "false" || NODE_ENV === "test" ? "commonjs" : false;
+const { NODE_ENV } = process.env;
 
 const presets = [
   "@babel/preset-env",

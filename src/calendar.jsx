@@ -385,9 +385,9 @@ export default class Calendar extends React.Component {
 
   increaseYear = () => {
     this.setState(
-      {
-        date: addYears(this.state.date, 1)
-      },
+      ({ date }) => ({
+        date: addYears(date, 1)
+      }),
       () => this.handleYearChange(this.state.date)
     );
   };

@@ -11,13 +11,14 @@ script:
 after_success:
   - yarn run codecov
 before_deploy:
-  - yarn run build:docs
+  - yarn --cwd docs-site install
+  - yarn --cwd docs-site build
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep_history: false
-  local_dir: docs-site
+  local_dir: docs-site/build
   on:
     branch: master
 addons:
