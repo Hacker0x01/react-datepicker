@@ -11,6 +11,7 @@ script:
 after_success:
   - yarn run codecov
 before_deploy:
+  - yarn --cwd docs-site install
   - yarn --cwd docs-site build
 deploy:
   provider: pages
