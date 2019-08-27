@@ -16,7 +16,7 @@ describe("Month", () => {
       const expectedDay = utils.addDays(start, offset);
       assert(
         utils.isSameDay(day.props.day, expectedDay),
-        `Day ${offset % 7 + 1} ` +
+        `Day ${(offset % 7) + 1} ` +
           `of week ${Math.floor(offset / 7) + 1} ` +
           `should be "${utils.formatDate(expectedDay, "yyyy-MM-dd")}" ` +
           `but it is "${utils.formatDate(day.props.day, "yyyy-MM-dd")}"`
@@ -202,7 +202,84 @@ describe("Month", () => {
         showMonthYearPicker
       />
     );
-    const month = monthComponent.find(".react-datepicker__month-text").at(4);
-    expect(month.hasClass("react-datepicker__month--in-range")).to.equal(true);
+    const quarter = monthComponent.find(".react-datepicker__month-text").at(2);
+    expect(quarter.hasClass("react-datepicker__month--in-range")).to.equal(
+      true
+    );
+  });
+
+  it("should have the quarter picker CSS class", () => {
+    const month = shallow(
+      <Month showQuarterYearPicker day={utils.newDate()} />
+    );
+    expect(month.hasClass("react-datepicker__quarterPicker")).to.equal(true);
+  });
+
+  it("should call the provided onQuarterClick function", () => {
+    let quarterClicked = null;
+
+    function onDayClick(day) {
+      quarterClicked = day;
+    }
+
+    const monthStart = utils.newDate("2015-12-01");
+    const monthComponent = mount(
+      <Month day={monthStart} showQuarterYearPicker onDayClick={onDayClick} />
+    );
+    const quarter = monthComponent
+      .find(".react-datepicker__quarter-text")
+      .at(3);
+    quarter.simulate("click");
+    expect(utils.getQuarter(quarterClicked)).to.be.equal(4);
+  });
+
+  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        minDate={utils.newDate("2016-02-01")}
+        maxDate={utils.newDate()}
+        showQuarterYearPicker
+      />
+    );
+    const quarter = monthComponent
+      .find(".react-datepicker__quarter-text")
+      .at(0);
+    expect(quarter.hasClass("react-datepicker__quarter--disabled")).to.equal(
+      true
+    );
+  });
+
+  it("should return selected class if quarter is selected", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-02-01")}
+        selected={utils.newDate("2015-02-01")}
+        showQuarterYearPicker
+      />
+    );
+    const quarter = monthComponent
+      .find(".react-datepicker__quarter-text")
+      .at(0);
+    expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
+      true
+    );
+  });
+
+  it("should return quarter-in-range class if quarter is between the start date and end date", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-02-01")}
+        startDate={utils.newDate("2015-01-01")}
+        endDate={utils.newDate("2015-08-01")}
+        showQuarterYearPicker
+      />
+    );
+    const quarter = monthComponent
+      .find(".react-datepicker__quarter-text")
+      .at(2);
+    expect(quarter.hasClass("react-datepicker__quarter--in-range")).to.equal(
+      true
+    );
   });
 });

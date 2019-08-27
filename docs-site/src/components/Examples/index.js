@@ -61,6 +61,8 @@ import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
+import QuarterPicker from "../../examples/quarterPicker";
+import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -303,6 +305,14 @@ export default class exampleComponents extends React.Component {
     {
       title: "Range Month Picker",
       component: RangeMonthPicker
+    },
+    {
+      title: "Quarter Picker",
+      component: QuarterPicker
+    },
+    {
+      title: "Range Quarter Picker",
+      component: RangeQuarterPicker
     }
   ];
 

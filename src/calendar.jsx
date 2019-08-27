@@ -87,6 +87,7 @@ export default class Calendar extends React.Component {
     showTimeSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
+    showQuarterYearPicker: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
@@ -361,7 +362,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.decreaseMonth;
 
-    if (this.props.showMonthYearPicker) {
+    if (this.props.showMonthYearPicker || this.props.showQuarterYearPicker) {
       clickHandler = this.decreaseYear;
     }
 
@@ -376,7 +377,7 @@ export default class Calendar extends React.Component {
         className={classes.join(" ")}
         onClick={clickHandler}
       >
-        {this.props.showMonthYearPicker
+        {this.props.showMonthYearPicker || this.props.showQuarterYearPicker
           ? this.props.previousYearButtonLabel
           : this.props.previousMonthButtonLabel}
       </button>
@@ -421,7 +422,7 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.increaseMonth;
 
-    if (this.props.showMonthYearPicker) {
+    if (this.props.showMonthYearPicker || this.props.showQuarterYearPicker) {
       clickHandler = this.increaseYear;
     }
 
@@ -436,7 +437,7 @@ export default class Calendar extends React.Component {
         className={classes.join(" ")}
         onClick={clickHandler}
       >
-        {this.props.showMonthYearPicker
+        {this.props.showMonthYearPicker || this.props.showQuarterYearPicker
           ? this.props.nextYearButtonLabel
           : this.props.nextMonthButtonLabel}
       </button>
@@ -609,7 +610,7 @@ export default class Calendar extends React.Component {
           }}
           className="react-datepicker__month-container"
         >
-          {!this.props.showMonthYearPicker
+          {!this.props.showMonthYearPicker && !this.props.showQuarterYearPicker
             ? this.props.renderCustomHeader
               ? this.renderCustomHeader({ monthDate, i })
               : this.renderDefaultHeader({ monthDate, i })
@@ -647,6 +648,7 @@ export default class Calendar extends React.Component {
             renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
+            showQuarterYearPicker={this.props.showQuarterYearPicker}
           />
         </div>
       );

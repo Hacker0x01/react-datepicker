@@ -149,6 +149,7 @@ export default class DatePicker extends React.Component {
     shouldCloseOnSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
+    showQuarterYearPicker: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -197,6 +198,7 @@ export default class DatePicker extends React.Component {
       showTimeSelect: false,
       showTimeInput: false,
       showMonthYearPicker: false,
+      showQuarterYearPicker: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
@@ -694,6 +696,7 @@ export default class DatePicker extends React.Component {
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
+        showQuarterYearPicker={this.props.showQuarterYearPicker}
       >
         {this.props.children}
       </WrappedCalendar>
