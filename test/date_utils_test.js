@@ -5,10 +5,12 @@ import {
   isEqual,
   isSameDay,
   isSameMonth,
+  isSameQuarter,
   isSameYear,
   isDayDisabled,
   isDayExcluded,
   isMonthDisabled,
+  isQuarterDisabled,
   monthDisabledBefore,
   monthDisabledAfter,
   getEffectiveMinDate,
@@ -17,7 +19,8 @@ import {
   isTimeInDisabledRange,
   isDayInRange,
   parseDate,
-  isMonthinRange
+  isMonthinRange,
+  isQuarterInRange
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -105,6 +108,27 @@ describe("date_utils", function() {
 
     it("should return true for equal months", function() {
       expect(isSameMonth(newDate("2016-02-10"), newDate("2016-02-29"))).to.be
+        .true;
+    });
+  });
+
+  describe("isSameQuarter", function() {
+    it("should return true for null dates", function() {
+      expect(isSameQuarter(null, null)).to.be.true;
+    });
+
+    it("should return false for a null and non-null date", function() {
+      expect(isSameQuarter(newDate(), null)).to.be.false;
+      expect(isSameQuarter(null, newDate())).to.be.false;
+    });
+
+    it("should return false for non-equal quarters ", function() {
+      expect(isSameQuarter(newDate("2016-02-10"), newDate("2016-04-10"))).to.be
+        .false;
+    });
+
+    it("should return true for equal quarters", function() {
+      expect(isSameQuarter(newDate("2016-02-10"), newDate("2016-03-29"))).to.be
         .true;
     });
   });
@@ -282,6 +306,74 @@ describe("date_utils", function() {
         return true;
       };
       isMonthDisabled(day, { filterDate });
+      expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isQuarterDisabled", function() {
+    it("should be enabled by default", () => {
+      const day = newDate();
+      expect(isQuarterDisabled(day)).to.be.false;
+    });
+
+    it("should be enabled if on the min date", () => {
+      const day = newDate();
+      expect(isQuarterDisabled(day, { minDate: day })).to.be.false;
+    });
+
+    it("should be disabled if before the min date", () => {
+      const day = newDate();
+      const minDate = addDays(day, 40);
+      expect(isQuarterDisabled(day, { minDate })).to.be.true;
+    });
+
+    it("should be enabled if on the max date", () => {
+      const day = newDate();
+      expect(isQuarterDisabled(day, { maxDate: day })).to.be.false;
+    });
+
+    it("should be disabled if after the max date", () => {
+      const day = newDate();
+      const maxDate = subDays(day, 40);
+      expect(isQuarterDisabled(day, { maxDate })).to.be.true;
+    });
+
+    it("should be disabled if in excluded dates", () => {
+      const day = newDate();
+      expect(isQuarterDisabled(day, { excludeDates: [day] })).to.be.true;
+    });
+
+    it("should be enabled if in included dates", () => {
+      const day = newDate();
+      expect(isQuarterDisabled(day, { includeDates: [day] })).to.be.false;
+    });
+
+    it("should be disabled if not in included dates", () => {
+      const day = newDate();
+      const includeDates = [addDays(day, 40)];
+      expect(isQuarterDisabled(day, { includeDates })).to.be.true;
+    });
+
+    it("should be enabled if date filter returns true", () => {
+      const day = newDate();
+      const filterDate = d => isEqual(d, day);
+      expect(isQuarterDisabled(day, { filterDate })).to.be.false;
+    });
+
+    it("should be disabled if date filter returns false", () => {
+      const day = newDate();
+      const filterDate = d => !isEqual(d, day);
+      expect(isQuarterDisabled(day, { filterDate })).to.be.true;
+    });
+
+    it("should not allow date filter to modify input date", () => {
+      const day = newDate();
+      const dayClone = newDate(day);
+      const filterDate = d => {
+        addDays(d, 40);
+        return true;
+      };
+      isQuarterDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
     });
   });
@@ -545,6 +637,32 @@ describe("date_utils", function() {
       const endDate = newDate("2020-02-01");
 
       expect(isMonthinRange(startDate, endDate, 5, day)).to.be.true;
+    });
+  });
+
+  describe("isQuarterInRange", () => {
+    it("should return true if the quarter passed is in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isQuarterInRange(startDate, endDate, 2, day)).to.be.true;
+    });
+
+    it("should return false if the quarter passed is not in range", () => {
+      const day = newDate("2015-02-01");
+      const startDate = newDate("2015-01-01");
+      const endDate = newDate("2015-09-01");
+
+      expect(isQuarterInRange(startDate, endDate, 4, day)).to.be.false;
+    });
+
+    it("should return true if the quarter passed is in range and maxDate +1 year", () => {
+      const day = newDate("2019-06-04");
+      const startDate = newDate("2019-06-04");
+      const endDate = newDate("2020-02-01");
+
+      expect(isQuarterInRange(startDate, endDate, 5, day)).to.be.true;
     });
   });
 });
