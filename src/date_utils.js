@@ -19,12 +19,14 @@ import getHours from "date-fns/getHours";
 import getDay from "date-fns/getDay";
 import getDate from "date-fns/getDate";
 import getMonth from "date-fns/getMonth";
+import getQuarter from "date-fns/getQuarter";
 import getYear from "date-fns/getYear";
 import getTime from "date-fns/getTime";
 import setSeconds from "date-fns/setSeconds";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
 import setMonth from "date-fns/setMonth";
+import setQuarter from "date-fns/setQuarter";
 import setYear from "date-fns/setYear";
 import min from "date-fns/min";
 import max from "date-fns/max";
@@ -34,6 +36,7 @@ import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
+import startOfQuarter from "date-fns/startOfQuarter";
 import startOfYear from "date-fns/startOfYear";
 import endOfDay from "date-fns/endOfDay";
 import endOfWeek from "date-fns/endOfWeek";
@@ -42,6 +45,7 @@ import dfIsEqual from "date-fns/isEqual";
 import dfIsSameDay from "date-fns/isSameDay";
 import dfIsSameMonth from "date-fns/isSameMonth";
 import dfIsSameYear from "date-fns/isSameYear";
+import dfIsSameQuarter from "date-fns/isSameQuarter";
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import isWithinInterval from "date-fns/isWithinInterval";
@@ -168,7 +172,7 @@ export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
   return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
-export { setMonth, setYear };
+export { setMonth, setYear, setQuarter };
 
 // ** Date Getters **
 
@@ -178,6 +182,7 @@ export {
   getMinutes,
   getHours,
   getMonth,
+  getQuarter,
   getYear,
   getDay,
   getDate,
@@ -210,6 +215,10 @@ export function getStartOfWeek(date, locale) {
 
 export function getStartOfMonth(date) {
   return startOfMonth(date);
+}
+
+export function getStartOfQuarter(date) {
+  return startOfQuarter(date);
 }
 
 export function getStartOfToday() {
@@ -251,6 +260,14 @@ export function isSameYear(date1, date2) {
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
     return dfIsSameMonth(date1, date2);
+  } else {
+    return !date1 && !date2;
+  }
+}
+
+export function isSameQuarter(date1, date2) {
+  if (date1 && date2) {
+    return dfIsSameQuarter(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -345,6 +362,10 @@ export function getMonthShortInLocale(month, locale) {
   return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
+export function getQuarterShortInLocale(quarter, locale) {
+  return formatDate(setQuarter(newDate(), quarter), "QQQ", locale);
+}
+
 // ** Utils for some components **
 
 export function isDayDisabled(
@@ -397,6 +418,38 @@ export function isMonthinRange(startDate, endDate, m, day) {
     return (
       (dayYear === startDateYear && startDateMonth <= m) ||
       (dayYear === endDateYear && endDateMonth >= m) ||
+      (dayYear < endDateYear && dayYear > startDateYear)
+    );
+  }
+}
+
+export function isQuarterDisabled(
+  quarter,
+  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
+) {
+  return (
+    isOutOfBounds(quarter, { minDate, maxDate }) ||
+    (excludeDates &&
+      excludeDates.some(excludeDate => isSameQuarter(quarter, excludeDate))) ||
+    (includeDates &&
+      !includeDates.some(includeDate => isSameQuarter(quarter, includeDate))) ||
+    (filterDate && !filterDate(newDate(quarter))) ||
+    false
+  );
+}
+
+export function isQuarterInRange(startDate, endDate, q, day) {
+  const startDateYear = getYear(startDate);
+  const startDateQuarter = getQuarter(startDate);
+  const endDateYear = getYear(endDate);
+  const endDateQuarter = getQuarter(endDate);
+  const dayYear = getYear(day);
+  if (startDateYear === endDateYear && startDateYear === dayYear) {
+    return startDateQuarter <= q && q <= endDateQuarter;
+  } else if (startDateYear < endDateYear) {
+    return (
+      (dayYear === startDateYear && startDateQuarter <= q) ||
+      (dayYear === endDateYear && endDateQuarter >= q) ||
       (dayYear < endDateYear && dayYear > startDateYear)
     );
   }
