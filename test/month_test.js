@@ -193,19 +193,17 @@ describe("Month", () => {
     expect(month.hasClass("react-datepicker__month--selected")).to.equal(true);
   });
 
-  it("should return quarter-in-range class if quarter is between the start date and end date", () => {
+  it("should return month-in-range class if month is between the start date and end date", () => {
     const monthComponent = mount(
       <Month
         day={utils.newDate("2015-02-01")}
         startDate={utils.newDate("2015-01-01")}
         endDate={utils.newDate("2015-08-01")}
-        showQuarterYearPicker
+        showMonthYearPicker
       />
     );
-    const quarter = monthComponent
-      .find(".react-datepicker__quarter-text")
-      .at(2);
-    expect(quarter.hasClass("react-datepicker__quarter--in-range")).to.equal(
+    const quarter = monthComponent.find(".react-datepicker__month-text").at(2);
+    expect(quarter.hasClass("react-datepicker__month--in-range")).to.equal(
       true
     );
   });
