@@ -18,6 +18,7 @@ git push
 
 git push --tags
 
+yarn run build
+
 npm publish
 
-yarn run build
