@@ -6,7 +6,8 @@
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "lib/index.js",
-  "module": "es",
+  "browser": "dist/react-datepicker.min.js",
+  "module": "es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
   "files": [
@@ -83,7 +84,12 @@
     "rollup": "^1.20.2",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-filesize": "^6.2.0",
+    "rollup-plugin-local-resolve": "^1.0.7",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-uglify": "^6.0.2",
     "sass-lint": "^1.13.1",
     "sass-loader": "^7.3.1",
@@ -124,10 +130,7 @@
     "css:modules:prod": "node-sass --output-style compressed src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.min.css",
     "css:dev": "node-sass --output-style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
     "css:modules:dev": "node-sass --output-style expanded src/stylesheets/datepicker-cssmodules.scss > dist/react-datepicker-cssmodules.css",
-    "build:es": "cross-env BABEL_ENV=es rollup -c -i src/index.jsx -o es/index.js",
-    "build:cjs": "cross-env BABEL_ENV=cjs rollup -c -i src/index.jsx -o lib/index.js",
-    "build:umd:dev": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.js",
-    "build:umd:prod": "cross-env BABEL_ENV=es rollup -c rollup.umd.config.js -i src/index.jsx -o dist/react-datepicker.min.js"
+    "build:js": "rollup -c"
   },
   "lint-staged": {
     "*.{js,jsx,json,css,scss,md}": [
