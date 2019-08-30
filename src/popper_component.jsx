@@ -15,7 +15,8 @@ export default class PopperComponent extends React.Component {
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
-    targetComponent: PropTypes.element
+    targetComponent: PropTypes.element,
+    showArrow: PropTypes.bool
   };
 
   static get defaultProps() {
