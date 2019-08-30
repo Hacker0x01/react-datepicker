@@ -111,3 +111,4 @@ docs/year_dropdown.md
 
 # We are using Yarn
 package-lock.json
+scripts/.DS_Store
