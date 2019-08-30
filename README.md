@@ -20,6 +20,12 @@ The package can be installed via NPM:
 npm install react-datepicker --save
 ```
 
+Or `yarn`:
+
+```
+yarn add react-datepicker
+```
+
 You’ll need to install React and PropTypes separately since those dependencies aren’t included in the package. If you need to use a locale other than the default en-US, you'll also need to import that into your project from date-fns (see Localization section below). Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
 
 ```js
@@ -140,7 +146,15 @@ Unfortunately, it is difficult to support legacy browsers while maintaining our 
 
 ## Local Development
 
-The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `yarn start`. This starts a simple webserver on http://localhost:8080.
+The `master` branch contains the latest version of the Datepicker component.
+
+To begin local development:
+
+1. `yarn install`
+2. `yarn build-dev`
+3. `yarn start`
+
+The last step starts documentation app as a simple webserver on http://localhost:3000.
 
 You can run `yarn test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
