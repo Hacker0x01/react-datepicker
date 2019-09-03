@@ -147,6 +147,8 @@ export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.containerRef = React.createRef();
+
     this.state = {
       date: this.getDateInView(),
       selectingDate: null,
@@ -186,6 +188,10 @@ export default class Calendar extends React.Component {
 
   handleClickOutside = event => {
     this.props.onClickOutside(event);
+  };
+
+  setClickOutsideRef = () => {
+    return this.containerRef.current;
   };
 
   handleDropdownFocus = event => {
@@ -704,19 +710,21 @@ export default class Calendar extends React.Component {
   render() {
     const Container = this.props.container || CalendarContainer;
     return (
-      <Container
-        className={classnames("react-datepicker", this.props.className, {
-          "react-datepicker--time-only": this.props.showTimeSelectOnly
-        })}
-      >
-        {this.renderPreviousButton()}
-        {this.renderNextButton()}
-        {this.renderMonths()}
-        {this.renderTodayButton()}
-        {this.renderTimeSection()}
-        {this.renderInputTimeSection()}
-        {this.props.children}
-      </Container>
+      <div ref={this.containerRef}>
+        <Container
+          className={classnames("react-datepicker", this.props.className, {
+            "react-datepicker--time-only": this.props.showTimeSelectOnly
+          })}
+        >
+          {this.renderPreviousButton()}
+          {this.renderNextButton()}
+          {this.renderMonths()}
+          {this.renderTodayButton()}
+          {this.renderTimeSection()}
+          {this.renderInputTimeSection()}
+          {this.props.children}
+        </Container>
+      </div>
     );
   }
 }
