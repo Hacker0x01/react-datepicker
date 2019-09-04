@@ -1155,4 +1155,30 @@ describe("Calendar", function() {
       assert.equal(utils.getYear(calendar.state.date), 1994);
     });
   });
+
+  describe("using click outside", () => {
+    const clickOutsideSpy = sinon.spy();
+    const calendar = mount(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={clickOutsideSpy}
+      />
+    );
+
+    const instance = calendar.instance();
+
+    it("calls onClickOutside prop when handles click outside", () => {
+      instance.handleClickOutside("__event__");
+
+      assert(clickOutsideSpy.calledWith("__event__"));
+    });
+
+    it("setClickOutsideRef function returns container ref", () => {
+      const ref = instance.setClickOutsideRef();
+
+      assert.isNotNull(ref);
+      assert.equal(ref, instance.containerRef.current);
+    });
+  });
 });
