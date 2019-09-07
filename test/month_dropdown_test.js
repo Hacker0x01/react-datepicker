@@ -41,7 +41,7 @@ describe("MonthDropdown", () => {
       monthDropdown = getMonthDropdown();
     });
 
-    it("shows the selected yonth in the initial view", () => {
+    it("shows the selected month in the initial view", () => {
       expect(monthDropdown.text()).to.contain("December");
     });
 
@@ -51,6 +51,16 @@ describe("MonthDropdown", () => {
         .simulate("click");
       var optionsView = monthDropdown.find(MonthDropdownOptions);
       expect(optionsView).to.exist;
+    });
+
+    it("applies the 'selected' modifier class to the selected month", () => {
+      monthDropdown
+        .find(".react-datepicker__month-read-view")
+        .simulate("click");
+      var selectedMonth = monthDropdown.find(
+        ".react-datepicker__month-option--selected_month"
+      );
+      expect(selectedMonth.text()).to.contain("December");
     });
 
     it("closes the dropdown when a month is clicked", () => {

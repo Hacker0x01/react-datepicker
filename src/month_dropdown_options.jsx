@@ -14,7 +14,7 @@ export default class MonthDropdownOptions extends React.Component {
       <div
         className={
           this.props.month === i
-            ? "react-datepicker__month-option --selected_month"
+            ? "react-datepicker__month-option react-datepicker__month-option--selected_month"
             : "react-datepicker__month-option"
         }
         key={month}
