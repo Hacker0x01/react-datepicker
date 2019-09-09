@@ -16,7 +16,8 @@ import pkg from "./package.json";
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 const dateFnsDirs = fs
   .readdirSync(path.join(".", "node_modules", "date-fns"))
-  .map(d => `date-fns/${d}`);
+  .map(d => `date-fns/${d}`)
+  .concat(["date-fns/_lib/format/longFormatters"]);
 
 const globals = {
   react: "React",
