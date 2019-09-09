@@ -5,6 +5,7 @@ import slugify from "slugify";
 import CodeExampleComponent from "../Example";
 
 import Default from "../../examples/default";
+import NoAnchorArrow from "../../examples/noAnchorArrow";
 import ShowTime from "../../examples/showTime";
 import ShowTimeOnly from "../../examples/showTimeOnly";
 import ExcludeTimes from "../../examples/excludeTimes";
@@ -77,6 +78,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Default",
       component: Default
+    },
+    {
+      title: "No Anchor Arrow",
+      component: NoAnchorArrow
     },
     {
       title: "Select Time",

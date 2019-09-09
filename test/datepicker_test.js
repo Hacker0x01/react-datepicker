@@ -1179,4 +1179,34 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(dayButtonInline);
     assert.equal(datePickerInline.state.monthSelectedIn, undefined);
   });
+
+  it("should show the popper arrow when showPopperArrow is true", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker showPopperArrow />
+    );
+    const dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+
+    const arrow = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePicker.calendar,
+      "react-datepicker__triangle"
+    );
+
+    expect(arrow).to.not.be.empty;
+  });
+
+  it("should not show the popper arrow when showPopperArrow is false", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker showPopperArrow={false} />
+    );
+    const dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+
+    const arrow = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePicker.calendar,
+      "react-datepicker__triangle"
+    );
+
+    expect(arrow).to.be.empty;
+  });
 });
