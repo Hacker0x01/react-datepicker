@@ -50,6 +50,7 @@ import FixedCalendar from "../../examples/fixedCalendar";
 import WeekNumbers from "../../examples/weekNumbers";
 import CustomInput from "../../examples/customInput";
 import MultiMonth from "../../examples/multiMonth";
+import MultiMonthPrevious from "../../examples/multiMonthPrevious";
 import MultiMonthDropdown from "../../examples/multiMonthDropdown";
 import MultiMonthInline from "../../examples/multiMonthInline";
 import Children from "../../examples/children";
@@ -262,6 +263,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Multiple months",
       component: MultiMonth
+    },
+    {
+      title: "Show previous months",
+      component: MultiMonthPrevious
     },
     {
       title: "Multiple months with year dropdown",
