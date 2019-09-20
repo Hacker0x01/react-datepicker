@@ -34,7 +34,8 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    ariaDayPrefix: PropTypes.string
   };
 
   handleClick = event => {
@@ -203,7 +204,7 @@ export default class Day extends React.Component {
         className={this.getClassNames(this.props.day)}
         onClick={this.handleClick}
         onMouseEnter={this.handleMouseEnter}
-        aria-label={`day-${getDate(this.props.day)}`}
+        aria-label={`${this.props.ariaDayPrefix} ${getDate(this.props.day)}`}
         role="option"
         aria-disabled={this.isDisabled()}
       >

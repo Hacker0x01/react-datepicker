@@ -40,7 +40,8 @@ export default class Week extends React.Component {
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    ariaDayPrefix: PropTypes.string
   };
 
   handleDayClick = (day, event) => {
@@ -110,6 +111,7 @@ export default class Week extends React.Component {
             dayClassName={this.props.dayClassName}
             renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+            ariaDayPrefix={this.props.ariaDayPrefix}
           />
         );
       })
