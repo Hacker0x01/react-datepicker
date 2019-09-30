@@ -3,6 +3,8 @@
 
 .react-datepicker-wrapper {
   display: inline-block;
+  padding: 0;
+  border: 0;
 }
 
 .react-datepicker {
@@ -201,7 +203,8 @@
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
-  .react-datepicker__month-text {
+  .react-datepicker__month-text,
+  .react-datepicker__quarter-text {
     display: inline-block;
     width: 4rem;
     margin: 2px;
@@ -244,7 +247,7 @@
 .react-datepicker__time-container {
   float: right;
   border-left: 1px solid $datepicker__border-color;
-  width: 70px;
+  width: 85px;
 
   &--with-today-button {
     display: inline;
@@ -260,7 +263,7 @@
     background: white;
 
     .react-datepicker__time-box {
-      width: 70px;
+      width: 85px;
       overflow-x: hidden;
       margin: 0 auto;
       text-align: center;
@@ -277,6 +280,7 @@
         li.react-datepicker__time-list-item {
           height: 30px;
           padding: 5px 10px;
+          white-space: nowrap;
           &:hover {
             cursor: pointer;
             background-color: $datepicker__background-color;
@@ -335,7 +339,8 @@
   margin: $datepicker__day-margin;
 }
 
-.react-datepicker__month {
+.react-datepicker__month,
+.react-datepicker__quarter {
   &--selected,
   &--in-selecting-range,
   &--in-range {
@@ -358,7 +363,8 @@
 }
 
 .react-datepicker__day,
-.react-datepicker__month-text {
+.react-datepicker__month-text,
+.react-datepicker__quarter-text {
   cursor: pointer;
 
   &:hover {
@@ -431,9 +437,12 @@
   }
 }
 
-.react-datepicker__month-text {
+.react-datepicker__month-text,
+.react-datepicker__quarter-text {
   &.react-datepicker__month--selected,
-  &.react-datepicker__month--in-range {
+  &.react-datepicker__month--in-range,
+  &.react-datepicker__quarter--selected,
+  &.react-datepicker__quarter--in-range {
     &:hover {
       background-color: $datepicker__selected-color;
     }
@@ -446,6 +455,7 @@
 .react-datepicker__input-container {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 
 .react-datepicker__year-read-view,
@@ -539,35 +549,32 @@
 }
 
 .react-datepicker__close-icon {
+  cursor: pointer;
   background-color: transparent;
   border: 0;
-  cursor: pointer;
   outline: 0;
-  padding: 0;
-  vertical-align: middle;
+  padding: 0px 6px 0px 0px;
   position: absolute;
-  height: 16px;
-  width: 16px;
-  top: 25%;
-  right: 7px;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
 
   &::after {
-    background-color: $datepicker__selected-color;
-    border-radius: 50%;
-    bottom: 0;
-    box-sizing: border-box;
-    color: #fff;
-    content: "\00d7";
     cursor: pointer;
-    font-size: 12px;
+    background-color: $datepicker__selected-color;
+    color: #fff;
+    border-radius: 50%;
     height: 16px;
     width: 16px;
-    line-height: 1;
-    margin: -8px auto 0;
     padding: 2px;
-    position: absolute;
-    right: 0px;
+    font-size: 12px;
+    line-height: 1;
     text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    content: "\00d7";
   }
 }
 

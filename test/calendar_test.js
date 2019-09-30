@@ -1043,6 +1043,23 @@ describe("Calendar", function() {
       expect(next.text()).to.equal("Next Year");
     });
 
+    it("should render custom next and previous labels", function() {
+      var calendar = mount(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+          previousYearButtonLabel="Custom Previous Year Label"
+          nextYearButtonLabel="Custom Next Year Label"
+        />
+      );
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Custom Previous Year Label");
+      expect(next.text()).to.equal("Custom Next Year Label");
+    });
+
     it("calls decreaseYear when previous month button clicked", () => {
       var calendar = TestUtils.renderIntoDocument(
         <Calendar
@@ -1071,6 +1088,97 @@ describe("Calendar", function() {
       var increaseYear = calendar.increaseYear;
       increaseYear();
       assert.equal(utils.getYear(calendar.state.date), 1994);
+    });
+  });
+
+  describe("when showQuarterYearPicker is enabled", () => {
+    let calendar = mount(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        showQuarterYearPicker
+      />
+    );
+    it("should change the next and previous labels", () => {
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Previous Year");
+      expect(next.text()).to.equal("Next Year");
+    });
+
+    it("should render custom next and previous labels", function() {
+      var calendar = mount(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showQuarterYearPicker
+          previousYearButtonLabel="Custom Previous Year Label"
+          nextYearButtonLabel="Custom Next Year Label"
+        />
+      );
+      const previous = calendar.find(".react-datepicker__navigation--previous");
+      const next = calendar.find(".react-datepicker__navigation--next");
+      expect(previous.text()).to.equal("Custom Previous Year Label");
+      expect(next.text()).to.equal("Custom Next Year Label");
+    });
+
+    it("calls decreaseYear when previous month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showQuarterYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1992);
+    });
+
+    it("calls increaseYear when next month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showQuarterYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1994);
+    });
+  });
+
+  describe("using click outside", () => {
+    const clickOutsideSpy = sinon.spy();
+    const calendar = mount(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={clickOutsideSpy}
+      />
+    );
+
+    const instance = calendar.instance();
+
+    it("calls onClickOutside prop when handles click outside", () => {
+      instance.handleClickOutside("__event__");
+
+      assert(clickOutsideSpy.calledWith("__event__"));
+    });
+
+    it("setClickOutsideRef function returns container ref", () => {
+      const ref = instance.setClickOutsideRef();
+
+      assert.isNotNull(ref);
+      assert.equal(ref, instance.containerRef.current);
     });
   });
 });

@@ -83,8 +83,10 @@ export default class Time extends React.Component {
 
   liClasses = (time, currH, currM) => {
     let classes = [
-        "react-datepicker__time-list-item",
-        this.props.timeClassName ? this.props.timeClassName(time, currH, currM) : undefined
+      "react-datepicker__time-list-item",
+      this.props.timeClassName
+        ? this.props.timeClassName(time, currH, currM)
+        : undefined
     ];
 
     if (currH === getHours(time) && currM === getMinutes(time)) {
@@ -189,7 +191,7 @@ export default class Time extends React.Component {
               }}
               style={height ? { height } : {}}
             >
-              {this.renderTimes.bind(this)()}
+              {this.renderTimes()}
             </ul>
           </div>
         </div>

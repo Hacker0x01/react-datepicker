@@ -46,7 +46,7 @@ describe("DatePicker", () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
@@ -610,7 +610,7 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
-  it("should not preSelect date if not after maxDate", () => {
+  it("should not preSelect date if after maxDate", () => {
     var data = getOnInputKeyDownStuff({
       maxDate: utils.addDays(utils.newDate(), 1)
     });
@@ -625,6 +625,32 @@ describe("DatePicker", () => {
     expect(data.datePicker.state.preSelection.valueOf()).to.equal(
       data.copyM.valueOf()
     );
+  });
+  it("should not manual select date if before minDate", () => {
+    var minDate = utils.subDays(utils.newDate(), 1);
+    var data = getOnInputKeyDownStuff({
+      minDate: minDate
+    });
+    TestUtils.Simulate.change(data.nodeInput, {
+      target: {
+        value: utils.formatDate(utils.subDays(minDate, 1), data.testFormat)
+      }
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+    expect(data.callback.calledOnce).to.be.false;
+  });
+  it("should not manual select date if after maxDate", () => {
+    var maxDate = utils.addDays(utils.newDate(), 1);
+    var data = getOnInputKeyDownStuff({
+      maxDate: maxDate
+    });
+    TestUtils.Simulate.change(data.nodeInput, {
+      target: {
+        value: utils.formatDate(utils.addDays(maxDate, 1), data.testFormat)
+      }
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+    expect(data.callback.calledOnce).to.be.false;
   });
   describe("onInputKeyDown Enter", () => {
     it("should update the selected date", () => {
@@ -1098,15 +1124,10 @@ describe("DatePicker", () => {
   });
   it("should fire onInputClick when input is clicked", () => {
     const onInputClickSpy = sinon.spy();
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker onInputClick={onInputClickSpy} />
-    );
-    var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
-    defer(() => {
-      assert(onInputClickSpy.calledOnce, "should fire onInputClick");
-      done();
-    });
+    var datePicker = mount(<DatePicker onInputClick={onInputClickSpy} />)
+      .find("input")
+      .simulate("click");
+    assert(onInputClickSpy.callCount, 1);
   });
 
   it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
@@ -1157,6 +1178,36 @@ describe("DatePicker", () => {
     )[40];
     TestUtils.Simulate.click(dayButtonInline);
     assert.equal(datePickerInline.state.monthSelectedIn, undefined);
+  });
+
+  it("should show the popper arrow when showPopperArrow is true", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker showPopperArrow />
+    );
+    const dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+
+    const arrow = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePicker.calendar,
+      "react-datepicker__triangle"
+    );
+
+    expect(arrow).to.not.be.empty;
+  });
+
+  it("should not show the popper arrow when showPopperArrow is false", () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker showPopperArrow={false} />
+    );
+    const dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+
+    const arrow = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePicker.calendar,
+      "react-datepicker__triangle"
+    );
+
+    expect(arrow).to.be.empty;
   });
 
   it("custom time className", () => {

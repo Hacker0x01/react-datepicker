@@ -10,7 +10,7 @@ describe("TimeComponent", () => {
   let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     // mock global time to June 14, 1990 13:28:12, so test results will be constant
     sandbox.useFakeTimers({
       now: new Date("1990-06-14 13:28").valueOf(),

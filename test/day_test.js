@@ -494,6 +494,17 @@ describe("Day", () => {
       const shallowDay = renderDay(day, { excludeDates: [day] });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
+
+    it("should have aria-disabled attribute with true value if date is disabled", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, { excludeDates: [day] });
+      expect(shallowDay.prop("aria-disabled")).to.equal(true);
+    });
+
+    it("should have aria-disabled attribute with false value if date is not disabled", () => {
+      const shallowDay = renderDay(newDate());
+      expect(shallowDay.prop("aria-disabled")).to.equal(false);
+    });
   });
 
   describe("click", () => {
