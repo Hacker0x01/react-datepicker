@@ -54,6 +54,39 @@ describe("TimePicker", () => {
     expect(datePicker.state.open).to.be.true;
   });
 
+  it("should show different colors for times", () => {
+    const handleTimeColors = (time, currH, currM) => {
+      if (!Number.isInteger(currH) || !Number.isInteger(currM)) {
+        return "wrong";
+      }
+      return time.getHours() < 12 ? "red" : "green";
+    };
+    const timePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        showTimeSelect
+        showTimeSelectOnly
+        timeClassName={handleTimeColors}
+        onChange={() => console.log("changed")}
+        open
+        focus
+      />
+    );
+    let redItems = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__time-list-item red"
+    );
+    let greenItems = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__time-list-item green"
+    );
+    assert.isTrue(
+      redItems !== undefined &&
+        redItems.length === 24 &&
+        greenItems !== undefined &&
+        greenItems.length === 24
+    );
+  });
+
   function setManually(string) {
     TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });

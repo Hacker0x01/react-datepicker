@@ -16,7 +16,6 @@ General datepicker component.
 | `dateFormat`                 | `union(string\|array)`         | `'MM/dd/yyyy'`  |                                            |
 | `dateFormatCalendar`         | `string`                       | `'LLLL yyyy'`   |                                            |
 | `dayClassName`               | `func`                         |                 |                                            |
-| `timeClassName`              | `func`                         |                 |                                            |
 | `disabled`                   | `bool`                         | `false`         |                                            |
 | `disabledKeyboardNavigation` | `bool`                         | `false`         |                                            |
 | `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                            |
@@ -72,6 +71,7 @@ General datepicker component.
 | `startDate`                  | `instanceOf(Date)`             |                 |                                            |
 | `startOpen`                  | `bool`                         |                 |                                            |
 | `tabIndex`                   | `number`                       |                 |                                            |
+| `timeClassName`              | `func`                         |                 |                                            |
 | `timeFormat`                 | `string`                       |                 |                                            |
 | `timeIntervals`              | `number`                       | `30`            |                                            |
 | `title`                      | `string`                       |                 |                                            |
