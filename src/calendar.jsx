@@ -464,7 +464,7 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__current-month--hasMonthYearDropdown");
     }
     return (
-      <div className={classes.join(" ")}>
+      <div className={classes.join(" ")} aria-live="polite">
         {formatDate(date, this.props.dateFormat, this.props.locale)}
       </div>
     );

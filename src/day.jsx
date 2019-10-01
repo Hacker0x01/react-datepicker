@@ -204,7 +204,7 @@ export default class Day extends React.Component {
         onClick={this.handleClick}
         onMouseEnter={this.handleMouseEnter}
         aria-label={`day-${getDate(this.props.day)}`}
-        role="option"
+        role="button"
         aria-disabled={this.isDisabled()}
       >
         {this.props.renderDayContents

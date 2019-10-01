@@ -239,6 +239,7 @@ export default class Month extends React.Component {
       <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (
           <div
+            role="button"
             key={j}
             onClick={ev => {
               this.onMonthClick(ev, m);
@@ -296,7 +297,6 @@ export default class Month extends React.Component {
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
-        role="listbox"
         aria-label={"month-" + utils.formatDate(this.props.day, "yyyy-MM")}
       >
         {showMonthYearPicker
