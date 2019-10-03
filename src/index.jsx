@@ -58,8 +58,11 @@ function hasPreSelectionChanged(date1, date2) {
 //errors
 const defaultErrors = {
   dateInvalid: { code: 1, msg: "Date input not valid" },
-  dateOutOfBounds: { code: 2, msg: "Date is out of bounds" }
+  dateOutOfBounds: { code: 2, msg: "Date is out of bounds" },
+  dateDisabled: { code: 3, msg: "Date is disabled" }
 };
+
+export const INVALID_DATE = "invalid-date";
 
 /**
  * General datepicker component.
@@ -414,7 +417,10 @@ export default class DatePicker extends React.Component {
     );
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
+      return;
     }
+
+    this.props.onInputError(this.getError("dateInvalid"), event.target.value);
   };
 
   handleSelect = (date, event, monthSelectedIn) => {
@@ -433,12 +439,19 @@ export default class DatePicker extends React.Component {
   setSelected = (date, event, keepInput, monthSelectedIn) => {
     let changedDate = date;
 
-    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-      if (isOutOfBounds(changedDate, this.props)) {
-        this.props.onInputError(this.getError("dateOutOfBounds"));
+    if (changedDate !== null) {
+      if (
+        isDayDisabled(changedDate, this.props) &&
+        !isOutOfBounds(changedDate, this.props)
+      ) {
+        this.props.onInputError(this.getError("dateDisabled"), changedDate);
+        return;
       }
 
-      return;
+      if (isOutOfBounds(changedDate, this.props)) {
+        this.props.onInputError(this.getError("dateOutOfBounds"), changedDate);
+        return;
+      }
     }
 
     if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
@@ -560,7 +573,7 @@ export default class DatePicker extends React.Component {
 
       this.setOpen(false);
       if (!this.inputOk()) {
-        this.props.onInputError(this.getError("dateInvalid"));
+        this.props.onInputError(this.getError("dateInvalid"), undefined);
       }
     } else if (eventKey === "Tab") {
       this.setOpen(false);
@@ -593,9 +606,6 @@ export default class DatePicker extends React.Component {
           break;
       }
       if (!newSelection) {
-        if (this.props.onInputError) {
-          this.props.onInputError(this.getError("dateInvalid"));
-        }
         return; // Let the input component handle this keydown
       }
       event.preventDefault();
