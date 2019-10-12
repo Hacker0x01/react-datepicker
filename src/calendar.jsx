@@ -106,6 +106,7 @@ export default class Calendar extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
@@ -605,9 +606,13 @@ export default class Calendar extends React.Component {
     }
 
     var monthList = [];
+    var monthsToSubtract = this.props.showPreviousMonths
+      ? this.props.monthsShown - 1
+      : 0;
+    var fromMonthDate = subMonths(this.state.date, monthsToSubtract);
     for (var i = 0; i < this.props.monthsShown; ++i) {
       var monthsToAdd = i - this.props.monthSelectedIn;
-      var monthDate = addMonths(this.state.date, monthsToAdd);
+      var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
       monthList.push(
         <div
