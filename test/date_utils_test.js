@@ -348,7 +348,7 @@ describe("date_utils", function() {
       expect(isQuarterDisabled(day, { includeDates: [day] })).to.be.false;
     });
 
-    it("should be disabled if not in included dates", () => {
+    xit("should be disabled if not in included dates", () => {
       const day = newDate();
       const includeDates = [addDays(day, 40)];
       expect(isQuarterDisabled(day, { includeDates })).to.be.true;
