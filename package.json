@@ -17,6 +17,7 @@
     "es",
     "src/stylesheets"
   ],
+  "sideEffects": false,
   "keywords": [
     "react",
     "datepicker",
