@@ -5,7 +5,7 @@
       selected={startDate}
       onChange={date => setStartDate(date)}
       locale={fi}
-      ariaDayPrefix="Päivä"
+      ariaLabelFormat="EEEE, MMMM d, yyyy"
     />
   );
 };

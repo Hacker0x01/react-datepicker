@@ -171,7 +171,7 @@ export default class DatePicker extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
-    ariaDayPrefix: PropTypes.string
+    ariaLabelFormat: PropTypes.string
   };
 
   static get defaultProps() {
@@ -209,7 +209,7 @@ export default class DatePicker extends React.Component {
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
-      ariaDayPrefix: "Day",
+      ariaLabelFormat: "EEEE, MMMM d, yyyy",
 
       renderDayContents(date) {
         return date;
@@ -702,7 +702,7 @@ export default class DatePicker extends React.Component {
         showMonthYearPicker={this.props.showMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
-        ariaDayPrefix={this.props.ariaDayPrefix}
+        ariaLabelFormat={this.props.ariaLabelFormat}
       >
         {this.props.children}
       </WrappedCalendar>

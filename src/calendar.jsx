@@ -129,7 +129,7 @@ export default class Calendar extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
-    ariaDayPrefix: PropTypes.string
+    ariaLabelFormat: PropTypes.string
   };
 
   static get defaultProps() {
@@ -142,8 +142,7 @@ export default class Calendar extends React.Component {
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month",
-      ariaDayPrefix: "Day"
+      nextMonthButtonLabel: "Next Month"
     };
   }
 
@@ -658,7 +657,7 @@ export default class Calendar extends React.Component {
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
             showQuarterYearPicker={this.props.showQuarterYearPicker}
-            ariaDayPrefix={this.props.ariaDayPrefix}
+            ariaLabelFormat={this.props.ariaLabelFormat}
           />
         </div>
       );

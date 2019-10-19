@@ -43,7 +43,7 @@ export default class Month extends React.Component {
     renderDayContents: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
-    ariaDayPrefix: PropTypes.string
+    ariaLabelFormat: PropTypes.string
   };
 
   handleDayClick = (day, event) => {
@@ -145,7 +145,7 @@ export default class Month extends React.Component {
           shouldCloseOnSelect={this.props.shouldCloseOnSelect}
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           renderDayContents={this.props.renderDayContents}
-          ariaDayPrefix={this.props.ariaDayPrefix}
+          ariaLabelFormat={this.props.ariaLabelFormat}
         />
       );
 
