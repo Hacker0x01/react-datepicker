@@ -532,7 +532,7 @@ export function yearDisabledBefore(day, { minDate, includeDates } = {}) {
     (minDate && differenceInCalendarYears(minDate, previousYear) > 0) ||
     (includeDates &&
       includeDates.every(
-        includeDate => differenceInCalendarYears(includeDate, previousMonth) > 0
+        includeDate => differenceInCalendarYears(includeDate, previousYear) > 0
       )) ||
     false
   );
