@@ -30,6 +30,8 @@ import {
   isSameDay,
   monthDisabledBefore,
   monthDisabledAfter,
+  yearDisabledBefore,
+  yearDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
   addZero
@@ -349,10 +351,9 @@ export default class Calendar extends React.Component {
       return;
     }
 
-    const allPrevDaysDisabled = monthDisabledBefore(
-      this.state.date,
-      this.props
-    );
+    const allPrevDaysDisabled = this.props.showMonthYearPicker
+      ? yearDisabledBefore(this.state.date, this.props)
+      : monthDisabledBefore(this.state.date, this.props);
 
     if (
       (!this.props.forceShowMonthNavigation &&
@@ -406,7 +407,9 @@ export default class Calendar extends React.Component {
       return;
     }
 
-    const allNextDaysDisabled = monthDisabledAfter(this.state.date, this.props);
+    const allNextDaysDisabled = this.props.showMonthYearPicker
+      ? yearDisabledAfter(this.state.date, this.props)
+      : monthDisabledAfter(this.state.date, this.props);
 
     if (
       (!this.props.forceShowMonthNavigation &&
