@@ -64,22 +64,59 @@ describe("TimeComponent", () => {
       expect(spy.args[0][1].innerHTML).to.eq("13:00");
     });
 
+    it("with five minute time interval, should call calcCenterPosition with centerLi ref, closest to the current time", () => {
+      mount(<TimeComponent format="HH:mm" intervals={5} />);
+      expect(spy.args[0][1].innerHTML).to.eq("13:25");
+    });
+
     it("should call calcCenterPosition with centerLi ref, closest to the selected time", () => {
       mount(
-        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:11")} />
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:11")}
+          openToDate={new Date("1990-06-14 09:11")}
+        />
       );
       expect(spy.args[0][1].innerHTML).to.eq("08:00");
     });
 
     it("should call calcCenterPosition with centerLi ref, which is selected", () => {
       mount(
-        <TimeComponent format="HH:mm" selected={new Date("1990-06-14 08:00")} />
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:00")}
+          openToDate={new Date("1990-06-14 09:00")}
+        />
       );
       expect(
         spy.args[0][1].classList.contains(
           "react-datepicker__time-list-item--selected"
         )
       ).to.be.true;
+    });
+
+    it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {
+      mount(
+        <TimeComponent
+          format="HH:mm"
+          openToDate={new Date("1990-06-14 09:11")}
+        />
+      );
+      expect(spy.args[0][1].innerHTML).to.eq("09:00");
+    });
+
+    it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", () => {
+      mount(
+        <TimeComponent
+          format="HH:mm"
+          openToDate={new Date("1990-06-14 09:00")}
+        />
+      );
+      expect(
+        spy.args[0][1].classList.contains(
+          "react-datepicker__time-list-item--selected"
+        )
+      ).to.be.false;
     });
 
     it("should calculate scroll for the first item of 4 (even) items list", () => {
