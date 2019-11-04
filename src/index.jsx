@@ -111,6 +111,8 @@ export default class DatePicker extends React.Component {
     onYearChange: PropTypes.func,
     onInputError: PropTypes.func,
     open: PropTypes.bool,
+    onCalendarOpen: PropTypes.func,
+    onCalendarClose: PropTypes.func,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -190,6 +192,8 @@ export default class DatePicker extends React.Component {
       onSelect() {},
       onClickOutside() {},
       onMonthChange() {},
+      onCalendarOpen() {},
+      onCalendarClose() {},
       preventOpenOnFocus: false,
       onYearChange() {},
       onInputError() {},
@@ -247,6 +251,16 @@ export default class DatePicker extends React.Component {
       !isEqual(prevProps.selected, this.props.selected)
     ) {
       this.setState({ inputValue: null });
+    }
+
+    if (prevState.open !== this.state.open) {
+      if (prevState.open === false && this.state.open === true) {
+        this.props.onCalendarOpen();
+      }
+
+      if (prevState.open === true && this.state.open === false) {
+        this.props.onCalendarClose();
+      }
     }
   }
 
