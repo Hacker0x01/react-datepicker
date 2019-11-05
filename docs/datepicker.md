@@ -5,6 +5,7 @@ General datepicker component.
 | name                         | type                           | default value   | description                                |
 | ---------------------------- | ------------------------------ | --------------- | ------------------------------------------ |
 | `allowSameDay`               | `bool`                         | `false`         |                                            |
+| `ariaLabelledBy`             | `string`                       | `null`          |                                            |
 | `autoComplete`               | `string`                       |                 |                                            |
 | `autoFocus`                  | `bool`                         |                 |                                            |
 | `calendarClassName`          | `string`                       |                 |                                            |
@@ -13,7 +14,7 @@ General datepicker component.
 | `clearButtonTitle`           | `string`                       |                 |                                            |
 | `customInput`                | `element`                      |                 |                                            |
 | `customInputRef`             | `string`                       | `'ref'`         | The property used to pass the ref callback |
-| `dateFormat`                 | `union(string\|array)`         | `'MM/dd/yyyy'`           |                                            |
+| `dateFormat`                 | `union(string\|array)`         | `'MM/dd/yyyy'`  |                                            |
 | `dateFormatCalendar`         | `string`                       | `'LLLL yyyy'`   |                                            |
 | `dayClassName`               | `func`                         |                 |                                            |
 | `disabled`                   | `bool`                         | `false`         |                                            |
