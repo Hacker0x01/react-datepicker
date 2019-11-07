@@ -51,6 +51,14 @@
       @extend %triangle-arrow-up;
     }
   }
+  
+  &[data-placement="bottom-end"],
+  &[data-placement="top-end"] {
+    .react-datepicker__triangle {
+      left: auto;
+      right: 50px;
+    }
+  }
 
   &[data-placement^="top"] {
     margin-bottom: $datepicker__triangle-size + 2px;
