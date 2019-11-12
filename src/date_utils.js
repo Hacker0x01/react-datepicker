@@ -53,7 +53,7 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
-import longFormatters from "date-fns/_lib/format/longFormatters";
+import longFormatters from "date-fns/esm/_lib/format/longFormatters";
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
