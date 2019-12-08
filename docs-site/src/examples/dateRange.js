@@ -14,6 +14,7 @@
         selected={endDate}
         onChange={date => setEndDate(date)}
         selectsEnd
+        startDate={startDate}
         endDate={endDate}
         minDate={startDate}
       />
