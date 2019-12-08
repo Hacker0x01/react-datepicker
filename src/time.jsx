@@ -13,6 +13,21 @@ import {
 } from "./date_utils";
 
 export default class Time extends React.Component {
+  static get defaultProps() {
+    return {
+      intervals: 30,
+      onTimeChange: () => {},
+      todayButton: null,
+      timeCaption: "Time"
+    };
+  }
+
+  static calcCenterPosition = (listHeight, centerLiRef) => {
+    return (
+      centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
+    );
+  };
+
   static propTypes = {
     format: PropTypes.string,
     includeTimes: PropTypes.array,
@@ -31,21 +46,6 @@ export default class Time extends React.Component {
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
     ])
-  };
-
-  static get defaultProps() {
-    return {
-      intervals: 30,
-      onTimeChange: () => {},
-      todayButton: null,
-      timeCaption: "Time"
-    };
-  }
-
-  static calcCenterPosition = (listHeight, centerLiRef) => {
-    return (
-      centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
-    );
   };
 
   state = {

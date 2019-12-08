@@ -51,6 +51,20 @@ const isDropdownSelect = (element = {}) => {
 };
 
 export default class Calendar extends React.Component {
+  static get defaultProps() {
+    return {
+      onDropdownFocus: () => {},
+      monthsShown: 1,
+      monthSelectedIn: 0,
+      forceShowMonthNavigation: false,
+      timeCaption: "Time",
+      previousYearButtonLabel: "Previous Year",
+      nextYearButtonLabel: "Next Year",
+      previousMonthButtonLabel: "Previous Month",
+      nextMonthButtonLabel: "Next Month"
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     className: PropTypes.string,
@@ -133,20 +147,6 @@ export default class Calendar extends React.Component {
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool
   };
-
-  static get defaultProps() {
-    return {
-      onDropdownFocus: () => {},
-      monthsShown: 1,
-      monthSelectedIn: 0,
-      forceShowMonthNavigation: false,
-      timeCaption: "Time",
-      previousYearButtonLabel: "Previous Year",
-      nextYearButtonLabel: "Next Year",
-      previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month"
-    };
-  }
 
   constructor(props) {
     super(props);
