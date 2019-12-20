@@ -617,6 +617,17 @@ export default class Calendar extends React.Component {
     );
   };
 
+  renderHeader = headerArgs => {
+    switch (true) {
+      case this.props.renderCustomHeader:
+        return this.renderCustomHeader(headerArgs);
+      case this.props.showMonthYearPicker || this.props.showQuarterYearPicker:
+        return this.renderYearHeader(headerArgs);
+      default:
+        return this.renderDefaultHeader(headerArgs);
+    }
+  };
+
   renderMonths = () => {
     if (this.props.showTimeSelectOnly) {
       return;
@@ -639,11 +650,7 @@ export default class Calendar extends React.Component {
           }}
           className="react-datepicker__month-container"
         >
-          {!this.props.showMonthYearPicker && !this.props.showQuarterYearPicker
-            ? this.props.renderCustomHeader
-              ? this.renderCustomHeader({ monthDate, i })
-              : this.renderDefaultHeader({ monthDate, i })
-            : this.renderYearHeader({ monthDate, i })}
+          {this.renderHeader({ monthDate, i })}
           <Month
             onChange={this.changeMonthYear}
             day={monthDate}
