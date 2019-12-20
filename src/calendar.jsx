@@ -619,7 +619,7 @@ export default class Calendar extends React.Component {
 
   renderHeader = headerArgs => {
     switch (true) {
-      case this.props.renderCustomHeader:
+      case this.props.renderCustomHeader !== undefined:
         return this.renderCustomHeader(headerArgs);
       case this.props.showMonthYearPicker || this.props.showQuarterYearPicker:
         return this.renderYearHeader(headerArgs);
