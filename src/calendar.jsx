@@ -574,6 +574,16 @@ export default class Calendar extends React.Component {
       this.props
     );
 
+    const prevYearButtonDisabled = yearDisabledBefore(
+      this.state.date,
+      this.props
+    );
+
+    const nextYearButtonDisabled = yearDisabledAfter(
+      this.state.date,
+      this.props
+    );
+
     return (
       <div
         className="react-datepicker__header react-datepicker__header--custom"
@@ -585,8 +595,12 @@ export default class Calendar extends React.Component {
           changeYear: this.changeYear,
           decreaseMonth: this.decreaseMonth,
           increaseMonth: this.increaseMonth,
+          decreaseYear: this.decreaseYear,
+          increaseYear: this.increaseYear,
           prevMonthButtonDisabled,
-          nextMonthButtonDisabled
+          nextMonthButtonDisabled,
+          prevYearButtonDisabled,
+          nextYearButtonDisabled
         })}
         <div className="react-datepicker__day-names">
           {this.header(monthDate)}
