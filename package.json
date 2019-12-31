@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "@bartverbruggen/react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
@@ -27,9 +27,6 @@
     "date",
     "react-component"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/bartverbruggen/react-datepicker.git"
