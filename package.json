@@ -4,7 +4,7 @@
   "description": "A simple and reusable datepicker component for React",
   "version": "2.10.2",
   "license": "MIT",
-  "homepage": "https://github.com/Hacker0x01/react-datepicker",
+  "homepage": "https://github.com/bartverbruggen/react-datepicker",
   "main": "dist/index.js",
   "browser": "dist/react-datepicker.min.js",
   "module": "dist/es/index.js",
