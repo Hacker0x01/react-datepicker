@@ -379,14 +379,17 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--previous--disabled");
       clickHandler = null;
     }
+    
+    const isForYear = this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
+        aria-label={isForYear ? "Previous Year" : "Previous Month"}
       >
-        {this.props.showMonthYearPicker || this.props.showQuarterYearPicker
+        {isForYear 
           ? this.props.previousYearButtonLabel
           : this.props.previousMonthButtonLabel}
       </button>
@@ -441,14 +444,17 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--next--disabled");
       clickHandler = null;
     }
-
+  
+    const isForYear = this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
+    
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
+        aria-label={isForYear ? "Next Year" : "Next Month"} 
       >
-        {this.props.showMonthYearPicker || this.props.showQuarterYearPicker
+        { isForYear
           ? this.props.nextYearButtonLabel
           : this.props.nextMonthButtonLabel}
       </button>
