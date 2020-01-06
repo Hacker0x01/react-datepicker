@@ -580,6 +580,16 @@ export default class Calendar extends React.Component {
       this.props
     );
 
+    const prevYearButtonDisabled = yearDisabledBefore(
+      this.state.date,
+      this.props
+    );
+
+    const nextYearButtonDisabled = yearDisabledAfter(
+      this.state.date,
+      this.props
+    );
+
     return (
       <div
         className="react-datepicker__header react-datepicker__header--custom"
@@ -591,8 +601,12 @@ export default class Calendar extends React.Component {
           changeYear: this.changeYear,
           decreaseMonth: this.decreaseMonth,
           increaseMonth: this.increaseMonth,
+          decreaseYear: this.decreaseYear,
+          increaseYear: this.increaseYear,
           prevMonthButtonDisabled,
-          nextMonthButtonDisabled
+          nextMonthButtonDisabled,
+          prevYearButtonDisabled,
+          nextYearButtonDisabled
         })}
         <div className="react-datepicker__day-names">
           {this.header(monthDate)}
@@ -607,6 +621,17 @@ export default class Calendar extends React.Component {
         {getYear(this.state.date)}
       </div>
     );
+  };
+
+  renderHeader = headerArgs => {
+    switch (true) {
+      case this.props.renderCustomHeader !== undefined:
+        return this.renderCustomHeader(headerArgs);
+      case this.props.showMonthYearPicker || this.props.showQuarterYearPicker:
+        return this.renderYearHeader(headerArgs);
+      default:
+        return this.renderDefaultHeader(headerArgs);
+    }
   };
 
   renderMonths = () => {
@@ -631,11 +656,7 @@ export default class Calendar extends React.Component {
           }}
           className="react-datepicker__month-container"
         >
-          {!this.props.showMonthYearPicker && !this.props.showQuarterYearPicker
-            ? this.props.renderCustomHeader
-              ? this.renderCustomHeader({ monthDate, i })
-              : this.renderDefaultHeader({ monthDate, i })
-            : this.renderYearHeader({ monthDate, i })}
+          {this.renderHeader({ monthDate, i })}
           <Month
             onChange={this.changeMonthYear}
             day={monthDate}
