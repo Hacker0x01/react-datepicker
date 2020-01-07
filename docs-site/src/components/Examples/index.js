@@ -51,6 +51,7 @@ import FixedCalendar from "../../examples/fixedCalendar";
 import WeekNumbers from "../../examples/weekNumbers";
 import CustomInput from "../../examples/customInput";
 import MultiMonth from "../../examples/multiMonth";
+import MultiMonthPrevious from "../../examples/multiMonthPrevious";
 import MultiMonthDropdown from "../../examples/multiMonthDropdown";
 import MultiMonthInline from "../../examples/multiMonthInline";
 import Children from "../../examples/children";
@@ -65,6 +66,7 @@ import MonthPicker from "../../examples/monthPicker";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
+import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -269,6 +271,10 @@ export default class exampleComponents extends React.Component {
       component: MultiMonth
     },
     {
+      title: "Show previous months",
+      component: MultiMonthPrevious
+    },
+    {
       title: "Multiple months with year dropdown",
       component: MultiMonthDropdown
     },
@@ -323,6 +329,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Range Quarter Picker",
       component: RangeQuarterPicker
+    },
+    {
+      title: "Calendar open state callbacks",
+      component: OnCalendarChangeStateCallbacks
     }
   ];
 

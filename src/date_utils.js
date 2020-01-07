@@ -33,6 +33,7 @@ import max from "date-fns/max";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
 import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
+import differenceInCalendarYears from "date-fns/differenceInCalendarYears";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
@@ -52,7 +53,7 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
-import longFormatters from "date-fns/_lib/format/longFormatters";
+import longFormatters from "date-fns/esm/_lib/format/longFormatters";
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
@@ -520,6 +521,30 @@ export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
     (includeDates &&
       includeDates.every(
         includeDate => differenceInCalendarMonths(nextMonth, includeDate) > 0
+      )) ||
+    false
+  );
+}
+
+export function yearDisabledBefore(day, { minDate, includeDates } = {}) {
+  const previousYear = subYears(day, 1);
+  return (
+    (minDate && differenceInCalendarYears(minDate, previousYear) > 0) ||
+    (includeDates &&
+      includeDates.every(
+        includeDate => differenceInCalendarYears(includeDate, previousYear) > 0
+      )) ||
+    false
+  );
+}
+
+export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
+  const nextYear = addYears(day, 1);
+  return (
+    (maxDate && differenceInCalendarYears(nextYear, maxDate) > 0) ||
+    (includeDates &&
+      includeDates.every(
+        includeDate => differenceInCalendarYears(nextYear, includeDate) > 0
       )) ||
     false
   );

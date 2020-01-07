@@ -14,13 +14,13 @@ A simple and reusable Datepicker component for React ([Demo](https://reactdatepi
 
 ## Installation
 
-The package can be installed via NPM:
+The package can be installed via [npm](https://github.com/npm/cli):
 
 ```
 npm install react-datepicker --save
 ```
 
-Or `yarn`:
+Or via [yarn](https://github.com/yarnpkg/yarn):
 
 ```
 yarn add react-datepicker

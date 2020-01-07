@@ -13,26 +13,6 @@ import {
 } from "./date_utils";
 
 export default class Time extends React.Component {
-  static propTypes = {
-    format: PropTypes.string,
-    includeTimes: PropTypes.array,
-    intervals: PropTypes.number,
-    selected: PropTypes.instanceOf(Date),
-    onChange: PropTypes.func,
-    timeClassName: PropTypes.func,
-    todayButton: PropTypes.node,
-    minTime: PropTypes.instanceOf(Date),
-    maxTime: PropTypes.instanceOf(Date),
-    excludeTimes: PropTypes.array,
-    monthRef: PropTypes.object,
-    timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array,
-    locale: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object })
-    ])
-  };
-
   static get defaultProps() {
     return {
       intervals: 30,
@@ -46,6 +26,27 @@ export default class Time extends React.Component {
     return (
       centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
     );
+  };
+
+  static propTypes = {
+    format: PropTypes.string,
+    includeTimes: PropTypes.array,
+    intervals: PropTypes.number,
+    selected: PropTypes.instanceOf(Date),
+    openToDate: PropTypes.instanceOf(Date),
+    onChange: PropTypes.func,
+    timeClassName: PropTypes.func,
+    todayButton: PropTypes.node,
+    minTime: PropTypes.instanceOf(Date),
+    maxTime: PropTypes.instanceOf(Date),
+    excludeTimes: PropTypes.array,
+    monthRef: PropTypes.object,
+    timeCaption: PropTypes.string,
+    injectTimes: PropTypes.array,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ])
   };
 
   state = {
@@ -89,7 +90,11 @@ export default class Time extends React.Component {
         : undefined
     ];
 
-    if (currH === getHours(time) && currM === getMinutes(time)) {
+    if (
+      this.props.selected &&
+      currH === getHours(time) &&
+      currM === getMinutes(time)
+    ) {
       classes.push("react-datepicker__time-list-item--selected");
     }
     if (
@@ -116,7 +121,9 @@ export default class Time extends React.Component {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
-    const activeTime = this.props.selected ? this.props.selected : newDate();
+    const activeTime =
+      this.props.selected || this.props.openToDate || newDate();
+
     const currH = getHours(activeTime);
     const currM = getMinutes(activeTime);
     let base = getStartOfDay(newDate());
@@ -148,10 +155,7 @@ export default class Time extends React.Component {
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
-          if (
-            (currH === getHours(time) && currM === getMinutes(time)) ||
-            (currH === getHours(time) && !this.centerLi)
-          ) {
+          if (currH === getHours(time) && currM >= getMinutes(time)) {
             this.centerLi = li;
           }
         }}

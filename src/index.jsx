@@ -60,9 +60,57 @@ function hasPreSelectionChanged(date1, date2) {
 const INPUT_ERR_1 = "Date input not valid.";
 
 export default class DatePicker extends React.Component {
+  static get defaultProps() {
+    return {
+      allowSameDay: false,
+      dateFormat: "MM/dd/yyyy",
+      dateFormatCalendar: "LLLL yyyy",
+      onChange() {},
+      disabled: false,
+      disabledKeyboardNavigation: false,
+      dropdownMode: "scroll",
+      onFocus() {},
+      onBlur() {},
+      onKeyDown() {},
+      onInputClick() {},
+      onSelect() {},
+      onClickOutside() {},
+      onMonthChange() {},
+      onCalendarOpen() {},
+      onCalendarClose() {},
+      preventOpenOnFocus: false,
+      onYearChange() {},
+      onInputError() {},
+      monthsShown: 1,
+      readOnly: false,
+      withPortal: false,
+      shouldCloseOnSelect: true,
+      showTimeSelect: false,
+      showTimeInput: false,
+      showPreviousMonths: false,
+      showMonthYearPicker: false,
+      showQuarterYearPicker: false,
+      strictParsing: false,
+      timeIntervals: 30,
+      timeCaption: "Time",
+      previousMonthButtonLabel: "Previous Month",
+      nextMonthButtonLabel: "Next Month",
+      previousYearButtonLabel: "Previous Year",
+      nextYearButtonLabel: "Next Year",
+      timeInputLabel: "Time",
+
+      renderDayContents(date) {
+        return date;
+      },
+      inlineFocusSelectedMonth: false,
+      showPopperArrow: true
+    };
+  }
+
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
+    ariaLabelledBy: PropTypes.string,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
@@ -112,6 +160,8 @@ export default class DatePicker extends React.Component {
     onYearChange: PropTypes.func,
     onInputError: PropTypes.func,
     open: PropTypes.bool,
+    onCalendarOpen: PropTypes.func,
+    onCalendarClose: PropTypes.func,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
     placeholderText: PropTypes.string,
@@ -129,6 +179,7 @@ export default class DatePicker extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
+    showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
@@ -174,50 +225,6 @@ export default class DatePicker extends React.Component {
     showPopperArrow: PropTypes.bool
   };
 
-  static get defaultProps() {
-    return {
-      allowSameDay: false,
-      dateFormat: "MM/dd/yyyy",
-      dateFormatCalendar: "LLLL yyyy",
-      onChange() {},
-      disabled: false,
-      disabledKeyboardNavigation: false,
-      dropdownMode: "scroll",
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onInputClick() {},
-      onSelect() {},
-      onClickOutside() {},
-      onMonthChange() {},
-      preventOpenOnFocus: false,
-      onYearChange() {},
-      onInputError() {},
-      monthsShown: 1,
-      readOnly: false,
-      withPortal: false,
-      shouldCloseOnSelect: true,
-      showTimeSelect: false,
-      showTimeInput: false,
-      showMonthYearPicker: false,
-      showQuarterYearPicker: false,
-      strictParsing: false,
-      timeIntervals: 30,
-      timeCaption: "Time",
-      previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month",
-      previousYearButtonLabel: "Previous Year",
-      nextYearButtonLabel: "Next Year",
-      timeInputLabel: "Time",
-
-      renderDayContents(date) {
-        return date;
-      },
-      inlineFocusSelectedMonth: false,
-      showPopperArrow: true
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = this.calcInitialState();
@@ -246,6 +253,16 @@ export default class DatePicker extends React.Component {
       !isEqual(prevProps.selected, this.props.selected)
     ) {
       this.setState({ inputValue: null });
+    }
+
+    if (prevState.open !== this.state.open) {
+      if (prevState.open === false && this.state.open === true) {
+        this.props.onCalendarOpen();
+      }
+
+      if (prevState.open === true && this.state.open === false) {
+        this.props.onCalendarClose();
+      }
     }
   }
 
@@ -655,6 +672,7 @@ export default class DatePicker extends React.Component {
         inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
+        showPreviousMonths={this.props.showPreviousMonths}
         useShortMonthInDropdown={this.props.useShortMonthInDropdown}
         showMonthYearDropdown={this.props.showMonthYearDropdown}
         showWeekNumbers={this.props.showWeekNumbers}
@@ -742,7 +760,8 @@ export default class DatePicker extends React.Component {
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
-      tabIndex: this.props.tabIndex
+      tabIndex: this.props.tabIndex,
+      "aria-labelledby": this.props.ariaLabelledBy
     });
   };
 
