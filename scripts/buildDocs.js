@@ -5,20 +5,20 @@
  * e.g. react-docgen components/* | buildDocs.sh
  */
 
-var fs = require('fs');
-var generateMarkdown = require('./generateMarkdown');
-var path = require('path');
+var fs = require("fs");
+var generateMarkdown = require("./generateMarkdown");
+var path = require("path");
 
-var json = '';
-process.stdin.setEncoding('utf8');
-process.stdin.on('readable', function() {
+var json = "";
+process.stdin.setEncoding("utf8");
+process.stdin.on("readable", function() {
   var chunk = process.stdin.read();
   if (chunk !== null) {
     json += chunk;
   }
 });
 
-process.stdin.on('end', function() {
+process.stdin.on("end", function() {
   buildDocs(JSON.parse(json));
 });
 
@@ -27,9 +27,9 @@ function buildDocs(api) {
   for (var filepath in api) {
     var name = getComponentName(filepath);
     var markdown = generateMarkdown(name, api[filepath]);
-    var outputLocation = './docs/';
-    fs.writeFileSync(outputLocation + name + '.md', markdown);
-    process.stdout.write(filepath + ' -> ' + outputLocation + name + '.md\n');
+    var outputLocation = "./docs/";
+    fs.writeFileSync(outputLocation + name + ".md", markdown);
+    process.stdout.write(filepath + " -> " + outputLocation + name + ".md\n");
   }
 }
 

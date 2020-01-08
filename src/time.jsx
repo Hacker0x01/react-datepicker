@@ -35,6 +35,7 @@ export default class Time extends React.Component {
     selected: PropTypes.instanceOf(Date),
     openToDate: PropTypes.instanceOf(Date),
     onChange: PropTypes.func,
+    timeClassName: PropTypes.func,
     todayButton: PropTypes.node,
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
@@ -82,7 +83,12 @@ export default class Time extends React.Component {
   };
 
   liClasses = (time, currH, currM) => {
-    let classes = ["react-datepicker__time-list-item"];
+    let classes = [
+      "react-datepicker__time-list-item",
+      this.props.timeClassName
+        ? this.props.timeClassName(time, currH, currM)
+        : undefined
+    ];
 
     if (
       this.props.selected &&

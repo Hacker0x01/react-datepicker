@@ -128,7 +128,7 @@ We're always trying to stay compatible with the latest version of React. We can'
 
 Latest compatible versions:
 
-- React 16 or newer:  React-datepicker v2.9.4 and newer
+- React 16 or newer: React-datepicker v2.9.4 and newer
 - React 15.5: React-datepicker v2.9.3
 - React 15.4.1: needs React-datepicker v0.40.0, newer won't work (due to react-onclickoutside dependencies)
 - React 0.14 or newer: All above React-datepicker v0.13.0

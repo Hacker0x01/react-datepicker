@@ -73,6 +73,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
@@ -552,7 +553,9 @@ export default class Calendar extends React.Component {
     <div className="react-datepicker__header">
       {this.renderCurrentMonth(monthDate)}
       <div
-        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
+        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
+          this.props.dropdownMode
+        }`}
         onFocus={this.handleDropdownFocus}
       >
         {this.renderMonthDropdown(i !== 0)}
@@ -708,6 +711,7 @@ export default class Calendar extends React.Component {
           selected={this.props.selected}
           openToDate={this.props.openToDate}
           onChange={this.props.onTimeChange}
+          timeClassName={this.props.timeClassName}
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
