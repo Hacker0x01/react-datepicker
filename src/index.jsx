@@ -545,6 +545,7 @@ export default class DatePicker extends React.Component {
   onInputKeyDown = event => {
     this.props.onKeyDown(event);
     const eventKey = event.key;
+
     if (
       !this.state.open &&
       !this.props.inline &&
@@ -575,7 +576,7 @@ export default class DatePicker extends React.Component {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
     } else if (eventKey === "Tab") {
-      this.setOpen(false, true);
+      // this.setOpen(false, true);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
@@ -720,6 +721,7 @@ export default class DatePicker extends React.Component {
         showMonthYearPicker={this.props.showMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
+        handleOnKeyDown={this.onInputKeyDown}
       >
         {this.props.children}
       </WrappedCalendar>
@@ -745,7 +747,7 @@ export default class DatePicker extends React.Component {
         this.input = input;
       },
       value: inputValue,
-      onBlur: this.handleBlur,
+      // onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
       onFocus: this.handleFocus,

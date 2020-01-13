@@ -34,8 +34,26 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    handleOnKeyDown: PropTypes.func
   };
+
+  componentDidUpdate = prevProps => {
+    const newTabIndex = this.getTabIndex(
+      this.props.selected,
+      this.props.preSelection
+    );
+
+    if (
+      newTabIndex === 0 &&
+      this.isSameDay(this.props.preSelection) !==
+        this.isSameDay(prevProps.preSelection)
+    ) {
+      this.dayEl.current.focus();
+    }
+  };
+
+  dayEl = React.createRef();
 
   handleClick = event => {
     if (!this.isDisabled() && this.props.onClick) {
@@ -47,6 +65,16 @@ export default class Day extends React.Component {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
+  };
+
+  handleOnKeyDown = event => {
+    const eventKey = event.key;
+    if (eventKey === " ") {
+      event.preventDefault();
+      event.key = "Enter";
+    }
+
+    this.props.handleOnKeyDown(event);
   };
 
   isSameDay = other => isSameDay(this.props.day, other);
@@ -197,23 +225,42 @@ export default class Day extends React.Component {
     );
   };
 
-  render() {
-    return (
-      <div
-        className={this.getClassNames(this.props.day)}
-        onClick={this.handleClick}
-        onMouseEnter={this.handleMouseEnter}
-        aria-label={`day-${getDate(this.props.day)}`}
-        role="option"
-        aria-disabled={this.isDisabled()}
-      >
-        {this.props.renderDayContents
-          ? this.props.renderDayContents(
-              getDate(this.props.day),
-              this.props.day
-            )
-          : getDate(this.props.day)}
-      </div>
-    );
-  }
+  getAriaLabel = () => {
+    const { day } = this.props;
+    const prefix =
+      this.isDisabled() || this.isExcluded() ? "Not available" : "Choose";
+
+    return `${prefix} ${formatDate(day, "PPPP")}`;
+  };
+
+  getTabIndex = (selected, preSelection) => {
+    const selectedDay = selected || this.props.selected;
+    const preSelectionDay = preSelection || this.props.preSelection;
+
+    const tabIndex =
+      this.isKeyboardSelected() ||
+      (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+        ? 0
+        : -1;
+
+    return tabIndex;
+  };
+
+  render = () => (
+    <div
+      ref={this.dayEl}
+      className={this.getClassNames(this.props.day)}
+      onKeyDown={this.handleOnKeyDown}
+      onClick={this.handleClick}
+      onMouseEnter={this.handleMouseEnter}
+      tabIndex={this.getTabIndex()}
+      aria-label={this.getAriaLabel()}
+      role="option"
+      aria-disabled={this.isDisabled()}
+    >
+      {this.props.renderDayContents
+        ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+        : getDate(this.props.day)}
+    </div>
+  );
 }
