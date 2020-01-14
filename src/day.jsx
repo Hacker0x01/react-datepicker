@@ -38,11 +38,19 @@ export default class Day extends React.Component {
     handleOnKeyDown: PropTypes.func
   };
 
-  componentDidUpdate = prevProps => {
-    const newTabIndex = this.getTabIndex(
-      this.props.selected,
-      this.props.preSelection
-    );
+  componentDidMount() {
+    const newTabIndex = this.getTabIndex();
+
+    if (newTabIndex === 0 && this.isSameDay(this.props.preSelection)) {
+      // focus the day on mount so that keyboard navigation works while cycling through months
+      // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
+      (!document.activeElement || document.activeElement === document.body) &&
+        this.dayEl.current.focus();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const newTabIndex = this.getTabIndex();
 
     if (
       newTabIndex === 0 &&
@@ -51,7 +59,7 @@ export default class Day extends React.Component {
     ) {
       this.dayEl.current.focus();
     }
-  };
+  }
 
   dayEl = React.createRef();
 

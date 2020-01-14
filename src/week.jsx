@@ -89,7 +89,7 @@ export default class Week extends React.Component {
         const day = utils.addDays(startOfWeek, offset);
         return (
           <Day
-            key={offset}
+            key={day.valueOf()}
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
