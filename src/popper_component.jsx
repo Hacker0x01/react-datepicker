@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
 import { Manager, Reference, Popper, placements } from "react-popper";
+import TabLoop from "./tab_loop";
 
 export const popperPlacementPositions = placements;
 
@@ -30,7 +31,8 @@ export default class PopperComponent extends React.Component {
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
-    targetComponent: PropTypes.element
+    targetComponent: PropTypes.element,
+    enableTabLoop: PropTypes.bool
   };
 
   render() {
@@ -42,7 +44,9 @@ export default class PopperComponent extends React.Component {
       popperModifiers,
       popperPlacement,
       popperProps,
-      targetComponent
+      targetComponent,
+      enableTabLoop,
+      popperOnKeyDown
     } = this.props;
 
     let popper;
@@ -56,13 +60,16 @@ export default class PopperComponent extends React.Component {
           {...popperProps}
         >
           {({ ref, style, placement, arrowProps }) => (
-            <div
-              {...{ ref, style }}
-              className={classes}
-              data-placement={placement}
-            >
-              {React.cloneElement(popperComponent, { arrowProps })}
-            </div>
+            <TabLoop enableTabLoop={enableTabLoop}>
+              <div
+                {...{ ref, style }}
+                className={classes}
+                data-placement={placement}
+                onKeyDown={popperOnKeyDown}
+              >
+                {React.cloneElement(popperComponent, { arrowProps })}
+              </div>
+            </TabLoop>
           )}
         </Popper>
       );

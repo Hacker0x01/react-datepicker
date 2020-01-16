@@ -98,6 +98,7 @@ export default class DatePicker extends React.Component {
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
+      enableTabLoop: true,
 
       renderDayContents(date) {
         return date;
@@ -222,7 +223,8 @@ export default class DatePicker extends React.Component {
     inlineFocusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
-    showPopperArrow: PropTypes.bool
+    showPopperArrow: PropTypes.bool,
+    enableTabLoop: PropTypes.bool
   };
 
   constructor(props) {
@@ -380,16 +382,13 @@ export default class DatePicker extends React.Component {
   };
 
   handleBlur = event => {
-    if (
-      this.state.open &&
-      !this.props.withPortal &&
-      !this.props.showTimeInput
-    ) {
-      this.deferFocusInput();
-    } else {
+    if (!this.state.open || this.props.withPortal || this.props.showTimeInput) {
       this.props.onBlur(event);
     }
-    this.setState({ focused: false });
+
+    if (!this.state.open && !this.props.withPortal) {
+      this.setState({ focused: false });
+    }
   };
 
   handleCalendarClickOutside = event => {
@@ -551,7 +550,11 @@ export default class DatePicker extends React.Component {
       !this.props.inline &&
       !this.props.preventOpenOnFocus
     ) {
-      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
+      if (
+        eventKey === "ArrowDown" ||
+        eventKey === "ArrowUp" ||
+        eventKey === "Enter"
+      ) {
         this.onInputClick();
       }
       return;
@@ -575,8 +578,6 @@ export default class DatePicker extends React.Component {
       if (!this.inputOk()) {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
-    } else if (eventKey === "Tab") {
-      // this.setOpen(false, true);
     } else if (!this.props.disabledKeyboardNavigation) {
       let newSelection;
       switch (eventKey) {
@@ -620,6 +621,23 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  // handle generic key down events in the popper that do not adjust or select dates
+  onPopperKeyDown = event => {
+    const eventKey = event.key;
+    if (eventKey === "Escape") {
+      // close the popper and refocus the input
+      event.preventDefault();
+      this.setState(
+        {
+          preventFocus: true
+        },
+        () => {
+          this.setOpen(false);
+          setTimeout(this.setFocus); // return focus to the input
+        }
+      );
+    }
+  };
   onClearClick = event => {
     if (event) {
       if (event.preventDefault) {
@@ -747,7 +765,7 @@ export default class DatePicker extends React.Component {
         this.input = input;
       },
       value: inputValue,
-      // onBlur: this.handleBlur,
+      onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
       onFocus: this.handleFocus,
@@ -823,6 +841,8 @@ export default class DatePicker extends React.Component {
         popperComponent={calendar}
         popperPlacement={this.props.popperPlacement}
         popperProps={this.props.popperProps}
+        popperOnKeyDown={this.onPopperKeyDown}
+        enableTabLoop={this.props.enableTabLoop}
       />
     );
   }

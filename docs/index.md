@@ -19,6 +19,7 @@
 | `disabled`                    | `bool`                         | `false`                          |               |
 | `disabledKeyboardNavigation`  | `bool`                         | `false`                          |               |
 | `dropdownMode`                | `enum("scroll"\|"select")`     | `"scroll"`                       |               |
+| `enableTabLoop`               | `bool`                         | `true`                           |               |
 | `endDate`                     | `instanceOfDate`               |                                  |               |
 | `excludeDates`                | `array`                        |                                  |               |
 | `excludeTimes`                | `array`                        |                                  |               |
