@@ -386,9 +386,7 @@ export default class DatePicker extends React.Component {
       this.props.onBlur(event);
     }
 
-    if (!this.state.open && !this.props.withPortal) {
-      this.setState({ focused: false });
-    }
+    this.setState({ focused: false });
   };
 
   handleCalendarClickOutside = event => {
