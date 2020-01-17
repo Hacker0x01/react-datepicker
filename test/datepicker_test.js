@@ -106,16 +106,27 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).to.be.false;
   });
 
-  it("should keep the calendar shown when blurring the date input", done => {
-    var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
-    var dateInput = datePicker.input;
-    var focusSpy = sandbox.spy(dateInput, "focus");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
+  it("should close the popper and return focus to the date input.", done => {
+    // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
+    // Date Picker Dialog | Escape | Closes the dialog and returns focus to the Choose Date button.
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(<DatePicker />, div);
+
+    // user focuses the input field, the calendar opens
+    var dateInput = div.querySelector("input");
+    TestUtils.Simulate.focus(dateInput);
+
+    // user may tab or arrow down to the current day (or some other element in the popper)
+    var today = div.querySelector(".react-datepicker__day--today");
+    today.focus();
+
+    // user hits Escape
+    TestUtils.Simulate.keyDown(today, getKey("Escape"));
 
     defer(() => {
-      expect(datePicker.calendar).to.exist;
-      assert(focusSpy.calledOnce, "should refocus the date input");
+      expect(datePicker.calendar).to.not.exist;
+      expect(document.activeElement).to.equal(div.querySelector("input"));
       done();
     });
   });
@@ -302,19 +313,6 @@ describe("DatePicker", () => {
       getKey("Escape")
     );
     expect(datePicker.calendar).to.not.exist;
-  });
-
-  it("should hide the calendar when tabbing from the date input", () => {
-    var onBlurSpy = sandbox.spy();
-    var datePicker = TestUtils.renderIntoDocument(
-      <DatePicker onBlur={onBlurSpy} />
-    );
-    var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(dateInput), getKey("Tab"));
-    TestUtils.Simulate.blur(ReactDOM.findDOMNode(dateInput));
-    expect(datePicker.calendar).to.not.exist;
-    assert(onBlurSpy.calledOnce, "should call onBlur");
   });
 
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
