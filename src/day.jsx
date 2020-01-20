@@ -35,7 +35,8 @@ export default class Day extends React.Component {
     selectsStart: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
-    handleOnKeyDown: PropTypes.func
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   componentDidMount() {
@@ -57,7 +58,7 @@ export default class Day extends React.Component {
       this.isSameDay(this.props.preSelection) !==
         this.isSameDay(prevProps.preSelection)
     ) {
-      this.dayEl.current.focus();
+      !prevProps.isInputFocused && this.dayEl.current.focus();
     }
   }
 

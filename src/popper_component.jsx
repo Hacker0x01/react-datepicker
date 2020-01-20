@@ -32,7 +32,8 @@ export default class PopperComponent extends React.Component {
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
     targetComponent: PropTypes.element,
-    enableTabLoop: PropTypes.bool
+    enableTabLoop: PropTypes.bool,
+    popperOnKeyDown: PropTypes.func
   };
 
   render() {

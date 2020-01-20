@@ -147,7 +147,8 @@ export default class Calendar extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
-    handleOnKeyDown: PropTypes.func
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   constructor(props) {
@@ -696,6 +697,7 @@ export default class Calendar extends React.Component {
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
             showQuarterYearPicker={this.props.showQuarterYearPicker}
+            isInputFocused={this.props.isInputFocused}
           />
         </div>
       );

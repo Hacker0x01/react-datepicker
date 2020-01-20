@@ -557,18 +557,53 @@ export default class DatePicker extends React.Component {
       }
       return;
     }
+
+    // if calendar is open, these keys will focus the selected day
+    if (this.state.open) {
+      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
+        event.preventDefault();
+        const selectedDay =
+          this.calendar.componentNode &&
+          this.calendar.componentNode.querySelector(
+            '.react-datepicker__day[tabindex="0"]'
+          );
+        selectedDay && selectedDay.focus();
+        return;
+      }
+
+      const copy = newDate(this.state.preSelection);
+      if (eventKey === "Enter") {
+        event.preventDefault();
+        if (
+          this.inputOk() &&
+          this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
+        ) {
+          this.handleSelect(copy, event);
+          !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
+        } else {
+          this.setOpen(false);
+        }
+      } else if (eventKey === "Escape") {
+        event.preventDefault();
+
+        this.setOpen(false);
+      }
+
+      if (!this.inputOk()) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+      }
+    }
+  };
+
+  onDayKeyDown = event => {
+    this.props.onKeyDown(event);
+    const eventKey = event.key;
+
     const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
       event.preventDefault();
-      if (
-        this.inputOk() &&
-        this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
-      ) {
-        this.handleSelect(copy, event);
-        !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
-      } else {
-        this.setOpen(false);
-      }
+      this.handleSelect(copy, event);
+      !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
     } else if (eventKey === "Escape") {
       event.preventDefault();
 
@@ -608,7 +643,7 @@ export default class DatePicker extends React.Component {
         if (this.props.onInputError) {
           this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
         }
-        return; // Let the input component handle this keydown
+        return;
       }
       event.preventDefault();
       this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
@@ -636,6 +671,7 @@ export default class DatePicker extends React.Component {
       );
     }
   };
+
   onClearClick = event => {
     if (event) {
       if (event.preventDefault) {
@@ -737,7 +773,8 @@ export default class DatePicker extends React.Component {
         showMonthYearPicker={this.props.showMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
-        handleOnKeyDown={this.onInputKeyDown}
+        handleOnKeyDown={this.onDayKeyDown}
+        isInputFocused={this.state.focused}
       >
         {this.props.children}
       </WrappedCalendar>

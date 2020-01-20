@@ -43,7 +43,8 @@ export default class Month extends React.Component {
     renderDayContents: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
-    handleOnKeyDown: PropTypes.func
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -146,6 +147,7 @@ export default class Month extends React.Component {
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           renderDayContents={this.props.renderDayContents}
           handleOnKeyDown={this.props.handleOnKeyDown}
+          isInputFocused={this.props.isInputFocused}
         />
       );
 
