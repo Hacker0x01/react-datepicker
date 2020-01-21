@@ -58,6 +58,8 @@ export default class Day extends React.Component {
       this.isSameDay(this.props.preSelection) !==
         this.isSameDay(prevProps.preSelection)
     ) {
+      // only do this while the input isn't focused
+      // otherwise, typing/backspacing the date manually may steal focus away from the input
       !prevProps.isInputFocused && this.dayEl.current.focus();
     }
   }

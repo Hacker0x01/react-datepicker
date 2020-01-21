@@ -595,6 +595,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  // keyDown events passed down to day.jsx
   onDayKeyDown = event => {
     this.props.onKeyDown(event);
     const eventKey = event.key;
@@ -655,10 +656,14 @@ export default class DatePicker extends React.Component {
   };
 
   // handle generic key down events in the popper that do not adjust or select dates
+  // ex: while focusing prev and next month buttons
   onPopperKeyDown = event => {
     const eventKey = event.key;
     if (eventKey === "Escape") {
       // close the popper and refocus the input
+      // stop the input from auto opening onFocus
+      // close the popper
+      // setFocus to the input
       event.preventDefault();
       this.setState(
         {

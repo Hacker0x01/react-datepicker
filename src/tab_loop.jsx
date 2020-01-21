@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// FocusGuard prevents the user from tabbing outside of the popper
+// TabLoop prevents the user from tabbing outside of the popper
 // It creates a tabindex loop so that "Tab" on the last element will focus the first element
 // and "Shift Tab" on the first element will focus the last element
 
-const focusableElements = "[tabindex], a, button, input, select, textarea";
+const focusableElementsSelector =
+  "[tabindex], a, button, input, select, textarea";
 const focusableFilter = node => !node.disabled && node.tabIndex !== -1;
 
 export default class TabLoop extends React.Component {
@@ -30,7 +31,11 @@ export default class TabLoop extends React.Component {
   // trim first and last because they are the focus guards
   getTabChildren = () =>
     Array.prototype.slice
-      .call(this.tabLoopRef.current.querySelectorAll(focusableElements), 1, -1)
+      .call(
+        this.tabLoopRef.current.querySelectorAll(focusableElementsSelector),
+        1,
+        -1
+      )
       .filter(focusableFilter);
 
   handleFocusStart = e => {
