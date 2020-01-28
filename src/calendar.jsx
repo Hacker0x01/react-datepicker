@@ -61,7 +61,8 @@ export default class Calendar extends React.Component {
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month"
+      nextMonthButtonLabel: "Next Month",
+      customTimeInput: null
     };
   }
 
@@ -146,7 +147,8 @@ export default class Calendar extends React.Component {
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
-    showPopperArrow: PropTypes.bool
+    showPopperArrow: PropTypes.bool,
+    customTimeInput: PropTypes.element
   };
 
   constructor(props) {
@@ -380,8 +382,9 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--previous--disabled");
       clickHandler = null;
     }
-    
-    const isForYear = this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
+
+    const isForYear =
+      this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
     return (
       <button
@@ -390,7 +393,7 @@ export default class Calendar extends React.Component {
         onClick={clickHandler}
         aria-label={isForYear ? "Previous Year" : "Previous Month"}
       >
-        {isForYear 
+        {isForYear
           ? this.props.previousYearButtonLabel
           : this.props.previousMonthButtonLabel}
       </button>
@@ -445,17 +448,18 @@ export default class Calendar extends React.Component {
       classes.push("react-datepicker__navigation--next--disabled");
       clickHandler = null;
     }
-  
-    const isForYear = this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
-    
+
+    const isForYear =
+      this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
+
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-        aria-label={isForYear ? "Next Year" : "Next Month"} 
+        aria-label={isForYear ? "Next Year" : "Next Month"}
       >
-        { isForYear
+        {isForYear
           ? this.props.nextYearButtonLabel
           : this.props.nextMonthButtonLabel}
       </button>
@@ -553,9 +557,7 @@ export default class Calendar extends React.Component {
     <div className="react-datepicker__header">
       {this.renderCurrentMonth(monthDate)}
       <div
-        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
-          this.props.dropdownMode
-        }`}
+        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
         onFocus={this.handleDropdownFocus}
       >
         {this.renderMonthDropdown(i !== 0)}
@@ -743,6 +745,7 @@ export default class Calendar extends React.Component {
           timeString={timeString}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
+          customTimeInput={this.props.customTimeInput}
         />
       );
     }
