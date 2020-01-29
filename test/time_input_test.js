@@ -45,4 +45,26 @@ describe("DatePicker", () => {
     input.simulate("change", { target: { value: "" } });
     expect(timeComponent.state("time")).to.equal("13:00");
   });
+
+  it("should trigger onChange event on a custom time input without using the last valid timeString", () => {
+    const CustomTimeInputComponent = ({ onChange, value }) => (
+      <input
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        style={{ border: "solid 1px pink" }}
+      />
+    );
+
+    const timeComponent = shallow(
+      <InputTimeComponent
+        timeString="13:00"
+        onChange={console.log}
+        customTimeInput={<CustomTimeInputComponent />}
+      />
+    );
+
+    const input = timeComponent.find("CustomTimeInputComponent");
+    input.simulate("change", "14:00");
+    expect(timeComponent.state("time")).to.equal("14:00");
+  });
 });
