@@ -2,6 +2,7 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import InputTimeComponent from "../src/inputTime";
+import PropTypes from "prop-types";
 
 describe("DatePicker", () => {
   let sandbox;
@@ -54,6 +55,11 @@ describe("DatePicker", () => {
         style={{ border: "solid 1px pink" }}
       />
     );
+
+    CustomTimeInputComponent.propTypes = {
+      onChange: PropTypes.func,
+      value: PropTypes.string
+    };
 
     const timeComponent = shallow(
       <InputTimeComponent
