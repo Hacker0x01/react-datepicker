@@ -604,6 +604,8 @@ export default class DatePicker extends React.Component {
         case "End":
           newSelection = addYears(copy, 1);
           break;
+        default:
+          break;
       }
       if (!newSelection) {
         if (this.props.onInputError) {

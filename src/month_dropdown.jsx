@@ -97,6 +97,8 @@ export default class MonthDropdown extends React.Component {
       case "select":
         renderedDropdown = this.renderSelectMode(monthNames);
         break;
+      default:
+        break;
     }
 
     return (
