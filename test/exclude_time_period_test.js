@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import * as utils from "../src/date_utils";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src";
 
 describe("DatePicker", () => {
   let sandbox;

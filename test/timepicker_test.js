@@ -1,5 +1,5 @@
 import React from "react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import Time from "../src/time";

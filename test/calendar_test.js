@@ -7,7 +7,7 @@ import TestUtils from "react-dom/test-utils";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
 import MonthYearDropdown from "../src/month_year_dropdown";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src";
 import { shallow, mount } from "enzyme";
 import sinon from "sinon";
 import * as utils from "../src/date_utils";

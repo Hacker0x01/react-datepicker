@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src";
 import TimeComponent from "../src/time";
 
 describe("DatePicker", () => {
