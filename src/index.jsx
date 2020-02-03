@@ -103,7 +103,8 @@ export default class DatePicker extends React.Component {
         return date;
       },
       inlineFocusSelectedMonth: false,
-      showPopperArrow: true
+      showPopperArrow: true,
+      customTimeInput: null
     };
   }
 
@@ -222,7 +223,8 @@ export default class DatePicker extends React.Component {
     inlineFocusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
-    showPopperArrow: PropTypes.bool
+    showPopperArrow: PropTypes.bool,
+    customTimeInput: PropTypes.element
   };
 
   constructor(props) {
@@ -720,6 +722,7 @@ export default class DatePicker extends React.Component {
         showMonthYearPicker={this.props.showMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
+        customTimeInput={this.props.customTimeInput}
       >
         {this.props.children}
       </WrappedCalendar>
