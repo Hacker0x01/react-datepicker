@@ -104,7 +104,8 @@ export default class DatePicker extends React.Component {
         return date;
       },
       inlineFocusSelectedMonth: false,
-      showPopperArrow: true
+      showPopperArrow: true,
+      customTimeInput: null
     };
   }
 
@@ -124,6 +125,7 @@ export default class DatePicker extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
+    monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
@@ -224,7 +226,8 @@ export default class DatePicker extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
-    enableTabLoop: PropTypes.bool
+    enableTabLoop: PropTypes.bool,
+    customTimeInput: PropTypes.element
   };
 
   constructor(props) {
@@ -750,6 +753,7 @@ export default class DatePicker extends React.Component {
         onMonthChange={this.props.onMonthChange}
         onYearChange={this.props.onYearChange}
         dayClassName={this.props.dayClassName}
+        monthClassName={this.props.monthClassName}
         timeClassName={this.props.timeClassName}
         showTimeSelect={this.props.showTimeSelect}
         showTimeSelectOnly={this.props.showTimeSelectOnly}
@@ -780,6 +784,7 @@ export default class DatePicker extends React.Component {
         showPopperArrow={this.props.showPopperArrow}
         handleOnKeyDown={this.onDayKeyDown}
         isInputFocused={this.state.focused}
+        customTimeInput={this.props.customTimeInput}
       >
         {this.props.children}
       </WrappedCalendar>

@@ -61,7 +61,8 @@ export default class Calendar extends React.Component {
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
-      nextMonthButtonLabel: "Next Month"
+      nextMonthButtonLabel: "Next Month",
+      customTimeInput: null
     };
   }
 
@@ -73,6 +74,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
@@ -148,7 +150,8 @@ export default class Calendar extends React.Component {
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
-    isInputFocused: PropTypes.bool
+    isInputFocused: PropTypes.bool,
+    customTimeInput: PropTypes.element
   };
 
   constructor(props) {
@@ -666,6 +669,7 @@ export default class Calendar extends React.Component {
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
+            monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnKeyDown}
             onDayMouseEnter={this.handleDayMouseEnter}
@@ -747,6 +751,7 @@ export default class Calendar extends React.Component {
           timeString={timeString}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
+          customTimeInput={this.props.customTimeInput}
         />
       );
     }
