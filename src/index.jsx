@@ -122,7 +122,9 @@ export default class DatePicker extends React.Component {
     // eslint-disable-next-line react/no-unused-prop-types
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
+    daynameClassName: PropTypes.string,
     dayClassName: PropTypes.func,
+    headerClassName: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabled: PropTypes.bool,
@@ -697,6 +699,8 @@ export default class DatePicker extends React.Component {
         dayClassName={this.props.dayClassName}
         monthClassName={this.props.monthClassName}
         timeClassName={this.props.timeClassName}
+        daynameClassName={this.props.daynameClassName}
+        headerClassName={this.props.headerClassName}
         showTimeSelect={this.props.showTimeSelect}
         showTimeSelectOnly={this.props.showTimeSelectOnly}
         onTimeChange={this.handleTimeChange}

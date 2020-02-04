@@ -85,8 +85,7 @@ export default class YearDropdownOptions extends React.Component {
           key={"upcoming"}
           onClick={this.incrementYears}
         >
-          <a href={"#"} className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming">
-          </a>
+          <button className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"/>
         </div>
       );
     }
@@ -99,8 +98,7 @@ export default class YearDropdownOptions extends React.Component {
           key={"previous"}
           onClick={this.decrementYears}
         >
-          <a href={"#"} className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous">
-          </a>
+          <button className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"/>
         </div>
       );
     }

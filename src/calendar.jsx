@@ -73,6 +73,8 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    daynameClassName: PropTypes.string,
+    headerClassName: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
@@ -312,7 +314,7 @@ export default class Calendar extends React.Component {
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
-        <div key="W" className="react-datepicker__day-name">
+        <div key="W" className={["react-datepicker__day-name", this.props.daynameClassName].join(" ")}>
           {this.props.weekLabel || "#"}
         </div>
       );
@@ -322,7 +324,7 @@ export default class Calendar extends React.Component {
         const day = addDays(startOfWeek, offset);
         const weekDayName = this.formatWeekday(day, this.props.locale);
         return (
-          <div key={offset} className="react-datepicker__day-name">
+          <div key={offset} className={["react-datepicker__day-name", this.props.daynameClassName].join(" ")}>
             {weekDayName}
           </div>
         );
@@ -551,7 +553,7 @@ export default class Calendar extends React.Component {
   };
 
   renderDefaultHeader = ({ monthDate, i }) => (
-    <div className="react-datepicker__header">
+    <div className={["react-datepicker__header", this.props.headerClassName].join(" ")}>
       {this.renderCurrentMonth(monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${
@@ -596,7 +598,7 @@ export default class Calendar extends React.Component {
 
     return (
       <div
-        className="react-datepicker__header react-datepicker__header--custom"
+          className={["react-datepicker__header", "react-datepicker__header--custom", this.props.headerClassName].join(" ")}
         onFocus={this.props.onDropdownFocus}
       >
         {this.props.renderCustomHeader({
@@ -621,7 +623,7 @@ export default class Calendar extends React.Component {
 
   renderYearHeader = () => {
     return (
-      <div className="react-datepicker__header react-datepicker-year-header">
+      <div className={["react-datepicker__header", "react-datepicker-year-header", this.props.headerClassName].join(" ")}>
         {getYear(this.state.date)}
       </div>
     );
