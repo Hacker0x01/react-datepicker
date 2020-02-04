@@ -124,6 +124,7 @@ export default class DatePicker extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
+    monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabled: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
@@ -694,6 +695,7 @@ export default class DatePicker extends React.Component {
         onMonthChange={this.props.onMonthChange}
         onYearChange={this.props.onYearChange}
         dayClassName={this.props.dayClassName}
+        monthClassName={this.props.monthClassName}
         timeClassName={this.props.timeClassName}
         showTimeSelect={this.props.showTimeSelect}
         showTimeSelectOnly={this.props.showTimeSelectOnly}
