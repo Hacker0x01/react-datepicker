@@ -40,7 +40,9 @@ export default class Week extends React.Component {
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
-    renderDayContents: PropTypes.func
+    renderDayContents: PropTypes.func,
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -88,7 +90,7 @@ export default class Week extends React.Component {
         const day = utils.addDays(startOfWeek, offset);
         return (
           <Day
-            key={offset}
+            key={day.valueOf()}
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
@@ -110,6 +112,8 @@ export default class Week extends React.Component {
             dayClassName={this.props.dayClassName}
             renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+            handleOnKeyDown={this.props.handleOnKeyDown}
+            isInputFocused={this.props.isInputFocused}
           />
         );
       })
