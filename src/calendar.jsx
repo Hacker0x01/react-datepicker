@@ -74,6 +74,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
@@ -666,6 +667,7 @@ export default class Calendar extends React.Component {
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
+            monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
             onDayMouseEnter={this.handleDayMouseEnter}
             onMouseLeave={this.handleMonthMouseLeave}
