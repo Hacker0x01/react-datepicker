@@ -22,6 +22,7 @@
 | `endDate`                     | `instanceOfDate`               |                                  |             |
 | `excludeDates`                | `array`                        |                                  |             |
 | `excludeTimes`                | `array`                        |                                  |             |
+| `excludeScrollbar`            | `array`                        |                                  |             |
 | `filterDate`                  | `func`                         |                                  |             |
 | `fixedHeight`                 | `bool`                         |                                  |             |
 | `forceShowMonthNavigation`    | `bool`                         |                                  |             |

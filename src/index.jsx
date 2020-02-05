@@ -105,6 +105,7 @@ export default class DatePicker extends React.Component {
       },
       inlineFocusSelectedMonth: false,
       showPopperArrow: true,
+      excludeScrollbar: true,
       customTimeInput: null
     };
   }
@@ -226,6 +227,7 @@ export default class DatePicker extends React.Component {
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
+    excludeScrollbar: PropTypes.bool,
     enableTabLoop: PropTypes.bool,
     customTimeInput: PropTypes.element
   };
@@ -782,6 +784,7 @@ export default class DatePicker extends React.Component {
         showMonthYearPicker={this.props.showMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
+        excludeScrollbar={this.props.excludeScrollbar}
         handleOnKeyDown={this.onDayKeyDown}
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
