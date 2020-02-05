@@ -67,6 +67,7 @@ import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
+import CustomTimeInput from "../../examples/customTimeInput";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -333,6 +334,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar open state callbacks",
       component: OnCalendarChangeStateCallbacks
+    },
+    {
+      title: "Custom time input",
+      component: CustomTimeInput
     }
   ];
 

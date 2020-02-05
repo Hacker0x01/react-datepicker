@@ -42,7 +42,9 @@ export default class Month extends React.Component {
     shouldCloseOnSelect: PropTypes.bool,
     renderDayContents: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
-    showQuarterYearPicker: PropTypes.bool
+    showQuarterYearPicker: PropTypes.bool,
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -144,6 +146,8 @@ export default class Month extends React.Component {
           shouldCloseOnSelect={this.props.shouldCloseOnSelect}
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           renderDayContents={this.props.renderDayContents}
+          handleOnKeyDown={this.props.handleOnKeyDown}
+          isInputFocused={this.props.isInputFocused}
         />
       );
 
@@ -234,7 +238,12 @@ export default class Month extends React.Component {
   };
 
   renderMonths = () => {
-    const months = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
+    const months = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [9, 10, 11]
+    ];
     return months.map((month, i) => (
       <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (

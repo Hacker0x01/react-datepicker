@@ -5,7 +5,8 @@ export default class inputTime extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
     timeString: PropTypes.string,
-    timeInputLabel: PropTypes.string
+    timeInputLabel: PropTypes.string,
+    customTimeInput: PropTypes.element
   };
 
   constructor(props) {
@@ -24,9 +25,33 @@ export default class inputTime extends React.Component {
     this.props.onChange(date);
   };
 
-  render() {
+  renderTimeInput = () => {
     const { time } = this.state;
-    const { timeString } = this.props;
+    const { timeString, customTimeInput } = this.props;
+
+    if (customTimeInput) {
+      return React.cloneElement(customTimeInput, {
+        value: time,
+        onChange: this.onTimeChange
+      });
+    }
+
+    return (
+      <input
+        type="time"
+        className="react-datepicker-time__input"
+        placeholder="Time"
+        name="time-input"
+        required
+        value={time}
+        onChange={ev => {
+          this.onTimeChange(ev.target.value || timeString);
+        }}
+      />
+    );
+  };
+
+  render() {
     return (
       <div className="react-datepicker__input-time-container">
         <div className="react-datepicker-time__caption">
@@ -34,17 +59,7 @@ export default class inputTime extends React.Component {
         </div>
         <div className="react-datepicker-time__input-container">
           <div className="react-datepicker-time__input">
-            <input
-              type="time"
-              className="react-datepicker-time__input"
-              placeholder="Time"
-              name="time-input"
-              required
-              value={time}
-              onChange={ev => {
-                this.onTimeChange(ev.target.value || timeString);
-              }}
-            />
+            {this.renderTimeInput()}
           </div>
         </div>
       </div>
