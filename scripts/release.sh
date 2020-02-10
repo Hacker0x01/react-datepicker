@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 rm -rf ./node_modules ./lib ./dist
 yarn
 
@@ -7,8 +9,7 @@ git checkout .
 
 npm version $1
 
-yarn global add react-docgen
-e
+npx react-docgen ./src/*.jsx | node ./scripts/buildDocs.js
 
 git add .
 
