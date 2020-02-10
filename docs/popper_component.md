@@ -3,6 +3,7 @@
 | name              | type      | default value | description |
 | ----------------- | --------- | ------------- | ----------- |
 | `className`       | `string`  |               |             |
+| `enableTabLoop`   | `bool`    |               |             |
 | `hidePopper`      | `bool`    | `true`        |             |
 | `popperComponent` | `element` |               |             |
 | `popperContainer` | `func`    |               |             |
@@ -13,4 +14,4 @@ enabled: true,
 escapeWithReference: true,
 boundariesElement: "viewport"
 }
-}`|| |`popperPlacement`|`enumpopperPlacementPositions`|`"bottom-start"`|| |`popperProps`|`object`|`{}`|| |`targetComponent`|`element`|||
+}`|| |`popperOnKeyDown`|`func`||| |`popperPlacement`|`enumpopperPlacementPositions`|`"bottom-start"`|| |`popperProps`|`object`|`{}`|| |`targetComponent`|`element`||| |`wrapperClassName`|`string`|||
