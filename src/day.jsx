@@ -268,6 +268,7 @@ export default class Day extends React.Component {
       aria-label={this.getAriaLabel()}
       role="option"
       aria-disabled={this.isDisabled()}
+      aria-selected={false}
     >
       {this.props.renderDayContents
         ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
