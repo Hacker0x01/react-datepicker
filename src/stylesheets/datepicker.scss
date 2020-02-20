@@ -51,7 +51,7 @@
       @extend %triangle-arrow-up;
     }
   }
-
+  
   &[data-placement="bottom-end"],
   &[data-placement="top-end"] {
     .react-datepicker__triangle {

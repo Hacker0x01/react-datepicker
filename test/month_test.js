@@ -46,9 +46,7 @@ describe("Month", () => {
     const shallowMonth = shallow(
       <Month ariaLabelPrefix={ariaLabelPrefix} day={utils.newDate()} />
     );
-    expect(
-      shallowMonth.html().indexOf(`aria-label="${ariaLabelPrefix}`)
-    ).not.equal(-1);
+    expect(shallowMonth.html().indexOf(`aria-label="${ariaLabelPrefix}`)).not.equal(-1);
   });
 
   it("should render all days of the month and some days in neighboring months", () => {

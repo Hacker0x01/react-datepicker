@@ -301,12 +301,7 @@ export default class Month extends React.Component {
   };
 
   render() {
-    const {
-      showMonthYearPicker,
-      showQuarterYearPicker,
-      day,
-      ariaLabelPrefix = "month "
-    } = this.props;
+    const { showMonthYearPicker, showQuarterYearPicker, day, ariaLabelPrefix = "month " } = this.props;
     return (
       <div
         className={this.getClassNames()}

@@ -140,7 +140,9 @@ export default class YearDropdown extends React.Component {
 
     return (
       <div
-        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}
+        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${
+          this.props.dropdownMode
+        }`}
       >
         {renderedDropdown}
       </div>

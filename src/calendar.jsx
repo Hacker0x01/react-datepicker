@@ -393,10 +393,7 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
-    const {
-      previousMonthAriaLabel = "Previous Month",
-      previousYearAriaLabel = "Previous Year"
-    } = this.props;
+    const { previousMonthAriaLabel = "Previous Month", previousYearAriaLabel = "Previous Year" } = this.props;
 
     return (
       <button
@@ -464,10 +461,7 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
-    const {
-      nextMonthAriaLabel = "Previous Month",
-      nextYearAriaLabel = "Previous Year"
-    } = this.props;
+    const { nextMonthAriaLabel = "Previous Month", nextYearAriaLabel = "Previous Year" } = this.props;
 
     return (
       <button

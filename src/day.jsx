@@ -240,15 +240,14 @@ export default class Day extends React.Component {
 
   getAriaLabel = () => {
     const {
-      day,
-      ariaLabelPrefixWhenEnabled = "Choose",
-      ariaLabelPrefixWhenDisabled = "Not available"
+            day,
+            ariaLabelPrefixWhenEnabled = "Choose",
+            ariaLabelPrefixWhenDisabled = "Not available" 
     } = this.props;
-
-    const prefix =
-      this.isDisabled() || this.isExcluded()
-        ? ariaLabelPrefixWhenDisabled
-        : ariaLabelPrefixWhenEnabled;
+    
+    const prefix = this.isDisabled() || this.isExcluded()
+                    ? ariaLabelPrefixWhenDisabled
+                    : ariaLabelPrefixWhenEnabled;
 
     return `${prefix} ${formatDate(day, "PPPP")}`;
   };
