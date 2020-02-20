@@ -8,6 +8,7 @@ const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
 export default class Month extends React.Component {
   static propTypes = {
+    ariaLabelPrefix: PropTypes.string,
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
@@ -300,13 +301,13 @@ export default class Month extends React.Component {
   };
 
   render() {
-    const { showMonthYearPicker, showQuarterYearPicker } = this.props;
+    const { showMonthYearPicker, showQuarterYearPicker, day, ariaLabelPrefix = "month " } = this.props;
     return (
       <div
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         role="listbox"
-        aria-label={"month-" + utils.formatDate(this.props.day, "yyyy-MM")}
+        aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
       >
         {showMonthYearPicker
           ? this.renderMonths()

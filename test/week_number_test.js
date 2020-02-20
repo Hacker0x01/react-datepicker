@@ -27,5 +27,13 @@ describe("WeekNumber", () => {
       shallowWeekNumber.instance().handleClick({});
       expect(onClick).to.have.property("callCount", 1);
     });
+
+    it("should have an aria-label containing the provided prefix", () => {
+      const ariaLabelPrefix = "A prefix in my native language";
+      const shallowWeekNumber = shallow(
+        <WeekNumber day={1} ariaLabelPrefix={ariaLabelPrefix} />
+      );
+      expect(shallowWeekNumber.html().indexOf(`aria-label="${ariaLabelPrefix}`)).not.equal(-1);
+    });
   });
 });

@@ -30,14 +30,23 @@ describe("Month", () => {
   });
 
   it("should have the month aria-label", () => {
+    const dateString = "2015-12";
     const month = TestUtils.renderIntoDocument(
-      <Month day={utils.newDate("2015-12-01")} />
+      <Month day={utils.newDate(`${dateString}-01`)} />
     );
     const month_dom = TestUtils.findRenderedDOMComponentWithClass(
       month,
       "react-datepicker__month"
     );
-    expect(month_dom.getAttribute("aria-label")).to.equal("month-2015-12");
+    expect(month_dom.getAttribute("aria-label")).to.contain(dateString);
+  });
+
+  it("should have an aria-label containing the provided prefix", () => {
+    const ariaLabelPrefix = "A prefix in my native language";
+    const shallowMonth = shallow(
+      <Month ariaLabelPrefix={ariaLabelPrefix} day={utils.newDate()} />
+    );
+    expect(shallowMonth.html().indexOf(`aria-label="${ariaLabelPrefix}`)).not.equal(-1);
   });
 
   it("should render all days of the month and some days in neighboring months", () => {

@@ -113,6 +113,7 @@ export default class DatePicker extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
+    ariaLabelClose: PropTypes.string,
     ariaLabelledBy: PropTypes.string,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
@@ -834,14 +835,15 @@ export default class DatePicker extends React.Component {
   };
 
   renderClearButton = () => {
-    if (this.props.isClearable && this.props.selected != null) {
+    const { isClearable, selected, clearButtonTitle, ariaLabelClose = "Close" } = this.props;
+    if (isClearable && selected != null) {
       return (
         <button
           type="button"
           className="react-datepicker__close-icon"
-          aria-label="Close"
+          aria-label={ariaLabelClose}
           onClick={this.onClearClick}
-          title={this.props.clearButtonTitle}
+          title={clearButtonTitle}
           tabIndex={-1}
         />
       );
