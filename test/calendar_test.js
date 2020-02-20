@@ -1213,7 +1213,9 @@ describe("Calendar", function() {
         showQuarterYearPicker
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a previous-button with the provided aria-label for year", () => {
@@ -1227,7 +1229,9 @@ describe("Calendar", function() {
         showQuarterYearPicker
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a next-button with the provided aria-label for month", () => {
@@ -1240,7 +1244,9 @@ describe("Calendar", function() {
         onClickOutside={() => {}}
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a previous-button with the provided aria-label for month", () => {
@@ -1253,6 +1259,8 @@ describe("Calendar", function() {
         onClickOutside={() => {}}
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 });
