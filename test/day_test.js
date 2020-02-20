@@ -507,6 +507,22 @@ describe("Day", () => {
     });
   });
 
+  describe("aria-label", () => {
+    const ariaLabelPrefixWhenEnabled = "A prefix in my native language desbribing that the date can be selected";
+    const ariaLabelPrefixWhenDisabled = "A prefix in my native language desbribing that the date can not be selected";
+
+    it("should have the correct provided prefix if date is not disabled", () => {
+      const shallowDay = renderDay(newDate(), { ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled });
+      expect(shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)).not.equal(-1);
+    });
+
+    it("should have the correct provided prefix if date is disabled", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, { ariaLabelPrefixWhenDisabled: ariaLabelPrefixWhenDisabled, excludeDates: [day] });
+      expect(shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)).not.equal(-1);
+    });
+  });
+
   describe("click", () => {
     var onClickCalled;
 

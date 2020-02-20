@@ -5,7 +5,8 @@ import classnames from "classnames";
 
 export default class WeekNumber extends React.Component<{
   weekNumber: number,
-  onClick?: Function
+  onClick?: Function,
+  ariaLabelPrefix?: string
 }> {
   static propTypes = {
     weekNumber: PropTypes.number.isRequired,
@@ -19,17 +20,18 @@ export default class WeekNumber extends React.Component<{
   };
 
   render() {
+    const { weekNumber, ariaLabelPrefix = "week ", onClick } = this.props;
     const weekNumberClasses = {
       "react-datepicker__week-number": true,
-      "react-datepicker__week-number--clickable": !!this.props.onClick
+      "react-datepicker__week-number--clickable": !!onClick
     };
     return (
       <div
         className={classnames(weekNumberClasses)}
-        aria-label={`week-${this.props.weekNumber}`}
+        aria-label={`${ariaLabelPrefix} ${this.props.weekNumber}`}
         onClick={this.handleClick}
       >
-        {this.props.weekNumber}
+        {weekNumber}
       </div>
     );
   }

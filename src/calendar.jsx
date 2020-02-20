@@ -68,6 +68,10 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
+    previousMonthAriaLabel: PropTypes.string,
+    nextMonthAriaLabel: PropTypes.string,
+    previousYearAriaLabel: PropTypes.string,
+    nextYearAriaLabel: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.node,
     container: PropTypes.func,
@@ -389,12 +393,14 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
+    const { previousMonthAriaLabel = "Previous Month", previousYearAriaLabel = "Previous Year" } = this.props;
+
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-        aria-label={isForYear ? "Previous Year" : "Previous Month"}
+        aria-label={isForYear ? previousYearAriaLabel : previousMonthAriaLabel}
       >
         {isForYear
           ? this.props.previousYearButtonLabel
@@ -455,12 +461,14 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
+    const { nextMonthAriaLabel = "Previous Month", nextYearAriaLabel = "Previous Year" } = this.props;
+
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-        aria-label={isForYear ? "Next Year" : "Next Month"}
+        aria-label={isForYear ? nextYearAriaLabel : nextMonthAriaLabel}
       >
         {isForYear
           ? this.props.nextYearButtonLabel
