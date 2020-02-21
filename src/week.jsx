@@ -11,9 +11,12 @@ export default class Week extends React.Component {
     };
   }
   static propTypes = {
+    ariaLabelPrefix: PropTypes.string,
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
+    disabledDayAriaLabelPrefix: PropTypes.string,
+    chooseDayAriaLabelPrefix: PropTypes.string,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
@@ -82,7 +85,12 @@ export default class Week extends React.Component {
         ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
         : undefined;
       days.push(
-        <WeekNumber key="W" weekNumber={weekNumber} onClick={onClickAction} />
+        <WeekNumber
+          key="W"
+          weekNumber={weekNumber}
+          onClick={onClickAction}
+          ariaLabelPrefix={this.props.ariaLabelPrefix}
+        />
       );
     }
     return days.concat(
@@ -90,6 +98,8 @@ export default class Week extends React.Component {
         const day = utils.addDays(startOfWeek, offset);
         return (
           <Day
+            ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
+            ariaLabelPrefixWhenDisabled={this.props.disabledDayAriaLabelPrefix}
             key={day.valueOf()}
             day={day}
             month={this.props.month}
