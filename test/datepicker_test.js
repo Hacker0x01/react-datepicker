@@ -1227,35 +1227,37 @@ describe("DatePicker", () => {
   });
 
   it("should pass chooseDayAriaLabelPrefix prop to the correct child component", () => {
-    const chooseDayAriaLabelPrefix = "My prefix";
-    const datePicker = TestUtils.renderIntoDocument(
+    const chooseDayAriaLabelPrefix = "My choose-day-prefix";
+    const datePicker = mount(
       <DatePicker inline chooseDayAriaLabelPrefix={chooseDayAriaLabelPrefix} />
     );
     expect(
-      TestUtils.scryRenderedComponentsWithType(datePicker, Day)[0].props[
-        "ariaLabelPrefixWhenEnabled"
-      ]
+      datePicker
+        .find(Day)
+        .first()
+        .prop("ariaLabelPrefixWhenEnabled")
     ).to.equal(chooseDayAriaLabelPrefix);
   });
 
   it("should pass disabledDayAriaLabelPrefix prop to the correct child component", () => {
-    const disabledDayAriaLabelPrefix = "My prefix";
-    const datePicker = TestUtils.renderIntoDocument(
+    const disabledDayAriaLabelPrefix = "My disabled-day-prefix";
+    const datePicker = mount(
       <DatePicker
         inline
         disabledDayAriaLabelPrefix={disabledDayAriaLabelPrefix}
       />
     );
     expect(
-      TestUtils.scryRenderedComponentsWithType(datePicker, Day)[0].props[
-        "ariaLabelPrefixWhenDisabled"
-      ]
+      datePicker
+        .find(Day)
+        .first()
+        .prop("ariaLabelPrefixWhenDisabled")
     ).to.equal(disabledDayAriaLabelPrefix);
   });
 
   it("should pass weekAriaLabelPrefix prop to the correct child component", () => {
-    const weekAriaLabelPrefix = "My prefix";
-    const datePicker = TestUtils.renderIntoDocument(
+    const weekAriaLabelPrefix = "My week-prefix";
+    const datePicker = mount(
       <DatePicker
         inline
         showWeekNumbers
@@ -1263,9 +1265,10 @@ describe("DatePicker", () => {
       />
     );
     expect(
-      TestUtils.scryRenderedComponentsWithType(datePicker, WeekNumber)[0].props[
-        "ariaLabelPrefix"
-      ]
+      datePicker
+        .find(WeekNumber)
+        .first()
+        .prop("ariaLabelPrefix")
     ).to.equal(weekAriaLabelPrefix);
   });
 });
