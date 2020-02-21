@@ -5,6 +5,7 @@ import { mount } from "enzyme";
 import defer from "lodash/defer";
 import DatePicker from "../src/index.jsx";
 import Day from "../src/day";
+import WeekNumber from "../src/week_number";
 import TestWrapper from "./test_wrapper.jsx";
 import PopperComponent from "../src/popper_component.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
@@ -1223,5 +1224,51 @@ describe("DatePicker", () => {
     );
 
     expect(arrow).to.be.empty;
+  });
+
+  it("should pass chooseDayAriaLabelPrefix prop to the correct child component", () => {
+    const chooseDayAriaLabelPrefix = "My choose-day-prefix";
+    const datePicker = mount(
+      <DatePicker inline chooseDayAriaLabelPrefix={chooseDayAriaLabelPrefix} />
+    );
+    expect(
+      datePicker
+        .find(Day)
+        .first()
+        .prop("ariaLabelPrefixWhenEnabled")
+    ).to.equal(chooseDayAriaLabelPrefix);
+  });
+
+  it("should pass disabledDayAriaLabelPrefix prop to the correct child component", () => {
+    const disabledDayAriaLabelPrefix = "My disabled-day-prefix";
+    const datePicker = mount(
+      <DatePicker
+        inline
+        disabledDayAriaLabelPrefix={disabledDayAriaLabelPrefix}
+      />
+    );
+    expect(
+      datePicker
+        .find(Day)
+        .first()
+        .prop("ariaLabelPrefixWhenDisabled")
+    ).to.equal(disabledDayAriaLabelPrefix);
+  });
+
+  it("should pass weekAriaLabelPrefix prop to the correct child component", () => {
+    const weekAriaLabelPrefix = "My week-prefix";
+    const datePicker = mount(
+      <DatePicker
+        inline
+        showWeekNumbers
+        weekAriaLabelPrefix={weekAriaLabelPrefix}
+      />
+    );
+    expect(
+      datePicker
+        .find(WeekNumber)
+        .first()
+        .prop("ariaLabelPrefix")
+    ).to.equal(weekAriaLabelPrefix);
   });
 });
