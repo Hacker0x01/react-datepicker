@@ -73,7 +73,7 @@ export default class Week extends React.Component {
     if (this.props.formatWeekNumber) {
       return this.props.formatWeekNumber(date);
     }
-    return utils.getWeek(date);
+    return utils.getWeek(date, this.props.locale);
   };
 
   renderDays = () => {
