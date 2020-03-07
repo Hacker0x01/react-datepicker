@@ -266,9 +266,9 @@ export default class Day extends React.Component {
       onMouseEnter={this.handleMouseEnter}
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
-      role="option"
       aria-disabled={this.isDisabled()}
       aria-selected={false}
+      role="option"
     >
       {this.props.renderDayContents
         ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
