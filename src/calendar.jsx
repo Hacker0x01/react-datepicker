@@ -468,8 +468,8 @@ export default class Calendar extends React.Component {
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
     const {
-      nextMonthAriaLabel = "Previous Month",
-      nextYearAriaLabel = "Previous Year"
+      nextMonthAriaLabel = "Next Month",
+      nextYearAriaLabel = "Next Year"
     } = this.props;
 
     return (
