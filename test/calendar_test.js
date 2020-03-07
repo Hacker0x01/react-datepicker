@@ -1201,4 +1201,58 @@ describe("Calendar", function() {
       assert.equal(ref, instance.containerRef.current);
     });
   });
+
+  it("should have a next-button with the provided aria-label for year", () => {
+    const ariaLabel = "A label in my native language for next year";
+    const shallowCalendar = mount(
+      <Calendar
+        nextYearAriaLabel={ariaLabel}
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        showQuarterYearPicker
+      />
+    );
+    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+  });
+
+  it("should have a previous-button with the provided aria-label for year", () => {
+    const ariaLabel = "A label in my native language for previous year";
+    const shallowCalendar = mount(
+      <Calendar
+        previousYearAriaLabel={ariaLabel}
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        showQuarterYearPicker
+      />
+    );
+    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+  });
+
+  it("should have a next-button with the provided aria-label for month", () => {
+    const ariaLabel = "A label in my native language for next month";
+    const shallowCalendar = mount(
+      <Calendar
+        nextMonthAriaLabel={ariaLabel}
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+      />
+    );
+    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+  });
+
+  it("should have a previous-button with the provided aria-label for month", () => {
+    const ariaLabel = "A label in my native language for previous month";
+    const shallowCalendar = mount(
+      <Calendar
+        previousMonthAriaLabel={ariaLabel}
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+      />
+    );
+    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+  });
 });

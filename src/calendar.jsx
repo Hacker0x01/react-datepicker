@@ -68,12 +68,14 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
+    chooseDayAriaLabelPrefix: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.node,
     container: PropTypes.func,
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    disabledDayAriaLabelPrefix: PropTypes.string,
     daynameClassName: PropTypes.string,
     headerClassName: PropTypes.string,
     monthClassName: PropTypes.func,
@@ -98,6 +100,8 @@ export default class Calendar extends React.Component {
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
     monthSelectedIn: PropTypes.number,
+    nextMonthAriaLabel: PropTypes.string,
+    nextYearAriaLabel: PropTypes.string,
     onClickOutside: PropTypes.func.isRequired,
     onMonthChange: PropTypes.func,
     onYearChange: PropTypes.func,
@@ -120,6 +124,8 @@ export default class Calendar extends React.Component {
     timeCaption: PropTypes.string,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
+    previousMonthAriaLabel: PropTypes.string,
+    previousYearAriaLabel: PropTypes.string,
     scrollableYearDropdown: PropTypes.bool,
     scrollableMonthYearDropdown: PropTypes.bool,
     preSelection: PropTypes.instanceOf(Date),
@@ -153,7 +159,8 @@ export default class Calendar extends React.Component {
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
-    customTimeInput: PropTypes.element
+    customTimeInput: PropTypes.element,
+    weekAriaLabelPrefix: PropTypes.string
   };
 
   constructor(props) {
@@ -391,12 +398,17 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
+    const {
+      previousMonthAriaLabel = "Previous Month",
+      previousYearAriaLabel = "Previous Year"
+    } = this.props;
+
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-        aria-label={isForYear ? "Previous Year" : "Previous Month"}
+        aria-label={isForYear ? previousYearAriaLabel : previousMonthAriaLabel}
       >
         {isForYear
           ? this.props.previousYearButtonLabel
@@ -457,12 +469,17 @@ export default class Calendar extends React.Component {
     const isForYear =
       this.props.showMonthYearPicker || this.props.showQuarterYearPicker;
 
+    const {
+      nextMonthAriaLabel = "Next Month",
+      nextYearAriaLabel = "Next Year"
+    } = this.props;
+
     return (
       <button
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
-        aria-label={isForYear ? "Next Year" : "Next Month"}
+        aria-label={isForYear ? nextYearAriaLabel : nextMonthAriaLabel}
       >
         {isForYear
           ? this.props.nextYearButtonLabel
@@ -668,6 +685,9 @@ export default class Calendar extends React.Component {
         >
           {this.renderHeader({ monthDate, i })}
           <Month
+            chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
+            disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
+            weekAriaLabelPrefix={this.props.weekAriaLabelPrefix}
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}

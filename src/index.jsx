@@ -113,12 +113,14 @@ export default class DatePicker extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
+    ariaLabelClose: PropTypes.string,
     ariaLabelledBy: PropTypes.string,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
     calendarContainer: PropTypes.func,
     children: PropTypes.node,
+    chooseDayAriaLabelPrefix: PropTypes.string,
     className: PropTypes.string,
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
@@ -128,6 +130,7 @@ export default class DatePicker extends React.Component {
     daynameClassName: PropTypes.string,
     dayClassName: PropTypes.func,
     headerClassName: PropTypes.string,
+    disabledDayAriaLabelPrefix: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabled: PropTypes.bool,
@@ -231,7 +234,8 @@ export default class DatePicker extends React.Component {
     showPopperArrow: PropTypes.bool,
     excludeScrollbar: PropTypes.bool,
     enableTabLoop: PropTypes.bool,
-    customTimeInput: PropTypes.element
+    customTimeInput: PropTypes.element,
+    weekAriaLabelPrefix: PropTypes.string
   };
 
   constructor(props) {
@@ -710,6 +714,9 @@ export default class DatePicker extends React.Component {
           this.calendar = elem;
         }}
         locale={this.props.locale}
+        chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
+        disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
+        weekAriaLabelPrefix={this.props.weekAriaLabelPrefix}
         adjustDateOnChange={this.props.adjustDateOnChange}
         setOpen={this.setOpen}
         shouldCloseOnSelect={this.props.shouldCloseOnSelect}
@@ -840,14 +847,20 @@ export default class DatePicker extends React.Component {
   };
 
   renderClearButton = () => {
-    if (this.props.isClearable && this.props.selected != null) {
+    const {
+      isClearable,
+      selected,
+      clearButtonTitle,
+      ariaLabelClose = "Close"
+    } = this.props;
+    if (isClearable && selected != null) {
       return (
         <button
           type="button"
           className="react-datepicker__close-icon"
-          aria-label="Close"
+          aria-label={ariaLabelClose}
           onClick={this.onClearClick}
-          title={this.props.clearButtonTitle}
+          title={clearButtonTitle}
           tabIndex={-1}
         />
       );

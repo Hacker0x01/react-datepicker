@@ -19,6 +19,8 @@ import {
 
 export default class Day extends React.Component {
   static propTypes = {
+    ariaLabelPrefixWhenEnabled: PropTypes.string,
+    ariaLabelPrefixWhenDisabled: PropTypes.string,
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
@@ -237,9 +239,15 @@ export default class Day extends React.Component {
   };
 
   getAriaLabel = () => {
-    const { day } = this.props;
-    const prefix =
-      this.isDisabled() || this.isExcluded() ? "Not available" : "Choose";
+    const {
+            day,
+            ariaLabelPrefixWhenEnabled = "Choose",
+            ariaLabelPrefixWhenDisabled = "Not available" 
+    } = this.props;
+    
+    const prefix = this.isDisabled() || this.isExcluded()
+                    ? ariaLabelPrefixWhenDisabled
+                    : ariaLabelPrefixWhenEnabled;
 
     return `${prefix} ${formatDate(day, "PPPP")}`;
   };
