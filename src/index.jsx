@@ -795,6 +795,7 @@ export default class DatePicker extends React.Component {
         handleOnKeyDown={this.onDayKeyDown}
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
+        setPreSelection={this.setPreSelection}
       >
         {this.props.children}
       </WrappedCalendar>
