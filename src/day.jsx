@@ -240,14 +240,15 @@ export default class Day extends React.Component {
 
   getAriaLabel = () => {
     const {
-            day,
-            ariaLabelPrefixWhenEnabled = "Choose",
-            ariaLabelPrefixWhenDisabled = "Not available" 
+      day,
+      ariaLabelPrefixWhenEnabled = "Choose",
+      ariaLabelPrefixWhenDisabled = "Not available"
     } = this.props;
-    
-    const prefix = this.isDisabled() || this.isExcluded()
-                    ? ariaLabelPrefixWhenDisabled
-                    : ariaLabelPrefixWhenEnabled;
+
+    const prefix =
+      this.isDisabled() || this.isExcluded()
+        ? ariaLabelPrefixWhenDisabled
+        : ariaLabelPrefixWhenEnabled;
 
     return `${prefix} ${formatDate(day, "PPPP")}`;
   };
@@ -274,7 +275,7 @@ export default class Day extends React.Component {
       onMouseEnter={this.handleMouseEnter}
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
-      role="option"
+      role="button"
       aria-disabled={this.isDisabled()}
     >
       {this.props.renderDayContents
