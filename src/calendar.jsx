@@ -158,7 +158,8 @@ export default class Calendar extends React.Component {
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     customTimeInput: PropTypes.element,
-    weekAriaLabelPrefix: PropTypes.string
+    weekAriaLabelPrefix: PropTypes.string,
+    setPreSelection: PropTypes.func
   };
 
   constructor(props) {
@@ -284,6 +285,8 @@ export default class Calendar extends React.Component {
         this.props.setOpen(true);
       }
     }
+
+    this.props.setPreSelection && this.props.setPreSelection(date);
   };
 
   handleMonthYearChange = date => {
@@ -722,6 +725,7 @@ export default class Calendar extends React.Component {
             showMonthYearPicker={this.props.showMonthYearPicker}
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
+            containerRef={this.containerRef}
           />
         </div>
       );

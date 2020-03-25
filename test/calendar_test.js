@@ -1213,7 +1213,9 @@ describe("Calendar", function() {
         showQuarterYearPicker
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a previous-button with the provided aria-label for year", () => {
@@ -1227,7 +1229,9 @@ describe("Calendar", function() {
         showQuarterYearPicker
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a next-button with the provided aria-label for month", () => {
@@ -1240,7 +1244,9 @@ describe("Calendar", function() {
         onClickOutside={() => {}}
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
   });
 
   it("should have a previous-button with the provided aria-label for month", () => {
@@ -1253,6 +1259,51 @@ describe("Calendar", function() {
         onClickOutside={() => {}}
       />
     );
-    expect(shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)).not.equal(-1);
+    expect(
+      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`)
+    ).not.equal(-1);
+  });
+
+  describe("changing the month also changes the preselection to preserve keyboard navigation abilities", () => {
+    it("updates the preselection when you choose Next Month", () => {
+      let selected = new Date();
+      selected.setDate(1);
+      const currentMonth = selected.getMonth();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={selected} />
+      );
+      const dateInput = datePicker.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.click(
+        TestUtils.findRenderedDOMComponentWithClass(
+          datePicker,
+          "react-datepicker__navigation--next"
+        )
+      );
+      expect(datePicker.state.preSelection.getMonth()).to.equal(
+        currentMonth === 11 ? 0 : currentMonth + 1
+      );
+    });
+    it("updates the preselection when you choose Previous Month", () => {
+      let selected = new Date();
+      selected.setDate(1);
+      const currentMonth = selected.getMonth();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={selected} />
+      );
+      const dateInput = datePicker.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.click(
+        TestUtils.findRenderedDOMComponentWithClass(
+          datePicker,
+          "react-datepicker__navigation--previous"
+        )
+      );
+      expect(datePicker.state.preSelection.getMonth()).to.equal(
+        currentMonth === 0 ? 11 : currentMonth - 1
+      );
+    });
   });
 });

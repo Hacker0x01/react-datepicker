@@ -26,9 +26,10 @@ Local development configuration is pretty snappy. Here's how to get set up:
 
 1. Install/use node >=11.10.1
 2. Run `yarn link` from project root
-3. Run `cd docs-sites && yarn link react-datepicker`
-4. Run `yarn install` from project root
-5. Run `yarn start` from project root
-6. Open new terminal window
-7. After each JS change run `yarn build:js` in project root
-8. After each SCSS change run `yarn run css:dev && yarn run css:modules:dev` in project root
+3. Run `cd docs-site && yarn link react-datepicker`
+4. Run `yarn build` from project root (at least the first time, this will get you the `dist` directory that holds the code that will be linked to)
+5. Run `yarn install` from project root
+6. Run `yarn start` from project root
+7. Open new terminal window
+8. After each JS change run `yarn build:js` in project root
+9. After each SCSS change run `yarn run css:dev && yarn run css:modules:dev` in project root

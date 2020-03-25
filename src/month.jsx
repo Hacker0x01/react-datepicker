@@ -48,7 +48,11 @@ export default class Month extends React.Component {
     showQuarterYearPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
-    weekAriaLabelPrefix: PropTypes.string
+    weekAriaLabelPrefix: PropTypes.string,
+    containerRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   handleDayClick = (day, event) => {
@@ -155,6 +159,7 @@ export default class Month extends React.Component {
           renderDayContents={this.props.renderDayContents}
           handleOnKeyDown={this.props.handleOnKeyDown}
           isInputFocused={this.props.isInputFocused}
+          containerRef={this.props.containerRef}
         />
       );
 

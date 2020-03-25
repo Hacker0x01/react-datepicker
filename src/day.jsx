@@ -38,32 +38,18 @@ export default class Day extends React.Component {
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
-    isInputFocused: PropTypes.bool
+    containerRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   componentDidMount() {
-    const newTabIndex = this.getTabIndex();
-
-    if (newTabIndex === 0 && this.isSameDay(this.props.preSelection)) {
-      // focus the day on mount so that keyboard navigation works while cycling through months
-      // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-      (!document.activeElement || document.activeElement === document.body) &&
-        this.dayEl.current.focus();
-    }
+    this.handleFocusDay();
   }
 
   componentDidUpdate(prevProps) {
-    const newTabIndex = this.getTabIndex();
-
-    if (
-      newTabIndex === 0 &&
-      this.isSameDay(this.props.preSelection) !==
-        this.isSameDay(prevProps.preSelection)
-    ) {
-      // only do this while the input isn't focused
-      // otherwise, typing/backspacing the date manually may steal focus away from the input
-      !prevProps.isInputFocused && this.dayEl.current.focus();
-    }
+    this.handleFocusDay(prevProps);
   }
 
   dayEl = React.createRef();
@@ -266,6 +252,35 @@ export default class Day extends React.Component {
     return tabIndex;
   };
 
+  // various cases when we need to apply focus to the preselected day
+  // focus the day on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
+  // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
+  handleFocusDay = (prevProps = {}) => {
+    let shouldFocusDay = false;
+    // only do this while the input isn't focused
+    // otherwise, typing/backspacing the date manually may steal focus away from the input
+    if (
+      this.getTabIndex() === 0 &&
+      !prevProps.isInputFocused &&
+      this.isSameDay(this.props.preSelection)
+    ) {
+      // there is currently no activeElement
+      if (!document.activeElement || document.activeElement === document.body) {
+        shouldFocusDay = true;
+      }
+      // the activeElement is in the container, and it is another instance of Day
+      if (
+        this.props.containerRef &&
+        this.props.containerRef.current &&
+        this.props.containerRef.current.contains(document.activeElement) &&
+        document.activeElement.classList.contains("react-datepicker__day")
+      ) {
+        shouldFocusDay = true;
+      }
+    }
+
+    shouldFocusDay && this.dayEl.current.focus();
+  };
   render = () => (
     <div
       ref={this.dayEl}
