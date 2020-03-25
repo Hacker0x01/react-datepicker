@@ -45,6 +45,7 @@ export default class Month extends React.Component {
     shouldCloseOnSelect: PropTypes.bool,
     renderDayContents: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
+    showFullMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
@@ -250,6 +251,7 @@ export default class Month extends React.Component {
   };
 
   renderMonths = () => {
+    const { showFullMonthYearPicker, locale } = this.props;
     const months = [
       [0, 1, 2],
       [3, 4, 5],
@@ -266,7 +268,9 @@ export default class Month extends React.Component {
             }}
             className={this.getMonthClassNames(m)}
           >
-            {utils.getMonthShortInLocale(m, this.props.locale)}
+            {showFullMonthYearPicker
+              ? utils.getMonthInLocale(m, locale)
+              : utils.getMonthShortInLocale(m, locale)}
           </div>
         ))}
       </div>
