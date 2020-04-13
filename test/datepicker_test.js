@@ -399,7 +399,7 @@ describe("DatePicker", () => {
     expect(clearButtonText).to.equal("clear button");
   });
 
-  it("should save time from the selected date", () => {
+  it("should save time from the selected date during day change", () => {
     const selected = utils.newDate("2015-12-20 10:11:12");
     let date;
 
@@ -417,6 +417,28 @@ describe("DatePicker", () => {
       "react-datepicker__day"
     )[0];
     TestUtils.Simulate.click(dayButton);
+
+    expect(utils.getHours(date)).to.equal(10);
+    expect(utils.getMinutes(date)).to.equal(11);
+    expect(utils.getSeconds(date)).to.equal(12);
+  });
+
+  it("should save time from the selected date during date change", () => {
+    const selected = utils.newDate("2015-12-20 10:11:12");
+    let date;
+
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={d => {
+          date = d;
+        }}
+      />
+    );
+
+    var input = ReactDOM.findDOMNode(datePicker.input);
+    input.value = utils.newDate("2014-01-02");
+    TestUtils.Simulate.change(input);
 
     expect(utils.getHours(date)).to.equal(10);
     expect(utils.getMinutes(date)).to.equal(11);
