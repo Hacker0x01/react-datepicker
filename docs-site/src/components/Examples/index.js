@@ -346,6 +346,13 @@ export default class exampleComponents extends React.Component {
     }
   ];
 
+  handleAnchorClick = (e, id) => {
+    e.preventDefault();
+    document
+      .getElementById(id)
+      .scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   render() {
     return (
       <>
@@ -353,7 +360,15 @@ export default class exampleComponents extends React.Component {
         <ul className="examples__navigation">
           {this.examples.map((example, index) => (
             <li className="examples__navigation-item" key={`link-${index}`}>
-              <a href={`#example-${slugify(example.title, { lower: true })}`}>
+              <a
+                href={`#example-${slugify(example.title, { lower: true })}`}
+                onClick={e =>
+                  this.handleAnchorClick(
+                    e,
+                    `example-${slugify(example.title, { lower: true })}`
+                  )
+                }
+              >
                 {example.title}
               </a>
             </li>
