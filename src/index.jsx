@@ -89,6 +89,7 @@ export default class DatePicker extends React.Component {
       showTimeInput: false,
       showPreviousMonths: false,
       showMonthYearPicker: false,
+      showFullMonthYearPicker: false,
       showQuarterYearPicker: false,
       strictParsing: false,
       timeIntervals: 30,
@@ -208,6 +209,7 @@ export default class DatePicker extends React.Component {
     shouldCloseOnSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
+    showFullMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
@@ -793,6 +795,7 @@ export default class DatePicker extends React.Component {
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
+        showFullMonthYearPicker={this.props.showFullMonthYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
