@@ -444,7 +444,7 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
-    this.setSelected(date, event, undefined, monthSelectedIn);
+    this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
@@ -461,13 +461,17 @@ export default class DatePicker extends React.Component {
 
     if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
       if (changedDate !== null) {
-        if (this.props.selected) {
-          let selected = this.props.selected;
-          if (keepInput) selected = newDate(changedDate);
+        if (
+          this.props.selected &&
+          (!keepInput ||
+            (!this.props.showTimeSelect &&
+              !this.props.showTimeSelectOnly &&
+              !this.props.showTimeInput))
+        ) {
           changedDate = setTime(changedDate, {
-            hour: getHours(selected),
-            minute: getMinutes(selected),
-            second: getSeconds(selected)
+            hour: getHours(this.props.selected),
+            minute: getMinutes(this.props.selected),
+            second: getSeconds(this.props.selected)
           });
         }
         if (!this.props.inline) {
