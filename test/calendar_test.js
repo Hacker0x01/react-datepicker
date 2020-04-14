@@ -13,6 +13,7 @@ import sinon from "sinon";
 import * as utils from "../src/date_utils";
 import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
+import { isSunday } from "date-fns";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/dd/yyyy";
@@ -164,6 +165,23 @@ describe("Calendar", function() {
     calendar
       .find(".react-datepicker__day-name")
       .forEach(dayName => expect(dayName.text()).to.have.length(1));
+  });
+
+  it("should contain the correct class when using the weekDayClassName prop", () => {
+    const func = date => (isSunday(date) ? "sunday" : undefined);
+
+    const calendar = mount(
+      <Calendar
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        weekDayClassName={func}
+      />
+    );
+
+    const sunday = calendar.find(".react-datepicker__day-name.sunday");
+    expect(sunday).to.have.length(1);
   });
 
   it("should render the months correctly adjusted by monthSelectedIn", () => {
