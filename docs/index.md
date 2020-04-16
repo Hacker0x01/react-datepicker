@@ -20,6 +20,7 @@
 | `dateFormat`                 | `union(string\|array)`         | `"MM/dd/yyyy"`     |             |
 | `dateFormatCalendar`         | `string`                       | `"LLLL yyyy"`      |             |
 | `dayClassName`               | `func`                         |                    |             |
+| `weekDayClassName`           | `func`                         |                    |             |
 | `disabled`                   | `bool`                         | `false`            |             |
 | `disabledDayAriaLabelPrefix` | `string`                       |                    |             |
 | `disabledKeyboardNavigation` | `bool`                         | `false`            |             |

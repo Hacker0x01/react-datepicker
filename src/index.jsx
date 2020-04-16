@@ -129,6 +129,7 @@ export default class DatePicker extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
     dayClassName: PropTypes.func,
+    weekDayClassName: PropTypes.func,
     disabledDayAriaLabelPrefix: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
@@ -768,6 +769,7 @@ export default class DatePicker extends React.Component {
         onMonthChange={this.props.onMonthChange}
         onYearChange={this.props.onYearChange}
         dayClassName={this.props.dayClassName}
+        weekDayClassName={this.props.weekDayClassName}
         monthClassName={this.props.monthClassName}
         timeClassName={this.props.timeClassName}
         showTimeSelect={this.props.showTimeSelect}

@@ -75,6 +75,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    weekDayClassName: PropTypes.func,
     disabledDayAriaLabelPrefix: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
@@ -336,8 +337,19 @@ export default class Calendar extends React.Component {
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
         const day = addDays(startOfWeek, offset);
         const weekDayName = this.formatWeekday(day, this.props.locale);
+
+        const weekDayClassName = this.props.weekDayClassName
+          ? this.props.weekDayClassName(day)
+          : undefined;
+
         return (
-          <div key={offset} className="react-datepicker__day-name">
+          <div
+            key={offset}
+            className={classnames(
+              "react-datepicker__day-name",
+              weekDayClassName
+            )}
+          >
             {weekDayName}
           </div>
         );
