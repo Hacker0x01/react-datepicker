@@ -1,31 +1,23 @@
-import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import React, { Component } from "react";
+import DatePicker from "react-datepicker";
 
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      startDate: moment()
-    };
-  }
+  state = {
+    startDate: new Date()
+  };
 
   render() {
-    return (
-      <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange.bind(this)}
-      />
-    );
+    const { startDate } = this.state;
+    return <DatePicker selected={startDate} onChange={this.handleChange} />;
   }
 
-  handleChange(date) {
+  handleChange = startDate => {
     this.setState({
-      startDate: date
+      startDate
     });
-  }
+  };
 }
 
 export default App;

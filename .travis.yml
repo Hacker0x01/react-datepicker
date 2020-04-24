@@ -1,23 +1,28 @@
-sudo: false
 language: node_js
 node_js:
-  - "6"
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-before_install:
-  - npm install -g grunt-cli
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "node"
+cache:
+  - npm
+  - yarn
 script:
+  - yarn lint
   - yarn test
+  - yarn build
 after_success:
   - yarn run codecov
+before_deploy:
+  - yarn --cwd docs-site install
+  - yarn --cwd docs-site build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: false
+  local_dir: docs-site/build
+  on:
+    branch: master
+addons:
+  firefox: latest
 notifications:
   slack:
     secure: kAmrLltV0ZLuhl6rKk26fDLGuoCch6AYaObRQje4UZlxVQjR2467k430vOZLqv39Mr3U5XmYl6VLcCGmBr3tjM/9c1zjoXnRT8MRy4eIYaUr/thXeh2FlfHKOk8rXnNOoRZ1kBsCzCDFCNDYZZA4jya8S5ITcQyGyYcOqBWVy1w=

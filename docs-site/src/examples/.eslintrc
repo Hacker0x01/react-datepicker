@@ -1,0 +1,33 @@
+{
+    "rules": {
+        "no-unused-expressions": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-no-undef": [
+            "error",
+            {
+                "allowGlobals": true
+            }
+        ]
+    },
+    "globals": {
+        "useState": false,
+        "render": false,
+        "DatePicker": false,
+        "setHours": false,
+        "setMinutes": false,
+        "getDate": false,
+        "addDays": false,
+        "subDays": false,
+        "addMonths": false,
+        "fi": false,
+        "getDay": false,
+        "isValid": false,
+        "format": false,
+        "range": false,
+        "getYear": false,
+        "getMonth": false,
+        "PropTypes": false,
+        "CalendarContainer": false,
+        "subMonths": false
+    }
+}

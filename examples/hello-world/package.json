@@ -1,21 +1,32 @@
 {
   "name": "hello-world",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "react-scripts": "0.2.0"
-  },
   "dependencies": {
-    "moment": "^2.15.1",
-    "react": "^15.2.1",
-    "react-datepicker": "^0.30.0",
-    "react-dom": "^15.2.1"
+    "react": "^16.9.0",
+    "react-datepicker": "^2.8.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "./node_modules/react-scripts/config/eslint.js"
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
