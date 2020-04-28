@@ -221,8 +221,14 @@ export default class DatePicker extends React.Component {
     excludeTimes: PropTypes.array,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
-    previousMonthButtonLabel: PropTypes.string,
-    nextMonthButtonLabel: PropTypes.string,
+    previousMonthButtonLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]),
+    nextMonthButtonLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]),
     previousYearButtonLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     timeInputLabel: PropTypes.string,

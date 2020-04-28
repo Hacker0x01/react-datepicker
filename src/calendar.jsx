@@ -148,8 +148,14 @@ export default class Calendar extends React.Component {
     shouldCloseOnSelect: PropTypes.bool,
     useShortMonthInDropdown: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
-    previousMonthButtonLabel: PropTypes.string,
-    nextMonthButtonLabel: PropTypes.string,
+    previousMonthButtonLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]),
+    nextMonthButtonLabel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]),
     previousYearButtonLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
