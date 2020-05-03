@@ -41,7 +41,7 @@
 | `includeTimes`               | `array`                        |                    |             |
 | `injectTimes`                | `array`                        |                    |             |
 | `inline`                     | `bool`                         |                    |             |
-| `inlineFocusSelectedMonth`   | `bool`                         | `false`            |             |
+| `focusSelectedMonth`         | `bool`                         | `false`            |             |
 | `isClearable`                | `bool`                         |                    |             |
 | `locale`                     | `union(string\|shape)`         |                    |             |
 | `maxDate`                    | `instanceOfDate`               |                    |             |
