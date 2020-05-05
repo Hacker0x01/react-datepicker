@@ -79,8 +79,8 @@
 | `popperPlacement`            | `enumpopperPlacementPositions` |                    |             |
 | `popperProps`                | `object`                       |                    |             |
 | `preventOpenOnFocus`         | `bool`                         | `false`            |             |
-| `previousMonthButtonLabel`   | `string`                       | `"Previous Month"` |             |
-| `previousYearButtonLabel`    | `string`                       | `"Previous Year"`  |             |
+| `previousMonthButtonLabel`   | `union(string\|node)`          | `"Previous Month"` |             |
+| `previousYearButtonLabel`    | `union(string\|node)`          | `"Previous Year"`  |             |
 | `readOnly`                   | `bool`                         | `false`            |             |
 | `renderCustomHeader`         | `func`                         |                    |             |
 | `renderDayContents`          | `func`                         | `function(date) {  |
