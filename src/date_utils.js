@@ -192,7 +192,9 @@ export {
 };
 
 export function getWeek(date, locale) {
-  let localeObj = (locale && getLocaleObject(locale)) || (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
+  let localeObj =
+    (locale && getLocaleObject(locale)) ||
+    (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
   return dfgetWeek(date, localeObj ? { locale: localeObj } : null);
 }
 
@@ -215,6 +217,10 @@ export function getStartOfWeek(date, locale) {
 
 export function getStartOfMonth(date) {
   return startOfMonth(date);
+}
+
+export function getStartOfYear(date) {
+  return startOfYear(date);
 }
 
 export function getStartOfQuarter(date) {

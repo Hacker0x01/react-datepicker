@@ -63,6 +63,7 @@ import RenderCustomDay from "../../examples/renderCustomDay";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
+import YearPicker from "../../examples/yearPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import QuarterPicker from "../../examples/quarterPicker";
@@ -71,7 +72,7 @@ import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCa
 import CustomTimeInput from "../../examples/customTimeInput";
 
 import "./style.scss";
-import "react-datepicker/dist/react-datepicker.css";
+import "../../../../dist/react-datepicker.css";
 
 export default class exampleComponents extends React.Component {
   componentDidMount() {
@@ -319,6 +320,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Month Picker",
       component: MonthPicker
+    },
+    {
+      title: "Year Picker",
+      component: YearPicker
     },
     {
       title: "Month Picker with Full Name",
