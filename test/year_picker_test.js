@@ -18,7 +18,7 @@ describe("YearPicker", () => {
   });
 
   it("should show year picker component when showYearPicker prop is present", () => {
-    const datePicker = mount(<DatePicker showYearPicker={true} />);
+    const datePicker = mount(<DatePicker showYearPicker />);
     const component = datePicker.find(Year);
     expect(component).to.exist;
   });
