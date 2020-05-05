@@ -1079,6 +1079,36 @@ describe("Calendar", function() {
       const timeInputClassname = calendar.find(".react-datepicker__year");
       expect(timeInputClassname).to.have.length(1);
     });
+
+    it("calls increaseYear when next year button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 2004);
+    });
+
+    it("calls decreaseYear when previous year button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showYearPicker
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1982);
+    });
   });
 
   describe("when showMonthYearPicker is enabled", () => {

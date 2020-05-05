@@ -11,7 +11,6 @@ export default class Year extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   handleYearClick = (day, event) => {
