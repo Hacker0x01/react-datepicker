@@ -1064,6 +1064,23 @@ describe("Calendar", function() {
     });
   });
 
+  describe("renderYearPicker", function() {
+    it("should render YearPicker component", function() {
+      let calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearPicker
+        />
+      );
+      const timeInputClassname = calendar.find(".react-datepicker__year");
+      expect(timeInputClassname).to.have.length(1);
+    });
+  });
+
   describe("when showMonthYearPicker is enabled", () => {
     let calendar = mount(
       <Calendar
