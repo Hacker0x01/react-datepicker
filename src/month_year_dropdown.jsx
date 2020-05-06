@@ -89,7 +89,6 @@ export default class MonthYearDropdown extends React.Component {
   renderDropdown = () => (
     <WrappedMonthYearDropdownOptions
       key="dropdown"
-      ref="options"
       date={this.props.date}
       dateFormat={this.props.dateFormat}
       onChange={this.onChange}
@@ -142,9 +141,7 @@ export default class MonthYearDropdown extends React.Component {
 
     return (
       <div
-        className={`react-datepicker__month-year-dropdown-container react-datepicker__month-year-dropdown-container--${
-          this.props.dropdownMode
-        }`}
+        className={`react-datepicker__month-year-dropdown-container react-datepicker__month-year-dropdown-container--${this.props.dropdownMode}`}
       >
         {renderedDropdown}
       </div>

@@ -60,7 +60,6 @@ export default class MonthYearDropdownOptions extends React.Component {
               : "react-datepicker__month-year-option"
           }
           key={monthYearPoint}
-          ref={monthYearPoint}
           onClick={this.onChange.bind(this, monthYearPoint)}
         >
           {isSameMonthYear ? (
