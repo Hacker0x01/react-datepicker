@@ -22,7 +22,8 @@ import {
   isDayInRange,
   parseDate,
   isMonthinRange,
-  isQuarterInRange
+  isQuarterInRange,
+  getStartOfYear
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -687,6 +688,14 @@ describe("date_utils", function() {
       const endDate = newDate("2020-02-01");
 
       expect(isMonthinRange(startDate, endDate, 5, day)).to.be.true;
+    });
+  });
+
+  describe("getStartOfYear", () => {
+    it("should return the start of the year", () => {
+      const day = new Date("2020-04-13T00:00:00.000+08:00");
+      expect(getStartOfYear(day).getDate()).to.be.eq(1);
+      expect(getStartOfYear(day).getMonth()).to.be.eq(0);
     });
   });
 

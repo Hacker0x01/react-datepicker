@@ -4,7 +4,7 @@ import DatePicker from "../src/index.jsx";
 import InputTimeComponent from "../src/inputTime";
 import PropTypes from "prop-types";
 
-describe("DatePicker", () => {
+describe("timeInput", () => {
   let sandbox;
 
   beforeEach(() => {

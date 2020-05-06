@@ -51,7 +51,7 @@
       @extend %triangle-arrow-up;
     }
   }
-  
+
   &[data-placement="bottom-end"],
   &[data-placement="top-end"] {
     .react-datepicker__triangle {
@@ -206,6 +206,22 @@
 
 .react-datepicker__month-container {
   float: left;
+}
+
+.react-datepicker__year {
+  &-container {
+    margin: $datepicker__margin;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    &-text {
+      display: inline-block;
+      cursor: pointer;
+      flex: 1 0 30%;
+      width: 12px;
+      padding: 2px;
+    }
+  }
 }
 
 .react-datepicker__month {

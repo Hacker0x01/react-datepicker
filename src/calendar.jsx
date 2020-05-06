@@ -3,6 +3,7 @@ import MonthDropdown from "./month_dropdown";
 import MonthYearDropdown from "./month_year_dropdown";
 import Month from "./month";
 import Time from "./time";
+import Year from "./year";
 import InputTime from "./inputTime";
 import React from "react";
 import PropTypes from "prop-types";
@@ -112,6 +113,7 @@ export default class Calendar extends React.Component {
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
+    showYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -375,7 +377,7 @@ export default class Calendar extends React.Component {
   decreaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: subYears(date, 1)
+        date: subYears(date, this.props.showYearPicker ? 11 : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -406,7 +408,11 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.decreaseMonth;
 
-    if (this.props.showMonthYearPicker || this.props.showQuarterYearPicker) {
+    if (
+      this.props.showMonthYearPicker ||
+      this.props.showQuarterYearPicker ||
+      this.props.showYearPicker
+    ) {
       clickHandler = this.decreaseYear;
     }
 
@@ -440,7 +446,7 @@ export default class Calendar extends React.Component {
   increaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: addYears(date, 1)
+        date: addYears(date, this.props.showYearPicker ? 11 : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -477,7 +483,11 @@ export default class Calendar extends React.Component {
 
     let clickHandler = this.increaseMonth;
 
-    if (this.props.showMonthYearPicker || this.props.showQuarterYearPicker) {
+    if (
+      this.props.showMonthYearPicker ||
+      this.props.showQuarterYearPicker ||
+      this.props.showYearPicker
+    ) {
       clickHandler = this.increaseYear;
     }
 
@@ -665,7 +675,9 @@ export default class Calendar extends React.Component {
   renderYearHeader = () => {
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
-        {getYear(this.state.date)}
+        {this.props.showYearPicker
+          ? `${getYear(this.state.date) - 11} - ${getYear(this.state.date)}`
+          : getYear(this.state.date)}
       </div>
     );
   };
@@ -674,7 +686,9 @@ export default class Calendar extends React.Component {
     switch (true) {
       case this.props.renderCustomHeader !== undefined:
         return this.renderCustomHeader(headerArgs);
-      case this.props.showMonthYearPicker || this.props.showQuarterYearPicker:
+      case this.props.showMonthYearPicker ||
+        this.props.showQuarterYearPicker ||
+        this.props.showYearPicker:
         return this.renderYearHeader(headerArgs);
       default:
         return this.renderDefaultHeader(headerArgs);
@@ -682,7 +696,7 @@ export default class Calendar extends React.Component {
   };
 
   renderMonths = () => {
-    if (this.props.showTimeSelectOnly) {
+    if (this.props.showTimeSelectOnly || this.props.showYearPicker) {
       return;
     }
 
@@ -743,6 +757,7 @@ export default class Calendar extends React.Component {
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
             showFullMonthYearPicker={this.props.showFullMonthYearPicker}
+            showYearPicker={this.props.showYearPicker}
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
@@ -751,6 +766,20 @@ export default class Calendar extends React.Component {
       );
     }
     return monthList;
+  };
+
+  renderYears = () => {
+    if (this.props.showTimeSelectOnly) {
+      return;
+    }
+    if (this.props.showYearPicker) {
+      return (
+        <div className="react-datepicker__year">
+          {this.renderHeader()}
+          <Year onDayClick={this.handleDayClick} date={this.state.date} />
+        </div>
+      );
+    }
   };
 
   renderTimeSection = () => {
@@ -814,6 +843,7 @@ export default class Calendar extends React.Component {
           {this.renderPreviousButton()}
           {this.renderNextButton()}
           {this.renderMonths()}
+          {this.renderYears()}
           {this.renderTodayButton()}
           {this.renderTimeSection()}
           {this.renderInputTimeSection()}
