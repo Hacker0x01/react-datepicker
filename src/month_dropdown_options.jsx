@@ -18,7 +18,6 @@ export default class MonthDropdownOptions extends React.Component {
             : "react-datepicker__month-option"
         }
         key={month}
-        ref={month}
         onClick={this.onChange.bind(this, i)}
       >
         {this.props.month === i ? (
