@@ -622,8 +622,10 @@ export default class Calendar extends React.Component {
     </div>
   );
 
-  renderCustomHeader = ({ monthDate, i }) => {
-    if (i !== 0) {
+  renderCustomHeader = (headerArgs = {}) => {
+    const { monthDate, i } = headerArgs;
+
+    if (i !== 0 && i !== undefined) {
       return null;
     }
 
@@ -647,6 +649,11 @@ export default class Calendar extends React.Component {
       this.props
     );
 
+    const showDayNames =
+      !this.props.showMonthYearPicker &&
+      !this.props.showQuarterYearPicker &&
+      !this.props.showYearPicker;
+
     return (
       <div
         className="react-datepicker__header react-datepicker__header--custom"
@@ -665,9 +672,11 @@ export default class Calendar extends React.Component {
           prevYearButtonDisabled,
           nextYearButtonDisabled
         })}
-        <div className="react-datepicker__day-names">
-          {this.header(monthDate)}
-        </div>
+        {showDayNames && (
+          <div className="react-datepicker__day-names">
+            {this.header(monthDate)}
+          </div>
+        )}
       </div>
     );
   };

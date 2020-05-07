@@ -318,6 +318,70 @@ describe("Calendar", function() {
       expect(nextMonth).to.have.length(1);
     });
 
+    it("should render custom header when showing year picker", function() {
+      const calendar = getCalendar({
+        renderCustomHeader,
+        showYearPicker: true
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+
+      expect(calendar.find(".react-datepicker__year")).to.have.length(1);
+    });
+
+    it("should render day names with renderCustomHeader", function() {
+      const calendar = getCalendar({
+        renderCustomHeader
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+
+      expect(calendar.find(".react-datepicker__day-names")).to.have.length(1);
+    });
+
+    it("should not render day names with renderCustomHeader & showMonthYearPicker", function() {
+      const calendar = getCalendar({
+        renderCustomHeader,
+        showMonthYearPicker: true
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+
+      expect(calendar.find(".react-datepicker__day-names")).to.have.length(0);
+    });
+
+    it("should not render day names with renderCustomHeader & showYearPicker", function() {
+      const calendar = getCalendar({
+        renderCustomHeader,
+        showYearPicker: true
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+
+      expect(calendar.find(".react-datepicker__day-names")).to.have.length(0);
+    });
+
+    it("should not render day names with renderCustomHeader & showQuarterYearPicker", function() {
+      const calendar = getCalendar({
+        renderCustomHeader,
+        showQuarterYearPicker: true
+      });
+
+      expect(calendar.find(".react-datepicker__header--custom")).to.have.length(
+        1
+      );
+
+      expect(calendar.find(".react-datepicker__day-names")).to.have.length(0);
+    });
+
     it("should go to previous month", function() {
       const calendar = getCalendar({
         renderCustomHeader
