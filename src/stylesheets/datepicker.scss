@@ -8,10 +8,10 @@
 .react-datepicker {
   font-family: $datepicker__font-family;
   font-size: $datepicker__font-size;
-  background-color: #fff;
+  background-color: #fefefe;
   color: $datepicker__text-color;
   border: 1px solid $datepicker__border-color;
-  border-radius: $datepicker__border-radius;
+  // border-radius: $datepicker__border-radius;
   display: inline-block;
   position: relative;
 }
@@ -26,11 +26,11 @@
   }
 
   .react-datepicker__time {
-    border-radius: 0.3rem;
+    // border-radius: 0.3rem;
   }
 
   .react-datepicker__time-box {
-    border-radius: 0.3rem;
+    // border-radius: 0.3rem;
   }
 }
 
@@ -110,6 +110,9 @@
   color: $datepicker__header-color;
   font-weight: bold;
   font-size: $datepicker__font-size * 1.18;
+  font-family: "Helvetica";
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .react-datepicker-time__header {
@@ -368,7 +371,7 @@
   &--selected,
   &--in-selecting-range,
   &--in-range {
-    border-radius: $datepicker__border-radius;
+    // border-radius: $datepicker__border-radius;
     background-color: $datepicker__selected-color;
     color: #fff;
 
@@ -378,7 +381,7 @@
   }
 
   &--keyboard-selected {
-    border-radius: $datepicker__border-radius;
+    // border-radius: $datepicker__border-radius;
     background-color: lighten($datepicker__selected-color, 10%);
     color: #fff;
 
@@ -417,7 +420,7 @@
 .react-datepicker__month-read-view,
 .react-datepicker__month-year-read-view {
   border: 1px solid transparent;
-  border-radius: $datepicker__border-radius;
+  // border-radius: $datepicker__border-radius;
 
   &:hover {
     cursor: pointer;
@@ -449,7 +452,7 @@
   top: 30px;
   z-index: 1;
   text-align: center;
-  border-radius: $datepicker__border-radius;
+  // border-radius: $datepicker__border-radius;
   border: 1px solid $datepicker__border-color;
 
   &:hover {
@@ -472,8 +475,8 @@
   margin-right: auto;
 
   &:first-of-type {
-    border-top-left-radius: $datepicker__border-radius;
-    border-top-right-radius: $datepicker__border-radius;
+    // border-top-left-radius: $datepicker__border-radius;
+    // border-top-right-radius: $datepicker__border-radius;
   }
 
   &:last-of-type {
@@ -481,8 +484,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border-bottom-left-radius: $datepicker__border-radius;
-    border-bottom-right-radius: $datepicker__border-radius;
+    // border-bottom-left-radius: $datepicker__border-radius;
+    // border-bottom-right-radius: $datepicker__border-radius;
   }
 
   &:hover {
