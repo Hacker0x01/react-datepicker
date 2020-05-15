@@ -688,6 +688,7 @@ export default class DatePicker extends React.Component {
       // stop the input from auto opening onFocus
       // close the popper
       // setFocus to the input
+      // allow input auto opening onFocus
       event.preventDefault();
       this.setState(
         {
@@ -695,7 +696,10 @@ export default class DatePicker extends React.Component {
         },
         () => {
           this.setOpen(false);
-          setTimeout(this.setFocus); // return focus to the input
+          setTimeout(() => {
+            this.setFocus();
+            this.setState({ preventFocus: false });
+          });
         }
       );
     }

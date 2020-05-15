@@ -136,6 +136,7 @@ describe("DatePicker", () => {
 
     defer(() => {
       expect(datePicker.calendar).to.not.exist;
+      expect(datePicker.state.preventFocus).to.be.false;
       expect(document.activeElement).to.equal(div.querySelector("input"));
       done();
     });
