@@ -26,7 +26,6 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
-    inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
