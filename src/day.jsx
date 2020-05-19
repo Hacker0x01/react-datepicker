@@ -26,7 +26,8 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
-    inline: PropTypes.bool,
+    
+    : PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -80,7 +81,6 @@ export default class Day extends React.Component {
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !this.props.inline &&
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);
 
