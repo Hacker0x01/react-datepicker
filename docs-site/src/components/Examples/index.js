@@ -65,6 +65,7 @@ import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import YearPicker from "../../examples/yearPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
+import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
@@ -328,6 +329,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Month Picker with Full Name",
       component: monthPickerFullName
+    },
+    {
+      title: "Month Picker Two Columns Layout",
+      component: monthPickerTwoColumns
     },
     {
       title: "Range Month Picker",
