@@ -455,6 +455,9 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
+    // if (this.props.onChangeRaw) {
+    //   this.props.onChangeRaw(event);
+    // }
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
@@ -501,9 +504,8 @@ export default class DatePicker extends React.Component {
       this.props.onChange(changedDate, event);
     }
 
-    this.props.onSelect(changedDate, event);
-
     if (!keepInput) {
+      this.props.onSelect(changedDate, event);
       this.setState({ inputValue: null });
     }
   };
