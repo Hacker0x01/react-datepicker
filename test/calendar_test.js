@@ -1109,8 +1109,8 @@ describe("Calendar", function() {
   });
 
   describe("renderInputTimeSection", function() {
-    it("should render InputTime component", function() {
-      let calendar = mount(
+    const renderCalendar = props =>
+      mount(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1119,12 +1119,21 @@ describe("Calendar", function() {
           dropdownMode="select"
           showYearDropdown
           showTimeInput
+          {...props}
         />
       );
-      const timeInputClassname = calendar.find(
-        ".react-datepicker__input-time-container"
-      );
+    const timeInputSelector = ".react-datepicker__input-time-container";
+
+    it("should render InputTime component", function() {
+      const calendar = renderCalendar();
+      const timeInputClassname = calendar.find(timeInputSelector);
       expect(timeInputClassname).to.have.length(1);
+    });
+
+    it("should pass empty string to InputTime when no selected date", () => {
+      const calendar = renderCalendar();
+      const timeInputEl = calendar.find(`${timeInputSelector} input`);
+      expect(timeInputEl.prop("value")).to.equal("");
     });
   });
 

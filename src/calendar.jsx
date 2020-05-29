@@ -35,7 +35,8 @@ import {
   yearDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
-  addZero
+  addZero,
+  isValid
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -825,9 +826,10 @@ export default class Calendar extends React.Component {
 
   renderInputTimeSection = () => {
     const time = new Date(this.props.selected);
-    const timeString = `${addZero(time.getHours())}:${addZero(
-      time.getMinutes()
-    )}`;
+    const timeValid = isValid(time) && Boolean(this.props.selected);
+    const timeString = timeValid
+      ? `${addZero(time.getHours())}:${addZero(time.getMinutes())}`
+      : "";
     if (this.props.showTimeInput) {
       return (
         <InputTime
