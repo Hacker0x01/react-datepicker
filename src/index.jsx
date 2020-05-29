@@ -455,9 +455,9 @@ export default class DatePicker extends React.Component {
       );
       return this.preventFocusTimeout;
     });
-    // if (this.props.onChangeRaw) {
-    //   this.props.onChangeRaw(event);
-    // }
+    if (this.props.onChangeRaw) {
+      this.props.onChangeRaw(event);
+    }
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
