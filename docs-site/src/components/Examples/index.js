@@ -39,6 +39,7 @@ import ClearInput from "../../examples/clearInput";
 import OnBlurCallbacks from "../../examples/onBlurCallbacks";
 import ConfigurePopper from "../../examples/configurePopper";
 import Portal from "../../examples/portal";
+import PortalById from "../../examples/portalById";
 import TabIndex from "../../examples/tabIndex";
 import YearDropdown from "../../examples/yearDropdown";
 import MonthDropdown from "../../examples/monthDropdown";
@@ -221,6 +222,12 @@ export default class exampleComponents extends React.Component {
     {
       title: "Portal version",
       component: Portal
+    },
+    {
+      title: "Portal by id",
+      description:
+        "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
+      component: PortalById
     },
     {
       title: "Inline portal version",

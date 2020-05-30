@@ -208,6 +208,7 @@ export default class DatePicker extends React.Component {
     value: PropTypes.string,
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
+    portalId: PropTypes.string,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
@@ -917,6 +918,7 @@ export default class DatePicker extends React.Component {
         className={this.props.popperClassName}
         wrapperClassName={this.props.wrapperClassName}
         hidePopper={!this.isCalendarOpen()}
+        portalId={this.props.portalId}
         popperModifiers={this.props.popperModifiers}
         targetComponent={
           <div className="react-datepicker__input-container">

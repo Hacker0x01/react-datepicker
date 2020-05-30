@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Manager, Reference, Popper, placements } from "react-popper";
 import TabLoop from "./tab_loop";
+import Portal from "./portal";
 
 export const popperPlacementPositions = placements;
 
@@ -33,7 +34,8 @@ export default class PopperComponent extends React.Component {
     popperProps: PropTypes.object,
     targetComponent: PropTypes.element,
     enableTabLoop: PropTypes.bool,
-    popperOnKeyDown: PropTypes.func
+    popperOnKeyDown: PropTypes.func,
+    portalId: PropTypes.string
   };
 
   render() {
@@ -47,7 +49,8 @@ export default class PopperComponent extends React.Component {
       popperProps,
       targetComponent,
       enableTabLoop,
-      popperOnKeyDown
+      popperOnKeyDown,
+      portalId
     } = this.props;
 
     let popper;
@@ -78,6 +81,10 @@ export default class PopperComponent extends React.Component {
 
     if (this.props.popperContainer) {
       popper = React.createElement(this.props.popperContainer, {}, popper);
+    }
+
+    if (portalId && !hidePopper) {
+      popper = <Portal portalId={portalId}>{popper}</Portal>;
     }
 
     const wrapperClasses = classnames(

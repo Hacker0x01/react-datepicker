@@ -25,13 +25,14 @@ export default class CodeExampleComponent extends React.Component {
   }
 
   render() {
-    const { title, component } = this.props.example;
+    const { title, description, component } = this.props.example;
     return (
       <div
         id={`example-${slugify(title, { lower: true })}`}
         className="example"
       >
         <h2 className="example__heading">{title}</h2>
+        {description && <p>{description}</p>}
         <div className="row">
           <LiveProvider
             code={component.trim()}
