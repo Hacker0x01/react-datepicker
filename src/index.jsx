@@ -106,7 +106,7 @@ export default class DatePicker extends React.Component {
       renderDayContents(date) {
         return date;
       },
-      inlineFocusSelectedMonth: false,
+      focusSelectedMonth: false,
       showPopperArrow: true,
       excludeScrollbar: true,
       customTimeInput: null
@@ -240,7 +240,7 @@ export default class DatePicker extends React.Component {
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     wrapperClassName: PropTypes.string,
-    inlineFocusSelectedMonth: PropTypes.bool,
+    focusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
@@ -493,11 +493,7 @@ export default class DatePicker extends React.Component {
             preSelection: changedDate
           });
         }
-        if (
-          this.props.inline &&
-          this.props.monthsShown > 1 &&
-          !this.props.inlineFocusSelectedMonth
-        ) {
+        if (!this.props.focusSelectedMonth) {
           this.setState({ monthSelectedIn: monthSelectedIn });
         }
       }
