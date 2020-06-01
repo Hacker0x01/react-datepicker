@@ -43,7 +43,6 @@ describe("YearPicker", () => {
       .find(".react-datepicker__year-container-text--selected")
       .at(0)
       .text();
-    // expect(utils.getYear(date)).to.equal(selectedYear);
     expect(year).to.equal(utils.getYear(date).toString());
   });
 });
