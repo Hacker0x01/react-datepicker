@@ -526,7 +526,7 @@ describe("DatePicker", () => {
         selected={m}
         onChange={callback}
         onInputError={onInputErrorCallback}
-        dateFormat="yyyy-MM-dd"
+        dateFormat={testFormat}
         {...opts}
       />
     );
