@@ -526,6 +526,7 @@ describe("DatePicker", () => {
         selected={m}
         onChange={callback}
         onInputError={onInputErrorCallback}
+        dateFormat="yyyy-MM-dd"
         {...opts}
       />
     );
@@ -684,7 +685,7 @@ describe("DatePicker", () => {
     });
     TestUtils.Simulate.change(data.nodeInput, {
       target: {
-        value: utils.formatDate(utils.subDays(minDate, 2), data.testFormat)
+        value: utils.formatDate(utils.subDays(minDate, 1), data.testFormat)
       }
     });
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
@@ -697,7 +698,7 @@ describe("DatePicker", () => {
     });
     TestUtils.Simulate.change(data.nodeInput, {
       target: {
-        value: utils.formatDate(utils.addDays(maxDate, 2), data.testFormat)
+        value: utils.formatDate(utils.addDays(maxDate, 1), data.testFormat)
       }
     });
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
