@@ -95,7 +95,7 @@ describe("Day", () => {
         preSelection: day,
         inline: true
       });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).to.equal(true);
     });
   });
 
