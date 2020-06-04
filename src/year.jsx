@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getYear } from "./date_utils";
 import * as utils from "./date_utils";
+import classnames from "classnames";
 
 export default class Year extends React.Component {
   static propTypes = {
@@ -40,7 +41,10 @@ export default class Year extends React.Component {
           onClick={ev => {
             this.onYearClick(ev, y);
           }}
-          className="react-datepicker__year-container-text"
+          className={classnames("react-datepicker__year-container-text", {
+            "react-datepicker__year-container-text--selected":
+              y === getYear(date)
+          })}
           key={y}
         >
           {y}

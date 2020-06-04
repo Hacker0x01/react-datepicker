@@ -5,6 +5,7 @@ import Year from "../src/year";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import InputTimeComponent from "../src/inputTime";
+import * as utils from "../src/date_utils";
 
 describe("YearPicker", () => {
   let sandbox;
@@ -33,5 +34,15 @@ describe("YearPicker", () => {
       .at(1);
     firstYearDiv.simulate("click");
     expect(onYearChangeSpy.called).to.be.true;
+  });
+
+  it("should has selected class when element of array equal of choosen year", () => {
+    const date = new Date("2015-06-01");
+    const yearComponent = mount(<Year date={date} />);
+    const year = yearComponent
+      .find(".react-datepicker__year-container-text--selected")
+      .at(0)
+      .text();
+    expect(year).to.equal(utils.getYear(date).toString());
   });
 });

@@ -364,7 +364,8 @@
 }
 
 .react-datepicker__month,
-.react-datepicker__quarter {
+.react-datepicker__quarter,
+.react-datepicker__year-container-text {
   &--selected,
   &--in-selecting-range,
   &--in-range {
