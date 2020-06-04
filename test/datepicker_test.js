@@ -526,6 +526,7 @@ describe("DatePicker", () => {
         selected={m}
         onChange={callback}
         onInputError={onInputErrorCallback}
+        dateFormat={testFormat}
         {...opts}
       />
     );
@@ -943,22 +944,49 @@ describe("DatePicker", () => {
       utils.formatDate(datePicker.prop("selected"), "yyyy-MM-dd")
     ).to.equal("1982-12-30");
   });
-  it("should invoke provided onChangeRaw function on manual input change", () => {
+  it("should invoke provided onChangeRaw function and should not invoke provided onSelect function on manual input change", () => {
     const inputValue = "test";
     const onChangeRawSpy = sandbox.spy();
+    const onSelectSpy = sandbox.spy();
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         selected={utils.newDate()}
         onChange={sandbox.spy()}
         onChangeRaw={onChangeRawSpy}
+        onSelect={onSelectSpy}
       />
     );
     expect(onChangeRawSpy.called).to.be.false;
+    expect(onSelectSpy.called).to.be.false;
     const input = ReactDOM.findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy.calledOnce).to.be.true;
     expect(onChangeRawSpy.args[0][0].target.value).to.equal(inputValue);
+    expect(onSelectSpy.called).to.be.false;
+  });
+  it("should invoke provided onChangeRaw and onSelect functions when clicking a day on the calendar", () => {
+    const onChangeRawSpy = sandbox.spy();
+    const onSelectSpy = sandbox.spy();
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={utils.newDate()}
+        onChange={sandbox.spy()}
+        onChangeRaw={onChangeRawSpy}
+        onSelect={onSelectSpy}
+      />
+    );
+    expect(onChangeRawSpy.called).to.be.false;
+    expect(onSelectSpy.called).to.be.false;
+    const input = ReactDOM.findDOMNode(datePicker.input);
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(input));
+    const day = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Day
+    )[0];
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    expect(onChangeRawSpy.calledOnce).to.be.true;
+    expect(onSelectSpy.calledOnce).to.be.true;
   });
   it("should allow onChangeRaw to prevent a change", () => {
     const onChangeRaw = e => e.target.value > "2" && e.preventDefault();
