@@ -87,6 +87,32 @@ describe("TimePicker", () => {
     );
   });
 
+  it("should handle 40 min time intervals", () => {
+    renderDatePicker("February 28, 2018 9:00 AM", {
+      timeIntervals: 40,
+      showTimeSelect: true
+    });
+    expect(getInputString()).to.equal("February 28, 2018 9:00 AM");
+
+    ReactDOM.findDOMNode(datePicker.input).focus();
+
+    setManually("February 28, 2018 9:20 AM");
+    expect(getInputString()).to.equal("February 28, 2018 9:20 AM");
+  });
+
+  it("should handle 53 min time intervals", () => {
+    renderDatePicker("February 28, 2018 9:00 AM", {
+      timeIntervals: 53,
+      showTimeSelect: true
+    });
+    expect(getInputString()).to.equal("February 28, 2018 9:00 AM");
+
+    ReactDOM.findDOMNode(datePicker.input).focus();
+
+    setManually("February 28, 2018 9:53 AM");
+    expect(getInputString()).to.equal("February 28, 2018 9:53 AM");
+  });
+
   function setManually(string) {
     TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });
@@ -96,11 +122,11 @@ describe("TimePicker", () => {
     return ReactDOM.findDOMNode(datePicker.input).value;
   }
 
-  function renderDatePicker(string) {
-    return renderDatePickerFor(new Date(string));
+  function renderDatePicker(string, props) {
+    return renderDatePickerFor(new Date(string), props);
   }
 
-  function renderDatePickerFor(selected) {
+  function renderDatePickerFor(selected, props) {
     datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
@@ -108,6 +134,7 @@ describe("TimePicker", () => {
         allowSameDay
         onChange={onChange}
         showTimeSelect
+        {...props}
       />,
       div
     );

@@ -133,6 +133,7 @@ export default class Time extends React.Component {
       this.props.injectTimes.sort(function(a, b) {
         return a - b;
       });
+    const centerLiTargetList = [];
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(base, i * intervals);
       times.push(currentTime);
@@ -147,6 +148,10 @@ export default class Time extends React.Component {
         );
         times = times.concat(timesToInject);
       }
+
+      if (currH === getHours(currentTime)) {
+        centerLiTargetList.push(currentTime);
+      }
     }
 
     return times.map((time, i) => (
@@ -155,8 +160,15 @@ export default class Time extends React.Component {
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
-          if (currH === getHours(time) && currM >= getMinutes(time)) {
-            this.centerLi = li;
+          if (currH === getHours(time)) {
+            if (currM >= getMinutes(time)) {
+              this.centerLi = li;
+            } else if (
+              !this.centerLi &&
+              centerLiTargetList.indexOf(time) === centerLiTargetList.length - 1
+            ) {
+              this.centerLi = li;
+            }
           }
         }}
       >
