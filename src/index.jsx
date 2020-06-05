@@ -335,7 +335,7 @@ export default class DatePicker extends React.Component {
 
   setFocus = () => {
     if (this.input && this.input.focus) {
-      this.input.focus();
+      this.input.focus({ preventScroll: true });
     }
   };
 
@@ -592,7 +592,8 @@ export default class DatePicker extends React.Component {
           this.calendar.componentNode.querySelector(
             '.react-datepicker__day[tabindex="0"]'
           );
-        selectedDay && selectedDay.focus();
+        selectedDay && selectedDay.focus({ preventScroll: true });
+
         return;
       }
 

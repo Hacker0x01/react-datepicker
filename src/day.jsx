@@ -279,7 +279,7 @@ export default class Day extends React.Component {
       }
     }
 
-    shouldFocusDay && this.dayEl.current.focus();
+    shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
   render = () => (
     <div
