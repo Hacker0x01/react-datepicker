@@ -687,10 +687,12 @@ export default class Calendar extends React.Component {
   };
 
   renderYearHeader = () => {
+    const endPeriod = Math.ceil(getYear(this.state.date) / 12) * 12;
+    const startPeriod = endPeriod - 11;
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
         {this.props.showYearPicker
-          ? `${getYear(this.state.date) - 11} - ${getYear(this.state.date)}`
+          ? `${startPeriod} - ${endPeriod}`
           : getYear(this.state.date)}
       </div>
     );
@@ -791,7 +793,7 @@ export default class Calendar extends React.Component {
     }
     if (this.props.showYearPicker) {
       return (
-        <div className="react-datepicker__year">
+        <div className="react-datepicker__year-container">
           {this.renderHeader()}
           <Year onDayClick={this.handleDayClick} date={this.state.date} />
         </div>
