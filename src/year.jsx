@@ -28,22 +28,18 @@ export default class Year extends React.Component {
   };
 
   render() {
-    const yearsToShow = 11;
     const yearsList = [];
     const { date } = this.props;
-    for (
-      let y = getYear(date) - yearsToShow, i = 0;
-      y <= getYear(date);
-      y++, i++
-    ) {
+    const endPeriod = Math.ceil(getYear(date) / 12) * 12;
+    const startPeriod = endPeriod - 11;
+    for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(
         <div
           onClick={ev => {
             this.onYearClick(ev, y);
           }}
-          className={classnames("react-datepicker__year-container-text", {
-            "react-datepicker__year-container-text--selected":
-              y === getYear(date)
+          className={classnames("react-datepicker__year", {
+            "react-datepicker__year--selected": y === getYear(date)
           })}
           key={y}
         >
@@ -51,6 +47,6 @@ export default class Year extends React.Component {
         </div>
       );
     }
-    return <div className="react-datepicker__year-container">{yearsList}</div>;
+    return <div className="react-datepicker__year-wrapper">{yearsList}</div>;
   }
 }
