@@ -79,8 +79,8 @@ export default class Time extends React.Component {
   onKeyDown = event => {
     if (event.keyCode !== KEY_CODE.TAB) {
       event.preventDefault();
+      const activeEle = document.activeElement;
       if (event.keyCode === KEY_CODE.DOWN) {
-        const activeEle = document.activeElement;
         const nextEle = document.activeElement.nextElementSibling;
         if (nextEle) {
           nextEle.focus();
@@ -89,9 +89,7 @@ export default class Time extends React.Component {
           document.activeElement.parentElement.children[0].focus();
           document.activeElement.parentElement.children[0].tabIndex = 0;
         }
-        activeEle.tabIndex = -1;
       } else if (event.keyCode === KEY_CODE.UP) {
-        const activeEle = document.activeElement;
         const prevEle = document.activeElement.previousElementSibling;
         if (prevEle) {
           prevEle.focus();
@@ -101,8 +99,8 @@ export default class Time extends React.Component {
           document.activeElement.parentElement.children[count - 1].focus();
           document.activeElement.parentElement.children[count - 1].tabIndex = 0;
         }
-        activeEle.tabIndex = -1;
       }
+      activeEle.tabIndex = -1;
     }
     if (event.keyCode === KEY_CODE.SPACE || event.keyCode === KEY_CODE.ENTER) {
       const ele = document.activeElement.innerText;
