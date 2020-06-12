@@ -12,6 +12,14 @@ import {
   timesToInjectAfter
 } from "./date_utils";
 
+const KEY_CODE = {
+  ENTER: 13,
+  SPACE: 32,
+  DOWN: 40,
+  UP: 38,
+  TAB: 9
+};
+
 export default class Time extends React.Component {
   static get defaultProps() {
     return {
@@ -68,6 +76,47 @@ export default class Time extends React.Component {
     }
   }
 
+  onKeyDown = event => {
+    if (event.keyCode !== KEY_CODE.TAB) {
+      event.preventDefault();
+      if (event.keyCode === KEY_CODE.DOWN) {
+        const activeEle = document.activeElement;
+        const nextEle = document.activeElement.nextElementSibling;
+        if (nextEle) {
+          nextEle.focus();
+          nextEle.tabIndex = 0;
+        } else {
+          document.activeElement.parentElement.children[0].focus();
+          document.activeElement.parentElement.children[0].tabIndex = 0;
+        }
+        activeEle.tabIndex = -1;
+      } else if (event.keyCode === KEY_CODE.UP) {
+        const activeEle = document.activeElement;
+        const prevEle = document.activeElement.previousElementSibling;
+        if (prevEle) {
+          prevEle.focus();
+          prevEle.tabIndex = 0;
+        } else {
+          const count = document.activeElement.parentElement.childElementCount;
+          document.activeElement.parentElement.children[count - 1].focus();
+          document.activeElement.parentElement.children[count - 1].tabIndex = 0;
+        }
+        activeEle.tabIndex = -1;
+      }
+    }
+    if (event.keyCode === KEY_CODE.SPACE || event.keyCode === KEY_CODE.ENTER) {
+      const ele = document.activeElement.innerText;
+      const times = ele.split(":");
+      const hours = times[0];
+      const min = times[1];
+      const date = new Date(this.props.selected).setHours(
+        parseInt(hours),
+        parseInt(min)
+      );
+      this.handleClick(date);
+    }
+  };
+
   handleClick = time => {
     if (
       ((this.props.minTime || this.props.maxTime) &&
@@ -117,6 +166,24 @@ export default class Time extends React.Component {
     return classes.join(" ");
   };
 
+  applyTabIndex = (currH, currM, time, index) => {
+    const isTimeMatched =
+      currH === getHours(time) && currM === getMinutes(time);
+    if (isTimeMatched && index !== 0) {
+      if (document.querySelector(".react-datepicker__time-list")) {
+        document.querySelector(
+          ".react-datepicker__time-list"
+        ).children[0].tabIndex = -1;
+      }
+      return 0;
+    }
+    if (index === 0) {
+      return 0;
+    } else {
+      return -1;
+    }
+  };
+
   renderTimes = () => {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
@@ -157,6 +224,7 @@ export default class Time extends React.Component {
     return times.map((time, i) => (
       <li
         key={i}
+        tabIndex={this.applyTabIndex(currH, currM, time, i)}
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
@@ -201,6 +269,7 @@ export default class Time extends React.Component {
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
             <ul
+              onKeyDown={e => this.onKeyDown(e)}
               className="react-datepicker__time-list"
               ref={list => {
                 this.list = list;
