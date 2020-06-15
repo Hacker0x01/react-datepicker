@@ -444,6 +444,11 @@ export function isQuarterDisabled(
   );
 }
 
+export function isYearDisabled(year, { minDate, maxDate } = {}) {
+  const date = new Date(year, 0, 1);
+  return isOutOfBounds(date, { minDate, maxDate }) || false;
+}
+
 export function isQuarterInRange(startDate, endDate, q, day) {
   const startDateYear = getYear(startDate);
   const startDateQuarter = getQuarter(startDate);
@@ -543,6 +548,16 @@ export function yearDisabledBefore(day, { minDate, includeDates } = {}) {
   );
 }
 
+export function yearsDisabledBefore(day, { minDate } = {}) {
+  const previousYear = getStartOfYear(subYears(day, 12));
+  const { startPeriod, endPeriod } = getYearsPeriod(previousYear);
+  const minDateYear = minDate && getYear(minDate);
+  return (
+    (minDateYear && (minDateYear < startPeriod || minDateYear > endPeriod)) ||
+    false
+  );
+}
+
 export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
   const nextYear = addYears(day, 1);
   return (
@@ -551,6 +566,16 @@ export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
       includeDates.every(
         includeDate => differenceInCalendarYears(nextYear, includeDate) > 0
       )) ||
+    false
+  );
+}
+
+export function yearsDisabledAfter(day, { maxDate } = {}) {
+  const nextYear = addYears(day, 12);
+  const { startPeriod, endPeriod } = getYearsPeriod(nextYear);
+  const maxDateYear = maxDate && getYear(maxDate);
+  return (
+    (maxDateYear && (maxDateYear < startPeriod || maxDateYear > endPeriod)) ||
     false
   );
 }
@@ -647,4 +672,10 @@ export function timesToInjectAfter(
 
 export function addZero(i) {
   return i < 10 ? `0${i}` : `${i}`;
+}
+
+export function getYearsPeriod(date) {
+  const endPeriod = Math.ceil(getYear(date) / 12) * 12;
+  const startPeriod = endPeriod - 11;
+  return { startPeriod, endPeriod };
 }
