@@ -211,18 +211,15 @@
 .react-datepicker__year {
   margin: $datepicker__margin;
   text-align: center;
-  display: inline-block;
-  cursor: pointer;
-  flex: 1 0 20%;
-  padding: 2px;
-  &-container {
-    float: left;
-  }
   &-wrapper {
     display: flex;
     flex-wrap: wrap;
-    max-width: 190px;
-    text-align: center;
+    max-width: 180px;
+  }
+  .react-datepicker__year-text {
+    display: inline-block;
+    width: 4rem;
+    margin: 2px;
   }
 }
 
@@ -366,8 +363,7 @@
 }
 
 .react-datepicker__month,
-.react-datepicker__quarter,
-.react-datepicker__year {
+.react-datepicker__quarter {
   &--selected,
   &--in-selecting-range,
   &--in-range {
@@ -391,7 +387,8 @@
 
 .react-datepicker__day,
 .react-datepicker__month-text,
-.react-datepicker__quarter-text {
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
   cursor: pointer;
 
   &:hover {
