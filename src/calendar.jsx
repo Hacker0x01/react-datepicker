@@ -38,7 +38,8 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   addZero,
-  isValid
+  isValid,
+  getYearsPeriod
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -719,13 +720,12 @@ export default class Calendar extends React.Component {
   };
 
   renderYearHeader = () => {
-    const endPeriod = Math.ceil(getYear(this.state.date) / 12) * 12;
-    const startPeriod = endPeriod - 11;
+    const { date } = this.state;
+    const { showYearPicker } = this.props;
+    const { startPeriod, endPeriod } = getYearsPeriod(date);
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
-        {this.props.showYearPicker
-          ? `${startPeriod} - ${endPeriod}`
-          : getYear(this.state.date)}
+        {showYearPicker ? `${startPeriod} - ${endPeriod}` : getYear(date)}
       </div>
     );
   };
