@@ -10,7 +10,10 @@ export default class Year extends React.Component {
     disabledKeyboardNavigation: PropTypes.bool,
     onDayClick: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
-    selected: PropTypes.object
+    selected: PropTypes.object,
+    inline: PropTypes.bool,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date)
   };
 
   constructor(props) {
