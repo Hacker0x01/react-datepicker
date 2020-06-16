@@ -7,7 +7,10 @@ import classnames from "classnames";
 export default class Year extends React.Component {
   static propTypes = {
     date: PropTypes.string,
-    onDayClick: PropTypes.func
+    disabledKeyboardNavigation: PropTypes.bool,
+    onDayClick: PropTypes.func,
+    preSelection: PropTypes.instanceOf(Date),
+    selected: PropTypes.object
   };
 
   constructor(props) {
@@ -20,33 +23,57 @@ export default class Year extends React.Component {
     }
   };
 
-  onYearClick = (e, y) => {
-    this.handleYearClick(
-      utils.getStartOfYear(utils.setYear(this.props.date, y)),
-      e
+  isSameDay = (y, other) => utils.isSameDay(y, other);
+
+  isKeyboardSelected = y => {
+    const date = utils.getStartOfYear(utils.setYear(this.props.date, y));
+    return (
+      !this.props.disabledKeyboardNavigation &&
+      !this.props.inline &&
+      !utils.isSameDay(date, utils.getStartOfYear(this.props.selected)) &&
+      utils.isSameDay(date, utils.getStartOfYear(this.props.preSelection))
     );
+  };
+
+  onYearClick = (e, y) => {
+    const { date } = this.props;
+    this.handleYearClick(utils.getStartOfYear(utils.setYear(date, y)), e);
+  };
+
+  getYearClassNames = y => {
+    const { minDate, maxDate, selected } = this.props;
+    return classnames("react-datepicker__year-text", {
+      "react-datepicker__year-text--selected": y === getYear(selected),
+      "react-datepicker__year-text--disabled":
+        (minDate || maxDate) && utils.isYearDisabled(y, this.props),
+      "react-datepicker__year-text--keyboard-selected": this.isKeyboardSelected(
+        y
+      )
+    });
   };
 
   render() {
     const yearsList = [];
     const { date } = this.props;
-    const endPeriod = Math.ceil(getYear(date) / 12) * 12;
-    const startPeriod = endPeriod - 11;
+    const { startPeriod, endPeriod } = utils.getYearsPeriod(date);
+
     for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(
         <div
           onClick={ev => {
             this.onYearClick(ev, y);
           }}
-          className={classnames("react-datepicker__year", {
-            "react-datepicker__year--selected": y === getYear(date)
-          })}
+          className={this.getYearClassNames(y)}
           key={y}
         >
           {y}
         </div>
       );
     }
-    return <div className="react-datepicker__year-wrapper">{yearsList}</div>;
+    return (
+      <div className="react-datepicker__year">
+        <div className="react-datepicker__year-wrapper">{yearsList}</div>
+      </div>
+    );
   }
 }
