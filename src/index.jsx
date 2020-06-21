@@ -35,6 +35,7 @@ import {
   getDefaultLocale
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
+import { addMinutes, subMinutes, closestIndexTo } from "date-fns";
 
 export { default as CalendarContainer } from "./calendar_container";
 
@@ -620,7 +621,41 @@ export default class DatePicker extends React.Component {
       }
     }
   };
+  onTimeKeyDown = (event, times) => {
+    const key = event.key;
+    const intervals = this.props.timeIntervals;
 
+    const copy = newDate(this.state.preSelection);
+
+    if (key === "Enter") {
+      event.preventDefault();
+      const selectedIndex = closestIndexTo(copy, times);
+      this.handleTimeChange(times[selectedIndex]);
+    } else if (!this.props.disabledKeyboardNavigation) {
+      let newSelection;
+
+      switch (key) {
+        case "ArrowDown":
+          newSelection = addMinutes(copy, intervals);
+          const maxCloseIndex = closestIndexTo(newSelection, times);
+          newSelection = times[maxCloseIndex];
+          break;
+        case "ArrowUp":
+          newSelection = subMinutes(copy, intervals);
+          const minCloseIndex = closestIndexTo(newSelection, times);
+          newSelection = times[minCloseIndex];
+          break;
+      }
+      if (!newSelection) {
+        return;
+      }
+      this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
+      if (this.props.adjustDateOnChange) {
+        this.setSelected(newSelection);
+      }
+      this.setPreSelection(newSelection);
+    }
+  };
   // keyDown events passed down to day.jsx
   onDayKeyDown = event => {
     this.props.onKeyDown(event);
@@ -821,6 +856,7 @@ export default class DatePicker extends React.Component {
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
+        handleTimeKeyDown={this.onTimeKeyDown}
       >
         {this.props.children}
       </WrappedCalendar>

@@ -11,6 +11,13 @@ import {
   isTimeDisabled,
   timesToInjectAfter
 } from "./date_utils";
+import {
+  isSameDay,
+  isSameMinute,
+  isSameHour,
+  closestIndexTo,
+  isEqual
+} from "date-fns";
 
 const KEY_CODE = {
   ENTER: 13,
@@ -41,6 +48,7 @@ export default class Time extends React.Component {
     includeTimes: PropTypes.array,
     intervals: PropTypes.number,
     selected: PropTypes.instanceOf(Date),
+    preSelection: PropTypes.instanceOf(Date),
     openToDate: PropTypes.instanceOf(Date),
     onChange: PropTypes.func,
     timeClassName: PropTypes.func,
@@ -54,7 +62,8 @@ export default class Time extends React.Component {
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
-    ])
+    ]),
+    handleTimeKeyDown: PropTypes.func
   };
 
   state = {
@@ -76,43 +85,11 @@ export default class Time extends React.Component {
     }
   }
 
-  onKeyDown = event => {
-    if (event.keyCode !== KEY_CODE.TAB) {
-      event.preventDefault();
-      const activeEle = document.activeElement;
-      if (event.keyCode === KEY_CODE.DOWN) {
-        const nextEle = document.activeElement.nextElementSibling;
-        if (nextEle) {
-          nextEle.focus();
-          nextEle.tabIndex = 0;
-        } else {
-          document.activeElement.parentElement.children[0].focus();
-          document.activeElement.parentElement.children[0].tabIndex = 0;
-        }
-      } else if (event.keyCode === KEY_CODE.UP) {
-        const prevEle = document.activeElement.previousElementSibling;
-        if (prevEle) {
-          prevEle.focus();
-          prevEle.tabIndex = 0;
-        } else {
-          const count = document.activeElement.parentElement.childElementCount;
-          document.activeElement.parentElement.children[count - 1].focus();
-          document.activeElement.parentElement.children[count - 1].tabIndex = 0;
-        }
-      }
-      activeEle.tabIndex = -1;
+  onKeyDown = (event, times) => {
+    if (event.key === " ") {
+      event.key = "Enter";
     }
-    if (event.keyCode === KEY_CODE.SPACE || event.keyCode === KEY_CODE.ENTER) {
-      const ele = document.activeElement.innerText;
-      const times = ele.split(":");
-      const hours = times[0];
-      const min = times[1];
-      const date = new Date(this.props.selected).setHours(
-        parseInt(hours),
-        parseInt(min)
-      );
-      this.handleClick(date);
-    }
+    this.props.handleTimeKeyDown(event, times);
   };
 
   handleClick = time => {
@@ -137,6 +114,17 @@ export default class Time extends React.Component {
         : undefined
     ];
 
+    const isTimeEqual = isEqual(this.props.selected, this.props.preSelection);
+    const preSelectionHrs = getHours(this.props.preSelection);
+    const preSelectionMin = getMinutes(this.props.preSelection);
+
+    if (
+      !isTimeEqual &&
+      getHours(time) === preSelectionHrs &&
+      getMinutes(time) === preSelectionMin
+    ) {
+      classes.push("react-datepicker__time-list-item--keyboard-selected ");
+    }
     if (
       this.props.selected &&
       currH === getHours(time) &&
@@ -164,21 +152,38 @@ export default class Time extends React.Component {
     return classes.join(" ");
   };
 
-  applyTabIndex = (currH, currM, time, index) => {
-    const isTimeMatched =
-      currH === getHours(time) && currM === getMinutes(time);
-    if (isTimeMatched && index !== 0) {
-      if (document.querySelector(".react-datepicker__time-list")) {
-        document.querySelector(
-          ".react-datepicker__time-list"
-        ).children[0].tabIndex = -1;
+  isSameTime = (time_1, time_2) => {
+    return isSameHour(time_1, time_2) && isSameMinute(time_1, time_2);
+  };
+
+  getTimeTabIndex = (time, index, times) => {
+    const selectedDay = this.props.selected;
+    const preSelectionDay = this.props.preSelection;
+    const nearestIndex = closestIndexTo(preSelectionDay, times);
+
+    if (isSameDay(selectedDay, preSelectionDay)) {
+      const isTimeMatched = this.isSameTime(selectedDay, time);
+
+      if (isTimeMatched) {
+        return 0;
+      } else {
+        if (nearestIndex === index) {
+          return 0;
+        } else {
+          return -1;
+        }
       }
-      return 0;
-    }
-    if (index === 0) {
-      return 0;
     } else {
-      return -1;
+      const isTimeMatched = this.isSameTime(preSelectionDay, time);
+      if (isTimeMatched) {
+        return 0;
+      } else {
+        if (nearestIndex === index) {
+          return 0;
+        } else {
+          return -1;
+        }
+      }
     }
   };
 
@@ -222,7 +227,8 @@ export default class Time extends React.Component {
     return times.map((time, i) => (
       <li
         key={i}
-        tabIndex={this.applyTabIndex(currH, currM, time, i)}
+        onKeyDown={e => this.onKeyDown(e, times)}
+        tabIndex={this.getTimeTabIndex(time, i, times)}
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
@@ -267,7 +273,6 @@ export default class Time extends React.Component {
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
             <ul
-              onKeyDown={e => this.onKeyDown(e)}
               className="react-datepicker__time-list"
               ref={list => {
                 this.list = list;
