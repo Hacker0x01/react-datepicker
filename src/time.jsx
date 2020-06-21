@@ -19,14 +19,6 @@ import {
   isEqual
 } from "date-fns";
 
-const KEY_CODE = {
-  ENTER: 13,
-  SPACE: 32,
-  DOWN: 40,
-  UP: 38,
-  TAB: 9
-};
-
 export default class Time extends React.Component {
   static get defaultProps() {
     return {
