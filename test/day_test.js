@@ -87,7 +87,7 @@ describe("Day", () => {
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
 
-    it("should not apply the keyboard-selected class if in inline mode", () => {
+    it("should apply the keyboard-selected class if in inline mode", () => {
       const day = newDate();
       const selected = addDays(day, 1);
       const shallowDay = renderDay(day, {
@@ -95,7 +95,7 @@ describe("Day", () => {
         preSelection: day,
         inline: true
       });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).to.equal(true);
     });
   });
 

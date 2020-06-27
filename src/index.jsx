@@ -760,7 +760,6 @@ export default class DatePicker extends React.Component {
         includeDates={this.props.includeDates}
         includeTimes={this.props.includeTimes}
         injectTimes={this.props.injectTimes}
-        inline={this.props.inline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
         showPreviousMonths={this.props.showPreviousMonths}
