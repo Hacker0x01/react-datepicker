@@ -267,6 +267,12 @@ export default class Calendar extends React.Component {
     );
   };
 
+  backCurrentMonth = () => {
+    this.setState({ date: new Date() },
+      () => this.handleMonthChange(this.state.date)
+    );
+  };
+
   handleDayClick = (day, event, monthSelectedIn) =>
     this.props.onSelect(day, event, monthSelectedIn);
 
@@ -672,6 +678,7 @@ export default class Calendar extends React.Component {
           increaseMonth: this.increaseMonth,
           decreaseYear: this.decreaseYear,
           increaseYear: this.increaseYear,
+          backCurrentMonth: this.backCurrentMonth,
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
           prevYearButtonDisabled,
