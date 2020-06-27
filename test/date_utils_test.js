@@ -23,7 +23,11 @@ import {
   parseDate,
   isMonthinRange,
   isQuarterInRange,
-  getStartOfYear
+  getStartOfYear,
+  getYearsPeriod,
+  yearsDisabledAfter,
+  yearsDisabledBefore,
+  getYear
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -722,6 +726,51 @@ describe("date_utils", function() {
       const endDate = newDate("2020-02-01");
 
       expect(isQuarterInRange(startDate, endDate, 5, day)).to.be.true;
+    });
+  });
+
+  describe("getYearsPeriod", () => {
+    it("should get start and end of 11 years period", () => {
+      const date = newDate("2000-01-01");
+      const { startPeriod, endPeriod } = getYearsPeriod(date);
+      expect(startPeriod).to.be.eq(1993);
+      expect(endPeriod).to.be.eq(2004);
+    });
+  });
+
+  describe("yearsDisabledAfter", () => {
+    it("should return false by default", () => {
+      expect(yearsDisabledAfter(newDate())).to.be.false;
+    });
+
+    it("should return true if max date is in the same year", () => {
+      const day = newDate("2016-03-19");
+      const maxDate = newDate("2016-08-31");
+      expect(yearsDisabledAfter(day, { maxDate })).to.be.true;
+    });
+
+    it("should return false if max date is in the next period years", () => {
+      const day = newDate("2016-03-19");
+      const maxDate = newDate("2018-04-01");
+      expect(yearsDisabledAfter(day, { maxDate })).to.be.false;
+    });
+  });
+
+  describe("yearsDisabledBefore", () => {
+    it("should return false by default", () => {
+      expect(yearsDisabledBefore(newDate())).to.be.false;
+    });
+
+    it("should return true if min date is in the same year", () => {
+      const day = newDate("2016-02-19");
+      const minDate = newDate("2016-03-01");
+      expect(yearsDisabledBefore(day, { minDate })).to.be.true;
+    });
+
+    it("should return false if min date is in the previous period year", () => {
+      const day = newDate("2016-03-19");
+      const minDate = newDate("2004-03-29");
+      expect(yearsDisabledBefore(day, { minDate })).to.be.false;
     });
   });
 });
