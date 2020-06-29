@@ -1153,6 +1153,86 @@ describe("DatePicker", () => {
     ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
   });
 
+  it("should change dates of range ", () => {
+    const selected = utils.newDate();
+    let startDate, endDate;
+    const onChange = (dates = []) => {
+      [startDate, endDate] = dates;
+    };
+    let datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={onChange}
+        startDate={startDate}
+        endDate={endDate}
+        selectsRange
+        inline
+      />
+    );
+
+    let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+    let selectedDay = days.find(
+      d =>
+        utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+        utils.formatDate(selected, "yyyy-MM-dd")
+    );
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+    expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+      utils.formatDate(selected, "yyyy-MM-dd")
+    );
+    expect(endDate).to.equal(null);
+
+    datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={onChange}
+        startDate={startDate}
+        endDate={endDate}
+        selectsRange
+        inline
+      />
+    );
+
+    days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+    selectedDay = days.find(
+      d =>
+        utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+        utils.formatDate(selected, "yyyy-MM-dd")
+    );
+
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+    expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+      utils.formatDate(selected, "yyyy-MM-dd")
+    );
+    expect(utils.formatDate(endDate, "yyyy-MM-dd")).to.equal(
+      utils.formatDate(selected, "yyyy-MM-dd")
+    );
+
+    datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={onChange}
+        startDate={startDate}
+        endDate={endDate}
+        selectsRange
+        inline
+      />
+    );
+
+    days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+    selectedDay = days.find(
+      d =>
+        utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+        utils.formatDate(selected, "yyyy-MM-dd")
+    );
+
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+    expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+      utils.formatDate(selected, "yyyy-MM-dd")
+    );
+    expect(endDate).to.equal(null);
+  });
+
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker preventOpenOnFocus />

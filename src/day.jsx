@@ -56,7 +56,6 @@ export default class Day extends React.Component {
 
   handleClick = event => {
     if (!this.isDisabled() && this.props.onClick) {
-      console.log("click day");
       this.props.onClick(event);
     }
   };

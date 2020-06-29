@@ -476,8 +476,13 @@ export default class DatePicker extends React.Component {
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
       return;
     }
+    const { onChange, selectsRange, startDate, endDate } = this.props;
 
-    if (!isEqual(this.props.selected, changedDate) || this.props.allowSameDay) {
+    if (
+      !isEqual(this.props.selected, changedDate) ||
+      this.props.allowSameDay ||
+      selectsRange
+    ) {
       if (changedDate !== null) {
         if (
           this.props.selected &&
@@ -501,7 +506,6 @@ export default class DatePicker extends React.Component {
           this.setState({ monthSelectedIn: monthSelectedIn });
         }
       }
-      const { onChange, selectsRange, startDate, endDate } = this.props;
       if (selectsRange) {
         const noRanges = !startDate && !endDate;
         const hasStartRange = startDate && !endDate;
