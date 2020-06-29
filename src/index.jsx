@@ -189,6 +189,7 @@ export default class DatePicker extends React.Component {
     selected: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
+    selectsRange: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -500,7 +501,26 @@ export default class DatePicker extends React.Component {
           this.setState({ monthSelectedIn: monthSelectedIn });
         }
       }
-      this.props.onChange(changedDate, event);
+      const { onChange, selectsRange, startDate, endDate } = this.props;
+      if (selectsRange) {
+        const noRanges = !startDate && !endDate;
+        const hasStartRange = startDate && !endDate;
+        const isRangeFilled = startDate && endDate;
+        if (noRanges) {
+          onChange([changedDate, null], event);
+        } else if (hasStartRange) {
+          if (isBefore(changedDate, startDate)) {
+            onChange([changedDate, null], event);
+          } else {
+            onChange([startDate, changedDate], event);
+          }
+        }
+        if (isRangeFilled) {
+          onChange([changedDate, null], event);
+        }
+      } else {
+        onChange(changedDate, event);
+      }
     }
 
     if (!keepInput) {
@@ -750,6 +770,7 @@ export default class DatePicker extends React.Component {
         maxDate={this.props.maxDate}
         selectsStart={this.props.selectsStart}
         selectsEnd={this.props.selectsEnd}
+        selectsRange={this.props.selectsRange}
         startDate={this.props.startDate}
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
