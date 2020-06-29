@@ -72,6 +72,7 @@ import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
+import SelectsRange from "../../examples/selectsRange";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -360,6 +361,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom time input",
       component: CustomTimeInput
+    },
+    {
+      title: "Date range for one datepicker",
+      component: SelectsRange
     }
   ];
 
