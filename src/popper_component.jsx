@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Reference, Popper, placements } from "react-popper";
+import { Manager, Reference, Popper } from "react-popper";
+import { placements } from '@popperjs/core/lib';
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
 
@@ -11,13 +12,16 @@ export default class PopperComponent extends React.Component {
   static get defaultProps() {
     return {
       hidePopper: true,
-      popperModifiers: {
-        preventOverflow: {
-          enabled: true,
-          escapeWithReference: true,
-          boundariesElement: "viewport"
+      popperModifiers: [
+        {
+          name: 'preventOverflow',
+          options: {
+            enabled: true,
+            escapeWithReference: true,
+            boundariesElement: "viewport"
+          }
         }
-      },
+      ],
       popperProps: {},
       popperPlacement: "bottom-start"
     };
