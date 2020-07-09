@@ -1,6 +1,8 @@
-# `portal` (component)
+`portal` (component)
+====================
 
-| name       | type     | default value | description |
-| ---------- | -------- | ------------- | ----------- |
-| `children` | `any`    |               |             |
-| `portalId` | `string` |               |             |
+
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`children`|`any`|||
+|`portalId`|`string`|||
