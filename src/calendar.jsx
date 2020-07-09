@@ -139,6 +139,7 @@ export default class Calendar extends React.Component {
     selected: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
+    selectsRange: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -793,6 +794,7 @@ export default class Calendar extends React.Component {
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
+            selectsRange={this.props.selectsRange}
             showWeekNumbers={this.props.showWeekNumbers}
             startDate={this.props.startDate}
             endDate={this.props.endDate}

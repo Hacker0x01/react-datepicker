@@ -38,6 +38,7 @@ export default class Month extends React.Component {
     selectingDate: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
+    selectsRange: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
@@ -149,6 +150,7 @@ export default class Month extends React.Component {
           selected={this.props.selected}
           selectsStart={this.props.selectsStart}
           selectsEnd={this.props.selectsEnd}
+          selectsRange={this.props.selectsRange}
           showWeekNumber={this.props.showWeekNumbers}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
