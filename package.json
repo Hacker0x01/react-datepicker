@@ -51,7 +51,7 @@
     "chai": "^4.2.0",
     "codecov": "^3.5.0",
     "core-js": "^3.2.1",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
