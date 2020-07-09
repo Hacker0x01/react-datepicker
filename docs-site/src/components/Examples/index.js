@@ -1,5 +1,5 @@
 import React from "react";
-import hljs from "highlight.js/lib/highlight";
+import hljs from "highlight.js/lib/core";
 import hljsJavaScriptLanguage from "highlight.js/lib/languages/javascript";
 import slugify from "slugify";
 import CodeExampleComponent from "../Example";

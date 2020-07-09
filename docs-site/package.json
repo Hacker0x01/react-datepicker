@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "highlight.js": "^10.1.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.6",
-    "react-datepicker": "file:..",
     "react-dom": "^16.13.1",
     "react-live": "^2.2.2",
     "react-scripts": "3.4.1"
