@@ -213,7 +213,7 @@
   dependencies:
     "@babel/types" "^7.10.4"
 
-"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.1", "@babel/helper-plugin-utils@^7.10.3", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
+"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.3", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.10.4.tgz#2f75a831269d4f677de49986dff59927533cf375"
   integrity sha512-O4KCvQA6lLiMU9l2eawBPMf1xPP8xPfB3iEQw150hOVTqj/rfXz0ThTb4HEzqQfs2Bmo5Ay8BzxfzVtBrr9dVg==
@@ -584,13 +584,6 @@
   dependencies:
     "@babel/helper-function-name" "^7.10.4"
     "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-transform-jscript@^7.8.3":
-  version "7.10.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-jscript/-/plugin-transform-jscript-7.10.1.tgz#92eb20dcc9e871870eac37dd47a9de0155551c96"
-  integrity sha512-AKQ7LjCWods+nzVfj7IHARwflha9AF0vXQR16uaT3cSQ2/EkNcbyuN9cVKuqJ4Gvh/CQAiBhLQsOnrvaIsfTfQ==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.1"
 
 "@babel/plugin-transform-literals@^7.10.4":
   version "7.10.4"
@@ -1808,10 +1801,10 @@ babel-plugin-transform-react-remove-prop-types@^0.4.24:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz#f2edaf9b4c6a5fbe5c1d678bfb531078c1555f3a"
   integrity sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==
 
-babel-preset-airbnb@^4.0.1:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-airbnb/-/babel-preset-airbnb-4.5.0.tgz#18f1a54b72594e9af66bea8afdfaefaf5874de2f"
-  integrity sha512-vw1Y1k/yeHB1wglFrSWXPPvgqCg7qGeT+m7m1GWpgL26dvjrGHwyQIOGuLmcHNvE51Rp4M0b685HG7pu3YGCyw==
+babel-preset-airbnb@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-airbnb/-/babel-preset-airbnb-5.0.0.tgz#5fdbab02b8013dcddfa5a767abd50178d56fe0c5"
+  integrity sha512-Y5nqHhnhu4RpwbmQj4H+srdk1kb413pX81PfJsT1IZQOuEuRzUDXmgN4Ut1GgpQJnfRpjjEuQy0/uzcLMMP1cQ==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.8.3"
@@ -1821,7 +1814,6 @@ babel-preset-airbnb@^4.0.1:
     "@babel/plugin-proposal-optional-chaining" "^7.9.0"
     "@babel/plugin-transform-classes" "^7.9.2"
     "@babel/plugin-transform-exponentiation-operator" "^7.8.3"
-    "@babel/plugin-transform-jscript" "^7.8.3"
     "@babel/plugin-transform-member-expression-literals" "^7.8.3"
     "@babel/plugin-transform-property-literals" "^7.8.3"
     "@babel/plugin-transform-property-mutators" "^7.8.3"
