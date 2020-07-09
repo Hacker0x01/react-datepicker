@@ -8,11 +8,10 @@ script:
   - yarn lint
   - yarn test
   - yarn build
-after_success:
-  - yarn run codecov
-before_deploy:
   - yarn --cwd docs-site install
   - yarn --cwd docs-site build
+after_success:
+  - yarn run codecov
 deploy:
   provider: pages
   skip_cleanup: true
