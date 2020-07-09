@@ -124,6 +124,7 @@ export default class DatePicker extends React.Component {
     calendarContainer: PropTypes.func,
     children: PropTypes.node,
     chooseDayAriaLabelPrefix: PropTypes.string,
+    closeOnScroll: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     className: PropTypes.string,
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
@@ -256,6 +257,10 @@ export default class DatePicker extends React.Component {
     this.state = this.calcInitialState();
   }
 
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll, true);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.inline &&
@@ -294,6 +299,7 @@ export default class DatePicker extends React.Component {
 
   componentWillUnmount() {
     this.clearPreventFocusTimeout();
+    window.removeEventListener("scroll", this.onScroll, true);
   }
 
   getPreSelection = () =>
@@ -743,6 +749,25 @@ export default class DatePicker extends React.Component {
 
   clear = () => {
     this.onClearClick();
+  };
+
+  onScroll = event => {
+    if (
+      typeof this.props.closeOnScroll === "boolean" &&
+      this.props.closeOnScroll
+    ) {
+      if (
+        event.target === document ||
+        event.target === document.documentElement ||
+        event.target === document.body
+      ) {
+        this.setOpen(false);
+      }
+    } else if (typeof this.props.closeOnScroll === "function") {
+      if (this.props.closeOnScroll(event)) {
+        this.setOpen(false);
+      }
+    }
   };
 
   renderCalendar = () => {

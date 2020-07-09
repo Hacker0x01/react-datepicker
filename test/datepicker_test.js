@@ -1300,6 +1300,44 @@ describe("DatePicker", () => {
     ).to.equal(weekAriaLabelPrefix);
   });
 
+  it("should close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker closeOnScroll />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.state.open).to.be.true;
+    datePicker.onScroll({ target: document });
+    expect(datePicker.state.open).to.be.false;
+  });
+
+  it("should not close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker closeOnScroll />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    datePicker.onScroll({ target: "something" });
+    expect(datePicker.state.open).to.be.true;
+  });
+
+  it("should close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker closeOnScroll={() => true} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.state.open).to.be.true;
+    datePicker.onScroll();
+    expect(datePicker.state.open).to.be.false;
+  });
+
+  it("should not close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker closeOnScroll={() => false} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    datePicker.onScroll();
+    expect(datePicker.state.open).to.be.true;
+  });
+
   describe("selectsRange with inline", () => {
     it("should change dates of range when dates are empty", () => {
       const selected = utils.newDate();

@@ -72,6 +72,8 @@ import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
+import CloseOnScroll from "../../examples/closeOnScroll";
+import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 
 import "./style.scss";
@@ -309,6 +311,14 @@ export default class exampleComponents extends React.Component {
     {
       title: "Don't hide calendar on date selection",
       component: DontCloseOnSelect
+    },
+    {
+      title: "Close on scroll",
+      component: CloseOnScroll
+    },
+    {
+      title: "Close on scroll callback",
+      component: CloseOnScrollCallback
     },
     {
       title: "Custom header",
