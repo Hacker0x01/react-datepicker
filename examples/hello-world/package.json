@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-datepicker": "^3.0.0",
-    "react-dom": "^16.9.0",
+    "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
