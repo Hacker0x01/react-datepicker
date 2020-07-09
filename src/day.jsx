@@ -34,6 +34,7 @@ export default class Day extends React.Component {
     selectingDate: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
+    selectsRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -111,12 +112,17 @@ export default class Day extends React.Component {
       day,
       selectsStart,
       selectsEnd,
+      selectsRange,
       selectingDate,
       startDate,
       endDate
     } = this.props;
 
-    if (!(selectsStart || selectsEnd) || !selectingDate || this.isDisabled()) {
+    if (
+      !(selectsStart || selectsEnd || selectsRange) ||
+      !selectingDate ||
+      this.isDisabled()
+    ) {
       return false;
     }
 
@@ -131,6 +137,15 @@ export default class Day extends React.Component {
     if (
       selectsEnd &&
       startDate &&
+      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
+    ) {
+      return isDayInRange(day, startDate, selectingDate);
+    }
+
+    if (
+      selectsRange &&
+      startDate &&
+      !endDate &&
       (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
     ) {
       return isDayInRange(day, startDate, selectingDate);

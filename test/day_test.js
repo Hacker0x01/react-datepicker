@@ -508,18 +508,29 @@ describe("Day", () => {
   });
 
   describe("aria-label", () => {
-    const ariaLabelPrefixWhenEnabled = "A prefix in my native language desbribing that the date can be selected";
-    const ariaLabelPrefixWhenDisabled = "A prefix in my native language desbribing that the date can not be selected";
+    const ariaLabelPrefixWhenEnabled =
+      "A prefix in my native language desbribing that the date can be selected";
+    const ariaLabelPrefixWhenDisabled =
+      "A prefix in my native language desbribing that the date can not be selected";
 
     it("should have the correct provided prefix if date is not disabled", () => {
-      const shallowDay = renderDay(newDate(), { ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled });
-      expect(shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)).not.equal(-1);
+      const shallowDay = renderDay(newDate(), {
+        ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled
+      });
+      expect(
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)
+      ).not.equal(-1);
     });
 
     it("should have the correct provided prefix if date is disabled", () => {
       const day = newDate();
-      const shallowDay = renderDay(day, { ariaLabelPrefixWhenDisabled: ariaLabelPrefixWhenDisabled, excludeDates: [day] });
-      expect(shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)).not.equal(-1);
+      const shallowDay = renderDay(day, {
+        ariaLabelPrefixWhenDisabled: ariaLabelPrefixWhenDisabled,
+        excludeDates: [day]
+      });
+      expect(
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
+      ).not.equal(-1);
     });
   });
 
@@ -566,6 +577,111 @@ describe("Day", () => {
       const shallowDay = renderDay(newDate(), { onMouseEnter });
       shallowDay.find(".react-datepicker__day").simulate("mouseenter");
       expect(onMouseEnterCalled).to.be.true;
+    });
+  });
+
+  describe("for a start date picker with selectsRange prop", () => {
+    const rangeDayClassName = "react-datepicker__day--in-selecting-range";
+    const rangeSetDayClassName = "react-datepicker__day--in-range";
+    const rangeDayStartClassName = "react-datepicker__day--range-start";
+    const rangeDayEndClassName = "react-datepicker__day--range-end";
+
+    function createDateRange(beforeDays, afterDays, day = newDate()) {
+      return {
+        startDate: subDays(day, beforeDays),
+        endDate: addDays(day, afterDays),
+        day
+      };
+    }
+
+    it("should highlight for dates before the selecting date", () => {
+      const { startDate } = createDateRange(-1, 1);
+
+      // All these should highlight: today, yesterday (startDate), the day before
+      for (let daysAfterStart = 1; daysAfterStart <= 3; daysAfterStart++) {
+        const selectingDate = addDays(startDate, daysAfterStart);
+        const shallowDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+      }
+    });
+
+    it("should not highlight for days before the start date", () => {
+      const startDate = newDate();
+      const selectingDate = subDays(startDate, 1);
+      const shallowDay = renderDay(selectingDate, {
+        startDate,
+        selectingDate,
+        selectsRange: true
+      });
+      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+    });
+
+    it("should have a class if it is a start or end date", () => {
+      const startDate = newDate();
+      const midRangeDate = addDays(startDate, 1);
+      const endDate = addDays(startDate, 2);
+
+      const shallowStartDay = renderDay(startDate, {
+        startDate,
+        endDate,
+        selectsRange: true
+      });
+      expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+
+      const shallowMidRangeDay = renderDay(midRangeDate, {
+        startDate,
+        endDate,
+        selectsRange: true
+      });
+      expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
+      expect(shallowMidRangeDay.hasClass(rangeSetDayClassName)).to.be.true;
+      expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+
+      const shallowEndDay = renderDay(endDate, {
+        startDate,
+        endDate,
+        selectsRange: true
+      });
+      expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+    });
+
+    it("should not highlight for days after the end date", () => {
+      const { day, startDate, endDate } = createDateRange(-1, 1);
+      const selectingDate = addDays(endDate, 1);
+      const shallowDay = renderDay(day, {
+        startDate,
+        endDate,
+        selectingDate,
+        selectsRange: true
+      });
+      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+    });
+
+    it("should not highlight if there is no end date selected", () => {
+      const startDate = newDate();
+      const selectingDate = subDays(startDate, 1);
+      const shallowDay = renderDay(selectingDate, {
+        startDate,
+        selectingDate,
+        selectsRange: true
+      });
+      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+    });
+
+    it("should not highlight for disabled dates", () => {
+      const endDate = newDate();
+      const selectingDate = subDays(endDate, 1);
+      const shallowDay = renderDay(selectingDate, {
+        selectingDate,
+        endDate,
+        selectsRange: true,
+        excludeDates: [selectingDate]
+      });
+      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
     });
   });
 });

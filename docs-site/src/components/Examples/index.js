@@ -74,6 +74,7 @@ import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCa
 import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
+import SelectsRange from "../../examples/selectsRange";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -370,6 +371,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom time input",
       component: CustomTimeInput
+    },
+    {
+      title: "Date range for one datepicker",
+      component: SelectsRange
     }
   ];
 
