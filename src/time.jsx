@@ -106,6 +106,7 @@ export default class Time extends React.Component {
         !isTimeDisabled(time, this.props.includeTimes))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
+      classes.push("react-datepicker__time-list-item--hide");
     }
     if (
       this.props.injectTimes &&
