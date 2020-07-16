@@ -754,6 +754,12 @@ describe("date_utils", function() {
       const maxDate = newDate("2018-04-01");
       expect(yearsDisabledAfter(day, { maxDate })).to.be.false;
     });
+
+    it("should return false if max date is in a next period year", () => {
+      const day = newDate("1996-08-08 00:00:00");
+      const maxDate = newDate("2020-08-08 00:00:00");
+      expect(yearsDisabledAfter(day, { maxDate })).to.be.false;
+    });
   });
 
   describe("yearsDisabledBefore", () => {
@@ -770,6 +776,12 @@ describe("date_utils", function() {
     it("should return false if min date is in the previous period year", () => {
       const day = newDate("2016-03-19");
       const minDate = newDate("2004-03-29");
+      expect(yearsDisabledBefore(day, { minDate })).to.be.false;
+    });
+
+    it("should return false if min date is in a previous period year", () => {
+      const day = newDate("2044-08-08 00:00:00");
+      const minDate = newDate("2020-08-08 00:00:00");
       expect(yearsDisabledBefore(day, { minDate })).to.be.false;
     });
   });
