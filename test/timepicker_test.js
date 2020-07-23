@@ -113,6 +113,35 @@ describe("TimePicker", () => {
     expect(getInputString()).to.equal("February 28, 2018 9:53 AM");
   });
 
+  it("should not contain the time only classname in header by default", () => {
+    const timePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        open
+        showTimeSelect
+      />
+    );
+    const header = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__header--time--only"
+    );
+    expect(header).to.have.length(0);
+  });
+
+  it("should contain the time only classname in header if enabled", () => {
+    const timePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        open
+        showTimeSelect
+        showTimeSelectOnly
+      />
+    );
+    const header = TestUtils.scryRenderedDOMComponentsWithClass(
+      timePicker,
+      "react-datepicker__header--time--only"
+    );
+    expect(header).to.have.length(1);
+  });
+
   function setManually(string) {
     TestUtils.Simulate.focus(datePicker.input);
     TestUtils.Simulate.change(datePicker.input, { target: { value: string } });

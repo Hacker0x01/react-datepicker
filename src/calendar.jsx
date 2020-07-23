@@ -644,7 +644,7 @@ export default class Calendar extends React.Component {
   };
 
   renderDefaultHeader = ({ monthDate, i }) => (
-    <div className="react-datepicker__header">
+    <div className={`react-datepicker__header ${this.props.showTimeSelect ? 'react-datepicker__header--has-time-select' : ''}`}>
       {this.renderCurrentMonth(monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
@@ -863,6 +863,7 @@ export default class Calendar extends React.Component {
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
           locale={this.props.locale}
+          showTimeSelectOnly={this.props.showTimeSelectOnly}
         />
       );
     }
