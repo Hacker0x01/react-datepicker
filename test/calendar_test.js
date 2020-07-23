@@ -1446,4 +1446,18 @@ describe("Calendar", function() {
       );
     });
   });
+
+  describe("showTimeSelect", () => {
+    it("should not contain the time select classname in header by default", () => {
+      const calendar = getCalendar();
+      const header = calendar.find(".react-datepicker__header--has-time-select");
+      expect(header).to.have.length(0);
+    });
+
+    it("should contain the time select classname in header if enabled", () => {
+      const calendar = getCalendar({ showTimeSelect: true });
+      const header = calendar.find(".react-datepicker__header--has-time-select");
+      expect(header).to.have.length(1);
+    });
+  });
 });

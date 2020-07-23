@@ -46,7 +46,8 @@ export default class Time extends React.Component {
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
-    ])
+    ]),
+    showTimeSelectOnly: PropTypes.bool
   };
 
   state = {
@@ -189,7 +190,7 @@ export default class Time extends React.Component {
         }`}
       >
         <div
-          className="react-datepicker__header react-datepicker__header--time"
+          className={`react-datepicker__header react-datepicker__header--time ${this.props.showTimeSelectOnly ? 'react-datepicker__header--time--only' : ''}`}
           ref={header => {
             this.header = header;
           }}
