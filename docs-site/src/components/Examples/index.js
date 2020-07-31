@@ -1,5 +1,5 @@
 import React from "react";
-import hljs from "highlight.js/lib/highlight";
+import hljs from "highlight.js/lib/core";
 import hljsJavaScriptLanguage from "highlight.js/lib/languages/javascript";
 import slugify from "slugify";
 import CodeExampleComponent from "../Example";
@@ -72,6 +72,9 @@ import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
+import CloseOnScroll from "../../examples/closeOnScroll";
+import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
+import SelectsRange from "../../examples/selectsRange";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -88,92 +91,116 @@ export default class exampleComponents extends React.Component {
       component: Default
     },
     {
-      title: "No Anchor Arrow",
-      component: NoAnchorArrow
+      title: "Calendar container",
+      component: CalendarContainer
     },
     {
-      title: "Select Time",
-      component: ShowTime
+      title: "Calendar open state callbacks",
+      component: OnCalendarChangeStateCallbacks
     },
     {
-      title: "Select Time Only",
-      component: ShowTimeOnly
+      title: "Children",
+      component: Children
     },
     {
-      title: "Exclude Times",
-      component: ExcludeTimes
+      title: "Clear datepicker input",
+      component: ClearInput
     },
     {
-      title: "Include Times",
-      component: IncludeTimes
+      title: "Close on scroll",
+      component: CloseOnScroll
     },
     {
-      title: "Inject Specific Times",
-      component: InjectTimes
+      title: "Close on scroll callback",
+      component: CloseOnScrollCallback
     },
     {
-      title: "Specific Time Range",
-      component: ExcludeTimePeriod
+      title: "Configure Popper Properties",
+      component: ConfigurePopper
     },
     {
-      title: "Custom date format",
-      component: CustomDateFormat
+      title: "Custom input",
+      component: CustomInput
     },
     {
-      title: "Custom class name",
-      component: CustomClassName
+      title: "Custom header",
+      component: RenderCustomHeader
+    },
+    {
+      title: "Custom Day",
+      component: RenderCustomDay
     },
     {
       title: "Custom calendar class name",
       component: CustomCalendarClassName
     },
     {
+      title: "Custom class name",
+      component: CustomClassName
+    },
+    {
       title: "Custom day class name",
       component: CustomDayClassName
+    },
+    {
+      title: "Custom date format",
+      component: CustomDateFormat
     },
     {
       title: "Custom time class name",
       component: CustomTimeClassName
     },
     {
-      title: "Today button",
-      component: Today
+      title: "Custom time input",
+      component: CustomTimeInput
     },
     {
-      title: "Placeholder text",
-      component: PlaceholderText
+      title: "Date Range",
+      component: DateRange
     },
     {
-      title: "Specific date range",
-      component: SpecificDateRange
-    },
-    {
-      title: "Min date",
-      component: MinDate
-    },
-    {
-      title: "Max date",
-      component: MaxDate
+      title: "Date range for one datepicker",
+      component: SelectsRange
     },
     {
       title: "Date Range with disabled navigation shown",
       component: DateRangeWithShowDisabledNavigation
     },
     {
-      title: "Locale",
-      component: Locale
+      title: "Disable datepicker",
+      component: Disabled
     },
     {
-      title: "Locale with time",
-      component: LocaleWithTime
+      title: "Disable keyboard navigation",
+      component: DisabledKeyboardNavigation
     },
     {
-      title: "Locale without global variables",
-      component: LocaleWithoutGlobalVariable
+      title: "Display Week Numbers",
+      component: WeekNumbers
+    },
+    {
+      title: "Don't hide calendar on date selection",
+      component: DontCloseOnSelect
     },
     {
       title: "Exclude dates",
       component: ExcludeDates
+    },
+    {
+      title: "Exclude Times",
+      component: ExcludeTimes
+    },
+    {
+      title: "Filter dates",
+      component: FilterDates
+    },
+    {
+      title: "Fixed height of Calendar",
+      component: FixedCalendar
+    },
+    {
+      title: "Get raw input value on change",
+      component: RawChange
     },
     {
       title: "Highlight dates",
@@ -188,58 +215,56 @@ export default class exampleComponents extends React.Component {
       component: IncludeDates
     },
     {
-      title: "Filter dates",
-      component: FilterDates
+      title: "Include Times",
+      component: IncludeTimes
     },
     {
-      title: "Date Range",
-      component: DateRange
+      title: "Inject Specific Times",
+      component: InjectTimes
     },
     {
-      title: "Disable datepicker",
-      component: Disabled
-    },
-    {
-      title: "Disable keyboard navigation",
-      component: DisabledKeyboardNavigation
-    },
-    {
-      title: "Read only datepicker",
-      component: ReadOnly
-    },
-    {
-      title: "Clear datepicker input",
-      component: ClearInput
-    },
-    {
-      title: "onBlur callbacks in console",
-      component: OnBlurCallbacks
-    },
-    {
-      title: "Configure Popper Properties",
-      component: ConfigurePopper
-    },
-    {
-      title: "Portal version",
-      component: Portal
-    },
-    {
-      title: "Portal by id",
-      description:
-        "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
-      component: PortalById
+      title: "Inline version",
+      component: Inline
     },
     {
       title: "Inline portal version",
       component: Inline
     },
     {
-      title: "TabIndex",
-      component: TabIndex
+      title: "Input time",
+      component: TimeInput
     },
     {
-      title: "Year dropdown",
-      component: YearDropdown
+      title: "Locale",
+      component: Locale
+    },
+    {
+      title: "Locale with time",
+      component: LocaleWithTime
+    },
+    {
+      title: "Locale without global variables",
+      component: LocaleWithoutGlobalVariable
+    },
+    {
+      title: "Min date",
+      component: MinDate
+    },
+    {
+      title: "Max date",
+      component: MaxDate
+    },
+    {
+      title: "Month Picker",
+      component: MonthPicker
+    },
+    {
+      title: "Month Picker with Full Name",
+      component: monthPickerFullName
+    },
+    {
+      title: "Month Picker Two Columns Layout",
+      component: monthPickerTwoColumns
     },
     {
       title: "Month dropdown",
@@ -254,36 +279,8 @@ export default class exampleComponents extends React.Component {
       component: MonthYearDropdown
     },
     {
-      title: "Year select dropdown",
-      component: YearSelectDropdown
-    },
-    {
-      title: "Inline version",
-      component: Inline
-    },
-    {
-      title: "Open to date",
-      component: OpenToDate
-    },
-    {
-      title: "Fixed height of Calendar",
-      component: FixedCalendar
-    },
-    {
-      title: "Display Week Numbers",
-      component: WeekNumbers
-    },
-    {
-      title: "Custom input",
-      component: CustomInput
-    },
-    {
       title: "Multiple months",
       component: MultiMonth
-    },
-    {
-      title: "Show previous months",
-      component: MultiMonthPrevious
     },
     {
       title: "Multiple months with year dropdown",
@@ -294,72 +291,90 @@ export default class exampleComponents extends React.Component {
       component: MultiMonthInline
     },
     {
-      title: "Children",
-      component: Children
+      title: "No Anchor Arrow",
+      component: NoAnchorArrow
     },
     {
-      title: "Calendar container",
-      component: CalendarContainer
+      title: "onBlur callbacks in console",
+      component: OnBlurCallbacks
     },
     {
-      title: "Get raw input value on change",
-      component: RawChange
+      title: "Open to date",
+      component: OpenToDate
     },
     {
-      title: "Don't hide calendar on date selection",
-      component: DontCloseOnSelect
+      title: "Placeholder text",
+      component: PlaceholderText
     },
     {
-      title: "Custom header",
-      component: RenderCustomHeader
+      title: "Portal version",
+      component: Portal
     },
     {
-      title: "Custom Day",
-      component: RenderCustomDay
-    },
-    {
-      title: "Input time",
-      component: TimeInput
-    },
-    {
-      title: "Strict parsing",
-      component: StrictParsing
-    },
-    {
-      title: "Month Picker",
-      component: MonthPicker
-    },
-    {
-      title: "Year Picker",
-      component: YearPicker
-    },
-    {
-      title: "Month Picker with Full Name",
-      component: monthPickerFullName
-    },
-    {
-      title: "Month Picker Two Columns Layout",
-      component: monthPickerTwoColumns
-    },
-    {
-      title: "Range Month Picker",
-      component: RangeMonthPicker
+      title: "Portal by id",
+      description:
+        "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
+      component: PortalById
     },
     {
       title: "Quarter Picker",
       component: QuarterPicker
     },
     {
+      title: "Range Month Picker",
+      component: RangeMonthPicker
+    },
+    {
       title: "Range Quarter Picker",
       component: RangeQuarterPicker
     },
     {
-      title: "Calendar open state callbacks",
-      component: OnCalendarChangeStateCallbacks
+      title: "Read only datepicker",
+      component: ReadOnly
     },
     {
-      title: "Custom time input",
-      component: CustomTimeInput
+      title: "Select Time",
+      component: ShowTime
+    },
+    {
+      title: "Select Time Only",
+      component: ShowTimeOnly
+    },
+    {
+      title: "Show previous months",
+      component: MultiMonthPrevious
+    },
+    {
+      title: "Specific date range",
+      component: SpecificDateRange
+    },
+    {
+      title: "Specific Time Range",
+      component: ExcludeTimePeriod
+    },
+    {
+      title: "Strict parsing",
+      component: StrictParsing
+    },
+    {
+      title: "TabIndex",
+      component: TabIndex
+    },
+    {
+      title: "Today button",
+      component: Today
+    },
+    {
+      title: "Year Picker",
+      component: YearPicker
+    },
+    {
+      title: "Year dropdown",
+      component: YearDropdown
+    },
+    {
+      title: "Year select dropdown",
+      component: YearSelectDropdown
     }
   ];
 

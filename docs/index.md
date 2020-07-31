@@ -14,6 +14,7 @@
 | `chooseDayAriaLabelPrefix`   | `string`                       |                    |             |
 | `className`                  | `string`                       |                    |             |
 | `clearButtonTitle`           | `string`                       |                    |             |
+| `closeOnScroll`              | `union(bool\|func)`            |                    |             |
 | `customInput`                | `element`                      |                    |             |
 | `customInputRef`             | `string`                       |                    |             |
 | `customTimeInput`            | `element`                      | `null`             |             |
@@ -52,22 +53,22 @@
 | `name`                       | `string`                       |                    |             |
 | `nextMonthButtonLabel`       | `union(string\|node)`          | `"Next Month"`     |             |
 | `nextYearButtonLabel`        | `string`                       | `"Next Year"`      |             |
-| `onBlur`                     | `func`                         | `function() {}`    |             |
-| `onCalendarClose`            | `func`                         | `function() {}`    |             |
-| `onCalendarOpen`             | `func`                         | `function() {}`    |             |
-| `onChange`                   | `func`                         | `function() {}`    |             |
+| `onBlur`                     | `func`                         | `() {}`            |             |
+| `onCalendarClose`            | `func`                         | `() {}`            |             |
+| `onCalendarOpen`             | `func`                         | `() {}`            |             |
+| `onChange`                   | `func`                         | `() {}`            |             |
 | `onChangeRaw`                | `func`                         |                    |             |
-| `onClickOutside`             | `func`                         | `function() {}`    |             |
+| `onClickOutside`             | `func`                         | `() {}`            |             |
 | `onDayMouseEnter`            | `func`                         |                    |             |
-| `onFocus`                    | `func`                         | `function() {}`    |             |
-| `onInputClick`               | `func`                         | `function() {}`    |             |
-| `onInputError`               | `func`                         | `function() {}`    |             |
-| `onKeyDown`                  | `func`                         | `function() {}`    |             |
-| `onMonthChange`              | `func`                         | `function() {}`    |             |
+| `onFocus`                    | `func`                         | `() {}`            |             |
+| `onInputClick`               | `func`                         | `() {}`            |             |
+| `onInputError`               | `func`                         | `() {}`            |             |
+| `onKeyDown`                  | `func`                         | `() {}`            |             |
+| `onMonthChange`              | `func`                         | `() {}`            |             |
 | `onMonthMouseLeave`          | `func`                         |                    |             |
-| `onSelect`                   | `func`                         | `function() {}`    |             |
+| `onSelect`                   | `func`                         | `() {}`            |             |
 | `onWeekSelect`               | `func`                         |                    |             |
-| `onYearChange`               | `func`                         | `function() {}`    |             |
+| `onYearChange`               | `func`                         | `() {}`            |             |
 | `open`                       | `bool`                         |                    |             |
 | `openToDate`                 | `instanceOfDate`               |                    |             |
 | `peekNextMonth`              | `bool`                         |                    |             |
@@ -83,7 +84,7 @@
 | `previousYearButtonLabel`    | `string`                       | `"Previous Year"`  |             |
 | `readOnly`                   | `bool`                         | `false`            |             |
 | `renderCustomHeader`         | `func`                         |                    |             |
-| `renderDayContents`          | `func`                         | `function(date) {  |
+| `renderDayContents`          | `func`                         | `(date) {          |
 
 return date;
-}`|| |`required`|`bool`||| |`scrollableMonthYearDropdown`|`bool`||| |`scrollableYearDropdown`|`bool`||| |`selected`|`instanceOfDate`||| |`selectsEnd`|`bool`||| |`selectsStart`|`bool`||| |`shouldCloseOnSelect`|`bool`|`true`|| |`showDisabledMonthNavigation`|`bool`||| |`showFullMonthYearPicker`|`bool`|`false`|| |`showMonthDropdown`|`bool`||| |`showMonthYearDropdown`|`bool`||| |`showMonthYearPicker`|`bool`|`false`|| |`showPopperArrow`|`bool`|`true`|| |`showPreviousMonths`|`bool`|`false`|| |`showQuarterYearPicker`|`bool`|`false`|| |`showTimeInput`|`bool`|`false`|| |`showTimeSelect`|`bool`|`false`|| |`showTimeSelectOnly`|`bool`||| |`showTwoColumnMonthYearPicker`|`bool`|`false`|| |`showWeekNumbers`|`bool`||| |`showYearDropdown`|`bool`||| |`showYearPicker`|`bool`|`false`|| |`startDate`|`instanceOfDate`||| |`startOpen`|`bool`||| |`strictParsing`|`bool`|`false`|| |`tabIndex`|`number`||| |`timeCaption`|`string`|`"Time"`|| |`timeClassName`|`func`||| |`timeFormat`|`string`||| |`timeInputLabel`|`string`|`"Time"`|| |`timeIntervals`|`number`|`30`|| |`title`|`string`||| |`todayButton`|`node`||| |`useShortMonthInDropdown`|`bool`||| |`useWeekdaysShort`|`bool`||| |`value`|`string`||| |`weekAriaLabelPrefix`|`string`||| |`weekDayClassName`|`func`||| |`weekLabel`|`string`||| |`withPortal`|`bool`|`false`|| |`wrapperClassName`|`string`||| |`yearDropdownItemNumber`|`number`|||
+}`|| |`required`|`bool`||| |`scrollableMonthYearDropdown`|`bool`||| |`scrollableYearDropdown`|`bool`||| |`selected`|`instanceOfDate`||| |`selectsEnd`|`bool`||| |`selectsRange`|`bool`||| |`selectsStart`|`bool`||| |`shouldCloseOnSelect`|`bool`|`true`|| |`showDisabledMonthNavigation`|`bool`||| |`showFullMonthYearPicker`|`bool`|`false`|| |`showMonthDropdown`|`bool`||| |`showMonthYearDropdown`|`bool`||| |`showMonthYearPicker`|`bool`|`false`|| |`showPopperArrow`|`bool`|`true`|| |`showPreviousMonths`|`bool`|`false`|| |`showQuarterYearPicker`|`bool`|`false`|| |`showTimeInput`|`bool`|`false`|| |`showTimeSelect`|`bool`|`false`|| |`showTimeSelectOnly`|`bool`||| |`showTwoColumnMonthYearPicker`|`bool`|`false`|| |`showWeekNumbers`|`bool`||| |`showYearDropdown`|`bool`||| |`showYearPicker`|`bool`|`false`|| |`startDate`|`instanceOfDate`||| |`startOpen`|`bool`||| |`strictParsing`|`bool`|`false`|| |`tabIndex`|`number`||| |`timeCaption`|`string`|`"Time"`|| |`timeClassName`|`func`||| |`timeFormat`|`string`||| |`timeInputLabel`|`string`|`"Time"`|| |`timeIntervals`|`number`|`30`|| |`title`|`string`||| |`todayButton`|`node`||| |`useShortMonthInDropdown`|`bool`||| |`useWeekdaysShort`|`bool`||| |`value`|`string`||| |`weekAriaLabelPrefix`|`string`||| |`weekDayClassName`|`func`||| |`weekLabel`|`string`||| |`withPortal`|`bool`|`false`|| |`wrapperClassName`|`string`||| |`yearDropdownItemNumber`|`number`|||

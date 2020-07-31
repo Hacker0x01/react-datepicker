@@ -10,6 +10,7 @@ import TestWrapper from "./test_wrapper.jsx";
 import PopperComponent from "../src/popper_component.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils";
+import { util } from "chai";
 
 function getKey(key) {
   switch (key) {
@@ -1297,5 +1298,167 @@ describe("DatePicker", () => {
         .first()
         .prop("ariaLabelPrefix")
     ).to.equal(weekAriaLabelPrefix);
+  });
+
+  it("should close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker closeOnScroll />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.state.open).to.be.true;
+    datePicker.onScroll({ target: document });
+    expect(datePicker.state.open).to.be.false;
+  });
+
+  it("should not close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker closeOnScroll />);
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    datePicker.onScroll({ target: "something" });
+    expect(datePicker.state.open).to.be.true;
+  });
+
+  it("should close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker closeOnScroll={() => true} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.state.open).to.be.true;
+    datePicker.onScroll();
+    expect(datePicker.state.open).to.be.false;
+  });
+
+  it("should not close the calendar after scrolling", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker closeOnScroll={() => false} />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    datePicker.onScroll();
+    expect(datePicker.state.open).to.be.true;
+  });
+
+  describe("selectsRange with inline", () => {
+    it("should change dates of range when dates are empty", () => {
+      const selected = utils.newDate();
+      let startDate, endDate;
+      const onChange = (dates = []) => {
+        [startDate, endDate] = dates;
+      };
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />
+      );
+
+      const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      const selectedDay = days.find(
+        d =>
+          utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+          utils.formatDate(selected, "yyyy-MM-dd")
+      );
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+        utils.formatDate(selected, "yyyy-MM-dd")
+      );
+      expect(endDate).to.equal(null);
+    });
+
+    it("should change dates of range set endDate when startDate is set", () => {
+      let startDate = utils.newDate();
+      const nextDay = utils.addDays(startDate, 1);
+      let endDate = null;
+      const onChange = (dates = []) => {
+        [startDate, endDate] = dates;
+      };
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={startDate}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />
+      );
+      const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      const selectedDay = days.find(
+        d =>
+          utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+          utils.formatDate(nextDay, "yyyy-MM-dd")
+      );
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+        utils.formatDate(startDate, "yyyy-MM-dd")
+      );
+      expect(utils.formatDate(endDate, "yyyy-MM-dd")).to.equal(
+        utils.formatDate(nextDay, "yyyy-MM-dd")
+      );
+    });
+
+    it("should change dates of range set endDate null when range is filled", () => {
+      const selected = utils.newDate();
+      let [startDate, endDate] = [selected, selected];
+      const onChange = (dates = []) => {
+        [startDate, endDate] = dates;
+      };
+      let datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />
+      );
+
+      let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      let selectedDay = days.find(
+        d =>
+          utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+          utils.formatDate(selected, "yyyy-MM-dd")
+      );
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+        utils.formatDate(selected, "yyyy-MM-dd")
+      );
+      expect(endDate).to.equal(null);
+    });
+
+    it("should change dates of range change startDate when endDate set before startDate", () => {
+      const selected = utils.newDate();
+      const selectedPrevious = utils.subDays(utils.newDate(), 3);
+      let [startDate, endDate] = [selected, null];
+      const onChange = (dates = []) => {
+        [startDate, endDate] = dates;
+      };
+      let datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />
+      );
+      let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      const selectedDay = days.find(
+        d =>
+          utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+          utils.formatDate(selectedPrevious, "yyyy-MM-dd")
+      );
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
+        utils.formatDate(selectedPrevious, "yyyy-MM-dd")
+      );
+      expect(endDate).to.equal(null);
+    });
   });
 });

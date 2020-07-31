@@ -27,12 +27,10 @@
     border-left: 0;
   }
 
-  .react-datepicker__time {
-    border-radius: 0.3rem;
-  }
-
+  .react-datepicker__time,
   .react-datepicker__time-box {
-    border-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
   }
 }
 
@@ -92,7 +90,6 @@
   background-color: $datepicker__background-color;
   border-bottom: 1px solid $datepicker__border-color;
   border-top-left-radius: $datepicker__border-radius;
-  border-top-right-radius: $datepicker__border-radius;
   padding-top: 8px;
   position: relative;
 
@@ -100,6 +97,14 @@
     padding-bottom: 8px;
     padding-left: 5px;
     padding-right: 5px;
+
+    &:not(&--only) {
+      border-top-left-radius: 0;
+    }
+  }
+
+  &:not(&--has-time-select) {
+    border-top-right-radius: $datepicker__border-radius;
   }
 }
 
@@ -163,7 +168,7 @@
     right: 10px;
     border-left-color: $datepicker__muted-color;
     &--with-time:not(&--with-today-button) {
-      right: 80px;
+      right: 95px;
     }
 
     &:hover {
@@ -209,18 +214,17 @@
 }
 
 .react-datepicker__year {
-  &-container {
-    margin: $datepicker__margin;
-    text-align: center;
+  margin: $datepicker__margin;
+  text-align: center;
+  &-wrapper {
     display: flex;
     flex-wrap: wrap;
-    &-text {
-      display: inline-block;
-      cursor: pointer;
-      flex: 1 0 30%;
-      width: 12px;
-      padding: 2px;
-    }
+    max-width: 180px;
+  }
+  .react-datepicker__year-text {
+    display: inline-block;
+    width: 4rem;
+    margin: 2px;
   }
 }
 
@@ -285,12 +289,14 @@
   .react-datepicker__time {
     position: relative;
     background: white;
+    border-bottom-right-radius: 0.3rem;
 
     .react-datepicker__time-box {
       width: 85px;
       overflow-x: hidden;
       margin: 0 auto;
       text-align: center;
+      border-bottom-right-radius: 0.3rem;
       ul.react-datepicker__time-list {
         list-style: none;
         margin: 0;
@@ -373,8 +379,7 @@
 }
 
 .react-datepicker__month,
-.react-datepicker__quarter,
-.react-datepicker__year-container-text {
+.react-datepicker__quarter {
   &--selected,
   &--in-selecting-range,
   &--in-range {
@@ -398,7 +403,8 @@
 
 .react-datepicker__day,
 .react-datepicker__month-text,
-.react-datepicker__quarter-text {
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
   cursor: pointer;
 
   &:hover {

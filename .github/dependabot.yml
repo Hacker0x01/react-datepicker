@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/docs-site"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/examples/hello-world"
+    schedule:
+      interval: "daily"
+ 

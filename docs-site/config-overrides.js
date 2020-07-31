@@ -2,6 +2,7 @@ const path = require("path");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 
 module.exports = function override(config, env) {
+  config.resolve.alias["react-datepicker"] = path.resolve(__dirname, "..");
   //do stuff with the webpack config...
   config.module.rules.push({
     test: /\.js/,
