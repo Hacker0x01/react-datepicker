@@ -46,6 +46,16 @@ describe("YearPicker", () => {
     expect(year).to.equal(utils.getYear(date).toString());
   });
 
+  it("should has current year class when element of array equal of current year", () => {
+    const date = new Date();
+    const yearComponent = mount(<Year date={date} />);
+    const year = yearComponent
+      .find(".react-datepicker__year-text--today")
+      .at(0)
+      .text();
+    expect(year).to.equal(utils.getYear(date).toString());
+  });
+
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
     const yearComponent = mount(
       <Year
