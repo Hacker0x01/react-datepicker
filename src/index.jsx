@@ -32,7 +32,8 @@ import {
   getMonth,
   registerLocale,
   setDefaultLocale,
-  getDefaultLocale
+  getDefaultLocale,
+  DEFAULT_YEAR_ITEM_NUMBER
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -102,6 +103,7 @@ export default class DatePicker extends React.Component {
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
       enableTabLoop: true,
+      yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER,
 
       renderDayContents(date) {
         return date;
@@ -211,6 +213,7 @@ export default class DatePicker extends React.Component {
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
     portalId: PropTypes.string,
+    yearItemNumber: PropTypes.number,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
@@ -846,6 +849,7 @@ export default class DatePicker extends React.Component {
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
         container={this.props.calendarContainer}
+        yearItemNumber={this.props.yearItemNumber}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}

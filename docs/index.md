@@ -131,4 +131,5 @@
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
 |`wrapperClassName`|`string`|||
+|`yearItemNumber`|`number`|`12`||
 |`yearDropdownItemNumber`|`number`|||

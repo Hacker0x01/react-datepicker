@@ -42,6 +42,7 @@ import Portal from "../../examples/portal";
 import PortalById from "../../examples/portalById";
 import TabIndex from "../../examples/tabIndex";
 import YearDropdown from "../../examples/yearDropdown";
+import YearItemNumber from "../../examples/yearItemNumber";
 import MonthDropdown from "../../examples/monthDropdown";
 import MonthDropdownShort from "../../examples/monthDropdownShort";
 import MonthYearDropdown from "../../examples/monthYearDropdown";
@@ -375,6 +376,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Year select dropdown",
       component: YearSelectDropdown
+    },
+    {
+      title: "Year item number",
+      component: YearItemNumber
     }
   ];
 

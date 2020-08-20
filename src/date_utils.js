@@ -56,6 +56,8 @@ import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
 import longFormatters from "date-fns/esm/_lib/format/longFormatters";
 
+export const DEFAULT_YEAR_ITEM_NUMBER = 12;
+
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
 var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
@@ -548,9 +550,9 @@ export function yearDisabledBefore(day, { minDate, includeDates } = {}) {
   );
 }
 
-export function yearsDisabledBefore(day, { minDate } = {}) {
-  const previousYear = getStartOfYear(subYears(day, 12));
-  const { endPeriod } = getYearsPeriod(previousYear);
+export function yearsDisabledBefore(day, { minDate, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER } = {}) {
+  const previousYear = getStartOfYear(subYears(day, yearItemNumber));
+  const { endPeriod } = getYearsPeriod(previousYear, yearItemNumber);
   const minDateYear = minDate && getYear(minDate);
   return (minDateYear && minDateYear > endPeriod) || false;
 }
@@ -567,9 +569,9 @@ export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
   );
 }
 
-export function yearsDisabledAfter(day, { maxDate } = {}) {
-  const nextYear = addYears(day, 12);
-  const { startPeriod } = getYearsPeriod(nextYear);
+export function yearsDisabledAfter(day, { maxDate, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER } = {}) {
+  const nextYear = addYears(day, yearItemNumber);
+  const { startPeriod } = getYearsPeriod(nextYear, yearItemNumber);
   const maxDateYear = maxDate && getYear(maxDate);
   return (maxDateYear && maxDateYear < startPeriod) || false;
 }
@@ -668,8 +670,8 @@ export function addZero(i) {
   return i < 10 ? `0${i}` : `${i}`;
 }
 
-export function getYearsPeriod(date) {
-  const endPeriod = Math.ceil(getYear(date) / 12) * 12;
-  const startPeriod = endPeriod - 11;
+export function getYearsPeriod(date, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER) {
+  const endPeriod = Math.ceil(getYear(date) / yearItemNumber) * yearItemNumber;
+  const startPeriod = endPeriod - (yearItemNumber - 1);
   return { startPeriod, endPeriod };
 }
