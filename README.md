@@ -50,7 +50,7 @@ const Example = () => {
 The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker selected={startdate} onChange={handleChange} />
+<DatePicker selected={startdate} onChange={date => setStartDate(date)} />
 ```
 
 You can use `onSelect` event handler which fires each time some calendar date has been selected
