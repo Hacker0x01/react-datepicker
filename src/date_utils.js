@@ -174,7 +174,7 @@ export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
   return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
-export { setMonth, setYear, setQuarter };
+export { setMinutes, setHours, setMonth, setQuarter, setYear };
 
 // ** Date Getters **
 
