@@ -1184,6 +1184,32 @@ describe("Calendar", function() {
       decreaseYear();
       assert.equal(utils.getYear(calendar.state.date), 1981);
     });
+
+    it("calls increaseYear for custom year item number when next year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 2003);
+    });
+  
+    it("calls decreaseYear for custom year item number when previous year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1983);
+    });
   });
 
   describe("when showMonthYearPicker is enabled", () => {

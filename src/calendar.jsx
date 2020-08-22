@@ -39,7 +39,8 @@ import {
   getEffectiveMaxDate,
   addZero,
   isValid,
-  getYearsPeriod
+  getYearsPeriod,
+  DEFAULT_YEAR_ITEM_NUMBER
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -67,7 +68,8 @@ export default class Calendar extends React.Component {
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month",
-      customTimeInput: null
+      customTimeInput: null,
+      yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER
     };
   }
 
@@ -151,6 +153,7 @@ export default class Calendar extends React.Component {
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
     weekLabel: PropTypes.string,
+    yearItemNumber: PropTypes.number,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
@@ -393,7 +396,7 @@ export default class Calendar extends React.Component {
   decreaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: subYears(date, this.props.showYearPicker ? 12 : 1)
+        date: subYears(date, this.props.showYearPicker ? this.props.yearItemNumber : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -473,7 +476,7 @@ export default class Calendar extends React.Component {
   increaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: addYears(date, this.props.showYearPicker ? 12 : 1)
+        date: addYears(date, this.props.showYearPicker ? this.props.yearItemNumber : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -721,8 +724,8 @@ export default class Calendar extends React.Component {
 
   renderYearHeader = () => {
     const { date } = this.state;
-    const { showYearPicker } = this.props;
-    const { startPeriod, endPeriod } = getYearsPeriod(date);
+    const { showYearPicker, yearItemNumber } = this.props;
+    const { startPeriod, endPeriod } = getYearsPeriod(date, yearItemNumber);
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
         {showYearPicker ? `${startPeriod} - ${endPeriod}` : getYear(date)}

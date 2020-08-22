@@ -13,7 +13,8 @@ export default class Year extends React.Component {
     selected: PropTypes.object,
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
-    minDate: PropTypes.instanceOf(Date)
+    minDate: PropTypes.instanceOf(Date),
+    yearItemNumber: PropTypes.number
   };
 
   constructor(props) {
@@ -58,8 +59,8 @@ export default class Year extends React.Component {
 
   render() {
     const yearsList = [];
-    const { date } = this.props;
-    const { startPeriod, endPeriod } = utils.getYearsPeriod(date);
+    const { date, yearItemNumber } = this.props;
+    const { startPeriod, endPeriod } = utils.getYearsPeriod(date, yearItemNumber);
 
     for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(

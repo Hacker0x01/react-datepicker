@@ -730,11 +730,18 @@ describe("date_utils", function() {
   });
 
   describe("getYearsPeriod", () => {
-    it("should get start and end of 11 years period", () => {
+    it("should get start and end of default 11 years period", () => {
       const date = newDate("2000-01-01");
       const { startPeriod, endPeriod } = getYearsPeriod(date);
       expect(startPeriod).to.be.eq(1993);
       expect(endPeriod).to.be.eq(2004);
+    });
+
+    it("should get start and end of custom 8 years period", () => {
+      const date = newDate("2000-01-01");
+      const { startPeriod, endPeriod } = getYearsPeriod(date, 9);
+      expect(startPeriod).to.be.eq(1999);
+      expect(endPeriod).to.be.eq(2007);
     });
   });
 
