@@ -113,6 +113,19 @@ describe("TimePicker", () => {
     expect(getInputString()).to.equal("February 28, 2018 9:53 AM");
   });
 
+  it("should handle 90 min time intervals", () => {
+    renderDatePicker("July 13, 2020 2:59 PM", {
+      timeIntervals: 90,
+      showTimeSelect: true
+    });
+    expect(getInputString()).to.equal("July 13, 2020 2:59 PM");
+
+    ReactDOM.findDOMNode(datePicker.input).focus();
+
+    setManually("July 13, 2020 3:00 PM");
+    expect(getInputString()).to.equal("July 13, 2020 3:00 PM");
+  });
+
   it("should not contain the time only classname in header by default", () => {
     const timePicker = TestUtils.renderIntoDocument(
       <DatePicker
