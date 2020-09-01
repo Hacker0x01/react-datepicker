@@ -92,9 +92,9 @@ typings/
 
 # End of https://www.gitignore.io/api/node
 
-dist
-lib
-es
+#dist
+#lib
+#es
 tmp
 
 .vscode
