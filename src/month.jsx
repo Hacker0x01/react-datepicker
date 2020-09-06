@@ -34,6 +34,7 @@ export default class Month extends React.Component {
     onWeekSelect: PropTypes.func,
     peekNextMonth: PropTypes.bool,
     preSelection: PropTypes.instanceOf(Date),
+    setPreSelection: PropTypes.func,
     selected: PropTypes.instanceOf(Date),
     selectingDate: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
@@ -196,6 +197,25 @@ export default class Month extends React.Component {
     );
   };
 
+  onMonthKeyDown = (event) => {
+    const eventKey = event.key;
+    if (!this.props.disabledKeyboardNavigation) {
+      switch (eventKey) {
+        case "Enter":
+          this.onMonthClick(event, utils.getMonth(this.props.preSelection));
+          this.props.setPreSelection(this.props.selected);
+          break;
+        case "ArrowUp":
+          
+          this.props.setPreSelection(utils.addMonths(this.props.preSelection, 1));
+          break;
+        case "ArrowDown":
+          this.props.setPreSelection(utils.subMonths(this.props.preSelection, 1));
+          break;
+      }
+    }
+  };
+
   onQuarterClick = (e, q) => {
     this.handleDayClick(
       utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
@@ -204,7 +224,7 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = m => {
-    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
+    const { day, startDate, endDate, selected, minDate, maxDate, preSelection } = this.props;
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
@@ -215,6 +235,7 @@ export default class Month extends React.Component {
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__month-text--keyboard-selected": utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,
@@ -282,6 +303,8 @@ export default class Month extends React.Component {
             onClick={ev => {
               this.onMonthClick(ev, m);
             }}
+            onKeyDown={this.onMonthKeyDown}
+            tabIndex="0"
             className={this.getMonthClassNames(m)}
           >
             {showFullMonthYearPicker
