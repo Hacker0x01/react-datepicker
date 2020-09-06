@@ -58,6 +58,8 @@ export default class Month extends React.Component {
     ])
   };
 
+  MONTH_REFS = Array(12).fill().map(() => React.createRef());
+
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event, this.props.orderInDisplay);
@@ -197,20 +199,23 @@ export default class Month extends React.Component {
     );
   };
 
-  onMonthKeyDown = (event) => {
+  onMonthKeyDown = (event, month) => {
     const eventKey = event.key;
     if (!this.props.disabledKeyboardNavigation) {
       switch (eventKey) {
         case "Enter":
-          this.onMonthClick(event, utils.getMonth(this.props.preSelection));
+          this.onMonthClick(event, month);
           this.props.setPreSelection(this.props.selected);
           break;
         case "ArrowUp":
-          
+          const nextMonth = month === 11 ? 0 : month+1;
           this.props.setPreSelection(utils.addMonths(this.props.preSelection, 1));
+          this.MONTH_REFS[nextMonth].current.focus();
           break;
         case "ArrowDown":
+          const prevMonth = month === 0 ? 11 : month-1;
           this.props.setPreSelection(utils.subMonths(this.props.preSelection, 1));
+          this.MONTH_REFS[prevMonth].current.focus();
           break;
       }
     }
@@ -246,6 +251,16 @@ export default class Month extends React.Component {
         "react-datepicker__month--range-end": this.isRangeEndMonth(m)
       }
     );
+  };
+
+  getTabIndex = (m) => {
+    const preSelectedMonth = utils.getMonth(this.props.preSelection);
+    const tabIndex = 
+      !this.props.disabledKeyboardNavigation && m === preSelectedMonth
+        ? "0"
+        : "-1";
+
+    return tabIndex;
   };
 
   getQuarterClassNames = q => {
@@ -299,13 +314,17 @@ export default class Month extends React.Component {
       <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (
           <div
+            ref={this.MONTH_REFS[m]}
             key={j}
             onClick={ev => {
               this.onMonthClick(ev, m);
             }}
-            onKeyDown={this.onMonthKeyDown}
-            tabIndex="0"
+            onKeyDown={ev => {
+              this.onMonthKeyDown(ev, m);
+            }}
+            tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
+            role="button"
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
