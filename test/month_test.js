@@ -308,6 +308,31 @@ describe("Month", () => {
     );
   });
 
+  it("should render full month name", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        showMonthYearPicker
+        showFullMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-1").at(0);
+
+    expect(month.text()).to.equal('February');
+  });
+
+  it("should render short month name", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-1").at(0);
+
+    expect(month.text()).to.equal('Feb');
+  });
+
   describe("Keyboard navigation", () => {
     const renderMonth = (props) => shallow(<Month showMonthYearPicker {...props} />);
 
@@ -323,6 +348,7 @@ describe("Month", () => {
         setPreSelection: setPreSelection,
         preSelection: utils.newDate("2015-02-01"),
       });
+      monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("Tab"));
       monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("ArrowRight"));
 
       expect(preSelected.toString()).to.equal(utils.newDate("2015-03-01").toString());
@@ -403,16 +429,48 @@ describe("Month", () => {
       expect(preSelected.toString()).to.equal(utils.newDate("2014-12-01").toString());
     });
 
-    it("should have label for disabled month", () => {
-      let preSelected = false;
+    it("should prevent navigation to disabled month", () => {
+      let preSelected = utils.newDate("2015-08-01");
       const setPreSelection = param => {
         preSelected = param;
       }
 
       const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01")
+      });
+
+      monthComponent.find(".react-datepicker__month-7").simulate('keydown', getKey("ArrowRight"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-08-01").toString());
+    });
+
+    it("should prevent navigation", () => {
+      let preSelected = utils.newDate("2015-08-01");
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        disabledKeyboardNavigation: true
+      });
+
+      monthComponent.find(".react-datepicker__month-7").simulate('keydown', getKey("ArrowRight"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-08-01").toString());
+    });
+
+    it("should have label for enabled/disabled month", () => {
+      const monthComponent = renderMonth({
         selected: utils.newDate("2015-03-01"),
         day: utils.newDate("2015-03-01"),
-        setPreSelection: setPreSelection,
+        setPreSelection: () => {},
         preSelection: utils.newDate("2015-03-01"),
         minDate: utils.newDate("2015-03-01"),
         maxDate: utils.newDate("2015-08-01")
@@ -428,6 +486,30 @@ describe("Month", () => {
 
       expect(enabled.prop('aria-label')).to.equal('Choose May 2015');
       expect(disabled.prop('aria-label')).to.equal('Not available January 2015');
+    });
+
+    it("should have custom label for month", () => {
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-03-01"),
+        day: utils.newDate("2015-03-01"),
+        setPreSelection: () => {},
+        preSelection: utils.newDate("2015-03-01"),
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01"),
+        ariaLabelPrefix: "Select this",
+        disabledDayAriaLabelPrefix: "Can't select this",
+      });
+
+      const enabled = monthComponent
+        .find(".react-datepicker__month-4")
+        .at(0);
+
+      const disabled = monthComponent
+        .find(".react-datepicker__month-0")
+        .at(0);
+
+      expect(enabled.prop('aria-label')).to.equal('Select this May 2015');
+      expect(disabled.prop('aria-label')).to.equal(`Can't select this January 2015`);
     });
   });
 });

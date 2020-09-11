@@ -269,7 +269,7 @@ export default class Month extends React.Component {
     return tabIndex;
   };
 
-  getAriaLabel = (month) => {
+  getAriaLabel = month => {
     const {
       ariaLabelPrefix = "Choose",
       disabledDayAriaLabelPrefix = "Not available",
