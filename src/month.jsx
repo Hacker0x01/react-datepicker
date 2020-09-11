@@ -60,6 +60,10 @@ export default class Month extends React.Component {
 
   MONTH_REFS = Array(12).fill().map(() => React.createRef());
 
+  isDisabled = () => utils.isDayDisabled(this.props.preSelection, this.props);
+
+  isExcluded = () => utils.isDayExcluded(this.props.preSelection, this.props);
+
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event, this.props.orderInDisplay);
@@ -207,12 +211,12 @@ export default class Month extends React.Component {
           this.onMonthClick(event, month);
           this.props.setPreSelection(this.props.selected);
           break;
-        case "ArrowUp":
+        case "ArrowRight":
           const nextMonth = month === 11 ? 0 : month+1;
           this.props.setPreSelection(utils.addMonths(this.props.preSelection, 1));
           this.MONTH_REFS[nextMonth].current.focus();
           break;
-        case "ArrowDown":
+        case "ArrowLeft":
           const prevMonth = month === 0 ? 11 : month-1;
           this.props.setPreSelection(utils.subMonths(this.props.preSelection, 1));
           this.MONTH_REFS[prevMonth].current.focus();
@@ -261,6 +265,23 @@ export default class Month extends React.Component {
         : "-1";
 
     return tabIndex;
+  };
+
+  getAriaLabel = (month) => {
+    const {
+      ariaLabelPrefix = "Choose",
+      disabledDayAriaLabelPrefix = "Not available",
+      day
+    } = this.props;
+
+    const labelDate = utils.setMonth(day, month)
+    const prefix =
+      this.isDisabled() || this.isExcluded()
+        ? disabledDayAriaLabelPrefix
+        : ariaLabelPrefix;
+
+
+    return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
   };
 
   getQuarterClassNames = q => {
@@ -325,6 +346,7 @@ export default class Month extends React.Component {
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
             role="button"
+            aria-label={this.getAriaLabel(m)}
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
