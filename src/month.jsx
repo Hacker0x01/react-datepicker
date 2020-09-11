@@ -60,9 +60,9 @@ export default class Month extends React.Component {
 
   MONTH_REFS = Array(12).fill().map(() => React.createRef());
 
-  isDisabled = () => utils.isDayDisabled(this.props.preSelection, this.props);
+  isDisabled = date => utils.isDayDisabled(date, this.props);
 
-  isExcluded = () => utils.isDayExcluded(this.props.preSelection, this.props);
+  isExcluded = date => utils.isDayExcluded(date, this.props);
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
@@ -203,6 +203,12 @@ export default class Month extends React.Component {
     );
   };
 
+  handleMonthNavigation = (newMonth, newDate) => {
+    if(this.isDisabled(newDate) || this.isExcluded(newDate)) return;
+    this.props.setPreSelection(newDate);
+    this.MONTH_REFS[newMonth].current && this.MONTH_REFS[newMonth].current.focus();
+  }
+
   onMonthKeyDown = (event, month) => {
     const eventKey = event.key;
     if (!this.props.disabledKeyboardNavigation) {
@@ -212,14 +218,10 @@ export default class Month extends React.Component {
           this.props.setPreSelection(this.props.selected);
           break;
         case "ArrowRight":
-          const nextMonth = month === 11 ? 0 : month+1;
-          this.props.setPreSelection(utils.addMonths(this.props.preSelection, 1));
-          this.MONTH_REFS[nextMonth].current.focus();
+          this.handleMonthNavigation(month === 11 ? 0 : month+1, utils.addMonths(this.props.preSelection, 1));
           break;
         case "ArrowLeft":
-          const prevMonth = month === 0 ? 11 : month-1;
-          this.props.setPreSelection(utils.subMonths(this.props.preSelection, 1));
-          this.MONTH_REFS[prevMonth].current.focus();
+          this.handleMonthNavigation(month === 0 ? 11 : month-1, utils.subMonths(this.props.preSelection, 1));
           break;
       }
     }
@@ -276,7 +278,7 @@ export default class Month extends React.Component {
 
     const labelDate = utils.setMonth(day, month)
     const prefix =
-      this.isDisabled() || this.isExcluded()
+      this.isDisabled(labelDate) || this.isExcluded(labelDate)
         ? disabledDayAriaLabelPrefix
         : ariaLabelPrefix;
 
