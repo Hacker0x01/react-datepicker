@@ -282,7 +282,6 @@ export default class Month extends React.Component {
         ? disabledDayAriaLabelPrefix
         : ariaLabelPrefix;
 
-
     return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
   };
 
