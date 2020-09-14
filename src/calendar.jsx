@@ -794,6 +794,7 @@ export default class Calendar extends React.Component {
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
+            setPreSelection={this.props.setPreSelection}
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}

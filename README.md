@@ -163,6 +163,12 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 - _End_: Move to the next year.
 - _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
 
+#### For month picker
+
+- _Left_: Move to the previous month.
+- _Right_: Move to the next month.
+- _Enter_: Select date and close the calendar
+
 ## License
 
 Copyright (c) 2019 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.

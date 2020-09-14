@@ -1,10 +1,26 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Month from "../src/month";
 import Day from "../src/day";
 import range from "lodash/range";
 import { mount, shallow } from "enzyme";
 import * as utils from "../src/date_utils";
 import TestUtils from "react-dom/test-utils";
+
+function getKey(key) {
+  switch (key) {
+    case "Tab":
+      return { key, code: 9, which: 9 };
+    case "Enter":
+      return { key, code: 13, which: 13 };
+    case "ArrowLeft":
+      return { key, code: 37, which: 37 };
+    case "ArrowRight":
+      return { key, code: 39, which: 39 };
+  }
+  throw new Error("Unknown key :" + key);
+}
+
 
 describe("Month", () => {
   function assertDateRangeInclusive(month, start, end) {
@@ -290,5 +306,210 @@ describe("Month", () => {
     expect(quarter.hasClass("react-datepicker__quarter--in-range")).to.equal(
       true
     );
+  });
+
+  it("should render full month name", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        showMonthYearPicker
+        showFullMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-1").at(0);
+
+    expect(month.text()).to.equal('February');
+  });
+
+  it("should render short month name", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-12-01")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-1").at(0);
+
+    expect(month.text()).to.equal('Feb');
+  });
+
+  describe("Keyboard navigation", () => {
+    const renderMonth = (props) => shallow(<Month showMonthYearPicker {...props} />);
+
+    it("should trigger setPreSelection and set March as pre-selected on arrowRight", () => {
+      let preSelected = false;
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-02-01"),
+        day: utils.newDate("2015-02-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-02-01"),
+      });
+      monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("Tab"));
+      monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("ArrowRight"));
+
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-03-01").toString());
+    });
+
+    it("should trigger setPreSelection and set January as pre-selected on arrowLeft", () => {
+      let preSelected = false;
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-02-01"),
+        day: utils.newDate("2015-02-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-02-01"),
+      });
+      monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("ArrowLeft"));
+     
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-01-01").toString());
+    });
+
+    it("should select March when Enter is pressed", () => {
+      let preSelected = false;
+      let selectedDate = null;
+      const setPreSelection = () => {
+        preSelected = true;
+      }
+      const setSelectedDate = param => {
+        selectedDate = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-02-01"),
+        day: utils.newDate("2015-02-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-02-01"),
+        onDayClick: setSelectedDate
+      });
+
+      monthComponent.find(".react-datepicker__month-1").simulate('keydown', getKey("ArrowLeft"));
+      monthComponent.find(".react-datepicker__month-2").simulate('keydown', getKey("Enter"));
+      
+      expect(preSelected).to.equal(true);
+      expect(selectedDate.toString()).to.equal(utils.newDate("2015-03-01").toString());
+    });
+
+    it("should pre-select Jan of next year on arrowRight", () => {
+      let preSelected = false;
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-12-01"),
+        day: utils.newDate("2015-12-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-12-01")
+      });
+
+      monthComponent.find(".react-datepicker__month-11").simulate('keydown', getKey("ArrowRight"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2016-01-01").toString());
+    });
+
+    it("should pre-select Dec of previous year on arrowLeft", () => {
+      let preSelected = false;
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-01-01"),
+        day: utils.newDate("2015-01-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-01-01")
+      });
+
+      monthComponent.find(".react-datepicker__month-0").simulate('keydown', getKey("ArrowLeft"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2014-12-01").toString());
+    });
+
+    it("should prevent navigation to disabled month", () => {
+      let preSelected = utils.newDate("2015-08-01");
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01")
+      });
+
+      monthComponent.find(".react-datepicker__month-7").simulate('keydown', getKey("ArrowRight"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-08-01").toString());
+    });
+
+    it("should prevent navigation", () => {
+      let preSelected = utils.newDate("2015-08-01");
+      const setPreSelection = param => {
+        preSelected = param;
+      }
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        disabledKeyboardNavigation: true
+      });
+
+      monthComponent.find(".react-datepicker__month-7").simulate('keydown', getKey("ArrowRight"));
+      expect(preSelected.toString()).to.equal(utils.newDate("2015-08-01").toString());
+    });
+
+    it("should have label for enabled/disabled month", () => {
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-03-01"),
+        day: utils.newDate("2015-03-01"),
+        setPreSelection: () => {},
+        preSelection: utils.newDate("2015-03-01"),
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01")
+      });
+
+      const enabled = monthComponent
+        .find(".react-datepicker__month-4")
+        .at(0);
+
+      const disabled = monthComponent
+        .find(".react-datepicker__month-0")
+        .at(0);
+
+      expect(enabled.prop('aria-label')).to.equal('Choose May 2015');
+      expect(disabled.prop('aria-label')).to.equal('Not available January 2015');
+    });
+
+    it("should have custom label for month", () => {
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-03-01"),
+        day: utils.newDate("2015-03-01"),
+        setPreSelection: () => {},
+        preSelection: utils.newDate("2015-03-01"),
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01"),
+        ariaLabelPrefix: "Select this",
+        disabledDayAriaLabelPrefix: "Can't select this",
+      });
+
+      const enabled = monthComponent
+        .find(".react-datepicker__month-4")
+        .at(0);
+
+      const disabled = monthComponent
+        .find(".react-datepicker__month-0")
+        .at(0);
+
+      expect(enabled.prop('aria-label')).to.equal('Select this May 2015');
+      expect(disabled.prop('aria-label')).to.equal(`Can't select this January 2015`);
+    });
   });
 });

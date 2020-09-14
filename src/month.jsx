@@ -34,6 +34,7 @@ export default class Month extends React.Component {
     onWeekSelect: PropTypes.func,
     peekNextMonth: PropTypes.bool,
     preSelection: PropTypes.instanceOf(Date),
+    setPreSelection: PropTypes.func,
     selected: PropTypes.instanceOf(Date),
     selectingDate: PropTypes.instanceOf(Date),
     selectsEnd: PropTypes.bool,
@@ -56,6 +57,12 @@ export default class Month extends React.Component {
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     ])
   };
+
+  MONTH_REFS = Array(12).fill().map(() => React.createRef());
+
+  isDisabled = date => utils.isDayDisabled(date, this.props);
+
+  isExcluded = date => utils.isDayExcluded(date, this.props);
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
@@ -196,6 +203,30 @@ export default class Month extends React.Component {
     );
   };
 
+  handleMonthNavigation = (newMonth, newDate) => {
+    if(this.isDisabled(newDate) || this.isExcluded(newDate)) return;
+    this.props.setPreSelection(newDate);
+    this.MONTH_REFS[newMonth].current && this.MONTH_REFS[newMonth].current.focus();
+  }
+
+  onMonthKeyDown = (event, month) => {
+    const eventKey = event.key;
+    if (!this.props.disabledKeyboardNavigation) {
+      switch (eventKey) {
+        case "Enter":
+          this.onMonthClick(event, month);
+          this.props.setPreSelection(this.props.selected);
+          break;
+        case "ArrowRight":
+          this.handleMonthNavigation(month === 11 ? 0 : month+1, utils.addMonths(this.props.preSelection, 1));
+          break;
+        case "ArrowLeft":
+          this.handleMonthNavigation(month === 0 ? 11 : month-1, utils.subMonths(this.props.preSelection, 1));
+          break;
+      }
+    }
+  };
+
   onQuarterClick = (e, q) => {
     this.handleDayClick(
       utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
@@ -204,7 +235,7 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = m => {
-    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
+    const { day, startDate, endDate, selected, minDate, maxDate, preSelection } = this.props;
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
@@ -215,6 +246,7 @@ export default class Month extends React.Component {
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__month-text--keyboard-selected": utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,
@@ -225,6 +257,32 @@ export default class Month extends React.Component {
         "react-datepicker__month--range-end": this.isRangeEndMonth(m)
       }
     );
+  };
+
+  getTabIndex = (m) => {
+    const preSelectedMonth = utils.getMonth(this.props.preSelection);
+    const tabIndex = 
+      !this.props.disabledKeyboardNavigation && m === preSelectedMonth
+        ? "0"
+        : "-1";
+
+    return tabIndex;
+  };
+
+  getAriaLabel = month => {
+    const {
+      ariaLabelPrefix = "Choose",
+      disabledDayAriaLabelPrefix = "Not available",
+      day
+    } = this.props;
+
+    const labelDate = utils.setMonth(day, month)
+    const prefix =
+      this.isDisabled(labelDate) || this.isExcluded(labelDate)
+        ? disabledDayAriaLabelPrefix
+        : ariaLabelPrefix;
+
+    return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
   };
 
   getQuarterClassNames = q => {
@@ -278,11 +336,18 @@ export default class Month extends React.Component {
       <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (
           <div
+            ref={this.MONTH_REFS[m]}
             key={j}
             onClick={ev => {
               this.onMonthClick(ev, m);
             }}
+            onKeyDown={ev => {
+              this.onMonthKeyDown(ev, m);
+            }}
+            tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
+            role="button"
+            aria-label={this.getAriaLabel(m)}
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
