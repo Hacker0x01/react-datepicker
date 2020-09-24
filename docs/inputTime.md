@@ -8,3 +8,4 @@
 |`onChange`|`func`|||
 |`timeInputLabel`|`string`|||
 |`timeString`|`string`|||
+|`date`|`instanceOfDate`|||
