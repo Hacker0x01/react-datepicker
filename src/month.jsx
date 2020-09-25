@@ -14,6 +14,7 @@ export default class Month extends React.Component {
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
+    monthClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     orderInDisplay: PropTypes.number,
     excludeDates: PropTypes.array,
@@ -235,8 +236,10 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = m => {
-    const { day, startDate, endDate, selected, minDate, maxDate, preSelection } = this.props;
+    const { day, startDate, endDate, selected, minDate, maxDate, preSelection, monthClassName } = this.props;
+    const _monthClassName = monthClassName ? monthClassName(date) : undefined;
     return classnames(
+      _monthClassName,
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       {
