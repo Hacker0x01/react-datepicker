@@ -236,10 +236,8 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = m => {
-    const { day, startDate, endDate, selected, minDate, maxDate, preSelection, monthClassName } = this.props;
-    const _monthClassName = monthClassName ? monthClassName(date) : undefined;
+    const { day, startDate, endDate, selected, minDate, maxDate, preSelection } = this.props;
     return classnames(
-      _monthClassName,
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       {
@@ -382,14 +380,19 @@ export default class Month extends React.Component {
 
   getClassNames = () => {
     const {
+      day,
       selectingDate,
       selectsStart,
       selectsEnd,
       showMonthYearPicker,
-      showQuarterYearPicker
+      showQuarterYearPicker,
+      monthClassName
     } = this.props;
+    const _monthClassName = monthClassName ? monthClassName(day) : undefined;
+
     return classnames(
       "react-datepicker__month",
+      _monthClassName,
       {
         "react-datepicker__month--selecting-range":
           selectingDate && (selectsStart || selectsEnd)

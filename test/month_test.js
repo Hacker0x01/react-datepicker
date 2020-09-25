@@ -40,6 +40,13 @@ describe("Month", () => {
     });
   }
 
+  it("should apply className returned from passed monthClassName prop function", () => {
+    const className = "customClassName";
+    const monthClassNameFunc = date => className;
+    const month = shallow(<Month day={utils.newDate()} monthClassName={monthClassNameFunc} />);
+    expect(month.hasClass(className)).to.equal(true);
+  });
+
   it("should have the month CSS class", () => {
     const month = shallow(<Month day={utils.newDate()} />);
     expect(month.hasClass("react-datepicker__month")).to.equal(true);
