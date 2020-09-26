@@ -17,6 +17,7 @@
 |`onTimeChange`||`() => {}`||
 |`openToDate`|`instanceOfDate`|||
 |`selected`|`instanceOfDate`|||
+|`showTimeSelectOnly`|`bool`|||
 |`timeCaption`|`string`|`"Time"`||
 |`timeClassName`|`func`|||
 |`todayButton`|`node`|`null`||
