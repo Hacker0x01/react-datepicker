@@ -23,7 +23,9 @@ import getMonth from "date-fns/getMonth";
 import getQuarter from "date-fns/getQuarter";
 import getYear from "date-fns/getYear";
 import getTime from "date-fns/getTime";
-import set from "date-fns/set";
+import setSeconds from "date-fns/setSeconds";
+import setMinutes from "date-fns/setMinutes";
+import setHours from "date-fns/setHours";
 import setMonth from "date-fns/setMonth";
 import setQuarter from "date-fns/setQuarter";
 import setYear from "date-fns/setYear";
@@ -171,7 +173,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
 // ** Date Setters **
 
 export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
-  return set(date, {hours: hour, minutes: minute, seconds: second});
+  return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
 export { setMinutes, setHours, setMonth, setQuarter, setYear };
@@ -492,9 +494,15 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     throw new Error("Both minTime and maxTime props required");
   }
   const base = newDate();
-  const baseTime = set(base, { hours: getHours(time), minutes: getMinutes(time) });
-  const min = set(base, { hours: getHours(minTime), minutes: getMinutes(minTime) });
-  const max = set(base, { hours: getHours(maxTime), minutes: getMinutes(maxTime) });
+  const baseTime = setHours(setMinutes(base, getMinutes(time)), getHours(time));
+  const min = setHours(
+    setMinutes(base, getMinutes(minTime)),
+    getHours(minTime)
+  );
+  const max = setHours(
+    setMinutes(base, getMinutes(maxTime)),
+    getHours(maxTime)
+  );
 
   let valid;
   try {
