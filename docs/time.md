@@ -5,6 +5,7 @@
 | name  | type  | default value  | description  |
 |---|---|---|---|
 |`excludeTimes`|`array`|||
+|`filterTime`|`func`|||
 |`format`|`string`|||
 |`includeTimes`|`array`|||
 |`injectTimes`|`array`|||

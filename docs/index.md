@@ -33,6 +33,7 @@
 |`excludeScrollbar`|`bool`|`true`||
 |`excludeTimes`|`array`|||
 |`filterDate`|`func`|||
+|`filterTime`|`func`|||
 |`fixedHeight`|`bool`|||
 |`focusSelectedMonth`|`bool`|`false`||
 |`forceShowMonthNavigation`|`bool`|||

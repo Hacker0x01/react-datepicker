@@ -482,10 +482,11 @@ export function isTimeInList(time, times) {
   ));
 }
 
-export function isTimeDisabled(time, { excludeTimes, includeTimes } = {}) {
+export function isTimeDisabled(time, { excludeTimes, includeTimes, filterTime } = {}) {
   return (
     (excludeTimes && isTimeInList(time, excludeTimes)) ||
     (includeTimes && !isTimeInList(time, includeTimes)) ||
+    (filterTime && !filterTime(time)) ||
     false
   );
 }
