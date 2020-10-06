@@ -23,6 +23,7 @@ export default class Week extends React.Component {
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    inline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -129,6 +130,7 @@ export default class Week extends React.Component {
             handleOnKeyDown={this.props.handleOnKeyDown}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.props.containerRef}
+            inline={this.props.inline}
           />
         );
       })

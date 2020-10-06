@@ -23,6 +23,7 @@ export default class Month extends React.Component {
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    inline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -151,6 +152,7 @@ export default class Month extends React.Component {
           maxDate={this.props.maxDate}
           excludeDates={this.props.excludeDates}
           includeDates={this.props.includeDates}
+          inline={this.props.inline}
           highlightDates={this.props.highlightDates}
           selectingDate={this.props.selectingDate}
           filterDate={this.props.filterDate}
@@ -262,7 +264,7 @@ export default class Month extends React.Component {
 
   getTabIndex = (m) => {
     const preSelectedMonth = utils.getMonth(this.props.preSelection);
-    const tabIndex = 
+    const tabIndex =
       !this.props.disabledKeyboardNavigation && m === preSelectedMonth
         ? "0"
         : "-1";
