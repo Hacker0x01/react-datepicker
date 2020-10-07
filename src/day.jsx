@@ -26,6 +26,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -277,8 +278,8 @@ export default class Day extends React.Component {
       !prevProps.isInputFocused &&
       this.isSameDay(this.props.preSelection)
     ) {
-      // there is currently no activeElement
-      if (!document.activeElement || document.activeElement === document.body) {
+      // there is currently no activeElement and not inline
+      if ((!document.activeElement || document.activeElement === document.body) && !this.props.inline) {
         shouldFocusDay = true;
       }
       // the activeElement is in the container, and it is another instance of Day
@@ -294,6 +295,7 @@ export default class Day extends React.Component {
 
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
+
   render = () => (
     <div
       ref={this.dayEl}
