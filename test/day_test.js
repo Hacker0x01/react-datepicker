@@ -481,6 +481,36 @@ describe("Day", () => {
       const shallowDay = renderDay(day, { month: getMonth(day) + 1 });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
+
+    it("should hide days outside month at end when duplicates", () => {
+      const day = newDate("2020-12-02");
+      const wrapper = mount(<Day day={day} month={getMonth(day)-1} monthShowsDuplicateDaysEnd />);
+      expect(wrapper.text()).to.be.empty;
+    });
+
+    it("should show days outside month at end when not duplicates", () => {
+      const day = newDate("2020-12-02");
+      const wrapper = mount(<Day day={day} month={getMonth(day)-1} />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
+
+    it("should hide days outside month at start when duplicates", () => {
+      const day = newDate("2020-10-30");
+      const wrapper = mount(<Day day={day} month={getMonth(day)+1} monthShowsDuplicateDaysStart />);
+      expect(wrapper.text()).to.be.empty;
+    });
+
+    it("should show days outside month at start when not duplicates", () => {
+      const day = newDate("2020-10-30");
+      const wrapper = mount(<Day day={day} month={getMonth(day)+1} />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
+
+    it("should show days in month when duplicates at start/end", () => {
+      const day = newDate("2020-11-15");
+      const wrapper = mount(<Day day={day} month={getMonth(day)} monthShowsDuplicateDaysStart monthShowsDuplicateDaysEnd />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
   });
 
   describe("disabled", () => {

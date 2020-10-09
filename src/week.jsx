@@ -50,7 +50,9 @@ export default class Week extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    monthShowsDuplicateDaysEnd: PropTypes.bool,
+    monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
   handleDayClick = (day, event) => {
@@ -131,6 +133,8 @@ export default class Week extends React.Component {
             isInputFocused={this.props.isInputFocused}
             containerRef={this.props.containerRef}
             inline={this.props.inline}
+            monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
+            monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
           />
         );
       })

@@ -761,6 +761,8 @@ export default class Calendar extends React.Component {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
+      var monthShowsDuplicateDaysEnd = i < (this.props.monthsShown - 1);
+      var monthShowsDuplicateDaysStart = i > 0;
       monthList.push(
         <div
           key={monthKey}
@@ -818,6 +820,8 @@ export default class Calendar extends React.Component {
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
+            monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
+            monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
           />
         </div>
       );
