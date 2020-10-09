@@ -251,7 +251,7 @@ export { addMinutes, addDays, addWeeks, addMonths, addYears };
 
 // *** Subtraction ***
 
-export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
+export { addHours, subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
@@ -475,18 +475,20 @@ export function isOutOfBounds(day, { minDate, maxDate } = {}) {
   );
 }
 
-export function isTimeDisabled(time, disabledTimes) {
-  const l = disabledTimes.length;
-  for (let i = 0; i < l; i++) {
-    if (
-      getHours(disabledTimes[i]) === getHours(time) &&
-      getMinutes(disabledTimes[i]) === getMinutes(time)
-    ) {
-      return true;
-    }
-  }
+export function isTimeInList(time, times) {
+  return times.some(listTime => (
+    getHours(listTime) === getHours(time) &&
+    getMinutes(listTime) === getMinutes(time)
+  ));
+}
 
-  return false;
+export function isTimeDisabled(time, { excludeTimes, includeTimes, filterTime } = {}) {
+  return (
+    (excludeTimes && isTimeInList(time, excludeTimes)) ||
+    (includeTimes && !isTimeInList(time, includeTimes)) ||
+    (filterTime && !filterTime(time)) ||
+    false
+  );
 }
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {

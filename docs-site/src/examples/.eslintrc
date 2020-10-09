@@ -13,6 +13,7 @@
         "useState": false,
         "render": false,
         "DatePicker": false,
+        "getHours": false,
         "setHours": false,
         "setMinutes": false,
         "getDate": false,

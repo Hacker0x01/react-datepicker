@@ -131,6 +131,7 @@ export default class Calendar extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     timeCaption: PropTypes.string,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
@@ -866,6 +867,7 @@ export default class Calendar extends React.Component {
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
+          filterTime={this.props.filterTime}
           timeCaption={this.props.timeCaption}
           todayButton={this.props.todayButton}
           showMonthDropdown={this.props.showMonthDropdown}

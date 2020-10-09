@@ -229,6 +229,7 @@ export default class DatePicker extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
     previousMonthButtonLabel: PropTypes.oneOfType([
@@ -847,6 +848,7 @@ export default class DatePicker extends React.Component {
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}
+        filterTime={this.props.filterTime}
         timeCaption={this.props.timeCaption}
         className={this.props.calendarClassName}
         container={this.props.calendarContainer}

@@ -44,6 +44,7 @@ export default class Time extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array,
@@ -77,10 +78,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       return;
     }
@@ -105,10 +104,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
     }

@@ -1,5 +1,6 @@
 import {
   newDate,
+  addHours,
   addDays,
   subDays,
   isEqual,
@@ -18,6 +19,7 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   addZero,
+  isTimeDisabled,
   isTimeInDisabledRange,
   isDayInRange,
   parseDate,
@@ -547,6 +549,59 @@ describe("date_utils", function() {
       const expected = "01";
       const result = addZero(input);
       assert(result === expected);
+    });
+  });
+
+  describe("isTimeDisabled", function() {
+    it("should be enabled by default", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time)).to.be.false;
+    });
+
+    it("should be disabled if in excluded times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time, { excludeTimes: [time] })).to.be.true;
+    });
+
+    it("should be enabled if in included times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time, { includeTimes: [time] })).to.be.false;
+    });
+
+    it("should be disabled if not in included times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const includeTimes = [addHours(time, 1)];
+      expect(isTimeDisabled(time, { includeTimes })).to.be.true;
+    });
+
+    it("should be enabled if time filter returns true", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const filterTime = t => isEqual(t, time);
+      expect(isTimeDisabled(time, { filterTime })).to.be.false;
+    });
+
+    it("should be disabled if time filter returns false", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const filterTime = t => !isEqual(t, time);
+      expect(isTimeDisabled(time, { filterTime })).to.be.true;
+    });
+
+    it("should not allow time filter to modify input time", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const timeClone = newDate(time);
+      const filterTime = t => {
+        addHours(t, 1);
+        return true;
+      };
+      isTimeDisabled(time, { filterTime });
+      expect(isEqual(time, timeClone)).to.be.true;
     });
   });
 

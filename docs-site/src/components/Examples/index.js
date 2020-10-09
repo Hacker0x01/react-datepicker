@@ -11,6 +11,7 @@ import ShowTimeOnly from "../../examples/showTimeOnly";
 import ExcludeTimes from "../../examples/excludeTimes";
 import IncludeTimes from "../../examples/includeTimes";
 import InjectTimes from "../../examples/injectTimes";
+import FilterTimes from "../../examples/filterTimes";
 import ExcludeTimePeriod from "../../examples/excludeTimePeriod";
 import CustomDateFormat from "../../examples/customDateFormat";
 import CustomClassName from "../../examples/customClassName";
@@ -194,6 +195,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Filter dates",
       component: FilterDates
+    },
+    {
+      title: "Filter times",
+      component: FilterTimes
     },
     {
       title: "Fixed height of Calendar",
