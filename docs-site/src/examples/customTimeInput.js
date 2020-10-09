@@ -1,6 +1,6 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomTimeInput = ({ value, onChange }) => (
+  const ExampleCustomTimeInput = ({ date, value, onChange }) => (
     <input
       value={value}
       onChange={e => onChange(e.target.value)}

@@ -890,6 +890,7 @@ export default class Calendar extends React.Component {
     if (this.props.showTimeInput) {
       return (
         <InputTime
+          date={time}
           timeString={timeString}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
