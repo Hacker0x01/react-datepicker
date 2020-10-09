@@ -57,7 +57,9 @@ export default class Month extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    monthShowsDuplicateDaysEnd: PropTypes.bool,
+    monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
   MONTH_REFS = Array(12).fill().map(() => React.createRef());
@@ -172,6 +174,8 @@ export default class Month extends React.Component {
           handleOnKeyDown={this.props.handleOnKeyDown}
           isInputFocused={this.props.isInputFocused}
           containerRef={this.props.containerRef}
+          monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
+          monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
         />
       );
 

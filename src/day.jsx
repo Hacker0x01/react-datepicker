@@ -42,7 +42,9 @@ export default class Day extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    monthShowsDuplicateDaysEnd: PropTypes.bool,
+    monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
   componentDidMount() {
@@ -296,6 +298,17 @@ export default class Day extends React.Component {
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
 
+  renderDayContents = () => {
+    if(this.isOutsideMonth()) {
+      if(this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10) return null;
+      if(this.props.monthShowsDuplicateDaysStart && getDate(this.props.day) > 20) return null;
+    }
+
+    return this.props.renderDayContents
+    ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+    : getDate(this.props.day);
+  }
+
   render = () => (
     <div
       ref={this.dayEl}
@@ -308,9 +321,7 @@ export default class Day extends React.Component {
       role="button"
       aria-disabled={this.isDisabled()}
     >
-      {this.props.renderDayContents
-        ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-        : getDate(this.props.day)}
+      {this.renderDayContents()}
     </div>
   );
 }
