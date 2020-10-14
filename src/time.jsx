@@ -124,7 +124,7 @@ export default class Time extends React.Component {
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
 
-    const base = getStartOfDay(newDate());
+    const base = getStartOfDay(newDate(this.props.selected));
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
