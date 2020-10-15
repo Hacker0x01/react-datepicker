@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "highlight.js": "^10.2.1",
-    "react": "^16.13.1",
+    "react": "^16.14.0",
     "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-live": "^2.2.2",
