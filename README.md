@@ -29,7 +29,7 @@ yarn add react-datepicker
 You’ll need to install React and PropTypes separately since those dependencies aren’t included in the package. If you need to use a locale other than the default en-US, you'll also need to import that into your project from date-fns (see Localization section below). Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
 
 ```js
-import React from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -37,26 +37,12 @@ import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-class Example extends React.Component {
-  state = {
-    startDate: new Date()
-  };
-
-  handleChange = date => {
-    this.setState({
-      startDate: date
-    });
-  };
-
-  render() {
-    return (
-      <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange}
-      />
-    );
-  }
-}
+const Example = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  return (
+    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+  );
+};
 ```
 
 ## Configuration
@@ -64,16 +50,16 @@ class Example extends React.Component {
 The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker selected={this.state.date} onChange={this.handleChange} />
+<DatePicker selected={startdate} onChange={date => setStartDate(date)} />
 ```
 
 You can use `onSelect` event handler which fires each time some calendar date has been selected
 
 ```js
 <DatePicker
-  selected={this.state.date}
-  onSelect={this.handleSelect} //when day is clicked
-  onChange={this.handleChange} //only when value has changed
+  selected={date}
+  onSelect={handleDateSelect} //when day is clicked
+  onChange={handleDateChange} //only when value has changed
 />
 ```
 
@@ -87,8 +73,8 @@ You can also include a time picker by adding the showTimeSelect prop
 
 ```js
 <DatePicker
-  selected={this.state.date}
-  onChange={this.handleChange}
+  selected={date}
+  onChange={handleDateChange}
   showTimeSelect
   dateFormat="Pp"
 />
@@ -176,6 +162,12 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 - _Home_: Move to the previous year.
 - _End_: Move to the next year.
 - _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
+
+#### For month picker
+
+- _Left_: Move to the previous month.
+- _Right_: Move to the next month.
+- _Enter_: Select date and close the calendar
 
 ## License
 

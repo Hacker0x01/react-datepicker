@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.13.1",
+    "highlight.js": "^10.2.1",
+    "react": "^16.14.0",
     "react-app-rewired": "^2.1.6",
-    "react-datepicker": "file:..",
     "react-dom": "^16.13.1",
     "react-live": "^2.2.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.3"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "node-sass": "^4.14.1",
-    "raw-loader": "^4.0.1"
+    "raw-loader": "^4.0.2"
   }
 }

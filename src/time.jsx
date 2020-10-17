@@ -3,10 +3,14 @@ import PropTypes from "prop-types";
 import {
   getHours,
   getMinutes,
+  setHours,
+  setMinutes,
   newDate,
   getStartOfDay,
   addMinutes,
   formatDate,
+  isBefore,
+  isEqual,
   isTimeInDisabledRange,
   isTimeDisabled,
   timesToInjectAfter
@@ -40,13 +44,15 @@ export default class Time extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
-    ])
+    ]),
+    showTimeSelectOnly: PropTypes.bool
   };
 
   state = {
@@ -72,10 +78,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       return;
     }
@@ -100,10 +104,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
@@ -121,19 +123,21 @@ export default class Time extends React.Component {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
-    const activeTime =
-      this.props.selected || this.props.openToDate || newDate();
 
-    const currH = getHours(activeTime);
-    const currM = getMinutes(activeTime);
-    let base = getStartOfDay(newDate());
+    const base = getStartOfDay(newDate(this.props.selected));
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
       this.props.injectTimes.sort(function(a, b) {
         return a - b;
       });
-    const centerLiTargetList = [];
+
+    const activeDate =
+      this.props.selected || this.props.openToDate || newDate();
+    const currH = getHours(activeDate);
+    const currM = getMinutes(activeDate);
+    const activeTime = setHours(setMinutes(base, currM), currH);
+
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(base, i * intervals);
       times.push(currentTime);
@@ -148,10 +152,6 @@ export default class Time extends React.Component {
         );
         times = times.concat(timesToInject);
       }
-
-      if (currH === getHours(currentTime)) {
-        centerLiTargetList.push(currentTime);
-      }
     }
 
     return times.map((time, i) => (
@@ -160,15 +160,8 @@ export default class Time extends React.Component {
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
         ref={li => {
-          if (currH === getHours(time)) {
-            if (currM >= getMinutes(time)) {
-              this.centerLi = li;
-            } else if (
-              !this.centerLi &&
-              centerLiTargetList.indexOf(time) === centerLiTargetList.length - 1
-            ) {
-              this.centerLi = li;
-            }
+          if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
+            this.centerLi = li;
           }
         }}
       >
@@ -189,7 +182,7 @@ export default class Time extends React.Component {
         }`}
       >
         <div
-          className="react-datepicker__header react-datepicker__header--time"
+          className={`react-datepicker__header react-datepicker__header--time ${this.props.showTimeSelectOnly ? 'react-datepicker__header--time--only' : ''}`}
           ref={header => {
             this.header = header;
           }}

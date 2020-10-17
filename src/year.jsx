@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { getYear } from "./date_utils";
+import { getYear, newDate } from "./date_utils";
 import * as utils from "./date_utils";
 import classnames from "classnames";
 
@@ -13,7 +13,8 @@ export default class Year extends React.Component {
     selected: PropTypes.object,
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
-    minDate: PropTypes.instanceOf(Date)
+    minDate: PropTypes.instanceOf(Date),
+    yearItemNumber: PropTypes.number
   };
 
   constructor(props) {
@@ -51,14 +52,15 @@ export default class Year extends React.Component {
         (minDate || maxDate) && utils.isYearDisabled(y, this.props),
       "react-datepicker__year-text--keyboard-selected": this.isKeyboardSelected(
         y
-      )
+      ),
+      "react-datepicker__year-text--today": y === getYear(newDate()),
     });
   };
 
   render() {
     const yearsList = [];
-    const { date } = this.props;
-    const { startPeriod, endPeriod } = utils.getYearsPeriod(date);
+    const { date, yearItemNumber } = this.props;
+    const { startPeriod, endPeriod } = utils.getYearsPeriod(date, yearItemNumber);
 
     for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(

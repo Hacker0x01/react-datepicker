@@ -24,6 +24,21 @@ describe("YearPicker", () => {
     expect(component).to.exist;
   });
 
+  it("should show year picker component with default year item number", () => {
+    const yearComponent = mount(<Year date={new Date()} />);
+    const yearItems = yearComponent
+      .find(".react-datepicker__year-text");
+    expect(yearItems.length).to.be.eq(utils.DEFAULT_YEAR_ITEM_NUMBER);
+  });
+
+  it("should show year picker component with specific year item number", () => {
+    const yearItemNumber = 9;
+    const yearComponent = mount(<Year date={new Date()} yearItemNumber={yearItemNumber} />);
+    const yearItems = yearComponent
+      .find(".react-datepicker__year-text");
+    expect(yearItems.length).to.be.eq(yearItemNumber);
+  });
+
   it("should change the year when clicked on any option in the picker", () => {
     const onYearChangeSpy = sinon.spy();
     const yearComponent = mount(
@@ -41,6 +56,16 @@ describe("YearPicker", () => {
     const yearComponent = mount(<Year selected={date} date={date} />);
     const year = yearComponent
       .find(".react-datepicker__year-text--selected")
+      .at(0)
+      .text();
+    expect(year).to.equal(utils.getYear(date).toString());
+  });
+
+  it("should has current year class when element of array equal of current year", () => {
+    const date = new Date();
+    const yearComponent = mount(<Year date={date} />);
+    const year = yearComponent
+      .find(".react-datepicker__year-text--today")
       .at(0)
       .text();
     expect(year).to.equal(utils.getYear(date).toString());

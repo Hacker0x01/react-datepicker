@@ -56,6 +56,8 @@ import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
 import longFormatters from "date-fns/esm/_lib/format/longFormatters";
 
+export const DEFAULT_YEAR_ITEM_NUMBER = 12;
+
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
 var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
@@ -174,7 +176,7 @@ export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
   return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
-export { setMonth, setYear, setQuarter };
+export { setMinutes, setHours, setMonth, setQuarter, setYear };
 
 // ** Date Getters **
 
@@ -249,7 +251,7 @@ export { addMinutes, addDays, addWeeks, addMonths, addYears };
 
 // *** Subtraction ***
 
-export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
+export { addHours, subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
@@ -473,18 +475,20 @@ export function isOutOfBounds(day, { minDate, maxDate } = {}) {
   );
 }
 
-export function isTimeDisabled(time, disabledTimes) {
-  const l = disabledTimes.length;
-  for (let i = 0; i < l; i++) {
-    if (
-      getHours(disabledTimes[i]) === getHours(time) &&
-      getMinutes(disabledTimes[i]) === getMinutes(time)
-    ) {
-      return true;
-    }
-  }
+export function isTimeInList(time, times) {
+  return times.some(listTime => (
+    getHours(listTime) === getHours(time) &&
+    getMinutes(listTime) === getMinutes(time)
+  ));
+}
 
-  return false;
+export function isTimeDisabled(time, { excludeTimes, includeTimes, filterTime } = {}) {
+  return (
+    (excludeTimes && isTimeInList(time, excludeTimes)) ||
+    (includeTimes && !isTimeInList(time, includeTimes)) ||
+    (filterTime && !filterTime(time)) ||
+    false
+  );
 }
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {
@@ -548,14 +552,11 @@ export function yearDisabledBefore(day, { minDate, includeDates } = {}) {
   );
 }
 
-export function yearsDisabledBefore(day, { minDate } = {}) {
-  const previousYear = getStartOfYear(subYears(day, 12));
-  const { startPeriod, endPeriod } = getYearsPeriod(previousYear);
+export function yearsDisabledBefore(day, { minDate, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER } = {}) {
+  const previousYear = getStartOfYear(subYears(day, yearItemNumber));
+  const { endPeriod } = getYearsPeriod(previousYear, yearItemNumber);
   const minDateYear = minDate && getYear(minDate);
-  return (
-    (minDateYear && (minDateYear < startPeriod || minDateYear > endPeriod)) ||
-    false
-  );
+  return (minDateYear && minDateYear > endPeriod) || false;
 }
 
 export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
@@ -570,14 +571,11 @@ export function yearDisabledAfter(day, { maxDate, includeDates } = {}) {
   );
 }
 
-export function yearsDisabledAfter(day, { maxDate } = {}) {
-  const nextYear = addYears(day, 12);
-  const { startPeriod, endPeriod } = getYearsPeriod(nextYear);
+export function yearsDisabledAfter(day, { maxDate, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER } = {}) {
+  const nextYear = addYears(day, yearItemNumber);
+  const { startPeriod } = getYearsPeriod(nextYear, yearItemNumber);
   const maxDateYear = maxDate && getYear(maxDate);
-  return (
-    (maxDateYear && (maxDateYear < startPeriod || maxDateYear > endPeriod)) ||
-    false
-  );
+  return (maxDateYear && maxDateYear < startPeriod) || false;
 }
 
 export function getEffectiveMinDate({ minDate, includeDates }) {
@@ -674,8 +672,8 @@ export function addZero(i) {
   return i < 10 ? `0${i}` : `${i}`;
 }
 
-export function getYearsPeriod(date) {
-  const endPeriod = Math.ceil(getYear(date) / 12) * 12;
-  const startPeriod = endPeriod - 11;
+export function getYearsPeriod(date, yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER) {
+  const endPeriod = Math.ceil(getYear(date) / yearItemNumber) * yearItemNumber;
+  const startPeriod = endPeriod - (yearItemNumber - 1);
   return { startPeriod, endPeriod };
 }

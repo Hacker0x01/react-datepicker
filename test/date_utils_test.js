@@ -1,5 +1,6 @@
 import {
   newDate,
+  addHours,
   addDays,
   subDays,
   isEqual,
@@ -18,6 +19,7 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   addZero,
+  isTimeDisabled,
   isTimeInDisabledRange,
   isDayInRange,
   parseDate,
@@ -550,6 +552,59 @@ describe("date_utils", function() {
     });
   });
 
+  describe("isTimeDisabled", function() {
+    it("should be enabled by default", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time)).to.be.false;
+    });
+
+    it("should be disabled if in excluded times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time, { excludeTimes: [time] })).to.be.true;
+    });
+
+    it("should be enabled if in included times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      expect(isTimeDisabled(time, { includeTimes: [time] })).to.be.false;
+    });
+
+    it("should be disabled if not in included times", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const includeTimes = [addHours(time, 1)];
+      expect(isTimeDisabled(time, { includeTimes })).to.be.true;
+    });
+
+    it("should be enabled if time filter returns true", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const filterTime = t => isEqual(t, time);
+      expect(isTimeDisabled(time, { filterTime })).to.be.false;
+    });
+
+    it("should be disabled if time filter returns false", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const filterTime = t => !isEqual(t, time);
+      expect(isTimeDisabled(time, { filterTime })).to.be.true;
+    });
+
+    it("should not allow time filter to modify input time", () => {
+      const date = newDate();
+      const time = setHours(setMinutes(date, 30), 1);
+      const timeClone = newDate(time);
+      const filterTime = t => {
+        addHours(t, 1);
+        return true;
+      };
+      isTimeDisabled(time, { filterTime });
+      expect(isEqual(time, timeClone)).to.be.true;
+    });
+  });
+
   describe("isTimeInDisabledRange", () => {
     it("should tell if time is in disabled range", () => {
       const date = newDate("2016-03-15");
@@ -730,11 +785,18 @@ describe("date_utils", function() {
   });
 
   describe("getYearsPeriod", () => {
-    it("should get start and end of 11 years period", () => {
+    it("should get start and end of default 11 years period", () => {
       const date = newDate("2000-01-01");
       const { startPeriod, endPeriod } = getYearsPeriod(date);
       expect(startPeriod).to.be.eq(1993);
       expect(endPeriod).to.be.eq(2004);
+    });
+
+    it("should get start and end of custom 8 years period", () => {
+      const date = newDate("2000-01-01");
+      const { startPeriod, endPeriod } = getYearsPeriod(date, 9);
+      expect(startPeriod).to.be.eq(1999);
+      expect(endPeriod).to.be.eq(2007);
     });
   });
 
@@ -754,6 +816,12 @@ describe("date_utils", function() {
       const maxDate = newDate("2018-04-01");
       expect(yearsDisabledAfter(day, { maxDate })).to.be.false;
     });
+
+    it("should return false if max date is in a next period year", () => {
+      const day = newDate("1996-08-08 00:00:00");
+      const maxDate = newDate("2020-08-08 00:00:00");
+      expect(yearsDisabledAfter(day, { maxDate })).to.be.false;
+    });
   });
 
   describe("yearsDisabledBefore", () => {
@@ -770,6 +838,12 @@ describe("date_utils", function() {
     it("should return false if min date is in the previous period year", () => {
       const day = newDate("2016-03-19");
       const minDate = newDate("2004-03-29");
+      expect(yearsDisabledBefore(day, { minDate })).to.be.false;
+    });
+
+    it("should return false if min date is in a previous period year", () => {
+      const day = newDate("2044-08-08 00:00:00");
+      const minDate = newDate("2020-08-08 00:00:00");
       expect(yearsDisabledBefore(day, { minDate })).to.be.false;
     });
   });
