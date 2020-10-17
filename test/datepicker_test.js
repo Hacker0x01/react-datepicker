@@ -11,6 +11,7 @@ import PopperComponent from "../src/popper_component.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils";
 import { util } from "chai";
+import Month from "../src/month.jsx";
 
 function getKey(key) {
   switch (key) {
@@ -1134,26 +1135,6 @@ describe("DatePicker", () => {
       utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd")
     ).to.equal(utils.formatDate(future, "yyyy-MM-dd"));
   });
-
-  it("should not switch months in inline mode when a day is clicked", () => {
-    const selected = utils.newDate();
-    const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker inline selected={selected} monthsShown={2} />
-    );
-    expect(
-      utils.formatDate(datePicker.state.preSelection, "yyyy-MM-dd")
-    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
-
-    let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
-    let nextMonthDay = days.find(
-      d => d.props.month !== utils.getMonth(selected)
-    );
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(nextMonthDay));
-    expect(
-      utils.formatDate(datePicker.state.preSelection, "yyyy-MM-dd")
-    ).to.equal(utils.formatDate(selected, "yyyy-MM-dd"));
-  });
-
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker preventOpenOnFocus />
@@ -1461,4 +1442,51 @@ describe("DatePicker", () => {
       expect(endDate).to.equal(null);
     });
   });
+
+  describe("duplicate dates when multiple months", () => {
+    it('should find duplicates at end on all months except last month', () => {
+      const twoMonths = mount(<DatePicker monthsShown={2}/>);
+      twoMonths.find("input").simulate("click");
+      const months = twoMonths.find(Month);
+      expect(months).to.have.lengthOf(2);
+      expect(months.first().props().monthShowsDuplicateDaysEnd).to.be.true;
+      expect(months.last().props().monthShowsDuplicateDaysEnd).to.be.false;
+
+      const moreThanTwoMonths = mount(<DatePicker monthsShown={4}/>);
+      moreThanTwoMonths.find("input").simulate("click");
+      const monthsMore = moreThanTwoMonths.find(Month);
+      expect(monthsMore).to.have.lengthOf(4);
+      expect(monthsMore.first().props().monthShowsDuplicateDaysEnd).to.be.true;
+      expect(monthsMore.get(1).props.monthShowsDuplicateDaysEnd).to.be.true;
+      expect(monthsMore.get(2).props.monthShowsDuplicateDaysEnd).to.be.true;
+      expect(monthsMore.last().props().monthShowsDuplicateDaysEnd).to.be.false;
+    })
+
+    it('should find duplicates at start on all months except first month', () => {
+      const twoMonths = mount(<DatePicker monthsShown={2}/>);
+      twoMonths.find("input").simulate("click");
+      const months = twoMonths.find(Month);
+      expect(months).to.have.lengthOf(2);
+      expect(months.first().props().monthShowsDuplicateDaysStart).to.be.false;
+      expect(months.last().props().monthShowsDuplicateDaysStart).to.be.true;
+
+      const moreThanTwoMonths = mount(<DatePicker monthsShown={4}/>);
+      moreThanTwoMonths.find("input").simulate("click");
+      const monthsMore = moreThanTwoMonths.find(Month);
+      expect(monthsMore).to.have.lengthOf(4);
+      expect(monthsMore.first().props().monthShowsDuplicateDaysStart).to.be.false;
+      expect(monthsMore.get(1).props.monthShowsDuplicateDaysStart).to.be.true;
+      expect(monthsMore.get(2).props.monthShowsDuplicateDaysStart).to.be.true;
+      expect(monthsMore.last().props().monthShowsDuplicateDaysStart).to.be.true;
+    })
+
+    it('should not find duplicates when single month displayed', () => {
+      const datepicker = mount(<DatePicker />);
+      datepicker.find("input").simulate("click");
+      const months = datepicker.find(Month);
+      expect(months).to.have.lengthOf(1);
+      expect(months.first().props().monthShowsDuplicateDaysStart).to.be.false;
+      expect(months.first().props().monthShowsDuplicateDaysEnd).to.be.false;
+    })
+  })
 });

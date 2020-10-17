@@ -39,7 +39,8 @@ import {
   getEffectiveMaxDate,
   addZero,
   isValid,
-  getYearsPeriod
+  getYearsPeriod,
+  DEFAULT_YEAR_ITEM_NUMBER
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -67,7 +68,8 @@ export default class Calendar extends React.Component {
       nextYearButtonLabel: "Next Year",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month",
-      customTimeInput: null
+      customTimeInput: null,
+      yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER
     };
   }
 
@@ -96,6 +98,7 @@ export default class Calendar extends React.Component {
     includeDates: PropTypes.array,
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
+    inline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -128,6 +131,7 @@ export default class Calendar extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     timeCaption: PropTypes.string,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
@@ -151,6 +155,7 @@ export default class Calendar extends React.Component {
     formatWeekDay: PropTypes.func,
     withPortal: PropTypes.bool,
     weekLabel: PropTypes.string,
+    yearItemNumber: PropTypes.number,
     yearDropdownItemNumber: PropTypes.number,
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
@@ -270,8 +275,10 @@ export default class Calendar extends React.Component {
     );
   };
 
-  handleDayClick = (day, event, monthSelectedIn) =>
+  handleDayClick = (day, event, monthSelectedIn) => {
     this.props.onSelect(day, event, monthSelectedIn);
+    this.props.setPreSelection && this.props.setPreSelection(day);
+  }   
 
   handleDayMouseEnter = day => {
     this.setState({ selectingDate: day });
@@ -393,7 +400,7 @@ export default class Calendar extends React.Component {
   decreaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: subYears(date, this.props.showYearPicker ? 12 : 1)
+        date: subYears(date, this.props.showYearPicker ? this.props.yearItemNumber : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -473,7 +480,7 @@ export default class Calendar extends React.Component {
   increaseYear = () => {
     this.setState(
       ({ date }) => ({
-        date: addYears(date, this.props.showYearPicker ? 12 : 1)
+        date: addYears(date, this.props.showYearPicker ? this.props.yearItemNumber : 1)
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -644,7 +651,7 @@ export default class Calendar extends React.Component {
   };
 
   renderDefaultHeader = ({ monthDate, i }) => (
-    <div className="react-datepicker__header">
+    <div className={`react-datepicker__header ${this.props.showTimeSelect ? 'react-datepicker__header--has-time-select' : ''}`}>
       {this.renderCurrentMonth(monthDate)}
       <div
         className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
@@ -721,8 +728,8 @@ export default class Calendar extends React.Component {
 
   renderYearHeader = () => {
     const { date } = this.state;
-    const { showYearPicker } = this.props;
-    const { startPeriod, endPeriod } = getYearsPeriod(date);
+    const { showYearPicker, yearItemNumber } = this.props;
+    const { startPeriod, endPeriod } = getYearsPeriod(date, yearItemNumber);
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
         {showYearPicker ? `${startPeriod} - ${endPeriod}` : getYear(date)}
@@ -757,6 +764,8 @@ export default class Calendar extends React.Component {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
+      var monthShowsDuplicateDaysEnd = i < (this.props.monthsShown - 1);
+      var monthShowsDuplicateDaysStart = i > 0;
       monthList.push(
         <div
           key={monthKey}
@@ -788,9 +797,11 @@ export default class Calendar extends React.Component {
             highlightDates={this.props.highlightDates}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
+            inline={this.props.inline}
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
+            setPreSelection={this.props.setPreSelection}
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
@@ -812,6 +823,8 @@ export default class Calendar extends React.Component {
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
+            monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
+            monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
           />
         </div>
       );
@@ -854,6 +867,7 @@ export default class Calendar extends React.Component {
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
+          filterTime={this.props.filterTime}
           timeCaption={this.props.timeCaption}
           todayButton={this.props.todayButton}
           showMonthDropdown={this.props.showMonthDropdown}
@@ -863,6 +877,7 @@ export default class Calendar extends React.Component {
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
           locale={this.props.locale}
+          showTimeSelectOnly={this.props.showTimeSelectOnly}
         />
       );
     }
@@ -877,6 +892,7 @@ export default class Calendar extends React.Component {
     if (this.props.showTimeInput) {
       return (
         <InputTime
+          date={time}
           timeString={timeString}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}

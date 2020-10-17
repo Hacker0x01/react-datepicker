@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 export default class inputTime extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
+    date: PropTypes.instanceOf(Date),
     timeString: PropTypes.string,
     timeInputLabel: PropTypes.string,
     customTimeInput: PropTypes.element
@@ -27,10 +28,11 @@ export default class inputTime extends React.Component {
 
   renderTimeInput = () => {
     const { time } = this.state;
-    const { timeString, customTimeInput } = this.props;
+    const { date, timeString, customTimeInput } = this.props;
 
     if (customTimeInput) {
       return React.cloneElement(customTimeInput, {
+        date,
         value: time,
         onChange: this.onTimeChange
       });

@@ -26,6 +26,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    inline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -41,7 +42,9 @@ export default class Day extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    monthShowsDuplicateDaysEnd: PropTypes.bool,
+    monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
   componentDidMount() {
@@ -277,8 +280,8 @@ export default class Day extends React.Component {
       !prevProps.isInputFocused &&
       this.isSameDay(this.props.preSelection)
     ) {
-      // there is currently no activeElement
-      if (!document.activeElement || document.activeElement === document.body) {
+      // there is currently no activeElement and not inline
+      if ((!document.activeElement || document.activeElement === document.body) && !this.props.inline) {
         shouldFocusDay = true;
       }
       // the activeElement is in the container, and it is another instance of Day
@@ -294,6 +297,18 @@ export default class Day extends React.Component {
 
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
+
+  renderDayContents = () => {
+    if(this.isOutsideMonth()) {
+      if(this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10) return null;
+      if(this.props.monthShowsDuplicateDaysStart && getDate(this.props.day) > 20) return null;
+    }
+
+    return this.props.renderDayContents
+    ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+    : getDate(this.props.day);
+  }
+
   render = () => (
     <div
       ref={this.dayEl}
@@ -306,9 +321,7 @@ export default class Day extends React.Component {
       role="button"
       aria-disabled={this.isDisabled()}
     >
-      {this.props.renderDayContents
-        ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-        : getDate(this.props.day)}
+      {this.renderDayContents()}
     </div>
   );
 }

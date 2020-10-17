@@ -26,6 +26,7 @@ General datepicker component.
 | `excludeTimes`               | `array`                        |                 |                                            |
 | `excludeScrollbar`           | `array`                        |                 |                                            |
 | `filterDate`                 | `func`                         |                 |                                            |
+| `filterTime`                 | `func`                         |                 |                                            |
 | `fixedHeight`                | `bool`                         |                 |                                            |
 | `forceShowMonthNavigation`   | `bool`                         |                 |                                            |
 | `formatWeekNumber`           | `func`                         |                 |                                            |
@@ -86,5 +87,7 @@ General datepicker component.
 | `value`                      | `string`                       |                 |                                            |
 | `weekLabel`                  | `string`                       |                 |                                            |
 | `withPortal`                 | `bool`                         | `false`         |                                            |
-| `wrapperClassName`           | `string`                       |                 |                                            |
+| `wrapperClassName`           | `string`                       |                 
+|                                            |
+| `yearItemNumber`             | `number`                       | `12`            |                                            |
 | `yearDropdownItemNumber`     | `number`                       |                 |                                            |

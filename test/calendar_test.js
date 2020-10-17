@@ -1184,6 +1184,32 @@ describe("Calendar", function() {
       decreaseYear();
       assert.equal(utils.getYear(calendar.state.date), 1981);
     });
+
+    it("calls increaseYear for custom year item number when next year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.increaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 2003);
+    });
+  
+    it("calls decreaseYear for custom year item number when previous year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.decreaseYear();
+      assert.equal(utils.getYear(calendar.state.date), 1983);
+    });
   });
 
   describe("when showMonthYearPicker is enabled", () => {
@@ -1444,6 +1470,20 @@ describe("Calendar", function() {
       expect(datePicker.state.preSelection.getMonth()).to.equal(
         currentMonth === 0 ? 11 : currentMonth - 1
       );
+    });
+  });
+
+  describe("showTimeSelect", () => {
+    it("should not contain the time select classname in header by default", () => {
+      const calendar = getCalendar();
+      const header = calendar.find(".react-datepicker__header--has-time-select");
+      expect(header).to.have.length(0);
+    });
+
+    it("should contain the time select classname in header if enabled", () => {
+      const calendar = getCalendar({ showTimeSelect: true });
+      const header = calendar.find(".react-datepicker__header--has-time-select");
+      expect(header).to.have.length(1);
     });
   });
 });

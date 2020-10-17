@@ -1,6 +1,8 @@
 import React from "react";
 import Day from "../src/day";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
+import defer from "lodash/defer";
+import sinon from "sinon";
 import {
   getDayOfWeekCode,
   newDate,
@@ -479,6 +481,36 @@ describe("Day", () => {
       const shallowDay = renderDay(day, { month: getMonth(day) + 1 });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
+
+    it("should hide days outside month at end when duplicates", () => {
+      const day = newDate("2020-12-02");
+      const wrapper = mount(<Day day={day} month={getMonth(day)-1} monthShowsDuplicateDaysEnd />);
+      expect(wrapper.text()).to.be.empty;
+    });
+
+    it("should show days outside month at end when not duplicates", () => {
+      const day = newDate("2020-12-02");
+      const wrapper = mount(<Day day={day} month={getMonth(day)-1} />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
+
+    it("should hide days outside month at start when duplicates", () => {
+      const day = newDate("2020-10-30");
+      const wrapper = mount(<Day day={day} month={getMonth(day)+1} monthShowsDuplicateDaysStart />);
+      expect(wrapper.text()).to.be.empty;
+    });
+
+    it("should show days outside month at start when not duplicates", () => {
+      const day = newDate("2020-10-30");
+      const wrapper = mount(<Day day={day} month={getMonth(day)+1} />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
+
+    it("should show days in month when duplicates at start/end", () => {
+      const day = newDate("2020-11-15");
+      const wrapper = mount(<Day day={day} month={getMonth(day)} monthShowsDuplicateDaysStart monthShowsDuplicateDaysEnd />);
+      expect(wrapper.text()).to.equal(day.getDate().toString());
+    });
   });
 
   describe("disabled", () => {
@@ -682,6 +714,40 @@ describe("Day", () => {
         excludeDates: [selectingDate]
       });
       expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+    });
+  });
+  
+  describe("focus", () => {
+    let sandbox;
+    beforeEach(function() {
+      sandbox = sinon.createSandbox()
+    });
+    afterEach(function() {
+      sandbox.restore();
+    });
+    
+    it("should apply focus to the preselected day", () => {
+      const day = newDate();
+      const dayInstance = mount(<Day day={day} preSelection={day} />).instance();
+      
+      sandbox.spy(dayInstance.dayEl.current, "focus");
+      dayInstance.componentDidMount();
+      defer(() => {
+        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(true);
+        done();
+      });
+    });
+  
+    it("should not apply focus to the preselected day if inline", () => {
+      const day = newDate();
+      const dayInstance = mount(<Day day={day} preSelection={day} inline />).instance();
+    
+      sandbox.spy(dayInstance.dayEl.current, "focus");
+      dayInstance.componentDidMount();
+      defer(() => {
+        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(false);
+        done();
+      });
     });
   });
 });
