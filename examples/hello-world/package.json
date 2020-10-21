@@ -6,7 +6,7 @@
     "react": "^16.14.0",
     "react-datepicker": "^3.3.0",
     "react-dom": "^16.14.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
