@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "highlight.js": "^10.3.1",
-    "react": "^17.0.0",
+    "react": "^17.0.1",
     "react-app-rewired": "^2.1.6",
-    "react-dom": "^17.0.0",
+    "react-dom": "^17.0.1",
     "react-live": "^2.2.2",
     "react-scripts": "3.4.4"
   },
