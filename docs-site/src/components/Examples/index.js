@@ -118,7 +118,12 @@ export default class exampleComponents extends React.Component {
     },
     {
       title: "Configure Popper Properties",
-      component: ConfigurePopper
+      component: ConfigurePopper,
+      description: (
+        <div>Full docs for the popper can be found at{" "}
+          <a href="https://popper.js.org" target="_blank" rel="noopener noreferrer">popper.js.org</a>
+        </div>
+      )
     },
     {
       title: "Custom input",
