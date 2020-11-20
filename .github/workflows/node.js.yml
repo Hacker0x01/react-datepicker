@@ -31,3 +31,8 @@ jobs:
     - run: yarn lint
     - run: yarn test
     - run: yarn build
+    - name: Build docs site
+      run: yarn --cwd docs-site install
+      run: yarn --cwd docs-site build
+    - name: Check code coverage
+      run: yarn run codecov
