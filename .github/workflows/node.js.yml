@@ -28,7 +28,4 @@ jobs:
       run: yarn
     - run: yarn lint
     - run: yarn test
-    - run: yarn build
-    - run: yarn --cwd docs-site install
-    - run: yarn --cwd docs-site build
-  - 
+    - run: yarn build 
