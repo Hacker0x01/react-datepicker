@@ -7,7 +7,10 @@
 |`adjustDateOnChange`|`bool`|||
 |`allowSameDay`|`bool`|`false`||
 |`ariaLabelClose`|`string`|||
+|`ariaDescribedBy`|`string`|||
+|`ariaInvalid`|`string`|||
 |`ariaLabelledBy`|`string`|||
+|`ariaRequired`|`string`|||
 |`autoComplete`|`string`|||
 |`autoFocus`|`bool`|||
 |`calendarClassName`|`string`|||
