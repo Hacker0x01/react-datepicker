@@ -95,9 +95,9 @@ describe("timeInput", () => {
       />
     );
 
-    expect(timeComponent.find("input").props.value).toEqual('13:00');
+    expect(timeComponent.find("input").props.value).to.equal('13:00');
 
     timeComponent.setProps({ timeString: '14:00' });
-    expect(timeComponent.find("input").props.value).toEqual('13:00');
+    expect(timeComponent.find("input").props.value).to.equal('14:00');
   });
 });
