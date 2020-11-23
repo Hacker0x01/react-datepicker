@@ -18,6 +18,17 @@ export default class inputTime extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.timeString !== state.time) {
+      return {
+        time: props.timeString
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
+  }
+
   onTimeChange = time => {
     this.setState({ time });
     const date = new Date();
