@@ -398,7 +398,7 @@ export default class exampleComponents extends React.Component {
     window.history.replaceState(null, document.title, `#${id}`);
     document
       .getElementById(id)
-      .scrollIntoView({ behavior: "smooth", block: "center" });
+      .scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   render() {
