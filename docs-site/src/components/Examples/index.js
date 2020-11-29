@@ -395,6 +395,7 @@ export default class exampleComponents extends React.Component {
 
   handleAnchorClick = (e, id) => {
     e.preventDefault();
+    window.history.replaceState(null, document.title, `#${id}`);
     document
       .getElementById(id)
       .scrollIntoView({ behavior: "smooth", block: "center" });
@@ -409,6 +410,7 @@ export default class exampleComponents extends React.Component {
             <li className="examples__navigation-item" key={`link-${index}`}>
               <a
                 href={`#example-${slugify(example.title, { lower: true })}`}
+                title="something"
                 onClick={e =>
                   this.handleAnchorClick(
                     e,
