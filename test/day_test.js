@@ -39,8 +39,9 @@ describe("Day", () => {
 
     it("should render custom day contents", () => {
       const day = newDate();
-      function renderDayContents(day, date) {
+      function renderDayContents(day, date, options) {
         const tooltipText = `Tooltip for date: ${date}`;
+        expect(options).to.be.an('object');
         return <span title={tooltipText}>{getDate(date)}</span>;
       }
       const shallowDay = renderDay(day, { renderDayContents });

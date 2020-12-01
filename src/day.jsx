@@ -298,6 +298,24 @@ export default class Day extends React.Component {
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
 
+  getRenderDayContentsProps = () => {
+    return {
+      disabled: this.isDisabled(),
+      excluded: this.isExcluded(),
+      selected: this.isSameDay(this.props.selected),
+      keyboardSelected: this.isKeyboardSelected(),
+      rangeStart: this.isRangeStart(),
+      rangeSnd: this.isRangeEnd(),
+      inRange: this.isInRange(),
+      inSelectingRange: this.isInSelectingRange(),
+      selectingRangeStart: this.isSelectingRangeStart(),
+      selectingRangeEnd: this.isSelectingRangeEnd(),
+      today: this.isSameDay(newDate()),
+      weekend: this.isWeekend(),
+      outsideMonth: this.isOutsideMonth()
+    };
+  }
+
   renderDayContents = () => {
     if(this.isOutsideMonth()) {
       if(this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10) return null;
@@ -305,7 +323,7 @@ export default class Day extends React.Component {
     }
 
     return this.props.renderDayContents
-    ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+    ? this.props.renderDayContents(getDate(this.props.day), this.props.day, this.getRenderDayContentsProps())
     : getDate(this.props.day);
   }
 
