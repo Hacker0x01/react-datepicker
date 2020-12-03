@@ -247,7 +247,7 @@ export default class Month extends React.Component {
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
-      _monthClassName
+      _monthClassName,
       {
         "react-datepicker__month--disabled":
           (minDate || maxDate) &&
