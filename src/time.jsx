@@ -199,6 +199,7 @@ export default class Time extends React.Component {
                 this.list = list;
               }}
               style={height ? { height } : {}}
+              tabIndex='0'
             >
               {this.renderTimes()}
             </ul>
