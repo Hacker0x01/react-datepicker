@@ -164,6 +164,7 @@ export default class Time extends React.Component {
             this.centerLi = li;
           }
         }}
+        tabIndex="0"
       >
         {formatDate(time, format, this.props.locale)}
       </li>
@@ -199,7 +200,7 @@ export default class Time extends React.Component {
                 this.list = list;
               }}
               style={height ? { height } : {}}
-              tabIndex='0'
+              tabIndex="0"
             >
               {this.renderTimes()}
             </ul>
