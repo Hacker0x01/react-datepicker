@@ -24,6 +24,7 @@ export default class Week extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -133,6 +134,7 @@ export default class Week extends React.Component {
             isInputFocused={this.props.isInputFocused}
             containerRef={this.props.containerRef}
             inline={this.props.inline}
+            shouldFocusDayInline={this.props.shouldFocusDayInline}
             monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
           />

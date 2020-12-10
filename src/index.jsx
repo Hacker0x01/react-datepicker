@@ -334,7 +334,10 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
-      focused: false
+      focused: false,
+      // used to focus day in inline version after month has changed, but not on
+      // initial render
+      shouldFocusDayInline: false
     };
   };
 
@@ -712,6 +715,22 @@ export default class DatePicker extends React.Component {
         this.setSelected(newSelection);
       }
       this.setPreSelection(newSelection);
+      // need to figure out whether month has changed to focus day in inline version
+      if (this.props.inline) {
+        const prevMonth = getMonth(copy);
+        const newMonth = getMonth(newSelection);
+        const prevYear = getYear(copy);
+        const newYear = getYear(newSelection);
+
+        if (prevMonth !== newMonth || prevYear !== newYear) {
+          // month has changed
+          this.setState({ shouldFocusDayInline: true })
+        }
+        else {
+          // month hasn't changed
+          this.setState({ shouldFocusDayInline: false })
+        }
+      }
     }
   };
 
@@ -815,6 +834,7 @@ export default class DatePicker extends React.Component {
         includeTimes={this.props.includeTimes}
         injectTimes={this.props.injectTimes}
         inline={this.props.inline}
+        shouldFocusDayInline={this.state.shouldFocusDayInline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
         showPreviousMonths={this.props.showPreviousMonths}
