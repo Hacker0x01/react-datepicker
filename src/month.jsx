@@ -62,7 +62,7 @@ export default class Month extends React.Component {
     monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
-  MONTH_REFS = Array(12).fill().map(() => React.createRef());
+  MONTH_REFS = [...Array(12)].map(() => React.createRef());
 
   isDisabled = date => utils.isDayDisabled(date, this.props);
 
