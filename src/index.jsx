@@ -118,8 +118,11 @@ export default class DatePicker extends React.Component {
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
     allowSameDay: PropTypes.bool,
+    ariaDescribedBy: PropTypes.string,
+    ariaInvalid: PropTypes.string,
     ariaLabelClose: PropTypes.string,
     ariaLabelledBy: PropTypes.string,
+    ariaRequired: PropTypes.string,
     autoComplete: PropTypes.string,
     autoFocus: PropTypes.bool,
     calendarClassName: PropTypes.string,
@@ -918,7 +921,10 @@ export default class DatePicker extends React.Component {
       readOnly: this.props.readOnly,
       required: this.props.required,
       tabIndex: this.props.tabIndex,
-      "aria-labelledby": this.props.ariaLabelledBy
+      "aria-describedby": this.props.ariaDescribedBy,
+      "aria-invalid": this.props.ariaInvalid,
+      "aria-labelledby": this.props.ariaLabelledBy,
+      "aria-required": this.props.ariaRequired,
     });
   };
 
