@@ -1489,4 +1489,68 @@ describe("DatePicker", () => {
       expect(months.first().props().monthShowsDuplicateDaysEnd).to.be.false;
     })
   })
+
+  describe("shouldFocusDayInline state", () => {
+    const dateFormat = "yyyy-MM-dd";
+
+    it("should not be updated when navigating with ArrowRight key without changing displayed month", () => {
+      const datePickerInline = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={utils.newDate("2020-11-15")}
+          dateFormat={dateFormat}
+          inline
+        />
+      );
+      TestUtils.Simulate.keyDown(
+        getSelectedDayNode(datePickerInline),
+        getKey("ArrowRight")
+      );
+      expect(datePickerInline.state.shouldFocusDayInline).to.be.false;
+    });
+
+    it("should be set to true when changing displayed month with ArrowRight key", () => {
+      const datePickerInline = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={utils.newDate("2020-11-30")}
+          dateFormat={dateFormat}
+          inline
+        />
+      );
+      TestUtils.Simulate.keyDown(
+        getSelectedDayNode(datePickerInline),
+        getKey("ArrowRight")
+      );
+      expect(datePickerInline.state.shouldFocusDayInline).to.be.true;
+    });
+
+    it("should be set to true when changing displayed month with PageDown key", () => {
+      const datePickerInline = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={utils.newDate("2020-11-15")}
+          dateFormat={dateFormat}
+          inline
+        />
+      );
+      TestUtils.Simulate.keyDown(
+        getSelectedDayNode(datePickerInline),
+        getKey("PageDown")
+      );
+      expect(datePickerInline.state.shouldFocusDayInline).to.be.true;
+    });
+
+    it("should be set to true when changing displayed month with End key", () => {
+      const datePickerInline = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={utils.newDate("2020-11-15")}
+          dateFormat={dateFormat}
+          inline
+        />
+      );
+      TestUtils.Simulate.keyDown(
+        getSelectedDayNode(datePickerInline),
+        getKey("End")
+      );
+      expect(datePickerInline.state.shouldFocusDayInline).to.be.true;
+    });
+  });
 });

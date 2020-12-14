@@ -24,6 +24,7 @@ export default class Month extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -155,6 +156,7 @@ export default class Month extends React.Component {
           excludeDates={this.props.excludeDates}
           includeDates={this.props.includeDates}
           inline={this.props.inline}
+          shouldFocusDayInline={this.props.shouldFocusDayInline}
           highlightDates={this.props.highlightDates}
           selectingDate={this.props.selectingDate}
           filterDate={this.props.filterDate}

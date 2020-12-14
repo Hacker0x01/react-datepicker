@@ -99,6 +99,7 @@ export default class Calendar extends React.Component {
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -798,6 +799,7 @@ export default class Calendar extends React.Component {
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
             inline={this.props.inline}
+            shouldFocusDayInline={this.props.shouldFocusDayInline}
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
