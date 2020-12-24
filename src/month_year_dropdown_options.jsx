@@ -34,7 +34,8 @@ export default class MonthYearDropdownOptions extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableMonthYearDropdown: PropTypes.bool,
     date: PropTypes.instanceOf(Date).isRequired,
-    dateFormat: PropTypes.string.isRequired
+    dateFormat: PropTypes.string.isRequired,
+    locale: PropTypes.string
   };
 
   constructor(props) {
@@ -69,7 +70,7 @@ export default class MonthYearDropdownOptions extends React.Component {
           ) : (
             ""
           )}
-          {formatDate(monthYear, this.props.dateFormat)}
+          {formatDate(monthYear, this.props.dateFormat, this.props.locale)}
         </div>
       );
     });
