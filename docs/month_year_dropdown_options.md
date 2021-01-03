@@ -11,3 +11,4 @@
 |`onCancel` (required)|`func`|||
 |`onChange` (required)|`func`|||
 |`scrollableMonthYearDropdown`|`bool`|||
+|`locale`|`string`|||
