@@ -184,7 +184,7 @@ export default class DatePicker extends React.Component {
     placeholderText: PropTypes.string,
     popperContainer: PropTypes.func,
     popperClassName: PropTypes.string, // <PopperComponent/> props
-    popperModifiers: PropTypes.object, // <PopperComponent/> props
+    popperModifiers: PropTypes.arrayOf(PropTypes.object), // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
     popperProps: PropTypes.object,
     preventOpenOnFocus: PropTypes.bool,
