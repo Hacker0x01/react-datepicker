@@ -290,7 +290,7 @@ export function isSameDayCompute(date1, date2) {
   }
 }
 
-export const isSameDay = moize.maxSize(100)(isSameDayCompute)
+export const isSameDay = moize.maxSize(200)(isSameDayCompute)
 
 export function isEqual(date1, date2) {
   if (date1 && date2) {

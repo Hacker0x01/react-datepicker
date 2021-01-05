@@ -602,7 +602,7 @@ function isSameDayCompute(date1, date2) {
     return !date1 && !date2;
   }
 }
-var isSameDay = moize__default['default'].maxSize(100)(isSameDayCompute);
+var isSameDay = moize__default['default'].maxSize(200)(isSameDayCompute);
 function isEqual(date1, date2) {
   if (date1 && date2) {
     return dfIsEqual__default['default'](date1, date2);
@@ -1645,35 +1645,29 @@ var MonthYearDropdown = /*#__PURE__*/function (_React$Component) {
   return MonthYearDropdown;
 }(React__default['default'].Component);
 
-var Day = /*#__PURE__*/function (_React$Component) {
-  _inherits(Day, _React$Component);
+var Day = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(Day, _React$PureComponent);
 
   var _super = _createSuper(Day);
 
-  function Day() {
+  function Day(props) {
     var _this;
 
     _classCallCheck(this, Day);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
-
-    _defineProperty(_assertThisInitialized(_this), "today", newDate());
+    _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "dayEl", /*#__PURE__*/React__default['default'].createRef());
 
     _defineProperty(_assertThisInitialized(_this), "handleClick", function (event) {
       if (!_this.isDisabled && _this.props.onClick) {
-        _this.props.onClick(event);
+        _this.props.onClick(_this.props.day)(event);
       }
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleMouseEnter", function (event) {
       if (!_this.isDisabled && _this.props.onMouseEnter) {
-        _this.props.onMouseEnter(event);
+        _this.props.onMouseEnter(_this.props.day)(event);
       }
     });
 
@@ -1850,7 +1844,7 @@ var Day = /*#__PURE__*/function (_React$Component) {
         "react-datepicker__day--in-selecting-range": _this.isInSelectingRange(),
         "react-datepicker__day--selecting-range-start": _this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end": _this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": _this.isSameDay(_this.today),
+        "react-datepicker__day--today": _this.isSameDay(_this.props.today),
         "react-datepicker__day--weekend": _this.isWeekend(),
         "react-datepicker__day--outside-month": _this.isOutsideMonth()
       }, _this.getHighLightedClass("react-datepicker__day--highlighted"));
@@ -1926,6 +1920,8 @@ var Day = /*#__PURE__*/function (_React$Component) {
       }, _this.renderDayContents());
     });
 
+    _this.today = props.today; // || newDate()
+
     return _this;
   }
 
@@ -1968,7 +1964,7 @@ var Day = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return Day;
-}(React__default['default'].Component);
+}(React__default['default'].PureComponent);
 
 var WeekNumber = /*#__PURE__*/function (_React$Component) {
   _inherits(WeekNumber, _React$Component);
@@ -2018,21 +2014,26 @@ var WeekNumber = /*#__PURE__*/function (_React$Component) {
   return WeekNumber;
 }(React__default['default'].Component);
 
-var Week = /*#__PURE__*/function (_React$Component) {
-  _inherits(Week, _React$Component);
+var Week = /*#__PURE__*/function (_React$PureComponent) {
+  _inherits(Week, _React$PureComponent);
 
   var _super = _createSuper(Week);
 
-  function Week() {
+  _createClass(Week, null, [{
+    key: "defaultProps",
+    get: function get() {
+      return {
+        shouldCloseOnSelect: true
+      };
+    }
+  }]);
+
+  function Week(props) {
     var _this;
 
     _classCallCheck(this, Week);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "handleDayClick", function (day, event) {
       if (_this.props.onDayClick) {
@@ -2087,9 +2088,12 @@ var Week = /*#__PURE__*/function (_React$Component) {
           ariaLabelPrefixWhenDisabled: _this.props.disabledDayAriaLabelPrefix,
           key: day.valueOf(),
           day: day,
-          month: _this.props.month,
-          onClick: _this.handleDayClick.bind(_assertThisInitialized(_this), day),
-          onMouseEnter: _this.handleDayMouseEnter.bind(_assertThisInitialized(_this), day),
+          today: _this.today,
+          month: _this.props.month // onClick={this.handleDayClick.bind(this, day)}
+          ,
+          onClick: _this.handleDayClick // onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+          ,
+          onMouseEnter: _this.handleDayMouseEnter,
           minDate: _this.props.minDate,
           maxDate: _this.props.maxDate,
           excludeDates: _this.props.excludeDates,
@@ -2118,6 +2122,7 @@ var Week = /*#__PURE__*/function (_React$Component) {
       }));
     });
 
+    _this.today = newDate();
     return _this;
   }
 
@@ -2128,17 +2133,10 @@ var Week = /*#__PURE__*/function (_React$Component) {
         className: "react-datepicker__week"
       }, this.renderDays());
     }
-  }], [{
-    key: "defaultProps",
-    get: function get() {
-      return {
-        shouldCloseOnSelect: true
-      };
-    }
   }]);
 
   return Week;
-}(React__default['default'].Component);
+}(React__default['default'].PureComponent);
 
 var FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -2147,16 +2145,12 @@ var Month = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(Month);
 
-  function Month() {
+  function Month(props) {
     var _this;
 
     _classCallCheck(this, Month);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "MONTH_REFS", _toConsumableArray(Array(12)).map(function () {
       return /*#__PURE__*/React__default['default'].createRef();
@@ -2260,7 +2254,7 @@ var Month = /*#__PURE__*/function (_React$Component) {
           disabledDayAriaLabelPrefix: _this.props.disabledDayAriaLabelPrefix,
           key: i,
           day: currentWeekStart,
-          month: getMonth__default['default'](_this.props.day),
+          month: _this.month,
           onDayClick: _this.handleDayClick,
           onDayMouseEnter: _this.handleDayMouseEnter,
           onWeekSelect: _this.props.onWeekSelect,
@@ -2476,6 +2470,7 @@ var Month = /*#__PURE__*/function (_React$Component) {
       });
     });
 
+    _this.month = getMonth__default['default'](props.day);
     return _this;
   }
 

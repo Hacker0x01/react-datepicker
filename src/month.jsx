@@ -63,6 +63,11 @@ export default class Month extends React.Component {
     monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
+  constructor(props) {
+    super(props)
+    this.month = utils.getMonth(props.day)
+  }
+
   MONTH_REFS = [...Array(12)].map(() => React.createRef());
 
   isDisabled = date => utils.isDayDisabled(date, this.props);
@@ -145,7 +150,7 @@ export default class Month extends React.Component {
           disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
           key={i}
           day={currentWeekStart}
-          month={utils.getMonth(this.props.day)}
+          month={this.month}
           onDayClick={this.handleDayClick}
           onDayMouseEnter={this.handleDayMouseEnter}
           onWeekSelect={this.props.onWeekSelect}

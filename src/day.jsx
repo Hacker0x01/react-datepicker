@@ -5,7 +5,7 @@ import {
   getDay,
   getMonth,
   getDate,
-  newDate,
+  // newDate,
   isSameDay,
   isDayDisabled,
   isDayExcluded,
@@ -17,7 +17,7 @@ import {
   formatDate
 } from "./date_utils";
 
-export default class Day extends React.Component {
+export default class Day extends React.PureComponent {
   static propTypes = {
     ariaLabelPrefixWhenEnabled: PropTypes.string,
     ariaLabelPrefixWhenDisabled: PropTypes.string,
@@ -38,6 +38,7 @@ export default class Day extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
+    today: PropTypes.instanceOf(Date).isRequired,
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
@@ -47,6 +48,11 @@ export default class Day extends React.Component {
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool
   };
+
+  constructor(props) {
+    super(props)
+    this.today = props.today// || newDate()
+  }
 
   componentDidMount() {
     this.handleFocusDay();
@@ -75,18 +81,17 @@ export default class Day extends React.Component {
     }  
   }
 
-  today = newDate()
   dayEl = React.createRef();
 
   handleClick = event => {
     if (!this.isDisabled && this.props.onClick) {
-      this.props.onClick(event);
+      this.props.onClick(this.props.day)(event);
     }
   };
 
   handleMouseEnter = event => {
     if (!this.isDisabled && this.props.onMouseEnter) {
-      this.props.onMouseEnter(event);
+      this.props.onMouseEnter(this.props.day)(event);
     }
   };
 
@@ -260,7 +265,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
         "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(this.today),
+        "react-datepicker__day--today": this.isSameDay(this.props.today),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth()
       },

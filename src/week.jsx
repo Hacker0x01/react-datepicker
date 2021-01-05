@@ -4,7 +4,7 @@ import Day from "./day";
 import WeekNumber from "./week_number";
 import * as utils from "./date_utils";
 
-export default class Week extends React.Component {
+export default class Week extends React.PureComponent {
   static get defaultProps() {
     return {
       shouldCloseOnSelect: true
@@ -55,6 +55,11 @@ export default class Week extends React.Component {
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool
   };
+
+  constructor(props){
+    super(props)
+    this.today = utils.newDate()
+  }
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
@@ -110,9 +115,12 @@ export default class Week extends React.Component {
             ariaLabelPrefixWhenDisabled={this.props.disabledDayAriaLabelPrefix}
             key={day.valueOf()}
             day={day}
+            today={this.today}
             month={this.props.month}
-            onClick={this.handleDayClick.bind(this, day)}
-            onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+            // onClick={this.handleDayClick.bind(this, day)}
+            onClick={this.handleDayClick}
+            // onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+            onMouseEnter={this.handleDayMouseEnter}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
