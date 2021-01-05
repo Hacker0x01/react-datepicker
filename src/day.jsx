@@ -26,6 +26,8 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -41,27 +43,49 @@ export default class Day extends React.Component {
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    ]),
+    monthShowsDuplicateDaysEnd: PropTypes.bool,
+    monthShowsDuplicateDaysStart: PropTypes.bool
   };
 
   componentDidMount() {
     this.handleFocusDay();
+
+    this.isDisabled = this.isDisabledCompute()
   }
 
   componentDidUpdate(prevProps) {
     this.handleFocusDay(prevProps);
+
+    if(
+      this.props.day !== prevProps?.day ||
+      /* eslint-disable */
+      this.props.isDisabledCompute !== prevProps?.isDisabledCompute ||
+      this.props.minDate !== prevProps?.minDate ||
+      this.props.maxDate !== prevProps?.maxDate ||
+      this.props.excludeDates !== prevProps?.excludeDates ||
+      this.props.includeDates !== prevProps?.includeDates ||
+      this.props.filterDate !== prevProps?.filterDate
+      ) { 
+        const {day, minDate, maxDate, excludeDates, includeDates, filterDate} = this.props
+        /* eslint-enable */
+      requestAnimationFrame(()=>{
+        this.isDisabled = isDayDisabled(day, {minDate, maxDate, excludeDates, includeDates, filterDate})
+      })
+    }  
   }
 
+  today = newDate()
   dayEl = React.createRef();
 
   handleClick = event => {
-    if (!this.isDisabled() && this.props.onClick) {
+    if (!this.isDisabled && this.props.onClick) {
       this.props.onClick(event);
     }
   };
 
   handleMouseEnter = event => {
-    if (!this.isDisabled() && this.props.onMouseEnter) {
+    if (!this.isDisabled && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
   };
@@ -83,7 +107,14 @@ export default class Day extends React.Component {
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);
 
-  isDisabled = () => isDayDisabled(this.props.day, this.props);
+  isDisabledCompute = (
+    day, 
+    minDate, 
+    maxDate, 
+    excludeDates, 
+    includeDates, 
+    filterDate) => isDayDisabled(day, {minDate, maxDate, excludeDates, includeDates, filterDate});
+  // filterDate) => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
 
@@ -121,7 +152,7 @@ export default class Day extends React.Component {
     if (
       !(selectsStart || selectsEnd || selectsRange) ||
       !selectingDate ||
-      this.isDisabled()
+      this.isDisabled
     ) {
       return false;
     }
@@ -219,7 +250,7 @@ export default class Day extends React.Component {
       dayClassName,
       "react-datepicker__day--" + getDayOfWeekCode(this.props.day),
       {
-        "react-datepicker__day--disabled": this.isDisabled(),
+        "react-datepicker__day--disabled": this.isDisabled,
         "react-datepicker__day--excluded": this.isExcluded(),
         "react-datepicker__day--selected": this.isSameDay(this.props.selected),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
@@ -229,7 +260,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
         "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(newDate()),
+        "react-datepicker__day--today": this.isSameDay(this.today),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth()
       },
@@ -245,7 +276,7 @@ export default class Day extends React.Component {
     } = this.props;
 
     const prefix =
-      this.isDisabled() || this.isExcluded()
+      this.isDisabled || this.isExcluded()
         ? ariaLabelPrefixWhenDisabled
         : ariaLabelPrefixWhenEnabled;
 
@@ -277,9 +308,15 @@ export default class Day extends React.Component {
       !prevProps.isInputFocused &&
       this.isSameDay(this.props.preSelection)
     ) {
-      // there is currently no activeElement
-      if (!document.activeElement || document.activeElement === document.body) {
+      // there is currently no activeElement and not inline
+      if ((!document.activeElement || document.activeElement === document.body)) {
         shouldFocusDay = true;
+      }
+      // inline version:
+      // do not focus on initial render to prevent autoFocus issue
+      // focus after month has changed via keyboard
+      if (this.props.inline && !this.props.shouldFocusDayInline) {
+        shouldFocusDay = false;
       }
       // the activeElement is in the container, and it is another instance of Day
       if (
@@ -294,6 +331,18 @@ export default class Day extends React.Component {
 
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
+
+  renderDayContents = () => {
+    if(this.isOutsideMonth()) {
+      if(this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10) return null;
+      if(this.props.monthShowsDuplicateDaysStart && getDate(this.props.day) > 20) return null;
+    }
+
+    return this.props.renderDayContents
+    ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+    : getDate(this.props.day);
+  }
+
   render = () => (
     <div
       ref={this.dayEl}
@@ -304,11 +353,9 @@ export default class Day extends React.Component {
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="button"
-      aria-disabled={this.isDisabled()}
+      aria-disabled={this.isDisabled}
     >
-      {this.props.renderDayContents
-        ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-        : getDate(this.props.day)}
+      {this.renderDayContents()}
     </div>
   );
 }

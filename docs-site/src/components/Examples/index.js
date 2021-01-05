@@ -11,6 +11,7 @@ import ShowTimeOnly from "../../examples/showTimeOnly";
 import ExcludeTimes from "../../examples/excludeTimes";
 import IncludeTimes from "../../examples/includeTimes";
 import InjectTimes from "../../examples/injectTimes";
+import FilterTimes from "../../examples/filterTimes";
 import ExcludeTimePeriod from "../../examples/excludeTimePeriod";
 import CustomDateFormat from "../../examples/customDateFormat";
 import CustomClassName from "../../examples/customClassName";
@@ -117,7 +118,12 @@ export default class exampleComponents extends React.Component {
     },
     {
       title: "Configure Popper Properties",
-      component: ConfigurePopper
+      component: ConfigurePopper,
+      description: (
+        <div>Full docs for the popper can be found at{" "}
+          <a href="https://popper.js.org" target="_blank" rel="noopener noreferrer">popper.js.org</a>
+        </div>
+      )
     },
     {
       title: "Custom input",
@@ -194,6 +200,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Filter dates",
       component: FilterDates
+    },
+    {
+      title: "Filter times",
+      component: FilterTimes
     },
     {
       title: "Fixed height of Calendar",
@@ -385,9 +395,10 @@ export default class exampleComponents extends React.Component {
 
   handleAnchorClick = (e, id) => {
     e.preventDefault();
+    window.history.replaceState(null, document.title, `#${id}`);
     document
       .getElementById(id)
-      .scrollIntoView({ behavior: "smooth", block: "center" });
+      .scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   render() {
@@ -395,8 +406,8 @@ export default class exampleComponents extends React.Component {
       <>
         <h1>Examples</h1>
         <ul className="examples__navigation">
-          {this.examples.map((example, index) => (
-            <li className="examples__navigation-item" key={`link-${index}`}>
+          {this.examples.map(example => (
+            <li className="examples__navigation-item" key={`link-${example.title}`}>
               <a
                 href={`#example-${slugify(example.title, { lower: true })}`}
                 onClick={e =>
@@ -412,8 +423,8 @@ export default class exampleComponents extends React.Component {
           ))}
         </ul>
         <div className="examples">
-          {this.examples.map((example, index) => (
-            <CodeExampleComponent key={index} example={example} />
+          {this.examples.map((example) => (
+            <CodeExampleComponent key={example.title} example={example} />
           ))}
         </div>
       </>

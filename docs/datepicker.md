@@ -5,7 +5,10 @@ General datepicker component.
 | name                         | type                           | default value   | description                                |
 | ---------------------------- | ------------------------------ | --------------- | ------------------------------------------ |
 | `allowSameDay`               | `bool`                         | `false`         |                                            |
+| `ariaDescribedBy`            | `string`                       | `null`          |                                            |
+| `ariaInvalid`                | `string`                       | `null`          |                                            |
 | `ariaLabelledBy`             | `string`                       | `null`          |                                            |
+| `ariaRequired`               | `string`                       | `null`          |                                            |
 | `autoComplete`               | `string`                       |                 |                                            |
 | `autoFocus`                  | `bool`                         |                 |                                            |
 | `calendarClassName`          | `string`                       |                 |                                            |
@@ -26,6 +29,7 @@ General datepicker component.
 | `excludeTimes`               | `array`                        |                 |                                            |
 | `excludeScrollbar`           | `array`                        |                 |                                            |
 | `filterDate`                 | `func`                         |                 |                                            |
+| `filterTime`                 | `func`                         |                 |                                            |
 | `fixedHeight`                | `bool`                         |                 |                                            |
 | `forceShowMonthNavigation`   | `bool`                         |                 |                                            |
 | `formatWeekNumber`           | `func`                         |                 |                                            |

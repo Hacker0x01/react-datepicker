@@ -55,6 +55,7 @@ import toDate from "date-fns/toDate";
 import parse from "date-fns/parse";
 import parseISO from "date-fns/parseISO";
 import longFormatters from "date-fns/esm/_lib/format/longFormatters";
+import moize from "moize"
 
 export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 
@@ -251,7 +252,7 @@ export { addMinutes, addDays, addWeeks, addMonths, addYears };
 
 // *** Subtraction ***
 
-export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
+export { addHours, subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
 
 // ** Date Comparison **
 
@@ -281,13 +282,15 @@ export function isSameQuarter(date1, date2) {
   }
 }
 
-export function isSameDay(date1, date2) {
+export function isSameDayCompute(date1, date2) {
   if (date1 && date2) {
     return dfIsSameDay(date1, date2);
   } else {
     return !date1 && !date2;
   }
 }
+
+export const isSameDay = moize.maxSize(100)(isSameDayCompute)
 
 export function isEqual(date1, date2) {
   if (date1 && date2) {
@@ -475,18 +478,20 @@ export function isOutOfBounds(day, { minDate, maxDate } = {}) {
   );
 }
 
-export function isTimeDisabled(time, disabledTimes) {
-  const l = disabledTimes.length;
-  for (let i = 0; i < l; i++) {
-    if (
-      getHours(disabledTimes[i]) === getHours(time) &&
-      getMinutes(disabledTimes[i]) === getMinutes(time)
-    ) {
-      return true;
-    }
-  }
+export function isTimeInList(time, times) {
+  return times.some(listTime => (
+    getHours(listTime) === getHours(time) &&
+    getMinutes(listTime) === getMinutes(time)
+  ));
+}
 
-  return false;
+export function isTimeDisabled(time, { excludeTimes, includeTimes, filterTime } = {}) {
+  return (
+    (excludeTimes && isTimeInList(time, excludeTimes)) ||
+    (includeTimes && !isTimeInList(time, includeTimes)) ||
+    (filterTime && !filterTime(time)) ||
+    false
+  );
 }
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {

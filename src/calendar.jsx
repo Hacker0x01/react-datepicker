@@ -98,6 +98,8 @@ export default class Calendar extends React.Component {
     includeDates: PropTypes.array,
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
+    inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object })
@@ -130,6 +132,7 @@ export default class Calendar extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     timeCaption: PropTypes.string,
     openToDate: PropTypes.instanceOf(Date),
     peekNextMonth: PropTypes.bool,
@@ -273,8 +276,10 @@ export default class Calendar extends React.Component {
     );
   };
 
-  handleDayClick = (day, event, monthSelectedIn) =>
+  handleDayClick = (day, event, monthSelectedIn) => {
     this.props.onSelect(day, event, monthSelectedIn);
+    this.props.setPreSelection && this.props.setPreSelection(day);
+  }   
 
   handleDayMouseEnter = day => {
     this.setState({ selectingDate: day });
@@ -760,6 +765,8 @@ export default class Calendar extends React.Component {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
+      var monthShowsDuplicateDaysEnd = i < (this.props.monthsShown - 1);
+      var monthShowsDuplicateDaysStart = i > 0;
       monthList.push(
         <div
           key={monthKey}
@@ -791,9 +798,12 @@ export default class Calendar extends React.Component {
             highlightDates={this.props.highlightDates}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
+            inline={this.props.inline}
+            shouldFocusDayInline={this.props.shouldFocusDayInline}
             fixedHeight={this.props.fixedHeight}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
+            setPreSelection={this.props.setPreSelection}
             selected={this.props.selected}
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
@@ -815,6 +825,8 @@ export default class Calendar extends React.Component {
             showQuarterYearPicker={this.props.showQuarterYearPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
+            monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
+            monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
           />
         </div>
       );
@@ -857,6 +869,7 @@ export default class Calendar extends React.Component {
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
+          filterTime={this.props.filterTime}
           timeCaption={this.props.timeCaption}
           todayButton={this.props.todayButton}
           showMonthDropdown={this.props.showMonthDropdown}
@@ -881,6 +894,7 @@ export default class Calendar extends React.Component {
     if (this.props.showTimeInput) {
       return (
         <InputTime
+          date={time}
           timeString={timeString}
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}

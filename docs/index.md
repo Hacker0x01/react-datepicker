@@ -7,7 +7,10 @@
 |`adjustDateOnChange`|`bool`|||
 |`allowSameDay`|`bool`|`false`||
 |`ariaLabelClose`|`string`|||
+|`ariaDescribedBy`|`string`|||
+|`ariaInvalid`|`string`|||
 |`ariaLabelledBy`|`string`|||
+|`ariaRequired`|`string`|||
 |`autoComplete`|`string`|||
 |`autoFocus`|`bool`|||
 |`calendarClassName`|`string`|||
@@ -33,6 +36,7 @@
 |`excludeScrollbar`|`bool`|`true`||
 |`excludeTimes`|`array`|||
 |`filterDate`|`func`|||
+|`filterTime`|`func`|||
 |`fixedHeight`|`bool`|||
 |`focusSelectedMonth`|`bool`|`false`||
 |`forceShowMonthNavigation`|`bool`|||
@@ -131,5 +135,5 @@
 |`weekLabel`|`string`|||
 |`withPortal`|`bool`|`false`||
 |`wrapperClassName`|`string`|||
-|`yearItemNumber`|`number`|`12`||
 |`yearDropdownItemNumber`|`number`|||
+|`yearItemNumber`|`number`|`DEFAULT_YEAR_ITEM_NUMBER`||

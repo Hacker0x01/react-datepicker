@@ -96,6 +96,7 @@ export default class MonthYearDropdown extends React.Component {
       minDate={this.props.minDate}
       maxDate={this.props.maxDate}
       scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
+      locale={this.props.locale}
     />
   );
 

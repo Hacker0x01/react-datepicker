@@ -44,6 +44,7 @@ export default class Time extends React.Component {
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
+    filterTime: PropTypes.func,
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array,
@@ -77,10 +78,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       return;
     }
@@ -105,10 +104,8 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      (this.props.excludeTimes &&
-        isTimeDisabled(time, this.props.excludeTimes)) ||
-      (this.props.includeTimes &&
-        !isTimeDisabled(time, this.props.includeTimes))
+      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+        isTimeDisabled(time, this.props))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
@@ -127,7 +124,7 @@ export default class Time extends React.Component {
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
 
-    const base = getStartOfDay(newDate());
+    const base = getStartOfDay(newDate(this.props.selected));
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
@@ -167,6 +164,7 @@ export default class Time extends React.Component {
             this.centerLi = li;
           }
         }}
+        tabIndex="0"
       >
         {formatDate(time, format, this.props.locale)}
       </li>
@@ -202,6 +200,7 @@ export default class Time extends React.Component {
                 this.list = list;
               }}
               style={height ? { height } : {}}
+              tabIndex="0"
             >
               {this.renderTimes()}
             </ul>

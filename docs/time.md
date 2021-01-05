@@ -5,6 +5,7 @@
 | name  | type  | default value  | description  |
 |---|---|---|---|
 |`excludeTimes`|`array`|||
+|`filterTime`|`func`|||
 |`format`|`string`|||
 |`includeTimes`|`array`|||
 |`injectTimes`|`array`|||
@@ -17,6 +18,7 @@
 |`onTimeChange`||`() => {}`||
 |`openToDate`|`instanceOfDate`|||
 |`selected`|`instanceOfDate`|||
+|`showTimeSelectOnly`|`bool`|||
 |`timeCaption`|`string`|`"Time"`||
 |`timeClassName`|`func`|||
 |`todayButton`|`node`|`null`||
