@@ -292,6 +292,8 @@ export function isSameDayCompute(date1, date2) {
 
 export const isSameDay = moize.maxSize(200)(isSameDayCompute)
 
+export const isEqualDate = (a, b) => a?.getTime() === b?.getTime()
+
 export function isEqual(date1, date2) {
   if (date1 && date2) {
     return dfIsEqual(date1, date2);

@@ -17,7 +17,7 @@ export default class Week extends React.PureComponent {
     dayClassName: PropTypes.func,
     disabledDayAriaLabelPrefix: PropTypes.string,
     chooseDayAriaLabelPrefix: PropTypes.string,
-    endDate: PropTypes.instanceOf(Date),
+    // endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
@@ -36,13 +36,13 @@ export default class Week extends React.PureComponent {
     onDayMouseEnter: PropTypes.func,
     onWeekSelect: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
-    selected: PropTypes.instanceOf(Date),
-    selectingDate: PropTypes.instanceOf(Date),
-    selectsEnd: PropTypes.bool,
-    selectsStart: PropTypes.bool,
-    selectsRange: PropTypes.bool,
+    // selected: PropTypes.instanceOf(Date),
+    // selectingDate: PropTypes.instanceOf(Date),
+    // selectsEnd: PropTypes.bool,
+    // selectsStart: PropTypes.bool,
+    // selectsRange: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
-    startDate: PropTypes.instanceOf(Date),
+    // startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
     renderDayContents: PropTypes.func,
@@ -63,13 +63,13 @@ export default class Week extends React.PureComponent {
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
-      this.props.onDayClick(day, event);
+      return this.props.onDayClick(day, event);
     }
   };
 
   handleDayMouseEnter = day => {
     if (this.props.onDayMouseEnter) {
-      this.props.onDayMouseEnter(day);
+      return this.props.onDayMouseEnter(day);
     }
   };
 
@@ -126,15 +126,15 @@ export default class Week extends React.PureComponent {
             excludeDates={this.props.excludeDates}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
-            selectingDate={this.props.selectingDate}
+            // selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
-            selected={this.props.selected}
-            selectsStart={this.props.selectsStart}
-            selectsEnd={this.props.selectsEnd}
-            selectsRange={this.props.selectsRange}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate}
+            // selected={this.props.selected}
+            // selectsStart={this.props.selectsStart}
+            // selectsEnd={this.props.selectsEnd}
+            // selectsRange={this.props.selectsRange}
+            // startDate={this.props.startDate}
+            // endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
             renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}

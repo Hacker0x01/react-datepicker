@@ -40,6 +40,7 @@ import {
   addZero,
   isValid,
   getYearsPeriod,
+  isEqualDate,
   DEFAULT_YEAR_ITEM_NUMBER
 } from "./date_utils";
 
@@ -56,7 +57,7 @@ const isDropdownSelect = (element = {}) => {
   );
 };
 
-export default class Calendar extends React.Component {
+export default class Calendar extends React.PureComponent {
   static get defaultProps() {
     return {
       onDropdownFocus: () => {},
@@ -191,9 +192,11 @@ export default class Calendar extends React.Component {
 
     this.state = {
       date: this.getDateInView(),
-      selectingDate: null,
+      // selectingDate: null,
       monthContainer: null
     };
+
+    this.computeMonthDates(props, this.state)
   }
 
   componentDidMount() {
@@ -208,7 +211,20 @@ export default class Calendar extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  getSnapshotBeforeUpdate(prevProps, prevState){
+    if(
+      this.props.monthSelectedIn !==  prevProps?.monthSelectedIn ||
+      this.props.monthsShown !== prevProps?.monthsShown ||
+      this.props.showPreviousMonths !== prevProps?.showPreviousMonths ||
+      !isEqualDate(this.state.date, prevState?.date)
+    ) {
+      this.computeMonthDates(this.props, this.state)
+    }
+
+    return null
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (
       this.props.preSelection &&
       !isSameDay(this.props.preSelection, prevProps.preSelection)
@@ -278,17 +294,17 @@ export default class Calendar extends React.Component {
 
   handleDayClick = (day, event, monthSelectedIn) => {
     this.props.onSelect(day, event, monthSelectedIn);
-    this.props.setPreSelection && this.props.setPreSelection(day);
+    return this.props.setPreSelection ? this.props.setPreSelection(day) : null;
   }   
 
   handleDayMouseEnter = day => {
-    this.setState({ selectingDate: day });
-    this.props.onDayMouseEnter && this.props.onDayMouseEnter(day);
+    // this.setState({ selectingDate: day });
+    return this.props.onDayMouseEnter ? this.props.onDayMouseEnter(day) : null;
   };
 
   handleMonthMouseLeave = () => {
-    this.setState({ selectingDate: null });
-    this.props.onMonthMouseLeave && this.props.onMonthMouseLeave();
+    // this.setState({ selectingDate: null });
+    return this.props.onMonthMouseLeave ? this.props.onMonthMouseLeave() : null;
   };
 
   handleYearChange = date => {
@@ -751,19 +767,36 @@ export default class Calendar extends React.Component {
     }
   };
 
+  computeFromMonthDate = (props, state) => {
+    var monthsToSubtract = props.showPreviousMonths
+      ? props.monthsShown - 1
+      : 0;
+    var fromMonthDate = subMonths(state.date, monthsToSubtract);
+    return fromMonthDate
+  }
+
+  computeMonthDate = (i, props) => {
+    var monthsToAdd = i - props.monthSelectedIn;
+    var monthDate = addMonths(this.computeFromMonthDate(props, this.state), monthsToAdd);
+    return monthDate
+  }
+  
+  computeMonthDates = (props) => {
+    for (var i = 0; i < props.monthsShown; ++i) {
+      this.monthDates = this.monthDates || []
+      this.monthDates[i] = this.computeMonthDate(i, props)
+    }    
+  }
+
   renderMonths = () => {
     if (this.props.showTimeSelectOnly || this.props.showYearPicker) {
       return;
     }
-
     var monthList = [];
-    var monthsToSubtract = this.props.showPreviousMonths
-      ? this.props.monthsShown - 1
-      : 0;
-    var fromMonthDate = subMonths(this.state.date, monthsToSubtract);
     for (var i = 0; i < this.props.monthsShown; ++i) {
-      var monthsToAdd = i - this.props.monthSelectedIn;
-      var monthDate = addMonths(fromMonthDate, monthsToAdd);
+      // var monthsToAdd = i - this.props.monthSelectedIn;
+      // var monthDate = addMonths(fromMonthDate, monthsToAdd);
+      const monthDate = this.monthDates[i] 
       var monthKey = `month-${i}`;
       var monthShowsDuplicateDaysEnd = i < (this.props.monthsShown - 1);
       var monthShowsDuplicateDaysStart = i > 0;
@@ -796,7 +829,7 @@ export default class Calendar extends React.Component {
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
             highlightDates={this.props.highlightDates}
-            selectingDate={this.state.selectingDate}
+            // selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
             inline={this.props.inline}
             shouldFocusDayInline={this.props.shouldFocusDayInline}
