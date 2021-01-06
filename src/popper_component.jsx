@@ -13,14 +13,19 @@ export default class PopperComponent extends React.Component {
       hidePopper: true,
       popperModifiers: [
         {
-          preventOverflow: {
-            enabled: true,
-            escapeWithReference: true,
-            boundariesElement: "viewport",
+          name: "flip",
+          options: {
+            allowedAutoPlacements: ["top", "bottom"],
+            rootBoundary: "viewport",
+          },
+        },
+        {
+          name: "preventOverflow",
+          options: {
+            rootBoundary: "viewport",
           },
         },
       ],
-      popperProps: {},
       popperPlacement: "bottom-start",
     };
   }

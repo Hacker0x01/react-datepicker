@@ -8,16 +8,24 @@
       popperPlacement="top-end"
       popperModifiers={[
         {
-          offset: {
-            enabled: true,
-            offset: "5px, 10px",
-          },
-          preventOverflow: {
-            enabled: true,
-            escapeWithReference: false,
-            boundariesElement: "viewport",
+          name: "flip",
+          options: {
+            allowedAutoPlacements: ["top", "bottom"],
+            rootBoundary: "viewport",
           },
         },
+        {
+          name: 'offset',
+          options: {
+            offset: [5, 10],
+          },
+        },
+        {
+          name: "preventOverflow",
+          options: {
+            rootBoundary: "viewport",
+          },
+        }
       ]}
     />
   );
