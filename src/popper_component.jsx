@@ -101,14 +101,14 @@ export default class PopperComponent extends React.Component {
           )}
         </Popper>
       );
-      if (this.props.popperContainer) {
-        popper = (
-          <this.props.popperContainer>{popper}</this.props.popperContainer>
-        );
-      }
-      if (portalId) {
-        popper = <Portal portalId={portalId}>{popper}</Portal>;
-      }
+    }
+    if (this.props.popperContainer) {
+      popper = (
+        <this.props.popperContainer>{popper}</this.props.popperContainer>
+      );
+    }
+    if (!hidePopper && portalId) {
+      popper = <Portal portalId={portalId}>{popper}</Portal>;
     }
 
     const wrapperClasses = classnames(
