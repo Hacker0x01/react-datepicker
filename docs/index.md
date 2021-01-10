@@ -6,9 +6,9 @@
 |---|---|---|---|
 |`adjustDateOnChange`|`bool`|||
 |`allowSameDay`|`bool`|`false`||
-|`ariaLabelClose`|`string`|||
 |`ariaDescribedBy`|`string`|||
 |`ariaInvalid`|`string`|||
+|`ariaLabelClose`|`string`|||
 |`ariaLabelledBy`|`string`|||
 |`ariaRequired`|`string`|||
 |`autoComplete`|`string`|||
@@ -81,7 +81,7 @@
 |`placeholderText`|`string`|||
 |`popperClassName`|`string`|||
 |`popperContainer`|`func`|||
-|`popperModifiers`|`object`|||
+|`popperModifiers`|`arrayOf[object Object]`|||
 |`popperPlacement`|`enumpopperPlacementPositions`|||
 |`popperProps`|`object`|||
 |`portalId`|`string`|||

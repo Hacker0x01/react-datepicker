@@ -6,9 +6,9 @@
 |---|---|---|---|
 |`date` (required)|`instanceOfDate`|||
 |`dateFormat` (required)|`string`|||
+|`locale`|`string`|||
 |`maxDate` (required)|`instanceOfDate`|||
 |`minDate` (required)|`instanceOfDate`|||
 |`onCancel` (required)|`func`|||
 |`onChange` (required)|`func`|||
 |`scrollableMonthYearDropdown`|`bool`|||
-|`locale`|`string`|||
