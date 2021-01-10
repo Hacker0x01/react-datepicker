@@ -78,11 +78,26 @@ describe("timeInput", () => {
 
     const input = timeComponent.find("CustomTimeInput");
     input.simulate("change", "14:00");
-    
+
     defer(() => {
       assert(onTimeChangeSpy.called === true, "should call CustomTimeInput onChange");
       assert(Object.prototype.toString.call(onTimeChangeSpy.args[0][0]) === "[object Date]", "should pass pure date to CustomTimeInput onChange");
       done();
     });
+  });
+
+  it ('should update input value if time is updated from outside', done => {
+    const timeComponent = mount(
+      <InputTimeComponent
+        date={new Date()}
+        timeString="13:00"
+        onChange={console.log}
+      />
+    );
+
+    expect(timeComponent.find("input").props.value).to.equal('13:00');
+
+    timeComponent.setProps({ timeString: '14:00' });
+    expect(timeComponent.find("input").props.value).to.equal('14:00');
   });
 });
