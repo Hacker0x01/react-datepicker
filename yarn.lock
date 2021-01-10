@@ -7707,9 +7707,9 @@ prelude-ls@~1.1.2:
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
 prettier@^2.0.5:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
-  integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
+  integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
 
 private@^0.1.8:
   version "0.1.8"
@@ -8562,9 +8562,9 @@ sass-lint@^1.13.1:
     util "^0.10.3"
 
 sass-loader@^10.0.3:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.0.4.tgz#ec7181096947d078d60a1d76d527f47c19b151d8"
-  integrity sha512-zhdZ8qvZM4iL5XjLVEjJLvKWvC+MB+hHgzL2x/Nf7UHpUNmPYsJvypW79bW39g4LZ603dH/dRSsRYzJJIljtdA==
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.1.0.tgz#1727fcc0c32ab3eb197cda61d78adf4e9174a4b3"
+  integrity sha512-ZCKAlczLBbFd3aGAhowpYEy69Te3Z68cg8bnHHl6WnSCvnKpbM6pQrz957HWMa8LKVuhnD9uMplmMAHwGQtHeg==
   dependencies:
     klona "^2.0.4"
     loader-utils "^2.0.0"
