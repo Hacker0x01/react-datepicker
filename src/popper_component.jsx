@@ -6,10 +6,6 @@ import TabLoop from "./tab_loop";
 import Portal from "./portal";
 
 export const popperPlacementPositions = placements;
-<<<<<<< HEAD
-const datepickerTriangleSize = 8;
-=======
->>>>>>> parent of d9d5fbb... chore!: upgrade react-popper
 
 export default class PopperComponent extends React.Component {
   static get defaultProps() {
@@ -97,21 +93,12 @@ export default class PopperComponent extends React.Component {
         </Popper>
       );
     }
-<<<<<<< HEAD
-    if (this.props.popperContainer) {
-      popper = (
-        <this.props.popperContainer>{popper}</this.props.popperContainer>
-      );
-    }
-    if (!hidePopper && portalId) {
-=======
 
     if (this.props.popperContainer) {
       popper = React.createElement(this.props.popperContainer, {}, popper);
     }
 
     if (portalId && !hidePopper) {
->>>>>>> parent of d9d5fbb... chore!: upgrade react-popper
       popper = <Portal portalId={portalId}>{popper}</Portal>;
     }
 
