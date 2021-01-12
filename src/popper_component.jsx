@@ -59,22 +59,7 @@ export default class PopperComponent extends React.Component {
       const classes = classnames("react-datepicker-popper", className);
       popper = (
         <Popper
-          modifiers={[
-            {
-              name: "offset",
-              options: {
-                offset: ({ placement }) => {
-                  const skidding = 0;
-                  const distance =
-                    placement.startsWith("left") ||
-                    placement.startsWith("right")
-                      ? datepickerTriangleSize
-                      : datepickerTriangleSize + 2;
-                  return [skidding, distance];
-                },
-              },
-            },
-          ].concat(popperModifiers || [])}
+          modifiers={popperModifiers}
           placement={popperPlacement}
           {...popperProps}
         >
