@@ -81,7 +81,7 @@
 |`placeholderText`|`string`|||
 |`popperClassName`|`string`|||
 |`popperContainer`|`func`|||
-|`popperModifiers`|`arrayOf[object Object]`|||
+|`popperModifiers`|`object`|||
 |`popperPlacement`|`enumpopperPlacementPositions`|||
 |`popperProps`|`object`|||
 |`portalId`|`string`|||

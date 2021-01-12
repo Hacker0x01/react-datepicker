@@ -9,24 +9,16 @@
 |`hidePopper`|`bool`|`true`||
 |`popperComponent`|`element`|||
 |`popperContainer`|`func`|||
-|`popperModifiers`|`arrayOf[object Object]`|`[
-  {
-    name: "flip",
-    options: {
-      allowedAutoPlacements: ["top", "bottom"],
-      rootBoundary: "viewport",
-    },
-  },
-  {
-    name: "preventOverflow",
-    options: {
-      rootBoundary: "viewport",
-    },
-  },
-]`||
+|`popperModifiers`|`object`|`{
+  preventOverflow: {
+    enabled: true,
+    escapeWithReference: true,
+    boundariesElement: "viewport"
+  }
+}`||
 |`popperOnKeyDown`|`func`|||
 |`popperPlacement`|`enumpopperPlacementPositions`|`"bottom-start"`||
-|`popperProps`|`object`|||
+|`popperProps`|`object`|`{}`||
 |`portalId`|`string`|||
 |`targetComponent`|`element`|||
 |`wrapperClassName`|`string`|||
