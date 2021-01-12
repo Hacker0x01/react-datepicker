@@ -3,30 +3,20 @@
   return (
     <DatePicker
       selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      onChange={date => setStartDate(date)}
       popperClassName="some-custom-class"
       popperPlacement="top-end"
-      popperModifiers={[
-        {
-          name: "flip",
-          options: {
-            allowedAutoPlacements: ["top", "bottom"],
-            rootBoundary: "viewport",
-          },
+      popperModifiers={{
+        offset: {
+          enabled: true,
+          offset: "5px, 10px"
         },
-        {
-          name: 'offset',
-          options: {
-            offset: [5, 10],
-          },
-        },
-        {
-          name: "preventOverflow",
-          options: {
-            rootBoundary: "viewport",
-          },
+        preventOverflow: {
+          enabled: true,
+          escapeWithReference: false,
+          boundariesElement: "viewport"
         }
-      ]}
+      }}
     />
   );
 };
