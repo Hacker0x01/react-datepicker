@@ -671,10 +671,6 @@ export default class Calendar extends React.Component {
   renderCustomHeader = (headerArgs = {}) => {
     const { monthDate, i } = headerArgs;
 
-    if (i !== 0 && i !== undefined) {
-      return null;
-    }
-
     const prevMonthButtonDisabled = monthDisabledBefore(
       this.state.date,
       this.props
@@ -707,6 +703,7 @@ export default class Calendar extends React.Component {
       >
         {this.props.renderCustomHeader({
           ...this.state,
+          customHeaderCount: i,
           changeMonth: this.changeMonth,
           changeYear: this.changeYear,
           decreaseMonth: this.decreaseMonth,
