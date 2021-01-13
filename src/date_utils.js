@@ -75,7 +75,7 @@ export function newDate(value) {
 
 export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
-  let localeObject = getLocaleObject(locale) || getDefaultLocale();
+  let localeObject = getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach(df => {
