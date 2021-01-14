@@ -51,6 +51,7 @@ export default class Month extends React.Component {
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
+    showFourColumnMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
@@ -324,8 +325,14 @@ export default class Month extends React.Component {
     const {
       showFullMonthYearPicker,
       showTwoColumnMonthYearPicker,
+      showFourColumnMonthYearPicker,
       locale
     } = this.props;
+    const monthsFourColumns = [
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8, 9, 10, 11]
+    ];
     const monthsThreeColumns = [
       [0, 1, 2],
       [3, 4, 5],
@@ -340,7 +347,9 @@ export default class Month extends React.Component {
       [8, 9],
       [10, 11]
     ];
-    const monthLayout = showTwoColumnMonthYearPicker
+    const monthLayout = showFourColumnMonthYearPicker ?
+      monthsFourColumns :
+      showTwoColumnMonthYearPicker
       ? monthsTwoColumns
       : monthsThreeColumns;
     return monthLayout.map((month, i) => (
