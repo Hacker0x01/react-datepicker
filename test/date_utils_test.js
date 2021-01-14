@@ -27,6 +27,7 @@ import {
   isQuarterInRange,
   getStartOfYear,
   getYearsPeriod,
+  setDefaultLocale,
   yearsDisabledAfter,
   yearsDisabledBefore,
   getYear
@@ -721,6 +722,18 @@ describe("date_utils", function() {
       const actual = parseDate(value, dateFormat, null, false);
 
       expect(actual).to.be.null;
+    });
+
+    it("should parse date based on default locale", () => {
+      const value = "26/05/1995";
+      const dateFormat = "P";
+
+      const expected = new Date("05/26/1995");
+      setDefaultLocale('pt-BR');
+      const actual = parseDate(value, dateFormat, null, false);
+      setDefaultLocale(null);
+
+      assert(isEqual(actual, expected));
     });
   });
 
