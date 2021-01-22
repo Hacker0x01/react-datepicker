@@ -88,8 +88,27 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
       }
+      if (!isValid(parsedDate)){
+        df = df
+        .match(longFormattingTokensRegExp)
+        .map(function(substring) {
+          var firstCharacter = substring[0];
+          if (firstCharacter === "p" || firstCharacter === "P") {
+            var longFormatter = longFormatters[firstCharacter];
+            return localeObject
+              ? longFormatter(substring, localeObject.formatLong)
+              : firstCharacter;
+          }
+          return substring;
+        })
+        .join("");
+
+        if (value.length > 0) {
+          parsedDate = parse(value, df.slice(0, value.length), new Date());
+        }
+      }
     });
-    return parsedDate;
+    return isValid(parsedDate)? parsedDate : null;
   }
 
   parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
