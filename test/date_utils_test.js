@@ -689,12 +689,11 @@ describe("date_utils", function() {
 
       expect(parseDate(value, dateFormat, null, true)).to.be.null;
     });
-
-    it("should not parse date that does not match any of the formats", () => {
+       it("should return parse date in default format that does not match any of the formats", () => {
       const value = "01/15/20";
       const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
 
-      expect(parseDate(value, dateFormat, null, true)).to.be.null;
+      expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
     });
 
     it("should parse date without strict parsing", () => {
