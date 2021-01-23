@@ -18,7 +18,7 @@ import getMinutes from "date-fns/getMinutes";
 import getHours from "date-fns/getHours";
 import getDay from "date-fns/getDay";
 import getDate from "date-fns/getDate";
-import dfgetWeek from "date-fns/getWeek";
+import getISOWeek from "date-fns/getISOWeek";
 import getMonth from "date-fns/getMonth";
 import getQuarter from "date-fns/getQuarter";
 import getYear from "date-fns/getYear";
@@ -197,7 +197,7 @@ export function getWeek(date, locale) {
   let localeObj =
     (locale && getLocaleObject(locale)) ||
     (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
-  return dfgetWeek(date, localeObj ? { locale: localeObj } : null);
+  return getISOWeek(date, localeObj ? { locale: localeObj } : null);
 }
 
 export function getDayOfWeekCode(day, locale) {

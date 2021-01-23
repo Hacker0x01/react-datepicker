@@ -29,7 +29,7 @@ import {
   getYearsPeriod,
   yearsDisabledAfter,
   yearsDisabledBefore,
-  getYear
+  getWeek
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -845,6 +845,23 @@ describe("date_utils", function() {
       const day = newDate("2044-08-08 00:00:00");
       const minDate = newDate("2020-08-08 00:00:00");
       expect(yearsDisabledBefore(day, { minDate })).to.be.false;
+    });
+  });
+
+  describe("week", () => {
+    it("should return the first 2021 year week", () => {
+      const first2021Day = new Date("2021-01-01");
+      assert(getWeek(first2021Day) === 53);
+    });
+
+    it("should return the 4 2021 year week", () => {
+      const date = new Date("2021-01-18");
+      assert(getWeek(date) === 3);
+    });
+
+    it("should return the first 2022 year week", () => {
+      const first2022Day = new Date("2022-01-01");
+      assert(getWeek(first2022Day) === 52);
     });
   });
 });
