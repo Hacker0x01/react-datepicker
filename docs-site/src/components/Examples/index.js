@@ -69,6 +69,7 @@ import MonthPicker from "../../examples/monthPicker";
 import YearPicker from "../../examples/yearPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
+import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
@@ -276,6 +277,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Month Picker Two Columns Layout",
       component: monthPickerTwoColumns
+    },
+    {
+      title: "Month Picker Four Columns Layout",
+      component: monthPickerFourColumns
     },
     {
       title: "Month dropdown",
