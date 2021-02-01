@@ -1,15 +1,15 @@
 import fs from "fs";
 import path from "path";
 
-import babel from "rollup-plugin-babel";
+import babel from "@rollup/plugin-babel";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import filesize from "rollup-plugin-filesize";
 import localResolve from "rollup-plugin-local-resolve";
 import { terser } from "rollup-plugin-terser";
 
-import replace from "rollup-plugin-replace";
+import replace from "@rollup/plugin-replace";
 import pkg from "./package.json";
 
 // it's important to mark all subpackages of data-fns as externals
@@ -57,7 +57,7 @@ const config = {
       extensions: [".js", ".jsx"]
     }),
     peerDepsExternal(),
-    babel(),
+    babel({ babelHelpers: 'bundled' }),
     localResolve(),
     commonjs(),
     filesize(),
