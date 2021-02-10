@@ -83,7 +83,7 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate) &&
-          value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
+          value === format(tryParseDate, df, { awareOfUnicodeTokens: true, locale: localeObject });
       }
       if (isValid(tryParseDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
@@ -97,7 +97,7 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
   if (strictParsing) {
     strictParsingValueMatch =
       isValid(parsedDate) &&
-      value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true });
+      value === format(parsedDate, dateFormat, { awareOfUnicodeTokens: true, locale: localeObject });
   } else if (!isValid(parsedDate)) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)

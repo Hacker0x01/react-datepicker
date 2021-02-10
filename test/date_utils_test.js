@@ -735,6 +735,18 @@ describe("date_utils", function() {
 
       assert(isEqual(actual, expected));
     });
+
+    it("should parse localized date with strict parsing", () => {
+      const value = "sex 26/05/1995";
+      const dateFormat = "E P";
+
+      const expected = new Date("05/26/1995");
+      setDefaultLocale('pt-BR');
+      const actual = parseDate(value, dateFormat, null, true);
+      setDefaultLocale(null);
+
+      assert(isEqual(actual, expected));
+    })
   });
 
   describe("isMonthinRange", () => {
