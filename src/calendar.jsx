@@ -672,6 +672,11 @@ export default class Calendar extends React.Component {
   renderCustomHeader = (headerArgs = {}) => {
     const { monthDate, i } = headerArgs;
 
+    if (this.props.showTimeSelect &&
+      (this.state.monthContainer || this.props.showTimeSelectOnly)) {
+        return null;
+    }
+
     const prevMonthButtonDisabled = monthDisabledBefore(
       this.state.date,
       this.props
