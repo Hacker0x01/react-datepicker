@@ -18,10 +18,13 @@ import {
   yearDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
+  getEffectiveMinDateTime,
+  getEffectiveMaxDateTime,
   addZero,
   isTimeDisabled,
   isTimeInDisabledRange,
   isDayInRange,
+  isDateTimeInRange,
   parseDate,
   isMonthinRange,
   isQuarterInRange,
@@ -537,6 +540,59 @@ describe("date_utils", function() {
     });
   });
 
+  describe("getEffectiveMinDateTime", () => {
+    it("should return null by default", () => {
+      expect(getEffectiveMinDateTime({})).to.not.exist;
+    });
+
+    it("should return the min date time", () => {
+      const minTime = newDate("2016-03-30 12:20:15");
+      const result = getEffectiveMinDateTime({ minTime });
+      assert(isEqual(minTime, result));
+    });
+
+    it("should return the minimum include date and time", () => {
+      const date1 = newDate("2016-03-30 12:20:15");
+      const date2 = newDate("2016-03-30 12:19:00");
+      const includeTimes = [date1, date2];
+      assert(isEqual(getEffectiveMinDateTime({ includeTimes }), date2));
+    });
+
+    it("should return the minimum include date satisfying the min date", () => {
+      const minTime = newDate("2016-03-31 15:00:00");
+      const date1 = newDate("2016-03-31 14:59:00");
+      const date2 = newDate("2016-03-31 15:01:00");
+      const includeTimes = [date1, date2];
+      assert(isEqual(getEffectiveMinDateTime({ minTime, includeTimes }), date2));
+    });
+  });
+
+  describe("getEffectiveMaxDateTime", () => {
+    it("should return null by default", () => {
+      expect(getEffectiveMaxDateTime({})).to.not.exist;
+    });
+
+    it("should return the max date", () => {
+      const maxTime = newDate("2016-03-30 12:20:15");
+      assert(isEqual(getEffectiveMaxDateTime({ maxTime }), maxTime));
+    });
+
+    it("should return the maximum include date and time", () => {
+      const date1 = newDate("2016-03-30 12:20:00");
+      const date2 = newDate("2016-03-30 12:20:10");
+      const includeTimes = [date1, date2];
+      assert(isEqual(getEffectiveMaxDateTime({ includeTimes }), date2));
+    });
+
+    it("should return the maximum include date satisfying the max date", () => {
+      const maxTime = newDate("2016-03-31 00:00:00");
+      const date1 = newDate("2016-03-31 00:01:00");
+      const date2 = newDate("2016-03-31 00:35:00");
+      const includeTimes = [date1, date2];
+      assert(isEqual(getEffectiveMaxDateTime({ maxTime, includeTimes }), date1));
+    });
+  });
+
   describe("addZero", () => {
     it("should return the same number if greater than 10", () => {
       const input = 11;
@@ -666,6 +722,36 @@ describe("date_utils", function() {
       const startDate = newDate("2016-02-15 09:40");
       const endDate = newDate("2016-01-15 08:40");
       expect(isDayInRange(day, startDate, endDate)).to.be.false;
+    });
+  });
+
+  describe("isDateTimeInRange", () => {
+    it("should tell if day and time is in range", () => {
+      const date = newDate("2016-02-14 10:25");
+      const startDate = newDate("2016-02-14 09:40");
+      const endDate = newDate("2016-02-14 10:27");
+      expect(isDateTimeInRange(date, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day and time is in range of many days", () => {
+      const date = newDate("2016-02-15 10:25");
+      const startDate = newDate("2016-02-14 09:40");
+      const endDate = newDate("2016-02-17 10:27");
+      expect(isDateTimeInRange(date, startDate, endDate)).to.be.true;
+    });
+
+    it("should tell if day is not in range", () => {
+      const date = newDate("2016-02-14 10:28");
+      const startDate = newDate("2016-02-14 09:40");
+      const endDate = newDate("2016-02-14 10:27");
+      expect(isDateTimeInRange(date, startDate, endDate)).to.be.false;
+    });
+
+    it("should not throw exception if end date is before start date", () => {
+      const date = newDate("2016-02-14 10:28");
+      const startDate = newDate("2016-02-14 09:40");
+      const endDate = newDate("2016-02-14 08:00");
+      expect(isDateTimeInRange(date, startDate, endDate)).to.be.false;
     });
   });
 
