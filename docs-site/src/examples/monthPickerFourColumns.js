@@ -4,8 +4,10 @@
     <DatePicker
       selected={startDate}
       onChange={date => setStartDate(date)}
-      locale="en-GB"
-      showWeekNumbers
+      dateFormat="MM/yyyy"
+      showMonthYearPicker
+      showFullMonthYearPicker
+      showFourColumnMonthYearPicker
     />
   );
 };

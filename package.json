@@ -65,7 +65,7 @@
     "highlight.js": "^10.1.1",
     "husky": "^4.2.5",
     "istanbul-instrumenter-loader": "^3.0.1",
-    "karma": "^5.1.0",
+    "karma": "^6.0.1",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^2.0.1",
     "karma-firefox-launcher": "^2.0.0",
