@@ -1,3 +1,20 @@
+%navigation-chevron {
+  border-color: $datepicker__muted-color;
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  content: "";
+  display: block;
+  height: 9px;
+  position: absolute;
+  top: 6px;
+  width: 9px;
+  &--disabled,
+  &--disabled:hover {
+    border-color: $datepicker__navigation-disabled-color;
+    cursor: default;
+  }
+}
+
 %triangle-arrow {
   margin-left: -$datepicker__triangle-size;
   position: absolute;
