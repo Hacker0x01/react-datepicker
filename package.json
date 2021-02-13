@@ -73,7 +73,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^4.0.2",
+    "karma-webpack": "^5.0.0",
     "lint-staged": "^10.2.11",
     "mocha": "^8.0.1",
     "node-sass": "^5.0.0",
