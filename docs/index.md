@@ -102,6 +102,7 @@
 |`selectsStart`|`bool`|||
 |`shouldCloseOnSelect`|`bool`|`true`||
 |`showDisabledMonthNavigation`|`bool`|||
+|`showFourColumnMonthYearPicker`|`bool`|`false`||
 |`showFullMonthYearPicker`|`bool`|`false`||
 |`showMonthDropdown`|`bool`|||
 |`showMonthYearDropdown`|`bool`|||
