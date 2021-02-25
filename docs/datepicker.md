@@ -86,7 +86,6 @@ General datepicker component.
 | `title`                      | `string`                       |                 |                                            |
 | `todayButton`                | `node`                         |                 |                                            |
 | `useWeekdaysShort`           | `bool`                         |                 |                                            |
-| `utcOffset`                  | `union(number\|string)`        |                 |                                            |
 | `value`                      | `string`                       |                 |                                            |
 | `weekLabel`                  | `string`                       |                 |                                            |
 | `withPortal`                 | `bool`                         | `false`         |                                            |
