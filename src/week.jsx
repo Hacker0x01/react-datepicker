@@ -42,6 +42,7 @@ export default class Week extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
@@ -125,6 +126,7 @@ export default class Week extends React.Component {
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
             selectsRange={this.props.selectsRange}
+            showWeekPicker={this.props.showWeekPicker}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
