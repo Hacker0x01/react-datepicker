@@ -44,7 +44,7 @@ export default class CodeExampleComponent extends React.Component {
               ...DateFNS,
               range,
               fi,
-              forwardRef
+              React
             }}
             theme={prismGitHubTheme}
           >
