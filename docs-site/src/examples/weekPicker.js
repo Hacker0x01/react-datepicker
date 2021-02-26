@@ -4,6 +4,8 @@
     <DatePicker
       selected={startDate}
       onChange={date => setStartDate(date)}
+      onWeekSelect={() => alert("bla!")}
+      showWeekNumbers
       showWeekPicker
     />
   );
