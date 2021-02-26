@@ -686,10 +686,18 @@ export default class DatePicker extends React.Component {
       let newSelection;
       switch (eventKey) {
         case "ArrowLeft":
-          newSelection = subDays(copy, 1);
+          if (this.props.showWeekPicker) {
+            newSelection = subWeeks(copy, 1);
+          } else {
+            newSelection = subDays(copy, 1);
+          }
           break;
         case "ArrowRight":
-          newSelection = addDays(copy, 1);
+          if (this.props.showWeekPicker) {
+            newSelection = addWeeks(copy, 1);
+          } else {
+            newSelection = addDays(copy, 1);
+          }
           break;
         case "ArrowUp":
           newSelection = subWeeks(copy, 1);

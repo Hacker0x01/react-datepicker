@@ -168,6 +168,7 @@ export default class Month extends React.Component {
           selectsEnd={this.props.selectsEnd}
           selectsRange={this.props.selectsRange}
           showWeekNumber={this.props.showWeekNumbers}
+          showWeekPicker={this.props.showWeekPicker}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
