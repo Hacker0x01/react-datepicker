@@ -1,6 +1,6 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomInput = React.forwardRef(
+  const ExampleCustomInput = forwardRef(
     ({ value, onClick }, ref) => (
       <button className="example-custom-input" onClick={onClick} ref={ref}>
         {value}
