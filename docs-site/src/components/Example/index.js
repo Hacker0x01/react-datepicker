@@ -37,6 +37,7 @@ export default class CodeExampleComponent extends React.Component {
           <LiveProvider
             code={component.trim()}
             scope={{
+              // NB any globals added here should also be referenced in ../../examples/.eslintrc
               PropTypes,
               useState,
               DatePicker,
