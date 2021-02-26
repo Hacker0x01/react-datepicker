@@ -117,6 +117,7 @@
 |`showWeekNumbers`|`bool`|||
 |`showYearDropdown`|`bool`|||
 |`showYearPicker`|`bool`|`false`||
+|`showWeekPicker`|`bool`|`false`||
 |`startDate`|`instanceOfDate`|||
 |`startOpen`|`bool`|||
 |`strictParsing`|`bool`|`false`||
