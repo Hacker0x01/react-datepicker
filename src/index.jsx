@@ -30,6 +30,7 @@ import {
   getHightLightDaysMap,
   getYear,
   getMonth,
+  getStartOfWeek,
   registerLocale,
   setDefaultLocale,
   getDefaultLocale,
@@ -482,6 +483,9 @@ export default class DatePicker extends React.Component {
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event);
     }
+    if (this.props.showWeekPicker) {
+      date = getStartOfWeek(date, this.props.locale)
+    }
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
@@ -558,6 +562,9 @@ export default class DatePicker extends React.Component {
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
+      if (this.props.showWeekPicker) {
+        date = getStartOfWeek(date, this.props.locale)
+      }
       if (hasMinDate && hasMaxDate) {
         isValidDateSelection = isDayInRange(
           date,

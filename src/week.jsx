@@ -2,7 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Day from "./day";
 import WeekNumber from "./week_number";
-import * as utils from "./date_utils";
+import classnames from "classnames";
+
+import {
+  addDays,
+  getWeek,
+  getStartOfWeek,
+  isSameDay
+} from "./date_utils";
 
 export default class Week extends React.Component {
   static get defaultProps() {
@@ -73,6 +80,10 @@ export default class Week extends React.Component {
     if (typeof this.props.onWeekSelect === "function") {
       this.props.onWeekSelect(day, weekNumber, event);
     }
+    if (this.props.showWeekPicker) {
+      const startOfWeek = getStartOfWeek(day, this.props.locale);
+      this.handleDayClick(startOfWeek, event)
+    }
     if (this.props.shouldCloseOnSelect) {
       this.props.setOpen(false);
     }
@@ -82,29 +93,33 @@ export default class Week extends React.Component {
     if (this.props.formatWeekNumber) {
       return this.props.formatWeekNumber(date);
     }
-    return utils.getWeek(date);
+    return getWeek(date);
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale);
+    const startOfWeek = getStartOfWeek(this.props.day, this.props.locale);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {
-      const onClickAction = this.props.onWeekSelect
+      const onClickAction = this.props.onWeekSelect || this.props.showWeekPicker
         ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
         : undefined;
       days.push(
         <WeekNumber
           key="W"
           weekNumber={weekNumber}
+          date={startOfWeek}
           onClick={onClickAction}
+          selected={this.props.selected}
+          preSelection={this.props.preSelection}
           ariaLabelPrefix={this.props.ariaLabelPrefix}
+          showWeekPicker={this.props.showWeekPicker}
         />
       );
     }
     return days.concat(
       [0, 1, 2, 3, 4, 5, 6].map(offset => {
-        const day = utils.addDays(startOfWeek, offset);
+        const day = addDays(startOfWeek, offset);
         return (
           <Day
             ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
@@ -114,6 +129,7 @@ export default class Week extends React.Component {
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+            locale={this.props.locale}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
@@ -145,7 +161,22 @@ export default class Week extends React.Component {
     );
   };
 
+  isSameDay = other => isSameDay(getStartOfWeek(this.props.day, this.props.locale), other)
+
+  isKeyboardSelected = () =>
+    !this.props.disabledKeyboardNavigation &&
+    !this.isSameDay(this.props.selected) &&
+    this.isSameDay(this.props.preSelection);
+
   render() {
-    return <div className="react-datepicker__week">{this.renderDays()}</div>;
+    const { day, locale, selected } = this.props;
+
+    const startOfWeek = getStartOfWeek(day, locale);
+    const weekNumberClasses = {
+      "react-datepicker__week": true,
+      "react-datepicker__week--selected": this.isSameDay(this.props.selected),
+      "react-datepicker__week--keyboard-selected": this.isKeyboardSelected(),
+    };
+    return <div className={classnames(weekNumberClasses)}>{this.renderDays()}</div>;
   }
 }
