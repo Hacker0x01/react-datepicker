@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import PropTypes from "prop-types";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import DatePicker, {
@@ -43,7 +43,8 @@ export default class CodeExampleComponent extends React.Component {
               CalendarContainer,
               ...DateFNS,
               range,
-              fi
+              fi,
+              forwardRef
             }}
             theme={prismGitHubTheme}
           >
