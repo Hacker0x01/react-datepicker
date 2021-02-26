@@ -95,6 +95,7 @@ export default class DatePicker extends React.Component {
       showFourColumnMonthYearPicker: false,
       showYearPicker: false,
       showQuarterYearPicker: false,
+      showWeekPicker: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
@@ -227,6 +228,7 @@ export default class DatePicker extends React.Component {
     showFourColumnMonthYearPicker: PropTypes.bool,
     showYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
@@ -897,6 +899,7 @@ export default class DatePicker extends React.Component {
         showFourColumnMonthYearPicker={this.props.showFourColumnMonthYearPicker}
         showYearPicker={this.props.showYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
+        showWeekPicker={this.props.showWeekPicker}
         showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
         handleOnKeyDown={this.onDayKeyDown}
