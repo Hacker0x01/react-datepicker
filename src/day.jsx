@@ -14,6 +14,7 @@ import {
   isBefore,
   isAfter,
   getDayOfWeekCode,
+  getStartOfWeek,
   formatDate
 } from "./date_utils";
 
@@ -28,6 +29,10 @@ export default class Day extends React.Component {
     highlightDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object })
+    ]),
     month: PropTypes.number,
     onClick: PropTypes.func,
     onMouseEnter: PropTypes.func,
@@ -85,12 +90,14 @@ export default class Day extends React.Component {
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+    !(this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected)) &&
+    (this.isSameDay(this.props.preSelection) || this.isSameWeek(this.props.preSelection));
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
+
+  isSameWeek = other => this.props.showWeekPicker && isSameDay(other, getStartOfWeek(this.props.day, this.props.locale))
 
   getHighLightedClass = defaultClassName => {
     const { day, highlightDates } = this.props;
@@ -226,7 +233,7 @@ export default class Day extends React.Component {
       {
         "react-datepicker__day--disabled": this.isDisabled(),
         "react-datepicker__day--excluded": this.isExcluded(),
-        "react-datepicker__day--selected": this.isSameDay(this.props.selected),
+        "react-datepicker__day--selected": this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
         "react-datepicker__day--range-start": this.isRangeStart(),
         "react-datepicker__day--range-end": this.isRangeEnd(),
