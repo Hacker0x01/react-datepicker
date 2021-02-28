@@ -4,7 +4,8 @@
     <DatePicker
       selected={startDate}
       onChange={date => setStartDate(date)}
-      dateFormat="II/yyyy"
+      dateFormat="I/R"
+      locale="en-GB"
       showWeekNumbers
       showWeekPicker
     />
