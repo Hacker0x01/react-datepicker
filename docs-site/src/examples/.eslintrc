@@ -29,6 +29,7 @@
         "getMonth": false,
         "PropTypes": false,
         "CalendarContainer": false,
-        "subMonths": false
+        "subMonths": false,
+        "forwardRef": false
     }
 }
