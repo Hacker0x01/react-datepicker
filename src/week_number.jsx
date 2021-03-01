@@ -16,7 +16,6 @@ export default class WeekNumber extends React.Component<{
   showWeekNumber?: boolean,
   disabledKeyboardNavigation?: boolean,
   handleOnKeyDown?: Function,
-  isInputFocused?: boolean,
   containerRef: object,
 }> {
   static propTypes = {
@@ -28,8 +27,9 @@ export default class WeekNumber extends React.Component<{
     showWeekPicker: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
+    inline: PropTypes.bool,
+    shouldFocusDayInline: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
-    isInputFocused: PropTypes.bool,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.instanceOf(Element) })
