@@ -12,7 +12,8 @@ export default class WeekNumber extends React.Component<{
   preSelection: date,
   onClick?: Function,
   ariaLabelPrefix?: string,
-  showWeekPicker?: boolean
+  showWeekPicker?: boolean,
+  showWeekNumber?: boolean
 }> {
   static propTypes = {
     weekNumber: PropTypes.number.isRequired,
@@ -20,7 +21,8 @@ export default class WeekNumber extends React.Component<{
     selected: PropTypes.instanceOf(Date),
     preSelection: PropTypes.instanceOf(Date),
     onClick: PropTypes.func,
-    showWeekPicker: PropTypes.bool
+    showWeekPicker: PropTypes.bool,
+    showWeekNumber: PropTypes.bool
   };
 
   handleClick = (event: any) => {
@@ -36,6 +38,16 @@ export default class WeekNumber extends React.Component<{
     !this.isSameDay(this.props.selected) &&
     this.isSameDay(this.props.preSelection);
 
+  getTabIndex = () =>
+    this.props.showWeekPicker && this.props.showWeekNumber &&
+    (
+      this.isKeyboardSelected() ||
+      (this.isSameDay(this.props.selected) && isSameDay(this.props.preSelection, this.props.selected))
+    )
+      ? 0
+      : -1;
+
+
   render() {
     const { weekNumber, ariaLabelPrefix = "week ", onClick, selected } = this.props;
 
@@ -48,6 +60,7 @@ export default class WeekNumber extends React.Component<{
     return (
       <div
         className={classnames(weekNumberClasses)}
+        tabIndex={this.getTabIndex()}
         aria-label={`${ariaLabelPrefix} ${this.props.weekNumber}`}
         onClick={this.handleClick}
       >

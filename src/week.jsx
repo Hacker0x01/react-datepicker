@@ -114,6 +114,7 @@ export default class Week extends React.Component {
           preSelection={this.props.preSelection}
           ariaLabelPrefix={this.props.ariaLabelPrefix}
           showWeekPicker={this.props.showWeekPicker}
+          showWeekNumber={this.props.showWeekNumber}
         />
       );
     }
@@ -143,6 +144,7 @@ export default class Week extends React.Component {
             selectsEnd={this.props.selectsEnd}
             selectsRange={this.props.selectsRange}
             showWeekPicker={this.props.showWeekPicker}
+            showWeekNumber={this.props.showWeekNumber}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
