@@ -347,7 +347,7 @@
 
   &.react-datepicker__week-number--clickable {
     cursor: pointer;
-    &:not(&--selected):not(&--keyboard-selected):hover {
+    &:not(.react-datepicker__week-number--selected):not(.react-datepicker__week-number--keyboard-selected):hover {
       border-radius: $datepicker__border-radius;
       background-color: $datepicker__background-color;
     }
@@ -380,7 +380,7 @@
   white-space: nowrap;
 
   &--selected {
-    
+
   }
 }
 
