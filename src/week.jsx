@@ -115,6 +115,9 @@ export default class Week extends React.Component {
           ariaLabelPrefix={this.props.ariaLabelPrefix}
           showWeekPicker={this.props.showWeekPicker}
           showWeekNumber={this.props.showWeekNumber}
+          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
+          handleOnKeyDown={this.props.handleOnKeyDown}
+          isInputFocused={this.props.isInputFocused}
         />
       );
     }

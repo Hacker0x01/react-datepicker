@@ -13,7 +13,10 @@ export default class WeekNumber extends React.Component<{
   onClick?: Function,
   ariaLabelPrefix?: string,
   showWeekPicker?: boolean,
-  showWeekNumber?: boolean
+  showWeekNumber?: boolean,
+  disabledKeyboardNavigation?: boolean,
+  handleOnKeyDown?: Function,
+  isInputFocused?: boolean
 }> {
   static propTypes = {
     weekNumber: PropTypes.number.isRequired,
@@ -22,13 +25,26 @@ export default class WeekNumber extends React.Component<{
     preSelection: PropTypes.instanceOf(Date),
     onClick: PropTypes.func,
     showWeekPicker: PropTypes.bool,
-    showWeekNumber: PropTypes.bool
+    showWeekNumber: PropTypes.bool,
+    disabledKeyboardNavigation: PropTypes.bool,
+    handleOnKeyDown: PropTypes.func,
+    isInputFocused: PropTypes.bool
   };
 
   handleClick = (event: any) => {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
+  };
+
+  handleOnKeyDown = (event: any) => {
+    const eventKey = event.key;
+    if (eventKey === " ") {
+      event.preventDefault();
+      event.key = "Enter";
+    }
+
+    this.props.handleOnKeyDown(event);
   };
 
   isSameDay = other => isSameDay(this.props.date, other)
@@ -60,9 +76,10 @@ export default class WeekNumber extends React.Component<{
     return (
       <div
         className={classnames(weekNumberClasses)}
+        onKeyDown={this.handleOnKeyDown}
+        onClick={this.handleClick}
         tabIndex={this.getTabIndex()}
         aria-label={`${ariaLabelPrefix} ${this.props.weekNumber}`}
-        onClick={this.handleClick}
       >
         {weekNumber}
       </div>
