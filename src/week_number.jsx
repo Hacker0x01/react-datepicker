@@ -46,7 +46,7 @@ export default class WeekNumber extends React.Component<{
     this.handleFocusWeekNumber(prevProps);
   }
 
-  weekNumberEl = React.createRef();
+  weekNumberEl = React.createRef<HTMLDivElement>();
 
   handleClick = (event: any) => {
     if (this.props.onClick) {
@@ -83,7 +83,7 @@ export default class WeekNumber extends React.Component<{
     // various cases when we need to apply focus to the preselected week-number
     // focus the week-number on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
     // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-    handleFocusWeekNumber = (prevProps = {}) => {
+    handleFocusWeekNumber = (prevProps: any = {}) => {
       let shouldFocusWeekNumber = false;
       // only do this while the input isn't focused
       // otherwise, typing/backspacing the date manually may steal focus away from the input
