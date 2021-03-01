@@ -641,9 +641,8 @@ export default class DatePicker extends React.Component {
     if (this.state.open) {
       if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         event.preventDefault();
-        let selectorString =
-            this.props.showWeekPicker &&
-            this.props.showWeekNumbers
+        const selectorString =
+            this.props.showWeekPicker && this.props.showWeekNumbers
             ? '.react-datepicker__week-number[tabindex="0"]'
             : '.react-datepicker__day[tabindex="0"]';
         const selectedItem =
@@ -678,7 +677,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  // keyDown events passed down to day.jsx
+  // keyDown events passed down to week_number.jsx and day.jsx
   onDayKeyDown = event => {
     this.props.onKeyDown(event);
     const eventKey = event.key;

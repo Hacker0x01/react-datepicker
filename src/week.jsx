@@ -118,6 +118,7 @@ export default class Week extends React.Component {
           disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
           handleOnKeyDown={this.props.handleOnKeyDown}
           isInputFocused={this.props.isInputFocused}
+          containerRef={this.props.containerRef}
         />
       );
     }
