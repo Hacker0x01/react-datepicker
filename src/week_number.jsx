@@ -8,7 +8,7 @@ import { isSameDay } from "./date_utils";
 export default class WeekNumber extends React.Component<{
   weekNumber: number,
   date: date,
-  selected: dwate,
+  selected: date,
   preSelection: date,
   onClick?: Function,
   ariaLabelPrefix?: string,
