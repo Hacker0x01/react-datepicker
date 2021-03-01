@@ -43,6 +43,7 @@ export default class Day extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     showWeekPicker: PropTypes.bool,
+    showWeekNumber: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -269,8 +270,10 @@ export default class Day extends React.Component {
     const preSelectionDay = preSelection || this.props.preSelection;
 
     const tabIndex =
-      this.isKeyboardSelected() ||
-      (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+      !(this.props.showWeekPicker && this.props.showWeekNumber) && (
+        this.isKeyboardSelected() ||
+        (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+      )
         ? 0
         : -1;
 

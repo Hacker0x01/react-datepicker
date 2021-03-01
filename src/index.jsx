@@ -637,16 +637,19 @@ export default class DatePicker extends React.Component {
       return;
     }
 
-    // if calendar is open, these keys will focus the selected day
+    // if calendar is open, these keys will focus the selected item
     if (this.state.open) {
       if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         event.preventDefault();
-        const selectedDay =
-          this.calendar.componentNode &&
-          this.calendar.componentNode.querySelector(
-            '.react-datepicker__day[tabindex="0"]'
-          );
-        selectedDay && selectedDay.focus({ preventScroll: true });
+        let selectorString =
+            this.props.showWeekPicker &&
+            this.props.showWeekNumbers
+            ? '.react-datepicker__week-number[tabindex="0"]'
+            : '.react-datepicker__day[tabindex="0"]';
+        const selectedItem =
+            this.calendar.componentNode &&
+            this.calendar.componentNode.querySelector(selectorString);
+        selectedItem && selectedItem.focus({ preventScroll: true });
 
         return;
       }
