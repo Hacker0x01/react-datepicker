@@ -98,6 +98,8 @@ export default class Day extends React.Component {
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
 
+  isStartOfWeek = () => isSameDay(this.props.day, getStartOfWeek(this.props.day, this.props.locale))
+
   isSameWeek = other => this.props.showWeekPicker && isSameDay(other, getStartOfWeek(this.props.day, this.props.locale))
 
   getHighLightedClass = defaultClassName => {
@@ -268,9 +270,14 @@ export default class Day extends React.Component {
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
     const preSelectionDay = preSelection || this.props.preSelection;
-
+    // TODO: use isStartOfWeek
     const tabIndex =
-      !(this.props.showWeekPicker && this.props.showWeekNumber) && (
+      (
+        !(this.props.showWeekPicker && (
+          this.props.showWeekNumber ||
+          !this.isStartOfWeek()
+        ))
+      ) && (
         this.isKeyboardSelected() ||
         (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
       )
