@@ -459,13 +459,16 @@ export default class DatePicker extends React.Component {
       inputValue: event.target.value,
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT
     });
-    const date = parseDate(
+    let date = parseDate(
       event.target.value,
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing
     );
     if (date || !event.target.value) {
+      if (this.props.showWeekPicker) {
+        date = getStartOfWeek(date, this.props.locale)
+      }
       this.setSelected(date, event, true);
     }
   };
