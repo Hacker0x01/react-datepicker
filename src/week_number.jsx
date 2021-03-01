@@ -8,15 +8,17 @@ import { isSameDay } from "./date_utils";
 export default class WeekNumber extends React.Component<{
   weekNumber: number,
   date: date,
-  selected: date,
+  selected: dwate,
   preSelection: date,
   onClick?: Function,
   ariaLabelPrefix?: string,
   showWeekPicker?: boolean,
   showWeekNumber?: boolean,
   disabledKeyboardNavigation?: boolean,
-  handleOnKeyDown?: Function,
-  containerRef: object,
+  inline: boolean,
+  shouldFocusDayInline: boolean,
+  handleOnKeyDown: Function,
+  containerRef: any,
 }> {
   static propTypes = {
     weekNumber: PropTypes.number.isRequired,
@@ -40,7 +42,7 @@ export default class WeekNumber extends React.Component<{
     this.handleFocusWeekNumber();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     this.handleFocusWeekNumber(prevProps);
   }
 
@@ -62,7 +64,7 @@ export default class WeekNumber extends React.Component<{
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = other => isSameDay(this.props.date, other);
+  isSameDay = (other: date) => isSameDay(this.props.date, other);
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
