@@ -98,9 +98,9 @@ export default class Day extends React.Component {
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
 
-  isStartOfWeek = () => isSameDay(this.props.day, getStartOfWeek(this.props.day, this.props.locale))
+  isStartOfWeek = () => isSameDay(this.props.day, getStartOfWeek(this.props.day, this.props.locale));
 
-  isSameWeek = other => this.props.showWeekPicker && isSameDay(other, getStartOfWeek(this.props.day, this.props.locale))
+  isSameWeek = other => this.props.showWeekPicker && isSameDay(other, getStartOfWeek(this.props.day, this.props.locale));
 
   getHighLightedClass = defaultClassName => {
     const { day, highlightDates } = this.props;

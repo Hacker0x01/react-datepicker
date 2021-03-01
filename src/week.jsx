@@ -82,7 +82,7 @@ export default class Week extends React.Component {
     }
     if (this.props.showWeekPicker) {
       const startOfWeek = getStartOfWeek(day, this.props.locale);
-      this.handleDayClick(startOfWeek, event)
+      this.handleDayClick(startOfWeek, event);
     }
     if (this.props.shouldCloseOnSelect) {
       this.props.setOpen(false);
@@ -167,7 +167,7 @@ export default class Week extends React.Component {
     );
   };
 
-  isSameDay = other => isSameDay(getStartOfWeek(this.props.day, this.props.locale), other)
+  isSameDay = other => isSameDay(getStartOfWeek(this.props.day, this.props.locale), other);
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
