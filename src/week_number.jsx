@@ -62,7 +62,7 @@ export default class WeekNumber extends React.Component<{
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = other => isSameDay(this.props.date, other)
+  isSameDay = other => isSameDay(this.props.date, other);
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&

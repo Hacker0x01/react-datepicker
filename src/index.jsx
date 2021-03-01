@@ -467,7 +467,7 @@ export default class DatePicker extends React.Component {
     );
     if (date || !event.target.value) {
       if (this.props.showWeekPicker) {
-        date = getStartOfWeek(date, this.props.locale)
+        date = getStartOfWeek(date, this.props.locale);
       }
       this.setSelected(date, event, true);
     }
@@ -487,7 +487,7 @@ export default class DatePicker extends React.Component {
       this.props.onChangeRaw(event);
     }
     if (this.props.showWeekPicker) {
-      date = getStartOfWeek(date, this.props.locale)
+      date = getStartOfWeek(date, this.props.locale);
     }
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
