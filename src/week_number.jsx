@@ -7,9 +7,9 @@ import { isSameDay } from "./date_utils";
 
 export default class WeekNumber extends React.Component<{
   weekNumber: number,
-  date: date,
-  selected: date,
-  preSelection: date,
+  date: Date,
+  selected: Date,
+  preSelection: Date,
   onClick?: Function,
   ariaLabelPrefix?: string,
   showWeekPicker?: boolean,
@@ -103,7 +103,6 @@ export default class WeekNumber extends React.Component<{
           shouldFocusWeekNumber = false;
         }
         // the activeElement is in the container, and it is another instance of WeekNumber
-        console.warn(this.props.containerRef)
         if (
           this.props.containerRef &&
           this.props.containerRef.current &&
