@@ -11,13 +11,12 @@ export default class PopperComponent extends React.Component {
   static get defaultProps() {
     return {
       hidePopper: true,
-      popperModifiers: {
-        preventOverflow: {
-          enabled: true,
-          escapeWithReference: true,
-          boundariesElement: "viewport"
-        }
-      },
+      popperModifiers: [
+        {
+          name: "preventOverflow",
+          options: {},
+        },
+      ],
       popperProps: {},
       popperPlacement: "bottom-start"
     };
