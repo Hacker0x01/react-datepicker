@@ -5,6 +5,7 @@ import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import {
   newDate,
+  newDateWithNeutralTime,
   isDate,
   isBefore,
   isAfter,
@@ -551,21 +552,30 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  // When checking preSelection via min/maxDate, times need to be neutralized
   setPreSelection = date => {
     const hasMinDate = typeof this.props.minDate !== "undefined";
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
-      if (hasMinDate && hasMaxDate) {
+      const copyDate = newDateWithNeutralTime(date);
+      let copyMinDate, copyMaxDate;
+      if (hasMinDate) {
+        copyMinDate = newDateWithNeutralTime(this.props.minDate);
+      }
+      if (hasMaxDate) {
+        copyMaxDate = newDateWithNeutralTime(this.props.maxDate);
+      }
+      if (hasMinDate && hasMaxDate && copyDate !== null && copyMinDate !== null && copyMaxDate !== null) {
         isValidDateSelection = isDayInRange(
-          date,
-          this.props.minDate,
-          this.props.maxDate
+          copyDate,
+          copyMinDate,
+          copyMaxDate
         );
-      } else if (hasMinDate) {
-        isValidDateSelection = isAfter(date, this.props.minDate) || isEqual(date, this.props.minDate);
-      } else if (hasMaxDate) {
-        isValidDateSelection = isBefore(date, this.props.maxDate) || isEqual(date, this.props.maxDate);
+      } else if (hasMinDate && copyDate !== null && copyMinDate !== null) {
+        isValidDateSelection = isAfter(copyDate, copyMinDate) || isEqual(copyDate, copyMinDate);
+      } else if (hasMaxDate && copyDate !== null && copyMaxDate !== null) {
+        isValidDateSelection = isBefore(date, copyMaxDate) || isEqual(copyDate, copyMaxDate);
       }
     }
     if (isValidDateSelection) {
