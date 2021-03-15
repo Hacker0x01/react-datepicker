@@ -563,9 +563,9 @@ export default class DatePicker extends React.Component {
           this.props.maxDate
         );
       } else if (hasMinDate) {
-        isValidDateSelection = isAfter(date, this.props.minDate);
+        isValidDateSelection = isAfter(date, this.props.minDate) || isEqual(date, this.props.minDate);
       } else if (hasMaxDate) {
-        isValidDateSelection = isBefore(date, this.props.maxDate);
+        isValidDateSelection = isBefore(date, this.props.maxDate) || isEqual(date, this.props.maxDate);
       }
     }
     if (isValidDateSelection) {
