@@ -44,7 +44,7 @@
 
   &[data-placement^="bottom"] {
     margin-top: $datepicker__triangle-size + 2px;
-    
+
     .react-datepicker__triangle {
       @extend %triangle-arrow-up;
     }
@@ -60,7 +60,7 @@
 
   &[data-placement^="top"] {
     margin-bottom: $datepicker__triangle-size + 2px;
-    
+
     .react-datepicker__triangle {
       @extend %triangle-arrow-down;
     }
@@ -68,7 +68,7 @@
 
   &[data-placement^="right"] {
     margin-left: $datepicker__triangle-size;
-    
+
     .react-datepicker__triangle {
       left: auto;
       right: 42px;
@@ -77,7 +77,7 @@
 
   &[data-placement^="left"] {
     margin-right: $datepicker__triangle-size;
-    
+
     .react-datepicker__triangle {
       left: 42px;
       right: auto;
@@ -254,7 +254,7 @@
       display: inline-block;
       margin-left: 10px;
       input {
-        width: 85px;
+        width: auto;
       }
       input[type="time"]::-webkit-inner-spin-button,
       input[type="time"]::-webkit-outer-spin-button {

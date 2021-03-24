@@ -271,6 +271,7 @@ describe("Calendar", function() {
       getCalendar({ renderCustomHeader });
 
       const match = {
+        customHeaderCount: 0,
         changeMonth: sinon.match.func,
         changeYear: sinon.match.func,
         date: sinon.match.instanceOf(Date),
@@ -490,6 +491,20 @@ describe("Calendar", function() {
       const selected = utils.newDate(calendar.state().date);
 
       expect(utils.getYear(selected)).to.be.equal(2017);
+    });
+
+    it("should render custom headers according to monthsShown prop", () => {
+      const twoMonthsCalendar = getCalendar({
+        renderCustomHeader,
+        monthsShown: 2
+      });
+      expect(twoMonthsCalendar.find(".react-datepicker__header--custom")).to.have.length(2);
+
+      const fourMonthsCalendar = getCalendar({
+        renderCustomHeader,
+        monthsShown: 4
+      });
+      expect(fourMonthsCalendar.find(".react-datepicker__header--custom")).to.have.length(4);
     });
   });
 
