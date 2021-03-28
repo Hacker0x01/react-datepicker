@@ -36,5 +36,8 @@ jobs:
       - name: Install docs dependencies
         run: yarn --cwd docs-site install
 
-      - name: Build
+      - name: Build datepicker
+        run: yarn build
+
+      - name: Build docs
         run: yarn --cwd docs-site build
