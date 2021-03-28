@@ -31,7 +31,9 @@ jobs:
           node-version: 12.x
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install
+
+      - name: Install docs dependencies
         run: yarn --cwd docs-site install
 
       - name: Build
