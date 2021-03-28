@@ -8,8 +8,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
-
+  update:
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,9 +16,9 @@ jobs:
         node-version: [10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Get yarn cache directory path
+      - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
@@ -31,13 +30,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - run: yarn install
-    - run: yarn lint
-    - run: yarn test
-    - run: yarn run codecov
-    - run: yarn build
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
+
+      - name: Codecov
+        run: yarn run codecov
+
+      - name: Build
+        run: yarn build
