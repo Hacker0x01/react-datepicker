@@ -27,5 +27,3 @@ jobs:
     - run: yarn test
     - run: yarn run codecov
     - run: yarn build
-    - run: yarn --cwd docs-site install
-    - run: yarn --cwd docs-site build
