@@ -73,7 +73,7 @@ export function newDate(value) {
   return isValid(d) ? d : null;
 }
 
-export function parseDate(value, dateFormat, locale, strictParsing) {
+export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
   let parsedDate = null;
   let localeObject = getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
   let strictParsingValueMatch = true;
@@ -82,10 +82,10 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
       let tryParseDate = parse(value, df, new Date(), { locale: localeObject });
       if (strictParsing) {
         strictParsingValueMatch =
-          isValid(tryParseDate) &&
+          isValid(tryParseDate, minDate) &&
           value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
       }
-      if (isValid(tryParseDate) && strictParsingValueMatch) {
+      if (isValid(tryParseDate, minDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
       }
     });
@@ -129,8 +129,9 @@ export function parseDate(value, dateFormat, locale, strictParsing) {
 
 export { isDate };
 
-export function isValid(date) {
-  return isValidDate(date) && isAfter(date, new Date("1/1/1000"));
+export function isValid(date, minDate) {
+  minDate = minDate ? minDate : new Date("1/1/1000")
+  return isValidDate(date) && isAfter(date, minDate);
 }
 
 // ** Date Formatting **
