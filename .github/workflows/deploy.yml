@@ -4,6 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
+    # The branches below must be a subset of the branches above
     branches: [master]
 
 jobs:
@@ -13,6 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
