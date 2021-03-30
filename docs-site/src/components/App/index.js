@@ -106,6 +106,7 @@ const Root = () => (
     </div>
     <div className="wrapper">
       <ExampleComponents />
+      <p>test</p>
     </div>
 
     <a href="https://github.com/Hacker0x01/react-datepicker/">
