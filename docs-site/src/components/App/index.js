@@ -101,7 +101,7 @@ const Root = () => (
       </p>
       <p>
         Below are examples which also can be edited directly via the editor on
-        the left side and will be rendered on the right...
+        the left side and will be rendered on the right.
       </p>
     </div>
     <div className="wrapper">
