@@ -673,6 +673,7 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
+
   it("should not clear the preSelect date when a pressed key is not a navigation key", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("x"));
@@ -680,6 +681,38 @@ describe("DatePicker", () => {
       data.copyM.valueOf()
     );
   });
+
+  describe('when update the datepicker input text while props.minDate is set', () => {
+    let datePicker;
+    beforeEach(() => {
+      datePicker = TestUtils.renderIntoDocument(
+          <DatePicker selected={new Date('1993-07-02')} minDate={new Date('1800/01/01')} open />);
+    });
+
+    it('should auto update calendar when the updated date text is after props.minDate', () => {
+      TestUtils.Simulate.change(datePicker.input, {
+        target: {
+          value: '1801/01/01'
+        }});
+
+      expect(datePicker.input.value).to.equal('1801/01/01');
+      expect(datePicker.calendar.componentNode.querySelector(
+          '.react-datepicker__current-month'
+      ).innerHTML).to.equal('January 1801');
+    });
+
+    it('should not auto update calendar when the updated date text is before props.minDate', () => {
+      TestUtils.Simulate.change(datePicker.input, {
+        target: {
+          value: '1799/01/01'
+        }});
+
+      expect(datePicker.calendar.componentNode.querySelector(
+          '.react-datepicker__current-month'
+      ).innerHTML).to.equal('July 1993');
+    });
+  });
+
   it("should not manual select date if before minDate", () => {
     var minDate = utils.subDays(utils.newDate(), 1);
     var data = getOnInputKeyDownStuff({

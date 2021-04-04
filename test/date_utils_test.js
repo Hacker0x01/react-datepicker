@@ -868,7 +868,7 @@ describe("date_utils", function() {
     });
 
     it("should return the 4 2021 year week", () => {
-      const date = new Date("2021-01-18");
+      const date = new Date("2021-01-19");
       assert(getWeek(date) === 3);
     });
 
