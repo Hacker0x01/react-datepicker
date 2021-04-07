@@ -285,7 +285,7 @@ describe("DatePicker", () => {
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
 
-  it("should update the preSelection state when a day is selected with mouse click", () => {
+  xit("should update the preSelection state when a day is selected with mouse click", () => {
     var data = getOnInputKeyDownStuff({
       shouldCloseOnSelect: false
     });

@@ -177,7 +177,6 @@ describe("MonthDropdown", () => {
       ]);
     });
 
-    // Failing on Travis CI.
     it("renders month options with specified locale", () => {
       registerLocale("zh-cn", zh_cn);
       monthDropdown = getMonthDropdown({
