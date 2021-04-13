@@ -237,6 +237,7 @@ export default class DatePicker extends React.Component {
     filterTime: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
+    clearButtonClassName: PropTypes.string,
     previousMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node
@@ -956,13 +957,14 @@ export default class DatePicker extends React.Component {
       isClearable,
       selected,
       clearButtonTitle,
+      clearButtonClassName,
       ariaLabelClose = "Close"
     } = this.props;
     if (isClearable && selected != null) {
       return (
         <button
           type="button"
-          className="react-datepicker__close-icon"
+          className={`react-datepicker__close-icon ${clearButtonClassName}`}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}
