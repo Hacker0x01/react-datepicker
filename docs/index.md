@@ -19,6 +19,7 @@
 |`chooseDayAriaLabelPrefix`|`string`|||
 |`className`|`string`|||
 |`clearButtonTitle`|`string`|||
+|`clearButtonClassName`|`string`|||
 |`closeOnScroll`|`union(bool\|func)`|||
 |`customInput`|`element`|||
 |`customInputRef`|`string`|||
