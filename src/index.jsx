@@ -23,8 +23,11 @@ import {
   subYears,
   isDayDisabled,
   isDayInRange,
+  isDateTimeInRange,
   getEffectiveMinDate,
   getEffectiveMaxDate,
+  getEffectiveMinDateTime,
+  getEffectiveMaxDateTime,
   parseDate,
   safeDateFormat,
   getHightLightDaysMap,
@@ -323,8 +326,12 @@ export default class DatePicker extends React.Component {
 
   calcInitialState = () => {
     const defaultPreSelection = this.getPreSelection();
-    const minDate = getEffectiveMinDate(this.props);
-    const maxDate = getEffectiveMaxDate(this.props);
+    const minDate = this.props.minTime
+      ? getEffectiveMinDateTime(this.props)
+      : getEffectiveMinDate(this.props);
+    const maxDate = this.props.maxTime
+      ? getEffectiveMaxDateTime(this.props)
+      : getEffectiveMaxDate(this.props);
     const boundedPreSelection =
       minDate && isBefore(defaultPreSelection, minDate)
         ? minDate
@@ -555,9 +562,18 @@ export default class DatePicker extends React.Component {
   setPreSelection = date => {
     const hasMinDate = typeof this.props.minDate !== "undefined";
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
+    const hasMinTime = typeof this.props.minTime !== "undefined";
+    const hasMaxTime = typeof this.props.maxTime !== "undefined";
+
     let isValidDateSelection = true;
     if (date) {
-      if (hasMinDate && hasMaxDate) {
+      if (hasMinTime && hasMaxTime) {
+        isValidDateSelection = isDateTimeInRange(
+          date,
+          this.props.minTime,
+          this.props.maxTime
+        );
+      } else if (hasMinDate && hasMaxDate) {
         isValidDateSelection = isDayInRange(
           date,
           this.props.minDate,

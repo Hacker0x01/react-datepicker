@@ -310,6 +310,14 @@ export function isDayInRange(day, startDate, endDate) {
   return valid;
 }
 
+export function isDateTimeInRange(date, startDate, endDate) {
+  try {
+    return isWithinInterval(date, { start: startDate, end: endDate })
+  } catch (err) {
+    return false
+  }
+}
+
 // *** Diffing ***
 
 export function getDaysDiff(date1, date2) {
@@ -602,6 +610,32 @@ export function getEffectiveMaxDate({ maxDate, includeDates }) {
   } else {
     return maxDate;
   }
+}
+
+export function getEffectiveMinDateTime({ minTime, includeTimes }) {
+  if (!minTime && !includeTimes) {
+    return null
+  }
+  if (minTime && !includeTimes) {
+    return minTime
+  }
+  if (includeTimes && minTime) {
+    return includeTimes.find((dateTime) => isBefore(minTime, dateTime)) || minTime
+  }
+  return min(includeTimes);
+}
+
+export function getEffectiveMaxDateTime({ maxTime, includeTimes }) {
+  if (!maxTime && !includeTimes) {
+    return null
+  }
+  if (maxTime && !includeTimes) {
+    return maxTime
+  }
+  if(includeTimes && maxTime) {
+    return includeTimes.find((dateTime) => isBefore(maxTime, dateTime)) || maxTime
+  }
+  return max(includeTimes)
 }
 
 export function getHightLightDaysMap(

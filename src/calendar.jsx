@@ -37,6 +37,8 @@ import {
   yearsDisabledBefore,
   getEffectiveMinDate,
   getEffectiveMaxDate,
+  getEffectiveMinDateTime,
+  getEffectiveMaxDateTime,
   addZero,
   isValid,
   getYearsPeriod,
@@ -242,9 +244,9 @@ export default class Calendar extends React.Component {
   };
 
   getDateInView = () => {
-    const { preSelection, selected, openToDate } = this.props;
-    const minDate = getEffectiveMinDate(this.props);
-    const maxDate = getEffectiveMaxDate(this.props);
+    const { preSelection, selected, openToDate, minTime, maxTime } = this.props;
+    const minDate = minTime ? getEffectiveMinDateTime(this.props) : getEffectiveMinDate(this.props);
+    const maxDate = maxTime ? getEffectiveMaxDateTime(this.props) : getEffectiveMaxDate(this.props);
     const current = newDate();
     const initialDate = openToDate || selected || preSelection;
     if (initialDate) {
