@@ -66,6 +66,7 @@ General datepicker component.
 | `popperContainer`            | `func`                         |                 |                                            |
 | `popperModifiers`            | `object`                       |                 |                                            |
 | `popperPlacement`            | `enumpopperPlacementPositions` |                 |                                            |
+| `preventOpenOnFocus`         | `bool`                         | false           | When this is true, the datepicker will not automatically open when the date field is focussed |
 | `readOnly`                   | `bool`                         |                 |                                            |
 | `required`                   | `bool`                         |                 |                                            |
 | `scrollableYearDropdown`     | `bool`                         |                 |                                            |
