@@ -488,7 +488,13 @@ export default class DatePicker extends React.Component {
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
-      this.setOpen(false);
+      if (!this.props.selectsRange) {
+        this.setOpen(false);
+      }
+      const { startDate, endDate } = this.props;
+      if (startDate && !endDate && !isBefore(date, startDate)) {
+        this.setOpen(false);
+      }
     }
   };
 
