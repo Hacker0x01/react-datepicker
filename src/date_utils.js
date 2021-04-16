@@ -172,14 +172,14 @@ export function safeDateFormat(date, { dateFormat, locale }) {
 }
 
 export function safeDateRangeFormat(startDate, endDate, props) {
-  if (!startDate || !endDate) {
+  if (!startDate) {
     return "";
   }
 
-  return `${safeDateFormat(startDate, props)} - ${safeDateFormat(
-    endDate,
-    props
-  )}`;
+  const formattedStartDate = safeDateFormat(startDate, props);
+  const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
+
+  return `${formattedStartDate} - ${formattedEndDate}`;
 }
 
 // ** Date Setters **
