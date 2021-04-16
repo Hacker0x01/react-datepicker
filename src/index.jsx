@@ -783,7 +783,11 @@ export default class DatePicker extends React.Component {
         event.preventDefault();
       }
     }
-    this.props.onChange(null, event);
+    if (this.props.selectsRange) {
+      this.props.onChange([null, null], event);
+    } else {
+      this.props.onChange(null, event);
+    }
     this.setState({ inputValue: null });
   };
 
