@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import Calendar from "./calendar";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
+import startOfDay from "date-fns/startOfDay";
+import endOfDay from "date-fns/endOfDay";
 import {
   newDate,
-  newDateWithNeutralTime,
   isDate,
   isBefore,
   isAfter,
@@ -326,9 +327,9 @@ export default class DatePicker extends React.Component {
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const boundedPreSelection =
-      minDate && isBefore(defaultPreSelection, minDate)
+      minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
-        : maxDate && isAfter(defaultPreSelection, maxDate)
+        : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
         ? maxDate
         : defaultPreSelection;
     return {
@@ -552,30 +553,26 @@ export default class DatePicker extends React.Component {
     }
   };
 
-  // When checking preSelection via min/maxDate, times need to be neutralized
+  // When checking preSelection via min/maxDate, times need to be manipulated via startOfDay/endOfDay
   setPreSelection = date => {
     const hasMinDate = typeof this.props.minDate !== "undefined";
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
-      const copyDate = newDateWithNeutralTime(date);
-      let copyMinDate, copyMaxDate;
-      if (hasMinDate) {
-        copyMinDate = newDateWithNeutralTime(this.props.minDate);
-      }
-      if (hasMaxDate) {
-        copyMaxDate = newDateWithNeutralTime(this.props.maxDate);
-      }
-      if (hasMinDate && hasMaxDate && copyDate !== null && copyMinDate !== null && copyMaxDate !== null) {
+      const dateStartOfDay = startOfDay(date);
+      if (hasMinDate && hasMaxDate) {
+        // isDayinRange uses startOfDay internally, so not necessary to manipulate times here
         isValidDateSelection = isDayInRange(
-          copyDate,
-          copyMinDate,
-          copyMaxDate
+          date,
+          this.props.minDate,
+          this.props.maxDate
         );
-      } else if (hasMinDate && copyDate !== null && copyMinDate !== null) {
-        isValidDateSelection = isAfter(copyDate, copyMinDate) || isEqual(copyDate, copyMinDate);
-      } else if (hasMaxDate && copyDate !== null && copyMaxDate !== null) {
-        isValidDateSelection = isBefore(date, copyMaxDate) || isEqual(copyDate, copyMaxDate);
+      } else if (hasMinDate) {
+        const minDateStartOfDay = startOfDay(this.props.minDate);
+        isValidDateSelection = isAfter(date, minDateStartOfDay) || isEqual(dateStartOfDay, minDateStartOfDay);
+      } else if (hasMaxDate) {
+        const maxDateEndOfDay = endOfDay(this.props.maxDate);
+        isValidDateSelection = isBefore(date, maxDateEndOfDay) || isEqual(dateStartOfDay, maxDateEndOfDay);
       }
     }
     if (isValidDateSelection) {

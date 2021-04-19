@@ -47,20 +47,6 @@ describe("date_utils", function() {
     });
   });
 
-  describe("newDateWithNeutralTime", function() {
-    it("should return null for invalid value passed", function() {
-      expect(newDateWithNeutralTime("21123asd")).to.be.null;
-    });
-    it("should return date with hours, minutes, seconds and milliseconds set to 0", function() {
-      const date = newDateWithNeutralTime("2016-02-10")
-      expect(date.getHours() === 0).to.be.true;
-      expect(date.getMinutes() === 0).to.be.true;
-      expect(date.getSeconds() === 0).to.be.true;
-      expect(date.getMilliseconds() === 0).to.be.true;
-    });
-  });
-
-
   describe("isEqual", function() {
     it("should return true for null dates", function() {
       expect(isEqual(null, null)).to.be.true;

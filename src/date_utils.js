@@ -73,17 +73,6 @@ export function newDate(value) {
   return isValid(d) ? d : null;
 }
 
-export function newDateWithNeutralTime(value) {
-  const copy = newDate(value);
-  if (copy !== null) {
-    copy.setHours(0);
-    copy.setMinutes(0);
-    copy.setSeconds(0);
-    copy.setMilliseconds(0);
-  }
-  return copy;
-}
-
 export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
   let localeObject = getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
