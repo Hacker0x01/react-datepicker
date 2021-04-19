@@ -688,6 +688,69 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
+  it("should be possible to preSelect minDate (no maxDate set)", () => {
+    var data = getOnInputKeyDownStuff({
+      minDate: utils.newDate()
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowRight")
+    );
+     TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowLeft")
+    );
+   expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.datePicker.props.minDate, data.testFormat));
+  });
+  it("should be possible to preSelect minDate (maxDate set)", () => {
+    var data = getOnInputKeyDownStuff({
+      minDate: utils.newDate(),
+      maxDate: utils.addDays(utils.newDate(), 20)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowRight")
+    );
+     TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowLeft")
+    );
+   expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.datePicker.props.minDate, data.testFormat));
+  });
+  it("should be possible to preSelect maxDate (no minDate set)", () => {
+    var data = getOnInputKeyDownStuff({
+      maxDate: utils.addDays(utils.newDate(), 1),
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowRight")
+    );
+  expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.datePicker.props.maxDate, data.testFormat));
+  });
+  
+  it("should be possible to preSelect maxDate (minDate set)", () => {
+    var data = getOnInputKeyDownStuff({
+      minDate: utils.subDays(utils.newDate(), 20),
+      maxDate: utils.addDays(utils.newDate(), 1)
+    });
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("ArrowRight")
+    );
+  expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
+    ).to.equal(utils.formatDate(data.datePicker.props.maxDate, data.testFormat));
+  });
   it("should not clear the preSelect date when a pressed key is not a navigation key", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("x"));
