@@ -34,6 +34,7 @@ import IncludeDates from "../../examples/includeDates";
 import FilterDates from "../../examples/filterDates";
 import DateRange from "../../examples/dateRange";
 import DateRangeInputWithClearButton from "../../examples/dateRangeInputWithClearButton";
+import DateRangeWithPortal from "../../examples/dateRangeWithPortal";
 import Disabled from "../../examples/disabled";
 import DisabledKeyboardNavigation from "../../examples/disabledKeyboardNavigation";
 import ReadOnly from "../../examples/readOnly";
@@ -185,6 +186,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date Range using input with clear button",
       component: DateRangeInputWithClearButton,
+    },
+    {
+      title: "Date Range with Portal",
+      component: DateRangeWithPortal,
     },
     {
       title: "Disable datepicker",
