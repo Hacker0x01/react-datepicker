@@ -1557,7 +1557,6 @@ describe("DatePicker", () => {
       const datePicker = TestUtils.renderIntoDocument(
         <DatePicker selectsRange startDate={startDate} endDate={endDate} />
       );
-      const dateInput = datePicker.input;
       datePicker.setOpen(true);
 
       const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
