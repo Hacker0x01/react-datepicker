@@ -1565,6 +1565,26 @@ describe("DatePicker", () => {
       TestUtils.Simulate.click(day);
       expect(datePicker.state.open).to.be.false;
     });
+
+    it("has clear button rendered when isClearable is true and startDate has value", () => {
+      const startDate = new Date("2021-01-01 00:00:00");
+      const endDate = new Date("2021-01-21 00:00:00");
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          isClearable
+        />
+      );
+
+      const clearButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__close-icon"
+      );
+      expect(clearButton).to.exist;
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
