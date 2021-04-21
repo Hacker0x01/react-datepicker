@@ -15,11 +15,11 @@ export default class PopperComponent extends React.Component {
         preventOverflow: {
           enabled: true,
           escapeWithReference: true,
-          boundariesElement: "viewport"
-        }
+          boundariesElement: "viewport",
+        },
       },
       popperProps: {},
-      popperPlacement: "bottom-start"
+      popperPlacement: "bottom-start",
     };
   }
 
@@ -35,7 +35,7 @@ export default class PopperComponent extends React.Component {
     targetComponent: PropTypes.element,
     enableTabLoop: PropTypes.bool,
     popperOnKeyDown: PropTypes.func,
-    portalId: PropTypes.string
+    portalId: PropTypes.string,
   };
 
   render() {
@@ -50,7 +50,7 @@ export default class PopperComponent extends React.Component {
       targetComponent,
       enableTabLoop,
       popperOnKeyDown,
-      portalId
+      portalId,
     } = this.props;
 
     let popper;

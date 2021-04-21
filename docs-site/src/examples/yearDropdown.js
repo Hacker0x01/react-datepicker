@@ -3,7 +3,7 @@
   return (
     <DatePicker
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
       showYearDropdown
       dateFormatCalendar="MMMM"
       yearDropdownItemNumber={15}

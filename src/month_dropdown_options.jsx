@@ -6,7 +6,7 @@ export default class MonthDropdownOptions extends React.Component {
     onCancel: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     month: PropTypes.number.isRequired,
-    monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+    monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
 
   renderOptions = () => {
@@ -30,7 +30,7 @@ export default class MonthDropdownOptions extends React.Component {
     ));
   };
 
-  onChange = month => this.props.onChange(month);
+  onChange = (month) => this.props.onChange(month);
 
   handleClickOutside = () => this.props.onCancel();
 

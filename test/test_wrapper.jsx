@@ -6,7 +6,7 @@ var TestWrapper = ({ children }) => (
 );
 
 TestWrapper.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default TestWrapper;

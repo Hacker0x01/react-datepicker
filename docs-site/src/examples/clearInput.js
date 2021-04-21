@@ -3,7 +3,7 @@
   return (
     <DatePicker
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
       isClearable
       placeholderText="I have been cleared!"
     />

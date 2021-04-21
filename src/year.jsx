@@ -14,7 +14,7 @@ export default class Year extends React.Component {
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
-    yearItemNumber: PropTypes.number
+    yearItemNumber: PropTypes.number,
   };
 
   constructor(props) {
@@ -29,7 +29,7 @@ export default class Year extends React.Component {
 
   isSameDay = (y, other) => utils.isSameDay(y, other);
 
-  isKeyboardSelected = y => {
+  isKeyboardSelected = (y) => {
     const date = utils.getStartOfYear(utils.setYear(this.props.date, y));
     return (
       !this.props.disabledKeyboardNavigation &&
@@ -44,7 +44,7 @@ export default class Year extends React.Component {
     this.handleYearClick(utils.getStartOfYear(utils.setYear(date, y)), e);
   };
 
-  getYearClassNames = y => {
+  getYearClassNames = (y) => {
     const { minDate, maxDate, selected } = this.props;
     return classnames("react-datepicker__year-text", {
       "react-datepicker__year-text--selected": y === getYear(selected),
@@ -60,12 +60,15 @@ export default class Year extends React.Component {
   render() {
     const yearsList = [];
     const { date, yearItemNumber } = this.props;
-    const { startPeriod, endPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+    const { startPeriod, endPeriod } = utils.getYearsPeriod(
+      date,
+      yearItemNumber
+    );
 
     for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(
         <div
-          onClick={ev => {
+          onClick={(ev) => {
             this.onYearClick(ev, y);
           }}
           className={this.getYearClassNames(y)}

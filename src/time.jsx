@@ -13,7 +13,7 @@ import {
   isEqual,
   isTimeInDisabledRange,
   isTimeDisabled,
-  timesToInjectAfter
+  timesToInjectAfter,
 } from "./date_utils";
 
 export default class Time extends React.Component {
@@ -22,7 +22,7 @@ export default class Time extends React.Component {
       intervals: 30,
       onTimeChange: () => {},
       todayButton: null,
-      timeCaption: "Time"
+      timeCaption: "Time",
     };
   }
 
@@ -50,13 +50,13 @@ export default class Time extends React.Component {
     injectTimes: PropTypes.array,
     locale: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object })
+      PropTypes.shape({ locale: PropTypes.object }),
     ]),
-    showTimeSelectOnly: PropTypes.bool
+    showTimeSelectOnly: PropTypes.bool,
   };
 
   state = {
-    height: null
+    height: null,
   };
 
   componentDidMount() {
@@ -69,16 +69,18 @@ export default class Time extends React.Component {
     );
     if (this.props.monthRef && this.header) {
       this.setState({
-        height: this.props.monthRef.clientHeight - this.header.clientHeight
+        height: this.props.monthRef.clientHeight - this.header.clientHeight,
       });
     }
   }
 
-  handleClick = time => {
+  handleClick = (time) => {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+      ((this.props.excludeTimes ||
+        this.props.includeTimes ||
+        this.props.filterTime) &&
         isTimeDisabled(time, this.props))
     ) {
       return;
@@ -91,7 +93,7 @@ export default class Time extends React.Component {
       "react-datepicker__time-list-item",
       this.props.timeClassName
         ? this.props.timeClassName(time, currH, currM)
-        : undefined
+        : undefined,
     ];
 
     if (
@@ -104,7 +106,9 @@ export default class Time extends React.Component {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
-      ((this.props.excludeTimes || this.props.includeTimes || this.props.filterTime) &&
+      ((this.props.excludeTimes ||
+        this.props.includeTimes ||
+        this.props.filterTime) &&
         isTimeDisabled(time, this.props))
     ) {
       classes.push("react-datepicker__time-list-item--disabled");
@@ -128,7 +132,7 @@ export default class Time extends React.Component {
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
-      this.props.injectTimes.sort(function(a, b) {
+      this.props.injectTimes.sort(function (a, b) {
         return a - b;
       });
 
@@ -159,7 +163,7 @@ export default class Time extends React.Component {
         key={i}
         onClick={this.handleClick.bind(this, time)}
         className={this.liClasses(time, currH, currM)}
-        ref={li => {
+        ref={(li) => {
           if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
             this.centerLi = li;
           }
@@ -183,8 +187,12 @@ export default class Time extends React.Component {
         }`}
       >
         <div
-          className={`react-datepicker__header react-datepicker__header--time ${this.props.showTimeSelectOnly ? 'react-datepicker__header--time--only' : ''}`}
-          ref={header => {
+          className={`react-datepicker__header react-datepicker__header--time ${
+            this.props.showTimeSelectOnly
+              ? "react-datepicker__header--time--only"
+              : ""
+          }`}
+          ref={(header) => {
             this.header = header;
           }}
         >
@@ -196,7 +204,7 @@ export default class Time extends React.Component {
           <div className="react-datepicker__time-box">
             <ul
               className="react-datepicker__time-list"
-              ref={list => {
+              ref={(list) => {
                 this.list = list;
               }}
               style={height ? { height } : {}}

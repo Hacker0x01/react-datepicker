@@ -13,7 +13,7 @@
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
   return (
     <DatePicker
@@ -24,13 +24,13 @@
         decreaseMonth,
         increaseMonth,
         prevMonthButtonDisabled,
-        nextMonthButtonDisabled
+        nextMonthButtonDisabled,
       }) => (
         <div
           style={{
             margin: 10,
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
@@ -40,7 +40,7 @@
             value={getYear(date)}
             onChange={({ target: { value } }) => changeYear(value)}
           >
-            {years.map(option => (
+            {years.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -53,7 +53,7 @@
               changeMonth(months.indexOf(value))
             }
           >
-            {months.map(option => (
+            {months.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -66,7 +66,7 @@
         </div>
       )}
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
     />
   );
 };

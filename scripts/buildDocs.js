@@ -9,14 +9,14 @@ var path = require("path");
 
 var json = "";
 process.stdin.setEncoding("utf8");
-process.stdin.on("readable", function() {
+process.stdin.on("readable", function () {
   var chunk = process.stdin.read();
   if (chunk !== null) {
     json += chunk;
   }
 });
 
-process.stdin.on("end", function() {
+process.stdin.on("end", function () {
   buildDocs(JSON.parse(json));
 });
 

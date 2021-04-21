@@ -22,7 +22,7 @@ describe("TimeComponent", () => {
         includeTimes={[
           utils.addMinutes(today, 60),
           utils.addMinutes(today, 120),
-          utils.addMinutes(today, 150)
+          utils.addMinutes(today, 150),
         ]}
       />
     );

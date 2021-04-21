@@ -7,7 +7,7 @@
   return (
     <DatePicker
       selected={date}
-      onChange={date => setDate(date)}
+      onChange={(date) => setDate(date)}
       onCalendarClose={handleCalendarClose}
       onCalendarOpen={handleCalendarOpen}
     />

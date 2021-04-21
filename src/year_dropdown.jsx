@@ -18,11 +18,11 @@ export default class YearDropdown extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
     date: PropTypes.instanceOf(Date),
     onSelect: PropTypes.func,
-    setOpen: PropTypes.func
+    setOpen: PropTypes.func,
   };
 
   state = {
-    dropdownVisible: false
+    dropdownVisible: false,
   };
 
   renderSelectOptions = () => {
@@ -40,7 +40,7 @@ export default class YearDropdown extends React.Component {
     return options;
   };
 
-  onSelectChange = e => {
+  onSelectChange = (e) => {
     this.onChange(e.target.value);
   };
 
@@ -54,12 +54,12 @@ export default class YearDropdown extends React.Component {
     </select>
   );
 
-  renderReadView = visible => (
+  renderReadView = (visible) => (
     <div
       key="read"
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
-      onClick={event => this.toggleDropdown(event)}
+      onClick={(event) => this.toggleDropdown(event)}
     >
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">
@@ -90,16 +90,16 @@ export default class YearDropdown extends React.Component {
     return result;
   };
 
-  onChange = year => {
+  onChange = (year) => {
     this.toggleDropdown();
     if (year === this.props.year) return;
     this.props.onChange(year);
   };
 
-  toggleDropdown = event => {
+  toggleDropdown = (event) => {
     this.setState(
       {
-        dropdownVisible: !this.state.dropdownVisible
+        dropdownVisible: !this.state.dropdownVisible,
       },
       () => {
         if (this.props.adjustDateOnChange) {

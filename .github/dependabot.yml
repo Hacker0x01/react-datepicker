@@ -12,4 +12,3 @@ updates:
     directory: "/examples/hello-world"
     schedule:
       interval: "daily"
- 

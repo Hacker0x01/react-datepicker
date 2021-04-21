@@ -12,7 +12,7 @@
     <DatePicker
       key="example9"
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
       onBlur={handleOnBlur}
       placeholderText="View blur callbacks in console"
     />

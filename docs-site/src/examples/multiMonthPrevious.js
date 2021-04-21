@@ -4,7 +4,7 @@
     <DatePicker
       selected={startDate}
       showPreviousMonths
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
       monthsShown={2}
     />
   );

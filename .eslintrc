@@ -4,9 +4,7 @@
     "es6": true
   },
 
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
 
   "parserOptions": {
     "ecmaVersion": 6,
@@ -42,6 +40,6 @@
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,
     "react/self-closing-comp": 2,
-    "react/sort-comp": 2,
+    "react/sort-comp": 2
   }
 }

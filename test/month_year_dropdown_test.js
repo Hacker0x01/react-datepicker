@@ -8,14 +8,14 @@ import {
   subMonths,
   formatDate,
   isAfter,
-  registerLocale
+  registerLocale,
 } from "../src/date_utils";
 import fi from "date-fns/locale/fi";
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown;
   let handleChangeResult;
-  const mockHandleChange = function(changeInput) {
+  const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput;
   };
   let sandbox;
@@ -50,7 +50,7 @@ describe("MonthYearDropdown", () => {
 
   describe("scroll mode", () => {
     let selectedDate;
-    beforeEach(function() {
+    beforeEach(function () {
       selectedDate = newDate("2018-01");
       monthYearDropdown = getMonthYearDropdown({ date: selectedDate });
     });
@@ -129,7 +129,7 @@ describe("MonthYearDropdown", () => {
     it("should use dateFormat to display date in dropdown", () => {
       registerLocale("fi", fi);
       let dropdownDateFormat = getMonthYearDropdown({
-        dateFormat: "LLLL yyyy"
+        dateFormat: "LLLL yyyy",
       });
 
       expect(dropdownDateFormat.text()).to.eq("January 2018");
@@ -140,19 +140,19 @@ describe("MonthYearDropdown", () => {
 
       dropdownDateFormat = getMonthYearDropdown({
         locale: "fi",
-        showMonthYearDropdown: true
+        showMonthYearDropdown: true,
       });
       expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
-        locale: "fi"
+        locale: "fi",
       });
       expect(dropdownDateFormat.text()).to.eq("2018 tammi");
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
         locale: "fi",
-        showMonthYearDropdown: true
+        showMonthYearDropdown: true,
       });
       expect(dropdownDateFormat.text()).to.eq("2018 tammi");
     });
@@ -179,14 +179,14 @@ describe("MonthYearDropdown", () => {
       expect(select).to.have.length(1);
       expect(select.prop("value")).to.eq(expected_date.valueOf());
       var options = select.find("option");
-      expect(options.map(o => o.prop("value"))).to.eql(expected_values);
+      expect(options.map((o) => o.prop("value"))).to.eql(expected_values);
     });
 
     it("renders month options with default locale", () => {
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
       var options = monthYearDropdown.find("option");
 
-      expect(options.map(o => o.text())).to.eql([
+      expect(options.map((o) => o.text())).to.eql([
         "July 2017",
         "August 2017",
         "September 2017",
@@ -198,7 +198,7 @@ describe("MonthYearDropdown", () => {
         "March 2018",
         "April 2018",
         "May 2018",
-        "June 2018"
+        "June 2018",
       ]);
     });
 
@@ -206,10 +206,10 @@ describe("MonthYearDropdown", () => {
       registerLocale("fi", fi);
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
-        locale: "fi"
+        locale: "fi",
       });
       var options = monthYearDropdown.find("option");
-      expect(options.map(o => o.text())).to.eql([
+      expect(options.map((o) => o.text())).to.eql([
         "heinäkuu 2017",
         "elokuu 2017",
         "syyskuu 2017",
@@ -221,7 +221,7 @@ describe("MonthYearDropdown", () => {
         "maaliskuu 2018",
         "huhtikuu 2018",
         "toukokuu 2018",
-        "kesäkuu 2018"
+        "kesäkuu 2018",
       ]);
     });
 
@@ -229,7 +229,7 @@ describe("MonthYearDropdown", () => {
       const selectedMonth = newDate("2017-11");
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
-        date: selectedMonth
+        date: selectedMonth,
       });
       var select = monthYearDropdown.find(
         ".react-datepicker__month-year-select"
@@ -243,7 +243,7 @@ describe("MonthYearDropdown", () => {
       const monthToClick = newDate("2017-09");
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
-        month: selectedMonth
+        month: selectedMonth,
       });
       var select = monthYearDropdown.find(
         ".react-datepicker__month-year-select"

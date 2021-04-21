@@ -12,7 +12,7 @@
 # Linter SpaceBeforeBrace, option "allow_single_line_padding"
 
 files:
-  include: '**/*.scss'
+  include: "**/*.scss"
 options:
   formatter: stylish
   merge-default-rules: false
@@ -120,7 +120,7 @@ rules:
         - dpi
         - dpcm
         - dppx
-        - '%'
+        - "%"
   quotes:
     - 1
     - style: double
