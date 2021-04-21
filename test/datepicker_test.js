@@ -1584,6 +1584,26 @@ describe("DatePicker", () => {
       );
       expect(clearButton).to.exist;
     });
+
+    it("clearing calls onChange with [null, null] in first argument making it consistent with the onChange behaviour for selecting days for selectsRange", () => {
+      const onChangeSpy = sandbox.spy();
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          endDate={null}
+          onChange={onChangeSpy}
+          isClearable
+        />
+      );
+
+      datePicker.clear();
+
+      expect(onChangeSpy.calledOnce).to.be.true;
+      expect(onChangeSpy.args[0][0]).to.be.an("array");
+      expect(onChangeSpy.args[0][0][0]).to.be.a("null");
+      expect(onChangeSpy.args[0][0][1]).to.be.a("null");
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
