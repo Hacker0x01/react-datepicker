@@ -1552,7 +1552,7 @@ describe("DatePicker", () => {
     });
 
     it("should be closed after clicking day when startDate has a value (endDate is being selected)", () => {
-      const startDate = new Date("2021-04-20 00:00:00");
+      const startDate = new Date("2021-01-01 00:00:00");
       const endDate = null;
       const datePicker = TestUtils.renderIntoDocument(
         <DatePicker selectsRange startDate={startDate} endDate={endDate} />
