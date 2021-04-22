@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Calendar from "./calendar";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
+import startOfDay from "date-fns/startOfDay";
+import endOfDay from "date-fns/endOfDay";
 import {
   newDate,
   isDate,
@@ -240,6 +242,7 @@ export default class DatePicker extends React.Component {
     filterTime: PropTypes.func,
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
+    clearButtonClassName: PropTypes.string,
     previousMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node
@@ -328,9 +331,9 @@ export default class DatePicker extends React.Component {
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
     const boundedPreSelection =
-      minDate && isBefore(defaultPreSelection, minDate)
+      minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
-        : maxDate && isAfter(defaultPreSelection, maxDate)
+        : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
         ? maxDate
         : defaultPreSelection;
     return {
@@ -560,6 +563,7 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  // When checking preSelection via min/maxDate, times need to be manipulated via startOfDay/endOfDay
   setPreSelection = date => {
     const hasMinDate = typeof this.props.minDate !== "undefined";
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
@@ -568,16 +572,20 @@ export default class DatePicker extends React.Component {
       if (this.props.showWeekPicker) {
         date = getStartOfWeek(date, this.props.locale)
       }
+      const dateStartOfDay = startOfDay(date);
       if (hasMinDate && hasMaxDate) {
+        // isDayinRange uses startOfDay internally, so not necessary to manipulate times here
         isValidDateSelection = isDayInRange(
           date,
           this.props.minDate,
           this.props.maxDate
         );
       } else if (hasMinDate) {
-        isValidDateSelection = isAfter(date, this.props.minDate);
+        const minDateStartOfDay = startOfDay(this.props.minDate);
+        isValidDateSelection = isAfter(date, minDateStartOfDay) || isEqual(dateStartOfDay, minDateStartOfDay);
       } else if (hasMaxDate) {
-        isValidDateSelection = isBefore(date, this.props.maxDate);
+        const maxDateEndOfDay = endOfDay(this.props.maxDate);
+        isValidDateSelection = isBefore(date, maxDateEndOfDay) || isEqual(dateStartOfDay, maxDateEndOfDay);
       }
     }
     if (isValidDateSelection) {
@@ -979,13 +987,14 @@ export default class DatePicker extends React.Component {
       isClearable,
       selected,
       clearButtonTitle,
+      clearButtonClassName,
       ariaLabelClose = "Close"
     } = this.props;
     if (isClearable && selected != null) {
       return (
         <button
           type="button"
-          className="react-datepicker__close-icon"
+          className={`react-datepicker__close-icon ${clearButtonClassName}`}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}
