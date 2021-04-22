@@ -107,13 +107,14 @@ export default class WeekNumber extends React.Component<{
           this.props.containerRef &&
           this.props.containerRef.current &&
           this.props.containerRef.current.contains(document.activeElement) &&
+          document.activeElement &&
           document.activeElement.classList.contains("react-datepicker__week-number")
         ) {
           shouldFocusWeekNumber = true;
         }
       }
 
-      shouldFocusWeekNumber && this.weekNumberEl.current.focus({ preventScroll: true });
+      shouldFocusWeekNumber && this.weekNumberEl.current && this.weekNumberEl.current.focus({ preventScroll: true });
     };
 
   render() {
