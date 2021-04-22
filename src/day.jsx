@@ -15,7 +15,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   getStartOfWeek,
-  formatDate
+  formatDate,
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -31,7 +31,7 @@ export default class Day extends React.Component {
     shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object })
+      PropTypes.shape({ locale: PropTypes.object }),
     ]),
     month: PropTypes.number,
     onClick: PropTypes.func,
@@ -49,10 +49,10 @@ export default class Day extends React.Component {
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
-    monthShowsDuplicateDaysStart: PropTypes.bool
+    monthShowsDuplicateDaysStart: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -65,19 +65,19 @@ export default class Day extends React.Component {
 
   dayEl = React.createRef();
 
-  handleClick = event => {
+  handleClick = (event) => {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event);
     }
   };
 
-  handleMouseEnter = event => {
+  handleMouseEnter = (event) => {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
   };
 
-  handleOnKeyDown = event => {
+  handleOnKeyDown = (event) => {
     const eventKey = event.key;
     if (eventKey === " ") {
       event.preventDefault();
@@ -87,22 +87,32 @@ export default class Day extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = other => isSameDay(this.props.day, other);
+  isSameDay = (other) => isSameDay(this.props.day, other);
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !(this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected)) &&
-    (this.isSameDay(this.props.preSelection) || this.isSameWeek(this.props.preSelection));
+    !(
+      this.isSameDay(this.props.selected) ||
+      this.isSameWeek(this.props.selected)
+    ) &&
+    (this.isSameDay(this.props.preSelection) ||
+      this.isSameWeek(this.props.preSelection));
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
 
-  isStartOfWeek = () => isSameDay(this.props.day, getStartOfWeek(this.props.day, this.props.locale));
+  isStartOfWeek = () =>
+    isSameDay(
+      this.props.day,
+      getStartOfWeek(this.props.day, this.props.locale)
+    );
 
-  isSameWeek = other => this.props.showWeekPicker && isSameDay(other, getStartOfWeek(this.props.day, this.props.locale));
+  isSameWeek = (other) =>
+    this.props.showWeekPicker &&
+    isSameDay(other, getStartOfWeek(this.props.day, this.props.locale));
 
-  getHighLightedClass = defaultClassName => {
+  getHighLightedClass = (defaultClassName) => {
     const { day, highlightDates } = this.props;
 
     if (!highlightDates) {
@@ -130,7 +140,7 @@ export default class Day extends React.Component {
       selectsRange,
       selectingDate,
       startDate,
-      endDate
+      endDate,
     } = this.props;
 
     if (
@@ -225,7 +235,7 @@ export default class Day extends React.Component {
     );
   };
 
-  getClassNames = date => {
+  getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
       : undefined;
@@ -236,7 +246,9 @@ export default class Day extends React.Component {
       {
         "react-datepicker__day--disabled": this.isDisabled(),
         "react-datepicker__day--excluded": this.isExcluded(),
-        "react-datepicker__day--selected": this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected),
+        "react-datepicker__day--selected":
+          this.isSameDay(this.props.selected) ||
+          this.isSameWeek(this.props.selected),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
         "react-datepicker__day--range-start": this.isRangeStart(),
         "react-datepicker__day--range-end": this.isRangeEnd(),
@@ -246,7 +258,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth()
+        "react-datepicker__day--outside-month": this.isOutsideMonth(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
@@ -256,7 +268,7 @@ export default class Day extends React.Component {
     const {
       day,
       ariaLabelPrefixWhenEnabled = "Choose",
-      ariaLabelPrefixWhenDisabled = "Not available"
+      ariaLabelPrefixWhenDisabled = "Not available",
     } = this.props;
 
     const prefix =
@@ -270,17 +282,14 @@ export default class Day extends React.Component {
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
     const preSelectionDay = preSelection || this.props.preSelection;
-    // TODO: use isStartOfWeek
     const tabIndex =
-      (
-        !(this.props.showWeekPicker && (
-          this.props.showWeekNumber ||
-          !this.isStartOfWeek()
-        ))
-      ) && (
-        this.isKeyboardSelected() ||
-        (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
-      )
+      !(
+        this.props.showWeekPicker &&
+        (this.props.showWeekNumber || !this.isStartOfWeek())
+      ) &&
+      (this.isKeyboardSelected() ||
+        (this.isSameDay(selectedDay) &&
+          isSameDay(preSelectionDay, selectedDay)))
         ? 0
         : -1;
 
@@ -300,7 +309,7 @@ export default class Day extends React.Component {
       this.isSameDay(this.props.preSelection)
     ) {
       // there is currently no activeElement and not inline
-      if ((!document.activeElement || document.activeElement === document.body)) {
+      if (!document.activeElement || document.activeElement === document.body) {
         shouldFocusDay = true;
       }
       // inline version:
@@ -324,15 +333,20 @@ export default class Day extends React.Component {
   };
 
   renderDayContents = () => {
-    if(this.isOutsideMonth()) {
-      if(this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10) return null;
-      if(this.props.monthShowsDuplicateDaysStart && getDate(this.props.day) > 20) return null;
+    if (this.isOutsideMonth()) {
+      if (this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10)
+        return null;
+      if (
+        this.props.monthShowsDuplicateDaysStart &&
+        getDate(this.props.day) > 20
+      )
+        return null;
     }
 
     return this.props.renderDayContents
-    ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-    : getDate(this.props.day);
-  }
+      ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+      : getDate(this.props.day);
+  };
 
   render = () => (
     <div
