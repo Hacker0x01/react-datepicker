@@ -1,7 +1,7 @@
 # React Date Picker
 
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
-[![Build Status](https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master)](https://travis-ci.org/Hacker0x01/react-datepicker)
+[![Test suite](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml/badge.svg)](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml)
 [![Dependency Status](https://david-dm.org/Hacker0x01/react-datepicker.svg)](https://david-dm.org/Hacker0x01/react-datepicker)
 [![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/master/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](https://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
@@ -40,7 +40,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
   );
 };
 ```
@@ -50,7 +50,7 @@ const Example = () => {
 The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker selected={startdate} onChange={date => setStartDate(date)} />
+<DatePicker selected={startdate} onChange={(date) => setStartDate(date)} />
 ```
 
 You can use `onSelect` event handler which fires each time some calendar date has been selected

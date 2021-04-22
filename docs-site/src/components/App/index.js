@@ -26,7 +26,7 @@ const Example = () => {
     <DatePicker
       open={isOpen && isScrolled}
       selected={startDate}
-      onChange={date => {
+      onChange={(date) => {
         setStartDate(date);
         setIsOpen(false);
       }}
@@ -66,10 +66,10 @@ const Root = () => (
             className="badge"
           />
         </a>
-        <a href="https://travis-ci.org/Hacker0x01/react-datepicker">
+        <a href="https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml">
           <img
-            src="https://travis-ci.org/Hacker0x01/react-datepicker.svg?branch=master"
-            alt="Travis CI status badge"
+            src="https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml/badge.svg"
+            alt="Test suite status badge"
             className="badge"
           />
         </a>

@@ -11,7 +11,7 @@ import ru from "date-fns/locale/ru";
 describe("MonthDropdown", () => {
   let monthDropdown;
   let handleChangeResult;
-  const mockHandleChange = function(changeInput) {
+  const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput;
   };
   let sandbox;
@@ -37,7 +37,7 @@ describe("MonthDropdown", () => {
   });
 
   describe("scroll mode", () => {
-    beforeEach(function() {
+    beforeEach(function () {
       monthDropdown = getMonthDropdown();
     });
 
@@ -75,7 +75,7 @@ describe("MonthDropdown", () => {
     });
 
     it("closes the dropdown if outside is clicked", () => {
-      const monthNames = range(0, 12).map(M => getMonthInLocale(M));
+      const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
       const onCancelSpy = sandbox.spy();
       const monthDropdownOptionsInstance = mount(
         <MonthDropdownOptions
@@ -133,13 +133,13 @@ describe("MonthDropdown", () => {
       expect(select).to.have.length(1);
       expect(select.prop("value")).to.eq(11);
       var options = select.find("option");
-      expect(options.map(o => o.prop("value"))).to.eql(range(0, 12));
+      expect(options.map((o) => o.prop("value"))).to.eql(range(0, 12));
     });
 
     it("renders month options with default locale", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select" });
       var options = monthDropdown.find("option");
-      expect(options.map(o => o.text())).to.eql([
+      expect(options.map((o) => o.text())).to.eql([
         "January",
         "February",
         "March",
@@ -151,17 +151,17 @@ describe("MonthDropdown", () => {
         "September",
         "October",
         "November",
-        "December"
+        "December",
       ]);
     });
     // Short Month Names
     it("renders month options with short name and default locale", () => {
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
-        useShortMonthInDropdown: true
+        useShortMonthInDropdown: true,
       });
       var options = monthDropdown.find("option");
-      expect(options.map(o => o.text())).to.eql([
+      expect(options.map((o) => o.text())).to.eql([
         "Jan",
         "Feb",
         "Mar",
@@ -173,19 +173,18 @@ describe("MonthDropdown", () => {
         "Sep",
         "Oct",
         "Nov",
-        "Dec"
+        "Dec",
       ]);
     });
 
-    // Failing on Travis CI.
     it("renders month options with specified locale", () => {
       registerLocale("zh-cn", zh_cn);
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
-        locale: "zh-cn"
+        locale: "zh-cn",
       });
       var options = monthDropdown.find("option");
-      expect(options.map(o => o.text())).to.eql([
+      expect(options.map((o) => o.text())).to.eql([
         "一月",
         "二月",
         "三月",
@@ -197,7 +196,7 @@ describe("MonthDropdown", () => {
         "九月",
         "十月",
         "十一月",
-        "十二月"
+        "十二月",
       ]);
     });
 
