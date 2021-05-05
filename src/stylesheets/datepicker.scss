@@ -167,6 +167,7 @@
   &--next {
     right: 10px;
     border-left-color: $datepicker__muted-color;
+
     &--with-time:not(&--with-today-button) {
       right: 95px;
     }
