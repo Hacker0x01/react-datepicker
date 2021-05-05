@@ -8,6 +8,7 @@
   position: absolute;
   top: 6px;
   width: 9px;
+
   &--disabled,
   &--disabled:hover {
     border-color: $datepicker__navigation-disabled-color;
