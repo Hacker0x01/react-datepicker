@@ -506,12 +506,15 @@
 
   &--down-arrow {
     @extend %triangle-arrow-down;
-    border-top-color: $datepicker__muted-color;
     float: right;
     margin-left: 20px;
     top: 8px;
     position: relative;
     border-width: $datepicker__navigation-size;
+
+    &::after {
+      border-top-color: $datepicker__muted-color;
+    }
   }
 }
 
