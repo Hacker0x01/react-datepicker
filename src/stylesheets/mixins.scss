@@ -16,11 +16,12 @@
 }
 
 %triangle-arrow {
-  margin-left: -$datepicker__triangle-size;
+  margin-left: -$datepicker__triangle-size / 2;
   position: absolute;
+  width: 0;
 
-  &,
-  &::before {
+  &::before,
+  &::after {
     box-sizing: content-box;
     position: absolute;
     border: $datepicker__triangle-size solid transparent;
@@ -29,12 +30,16 @@
     width: 1px;
   }
 
-  &::before {
+  &::before,
+  &::after {
     content: "";
     z-index: -1;
     border-width: $datepicker__triangle-size;
 
     left: -$datepicker__triangle-size;
+  }
+
+  &::before {
     border-bottom-color: $datepicker__border-color;
   }
 }
@@ -45,10 +50,14 @@
   top: 0;
   margin-top: -$datepicker__triangle-size;
 
-  &,
-  &::before {
+  &::before,
+  &::after {
     border-top: none;
     border-bottom-color: $datepicker__background-color;
+  }
+
+  &::after {
+    top: 0;
   }
 
   &::before {
@@ -63,10 +72,14 @@
   bottom: 0;
   margin-bottom: -$datepicker__triangle-size;
 
-  &,
-  &::before {
+  &::before,
+  &::after {
     border-bottom: none;
     border-top-color: #fff;
+  }
+
+  &::after {
+    bottom: 0;
   }
 
   &::before {

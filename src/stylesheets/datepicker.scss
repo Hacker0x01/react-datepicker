@@ -254,7 +254,7 @@
       display: inline-block;
       margin-left: 10px;
       input {
-        width: 85px;
+        width: auto;
       }
       input[type="time"]::-webkit-inner-spin-button,
       input[type="time"]::-webkit-outer-spin-button {
