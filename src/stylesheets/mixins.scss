@@ -8,17 +8,11 @@
     box-sizing: content-box;
     position: absolute;
     border: $datepicker__triangle-size solid transparent;
-
     height: 0;
     width: 1px;
-  }
-
-  &::before,
-  &::after {
     content: "";
     z-index: -1;
     border-width: $datepicker__triangle-size;
-
     left: -$datepicker__triangle-size;
   }
 
