@@ -440,7 +440,7 @@ export default class Calendar extends React.Component {
 
     const iconClasses = [
       "react-datepicker__navigation-icon",
-      "react-datepicker__navigation-icon--previous"
+      "react-datepicker__navigation-icon--previous",
     ];
 
     const classes = [
@@ -534,7 +534,7 @@ export default class Calendar extends React.Component {
     ];
     const iconClasses = [
       "react-datepicker__navigation-icon",
-      "react-datepicker__navigation-icon--next"
+      "react-datepicker__navigation-icon--next",
     ];
     if (this.props.showTimeSelect) {
       classes.push("react-datepicker__navigation--next--with-time");

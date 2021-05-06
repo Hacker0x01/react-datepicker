@@ -8,6 +8,7 @@
   position: absolute;
   top: 6px;
   width: 9px;
+
   &--disabled,
   &--disabled:hover {
     border-color: $datepicker__navigation-disabled-color;
@@ -25,17 +26,11 @@
     box-sizing: content-box;
     position: absolute;
     border: $datepicker__triangle-size solid transparent;
-
     height: 0;
     width: 1px;
-  }
-
-  &::before,
-  &::after {
     content: "";
     z-index: -1;
     border-width: $datepicker__triangle-size;
-
     left: -$datepicker__triangle-size;
   }
 
