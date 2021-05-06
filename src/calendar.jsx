@@ -439,6 +439,11 @@ export default class Calendar extends React.Component {
       return;
     }
 
+    const iconClasses = [
+      "react-datepicker__navigation-icon",
+      "react-datepicker__navigation-icon--previous",
+    ];
+
     const classes = [
       "react-datepicker__navigation",
       "react-datepicker__navigation--previous",
@@ -476,9 +481,11 @@ export default class Calendar extends React.Component {
         onClick={clickHandler}
         aria-label={isForYear ? previousYearAriaLabel : previousMonthAriaLabel}
       >
-        {isForYear
-          ? this.props.previousYearButtonLabel
-          : this.props.previousMonthButtonLabel}
+        <span className={iconClasses.join(" ")}>
+          {isForYear
+            ? this.props.previousYearButtonLabel
+            : this.props.previousMonthButtonLabel}
+        </span>
       </button>
     );
   };
@@ -526,6 +533,10 @@ export default class Calendar extends React.Component {
       "react-datepicker__navigation",
       "react-datepicker__navigation--next",
     ];
+    const iconClasses = [
+      "react-datepicker__navigation-icon",
+      "react-datepicker__navigation-icon--next",
+    ];
     if (this.props.showTimeSelect) {
       classes.push("react-datepicker__navigation--next--with-time");
     }
@@ -565,9 +576,11 @@ export default class Calendar extends React.Component {
         onClick={clickHandler}
         aria-label={isForYear ? nextYearAriaLabel : nextMonthAriaLabel}
       >
-        {isForYear
-          ? this.props.nextYearButtonLabel
-          : this.props.nextMonthButtonLabel}
+        <span className={iconClasses.join(" ")}>
+          {isForYear
+            ? this.props.nextYearButtonLabel
+            : this.props.nextMonthButtonLabel}
+        </span>
       </button>
     );
   };
