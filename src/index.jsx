@@ -967,14 +967,14 @@ export default class DatePicker extends React.Component {
       isClearable,
       selected,
       clearButtonTitle,
-      clearButtonClassName,
+      clearButtonClassName = "",
       ariaLabelClose = "Close",
     } = this.props;
     if (isClearable && selected != null) {
       return (
         <button
           type="button"
-          className={`react-datepicker__close-icon ${clearButtonClassName}`}
+          className={`react-datepicker__close-icon ${clearButtonClassName}`.trim()}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}

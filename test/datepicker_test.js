@@ -403,14 +403,26 @@ describe("DatePicker", () => {
   });
 
   it("should customize the className attribute on the clear button if clearButtonClassName is supplied", () => {
-    const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker
-            selected={utils.newDate("2021-04-15")}
-            isClearable
-            clearButtonClassName="customized-close-icon"
-        />
+    let datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          selected={utils.newDate("2021-04-15")}
+          isClearable
+      />
     );
-    const clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
+    let clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__close-icon"
+    ).getAttribute("class");
+    expect(clearButtonClass).to.equal("react-datepicker__close-icon");
+
+    datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+          selected={utils.newDate("2021-04-15")}
+          isClearable
+          clearButtonClassName="customized-close-icon"
+      />
+    );
+    clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
         datePicker,
         "react-datepicker__close-icon"
     ).getAttribute("class");
