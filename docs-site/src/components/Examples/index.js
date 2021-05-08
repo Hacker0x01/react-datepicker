@@ -67,6 +67,7 @@ import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import YearPicker from "../../examples/yearPicker";
+import WeekPicker from "../../examples/weekPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -395,6 +396,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Year item number",
       component: YearItemNumber
+    },
+    {
+      title: "Week Picker",
+      component: WeekPicker
     }
   ];
 

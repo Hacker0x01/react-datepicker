@@ -53,6 +53,7 @@ export default class Month extends React.Component {
     showTwoColumnMonthYearPicker: PropTypes.bool,
     showFourColumnMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     weekAriaLabelPrefix: PropTypes.string,
@@ -167,6 +168,7 @@ export default class Month extends React.Component {
           selectsEnd={this.props.selectsEnd}
           selectsRange={this.props.selectsRange}
           showWeekNumber={this.props.showWeekNumbers}
+          showWeekPicker={this.props.showWeekPicker}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
@@ -404,9 +406,10 @@ export default class Month extends React.Component {
       selectsStart,
       selectsEnd,
       showMonthYearPicker,
-      showQuarterYearPicker
+      showQuarterYearPicker,
+      showWeekPicker
     } = this.props;
-    
+
     return classnames(
       "react-datepicker__month",
       {
@@ -414,7 +417,8 @@ export default class Month extends React.Component {
           selectingDate && (selectsStart || selectsEnd)
       },
       { "react-datepicker__monthPicker": showMonthYearPicker },
-      { "react-datepicker__quarterPicker": showQuarterYearPicker }
+      { "react-datepicker__quarterPicker": showQuarterYearPicker },
+      { "react-datepicker__weekPicker": showWeekPicker }
     );
   };
 
