@@ -987,7 +987,7 @@ export default class DatePicker extends React.Component {
       startDate,
       endDate,
       clearButtonTitle,
-      clearButtonClassName,
+      clearButtonClassName = "",
       ariaLabelClose = "Close",
     } = this.props;
     if (
@@ -997,7 +997,7 @@ export default class DatePicker extends React.Component {
       return (
         <button
           type="button"
-          className={`react-datepicker__close-icon ${clearButtonClassName}`}
+          className={`react-datepicker__close-icon ${clearButtonClassName}`.trim()}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}

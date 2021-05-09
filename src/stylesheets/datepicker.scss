@@ -156,6 +156,7 @@
 
   &--next {
     right: 2px;
+
     &--with-time:not(&--with-today-button) {
       right: 85px;
     }
@@ -178,7 +179,7 @@
   }
 
   &:hover {
-    *:before {
+    *::before {
       border-color: darken($datepicker__muted-color, 15%);
     }
   }
@@ -189,20 +190,23 @@
   top: -1px;
   font-size: 20px;
 
-  &:before {
+  &::before {
     @extend %navigation-chevron;
   }
 
   &--next {
     left: -2px;
-    &:before {
+
+    &::before {
       transform: rotate(45deg);
       left: -7px;
     }
   }
+
   &--previous {
     right: -2px;
-    &:before {
+
+    &::before {
       transform: rotate(225deg);
       right: -7px;
     }
@@ -216,11 +220,13 @@
 .react-datepicker__year {
   margin: $datepicker__margin;
   text-align: center;
+
   &-wrapper {
     display: flex;
     flex-wrap: wrap;
     max-width: 180px;
   }
+
   .react-datepicker__year-text {
     display: inline-block;
     width: 4rem;
@@ -231,6 +237,7 @@
 .react-datepicker__month {
   margin: $datepicker__margin;
   text-align: center;
+
   .react-datepicker__month-text,
   .react-datepicker__quarter-text {
     display: inline-block;
@@ -245,26 +252,33 @@
   float: left;
   margin: 5px 0 10px 15px;
   text-align: left;
+
   .react-datepicker-time__caption {
     display: inline-block;
   }
+
   .react-datepicker-time__input-container {
     display: inline-block;
+
     .react-datepicker-time__input {
       display: inline-block;
       margin-left: 10px;
+
       input {
         width: auto;
       }
+
       input[type="time"]::-webkit-inner-spin-button,
       input[type="time"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
+
       input[type="time"] {
         -moz-appearance: textfield;
       }
     }
+
     .react-datepicker-time__delimiter {
       margin-left: 5px;
       display: inline-block;
@@ -297,13 +311,14 @@
       margin: 0 auto;
       text-align: center;
       border-bottom-right-radius: 0.3rem;
+
       ul.react-datepicker__time-list {
         list-style: none;
         margin: 0;
         height: calc(195px + (#{$datepicker__item-size} / 2));
         overflow-y: scroll;
-        padding-right: 0px;
-        padding-left: 0px;
+        padding-right: 0;
+        padding-left: 0;
         width: 100%;
         box-sizing: content-box;
 
@@ -311,18 +326,22 @@
           height: 30px;
           padding: 5px 10px;
           white-space: nowrap;
+
           &:hover {
             cursor: pointer;
             background-color: $datepicker__background-color;
           }
+
           &--selected {
             background-color: $datepicker__selected-color;
             color: white;
             font-weight: bold;
+
             &:hover {
               background-color: $datepicker__selected-color;
             }
           }
+
           &--disabled {
             color: $datepicker__muted-color;
 
@@ -344,8 +363,10 @@
   line-height: $datepicker__item-size;
   text-align: center;
   margin: $datepicker__day-margin;
+
   &.react-datepicker__week-number--clickable {
     cursor: pointer;
+
     &:hover {
       border-radius: $datepicker__border-radius;
       background-color: $datepicker__background-color;
@@ -357,6 +378,7 @@
 .react-datepicker__week {
   white-space: nowrap;
 }
+
 .react-datepicker__day-names {
   margin-bottom: -8px;
 }
@@ -385,9 +407,11 @@
       background-color: darken($datepicker__selected-color, 5%);
     }
   }
+
   &--disabled {
     color: $datepicker__muted-color;
     pointer-events: none;
+
     &:hover {
       cursor: default;
       background-color: transparent;
@@ -481,6 +505,7 @@
       background-color: $datepicker__selected-color;
     }
   }
+
   &:hover {
     background-color: $datepicker__background-color;
   }
@@ -510,9 +535,10 @@
 
   &--down-arrow {
     @extend %navigation-chevron;
+
     transform: rotate(135deg);
     right: -16px;
-    top: 0px;
+    top: 0;
   }
 }
 
@@ -585,7 +611,7 @@
   background-color: transparent;
   border: 0;
   outline: 0;
-  padding: 0px 6px 0px 0px;
+  padding: 0 6px 0 0;
   position: absolute;
   top: 0;
   right: 0;
