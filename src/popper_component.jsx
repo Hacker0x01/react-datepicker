@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Reference, Popper, placements } from "react-popper";
+import { Manager, Reference, Popper } from "react-popper";
+import { placements } from "@popperjs/core/lib";
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
 
@@ -11,15 +12,9 @@ export default class PopperComponent extends React.Component {
   static get defaultProps() {
     return {
       hidePopper: true,
-      popperModifiers: {
-        preventOverflow: {
-          enabled: true,
-          escapeWithReference: true,
-          boundariesElement: "viewport"
-        }
-      },
+      popperModifiers: [],
       popperProps: {},
-      popperPlacement: "bottom-start"
+      popperPlacement: "bottom-start",
     };
   }
 
@@ -28,14 +23,14 @@ export default class PopperComponent extends React.Component {
     wrapperClassName: PropTypes.string,
     hidePopper: PropTypes.bool,
     popperComponent: PropTypes.element,
-    popperModifiers: PropTypes.object, // <datepicker/> props
+    popperModifiers: PropTypes.arrayOf(PropTypes.object), // <datepicker/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
     targetComponent: PropTypes.element,
     enableTabLoop: PropTypes.bool,
     popperOnKeyDown: PropTypes.func,
-    portalId: PropTypes.string
+    portalId: PropTypes.string,
   };
 
   render() {
@@ -50,7 +45,7 @@ export default class PopperComponent extends React.Component {
       targetComponent,
       enableTabLoop,
       popperOnKeyDown,
-      portalId
+      portalId,
     } = this.props;
 
     let popper;

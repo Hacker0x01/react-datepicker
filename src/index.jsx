@@ -29,6 +29,7 @@ import {
   getEffectiveMaxDate,
   parseDate,
   safeDateFormat,
+  safeDateRangeFormat,
   getHightLightDaysMap,
   getYear,
   getMonth,
@@ -187,7 +188,7 @@ export default class DatePicker extends React.Component {
     placeholderText: PropTypes.string,
     popperContainer: PropTypes.func,
     popperClassName: PropTypes.string, // <PopperComponent/> props
-    popperModifiers: PropTypes.object, // <PopperComponent/> props
+    popperModifiers: PropTypes.arrayOf(PropTypes.object), // <PopperComponent/> props
     popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <PopperComponent/> props
     popperProps: PropTypes.object,
     preventOpenOnFocus: PropTypes.bool,
@@ -336,9 +337,10 @@ export default class DatePicker extends React.Component {
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
-      preSelection: this.props.selected
-        ? this.props.selected
-        : boundedPreSelection,
+      preSelection:
+        (this.props.selectsRange
+          ? this.props.startDate
+          : this.props.selected) ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
@@ -488,7 +490,13 @@ export default class DatePicker extends React.Component {
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
-      this.setOpen(false);
+      if (!this.props.selectsRange) {
+        this.setOpen(false);
+      }
+      const { startDate, endDate } = this.props;
+      if (startDate && !endDate && !isBefore(date, startDate)) {
+        this.setOpen(false);
+      }
     }
   };
 
@@ -783,7 +791,11 @@ export default class DatePicker extends React.Component {
         event.preventDefault();
       }
     }
-    this.props.onChange(null, event);
+    if (this.props.selectsRange) {
+      this.props.onChange([null, null], event);
+    } else {
+      this.props.onChange(null, event);
+    }
     this.setState({ inputValue: null });
   };
 
@@ -933,6 +945,12 @@ export default class DatePicker extends React.Component {
         ? this.props.value
         : typeof this.state.inputValue === "string"
         ? this.state.inputValue
+        : this.props.selectsRange
+        ? safeDateRangeFormat(
+            this.props.startDate,
+            this.props.endDate,
+            this.props
+          )
         : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
@@ -967,15 +985,20 @@ export default class DatePicker extends React.Component {
     const {
       isClearable,
       selected,
+      startDate,
+      endDate,
       clearButtonTitle,
-      clearButtonClassName,
+      clearButtonClassName = "",
       ariaLabelClose = "Close",
     } = this.props;
-    if (isClearable && selected != null) {
+    if (
+      isClearable &&
+      (selected != null || startDate != null || endDate != null)
+    ) {
       return (
         <button
           type="button"
-          className={`react-datepicker__close-icon ${clearButtonClassName}`}
+          className={`react-datepicker__close-icon ${clearButtonClassName}`.trim()}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}

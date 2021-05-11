@@ -403,14 +403,23 @@ describe("DatePicker", () => {
   });
 
   it("should customize the className attribute on the clear button if clearButtonClassName is supplied", () => {
-    const datePicker = TestUtils.renderIntoDocument(
+    let datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2021-04-15")} isClearable />
+    );
+    let clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__close-icon"
+    ).getAttribute("class");
+    expect(clearButtonClass).to.equal("react-datepicker__close-icon");
+
+    datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         selected={utils.newDate("2021-04-15")}
         isClearable
         clearButtonClassName="customized-close-icon"
       />
     );
-    const clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
+    clearButtonClass = TestUtils.findRenderedDOMComponentWithClass(
       datePicker,
       "react-datepicker__close-icon"
     ).getAttribute("class");
@@ -1567,6 +1576,89 @@ describe("DatePicker", () => {
         utils.formatDate(selectedPrevious, "yyyy-MM-dd")
       );
       expect(endDate).to.equal(null);
+    });
+  });
+
+  describe("selectsRange without inline", () => {
+    it("should have preSelection set to startDate upon opening", () => {
+      const startDate = new Date("2021-04-20 00:00:00");
+      const endDate = null;
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selectsRange startDate={startDate} endDate={endDate} />
+      );
+      const dateInput = datePicker.input;
+      // Click to open
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+      expect(datePicker.state.preSelection).to.equal(startDate);
+    });
+
+    it("should remain open after clicking day when startDate is null", () => {
+      const startDate = null;
+      const endDate = null;
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selectsRange startDate={startDate} endDate={endDate} />
+      );
+      const dateInput = datePicker.input;
+      // Click to open
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+      const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      // Click the first Day
+      TestUtils.Simulate.click(ReactDOM.findDOMNode(days[0]));
+      expect(datePicker.state.open).to.be.true;
+    });
+
+    it("should be closed after clicking day when startDate has a value (endDate is being selected)", () => {
+      const startDate = new Date("2021-01-01 00:00:00");
+      const endDate = null;
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selectsRange startDate={startDate} endDate={endDate} />
+      );
+      datePicker.setOpen(true);
+
+      const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+      const day = ReactDOM.findDOMNode(days[Math.floor(days.length / 2)]);
+      TestUtils.Simulate.click(day);
+      expect(datePicker.state.open).to.be.false;
+    });
+
+    it("has clear button rendered when isClearable is true and startDate has value", () => {
+      const startDate = new Date("2021-01-01 00:00:00");
+      const endDate = new Date("2021-01-21 00:00:00");
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          isClearable
+        />
+      );
+
+      const clearButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__close-icon"
+      );
+      expect(clearButton).to.exist;
+    });
+
+    it("clearing calls onChange with [null, null] in first argument making it consistent with the onChange behaviour for selecting days for selectsRange", () => {
+      const onChangeSpy = sandbox.spy();
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          endDate={null}
+          onChange={onChangeSpy}
+          isClearable
+        />
+      );
+
+      datePicker.clear();
+
+      expect(onChangeSpy.calledOnce).to.be.true;
+      expect(onChangeSpy.args[0][0]).to.be.an("array");
+      expect(onChangeSpy.args[0][0][0]).to.be.a("null");
+      expect(onChangeSpy.args[0][0][1]).to.be.a("null");
     });
   });
 
