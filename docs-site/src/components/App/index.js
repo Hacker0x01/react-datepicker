@@ -26,7 +26,7 @@ const Example = () => {
     <DatePicker
       open={isOpen && isScrolled}
       selected={startDate}
-      onChange={date => {
+      onChange={(date) => {
         setStartDate(date);
         setIsOpen(false);
       }}

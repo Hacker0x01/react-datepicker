@@ -40,7 +40,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
   );
 };
 ```
@@ -50,7 +50,7 @@ const Example = () => {
 The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker selected={startdate} onChange={date => setStartDate(date)} />
+<DatePicker selected={startdate} onChange={(date) => setStartDate(date)} />
 ```
 
 You can use `onSelect` event handler which fires each time some calendar date has been selected
