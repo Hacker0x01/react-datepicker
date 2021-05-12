@@ -88,6 +88,7 @@ export default class Calendar extends React.Component {
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
+    calendarStartDay: PropTypes.number,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
@@ -351,7 +352,8 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(date, this.props.locale);
+    const startOfWeek = getStartOfWeek(date, this.props.locale, this.props.calendarStartDay);
+    
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -776,6 +778,7 @@ export default class Calendar extends React.Component {
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
+            calendarStartDay={this.props.calendarStartDay}
             monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnKeyDown}

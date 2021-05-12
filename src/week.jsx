@@ -28,6 +28,7 @@ export default class Week extends React.Component {
       PropTypes.shape({ locale: PropTypes.object })
     ]),
     maxDate: PropTypes.instanceOf(Date),
+    calendarStartDay: PropTypes.number,
     minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
     onDayClick: PropTypes.func,
@@ -81,7 +82,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale);
+    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale, this.props.calendarStartDay);
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {

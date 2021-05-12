@@ -36,6 +36,7 @@ export default class Month extends React.Component {
     preSelection: PropTypes.instanceOf(Date),
     selected: PropTypes.instanceOf(Date),
     selectingDate: PropTypes.instanceOf(Date),
+    calendarStartDay: PropTypes.number,
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
@@ -118,12 +119,14 @@ export default class Month extends React.Component {
   renderWeeks = () => {
     const weeks = [];
     var isFixedHeight = this.props.fixedHeight;
-    let currentWeekStart = utils.getStartOfWeek(
-      utils.getStartOfMonth(this.props.day),
-      this.props.locale
-    );
+
     let i = 0;
     let breakAfterNextPush = false;
+    let currentWeekStart = utils.getStartOfWeek(
+      utils.getStartOfMonth(this.props.day),
+      this.props.locale,
+      this.props.calendarStartDay,
+    );
 
     while (true) {
       weeks.push(
@@ -162,6 +165,7 @@ export default class Month extends React.Component {
           handleOnKeyDown={this.props.handleOnKeyDown}
           isInputFocused={this.props.isInputFocused}
           containerRef={this.props.containerRef}
+          calendarStartDay={this.props.calendarStartDay}
         />
       );
 

@@ -111,7 +111,8 @@ export default class DatePicker extends React.Component {
       focusSelectedMonth: false,
       showPopperArrow: true,
       excludeScrollbar: true,
-      customTimeInput: null
+      customTimeInput: null,
+      calendarStartDay: 0,
     };
   }
 
@@ -130,6 +131,7 @@ export default class DatePicker extends React.Component {
     className: PropTypes.string,
     customInput: PropTypes.element,
     customInputRef: PropTypes.string,
+    calendarStartDay: PropTypes.number,
     // eslint-disable-next-line react/no-unused-prop-types
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     dateFormatCalendar: PropTypes.string,
@@ -783,6 +785,7 @@ export default class DatePicker extends React.Component {
           this.calendar = elem;
         }}
         locale={this.props.locale}
+        calendarStartDay={this.props.calendarStartDay}
         chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
         disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
         weekAriaLabelPrefix={this.props.weekAriaLabelPrefix}
