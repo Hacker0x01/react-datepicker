@@ -13,6 +13,7 @@
         "useState": false,
         "render": false,
         "DatePicker": false,
+        "getHours": false,
         "setHours": false,
         "setMinutes": false,
         "getDate": false,
@@ -28,6 +29,7 @@
         "getMonth": false,
         "PropTypes": false,
         "CalendarContainer": false,
-        "subMonths": false
+        "subMonths": false,
+        "forwardRef": false
     }
 }

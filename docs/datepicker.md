@@ -5,13 +5,17 @@ General datepicker component.
 | name                         | type                           | default value   | description                                |
 | ---------------------------- | ------------------------------ | --------------- | ------------------------------------------ |
 | `allowSameDay`               | `bool`                         | `false`         |                                            |
+| `ariaDescribedBy`            | `string`                       | `null`          |                                            |
+| `ariaInvalid`                | `string`                       | `null`          |                                            |
 | `ariaLabelledBy`             | `string`                       | `null`          |                                            |
+| `ariaRequired`               | `string`                       | `null`          |                                            |
 | `autoComplete`               | `string`                       |                 |                                            |
 | `autoFocus`                  | `bool`                         |                 |                                            |
 | `calendarClassName`          | `string`                       |                 |                                            |
 | `children`                   | `node`                         |                 |                                            |
 | `className`                  | `string`                       |                 |                                            |
 | `clearButtonTitle`           | `string`                       |                 |                                            |
+| `clearButtonClassName`       | `string`                       |                 | Customize the clear button                 |
 | `customInput`                | `element`                      |                 |                                            |
 | `customInputRef`             | `string`                       | `'ref'`         | The property used to pass the ref callback |
 | `dateFormat`                 | `union(string\|array)`         | `'MM/dd/yyyy'`  |                                            |
@@ -26,6 +30,7 @@ General datepicker component.
 | `excludeTimes`               | `array`                        |                 |                                            |
 | `excludeScrollbar`           | `array`                        |                 |                                            |
 | `filterDate`                 | `func`                         |                 |                                            |
+| `filterTime`                 | `func`                         |                 |                                            |
 | `fixedHeight`                | `bool`                         |                 |                                            |
 | `forceShowMonthNavigation`   | `bool`                         |                 |                                            |
 | `formatWeekNumber`           | `func`                         |                 |                                            |
@@ -62,6 +67,7 @@ General datepicker component.
 | `popperContainer`            | `func`                         |                 |                                            |
 | `popperModifiers`            | `object`                       |                 |                                            |
 | `popperPlacement`            | `enumpopperPlacementPositions` |                 |                                            |
+| `preventOpenOnFocus`         | `bool`                         | false           | When this is true, the datepicker will not automatically open when the date field is focussed |
 | `readOnly`                   | `bool`                         |                 |                                            |
 | `required`                   | `bool`                         |                 |                                            |
 | `scrollableYearDropdown`     | `bool`                         |                 |                                            |

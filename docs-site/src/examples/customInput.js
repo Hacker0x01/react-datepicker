@@ -1,9 +1,11 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomInput = ({ value, onClick }) => (
-    <button className="example-custom-input" onClick={onClick}>
-      {value}
-    </button>
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick }, ref) => (
+      <button className="example-custom-input" onClick={onClick} ref={ref}>
+        {value}
+      </button>
+    ),
   );
   return (
     <DatePicker

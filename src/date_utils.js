@@ -18,7 +18,7 @@ import getMinutes from "date-fns/getMinutes";
 import getHours from "date-fns/getHours";
 import getDay from "date-fns/getDay";
 import getDate from "date-fns/getDate";
-import dfgetWeek from "date-fns/getWeek";
+import getISOWeek from "date-fns/getISOWeek";
 import getMonth from "date-fns/getMonth";
 import getQuarter from "date-fns/getQuarter";
 import getYear from "date-fns/getYear";
@@ -75,7 +75,8 @@ export function newDate(value) {
 
 export function parseDate(value, dateFormat, locale, strictParsing) {
   let parsedDate = null;
-  let localeObject = getLocaleObject(locale) || getDefaultLocale();
+  let localeObject =
+    getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach((df) => {
@@ -170,6 +171,17 @@ export function safeDateFormat(date, { dateFormat, locale }) {
   );
 }
 
+export function safeDateRangeFormat(startDate, endDate, props) {
+  if (!startDate) {
+    return "";
+  }
+
+  const formattedStartDate = safeDateFormat(startDate, props);
+  const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
+
+  return `${formattedStartDate} - ${formattedEndDate}`;
+}
+
 // ** Date Setters **
 
 export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
@@ -197,7 +209,7 @@ export function getWeek(date, locale) {
   let localeObj =
     (locale && getLocaleObject(locale)) ||
     (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
-  return dfgetWeek(date, localeObj ? { locale: localeObj } : null);
+  return getISOWeek(date, localeObj ? { locale: localeObj } : null);
 }
 
 export function getDayOfWeekCode(day, locale) {
@@ -254,7 +266,15 @@ export { addMinutes, addDays, addWeeks, addMonths, addYears };
 
 // *** Subtraction ***
 
-export { subMinutes, subHours, subDays, subWeeks, subMonths, subYears };
+export {
+  addHours,
+  subMinutes,
+  subHours,
+  subDays,
+  subWeeks,
+  subMonths,
+  subYears,
+};
 
 // ** Date Comparison **
 
@@ -482,18 +502,24 @@ export function isOutOfBounds(day, { minDate, maxDate } = {}) {
   );
 }
 
-export function isTimeDisabled(time, disabledTimes) {
-  const l = disabledTimes.length;
-  for (let i = 0; i < l; i++) {
-    if (
-      getHours(disabledTimes[i]) === getHours(time) &&
-      getMinutes(disabledTimes[i]) === getMinutes(time)
-    ) {
-      return true;
-    }
-  }
+export function isTimeInList(time, times) {
+  return times.some(
+    (listTime) =>
+      getHours(listTime) === getHours(time) &&
+      getMinutes(listTime) === getMinutes(time)
+  );
+}
 
-  return false;
+export function isTimeDisabled(
+  time,
+  { excludeTimes, includeTimes, filterTime } = {}
+) {
+  return (
+    (excludeTimes && isTimeInList(time, excludeTimes)) ||
+    (includeTimes && !isTimeInList(time, includeTimes)) ||
+    (filterTime && !filterTime(time)) ||
+    false
+  );
 }
 
 export function isTimeInDisabledRange(time, { minTime, maxTime }) {

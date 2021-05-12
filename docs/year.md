@@ -12,3 +12,4 @@
 |`onDayClick`|`func`|||
 |`preSelection`|`instanceOfDate`|||
 |`selected`|`object`|||
+|`yearItemNumber`|`number`|||
