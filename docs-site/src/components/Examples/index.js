@@ -80,6 +80,7 @@ import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
+import CalendarStartDay from "../../examples/calendarStartDay";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -412,6 +413,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Year item number",
       component: YearItemNumber,
+    },
+    {
+      title: "Calendar Start day",
+      component: CalendarStartDay,
     },
   ];
 
