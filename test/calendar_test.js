@@ -426,10 +426,8 @@ describe("Calendar", function () {
         maxDate: utils.newDate(),
       });
 
-      const {
-        prevMonthButtonDisabled,
-        nextMonthButtonDisabled,
-      } = renderCustomHeader.getCall(0).args[0];
+      const { prevMonthButtonDisabled, nextMonthButtonDisabled } =
+        renderCustomHeader.getCall(0).args[0];
 
       assert(
         prevMonthButtonDisabled === false,
@@ -450,10 +448,8 @@ describe("Calendar", function () {
         maxDate: utils.addMonths(utils.newDate(), 1),
       });
 
-      const {
-        prevMonthButtonDisabled,
-        nextMonthButtonDisabled,
-      } = renderCustomHeader.getCall(0).args[0];
+      const { prevMonthButtonDisabled, nextMonthButtonDisabled } =
+        renderCustomHeader.getCall(0).args[0];
 
       assert(
         prevMonthButtonDisabled === true,
@@ -1511,6 +1507,22 @@ describe("Calendar", function () {
         ".react-datepicker__header--has-time-select"
       );
       expect(header).to.have.length(1);
+    });
+  });
+
+  describe("calendarStartDay", () => {
+    it("should have default sunday as start day if No prop passed", () => {
+      const calendar = getCalendar();
+      const calendarDays = calendar.find(".react-datepicker__day-name");
+      expect(calendarDays.at(0).text()).to.equal("Su");
+      expect(calendarDays.at(6).text()).to.equal("Sa");
+    });
+
+    it("should have default wednesday as start day if No prop passed", () => {
+      const calendar = getCalendar({ calendarStartDay: 3 });
+      const calendarDays = calendar.find(".react-datepicker__day-name");
+      expect(calendarDays.at(0).text()).to.equal("We");
+      expect(calendarDays.at(6).text()).to.equal("Tu");
     });
   });
 });

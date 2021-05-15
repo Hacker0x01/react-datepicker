@@ -223,11 +223,14 @@ export function getStartOfDay(date) {
   return startOfDay(date);
 }
 
-export function getStartOfWeek(date, locale) {
+export function getStartOfWeek(date, locale, calendarStartDay) {
   let localeObj = locale
     ? getLocaleObject(locale)
     : getLocaleObject(getDefaultLocale());
-  return startOfWeek(date, { locale: localeObj });
+  return startOfWeek(date, {
+    locale: localeObj,
+    weekStartsOn: calendarStartDay,
+  });
 }
 
 export function getStartOfMonth(date) {
