@@ -358,8 +358,12 @@ export default class Calendar extends React.Component {
   };
 
   header = (date = this.state.date) => {
-    const startOfWeek = getStartOfWeek(date, this.props.locale, this.props.calendarStartDay);
-    
+    const startOfWeek = getStartOfWeek(
+      date,
+      this.props.locale,
+      this.props.calendarStartDay
+    );
+
     const dayNames = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -739,6 +743,7 @@ export default class Calendar extends React.Component {
         {this.props.renderCustomHeader({
           ...this.state,
           customHeaderCount: i,
+          monthDate,
           changeMonth: this.changeMonth,
           changeYear: this.changeYear,
           decreaseMonth: this.decreaseMonth,
