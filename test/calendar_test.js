@@ -507,6 +507,34 @@ describe("Calendar", function () {
       ).to.have.length(4);
     });
 
+    it("should set monthDate prop correctly when rendering custom headers", () => {
+      const renderMonthDateInCustomHeader = ({ monthDate }) => (
+        <div className="customheader-monthdate">{`${monthDate.getFullYear()}-${monthDate.getMonth()}-${monthDate.getDate()}`}</div>
+      );
+      const twoMonthsCalendar = getCalendar({
+        renderCustomHeader: renderMonthDateInCustomHeader,
+        monthsShown: 2,
+      });
+
+      const firstDate = new Date();
+      const secondDate = utils.addMonths(new Date(), 1);
+      const firstDateInCustomHeader = twoMonthsCalendar
+        .find(".customheader-monthdate")
+        .at(0)
+        .text();
+      const secondDateInCustomHeader = twoMonthsCalendar
+        .find(".customheader-monthdate")
+        .at(1)
+        .text();
+
+      expect(firstDateInCustomHeader).to.equal(
+        `${firstDate.getFullYear()}-${firstDate.getMonth()}-${firstDate.getDate()}`
+      );
+      expect(secondDateInCustomHeader).to.equal(
+        `${secondDate.getFullYear()}-${secondDate.getMonth()}-${secondDate.getDate()}`
+      );
+    });
+
     it("should render custom header with show time select", function () {
       const calendar = mount(
         <Calendar
