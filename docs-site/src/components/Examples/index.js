@@ -64,6 +64,7 @@ import CalendarContainer from "../../examples/calendarContainer";
 import RawChange from "../../examples/rawChange";
 import DontCloseOnSelect from "../../examples/dontCloseOnSelect";
 import RenderCustomHeader from "../../examples/renderCustomHeader";
+import RenderCustomHeaderTwoMonths from "../../examples/renderCustomHeaderTwoMonths";
 import RenderCustomDay from "../../examples/renderCustomDay";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
@@ -143,6 +144,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom header",
       component: RenderCustomHeader,
+    },
+    {
+      title: "Custom header with two months displayed",
+      component: RenderCustomHeaderTwoMonths,
     },
     {
       title: "Custom Day",
