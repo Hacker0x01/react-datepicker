@@ -256,7 +256,7 @@ export default class Day extends React.Component {
         ? ariaLabelPrefixWhenDisabled
         : ariaLabelPrefixWhenEnabled;
 
-    return `${prefix} ${formatDate(day, "PPPP")}`;
+    return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
   };
 
   getTabIndex = (selected, preSelection) => {
