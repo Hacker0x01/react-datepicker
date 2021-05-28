@@ -168,8 +168,8 @@ describe("TimePicker", () => {
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], {
       key: "Escape",
-      keyCode: 13,
-      which: 13,
+      keyCode: 27,
+      which: 27,
     });
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
   });
