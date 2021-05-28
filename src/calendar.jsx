@@ -180,6 +180,7 @@ export default class Calendar extends React.Component {
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
+    handleTimeKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
@@ -920,6 +921,7 @@ export default class Calendar extends React.Component {
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
           locale={this.props.locale}
+          handleOnKeyDown={this.props.handleTimeKeyDown}
           showTimeSelectOnly={this.props.showTimeSelectOnly}
         />
       );

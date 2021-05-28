@@ -927,6 +927,7 @@ export default class DatePicker extends React.Component {
         showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
         handleOnKeyDown={this.onDayKeyDown}
+        handleTimeKeyDown={this.props.onKeyDown}
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
