@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 export default class Portal extends React.Component {
   static propTypes = {
     children: PropTypes.any,
-    portalId: PropTypes.string
+    portalId: PropTypes.string,
   };
 
   constructor(props) {

@@ -9,7 +9,7 @@ import {
   isAfter,
   isSameMonth,
   isSameYear,
-  getTime
+  getTime,
 } from "./date_utils";
 
 function generateMonthYears(minDate, maxDate) {
@@ -35,19 +35,22 @@ export default class MonthYearDropdownOptions extends React.Component {
     scrollableMonthYearDropdown: PropTypes.bool,
     date: PropTypes.instanceOf(Date).isRequired,
     dateFormat: PropTypes.string.isRequired,
-    locale: PropTypes.string
+    locale: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      monthYearsList: generateMonthYears(this.props.minDate, this.props.maxDate)
+      monthYearsList: generateMonthYears(
+        this.props.minDate,
+        this.props.maxDate
+      ),
     };
   }
 
   renderOptions = () => {
-    return this.state.monthYearsList.map(monthYear => {
+    return this.state.monthYearsList.map((monthYear) => {
       const monthYearPoint = getTime(monthYear);
       const isSameMonthYear =
         isSameYear(this.props.date, monthYear) &&
@@ -76,7 +79,7 @@ export default class MonthYearDropdownOptions extends React.Component {
     });
   };
 
-  onChange = monthYear => this.props.onChange(monthYear);
+  onChange = (monthYear) => this.props.onChange(monthYear);
 
   handleClickOutside = () => {
     this.props.onCancel();
@@ -85,8 +88,8 @@ export default class MonthYearDropdownOptions extends React.Component {
   render() {
     let dropdownClass = classNames({
       "react-datepicker__month-year-dropdown": true,
-      "react-datepicker__month-year-dropdown--scrollable": this.props
-        .scrollableMonthYearDropdown
+      "react-datepicker__month-year-dropdown--scrollable":
+        this.props.scrollableMonthYearDropdown,
     });
 
     return <div className={dropdownClass}>{this.renderOptions()}</div>;

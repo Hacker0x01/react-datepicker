@@ -27,7 +27,7 @@ export default class Month extends React.Component {
     shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object })
+      PropTypes.shape({ locale: PropTypes.object }),
     ]),
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
@@ -59,17 +59,17 @@ export default class Month extends React.Component {
     weekAriaLabelPrefix: PropTypes.string,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
-    monthShowsDuplicateDaysStart: PropTypes.bool
+    monthShowsDuplicateDaysStart: PropTypes.bool,
   };
 
   MONTH_REFS = [...Array(12)].map(() => React.createRef());
 
-  isDisabled = date => utils.isDayDisabled(date, this.props);
+  isDisabled = (date) => utils.isDayDisabled(date, this.props);
 
-  isExcluded = date => utils.isDayExcluded(date, this.props);
+  isExcluded = (date) => utils.isDayExcluded(date, this.props);
 
   handleDayClick = (day, event) => {
     if (this.props.onDayClick) {
@@ -77,7 +77,7 @@ export default class Month extends React.Component {
     }
   };
 
-  handleDayMouseEnter = day => {
+  handleDayMouseEnter = (day) => {
     if (this.props.onDayMouseEnter) {
       this.props.onDayMouseEnter(day);
     }
@@ -89,7 +89,7 @@ export default class Month extends React.Component {
     }
   };
 
-  isRangeStartMonth = m => {
+  isRangeStartMonth = (m) => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
@@ -97,7 +97,7 @@ export default class Month extends React.Component {
     return utils.isSameMonth(utils.setMonth(day, m), startDate);
   };
 
-  isRangeStartQuarter = q => {
+  isRangeStartQuarter = (q) => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
@@ -105,7 +105,7 @@ export default class Month extends React.Component {
     return utils.isSameQuarter(utils.setQuarter(day, q), startDate);
   };
 
-  isRangeEndMonth = m => {
+  isRangeEndMonth = (m) => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
@@ -113,7 +113,7 @@ export default class Month extends React.Component {
     return utils.isSameMonth(utils.setMonth(day, m), endDate);
   };
 
-  isRangeEndQuarter = q => {
+  isRangeEndQuarter = (q) => {
     const { day, startDate, endDate } = this.props;
     if (!startDate || !endDate) {
       return false;
@@ -121,7 +121,7 @@ export default class Month extends React.Component {
     return utils.isSameQuarter(utils.setQuarter(day, q), endDate);
   };
 
-  isWeekInMonth = startOfWeek => {
+  isWeekInMonth = (startOfWeek) => {
     const day = this.props.day;
     const endOfWeek = utils.addDays(startOfWeek, 6);
     return (
@@ -138,7 +138,7 @@ export default class Month extends React.Component {
     let currentWeekStart = utils.getStartOfWeek(
       utils.getStartOfMonth(this.props.day),
       this.props.locale,
-      this.props.calendarStartDay,
+      this.props.calendarStartDay
     );
 
     while (true) {
@@ -218,10 +218,11 @@ export default class Month extends React.Component {
   };
 
   handleMonthNavigation = (newMonth, newDate) => {
-    if(this.isDisabled(newDate) || this.isExcluded(newDate)) return;
+    if (this.isDisabled(newDate) || this.isExcluded(newDate)) return;
     this.props.setPreSelection(newDate);
-    this.MONTH_REFS[newMonth].current && this.MONTH_REFS[newMonth].current.focus();
-  }
+    this.MONTH_REFS[newMonth].current &&
+      this.MONTH_REFS[newMonth].current.focus();
+  };
 
   onMonthKeyDown = (event, month) => {
     const eventKey = event.key;
@@ -232,10 +233,16 @@ export default class Month extends React.Component {
           this.props.setPreSelection(this.props.selected);
           break;
         case "ArrowRight":
-          this.handleMonthNavigation(month === 11 ? 0 : month+1, utils.addMonths(this.props.preSelection, 1));
+          this.handleMonthNavigation(
+            month === 11 ? 0 : month + 1,
+            utils.addMonths(this.props.preSelection, 1)
+          );
           break;
         case "ArrowLeft":
-          this.handleMonthNavigation(month === 0 ? 11 : month-1, utils.subMonths(this.props.preSelection, 1));
+          this.handleMonthNavigation(
+            month === 0 ? 11 : month - 1,
+            utils.subMonths(this.props.preSelection, 1)
+          );
           break;
       }
     }
@@ -248,8 +255,17 @@ export default class Month extends React.Component {
     );
   };
 
-  getMonthClassNames = m => {
-    const { day, startDate, endDate, selected, minDate, maxDate, preSelection, monthClassName } = this.props;
+  getMonthClassNames = (m) => {
+    const {
+      day,
+      startDate,
+      endDate,
+      selected,
+      minDate,
+      maxDate,
+      preSelection,
+      monthClassName,
+    } = this.props;
     const _monthClassName = monthClassName ? monthClassName(day) : undefined;
     return classnames(
       "react-datepicker__month-text",
@@ -262,7 +278,8 @@ export default class Month extends React.Component {
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
-        "react-datepicker__month-text--keyboard-selected": utils.getMonth(preSelection) === m,
+        "react-datepicker__month-text--keyboard-selected":
+          utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,
@@ -270,7 +287,7 @@ export default class Month extends React.Component {
           day
         ),
         "react-datepicker__month--range-start": this.isRangeStartMonth(m),
-        "react-datepicker__month--range-end": this.isRangeEndMonth(m)
+        "react-datepicker__month--range-end": this.isRangeEndMonth(m),
       }
     );
   };
@@ -285,14 +302,14 @@ export default class Month extends React.Component {
     return tabIndex;
   };
 
-  getAriaLabel = month => {
+  getAriaLabel = (month) => {
     const {
       ariaLabelPrefix = "Choose",
       disabledDayAriaLabelPrefix = "Not available",
-      day
+      day,
     } = this.props;
 
-    const labelDate = utils.setMonth(day, month)
+    const labelDate = utils.setMonth(day, month);
     const prefix =
       this.isDisabled(labelDate) || this.isExcluded(labelDate)
         ? disabledDayAriaLabelPrefix
@@ -301,7 +318,7 @@ export default class Month extends React.Component {
     return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
   };
 
-  getQuarterClassNames = q => {
+  getQuarterClassNames = (q) => {
     const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
@@ -320,7 +337,7 @@ export default class Month extends React.Component {
           day
         ),
         "react-datepicker__quarter--range-start": this.isRangeStartQuarter(q),
-        "react-datepicker__quarter--range-end": this.isRangeEndQuarter(q)
+        "react-datepicker__quarter--range-end": this.isRangeEndQuarter(q),
       }
     );
   };
@@ -330,18 +347,18 @@ export default class Month extends React.Component {
       showFullMonthYearPicker,
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
-      locale
+      locale,
     } = this.props;
     const monthsFourColumns = [
       [0, 1, 2, 3],
       [4, 5, 6, 7],
-      [8, 9, 10, 11]
+      [8, 9, 10, 11],
     ];
     const monthsThreeColumns = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
-      [9, 10, 11]
+      [9, 10, 11],
     ];
     const monthsTwoColumns = [
       [0, 1],
@@ -349,11 +366,11 @@ export default class Month extends React.Component {
       [4, 5],
       [6, 7],
       [8, 9],
-      [10, 11]
+      [10, 11],
     ];
-    const monthLayout = showFourColumnMonthYearPicker ?
-      monthsFourColumns :
-      showTwoColumnMonthYearPicker
+    const monthLayout = showFourColumnMonthYearPicker
+      ? monthsFourColumns
+      : showTwoColumnMonthYearPicker
       ? monthsTwoColumns
       : monthsThreeColumns;
     return monthLayout.map((month, i) => (
@@ -362,10 +379,10 @@ export default class Month extends React.Component {
           <div
             ref={this.MONTH_REFS[m]}
             key={j}
-            onClick={ev => {
+            onClick={(ev) => {
               this.onMonthClick(ev, m);
             }}
-            onKeyDown={ev => {
+            onKeyDown={(ev) => {
               this.onMonthKeyDown(ev, m);
             }}
             tabIndex={this.getTabIndex(m)}
@@ -389,7 +406,7 @@ export default class Month extends React.Component {
         {quarters.map((q, j) => (
           <div
             key={j}
-            onClick={ev => {
+            onClick={(ev) => {
               this.onQuarterClick(ev, q);
             }}
             className={this.getQuarterClassNames(q)}
@@ -408,14 +425,14 @@ export default class Month extends React.Component {
       selectsStart,
       selectsEnd,
       showMonthYearPicker,
-      showQuarterYearPicker
+      showQuarterYearPicker,
     } = this.props;
-    
+
     return classnames(
       "react-datepicker__month",
       {
         "react-datepicker__month--selecting-range":
-          selectingDate && (selectsStart || selectsEnd)
+          selectingDate && (selectsStart || selectsEnd),
       },
       { "react-datepicker__monthPicker": showMonthYearPicker },
       { "react-datepicker__quarterPicker": showQuarterYearPicker }
@@ -427,7 +444,7 @@ export default class Month extends React.Component {
       showMonthYearPicker,
       showQuarterYearPicker,
       day,
-      ariaLabelPrefix = "month "
+      ariaLabelPrefix = "month ",
     } = this.props;
     return (
       <div
