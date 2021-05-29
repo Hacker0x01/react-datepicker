@@ -14,7 +14,7 @@ describe("TimeComponent", () => {
     // mock global time to June 14, 1990 13:28:12, so test results will be constant
     sandbox.useFakeTimers({
       now: new Date("1990-06-14 13:28").valueOf(),
-      toFake: ["Date"]
+      toFake: ["Date"],
     });
   });
 
@@ -123,7 +123,7 @@ describe("TimeComponent", () => {
       expect(
         TimeComponent.calcCenterPosition(200, {
           offsetTop: 0,
-          clientHeight: 50
+          clientHeight: 50,
         })
       ).to.be.eq(-75);
     });
@@ -132,7 +132,7 @@ describe("TimeComponent", () => {
       expect(
         TimeComponent.calcCenterPosition(200, {
           offsetTop: 150,
-          clientHeight: 50
+          clientHeight: 50,
         })
       ).to.be.eq(75);
     });
@@ -147,7 +147,7 @@ describe("TimeComponent", () => {
       expect(
         TimeComponent.calcCenterPosition(90, {
           offsetTop: 60,
-          clientHeight: 30
+          clientHeight: 30,
         })
       ).to.be.eq(30);
     });

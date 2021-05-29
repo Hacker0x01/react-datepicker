@@ -7,18 +7,18 @@ import PropTypes from "prop-types";
 
 const focusableElementsSelector =
   "[tabindex], a, button, input, select, textarea";
-const focusableFilter = node => !node.disabled && node.tabIndex !== -1;
+const focusableFilter = (node) => !node.disabled && node.tabIndex !== -1;
 
 export default class TabLoop extends React.Component {
   static get defaultProps() {
     return {
-      enableTabLoop: true
+      enableTabLoop: true,
     };
   }
 
   static propTypes = {
     children: PropTypes.any,
-    enableTabLoop: PropTypes.bool
+    enableTabLoop: PropTypes.bool,
   };
 
   constructor(props) {
@@ -38,14 +38,14 @@ export default class TabLoop extends React.Component {
       )
       .filter(focusableFilter);
 
-  handleFocusStart = e => {
+  handleFocusStart = (e) => {
     const tabChildren = this.getTabChildren();
     tabChildren &&
       tabChildren.length > 1 &&
       tabChildren[tabChildren.length - 1].focus();
   };
 
-  handleFocusEnd = e => {
+  handleFocusEnd = (e) => {
     const tabChildren = this.getTabChildren();
     tabChildren && tabChildren.length > 1 && tabChildren[0].focus();
   };

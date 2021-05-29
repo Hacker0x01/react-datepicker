@@ -26,16 +26,16 @@ describe("YearPicker", () => {
 
   it("should show year picker component with default year item number", () => {
     const yearComponent = mount(<Year date={new Date()} />);
-    const yearItems = yearComponent
-      .find(".react-datepicker__year-text");
+    const yearItems = yearComponent.find(".react-datepicker__year-text");
     expect(yearItems.length).to.be.eq(utils.DEFAULT_YEAR_ITEM_NUMBER);
   });
 
   it("should show year picker component with specific year item number", () => {
     const yearItemNumber = 9;
-    const yearComponent = mount(<Year date={new Date()} yearItemNumber={yearItemNumber} />);
-    const yearItems = yearComponent
-      .find(".react-datepicker__year-text");
+    const yearComponent = mount(
+      <Year date={new Date()} yearItemNumber={yearItemNumber} />
+    );
+    const yearItems = yearComponent.find(".react-datepicker__year-text");
     expect(yearItems.length).to.be.eq(yearItemNumber);
   });
 
@@ -98,7 +98,7 @@ describe("YearPicker", () => {
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
           showYearPicker
-          onChange={d => {
+          onChange={(d) => {
             date = d;
           }}
         />
@@ -137,7 +137,7 @@ describe("YearPicker", () => {
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
           showYearPicker
-          onChange={d => {
+          onChange={(d) => {
             date = d;
           }}
         />

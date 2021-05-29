@@ -5,7 +5,7 @@ export default function CalendarContainer({
   className,
   children,
   showPopperArrow,
-  arrowProps = {}
+  arrowProps = {},
 }) {
   return (
     <div className={className}>
@@ -21,5 +21,5 @@ CalendarContainer.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   arrowProps: PropTypes.object, // react-popper arrow props
-  showPopperArrow: PropTypes.bool
+  showPopperArrow: PropTypes.bool,
 };

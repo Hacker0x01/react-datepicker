@@ -10,7 +10,7 @@ import {
   isSameMonth,
   isSameYear,
   newDate,
-  getTime
+  getTime,
 } from "./date_utils";
 
 var WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions);
@@ -24,11 +24,11 @@ export default class MonthYearDropdown extends React.Component {
     minDate: PropTypes.instanceOf(Date).isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
     onChange: PropTypes.func.isRequired,
-    scrollableMonthYearDropdown: PropTypes.bool
+    scrollableMonthYearDropdown: PropTypes.bool,
   };
 
   state = {
-    dropdownVisible: false
+    dropdownVisible: false,
   };
 
   renderSelectOptions = () => {
@@ -50,7 +50,7 @@ export default class MonthYearDropdown extends React.Component {
     return options;
   };
 
-  onSelectChange = e => {
+  onSelectChange = (e) => {
     this.onChange(e.target.value);
   };
 
@@ -64,7 +64,7 @@ export default class MonthYearDropdown extends React.Component {
     </select>
   );
 
-  renderReadView = visible => {
+  renderReadView = (visible) => {
     const yearMonth = formatDate(
       this.props.date,
       this.props.dateFormat,
@@ -76,7 +76,7 @@ export default class MonthYearDropdown extends React.Component {
         key="read"
         style={{ visibility: visible ? "visible" : "hidden" }}
         className="react-datepicker__month-year-read-view"
-        onClick={event => this.toggleDropdown(event)}
+        onClick={(event) => this.toggleDropdown(event)}
       >
         <span className="react-datepicker__month-year-read-view--down-arrow" />
         <span className="react-datepicker__month-year-read-view--selected-month-year">
@@ -109,7 +109,7 @@ export default class MonthYearDropdown extends React.Component {
     return result;
   };
 
-  onChange = monthYearPoint => {
+  onChange = (monthYearPoint) => {
     this.toggleDropdown();
 
     const changedDate = newDate(parseInt(monthYearPoint));
@@ -126,7 +126,7 @@ export default class MonthYearDropdown extends React.Component {
 
   toggleDropdown = () =>
     this.setState({
-      dropdownVisible: !this.state.dropdownVisible
+      dropdownVisible: !this.state.dropdownVisible,
     });
 
   render() {

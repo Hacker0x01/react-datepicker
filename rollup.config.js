@@ -16,14 +16,14 @@ import pkg from "./package.json";
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 const dateFnsDirs = fs
   .readdirSync(path.join(".", "node_modules", "date-fns"))
-  .map(d => `date-fns/${d}`);
+  .map((d) => `date-fns/${d}`);
 
 const globals = {
   react: "React",
   "prop-types": "PropTypes",
   "react-onclickoutside": "onClickOutside",
   "react-popper": "ReactPopper",
-  classnames: "classNames"
+  classnames: "classNames",
 };
 
 const config = {
@@ -33,28 +33,28 @@ const config = {
       file: pkg.browser,
       format: "umd",
       name: "DatePicker",
-      globals
+      globals,
     },
     {
       file: "dist/react-datepicker.js",
       format: "umd",
       name: "DatePicker",
-      globals
+      globals,
     },
     {
       file: pkg.main,
       format: "cjs",
-      name: "DatePicker"
+      name: "DatePicker",
     },
     {
       file: pkg.module,
-      format: "es"
-    }
+      format: "es",
+    },
   ],
   plugins: [
     resolve({
       mainFields: ["module"],
-      extensions: [".js", ".jsx"]
+      extensions: [".js", ".jsx"],
     }),
     peerDepsExternal(),
     babel(),
@@ -63,12 +63,12 @@ const config = {
     filesize(),
     terser(),
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production")
-    })
+      "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
   ],
   external: Object.keys(pkg.dependencies)
     .concat(Object.keys(pkg.peerDependencies))
-    .concat(dateFnsDirs)
+    .concat(dateFnsDirs),
 };
 
 export default config;

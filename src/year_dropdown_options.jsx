@@ -33,7 +33,7 @@ export default class YearDropdownOptions extends React.Component {
     onChange: PropTypes.func.isRequired,
     scrollableYearDropdown: PropTypes.bool,
     year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number
+    yearDropdownItemNumber: PropTypes.number,
   };
 
   constructor(props) {
@@ -48,13 +48,13 @@ export default class YearDropdownOptions extends React.Component {
         noOfYear,
         this.props.minDate,
         this.props.maxDate
-      )
+      ),
     };
   }
 
   renderOptions = () => {
     var selectedYear = this.props.year;
-    var options = this.state.yearsList.map(year => (
+    var options = this.state.yearsList.map((year) => (
       <div
         className={
           selectedYear === year
@@ -76,7 +76,7 @@ export default class YearDropdownOptions extends React.Component {
     const minYear = this.props.minDate ? getYear(this.props.minDate) : null;
     const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : null;
 
-    if (!maxYear || !this.state.yearsList.find(year => year === maxYear)) {
+    if (!maxYear || !this.state.yearsList.find((year) => year === maxYear)) {
       options.unshift(
         <div
           className="react-datepicker__year-option"
@@ -88,7 +88,7 @@ export default class YearDropdownOptions extends React.Component {
       );
     }
 
-    if (!minYear || !this.state.yearsList.find(year => year === minYear)) {
+    if (!minYear || !this.state.yearsList.find((year) => year === minYear)) {
       options.push(
         <div
           className="react-datepicker__year-option"
@@ -103,7 +103,7 @@ export default class YearDropdownOptions extends React.Component {
     return options;
   };
 
-  onChange = year => {
+  onChange = (year) => {
     this.props.onChange(year);
   };
 
@@ -111,13 +111,13 @@ export default class YearDropdownOptions extends React.Component {
     this.props.onCancel();
   };
 
-  shiftYears = amount => {
-    var years = this.state.yearsList.map(function(year) {
+  shiftYears = (amount) => {
+    var years = this.state.yearsList.map(function (year) {
       return year + amount;
     });
 
     this.setState({
-      yearsList: years
+      yearsList: years,
     });
   };
 
@@ -132,8 +132,8 @@ export default class YearDropdownOptions extends React.Component {
   render() {
     let dropdownClass = classNames({
       "react-datepicker__year-dropdown": true,
-      "react-datepicker__year-dropdown--scrollable": this.props
-        .scrollableYearDropdown
+      "react-datepicker__year-dropdown--scrollable":
+        this.props.scrollableYearDropdown,
     });
 
     return <div className={dropdownClass}>{this.renderOptions()}</div>;

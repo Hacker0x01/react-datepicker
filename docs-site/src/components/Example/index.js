@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import DatePicker, {
   registerLocale,
-  CalendarContainer
+  CalendarContainer,
 } from "react-datepicker";
 import * as DateFNS from "date-fns/esm";
 import fi from "date-fns/locale/fi";
@@ -16,7 +16,7 @@ import editIcon from "./edit-regular.svg";
 
 export default class CodeExampleComponent extends React.Component {
   static propTypes = {
-    example: PropTypes.object.isRequired
+    example: PropTypes.object.isRequired,
   };
   componentDidMount() {
     registerLocale("fi", fi);
@@ -45,7 +45,7 @@ export default class CodeExampleComponent extends React.Component {
               ...DateFNS,
               range,
               fi,
-              forwardRef
+              forwardRef,
             }}
             theme={prismGitHubTheme}
           >

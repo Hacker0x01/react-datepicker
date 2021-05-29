@@ -1,10 +1,10 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
-  const handleChange = e => {
+  const handleChange = (e) => {
     setIsOpen(!isOpen);
   };
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
     setIsOpen(!isOpen);
   };

@@ -12,25 +12,25 @@ export default class MonthDropdown extends React.Component {
     locale: PropTypes.string,
     month: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    useShortMonthInDropdown: PropTypes.bool
+    useShortMonthInDropdown: PropTypes.bool,
   };
 
   state = {
-    dropdownVisible: false
+    dropdownVisible: false,
   };
 
-  renderSelectOptions = monthNames =>
+  renderSelectOptions = (monthNames) =>
     monthNames.map((M, i) => (
       <option key={i} value={i}>
         {M}
       </option>
     ));
 
-  renderSelectMode = monthNames => (
+  renderSelectMode = (monthNames) => (
     <select
       value={this.props.month}
       className="react-datepicker__month-select"
-      onChange={e => this.onChange(e.target.value)}
+      onChange={(e) => this.onChange(e.target.value)}
     >
       {this.renderSelectOptions(monthNames)}
     </select>
@@ -50,7 +50,7 @@ export default class MonthDropdown extends React.Component {
     </div>
   );
 
-  renderDropdown = monthNames => (
+  renderDropdown = (monthNames) => (
     <WrappedMonthDropdownOptions
       key="dropdown"
       month={this.props.month}
@@ -60,7 +60,7 @@ export default class MonthDropdown extends React.Component {
     />
   );
 
-  renderScrollMode = monthNames => {
+  renderScrollMode = (monthNames) => {
     const { dropdownVisible } = this.state;
     let result = [this.renderReadView(!dropdownVisible, monthNames)];
     if (dropdownVisible) {
@@ -69,7 +69,7 @@ export default class MonthDropdown extends React.Component {
     return result;
   };
 
-  onChange = month => {
+  onChange = (month) => {
     this.toggleDropdown();
     if (month !== this.props.month) {
       this.props.onChange(month);
@@ -78,14 +78,14 @@ export default class MonthDropdown extends React.Component {
 
   toggleDropdown = () =>
     this.setState({
-      dropdownVisible: !this.state.dropdownVisible
+      dropdownVisible: !this.state.dropdownVisible,
     });
 
   render() {
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
-        ? M => utils.getMonthShortInLocale(M, this.props.locale)
-        : M => utils.getMonthInLocale(M, this.props.locale)
+        ? (M) => utils.getMonthShortInLocale(M, this.props.locale)
+        : (M) => utils.getMonthInLocale(M, this.props.locale)
     );
 
     let renderedDropdown;

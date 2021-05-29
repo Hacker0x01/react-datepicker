@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 class CustomInput extends React.Component {
-  onChange = e => {
+  onChange = (e) => {
     var args = [e, e.target.value];
     if (this.props.onChangeArgs) {
       args = this.props.onChangeArgs(e);
@@ -19,7 +19,7 @@ class CustomInput extends React.Component {
 
 CustomInput.propTypes = {
   onChange: PropTypes.func,
-  onChangeArgs: PropTypes.func
+  onChangeArgs: PropTypes.func,
 };
 
 export default CustomInput;
