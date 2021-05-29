@@ -23,7 +23,7 @@ describe("DatePicker", () => {
           setTime(now, { hours: 17, minutes: 0 }),
           setTime(now, { hours: 18, minutes: 30 }),
           setTime(now, { hours: 19, minutes: 30 }),
-          setTime(now, { hours: 17, minutes: 30 })
+          setTime(now, { hours: 17, minutes: 30 }),
         ]}
       />
     );

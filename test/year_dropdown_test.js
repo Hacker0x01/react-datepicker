@@ -29,7 +29,7 @@ describe("YearDropdown", () => {
   });
 
   describe("scroll mode", () => {
-    beforeEach(function() {
+    beforeEach(function () {
       yearDropdown = getYearDropdown();
     });
 
@@ -84,8 +84,8 @@ describe("YearDropdown", () => {
       expect(select.prop("value")).to.eq(2015);
 
       const options = select.find("option");
-      expect(options.map(o => o.text())).to.eql(
-        range(1900, 2101).map(n => `${n}`)
+      expect(options.map((o) => o.text())).to.eql(
+        range(1900, 2101).map((n) => `${n}`)
       );
     });
 
@@ -93,15 +93,15 @@ describe("YearDropdown", () => {
       yearDropdown = getYearDropdown({
         dropdownMode: "select",
         minDate: newDate("1988-01-01"),
-        maxDate: newDate("2016-01-01")
+        maxDate: newDate("2016-01-01"),
       });
       const select = yearDropdown.find(".react-datepicker__year-select");
       expect(select).to.have.length(1);
       expect(select.prop("value")).to.eq(2015);
 
       const options = select.find("option");
-      expect(options.map(o => o.text())).to.eql(
-        range(1988, 2017).map(n => `${n}`)
+      expect(options.map((o) => o.text())).to.eql(
+        range(1988, 2017).map((n) => `${n}`)
       );
     });
 
@@ -128,7 +128,7 @@ describe("YearDropdown", () => {
         dropdownMode: "select",
         onSelect: onSelectSpy,
         setOpen: setOpenSpy,
-        adjustDateOnChange: true
+        adjustDateOnChange: true,
       });
       const select = yearDropdown.find(".react-datepicker__year-select");
 

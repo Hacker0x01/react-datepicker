@@ -4,7 +4,7 @@
     <DatePicker
       showPopperArrow={false}
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
     />
   );
 };

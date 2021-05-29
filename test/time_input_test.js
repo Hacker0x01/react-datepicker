@@ -63,16 +63,14 @@ describe("timeInput", () => {
     expect(timeComponent.state("time")).to.equal("14:00");
   });
 
-  it("should pass pure Date to custom time input", done => {
+  it("should pass pure Date to custom time input", (done) => {
     const onTimeChangeSpy = sandbox.spy();
     const timeComponent = mount(
       <InputTimeComponent
         date={new Date()}
         timeString="13:00"
         onChange={console.log}
-        customTimeInput={
-          <CustomTimeInput onTimeChange={onTimeChangeSpy} />
-        }
+        customTimeInput={<CustomTimeInput onTimeChange={onTimeChangeSpy} />}
       />
     );
 
@@ -80,13 +78,20 @@ describe("timeInput", () => {
     input.simulate("change", "14:00");
 
     defer(() => {
-      assert(onTimeChangeSpy.called === true, "should call CustomTimeInput onChange");
-      assert(Object.prototype.toString.call(onTimeChangeSpy.args[0][0]) === "[object Date]", "should pass pure date to CustomTimeInput onChange");
+      assert(
+        onTimeChangeSpy.called === true,
+        "should call CustomTimeInput onChange"
+      );
+      assert(
+        Object.prototype.toString.call(onTimeChangeSpy.args[0][0]) ===
+          "[object Date]",
+        "should pass pure date to CustomTimeInput onChange"
+      );
       done();
     });
   });
 
-  it ('should update input value if time is updated from outside', done => {
+  it("should update input value if time is updated from outside", (done) => {
     const timeComponent = mount(
       <InputTimeComponent
         date={new Date()}
@@ -95,9 +100,9 @@ describe("timeInput", () => {
       />
     );
 
-    expect(timeComponent.find("input").props.value).to.equal('13:00');
+    expect(timeComponent.find("input").props.value).to.equal("13:00");
 
-    timeComponent.setProps({ timeString: '14:00' });
-    expect(timeComponent.find("input").props.value).to.equal('14:00');
+    timeComponent.setProps({ timeString: "14:00" });
+    expect(timeComponent.find("input").props.value).to.equal("14:00");
   });
 });

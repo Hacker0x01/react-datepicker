@@ -5,7 +5,7 @@
     <>
       <DatePicker
         selected={startDate}
-        onChange={date => setStartDate(date)}
+        onChange={(date) => setStartDate(date)}
         selectsStart
         startDate={startDate}
         endDate={endDate}
@@ -14,7 +14,7 @@
       />
       <DatePicker
         selected={endDate}
-        onChange={date => setEndDate(date)}
+        onChange={(date) => setEndDate(date)}
         selectsEnd
         startDate={startDate}
         endDate={endDate}

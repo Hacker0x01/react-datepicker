@@ -33,7 +33,9 @@ describe("WeekNumber", () => {
       const shallowWeekNumber = shallow(
         <WeekNumber day={1} ariaLabelPrefix={ariaLabelPrefix} />
       );
-      expect(shallowWeekNumber.html().indexOf(`aria-label="${ariaLabelPrefix}`)).not.equal(-1);
+      expect(
+        shallowWeekNumber.html().indexOf(`aria-label="${ariaLabelPrefix}`)
+      ).not.equal(-1);
     });
   });
 });

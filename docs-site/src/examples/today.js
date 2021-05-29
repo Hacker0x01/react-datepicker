@@ -4,7 +4,7 @@
     <DatePicker
       todayButton="Vandaag"
       selected={startDate}
-      onChange={date => setStartDate(date)}
+      onChange={(date) => setStartDate(date)}
     />
   );
 };
