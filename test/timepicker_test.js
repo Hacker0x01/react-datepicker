@@ -5,6 +5,18 @@ import ReactDOM from "react-dom";
 import Time from "../src/time";
 import { newDate, formatDate } from "../src/date_utils";
 
+function getKey(key) {
+  switch (key) {
+    case " ":
+      return { key, code: 32, which: 32 };
+    case "Enter":
+      return { key, code: 13, which: 13 };
+    case "Escape":
+      return { key, code: 27, which: 27 };
+  }
+  throw new Error("Unknown key :" + key);
+}
+
 describe("TimePicker", () => {
   let datePicker;
   let div;
@@ -153,11 +165,16 @@ describe("TimePicker", () => {
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
-    TestUtils.Simulate.keyDown(lis[1], {
-      key: "Enter",
-      keyCode: 13,
-      which: 13,
-    });
+    TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
+    expect(getInputString()).to.equal("February 28, 2018 12:30 AM");
+  });
+
+  it("should select time when Space is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey(" "));
     expect(getInputString()).to.equal("February 28, 2018 12:30 AM");
   });
 
@@ -166,11 +183,7 @@ describe("TimePicker", () => {
     TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
-    TestUtils.Simulate.keyDown(lis[1], {
-      key: "Escape",
-      keyCode: 27,
-      which: 27,
-    });
+    TestUtils.Simulate.keyDown(lis[1], getKey("Escape"));
     expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
   });
 
