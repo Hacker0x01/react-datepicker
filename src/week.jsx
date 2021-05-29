@@ -7,7 +7,7 @@ import * as utils from "./date_utils";
 export default class Week extends React.Component {
   static get defaultProps() {
     return {
-      shouldCloseOnSelect: true
+      shouldCloseOnSelect: true,
     };
   }
   static propTypes = {
@@ -27,7 +27,7 @@ export default class Week extends React.Component {
     shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object })
+      PropTypes.shape({ locale: PropTypes.object }),
     ]),
     maxDate: PropTypes.instanceOf(Date),
     calendarStartDay: PropTypes.number,
@@ -51,10 +51,10 @@ export default class Week extends React.Component {
     isInputFocused: PropTypes.bool,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
-    monthShowsDuplicateDaysStart: PropTypes.bool
+    monthShowsDuplicateDaysStart: PropTypes.bool,
   };
 
   handleDayClick = (day, event) => {
@@ -63,7 +63,7 @@ export default class Week extends React.Component {
     }
   };
 
-  handleDayMouseEnter = day => {
+  handleDayMouseEnter = (day) => {
     if (this.props.onDayMouseEnter) {
       this.props.onDayMouseEnter(day);
     }
@@ -78,7 +78,7 @@ export default class Week extends React.Component {
     }
   };
 
-  formatWeekNumber = date => {
+  formatWeekNumber = (date) => {
     if (this.props.formatWeekNumber) {
       return this.props.formatWeekNumber(date);
     }
@@ -86,7 +86,11 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = utils.getStartOfWeek(this.props.day, this.props.locale, this.props.calendarStartDay);
+    const startOfWeek = utils.getStartOfWeek(
+      this.props.day,
+      this.props.locale,
+      this.props.calendarStartDay
+    );
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {
@@ -103,7 +107,7 @@ export default class Week extends React.Component {
       );
     }
     return days.concat(
-      [0, 1, 2, 3, 4, 5, 6].map(offset => {
+      [0, 1, 2, 3, 4, 5, 6].map((offset) => {
         const day = utils.addDays(startOfWeek, offset);
         return (
           <Day
@@ -137,7 +141,10 @@ export default class Week extends React.Component {
             inline={this.props.inline}
             shouldFocusDayInline={this.props.shouldFocusDayInline}
             monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
-            monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
+            monthShowsDuplicateDaysStart={
+              this.props.monthShowsDuplicateDaysStart
+            }
+            locale={this.props.locale}
           />
         );
       })

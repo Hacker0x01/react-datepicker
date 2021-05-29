@@ -46,6 +46,10 @@ export default class Day extends React.Component {
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ locale: PropTypes.object }),
+    ]),
   };
 
   componentDidMount() {
@@ -112,14 +116,8 @@ export default class Day extends React.Component {
   };
 
   isInSelectingRange = () => {
-    const {
-      day,
-      selectsStart,
-      selectsEnd,
-      selectsRange,
-      startDate,
-      endDate,
-    } = this.props;
+    const { day, selectsStart, selectsEnd, selectsRange, startDate, endDate } =
+      this.props;
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
@@ -234,8 +232,10 @@ export default class Day extends React.Component {
         "react-datepicker__day--range-end": this.isRangeEnd(),
         "react-datepicker__day--in-range": this.isInRange(),
         "react-datepicker__day--in-selecting-range": this.isInSelectingRange(),
-        "react-datepicker__day--selecting-range-start": this.isSelectingRangeStart(),
-        "react-datepicker__day--selecting-range-end": this.isSelectingRangeEnd(),
+        "react-datepicker__day--selecting-range-start":
+          this.isSelectingRangeStart(),
+        "react-datepicker__day--selecting-range-end":
+          this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isSameDay(newDate()),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth(),
@@ -256,7 +256,7 @@ export default class Day extends React.Component {
         ? ariaLabelPrefixWhenDisabled
         : ariaLabelPrefixWhenEnabled;
 
-    return `${prefix} ${formatDate(day, "PPPP")}`;
+    return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
   };
 
   getTabIndex = (selected, preSelection) => {
