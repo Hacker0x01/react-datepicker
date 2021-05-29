@@ -125,6 +125,7 @@
     "precommit": "lint-staged",
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
     "lint": "run-p eslint flow sass-lint",
+    "prettier": "prettier --write '**/*.js'",
     "start": "yarn --cwd docs-site install && yarn --cwd docs-site start",
     "test": "cross-env NODE_ENV=test karma start karma.conf.js --single-run",
     "test:watch": "cross-env NODE_ENV=test karma start karma.conf.js --watch",
