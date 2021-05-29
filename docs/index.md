@@ -13,6 +13,7 @@
 | `autoFocus`                  | `bool`                         |                    |             |
 | `calendarClassName`          | `string`                       |                    |             |
 | `calendarContainer`          | `func`                         |                    |             |
+| `calendarStartDay`           | `number`                       | `0`                |             |
 | `children`                   | `node`                         |                    |             |
 | `chooseDayAriaLabelPrefix`   | `string`                       |                    |             |
 | `className`                  | `string`                       |                    |             |
@@ -80,7 +81,7 @@
 | `placeholderText`            | `string`                       |                    |             |
 | `popperClassName`            | `string`                       |                    |             |
 | `popperContainer`            | `func`                         |                    |             |
-| `popperModifiers`            | `object`                       |                    |             |
+| `popperModifiers`            | `arrayOf[object Object]`       |                    |             |
 | `popperPlacement`            | `enumpopperPlacementPositions` |                    |             |
 | `popperProps`                | `object`                       |                    |             |
 | `portalId`                   | `string`                       |                    |             |
