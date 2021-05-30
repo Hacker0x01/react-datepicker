@@ -5,6 +5,18 @@ import ReactDOM from "react-dom";
 import Time from "../src/time";
 import { newDate, formatDate } from "../src/date_utils";
 
+function getKey(key) {
+  switch (key) {
+    case " ":
+      return { key, code: 32, which: 32 };
+    case "Enter":
+      return { key, code: 13, which: 13 };
+    case "Escape":
+      return { key, code: 27, which: 27 };
+  }
+  throw new Error("Unknown key :" + key);
+}
+
 describe("TimePicker", () => {
   let datePicker;
   let div;
@@ -146,6 +158,69 @@ describe("TimePicker", () => {
       "react-datepicker__header--time--only"
     );
     expect(header).to.have.length(1);
+  });
+
+  it("should select time when Enter is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
+    expect(getInputString()).to.equal("February 28, 2018 12:30 AM");
+  });
+
+  it("should select time when Space is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey(" "));
+    expect(getInputString()).to.equal("February 28, 2018 12:30 AM");
+  });
+
+  it("should not select time when Escape is pressed", () => {
+    renderDatePicker("February 28, 2018 4:43 PM");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey("Escape"));
+    expect(getInputString()).to.equal("February 28, 2018 4:43 PM");
+  });
+
+  it("should call the onKeyDown handler on key Escape press", () => {
+    const onKeyDownSpy = sinon.spy();
+    renderDatePicker("February 28, 2018 4:43 PM", {
+      onKeyDown: onKeyDownSpy,
+    });
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey("Escape"));
+    expect(onKeyDownSpy.calledOnce).to.be.true;
+  });
+
+  it("should call the onKeyDown handler on key Enter press", () => {
+    const onKeyDownSpy = sinon.spy();
+    renderDatePicker("February 28, 2018 4:43 PM", {
+      onKeyDown: onKeyDownSpy,
+    });
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
+    expect(onKeyDownSpy.calledOnce).to.be.true;
+  });
+
+  it("should call the onKeyDown handler on key Space press", () => {
+    const onKeyDownSpy = sinon.spy();
+    renderDatePicker("February 28, 2018 4:43 PM", {
+      onKeyDown: onKeyDownSpy,
+    });
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey(" "));
+    expect(onKeyDownSpy.calledOnce).to.be.true;
   });
 
   function setManually(string) {

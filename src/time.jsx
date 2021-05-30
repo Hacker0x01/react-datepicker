@@ -48,6 +48,7 @@ export default class Time extends React.Component {
     monthRef: PropTypes.object,
     timeCaption: PropTypes.string,
     injectTimes: PropTypes.array,
+    handleOnKeyDown: PropTypes.func,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
@@ -123,6 +124,18 @@ export default class Time extends React.Component {
     return classes.join(" ");
   };
 
+  handleOnKeyDown = (event, time) => {
+    if (event.key === " ") {
+      event.preventDefault();
+      event.key = "Enter";
+    }
+
+    if (event.key === "Enter") {
+      this.handleClick(time);
+    }
+    this.props.handleOnKeyDown(event);
+  };
+
   renderTimes = () => {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
@@ -167,6 +180,9 @@ export default class Time extends React.Component {
           if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
             this.centerLi = li;
           }
+        }}
+        onKeyDown={(ev) => {
+          this.handleOnKeyDown(ev, time);
         }}
         tabIndex="0"
       >
