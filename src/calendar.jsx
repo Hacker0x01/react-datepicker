@@ -180,7 +180,7 @@ export default class Calendar extends React.Component {
     onMonthMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
-    handleTimeKeyDown: PropTypes.func,
+    handleOnDayKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
@@ -485,6 +485,7 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
+        onKeyDown={this.props.handleOnKeyDown}
         aria-label={isForYear ? previousYearAriaLabel : previousMonthAriaLabel}
       >
         <span className={iconClasses.join(" ")}>
@@ -580,6 +581,7 @@ export default class Calendar extends React.Component {
         type="button"
         className={classes.join(" ")}
         onClick={clickHandler}
+        onKeyDown={this.props.handleOnKeyDown}
         aria-label={isForYear ? nextYearAriaLabel : nextMonthAriaLabel}
       >
         <span className={iconClasses.join(" ")}>
@@ -824,7 +826,7 @@ export default class Calendar extends React.Component {
             calendarStartDay={this.props.calendarStartDay}
             monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
-            handleOnKeyDown={this.props.handleOnKeyDown}
+            handleOnKeyDown={this.props.handleOnDayKeyDown}
             onDayMouseEnter={this.handleDayMouseEnter}
             onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}
@@ -921,7 +923,7 @@ export default class Calendar extends React.Component {
           monthRef={this.state.monthContainer}
           injectTimes={this.props.injectTimes}
           locale={this.props.locale}
-          handleOnKeyDown={this.props.handleTimeKeyDown}
+          handleOnKeyDown={this.props.handleOnKeyDown}
           showTimeSelectOnly={this.props.showTimeSelectOnly}
         />
       );
