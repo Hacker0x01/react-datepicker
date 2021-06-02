@@ -43,7 +43,7 @@
   z-index: 1;
 
   &[data-placement^="bottom"] {
-    margin-top: $datepicker__triangle-size + 2px;
+    padding-top: $datepicker__triangle-size + 2px;
 
     .react-datepicker__triangle {
       @extend %triangle-arrow-up;
@@ -59,7 +59,7 @@
   }
 
   &[data-placement^="top"] {
-    margin-bottom: $datepicker__triangle-size + 2px;
+    padding-bottom: $datepicker__triangle-size + 2px;
 
     .react-datepicker__triangle {
       @extend %triangle-arrow-down;
@@ -67,7 +67,7 @@
   }
 
   &[data-placement^="right"] {
-    margin-left: $datepicker__triangle-size;
+    padding-left: $datepicker__triangle-size;
 
     .react-datepicker__triangle {
       left: auto;
@@ -76,7 +76,7 @@
   }
 
   &[data-placement^="left"] {
-    margin-right: $datepicker__triangle-size;
+    padding-right: $datepicker__triangle-size;
 
     .react-datepicker__triangle {
       left: 42px;
