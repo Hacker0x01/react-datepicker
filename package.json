@@ -122,7 +122,7 @@
   "scripts": {
     "eslint": "eslint --ext .js,.jsx src test",
     "flow": "flow",
-    "precommit": "lint-staged",
+    "precommit": "lint-staged --allow-empty",
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
     "lint": "run-p eslint flow sass-lint",
     "prettier": "prettier --write '**/*.{js,jsx}'",
