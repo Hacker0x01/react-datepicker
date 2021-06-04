@@ -8608,9 +8608,9 @@ rollup-pluginutils@^2.6.0, rollup-pluginutils@^2.8.1:
     estree-walker "^0.6.1"
 
 rollup@^2.32.0:
-  version "2.50.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.50.2.tgz#640c500c68c698f62efb01857e0ff06fcd18181f"
-  integrity sha512-Ra5JkxSiZPZZFnvE68KWtlrLnZGg5LNaV1n1esq4ch69P7ReeoRVlrTuL/k+L/GJfcowA5An0BEhEq2Hfzwl6w==
+  version "2.50.6"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.50.6.tgz#24e2211caf9031081656e98a5e5e94d3b5e786e2"
+  integrity sha512-6c5CJPLVgo0iNaZWWliNu1Kl43tjP9LZcp6D/tkf2eLH2a9/WeHxg9vfTFl8QV/2SOyaJX37CEm9XuGM0rviUg==
   optionalDependencies:
     fsevents "~2.3.1"
 
@@ -10540,9 +10540,9 @@ write-file-atomic@^3.0.3:
     typedarray-to-buffer "^3.1.5"
 
 ws@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
-  integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.2.tgz#dd5cdbd57a9979916097652d78f1cc5faea0c32e"
+  integrity sha512-zmhltoSR8u1cnDsD43TX59mzoMZsLKqUweyYBAIvTngR3shc0W6aOZylZmq/7hqyVxPdi+5Ud2QInblgyE72fw==
   dependencies:
     async-limiter "~1.0.0"
 
