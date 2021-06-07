@@ -270,7 +270,7 @@ export default class Month extends React.Component {
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m} ${
-        m === new Date().getMonth() ? "current" : ""
+        m === new Date().getMonth() ? `current` : ``
       }`,
       _monthClassName,
       {
