@@ -2,7 +2,7 @@
   "author": "socialpilot",
   "name": "socialpilot-react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "license": "MIT",
   "homepage": "https://github.com/rohanvachheta/react-datepicker",
   "main": "dist/index.js",
