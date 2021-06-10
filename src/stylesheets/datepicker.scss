@@ -466,11 +466,13 @@
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: lighten($datepicker__selected-color, 10%);
-    color: #fff;
+    // background-color: lighten($datepicker__selected-color, 10%);
+    // color: #fff;
 
     &:hover {
-      background-color: darken($datepicker__selected-color, 5%);
+      // background-color: darken($datepicker__selected-color, 5%);
+      border-radius: $datepicker__border-radius;
+      background-color: $datepicker__background-color;
     }
   }
 
