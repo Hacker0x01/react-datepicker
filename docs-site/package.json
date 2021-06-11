@@ -11,7 +11,7 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "set PORT=8080 && react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

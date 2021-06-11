@@ -266,12 +266,13 @@ export default class Month extends React.Component {
       preSelection,
       monthClassName,
     } = this.props;
-    console.log("props--", this.props);
     const _monthClassName = monthClassName ? monthClassName(day) : undefined;
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m} ${
-        m === new Date().getMonth() ? `current` : ``
+        m === new Date().getMonth() && utils.isSameYear(new Date(), day)
+          ? `current-month`
+          : `` // class for the current month
       }`,
       _monthClassName,
       {
