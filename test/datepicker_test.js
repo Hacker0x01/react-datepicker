@@ -1776,9 +1776,9 @@ describe("DatePicker", () => {
   });
 
   it("should show the correct start of week for GB locale", () => {
-    registerLocale("gb", enGB);
+    registerLocale("en-GB", enGB);
 
-    var datePicker = mount(<DatePicker locale="gb" />);
+    const datePicker = mount(<DatePicker locale="en-GB" />);
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
     const focusSpy = sandbox.spy(dateInput, "focus");
@@ -1793,9 +1793,9 @@ describe("DatePicker", () => {
   });
 
   it("should show the correct start of week for US locale", () => {
-    registerLocale("us", enUS);
+    registerLocale("en-US", enUS);
 
-    var datePicker = mount(<DatePicker locale="us" />);
+    const datePicker = mount(<DatePicker locale="en-US" />);
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
     const focusSpy = sandbox.spy(dateInput, "focus");
