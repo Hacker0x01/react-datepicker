@@ -116,7 +116,7 @@ export default class DatePicker extends React.Component {
       showPopperArrow: true,
       excludeScrollbar: true,
       customTimeInput: null,
-      calendarStartDay: 0,
+      calendarStartDay: undefined,
     };
   }
 
