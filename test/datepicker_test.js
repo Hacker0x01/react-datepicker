@@ -515,6 +515,19 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).to.exist;
   });
 
+  it("should ignore withPortal prop when inline prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline withPortal />
+    );
+
+    expect(function () {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__portal"
+      );
+    }).to.throw();
+  });
+
   it("should render Calendar in portal when withPortal is set and input has focus", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker withPortal />);
     var dateInput = datePicker.input;
@@ -539,6 +552,16 @@ describe("DatePicker", () => {
       );
     }).to.throw();
     expect(datePicker.calendar).not.to.exist;
+  });
+
+  it("should render Calendar in a ReactDOM portal when withPortal is set and portalId is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal portalId="portal-id-dom-test" />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    expect(document.getElementById("portal-id-dom-test")).to.exist;
   });
 
   function getOnInputKeyDownStuff(opts) {

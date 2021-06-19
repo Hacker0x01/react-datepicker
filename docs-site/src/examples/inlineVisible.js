@@ -3,6 +3,7 @@
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = (e) => {
     setIsOpen(!isOpen);
+    setStartDate(e);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -14,12 +15,7 @@
         {format(startDate, "dd-MM-yyyy")}
       </button>
       {isOpen && (
-        <DatePicker
-          selected={startDate}
-          onChange={handleChange}
-          withPortal
-          inline
-        />
+        <DatePicker selected={startDate} onChange={handleChange} inline />
       )}
     </>
   );
