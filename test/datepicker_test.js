@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
+import { enUS, enGB } from "date-fns/locale";
 import { mount } from "enzyme";
 import defer from "lodash/defer";
-import DatePicker from "../src/index.jsx";
+import DatePicker, { registerLocale } from "../src/index.jsx";
 import Day from "../src/day";
 import WeekNumber from "../src/week_number";
 import TestWrapper from "./test_wrapper.jsx";
@@ -1772,5 +1773,39 @@ describe("DatePicker", () => {
       );
       expect(datePickerInline.state.shouldFocusDayInline).to.be.true;
     });
+  });
+
+  it("should show the correct start of week for GB locale", () => {
+    registerLocale("en-GB", enGB);
+
+    const datePicker = mount(<DatePicker locale="en-GB" />);
+    const dateInput = datePicker.instance().input;
+    const dateInputWrapper = datePicker.find("input");
+    const focusSpy = sandbox.spy(dateInput, "focus");
+
+    dateInputWrapper.simulate("focus");
+
+    const firstDay = datePicker
+      .find(".react-datepicker__day-names")
+      .childAt(0)
+      .text();
+    expect(firstDay).to.equal("Mo");
+  });
+
+  it("should show the correct start of week for US locale", () => {
+    registerLocale("en-US", enUS);
+
+    const datePicker = mount(<DatePicker locale="en-US" />);
+    const dateInput = datePicker.instance().input;
+    const dateInputWrapper = datePicker.find("input");
+    const focusSpy = sandbox.spy(dateInput, "focus");
+
+    dateInputWrapper.simulate("focus");
+
+    const firstDay = datePicker
+      .find(".react-datepicker__day-names")
+      .childAt(0)
+      .text();
+    expect(firstDay).to.equal("Su");
   });
 });
