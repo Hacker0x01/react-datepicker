@@ -14,6 +14,7 @@ import * as utils from "../src/date_utils";
 import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
 import { isSunday } from "date-fns";
+import Time from "../src/time";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/dd/yyyy";
@@ -1551,6 +1552,51 @@ describe("Calendar", function () {
       const calendarDays = calendar.find(".react-datepicker__day-name");
       expect(calendarDays.at(0).text()).to.equal("We");
       expect(calendarDays.at(6).text()).to.equal("Tu");
+    });
+  });
+
+  describe("prev/next month button onKeyDown handler", () => {
+    it("should call the prevMonthButton onKeyDown handler on Tab press", () => {
+      const onKeyDownSpy = sinon.spy();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={new Date("February 28, 2018 4:43 PM")}
+          onKeyDown={onKeyDownSpy}
+        />
+      );
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      const prevMonthButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__navigation--previous"
+      );
+      TestUtils.Simulate.keyDown(prevMonthButton, {
+        key: "Tab",
+        code: 9,
+        which: 9,
+      });
+      expect(onKeyDownSpy.calledOnce).to.be.true;
+    });
+    it("should call the nextMonthButton onKeyDown handler on Tab press", () => {
+      const onKeyDownSpy = sinon.spy();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={new Date("February 28, 2018 4:43 PM")}
+          onKeyDown={onKeyDownSpy}
+        />
+      );
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      const nextMonthButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__navigation--next"
+      );
+      TestUtils.Simulate.keyDown(nextMonthButton, {
+        key: "Tab",
+        code: 9,
+        which: 9,
+      });
+      expect(onKeyDownSpy.calledOnce).to.be.true;
     });
   });
 });
