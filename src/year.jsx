@@ -144,6 +144,7 @@ export default class Year extends React.Component {
         </div>
       );
     }
+
     return (
       <div className="react-datepicker__year">
         <div className="react-datepicker__year-wrapper">{yearsList}</div>

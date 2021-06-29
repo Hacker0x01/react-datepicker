@@ -3,6 +3,7 @@ import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import Year from "../src/year";
 import TestUtils from "react-dom/test-utils";
+import { create } from "react-test-renderer";
 import ReactDOM from "react-dom";
 import * as utils from "../src/date_utils";
 import Calendar from "../src/calendar";
@@ -164,6 +165,113 @@ describe("YearPicker", () => {
         utils.formatDate(expectedDate, "dd.MM.yyyy")
       );
       expect(allPreselectedYears.length).to.equal(1);
+    });
+  });
+
+  describe("Keyboard navigation", () => {
+    let preSelected;
+    const setPreSelection = (preSelection) => {
+      preSelected = preSelection;
+    };
+
+    let selectedDay;
+    const onDayClick = (day) => {
+      selectedDay = day;
+    };
+
+    const getPicker = (initialDate, props) =>
+      TestUtils.renderIntoDocument(
+        <Year
+          selected={utils.newDate(initialDate)}
+          date={utils.newDate(initialDate)}
+          setPreSelection={setPreSelection}
+          preSelection={utils.newDate(initialDate)}
+          onDayClick={onDayClick}
+          yearItemNumber={12}
+          {...props}
+        />
+      );
+
+    const simulateLeft = (target) =>
+      TestUtils.Simulate.keyDown(target, {
+        key: "ArrowLeft",
+        keyCode: 37,
+        which: 37,
+      });
+    const simulateRight = (target) =>
+      TestUtils.Simulate.keyDown(target, {
+        key: "ArrowRight",
+        keyCode: 39,
+        which: 39,
+      });
+
+    it("should preSelect and set 2020 on left arrow press", () => {
+      const yearPicker = getPicker("2021-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+      simulateLeft(target);
+
+      expect(utils.getYear(preSelected)).to.equal(2020);
+    });
+    it("should preSelect and set 2022 on left arrow press", () => {
+      const yearPicker = getPicker("2021-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+      simulateRight(target);
+
+      expect(utils.getYear(preSelected)).to.equal(2022);
+    });
+    it("should paginate from 2017 to 2016", () => {
+      const yearPicker = getPicker("2017-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+      simulateLeft(target);
+
+      expect(utils.getYear(preSelected)).to.equal(2016);
+    });
+    it("should paginate from 2028 to 2029", () => {
+      const yearPicker = getPicker("2028-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+      simulateRight(target);
+
+      expect(utils.getYear(preSelected)).to.equal(2029);
+    });
+    it("should select 2021 when Enter key is pressed", () => {
+      const yearPicker = getPicker("2021-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+
+      TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
+      expect(utils.getYear(selectedDay)).to.equal(2021);
+    });
+    it("should disable keyboard navigation", () => {
+      const yearPicker = getPicker("2021-01-01", {
+        disabledKeyboardNavigation: true,
+      });
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected"
+      );
+      simulateRight(target);
+
+      expect(utils.getYear(preSelected)).to.equal(2021);
     });
   });
 });
