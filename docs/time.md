@@ -8,7 +8,7 @@
 | `handleOnKeyDown`    | `func`                 |               |             |
 | `includeTimes`       | `array`                |               |             |
 | `injectTimes`        | `array`                |               |             |
-| `intervals`          | `number`               | `30`          |             |
+| `timeIntervals`      | `number`               | `30`          |             |
 | `locale`             | `union(string\|shape)` |               |             |
 | `maxTime`            | `instanceOfDate`       |               |             |
 | `minTime`            | `instanceOfDate`       |               |             |
