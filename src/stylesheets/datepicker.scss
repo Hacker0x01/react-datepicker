@@ -190,6 +190,7 @@
   position: relative;
   top: -1px;
   font-size: 20px;
+  width: 0;
 
   &::before {
     @extend %navigation-chevron;
