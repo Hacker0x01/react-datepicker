@@ -256,25 +256,18 @@ export default class Month extends React.Component {
   };
 
   getMonthClassNames = (m) => {
-    const {
-      day,
-      startDate,
-      endDate,
-      selected,
-      minDate,
-      maxDate,
-      preSelection,
-      monthClassName,
-    } = this.props;
+    const { day, startDate, endDate, selected, preSelection, monthClassName } =
+      this.props;
     const _monthClassName = monthClassName ? monthClassName(day) : undefined;
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       _monthClassName,
       {
-        "react-datepicker__month--disabled":
-          (minDate || maxDate) &&
-          utils.isMonthDisabled(utils.setMonth(day, m), this.props),
+        "react-datepicker__month--disabled": utils.isMonthDisabled(
+          utils.setMonth(day, m),
+          this.props
+        ),
         "react-datepicker__month--selected":
           utils.getMonth(day) === m &&
           utils.getYear(day) === utils.getYear(selected),
@@ -319,14 +312,15 @@ export default class Month extends React.Component {
   };
 
   getQuarterClassNames = (q) => {
-    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
+    const { day, startDate, endDate, selected } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
       {
-        "react-datepicker__quarter--disabled":
-          (minDate || maxDate) &&
-          utils.isQuarterDisabled(utils.setQuarter(day, q), this.props),
+        "react-datepicker__quarter--disabled": utils.isQuarterDisabled(
+          utils.setQuarter(day, q),
+          this.props
+        ),
         "react-datepicker__quarter--selected":
           utils.getQuarter(day) === q &&
           utils.getYear(day) === utils.getYear(selected),

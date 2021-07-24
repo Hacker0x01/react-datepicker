@@ -428,7 +428,7 @@ export function isMonthDisabled(
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
-    isOutOfBounds(month, { minDate, maxDate }) ||
+    ((minDate || maxDate) && isOutOfBounds(month, { minDate, maxDate })) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameMonth(month, excludeDate))) ||
     (includeDates &&
@@ -460,7 +460,7 @@ export function isQuarterDisabled(
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
-    isOutOfBounds(quarter, { minDate, maxDate }) ||
+    ((minDate || maxDate) && isOutOfBounds(quarter, { minDate, maxDate })) ||
     (excludeDates &&
       excludeDates.some((excludeDate) =>
         isSameQuarter(quarter, excludeDate)
