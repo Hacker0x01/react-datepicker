@@ -1,3 +1,5 @@
+@use "sass:math";
+
 %navigation-chevron {
   border-color: $datepicker__muted-color;
   border-style: solid;
@@ -17,7 +19,7 @@
 }
 
 %triangle-arrow {
-  margin-left: -$datepicker__triangle-size / 2;
+  margin-left: math.div(-$datepicker__triangle-size, 2);
   position: absolute;
   width: 0;
 
