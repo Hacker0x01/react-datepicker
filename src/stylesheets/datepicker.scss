@@ -5,6 +5,7 @@
   display: inline-block;
   padding: 0;
   border: 0;
+  width: 100%;
 }
 
 .react-datepicker {
@@ -189,6 +190,7 @@
   position: relative;
   top: -1px;
   font-size: 20px;
+  width: 0;
 
   &::before {
     @extend %navigation-chevron;

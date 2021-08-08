@@ -32,6 +32,7 @@ General datepicker component.
 | `filterDate`                 | `func`                         |                 |                                                                                               |
 | `filterTime`                 | `func`                         |                 |                                                                                               |
 | `fixedHeight`                | `bool`                         |                 |                                                                                               |
+| `focusSelectedMonth`         | `bool`                         | `false`         |                                                                                               |
 | `forceShowMonthNavigation`   | `bool`                         |                 |                                                                                               |
 | `formatWeekNumber`           | `func`                         |                 |                                                                                               |
 | `highlightDates`             | `array`                        |                 |                                                                                               |

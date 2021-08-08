@@ -43,6 +43,7 @@ import OnBlurCallbacks from "../../examples/onBlurCallbacks";
 import ConfigurePopper from "../../examples/configurePopper";
 import Portal from "../../examples/portal";
 import PortalById from "../../examples/portalById";
+import WithPortalById from "../../examples/withPortalById";
 import TabIndex from "../../examples/tabIndex";
 import YearDropdown from "../../examples/yearDropdown";
 import YearItemNumber from "../../examples/yearItemNumber";
@@ -51,6 +52,7 @@ import MonthDropdownShort from "../../examples/monthDropdownShort";
 import MonthYearDropdown from "../../examples/monthYearDropdown";
 import YearSelectDropdown from "../../examples/yearSelectDropdown";
 import Inline from "../../examples/inline";
+import InlineVisible from "../../examples/inlineVisible";
 import OpenToDate from "../../examples/openToDate";
 import FixedCalendar from "../../examples/fixedCalendar";
 import WeekNumbers from "../../examples/weekNumbers";
@@ -262,8 +264,8 @@ export default class exampleComponents extends React.Component {
       component: Inline,
     },
     {
-      title: "Inline portal version",
-      component: Inline,
+      title: "Button to show Inline version",
+      component: InlineVisible,
     },
     {
       title: "Input time",
@@ -354,6 +356,12 @@ export default class exampleComponents extends React.Component {
       description:
         "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
       component: PortalById,
+    },
+    {
+      title: "Portal version with portal by id",
+      description:
+        "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
+      component: WithPortalById,
     },
     {
       title: "Quarter Picker",
