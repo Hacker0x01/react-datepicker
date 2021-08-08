@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "highlight.js": "^10.7.2",
+    "highlight.js": "^11.1.0",
     "react": "^17.0.2",
     "react-app-rewired": "^2.1.8",
     "react-dom": "^17.0.2",

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Calendar from "./calendar";
+import Portal from "./portal";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
 import startOfDay from "date-fns/startOfDay";
@@ -116,7 +117,7 @@ export default class DatePicker extends React.Component {
       showPopperArrow: true,
       excludeScrollbar: true,
       customTimeInput: null,
-      calendarStartDay: 0,
+      calendarStartDay: undefined,
     };
   }
 
@@ -1014,25 +1015,35 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  renderInputContainer() {
+    return (
+      <div className="react-datepicker__input-container">
+        {this.renderDateInput()}
+        {this.renderClearButton()}
+      </div>
+    );
+  }
+
   render() {
     const calendar = this.renderCalendar();
 
-    if (this.props.inline && !this.props.withPortal) {
-      return calendar;
-    }
+    if (this.props.inline) return calendar;
 
     if (this.props.withPortal) {
+      let portalContainer = this.state.open ? (
+        <div className="react-datepicker__portal">{calendar}</div>
+      ) : null;
+
+      if (this.state.open && this.props.portalId) {
+        portalContainer = (
+          <Portal portalId={this.props.portalId}>{portalContainer}</Portal>
+        );
+      }
+
       return (
         <div>
-          {!this.props.inline ? (
-            <div className="react-datepicker__input-container">
-              {this.renderDateInput()}
-              {this.renderClearButton()}
-            </div>
-          ) : null}
-          {this.state.open || this.props.inline ? (
-            <div className="react-datepicker__portal">{calendar}</div>
-          ) : null}
+          {this.renderInputContainer()}
+          {portalContainer}
         </div>
       );
     }
@@ -1044,12 +1055,7 @@ export default class DatePicker extends React.Component {
         hidePopper={!this.isCalendarOpen()}
         portalId={this.props.portalId}
         popperModifiers={this.props.popperModifiers}
-        targetComponent={
-          <div className="react-datepicker__input-container">
-            {this.renderDateInput()}
-            {this.renderClearButton()}
-          </div>
-        }
+        targetComponent={this.renderInputContainer()}
         popperContainer={this.props.popperContainer}
         popperComponent={calendar}
         popperPlacement={this.props.popperPlacement}

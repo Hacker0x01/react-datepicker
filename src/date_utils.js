@@ -166,7 +166,7 @@ export function safeDateFormat(date, { dateFormat, locale }) {
       formatDate(
         date,
         Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
-        (locale: locale)
+        locale
       )) ||
     ""
   );
@@ -214,7 +214,7 @@ export function getWeek(date, locale) {
 }
 
 export function getDayOfWeekCode(day, locale) {
-  return formatDate(day, "ddd", (locale: locale));
+  return formatDate(day, "ddd", locale);
 }
 
 // *** Start of ***

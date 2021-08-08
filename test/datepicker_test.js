@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
+import { enUS, enGB } from "date-fns/locale";
 import { mount } from "enzyme";
 import defer from "lodash/defer";
-import DatePicker from "../src/index.jsx";
+import DatePicker, { registerLocale } from "../src/index.jsx";
 import Day from "../src/day";
 import WeekNumber from "../src/week_number";
 import TestWrapper from "./test_wrapper.jsx";
@@ -514,6 +515,19 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).to.exist;
   });
 
+  it("should ignore withPortal prop when inline prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline withPortal />
+    );
+
+    expect(function () {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__portal"
+      );
+    }).to.throw();
+  });
+
   it("should render Calendar in portal when withPortal is set and input has focus", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker withPortal />);
     var dateInput = datePicker.input;
@@ -538,6 +552,16 @@ describe("DatePicker", () => {
       );
     }).to.throw();
     expect(datePicker.calendar).not.to.exist;
+  });
+
+  it("should render Calendar in a ReactDOM portal when withPortal is set and portalId is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal portalId="portal-id-dom-test" />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    expect(document.getElementById("portal-id-dom-test")).to.exist;
   });
 
   function getOnInputKeyDownStuff(opts) {
@@ -1772,5 +1796,39 @@ describe("DatePicker", () => {
       );
       expect(datePickerInline.state.shouldFocusDayInline).to.be.true;
     });
+  });
+
+  it("should show the correct start of week for GB locale", () => {
+    registerLocale("en-GB", enGB);
+
+    const datePicker = mount(<DatePicker locale="en-GB" />);
+    const dateInput = datePicker.instance().input;
+    const dateInputWrapper = datePicker.find("input");
+    const focusSpy = sandbox.spy(dateInput, "focus");
+
+    dateInputWrapper.simulate("focus");
+
+    const firstDay = datePicker
+      .find(".react-datepicker__day-names")
+      .childAt(0)
+      .text();
+    expect(firstDay).to.equal("Mo");
+  });
+
+  it("should show the correct start of week for US locale", () => {
+    registerLocale("en-US", enUS);
+
+    const datePicker = mount(<DatePicker locale="en-US" />);
+    const dateInput = datePicker.instance().input;
+    const dateInputWrapper = datePicker.find("input");
+    const focusSpy = sandbox.spy(dateInput, "focus");
+
+    dateInputWrapper.simulate("focus");
+
+    const firstDay = datePicker
+      .find(".react-datepicker__day-names")
+      .childAt(0)
+      .text();
+    expect(firstDay).to.equal("Su");
   });
 });
