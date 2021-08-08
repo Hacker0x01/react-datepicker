@@ -927,8 +927,8 @@ export default class DatePicker extends React.Component {
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
-        handleOnKeyDown={this.onDayKeyDown}
-        handleTimeKeyDown={this.props.onKeyDown}
+        handleOnKeyDown={this.props.onKeyDown}
+        handleOnDayKeyDown={this.onDayKeyDown}
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
