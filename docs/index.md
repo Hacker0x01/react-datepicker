@@ -13,7 +13,7 @@
 | `autoFocus`                  | `bool`                         |                    |             |
 | `calendarClassName`          | `string`                       |                    |             |
 | `calendarContainer`          | `func`                         |                    |             |
-| `calendarStartDay`           | `number`                       | `0`                |             |
+| `calendarStartDay`           | `number`                       | `undefined`        |             |
 | `children`                   | `node`                         |                    |             |
 | `chooseDayAriaLabelPrefix`   | `string`                       |                    |             |
 | `className`                  | `string`                       |                    |             |
