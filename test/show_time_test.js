@@ -28,9 +28,13 @@ describe("DatePicker", () => {
   });
 
   describe("Time Select Only", () => {
-    var datePicker = mount(
-      <DatePicker showTimeSelect showTimeSelectOnly todayButton="Today" />
-    );
+    let datePicker;
+    before(() => {
+      datePicker = mount(
+        <DatePicker showTimeSelect showTimeSelectOnly todayButton="Today" />
+      );
+      datePicker.find("input").simulate("click");
+    });
 
     it("should not show month container when showTimeSelectOnly prop is present", () => {
       var elem = datePicker.find(".react-datepicker__month-container");
