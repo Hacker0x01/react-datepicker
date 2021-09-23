@@ -52,6 +52,7 @@ import MonthDropdownShort from "../../examples/monthDropdownShort";
 import MonthYearDropdown from "../../examples/monthYearDropdown";
 import YearSelectDropdown from "../../examples/yearSelectDropdown";
 import Inline from "../../examples/inline";
+import inlineWithInput from "../../examples/inlineWithInput";
 import InlineVisible from "../../examples/inlineVisible";
 import OpenToDate from "../../examples/openToDate";
 import FixedCalendar from "../../examples/fixedCalendar";
@@ -262,6 +263,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Inline version",
       component: Inline,
+    },
+    {
+      title: "Inline with input version",
+      component: inlineWithInput,
     },
     {
       title: "Button to show Inline version",

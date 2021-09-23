@@ -162,6 +162,7 @@ export default class DatePicker extends React.Component {
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
+    inlineWithInput: PropTypes.bool,
     isClearable: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
@@ -826,7 +827,11 @@ export default class DatePicker extends React.Component {
   };
 
   renderCalendar = () => {
-    if (!this.props.inline && !this.isCalendarOpen()) {
+    if (
+      !this.props.inline &&
+      !this.props.inlineWithInput &&
+      !this.isCalendarOpen()
+    ) {
       return null;
     }
     return (
@@ -1026,6 +1031,10 @@ export default class DatePicker extends React.Component {
 
   render() {
     const calendar = this.renderCalendar();
+
+    if (this.props.inlineWithInput) {
+      return [this.renderInputContainer(), calendar];
+    }
 
     if (this.props.inline) return calendar;
 
