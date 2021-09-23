@@ -441,7 +441,7 @@ export default class DatePicker extends React.Component {
   };
 
   handleCalendarClickOutside = (event) => {
-    if (!this.props.inline) {
+    if (!this.props.inline || !this.props.inlineWithInput) {
       this.setOpen(false);
     }
     this.props.onClickOutside(event);
@@ -493,7 +493,7 @@ export default class DatePicker extends React.Component {
     this.setSelected(date, event, false, monthSelectedIn);
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
-    } else if (!this.props.inline) {
+    } else if (!this.props.inline || !this.props.inlineWithInput) {
       if (!this.props.selectsRange) {
         this.setOpen(false);
       }
@@ -531,7 +531,7 @@ export default class DatePicker extends React.Component {
             second: getSeconds(this.props.selected),
           });
         }
-        if (!this.props.inline) {
+        if (!this.props.inline || !this.props.inlineWithInput) {
           this.setState({
             preSelection: changedDate,
           });
@@ -746,7 +746,7 @@ export default class DatePicker extends React.Component {
       }
       this.setPreSelection(newSelection);
       // need to figure out whether month has changed to focus day in inline version
-      if (this.props.inline) {
+      if (this.props.inline || this.props.inlineWithInput) {
         const prevMonth = getMonth(copy);
         const newMonth = getMonth(newSelection);
         const prevYear = getYear(copy);
@@ -871,7 +871,7 @@ export default class DatePicker extends React.Component {
         includeDates={this.props.includeDates}
         includeTimes={this.props.includeTimes}
         injectTimes={this.props.injectTimes}
-        inline={this.props.inline}
+        inline={this.props.inline || this.props.inlineWithInput}
         shouldFocusDayInline={this.state.shouldFocusDayInline}
         peekNextMonth={this.props.peekNextMonth}
         showMonthDropdown={this.props.showMonthDropdown}
