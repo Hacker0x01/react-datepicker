@@ -528,6 +528,59 @@ describe("DatePicker", () => {
     }).to.throw();
   });
 
+  it("should render calendar inside PopperComponent when inlineWithInput prop is not set", () => {
+    var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
+
+    expect(function () {
+      TestUtils.findRenderedComponentWithType(datePicker, PopperComponent);
+    }).to.not.throw();
+  });
+
+  it("should render calendar directly without PopperComponent when inlineWithInput prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inlineWithInput />
+    );
+
+    expect(function () {
+      TestUtils.findRenderedComponentWithType(datePicker, PopperComponent);
+    }).to.throw();
+    expect(datePicker.calendar).to.exist;
+  });
+
+  it("should ignore disable prop when inlineWithInput prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inlineWithInput disabled />
+    );
+
+    expect(datePicker.calendar).to.exist;
+  });
+
+  it("should ignore withPortal prop when inlineWithInput prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inlineWithInput withPortal />
+    );
+
+    expect(function () {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__portal"
+      );
+    }).to.throw();
+  });
+
+  it("should ignore inline prop when inlineWithInput prop is set", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker inline inlineWithInput />
+    );
+
+    expect(function () {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__input-container"
+      );
+    }).to.not.throw();
+  });
+
   it("should render Calendar in portal when withPortal is set and input has focus", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker withPortal />);
     var dateInput = datePicker.input;
