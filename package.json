@@ -63,7 +63,7 @@
     "express": "^4.17.1",
     "flow-bin": "^0.132.0",
     "highlight.js": "^11.0.1",
-    "husky": "6",
+    "husky": "7",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^6.0.1",
     "karma-chai": "^0.1.0",
