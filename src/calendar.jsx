@@ -475,9 +475,15 @@ export default class Calendar extends React.Component {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
+    const { previousMonthButtonLabel, previousYearButtonLabel } = this.props;
+
     const {
-      previousMonthAriaLabel = "Previous Month",
-      previousYearAriaLabel = "Previous Year",
+      previousMonthAriaLabel = typeof previousMonthButtonLabel === "string"
+        ? previousMonthButtonLabel
+        : "Previous Month",
+      previousYearAriaLabel = typeof previousYearButtonLabel === "string"
+        ? previousYearButtonLabel
+        : "Previous Year",
     } = this.props;
 
     return (
@@ -571,9 +577,14 @@ export default class Calendar extends React.Component {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
+    const { nextMonthButtonLabel, nextYearButtonLabel } = this.props;
     const {
-      nextMonthAriaLabel = "Next Month",
-      nextYearAriaLabel = "Next Year",
+      nextMonthAriaLabel = typeof nextMonthButtonLabel === "string"
+        ? nextMonthButtonLabel
+        : "Next Month",
+      nextYearAriaLabel = typeof nextYearButtonLabel === "string"
+        ? nextYearButtonLabel
+        : "Next Year",
     } = this.props;
 
     return (
