@@ -102,9 +102,13 @@ export default class DatePicker extends React.Component {
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
+      previousMonthAriaLabel: "Previous Month",
       previousMonthButtonLabel: "Previous Month",
+      nextMonthAriaLabel: "Next Month",
       nextMonthButtonLabel: "Next Month",
+      previousYearAriaLabel: "Previous Year",
       previousYearButtonLabel: "Previous Year",
+      nextYearAriaLabel: "Next Year",
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
       enableTabLoop: true,
@@ -244,15 +248,19 @@ export default class DatePicker extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
     clearButtonClassName: PropTypes.string,
+    previousMonthAriaLabel: PropTypes.string,
     previousMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,
     ]),
+    nextMonthAriaLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,
     ]),
+    previousYearAriaLabel: PropTypes.string,
     previousYearButtonLabel: PropTypes.string,
+    nextYearAriaLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
@@ -907,9 +915,13 @@ export default class DatePicker extends React.Component {
         container={this.props.calendarContainer}
         yearItemNumber={this.props.yearItemNumber}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        previousMonthAriaLabel={this.props.previousMonthAriaLabel}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
+        nextMonthAriaLabel={this.props.nextMonthAriaLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        previousYearAriaLabel={this.props.previousYearAriaLabel}
         previousYearButtonLabel={this.props.previousYearButtonLabel}
+        nextYearAriaLabel={this.props.nextYearAriaLabel}
         nextYearButtonLabel={this.props.nextYearButtonLabel}
         timeInputLabel={this.props.timeInputLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
