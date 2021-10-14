@@ -1347,6 +1347,12 @@ describe("DatePicker", () => {
       .simulate("click");
     assert(onInputClickSpy.callCount, 1);
   });
+  it("should not open calendar onClick if preventOpenOnFocus", () => {
+    var datePicker = mount(<DatePicker preventOpenOnFocus />)
+      .find("input")
+      .simulate("click");
+    expect(datePicker.calendar).to.not.exist;
+  });
 
   it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
     const datePicker = mount(<DatePicker monthsShown={2} inline />);
