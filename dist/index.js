@@ -2410,7 +2410,7 @@ var _r = (function (e) {
     );
   })();
 ct(Yr, "calcCenterPosition", function (e, t) {
-  return t.offsetTop - (e / 2 - t.clientHeight / 2);
+  return t ? t.offsetTop - (e / 2 - t.clientHeight / 2) : 0;
 });
 var Tr = (function (e) {
     ut(r, ne["default"].Component);

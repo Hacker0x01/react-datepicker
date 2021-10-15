@@ -2697,7 +2697,7 @@
         );
       })(de.default.Component);
     vt(Wr, "calcCenterPosition", function (e, t) {
-      return t.offsetTop - (e / 2 - t.clientHeight / 2);
+      return t ? t.offsetTop - (e / 2 - t.clientHeight / 2) : 0;
     });
     var Kr = (function (e) {
         wt(r, e);
