@@ -24,6 +24,7 @@ import SpecificDateRange from "../../examples/specificDateRange";
 import MinDate from "../../examples/minDate";
 import MaxDate from "../../examples/maxDate";
 import DateRangeWithShowDisabledNavigation from "../../examples/dateRangeWithShowDisabledNavigation";
+import LimitTime from "../../examples/limitTime";
 import Locale from "../../examples/locale";
 import LocaleWithTime from "../../examples/localeWithTime";
 import LocaleWithoutGlobalVariable from "../../examples/localeWithoutGlobalVariable";
@@ -259,6 +260,7 @@ export default class exampleComponents extends React.Component {
       title: "Inject Specific Times",
       component: InjectTimes,
     },
+
     {
       title: "Inline version",
       component: Inline,
@@ -270,6 +272,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Input time",
       component: TimeInput,
+    },
+    {
+      title: "Limit time",
+      component: LimitTime,
     },
     {
       title: "Locale",

@@ -20,6 +20,7 @@ export default class Time extends React.Component {
   static get defaultProps() {
     return {
       intervals: 30,
+      limit: undefined,
       onTimeChange: () => {},
       todayButton: null,
       timeCaption: "Time",
@@ -36,6 +37,7 @@ export default class Time extends React.Component {
     format: PropTypes.string,
     includeTimes: PropTypes.array,
     intervals: PropTypes.number,
+    limit: PropTypes.array,
     selected: PropTypes.instanceOf(Date),
     openToDate: PropTypes.instanceOf(Date),
     onChange: PropTypes.func,
@@ -136,13 +138,24 @@ export default class Time extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
+  defineLimits = () => {
+    const intervals = this.props.intervals;
+    const multiplier = 1440 / intervals;
+    if (this.props.limit) {
+      const [start, end] = this.props.limit;
+      return [(60 / intervals) * start, (60 / intervals) * end + 1];
+    } else {
+      return [0, multiplier];
+    }
+  };
+
   renderTimes = () => {
     let times = [];
+
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
 
     const base = getStartOfDay(newDate(this.props.selected));
-    const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
       this.props.injectTimes.sort(function (a, b) {
@@ -154,8 +167,9 @@ export default class Time extends React.Component {
     const currH = getHours(activeDate);
     const currM = getMinutes(activeDate);
     const activeTime = setHours(setMinutes(base, currM), currH);
+    const [startTime, endTime] = this.defineLimits();
 
-    for (let i = 0; i < multiplier; i++) {
+    for (let i = startTime; i < endTime; i++) {
       const currentTime = addMinutes(base, i * intervals);
       times.push(currentTime);
 

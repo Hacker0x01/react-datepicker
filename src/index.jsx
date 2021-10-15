@@ -101,6 +101,7 @@ export default class DatePicker extends React.Component {
       showQuarterYearPicker: false,
       strictParsing: false,
       timeIntervals: 30,
+      timeLimit: undefined,
       timeCaption: "Time",
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month",
@@ -237,6 +238,7 @@ export default class DatePicker extends React.Component {
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
+    timeLimit: PropTypes.array,
     minTime: PropTypes.instanceOf(Date),
     maxTime: PropTypes.instanceOf(Date),
     excludeTimes: PropTypes.array,
@@ -898,6 +900,7 @@ export default class DatePicker extends React.Component {
         onTimeChange={this.handleTimeChange}
         timeFormat={this.props.timeFormat}
         timeIntervals={this.props.timeIntervals}
+        timeLimit={this.props.timeLimit}
         minTime={this.props.minTime}
         maxTime={this.props.maxTime}
         excludeTimes={this.props.excludeTimes}

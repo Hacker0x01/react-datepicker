@@ -129,6 +129,7 @@ export default class Calendar extends React.Component {
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
+    timeLimit: PropTypes.array,
     onTimeChange: PropTypes.func,
     timeInputLabel: PropTypes.string,
     minTime: PropTypes.instanceOf(Date),
@@ -910,6 +911,7 @@ export default class Calendar extends React.Component {
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
+          limit={this.props.timeLimit}
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}
