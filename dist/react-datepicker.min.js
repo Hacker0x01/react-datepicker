@@ -360,19 +360,22 @@
       return e;
     }
     function ft(e) {
-      return (ft =
-        "function" == typeof Symbol && "symbol" == typeof Symbol.iterator
-          ? function (e) {
-              return typeof e;
-            }
-          : function (e) {
-              return e &&
-                "function" == typeof Symbol &&
-                e.constructor === Symbol &&
-                e !== Symbol.prototype
-                ? "symbol"
-                : typeof e;
-            })(e);
+      return (
+        (ft =
+          "function" == typeof Symbol && "symbol" == typeof Symbol.iterator
+            ? function (e) {
+                return typeof e;
+              }
+            : function (e) {
+                return e &&
+                  "function" == typeof Symbol &&
+                  e.constructor === Symbol &&
+                  e !== Symbol.prototype
+                  ? "symbol"
+                  : typeof e;
+              }),
+        ft(e)
+      );
     }
     function ht(e, t) {
       if (!(e instanceof t))
@@ -404,16 +407,19 @@
       );
     }
     function Dt() {
-      return (Dt =
-        Object.assign ||
-        function (e) {
-          for (var t = 1; t < arguments.length; t++) {
-            var r = arguments[t];
-            for (var a in r)
-              Object.prototype.hasOwnProperty.call(r, a) && (e[a] = r[a]);
-          }
-          return e;
-        }).apply(this, arguments);
+      return (
+        (Dt =
+          Object.assign ||
+          function (e) {
+            for (var t = 1; t < arguments.length; t++) {
+              var r = arguments[t];
+              for (var a in r)
+                Object.prototype.hasOwnProperty.call(r, a) && (e[a] = r[a]);
+            }
+            return e;
+          }),
+        Dt.apply(this, arguments)
+      );
     }
     function wt(e, t) {
       if ("function" != typeof t && null !== t)
@@ -426,18 +432,24 @@
         t && kt(e, t);
     }
     function gt(e) {
-      return (gt = Object.setPrototypeOf
-        ? Object.getPrototypeOf
-        : function (e) {
-            return e.__proto__ || Object.getPrototypeOf(e);
-          })(e);
+      return (
+        (gt = Object.setPrototypeOf
+          ? Object.getPrototypeOf
+          : function (e) {
+              return e.__proto__ || Object.getPrototypeOf(e);
+            }),
+        gt(e)
+      );
     }
     function kt(e, t) {
-      return (kt =
-        Object.setPrototypeOf ||
-        function (e, t) {
-          return (e.__proto__ = t), e;
-        })(e, t);
+      return (
+        (kt =
+          Object.setPrototypeOf ||
+          function (e, t) {
+            return (e.__proto__ = t), e;
+          }),
+        kt(e, t)
+      );
     }
     function bt(e) {
       if (void 0 === e)
@@ -571,7 +583,6 @@
           return t.date({ width: "medium" });
         case "PPP":
           return t.date({ width: "long" });
-        case "PPPP":
         default:
           return t.date({ width: "full" });
       }
@@ -584,7 +595,6 @@
           return t.time({ width: "medium" });
         case "ppp":
           return t.time({ width: "long" });
-        case "pppp":
         default:
           return t.time({ width: "full" });
       }
@@ -607,7 +617,6 @@
             case "PPP":
               r = t.dateTime({ width: "long" });
               break;
-            case "PPPP":
             default:
               r = t.dateTime({ width: "full" });
           }
