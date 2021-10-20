@@ -325,6 +325,8 @@ export default class DatePicker extends React.Component {
       ? this.props.startDate
       : this.props.selectsStart && this.props.endDate
       ? this.props.endDate
+      : this.props.minDate && this.props.minDate > newDate()
+      ? this.props.minDate
       : newDate();
 
   calcInitialState = () => {
