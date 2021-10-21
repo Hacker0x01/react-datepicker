@@ -57,7 +57,9 @@
 | `monthClassName`             | `func`                         |                    |             |
 | `monthsShown`                | `number`                       | `1`                |             |
 | `name`                       | `string`                       |                    |             |
+| `nextMonthAriaLabel`         | `string`                       | `"Next Month"`     |             |
 | `nextMonthButtonLabel`       | `union(string\|node)`          | `"Next Month"`     |             |
+| `nextYearAriaLabel`          | `string`                       | `"Next Year"`      |             |
 | `nextYearButtonLabel`        | `string`                       | `"Next Year"`      |             |
 | `onBlur`                     | `func`                         | `() {}`            |             |
 | `onCalendarClose`            | `func`                         | `() {}`            |             |
@@ -86,7 +88,9 @@
 | `popperProps`                | `object`                       |                    |             |
 | `portalId`                   | `string`                       |                    |             |
 | `preventOpenOnFocus`         | `bool`                         | `false`            |             |
+| `previousMonthAriaLabel`     | `string`                       | `"Previous Month"` |             |
 | `previousMonthButtonLabel`   | `union(string\|node)`          | `"Previous Month"` |             |
+| `previousYearAriaLabel`      | `string`                       | `"Previous Year"`  |             |
 | `previousYearButtonLabel`    | `string`                       | `"Previous Year"`  |             |
 | `readOnly`                   | `bool`                         | `false`            |             |
 | `renderCustomHeader`         | `func`                         |                    |             |
