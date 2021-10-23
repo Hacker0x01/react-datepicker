@@ -75,6 +75,18 @@ export default class Time extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.monthRef && this.header) {
+      const updatedHeight =
+        this.props.monthRef.clientHeight - this.header.clientHeight;
+      if (this.state.height !== updatedHeight) {
+        this.setState({
+          height: updatedHeight,
+        });
+      }
+    }
+  }
+
   handleClick = (time) => {
     if (
       ((this.props.minTime || this.props.maxTime) &&

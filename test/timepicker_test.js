@@ -4,6 +4,7 @@ import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import Time from "../src/time";
 import { newDate, formatDate } from "../src/date_utils";
+import { mount } from "enzyme";
 
 function getKey(key) {
   switch (key) {
@@ -254,4 +255,31 @@ describe("TimePicker", () => {
     onChangeMoment = newDate(m);
     renderDatePicker(m);
   }
+});
+
+describe("TimePicker height test", () => {
+  it("should be null when monthRef is undefined", () => {
+    const time = mount(<Time />);
+    expect(time.state("height")).to.equal(null);
+  });
+
+  it("should equal monthRef's clientHeight after mount", () => {
+    const monthRef = {
+      clientHeight: 100,
+    };
+    //The headers clientHeight is 0
+    const time = mount(<Time monthRef={monthRef} />);
+    expect(time.state("height")).to.equal(100);
+  });
+
+  it("should equal monthRef's clientHeight after update", () => {
+    const monthRef = {
+      clientHeight: 100,
+    };
+    const time = mount(<Time monthRef={monthRef} />);
+    expect(time.state("height")).to.equal(100);
+    monthRef.clientHeight = 120;
+    time.instance().componentDidUpdate();
+    expect(time.state("height")).to.equal(120);
+  });
 });
