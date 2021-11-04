@@ -84,6 +84,7 @@ import CloseOnScroll from "../../examples/closeOnScroll";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 import CalendarStartDay from "../../examples/calendarStartDay";
+import CalendarShowDaysOnlyInMonth from "../../examples/calendarShowDaysOnlyInMonth";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -430,6 +431,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "Calendar not show days outside month",
+      component: CalendarShowDaysOnlyInMonth,
     },
   ];
 

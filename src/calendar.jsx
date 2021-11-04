@@ -61,6 +61,7 @@ export default class Calendar extends React.Component {
     return {
       onDropdownFocus: () => {},
       monthsShown: 1,
+      monthNotShowsDuplicateDays: false,
       monthSelectedIn: 0,
       forceShowMonthNavigation: false,
       timeCaption: "Time",
@@ -108,6 +109,7 @@ export default class Calendar extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
+    monthNotShowsDuplicateDays: PropTypes.bool,
     monthSelectedIn: PropTypes.number,
     nextMonthAriaLabel: PropTypes.string,
     nextYearAriaLabel: PropTypes.string,
@@ -323,7 +325,7 @@ export default class Calendar extends React.Component {
       }
     }
 
-    this.props.setPreSelection && this.props.setPreSelection(date);
+    // this.props.setPreSelection && this.props.setPreSelection(date);
   };
 
   handleMonthYearChange = (date) => {
@@ -816,8 +818,10 @@ export default class Calendar extends React.Component {
       var monthsToAdd = i - this.props.monthSelectedIn;
       var monthDate = addMonths(fromMonthDate, monthsToAdd);
       var monthKey = `month-${i}`;
-      var monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
-      var monthShowsDuplicateDaysStart = i > 0;
+      var monthShowsDuplicateDaysEnd =
+        this.props.monthNotShowsDuplicateDays ?? i < this.props.monthsShown - 1;
+      var monthShowsDuplicateDaysStart =
+        this.props.monthNotShowsDuplicateDays ?? i > 0;
       monthList.push(
         <div
           key={monthKey}

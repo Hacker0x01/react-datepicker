@@ -87,6 +87,7 @@ export default class DatePicker extends React.Component {
       onYearChange() {},
       onInputError() {},
       monthsShown: 1,
+      monthNotShowsDuplicateDays: false,
       readOnly: false,
       withPortal: false,
       shouldCloseOnSelect: true,
@@ -174,6 +175,7 @@ export default class DatePicker extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     monthsShown: PropTypes.number,
+    monthNotShowsDuplicateDays: PropTypes.bool,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func.isRequired,
@@ -893,6 +895,7 @@ export default class DatePicker extends React.Component {
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
         monthsShown={this.props.monthsShown}
+        monthNotShowsDuplicateDays={this.props.monthNotShowsDuplicateDays}
         monthSelectedIn={this.state.monthSelectedIn}
         onDropdownFocus={this.handleDropdownFocus}
         onMonthChange={this.props.onMonthChange}
