@@ -32,6 +32,7 @@ import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import HighlightDates from "../../examples/highlightDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
+import IncludeDateIntervals from "../../examples/includeDateIntervals";
 import FilterDates from "../../examples/filterDates";
 import DateRange from "../../examples/dateRange";
 import DateRangeInputWithClearButton from "../../examples/dateRangeInputWithClearButton";
@@ -222,7 +223,7 @@ export default class exampleComponents extends React.Component {
     },
     {
       title: "Exclude date intervals",
-      component: ExcludeDateIntervals
+      component: ExcludeDateIntervals,
     },
     {
       title: "Exclude Times",
@@ -255,6 +256,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Include dates",
       component: IncludeDates,
+    },
+    {
+      title: "Include date intervals",
+      component: IncludeDateIntervals,
     },
     {
       title: "Include Times",

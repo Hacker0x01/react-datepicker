@@ -19,14 +19,17 @@ export default class Week extends React.Component {
     chooseDayAriaLabelPrefix: PropTypes.string,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
-    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
-      start: PropTypes.instanceOf(Date),
-      end: PropTypes.instanceOf(Date)
-    })),
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
@@ -127,6 +130,7 @@ export default class Week extends React.Component {
             excludeDates={this.props.excludeDates}
             excludeDateIntervals={this.props.excludeDateIntervals}
             includeDates={this.props.includeDates}
+            includeDateIntervals={this.props.includeDateIntervals}
             highlightDates={this.props.highlightDates}
             selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}

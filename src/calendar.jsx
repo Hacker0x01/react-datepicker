@@ -92,15 +92,23 @@ export default class Calendar extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
-    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
-      start: PropTypes.instanceOf(Date),
-      end: PropTypes.instanceOf(Date)
-    })),
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
@@ -855,6 +863,7 @@ export default class Calendar extends React.Component {
             highlightDates={this.props.highlightDates}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
+            includeDateIntervals={this.props.includeDateIntervals}
             inline={this.props.inline}
             shouldFocusDayInline={this.props.shouldFocusDayInline}
             fixedHeight={this.props.fixedHeight}

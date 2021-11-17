@@ -80,11 +80,16 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach((df) => {
-      let tryParseDate = parse(value, df, new Date(), { locale: localeObject });
+      let tryParseDate = parse(value, df, new Date(), {
+        locale: localeObject,
+      });
       if (strictParsing) {
         strictParsingValueMatch =
           isValid(tryParseDate, minDate) &&
-          value === format(tryParseDate, df, { awareOfUnicodeTokens: true });
+          value ===
+            format(tryParseDate, df, {
+              awareOfUnicodeTokens: true,
+            });
       }
       if (isValid(tryParseDate, minDate) && strictParsingValueMatch) {
         parsedDate = tryParseDate;
@@ -402,24 +407,43 @@ export function getQuarterShortInLocale(quarter, locale) {
 
 export function isDayDisabled(
   day,
-  { minDate, maxDate, excludeDates, excludeDateIntervals, includeDates, filterDate } = {}
+  {
+    minDate,
+    maxDate,
+    excludeDates,
+    excludeDateIntervals,
+    includeDates,
+    includeDateIntervals,
+    filterDate,
+  } = {}
 ) {
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
     (excludeDateIntervals &&
-      excludeDateIntervals.some(({start,end}) => isWithinInterval(day, {start, end}))) ||
+      excludeDateIntervals.some(({ start, end }) =>
+        isWithinInterval(day, { start, end })
+      )) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameDay(day, includeDate))) ||
+    (includeDateIntervals &&
+      !includeDateIntervals.some(({ start, end }) =>
+        isWithinInterval(day, { start, end })
+      )) ||
     (filterDate && !filterDate(newDate(day))) ||
     false
   );
 }
 
-export function isDayExcluded(day, { excludeDates, excludeDateIntervals } = {}) {
+export function isDayExcluded(
+  day,
+  { excludeDates, excludeDateIntervals } = {}
+) {
   if (excludeDateIntervals && excludeDateIntervals.length > 0) {
-    return excludeDateIntervals.some(({start, end}) => isWithinInterval(day, {start, end}))
+    return excludeDateIntervals.some(({ start, end }) =>
+      isWithinInterval(day, { start, end })
+    );
   }
   return (
     (excludeDates &&

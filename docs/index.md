@@ -46,6 +46,7 @@
 | `highlightDates`             | `array`                        |                    |             |
 | `id`                         | `string`                       |                    |             |
 | `includeDates`               | `array`                        |                    |             |
+| `includeDateIntervals`       | `array`                        |                    |             |
 | `includeTimes`               | `array`                        |                    |             |
 | `injectTimes`                | `array`                        |                    |             |
 | `inline`                     | `bool`                         |                    |             |

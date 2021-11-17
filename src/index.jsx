@@ -157,16 +157,19 @@ export default class DatePicker extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
-    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
-      start: PropTypes.instanceOf(Date),
-      end: PropTypes.instanceOf(Date)
-    })),
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.array,
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
@@ -877,6 +880,7 @@ export default class DatePicker extends React.Component {
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
+        includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}
         injectTimes={this.props.injectTimes}
         inline={this.props.inline}

@@ -18,15 +18,18 @@ export default class Month extends React.Component {
     endDate: PropTypes.instanceOf(Date),
     orderInDisplay: PropTypes.number,
     excludeDates: PropTypes.array,
-    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
-      start: PropTypes.instanceOf(Date),
-      end: PropTypes.instanceOf(Date)
-    })),
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     locale: PropTypes.oneOfType([
@@ -164,6 +167,7 @@ export default class Month extends React.Component {
           excludeDates={this.props.excludeDates}
           excludeDateIntervals={this.props.excludeDateIntervals}
           includeDates={this.props.includeDates}
+          includeDateIntervals={this.props.includeDateIntervals}
           inline={this.props.inline}
           shouldFocusDayInline={this.props.shouldFocusDayInline}
           highlightDates={this.props.highlightDates}
