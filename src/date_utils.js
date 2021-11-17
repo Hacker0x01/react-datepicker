@@ -402,12 +402,14 @@ export function getQuarterShortInLocale(quarter, locale) {
 
 export function isDayDisabled(
   day,
-  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
+  { minDate, maxDate, excludeDates, excludeDateIntervals, includeDates, filterDate } = {}
 ) {
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
+    (excludeDateIntervals &&
+      excludeDateIntervals.some(({start,end}) => isWithinInterval(day, {start, end}))) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameDay(day, includeDate))) ||
     (filterDate && !filterDate(newDate(day))) ||
@@ -415,7 +417,10 @@ export function isDayDisabled(
   );
 }
 
-export function isDayExcluded(day, { excludeDates } = {}) {
+export function isDayExcluded(day, { excludeDates, excludeDateIntervals } = {}) {
+  if (excludeDateIntervals && excludeDateIntervals.length > 0) {
+    return excludeDateIntervals.some(({start, end}) => isWithinInterval(day, {start, end}))
+  }
   return (
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||

@@ -33,6 +33,7 @@
 | `enableTabLoop`              | `bool`                         | `true`             |             |
 | `endDate`                    | `instanceOfDate`               |                    |             |
 | `excludeDates`               | `array`                        |                    |             |
+| `excludeDateIntervals`       | `array`                        |                    |             |
 | `excludeScrollbar`           | `bool`                         | `true`             |             |
 | `excludeTimes`               | `array`                        |                    |             |
 | `filterDate`                 | `func`                         |                    |             |

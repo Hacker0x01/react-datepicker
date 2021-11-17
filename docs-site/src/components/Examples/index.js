@@ -28,6 +28,7 @@ import Locale from "../../examples/locale";
 import LocaleWithTime from "../../examples/localeWithTime";
 import LocaleWithoutGlobalVariable from "../../examples/localeWithoutGlobalVariable";
 import ExcludeDates from "../../examples/excludeDates";
+import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import HighlightDates from "../../examples/highlightDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
@@ -218,6 +219,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Exclude dates",
       component: ExcludeDates,
+    },
+    {
+      title: "Exclude date intervals",
+      component: ExcludeDateIntervals
     },
     {
       title: "Exclude Times",

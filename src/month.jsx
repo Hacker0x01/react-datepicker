@@ -18,6 +18,10 @@ export default class Month extends React.Component {
     endDate: PropTypes.instanceOf(Date),
     orderInDisplay: PropTypes.number,
     excludeDates: PropTypes.array,
+    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
+      start: PropTypes.instanceOf(Date),
+      end: PropTypes.instanceOf(Date)
+    })),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
@@ -158,6 +162,7 @@ export default class Month extends React.Component {
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           excludeDates={this.props.excludeDates}
+          excludeDateIntervals={this.props.excludeDateIntervals}
           includeDates={this.props.includeDates}
           inline={this.props.inline}
           shouldFocusDayInline={this.props.shouldFocusDayInline}

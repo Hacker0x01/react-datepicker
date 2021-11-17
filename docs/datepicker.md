@@ -27,6 +27,7 @@ General datepicker component.
 | `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                                                                               |
 | `endDate`                    | `instanceOf(Date)`             |                 |                                                                                               |
 | `excludeDates`               | `array`                        |                 |                                                                                               |
+| `excludeDateIntervals`       | `array`                        |                 |                                            |
 | `excludeTimes`               | `array`                        |                 |                                                                                               |
 | `excludeScrollbar`           | `array`                        |                 |                                                                                               |
 | `filterDate`                 | `func`                         |                 |                                                                                               |

@@ -19,6 +19,10 @@ export default class Week extends React.Component {
     chooseDayAriaLabelPrefix: PropTypes.string,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
+    excludeDateIntervals: PropTypes.arrayOf(PropTypes.shape({
+      start: PropTypes.instanceOf(Date),
+      end: PropTypes.instanceOf(Date)
+    })),
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
@@ -121,6 +125,7 @@ export default class Week extends React.Component {
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
+            excludeDateIntervals={this.props.excludeDateIntervals}
             includeDates={this.props.includeDates}
             highlightDates={this.props.highlightDates}
             selectingDate={this.props.selectingDate}

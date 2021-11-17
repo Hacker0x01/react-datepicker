@@ -197,6 +197,36 @@ describe("date_utils", function () {
       const day = newDate();
       expect(isDayDisabled(day, { excludeDates: [day] })).to.be.true;
     });
+      
+    it("should be disabled if on excluded date interval start", () => {
+      const day = newDate();
+      expect(isDayDisabled(day, { excludeDateIntervals: [{start: day, end: addDays(day, 1)}] })).to.be.true;
+    });
+   
+    it("should be disabled if within excluded date interval", () => {
+      const day = newDate();
+      expect(isDayDisabled(day, { excludeDateIntervals: [{start: subDays(day, 1), end: addDays(day, 1)}] })).to.be.true;
+    });
+   
+    it("should be disabled if on excluded date interval end", () => {
+      const day = newDate();
+      expect(isDayDisabled(day, { excludeDateIntervals: [{start: subDays(day, 1), end: day}] })).to.be.true;
+    });
+   
+    it("should throw error if excluded date interval is invalid", () => {
+      const day = newDate();
+      expect(() => isDayDisabled(day, { excludeDateIntervals: [{start: addDays(day, 1), end: subDays(day, 1)}] })).to.throw('Invalid interval');
+    });
+   
+    it("should be enabled if excluded date interval is empty", () => {
+      const day = newDate();
+      expect(isDayDisabled(day, { excludeDateIntervals: [] })).to.be.false;
+    });
+   
+    it("should be enabled if not in excluded date interval", () => {
+      const day = newDate();
+      expect(isDayDisabled(day, { excludeDateIntervals: [{start: addDays(day, 1), end: addDays(day, 2)}] })).to.be.false;
+    });
 
     it("should be enabled if in included dates", () => {
       const day = newDate();
@@ -239,12 +269,37 @@ describe("date_utils", function () {
       expect(isDayExcluded(day)).to.be.false;
     });
 
-    it("should be excluded if in excluded dates", () => {
+    it("should be excluded if within excluded date interval", () => {
+      const day = newDate();
+      expect(isDayExcluded(day, { excludeDateIntervals: [{start: subDays(day, 1), end: addDays(day, 1)}] })).to.be.true;
+    });
+
+    it("should not be excluded if excluded date interval is empty", () => {
+      const day = newDate();
+      expect(isDayExcluded(day, { excludeDateIntervals: [] })).to.be.false;
+    });
+
+    it("should not be excluded if not within excluded date intervals", () => {
+      const day = newDate();
+      expect(isDayExcluded(day, { excludeDateIntervals: [{start: addDays(day, 1), end: addDays(day, 2)}] })).to.be.false;
+    });
+
+    it("should throw error if excluded date interval is invalid", () => {
+      const day = newDate();
+      expect(() => isDayExcluded(day, { excludeDateIntervals: [{start: addDays(day, 1), end: subDays(day, 1)}] })).to.be.throw('Invalid interval');
+    });
+
+    it("should not be excluded if in excluded dates and not within excluded date intervals", () => {
+      const day = newDate();
+      expect(isDayExcluded(day, { excludeDates: [day], excludeDateIntervals: [{start: addDays(day, 1), end: addDays(day, 2)}] })).to.be.false;
+    });
+    
+    it("should be excluded if in excluded dates and there are no excluded date intervals", () => {
       const day = newDate();
       expect(isDayExcluded(day, { excludeDates: [day] })).to.be.true;
     });
 
-    it("should not be excluded if not in excluded dates", () => {
+    it("should not be excluded if not in excluded dates and there are no excluded date intervals", () => {
       const day = newDate();
       const excludedDay = newDate();
       const currentMonth = excludedDay.getMonth();
@@ -359,7 +414,7 @@ describe("date_utils", function () {
       expect(isQuarterDisabled(day, { includeDates: [day] })).to.be.false;
     });
 
-    xit("should be disabled if not in included dates", () => {
+    it("should be disabled if not in included dates", () => {
       const day = newDate();
       const includeDates = [addDays(day, 40)];
       expect(isQuarterDisabled(day, { includeDates })).to.be.true;
