@@ -132,7 +132,7 @@ export { isDate };
 
 export function isValid(date, minDate) {
   minDate = minDate ? minDate : new Date("1/1/1000");
-  return isValidDate(date) && isAfter(date, minDate);
+  return isValidDate(date) && !isBefore(date, minDate);
 }
 
 // ** Date Formatting **
