@@ -227,6 +227,7 @@ export default class DatePicker extends React.Component {
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
     portalId: PropTypes.string,
+    portalHost: PropTypes.instanceOf(ShadowRoot),
     yearItemNumber: PropTypes.number,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
@@ -1048,7 +1049,12 @@ export default class DatePicker extends React.Component {
 
       if (this.state.open && this.props.portalId) {
         portalContainer = (
-          <Portal portalId={this.props.portalId}>{portalContainer}</Portal>
+          <Portal
+            portalId={this.props.portalId}
+            portalHost={this.props.portalHost}
+          >
+            {portalContainer}
+          </Portal>
         );
       }
 
@@ -1066,6 +1072,7 @@ export default class DatePicker extends React.Component {
         wrapperClassName={this.props.wrapperClassName}
         hidePopper={!this.isCalendarOpen()}
         portalId={this.props.portalId}
+        portalHost={this.props.portalHost}
         popperModifiers={this.props.popperModifiers}
         targetComponent={this.renderInputContainer()}
         popperContainer={this.props.popperContainer}

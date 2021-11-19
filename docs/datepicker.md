@@ -93,6 +93,8 @@ General datepicker component.
 | `value`                      | `string`                       |                 |                                                                                               |
 | `weekLabel`                  | `string`                       |                 |                                                                                               |
 | `withPortal`                 | `bool`                         | `false`         |                                                                                               |
+| `portalId`                   | `string`                       |                 |                                                                                               |
+| `portalHost`                 | `instanceOf(ShadowRoot)`       |                 | When set, portals will be attached to this ShadowRoot instead of the document body.           |
 | `wrapperClassName`           | `string`                       |
 |                              |
 | `yearItemNumber`             | `number`                       | `12`            |                                                                                               |

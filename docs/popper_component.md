@@ -12,5 +12,6 @@
 | `popperPlacement`  | `enumpopperPlacementPositions` | `"bottom-start"` |             |
 | `popperProps`      | `object`                       | `{}`             |             |
 | `portalId`         | `string`                       |                  |             |
+| `portalHost`       | `instanceOf(ShadowRoot)`       |                  |             |
 | `targetComponent`  | `element`                      |                  |             |
 | `wrapperClassName` | `string`                       |                  |             |
