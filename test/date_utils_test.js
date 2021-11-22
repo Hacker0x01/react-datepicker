@@ -12,6 +12,7 @@ import {
   isDayExcluded,
   isMonthDisabled,
   isQuarterDisabled,
+  isValid,
   monthDisabledBefore,
   monthDisabledAfter,
   yearDisabledBefore,
@@ -386,6 +387,17 @@ describe("date_utils", function () {
       };
       isQuarterDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isValid", () => {
+    it("should return true if date is valid and equal or after minDate", () => {
+      expect(isValid(newDate("2021-11-15"), newDate("2021-11-15"))).to.be.true;
+      expect(isValid(newDate("2021-11-30"), newDate("2021-11-15"))).to.be.true;
+    });
+
+    it("should return false if date is valid and before minDate", () => {
+      expect(isValid(newDate("2021-11-01"), newDate("2021-11-15"))).to.be.false;
     });
   });
 
