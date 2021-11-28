@@ -32,8 +32,8 @@
 | `dropdownMode`               | `enum("scroll"\|"select")`     | `"scroll"`         |             |
 | `enableTabLoop`              | `bool`                         | `true`             |             |
 | `endDate`                    | `instanceOfDate`               |                    |             |
+| `excludeDateIntervals`       | `arrayOf[object Object]`       |                    |             |
 | `excludeDates`               | `array`                        |                    |             |
-| `excludeDateIntervals`       | `array`                        |                    |             |
 | `excludeScrollbar`           | `bool`                         | `true`             |             |
 | `excludeTimes`               | `array`                        |                    |             |
 | `filterDate`                 | `func`                         |                    |             |
@@ -45,8 +45,8 @@
 | `formatWeekNumber`           | `func`                         |                    |             |
 | `highlightDates`             | `array`                        |                    |             |
 | `id`                         | `string`                       |                    |             |
-| `includeDates`               | `array`                        |                    |             |
 | `includeDateIntervals`       | `array`                        |                    |             |
+| `includeDates`               | `array`                        |                    |             |
 | `includeTimes`               | `array`                        |                    |             |
 | `injectTimes`                | `array`                        |                    |             |
 | `inline`                     | `bool`                         |                    |             |
@@ -88,6 +88,7 @@
 | `popperModifiers`            | `arrayOf[object Object]`       |                    |             |
 | `popperPlacement`            | `enumpopperPlacementPositions` |                    |             |
 | `popperProps`                | `object`                       |                    |             |
+| `portalHost`                 | `instanceOfShadowRoot`         |                    |             |
 | `portalId`                   | `string`                       |                    |             |
 | `preventOpenOnFocus`         | `bool`                         | `false`            |             |
 | `previousMonthAriaLabel`     | `string`                       | `"Previous Month"` |             |
