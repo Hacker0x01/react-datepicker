@@ -928,6 +928,31 @@ describe("DatePicker", () => {
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       expect(data.callback.calledOnce).to.be.false;
     });
+    describe("with excludeDateIntervals", () => {
+      it("should not select the start date of the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
+      it("should not select a dates within the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
+      it("should not select the end date of the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowRight"));
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
+    });
     it("should not select dates excluded from filterDate", () => {
       var data = getOnInputKeyDownStuff({
         filterDate: (date) =>

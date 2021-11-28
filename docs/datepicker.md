@@ -27,6 +27,7 @@ General datepicker component.
 | `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                                                                               |
 | `endDate`                    | `instanceOf(Date)`             |                 |                                                                                               |
 | `excludeDates`               | `array`                        |                 |                                                                                               |
+| `excludeDateIntervals`       | `array`                        |                 |                                                                                               |
 | `excludeTimes`               | `array`                        |                 |                                                                                               |
 | `excludeScrollbar`           | `array`                        |                 |                                                                                               |
 | `filterDate`                 | `func`                         |                 |                                                                                               |
@@ -38,6 +39,7 @@ General datepicker component.
 | `highlightDates`             | `array`                        |                 |                                                                                               |
 | `id`                         | `string`                       |                 |                                                                                               |
 | `includeDates`               | `array`                        |                 |                                                                                               |
+| `includeDateIntervals`       | `array`                        |                 |                                                                                               |
 | `includeTimes`               | `array`                        |                 |                                                                                               |
 | `injectTimes`                | `array`                        |                 |                                                                                               |
 | `inline`                     | `bool`                         |                 |                                                                                               |

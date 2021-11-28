@@ -33,6 +33,7 @@
 | `enableTabLoop`              | `bool`                         | `true`             |             |
 | `endDate`                    | `instanceOfDate`               |                    |             |
 | `excludeDates`               | `array`                        |                    |             |
+| `excludeDateIntervals`       | `array`                        |                    |             |
 | `excludeScrollbar`           | `bool`                         | `true`             |             |
 | `excludeTimes`               | `array`                        |                    |             |
 | `filterDate`                 | `func`                         |                    |             |
@@ -45,6 +46,7 @@
 | `highlightDates`             | `array`                        |                    |             |
 | `id`                         | `string`                       |                    |             |
 | `includeDates`               | `array`                        |                    |             |
+| `includeDateIntervals`       | `array`                        |                    |             |
 | `includeTimes`               | `array`                        |                    |             |
 | `injectTimes`                | `array`                        |                    |             |
 | `inline`                     | `bool`                         |                    |             |
