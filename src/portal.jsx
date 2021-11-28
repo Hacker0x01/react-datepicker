@@ -6,6 +6,7 @@ export default class Portal extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     portalId: PropTypes.string,
+    portalHost: PropTypes.instanceOf(ShadowRoot),
   };
 
   constructor(props) {
@@ -14,11 +15,13 @@ export default class Portal extends React.Component {
   }
 
   componentDidMount() {
-    this.portalRoot = document.getElementById(this.props.portalId);
+    this.portalRoot = (this.props.portalHost || document).getElementById(
+      this.props.portalId
+    );
     if (!this.portalRoot) {
       this.portalRoot = document.createElement("div");
       this.portalRoot.setAttribute("id", this.props.portalId);
-      document.body.appendChild(this.portalRoot);
+      (this.props.portalHost || document.body).appendChild(this.portalRoot);
     }
     this.portalRoot.appendChild(this.el);
   }

@@ -112,6 +112,21 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).to.exist;
   });
 
+  it("should render the calendar in the portalHost prop when provided", () => {
+    var root = document.createElement("div");
+    var shadow = root.attachShadow({ mode: "closed" });
+    var appHost = document.createElement("div");
+    shadow.appendChild(appHost);
+    var datePicker = ReactDOM.render(
+      <DatePicker portalId="test-portal" portalHost={shadow} />,
+      appHost
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.calendar).to.exist;
+    expect(shadow.getElementById("test-portal")).to.exist;
+  });
+
   it("should not set open state when it is disabled and gets clicked", function () {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker disabled />);
     var dateInput = datePicker.input;
