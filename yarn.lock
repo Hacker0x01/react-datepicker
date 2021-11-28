@@ -1347,15 +1347,15 @@
   resolved "https://registry.yarnpkg.com/@types/component-emitter/-/component-emitter-1.2.10.tgz#ef5b1589b9f16544642e473db5ea5639107ef3ea"
   integrity sha512-bsjleuRKWmGqajMerkzox19aGbscQX5rmmvvXl3wlIp5gMG1HgkiwPxsN5p070fBDKTNSPgojVbuY1+HWMbFhg==
 
-"@types/cookie@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.4.0.tgz#14f854c0f93d326e39da6e3b6f34f7d37513d108"
-  integrity sha512-y7mImlc/rNkvCRmg8gC3/lj87S7pTUIJ6QGjwHR9WQJcFs+ZMTOaoPrkdFA/YdbuqVEmEbb5RdhVxMkAcgOnpg==
+"@types/cookie@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.4.1.tgz#bfd02c1f2224567676c1545199f87c3a861d878d"
+  integrity sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==
 
-"@types/cors@^2.8.8":
-  version "2.8.10"
-  resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.10.tgz#61cc8469849e5bcdd0c7044122265c39cec10cf4"
-  integrity sha512-C7srjHiVG3Ey1nR6d511dtDkCEjxuN9W1HWAEjGq8kpcwmNM6JJkpC0xvabM7BXTG2wDq8Eu33iH9aQKa7IvLQ==
+"@types/cors@^2.8.12":
+  version "2.8.12"
+  resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.12.tgz#6b2c510a7ad7039e98e7b8d3d6598f4359e5c080"
+  integrity sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==
 
 "@types/estree@*":
   version "0.0.45"
@@ -2236,10 +2236,10 @@ balanced-match@^2.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-2.0.0.tgz#dc70f920d78db8b858535795867bf48f820633d9"
   integrity sha512-1ugUSr8BHXRnK23KfuYS+gVMC3LB8QGH9W1iGtDPsNWoQbgtXSExkBu2aDR4epiGWZOjZsj6lDl/N/AqqTC3UA==
 
-base64-arraybuffer@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.4.tgz#9818c79e059b1355f97e0428a017c838e90ba812"
-  integrity sha1-mBjHngWbE1X5fgQooBfIOOkLqBI=
+base64-arraybuffer@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-1.0.1.tgz#87bd13525626db4a9838e00a508c2b73efcf348c"
+  integrity sha512-vFIUq7FdLtjZMhATwDul5RZWv2jpXQ09Pd6jcVEOvIsqCWTRFD/ONHNfyOS8dA/Ippi5dsIgpyKWKZaAKZltbA==
 
 base64-js@^1.0.2:
   version "1.3.1"
@@ -3277,7 +3277,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@4.3.2, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@~4.3.1:
+debug@4, debug@4.3.2, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@~4.3.1, debug@~4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
   integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
@@ -3652,25 +3652,28 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-engine.io-parser@~4.0.0:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-4.0.2.tgz#e41d0b3fb66f7bf4a3671d2038a154024edb501e"
-  integrity sha512-sHfEQv6nmtJrq6TKuIz5kyEKH/qSdK56H/A+7DnAuUPWosnIZAS2NHNcPLmyjtY3cGS/MqJdZbUjW97JU72iYg==
+engine.io-parser@~5.0.0:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-5.0.2.tgz#69a2ec3ed431da021f0666712d07f106bcffa6ce"
+  integrity sha512-wuiO7qO/OEkPJSFueuATIXtrxF7/6GTbAO9QLv7nnbjwZ5tYhLm9zxvLwxstRs0dcT0KUlWTjtIOs1T86jt12g==
   dependencies:
-    base64-arraybuffer "0.1.4"
+    base64-arraybuffer "~1.0.1"
 
-engine.io@~4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-4.1.1.tgz#9a8f8a5ac5a5ea316183c489bf7f5b6cf91ace5b"
-  integrity sha512-t2E9wLlssQjGw0nluF6aYyfX8LwYU8Jj0xct+pAhfWfv/YrBn6TSNtEYsgxHIfaMqfrLx07czcMg9bMN6di+3w==
+engine.io@~6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-6.1.0.tgz#459eab0c3724899d7b63a20c3a6835cf92857939"
+  integrity sha512-ErhZOVu2xweCjEfYcTdkCnEYUiZgkAcBBAhW4jbIvNG8SLU3orAqoJCiytZjYF7eTpVmmCrLDjLIEaPlUAs1uw==
   dependencies:
+    "@types/cookie" "^0.4.1"
+    "@types/cors" "^2.8.12"
+    "@types/node" ">=10.0.0"
     accepts "~1.3.4"
     base64id "2.0.0"
     cookie "~0.4.1"
     cors "~2.8.5"
     debug "~4.3.1"
-    engine.io-parser "~4.0.0"
-    ws "~7.4.2"
+    engine.io-parser "~5.0.0"
+    ws "~8.2.3"
 
 enhanced-resolve@^4.3.0:
   version "4.3.0"
@@ -6044,9 +6047,9 @@ karma-webpack@^4.0.2:
     webpack-dev-middleware "^3.7.0"
 
 karma@^6.0.1:
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-6.3.4.tgz#359899d3aab3d6b918ea0f57046fd2a6b68565e6"
-  integrity sha512-hbhRogUYIulfkBTZT7xoPrCYhRBnBoqbbL4fszWD0ReFGUxU+LYBr3dwKdAluaDQ/ynT9/7C+Lf7pPNW4gSx4Q==
+  version "6.3.9"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-6.3.9.tgz#cc309607f0fcdb58a88643184f3e4ba8bff26751"
+  integrity sha512-E/MqdLM9uVIhfuyVnrhlGBu4miafBdXEAEqCmwdEMh3n17C7UWC/8Kvm3AYKr91gc7scutekZ0xv6rxRaUCtnw==
   dependencies:
     body-parser "^1.19.0"
     braces "^3.0.2"
@@ -6066,10 +6069,10 @@ karma@^6.0.1:
     qjobs "^1.2.0"
     range-parser "^1.2.1"
     rimraf "^3.0.2"
-    socket.io "^3.1.0"
+    socket.io "^4.2.0"
     source-map "^0.6.1"
     tmp "^0.2.1"
-    ua-parser-js "^0.7.28"
+    ua-parser-js "^0.7.30"
     yargs "^16.1.1"
 
 killable@^1.0.1:
@@ -8960,12 +8963,12 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-socket.io-adapter@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-2.1.0.tgz#edc5dc36602f2985918d631c1399215e97a1b527"
-  integrity sha512-+vDov/aTsLjViYTwS9fPy5pEtTkrbEKsw2M+oVSoFGw6OD1IpvlV1VPhUzNbofCQ8oyMbdYJqDtGdmHQK6TdPg==
+socket.io-adapter@~2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-2.3.3.tgz#4d6111e4d42e9f7646e365b4f578269821f13486"
+  integrity sha512-Qd/iwn3VskrpNO60BeRyCyr8ZWw9CPZyitW4AQwmRZ8zCiyDiL+znRnWX6tDHXnWn1sJrM1+b6Mn6wEDJJ4aYQ==
 
-socket.io-parser@~4.0.3:
+socket.io-parser@~4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.0.4.tgz#9ea21b0d61508d18196ef04a2c6b9ab630f4c2b0"
   integrity sha512-t+b0SS+IxG7Rxzda2EVvyBZbvFPBCjJoyHuE0P//7OAsN23GItzDRdWa6ALxZI/8R5ygK7jAR6t028/z+7295g==
@@ -8974,20 +8977,17 @@ socket.io-parser@~4.0.3:
     component-emitter "~1.3.0"
     debug "~4.3.1"
 
-socket.io@^3.1.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-3.1.2.tgz#06e27caa1c4fc9617547acfbb5da9bc1747da39a"
-  integrity sha512-JubKZnTQ4Z8G4IZWtaAZSiRP3I/inpy8c/Bsx2jrwGrTbKeVU5xd6qkKMHpChYeM3dWZSO0QACiGK+obhBNwYw==
+socket.io@^4.2.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-4.4.0.tgz#8140a0db2c22235f88a6dceb867e4d5c9bd70507"
+  integrity sha512-bnpJxswR9ov0Bw6ilhCvO38/1WPtE3eA2dtxi2Iq4/sFebiDJQzgKNYA7AuVVdGW09nrESXd90NbZqtDd9dzRQ==
   dependencies:
-    "@types/cookie" "^0.4.0"
-    "@types/cors" "^2.8.8"
-    "@types/node" ">=10.0.0"
     accepts "~1.3.4"
     base64id "~2.0.0"
-    debug "~4.3.1"
-    engine.io "~4.1.0"
-    socket.io-adapter "~2.1.0"
-    socket.io-parser "~4.0.3"
+    debug "~4.3.2"
+    engine.io "~6.1.0"
+    socket.io-adapter "~2.3.3"
+    socket.io-parser "~4.0.4"
 
 sockjs-client@^1.5.0:
   version "1.5.0"
@@ -9871,10 +9871,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-ua-parser-js@^0.7.28:
-  version "0.7.28"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
-  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
+ua-parser-js@^0.7.30:
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
+  integrity sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==
 
 uglify-js@^3.4.9:
   version "3.10.0"
@@ -10440,10 +10440,10 @@ ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@~7.4.2:
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
-  integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
+ws@~8.2.3:
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.3.tgz#63a56456db1b04367d0b721a0b80cae6d8becbba"
+  integrity sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
