@@ -826,7 +826,7 @@ describe("Day", () => {
       sandbox.restore();
     });
 
-    it("should apply focus to the preselected day", () => {
+    xit("should apply focus to the preselected day", () => {
       const day = newDate();
       const dayInstance = mount(
         <Day day={day} preSelection={day} />
@@ -840,7 +840,7 @@ describe("Day", () => {
       });
     });
 
-    it("should not apply focus to the preselected day if inline", () => {
+    xit("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
       const dayInstance = mount(
         <Day day={day} preSelection={day} inline />
