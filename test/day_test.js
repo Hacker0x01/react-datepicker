@@ -816,42 +816,4 @@ describe("Day", () => {
       expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
     });
   });
-
-  describe("focus", () => {
-    let sandbox;
-    beforeEach(function () {
-      sandbox = sinon.createSandbox();
-    });
-    afterEach(function () {
-      sandbox.restore();
-    });
-
-    xit("should apply focus to the preselected day", () => {
-      const day = newDate();
-      const dayInstance = mount(
-        <Day day={day} preSelection={day} />
-      ).instance();
-
-      sandbox.spy(dayInstance.dayEl.current, "focus");
-      dayInstance.componentDidMount();
-      defer(() => {
-        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(true);
-        done();
-      });
-    });
-
-    xit("should not apply focus to the preselected day if inline", () => {
-      const day = newDate();
-      const dayInstance = mount(
-        <Day day={day} preSelection={day} inline />
-      ).instance();
-
-      sandbox.spy(dayInstance.dayEl.current, "focus");
-      dayInstance.componentDidMount();
-      defer(() => {
-        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(false);
-        done();
-      });
-    });
-  });
 });
