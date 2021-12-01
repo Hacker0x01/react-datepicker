@@ -297,6 +297,9 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__month--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month--range-end": this.isRangeEndMonth(m),
+        "react-datepicker__month-text--today":
+          utils.getYear(day) === utils.getYear(utils.newDate()) &&
+          m === utils.getMonth(utils.newDate()),
       }
     );
   };
