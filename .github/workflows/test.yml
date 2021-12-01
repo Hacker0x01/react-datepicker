@@ -48,7 +48,7 @@ jobs:
         run: yarn test
 
       - name: Codecov
-        run: yarn run codecov
+        run: yarn run codecov --disable=gcov
 
       - name: Build
         run: yarn build
