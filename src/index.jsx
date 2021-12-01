@@ -89,6 +89,7 @@ export default class DatePicker extends React.Component {
       monthsShown: 1,
       readOnly: false,
       withPortal: false,
+      selectsDisabledDaysInRange: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       showTimeInput: false,
@@ -214,6 +215,7 @@ export default class DatePicker extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -940,6 +942,7 @@ export default class DatePicker extends React.Component {
         renderDayContents={this.props.renderDayContents}
         onDayMouseEnter={this.props.onDayMouseEnter}
         onMonthMouseLeave={this.props.onMonthMouseLeave}
+        selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
         showFullMonthYearPicker={this.props.showFullMonthYearPicker}

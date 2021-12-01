@@ -85,6 +85,7 @@ import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
+import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates";
 import CalendarStartDay from "../../examples/calendarStartDay";
 
 import "./style.scss";
@@ -188,6 +189,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date range for one datepicker",
       component: SelectsRange,
+    },
+    {
+      title: "Date range for one datepicker with disabled dates highlighted",
+      component: selectsRangeWithDisabledDates,
     },
     {
       title: "Date Range with disabled navigation shown",

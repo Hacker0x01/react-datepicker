@@ -51,6 +51,7 @@ export default class Month extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     showWeekNumbers: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     setOpen: PropTypes.func,
@@ -178,6 +179,7 @@ export default class Month extends React.Component {
           selectsStart={this.props.selectsStart}
           selectsEnd={this.props.selectsEnd}
           selectsRange={this.props.selectsRange}
+          selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
           showWeekNumber={this.props.showWeekNumbers}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
@@ -297,6 +299,9 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__month--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month--range-end": this.isRangeEndMonth(m),
+        "react-datepicker__month-text--today":
+          utils.getYear(day) === utils.getYear(utils.newDate()) &&
+          m === utils.getMonth(utils.newDate()),
       }
     );
   };
