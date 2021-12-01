@@ -25,7 +25,7 @@ jobs:
       - name: Set Node.js
         uses: actions/setup-node@master
         with:
-          node-version: 12.x
+          node-version: 16.x
 
       - name: Install dependencies
         run: yarn install
