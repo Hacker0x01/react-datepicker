@@ -37,6 +37,7 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -116,15 +117,22 @@ export default class Day extends React.Component {
   };
 
   isInSelectingRange = () => {
-    const { day, selectsStart, selectsEnd, selectsRange, startDate, endDate } =
-      this.props;
+    const {
+      day,
+      selectsStart,
+      selectsEnd,
+      selectsRange,
+      selectsDisabledDaysInRange,
+      startDate,
+      endDate,
+    } = this.props;
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (
       !(selectsStart || selectsEnd || selectsRange) ||
       !selectingDate ||
-      this.isDisabled()
+      (!selectsDisabledDaysInRange && this.isDisabled())
     ) {
       return false;
     }

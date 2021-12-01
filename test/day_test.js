@@ -342,7 +342,7 @@ describe("Day", () => {
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
       });
 
-      it("should not highlight for disabled dates", () => {
+      it("should not highlight for disabled dates when selectsDisabledDaysInRange is false (default)", () => {
         const endDate = newDate();
         const selectingDate = subDays(endDate, 1);
         const shallowDay = renderDay(selectingDate, {
@@ -354,16 +354,46 @@ describe("Day", () => {
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
       });
 
-      it("should not highlight for disabled dates within interval", () => {
+      it("should highlight for disabled dates when selectsDisabledDaysInRange is true", () => {
         const endDate = newDate();
         const selectingDate = subDays(endDate, 1);
         const shallowDay = renderDay(selectingDate, {
           selectingDate,
           endDate,
           selectsStart: true,
-          excludeDateIntervals: [{start: subDays(selectingDate, 1), end: endDate}]
+          excludeDates: [selectingDate],
+          selectsDisabledDaysInRange: true,
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+      });
+
+      it("should not highlight for disabled dates within interval when selectsDisabledDaysInRange is false (default)", () => {
+        const endDate = newDate();
+        const selectingDate = subDays(endDate, 1);
+        const shallowDay = renderDay(selectingDate, {
+          selectingDate,
+          endDate,
+          selectsStart: true,
+          excludeDateIntervals: [
+            { start: subDays(selectingDate, 1), end: endDate },
+          ],
         });
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      });
+
+      it("should highlight for disabled dates within interval when selectsDisabledDaysInRange is true", () => {
+        const endDate = newDate();
+        const selectingDate = subDays(endDate, 1);
+        const shallowDay = renderDay(selectingDate, {
+          selectingDate,
+          endDate,
+          selectsStart: true,
+          excludeDateIntervals: [
+            { start: subDays(selectingDate, 1), end: endDate },
+          ],
+          selectsDisabledDaysInRange: true,
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
       });
     });
 
@@ -434,7 +464,7 @@ describe("Day", () => {
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
       });
 
-      it("should not highlight for disabled dates", () => {
+      it("should not highlight for disabled dates when selectsDisabledDaysInRange is false (default)", () => {
         const startDate = newDate();
         const selectingDate = addDays(startDate, 1);
         const shallowDay = renderDay(selectingDate, {
@@ -446,16 +476,46 @@ describe("Day", () => {
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
       });
 
-      it("should not highlight for disabled dates within interval", () => {
+      it("should highlight for disabled dates when selectsDisabledDaysInRange is true", () => {
         const startDate = newDate();
         const selectingDate = addDays(startDate, 1);
         const shallowDay = renderDay(selectingDate, {
           startDate,
           selectingDate,
           selectsEnd: true,
-          excludeDateIntervals: [{start: startDate, end: addDays(selectingDate, 1)}]
+          excludeDates: [selectingDate],
+          selectsDisabledDaysInRange: true,
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+      });
+
+      it("should not highlight for disabled dates within interval when selectsDisabledDaysInRange is false (default)", () => {
+        const startDate = newDate();
+        const selectingDate = addDays(startDate, 1);
+        const shallowDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsEnd: true,
+          excludeDateIntervals: [
+            { start: startDate, end: addDays(selectingDate, 1) },
+          ],
         });
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      });
+
+      it("should highlight for disabled dates within interval when selectsDisabledDaysInRange is true", () => {
+        const startDate = newDate();
+        const selectingDate = addDays(startDate, 1);
+        const shallowDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsEnd: true,
+          excludeDateIntervals: [
+            { start: startDate, end: addDays(selectingDate, 1) },
+          ],
+          selectsDisabledDaysInRange: true,
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
       });
     });
   });
@@ -566,7 +626,11 @@ describe("Day", () => {
 
     it("should be disabled if date is within excluded interval", () => {
       const day = newDate();
-      const shallowDay = renderDay(day, { excludeDateIntervals: [{start: subDays(day, 1), end: addDays(day, 1)}] });
+      const shallowDay = renderDay(day, {
+        excludeDateIntervals: [
+          { start: subDays(day, 1), end: addDays(day, 1) },
+        ],
+      });
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
 
@@ -578,7 +642,11 @@ describe("Day", () => {
 
     it("should have aria-disabled attribute with true value if date is within excluded interval", () => {
       const day = newDate();
-      const shallowDay = renderDay(day, { excludeDateIntervals: [{start: subDays(day, 1), end: addDays(day, 1)}] });
+      const shallowDay = renderDay(day, {
+        excludeDateIntervals: [
+          { start: subDays(day, 1), end: addDays(day, 1) },
+        ],
+      });
       expect(shallowDay.prop("aria-disabled")).to.equal(true);
     });
 
@@ -618,7 +686,9 @@ describe("Day", () => {
       const day = newDate();
       const shallowDay = renderDay(day, {
         ariaLabelPrefixWhenDisabled: ariaLabelPrefixWhenDisabled,
-        excludeDateIntervals: [{start: subDays(day, 1), end: addDays(day, 1)}]
+        excludeDateIntervals: [
+          { start: subDays(day, 1), end: addDays(day, 1) },
+        ],
       });
       expect(
         shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
@@ -675,7 +745,13 @@ describe("Day", () => {
     it("should not call onClick if day is within excluded interval", () => {
       const day = newDate();
       const dayNode = shallow(
-        <Day day={day} excludeDateIntervals={[{start: subDays(day, 1), end: addDays(day, 1)}]} onClick={onClick} />
+        <Day
+          day={day}
+          excludeDateIntervals={[
+            { start: subDays(day, 1), end: addDays(day, 1) },
+          ]}
+          onClick={onClick}
+        />
       );
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).to.be.false;
@@ -803,7 +879,7 @@ describe("Day", () => {
       });
       expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
     });
-    
+
     it("should not highlight for disabled (within excluded interval) dates", () => {
       const endDate = newDate();
       const selectingDate = subDays(endDate, 1);
@@ -811,7 +887,7 @@ describe("Day", () => {
         selectingDate,
         endDate,
         selectsRange: true,
-        excludeDateIntervals: [{start: selectingDate, end: endDate}]
+        excludeDateIntervals: [{ start: selectingDate, end: endDate }],
       });
       expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
     });
