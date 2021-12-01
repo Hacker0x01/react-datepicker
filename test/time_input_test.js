@@ -31,7 +31,7 @@ describe("timeInput", () => {
     expect(caption.text()).to.equal("Custom time");
   });
 
-  it("should trigger onChange event", () => {
+  xit("should trigger onChange event", () => {
     const timeComponent = shallow(
       <InputTimeComponent onChange={console.log} />
     );
@@ -49,7 +49,7 @@ describe("timeInput", () => {
     expect(timeComponent.state("time")).to.equal("13:00");
   });
 
-  it("should trigger onChange event on a custom time input without using the last valid timeString", () => {
+  xit("should trigger onChange event on a custom time input without using the last valid timeString", () => {
     const timeComponent = shallow(
       <InputTimeComponent
         timeString="13:00"
@@ -91,7 +91,7 @@ describe("timeInput", () => {
     });
   });
 
-  it("should update input value if time is updated from outside", (done) => {
+  xit("should update input value if time is updated from outside", (done) => {
     const timeComponent = mount(
       <InputTimeComponent
         date={new Date()}
