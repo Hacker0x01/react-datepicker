@@ -7,6 +7,10 @@
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
     "no-descending-specificity": null,
+    "selector-class-pattern": null,
+    "property-no-vendor-prefix": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
