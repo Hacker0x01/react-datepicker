@@ -361,6 +361,19 @@ describe("Day", () => {
           selectingDate,
           endDate,
           selectsStart: true,
+          excludeDates: [selectingDate],
+          selectsDisabledDaysInRange: true,
+        });
+        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+      });
+
+      it("should not highlight for disabled dates within interval when selectsDisabledDaysInRange is false (default)", () => {
+        const endDate = newDate();
+        const selectingDate = subDays(endDate, 1);
+        const shallowDay = renderDay(selectingDate, {
+          selectingDate,
+          endDate,
+          selectsStart: true,
           excludeDateIntervals: [
             { start: subDays(selectingDate, 1), end: endDate },
           ],
