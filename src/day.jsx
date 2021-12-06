@@ -21,6 +21,9 @@ export default class Day extends React.Component {
   static propTypes = {
     ariaLabelPrefixWhenEnabled: PropTypes.string,
     ariaLabelPrefixWhenDisabled: PropTypes.string,
+    ariaLabelPrefixWhenDateIsSame: PropTypes.string,
+    ariaLabelSuffixWhenDateIsNotSame: PropTypes.string,
+    ariaLabelSuffixWhenDateIsSame: PropTypes.string,
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
@@ -257,14 +260,23 @@ export default class Day extends React.Component {
       day,
       ariaLabelPrefixWhenEnabled = "Choose",
       ariaLabelPrefixWhenDisabled = "Not available",
+      ariaLabelPrefixWhenDateIsSame = "",
+      ariaLabelSuffixWhenDateIsNotSame = "",
+      ariaLabelSuffixWhenDateIsSame = "Selected",
     } = this.props;
 
     const prefix =
       this.isDisabled() || this.isExcluded()
         ? ariaLabelPrefixWhenDisabled
+        : this.isSameDay(this.props.selected)
+        ? ariaLabelPrefixWhenDateIsSame
         : ariaLabelPrefixWhenEnabled;
 
-    return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
+    const suffix = this.isSameDay(this.props.selected)
+      ? ariaLabelSuffixWhenDateIsSame
+      : ariaLabelSuffixWhenDateIsNotSame;
+
+    return `${prefix} ${formatDate(day, "PPPP", this.props.locale)} ${suffix}`;
   };
 
   getTabIndex = (selected, preSelection) => {

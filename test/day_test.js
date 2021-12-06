@@ -658,9 +658,13 @@ describe("Day", () => {
 
   describe("aria-label", () => {
     const ariaLabelPrefixWhenEnabled =
-      "A prefix in my native language desbribing that the date can be selected";
+      "A prefix in my native language describing that the date can be selected";
     const ariaLabelPrefixWhenDisabled =
-      "A prefix in my native language desbribing that the date can not be selected";
+      "A prefix in my native language describing that the date can not be selected";
+    const ariaLabelPrefixWhenDateIsSame = "An empty prefix is expected";
+    const ariaLabelSuffixWhenDateIsSame =
+      "A suffix in my native language describing that the date is selected";
+    const ariaLabelSuffixWhenDateIsNotSame = "An empty suffix is expected";
 
     it("should have the correct provided prefix if date is not disabled", () => {
       const shallowDay = renderDay(newDate(), {
@@ -692,6 +696,41 @@ describe("Day", () => {
       });
       expect(
         shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
+      ).not.equal(-1);
+    });
+
+    it("should have the correct provided prefix if focused day is the current selected", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, {
+        ariaLabelPrefixWhenDateIsSame: ariaLabelPrefixWhenDateIsSame,
+        selected: day,
+      });
+      expect(
+        shallowDay
+          .html()
+          .indexOf(`aria-label="${ariaLabelPrefixWhenDateIsSame}`)
+      ).not.equal(-1);
+    });
+
+    it("should have the correct provided suffix if focused day is the current selected", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, {
+        ariaLabelSuffixWhenDateIsSame: ariaLabelSuffixWhenDateIsSame,
+        selected: day,
+      });
+      expect(
+        shallowDay.html().indexOf(ariaLabelSuffixWhenDateIsSame)
+      ).not.equal(-1);
+    });
+
+    it("should have the correct provided suffix if focused day is not the current selected", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, {
+        ariaLabelSuffixWhenDateIsNotSame: ariaLabelSuffixWhenDateIsNotSame,
+        selected: addDays(day, 1),
+      });
+      expect(
+        shallowDay.html().indexOf(ariaLabelSuffixWhenDateIsNotSame)
       ).not.equal(-1);
     });
 
