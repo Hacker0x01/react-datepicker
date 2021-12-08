@@ -104,7 +104,7 @@
     "webpack": "^4.39.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-middleware": "^5.0.0",
-    "webpack-dev-server": "^3.8.0",
+    "webpack-dev-server": "^4.6.0",
     "webpack-hot-middleware": "^2.25.0"
   },
   "peerDependencies": {
