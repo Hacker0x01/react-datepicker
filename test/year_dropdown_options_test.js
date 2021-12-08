@@ -364,4 +364,25 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     );
     expect(yearDropdown.state().yearsList.length).to.equal(51);
   });
+
+  it("should scroll year dropdown to the middle on open", () => {
+    const onCancelSpy = sandbox.spy();
+    const onChangeSpy = sandbox.spy();
+    const yearDropdownInstance = mount(
+      <YearDropdownOptions
+        onCancel={onCancelSpy}
+        onChange={onChangeSpy}
+        scrollableYearDropdown
+        year={2015}
+        yearDropdownItemNumber={25}
+      />
+    ).instance();
+
+    yearDropdownInstance.dropdownRef.current = {
+      scrollHeight: 800,
+      clientHeight: 400,
+    };
+    yearDropdownInstance.componentDidMount();
+    expect(yearDropdownInstance.dropdownRef.current.scrollTop).to.equal(200);
+  });
 });

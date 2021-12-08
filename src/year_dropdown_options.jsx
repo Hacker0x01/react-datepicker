@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { getYear } from "./date_utils";
@@ -50,6 +50,15 @@ export default class YearDropdownOptions extends React.Component {
         this.props.maxDate
       ),
     };
+    this.dropdownRef = createRef();
+  }
+
+  componentDidMount() {
+    const dropdownCurrent = this.dropdownRef.current;
+    if (dropdownCurrent) {
+      dropdownCurrent.scrollTop =
+        dropdownCurrent.scrollHeight / 2 - dropdownCurrent.clientHeight / 2;
+    }
   }
 
   renderOptions = () => {
@@ -136,6 +145,10 @@ export default class YearDropdownOptions extends React.Component {
         this.props.scrollableYearDropdown,
     });
 
-    return <div className={dropdownClass}>{this.renderOptions()}</div>;
+    return (
+      <div className={dropdownClass} ref={this.dropdownRef}>
+        {this.renderOptions()}
+      </div>
+    );
   }
 }
