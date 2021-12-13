@@ -18,6 +18,6 @@
 | `openToDate`         | `instanceOfDate`       |               |             |
 | `selected`           | `instanceOfDate`       |               |             |
 | `showTimeSelectOnly` | `bool`                 |               |             |
-| `timeCaption`        | `string`               | `"Time"`      |             |
+| `timeCaption`        | `string`               | `"Time"`      |  Specifies the text above the time entry, it can be used specifically to translate.           |
 | `timeClassName`      | `func`                 |               |             |
 | `todayButton`        | `node`                 | `null`        |             |
