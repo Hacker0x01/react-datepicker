@@ -265,6 +265,30 @@ describe("Month", () => {
     expect(months).to.have.length(0);
   });
 
+  it("should include aria-current property if month is current year's month", () => {
+    const date = new Date();
+    const monthComponent = mount(
+      <Month day={date} selected={date} showMonthYearPicker />
+    );
+    const ariaCurrent = monthComponent
+      .find(".react-datepicker__month-text--today")
+      .prop("aria-current");
+    expect(ariaCurrent).to.equal("date");
+  });
+
+  it("should not include aria-current property if month is not current year's month", () => {
+    const lastYearDate = new Date();
+    lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+    const monthComponent = mount(
+      <Month day={lastYearDate} selected={lastYearDate} showMonthYearPicker />
+    );
+    const ariaCurrent = monthComponent
+      .find(".react-datepicker__month-text")
+      .at(0)
+      .prop("aria-current");
+    expect(ariaCurrent).to.be.undefined;
+  });
+
   it("should have the quarter picker CSS class", () => {
     const month = shallow(
       <Month showQuarterYearPicker day={utils.newDate()} />

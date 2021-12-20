@@ -528,23 +528,23 @@ describe("Day", () => {
       expect(shallowDay.hasClass(className)).to.equal(true);
     });
 
-    it("should apply the aria-current date attribute if today", () => {
-      const shallowDay = renderDay(newDate());
-      const currentAriaProp = shallowDay.prop("aria-current");
-
-      expect(currentAriaProp).to.equal("date");
-    });
-
     it("should not apply the today class if not today", () => {
       const shallowDay = renderDay(addDays(newDate(), 1));
       expect(shallowDay.hasClass(className)).to.equal(false);
     });
 
+    it("should apply the aria-current date attribute if today", () => {
+      const shallowDay = renderDay(newDate());
+      const ariaCurrent = shallowDay.prop("aria-current");
+
+      expect(ariaCurrent).to.equal("date");
+    });
+
     it("should not apply the aria-current date attribute if not today", () => {
       const shallowDay = renderDay(addDays(newDate(), 1));
-      const currentAriaProp = shallowDay.prop("aria-current");
+      const ariaCurrent = shallowDay.prop("aria-current");
 
-      expect(currentAriaProp).to.be.undefined;
+      expect(ariaCurrent).to.be.undefined;
     });
   });
 

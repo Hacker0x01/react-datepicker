@@ -362,6 +362,7 @@ export default class Month extends React.Component {
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
       locale,
+      day,
     } = this.props;
     const monthsFourColumns = [
       [0, 1, 2, 3],
@@ -403,6 +404,12 @@ export default class Month extends React.Component {
             className={this.getMonthClassNames(m)}
             role="button"
             aria-label={this.getAriaLabel(m)}
+            aria-current={
+              utils.getYear(day) === utils.getYear(utils.newDate()) &&
+              m === utils.getMonth(utils.newDate())
+                ? "date"
+                : undefined
+            }
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
