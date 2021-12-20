@@ -60,6 +60,8 @@ export default class Year extends React.Component {
 
   isSameDay = (y, other) => utils.isSameDay(y, other);
 
+  isCurrentYear = (y) => y === getYear(newDate());
+
   isKeyboardSelected = (y) => {
     const date = utils.getStartOfYear(utils.setYear(this.props.date, y));
     return (
@@ -107,7 +109,7 @@ export default class Year extends React.Component {
         (minDate || maxDate) && utils.isYearDisabled(y, this.props),
       "react-datepicker__year-text--keyboard-selected":
         this.isKeyboardSelected(y),
-      "react-datepicker__year-text--today": y === getYear(newDate()),
+      "react-datepicker__year-text--today": this.isCurrentYear(y),
     });
   };
 
@@ -139,7 +141,7 @@ export default class Year extends React.Component {
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
           key={y}
-          aria-current={y === getYear(newDate()) ? "date" : undefined}
+          aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
           {y}
         </div>
