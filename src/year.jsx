@@ -139,6 +139,7 @@ export default class Year extends React.Component {
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
           key={y}
+          aria-current={y === getYear(newDate()) ? "date" : undefined}
         >
           {y}
         </div>
