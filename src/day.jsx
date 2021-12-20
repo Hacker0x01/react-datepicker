@@ -343,6 +343,7 @@ export default class Day extends React.Component {
       aria-label={this.getAriaLabel()}
       role="button"
       aria-disabled={this.isDisabled()}
+      aria-current={this.isSameDay(newDate()) ? "date" : undefined}
     >
       {this.renderDayContents()}
     </div>
