@@ -137,6 +137,10 @@ export default class Month extends React.Component {
     );
   };
 
+  isCurrentMonth = (day, m) =>
+    utils.getYear(day) === utils.getYear(utils.newDate()) &&
+    m === utils.getMonth(utils.newDate());
+
   renderWeeks = () => {
     const weeks = [];
     var isFixedHeight = this.props.fixedHeight;
@@ -299,9 +303,7 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__month--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month--range-end": this.isRangeEndMonth(m),
-        "react-datepicker__month-text--today":
-          utils.getYear(day) === utils.getYear(utils.newDate()) &&
-          m === utils.getMonth(utils.newDate()),
+        "react-datepicker__month-text--today": this.isCurrentMonth(day, m),
       }
     );
   };
@@ -404,12 +406,7 @@ export default class Month extends React.Component {
             className={this.getMonthClassNames(m)}
             role="button"
             aria-label={this.getAriaLabel(m)}
-            aria-current={
-              utils.getYear(day) === utils.getYear(utils.newDate()) &&
-              m === utils.getMonth(utils.newDate())
-                ? "date"
-                : undefined
-            }
+            aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
