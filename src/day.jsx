@@ -223,6 +223,8 @@ export default class Day extends React.Component {
     );
   };
 
+  isCurrentDay = () => this.isSameDay(newDate());
+
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
@@ -244,7 +246,7 @@ export default class Day extends React.Component {
           this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end":
           this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(newDate()),
+        "react-datepicker__day--today": this.isCurrentDay(),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month": this.isOutsideMonth(),
       },
@@ -343,7 +345,7 @@ export default class Day extends React.Component {
       aria-label={this.getAriaLabel()}
       role="button"
       aria-disabled={this.isDisabled()}
-      aria-current={this.isSameDay(newDate()) ? "date" : undefined}
+      aria-current={this.isCurrentDay() ? "date" : undefined}
     >
       {this.renderDayContents()}
     </div>
