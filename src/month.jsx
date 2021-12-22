@@ -141,8 +141,12 @@ export default class Month extends React.Component {
     utils.getYear(day) === utils.getYear(utils.newDate()) &&
     m === utils.getMonth(utils.newDate());
 
-  isSelectedMonth = (day, selected, m) =>
+  isSelectedMonth = (day, m, selected) =>
     utils.getMonth(day) === m && utils.getYear(day) === utils.getYear(selected);
+
+  isSelectedQuarter = (day, q, selected) =>
+    utils.getQuarter(day) === q &&
+    utils.getYear(day) === utils.getYear(selected);
 
   renderWeeks = () => {
     const weeks = [];
@@ -295,8 +299,8 @@ export default class Month extends React.Component {
           utils.isMonthDisabled(utils.setMonth(day, m), this.props),
         "react-datepicker__month--selected": this.isSelectedMonth(
           day,
-          selected,
-          m
+          m,
+          selected
         ),
         "react-datepicker__month-text--keyboard-selected":
           utils.getMonth(preSelection) === m,
@@ -348,9 +352,11 @@ export default class Month extends React.Component {
         "react-datepicker__quarter--disabled":
           (minDate || maxDate) &&
           utils.isQuarterDisabled(utils.setQuarter(day, q), this.props),
-        "react-datepicker__quarter--selected":
-          utils.getQuarter(day) === q &&
-          utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__quarter--selected": this.isSelectedQuarter(
+          day,
+          q,
+          selected
+        ),
         "react-datepicker__quarter--in-range": utils.isQuarterInRange(
           startDate,
           endDate,
@@ -414,7 +420,7 @@ export default class Month extends React.Component {
             aria-label={this.getAriaLabel(m)}
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
             aria-selected={
-              this.isSelectedMonth(day, selected, m) ? "true" : undefined
+              this.isSelectedMonth(day, m, selected) ? "true" : undefined
             }
           >
             {showFullMonthYearPicker
@@ -427,6 +433,7 @@ export default class Month extends React.Component {
   };
 
   renderQuarters = () => {
+    const { day, selected } = this.props;
     const quarters = [1, 2, 3, 4];
     return (
       <div className="react-datepicker__quarter-wrapper">
@@ -437,6 +444,9 @@ export default class Month extends React.Component {
               this.onQuarterClick(ev, q);
             }}
             className={this.getQuarterClassNames(q)}
+            aria-selected={
+              this.isSelectedQuarter(day, q, selected) ? "true" : undefined
+            }
           >
             {utils.getQuarterShortInLocale(q, this.props.locale)}
           </div>

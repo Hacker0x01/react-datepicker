@@ -369,20 +369,54 @@ describe("Month", () => {
     );
   });
 
-  it("should return selected class if quarter is selected", () => {
-    const monthComponent = mount(
-      <Month
-        day={utils.newDate("2015-02-01")}
-        selected={utils.newDate("2015-02-01")}
-        showQuarterYearPicker
-      />
-    );
-    const quarter = monthComponent
-      .find(".react-datepicker__quarter-text")
-      .at(0);
-    expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
-      true
-    );
+  describe("if quarter is selected", () => {
+    let quarter;
+
+    beforeEach(() => {
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate("2015-02-01")}
+          selected={utils.newDate("2015-02-01")}
+          showQuarterYearPicker
+        />
+      );
+      quarter = monthComponent.find(".react-datepicker__quarter-text").at(0);
+    });
+
+    it("should return selected class", () => {
+      expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
+        true
+      );
+    });
+
+    it("should add aria-selected property", () => {
+      expect(quarter.prop("aria-selected")).to.equal("true");
+    });
+  });
+
+  describe("if quarter is not selected", () => {
+    let quarter;
+
+    beforeEach(() => {
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate("2015-02-01")}
+          selected={utils.newDate("2015-02-01")}
+          showQuarterYearPicker
+        />
+      );
+      quarter = monthComponent.find(".react-datepicker__quarter-text").at(1);
+    });
+
+    it("should not return selected class", () => {
+      expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
+        false
+      );
+    });
+
+    it("should not add aria-selected property", () => {
+      expect(quarter.prop("aria-selected")).to.be.undefined;
+    });
   });
 
   it("should return quarter-in-range class if quarter is between the start date and end date", () => {
