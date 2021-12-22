@@ -216,16 +216,54 @@ describe("Month", () => {
     expect(month.hasClass("react-datepicker__month--disabled")).to.equal(true);
   });
 
-  it("should return selected class if month is selected", () => {
-    const monthComponent = mount(
-      <Month
-        day={utils.newDate("2015-02-01")}
-        selected={utils.newDate("2015-02-01")}
-        showMonthYearPicker
-      />
-    );
-    const month = monthComponent.find(".react-datepicker__month-text").at(1);
-    expect(month.hasClass("react-datepicker__month--selected")).to.equal(true);
+  describe("if month is selected", () => {
+    let month;
+
+    beforeEach(() => {
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate("2015-02-01")}
+          selected={utils.newDate("2015-02-01")}
+          showMonthYearPicker
+        />
+      );
+      month = monthComponent.find(".react-datepicker__month-text").at(1);
+    });
+
+    it("should return selected class", () => {
+      expect(month.hasClass("react-datepicker__month--selected")).to.equal(
+        true
+      );
+    });
+
+    it("should add the aria-selected property", () => {
+      expect(month.prop("aria-selected")).to.equal("true");
+    });
+  });
+
+  describe("if month is not selected", () => {
+    let month;
+
+    beforeEach(() => {
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate("2015-02-01")}
+          selected={utils.newDate("2015-02-01")}
+          showMonthYearPicker
+        />
+      );
+      month = monthComponent.find(".react-datepicker__month-text").at(0);
+    });
+
+    it("should not have the selected class", () => {
+      expect(month.hasClass("react-datepicker__month--selected")).to.equal(
+        false
+      );
+    });
+
+    it("should not add the aria-selected property", () => {
+      expect(month.prop("aria-selected")).to.be.undefined;
+    });
   });
 
   it("should return month-in-range class if month is between the start date and end date", () => {

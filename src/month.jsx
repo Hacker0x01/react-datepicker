@@ -141,6 +141,9 @@ export default class Month extends React.Component {
     utils.getYear(day) === utils.getYear(utils.newDate()) &&
     m === utils.getMonth(utils.newDate());
 
+  isSelectedMonth = (day, selected, m) =>
+    utils.getMonth(day) === m && utils.getYear(day) === utils.getYear(selected);
+
   renderWeeks = () => {
     const weeks = [];
     var isFixedHeight = this.props.fixedHeight;
@@ -290,9 +293,11 @@ export default class Month extends React.Component {
         "react-datepicker__month--disabled":
           (minDate || maxDate) &&
           utils.isMonthDisabled(utils.setMonth(day, m), this.props),
-        "react-datepicker__month--selected":
-          utils.getMonth(day) === m &&
-          utils.getYear(day) === utils.getYear(selected),
+        "react-datepicker__month--selected": this.isSelectedMonth(
+          day,
+          selected,
+          m
+        ),
         "react-datepicker__month-text--keyboard-selected":
           utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
@@ -365,6 +370,7 @@ export default class Month extends React.Component {
       showFourColumnMonthYearPicker,
       locale,
       day,
+      selected,
     } = this.props;
     const monthsFourColumns = [
       [0, 1, 2, 3],
@@ -407,6 +413,9 @@ export default class Month extends React.Component {
             role="button"
             aria-label={this.getAriaLabel(m)}
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
+            aria-selected={
+              this.isSelectedMonth(day, selected, m) ? "true" : undefined
+            }
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
