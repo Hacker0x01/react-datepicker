@@ -119,6 +119,49 @@ describe("YearDropdownOptions", () => {
     instance.handleClickOutside();
     expect(onCancelSpy.calledOnce).to.be.true;
   });
+
+  describe("selected", () => {
+    const className = "react-datepicker__year-option--selected_year";
+    let yearOptions;
+
+    beforeEach(() => {
+      yearOptions = yearDropdown.find(".react-datepicker__year-option");
+    });
+
+    describe("if selected", () => {
+      let selectedYearOption;
+      beforeEach(() => {
+        selectedYearOption = yearOptions.filterWhere((o) =>
+          o.hasClass(className)
+        );
+      });
+      it("should apply the selected class", () => {
+        expect(selectedYearOption.hasClass(className)).to.equal(true);
+      });
+
+      it("should add aria-selected property with the value of true", () => {
+        const ariaSelected = selectedYearOption.prop("aria-selected");
+        expect(ariaSelected).to.equal("true");
+      });
+    });
+
+    describe("if not selected", () => {
+      let selectedYearOption;
+      beforeEach(() => {
+        selectedYearOption = yearOptions
+          .filterWhere((o) => !o.hasClass(className))
+          .at(0);
+      });
+      it("should not apply the selected class", () => {
+        expect(selectedYearOption.hasClass(className)).to.equal(false);
+      });
+
+      it("should not add aria-selected property with the value of true", () => {
+        const ariaSelected = selectedYearOption.prop("aria-selected");
+        expect(ariaSelected).to.be.undefined;
+      });
+    });
+  });
 });
 
 describe("YearDropdownOptions with scrollable dropwdown", () => {
