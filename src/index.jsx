@@ -392,7 +392,7 @@ export default class DatePicker extends React.Component {
     this.cancelFocusInput();
   };
 
-  setOpen = (open, skipSetBlur = false) => {
+  setOpen = (open, skipSetBlur = false, resetMonthSelectedInIndex = false) => {
     this.setState(
       {
         open: open,
@@ -407,6 +407,9 @@ export default class DatePicker extends React.Component {
           this.setState(
             (prev) => ({
               focused: skipSetBlur ? prev.focused : false,
+              monthSelectedIn: resetMonthSelectedInIndex
+                ? undefined
+                : prev.monthSelectedIn,
             }),
             () => {
               !skipSetBlur && this.setBlur();
