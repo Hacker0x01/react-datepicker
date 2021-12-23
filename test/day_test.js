@@ -52,18 +52,43 @@ describe("Day", () => {
 
   describe("selected", () => {
     const className = "react-datepicker__day--selected";
+    let day;
 
-    it("should apply the selected class if selected", () => {
-      const day = newDate();
-      const shallowDay = renderDay(day, { selected: day });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+    beforeEach(() => {
+      day = newDate();
     });
 
-    it("should not apply the selected class if not selected", () => {
-      const day = newDate();
-      const selected = addDays(day, 1);
-      const shallowDay = renderDay(day, { selected });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+    describe("if selected", () => {
+      let shallowDay;
+      beforeEach(() => {
+        shallowDay = renderDay(day, { selected: day });
+      });
+
+      it("should apply the selected class", () => {
+        expect(shallowDay.hasClass(className)).to.equal(true);
+      });
+
+      it("should add aria-selected property with the value of true", () => {
+        const ariaSelected = shallowDay.prop("aria-selected");
+        expect(ariaSelected).to.equal("true");
+      });
+    });
+
+    describe("if not selected", () => {
+      let shallowDay;
+      beforeEach(() => {
+        const selected = addDays(day, 1);
+        shallowDay = renderDay(day, { selected });
+      });
+
+      it("should not apply the selected class", () => {
+        expect(shallowDay.hasClass(className)).to.equal(false);
+      });
+
+      it("should not add aria-selected property", () => {
+        const ariaSelected = shallowDay.prop("aria-selected");
+        expect(ariaSelected).to.be.undefined;
+      });
     });
   });
 

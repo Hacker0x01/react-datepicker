@@ -95,6 +95,36 @@ describe("TimeComponent", () => {
       ).to.be.true;
     });
 
+    it("should add the aria-selected property to the selected item", () => {
+      var timeComponent = mount(
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:00")}
+          openToDate={new Date("1990-06-14 09:00")}
+        />
+      );
+
+      var timeListItem = timeComponent.find(
+        ".react-datepicker__time-list-item--selected"
+      );
+      expect(timeListItem.at(0).prop("aria-selected")).to.eq("true");
+    });
+
+    it("should not add the aria-selected property to a regular item", () => {
+      var timeComponent = mount(
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:00")}
+          openToDate={new Date("1990-06-14 09:00")}
+        />
+      );
+
+      var timeListItem = timeComponent.find(
+        ".react-datepicker__time-list-item"
+      );
+      expect(timeListItem.at(0).prop("aria-selected")).to.be.undefined;
+    });
+
     it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {
       mount(
         <TimeComponent

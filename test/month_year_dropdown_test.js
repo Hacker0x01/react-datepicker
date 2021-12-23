@@ -106,10 +106,34 @@ describe("MonthYearDropdown", () => {
         .simulate("click");
 
       monthYearDropdown
-        .find(".react-datepicker__month-year-option")
-        .at(6)
+        .find(".react-datepicker__month-year-option--selected_month-year")
         .simulate("click");
       expect(handleChangeResult).to.be.null;
+    });
+
+    it("adds aria-selected to selected option", () => {
+      monthYearDropdown
+        .find(".react-datepicker__month-year-read-view")
+        .simulate("click");
+
+      const ariaSelected = monthYearDropdown
+        .find(".react-datepicker__month-year-option--selected_month-year")
+        .prop("aria-selected");
+
+      expect(ariaSelected).to.equal("true");
+    });
+
+    it("does not add aria-selected to non-selected option", () => {
+      monthYearDropdown
+        .find(".react-datepicker__month-year-read-view")
+        .simulate("click");
+
+      const ariaSelected = monthYearDropdown
+        .find(".react-datepicker__month-year-option")
+        .at(0)
+        .prop("aria-selected");
+
+      expect(ariaSelected).to.be.undefined;
     });
 
     it("calls the supplied onChange function when a different month year is clicked", () => {

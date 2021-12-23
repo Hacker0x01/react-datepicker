@@ -225,6 +225,8 @@ export default class Day extends React.Component {
 
   isCurrentDay = () => this.isSameDay(newDate());
 
+  isSelected = () => this.isSameDay(this.props.selected);
+
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
@@ -236,7 +238,7 @@ export default class Day extends React.Component {
       {
         "react-datepicker__day--disabled": this.isDisabled(),
         "react-datepicker__day--excluded": this.isExcluded(),
-        "react-datepicker__day--selected": this.isSameDay(this.props.selected),
+        "react-datepicker__day--selected": this.isSelected(),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
         "react-datepicker__day--range-start": this.isRangeStart(),
         "react-datepicker__day--range-end": this.isRangeEnd(),
@@ -346,6 +348,7 @@ export default class Day extends React.Component {
       role="button"
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
+      aria-selected={this.isSelected() ? "true" : undefined}
     >
       {this.renderDayContents()}
     </div>
