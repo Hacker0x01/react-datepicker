@@ -602,13 +602,22 @@ describe("Day", () => {
     });
 
     it("should apply the outside-month class if not in same month", () => {
-      const day = newDate();
-      const shallowDay = renderDay(day, { month: getMonth(day) + 1 });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      const day1 = newDate("2020-12-02");
+      const day2 = newDate("2021-01-02");
+      const day3 = newDate("2021-04-02");
+      const day4 = newDate("2021-04-02");
+      const shallowDay1 = renderDay(day1, { month: 0 });
+      const shallowDay2 = renderDay(day2, { month: 11 });
+      const shallowDay3 = renderDay(day3, { month: 4 });
+      const shallowDay4 = renderDay(day4, { month: 2 });
+      expect(shallowDay1.hasClass(className)).to.equal(true);
+      expect(shallowDay2.hasClass(className)).to.equal(true);
+      expect(shallowDay3.hasClass(className)).to.equal(true);
+      expect(shallowDay4.hasClass(className)).to.equal(true);
     });
 
     it("should hide days outside month at end when duplicates", () => {
-      const day = newDate("2020-12-02");
+      const day = newDate("2021-03-17");
       const wrapper = mount(
         <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />
       );
@@ -616,13 +625,13 @@ describe("Day", () => {
     });
 
     it("should show days outside month at end when not duplicates", () => {
-      const day = newDate("2020-12-02");
+      const day = newDate("2020-03-17");
       const wrapper = mount(<Day day={day} month={getMonth(day) - 1} />);
       expect(wrapper.text()).to.equal(day.getDate().toString());
     });
 
     it("should hide days outside month at start when duplicates", () => {
-      const day = newDate("2020-10-30");
+      const day = newDate("2020-10-05");
       const wrapper = mount(
         <Day day={day} month={getMonth(day) + 1} monthShowsDuplicateDaysStart />
       );
@@ -630,7 +639,7 @@ describe("Day", () => {
     });
 
     it("should show days outside month at start when not duplicates", () => {
-      const day = newDate("2020-10-30");
+      const day = newDate("2020-10-05");
       const wrapper = mount(<Day day={day} month={getMonth(day) + 1} />);
       expect(wrapper.text()).to.equal(day.getDate().toString());
     });

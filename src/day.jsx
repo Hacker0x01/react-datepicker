@@ -216,10 +216,17 @@ export default class Day extends React.Component {
     return weekday === 0 || weekday === 6;
   };
 
-  isOutsideMonth = () => {
+  isAfterMonth = () => {
     return (
       this.props.month !== undefined &&
-      this.props.month !== getMonth(this.props.day)
+      (this.props.month + 1) % 12 === getMonth(this.props.day)
+    );
+  };
+
+  isBeforeMonth = () => {
+    return (
+      this.props.month !== undefined &&
+      (getMonth(this.props.day) + 1) % 12 === this.props.month
     );
   };
 
@@ -250,7 +257,8 @@ export default class Day extends React.Component {
           this.isSelectingRangeEnd(),
         "react-datepicker__day--today": this.isCurrentDay(),
         "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth(),
+        "react-datepicker__day--outside-month":
+          this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
@@ -321,16 +329,10 @@ export default class Day extends React.Component {
   };
 
   renderDayContents = () => {
-    if (this.isOutsideMonth()) {
-      if (this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10)
-        return null;
-      if (
-        this.props.monthShowsDuplicateDaysStart &&
-        getDate(this.props.day) > 20
-      )
-        return null;
-    }
-
+    if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
+      return null;
+    if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
+      return null;
     return this.props.renderDayContents
       ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
       : getDate(this.props.day);
