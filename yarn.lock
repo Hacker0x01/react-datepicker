@@ -333,11 +333,11 @@
     "@babel/plugin-proposal-optional-chaining" "^7.16.0"
 
 "@babel/plugin-external-helpers@^7.2.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-external-helpers/-/plugin-external-helpers-7.16.0.tgz#cb2dd1c5398bd3552fe855fae97a2c03ab125223"
-  integrity sha512-jun5/kzq/fZugn+2zQNposKDp+9BrUl/Lp3bWrNrIzTk08+tZM3YcstUg/KbNbefEK8/Qy+mWaawgIC/Uc1e0w==
+  version "7.16.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-external-helpers/-/plugin-external-helpers-7.16.5.tgz#923532490f4a4276a6952cb62544fd6fde3a5c2d"
+  integrity sha512-/YY58sy+Y+Oj5bbVyVRF+bqQnSKlY54XuavbdMW6SH/Duet45wHnRnO6hQFN+fqF/Irq7TcXGVl3m9gMhYt7qA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.14.5"
+    "@babel/helper-plugin-utils" "^7.16.5"
 
 "@babel/plugin-proposal-async-generator-functions@^7.16.4":
   version "7.16.4"
