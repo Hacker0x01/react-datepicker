@@ -483,6 +483,10 @@ export default class Calendar extends React.Component {
       clickHandler = null;
     }
 
+    if (this.props.showTimeSelect) {
+      classes.push("react-datepicker__navigation--previous--with-time");
+    }
+
     const isForYear =
       this.props.showMonthYearPicker ||
       this.props.showQuarterYearPicker ||

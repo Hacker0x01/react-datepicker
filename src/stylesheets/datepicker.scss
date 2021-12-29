@@ -186,6 +186,28 @@
   }
 }
 
+[dir="rtl"] .react-datepicker__navigation {
+  &--previous {
+    left: unset;
+    right: 2px;
+    transform: rotate(180deg);
+
+    &--with-time:not(&--with-today-button) {
+      right: 85px;
+    }
+  }
+
+  &--next {
+    left: 2px;
+    right: unset;
+    transform: rotate(180deg);
+
+    &--with-time:not(&--with-today-button) {
+      right: unset;
+    }
+  }
+}
+
 .react-datepicker__navigation-icon {
   position: relative;
   top: -1px;
