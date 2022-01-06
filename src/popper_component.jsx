@@ -31,6 +31,7 @@ export default class PopperComponent extends React.Component {
     enableTabLoop: PropTypes.bool,
     popperOnKeyDown: PropTypes.func,
     portalId: PropTypes.string,
+    portalHost: PropTypes.instanceOf(ShadowRoot),
   };
 
   render() {
@@ -46,6 +47,7 @@ export default class PopperComponent extends React.Component {
       enableTabLoop,
       popperOnKeyDown,
       portalId,
+      portalHost,
     } = this.props;
 
     let popper;
@@ -79,7 +81,11 @@ export default class PopperComponent extends React.Component {
     }
 
     if (portalId && !hidePopper) {
-      popper = <Portal portalId={portalId}>{popper}</Portal>;
+      popper = (
+        <Portal portalId={portalId} portalHost={portalHost}>
+          {popper}
+        </Portal>
+      );
     }
 
     const wrapperClasses = classnames(

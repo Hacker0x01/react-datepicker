@@ -37,6 +37,7 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -116,15 +117,22 @@ export default class Day extends React.Component {
   };
 
   isInSelectingRange = () => {
-    const { day, selectsStart, selectsEnd, selectsRange, startDate, endDate } =
-      this.props;
+    const {
+      day,
+      selectsStart,
+      selectsEnd,
+      selectsRange,
+      selectsDisabledDaysInRange,
+      startDate,
+      endDate,
+    } = this.props;
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (
       !(selectsStart || selectsEnd || selectsRange) ||
       !selectingDate ||
-      this.isDisabled()
+      (!selectsDisabledDaysInRange && this.isDisabled())
     ) {
       return false;
     }
@@ -208,12 +216,23 @@ export default class Day extends React.Component {
     return weekday === 0 || weekday === 6;
   };
 
-  isOutsideMonth = () => {
+  isAfterMonth = () => {
     return (
       this.props.month !== undefined &&
-      this.props.month !== getMonth(this.props.day)
+      (this.props.month + 1) % 12 === getMonth(this.props.day)
     );
   };
+
+  isBeforeMonth = () => {
+    return (
+      this.props.month !== undefined &&
+      (getMonth(this.props.day) + 1) % 12 === this.props.month
+    );
+  };
+
+  isCurrentDay = () => this.isSameDay(newDate());
+
+  isSelected = () => this.isSameDay(this.props.selected);
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
@@ -226,7 +245,7 @@ export default class Day extends React.Component {
       {
         "react-datepicker__day--disabled": this.isDisabled(),
         "react-datepicker__day--excluded": this.isExcluded(),
-        "react-datepicker__day--selected": this.isSameDay(this.props.selected),
+        "react-datepicker__day--selected": this.isSelected(),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
         "react-datepicker__day--range-start": this.isRangeStart(),
         "react-datepicker__day--range-end": this.isRangeEnd(),
@@ -236,9 +255,10 @@ export default class Day extends React.Component {
           this.isSelectingRangeStart(),
         "react-datepicker__day--selecting-range-end":
           this.isSelectingRangeEnd(),
-        "react-datepicker__day--today": this.isSameDay(newDate()),
+        "react-datepicker__day--today": this.isCurrentDay(),
         "react-datepicker__day--weekend": this.isWeekend(),
-        "react-datepicker__day--outside-month": this.isOutsideMonth(),
+        "react-datepicker__day--outside-month":
+          this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted")
     );
@@ -309,16 +329,10 @@ export default class Day extends React.Component {
   };
 
   renderDayContents = () => {
-    if (this.isOutsideMonth()) {
-      if (this.props.monthShowsDuplicateDaysEnd && getDate(this.props.day) < 10)
-        return null;
-      if (
-        this.props.monthShowsDuplicateDaysStart &&
-        getDate(this.props.day) > 20
-      )
-        return null;
-    }
-
+    if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
+      return null;
+    if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
+      return null;
     return this.props.renderDayContents
       ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
       : getDate(this.props.day);
@@ -335,6 +349,8 @@ export default class Day extends React.Component {
       aria-label={this.getAriaLabel()}
       role="button"
       aria-disabled={this.isDisabled()}
+      aria-current={this.isCurrentDay() ? "date" : undefined}
+      aria-selected={this.isSelected() ? "true" : undefined}
     >
       {this.renderDayContents()}
     </div>

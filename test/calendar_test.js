@@ -194,6 +194,114 @@ describe("Calendar", function () {
     });
   });
 
+  it("should render the correct default aria labels for next and prev months buttons", () => {
+    const calendar = getCalendar();
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal("Previous Month");
+    expect(nextButtonAriaLabel).to.equal("Next Month");
+  });
+
+  it("should render by default aria labels for next and prev months button equal to the next and prev buttons text", () => {
+    const previousMonthButtonLabel = "Go to previous month";
+    const nextMonthButtonLabel = "Go to next month";
+    const calendar = getCalendar({
+      previousMonthButtonLabel,
+      nextMonthButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal(previousMonthButtonLabel);
+    expect(nextButtonAriaLabel).to.equal(nextMonthButtonLabel);
+  });
+
+  it("should allow user to pass a custom aria label for next and/or previous month button", () => {
+    const previousMonthAriaLabel = "Go to the previous month of the year";
+    const nextMonthAriaLabel = "Go to the next month of the year";
+    const calendar = getCalendar({
+      previousMonthButtonLabel: "Go to previous month",
+      nextMonthButtonLabel: "Go to next month",
+      previousMonthAriaLabel,
+      nextMonthAriaLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal(previousButtonAriaLabel);
+    expect(nextButtonAriaLabel).to.equal(nextButtonAriaLabel);
+  });
+
+  it("should render the correct default aria labels for next and prev year buttons", () => {
+    const calendar = getCalendar({ showYearPicker: true });
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal("Previous Year");
+    expect(nextButtonAriaLabel).to.equal("Next Year");
+  });
+
+  it("should render by default aria labels for next and prev year buttons equal to the next and prev buttons text", () => {
+    const previousYearButtonLabel = "Go to previous year";
+    const nextYearButtonLabel = "Go to next year";
+    const calendar = getCalendar({
+      showYearPicker: true,
+      previousYearButtonLabel,
+      nextYearButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal(previousYearButtonLabel);
+    expect(nextButtonAriaLabel).to.equal(nextYearButtonLabel);
+  });
+
+  it("should allow user to pass a custom aria label for next and/or previous year button", () => {
+    const previousYearAriaLabel = "Go to the previous year";
+    const nextYearAriaLabel = "Go to the next year";
+    const calendar = getCalendar({
+      showYearPicker: true,
+      previousYearButtonLabel: "Go to prev year",
+      nextYearButtonLabel: "Go to next year",
+      previousYearAriaLabel,
+      nextYearAriaLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--previous")
+      .prop("aria-label");
+    const nextButtonAriaLabel = calendar
+      .find(".react-datepicker__navigation--next")
+      .prop("aria-label");
+
+    expect(previousButtonAriaLabel).to.equal(previousYearAriaLabel);
+    expect(nextButtonAriaLabel).to.equal(nextYearAriaLabel);
+  });
+
   describe("custom header", function () {
     const months = [
       "January",

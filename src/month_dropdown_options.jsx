@@ -9,18 +9,21 @@ export default class MonthDropdownOptions extends React.Component {
     monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
 
+  isSelectedMonth = (i) => this.props.month === i;
+
   renderOptions = () => {
     return this.props.monthNames.map((month, i) => (
       <div
         className={
-          this.props.month === i
+          this.isSelectedMonth(i)
             ? "react-datepicker__month-option react-datepicker__month-option--selected_month"
             : "react-datepicker__month-option"
         }
         key={month}
         onClick={this.onChange.bind(this, i)}
+        aria-selected={this.isSelectedMonth(i) ? "true" : undefined}
       >
-        {this.props.month === i ? (
+        {this.isSelectedMonth(i) ? (
           <span className="react-datepicker__month-option--selected">✓</span>
         ) : (
           ""

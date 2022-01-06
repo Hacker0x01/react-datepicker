@@ -53,14 +53,48 @@ describe("MonthDropdown", () => {
       expect(optionsView).to.exist;
     });
 
-    it("applies the 'selected' modifier class to the selected month", () => {
-      monthDropdown
-        .find(".react-datepicker__month-read-view")
-        .simulate("click");
-      var selectedMonth = monthDropdown.find(
-        ".react-datepicker__month-option--selected_month"
-      );
-      expect(selectedMonth.text()).to.contain("December");
+    describe("with the selected month", () => {
+      let selectedMonth;
+
+      beforeEach(() => {
+        monthDropdown
+          .find(".react-datepicker__month-read-view")
+          .simulate("click");
+        selectedMonth = monthDropdown.find(
+          ".react-datepicker__month-option--selected_month"
+        );
+      });
+
+      it("applies the 'selected' modifier class to the selected month", () => {
+        expect(selectedMonth.text()).to.contain("December");
+      });
+
+      it("adds aria-selected property to the selected month", () => {
+        const ariaSelected = selectedMonth.prop("aria-selected");
+        expect(ariaSelected).to.equal("true");
+      });
+    });
+
+    describe("with a not selected month", () => {
+      let notSelectedMonth;
+
+      beforeEach(() => {
+        monthDropdown
+          .find(".react-datepicker__month-read-view")
+          .simulate("click");
+        notSelectedMonth = monthDropdown
+          .find(".react-datepicker__month-option")
+          .at(0);
+      });
+
+      it("does not apply the 'selected' modifier class to the selected month", () => {
+        expect(notSelectedMonth.text()).to.not.contain("December");
+      });
+
+      it("does not add aria-selected property to the selected month", () => {
+        const ariaSelected = notSelectedMonth.prop("aria-selected");
+        expect(ariaSelected).to.be.undefined;
+      });
     });
 
     it("closes the dropdown when a month is clicked", () => {

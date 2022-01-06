@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x, 16.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -48,7 +48,7 @@ jobs:
         run: yarn test
 
       - name: Codecov
-        run: yarn run codecov
+        run: yarn run codecov --disable=gcov
 
       - name: Build
         run: yarn build

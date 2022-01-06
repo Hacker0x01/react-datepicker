@@ -11,6 +11,7 @@
 | `popperOnKeyDown`  | `func`                         |                  |             |
 | `popperPlacement`  | `enumpopperPlacementPositions` | `"bottom-start"` |             |
 | `popperProps`      | `object`                       | `{}`             |             |
+| `portalHost`       | `instanceOfShadowRoot`         |                  |             |
 | `portalId`         | `string`                       |                  |             |
 | `targetComponent`  | `element`                      |                  |             |
 | `wrapperClassName` | `string`                       |                  |             |

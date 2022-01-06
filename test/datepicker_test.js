@@ -112,6 +112,21 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).to.exist;
   });
 
+  it("should render the calendar in the portalHost prop when provided", () => {
+    var root = document.createElement("div");
+    var shadow = root.attachShadow({ mode: "closed" });
+    var appHost = document.createElement("div");
+    shadow.appendChild(appHost);
+    var datePicker = ReactDOM.render(
+      <DatePicker portalId="test-portal" portalHost={shadow} />,
+      appHost
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    expect(datePicker.calendar).to.exist;
+    expect(shadow.getElementById("test-portal")).to.exist;
+  });
+
   it("should not set open state when it is disabled and gets clicked", function () {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker disabled />);
     var dateInput = datePicker.input;
@@ -912,6 +927,31 @@ describe("DatePicker", () => {
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       expect(data.callback.calledOnce).to.be.false;
+    });
+    describe("with excludeDateIntervals", () => {
+      it("should not select the start date of the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
+      it("should not select a dates within the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
+      it("should not select the end date of the interval", () => {
+        var data = getOnInputKeyDownStuff({
+          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+        });
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowRight"));
+        TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
+        expect(data.callback.calledOnce).to.be.false;
+      });
     });
     it("should not select dates excluded from filterDate", () => {
       var data = getOnInputKeyDownStuff({

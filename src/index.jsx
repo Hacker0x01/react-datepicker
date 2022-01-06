@@ -89,6 +89,7 @@ export default class DatePicker extends React.Component {
       monthsShown: 1,
       readOnly: false,
       withPortal: false,
+      selectsDisabledDaysInRange: false,
       shouldCloseOnSelect: true,
       showTimeSelect: false,
       showTimeInput: false,
@@ -102,9 +103,13 @@ export default class DatePicker extends React.Component {
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
+      previousMonthAriaLabel: "Previous Month",
       previousMonthButtonLabel: "Previous Month",
+      nextMonthAriaLabel: "Next Month",
       nextMonthButtonLabel: "Next Month",
+      previousYearAriaLabel: "Previous Year",
       previousYearButtonLabel: "Previous Year",
+      nextYearAriaLabel: "Next Year",
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
       enableTabLoop: true,
@@ -153,12 +158,19 @@ export default class DatePicker extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.array,
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
@@ -203,6 +215,7 @@ export default class DatePicker extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -223,6 +236,7 @@ export default class DatePicker extends React.Component {
     weekLabel: PropTypes.string,
     withPortal: PropTypes.bool,
     portalId: PropTypes.string,
+    portalHost: PropTypes.instanceOf(ShadowRoot),
     yearItemNumber: PropTypes.number,
     yearDropdownItemNumber: PropTypes.number,
     shouldCloseOnSelect: PropTypes.bool,
@@ -244,15 +258,19 @@ export default class DatePicker extends React.Component {
     useShortMonthInDropdown: PropTypes.bool,
     clearButtonTitle: PropTypes.string,
     clearButtonClassName: PropTypes.string,
+    previousMonthAriaLabel: PropTypes.string,
     previousMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,
     ]),
+    nextMonthAriaLabel: PropTypes.string,
     nextMonthButtonLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,
     ]),
+    previousYearAriaLabel: PropTypes.string,
     previousYearButtonLabel: PropTypes.string,
+    nextYearAriaLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
@@ -863,11 +881,13 @@ export default class DatePicker extends React.Component {
         startDate={this.props.startDate}
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
+        excludeDateIntervals={this.props.excludeDateIntervals}
         filterDate={this.props.filterDate}
         onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
         includeDates={this.props.includeDates}
+        includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}
         injectTimes={this.props.injectTimes}
         inline={this.props.inline}
@@ -911,9 +931,13 @@ export default class DatePicker extends React.Component {
         container={this.props.calendarContainer}
         yearItemNumber={this.props.yearItemNumber}
         yearDropdownItemNumber={this.props.yearDropdownItemNumber}
+        previousMonthAriaLabel={this.props.previousMonthAriaLabel}
         previousMonthButtonLabel={this.props.previousMonthButtonLabel}
+        nextMonthAriaLabel={this.props.nextMonthAriaLabel}
         nextMonthButtonLabel={this.props.nextMonthButtonLabel}
+        previousYearAriaLabel={this.props.previousYearAriaLabel}
         previousYearButtonLabel={this.props.previousYearButtonLabel}
+        nextYearAriaLabel={this.props.nextYearAriaLabel}
         nextYearButtonLabel={this.props.nextYearButtonLabel}
         timeInputLabel={this.props.timeInputLabel}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
@@ -922,6 +946,7 @@ export default class DatePicker extends React.Component {
         renderDayContents={this.props.renderDayContents}
         onDayMouseEnter={this.props.onDayMouseEnter}
         onMonthMouseLeave={this.props.onMonthMouseLeave}
+        selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
         showFullMonthYearPicker={this.props.showFullMonthYearPicker}
@@ -1040,7 +1065,12 @@ export default class DatePicker extends React.Component {
 
       if (this.state.open && this.props.portalId) {
         portalContainer = (
-          <Portal portalId={this.props.portalId}>{portalContainer}</Portal>
+          <Portal
+            portalId={this.props.portalId}
+            portalHost={this.props.portalHost}
+          >
+            {portalContainer}
+          </Portal>
         );
       }
 
@@ -1058,6 +1088,7 @@ export default class DatePicker extends React.Component {
         wrapperClassName={this.props.wrapperClassName}
         hidePopper={!this.isCalendarOpen()}
         portalId={this.props.portalId}
+        portalHost={this.props.portalHost}
         popperModifiers={this.props.popperModifiers}
         targetComponent={this.renderInputContainer()}
         popperContainer={this.props.popperContainer}

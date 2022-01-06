@@ -62,7 +62,7 @@ describe("YearPicker", () => {
     expect(year).to.equal(utils.getYear(date).toString());
   });
 
-  it("should has current year class when element of array equal of current year", () => {
+  it("should have current year class when element of array equal of current year", () => {
     const date = new Date();
     const yearComponent = mount(<Year date={date} />);
     const year = yearComponent
@@ -70,6 +70,25 @@ describe("YearPicker", () => {
       .at(0)
       .text();
     expect(year).to.equal(utils.getYear(date).toString());
+  });
+
+  it("should have aria-current date when element of array equal to current year", () => {
+    const date = new Date();
+    const yearComponent = mount(<Year date={date} />);
+    const ariaCurrent = yearComponent
+      .find(".react-datepicker__year-text--today")
+      .prop("aria-current");
+    expect(ariaCurrent).to.equal("date");
+  });
+
+  it("should not have aria-current date when element of array does not equal current year", () => {
+    const date = new Date("2015-01-01");
+    const yearComponent = mount(<Year date={date} />);
+    const ariaCurrent = yearComponent
+      .find(".react-datepicker__year-text")
+      .at(0)
+      .prop("aria-current");
+    expect(ariaCurrent).to.be.undefined;
   });
 
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {

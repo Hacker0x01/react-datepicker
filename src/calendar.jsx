@@ -92,11 +92,23 @@ export default class Calendar extends React.Component {
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
+    excludeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
+    includeDateIntervals: PropTypes.arrayOf(
+      PropTypes.shape({
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+      })
+    ),
     includeTimes: PropTypes.array,
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
@@ -147,6 +159,7 @@ export default class Calendar extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsDisabledDaysInRange: PropTypes.bool,
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -475,9 +488,15 @@ export default class Calendar extends React.Component {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
+    const { previousMonthButtonLabel, previousYearButtonLabel } = this.props;
+
     const {
-      previousMonthAriaLabel = "Previous Month",
-      previousYearAriaLabel = "Previous Year",
+      previousMonthAriaLabel = typeof previousMonthButtonLabel === "string"
+        ? previousMonthButtonLabel
+        : "Previous Month",
+      previousYearAriaLabel = typeof previousYearButtonLabel === "string"
+        ? previousYearButtonLabel
+        : "Previous Year",
     } = this.props;
 
     return (
@@ -571,9 +590,14 @@ export default class Calendar extends React.Component {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
+    const { nextMonthButtonLabel, nextYearButtonLabel } = this.props;
     const {
-      nextMonthAriaLabel = "Next Month",
-      nextYearAriaLabel = "Next Year",
+      nextMonthAriaLabel = typeof nextMonthButtonLabel === "string"
+        ? nextMonthButtonLabel
+        : "Next Month",
+      nextYearAriaLabel = typeof nextYearButtonLabel === "string"
+        ? nextYearButtonLabel
+        : "Next Year",
     } = this.props;
 
     return (
@@ -836,9 +860,11 @@ export default class Calendar extends React.Component {
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
             excludeDates={this.props.excludeDates}
+            excludeDateIntervals={this.props.excludeDateIntervals}
             highlightDates={this.props.highlightDates}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
+            includeDateIntervals={this.props.includeDateIntervals}
             inline={this.props.inline}
             shouldFocusDayInline={this.props.shouldFocusDayInline}
             fixedHeight={this.props.fixedHeight}
@@ -849,6 +875,7 @@ export default class Calendar extends React.Component {
             selectsStart={this.props.selectsStart}
             selectsEnd={this.props.selectsEnd}
             selectsRange={this.props.selectsRange}
+            selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
             showWeekNumbers={this.props.showWeekNumbers}
             startDate={this.props.startDate}
             endDate={this.props.endDate}

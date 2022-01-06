@@ -27,6 +27,7 @@ General datepicker component.
 | `dropdownMode` (required)    | `enum('scroll'\|'select')`     | `'scroll'`      |                                                                                               |
 | `endDate`                    | `instanceOf(Date)`             |                 |                                                                                               |
 | `excludeDates`               | `array`                        |                 |                                                                                               |
+| `excludeDateIntervals`       | `array`                        |                 |                                                                                               |
 | `excludeTimes`               | `array`                        |                 |                                                                                               |
 | `excludeScrollbar`           | `array`                        |                 |                                                                                               |
 | `filterDate`                 | `func`                         |                 |                                                                                               |
@@ -38,6 +39,7 @@ General datepicker component.
 | `highlightDates`             | `array`                        |                 |                                                                                               |
 | `id`                         | `string`                       |                 |                                                                                               |
 | `includeDates`               | `array`                        |                 |                                                                                               |
+| `includeDateIntervals`       | `array`                        |                 |                                                                                               |
 | `includeTimes`               | `array`                        |                 |                                                                                               |
 | `injectTimes`                | `array`                        |                 |                                                                                               |
 | `inline`                     | `bool`                         |                 |                                                                                               |
@@ -93,6 +95,8 @@ General datepicker component.
 | `value`                      | `string`                       |                 |                                                                                               |
 | `weekLabel`                  | `string`                       |                 |                                                                                               |
 | `withPortal`                 | `bool`                         | `false`         |                                                                                               |
+| `portalId`                   | `string`                       |                 |                                                                                               |
+| `portalHost`                 | `instanceOf(ShadowRoot)`       |                 | When set, portals will be attached to this ShadowRoot instead of the document body.           |
 | `wrapperClassName`           | `string`                       |
 |                              |
 | `yearItemNumber`             | `number`                       | `12`            |                                                                                               |
