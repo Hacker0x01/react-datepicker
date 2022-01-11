@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Reference, Popper } from "react-popper";
+import { Manager, Reference, Popper, PopperProps } from "react-popper";
 import { placements } from "@popperjs/core/lib";
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
@@ -23,8 +23,8 @@ export default class PopperComponent extends React.Component {
     wrapperClassName: PropTypes.string,
     hidePopper: PropTypes.bool,
     popperComponent: PropTypes.element,
-    popperModifiers: PropTypes.arrayOf(PropTypes.object), // <datepicker/> props
-    popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
+    popperModifiers: PopperProps['modifiers'],
+    popperPlacement: PopperProps['placement'],
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
     targetComponent: PropTypes.element,
