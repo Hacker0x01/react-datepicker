@@ -238,6 +238,7 @@
 
 .react-datepicker__month {
   margin: $datepicker__margin;
+  min-width: 8rem;
   text-align: center;
 
   .react-datepicker__month-text,

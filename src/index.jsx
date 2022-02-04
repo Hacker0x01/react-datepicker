@@ -96,6 +96,7 @@ export default class DatePicker extends React.Component {
       showPreviousMonths: false,
       showMonthYearPicker: false,
       showFullMonthYearPicker: false,
+      showOneColumnMonthYearPicker: false,
       showTwoColumnMonthYearPicker: false,
       showFourColumnMonthYearPicker: false,
       showYearPicker: false,
@@ -243,6 +244,7 @@ export default class DatePicker extends React.Component {
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
+    showOneColumnMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
     showFourColumnMonthYearPicker: PropTypes.bool,
     showYearPicker: PropTypes.bool,
@@ -946,6 +948,7 @@ export default class DatePicker extends React.Component {
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}
         showFullMonthYearPicker={this.props.showFullMonthYearPicker}
+        showOneColumnMonthYearPicker={this.props.showOneColumnMonthYearPicker}
         showTwoColumnMonthYearPicker={this.props.showTwoColumnMonthYearPicker}
         showFourColumnMonthYearPicker={this.props.showFourColumnMonthYearPicker}
         showYearPicker={this.props.showYearPicker}

@@ -59,6 +59,7 @@ export default class Month extends React.Component {
     renderDayContents: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
+    showOneColumnMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
     showFourColumnMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
@@ -372,6 +373,7 @@ export default class Month extends React.Component {
   renderMonths = () => {
     const {
       showFullMonthYearPicker,
+      showOneColumnMonthYearPicker,
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
       locale,
@@ -397,10 +399,26 @@ export default class Month extends React.Component {
       [8, 9],
       [10, 11],
     ];
+    const monthsOneColumn = [
+      [0],
+      [1],
+      [2],
+      [3],
+      [4],
+      [5],
+      [6],
+      [7],
+      [8],
+      [9],
+      [10],
+      [11],
+    ];
     const monthLayout = showFourColumnMonthYearPicker
       ? monthsFourColumns
       : showTwoColumnMonthYearPicker
       ? monthsTwoColumns
+      : showOneColumnMonthYearPicker
+      ? monthsOneColumn
       : monthsThreeColumns;
     return monthLayout.map((month, i) => (
       <div className="react-datepicker__month-wrapper" key={i}>

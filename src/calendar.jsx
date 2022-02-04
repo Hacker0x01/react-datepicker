@@ -134,6 +134,7 @@ export default class Calendar extends React.Component {
     showTimeInput: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
+    showOneColumnMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
     showFourColumnMonthYearPicker: PropTypes.bool,
     showYearPicker: PropTypes.bool,
@@ -886,6 +887,9 @@ export default class Calendar extends React.Component {
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
             showFullMonthYearPicker={this.props.showFullMonthYearPicker}
+            showOneColumnMonthYearPicker={
+              this.props.showOneColumnMonthYearPicker
+            }
             showTwoColumnMonthYearPicker={
               this.props.showTwoColumnMonthYearPicker
             }
