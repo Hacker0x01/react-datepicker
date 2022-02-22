@@ -468,7 +468,7 @@
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: lighten($datepicker__selected-color, 10%);
+    background-color: lighten($datepicker__selected-color, 5%);
     color: #fff;
 
     &:hover {

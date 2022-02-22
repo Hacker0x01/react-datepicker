@@ -68,8 +68,10 @@ describe("Day", () => {
         expect(shallowDay.hasClass(className)).to.equal(true);
       });
 
-      it("should add aria-selected property with the value of true", () => {
-        const ariaSelected = shallowDay.prop("aria-selected");
+      it('should set aria-selected attribute to "true"', () => {
+        const ariaSelected = mount(shallowDay.getElement())
+          .getDOMNode()
+          .getAttribute("aria-selected");
         expect(ariaSelected).to.equal("true");
       });
     });
@@ -85,9 +87,11 @@ describe("Day", () => {
         expect(shallowDay.hasClass(className)).to.equal(false);
       });
 
-      it("should not add aria-selected property", () => {
-        const ariaSelected = shallowDay.prop("aria-selected");
-        expect(ariaSelected).to.be.undefined;
+      it('should set aria-selected attribute to "false"', () => {
+        const ariaSelected = mount(shallowDay.getElement())
+          .getDOMNode()
+          .getAttribute("aria-selected");
+        expect(ariaSelected).to.equal("false");
       });
     });
   });

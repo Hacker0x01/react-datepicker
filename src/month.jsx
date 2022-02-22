@@ -416,12 +416,10 @@ export default class Month extends React.Component {
             }}
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
-            role="button"
+            role="option"
             aria-label={this.getAriaLabel(m)}
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
-            aria-selected={
-              this.isSelectedMonth(day, m, selected) ? "true" : undefined
-            }
+            aria-selected={this.isSelectedMonth(day, m, selected)}
           >
             {showFullMonthYearPicker
               ? utils.getMonthInLocale(m, locale)
@@ -440,13 +438,12 @@ export default class Month extends React.Component {
         {quarters.map((q, j) => (
           <div
             key={j}
+            role="option"
             onClick={(ev) => {
               this.onQuarterClick(ev, q);
             }}
             className={this.getQuarterClassNames(q)}
-            aria-selected={
-              this.isSelectedQuarter(day, q, selected) ? "true" : undefined
-            }
+            aria-selected={this.isSelectedQuarter(day, q, selected)}
           >
             {utils.getQuarterShortInLocale(q, this.props.locale)}
           </div>
@@ -488,6 +485,7 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
+        role="listbox"
       >
         {showMonthYearPicker
           ? this.renderMonths()

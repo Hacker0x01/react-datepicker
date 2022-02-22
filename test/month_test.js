@@ -6,6 +6,7 @@ import range from "lodash/range";
 import { mount, shallow } from "enzyme";
 import * as utils from "../src/date_utils";
 import TestUtils from "react-dom/test-utils";
+import { runAxe } from "./run_axe";
 
 function getKey(key) {
   switch (key) {
@@ -216,14 +217,27 @@ describe("Month", () => {
     expect(month.hasClass("react-datepicker__month--disabled")).to.equal(true);
   });
 
+  it("should have no axe violations", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-02-01")}
+        selected={utils.newDate("2015-02-01")}
+        preSelection={utils.newDate("2015-02-03")}
+      />
+    );
+    return runAxe(monthComponent.getDOMNode());
+  });
+
   describe("if month is selected", () => {
+    let monthComponent;
     let month;
 
     beforeEach(() => {
-      const monthComponent = mount(
+      monthComponent = mount(
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
+          preSelection={utils.newDate("2015-03-01")}
           showMonthYearPicker
         />
       );
@@ -236,9 +250,12 @@ describe("Month", () => {
       );
     });
 
-    it("should add the aria-selected property", () => {
-      expect(month.prop("aria-selected")).to.equal("true");
+    it('should set aria-selected attribute to "true"', () => {
+      expect(month.getDOMNode().getAttribute("aria-selected")).to.equal("true");
     });
+
+    it("should have no axe violations", () =>
+      runAxe(monthComponent.getDOMNode()));
   });
 
   describe("if month is not selected", () => {
@@ -261,8 +278,10 @@ describe("Month", () => {
       );
     });
 
-    it("should not add the aria-selected property", () => {
-      expect(month.prop("aria-selected")).to.be.undefined;
+    it('should set aria-selected attribute to "false"', () => {
+      expect(month.getDOMNode().getAttribute("aria-selected")).to.equal(
+        "false"
+      );
     });
   });
 
@@ -370,13 +389,15 @@ describe("Month", () => {
   });
 
   describe("if quarter is selected", () => {
+    let monthComponent;
     let quarter;
 
     beforeEach(() => {
-      const monthComponent = mount(
+      monthComponent = mount(
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
+          preSelection={utils.newDate("2015-05-01")}
           showQuarterYearPicker
         />
       );
@@ -389,9 +410,14 @@ describe("Month", () => {
       );
     });
 
-    it("should add aria-selected property", () => {
-      expect(quarter.prop("aria-selected")).to.equal("true");
+    it('should set aria-selected attribute to "true"', () => {
+      expect(quarter.getDOMNode().getAttribute("aria-selected")).to.equal(
+        "true"
+      );
     });
+
+    it("should have no axe violations", () =>
+      runAxe(monthComponent.getDOMNode()));
   });
 
   describe("if quarter is not selected", () => {
@@ -414,8 +440,10 @@ describe("Month", () => {
       );
     });
 
-    it("should not add aria-selected property", () => {
-      expect(quarter.prop("aria-selected")).to.be.undefined;
+    it('should set aria-selected attribute to "false"', () => {
+      expect(quarter.getDOMNode().getAttribute("aria-selected")).to.equal(
+        "false"
+      );
     });
   });
 
