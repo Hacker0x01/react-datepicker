@@ -818,6 +818,16 @@ describe("date_utils", function () {
       expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
     });
 
+    it("should parse date based on locale", () => {
+      const value = "26/05/1995";
+      const dateFormat = "P";
+
+      const expected = new Date("05/26/1995");
+      const actual = parseDate(value, dateFormat, "pt-BR", true);
+
+      assert(isEqual(actual, expected));
+    });
+
     it("should parse date that matches one of the formats", () => {
       const value = "01/15/2019";
       const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
@@ -846,7 +856,7 @@ describe("date_utils", function () {
       expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
     });
 
-    it("should parse date based on locale", () => {
+    it("should parse date based on locale without strict parsing", () => {
       const value = "26/05/1995";
       const dateFormat = "P";
 
