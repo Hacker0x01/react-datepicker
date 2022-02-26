@@ -345,7 +345,7 @@ export function getDaysDiff(date1, date2) {
 // ** Date Localization **
 
 export function registerLocale(localeName, localeData) {
-  const scope = typeof window !== "undefined" ? window : global;
+  const scope = typeof window !== "undefined" ? window : globalThis;
 
   if (!scope.__localeData__) {
     scope.__localeData__ = {};
@@ -354,13 +354,13 @@ export function registerLocale(localeName, localeData) {
 }
 
 export function setDefaultLocale(localeName) {
-  const scope = typeof window !== "undefined" ? window : global;
+  const scope = typeof window !== "undefined" ? window : globalThis;
 
   scope.__localeId__ = localeName;
 }
 
 export function getDefaultLocale() {
-  const scope = typeof window !== "undefined" ? window : global;
+  const scope = typeof window !== "undefined" ? window : globalThis;
 
   return scope.__localeId__;
 }
@@ -368,7 +368,7 @@ export function getDefaultLocale() {
 export function getLocaleObject(localeSpec) {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
-    const scope = typeof window !== "undefined" ? window : global;
+    const scope = typeof window !== "undefined" ? window : globalThis;
     return scope.__localeData__ ? scope.__localeData__[localeSpec] : null;
   } else {
     // Treat it as a raw date-fns locale object
