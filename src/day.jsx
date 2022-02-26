@@ -347,10 +347,10 @@ export default class Day extends React.Component {
       onMouseEnter={this.handleMouseEnter}
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
-      role="button"
+      role="option"
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
-      aria-selected={this.isSelected() ? "true" : undefined}
+      aria-selected={this.isSelected()}
     >
       {this.renderDayContents()}
     </div>

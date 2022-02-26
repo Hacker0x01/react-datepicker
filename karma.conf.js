@@ -36,6 +36,11 @@ module.exports = function (config) {
             enforce: "post",
             options: { esModules: true },
           },
+          {
+            test: /\.scss$/,
+            include: path.resolve(__dirname, "src", "stylesheets"),
+            use: ["style-loader", "css-loader", "sass-loader"],
+          },
         ],
       },
       plugins: [
