@@ -59,7 +59,7 @@
     "eslint": "^7.4.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.14.3",
     "express": "^4.17.1",
     "flow-bin": "^0.132.0",
