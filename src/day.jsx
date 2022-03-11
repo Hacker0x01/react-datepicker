@@ -15,6 +15,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   formatDate,
+  getValidDateRange,
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -51,6 +52,7 @@ export default class Day extends React.Component {
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
+    ignoreRangeDirection: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -125,6 +127,7 @@ export default class Day extends React.Component {
       selectsDisabledDaysInRange,
       startDate,
       endDate,
+      ignoreRangeDirection,
     } = this.props;
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
@@ -135,6 +138,11 @@ export default class Day extends React.Component {
       (!selectsDisabledDaysInRange && this.isDisabled())
     ) {
       return false;
+    }
+
+    if (selectsRange && startDate && !endDate && ignoreRangeDirection) {
+      const [start, end] = getValidDateRange(startDate, selectingDate);
+      return isDayInRange(day, start, end);
     }
 
     if (

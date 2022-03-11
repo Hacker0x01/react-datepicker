@@ -71,6 +71,7 @@ export default class Month extends React.Component {
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
+    ignoreRangeDirection: PropTypes.bool,
   };
 
   MONTH_REFS = [...Array(12)].map(() => React.createRef());
@@ -205,6 +206,7 @@ export default class Month extends React.Component {
           calendarStartDay={this.props.calendarStartDay}
           monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
           monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
+          ignoreRangeDirection={this.props.ignoreRangeDirection}
         />
       );
 

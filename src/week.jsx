@@ -63,6 +63,7 @@ export default class Week extends React.Component {
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
+    ignoreRangeDirection: PropTypes.bool,
   };
 
   handleDayClick = (day, event) => {
@@ -156,6 +157,7 @@ export default class Week extends React.Component {
               this.props.monthShowsDuplicateDaysStart
             }
             locale={this.props.locale}
+            ignoreRangeDirection={this.props.ignoreRangeDirection}
           />
         );
       })

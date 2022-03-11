@@ -87,6 +87,7 @@ import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates";
 import CalendarStartDay from "../../examples/calendarStartDay";
+import DateRangeIgnoreDirection from "../../examples/dateRangeIgnoreDirection";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -205,6 +206,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date Range with Portal",
       component: DateRangeWithPortal,
+    },
+    {
+      title: "Date Range without direction",
+      component: DateRangeIgnoreDirection,
     },
     {
       title: "Disable datepicker",
