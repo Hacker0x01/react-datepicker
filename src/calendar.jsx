@@ -198,6 +198,7 @@ export default class Calendar extends React.Component {
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
     setPreSelection: PropTypes.func,
+    ignoreRangeDirection: PropTypes.bool,
   };
 
   constructor(props) {
@@ -898,6 +899,7 @@ export default class Calendar extends React.Component {
             containerRef={this.containerRef}
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
+            ignoreRangeDirection={this.props.ignoreRangeDirection}
           />
         </div>
       );

@@ -745,3 +745,13 @@ export function getYearsPeriod(
   const startPeriod = endPeriod - (yearItemNumber - 1);
   return { startPeriod, endPeriod };
 }
+
+export function getValidDateRange(start, end) {
+  if (!start) {
+    return [end, null];
+  }
+  if (!end) {
+    return [start, end];
+  }
+  return isAfter(start, end) ? [end, start] : [start, end];
+}

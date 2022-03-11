@@ -38,6 +38,7 @@ import {
   setDefaultLocale,
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
+  getValidDateRange,
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -123,6 +124,7 @@ export default class DatePicker extends React.Component {
       excludeScrollbar: true,
       customTimeInput: null,
       calendarStartDay: undefined,
+      ignoreRangeDirection: false,
     };
   }
 
@@ -284,6 +286,7 @@ export default class DatePicker extends React.Component {
     enableTabLoop: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
+    ignoreRangeDirection: PropTypes.bool,
   };
 
   constructor(props) {
@@ -527,7 +530,8 @@ export default class DatePicker extends React.Component {
     if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
       return;
     }
-    const { onChange, selectsRange, startDate, endDate } = this.props;
+    const { onChange, selectsRange, startDate, endDate, ignoreRangeDirection } =
+      this.props;
 
     if (
       !isEqual(this.props.selected, changedDate) ||
@@ -564,10 +568,15 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          if (isBefore(changedDate, startDate)) {
-            onChange([changedDate, null], event);
+          if (ignoreRangeDirection) {
+            const validDateRange = getValidDateRange(changedDate, startDate);
+            onChange(validDateRange, event);
           } else {
-            onChange([startDate, changedDate], event);
+            if (isBefore(changedDate, startDate)) {
+              onChange([changedDate, null], event);
+            } else {
+              onChange([startDate, changedDate], event);
+            }
           }
         }
         if (isRangeFilled) {
@@ -957,6 +966,7 @@ export default class DatePicker extends React.Component {
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
+        ignoreRangeDirection={this.props.ignoreRangeDirection}
       >
         {this.props.children}
       </WrappedCalendar>
