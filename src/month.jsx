@@ -329,7 +329,7 @@ export default class Month extends React.Component {
 
   getAriaLabel = (month) => {
     const {
-      ariaLabelPrefix = "Choose",
+      chooseDayAriaLabelPrefix = "Choose",
       disabledDayAriaLabelPrefix = "Not available",
       day,
     } = this.props;
@@ -338,7 +338,7 @@ export default class Month extends React.Component {
     const prefix =
       this.isDisabled(labelDate) || this.isExcluded(labelDate)
         ? disabledDayAriaLabelPrefix
-        : ariaLabelPrefix;
+        : chooseDayAriaLabelPrefix;
 
     return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
   };
