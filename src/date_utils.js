@@ -508,11 +508,10 @@ export function isQuarterDisabled(
 export function isYearDisabled(year, { minDate, maxDate } = {}) {
   const date = new Date(year, 0, 1);
 
-  if (minDate && isSameYear(date, minDate)) {
-    return false;
-  }
-
-  return isOutOfBounds(date, { minDate, maxDate }) || false;
+  return !!(
+    (minDate && differenceInCalendarDays(getEndOfYear(date), minDate) < 0) ||
+    (maxDate && differenceInCalendarDays(getStartOfYear(date), maxDate) > 0)
+  );
 }
 
 export function isQuarterInRange(startDate, endDate, q, day) {
