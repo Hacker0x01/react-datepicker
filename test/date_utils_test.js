@@ -26,7 +26,10 @@ import {
   parseDate,
   isMonthinRange,
   isQuarterInRange,
+  getYear,
   getStartOfYear,
+  getEndOfYear,
+  isYearDisabled,
   getYearsPeriod,
   setDefaultLocale,
   yearsDisabledAfter,
@@ -447,6 +450,95 @@ describe("date_utils", function () {
       };
       isMonthDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isYearDisabled", () => {
+    it("should be enabled by default", () => {
+      const day = newDate();
+      expect(isYearDisabled(getYear(day))).to.be.false;
+    });
+
+    describe("min date provided only", () => {
+      it("should be enabled if min date is same year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { minDate: getStartOfYear(day) }))
+          .to.be.false;
+        expect(isYearDisabled(getYear(day), { minDate: getEndOfYear(day) })).to
+          .be.false;
+      });
+
+      it("should be enabled if min date is previous year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { minDate: subDays(day, 400) })).to
+          .be.false;
+      });
+
+      it("should be disabled if min date is next year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { minDate: addDays(day, 400) })).to
+          .be.true;
+      });
+    });
+
+    describe("max date provided only", () => {
+      it("should be enabled if max date is same year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { maxDate: getStartOfYear(day) }))
+          .to.be.false;
+        expect(isYearDisabled(getYear(day), { maxDate: getEndOfYear(day) })).to
+          .be.false;
+      });
+
+      it("should be disabled if max date is previous year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { maxDate: subDays(day, 400) })).to
+          .be.true;
+      });
+
+      it("should be enabled if min date is next year", () => {
+        const day = newDate();
+        expect(isYearDisabled(getYear(day), { maxDate: addDays(day, 400) })).to
+          .be.false;
+      });
+    });
+
+    describe("both min and max dates provided", () => {
+      it("should be enabled if min and max dates are same year", () => {
+        const day = newDate();
+        expect(
+          isYearDisabled(getYear(day), {
+            minDate: getStartOfYear(day),
+            maxDate: getEndOfYear(day),
+          })
+        ).to.be.false;
+      });
+
+      it("should be enabled if current year is in range", () => {
+        const day = newDate();
+        expect(
+          isYearDisabled(getYear(day), {
+            minDate: subDays(day, 400),
+            maxDate: addDays(day, 400),
+          })
+        ).to.be.false;
+      });
+
+      it("should be disabled if current year is out of range", () => {
+        const day = newDate();
+        expect(
+          isYearDisabled(getYear(day), {
+            minDate: addDays(day, 400),
+            maxDate: addDays(day, 401),
+          })
+        ).to.be.true;
+        expect(
+          isYearDisabled(getYear(day), {
+            minDate: subDays(day, 401),
+            maxDate: subDays(day, 400),
+          })
+        ).to.be.true;
+      });
     });
   });
 

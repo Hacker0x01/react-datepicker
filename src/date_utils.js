@@ -40,6 +40,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
 import startOfQuarter from "date-fns/startOfQuarter";
 import startOfYear from "date-fns/startOfYear";
+import endOfYear from "date-fns/endOfYear";
 import endOfDay from "date-fns/endOfDay";
 import endOfWeek from "date-fns/endOfWeek";
 import endOfMonth from "date-fns/endOfMonth";
@@ -259,6 +260,10 @@ export function getEndOfWeek(date) {
 
 export function getEndOfMonth(date) {
   return endOfMonth(date);
+}
+
+export function getEndOfYear(date) {
+  return endOfYear(date);
 }
 
 // ** Date Math **
@@ -502,6 +507,11 @@ export function isQuarterDisabled(
 
 export function isYearDisabled(year, { minDate, maxDate } = {}) {
   const date = new Date(year, 0, 1);
+
+  if (minDate && isSameYear(date, minDate)) {
+    return false;
+  }
+
   return isOutOfBounds(date, { minDate, maxDate }) || false;
 }
 
