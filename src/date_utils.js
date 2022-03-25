@@ -510,7 +510,7 @@ export function isYearDisabled(year, { minDate, maxDate } = {}) {
 
   return !!(
     (minDate && differenceInCalendarDays(getEndOfYear(date), minDate) < 0) ||
-    (maxDate && differenceInCalendarDays(getStartOfYear(date), maxDate) > 0)
+    (maxDate && differenceInCalendarDays(date, maxDate) > 0)
   );
 }
 
