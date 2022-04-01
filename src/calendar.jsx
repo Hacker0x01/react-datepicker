@@ -197,6 +197,7 @@ export default class Calendar extends React.Component {
     isInputFocused: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
+    monthAriaLabelPrefix: PropTypes.string,
     setPreSelection: PropTypes.func,
   };
 
@@ -844,6 +845,7 @@ export default class Calendar extends React.Component {
             chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
             disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
             weekAriaLabelPrefix={this.props.weekAriaLabelPrefix}
+            ariaLabelPrefix={this.props.monthAriaLabelPrefix}
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
