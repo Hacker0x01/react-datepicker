@@ -6424,10 +6424,10 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
-highlight.js@^11.4.0:
-  version "11.4.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.4.0.tgz#34ceadd49e1596ee5aba3d99346cdfd4845ee05a"
-  integrity sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==
+highlight.js@^11.5.0:
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.5.0.tgz#00abb7ed926491adbdabc93a4f3fd2b88b451b4a"
+  integrity sha512-SM6WDj5/C+VfIY8pZ6yW6Xa0Fm1tniYVYWYW1Q/DcMnISZFrC3aQAZZZFAAZtybKNrGId3p/DNbFTtcTXXgYBw==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -8267,15 +8267,10 @@ minimatch@3.0.4, minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.1.1, minimist@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-  integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
-
-minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 minipass-collect@^1.0.2:
   version "1.0.2"
@@ -10895,10 +10890,10 @@ sass-loader@^10.0.5:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@^1.49.9:
-  version "1.49.9"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.49.9.tgz#b15a189ecb0ca9e24634bae5d1ebc191809712f9"
-  integrity sha512-YlYWkkHP9fbwaFRZQRXgDi3mXZShslVmmo+FVK3kHLUELHHEYrCmL1x6IUjC7wLS6VuJSAFXRQS/DxdsC4xL1A==
+sass@^1.49.10:
+  version "1.49.10"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.49.10.tgz#7b83cee0f03bbba443111b3f94944fde2b0c7a6b"
+  integrity sha512-w37zfWJwKu4I78U4z63u1mmgoncq+v3iOB4yzQMPyAPVHHawaQSnu9C9ysGQnZEhW609jkcLioJcMCqm75JMdg==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"

@@ -286,6 +286,7 @@ export default class DatePicker extends React.Component {
     enableTabLoop: PropTypes.bool,
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
+    monthAriaLabelPrefix: PropTypes.string,
     ignoreRangeDirection: PropTypes.bool,
   };
 
@@ -866,6 +867,7 @@ export default class DatePicker extends React.Component {
         chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
         disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
         weekAriaLabelPrefix={this.props.weekAriaLabelPrefix}
+        monthAriaLabelPrefix={this.props.monthAriaLabelPrefix}
         adjustDateOnChange={this.props.adjustDateOnChange}
         setOpen={this.setOpen}
         shouldCloseOnSelect={this.props.shouldCloseOnSelect}

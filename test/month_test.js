@@ -680,7 +680,7 @@ describe("Month", () => {
         preSelection: utils.newDate("2015-03-01"),
         minDate: utils.newDate("2015-03-01"),
         maxDate: utils.newDate("2015-08-01"),
-        ariaLabelPrefix: "Select this",
+        chooseDayAriaLabelPrefix: "Select this",
         disabledDayAriaLabelPrefix: "Can't select this",
       });
 

@@ -931,7 +931,12 @@ describe("DatePicker", () => {
     describe("with excludeDateIntervals", () => {
       it("should not select the start date of the interval", () => {
         var data = getOnInputKeyDownStuff({
-          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+          excludeDateIntervals: [
+            {
+              start: utils.subDays(utils.newDate(), 1),
+              end: utils.addDays(utils.newDate(), 1),
+            },
+          ],
         });
         TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowLeft"));
         TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
@@ -939,14 +944,24 @@ describe("DatePicker", () => {
       });
       it("should not select a dates within the interval", () => {
         var data = getOnInputKeyDownStuff({
-          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+          excludeDateIntervals: [
+            {
+              start: utils.subDays(utils.newDate(), 1),
+              end: utils.addDays(utils.newDate(), 1),
+            },
+          ],
         });
         TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
         expect(data.callback.calledOnce).to.be.false;
       });
       it("should not select the end date of the interval", () => {
         var data = getOnInputKeyDownStuff({
-          excludeDateIntervals: [{start: utils.subDays(utils.newDate(), 1), end: utils.addDays(utils.newDate(), 1)}]
+          excludeDateIntervals: [
+            {
+              start: utils.subDays(utils.newDate(), 1),
+              end: utils.addDays(utils.newDate(), 1),
+            },
+          ],
         });
         TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowRight"));
         TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
@@ -1479,6 +1494,20 @@ describe("DatePicker", () => {
     expect(
       datePicker.find(WeekNumber).first().prop("ariaLabelPrefix")
     ).to.equal(weekAriaLabelPrefix);
+  });
+
+  it("should pass monthAriaLabelPrefix prop to the correct child component", () => {
+    const monthAriaLabelPrefix = "My month-prefix";
+    const datePicker = mount(
+      <DatePicker
+        inline
+        showWeekNumbers
+        monthAriaLabelPrefix={monthAriaLabelPrefix}
+      />
+    );
+    expect(datePicker.find(Month).first().prop("ariaLabelPrefix")).to.equal(
+      monthAriaLabelPrefix
+    );
   });
 
   it("should close the calendar after scrolling", () => {
