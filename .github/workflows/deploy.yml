@@ -4,8 +4,13 @@ on:
   push:
     branches: [master]
 
+permissions:
+  contents: read
+
 jobs:
   build:
+    permissions:
+      contents: write  # for JamesIves/github-pages-deploy-action to push changes in repo
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
