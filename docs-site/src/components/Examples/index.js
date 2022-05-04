@@ -89,7 +89,7 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 
 import "./style.scss";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.min.css";
 
 export default class exampleComponents extends React.Component {
   componentDidMount() {

@@ -2,12 +2,13 @@
   "name": "hello-world",
   "version": "0.1.0",
   "private": true,
-  "comment:react-datepicker": "^4.7.0",
+  "comment:react-datepicker": "^4.7.0 ",
   "dependencies": {
     "react": "link:../../node_modules/react",
     "react-dom": "link:../../node_modules/react-dom",
     "react-scripts": "link:../../node_modules/react-scripts",
-    "react-datepicker": "link:../../"
+    "react-datepicker": "link:../../",
+    "react-maskedinput": "^4.0.1"
   },
   "scripts": {
     "start": "node ../../node_modules/react-scripts/bin/react-scripts.js start",

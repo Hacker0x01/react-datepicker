@@ -101,7 +101,7 @@ export default class DatePicker extends React.Component {
       showYearPicker: false,
       showQuarterYearPicker: false,
       strictParsing: false,
-      timeIntervals: 30,
+      timeIntervals: 1,
       timeCaption: "Time",
       previousMonthAriaLabel: "Previous Month",
       previousMonthButtonLabel: "Previous Month",
@@ -970,7 +970,7 @@ export default class DatePicker extends React.Component {
       [outsideClickIgnoreClass]: this.state.open,
     });
 
-    const customInput = this.props.customInput || <input type="text" />;
+    const customInput = this.props.customInput || <input type="tel" />;
     const customInputRef = this.props.customInputRef || "ref";
     const inputValue =
       typeof this.props.value === "string"

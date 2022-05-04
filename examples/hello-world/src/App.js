@@ -8,16 +8,16 @@ class App extends Component {
     startDate: new Date(),
   };
 
-  render() {
-    const { startDate } = this.state;
-    return <DatePicker selected={startDate} onChange={this.handleChange} />;
-  }
-
   handleChange = (startDate) => {
     this.setState({
       startDate,
     });
   };
+
+  render() {
+    const { startDate } = this.state;
+    return <DatePicker selected={startDate} onChange={this.handleChange} />;
+  }
 }
 
 export default App;

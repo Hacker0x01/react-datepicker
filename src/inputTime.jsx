@@ -35,6 +35,22 @@ export default class inputTime extends React.Component {
     date.setHours(time.split(":")[0]);
     date.setMinutes(time.split(":")[1]);
     this.props.onChange(date);
+    this.handleRawChange();
+  };
+
+  handleRawChange = () => {
+    console.log(props, 12);
+    const inputRef = this.props.customTimeInput || "ref";
+    const selectionStart = inputRef.current?.input.selectionStart || 0;
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.input.setSelectionRange(
+          selectionStart,
+          selectionStart
+        );
+      }
+    }, 0);
   };
 
   renderTimeInput = () => {
