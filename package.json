@@ -109,8 +109,8 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "peerDependencies": {
-    "react": "^16.9.0 || ^17",
-    "react-dom": "^16.9.0 || ^17"
+    "react": "^16.9.0 || ^17 || ^18",
+    "react-dom": "^16.9.0 || ^17 || ^18"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
