@@ -547,6 +547,36 @@ describe("Day", () => {
         expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
       });
     });
+
+    describe("for a date picker with selectsRange prop", () => {
+      it("should have a class if it is a start or end date", () => {
+        const startDate = newDate();
+        const midRangeDate = addDays(startDate, 1);
+        const endDate = addDays(startDate, 2);
+
+        const shallowStartDay = renderDay(startDate, {
+          startDate,
+          selectingDate: endDate,
+          selectsRange: true,
+        });
+        expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+
+        const shallowMidRangeDay = renderDay(midRangeDate, {
+          startDate,
+          selectingDate: endDate,
+          selectsRange: true,
+        });
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+
+        const shallowEndDay = renderDay(endDate, {
+          startDate,
+          selectingDate: endDate,
+          selectsRange: true,
+        });
+        expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+      });
+    });
   });
 
   describe("today", () => {

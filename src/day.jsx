@@ -185,10 +185,10 @@ export default class Day extends React.Component {
       return false;
     }
 
-    const { day, endDate, selectsEnd } = this.props;
+    const { day, endDate, selectsEnd, selectsRange } = this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
-    if (selectsEnd) {
+    if (selectsEnd || selectsRange) {
       return isSameDay(day, selectingDate);
     } else {
       return isSameDay(day, endDate);
