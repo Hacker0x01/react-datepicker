@@ -1900,4 +1900,35 @@ describe("DatePicker", () => {
       .text();
     expect(firstDay).to.equal("Su");
   });
+
+  describe("when update the datepicker input text while props.showTimeSelectOnly is set and dateFormat has only time related format", () => {
+    const format = "h:mm aa";
+
+    it("should keep selected date in state except new time", () => {
+      const selected = utils.newDate("2022-02-24 10:00:00");
+      let date;
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={selected}
+          onChange={(d) => {
+            console.log("trigger change", d);
+            date = d;
+          }}
+          showTimeSelect
+          showTimeSelectOnly
+          dateFormat={format}
+          timeFormat={format}
+        />
+      );
+
+      const input = ReactDOM.findDOMNode(datePicker.input);
+      input.value = "8:22 AM";
+      TestUtils.Simulate.change(input);
+
+      expect(utils.isSameDay(date, selected)).to.equal(true);
+      expect(utils.getHours(date)).to.equal(8);
+      expect(utils.getMinutes(date)).to.equal(22);
+    });
+  });
 });
