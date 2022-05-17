@@ -56,6 +56,7 @@
 | `maxTime`                    | `instanceOfDate`               |                    |             |
 | `minDate`                    | `instanceOfDate`               |                    |             |
 | `minTime`                    | `instanceOfDate`               |                    |             |
+| `monthAriaLabelPrefix`       | `string`                       |                    |             |
 | `monthClassName`             | `func`                         |                    |             |
 | `monthsShown`                | `number`                       | `1`                |             |
 | `name`                       | `string`                       |                    |             |
