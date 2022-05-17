@@ -4,6 +4,7 @@ import Calendar from "./calendar";
 import Portal from "./portal";
 import PopperComponent, { popperPlacementPositions } from "./popper_component";
 import classnames from "classnames";
+import set from "date-fns/set";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
 import {
@@ -38,6 +39,7 @@ import {
   setDefaultLocale,
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
+  isSameDay,
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
 
@@ -483,13 +485,24 @@ export default class DatePicker extends React.Component {
       inputValue: event.target.value,
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT,
     });
-    const date = parseDate(
+    let date = parseDate(
       event.target.value,
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing,
       this.props.minDate
     );
+    // Use date from `selected` prop when manipulating only time for input value
+    if (
+      this.props.showTimeSelectOnly &&
+      !isSameDay(date, this.props.selected)
+    ) {
+      date = set(this.props.selected, {
+        hours: getHours(date),
+        minutes: getMinutes(date),
+        seconds: getSeconds(date),
+      });
+    }
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
     }
