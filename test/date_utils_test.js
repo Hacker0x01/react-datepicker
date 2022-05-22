@@ -36,6 +36,7 @@ import {
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
+import addQuarters from "date-fns/addQuarters";
 import ptBR from "date-fns/locale/pt-BR";
 import { registerLocale } from "../src/date_utils";
 
@@ -490,7 +491,7 @@ describe("date_utils", function () {
 
     it("should be disabled if not in included dates", () => {
       const day = newDate();
-      const includeDates = [addDays(day, 40)];
+      const includeDates = [addQuarters(day, 1)];
       expect(isQuarterDisabled(day, { includeDates })).to.be.true;
     });
 

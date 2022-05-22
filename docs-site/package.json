@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "highlight.js": "^11.5.0",
-    "react": "^17.0.2",
+    "highlight.js": "^11.5.1",
+    "react": "^18.1.0",
     "react-app-rewired": "^2.2.1",
-    "react-dom": "^17.0.2",
-    "react-live": "^2.3.0",
+    "react-dom": "^18.1.0",
+    "react-live": "^2.4.1",
     "react-scripts": "4.0.3"
   },
   "scripts": {
@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.49.10",
+    "sass": "^1.52.0",
     "raw-loader": "^4.0.2"
   }
 }
