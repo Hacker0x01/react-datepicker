@@ -978,6 +978,16 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderChildren = () => {
+    if (this.props.children) {
+      return (
+        <div className="react-datepicker__children-container">
+          {this.props.children}
+        </div>
+      );
+    }
+  };
+
   render() {
     const Container = this.props.container || CalendarContainer;
     return (
@@ -996,7 +1006,7 @@ export default class Calendar extends React.Component {
           {this.renderTodayButton()}
           {this.renderTimeSection()}
           {this.renderInputTimeSection()}
-          {this.props.children}
+          {this.renderChildren()}
         </Container>
       </div>
     );
