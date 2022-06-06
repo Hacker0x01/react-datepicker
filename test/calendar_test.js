@@ -1712,4 +1712,33 @@ describe("Calendar", function () {
       expect(onKeyDownSpy.calledOnce).to.be.true;
     });
   });
+
+  describe("renderChildren", () => {
+    const renderCalendar = (props) =>
+      mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="scroll"
+          {...props}
+        />
+      );
+    const childrenContainerSelector = ".react-datepicker__children-container";
+
+    it("should render children components", function () {
+      const calendar = renderCalendar({
+        children: <div>This is a child component for test.</div>,
+      });
+      const childrenContainer = calendar.find(childrenContainerSelector);
+      expect(childrenContainer).to.have.length(1);
+    });
+
+    it("should not render children components", function () {
+      const calendar = renderCalendar();
+      const childrenContainer = calendar.find(childrenContainerSelector);
+      expect(childrenContainer).to.have.length(0);
+    });
+  });
 });
