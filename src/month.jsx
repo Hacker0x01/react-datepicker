@@ -252,7 +252,6 @@ export default class Month extends React.Component {
       switch (eventKey) {
         case "Enter":
           this.onMonthClick(event, month);
-          this.props.setPreSelection(this.props.selected);
           break;
         case "ArrowRight":
           this.handleMonthNavigation(
