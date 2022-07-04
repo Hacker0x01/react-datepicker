@@ -56,7 +56,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
     "enzyme": "^3.10.0",
-    "eslint": "^7.4.0",
+    "eslint": "^8.19.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
