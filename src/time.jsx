@@ -28,7 +28,7 @@ export default class Time extends React.Component {
 
   static calcCenterPosition = (listHeight, centerLiRef) => {
     return (
-      centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
+      centerLiRef?.offsetTop - (listHeight / 2 - centerLiRef?.clientHeight / 2)
     );
   };
 
