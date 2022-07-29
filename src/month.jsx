@@ -288,7 +288,7 @@ export default class Month extends React.Component {
       preSelection,
       monthClassName,
     } = this.props;
-    const _monthClassName = monthClassName ? monthClassName(day) : undefined;
+    const _monthClassName = monthClassName ? monthClassName(utils.setMonth(day, m)) : undefined;
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
