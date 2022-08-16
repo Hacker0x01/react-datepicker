@@ -6,12 +6,14 @@ import addHours from "date-fns/addHours";
 import addDays from "date-fns/addDays";
 import addWeeks from "date-fns/addWeeks";
 import addMonths from "date-fns/addMonths";
+import addQuarters from "date-fns/addQuarters";
 import addYears from "date-fns/addYears";
 import subMinutes from "date-fns/subMinutes";
 import subHours from "date-fns/subHours";
 import subDays from "date-fns/subDays";
 import subWeeks from "date-fns/subWeeks";
 import subMonths from "date-fns/subMonths";
+import subQuarters from "date-fns/subQuarters";
 import subYears from "date-fns/subYears";
 import getSeconds from "date-fns/getSeconds";
 import getMinutes from "date-fns/getMinutes";
@@ -265,7 +267,7 @@ export function getEndOfMonth(date) {
 
 // *** Addition ***
 
-export { addMinutes, addDays, addWeeks, addMonths, addYears };
+export { addMinutes, addDays, addWeeks, addMonths, addQuarters, addYears };
 
 // *** Subtraction ***
 
@@ -276,6 +278,7 @@ export {
   subDays,
   subWeeks,
   subMonths,
+  subQuarters,
   subYears,
 };
 
@@ -377,7 +380,9 @@ export function getLocaleObject(localeSpec) {
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return typeof formatFunc === "function" ? formatFunc(date, locale) : formatDate(date, "EEEE", locale);
+  return typeof formatFunc === "function"
+    ? formatFunc(date, locale)
+    : formatDate(date, "EEEE", locale);
 }
 
 export function getWeekdayMinInLocale(date, locale) {
