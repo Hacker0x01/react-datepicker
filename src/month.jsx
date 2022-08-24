@@ -247,6 +247,7 @@ export default class Month extends React.Component {
   };
 
   onMonthKeyDown = (event, month) => {
+    event.preventDefault();
     const eventKey = event.key;
     if (!this.props.disabledKeyboardNavigation) {
       switch (eventKey) {
@@ -264,6 +265,18 @@ export default class Month extends React.Component {
           this.handleMonthNavigation(
             month === 0 ? 11 : month - 1,
             utils.subMonths(this.props.preSelection, 1)
+          );
+          break;
+        case "ArrowUp":
+          this.handleMonthNavigation(
+            month >= 0 && month <= 2 ? month + 9 : month - 3,
+            utils.subMonths(this.props.preSelection, 3)
+          );
+          break;
+        case "ArrowDown":
+          this.handleMonthNavigation(
+            month >= 9 && month <= 11 ? month - 9 : month + 3,
+            utils.addMonths(this.props.preSelection, 3)
           );
           break;
       }
