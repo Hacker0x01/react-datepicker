@@ -693,9 +693,8 @@ export default class Calendar extends React.Component {
 
   handleTodayButtonClick = (e) => {
     this.props.onSelect(getStartOfToday(), e);
-    this.props.setPreSelection(getStartOfToday());
+    this.props.setPreSelection && this.props.setPreSelection(getStartOfToday());
   };
-
 
   renderTodayButton = () => {
     if (!this.props.todayButton || this.props.showTimeSelectOnly) {
