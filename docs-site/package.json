@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.54.5",
+    "sass": "^1.54.7",
     "raw-loader": "^4.0.2"
   }
 }
