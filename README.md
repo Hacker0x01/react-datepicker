@@ -138,7 +138,8 @@ To begin local development:
 
 1. `yarn install`
 2. `yarn build-dev`
-3. `yarn start`
+3. `yarn css:dev`
+4. `yarn start`
 
 The last step starts documentation app as a simple webserver on http://localhost:3000.
 
