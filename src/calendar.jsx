@@ -691,6 +691,11 @@ export default class Calendar extends React.Component {
     );
   };
 
+  handleTodayButtonClick = (e) => {
+    this.props.onSelect(getStartOfToday(), e);
+    this.props.setPreSelection && this.props.setPreSelection(getStartOfToday());
+  };
+
   renderTodayButton = () => {
     if (!this.props.todayButton || this.props.showTimeSelectOnly) {
       return;
@@ -698,7 +703,7 @@ export default class Calendar extends React.Component {
     return (
       <div
         className="react-datepicker__today-button"
-        onClick={(e) => this.props.onSelect(getStartOfToday(), e)}
+        onClick={(e) => this.handleTodayButtonClick(e)}
       >
         {this.props.todayButton}
       </div>
