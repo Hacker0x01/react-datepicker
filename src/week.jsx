@@ -15,6 +15,7 @@ export default class Week extends React.Component {
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
+    selectedDayClassName:PropTypes.func,
     disabledDayAriaLabelPrefix: PropTypes.string,
     chooseDayAriaLabelPrefix: PropTypes.string,
     endDate: PropTypes.instanceOf(Date),
@@ -144,6 +145,7 @@ export default class Week extends React.Component {
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
+            selectedDayClassName={this.props.selectedDayClassName}
             renderDayContents={this.props.renderDayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             handleOnKeyDown={this.props.handleOnKeyDown}

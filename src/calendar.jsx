@@ -83,6 +83,7 @@ export default class Calendar extends React.Component {
     dateFormat: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
       .isRequired,
     dayClassName: PropTypes.func,
+    selectedDayClassName: PropTypes.func,
     weekDayClassName: PropTypes.func,
     disabledDayAriaLabelPrefix: PropTypes.string,
     monthClassName: PropTypes.func,
@@ -854,6 +855,7 @@ export default class Calendar extends React.Component {
             onChange={this.changeMonthYear}
             day={monthDate}
             dayClassName={this.props.dayClassName}
+            selectedDayClassName={this.props.selectedDayClassName}
             calendarStartDay={this.props.calendarStartDay}
             monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}

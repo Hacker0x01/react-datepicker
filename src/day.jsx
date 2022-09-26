@@ -24,6 +24,7 @@ export default class Day extends React.Component {
     disabledKeyboardNavigation: PropTypes.bool,
     day: PropTypes.instanceOf(Date).isRequired,
     dayClassName: PropTypes.func,
+    selectedDayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
@@ -241,6 +242,7 @@ export default class Day extends React.Component {
     return classnames(
       "react-datepicker__day",
       dayClassName,
+      this.isSelected() ? selectedDayClassName : undefined,
       "react-datepicker__day--" + getDayOfWeekCode(this.props.day),
       {
         "react-datepicker__day--disabled": this.isDisabled(),
