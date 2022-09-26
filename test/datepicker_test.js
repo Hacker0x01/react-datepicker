@@ -319,6 +319,32 @@ describe("DatePicker", () => {
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
 
+  it("should update the preSelection state when Today button is clicked after selecting a different day for inline mode", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        todayButton="Today"
+        selected={utils.newDate()}
+        inline
+        onChange={(d) => {
+          var date = d;
+        }}
+      />
+    );
+
+    var today = getSelectedDayNode(datePicker);
+    var anyOtherDay = today.nextElementSibling || today.previousElementSibling;
+    TestUtils.Simulate.click(anyOtherDay); // will update the preSelection to next or previous day
+
+    var todayBtn = datePicker.calendar.componentNode.querySelector(
+      ".react-datepicker__today-button"
+    );
+    TestUtils.Simulate.click(todayBtn); // will update the preSelection
+
+    expect(
+      utils.formatDate(datePicker.state.preSelection, "yyyy-MM-dd")
+    ).to.equal(utils.formatDate(utils.newDate(), "yyyy-MM-dd"));
+  });
+
   it("should hide the calendar when pressing enter in the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
