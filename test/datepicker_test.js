@@ -583,6 +583,33 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).to.exist;
   });
 
+  it("should render Calendar in portal when withPortal is set and should close on Escape key when focus is on header", () => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker withPortal portalId="portal-id-dom-test" />
+    );
+    var dateInput = datePicker.input;
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+    expect(function () {
+      TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__portal"
+      );
+    }).to.not.throw();
+    expect(datePicker.calendar).to.exist;
+
+    var header = TestUtils.scryRenderedDOMComponentsWithClass(
+      datePicker,
+      "react-datepicker__current-month"
+    )[0];
+
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(header));
+
+    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(header), getKey("Escape"));
+
+    expect(datePicker.calendar).to.not.exist;
+  });
+
   it("should not render Calendar when withPortal is set and no focus is given to input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker withPortal />);
 
