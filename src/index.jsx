@@ -17,7 +17,6 @@ import {
   getSeconds,
   getMinutes,
   getHours,
-  getTime,
   addDays,
   addMonths,
   addWeeks,
@@ -40,7 +39,6 @@ import {
   setDefaultLocale,
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
-  correctDateString,
   isSameDay,
 } from "./date_utils";
 import onClickOutside from "react-onclickoutside";
