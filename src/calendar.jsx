@@ -132,6 +132,7 @@ export default class Calendar extends React.Component {
     onWeekSelect: PropTypes.func,
     showTimeSelect: PropTypes.bool,
     showTimeInput: PropTypes.bool,
+    timeInputSeconds: PropTypes.bool,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
@@ -962,9 +963,13 @@ export default class Calendar extends React.Component {
   renderInputTimeSection = () => {
     const time = new Date(this.props.selected);
     const timeValid = isValid(time) && Boolean(this.props.selected);
-    const timeString = timeValid
-      ? `${addZero(time.getHours())}:${addZero(time.getMinutes())}`
-      : "";
+    let timeWithColon = `${addZero(time.getHours())}:${addZero(
+      time.getMinutes()
+    )}`;
+    if (this.props.timeInputSeconds) {
+      timeWithColon += `:${addZero(time.getSeconds())}`;
+    }
+    const timeString = timeValid ? timeWithColon : "";
     if (this.props.showTimeInput) {
       return (
         <InputTime
@@ -973,6 +978,7 @@ export default class Calendar extends React.Component {
           timeInputLabel={this.props.timeInputLabel}
           onChange={this.props.onTimeChange}
           customTimeInput={this.props.customTimeInput}
+          timeInputSeconds={this.props.timeInputSeconds}
         />
       );
     }

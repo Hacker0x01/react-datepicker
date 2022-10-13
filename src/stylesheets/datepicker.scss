@@ -262,6 +262,10 @@
   .react-datepicker-time__input-container {
     display: inline-block;
 
+    .react-datepicker-time__input.react-datepicker-time__input-seconds {
+      margin-left: 0;
+    }
+
     .react-datepicker-time__input {
       display: inline-block;
       margin-left: 10px;

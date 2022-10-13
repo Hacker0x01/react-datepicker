@@ -40,6 +40,15 @@ describe("timeInput", () => {
     expect(timeComponent.state("time")).to.equal("13:00");
   });
 
+  xit("should trigger onChange event (with seconds)", () => {
+    const timeComponent = shallow(
+      <InputTimeComponent onChange={console.log} />
+    );
+    const input = timeComponent.find("input");
+    input.simulate("change", { target: { value: "13:00:01" } });
+    expect(timeComponent.state("time")).to.equal("13:00:01");
+  });
+
   it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
     const timeComponent = shallow(
       <InputTimeComponent timeString="13:00" onChange={console.log} />

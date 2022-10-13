@@ -71,6 +71,7 @@ import RenderCustomHeader from "../../examples/renderCustomHeader";
 import RenderCustomHeaderTwoMonths from "../../examples/renderCustomHeaderTwoMonths";
 import RenderCustomDay from "../../examples/renderCustomDay";
 import TimeInput from "../../examples/timeInput";
+import TimeInputSeconds from "../../examples/timeInputSeconds";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import YearPicker from "../../examples/yearPicker";
@@ -285,6 +286,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Input time",
       component: TimeInput,
+    },
+    {
+      title: "Input time with seconds",
+      component: TimeInputSeconds,
     },
     {
       title: "Locale",

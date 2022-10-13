@@ -112,6 +112,7 @@ export default class DatePicker extends React.Component {
       nextYearAriaLabel: "Next Year",
       nextYearButtonLabel: "Next Year",
       timeInputLabel: "Time",
+      timeInputSeconds: false,
       enableTabLoop: true,
       yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER,
 
@@ -273,6 +274,7 @@ export default class DatePicker extends React.Component {
     nextYearAriaLabel: PropTypes.string,
     nextYearButtonLabel: PropTypes.string,
     timeInputLabel: PropTypes.string,
+    timeInputSeconds: PropTypes.bool,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
     wrapperClassName: PropTypes.string,
@@ -625,6 +627,7 @@ export default class DatePicker extends React.Component {
     let changedDate = setTime(selected, {
       hour: getHours(time),
       minute: getMinutes(time),
+      second: getSeconds(time),
     });
 
     this.setState({
@@ -938,6 +941,7 @@ export default class DatePicker extends React.Component {
         nextYearAriaLabel={this.props.nextYearAriaLabel}
         nextYearButtonLabel={this.props.nextYearButtonLabel}
         timeInputLabel={this.props.timeInputLabel}
+        timeInputSeconds={this.props.timeInputSeconds}
         disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}

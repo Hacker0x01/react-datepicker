@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import {
   getHours,
   getMinutes,
+  getSeconds,
   setHours,
   setMinutes,
+  setSeconds,
   newDate,
   getStartOfDay,
   addMinutes,
@@ -89,20 +91,21 @@ export default class Time extends React.Component {
     this.props.onChange(time);
   };
 
-  isSelectedTime = (time, currH, currM) =>
+  isSelectedTime = (time, currH, currM, currS) =>
     this.props.selected &&
     currH === getHours(time) &&
-    currM === getMinutes(time);
+    currM === getMinutes(time) &&
+    (typeof currS === "undefined" || currS === getSeconds(time));
 
-  liClasses = (time, currH, currM) => {
+  liClasses = (time, currH, currM, currS) => {
     let classes = [
       "react-datepicker__time-list-item",
       this.props.timeClassName
-        ? this.props.timeClassName(time, currH, currM)
+        ? this.props.timeClassName(time, currH, currM, currS)
         : undefined,
     ];
 
-    if (this.isSelectedTime(time, currH, currM)) {
+    if (this.isSelectedTime(time, currH, currM, currS)) {
       classes.push("react-datepicker__time-list-item--selected");
     }
 
@@ -118,7 +121,9 @@ export default class Time extends React.Component {
     }
     if (
       this.props.injectTimes &&
-      (getHours(time) * 60 + getMinutes(time)) % this.props.intervals !== 0
+      (getHours(time) * 60 + getMinutes(time) + getSeconds(time)) %
+        this.props.intervals !==
+        0
     ) {
       classes.push("react-datepicker__time-list-item--injected");
     }
@@ -155,7 +160,11 @@ export default class Time extends React.Component {
       this.props.selected || this.props.openToDate || newDate();
     const currH = getHours(activeDate);
     const currM = getMinutes(activeDate);
-    const activeTime = setHours(setMinutes(base, currM), currH);
+    const currS = getSeconds(activeDate);
+    const activeTime = setHours(
+      setMinutes(setSeconds(base, currS), currM),
+      currH
+    );
 
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(base, i * intervals);
@@ -188,7 +197,7 @@ export default class Time extends React.Component {
         }}
         tabIndex="0"
         aria-selected={
-          this.isSelectedTime(time, currH, currM) ? "true" : undefined
+          this.isSelectedTime(time, currH, currM, currS) ? "true" : undefined
         }
       >
         {formatDate(time, format, this.props.locale)}

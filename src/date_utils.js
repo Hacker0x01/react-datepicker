@@ -191,7 +191,7 @@ export function setTime(date, { hour = 0, minute = 0, second = 0 }) {
   return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
 
-export { setMinutes, setHours, setMonth, setQuarter, setYear };
+export { setSeconds, setMinutes, setHours, setMonth, setQuarter, setYear };
 
 // ** Date Getters **
 
@@ -533,7 +533,8 @@ export function isTimeInList(time, times) {
   return times.some(
     (listTime) =>
       getHours(listTime) === getHours(time) &&
-      getMinutes(listTime) === getMinutes(time)
+      getMinutes(listTime) === getMinutes(time) &&
+      getSeconds(listTime) === getSeconds(time)
   );
 }
 

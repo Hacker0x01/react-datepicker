@@ -8,6 +8,7 @@ export default class inputTime extends React.Component {
     timeString: PropTypes.string,
     timeInputLabel: PropTypes.string,
     customTimeInput: PropTypes.element,
+    timeInputSeconds: PropTypes.bool,
   };
 
   constructor(props) {
@@ -34,6 +35,7 @@ export default class inputTime extends React.Component {
     const date = new Date();
     date.setHours(time.split(":")[0]);
     date.setMinutes(time.split(":")[1]);
+    date.setSeconds(time.split(":")[2]);
     this.props.onChange(date);
   };
 
@@ -71,7 +73,13 @@ export default class inputTime extends React.Component {
           {this.props.timeInputLabel}
         </div>
         <div className="react-datepicker-time__input-container">
-          <div className="react-datepicker-time__input">
+          <div
+            className={
+              this.props.timeInputSeconds
+                ? "react-datepicker-time__input react-datepicker-time__input-seconds"
+                : "react-datepicker-time__input"
+            }
+          >
             {this.renderTimeInput()}
           </div>
         </div>
