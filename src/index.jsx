@@ -41,6 +41,7 @@ import {
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
 } from "./date_utils";
+import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
 
 export { default as CalendarContainer } from "./calendar_container";
@@ -709,13 +710,31 @@ export default class DatePicker extends React.Component {
         }
       } else if (eventKey === "Escape") {
         event.preventDefault();
-
         this.setOpen(false);
       }
 
       if (!this.inputOk()) {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
+    }
+  };
+
+  onPortalKeyDown = (event) => {
+    const eventKey = event.key;
+    if (eventKey === "Escape") {
+      event.preventDefault();
+      this.setState(
+        {
+          preventFocus: true,
+        },
+        () => {
+          this.setOpen(false);
+          setTimeout(() => {
+            this.setFocus();
+            this.setState({ preventFocus: false });
+          });
+        }
+      );
     }
   };
 
@@ -1071,7 +1090,15 @@ export default class DatePicker extends React.Component {
 
     if (this.props.withPortal) {
       let portalContainer = this.state.open ? (
-        <div className="react-datepicker__portal">{calendar}</div>
+        <TabLoop enableTabLoop={this.props.enableTabLoop}>
+          <div
+            className="react-datepicker__portal"
+            tabIndex={-1}
+            onKeyDown={this.onPortalKeyDown}
+          >
+            {calendar}
+          </div>
+        </TabLoop>
       ) : null;
 
       if (this.state.open && this.props.portalId) {
