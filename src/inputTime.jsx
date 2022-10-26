@@ -19,6 +19,11 @@ export default class inputTime extends React.Component {
     };
   }
 
+  /**
+   * This routine will update local state from props whenever the component renders.
+   * This can cause some issues where if local state changes, it will be overwritten with props.
+   * See: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#anti-pattern-unconditionally-copying-props-to-state
+   */
   static getDerivedStateFromProps(props, state) {
     if (props.timeString !== state.time) {
       return {
@@ -35,7 +40,11 @@ export default class inputTime extends React.Component {
     const date = new Date();
     date.setHours(time.split(":")[0]);
     date.setMinutes(time.split(":")[1]);
-    date.setSeconds(time.split(":")[2]);
+    // If seconds were specified on the time string, set the seconds into the date object.
+    // When seconds are not specified, "new Date()" is going to have seconds set to current time.
+    if (time.split(":")[2]) {
+      date.setSeconds(time.split(":")[2]);
+    }
     this.props.onChange(date);
   };
 

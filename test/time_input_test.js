@@ -40,13 +40,44 @@ describe("timeInput", () => {
     expect(timeComponent.state("time")).to.equal("13:00");
   });
 
-  xit("should trigger onChange event (with seconds)", () => {
+  it("should trigger onChange event (with seconds)", () => {
+    const onChangeSecondsSpy = sandbox.spy();
     const timeComponent = shallow(
-      <InputTimeComponent onChange={console.log} />
+      <InputTimeComponent
+        timeString="12:00:00"
+        timeInputSeconds
+        onChange={onChangeSecondsSpy}
+      />
     );
     const input = timeComponent.find("input");
     input.simulate("change", { target: { value: "13:00:01" } });
-    expect(timeComponent.state("time")).to.equal("13:00:01");
+    assert(
+      onChangeSecondsSpy.called === true,
+      "should call InputTimeComponent onChange"
+    );
+  });
+
+  it("should send updated time in onChange event (with seconds)", () => {
+    const onChangeSecondsSpy = sandbox.spy();
+    const timeComponent = mount(
+      <InputTimeComponent
+        timeString="12:00:00"
+        timeInputSeconds
+        onChange={onChangeSecondsSpy}
+      />
+    );
+    let input = timeComponent.find("input");
+    input.simulate("change", { target: { value: "13:00:01" } });
+    // The onChange inside InputTimeComponent creates a Date() object and returns it.
+    // We want to pull out the hours:minutes:seconds out of that date object to see if it matches.
+    const newDate = onChangeSecondsSpy.getCall(0).args[0];
+    const dateCompare =
+      newDate.getHours().toString().padStart(2, "0") +
+      ":" +
+      newDate.getMinutes().toString().padStart(2, "0") +
+      ":" +
+      newDate.getSeconds().toString().padStart(2, "0");
+    expect(dateCompare).to.equal("13:00:01");
   });
 
   it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
