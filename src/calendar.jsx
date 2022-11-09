@@ -211,6 +211,7 @@ export default class Calendar extends React.Component {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
+      isRenderAriaLiveMessage: false,
     };
   }
 
@@ -312,7 +313,7 @@ export default class Calendar extends React.Component {
   handleYearChange = (date) => {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
-      this.setState({ ariaLiveMessage: getYear(date) });
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -329,12 +330,7 @@ export default class Calendar extends React.Component {
   handleMonthChange = (date) => {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date);
-      this.setState({
-        ariaLiveMessage: `${getMonthInLocale(
-          getMonth(date),
-          this.props.locale
-        )} ${getYear(date)}`,
-      });
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -992,9 +988,33 @@ export default class Calendar extends React.Component {
   };
 
   renderAriaLiveRegion = () => {
+    const { startPeriod, endPeriod } = getYearsPeriod(
+      this.state.date,
+      this.props.yearItemNumber
+    );
+    let ariaLiveMessage;
+
+    if (this.props.showYearPicker) {
+      ariaLiveMessage = `${startPeriod} - ${endPeriod}`;
+    } else if (
+      this.props.showMonthYearPicker ||
+      this.props.showQuarterYearPicker
+    ) {
+      ariaLiveMessage = getYear(this.state.date);
+    } else {
+      ariaLiveMessage = `${getMonthInLocale(
+        getMonth(this.state.date),
+        this.props.locale
+      )} ${getYear(this.state.date)}`;
+    }
+
     return (
-      <span role="alert" aria-live="polite" className="visually-hidden">
-        {this.state.ariaLiveMessage}
+      <span
+        role="alert"
+        aria-live="polite"
+        className="react-datepicker__aria-live"
+      >
+        {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
       </span>
     );
   };

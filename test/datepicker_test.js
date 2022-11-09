@@ -1984,4 +1984,56 @@ describe("DatePicker", () => {
       expect(utils.getMinutes(date)).to.equal(22);
     });
   });
+
+  describe("should render aria live region after date selection", () => {
+    it("should have correct format if datepicker does not contain time", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(
+        ReactDOM.findDOMNode(dateInput),
+        getKey("Enter")
+      );
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(ariaLiveMessage).to.equal(
+        `Selected date: ${utils.safeDateFormat(datePicker.props.selected, {
+          dateFormat: "PPPP",
+          locale: datePicker.props.locale,
+        })}`
+      );
+    });
+
+    it("should have correct format if datepicker contains time", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker showTimeInput selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(
+        ReactDOM.findDOMNode(dateInput),
+        getKey("Enter")
+      );
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(ariaLiveMessage).to.equal(
+        `Selected date: ${utils.safeDateFormat(datePicker.props.selected, {
+          dateFormat: "PPPPp",
+          locale: datePicker.props.locale,
+        })}`
+      );
+    });
+  });
 });

@@ -1062,7 +1062,11 @@ export default class DatePicker extends React.Component {
     }
 
     return (
-      <span role="alert" aria-live="polite" className="visually-hidden">
+      <span
+        role="alert"
+        aria-live="polite"
+        className="react-datepicker__aria-live"
+      >
         {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
       </span>
     );
