@@ -40,6 +40,7 @@ import {
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
+  formatDate,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -373,6 +374,7 @@ export default class DatePicker extends React.Component {
       // used to focus day in inline version after month has changed, but not on
       // initial render
       shouldFocusDayInline: false,
+      isRenderAriaLiveMessage: false,
     };
   };
 
@@ -523,6 +525,7 @@ export default class DatePicker extends React.Component {
       this.props.onChangeRaw(event);
     }
     this.setSelected(date, event, false, monthSelectedIn);
+    this.setState({ isRenderAriaLiveMessage: true });
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
@@ -651,6 +654,9 @@ export default class DatePicker extends React.Component {
     }
     if (this.props.showTimeInput) {
       this.setOpen(true);
+    }
+    if (this.props.showTimeSelectOnly || this.props.showTimeSelect) {
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     this.setState({ inputValue: null });
   };
@@ -997,6 +1003,71 @@ export default class DatePicker extends React.Component {
     );
   };
 
+  renderAriaLiveRegion = () => {
+    const { dateFormat, locale } = this.props;
+    const isContainsTime =
+      this.props.showTimeInput || this.props.showTimeSelect;
+    const longDateFormat = isContainsTime ? "PPPPp" : "PPPP";
+    let ariaLiveMessage;
+
+    if (this.props.selectsRange) {
+      ariaLiveMessage = `Selected start date: ${safeDateFormat(
+        this.props.startDate,
+        {
+          dateFormat: longDateFormat,
+          locale,
+        }
+      )}. ${
+        this.props.endDate
+          ? "End date: " +
+            safeDateFormat(this.props.endDate, {
+              dateFormat: longDateFormat,
+              locale,
+            })
+          : ""
+      }`;
+    } else {
+      if (this.props.showTimeSelectOnly) {
+        ariaLiveMessage = `Selected time: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat, locale }
+        )}`;
+      } else if (this.props.showYearPicker) {
+        ariaLiveMessage = `Selected year: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat: "yyyy", locale }
+        )}`;
+      } else if (this.props.showMonthYearPicker) {
+        ariaLiveMessage = `Selected month: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat: "MMMM yyyy", locale }
+        )}`;
+      } else if (this.props.showQuarterYearPicker) {
+        ariaLiveMessage = `Selected quarter: ${safeDateFormat(
+          this.props.selected,
+          {
+            dateFormat: "yyyy, QQQ",
+            locale,
+          }
+        )}`;
+      } else {
+        ariaLiveMessage = `Selected date: ${safeDateFormat(
+          this.props.selected,
+          {
+            dateFormat: longDateFormat,
+            locale,
+          }
+        )}`;
+      }
+    }
+
+    return (
+      <span role="alert" aria-live="polite" className="visually-hidden">
+        {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
+      </span>
+    );
+  };
+
   renderDateInput = () => {
     const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open,
@@ -1077,6 +1148,7 @@ export default class DatePicker extends React.Component {
   renderInputContainer() {
     return (
       <div className="react-datepicker__input-container">
+        {this.renderAriaLiveRegion()}
         {this.renderDateInput()}
         {this.renderClearButton()}
       </div>

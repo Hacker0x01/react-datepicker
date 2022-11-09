@@ -41,6 +41,7 @@ import {
   isValid,
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
+  getMonthInLocale,
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -311,6 +312,7 @@ export default class Calendar extends React.Component {
   handleYearChange = (date) => {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
+      this.setState({ ariaLiveMessage: getYear(date) });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -327,6 +329,12 @@ export default class Calendar extends React.Component {
   handleMonthChange = (date) => {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date);
+      this.setState({
+        ariaLiveMessage: `${getMonthInLocale(
+          getMonth(date),
+          this.props.locale
+        )} ${getYear(date)}`,
+      });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -983,6 +991,14 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderAriaLiveRegion = () => {
+    return (
+      <span role="alert" aria-live="polite" className="visually-hidden">
+        {this.state.ariaLiveMessage}
+      </span>
+    );
+  };
+
   renderChildren = () => {
     if (this.props.children) {
       return (
@@ -1004,6 +1020,7 @@ export default class Calendar extends React.Component {
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
         >
+          {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}
           {this.renderNextButton()}
           {this.renderMonths()}
