@@ -377,7 +377,9 @@ export function getLocaleObject(localeSpec) {
 }
 
 export function getFormattedWeekdayInLocale(date, formatFunc, locale) {
-  return typeof formatFunc === "function" ? formatFunc(date, locale) : formatDate(date, "EEEE", locale);
+  return typeof formatFunc === "function"
+    ? formatFunc(date, locale)
+    : formatDate(date, "EEEE", locale);
 }
 
 export function getWeekdayMinInLocale(date, locale) {
@@ -454,7 +456,10 @@ export function isMonthDisabled(
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
-    isOutOfBounds(month, { minDate, maxDate }) ||
+    isOutOfBounds(month, {
+      minDate: startOfMonth(minDate),
+      maxDate: endOfMonth(maxDate),
+    }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameMonth(month, excludeDate))) ||
     (includeDates &&

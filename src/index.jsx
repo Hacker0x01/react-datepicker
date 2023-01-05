@@ -40,6 +40,7 @@ import {
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
+  isMonthDisabled,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -539,9 +540,16 @@ export default class DatePicker extends React.Component {
   setSelected = (date, event, keepInput, monthSelectedIn) => {
     let changedDate = date;
 
-    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-      return;
+    if (this.props.showMonthYearPicker) {
+      if (changedDate !== null && isMonthDisabled(changedDate, this.props)) {
+        return;
+      }
+    } else {
+      if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+        return;
+      }
     }
+
     const { onChange, selectsRange, startDate, endDate } = this.props;
 
     if (
