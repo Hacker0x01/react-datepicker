@@ -43,6 +43,7 @@ import startOfYear from "date-fns/startOfYear";
 import endOfDay from "date-fns/endOfDay";
 import endOfWeek from "date-fns/endOfWeek";
 import endOfMonth from "date-fns/endOfMonth";
+import endOfYear from "date-fns/endOfYear";
 import dfIsEqual from "date-fns/isEqual";
 import dfIsSameDay from "date-fns/isSameDay";
 import dfIsSameMonth from "date-fns/isSameMonth";
@@ -505,9 +506,23 @@ export function isQuarterDisabled(
   );
 }
 
-export function isYearDisabled(year, { minDate, maxDate } = {}) {
+export function isYearDisabled(
+  year,
+  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
+) {
   const date = new Date(year, 0, 1);
-  return isOutOfBounds(date, { minDate, maxDate }) || false;
+  return (
+    isOutOfBounds(date, {
+      minDate: startOfYear(minDate),
+      maxDate: endOfYear(maxDate),
+    }) ||
+    (excludeDates &&
+      excludeDates.some((excludeDate) => isSameYear(date, excludeDate))) ||
+    (includeDates &&
+      !includeDates.some((includeDate) => isSameYear(date, includeDate))) ||
+    (filterDate && !filterDate(newDate(date))) ||
+    false
+  );
 }
 
 export function isQuarterInRange(startDate, endDate, q, day) {

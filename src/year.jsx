@@ -102,11 +102,19 @@ export default class Year extends React.Component {
   };
 
   getYearClassNames = (y) => {
-    const { minDate, maxDate, selected } = this.props;
+    const {
+      minDate,
+      maxDate,
+      selected,
+      excludeDates,
+      includeDates,
+      filterDate,
+    } = this.props;
     return classnames("react-datepicker__year-text", {
       "react-datepicker__year-text--selected": y === getYear(selected),
       "react-datepicker__year-text--disabled":
-        (minDate || maxDate) && utils.isYearDisabled(y, this.props),
+        (minDate || maxDate || excludeDates || includeDates || filterDate) &&
+        utils.isYearDisabled(y, this.props),
       "react-datepicker__year-text--keyboard-selected":
         this.isKeyboardSelected(y),
       "react-datepicker__year-text--today": this.isCurrentYear(y),
