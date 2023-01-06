@@ -784,4 +784,30 @@ describe("Month", () => {
       );
     });
   });
+
+  describe("if keyboard navigation is disabled", () => {
+    const renderMonth = (props) =>
+        mount(<Month showMonthYearPicker {...props} />);
+
+    it("should not have the selected class", () => {
+      let preSelected = utils.newDate("2015-08-01");
+      const setPreSelection = (param) => {
+        preSelected = param;
+      };
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        disabledKeyboardNavigation: true,
+      });
+
+      expect(
+          monthComponent
+              .find(".react-datepicker__month--selected")
+              .hasClass("react-datepicker__month-text--keyboard-selected")
+      ).to.equal(false);
+    });
+  });
 });
