@@ -221,6 +221,88 @@ describe("Month", () => {
     expect(month.hasClass("react-datepicker__month--disabled")).to.equal(true);
   });
 
+  it("should not return disabled class if current date is before minDate but same month", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-01-01")}
+        minDate={utils.newDate("2015-01-10")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(0);
+    expect(month.hasClass("react-datepicker__month--disabled")).to.not.equal(
+      true
+    );
+  });
+
+  it("should not return disabled class if current date is after maxDate but same month", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-01-10")}
+        maxDate={utils.newDate("2015-01-01")}
+        showMonthYearPicker
+      />
+    );
+    const month = monthComponent.find(".react-datepicker__month-text").at(0);
+    expect(month.hasClass("react-datepicker__month--disabled")).to.not.equal(
+      true
+    );
+  });
+
+  it("should return disabled class if specified excludeDate", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-01-01")}
+        excludeDates={[
+          utils.newDate("2015-02-01"),
+          utils.newDate("2015-04-02"),
+          utils.newDate("2015-07-03"),
+          utils.newDate("2015-10-04"),
+        ]}
+        showMonthYearPicker
+      />
+    );
+    // exclude month index
+    const monthTexts = monthComponent.find(".react-datepicker__month-text");
+
+    [(1, 3, 6, 9)].forEach((i) => {
+      const month = monthTexts.at(i);
+      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+        true
+      );
+    });
+  });
+
+  it("should return disabled class if specified includeDate", () => {
+    const monthComponent = mount(
+      <Month
+        day={utils.newDate("2015-01-01")}
+        includeDates={[
+          utils.newDate("2015-01-01"),
+          utils.newDate("2015-02-02"),
+          utils.newDate("2015-03-03"),
+          utils.newDate("2015-04-04"),
+          utils.newDate("2015-05-05"),
+          utils.newDate("2015-06-06"),
+        ]}
+        showMonthYearPicker
+      />
+    );
+    const monthTexts = monthComponent.find(".react-datepicker__month-text");
+    for (let i = 0; i < 6; i++) {
+      const month = monthTexts.at(i);
+      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+        false
+      );
+    }
+    for (let i = 6; i < 12; i++) {
+      const month = monthTexts.at(i);
+      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+        true
+      );
+    }
+  });
+
   it("should have no axe violations", () => {
     const monthComponent = mount(
       <Month

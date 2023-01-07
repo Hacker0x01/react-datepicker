@@ -12,6 +12,7 @@ import {
   isDayExcluded,
   isMonthDisabled,
   isQuarterDisabled,
+  isYearDisabled,
   isValid,
   monthDisabledBefore,
   monthDisabledAfter,
@@ -39,6 +40,7 @@ import setHours from "date-fns/setHours";
 import addQuarters from "date-fns/addQuarters";
 import ptBR from "date-fns/locale/pt-BR";
 import { registerLocale } from "../src/date_utils";
+import { addYears } from "date-fns";
 
 registerLocale("pt-BR", ptBR);
 
@@ -449,6 +451,18 @@ describe("date_utils", function () {
       isMonthDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
     });
+
+    it("should be enabled if before minDate but same month", () => {
+      const day = newDate("2023-01-01");
+      expect(isMonthDisabled(day, { minDate: newDate("2023-01-02") })).to.be
+        .false;
+    });
+
+    it("should be enabled if after maxDate but same month", () => {
+      const day = newDate("2023-01-02");
+      expect(isMonthDisabled(day, { maxDate: newDate("2023-01-01") })).to.be
+        .false;
+    });
   });
 
   describe("isQuarterDisabled", function () {
@@ -516,6 +530,57 @@ describe("date_utils", function () {
       };
       isQuarterDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).to.be.true;
+    });
+  });
+
+  describe("isYearDisabled", function () {
+    const year = 2023;
+    const newYearsDay = newDate(`${year}-01-01`);
+
+    it("should be enabled by default", () => {
+      expect(isYearDisabled(year)).to.be.false;
+    });
+
+    it("should be enabled if on the min date", () => {
+      expect(isYearDisabled(year, { minDate: newYearsDay })).to.be.false;
+    });
+
+    it("should be disabled if before the min date", () => {
+      expect(isYearDisabled(year, { minDate: addYears(newYearsDay, 1) })).to.be
+        .true;
+    });
+
+    it("should be enabled if on the max date", () => {
+      expect(isYearDisabled(year, { maxDate: newYearsDay })).to.be.false;
+    });
+
+    it("should be disabled if after the max date", () => {
+      expect(isYearDisabled(year, { maxDate: addYears(newYearsDay, -1) })).to.be
+        .true;
+    });
+
+    it("should be disabled if in excluded dates", () => {
+      const day = newDate();
+      expect(isYearDisabled(year, { excludeDates: [day] })).to.be.true;
+    });
+
+    it("should be enabled if in included dates", () => {
+      expect(isYearDisabled(year, { includeDates: [newYearsDay] })).to.be.false;
+    });
+
+    it("should be disabled if not in included dates", () => {
+      const includeDates = [addYears(newYearsDay, 1)];
+      expect(isYearDisabled(year, { includeDates })).to.be.true;
+    });
+
+    it("should be enabled if date filter returns true", () => {
+      const filterDate = (d) => isSameYear(d, newYearsDay);
+      expect(isYearDisabled(year, { filterDate })).to.be.false;
+    });
+
+    it("should be disabled if date filter returns false", () => {
+      const filterDate = (d) => !isSameYear(d, newYearsDay);
+      expect(isYearDisabled(year, { filterDate })).to.be.true;
     });
   });
 
