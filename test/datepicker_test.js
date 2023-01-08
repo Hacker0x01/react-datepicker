@@ -1984,4 +1984,60 @@ describe("DatePicker", () => {
       expect(utils.getMinutes(date)).to.equal(22);
     });
   });
+
+  it("should selected month when specified minDate same month", () => {
+    const selected = utils.newDate("2023-01-09");
+    let date = null;
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={(d) => (date = d)}
+        dateFormat="MM/yyyy"
+        minDate={utils.newDate("2022-12-31")}
+        showMonthYearPicker
+      />
+    );
+
+    TestUtils.Simulate.change(datePicker.input, {
+      target: {
+        value: "11/2022",
+      },
+    });
+    expect(date).to.equal(null);
+
+    TestUtils.Simulate.change(datePicker.input, {
+      target: {
+        value: "12/2022",
+      },
+    });
+    expect(date.toString()).to.equal(utils.newDate("2022-12-01").toString());
+  });
+
+  it("should selected year when specified minDate same year", () => {
+    const selected = utils.newDate("2023-01-09");
+    let date = null;
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker
+        selected={selected}
+        onChange={(d) => (date = d)}
+        dateFormat="yyyy"
+        minDate={utils.newDate("2022-12-31")}
+        showYearPicker
+      />
+    );
+
+    TestUtils.Simulate.change(datePicker.input, {
+      target: {
+        value: "2021",
+      },
+    });
+    expect(date).to.equal(null);
+
+    TestUtils.Simulate.change(datePicker.input, {
+      target: {
+        value: "2022",
+      },
+    });
+    expect(date.toString()).to.equal(utils.newDate("2022-01-01").toString());
+  });
 });
