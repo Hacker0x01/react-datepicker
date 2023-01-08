@@ -15,6 +15,9 @@ export default class Year extends React.Component {
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
+    excludeDates: PropTypes.array,
+    includeDates: PropTypes.array,
+    filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
   };
 
