@@ -105,6 +105,100 @@ describe("YearPicker", () => {
     );
   });
 
+  it("should not return disabled class if current date is before minDate but same year", () => {
+    const date = utils.newDate("2023-01-01");
+    const yearComponent = mount(
+      <Year date={date} minDate={utils.newDate("2023-12-31")} />
+    );
+    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const firstYear = utils.getYearsPeriod(
+      date,
+      utils.DEFAULT_YEAR_ITEM_NUMBER
+    ).startPeriod;
+
+    expect(
+      yearTexts
+        .at(2023 - firstYear)
+        .hasClass("react-datepicker__year-text--disabled")
+    ).to.equal(false);
+  });
+
+  it("should not return disabled class if current date is after maxDate but same year", () => {
+    const date = utils.newDate("2023-12-31");
+    const yearComponent = mount(
+      <Year date={date} maxDate={utils.newDate("2023-01-01")} />
+    );
+    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const firstYear = utils.getYearsPeriod(
+      date,
+      utils.DEFAULT_YEAR_ITEM_NUMBER
+    ).startPeriod;
+
+    expect(
+      yearTexts
+        .at(2023 - firstYear)
+        .hasClass("react-datepicker__year-text--disabled")
+    ).to.equal(false);
+  });
+
+  it("should return disabled class if specified excludeDate", () => {
+    const date = utils.newDate("2023-12-31");
+    const firstYear = utils.getYearsPeriod(
+      date,
+      utils.DEFAULT_YEAR_ITEM_NUMBER
+    ).startPeriod;
+
+    const excludeDates = [];
+    for (let year = firstYear; year <= 2023; year++) {
+      excludeDates.push(utils.newDate(`${year}-01-01`));
+    }
+
+    const yearComponent = mount(
+      <Year date={utils.newDate("2023-01-01")} excludeDates={excludeDates} />
+    );
+
+    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+
+    for (let i = 0; i <= 2023 - firstYear; i++) {
+      const year = yearTexts.at(i);
+      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
+        true
+      );
+    }
+  });
+
+  it("should return disabled class if specified includeDate", () => {
+    const date = utils.newDate("2023-12-31");
+    const firstYear = utils.getYearsPeriod(
+      date,
+      utils.DEFAULT_YEAR_ITEM_NUMBER
+    ).startPeriod;
+
+    const includeDates = [];
+    for (let year = firstYear; year <= 2023; year++) {
+      includeDates.push(utils.newDate(`${year}-01-01`));
+    }
+    const yearComponent = mount(
+      <Year date={utils.newDate("2023-01-01")} includeDates={includeDates} />
+    );
+
+    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+
+    const pos = 2023 - firstYear;
+    for (let i = 0; i <= pos; i++) {
+      const year = yearTexts.at(i);
+      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
+        false
+      );
+    }
+    for (let i = pos + 1; i < 12; i++) {
+      const year = yearTexts.at(i);
+      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
+        true
+      );
+    }
+  });
+
   describe("keyboard-selected", () => {
     const className = "react-datepicker__year-text--keyboard-selected";
 
