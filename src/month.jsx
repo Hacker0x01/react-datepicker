@@ -319,7 +319,8 @@ export default class Month extends React.Component {
           selected
         ),
         "react-datepicker__month-text--keyboard-selected":
-            !this.props.disabledKeyboardNavigation && utils.getMonth(preSelection) === m,
+          !this.props.disabledKeyboardNavigation &&
+          utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,
@@ -501,7 +502,6 @@ export default class Month extends React.Component {
         className={this.getClassNames()}
         onMouseLeave={this.handleMouseLeave}
         aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
-        role="listbox"
       >
         {showMonthYearPicker
           ? this.renderMonths()
