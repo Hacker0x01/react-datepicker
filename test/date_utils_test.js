@@ -884,16 +884,6 @@ describe("date_utils", function () {
       expect(parseDate(value, dateFormat, null, true)).to.not.be.null;
     });
 
-    it("should parse date based on locale", () => {
-      const value = "26/05/1995";
-      const dateFormat = "P";
-
-      const expected = new Date("05/26/1995");
-      const actual = parseDate(value, dateFormat, "pt-BR", true);
-
-      assert(isEqual(actual, expected));
-    });
-
     it("should parse date that matches one of the formats", () => {
       const value = "01/15/2019";
       const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
@@ -922,12 +912,24 @@ describe("date_utils", function () {
       expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
     });
 
-    it("should parse date based on locale without strict parsing", () => {
+    it("should parse date based on locale", () => {
       const value = "26/05/1995";
+      const locale = "pt-BR";
       const dateFormat = "P";
 
-      const expected = new Date("05/26/1995");
-      const actual = parseDate(value, dateFormat, "pt-BR", false);
+      const expected = new Date(1995, 4, 26);
+      const actual = parseDate(value, dateFormat, locale, true);
+
+      assert(isEqual(actual, expected));
+    });
+
+    it("should parse date based on locale without strict parsing", () => {
+      const value = "26/05/1995";
+      const locale = "pt-BR";
+      const dateFormat = "P";
+
+      const expected = new Date(1995, 4, 26);
+      const actual = parseDate(value, dateFormat, locale, false);
 
       assert(isEqual(actual, expected));
     });
@@ -943,10 +945,11 @@ describe("date_utils", function () {
 
     it("should parse date based on default locale", () => {
       const value = "26/05/1995";
+      const locale = "pt-BR";
       const dateFormat = "P";
 
-      const expected = new Date("05/26/1995");
-      setDefaultLocale("pt-BR");
+      const expected = new Date(1995, 4, 26);
+      setDefaultLocale(locale);
       const actual = parseDate(value, dateFormat, null, false);
       setDefaultLocale(null);
 
