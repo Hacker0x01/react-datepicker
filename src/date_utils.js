@@ -59,10 +59,6 @@ import longFormatters from "date-fns/esm/_lib/format/longFormatters";
 
 export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 
-// This RegExp catches symbols escaped by quotes, and also
-// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
-var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
-
 // ** Date Constructors **
 
 export function newDate(value) {
@@ -103,27 +99,7 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
       isValid(parsedDate) &&
       value === formatDate(parsedDate, dateFormat, locale);
   } else if (!isValid(parsedDate)) {
-    dateFormat = dateFormat
-      .match(longFormattingTokensRegExp)
-      .map(function (substring) {
-        var firstCharacter = substring[0];
-        if (firstCharacter === "p" || firstCharacter === "P") {
-          var longFormatter = longFormatters[firstCharacter];
-          return localeObject
-            ? longFormatter(substring, localeObject.formatLong)
-            : firstCharacter;
-        }
-        return substring;
-      })
-      .join("");
-
-    if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date());
-    }
-
-    if (!isValid(parsedDate)) {
-      parsedDate = new Date(value);
-    }
+    parsedDate = new Date(value);
   }
 
   return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
