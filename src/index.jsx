@@ -46,6 +46,8 @@ import {
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
 
+import { FaCalendarAlt } from "react-icons/fa";
+
 export { default as CalendarContainer } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
@@ -1090,10 +1092,20 @@ export default class DatePicker extends React.Component {
     }
   };
 
+  renderCalendarIcon = () => {
+    return (
+      <FaCalendarAlt
+        className="react-datepicker__calendar-icon"
+        onClick={() => this.setOpen(true)}
+      />
+    );
+  };
+
   renderInputContainer() {
     return (
       <div className="react-datepicker__input-container">
         {this.renderDateInput()}
+        {this.renderCalendarIcon()}
         {this.renderClearButton()}
       </div>
     );

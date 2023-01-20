@@ -117,6 +117,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.24.0",
     "prop-types": "^15.7.2",
+    "react-icons": "^4.7.1",
     "react-onclickoutside": "^6.12.2",
     "react-popper": "^2.3.0"
   },
