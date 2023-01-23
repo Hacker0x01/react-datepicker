@@ -606,7 +606,7 @@ export default class DatePicker extends Component<
       dateFormat,
       this.props.locale,
       strictParsing,
-      this.props.minDate,
+      this.props.selected ?? undefined,
     );
     // Use date from `selected` prop when manipulating only time for input value
     if (

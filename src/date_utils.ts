@@ -118,7 +118,7 @@ export function newDate(value?: string | Date | number | null): Date {
  * @param dateFormat - The date format.
  * @param locale - The locale.
  * @param strictParsing - The strict parsing flag.
- * @param minDate - The minimum date.
+ * @param refDate - The base date to be passed to date-fns parse() function.
  * @returns - The parsed date or null.
  */
 export function parseDate(
@@ -126,46 +126,27 @@ export function parseDate(
   dateFormat: string | string[],
   locale: Locale | undefined,
   strictParsing: boolean,
-  minDate?: Date,
+  refDate?: Date,
 ): Date | null {
-  let parsedDate = null;
   const localeObject =
     getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
-  let strictParsingValueMatch = true;
-  if (Array.isArray(dateFormat)) {
-    dateFormat.forEach((df) => {
-      const tryParseDate = parse(value, df, new Date(), {
-        locale: localeObject,
-        useAdditionalWeekYearTokens: true,
-        useAdditionalDayOfYearTokens: true,
-      });
-      if (strictParsing) {
-        strictParsingValueMatch =
-          isValid(tryParseDate, minDate) &&
-          value === formatDate(tryParseDate, df, locale);
-      }
-      if (isValid(tryParseDate, minDate) && strictParsingValueMatch) {
-        parsedDate = tryParseDate;
-      }
+
+  const formats = Array.isArray(dateFormat) ? dateFormat : [dateFormat];
+
+  for (const format of formats) {
+    const parsedDate = parse(value, format, refDate || newDate(), {
+      locale: localeObject,
+      useAdditionalWeekYearTokens: true,
+      useAdditionalDayOfYearTokens: true,
     });
-    return parsedDate;
-  }
-
-  parsedDate = parse(value, dateFormat, new Date(), {
-    locale: localeObject,
-    useAdditionalWeekYearTokens: true,
-    useAdditionalDayOfYearTokens: true,
-  });
-
-  if (strictParsing) {
-    strictParsingValueMatch =
+    if (
       isValid(parsedDate) &&
-      value === formatDate(parsedDate, dateFormat, locale);
-  } else if (!isValid(parsedDate)) {
-    parsedDate = new Date(value);
+      (!strictParsing || value === formatDate(parsedDate, format, locale))
+    ) {
+      return parsedDate;
+    }
   }
-
-  return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
+  return null;
 }
 
 // ** Date "Reflection" **
@@ -213,13 +194,7 @@ export function formatDate(
       `A locale object was not found for the provided string ["${locale}"].`,
     );
   }
-  if (
-    !localeObj &&
-    !!getDefaultLocale() &&
-    !!getLocaleObject(getDefaultLocale())
-  ) {
-    localeObj = getLocaleObject(getDefaultLocale());
-  }
+  localeObj = localeObj || getLocaleObject(getDefaultLocale());
   return format(date, formatStr, {
     locale: localeObj,
     useAdditionalWeekYearTokens: true,

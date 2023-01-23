@@ -978,9 +978,33 @@ describe("date_utils", () => {
 
     it("should parse date that matches one of the formats", () => {
       const value = "01/15/2019";
-      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+      const dateFormat = ["yyyy-MM-dd", "MM/dd/yyyy"];
 
       expect(parseDate(value, dateFormat, undefined, true)).not.toBeNull();
+    });
+
+    it("should prefer the first matching format in array (strict)", () => {
+      const value = "01/06/2019";
+      const valueLax = "1/6/2019";
+      const dateFormat = ["MM/dd/yyyy", "dd/MM/yyyy"];
+
+      const expected = new Date(2019, 0, 6);
+
+      expect(parseDate(value, dateFormat, undefined, true)).toEqual(expected);
+      expect(parseDate(valueLax, dateFormat, undefined, true)).toBeNull();
+    });
+
+    it("should prefer the first matching format in array", () => {
+      const value = "01/06/2019";
+      const valueLax = "1/6/2019";
+      const dateFormat = ["MM/dd/yyyy", "dd/MM/yyyy"];
+
+      const expected = new Date(2019, 0, 6);
+
+      expect(parseDate(value, dateFormat, undefined, false)).toEqual(expected);
+      expect(parseDate(valueLax, dateFormat, undefined, false)).toEqual(
+        expected,
+      );
     });
 
     it("should not parse date that does not match the format", () => {
