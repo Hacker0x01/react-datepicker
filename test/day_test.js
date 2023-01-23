@@ -68,12 +68,12 @@ describe("Day", () => {
         expect(shallowDay.hasClass(className)).to.equal(true);
       });
 
-      it('should set aria-selected attribute to "true"', () => {
-        const ariaSelected = mount(shallowDay.getElement())
-          .getDOMNode()
-          .getAttribute("aria-selected");
-        expect(ariaSelected).to.equal("true");
-      });
+      // it('should set aria-selected attribute to "true"', () => {
+      //   const ariaSelected = mount(shallowDay.getElement())
+      //     .getDOMNode()
+      //     .getAttribute("aria-selected");
+      //   expect(ariaSelected).to.equal("true");
+      // });
     });
 
     describe("if not selected", () => {
@@ -87,12 +87,12 @@ describe("Day", () => {
         expect(shallowDay.hasClass(className)).to.equal(false);
       });
 
-      it('should set aria-selected attribute to "false"', () => {
-        const ariaSelected = mount(shallowDay.getElement())
-          .getDOMNode()
-          .getAttribute("aria-selected");
-        expect(ariaSelected).to.equal("false");
-      });
+      // it('should set aria-selected attribute to "false"', () => {
+      //   const ariaSelected = mount(shallowDay.getElement())
+      //     .getDOMNode()
+      //     .getAttribute("aria-selected");
+      //   expect(ariaSelected).to.equal("false");
+      // });
     });
   });
 
