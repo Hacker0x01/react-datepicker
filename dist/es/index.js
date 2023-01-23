@@ -1637,7 +1637,6 @@ var Nt = re(
               role: "button",
               "aria-disabled": t.isDisabled(),
               "aria-current": t.isCurrentDay() ? "date" : void 0,
-              "aria-selected": t.isSelected(),
             },
             t.renderDayContents()
           );
