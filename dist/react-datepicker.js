@@ -1962,7 +1962,6 @@
                   role: "button",
                   "aria-disabled": e.isDisabled(),
                   "aria-current": e.isCurrentDay() ? "date" : void 0,
-                  "aria-selected": e.isSelected(),
                 },
                 e.renderDayContents()
               );

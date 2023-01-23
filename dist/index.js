@@ -13,8 +13,8 @@ var t = require("classnames"),
   l = require("date-fns/addMonths"),
   c = require("date-fns/addYears");
 require("date-fns/subMinutes"), require("date-fns/subHours");
-var d = require("date-fns/subDays"),
-  u = require("date-fns/subWeeks"),
+var u = require("date-fns/subDays"),
+  d = require("date-fns/subWeeks"),
   f = require("date-fns/subMonths"),
   h = require("date-fns/subYears"),
   m = require("date-fns/getSeconds"),
@@ -25,8 +25,8 @@ var d = require("date-fns/subDays"),
   g = require("date-fns/getISOWeek"),
   k = require("date-fns/getMonth"),
   b = require("date-fns/getQuarter"),
-  S = require("date-fns/getYear"),
-  C = require("date-fns/getTime"),
+  C = require("date-fns/getYear"),
+  S = require("date-fns/getTime"),
   _ = require("date-fns/setSeconds"),
   M = require("date-fns/setMinutes"),
   P = require("date-fns/setHours"),
@@ -71,26 +71,26 @@ var se = oe(e),
   pe = oe(r),
   le = oe(n),
   ce = oe(a),
-  de = oe(o),
-  ue = oe(s),
+  ue = oe(o),
+  de = oe(s),
   fe = oe(i),
   he = oe(p),
   me = oe(l),
   ye = oe(c),
-  ve = oe(d),
-  De = oe(u),
+  ve = oe(u),
+  De = oe(d),
   we = oe(f),
   ge = oe(h),
   ke = oe(m),
   be = oe(y),
-  Se = oe(v),
-  Ce = oe(D),
+  Ce = oe(v),
+  Se = oe(D),
   _e = oe(w),
   Me = oe(g),
   Pe = oe(k),
   Ee = oe(b),
-  Ne = oe(S),
-  xe = oe(C),
+  Ne = oe(C),
+  xe = oe(S),
   Oe = oe(_),
   Ye = oe(M),
   Ie = oe(P),
@@ -136,7 +136,7 @@ function ct(e, t) {
   }
   return r;
 }
-function dt(e) {
+function ut(e) {
   for (var t = 1; t < arguments.length; t++) {
     var r = null != arguments[t] ? arguments[t] : {};
     t % 2
@@ -151,8 +151,8 @@ function dt(e) {
   }
   return e;
 }
-function ut(e) {
-  return (ut =
+function dt(e) {
+  return (dt =
     "function" == typeof Symbol && "symbol" == typeof Symbol.iterator
       ? function (e) {
           return typeof e;
@@ -250,7 +250,7 @@ function bt(e, t) {
     );
   return kt(e);
 }
-function St(e) {
+function Ct(e) {
   var t = (function () {
     if ("undefined" == typeof Reflect || !Reflect.construct) return !1;
     if (Reflect.construct.sham) return !1;
@@ -276,7 +276,7 @@ function St(e) {
     return bt(this, r);
   };
 }
-function Ct(e) {
+function St(e) {
   return (
     (function (e) {
       if (Array.isArray(e)) return _t(e);
@@ -665,25 +665,25 @@ function lr(e) {
 }
 function cr(e, t) {
   return t.some(function (t) {
-    return Se.default(t) === Se.default(e) && be.default(t) === be.default(e);
+    return Ce.default(t) === Ce.default(e) && be.default(t) === be.default(e);
   });
 }
-function dr(e) {
+function ur(e) {
   var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {},
     r = t.excludeTimes,
     n = t.includeTimes,
     a = t.filterTime;
   return (r && cr(e, r)) || (n && !cr(e, n)) || (a && !a(e)) || !1;
 }
-function ur(e, t) {
+function dr(e, t) {
   var r = t.minTime,
     n = t.maxTime;
   if (!r || !n) throw new Error("Both minTime and maxTime props required");
   var a,
     o = Ot(),
-    s = Ie.default(Ye.default(o, be.default(e)), Se.default(e)),
-    i = Ie.default(Ye.default(o, be.default(r)), Se.default(r)),
-    p = Ie.default(Ye.default(o, be.default(n)), Se.default(n));
+    s = Ie.default(Ye.default(o, be.default(e)), Ce.default(e)),
+    i = Ie.default(Ye.default(o, be.default(r)), Ce.default(r)),
+    p = Ie.default(Ye.default(o, be.default(n)), Ce.default(n));
   try {
     a = !nt.default(s, { start: i, end: p });
   } catch (e) {
@@ -787,13 +787,13 @@ function wr() {
       var s = Tt(o, "MM.dd.yyyy"),
         i = r.get(s) || [];
       i.includes(t) || (i.push(t), r.set(s, i));
-    } else if ("object" === ut(o)) {
+    } else if ("object" === dt(o)) {
       var p = Object.keys(o),
         l = p[0],
         c = o[p[0]];
       if ("string" == typeof l && c.constructor === Array)
-        for (var d = 0, u = c.length; d < u; d++) {
-          var f = Tt(c[d], "MM.dd.yyyy"),
+        for (var u = 0, d = c.length; u < d; u++) {
+          var f = Tt(c[u], "MM.dd.yyyy"),
             h = r.get(f) || [];
           h.includes(l) || (h.push(l), r.set(f, h));
         }
@@ -803,8 +803,8 @@ function wr() {
 }
 function gr(e, t, r, n, a) {
   for (var o = a.length, s = [], i = 0; i < o; i++) {
-    var p = de.default(ue.default(e, Se.default(a[i])), be.default(a[i])),
-      l = de.default(e, (r + 1) * n);
+    var p = ue.default(de.default(e, Ce.default(a[i])), be.default(a[i])),
+      l = ue.default(e, (r + 1) * n);
     tt.default(p, t) && rt.default(p, l) && s.push(a[i]);
   }
   return s;
@@ -818,7 +818,7 @@ function br(e) {
     n = r - (t - 1);
   return { startPeriod: n, endPeriod: r };
 }
-function Sr(e, t, r, n) {
+function Cr(e, t, r, n) {
   for (var a = [], o = 0; o < 2 * t + 1; o++) {
     var s = e + t - o,
       i = !0;
@@ -828,9 +828,9 @@ function Sr(e, t, r, n) {
   }
   return a;
 }
-var Cr = (function (t) {
+var Sr = (function (t) {
     Dt(n, se["default"].Component);
-    var r = St(n);
+    var r = Ct(n);
     function n(t) {
       var a;
       ft(this, n),
@@ -923,7 +923,7 @@ var Cr = (function (t) {
         i = o || (s ? 10 : 5);
       return (
         (a.state = {
-          yearsList: Sr(a.props.year, i, a.props.minDate, a.props.maxDate),
+          yearsList: Cr(a.props.year, i, a.props.minDate, a.props.maxDate),
         }),
         (a.dropdownRef = e.createRef()),
         a
@@ -957,10 +957,10 @@ var Cr = (function (t) {
       n
     );
   })(),
-  _r = it.default(Cr),
+  _r = it.default(Sr),
   Mr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1088,7 +1088,7 @@ var Cr = (function (t) {
   })(),
   Pr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1153,7 +1153,7 @@ var Cr = (function (t) {
   Er = it.default(Pr),
   Nr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1271,7 +1271,7 @@ function xr(e, t) {
 }
 var Or = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -1338,7 +1338,7 @@ var Or = (function (e) {
   Yr = it.default(Or),
   Ir = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1465,7 +1465,7 @@ var Or = (function (e) {
   })(),
   Tr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1583,7 +1583,7 @@ var Or = (function (e) {
           return !(!n || !a) && $t(a, r);
         }),
         yt(kt(e), "isWeekend", function () {
-          var t = Ce.default(e.props.day);
+          var t = Se.default(e.props.day);
           return 0 === t || 6 === t;
         }),
         yt(kt(e), "isAfterMonth", function () {
@@ -1694,7 +1694,6 @@ var Or = (function (e) {
               role: "button",
               "aria-disabled": e.isDisabled(),
               "aria-current": e.isCurrentDay() ? "date" : void 0,
-              "aria-selected": e.isSelected(),
             },
             e.renderDayContents()
           );
@@ -1722,7 +1721,7 @@ var Or = (function (e) {
   })(),
   Lr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1769,7 +1768,7 @@ var Or = (function (e) {
   })(),
   Rr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1887,7 +1886,7 @@ var Or = (function (e) {
   })(),
   Fr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -1897,7 +1896,7 @@ var Or = (function (e) {
         yt(
           kt((e = t.call.apply(t, [this].concat(a)))),
           "MONTH_REFS",
-          Ct(Array(12)).map(function () {
+          St(Array(12)).map(function () {
             return se.default.createRef();
           })
         ),
@@ -2081,8 +2080,8 @@ var Or = (function (e) {
             p = r.maxDate,
             l = r.preSelection,
             c = r.monthClassName,
-            d = r.excludeDates,
-            u = r.includeDates,
+            u = r.excludeDates,
+            d = r.includeDates,
             f = c ? c(n) : void 0,
             h = Te.default(n, t);
           return ie.default(
@@ -2091,7 +2090,7 @@ var Or = (function (e) {
             f,
             {
               "react-datepicker__month--disabled":
-                (i || p || d || u) && ar(h, e.props),
+                (i || p || u || d) && ar(h, e.props),
               "react-datepicker__month--selected": e.isSelectedMonth(n, t, s),
               "react-datepicker__month-text--keyboard-selected":
                 !e.props.disabledKeyboardNavigation && Pe.default(l) === t,
@@ -2276,7 +2275,7 @@ var Or = (function (e) {
   })(),
   Ar = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       var e;
       ft(this, r);
@@ -2287,15 +2286,15 @@ var Or = (function (e) {
           height: null,
         }),
         yt(kt(e), "handleClick", function (t) {
-          ((e.props.minTime || e.props.maxTime) && ur(t, e.props)) ||
+          ((e.props.minTime || e.props.maxTime) && dr(t, e.props)) ||
             ((e.props.excludeTimes ||
               e.props.includeTimes ||
               e.props.filterTime) &&
-              dr(t, e.props)) ||
+              ur(t, e.props)) ||
             e.props.onChange(t);
         }),
         yt(kt(e), "isSelectedTime", function (t, r, n) {
-          return e.props.selected && r === Se.default(t) && n === be.default(t);
+          return e.props.selected && r === Ce.default(t) && n === be.default(t);
         }),
         yt(kt(e), "liClasses", function (t, r, n) {
           var a = [
@@ -2305,14 +2304,14 @@ var Or = (function (e) {
           return (
             e.isSelectedTime(t, r, n) &&
               a.push("react-datepicker__time-list-item--selected"),
-            (((e.props.minTime || e.props.maxTime) && ur(t, e.props)) ||
+            (((e.props.minTime || e.props.maxTime) && dr(t, e.props)) ||
               ((e.props.excludeTimes ||
                 e.props.includeTimes ||
                 e.props.filterTime) &&
-                dr(t, e.props))) &&
+                ur(t, e.props))) &&
               a.push("react-datepicker__time-list-item--disabled"),
             e.props.injectTimes &&
-              (60 * Se.default(t) + be.default(t)) % e.props.intervals != 0 &&
+              (60 * Ce.default(t) + be.default(t)) % e.props.intervals != 0 &&
               a.push("react-datepicker__time-list-item--injected"),
             a.join(" ")
           );
@@ -2335,16 +2334,16 @@ var Or = (function (e) {
                   return e - t;
                 }),
               i = e.props.selected || e.props.openToDate || Ot(),
-              p = Se.default(i),
+              p = Ce.default(i),
               l = be.default(i),
               c = Ie.default(Ye.default(a, l), p),
-              d = 0;
-            d < o;
-            d++
+              u = 0;
+            u < o;
+            u++
           ) {
-            var u = de.default(a, d * n);
-            if ((t.push(u), s)) {
-              var f = gr(a, u, d, n, s);
+            var d = ue.default(a, u * n);
+            if ((t.push(d), s)) {
+              var f = gr(a, d, u, n, s);
               t = t.concat(f);
             }
           }
@@ -2475,7 +2474,7 @@ yt(Ar, "calcCenterPosition", function (e, t) {
 });
 var qr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -2483,7 +2482,7 @@ var qr = (function (e) {
         yt(
           kt((n = t.call(this, e))),
           "YEAR_REFS",
-          Ct(Array(n.props.yearItemNumber)).map(function () {
+          St(Array(n.props.yearItemNumber)).map(function () {
             return se.default.createRef();
           })
         ),
@@ -2637,7 +2636,7 @@ var qr = (function (e) {
   })(),
   Br = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -2741,7 +2740,7 @@ var jr = [
   ],
   Wr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -2986,13 +2985,13 @@ var jr = [
                       ? s
                       : "Previous Month"
                     : l,
-                d = p.previousYearAriaLabel,
-                u =
-                  void 0 === d
+                u = p.previousYearAriaLabel,
+                d =
+                  void 0 === u
                     ? "string" == typeof i
                       ? i
                       : "Previous Year"
-                    : d;
+                    : u;
               return se.default.createElement(
                 "button",
                 {
@@ -3000,7 +2999,7 @@ var jr = [
                   className: t.join(" "),
                   onClick: r,
                   onKeyDown: n.props.handleOnKeyDown,
-                  "aria-label": a ? u : c,
+                  "aria-label": a ? d : c,
                 },
                 se.default.createElement(
                   "span",
@@ -3094,8 +3093,8 @@ var jr = [
                 l = p.nextMonthAriaLabel,
                 c =
                   void 0 === l ? ("string" == typeof s ? s : "Next Month") : l,
-                d = p.nextYearAriaLabel,
-                u = void 0 === d ? ("string" == typeof i ? i : "Next Year") : d;
+                u = p.nextYearAriaLabel,
+                d = void 0 === u ? ("string" == typeof i ? i : "Next Year") : u;
               return se.default.createElement(
                 "button",
                 {
@@ -3103,7 +3102,7 @@ var jr = [
                   className: t.join(" "),
                   onClick: r,
                   onKeyDown: n.props.handleOnKeyDown,
-                  "aria-label": a ? u : c,
+                  "aria-label": a ? d : c,
                 },
                 se.default.createElement(
                   "span",
@@ -3262,8 +3261,8 @@ var jr = [
               onFocus: n.props.onDropdownFocus,
             },
             n.props.renderCustomHeader(
-              dt(
-                dt({}, n.state),
+              ut(
+                ut({}, n.state),
                 {},
                 {
                   customHeaderCount: r,
@@ -3574,7 +3573,7 @@ var jr = [
   })(),
   Hr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -3621,7 +3620,7 @@ var jr = [
   },
   Vr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -3693,7 +3692,7 @@ var jr = [
   })(),
   Ur = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r() {
       return ft(this, r), t.apply(this, arguments);
     }
@@ -3715,8 +3714,8 @@ var jr = [
                 p = t.popperProps,
                 l = t.targetComponent,
                 c = t.enableTabLoop,
-                d = t.popperOnKeyDown,
-                u = t.portalId,
+                u = t.popperOnKeyDown,
+                d = t.portalId,
                 f = t.portalHost;
               if (!a) {
                 var h = ie.default("react-datepicker-popper", r);
@@ -3738,7 +3737,7 @@ var jr = [
                           style: r,
                           className: h,
                           "data-placement": n,
-                          onKeyDown: d,
+                          onKeyDown: u,
                         },
                         se.default.cloneElement(o, { arrowProps: a })
                       )
@@ -3752,11 +3751,11 @@ var jr = [
                   {},
                   e
                 )),
-                u &&
+                d &&
                   !a &&
                   (e = se.default.createElement(
                     Hr,
-                    { portalId: u, portalHost: f },
+                    { portalId: d, portalHost: f },
                     e
                   ));
               var m = ie.default("react-datepicker-wrapper", n);
@@ -3796,7 +3795,7 @@ var jr = [
   $r = it.default(Wr);
 var zr = (function (e) {
     Dt(r, se["default"].Component);
-    var t = St(r);
+    var t = Ct(r);
     function r(e) {
       var n;
       return (
@@ -3927,7 +3926,7 @@ var zr = (function (e) {
             n.props.showTimeSelectOnly &&
               !$t(o, n.props.selected) &&
               (o = lt.default(n.props.selected, {
-                hours: Se.default(o),
+                hours: Ce.default(o),
                 minutes: be.default(o),
                 seconds: ke.default(o),
               })),
@@ -3978,7 +3977,7 @@ var zr = (function (e) {
                       n.props.showTimeSelectOnly ||
                       n.props.showTimeInput)) ||
                   (o = Rt(o, {
-                    hour: Se.default(n.props.selected),
+                    hour: Ce.default(n.props.selected),
                     minute: be.default(n.props.selected),
                     second: ke.default(n.props.selected),
                   })),
@@ -3987,12 +3986,12 @@ var zr = (function (e) {
                   n.setState({ monthSelectedIn: a })),
               p)
             ) {
-              var d = l && !c,
-                u = l && c;
+              var u = l && !c,
+                d = l && c;
               !l && !c
                 ? i([o, null], t)
-                : d && (rt.default(o, l) ? i([o, null], t) : i([l, o], t)),
-                u && i([o, null], t);
+                : u && (rt.default(o, l) ? i([o, null], t) : i([l, o], t)),
+                d && i([o, null], t);
             } else i(o, t);
           r || (n.props.onSelect(o, t), n.setState({ inputValue: null }));
         }),
@@ -4016,7 +4015,7 @@ var zr = (function (e) {
         yt(kt(n), "handleTimeChange", function (e) {
           var t = Rt(
             n.props.selected ? n.props.selected : n.getPreSelection(),
-            { hour: Se.default(e), minute: be.default(e) }
+            { hour: Ce.default(e), minute: be.default(e) }
           );
           n.setState({ preSelection: t }),
             n.props.onChange(t),

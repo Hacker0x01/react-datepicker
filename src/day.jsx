@@ -350,7 +350,6 @@ export default class Day extends React.Component {
       role="button"
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
-      aria-selected={this.isSelected()}
     >
       {this.renderDayContents()}
     </div>
