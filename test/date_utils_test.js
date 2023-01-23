@@ -906,7 +906,7 @@ describe("date_utils", function () {
     });
 
     it("should parse date without strict parsing", () => {
-      const value = "01/15/20";
+      const value = "1/2/2020";
       const dateFormat = "MM/dd/yyyy";
 
       expect(parseDate(value, dateFormat, null, false)).to.not.be.null;
