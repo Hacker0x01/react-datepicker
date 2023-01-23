@@ -70,39 +70,24 @@ export function newDate(value) {
   return isValid(d) ? d : null;
 }
 
-export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
-  let parsedDate = null;
-  let localeObject =
+export function parseDate(value, dateFormat, locale, strictParsing, refDate) {
+  const localeObject =
     getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
-  let strictParsingValueMatch = true;
-  if (Array.isArray(dateFormat)) {
-    dateFormat.forEach((df) => {
-      let tryParseDate = parse(value, df, new Date(), {
-        locale: localeObject,
-      });
-      if (strictParsing) {
-        strictParsingValueMatch =
-          isValid(tryParseDate, minDate) &&
-          value === formatDate(tryParseDate, df, locale);
-      }
-      if (isValid(tryParseDate, minDate) && strictParsingValueMatch) {
-        parsedDate = tryParseDate;
-      }
-    });
-    return parsedDate;
+
+  const formats = Array.isArray(dateFormat) ? dateFormat : [dateFormat];
+  refDate = refDate || newDate();
+
+  for (let i = 0, len = formats.length; i < len; i++) {
+    const format = formats[i];
+    const parsedDate = parse(value, format, refDate, { locale: localeObject });
+    if (
+      isValid(parsedDate /* , minDate */) &&
+      (!strictParsing || value === formatDate(parsedDate, format, locale))
+    ) {
+      return parsedDate;
+    }
   }
-
-  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
-
-  if (strictParsing) {
-    strictParsingValueMatch =
-      isValid(parsedDate) &&
-      value === formatDate(parsedDate, dateFormat, locale);
-  } else if (!isValid(parsedDate)) {
-    parsedDate = new Date(value);
-  }
-
-  return isValid(parsedDate) && strictParsingValueMatch ? parsedDate : null;
+  return null;
 }
 
 // ** Date "Reflection" **
@@ -120,21 +105,15 @@ export function formatDate(date, formatStr, locale) {
   if (locale === "en") {
     return format(date, formatStr, { awareOfUnicodeTokens: true });
   }
-  let localeObj = getLocaleObject(locale);
+  const localeObj =
+    getLocaleObject(locale) || getLocaleObject(getDefaultLocale()) || null;
   if (locale && !localeObj) {
     console.warn(
       `A locale object was not found for the provided string ["${locale}"].`
     );
   }
-  if (
-    !localeObj &&
-    !!getDefaultLocale() &&
-    !!getLocaleObject(getDefaultLocale())
-  ) {
-    localeObj = getLocaleObject(getDefaultLocale());
-  }
   return format(date, formatStr, {
-    locale: localeObj ? localeObj : null,
+    locale: localeObj,
     awareOfUnicodeTokens: true,
   });
 }
