@@ -89,6 +89,7 @@ import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates";
 import CalendarStartDay from "../../examples/calendarStartDay";
+import ExternalForm from "../../examples/externalForm";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -455,6 +456,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "External Form",
+      component: ExternalForm,
     },
   ];
 
