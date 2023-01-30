@@ -1984,7 +1984,7 @@ describe("DatePicker", () => {
       expect(utils.getMinutes(date)).to.equal(22);
     });
   });
-  
+
   it("should selected month when specified minDate same month", () => {
     const selected = utils.newDate("2023-01-09");
     let date = null;

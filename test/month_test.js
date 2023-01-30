@@ -935,7 +935,7 @@ describe("Month", () => {
 
   describe("if keyboard navigation is disabled", () => {
     const renderMonth = (props) =>
-        mount(<Month showMonthYearPicker {...props} />);
+      mount(<Month showMonthYearPicker {...props} />);
 
     it("should not have the selected class", () => {
       let preSelected = utils.newDate("2015-08-01");
@@ -952,9 +952,9 @@ describe("Month", () => {
       });
 
       expect(
-          monthComponent
-              .find(".react-datepicker__month--selected")
-              .hasClass("react-datepicker__month-text--keyboard-selected")
+        monthComponent
+          .find(".react-datepicker__month--selected")
+          .hasClass("react-datepicker__month-text--keyboard-selected")
       ).to.equal(false);
     });
   });

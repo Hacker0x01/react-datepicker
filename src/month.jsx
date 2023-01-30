@@ -339,7 +339,9 @@ export default class Month extends React.Component {
       excludeDates,
       includeDates,
     } = this.props;
-    const _monthClassName = monthClassName ? monthClassName(day) : undefined;
+    const _monthClassName = monthClassName
+      ? monthClassName(utils.setMonth(day, m))
+      : undefined;
     const labelDate = utils.setMonth(day, m);
     return classnames(
       "react-datepicker__month-text",
@@ -355,7 +357,8 @@ export default class Month extends React.Component {
           selected
         ),
         "react-datepicker__month-text--keyboard-selected":
-            !this.props.disabledKeyboardNavigation && utils.getMonth(preSelection) === m,
+          !this.props.disabledKeyboardNavigation &&
+          utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,
