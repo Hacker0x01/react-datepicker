@@ -230,7 +230,8 @@ export default class Calendar extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.preSelection &&
-      !isSameDay(this.props.preSelection, prevProps.preSelection)
+      (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
+        this.props.monthSelectedIn !== prevProps.monthSelectedIn)
     ) {
       this.setState({
         date: this.props.preSelection,
