@@ -1741,4 +1741,74 @@ describe("Calendar", function () {
       expect(childrenContainer).to.have.length(0);
     });
   });
+
+  describe("should render aria live region after month/year change", () => {
+    it("should render aria live region after month change", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+      const calendar = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Calendar
+      )[0];
+      const nextNavigationButton = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__navigation--next"
+      );
+      nextNavigationButton.click();
+
+      const currentMonthText = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__current-month"
+      ).textContent;
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(currentMonthText).to.equal(ariaLiveMessage);
+    });
+
+    it("should render aria live region after year change", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker showYearDropdown selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+      const calendar = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Calendar
+      )[0];
+      const yearDropdown = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__year-read-view"
+      );
+      yearDropdown.click();
+
+      const option = TestUtils.scryRenderedDOMComponentsWithClass(
+        calendar,
+        "react-datepicker__year-option"
+      )[7];
+      option.click();
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(ariaLiveMessage).to.equal(
+        `${utils.getMonthInLocale(
+          utils.getMonth(calendar.state.date),
+          datePicker.props.locale
+        )} ${utils.getYear(calendar.state.date)}`
+      );
+    });
+  });
 });

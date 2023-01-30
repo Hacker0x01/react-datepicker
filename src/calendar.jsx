@@ -41,6 +41,7 @@ import {
   isValid,
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
+  getMonthInLocale,
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -210,6 +211,7 @@ export default class Calendar extends React.Component {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
+      isRenderAriaLiveMessage: false,
     };
   }
 
@@ -312,6 +314,7 @@ export default class Calendar extends React.Component {
   handleYearChange = (date) => {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -328,6 +331,7 @@ export default class Calendar extends React.Component {
   handleMonthChange = (date) => {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date);
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -984,6 +988,38 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderAriaLiveRegion = () => {
+    const { startPeriod, endPeriod } = getYearsPeriod(
+      this.state.date,
+      this.props.yearItemNumber
+    );
+    let ariaLiveMessage;
+
+    if (this.props.showYearPicker) {
+      ariaLiveMessage = `${startPeriod} - ${endPeriod}`;
+    } else if (
+      this.props.showMonthYearPicker ||
+      this.props.showQuarterYearPicker
+    ) {
+      ariaLiveMessage = getYear(this.state.date);
+    } else {
+      ariaLiveMessage = `${getMonthInLocale(
+        getMonth(this.state.date),
+        this.props.locale
+      )} ${getYear(this.state.date)}`;
+    }
+
+    return (
+      <span
+        role="alert"
+        aria-live="polite"
+        className="react-datepicker__aria-live"
+      >
+        {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
+      </span>
+    );
+  };
+
   renderChildren = () => {
     if (this.props.children) {
       return (
@@ -1005,6 +1041,7 @@ export default class Calendar extends React.Component {
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
         >
+          {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}
           {this.renderNextButton()}
           {this.renderMonths()}
