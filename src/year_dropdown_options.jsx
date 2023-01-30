@@ -55,9 +55,20 @@ export default class YearDropdownOptions extends React.Component {
 
   componentDidMount() {
     const dropdownCurrent = this.dropdownRef.current;
+
     if (dropdownCurrent) {
-      dropdownCurrent.scrollTop =
-        dropdownCurrent.scrollHeight / 2 - dropdownCurrent.clientHeight / 2;
+      // Get array from HTMLCollection
+      const dropdownCurrentChildren = dropdownCurrent.children
+        ? Array.from(dropdownCurrent.children)
+        : null;
+      const selectedYearOptionEl = dropdownCurrentChildren
+        ? dropdownCurrentChildren.find((childEl) => childEl.ariaSelected)
+        : null;
+
+      dropdownCurrent.scrollTop = selectedYearOptionEl
+        ? selectedYearOptionEl.offsetTop +
+          (selectedYearOptionEl.clientHeight - dropdownCurrent.clientHeight) / 2
+        : (dropdownCurrent.scrollHeight - dropdownCurrent.clientHeight) / 2;
     }
   }
 
