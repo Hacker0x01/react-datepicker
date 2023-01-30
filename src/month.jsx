@@ -74,6 +74,7 @@ export default class Month extends React.Component {
   };
 
   MONTH_REFS = [...Array(12)].map(() => React.createRef());
+  QUARTER_REFS = [...Array(4)].map(() => React.createRef());
 
   isDisabled = (date) => utils.isDayDisabled(date, this.props);
 
@@ -140,6 +141,10 @@ export default class Month extends React.Component {
   isCurrentMonth = (day, m) =>
     utils.getYear(day) === utils.getYear(utils.newDate()) &&
     m === utils.getMonth(utils.newDate());
+
+  isCurrentQuarter = (day, q) =>
+    utils.getYear(day) === utils.getYear(utils.newDate()) &&
+    q === utils.getQuarter(utils.newDate());
 
   isSelectedMonth = (day, m, selected) =>
     utils.getMonth(day) === m && utils.getYear(day) === utils.getYear(selected);
@@ -290,6 +295,37 @@ export default class Month extends React.Component {
     );
   };
 
+  handleQuarterNavigation = (newQuarter, newDate) => {
+    if (this.isDisabled(newDate) || this.isExcluded(newDate)) return;
+    this.props.setPreSelection(newDate);
+    this.QUARTER_REFS[newQuarter - 1].current &&
+      this.QUARTER_REFS[newQuarter - 1].current.focus();
+  };
+
+  onQuarterKeyDown = (event, quarter) => {
+    const eventKey = event.key;
+    if (!this.props.disabledKeyboardNavigation) {
+      switch (eventKey) {
+        case "Enter":
+          this.onQuarterClick(event, quarter);
+          this.props.setPreSelection(this.props.selected);
+          break;
+        case "ArrowRight":
+          this.handleQuarterNavigation(
+            quarter === 4 ? 1 : quarter + 1,
+            utils.addQuarters(this.props.preSelection, 1)
+          );
+          break;
+        case "ArrowLeft":
+          this.handleQuarterNavigation(
+            quarter === 1 ? 4 : quarter - 1,
+            utils.subQuarters(this.props.preSelection, 1)
+          );
+          break;
+      }
+    }
+  };
+
   getMonthClassNames = (m) => {
     const {
       day,
@@ -343,6 +379,16 @@ export default class Month extends React.Component {
     return tabIndex;
   };
 
+  getQuarterTabIndex = (q) => {
+    const preSelectedQuarter = utils.getQuarter(this.props.preSelection);
+    const tabIndex =
+      !this.props.disabledKeyboardNavigation && q === preSelectedQuarter
+        ? "0"
+        : "-1";
+
+    return tabIndex;
+  };
+
   getAriaLabel = (month) => {
     const {
       chooseDayAriaLabelPrefix = "Choose",
@@ -360,7 +406,15 @@ export default class Month extends React.Component {
   };
 
   getQuarterClassNames = (q) => {
-    const { day, startDate, endDate, selected, minDate, maxDate } = this.props;
+    const {
+      day,
+      startDate,
+      endDate,
+      selected,
+      minDate,
+      maxDate,
+      preSelection,
+    } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
@@ -373,6 +427,8 @@ export default class Month extends React.Component {
           q,
           selected
         ),
+        "react-datepicker__quarter-text--keyboard-selected":
+          utils.getQuarter(preSelection) === q,
         "react-datepicker__quarter--in-range": utils.isQuarterInRange(
           startDate,
           endDate,
@@ -454,12 +510,18 @@ export default class Month extends React.Component {
         {quarters.map((q, j) => (
           <div
             key={j}
+            ref={this.QUARTER_REFS[j]}
             role="option"
             onClick={(ev) => {
               this.onQuarterClick(ev, q);
             }}
+            onKeyDown={(ev) => {
+              this.onQuarterKeyDown(ev, q);
+            }}
             className={this.getQuarterClassNames(q)}
             aria-selected={this.isSelectedQuarter(day, q, selected)}
+            tabIndex={this.getQuarterTabIndex(q)}
+            aria-current={this.isCurrentQuarter(day, q) ? "date" : undefined}
           >
             {utils.getQuarterShortInLocale(q, this.props.locale)}
           </div>
