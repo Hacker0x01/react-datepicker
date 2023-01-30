@@ -1984,7 +1984,7 @@ describe("DatePicker", () => {
       expect(utils.getMinutes(date)).to.equal(22);
     });
   });
-
+  
   it("should selected month when specified minDate same month", () => {
     const selected = utils.newDate("2023-01-09");
     let date = null;
@@ -2039,5 +2039,57 @@ describe("DatePicker", () => {
       },
     });
     expect(date.toString()).to.equal(utils.newDate("2022-01-01").toString());
+  });
+
+  describe("should render aria live region after date selection", () => {
+    it("should have correct format if datepicker does not contain time", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(
+        ReactDOM.findDOMNode(dateInput),
+        getKey("Enter")
+      );
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(ariaLiveMessage).to.equal(
+        `Selected date: ${utils.safeDateFormat(datePicker.props.selected, {
+          dateFormat: "PPPP",
+          locale: datePicker.props.locale,
+        })}`
+      );
+    });
+
+    it("should have correct format if datepicker contains time", () => {
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker showTimeInput selected={utils.newDate()} />
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(
+        ReactDOM.findDOMNode(dateInput),
+        getKey("Enter")
+      );
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__aria-live"
+      ).textContent;
+
+      expect(ariaLiveMessage).to.equal(
+        `Selected date: ${utils.safeDateFormat(datePicker.props.selected, {
+          dateFormat: "PPPPp",
+          locale: datePicker.props.locale,
+        })}`
+      );
+    });
   });
 });
