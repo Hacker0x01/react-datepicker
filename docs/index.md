@@ -41,6 +41,7 @@
 | `fixedHeight`                | `bool`                         |                    |             |
 | `focusSelectedMonth`         | `bool`                         | `false`            |             |
 | `forceShowMonthNavigation`   | `bool`                         |                    |             |
+| `form`                       | `string`                       |                    |             |
 | `formatWeekDay`              | `func`                         |                    |             |
 | `formatWeekNumber`           | `func`                         |                    |             |
 | `highlightDates`             | `array`                        |                    |             |

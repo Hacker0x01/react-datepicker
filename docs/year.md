@@ -4,6 +4,9 @@
 | ---------------------------- | ---------------- | ------------- | ----------- |
 | `date`                       | `string`         |               |             |
 | `disabledKeyboardNavigation` | `bool`           |               |             |
+| `excludeDates`               | `array`          |               |             |
+| `filterDate`                 | `func`           |               |             |
+| `includeDates`               | `array`          |               |             |
 | `inline`                     | `bool`           |               |             |
 | `maxDate`                    | `instanceOfDate` |               |             |
 | `minDate`                    | `instanceOfDate` |               |             |

@@ -29,10 +29,12 @@ import LocaleWithTime from "../../examples/localeWithTime";
 import LocaleWithoutGlobalVariable from "../../examples/localeWithoutGlobalVariable";
 import ExcludeDates from "../../examples/excludeDates";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
+import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
 import IncludeDateIntervals from "../../examples/includeDateIntervals";
+import IncludeDatesMonthPicker from "../../examples/includeDatesMonthPicker";
 import FilterDates from "../../examples/filterDates";
 import DateRange from "../../examples/dateRange";
 import DateRangeInputWithClearButton from "../../examples/dateRangeInputWithClearButton";
@@ -87,6 +89,7 @@ import CloseOnScrollCallback from "../../examples/closeOnScrollCallback";
 import SelectsRange from "../../examples/selectsRange";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates";
 import CalendarStartDay from "../../examples/calendarStartDay";
+import ExternalForm from "../../examples/externalForm";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -231,6 +234,10 @@ export default class exampleComponents extends React.Component {
       component: ExcludeDateIntervals,
     },
     {
+      title: "Exclude Months in Month Picker",
+      component: ExcludeDatesMonthPicker,
+    },
+    {
       title: "Exclude Times",
       component: ExcludeTimes,
     },
@@ -265,6 +272,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Include date intervals",
       component: IncludeDateIntervals,
+    },
+    {
+      title: "Include Months in Month Picker",
+      component: IncludeDatesMonthPicker,
     },
     {
       title: "Include Times",
@@ -445,6 +456,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "External Form",
+      component: ExternalForm,
     },
   ];
 

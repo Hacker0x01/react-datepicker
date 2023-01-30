@@ -41,6 +41,7 @@ import {
   isValid,
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
+  getMonthInLocale,
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
@@ -210,6 +211,7 @@ export default class Calendar extends React.Component {
       date: this.getDateInView(),
       selectingDate: null,
       monthContainer: null,
+      isRenderAriaLiveMessage: false,
     };
   }
 
@@ -228,7 +230,8 @@ export default class Calendar extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.preSelection &&
-      !isSameDay(this.props.preSelection, prevProps.preSelection)
+      (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
+        this.props.monthSelectedIn !== prevProps.monthSelectedIn)
     ) {
       this.setState({
         date: this.props.preSelection,
@@ -311,6 +314,7 @@ export default class Calendar extends React.Component {
   handleYearChange = (date) => {
     if (this.props.onYearChange) {
       this.props.onYearChange(date);
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -327,6 +331,7 @@ export default class Calendar extends React.Component {
   handleMonthChange = (date) => {
     if (this.props.onMonthChange) {
       this.props.onMonthChange(date);
+      this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
       if (this.props.onSelect) {
@@ -691,6 +696,11 @@ export default class Calendar extends React.Component {
     );
   };
 
+  handleTodayButtonClick = (e) => {
+    this.props.onSelect(getStartOfToday(), e);
+    this.props.setPreSelection && this.props.setPreSelection(getStartOfToday());
+  };
+
   renderTodayButton = () => {
     if (!this.props.todayButton || this.props.showTimeSelectOnly) {
       return;
@@ -698,7 +708,7 @@ export default class Calendar extends React.Component {
     return (
       <div
         className="react-datepicker__today-button"
-        onClick={(e) => this.props.onSelect(getStartOfToday(), e)}
+        onClick={(e) => this.handleTodayButtonClick(e)}
       >
         {this.props.todayButton}
       </div>
@@ -978,6 +988,48 @@ export default class Calendar extends React.Component {
     }
   };
 
+  renderAriaLiveRegion = () => {
+    const { startPeriod, endPeriod } = getYearsPeriod(
+      this.state.date,
+      this.props.yearItemNumber
+    );
+    let ariaLiveMessage;
+
+    if (this.props.showYearPicker) {
+      ariaLiveMessage = `${startPeriod} - ${endPeriod}`;
+    } else if (
+      this.props.showMonthYearPicker ||
+      this.props.showQuarterYearPicker
+    ) {
+      ariaLiveMessage = getYear(this.state.date);
+    } else {
+      ariaLiveMessage = `${getMonthInLocale(
+        getMonth(this.state.date),
+        this.props.locale
+      )} ${getYear(this.state.date)}`;
+    }
+
+    return (
+      <span
+        role="alert"
+        aria-live="polite"
+        className="react-datepicker__aria-live"
+      >
+        {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
+      </span>
+    );
+  };
+
+  renderChildren = () => {
+    if (this.props.children) {
+      return (
+        <div className="react-datepicker__children-container">
+          {this.props.children}
+        </div>
+      );
+    }
+  };
+
   render() {
     const Container = this.props.container || CalendarContainer;
     return (
@@ -989,6 +1041,7 @@ export default class Calendar extends React.Component {
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
         >
+          {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}
           {this.renderNextButton()}
           {this.renderMonths()}
@@ -996,7 +1049,7 @@ export default class Calendar extends React.Component {
           {this.renderTodayButton()}
           {this.renderTimeSection()}
           {this.renderInputTimeSection()}
-          {this.props.children}
+          {this.renderChildren()}
         </Container>
       </div>
     );

@@ -40,7 +40,10 @@ import {
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
+  isMonthDisabled,
+  isYearDisabled,
 } from "./date_utils";
+import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
 
 export { default as CalendarContainer } from "./calendar_container";
@@ -168,6 +171,7 @@ export default class DatePicker extends React.Component {
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
+    form: PropTypes.string,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     id: PropTypes.string,
@@ -372,6 +376,7 @@ export default class DatePicker extends React.Component {
       // used to focus day in inline version after month has changed, but not on
       // initial render
       shouldFocusDayInline: false,
+      isRenderAriaLiveMessage: false,
     };
   };
 
@@ -490,6 +495,7 @@ export default class DatePicker extends React.Component {
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing,
+      this.props.selected,
       this.props.minDate
     );
     // Use date from `selected` prop when manipulating only time for input value
@@ -497,11 +503,19 @@ export default class DatePicker extends React.Component {
       this.props.showTimeSelectOnly &&
       !isSameDay(date, this.props.selected)
     ) {
-      date = set(this.props.selected, {
-        hours: getHours(date),
-        minutes: getMinutes(date),
-        seconds: getSeconds(date),
-      });
+      if (date == null) {
+        date = set(this.props.selected, {
+          hours: getHours(this.props.selected),
+          minutes: getMinutes(this.props.selected),
+          seconds: getSeconds(this.props.selected),
+        });
+      } else {
+        date = set(this.props.selected, {
+          hours: getHours(date),
+          minutes: getMinutes(date),
+          seconds: getSeconds(date),
+        });
+      }
     }
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
@@ -522,6 +536,7 @@ export default class DatePicker extends React.Component {
       this.props.onChangeRaw(event);
     }
     this.setSelected(date, event, false, monthSelectedIn);
+    this.setState({ isRenderAriaLiveMessage: true });
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
     } else if (!this.props.inline) {
@@ -538,9 +553,23 @@ export default class DatePicker extends React.Component {
   setSelected = (date, event, keepInput, monthSelectedIn) => {
     let changedDate = date;
 
-    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-      return;
+    if (this.props.showYearPicker) {
+      if (
+        changedDate !== null &&
+        isYearDisabled(getYear(changedDate), this.props)
+      ) {
+        return;
+      }
+    } else if (this.props.showMonthYearPicker) {
+      if (changedDate !== null && isMonthDisabled(changedDate, this.props)) {
+        return;
+      }
+    } else {
+      if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+        return;
+      }
     }
+
     const { onChange, selectsRange, startDate, endDate } = this.props;
 
     if (
@@ -651,6 +680,9 @@ export default class DatePicker extends React.Component {
     if (this.props.showTimeInput) {
       this.setOpen(true);
     }
+    if (this.props.showTimeSelectOnly || this.props.showTimeSelect) {
+      this.setState({ isRenderAriaLiveMessage: true });
+    }
     this.setState({ inputValue: null });
   };
 
@@ -709,13 +741,31 @@ export default class DatePicker extends React.Component {
         }
       } else if (eventKey === "Escape") {
         event.preventDefault();
-
         this.setOpen(false);
       }
 
       if (!this.inputOk()) {
         this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
       }
+    }
+  };
+
+  onPortalKeyDown = (event) => {
+    const eventKey = event.key;
+    if (eventKey === "Escape") {
+      event.preventDefault();
+      this.setState(
+        {
+          preventFocus: true,
+        },
+        () => {
+          this.setOpen(false);
+          setTimeout(() => {
+            this.setFocus();
+            this.setState({ preventFocus: false });
+          });
+        }
+      );
     }
   };
 
@@ -978,6 +1028,75 @@ export default class DatePicker extends React.Component {
     );
   };
 
+  renderAriaLiveRegion = () => {
+    const { dateFormat, locale } = this.props;
+    const isContainsTime =
+      this.props.showTimeInput || this.props.showTimeSelect;
+    const longDateFormat = isContainsTime ? "PPPPp" : "PPPP";
+    let ariaLiveMessage;
+
+    if (this.props.selectsRange) {
+      ariaLiveMessage = `Selected start date: ${safeDateFormat(
+        this.props.startDate,
+        {
+          dateFormat: longDateFormat,
+          locale,
+        }
+      )}. ${
+        this.props.endDate
+          ? "End date: " +
+            safeDateFormat(this.props.endDate, {
+              dateFormat: longDateFormat,
+              locale,
+            })
+          : ""
+      }`;
+    } else {
+      if (this.props.showTimeSelectOnly) {
+        ariaLiveMessage = `Selected time: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat, locale }
+        )}`;
+      } else if (this.props.showYearPicker) {
+        ariaLiveMessage = `Selected year: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat: "yyyy", locale }
+        )}`;
+      } else if (this.props.showMonthYearPicker) {
+        ariaLiveMessage = `Selected month: ${safeDateFormat(
+          this.props.selected,
+          { dateFormat: "MMMM yyyy", locale }
+        )}`;
+      } else if (this.props.showQuarterYearPicker) {
+        ariaLiveMessage = `Selected quarter: ${safeDateFormat(
+          this.props.selected,
+          {
+            dateFormat: "yyyy, QQQ",
+            locale,
+          }
+        )}`;
+      } else {
+        ariaLiveMessage = `Selected date: ${safeDateFormat(
+          this.props.selected,
+          {
+            dateFormat: longDateFormat,
+            locale,
+          }
+        )}`;
+      }
+    }
+
+    return (
+      <span
+        role="alert"
+        aria-live="polite"
+        className="react-datepicker__aria-live"
+      >
+        {this.state.isRenderAriaLiveMessage && ariaLiveMessage}
+      </span>
+    );
+  };
+
   renderDateInput = () => {
     const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open,
@@ -1010,6 +1129,7 @@ export default class DatePicker extends React.Component {
       onKeyDown: this.onInputKeyDown,
       id: this.props.id,
       name: this.props.name,
+      form: this.props.form,
       autoFocus: this.props.autoFocus,
       placeholder: this.props.placeholderText,
       disabled: this.props.disabled,
@@ -1058,6 +1178,7 @@ export default class DatePicker extends React.Component {
   renderInputContainer() {
     return (
       <div className="react-datepicker__input-container">
+        {this.renderAriaLiveRegion()}
         {this.renderDateInput()}
         {this.renderClearButton()}
       </div>
@@ -1071,7 +1192,15 @@ export default class DatePicker extends React.Component {
 
     if (this.props.withPortal) {
       let portalContainer = this.state.open ? (
-        <div className="react-datepicker__portal">{calendar}</div>
+        <TabLoop enableTabLoop={this.props.enableTabLoop}>
+          <div
+            className="react-datepicker__portal"
+            tabIndex={-1}
+            onKeyDown={this.onPortalKeyDown}
+          >
+            {calendar}
+          </div>
+        </TabLoop>
       ) : null;
 
       if (this.state.open && this.props.portalId) {

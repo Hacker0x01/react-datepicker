@@ -298,7 +298,7 @@
     border: 1px solid #aeaeae;
     border-radius: 0.3rem;
     position: absolute;
-    right: -72px;
+    right: -87px;
     top: 0;
   }
 
@@ -468,8 +468,8 @@
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: lighten($datepicker__selected-color, 5%);
-    color: #fff;
+    background-color: lighten($datepicker__selected-color, 45%);
+    color: rgb(0, 0, 0);
 
     &:hover {
       background-color: darken($datepicker__selected-color, 5%);
@@ -680,4 +680,24 @@
   .react-datepicker-time__header {
     font-size: $datepicker__font-size * 1.8;
   }
+}
+
+.react-datepicker__children-container {
+  width: 13.8rem;
+  margin: 0.4rem;
+  padding-right: 0.2rem;
+  padding-left: 0.2rem;
+  height: auto;
+}
+
+.react-datepicker__aria-live {
+  position: absolute;
+  clip-path: circle(0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+  white-space: nowrap;
 }
