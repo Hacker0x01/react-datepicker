@@ -300,23 +300,26 @@ export default class Month extends React.Component {
       maxDate,
       preSelection,
       monthClassName,
+      excludeDates,
+      includeDates,
     } = this.props;
     const _monthClassName = monthClassName ? monthClassName(day) : undefined;
+    const labelDate = utils.setMonth(day, m);
     return classnames(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       _monthClassName,
       {
         "react-datepicker__month--disabled":
-          (minDate || maxDate) &&
-          utils.isMonthDisabled(utils.setMonth(day, m), this.props),
+          (minDate || maxDate || excludeDates || includeDates) &&
+          utils.isMonthDisabled(labelDate, this.props),
         "react-datepicker__month--selected": this.isSelectedMonth(
           day,
           m,
           selected
         ),
         "react-datepicker__month-text--keyboard-selected":
-          utils.getMonth(preSelection) === m,
+            !this.props.disabledKeyboardNavigation && utils.getMonth(preSelection) === m,
         "react-datepicker__month--in-range": utils.isMonthinRange(
           startDate,
           endDate,

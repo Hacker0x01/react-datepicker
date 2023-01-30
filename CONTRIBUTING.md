@@ -24,7 +24,7 @@ Start reading our code, and you'll get the hang of it. We optimize for readabili
 
 Local development configuration is pretty snappy. Here's how to get set up:
 
-1. Install/use node >=11.10.1
+1. Install/use node >=16.0.0
 1. Run `yarn link` from project root
 1. Run `cd docs-site && yarn link react-datepicker`
 1. Run `yarn install` from project root
