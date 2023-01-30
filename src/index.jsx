@@ -40,6 +40,8 @@ import {
   getDefaultLocale,
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
+  isMonthDisabled,
+  isYearDisabled,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -169,6 +171,7 @@ export default class DatePicker extends React.Component {
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
+    form: PropTypes.string,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     id: PropTypes.string,
@@ -491,6 +494,7 @@ export default class DatePicker extends React.Component {
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing,
+      this.props.selected,
       this.props.minDate
     );
     // Use date from `selected` prop when manipulating only time for input value
@@ -539,9 +543,23 @@ export default class DatePicker extends React.Component {
   setSelected = (date, event, keepInput, monthSelectedIn) => {
     let changedDate = date;
 
-    if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-      return;
+    if (this.props.showYearPicker) {
+      if (
+        changedDate !== null &&
+        isYearDisabled(getYear(changedDate), this.props)
+      ) {
+        return;
+      }
+    } else if (this.props.showMonthYearPicker) {
+      if (changedDate !== null && isMonthDisabled(changedDate, this.props)) {
+        return;
+      }
+    } else {
+      if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+        return;
+      }
     }
+
     const { onChange, selectsRange, startDate, endDate } = this.props;
 
     if (
@@ -1029,6 +1047,7 @@ export default class DatePicker extends React.Component {
       onKeyDown: this.onInputKeyDown,
       id: this.props.id,
       name: this.props.name,
+      form: this.props.form,
       autoFocus: this.props.autoFocus,
       placeholder: this.props.placeholderText,
       disabled: this.props.disabled,

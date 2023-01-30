@@ -4,8 +4,6 @@
 [![Test suite](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml/badge.svg)](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/master/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](https://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
-[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/Hacker0x01/react-datepicker.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Hacker0x01/react-datepicker/context:javascript)
-[![Total Alerts](https://img.shields.io/lgtm/alerts/g/Hacker0x01/react-datepicker.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Hacker0x01/react-datepicker/alerts)
 
 A simple and reusable Datepicker component for React ([Demo](https://reactdatepicker.com/))
 
@@ -170,4 +168,4 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 
 ## License
 
-Copyright (c) 2014-2021 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
+Copyright (c) 2014-2023 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
