@@ -52,6 +52,7 @@
 | `injectTimes`                | `array`                        |                    |             |
 | `inline`                     | `bool`                         |                    |             |
 | `isClearable`                | `bool`                         |                    |             |
+| `showIcon`                   | `bool`                         |                    |             |
 | `locale`                     | `union(string\|shape)`         |                    |             |
 | `maxDate`                    | `instanceOfDate`               |                    |             |
 | `maxTime`                    | `instanceOfDate`               |                    |             |
