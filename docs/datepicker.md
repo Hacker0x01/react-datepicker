@@ -44,6 +44,7 @@ General datepicker component.
 | `injectTimes`                | `array`                        |                 |                                                                                               |
 | `inline`                     | `bool`                         |                 |                                                                                               |
 | `isClearable`                | `bool`                         |                 |                                                                                               |
+| `showIcon`                   | `bool`                         |                 |                                                                                               |
 | `locale`                     | `string`                       |                 |                                                                                               |
 | `maxDate`                    | `instanceOf(Date)`             |                 |                                                                                               |
 | `maxTime`                    | `instanceOf(Date)`             |                 |                                                                                               |
