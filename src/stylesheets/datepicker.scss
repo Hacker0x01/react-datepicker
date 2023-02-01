@@ -517,11 +517,13 @@
   position: relative;
   display: inline-block;
   width: 100%;
+
   .react-datepicker__calendar-icon {
     position: absolute;
     padding: 0.5rem;
   }
 }
+
 .react-datepicker__view-calendar-icon {
   input {
     padding: 6px 10px 5px 25px;
