@@ -10070,10 +10070,10 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-datepicker@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.9.0.tgz#e70cc7956e89e22d41dfdca06a6a8bf9676a0cc6"
-  integrity sha512-H2TphqnbFpBzbgcYN6B2lhiNt0us0OBdvMOuhmZMXvm7s1Cz7U5nYdORL7aCh7bc41ofPimf3ocg/uw2/xdRUA==
+react-datepicker@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.10.0.tgz#3f386ac5873dac5ea56544e51cdc01109938796c"
+  integrity sha512-6IfBCZyWj54ZZGLmEZJ9c4Yph0s9MVfEGDC2evOvf9AmVz+RRcfP2Czqad88Ff9wREbcbqa4dk7IFYeXF1d3Ag==
   dependencies:
     "@popperjs/core" "^2.9.2"
     classnames "^2.2.6"
