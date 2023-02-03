@@ -2092,4 +2092,37 @@ describe("DatePicker", () => {
       );
     });
   });
+
+  it("should not customize the className attribute if showIcon is set to false", () => {
+    let datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2021-04-15")} />
+    );
+    let showIconClass = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__input-container "
+    ).getAttribute("class");
+    expect(showIconClass).to.equal("react-datepicker__input-container ");
+  });
+
+  it("should display the Calendar icon if showIcon is set to true", () => {
+    let datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2021-04-15")} showIcon />
+    );
+    let showIconClass = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__input-container"
+    ).getAttribute("class");
+    expect(showIconClass).to.equal(
+      "react-datepicker__input-container react-datepicker__view-calendar-icon"
+    );
+
+    datePicker = TestUtils.renderIntoDocument(
+      <DatePicker selected={utils.newDate("2021-04-15")} showIcon />
+    );
+    showIconClass = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__calendar-icon"
+    ).getAttribute("class");
+    expect(showIconClass).to.equal("react-datepicker__calendar-icon");
+  });
 });
