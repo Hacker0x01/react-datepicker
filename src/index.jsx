@@ -119,7 +119,6 @@ export default class DatePicker extends React.Component {
       timeInputLabel: "Time",
       enableTabLoop: true,
       yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER,
-
       renderDayContents(date) {
         return date;
       },
@@ -128,6 +127,7 @@ export default class DatePicker extends React.Component {
       excludeScrollbar: true,
       customTimeInput: null,
       calendarStartDay: undefined,
+      styles: {},
     };
   }
 
@@ -292,6 +292,7 @@ export default class DatePicker extends React.Component {
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
     monthAriaLabelPrefix: PropTypes.string,
+    styles: PropTypes.object,
   };
 
   constructor(props) {
@@ -1144,6 +1145,7 @@ export default class DatePicker extends React.Component {
       "aria-invalid": this.props.ariaInvalid,
       "aria-labelledby": this.props.ariaLabelledBy,
       "aria-required": this.props.ariaRequired,
+      style: this.props.styles,
     });
   };
 
