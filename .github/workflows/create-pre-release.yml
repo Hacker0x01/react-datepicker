@@ -1,0 +1,67 @@
+name: Pre-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      # Comment this if you are not using monorepo
+      packages: 
+        description: 'Packages to release (comma-separated)'
+        required: true
+        default: '*'
+
+jobs:
+  pre-release:
+    name: Pre-release
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.CI_BOT_GH_TOKEN }} # Allows for deployments
+            
+      - name: Set git credentials
+        run: .github/common/setup-git.sh
+
+      - name: Set environment variables
+        run: .github/common/set-env-vars.sh
+        env:
+          PACKAGES: ${{ github.event.inputs.packages || '*' }}
+
+      - name: Setup Publication Repository
+        uses: actions/setup-node@v6
+        with:
+          node-version: '16.18.1'
+          registry-url: https://nexus.greatminds.dev/repository/npm/
+          cache: "npm"
+
+      - name: Install NPM Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Pre-release packages
+        if: env.REPO_TYPE == 'lerna'
+        run: .github/deploy/release-packages.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION_BUMP: ''
+          PACKAGES: ${{ github.event.inputs.packages || '*' }}
+          RELEASE_TYPE: 'prerelease'
+
+      - name: Pre-release lib
+        if: env.REPO_TYPE == 'lib'
+        run: .github/version/preid-tag.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION_BUMP: ''
+          PACKAGES: ${{ github.event.inputs.packages || '*' }}
+          RELEASE_TYPE: 'prerelease'
+          VERSION: ${{ env.VERSION }}
+      
+      - name: Upload tags
+        run: .github/deploy/publish-tags.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}

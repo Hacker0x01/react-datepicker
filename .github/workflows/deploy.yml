@@ -1,0 +1,97 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - v*
+      - '@greatminds**'
+
+jobs:
+  npm:
+    name: Publish NPM Artifacts
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.CI_BOT_GH_TOKEN }} # Allows for deployments
+
+      - name: Set Environment Variables
+        env:
+          ROOT: ${{ matrix.folder }}
+        run: .github/common/set-env-vars.sh
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '16.18.1'
+          registry-url: https://nexus.greatminds.dev/repository/npm/
+          cache: "npm"
+
+      - name: Install NPM Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Add prerelease version to package
+        if: env.DP_ENV != 'prod'
+        run: .github/version/bump-version.sh
+        env:
+          TARGET: ${{ env.VERSION }}
+
+      - name: Lerna Bootstrap (Lerna)
+        if: env.REPO_TYPE == 'lerna'
+        run: npm run bootstrap -- --scope "$PACKAGE" --force-local
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Project (Standard)
+        run: npm run build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Project (Lerna)
+        if: env.REPO_TYPE == 'lerna'
+        run: npm run build -- --scope "$PACKAGE"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Setup Publication Repository
+        uses: actions/setup-node@v6
+        with:
+          node-version: '16.18.1'
+          registry-url: https://nexus.greatminds.dev/repository/npm-private/
+          cache: "npm"
+
+      - name: Publish Package
+        working-directory: ${{ env.ROOT }}
+        run: npm publish --tag $PREID
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Create Release
+        env:
+          VERSION: ${{ env.VERSION }}
+          DP_ENV: ${{ env.DP_ENV }}
+          REPO_TYPE: ${{ env.REPO_TYPE }}
+          PACKAGE: ${{ env.PACKAGE }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.CI_BOT_GH_TOKEN }}
+          script: |
+            const { DP_ENV, VERSION, REPO_TYPE, PACKAGE } = process.env;
+            const tagName = `v${VERSION}`;
+            const releaseName = REPO_TYPE == 'lerna' ? `${PACKAGE} ${tagName}` : `${tagName}`;
+
+            await github
+              .rest
+              .repos
+              .createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tagName,
+                name: `${releaseName}`,
+                draft: false,
+                prerelease: false,
+              });
+

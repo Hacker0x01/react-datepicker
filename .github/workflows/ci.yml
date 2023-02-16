@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Environment Variables
+        run: .github/common/set-env-vars.sh
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '16.18.1'
+          registry-url: https://nexus.greatminds.dev/repository/npm/
+          cache: "npm"
+
+      - name: Install NPM Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Lerna Bootstrap
+        if: env.REPO_TYPE == 'lerna'
+        run: npm run bootstrap
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        timeout-minutes: 10 # Avoids open handles to run indefinitely
+        run: npm run test:ci:cov
+
+      - name: Publish Test Reports
+        run: .github/ci/publish-reports.sh
+        if: always()
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          BRANCH: ${{ github.head_ref }}

@@ -1,0 +1,119 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-bump:
+        type: choice
+        description: 'Select a new version'
+        options: 
+          - major
+          - minor
+          - patch
+        default: minor
+      # Comment this if you are not using monorepo
+      packages: 
+        description: 'Packages to release (comma-separated)'
+        required: true
+        default: '*'
+
+jobs:
+  define-jobs:
+    name: Define Jobs
+    outputs:
+      repo-type: ${{ steps.repo-type.outputs.result }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Environment Variables
+        run: .github/common/set-env-vars.sh
+
+      - name: Define Repo Type as a output
+        id: repo-type
+        run: echo "result=$REPO_TYPE" >> $GITHUB_OUTPUT;
+
+  update-main-lib:
+    needs: define-jobs
+    if: needs.define-jobs.outputs.repo-type == 'lib'
+    name: Update Main
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.CI_BOT_GH_TOKEN }} # Allows for deployments
+
+      - name: Set git credentials
+        run: .github/common/setup-git.sh
+
+      - name: Set environment variables
+        run: .github/common/set-env-vars.sh
+        env:
+          PACKAGES: ${{ github.event.inputs.packages || '*' }}
+
+      - name: Set target version
+        env:
+          TYPE: ${{ github.event.inputs.version-bump }}
+        run: echo "TARGET=$(npx semver -i "$TYPE" "$VERSION")" >> $GITHUB_ENV
+
+      - name: Bump main
+        run: .github/version/bump-version.sh
+        env:
+          VERSION_BUMP: ${{ github.event.inputs.version-bump }}
+
+      - name: Tag main
+        run: |
+          git commit -am "chore(bump): start $TARGET release"
+          git tag "v$TARGET"
+
+      - name: Update remotes 
+        run: git push && git push --tags # Triggers the deploy workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}
+
+  release:
+    needs: define-jobs
+    if: needs.define-jobs.outputs.repo-type == 'lerna'
+    name: Release
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.CI_BOT_GH_TOKEN }} # Allows for deployments
+
+      - name: Set git credentials
+        run: .github/common/setup-git.sh
+
+      - name: Set environment variables
+        run: .github/common/set-env-vars.sh
+
+      - name: Setup Publication Repository
+        uses: actions/setup-node@v6
+        with:
+          node-version: '16.18.1'
+          registry-url: https://nexus.greatminds.dev/repository/npm/
+          cache: "npm"
+
+      - name: Install NPM Dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Release packages
+        run: .github/deploy/release-packages.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}
+          VERSION_BUMP: ${{ github.event.inputs.version-bump }}
+          PACKAGES: ${{ github.event.inputs.packages || '*' }}
+          RELEASE_TYPE: 'release'
+
+      - name: Update remotes 
+        run: | 
+          git push
+          .github/deploy/publish-tags.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_BOT_GH_TOKEN }}
