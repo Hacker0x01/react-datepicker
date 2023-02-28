@@ -2044,7 +2044,7 @@ describe("DatePicker", () => {
   describe("should render aria live region after date selection", () => {
     it("should have correct format if datepicker does not contain time", () => {
       const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker selected={utils.newDate()} />
+        <DatePicker showDateSelect selected={utils.newDate()} />
       );
       const dateInput = datePicker.input;
 
@@ -2069,7 +2069,7 @@ describe("DatePicker", () => {
 
     it("should have correct format if datepicker contains time", () => {
       const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker showTimeInput selected={utils.newDate()} />
+        <DatePicker showTimeInput showDateSelect selected={utils.newDate()} />
       );
       const dateInput = datePicker.input;
 
