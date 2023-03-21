@@ -218,7 +218,9 @@ describe("Month", () => {
       />
     );
     const month = monthComponent.find(".react-datepicker__month-text").at(0);
-    expect(month.hasClass("react-datepicker__month--disabled")).to.equal(true);
+    expect(month.hasClass("react-datepicker__month-text--disabled")).to.equal(
+      true
+    );
   });
 
   it("should not return disabled class if current date is before minDate but same month", () => {
@@ -230,9 +232,9 @@ describe("Month", () => {
       />
     );
     const month = monthComponent.find(".react-datepicker__month-text").at(0);
-    expect(month.hasClass("react-datepicker__month--disabled")).to.not.equal(
-      true
-    );
+    expect(
+      month.hasClass("react-datepicker__month-text--disabled")
+    ).to.not.equal(true);
   });
 
   it("should not return disabled class if current date is after maxDate but same month", () => {
@@ -244,9 +246,9 @@ describe("Month", () => {
       />
     );
     const month = monthComponent.find(".react-datepicker__month-text").at(0);
-    expect(month.hasClass("react-datepicker__month--disabled")).to.not.equal(
-      true
-    );
+    expect(
+      month.hasClass("react-datepicker__month-text--disabled")
+    ).to.not.equal(true);
   });
 
   it("should return disabled class if specified excludeDate", () => {
@@ -267,7 +269,7 @@ describe("Month", () => {
 
     [(1, 3, 6, 9)].forEach((i) => {
       const month = monthTexts.at(i);
-      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+      expect(month.hasClass("react-datepicker__month-text--disabled")).to.equal(
         true
       );
     });
@@ -291,13 +293,13 @@ describe("Month", () => {
     const monthTexts = monthComponent.find(".react-datepicker__month-text");
     for (let i = 0; i < 6; i++) {
       const month = monthTexts.at(i);
-      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+      expect(month.hasClass("react-datepicker__month-text--disabled")).to.equal(
         false
       );
     }
     for (let i = 6; i < 12; i++) {
       const month = monthTexts.at(i);
-      expect(month.hasClass("react-datepicker__month--disabled")).to.equal(
+      expect(month.hasClass("react-datepicker__month-text--disabled")).to.equal(
         true
       );
     }
@@ -312,6 +314,121 @@ describe("Month", () => {
       />
     );
     return runAxe(monthComponent.getDOMNode());
+  });
+
+  describe("selecting range", () => {
+    it("should add in-selecting-range class if month is between the selecting date and end date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          endDate={utils.newDate("2015-03-01")}
+          selectingDate={utils.newDate("2015-02-01")}
+          selectsStart
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+      expect(months.length).to.equal(2);
+      expect(months.at(0).text()).to.eq("Feb");
+      expect(months.at(1).text()).to.eq("Mar");
+    });
+
+    it("should add in-selecting-range class if month is between the start date and selecting date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-02-01")}
+          selectingDate={utils.newDate("2015-03-01")}
+          selectsEnd
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+
+      expect(months.length).to.equal(2);
+      expect(months.at(0).text()).to.eq("Feb");
+      expect(months.at(1).text()).to.eq("Mar");
+    });
+
+    it("should use pre selection date if selecting date is not defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-03-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-02-01")}
+          selectsEnd
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+
+      expect(months.length).to.equal(2);
+      expect(months.at(0).text()).to.eq("Feb");
+      expect(months.at(1).text()).to.eq("Mar");
+    });
+
+    it("should add in-selecting-range class for one month picker if month is between the start date and selecting date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-02-01")}
+          selectingDate={utils.newDate("2015-03-01")}
+          selectsRange
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+
+      expect(months.length).to.equal(2);
+      expect(months.at(0).text()).to.eq("Feb");
+      expect(months.at(1).text()).to.eq("Mar");
+    });
+
+    it("should not add in-selecting-range class for one month picker if the start date is not defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          selectingDate={utils.newDate("2015-03-01")}
+          selectsRange
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+
+      expect(months.length).to.equal(0);
+    });
+
+    it("should not add in-selecting-range class for one month picker if the end date is defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          selectingDate={utils.newDate("2015-03-01")}
+          endDate={utils.newDate("2015-03-01")}
+          selectsRange
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--in-selecting-range"
+      );
+
+      expect(months.length).to.equal(0);
+    });
   });
 
   describe("if month is selected", () => {
@@ -331,7 +448,7 @@ describe("Month", () => {
     });
 
     it("should return selected class", () => {
-      expect(month.hasClass("react-datepicker__month--selected")).to.equal(
+      expect(month.hasClass("react-datepicker__month-text--selected")).to.equal(
         true
       );
     });
@@ -359,7 +476,7 @@ describe("Month", () => {
     });
 
     it("should not have the selected class", () => {
-      expect(month.hasClass("react-datepicker__month--selected")).to.equal(
+      expect(month.hasClass("react-datepicker__month-text--selected")).to.equal(
         false
       );
     });
@@ -380,8 +497,8 @@ describe("Month", () => {
         showMonthYearPicker
       />
     );
-    const quarter = monthComponent.find(".react-datepicker__month-text").at(2);
-    expect(quarter.hasClass("react-datepicker__month--in-range")).to.equal(
+    const month = monthComponent.find(".react-datepicker__month-text").at(2);
+    expect(month.hasClass("react-datepicker__month-text--in-range")).to.equal(
       true
     );
   });
@@ -469,9 +586,9 @@ describe("Month", () => {
     const quarter = monthComponent
       .find(".react-datepicker__quarter-text")
       .at(0);
-    expect(quarter.hasClass("react-datepicker__quarter--disabled")).to.equal(
-      true
-    );
+    expect(
+      quarter.hasClass("react-datepicker__quarter-text--disabled")
+    ).to.equal(true);
   });
 
   describe("if quarter is selected", () => {
@@ -491,9 +608,9 @@ describe("Month", () => {
     });
 
     it("should return selected class", () => {
-      expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
-        true
-      );
+      expect(
+        quarter.hasClass("react-datepicker__quarter-text--selected")
+      ).to.equal(true);
     });
 
     it('should set aria-selected attribute to "true"', () => {
@@ -521,9 +638,9 @@ describe("Month", () => {
     });
 
     it("should not return selected class", () => {
-      expect(quarter.hasClass("react-datepicker__quarter--selected")).to.equal(
-        false
-      );
+      expect(
+        quarter.hasClass("react-datepicker__quarter-text--selected")
+      ).to.equal(false);
     });
 
     it('should set aria-selected attribute to "false"', () => {
@@ -545,9 +662,9 @@ describe("Month", () => {
     const quarter = monthComponent
       .find(".react-datepicker__quarter-text")
       .at(2);
-    expect(quarter.hasClass("react-datepicker__quarter--in-range")).to.equal(
-      true
-    );
+    expect(
+      quarter.hasClass("react-datepicker__quarter-text--in-range")
+    ).to.equal(true);
   });
 
   it("should enable keyboard focus on the preselected component", () => {
@@ -953,7 +1070,7 @@ describe("Month", () => {
 
       expect(
         monthComponent
-          .find(".react-datepicker__month--selected")
+          .find(".react-datepicker__month-text--selected")
           .hasClass("react-datepicker__month-text--keyboard-selected")
       ).to.equal(false);
     });
