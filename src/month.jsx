@@ -155,6 +155,31 @@ export default class Month extends React.Component {
     return false;
   };
 
+  isInSelectingRangeQuarter = (q) => {
+    const { day, selectsStart, selectsEnd, selectsRange, startDate, endDate } =
+      this.props;
+
+    const selectingDate = this.props.selectingDate ?? this.props.preSelection;
+
+    if (!(selectsStart || selectsEnd || selectsRange) || !selectingDate) {
+      return false;
+    }
+
+    if (selectsStart && endDate) {
+      return utils.isQuarterInRange(selectingDate, endDate, q, day);
+    }
+
+    if (selectsEnd && startDate) {
+      return utils.isQuarterInRange(startDate, selectingDate, q, day);
+    }
+
+    if (selectsRange && startDate && !endDate) {
+      return utils.isQuarterInRange(startDate, selectingDate, q, day);
+    }
+
+    return false;
+  };
+
   isWeekInMonth = (startOfWeek) => {
     const day = this.props.day;
     const endOfWeek = utils.addDays(startOfWeek, 6);
@@ -326,6 +351,12 @@ export default class Month extends React.Component {
     );
   };
 
+  onQuarterMouseEnter = (q) => {
+    this.handleDayMouseEnter(
+      utils.getStartOfQuarter(utils.setQuarter(this.props.day, q))
+    );
+  };
+
   handleQuarterNavigation = (newQuarter, newDate) => {
     if (this.isDisabled(newDate) || this.isExcluded(newDate)) return;
     this.props.setPreSelection(newDate);
@@ -465,6 +496,8 @@ export default class Month extends React.Component {
         ),
         "react-datepicker__quarter-text--keyboard-selected":
           utils.getQuarter(preSelection) === q,
+        "react-datepicker__quarter-text--in-selecting-range":
+          this.isInSelectingRangeQuarter(q),
         "react-datepicker__quarter-text--in-range": utils.isQuarterInRange(
           startDate,
           endDate,
@@ -556,6 +589,7 @@ export default class Month extends React.Component {
             onKeyDown={(ev) => {
               this.onQuarterKeyDown(ev, q);
             }}
+            onMouseEnter={() => this.onQuarterMouseEnter(q)}
             className={this.getQuarterClassNames(q)}
             aria-selected={this.isSelectedQuarter(day, q, selected)}
             tabIndex={this.getQuarterTabIndex(q)}

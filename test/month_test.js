@@ -316,7 +316,7 @@ describe("Month", () => {
     return runAxe(monthComponent.getDOMNode());
   });
 
-  describe("selecting range", () => {
+  describe("selecting month range", () => {
     it("should add in-selecting-range class if month is between the selecting date and end date", () => {
       const monthComponent = mount(
         <Month
@@ -428,6 +428,123 @@ describe("Month", () => {
       );
 
       expect(months.length).to.equal(0);
+    });
+  });
+
+  describe("selecting quarter range", () => {
+    it("should add in-selecting-range class if quarter is between the selecting date and end date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          endDate={utils.newDate("2015-07-01")}
+          selectingDate={utils.newDate("2015-04-01")}
+          selectsStart
+          showQuarterYearPicker
+        />
+      );
+
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(2);
+      expect(quarters.at(0).text()).to.eq("Q2");
+      expect(quarters.at(1).text()).to.eq("Q3");
+    });
+
+    it("should add in-selecting-range class if quarter is between the start date and selecting date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-04-01")}
+          selectingDate={utils.newDate("2015-07-01")}
+          selectsEnd
+          showQuarterYearPicker
+        />
+      );
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(2);
+      expect(quarters.at(0).text()).to.eq("Q2");
+      expect(quarters.at(1).text()).to.eq("Q3");
+    });
+
+    it("should use pre selection date if selecting date is not defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-07-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-04-01")}
+          selectsEnd
+          showQuarterYearPicker
+        />
+      );
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(2);
+      expect(quarters.at(0).text()).to.eq("Q2");
+      expect(quarters.at(1).text()).to.eq("Q3");
+    });
+
+    it("should add in-selecting-range class for one quarter picker if quarter is between the start date and selecting date", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-04-01")}
+          selectingDate={utils.newDate("2015-07-01")}
+          selectsRange
+          showQuarterYearPicker
+        />
+      );
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(2);
+      expect(quarters.at(0).text()).to.eq("Q2");
+      expect(quarters.at(1).text()).to.eq("Q3");
+    });
+
+    it("should not add in-selecting-range class for one quarter picker if the start date is not defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          selectingDate={utils.newDate("2015-04-01")}
+          selectsRange
+          showQuarterYearPicker
+        />
+      );
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(0);
+    });
+
+    it("should not add in-selecting-range class for one quarter picker if the end date is defined", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          selectingDate={utils.newDate("2015-04-01")}
+          endDate={utils.newDate("2015-07-01")}
+          selectsRange
+          showQuarterYearPicker
+        />
+      );
+      const quarters = monthComponent.find(
+        ".react-datepicker__quarter-text--in-selecting-range"
+      );
+
+      expect(quarters.length).to.equal(0);
     });
   });
 
