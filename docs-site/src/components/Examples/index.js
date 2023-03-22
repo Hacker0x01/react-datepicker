@@ -80,6 +80,7 @@ import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
 import RangeMonthPicker from "../../examples/rangeMonthPicker";
+import RangeMonthPickerSelectsRange from "../../examples/rangeMonthPickerSelectsRange";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
@@ -401,6 +402,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Range Month Picker",
       component: RangeMonthPicker,
+    },
+    {
+      title: "Range Month Picker for one month picker",
+      component: RangeMonthPickerSelectsRange,
     },
     {
       title: "Range Quarter Picker",
