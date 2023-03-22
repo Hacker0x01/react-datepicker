@@ -83,6 +83,7 @@ import RangeMonthPicker from "../../examples/rangeMonthPicker";
 import RangeMonthPickerSelectsRange from "../../examples/rangeMonthPickerSelectsRange";
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
+import RangeQuarterPickerSelectsRange from "../../examples/rangeQuarterPickerSelectsRange";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
@@ -410,6 +411,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Range Quarter Picker",
       component: RangeQuarterPicker,
+    },
+    {
+      title: "Range Quarter Picker for one quarter picker",
+      component: RangeQuarterPickerSelectsRange,
     },
     {
       title: "Read only datepicker",
