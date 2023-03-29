@@ -507,9 +507,9 @@ describe("DatePicker", () => {
       />
     );
 
-    TestUtils.Simulate.change(datePicker.input, {
-      target: { value: "01/02/2014" },
-    });
+    var input = ReactDOM.findDOMNode(datePicker.input);
+    input.value = utils.newDate("2014-01-02");
+    TestUtils.Simulate.change(input);
 
     expect(utils.getHours(date)).to.equal(10);
     expect(utils.getMinutes(date)).to.equal(11);
@@ -880,7 +880,7 @@ describe("DatePicker", () => {
       datePicker = TestUtils.renderIntoDocument(
         <DatePicker
           selected={new Date("1993-07-02")}
-          minDate={new Date("1800-01-01")}
+          minDate={new Date("1800/01/01")}
           open
         />
       );
@@ -889,11 +889,11 @@ describe("DatePicker", () => {
     it("should auto update calendar when the updated date text is after props.minDate", () => {
       TestUtils.Simulate.change(datePicker.input, {
         target: {
-          value: "01/01/1801",
+          value: "1801/01/01",
         },
       });
 
-      expect(datePicker.input.value).to.equal("01/01/1801");
+      expect(datePicker.input.value).to.equal("1801/01/01");
       expect(
         datePicker.calendar.componentNode.querySelector(
           ".react-datepicker__current-month"
@@ -965,7 +965,7 @@ describe("DatePicker", () => {
     it("should update the selected date on manual input", () => {
       var data = getOnInputKeyDownStuff();
       TestUtils.Simulate.change(data.nodeInput, {
-        target: { value: "2017-02-02" },
+        target: { value: "02/02/2017" },
       });
       TestUtils.Simulate.keyDown(data.nodeInput, getKey("Enter"));
       data.copyM = utils.newDate("2017-02-02");
