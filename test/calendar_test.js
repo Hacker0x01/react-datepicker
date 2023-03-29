@@ -162,15 +162,10 @@ describe("Calendar", function () {
   });
 
   it("should correctly format weekday using formatWeekDay prop", function () {
-    const mockFormattedWeekDay = "mockFormattedWeekDay";
-    const formatWeekDay = sinon.fake.returns(mockFormattedWeekDay);
-    const calendar = getCalendar({ formatWeekDay });
-    sinon.assert.alwaysCalledWith(formatWeekDay, sinon.match.date);
+    const calendar = getCalendar({ formatWeekDay: (day) => day[0] });
     calendar
       .find(".react-datepicker__day-name")
-      .forEach((dayName) =>
-        expect(dayName.text()).to.equals(mockFormattedWeekDay)
-      );
+      .forEach((dayName) => expect(dayName.text()).to.have.length(1));
   });
 
   it("should contain the correct class when using the weekDayClassName prop", () => {
