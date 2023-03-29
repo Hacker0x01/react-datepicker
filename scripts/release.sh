@@ -2,6 +2,10 @@
 
 set -e
 
+git checkout master
+
+git pull
+
 rm -rf ./node_modules ./lib ./dist
 yarn
 
