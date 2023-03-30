@@ -102,3 +102,6 @@ General datepicker component.
 |                              |
 | `yearItemNumber`             | `number`                       | `12`            |                                                                                               |
 | `yearDropdownItemNumber`     | `number`                       |                 |                                                                                               |
+| `renderDayContents`   |      |`func`                          |                 | This prop is used to customize the contents of a day cell
+
+| `renderCustomHeader`  |      |`func`                          |                 | This prop allows you to customize the header of the datepicker
