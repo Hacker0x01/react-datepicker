@@ -1014,6 +1014,22 @@ describe("date_utils", () => {
       expect(actual).toEqual(expected);
     });
 
+    it("should parse date based on locale w/o strict", () => {
+      const valuePt = "26. fev 1995";
+      const valueEn = "26. feb 1995";
+
+      const locale = "pt-BR";
+      const dateFormat = "d. MMM yyyy";
+
+      const expected = new Date(1995, 1, 26);
+
+      expect(parseDate(valuePt, dateFormat, locale, false)).toEqual(expected);
+      expect(parseDate(valueEn, dateFormat, undefined, false)).toEqual(
+        expected,
+      );
+      expect(parseDate(valueEn, dateFormat, locale, false)).toBeNull();
+    });
+
     it("should not parse date based on locale without a given locale", () => {
       const value = "26/05/1995";
       const dateFormat = "P";
