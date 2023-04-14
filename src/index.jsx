@@ -42,6 +42,7 @@ import {
   isSameDay,
   isMonthDisabled,
   isYearDisabled,
+  safeMultipleDatesFormat,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -223,6 +224,8 @@ export default class DatePicker extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -570,12 +573,20 @@ export default class DatePicker extends React.Component {
       }
     }
 
-    const { onChange, selectsRange, startDate, endDate } = this.props;
+    const {
+      onChange,
+      selectsRange,
+      startDate,
+      endDate,
+      selectsMultiple,
+      selectedDates,
+    } = this.props;
 
     if (
       !isEqual(this.props.selected, changedDate) ||
       this.props.allowSameDay ||
-      selectsRange
+      selectsRange ||
+      selectsMultiple
     ) {
       if (changedDate !== null) {
         if (
@@ -615,6 +626,26 @@ export default class DatePicker extends React.Component {
         }
         if (isRangeFilled) {
           onChange([changedDate, null], event);
+        }
+      } else if (selectsMultiple) {
+        const noSelectedDates = !selectedDates || selectedDates.length === 0;
+
+        if (noSelectedDates) {
+          onChange([changedDate], event);
+        } else {
+          const isChangedDateAlreadySelected = selectedDates.some(
+            (selectedDate) => isSameDay(selectedDate, changedDate)
+          );
+
+          if (isChangedDateAlreadySelected) {
+            const nextDates = selectedDates.filter(
+              (selectedDate) => !isSameDay(selectedDate, changedDate)
+            );
+
+            onChange(nextDates, event);
+          } else {
+            onChange([...selectedDates, changedDate], event);
+          }
         }
       } else {
         onChange(changedDate, event);
@@ -939,6 +970,8 @@ export default class DatePicker extends React.Component {
         selectsStart={this.props.selectsStart}
         selectsEnd={this.props.selectsEnd}
         selectsRange={this.props.selectsRange}
+        selectsMultiple={this.props.selectsMultiple}
+        selectedDates={this.props.selectedDates}
         startDate={this.props.startDate}
         endDate={this.props.endDate}
         excludeDates={this.props.excludeDates}
@@ -1115,6 +1148,8 @@ export default class DatePicker extends React.Component {
             this.props.endDate,
             this.props
           )
+        : this.props.selectsMultiple
+        ? safeMultipleDatesFormat(this.props.selectedDates, this.props)
         : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {

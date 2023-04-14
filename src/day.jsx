@@ -38,6 +38,8 @@ export default class Day extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -87,10 +89,22 @@ export default class Day extends React.Component {
 
   isSameDay = (other) => isSameDay(this.props.day, other);
 
-  isKeyboardSelected = () =>
-    !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+  isKeyboardSelected = () => {
+    if (this.props.disabledKeyboardNavigation) {
+      return false;
+    }
+    if (this.props.selectsMultiple) {
+      const isSelectedDate = (this.props.selectedDates || []).some((date) =>
+        this.isSameDay(date)
+      );
+      return !isSelectedDate && this.isSameDay(this.props.preSelection);
+    } else {
+      return (
+        !this.isSameDay(this.props.selected) &&
+        this.isSameDay(this.props.preSelection)
+      );
+    }
+  };
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
@@ -232,7 +246,12 @@ export default class Day extends React.Component {
 
   isCurrentDay = () => this.isSameDay(newDate());
 
-  isSelected = () => this.isSameDay(this.props.selected);
+  isSelected = () => {
+    if (this.props.selectsMultiple && this.props.selectedDates) {
+      return this.props.selectedDates.some((date) => this.isSameDay(date));
+    }
+    return this.isSameDay(this.props.selected);
+  };
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
