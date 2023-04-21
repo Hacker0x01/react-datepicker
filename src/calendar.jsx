@@ -706,11 +706,13 @@ export default class Calendar extends React.Component {
       return;
     }
     return (
-      <div
-        className="react-datepicker__today-button"
-        onClick={(e) => this.handleTodayButtonClick(e)}
-      >
-        {this.props.todayButton}
+      <div className="react-datepicker__today-button">
+        <button
+          className="react-datepicker__today-button-trigger"
+          onClick={(e) => this.handleTodayButtonClick(e)}
+        >
+          {this.props.todayButton}
+        </button>
       </div>
     );
   };

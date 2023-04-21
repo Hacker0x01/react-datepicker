@@ -652,11 +652,18 @@
 .react-datepicker__today-button {
   background: $datepicker__background-color;
   border-top: 1px solid $datepicker__border-color;
-  cursor: pointer;
-  text-align: center;
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
   padding: 5px 0;
   clear: left;
+
+  .react-datepicker__today-button-trigger {
+    font-size: $datepicker__font-size;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: bold;
+  }
 }
 
 .react-datepicker__portal {

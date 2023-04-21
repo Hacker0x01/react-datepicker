@@ -336,7 +336,7 @@ describe("DatePicker", () => {
     TestUtils.Simulate.click(anyOtherDay); // will update the preSelection to next or previous day
 
     var todayBtn = datePicker.calendar.componentNode.querySelector(
-      ".react-datepicker__today-button"
+      ".react-datepicker__today-button-trigger"
     );
     TestUtils.Simulate.click(todayBtn); // will update the preSelection
 
