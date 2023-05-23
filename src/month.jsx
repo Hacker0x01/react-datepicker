@@ -6,6 +6,52 @@ import * as utils from "./date_utils";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
+const MONTH_COLUMNS_LAYOUT = {
+  TWO_COLUMNS: "two_columns",
+  THREE_COLUMNS: "three_columns",
+  FOUR_COLUMNS: "four_columns",
+};
+const MONTH_COLUMNS = {
+  [MONTH_COLUMNS_LAYOUT.TWO_COLUMNS]: {
+    grid: [
+      [0, 1],
+      [2, 3],
+      [4, 5],
+      [6, 7],
+      [8, 9],
+      [10, 11],
+    ],
+    verticalNavigationOffset: 2,
+  },
+  [MONTH_COLUMNS_LAYOUT.THREE_COLUMNS]: {
+    grid: [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [9, 10, 11],
+    ],
+    verticalNavigationOffset: 3,
+  },
+  [MONTH_COLUMNS_LAYOUT.FOUR_COLUMNS]: {
+    grid: [
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8, 9, 10, 11],
+    ],
+    verticalNavigationOffset: 4,
+  },
+};
+const MONTH_NAVIGATION_HORIZONTAL_OFFSET = 1;
+
+function getMonthColumnsLayout(
+  showFourColumnMonthYearPicker,
+  showTwoColumnMonthYearPicker
+) {
+  if (showFourColumnMonthYearPicker) return MONTH_COLUMNS_LAYOUT.FOUR_COLUMNS;
+  if (showTwoColumnMonthYearPicker) return MONTH_COLUMNS_LAYOUT.TWO_COLUMNS;
+  return MONTH_COLUMNS_LAYOUT.THREE_COLUMNS;
+}
+
 export default class Month extends React.Component {
   static propTypes = {
     ariaLabelPrefix: PropTypes.string,
@@ -252,36 +298,54 @@ export default class Month extends React.Component {
   };
 
   onMonthKeyDown = (event, month) => {
+    const {
+      selected,
+      preSelection,
+      disabledKeyboardNavigation,
+      showTwoColumnMonthYearPicker,
+      showFourColumnMonthYearPicker,
+      setPreSelection,
+    } = this.props;
     event.preventDefault();
     const eventKey = event.key;
-    if (!this.props.disabledKeyboardNavigation) {
+    const monthColumnsLayout = getMonthColumnsLayout(
+      showFourColumnMonthYearPicker,
+      showTwoColumnMonthYearPicker
+    );
+    const verticalOffset =
+      MONTH_COLUMNS[monthColumnsLayout].verticalNavigationOffset;
+    if (!disabledKeyboardNavigation) {
       switch (eventKey) {
         case "Enter":
           this.onMonthClick(event, month);
-          this.props.setPreSelection(this.props.selected);
+          setPreSelection(selected);
           break;
         case "ArrowRight":
           this.handleMonthNavigation(
-            month === 11 ? 0 : month + 1,
-            utils.addMonths(this.props.preSelection, 1)
+            month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+            utils.addMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET)
           );
           break;
         case "ArrowLeft":
           this.handleMonthNavigation(
-            month === 0 ? 11 : month - 1,
-            utils.subMonths(this.props.preSelection, 1)
+            month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+            utils.subMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET)
           );
           break;
         case "ArrowUp":
           this.handleMonthNavigation(
-            month >= 0 && month <= 2 ? month + 9 : month - 3,
-            utils.subMonths(this.props.preSelection, 3)
+            month >= 0 && month <= 2
+              ? month + 12 - verticalOffset
+              : month - verticalOffset,
+            utils.subMonths(preSelection, verticalOffset)
           );
           break;
         case "ArrowDown":
           this.handleMonthNavigation(
-            month >= 9 && month <= 11 ? month - 9 : month + 3,
-            utils.addMonths(this.props.preSelection, 3)
+            month >= 9 && month <= 11
+              ? month - 12 + verticalOffset
+              : month + verticalOffset,
+            utils.addMonths(preSelection, verticalOffset)
           );
           break;
       }
@@ -453,31 +517,15 @@ export default class Month extends React.Component {
       day,
       selected,
     } = this.props;
-    const monthsFourColumns = [
-      [0, 1, 2, 3],
-      [4, 5, 6, 7],
-      [8, 9, 10, 11],
-    ];
-    const monthsThreeColumns = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [9, 10, 11],
-    ];
-    const monthsTwoColumns = [
-      [0, 1],
-      [2, 3],
-      [4, 5],
-      [6, 7],
-      [8, 9],
-      [10, 11],
-    ];
-    const monthLayout = showFourColumnMonthYearPicker
-      ? monthsFourColumns
-      : showTwoColumnMonthYearPicker
-      ? monthsTwoColumns
-      : monthsThreeColumns;
-    return monthLayout.map((month, i) => (
+
+    const monthColumns =
+      MONTH_COLUMNS[
+        getMonthColumnsLayout(
+          showFourColumnMonthYearPicker,
+          showTwoColumnMonthYearPicker
+        )
+      ].grid;
+    return monthColumns.map((month, i) => (
       <div className="react-datepicker__month-wrapper" key={i}>
         {month.map((m, j) => (
           <div
