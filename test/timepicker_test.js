@@ -68,7 +68,6 @@ describe("TimePicker", () => {
         showTimeSelect
         showTimeSelectOnly
         timeClassName={handleTimeColors}
-        onChange={() => console.log("changed")}
         open
         focus
       />

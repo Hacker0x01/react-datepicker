@@ -1935,7 +1935,6 @@ describe("DatePicker", () => {
         <DatePicker
           selected={selected}
           onChange={(d) => {
-            console.log("trigger change", d);
             date = d;
           }}
           showTimeSelect

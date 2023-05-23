@@ -32,9 +32,7 @@ describe("timeInput", () => {
   });
 
   xit("should trigger onChange event", () => {
-    const timeComponent = shallow(
-      <InputTimeComponent onChange={console.log} />
-    );
+    const timeComponent = shallow(<InputTimeComponent />);
     const input = timeComponent.find("input");
     input.simulate("change", { target: { value: "13:00" } });
     expect(timeComponent.state("time")).to.equal("13:00");
@@ -42,7 +40,7 @@ describe("timeInput", () => {
 
   it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
     const timeComponent = shallow(
-      <InputTimeComponent timeString="13:00" onChange={console.log} />
+      <InputTimeComponent timeString="13:00" onChange={() => {}} />
     );
     const input = timeComponent.find("input");
     input.simulate("change", { target: { value: "" } });
@@ -53,7 +51,6 @@ describe("timeInput", () => {
     const timeComponent = shallow(
       <InputTimeComponent
         timeString="13:00"
-        onChange={console.log}
         customTimeInput={<CustomTimeInput />}
       />
     );
@@ -69,7 +66,6 @@ describe("timeInput", () => {
       <InputTimeComponent
         date={new Date()}
         timeString="13:00"
-        onChange={console.log}
         customTimeInput={<CustomTimeInput onTimeChange={onTimeChangeSpy} />}
       />
     );
@@ -93,11 +89,7 @@ describe("timeInput", () => {
 
   xit("should update input value if time is updated from outside", (done) => {
     const timeComponent = mount(
-      <InputTimeComponent
-        date={new Date()}
-        timeString="13:00"
-        onChange={console.log}
-      />
+      <InputTimeComponent date={new Date()} timeString="13:00" />
     );
 
     expect(timeComponent.find("input").props.value).to.equal("13:00");
