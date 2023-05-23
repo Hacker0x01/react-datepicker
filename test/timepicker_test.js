@@ -5,17 +5,7 @@ import ReactDOM from "react-dom";
 import Time from "../src/time";
 import { newDate, formatDate } from "../src/date_utils";
 
-function getKey(key) {
-  switch (key) {
-    case " ":
-      return { key, code: 32, which: 32 };
-    case "Enter":
-      return { key, code: 13, which: 13 };
-    case "Escape":
-      return { key, code: 27, which: 27 };
-  }
-  throw new Error("Unknown key :" + key);
-}
+import { getKey } from "./test_utils";
 
 describe("TimePicker", () => {
   let datePicker;
