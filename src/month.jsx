@@ -252,8 +252,11 @@ export default class Month extends React.Component {
   };
 
   onMonthKeyDown = (event, month) => {
-    event.preventDefault();
     const eventKey = event.key;
+    if (eventKey !== "Tab") {
+      // preventDefault on tab event blocks focus change
+      event.preventDefault();
+    }
     if (!this.props.disabledKeyboardNavigation) {
       switch (eventKey) {
         case "Enter":
