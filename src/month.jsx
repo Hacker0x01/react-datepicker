@@ -363,17 +363,18 @@ export default class Month extends React.Component {
       setPreSelection,
     } = this.props;
     const eventKey = event.key;
-    const monthColumnsLayout = getMonthColumnsLayout(
-      showFourColumnMonthYearPicker,
-      showTwoColumnMonthYearPicker
-    );
-    const verticalOffset =
-      MONTH_COLUMNS[monthColumnsLayout].verticalNavigationOffset;
     if (eventKey !== "Tab") {
       // preventDefault on tab event blocks focus change
       event.preventDefault();
     }
     if (!disabledKeyboardNavigation) {
+      const monthColumnsLayout = getMonthColumnsLayout(
+        showFourColumnMonthYearPicker,
+        showTwoColumnMonthYearPicker
+      );
+      const verticalOffset =
+        MONTH_COLUMNS[monthColumnsLayout].verticalNavigationOffset;
+      const monthsGrid = MONTH_COLUMNS[monthColumnsLayout].grid;
       switch (eventKey) {
         case "Enter":
           this.onMonthClick(event, month);
@@ -393,7 +394,8 @@ export default class Month extends React.Component {
           break;
         case "ArrowUp":
           this.handleMonthNavigation(
-            month >= 0 && month <= 2
+            // Check if month on the first row
+            monthsGrid[0].includes(month)
               ? month + 12 - verticalOffset
               : month - verticalOffset,
             utils.subMonths(preSelection, verticalOffset)
@@ -401,7 +403,8 @@ export default class Month extends React.Component {
           break;
         case "ArrowDown":
           this.handleMonthNavigation(
-            month >= 9 && month <= 11
+            // Check if month on the last row
+            monthsGrid[monthsGrid.length - 1].includes(month)
               ? month - 12 + verticalOffset
               : month + verticalOffset,
             utils.addMonths(preSelection, verticalOffset)
