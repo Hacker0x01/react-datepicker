@@ -323,6 +323,13 @@ export default class Day extends React.Component {
       ) {
         shouldFocusDay = true;
       }
+      //day is one of the non rendered duplicate days
+      if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth()) {
+        shouldFocusDay = false;
+      }
+      if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth()) {
+        shouldFocusDay = false;
+      }
     }
 
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });

@@ -501,6 +501,7 @@ export default class DatePicker extends React.Component {
     // Use date from `selected` prop when manipulating only time for input value
     if (
       this.props.showTimeSelectOnly &&
+      this.props.selected &&
       !isSameDay(date, this.props.selected)
     ) {
       if (date == null) {
