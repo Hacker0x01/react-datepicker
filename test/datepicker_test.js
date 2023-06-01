@@ -11,7 +11,6 @@ import TestWrapper from "./test_wrapper.jsx";
 import PopperComponent from "../src/popper_component.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils";
-import { util } from "chai";
 import Month from "../src/month.jsx";
 
 import { getKey } from "./test_utils";
@@ -335,6 +334,26 @@ describe("DatePicker", () => {
       getKey("Escape")
     );
     expect(datePicker.calendar).to.not.exist;
+  });
+
+  it("should hide the calendar when the pressing Shift + Tab in the date input", (done) => {
+    var datePicker = TestUtils.renderIntoDocument(
+      <DatePicker onBlur={onBlurSpy} />
+    );
+    var dateInput = datePicker.input;
+    const onBlurSpy = sandbox.spy(dateInput, "blur");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.keyDown(
+      ReactDOM.findDOMNode(dateInput),
+      getKey("Tab", true)
+    );
+
+    expect(datePicker.calendar).to.not.exist;
+
+    defer(() => {
+      assert(onBlurSpy.called === true, "should blur date input");
+      done();
+    });
   });
 
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
