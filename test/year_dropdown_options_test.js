@@ -279,11 +279,6 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       .map((node) => node.text());
     const x = textContents.find((year) => year === utils.getYear(minDate));
     expect(x).to.be.undefined;
-    console.log(
-      "kektus",
-      x,
-      textContents.find((year) => year === utils.getYear(minDate))
-    );
     expect(textContents.find((year) => year === utils.getYear(maxDate))).to.be
       .undefined;
     expect(
