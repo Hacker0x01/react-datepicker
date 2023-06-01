@@ -8,23 +8,7 @@ import * as utils from "../src/date_utils";
 import TestUtils from "react-dom/test-utils";
 import { runAxe } from "./run_axe";
 
-function getKey(key) {
-  switch (key) {
-    case "Tab":
-      return { key, code: 9, which: 9 };
-    case "Enter":
-      return { key, code: 13, which: 13 };
-    case "ArrowLeft":
-      return { key, code: 37, which: 37 };
-    case "ArrowRight":
-      return { key, code: 39, which: 39 };
-    case "ArrowUp":
-      return { key, code: 38, which: 38 };
-    case "ArrowDown":
-      return { key, code: 40, which: 40 };
-  }
-  throw new Error("Unknown key :" + key);
-}
+import { getKey } from "./test_utils";
 
 describe("Month", () => {
   function assertDateRangeInclusive(month, start, end) {
