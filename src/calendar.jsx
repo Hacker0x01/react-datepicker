@@ -200,6 +200,7 @@ export default class Calendar extends React.Component {
     weekAriaLabelPrefix: PropTypes.string,
     monthAriaLabelPrefix: PropTypes.string,
     setPreSelection: PropTypes.func,
+    renderTimeContents: PropTypes.func,
   };
 
   constructor(props) {
@@ -964,6 +965,7 @@ export default class Calendar extends React.Component {
           locale={this.props.locale}
           handleOnKeyDown={this.props.handleOnKeyDown}
           showTimeSelectOnly={this.props.showTimeSelectOnly}
+          renderTimeContents={this.props.renderTimeContents}
         />
       );
     }

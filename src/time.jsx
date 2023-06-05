@@ -54,6 +54,7 @@ export default class Time extends React.Component {
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
     showTimeSelectOnly: PropTypes.bool,
+    renderTimeContents: PropTypes.func,
   };
 
   state = {
@@ -140,6 +141,13 @@ export default class Time extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
+  renderTimeContents = (time, format) => {
+    const formatTime = formatDate(time, format, this.props.locale);
+    return this.props.renderTimeContents
+      ? this.props.renderTimeContents(formatTime, time, format)
+      : formatTime;
+  };
+
   renderTimes = () => {
     let times = [];
     const format = this.props.format ? this.props.format : "p";
@@ -193,7 +201,7 @@ export default class Time extends React.Component {
           this.isSelectedTime(time, currH, currM) ? "true" : undefined
         }
       >
-        {formatDate(time, format, this.props.locale)}
+        {this.renderTimeContents(time, format)}
       </li>
     ));
   };
