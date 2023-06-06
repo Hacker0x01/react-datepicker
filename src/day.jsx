@@ -132,7 +132,10 @@ export default class Day extends React.Component {
     if (
       this.props.disabledKeyboardNavigation &&
       !this.props.selectingDate &&
-      !isEqual(this.props.selected, this.props.preSelection)
+      ((selectsStart &&
+        (!startDate || isBefore(selectingDate, startDate))) ||
+      (selectsEnd &&
+        (!endDate || isAfter(selectingDate, endDate))))
     ) {
       return false;
     }
