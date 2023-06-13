@@ -75,7 +75,6 @@ import RenderCustomDay from "../../examples/renderCustomDay";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
-import YearPicker from "../../examples/yearPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -84,6 +83,9 @@ import RangeMonthPickerSelectsRange from "../../examples/rangeMonthPickerSelects
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import RangeQuarterPickerSelectsRange from "../../examples/rangeQuarterPickerSelectsRange";
+import YearPicker from "../../examples/yearPicker";
+import RangeYearPicker from "../../examples/rangeYearPicker";
+import RangeYearPickerSelectsRange from "../../examples/rangeYearPickerSelectsRange";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
@@ -455,6 +457,14 @@ export default class exampleComponents extends React.Component {
     {
       title: "Year Picker",
       component: YearPicker,
+    },
+    {
+      title: "Range Year Picker",
+      component: RangeYearPicker,
+    },
+    {
+      title: "Range Year Picker for one datepicker",
+      component: RangeYearPickerSelectsRange,
     },
     {
       title: "Year dropdown",
