@@ -2113,4 +2113,41 @@ describe("DatePicker", () => {
     ).getAttribute("class");
     expect(showIconClass).to.equal("react-datepicker__calendar-icon");
   });
+
+  describe("Year picker", () => {
+    it("should call onYearMouseEnter and onYearMouseEnter", (done) => {
+      const onYearMouseEnterSpy = sandbox.spy();
+      const onYearMouseLeaveSpy = sandbox.spy();
+      const datePicker = mount(
+        <DatePicker
+          selected={new Date(2023, 0, 1)}
+          showYearPicker
+          onYearMouseEnter={onYearMouseEnterSpy}
+          onYearMouseLeave={onYearMouseLeaveSpy}
+        />
+      );
+
+      const dateInputWrapper = datePicker.find("input");
+      dateInputWrapper.simulate("click");
+      const calendarWrapper = datePicker.find("Calendar");
+      const selectedYear = calendarWrapper.find(
+        ".react-datepicker__year-text--selected"
+      );
+
+      selectedYear.simulate("mouseenter");
+      selectedYear.simulate("mouseleave");
+
+      defer(() => {
+        assert(
+          onYearMouseEnterSpy.called === true,
+          "should call DatePicker onYearMouseEnter"
+        );
+        assert(
+          onYearMouseLeaveSpy.called === true,
+          "should call DatePicker onYearMouseLeave"
+        );
+        done();
+      });
+    });
+  });
 });

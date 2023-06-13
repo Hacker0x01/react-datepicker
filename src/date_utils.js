@@ -507,6 +507,20 @@ export function isQuarterDisabled(
   );
 }
 
+/**
+ * @param {number} year
+ * @param {date} start
+ * @param {date} end
+ * @returns {boolean}
+ */
+export function isYearInRange(year, start, end) {
+  if (!isValidDate(start) || !isValidDate(end)) return false;
+  const startYear = getYear(start);
+  const endYear = getYear(end);
+
+  return startYear <= year && endYear >= year;
+}
+
 export function isYearDisabled(
   year,
   { minDate, maxDate, excludeDates, includeDates, filterDate } = {}

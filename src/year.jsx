@@ -6,8 +6,10 @@ import classnames from "classnames";
 
 export default class Year extends React.Component {
   static propTypes = {
-    date: PropTypes.string,
+    clearSelectingDate: PropTypes.func,
+    date: PropTypes.instanceOf(Date),
     disabledKeyboardNavigation: PropTypes.bool,
+    endDate: PropTypes.instanceOf(Date),
     onDayClick: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
     setPreSelection: PropTypes.func,
@@ -15,6 +17,13 @@ export default class Year extends React.Component {
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
+    onYearMouseEnter: PropTypes.func.isRequired,
+    onYearMouseLeave: PropTypes.func.isRequired,
+    selectingDate: PropTypes.instanceOf(Date),
+    selectsEnd: PropTypes.bool,
+    selectsStart: PropTypes.bool,
+    selectsRange: PropTypes.bool,
+    startDate: PropTypes.instanceOf(Date),
     excludeDates: PropTypes.array,
     includeDates: PropTypes.array,
     filterDate: PropTypes.func,
@@ -32,6 +41,8 @@ export default class Year extends React.Component {
   isDisabled = (date) => utils.isDayDisabled(date, this.props);
 
   isExcluded = (date) => utils.isDayExcluded(date, this.props);
+
+  selectingDate = () => this.props.selectingDate ?? this.props.preSelection;
 
   updateFocusOnPaginate = (refIndex) => {
     const waitForReRender = function () {
@@ -64,6 +75,69 @@ export default class Year extends React.Component {
   isSameDay = (y, other) => utils.isSameDay(y, other);
 
   isCurrentYear = (y) => y === getYear(newDate());
+
+  isRangeStart = (y) =>
+    this.props.startDate &&
+    this.props.endDate &&
+    utils.isSameYear(utils.setYear(newDate(), y), this.props.startDate);
+
+  isRangeEnd = (y) =>
+    this.props.startDate &&
+    this.props.endDate &&
+    utils.isSameYear(utils.setYear(newDate(), y), this.props.endDate);
+
+  isInRange = (y) =>
+    utils.isYearInRange(y, this.props.startDate, this.props.endDate);
+
+  isInSelectingRange = (y) => {
+    const { selectsStart, selectsEnd, selectsRange, startDate, endDate } =
+      this.props;
+
+    if (
+      !(selectsStart || selectsEnd || selectsRange) ||
+      !this.selectingDate()
+    ) {
+      return false;
+    }
+    if (selectsStart && endDate) {
+      return utils.isYearInRange(y, this.selectingDate(), endDate);
+    }
+    if (selectsEnd && startDate) {
+      return utils.isYearInRange(y, startDate, this.selectingDate());
+    }
+    if (selectsRange && startDate && !endDate) {
+      return utils.isYearInRange(y, startDate, this.selectingDate());
+    }
+    return false;
+  };
+
+  isSelectingRangeStart = (y) => {
+    if (!this.isInSelectingRange(y)) {
+      return false;
+    }
+
+    const { startDate, selectsStart } = this.props;
+    const _year = utils.setYear(newDate(), y);
+
+    if (selectsStart) {
+      return utils.isSameYear(_year, this.selectingDate());
+    }
+    return utils.isSameYear(_year, startDate);
+  };
+
+  isSelectingRangeEnd = (y) => {
+    if (!this.isInSelectingRange(y)) {
+      return false;
+    }
+
+    const { endDate, selectsEnd, selectsRange } = this.props;
+    const _year = utils.setYear(newDate(), y);
+
+    if (selectsEnd || selectsRange) {
+      return utils.isSameYear(_year, this.selectingDate());
+    }
+    return utils.isSameYear(_year, endDate);
+  };
 
   isKeyboardSelected = (y) => {
     const date = utils.getStartOfYear(utils.setYear(this.props.date, y));
@@ -120,6 +194,15 @@ export default class Year extends React.Component {
         utils.isYearDisabled(y, this.props),
       "react-datepicker__year-text--keyboard-selected":
         this.isKeyboardSelected(y),
+      "react-datepicker__year-text--range-start": this.isRangeStart(y),
+      "react-datepicker__year-text--range-end": this.isRangeEnd(y),
+      "react-datepicker__year-text--in-range": this.isInRange(y),
+      "react-datepicker__year-text--in-selecting-range":
+        this.isInSelectingRange(y),
+      "react-datepicker__year-text--selecting-range-start":
+        this.isSelectingRangeStart(y),
+      "react-datepicker__year-text--selecting-range-end":
+        this.isSelectingRangeEnd(y),
       "react-datepicker__year-text--today": this.isCurrentYear(y),
     });
   };
@@ -131,9 +214,19 @@ export default class Year extends React.Component {
     return y === preSelected ? "0" : "-1";
   };
 
+  getYearContainerClassNames = () => {
+    const { selectingDate, selectsStart, selectsEnd, selectsRange } =
+      this.props;
+    return classnames("react-datepicker__year", {
+      "react-datepicker__year--selecting-range":
+        selectingDate && (selectsStart || selectsEnd || selectsRange),
+    });
+  };
+
   render() {
     const yearsList = [];
-    const { date, yearItemNumber } = this.props;
+    const { date, yearItemNumber, onYearMouseEnter, onYearMouseLeave } =
+      this.props;
     const { startPeriod, endPeriod } = utils.getYearsPeriod(
       date,
       yearItemNumber
@@ -151,6 +244,8 @@ export default class Year extends React.Component {
           }}
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
+          onMouseEnter={(ev) => onYearMouseEnter(ev, y)}
+          onMouseLeave={(ev) => onYearMouseLeave(ev, y)}
           key={y}
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
@@ -160,8 +255,13 @@ export default class Year extends React.Component {
     }
 
     return (
-      <div className="react-datepicker__year">
-        <div className="react-datepicker__year-wrapper">{yearsList}</div>
+      <div className={this.getYearContainerClassNames()}>
+        <div
+          className="react-datepicker__year-wrapper"
+          onMouseLeave={this.props.clearSelectingDate}
+        >
+          {yearsList}
+        </div>
       </div>
     );
   }

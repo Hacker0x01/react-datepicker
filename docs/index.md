@@ -78,6 +78,8 @@
 | `onKeyDown`                  | `func`                         | `() {}`            |             |
 | `onMonthChange`              | `func`                         | `() {}`            |             |
 | `onMonthMouseLeave`          | `func`                         |                    |             |
+| `onYearMouseEnter`           | `func`                         |                    |             |
+| `onYearMouseLeave`           | `func`                         |                    |             |
 | `onSelect`                   | `func`                         | `() {}`            |             |
 | `onWeekSelect`               | `func`                         |                    |             |
 | `onYearChange`               | `func`                         | `() {}`            |             |

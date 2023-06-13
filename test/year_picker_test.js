@@ -199,6 +199,236 @@ describe("YearPicker", () => {
     }
   });
 
+  describe("range", () => {
+    it("should add range classes", () => {
+      const yearComponent = mount(
+        <Year
+          date={utils.newDate("2009-01-01")}
+          startDate={utils.newDate("2009-01-01")}
+          endDate={utils.newDate("2012-01-01")}
+        />
+      );
+
+      const inRangeYears = yearComponent.find(
+        ".react-datepicker__year-text--in-range"
+      );
+
+      expect(inRangeYears.length).to.equal(4);
+      expect(inRangeYears.at(0).text()).to.eq("2009");
+      expect(inRangeYears.at(1).text()).to.eq("2010");
+      expect(inRangeYears.at(2).text()).to.eq("2011");
+      expect(inRangeYears.at(3).text()).to.eq("2012");
+
+      const rangeStartYear = yearComponent.find(
+        ".react-datepicker__year-text--range-start"
+      );
+
+      expect(rangeStartYear.length).to.equal(1);
+      expect(rangeStartYear.at(0).text()).to.eq("2009");
+
+      const rangeEndYear = yearComponent.find(
+        ".react-datepicker__year-text--range-end"
+      );
+
+      expect(rangeEndYear.length).to.equal(1);
+      expect(rangeEndYear.at(0).text()).to.eq("2012");
+    });
+
+    it("should not add range classes when start date is not defined", () => {
+      const yearComponent = mount(
+        <Year
+          date={utils.newDate("2009-01-01")}
+          endDate={utils.newDate("2012-01-01")}
+        />
+      );
+
+      const inRangeYears = yearComponent.find(
+        ".react-datepicker__year-text--in-range"
+      );
+      const rangeStartYear = yearComponent.find(
+        ".react-datepicker__year-text--range-start"
+      );
+      const rangeEndYear = yearComponent.find(
+        ".react-datepicker__year-text--range-end"
+      );
+
+      expect(inRangeYears.length).to.equal(0);
+      expect(rangeEndYear.length).to.equal(0);
+      expect(rangeStartYear.length).to.equal(0);
+    });
+
+    it("should not add range classes when end date is not defined", () => {
+      const yearComponent = mount(
+        <Year
+          date={utils.newDate("2009-01-01")}
+          startDate={utils.newDate("2009-01-01")}
+        />
+      );
+
+      const inRangeYears = yearComponent.find(
+        ".react-datepicker__year-text--in-range"
+      );
+      const rangeStartYear = yearComponent.find(
+        ".react-datepicker__year-text--range-start"
+      );
+      const rangeEndYear = yearComponent.find(
+        ".react-datepicker__year-text--range-end"
+      );
+
+      expect(inRangeYears.length).to.equal(0);
+      expect(rangeEndYear.length).to.equal(0);
+      expect(rangeStartYear.length).to.equal(0);
+    });
+
+    describe("selecting", () => {
+      it("should add in-selecting-range class if year is between the selecting date and end date", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2015-01-01")}
+            date={utils.newDate("2012-01-01")}
+            endDate={utils.newDate("2016-01-01")}
+            selectingDate={utils.newDate("2015-01-01")}
+            selectsStart
+          />
+        );
+
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(2);
+        expect(years.at(0).text()).to.eq("2015");
+        expect(years.at(1).text()).to.eq("2016");
+      });
+
+      it("should add in-selecting-range class if year is between the start date and selecting date", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2011-01-01")}
+            date={utils.newDate("2015-01-01")}
+            startDate={utils.newDate("2010-01-01")}
+            selectingDate={utils.newDate("2011-01-01")}
+            selectsEnd
+          />
+        );
+
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(2);
+        expect(years.at(0).text()).to.eq("2010");
+        expect(years.at(1).text()).to.eq("2011");
+      });
+
+      it("should use pre selection date if selecting date is not defined", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2011-01-01")}
+            date={utils.newDate("2015-01-01")}
+            startDate={utils.newDate("2010-01-01")}
+            selectsEnd
+          />
+        );
+
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(2);
+        expect(years.at(0).text()).to.eq("2010");
+        expect(years.at(1).text()).to.eq("2011");
+      });
+
+      it("should add in-selecting-range class for one year picker if year is between the start date and selecting date", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2011-01-01")}
+            date={utils.newDate("2015-01-01")}
+            startDate={utils.newDate("2010-02-01")}
+            selectingDate={utils.newDate("2011-01-01")}
+            selectsRange
+          />
+        );
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(2);
+        expect(years.at(0).text()).to.eq("2010");
+        expect(years.at(1).text()).to.eq("2011");
+      });
+
+      it("should not add in-selecting-range class for one year picker if the start date is not defined", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2014-01-01")}
+            date={utils.newDate("2015-01-01")}
+            selectingDate={utils.newDate("2014-01-01")}
+            selectsRange
+          />
+        );
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(0);
+      });
+
+      it("should not add in-selecting-range class for one year picker if the end date is defined", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2014-01-01")}
+            date={utils.newDate("2013-01-01")}
+            selectingDate={utils.newDate("2014-01-01")}
+            endDate={utils.newDate("2013-01-01")}
+            selectsRange
+          />
+        );
+        const years = yearComponent.find(
+          ".react-datepicker__month-text--in-selecting-range"
+        );
+
+        expect(years.length).to.equal(0);
+      });
+
+      it("should add 'selecting-range-start' class to the start selecting year", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2012-01-01")}
+            date={utils.newDate("2010-01-01")}
+            endDate={utils.newDate("2015-01-01")}
+            selectingDate={utils.newDate("2012-01-01")}
+            selectsStart
+          />
+        );
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--selecting-range-start"
+        );
+        expect(years.length).to.equal(1);
+        expect(years.at(0).text()).to.eq("2012");
+      });
+
+      it("should add 'selecting-range-end' class to the end selecting year", () => {
+        const yearComponent = mount(
+          <Year
+            preSelection={utils.newDate("2014-01-01")}
+            date={utils.newDate("2012-01-01")}
+            startDate={utils.newDate("2010-01-01")}
+            endDate={utils.newDate("2015-01-01")}
+            selectingDate={utils.newDate("2014-01-01")}
+            selectsEnd
+          />
+        );
+        const years = yearComponent.find(
+          ".react-datepicker__year-text--selecting-range-end"
+        );
+        expect(years.length).to.equal(1);
+        expect(years.at(0).text()).to.eq("2014");
+      });
+    });
+  });
+
   describe("keyboard-selected", () => {
     const className = "react-datepicker__year-text--keyboard-selected";
 
