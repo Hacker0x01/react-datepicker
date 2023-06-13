@@ -413,6 +413,43 @@ describe("Month", () => {
 
       expect(months.length).to.equal(0);
     });
+
+    it("should add 'selecting-range-start' class to the start selecting month", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          endDate={utils.newDate("2015-03-01")}
+          selectingDate={utils.newDate("2015-02-01")}
+          selectsStart
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--selecting-range-start"
+      );
+      expect(months.length).to.equal(1);
+      expect(months.at(0).text()).to.eq("Feb");
+    });
+
+    it("should add 'selecting-range-end' class to the end selecting month", () => {
+      const monthComponent = mount(
+        <Month
+          preSelection={utils.newDate("2015-01-01")}
+          day={utils.newDate("2015-01-01")}
+          startDate={utils.newDate("2015-01-01")}
+          endDate={utils.newDate("2015-03-01")}
+          selectingDate={utils.newDate("2015-06-01")}
+          selectsEnd
+          showMonthYearPicker
+        />
+      );
+      const months = monthComponent.find(
+        ".react-datepicker__month-text--selecting-range-end"
+      );
+      expect(months.length).to.equal(1);
+      expect(months.at(0).text()).to.eq("Jun");
+    });
   });
 
   describe("selecting quarter range", () => {
