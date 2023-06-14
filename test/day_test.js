@@ -740,9 +740,9 @@ describe("Day", () => {
 
   describe("aria-label", () => {
     const ariaLabelPrefixWhenEnabled =
-      "A prefix in my native language desbribing that the date can be selected";
+      "A prefix in my native language describing that the date can be selected";
     const ariaLabelPrefixWhenDisabled =
-      "A prefix in my native language desbribing that the date can not be selected";
+      "A prefix in my native language describing that the date can not be selected";
 
     it("should have the correct provided prefix if date is not disabled", () => {
       const shallowDay = renderDay(newDate(), {
