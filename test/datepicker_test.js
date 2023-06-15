@@ -752,6 +752,29 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat)
     ).to.equal(utils.formatDate(data.copyM, data.testFormat));
   });
+  it("should call onMonthchange when keyboard navigation moves preSelection to different month", () => {
+    var onMonthChangeSpy = sandbox.spy();
+    var opts = { onMonthChange: onMonthChangeSpy };
+    var data = getOnInputKeyDownStuff(opts);
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("PageDown")
+    );
+
+    expect(onMonthChangeSpy.calledOnce).to.be.true;
+  });
+  it("should call onSelect only once when keyboard navigation moves selection to different month", () => {
+    var onSelectSpy = sandbox.spy();
+    var opts = { onSelect: onSelectSpy, adjustDateOnChange: true };
+    var data = getOnInputKeyDownStuff(opts);
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("PageDown")
+    );
+    expect(onSelectSpy.calledOnce).to.be.true;
+  });
   it("should not preSelect date if not between minDate and maxDate", () => {
     var data = getOnInputKeyDownStuff({
       minDate: utils.subDays(utils.newDate(), 1),
