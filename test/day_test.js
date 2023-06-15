@@ -74,6 +74,17 @@ describe("Day", () => {
           .getAttribute("aria-selected");
         expect(ariaSelected).to.equal("true");
       });
+
+      it('should set aria-selected attribute to "true" if previous and after days selected', () => {
+        const day = newDate();
+        const startDate = subDays(day, 1);
+        const endDate = addDays(day, 1);
+        const shallowDay = renderDay(day, { startDate, endDate });
+        const ariaSelected = mount(shallowDay.getElement())
+          .getDOMNode()
+          .getAttribute("aria-selected");
+        expect(ariaSelected).to.equal("true");
+      });
     });
 
     describe("if not selected", () => {
