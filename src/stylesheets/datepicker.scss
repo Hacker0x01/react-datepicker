@@ -451,7 +451,8 @@
   }
 
   &--in-range:not(&--in-selecting-range) {
-    .react-datepicker__month--selecting-range & {
+    .react-datepicker__month--selecting-range &,
+    .react-datepicker__year--selecting-range & {
       background-color: $datepicker__background-color;
       color: $datepicker__text-color;
     }

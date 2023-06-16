@@ -192,6 +192,8 @@ export default class Calendar extends React.Component {
     renderDayContents: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
+    onYearMouseEnter: PropTypes.func,
+    onYearMouseLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     handleOnDayKeyDown: PropTypes.func,
@@ -309,6 +311,15 @@ export default class Calendar extends React.Component {
   handleMonthMouseLeave = () => {
     this.setState({ selectingDate: null });
     this.props.onMonthMouseLeave && this.props.onMonthMouseLeave();
+  };
+
+  handleYearMouseEnter = (event, year) => {
+    this.setState({ selectingDate: setYear(newDate(), year) });
+    !!this.props.onYearMouseEnter && this.props.onYearMouseEnter(event, year);
+  };
+
+  handleYearMouseLeave = (event, year) => {
+    !!this.props.onYearMouseLeave && this.props.onYearMouseLeave(event, year);
   };
 
   handleYearChange = (date) => {
@@ -435,6 +446,10 @@ export default class Calendar extends React.Component {
       }),
       () => this.handleYearChange(this.state.date)
     );
+  };
+
+  clearSelectingDate = () => {
+    this.setState({ selectingDate: null });
   };
 
   renderPreviousButton = () => {
@@ -927,8 +942,12 @@ export default class Calendar extends React.Component {
           {this.renderHeader()}
           <Year
             onDayClick={this.handleDayClick}
+            selectingDate={this.state.selectingDate}
+            clearSelectingDate={this.clearSelectingDate}
             date={this.state.date}
             {...this.props}
+            onYearMouseEnter={this.handleYearMouseEnter}
+            onYearMouseLeave={this.handleYearMouseLeave}
           />
         </div>
       );

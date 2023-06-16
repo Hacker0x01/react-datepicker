@@ -27,6 +27,7 @@ import {
   parseDate,
   isMonthinRange,
   isQuarterInRange,
+  isYearInRange,
   getStartOfYear,
   getYearsPeriod,
   setDefaultLocale,
@@ -1011,6 +1012,30 @@ describe("date_utils", function () {
       const endDate = newDate("2020-02-01");
 
       expect(isQuarterInRange(startDate, endDate, 5, day)).to.be.true;
+    });
+  });
+
+  describe("isYearInRange", () => {
+    it("should return true if the year passed is in range", () => {
+      const startDate = newDate("2000-01-01");
+      const endDate = newDate("2015-08-01");
+      // Check start range
+      expect(isYearInRange(2000, startDate, endDate)).to.be.true;
+      // Check end range
+      expect(isYearInRange(2015, startDate, endDate)).to.be.true;
+      expect(isYearInRange(2010, startDate, endDate)).to.be.true;
+    });
+
+    it("should return false if the year passed is not in range", () => {
+      const startDate = newDate("2000-01-01");
+      const endDate = newDate("2015-08-01");
+
+      expect(isYearInRange(1999, startDate, endDate)).to.be.false;
+      expect(isYearInRange(2016, startDate, endDate)).to.be.false;
+    });
+
+    it("should return false if range isn't passed", () => {
+      expect(isYearInRange(2016)).to.be.false;
     });
   });
 
