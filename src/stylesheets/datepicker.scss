@@ -214,6 +214,10 @@
   }
 }
 
+.react-datepicker__month-container {
+  float: left;
+}
+
 .react-datepicker__year {
   margin: $datepicker__margin;
   text-align: center;
