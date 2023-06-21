@@ -275,7 +275,8 @@ export default class Month extends React.Component {
     q === utils.getQuarter(utils.newDate());
 
   isSelectedMonth = (day, m, selected) =>
-    utils.getMonth(day) === m && utils.getYear(day) === utils.getYear(selected);
+    utils.getMonth(selected) === m &&
+    utils.getYear(day) === utils.getYear(selected);
 
   isSelectedQuarter = (day, q, selected) =>
     utils.getQuarter(day) === q &&
