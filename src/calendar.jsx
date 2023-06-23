@@ -191,6 +191,9 @@ export default class Calendar extends React.Component {
     nextYearButtonLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
+    renderMonthContent: PropTypes.func,
+    renderQuarterContent: PropTypes.func,
+    renderYearContent: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     onYearMouseEnter: PropTypes.func,
@@ -922,6 +925,9 @@ export default class Calendar extends React.Component {
             setOpen={this.props.setOpen}
             shouldCloseOnSelect={this.props.shouldCloseOnSelect}
             renderDayContents={this.props.renderDayContents}
+            renderMonthContent={this.props.renderMonthContent}
+            renderQuarterContent={this.props.renderQuarterContent}
+            renderYearContent={this.props.renderYearContent}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             showMonthYearPicker={this.props.showMonthYearPicker}
             showFullMonthYearPicker={this.props.showFullMonthYearPicker}

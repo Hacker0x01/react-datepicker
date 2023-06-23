@@ -8,8 +8,6 @@ import addWeeks from "date-fns/addWeeks";
 import addMonths from "date-fns/addMonths";
 import addQuarters from "date-fns/addQuarters";
 import addYears from "date-fns/addYears";
-import subMinutes from "date-fns/subMinutes";
-import subHours from "date-fns/subHours";
 import subDays from "date-fns/subDays";
 import subWeeks from "date-fns/subWeeks";
 import subMonths from "date-fns/subMonths";
@@ -35,7 +33,6 @@ import min from "date-fns/min";
 import max from "date-fns/max";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
-import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
 import differenceInCalendarYears from "date-fns/differenceInCalendarYears";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
@@ -272,16 +269,7 @@ export { addMinutes, addDays, addWeeks, addMonths, addQuarters, addYears };
 
 // *** Subtraction ***
 
-export {
-  addHours,
-  subMinutes,
-  subHours,
-  subDays,
-  subWeeks,
-  subMonths,
-  subQuarters,
-  subYears,
-};
+export { addHours, subDays, subWeeks, subMonths, subQuarters, subYears };
 
 // ** Date Comparison **
 

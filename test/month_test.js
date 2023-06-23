@@ -841,6 +841,40 @@ describe("Month", () => {
     expect(month.text()).to.equal("Feb");
   });
 
+  describe("custom renders", () => {
+    it("should render custom month content", () => {
+      function renderMonthContent() {
+        return <span>custom render</span>;
+      }
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate()}
+          renderMonthContent={renderMonthContent}
+          showMonthYearPicker
+        />
+      );
+      const month = monthComponent.find(".react-datepicker__month-text").at(0);
+      expect(month.find("span").at(0).text()).to.equal("custom render");
+    });
+
+    it("should render custom quarter content", () => {
+      function renderQuarterContent() {
+        return <span>custom render</span>;
+      }
+      const monthComponent = mount(
+        <Month
+          day={utils.newDate()}
+          renderQuarterContent={renderQuarterContent}
+          showQuarterYearPicker
+        />
+      );
+      const quarter = monthComponent
+        .find(".react-datepicker__quarter-text")
+        .at(0);
+      expect(quarter.find("span").at(0).text()).to.equal("custom render");
+    });
+  });
+
   describe("Keyboard navigation", () => {
     const renderQuarters = (props) =>
       shallow(<Month showQuarterYearPicker {...props} />);

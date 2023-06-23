@@ -199,6 +199,17 @@ describe("YearPicker", () => {
     }
   });
 
+  it("should render custom year content", () => {
+    function renderYearContent() {
+      return <span>custom render</span>;
+    }
+    const yearComponent = mount(
+      <Year date={utils.newDate()} renderYearContent={renderYearContent} />
+    );
+    const year = yearComponent.find(".react-datepicker__year-text").at(0);
+    expect(year.find("span").at(0).text()).to.equal("custom render");
+  });
+
   describe("range", () => {
     it("should add range classes", () => {
       const yearComponent = mount(
