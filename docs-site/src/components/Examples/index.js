@@ -72,6 +72,9 @@ import DontCloseOnSelect from "../../examples/dontCloseOnSelect";
 import RenderCustomHeader from "../../examples/renderCustomHeader";
 import RenderCustomHeaderTwoMonths from "../../examples/renderCustomHeaderTwoMonths";
 import RenderCustomDay from "../../examples/renderCustomDay";
+import RenderCustomMonth from "../../examples/renderCustomMonth";
+import RenderCustomQuarter from "../../examples/renderCustomQuarter";
+import RenderCustomYear from "../../examples/renderCustomYear";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
@@ -169,6 +172,18 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom Day",
       component: RenderCustomDay,
+    },
+    {
+      title: "Custom Month",
+      component: RenderCustomMonth,
+    },
+    {
+      title: "Custom Quarter",
+      component: RenderCustomQuarter,
+    },
+    {
+      title: "Custom Year",
+      component: RenderCustomYear,
     },
     {
       title: "Custom calendar class name",

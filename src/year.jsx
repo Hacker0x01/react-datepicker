@@ -20,6 +20,7 @@ export default class Year extends React.Component {
     onYearMouseEnter: PropTypes.func.isRequired,
     onYearMouseLeave: PropTypes.func.isRequired,
     selectingDate: PropTypes.instanceOf(Date),
+    renderYearContent: PropTypes.func,
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
@@ -223,6 +224,10 @@ export default class Year extends React.Component {
     });
   };
 
+  getYearContent = (y) => {
+    return this.props.renderYearContent ? this.props.renderYearContent(y) : y;
+  };
+
   render() {
     const yearsList = [];
     const { date, yearItemNumber, onYearMouseEnter, onYearMouseLeave } =
@@ -249,7 +254,7 @@ export default class Year extends React.Component {
           key={y}
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
-          {y}
+          {this.getYearContent(y)}
         </div>
       );
     }

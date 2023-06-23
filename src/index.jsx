@@ -119,10 +119,6 @@ export default class DatePicker extends React.Component {
       timeInputLabel: "Time",
       enableTabLoop: true,
       yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER,
-
-      renderDayContents(date) {
-        return date;
-      },
       focusSelectedMonth: false,
       showPopperArrow: true,
       excludeScrollbar: true,
@@ -282,6 +278,9 @@ export default class DatePicker extends React.Component {
     timeInputLabel: PropTypes.string,
     renderCustomHeader: PropTypes.func,
     renderDayContents: PropTypes.func,
+    renderMonthContent: PropTypes.func,
+    renderQuarterContent: PropTypes.func,
+    renderYearContent: PropTypes.func,
     wrapperClassName: PropTypes.string,
     focusSelectedMonth: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
@@ -1010,6 +1009,9 @@ export default class DatePicker extends React.Component {
         renderCustomHeader={this.props.renderCustomHeader}
         popperProps={this.props.popperProps}
         renderDayContents={this.props.renderDayContents}
+        renderMonthContent={this.props.renderMonthContent}
+        renderQuarterContent={this.props.renderQuarterContent}
+        renderYearContent={this.props.renderYearContent}
         onDayMouseEnter={this.props.onDayMouseEnter}
         onMonthMouseLeave={this.props.onMonthMouseLeave}
         onYearMouseEnter={this.props.onYearMouseEnter}

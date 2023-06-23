@@ -103,6 +103,8 @@ export default class Month extends React.Component {
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
     renderDayContents: PropTypes.func,
+    renderMonthContent: PropTypes.func,
+    renderQuarterContent: PropTypes.func,
     showMonthYearPicker: PropTypes.bool,
     showFullMonthYearPicker: PropTypes.bool,
     showTwoColumnMonthYearPicker: PropTypes.bool,
@@ -618,12 +620,28 @@ export default class Month extends React.Component {
     );
   };
 
+  getMonthContent = (m) => {
+    const { showFullMonthYearPicker, renderMonthContent, locale } = this.props;
+    const shortMonthText = utils.getMonthShortInLocale(m, locale);
+    const fullMonthText = utils.getMonthInLocale(m, locale);
+    if (renderMonthContent) {
+      return renderMonthContent(m, shortMonthText, fullMonthText);
+    }
+    return showFullMonthYearPicker ? fullMonthText : shortMonthText;
+  };
+
+  getQuarterContent = (q) => {
+    const { renderQuarterContent, locale } = this.props;
+    const shortQuarter = utils.getQuarterShortInLocale(q, locale);
+    return renderQuarterContent
+      ? renderQuarterContent(q, shortQuarter)
+      : shortQuarter;
+  };
+
   renderMonths = () => {
     const {
-      showFullMonthYearPicker,
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
-      locale,
       day,
       selected,
     } = this.props;
@@ -655,9 +673,7 @@ export default class Month extends React.Component {
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
             aria-selected={this.isSelectedMonth(day, m, selected)}
           >
-            {showFullMonthYearPicker
-              ? utils.getMonthInLocale(m, locale)
-              : utils.getMonthShortInLocale(m, locale)}
+            {this.getMonthContent(m)}
           </div>
         ))}
       </div>
@@ -686,7 +702,7 @@ export default class Month extends React.Component {
             tabIndex={this.getQuarterTabIndex(q)}
             aria-current={this.isCurrentQuarter(day, q) ? "date" : undefined}
           >
-            {utils.getQuarterShortInLocale(q, this.props.locale)}
+            {this.getQuarterContent(q)}
           </div>
         ))}
       </div>
