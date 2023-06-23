@@ -38,14 +38,14 @@ export default class TabLoop extends React.Component {
       )
       .filter(focusableFilter);
 
-  handleFocusStart = (e) => {
+  handleFocusStart = () => {
     const tabChildren = this.getTabChildren();
     tabChildren &&
       tabChildren.length > 1 &&
       tabChildren[tabChildren.length - 1].focus();
   };
 
-  handleFocusEnd = (e) => {
+  handleFocusEnd = () => {
     const tabChildren = this.getTabChildren();
     tabChildren && tabChildren.length > 1 && tabChildren[0].focus();
   };
