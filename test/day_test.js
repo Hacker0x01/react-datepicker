@@ -1,5 +1,5 @@
 import React from "react";
-import { es, enUS } from "date-fns/locale";
+import { es } from "date-fns/locale";
 import Day from "../src/day";
 import { mount, shallow } from "enzyme";
 import defer from "lodash/defer";
@@ -11,7 +11,6 @@ import {
   addDays,
   subDays,
   getMonth,
-  newDateWithOffset,
   getHightLightDaysMap,
   registerLocale,
 } from "../src/date_utils";

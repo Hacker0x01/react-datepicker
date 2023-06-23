@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Month from "../src/month";
 import Day from "../src/day";
 import range from "lodash/range";

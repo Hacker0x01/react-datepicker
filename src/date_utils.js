@@ -35,7 +35,6 @@ import min from "date-fns/min";
 import max from "date-fns/max";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
-import differenceInCalendarWeeks from "date-fns/differenceInCalendarWeeks";
 import differenceInCalendarYears from "date-fns/differenceInCalendarYears";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";

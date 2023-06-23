@@ -1,7 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
 import * as utils from "../src/date_utils";
-import { setTime, newDate } from "../src/date_utils";
 import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {

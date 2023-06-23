@@ -14,7 +14,6 @@ import * as utils from "../src/date_utils";
 import eo from "date-fns/locale/eo";
 import fi from "date-fns/locale/fi";
 import { isSunday } from "date-fns";
-import Time from "../src/time";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/dd/yyyy";
