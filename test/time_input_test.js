@@ -86,7 +86,7 @@ describe("timeInput", () => {
     });
   });
 
-  xit("should update input value if time is updated from outside", (done) => {
+  xit("should update input value if time is updated from outside", () => {
     const timeComponent = mount(
       <InputTimeComponent date={new Date()} timeString="13:00" />
     );

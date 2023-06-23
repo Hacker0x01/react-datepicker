@@ -29,7 +29,7 @@ describe("Month", () => {
 
   xit("should apply className returned from passed monthClassName prop function", () => {
     const className = "customClassName";
-    const monthClassNameFunc = (date) => className;
+    const monthClassNameFunc = () => className;
     const month = shallow(
       <Month day={utils.newDate()} monthClassName={monthClassNameFunc} />
     );
