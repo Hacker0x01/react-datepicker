@@ -52,7 +52,7 @@
     "babel-preset-airbnb": "^5.0.0",
     "chai": "^4.2.0",
     "codecov": "^3.5.0",
-    "core-js": "^3.2.1",
+    "core-js": "^3.29.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
     "enzyme": "^3.10.0",
