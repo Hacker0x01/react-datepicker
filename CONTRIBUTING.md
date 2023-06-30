@@ -12,6 +12,8 @@ Please send a [GitHub Pull Request](https://github.com/Hacker0x01/react-datepick
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 \$ git commit -m "A summary of the commit > > A paragraph describing what changed and its impact."
 
+All pull requests are reviewed with :heart: by [PullRequest](https://www.pullrequest.com/).
+
 ## Coding conventions
 
 Start reading our code, and you'll get the hang of it. We optimize for readability:
