@@ -18,7 +18,7 @@ import getMinutes from "date-fns/getMinutes";
 import getHours from "date-fns/getHours";
 import getDay from "date-fns/getDay";
 import getDate from "date-fns/getDate";
-import getWeek from "date-fns/getWeek";
+import getWeekOfDate from "date-fns/getWeek";
 import getMonth from "date-fns/getMonth";
 import getQuarter from "date-fns/getQuarter";
 import getYear from "date-fns/getYear";
@@ -212,7 +212,7 @@ export function getWeek(date, locale) {
   let localeObj =
     (locale && getLocaleObject(locale)) ||
     (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
-  return getWeek(date, localeObj ? { locale: localeObj } : null);
+  return getWeekOfDate(date, localeObj ? { locale: localeObj } : null);
 }
 
 export function getDayOfWeekCode(day, locale) {
