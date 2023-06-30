@@ -97,7 +97,7 @@
     "style-loader": "^2.0.0",
     "stylelint": "^14.1.0",
     "stylelint-config-standard": "^24.0.0",
-    "stylelint-scss": "^4.0.0",
+    "stylelint-scss": "^5.0.1",
     "webpack": "^4.39.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-middleware": "^5.0.0",
