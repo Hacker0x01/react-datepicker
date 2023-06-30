@@ -1,19 +1,21 @@
-// @flow
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-export default class WeekNumber extends React.Component<{
-  weekNumber: number,
-  onClick?: Function,
-  ariaLabelPrefix?: string,
-}> {
+export default class WeekNumber extends React.Component {
+  static get defaultProps() {
+    return {
+      ariaLabelPrefix: "week ",
+    };
+  }
+
   static propTypes = {
     weekNumber: PropTypes.number.isRequired,
     onClick: PropTypes.func,
+    ariaLabelPrefix: PropTypes.string,
   };
 
-  handleClick = (event: any) => {
+  handleClick = (event) => {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
