@@ -3,7 +3,7 @@ import range from "lodash/range";
 import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
 import { mount } from "enzyme";
-import { newDate, getMonthInLocale, registerLocale } from "../src/date_utils";
+import { getMonthInLocale, registerLocale } from "../src/date_utils";
 import zh_cn from "date-fns/locale/zh-CN";
 import el from "date-fns/locale/el";
 import ru from "date-fns/locale/ru";

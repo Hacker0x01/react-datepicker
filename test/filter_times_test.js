@@ -1,7 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
 import { getHours } from "../src/date_utils";
-import DatePicker from "../src/index.jsx";
 import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {

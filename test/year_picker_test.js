@@ -3,7 +3,6 @@ import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import Year from "../src/year";
 import TestUtils from "react-dom/test-utils";
-import { create } from "react-test-renderer";
 import ReactDOM from "react-dom";
 import * as utils from "../src/date_utils";
 import Calendar from "../src/calendar";

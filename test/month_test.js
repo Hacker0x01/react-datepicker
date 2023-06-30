@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Month from "../src/month";
 import Day from "../src/day";
 import range from "lodash/range";
@@ -30,7 +29,7 @@ describe("Month", () => {
 
   xit("should apply className returned from passed monthClassName prop function", () => {
     const className = "customClassName";
-    const monthClassNameFunc = (date) => className;
+    const monthClassNameFunc = () => className;
     const month = shallow(
       <Month day={utils.newDate()} monthClassName={monthClassNameFunc} />
     );

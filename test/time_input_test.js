@@ -4,7 +4,6 @@ import { mount, shallow } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import InputTimeComponent from "../src/inputTime";
 import CustomTimeInput from "./helper_components/custom_time_input";
-import { newDate } from "../src/date_utils.js";
 
 describe("timeInput", () => {
   let sandbox;
@@ -87,7 +86,7 @@ describe("timeInput", () => {
     });
   });
 
-  xit("should update input value if time is updated from outside", (done) => {
+  xit("should update input value if time is updated from outside", () => {
     const timeComponent = mount(
       <InputTimeComponent date={new Date()} timeString="13:00" />
     );

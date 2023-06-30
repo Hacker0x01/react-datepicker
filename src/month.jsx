@@ -711,7 +711,6 @@ export default class Month extends React.Component {
 
   getClassNames = () => {
     const {
-      day,
       selectingDate,
       selectsStart,
       selectsEnd,
