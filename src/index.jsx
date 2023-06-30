@@ -1080,7 +1080,7 @@ export default class DatePicker extends React.Component {
             locale,
           }
         )}`;
-      } /*if (this.props.showDateSelect)*/ else {
+      } else {
         ariaLiveMessage = `Selected date: ${safeDateFormat(
           this.props.selected,
           {
