@@ -16,6 +16,7 @@
 | `onYearMouseEnter` (required) | `func`           |               |             |
 | `onYearMouseLeave` (required) | `func`           |               |             |
 | `preSelection`                | `instanceOfDate` |               |             |
+| `renderYearContent`           | `func`           |               |             |
 | `selected`                    | `object`         |               |             |
 | `selectingDate`               | `instanceOfDate` |               |             |
 | `selectsEnd`                  | `bool`           |               |             |
