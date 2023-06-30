@@ -13,6 +13,7 @@ Always write a clear log message for your commits. One-line messages are fine fo
 \$ git commit -m "A summary of the commit > > A paragraph describing what changed and its impact."
 
 All pull requests are reviewed with :heart: by [PullRequest](https://www.pullrequest.com/).
+The GitHub user persona will be displayed as "pullrequest (bot)" but the written contents are from a human software engineer. You can respond to these comments as if they were any other GitHub user. More [here](https://docs.pullrequest.com/customer-documentation/assign-code-review-to-pull-request-network/collaborating-with-pullrequest-reviewers#addressing-pullrequest-reviewers-in-comments).
 
 ## Coding conventions
 
