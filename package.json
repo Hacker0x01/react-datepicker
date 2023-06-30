@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@babel/eslint-parser": "^7.22.5",
     "@babel/helpers": "^7.5.5",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -44,7 +45,6 @@
     "@babel/preset-react": "^7.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
     "axe-core": "^4.4.1",
-    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-react-transform": "^3.0.0",

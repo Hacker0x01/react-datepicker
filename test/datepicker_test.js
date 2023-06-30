@@ -295,6 +295,7 @@ describe("DatePicker", () => {
         selected={utils.newDate()}
         inline
         onChange={(d) => {
+          // eslint-disable-next-line
           var date = d;
         }}
       />
@@ -1462,7 +1463,7 @@ describe("DatePicker", () => {
   });
   it("should fire onInputClick when input is clicked", () => {
     const onInputClickSpy = sinon.spy();
-    var datePicker = mount(<DatePicker onInputClick={onInputClickSpy} />)
+    mount(<DatePicker onInputClick={onInputClickSpy} />)
       .find("input")
       .simulate("click");
     assert(onInputClickSpy.callCount, 1);
@@ -1938,7 +1939,7 @@ describe("DatePicker", () => {
     const datePicker = mount(<DatePicker locale="en-GB" />);
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
-    const focusSpy = sandbox.spy(dateInput, "focus");
+    sandbox.spy(dateInput, "focus");
 
     dateInputWrapper.simulate("focus");
 
@@ -1955,7 +1956,7 @@ describe("DatePicker", () => {
     const datePicker = mount(<DatePicker locale="en-US" />);
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
-    const focusSpy = sandbox.spy(dateInput, "focus");
+    sandbox.spy(dateInput, "focus");
 
     dateInputWrapper.simulate("focus");
 
