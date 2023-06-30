@@ -61,7 +61,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "express": "^4.17.1",
     "highlight.js": "^11.0.1",
-    "husky": "7",
+    "husky": "8",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^6.4.2",
     "karma-chai": "^0.1.0",
