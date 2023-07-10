@@ -2111,9 +2111,9 @@ describe("DatePicker", () => {
     );
     let showIconClass = TestUtils.findRenderedDOMComponentWithClass(
       datePicker,
-      "react-datepicker__input-container "
+      "react-datepicker__input-container"
     ).getAttribute("class");
-    expect(showIconClass).to.equal("react-datepicker__input-container ");
+    expect(showIconClass).to.equal("react-datepicker__input-container");
   });
 
   it("should display the Calendar icon if showIcon is set to true", () => {
