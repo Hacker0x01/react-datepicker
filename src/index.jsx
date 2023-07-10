@@ -1188,8 +1188,8 @@ export default class DatePicker extends React.Component {
     const { showIcon } = this.props;
     return (
       <div
-        className={`react-datepicker__input-container ${
-          showIcon ? "react-datepicker__view-calendar-icon" : ""
+        className={`react-datepicker__input-container${
+          showIcon ? " react-datepicker__view-calendar-icon" : ""
         }`}
       >
         {showIcon && (
