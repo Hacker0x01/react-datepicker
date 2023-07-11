@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/react-datepicker.svg)](https://badge.fury.io/js/react-datepicker)
 [![Test suite](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml/badge.svg)](https://github.com/Hacker0x01/react-datepicker/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/master/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
+[![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/main/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](https://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
 
 A simple and reusable Datepicker component for React ([Demo](https://reactdatepicker.com/))
@@ -62,7 +62,7 @@ You can use `onSelect` event handler which fires each time some calendar date ha
 
 `onClickOutside` handler may be useful to close datepicker in `inline` mode
 
-See [here](https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
+See [here](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
 
 ### Time picker
 
@@ -130,7 +130,7 @@ Unfortunately, it is difficult to support legacy browsers while maintaining our 
 
 ## Local Development
 
-The `master` branch contains the latest version of the Datepicker component.
+The `main` branch contains the latest version of the Datepicker component.
 
 To begin local development:
 

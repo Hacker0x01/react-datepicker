@@ -8,7 +8,7 @@ We have a handful of Cucumber features, but most of our testbed consists of RSpe
 
 ## Submitting changes
 
-Please send a [GitHub Pull Request](https://github.com/Hacker0x01/react-datepicker/pull/new/master) with a clear list of what you've done (read more about [pull requests](https://help.github.com/articles/about-pull-requests/)). When you send a pull request, we will love you forever if you include a test to cover your changes. We can always use more test coverage.
+Please send a [GitHub Pull Request](https://github.com/Hacker0x01/react-datepicker/pull/new/main) with a clear list of what you've done (read more about [pull requests](https://help.github.com/articles/about-pull-requests/)). When you send a pull request, we will love you forever if you include a test to cover your changes. We can always use more test coverage.
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 \$ git commit -m "A summary of the commit > > A paragraph describing what changed and its impact."
 
