@@ -25,7 +25,7 @@ jobs:
       - name: Set Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.x # https://github.com/facebook/create-react-app/issues/12977 - openssl issue on node 18
 
       - name: Install dependencies
         run: yarn install
