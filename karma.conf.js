@@ -25,6 +25,9 @@ module.exports = function (config) {
             test: /\.jsx?$/,
             exclude: /node_modules/,
             loader: "babel-loader",
+            options: {
+              presets: ["airbnb"],
+            },
           },
           {
             test: /\.jsx?$/,
