@@ -1,5 +1,4 @@
 // Karma configuration
-const webpack = require("webpack");
 const path = require("path");
 
 module.exports = function (config) {
@@ -25,7 +24,7 @@ module.exports = function (config) {
             test: /\.jsx?$/,
             exclude: /node_modules/,
             loader: "babel-loader",
-            query: {
+            options: {
               presets: ["airbnb"],
             },
           },
@@ -43,11 +42,6 @@ module.exports = function (config) {
           },
         ],
       },
-      plugins: [
-        new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify("test"),
-        }),
-      ],
       resolve: {
         extensions: [".jsx", ".js"],
       },

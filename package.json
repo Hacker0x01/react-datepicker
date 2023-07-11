@@ -71,7 +71,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.4.0",
-    "karma-webpack": "^4.0.2",
+    "karma-webpack": "^5.0.0",
     "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "prettier": "^2.0.5",
@@ -98,10 +98,10 @@
     "stylelint": "^15.10.1",
     "stylelint-config-standard": "^24.0.0",
     "stylelint-scss": "^5.0.1",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-middleware": "^5.0.0",
-    "webpack-dev-server": "^3.8.0",
+    "webpack": "^5.88",
+    "webpack-cli": "^5.1",
+    "webpack-dev-middleware": "^5.3.3",
+    "webpack-dev-server": "^4.15",
     "webpack-hot-middleware": "^2.25.0"
   },
   "peerDependencies": {
