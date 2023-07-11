@@ -11,19 +11,14 @@ object-assign
 */
 
 /*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
-/*!
  * regjsgen 0.5.0
  * Copyright 2014-2018 Benjamin Tan <https://bnjmnt4n.now.sh/>
  * Available under MIT license <https://github.com/bnjmnt4n/regjsgen/blob/master/LICENSE>
  */
 
 /*! https://mths.be/regenerate v1.3.3 by @mathias | MIT license */
+
+/*! https://mths.be/regenerate v1.4.2 by @mathias | MIT license */
 
 /**
  * @license React
