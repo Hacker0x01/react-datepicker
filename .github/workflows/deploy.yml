@@ -23,9 +23,9 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Set Node.js
-        uses: actions/setup-node@master
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Install dependencies
         run: yarn install
