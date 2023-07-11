@@ -58,7 +58,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.0",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "express": "^4.17.1",
     "highlight.js": "^11.0.1",
     "husky": "8",
