@@ -114,6 +114,7 @@
 | `selectsRange`                  | `bool`                         |                            |             |
 | `selectsStart`                  | `bool`                         |                            |             |
 | `shouldCloseOnSelect`           | `bool`                         | `true`                     |             |
+| `showDateSelect`                | `bool`                         |                            |             |
 | `showDisabledMonthNavigation`   | `bool`                         |                            |             |
 | `showFourColumnMonthYearPicker` | `bool`                         | `false`                    |             |
 | `showFullMonthYearPicker`       | `bool`                         | `false`                    |             |
