@@ -2,7 +2,7 @@ name: "Deploy docs site"
 
 on:
   push:
-    branches: [main, jah/check-deploy]
+    branches: [main]
 
 jobs:
   build:
