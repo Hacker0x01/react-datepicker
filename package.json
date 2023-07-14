@@ -80,7 +80,7 @@
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "react-transform-hmr": "^1.0.4",
-    "rollup": "^2.32.0",
+    "rollup": "^3.26.2",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-filesize": "^10.0.0",
