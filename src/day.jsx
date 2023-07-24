@@ -15,6 +15,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   formatDate,
+  isHoliday,
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -73,6 +74,8 @@ export default class Day extends React.Component {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
+
+    console.log(this.props.day);
   };
 
   handleOnKeyDown = (event) => {
@@ -234,6 +237,8 @@ export default class Day extends React.Component {
 
   isSelected = () => this.isSameDay(this.props.selected);
 
+  isHoliday = (date) => isHoliday(date);
+
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
@@ -259,8 +264,10 @@ export default class Day extends React.Component {
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
+        "react-datepicker__day--holiday":
+          !this.isSelected() && this.isHoliday(date),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
     );
   };
 
@@ -335,14 +342,31 @@ export default class Day extends React.Component {
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
 
+  renderDateWithDescription = () => {
+    const { description } = this.isHoliday(this.props.day) || {};
+
+    return (
+      <>
+        {!this.isSelected() && description && (
+          <span class="tooltip-text">{description}</span>
+        )}
+
+        {getDate(this.props.day)}
+      </>
+    );
+  };
+
   renderDayContents = () => {
     if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
       return null;
     if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
       return null;
     return this.props.renderDayContents
-      ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
-      : getDate(this.props.day);
+      ? this.props.renderDayContents(
+          this.renderDateWithDescription(this.props.day),
+          this.props.day,
+        )
+      : this.renderDateWithDescription(this.props.day);
   };
 
   render = () => (
