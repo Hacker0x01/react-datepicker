@@ -74,8 +74,6 @@ export default class Day extends React.Component {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
-
-    console.log(this.props.day);
   };
 
   handleOnKeyDown = (event) => {

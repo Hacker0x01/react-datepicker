@@ -683,13 +683,6 @@
   border-radius: 0.3rem;
   position: relative;
 
-  // .tooltip {
-  //   visibility: hidden;
-
-  //   &:hover {
-  //     visibility: visible;
-  //   }
-
   .tooltip-text {
     display: none;
     width: 120px;
@@ -714,7 +707,6 @@
       border-style: solid;
       border-color: black transparent transparent transparent;
     }
-    // }
   }
 
   &:hover {
