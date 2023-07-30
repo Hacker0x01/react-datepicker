@@ -134,6 +134,21 @@ export default class Time extends React.Component {
       event.key = "Enter";
     }
 
+    if (
+      (event.key === "ArrowUp" || event.key === "ArrowLeft") &&
+      event.target.previousSibling
+    ) {
+      event.preventDefault();
+      event.target.previousSibling.focus();
+    }
+    if (
+      (event.key === "ArrowDown" || event.key === "ArrowRight") &&
+      event.target.nextSibling
+    ) {
+      event.preventDefault();
+      event.target.nextSibling.focus();
+    }
+
     if (event.key === "Enter") {
       this.handleClick(time);
     }
@@ -175,27 +190,39 @@ export default class Time extends React.Component {
       }
     }
 
-    return times.map((time, i) => (
-      <li
-        key={i}
-        onClick={this.handleClick.bind(this, time)}
-        className={this.liClasses(time, currH, currM)}
-        ref={(li) => {
-          if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
-            this.centerLi = li;
+    // Determine which time to focus and scroll into view when component mounts
+    const timeToFocus = times.reduce((prev, time) => {
+      if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
+        return time;
+      } else {
+        return prev;
+      }
+    }, times[0]);
+
+    return times.map((time, i) => {
+      return (
+        <li
+          key={i}
+          onClick={this.handleClick.bind(this, time)}
+          className={this.liClasses(time, currH, currM)}
+          ref={(li) => {
+            if (time === timeToFocus) {
+              this.centerLi = li;
+            }
+          }}
+          onKeyDown={(ev) => {
+            this.handleOnKeyDown(ev, time);
+          }}
+          tabIndex={time === timeToFocus ? "0" : "-1"}
+          role="option"
+          aria-selected={
+            this.isSelectedTime(time, currH, currM) ? "true" : undefined
           }
-        }}
-        onKeyDown={(ev) => {
-          this.handleOnKeyDown(ev, time);
-        }}
-        tabIndex="0"
-        aria-selected={
-          this.isSelectedTime(time, currH, currM) ? "true" : undefined
-        }
-      >
-        {formatDate(time, format, this.props.locale)}
-      </li>
-    ));
+        >
+          {formatDate(time, format, this.props.locale)}
+        </li>
+      );
+    });
   };
 
   render() {
@@ -231,7 +258,8 @@ export default class Time extends React.Component {
                 this.list = list;
               }}
               style={height ? { height } : {}}
-              tabIndex="0"
+              role="listbox"
+              aria-label={this.props.timeCaption}
             >
               {this.renderTimes()}
             </ul>

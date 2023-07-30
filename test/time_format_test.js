@@ -110,6 +110,21 @@ describe("TimeComponent", () => {
       expect(timeListItem.at(0).prop("aria-selected")).to.eq("true");
     });
 
+    it("should enable keyboard focus on the selected item", () => {
+      var timeComponent = mount(
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:00")}
+          openToDate={new Date("1990-06-14 09:00")}
+        />
+      );
+
+      var timeListItem = timeComponent.find(
+        ".react-datepicker__time-list-item--selected"
+      );
+      expect(timeListItem.at(0).prop("tabIndex")).to.equal("0");
+    });
+
     it("should not add the aria-selected property to a regular item", () => {
       var timeComponent = mount(
         <TimeComponent
@@ -123,6 +138,39 @@ describe("TimeComponent", () => {
         ".react-datepicker__time-list-item"
       );
       expect(timeListItem.at(0).prop("aria-selected")).to.be.undefined;
+    });
+
+    it("should disable keyboard focus on a regular item", () => {
+      var timeComponent = mount(
+        <TimeComponent
+          format="HH:mm"
+          selected={new Date("1990-06-14 08:00")}
+          openToDate={new Date("1990-06-14 09:00")}
+        />
+      );
+
+      var timeListItem = timeComponent.find(
+        ".react-datepicker__time-list-item"
+      );
+      expect(timeListItem.at(0).prop("tabIndex")).to.equal("-1");
+    });
+
+    it("when no selected time, should focus the time closest to the opened time", () => {
+      var timeComponent = mount(
+        <TimeComponent
+          format="HH:mm"
+          openToDate={new Date("1990-06-14 09:11")}
+        />
+      );
+
+      var timeListItem = timeComponent.find(
+        ".react-datepicker__time-list-item"
+      );
+      expect(
+        timeListItem
+          .findWhere((node) => node.type() && node.text() === "09:00")
+          .prop("tabIndex")
+      ).to.equal("0");
     });
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {
