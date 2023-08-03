@@ -98,6 +98,7 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
+import holidayhighlight from "../../examples/holidayhighlight";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -288,6 +289,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Highlight dates with custom class names and ranges",
       component: HighlightDatesRanges,
+    },
+    {
+      title: "Highlight holiday dates",
+      component: holidayhighlight,
     },
     {
       title: "Include dates",
@@ -526,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`
+                    `example-${slugify(example.title, { lower: true })}`,
                   )
                 }
               >

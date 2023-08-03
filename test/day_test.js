@@ -13,6 +13,7 @@ import {
   getMonth,
   getHightLightDaysMap,
   registerLocale,
+  getHightLightHolidaysMap,
 } from "../src/date_utils";
 
 function renderDay(day, props = {}) {
@@ -202,6 +203,93 @@ describe("Day", () => {
         const highlightDay2 = { barClassName: [newDate(day)] };
         const highlightDay3 = newDate(day);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
+        const highlightDatesMap = getHightLightDaysMap(highlightDates);
+        const shallowDay = renderDay(day, {
+          highlightDates: highlightDatesMap,
+        });
+        expect(shallowDay.hasClass("fooClassName")).to.equal(true);
+        expect(shallowDay.hasClass("barClassName")).to.equal(true);
+        expect(shallowDay.hasClass(className)).to.equal(true);
+      });
+    });
+  });
+
+  describe("Holiday highlighted", () => {
+    const className = "react-datepicker__day--highlighted-holiday";
+
+    it("should apply the highlighted-holiday class if in highlightedHoliday array", () => {
+      const day = newDate();
+      const highlightedHoliday1 = newDate(day);
+      const hhighlightedHoliday2 = addDays(day, 1);
+      const highlightedHoliday = [highlightedHoliday1, highlightedHoliday2];
+      const highlightDatesMap = getHightLightHolidaysMap(highlightedHoliday);
+      const shallowDay = renderDay(day, {
+        highlightedHoliday: highlightDatesMap,
+      });
+      expect(shallowDay.hasClass(className)).to.equal(true);
+    });
+
+    it("should not apply the highlighted-holiday class if not in highlightedHoliday array", () => {
+      const day = newDate();
+      const highlightedHoliday1 = subDays(day, 1);
+      const highlightedHoliday2 = addDays(day, 1);
+      const highlightedHoliday = [highlightedHoliday1, highlightedHoliday2];
+      const highlightDatesMap = getHightLightDaysMap(highlightedHoliday);
+      const shallowDay = renderDay(day, {
+        highlightedHoliday: highlightDatesMap,
+      });
+      expect(shallowDay.hasClass(className)).to.equal(false);
+    });
+
+    describe("prop is an array of objects with class name as a key and array of moments as a value", () => {
+      it("should apply the highlighted-holiday class if in highlightedHoliday", () => {
+        const day = newDate();
+        const highlightedHoliday1 = {
+          testClassName: [addDays(day, 1), newDate(day)],
+        };
+        const highlightedHoliday2 = addDays(day, 2);
+        const highlightedHoliday3 = addDays(day, 3);
+        const highlightDates = [
+          highlightedHoliday1,
+          highlightedHoliday2,
+          highlightedHoliday3,
+        ];
+        const highlightedHoliday = getHightLightDaysMap(highlightDates);
+        const shallowDay = renderDay(day, {
+          highlightedHoliday: highlightDatesMap,
+        });
+        expect(shallowDay.hasClass("testClassName")).to.equal(true);
+      });
+
+      it("should not apply the highlighted-holiday class if not in highlightedHoliday array", () => {
+        const day = newDate();
+        const highlightedHoliday1 = {
+          testClassName: [addDays(day, 1), addDays(day, 2)],
+        };
+        const highlightedHoliday2 = addDays(day, 3);
+        const highlightedHoliday3 = addDays(day, 4);
+        const highlightDates = [
+          highlightedHoliday1,
+          highlightedHoliday2,
+          highlightedHoliday3,
+        ];
+        const highlightDatesMap = getHightLightDaysMap(highlightDates);
+        const shallowDay = renderDay(day, {
+          highlightDates: highlightDatesMap,
+        });
+        expect(shallowDay.hasClass("testClassName")).to.equal(false);
+      });
+
+      it("should apply the highlighted classes even if the same day in highlighted array", () => {
+        const day = newDate();
+        const highlightedHoliday1 = { fooClassName: [newDate(day)] };
+        const highlightedHoliday2 = { barClassName: [newDate(day)] };
+        const highlightedHoliday3 = newDate(day);
+        const highlightDates = [
+          highlightedHoliday1,
+          highlightedHoliday2,
+          highlightedHoliday3,
+        ];
         const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
@@ -663,7 +751,7 @@ describe("Day", () => {
     it("should hide days outside month at end when duplicates", () => {
       const day = newDate("2021-03-17");
       const wrapper = mount(
-        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />
+        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />,
       );
       expect(wrapper.text()).to.be.empty;
     });
@@ -677,7 +765,11 @@ describe("Day", () => {
     it("should hide days outside month at start when duplicates", () => {
       const day = newDate("2020-10-05");
       const wrapper = mount(
-        <Day day={day} month={getMonth(day) + 1} monthShowsDuplicateDaysStart />
+        <Day
+          day={day}
+          month={getMonth(day) + 1}
+          monthShowsDuplicateDaysStart
+        />,
       );
       expect(wrapper.text()).to.be.empty;
     });
@@ -696,7 +788,7 @@ describe("Day", () => {
           month={getMonth(day)}
           monthShowsDuplicateDaysStart
           monthShowsDuplicateDaysEnd
-        />
+        />,
       );
       expect(wrapper.text()).to.equal(day.getDate().toString());
     });
@@ -759,7 +851,7 @@ describe("Day", () => {
         ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled,
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`),
       ).not.equal(-1);
     });
 
@@ -770,7 +862,7 @@ describe("Day", () => {
         excludeDates: [day],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
       ).not.equal(-1);
     });
 
@@ -783,7 +875,7 @@ describe("Day", () => {
         ],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
       ).not.equal(-1);
     });
 
@@ -791,7 +883,7 @@ describe("Day", () => {
       const day = newDate("2021-05-26");
       const shallowDay = renderDay(day);
       expect(shallowDay.html().indexOf("Wednesday, May 26th, 2021")).not.equal(
-        -1
+        -1,
       );
     });
 
@@ -802,7 +894,7 @@ describe("Day", () => {
         locale: "es",
       });
       expect(
-        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021")
+        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021"),
       ).not.equal(-1);
     });
   });
@@ -828,7 +920,7 @@ describe("Day", () => {
     it("should not call onClick if day is disabled", () => {
       const day = newDate();
       const dayNode = shallow(
-        <Day day={day} excludeDates={[day]} onClick={onClick} />
+        <Day day={day} excludeDates={[day]} onClick={onClick} />,
       );
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).to.be.false;
@@ -843,7 +935,7 @@ describe("Day", () => {
             { start: subDays(day, 1), end: addDays(day, 1) },
           ]}
           onClick={onClick}
-        />
+        />,
       );
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).to.be.false;
@@ -998,7 +1090,7 @@ describe("Day", () => {
     xit("should apply focus to the preselected day", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} />
+        <Day day={day} preSelection={day} />,
       ).instance();
 
       sandbox.spy(dayInstance.dayEl.current, "focus");
@@ -1013,7 +1105,7 @@ describe("Day", () => {
     xit("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} inline />
+        <Day day={day} preSelection={day} inline />,
       ).instance();
 
       sandbox.spy(dayInstance.dayEl.current, "focus");

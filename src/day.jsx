@@ -26,6 +26,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    highlightHolidayDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
@@ -105,7 +106,28 @@ export default class Day extends React.Component {
 
     // Looking for className in the Map of {'day string, 'className'}
     const dayStr = formatDate(day, "MM.dd.yyyy");
+
     return highlightDates.get(dayStr);
+  };
+
+  getHighLightedHolidayDetail = (type) => {
+    const { day, highlightHolidayDates } = this.props;
+
+    if (!highlightHolidayDates) {
+      return false;
+    }
+    let classname = "";
+    let holidayname = "";
+    // Looking for className in the Map of {'day string, 'className'}
+    const dayStr = formatDate(day, "MM.dd.yyyy");
+    if (type === "classname") {
+      classname = highlightHolidayDates.get(dayStr)?.class;
+      return classname;
+    } else if (type === "holidayname");
+    {
+      holidayname = highlightHolidayDates.get(dayStr)?.name;
+      return holidayname;
+    }
   };
 
   isInRange = () => {
@@ -260,7 +282,8 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHighLightedHolidayDetail("classname"),
     );
   };
 
@@ -358,6 +381,7 @@ export default class Day extends React.Component {
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
       aria-selected={this.isSelected() || this.isInRange()}
+      data-tooltip={this.getHighLightedHolidayDetail("holidayname")}
     >
       {this.renderDayContents()}
     </div>

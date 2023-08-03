@@ -42,6 +42,7 @@ import {
   isSameDay,
   isMonthDisabled,
   isYearDisabled,
+  getHightLightHolidaysMap,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -163,13 +164,14 @@ export default class DatePicker extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      })
+      }),
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     form: PropTypes.string,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
+    highlightHolidayDates: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
@@ -323,6 +325,13 @@ export default class DatePicker extends React.Component {
         highlightDates: getHightLightDaysMap(this.props.highlightDates),
       });
     }
+    if (prevProps.highlightHolidayDates !== this.props.highlightHolidayDates) {
+      this.setState({
+        highlightHolidayDates: getHightLightHolidaysMap(
+          this.props.highlightHolidayDates,
+        ),
+      });
+    }
     if (
       !prevState.focused &&
       !isEqual(prevProps.selected, this.props.selected)
@@ -375,6 +384,9 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      highlightHolidayDates: getHightLightHolidaysMap(
+        this.props.highlightHolidayDates,
+      ),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render
@@ -423,10 +435,10 @@ export default class DatePicker extends React.Component {
               !skipSetBlur && this.setBlur();
 
               this.setState({ inputValue: null });
-            }
+            },
           );
         }
-      }
+      },
     );
   };
   inputOk = () => isDate(this.state.preSelection);
@@ -498,7 +510,7 @@ export default class DatePicker extends React.Component {
       this.props.dateFormat,
       this.props.locale,
       this.props.strictParsing,
-      this.props.minDate
+      this.props.minDate,
     );
     // Use date from `selected` prop when manipulating only time for input value
     if (
@@ -531,7 +543,7 @@ export default class DatePicker extends React.Component {
     this.setState({ preventFocus: true }, () => {
       this.preventFocusTimeout = setTimeout(
         () => this.setState({ preventFocus: false }),
-        50
+        50,
       );
       return this.preventFocusTimeout;
     });
@@ -644,7 +656,7 @@ export default class DatePicker extends React.Component {
         isValidDateSelection = isDayInRange(
           date,
           this.props.minDate,
-          this.props.maxDate
+          this.props.maxDate,
         );
       } else if (hasMinDate) {
         const minDateStartOfDay = startOfDay(this.props.minDate);
@@ -725,7 +737,7 @@ export default class DatePicker extends React.Component {
         const selectedDay =
           this.calendar.componentNode &&
           this.calendar.componentNode.querySelector(
-            '.react-datepicker__day[tabindex="0"]'
+            '.react-datepicker__day[tabindex="0"]',
           );
         selectedDay && selectedDay.focus({ preventScroll: true });
 
@@ -771,7 +783,7 @@ export default class DatePicker extends React.Component {
             this.setFocus();
             this.setState({ preventFocus: false });
           });
-        }
+        },
       );
     }
   };
@@ -872,7 +884,7 @@ export default class DatePicker extends React.Component {
             this.setFocus();
             this.setState({ preventFocus: false });
           });
-        }
+        },
       );
     }
   };
@@ -954,6 +966,7 @@ export default class DatePicker extends React.Component {
         onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
+        highlightHolidayDates={this.state.highlightHolidayDates}
         includeDates={this.props.includeDates}
         includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}
@@ -1054,7 +1067,7 @@ export default class DatePicker extends React.Component {
         {
           dateFormat: longDateFormat,
           locale,
-        }
+        },
       )}. ${
         this.props.endDate
           ? "End date: " +
@@ -1068,17 +1081,17 @@ export default class DatePicker extends React.Component {
       if (this.props.showTimeSelectOnly) {
         ariaLiveMessage = `Selected time: ${safeDateFormat(
           this.props.selected,
-          { dateFormat, locale }
+          { dateFormat, locale },
         )}`;
       } else if (this.props.showYearPicker) {
         ariaLiveMessage = `Selected year: ${safeDateFormat(
           this.props.selected,
-          { dateFormat: "yyyy", locale }
+          { dateFormat: "yyyy", locale },
         )}`;
       } else if (this.props.showMonthYearPicker) {
         ariaLiveMessage = `Selected month: ${safeDateFormat(
           this.props.selected,
-          { dateFormat: "MMMM yyyy", locale }
+          { dateFormat: "MMMM yyyy", locale },
         )}`;
       } else if (this.props.showQuarterYearPicker) {
         ariaLiveMessage = `Selected quarter: ${safeDateFormat(
@@ -1086,7 +1099,7 @@ export default class DatePicker extends React.Component {
           {
             dateFormat: "yyyy, QQQ",
             locale,
-          }
+          },
         )}`;
       } else {
         ariaLiveMessage = `Selected date: ${safeDateFormat(
@@ -1094,7 +1107,7 @@ export default class DatePicker extends React.Component {
           {
             dateFormat: longDateFormat,
             locale,
-          }
+          },
         )}`;
       }
     }
@@ -1126,7 +1139,7 @@ export default class DatePicker extends React.Component {
         ? safeDateRangeFormat(
             this.props.startDate,
             this.props.endDate,
-            this.props
+            this.props,
           )
         : safeDateFormat(this.props.selected, this.props);
 

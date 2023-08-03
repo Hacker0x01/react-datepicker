@@ -23,11 +23,12 @@ export default class Week extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      })
+      }),
     ),
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
+    highlightHolidayDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
@@ -97,7 +98,7 @@ export default class Week extends React.Component {
     const startOfWeek = utils.getStartOfWeek(
       this.props.day,
       this.props.locale,
-      this.props.calendarStartDay
+      this.props.calendarStartDay,
     );
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
@@ -111,7 +112,7 @@ export default class Week extends React.Component {
           weekNumber={weekNumber}
           onClick={onClickAction}
           ariaLabelPrefix={this.props.ariaLabelPrefix}
-        />
+        />,
       );
     }
     return days.concat(
@@ -133,6 +134,7 @@ export default class Week extends React.Component {
             includeDates={this.props.includeDates}
             includeDateIntervals={this.props.includeDateIntervals}
             highlightDates={this.props.highlightDates}
+            highlightHolidayDates={this.props.highlightHolidayDates}
             selectingDate={this.props.selectingDate}
             filterDate={this.props.filterDate}
             preSelection={this.props.preSelection}
@@ -158,7 +160,7 @@ export default class Week extends React.Component {
             locale={this.props.locale}
           />
         );
-      })
+      }),
     );
   };
 
