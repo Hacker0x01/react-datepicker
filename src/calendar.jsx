@@ -559,7 +559,7 @@ export default class Calendar extends React.Component {
         date: addYears(
           date,
           this.props.showYearPicker ? this.props.yearItemNumber : 1
-        )
+        ),
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -594,11 +594,11 @@ export default class Calendar extends React.Component {
 
     const classes = [
       "react-datepicker__navigation",
-      "react-datepicker__navigation--next"
+      "react-datepicker__navigation--next",
     ];
     const iconClasses = [
       "react-datepicker__navigation-icon",
-      "react-datepicker__navigation-icon--next"
+      "react-datepicker__navigation-icon--next",
     ];
     if (this.props.showTimeSelect) {
       classes.push("react-datepicker__navigation--next--with-time");
