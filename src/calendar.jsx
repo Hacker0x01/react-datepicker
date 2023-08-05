@@ -458,7 +458,7 @@ export default class Calendar extends React.Component {
         date: subYears(
           date,
           this.props.showYearPicker ? this.props.yearItemNumber : 1
-        )
+        ),
       }),
       () => this.handleYearChange(this.state.date)
     );
@@ -497,12 +497,12 @@ export default class Calendar extends React.Component {
 
     const iconClasses = [
       "react-datepicker__navigation-icon",
-      "react-datepicker__navigation-icon--previous"
+      "react-datepicker__navigation-icon--previous",
     ];
 
     const classes = [
       "react-datepicker__navigation",
-      "react-datepicker__navigation--previous"
+      "react-datepicker__navigation--previous",
     ];
 
     let clickHandler = this.decreaseMonth;
@@ -533,7 +533,7 @@ export default class Calendar extends React.Component {
         : "Previous Month",
       previousYearAriaLabel = typeof previousYearButtonLabel === "string"
         ? previousYearButtonLabel
-        : "Previous Year"
+        : "Previous Year",
     } = this.props;
 
     return (
@@ -634,7 +634,7 @@ export default class Calendar extends React.Component {
         : "Next Month",
       nextYearAriaLabel = typeof nextYearButtonLabel === "string"
         ? nextYearButtonLabel
-        : "Next Year"
+        : "Next Year",
     } = this.props;
 
     return (
@@ -822,7 +822,7 @@ export default class Calendar extends React.Component {
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
           prevYearButtonDisabled,
-          nextYearButtonDisabled
+          nextYearButtonDisabled,
         })}
         {showDayNames && (
           <div className="react-datepicker__day-names">
@@ -1074,7 +1074,7 @@ export default class Calendar extends React.Component {
       <div ref={this.containerRef}>
         <Container
           className={classnames("react-datepicker", this.props.className, {
-            "react-datepicker--time-only": this.props.showTimeSelectOnly
+            "react-datepicker--time-only": this.props.showTimeSelectOnly,
           })}
           showPopperArrow={this.props.showPopperArrow}
           arrowProps={this.props.arrowProps}
