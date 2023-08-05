@@ -98,6 +98,7 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
+import CalendarWithHolidays from "../../examples/calendarWithHolidays";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -501,6 +502,10 @@ export default class exampleComponents extends React.Component {
       title: "External Form",
       component: ExternalForm,
     },
+    {
+      title: "Calendar with holiday list",
+      component: CalendarWithHolidays,
+    },
   ];
 
   handleAnchorClick = (e, id) => {
@@ -526,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`
+                    `example-${slugify(example.title, { lower: true })}`,
                   )
                 }
               >

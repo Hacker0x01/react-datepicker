@@ -15,6 +15,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   formatDate,
+  filterArrayByDate,
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -26,6 +27,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    holidayDates: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
@@ -106,6 +108,17 @@ export default class Day extends React.Component {
     // Looking for className in the Map of {'day string, 'className'}
     const dayStr = formatDate(day, "MM.dd.yyyy");
     return highlightDates.get(dayStr);
+  };
+
+  getHolidayListClass = () => {
+    const { day, holidayDates } = this.props;
+
+    if (!holidayDates) {
+      return false;
+    }
+    // Looking for className in the Map of {'day string, 'className'}
+    const dayStr = formatDate(day, "MM.dd.yyyy");
+    return holidayDates.get(dayStr);
   };
 
   isInRange = () => {
@@ -260,7 +273,8 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHolidayListClass("react-datepicker__day--holiday"),
     );
   };
 
@@ -336,12 +350,20 @@ export default class Day extends React.Component {
   };
 
   renderDayContents = () => {
+    const getHolidayName = filterArrayByDate(
+      this.props.day,
+      this.props.holidayDates,
+    );
     if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
       return null;
     if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
       return null;
     return this.props.renderDayContents
-      ? this.props.renderDayContents(getDate(this.props.day), this.props.day)
+      ? this.props.renderDayContents(
+          getDate(this.props.day),
+          this.props.day,
+          getHolidayName[1] ?? "",
+        )
       : getDate(this.props.day);
   };
 

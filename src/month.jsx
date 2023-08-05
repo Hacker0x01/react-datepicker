@@ -45,7 +45,7 @@ const MONTH_NAVIGATION_HORIZONTAL_OFFSET = 1;
 
 function getMonthColumnsLayout(
   showFourColumnMonthYearPicker,
-  showTwoColumnMonthYearPicker
+  showTwoColumnMonthYearPicker,
 ) {
   if (showFourColumnMonthYearPicker) return MONTH_COLUMNS_LAYOUT.FOUR_COLUMNS;
   if (showTwoColumnMonthYearPicker) return MONTH_COLUMNS_LAYOUT.TWO_COLUMNS;
@@ -68,12 +68,13 @@ export default class Month extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      })
+      }),
     ),
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
+    holidayDates: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
@@ -293,7 +294,7 @@ export default class Month extends React.Component {
     let currentWeekStart = utils.getStartOfWeek(
       utils.getStartOfMonth(this.props.day),
       this.props.locale,
-      this.props.calendarStartDay
+      this.props.calendarStartDay,
     );
 
     while (true) {
@@ -319,6 +320,7 @@ export default class Month extends React.Component {
           inline={this.props.inline}
           shouldFocusDayInline={this.props.shouldFocusDayInline}
           highlightDates={this.props.highlightDates}
+          holidayDates={this.props.holidayDates}
           selectingDate={this.props.selectingDate}
           filterDate={this.props.filterDate}
           preSelection={this.props.preSelection}
@@ -341,7 +343,7 @@ export default class Month extends React.Component {
           calendarStartDay={this.props.calendarStartDay}
           monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
           monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
-        />
+        />,
       );
 
       if (breakAfterNextPush) break;
@@ -371,13 +373,13 @@ export default class Month extends React.Component {
   onMonthClick = (e, m) => {
     this.handleDayClick(
       utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
-      e
+      e,
     );
   };
 
   onMonthMouseEnter = (m) => {
     this.handleDayMouseEnter(
-      utils.getStartOfMonth(utils.setMonth(this.props.day, m))
+      utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
     );
   };
 
@@ -405,7 +407,7 @@ export default class Month extends React.Component {
     if (!disabledKeyboardNavigation) {
       const monthColumnsLayout = getMonthColumnsLayout(
         showFourColumnMonthYearPicker,
-        showTwoColumnMonthYearPicker
+        showTwoColumnMonthYearPicker,
       );
       const verticalOffset =
         MONTH_COLUMNS[monthColumnsLayout].verticalNavigationOffset;
@@ -418,13 +420,13 @@ export default class Month extends React.Component {
         case "ArrowRight":
           this.handleMonthNavigation(
             month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET,
-            utils.addMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET)
+            utils.addMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
           );
           break;
         case "ArrowLeft":
           this.handleMonthNavigation(
             month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET,
-            utils.subMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET)
+            utils.subMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
           );
           break;
         case "ArrowUp":
@@ -433,7 +435,7 @@ export default class Month extends React.Component {
             monthsGrid[0].includes(month)
               ? month + 12 - verticalOffset
               : month - verticalOffset,
-            utils.subMonths(preSelection, verticalOffset)
+            utils.subMonths(preSelection, verticalOffset),
           );
           break;
         case "ArrowDown":
@@ -442,7 +444,7 @@ export default class Month extends React.Component {
             monthsGrid[monthsGrid.length - 1].includes(month)
               ? month - 12 + verticalOffset
               : month + verticalOffset,
-            utils.addMonths(preSelection, verticalOffset)
+            utils.addMonths(preSelection, verticalOffset),
           );
           break;
       }
@@ -452,13 +454,13 @@ export default class Month extends React.Component {
   onQuarterClick = (e, q) => {
     this.handleDayClick(
       utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
-      e
+      e,
     );
   };
 
   onQuarterMouseEnter = (q) => {
     this.handleDayMouseEnter(
-      utils.getStartOfQuarter(utils.setQuarter(this.props.day, q))
+      utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
     );
   };
 
@@ -480,13 +482,13 @@ export default class Month extends React.Component {
         case "ArrowRight":
           this.handleQuarterNavigation(
             quarter === 4 ? 1 : quarter + 1,
-            utils.addQuarters(this.props.preSelection, 1)
+            utils.addQuarters(this.props.preSelection, 1),
           );
           break;
         case "ArrowLeft":
           this.handleQuarterNavigation(
             quarter === 1 ? 4 : quarter - 1,
-            utils.subQuarters(this.props.preSelection, 1)
+            utils.subQuarters(this.props.preSelection, 1),
           );
           break;
       }
@@ -521,7 +523,7 @@ export default class Month extends React.Component {
         "react-datepicker__month-text--selected": this.isSelectedMonth(
           day,
           m,
-          selected
+          selected,
         ),
         "react-datepicker__month-text--keyboard-selected":
           !this.props.disabledKeyboardNavigation &&
@@ -532,7 +534,7 @@ export default class Month extends React.Component {
           startDate,
           endDate,
           m,
-          day
+          day,
         ),
         "react-datepicker__month-text--range-start": this.isRangeStartMonth(m),
         "react-datepicker__month-text--range-end": this.isRangeEndMonth(m),
@@ -541,7 +543,7 @@ export default class Month extends React.Component {
         "react-datepicker__month-text--selecting-range-end":
           this.isSelectingMonthRangeEnd(m),
         "react-datepicker__month-text--today": this.isCurrentMonth(day, m),
-      }
+      },
     );
   };
 
@@ -601,7 +603,7 @@ export default class Month extends React.Component {
         "react-datepicker__quarter-text--selected": this.isSelectedQuarter(
           day,
           q,
-          selected
+          selected,
         ),
         "react-datepicker__quarter-text--keyboard-selected":
           utils.getQuarter(preSelection) === q,
@@ -611,12 +613,12 @@ export default class Month extends React.Component {
           startDate,
           endDate,
           q,
-          day
+          day,
         ),
         "react-datepicker__quarter-text--range-start":
           this.isRangeStartQuarter(q),
         "react-datepicker__quarter-text--range-end": this.isRangeEndQuarter(q),
-      }
+      },
     );
   };
 
@@ -650,7 +652,7 @@ export default class Month extends React.Component {
       MONTH_COLUMNS[
         getMonthColumnsLayout(
           showFourColumnMonthYearPicker,
-          showTwoColumnMonthYearPicker
+          showTwoColumnMonthYearPicker,
         )
       ].grid;
     return monthColumns.map((month, i) => (
@@ -725,7 +727,7 @@ export default class Month extends React.Component {
           selectingDate && (selectsStart || selectsEnd),
       },
       { "react-datepicker__monthPicker": showMonthYearPicker },
-      { "react-datepicker__quarterPicker": showQuarterYearPicker }
+      { "react-datepicker__quarterPicker": showQuarterYearPicker },
     );
   };
 
