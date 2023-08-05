@@ -15,7 +15,7 @@ import {
   isAfter,
   getDayOfWeekCode,
   formatDate,
-  filterArrayByDate,
+  filterArrayByDate
 } from "./date_utils";
 
 export default class Day extends React.Component {
@@ -45,14 +45,14 @@ export default class Day extends React.Component {
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
     locale: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object }),
-    ]),
+      PropTypes.shape({ locale: PropTypes.object })
+    ])
   };
 
   componentDidMount() {
@@ -137,7 +137,7 @@ export default class Day extends React.Component {
       selectsRange,
       selectsDisabledDaysInRange,
       startDate,
-      endDate,
+      endDate
     } = this.props;
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
@@ -271,10 +271,10 @@ export default class Day extends React.Component {
         "react-datepicker__day--today": this.isCurrentDay(),
         "react-datepicker__day--weekend": this.isWeekend(),
         "react-datepicker__day--outside-month":
-          this.isAfterMonth() || this.isBeforeMonth(),
+          this.isAfterMonth() || this.isBeforeMonth()
       },
       this.getHighLightedClass("react-datepicker__day--highlighted"),
-      this.getHolidayListClass("react-datepicker__day--holiday"),
+      this.getHolidayListClass("react-datepicker__day--holiday")
     );
   };
 
@@ -282,7 +282,7 @@ export default class Day extends React.Component {
     const {
       day,
       ariaLabelPrefixWhenEnabled = "Choose",
-      ariaLabelPrefixWhenDisabled = "Not available",
+      ariaLabelPrefixWhenDisabled = "Not available"
     } = this.props;
 
     const prefix =
@@ -352,7 +352,7 @@ export default class Day extends React.Component {
   renderDayContents = () => {
     const getHolidayName = filterArrayByDate(
       this.props.day,
-      this.props.holidayDates,
+      this.props.holidayDates
     );
     if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
       return null;
@@ -362,7 +362,7 @@ export default class Day extends React.Component {
       ? this.props.renderDayContents(
           getDate(this.props.day),
           this.props.day,
-          getHolidayName[1] ?? "",
+          getHolidayName[1] ?? ""
         )
       : getDate(this.props.day);
   };
