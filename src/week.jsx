@@ -23,7 +23,7 @@ export default class Week extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      }),
+      })
     ),
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
@@ -98,7 +98,7 @@ export default class Week extends React.Component {
     const startOfWeek = utils.getStartOfWeek(
       this.props.day,
       this.props.locale,
-      this.props.calendarStartDay,
+      this.props.calendarStartDay
     );
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
@@ -112,7 +112,7 @@ export default class Week extends React.Component {
           weekNumber={weekNumber}
           onClick={onClickAction}
           ariaLabelPrefix={this.props.ariaLabelPrefix}
-        />,
+        />
       );
     }
     return days.concat(
@@ -160,7 +160,7 @@ export default class Week extends React.Component {
             locale={this.props.locale}
           />
         );
-      }),
+      })
     );
   };
 
