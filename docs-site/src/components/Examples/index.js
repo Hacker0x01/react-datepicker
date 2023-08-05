@@ -372,7 +372,7 @@ export default class exampleComponents extends React.Component {
     },
     {
       title: "Multiple months",
-      component: MultiMonth
+      component: MultiMonth,
     },
     {
       title: "Multiple months with year dropdown",
