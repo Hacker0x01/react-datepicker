@@ -112,35 +112,35 @@ export default class exampleComponents extends React.Component {
   examples = [
     {
       title: "Default",
-      component: Default,
+      component: Default
     },
     {
       title: "Calendar Icon",
-      component: CalendarIcon,
+      component: CalendarIcon
     },
     {
       title: "Calendar container",
-      component: CalendarContainer,
+      component: CalendarContainer
     },
     {
       title: "Calendar open state callbacks",
-      component: OnCalendarChangeStateCallbacks,
+      component: OnCalendarChangeStateCallbacks
     },
     {
       title: "Children",
-      component: Children,
+      component: Children
     },
     {
       title: "Clear datepicker input",
-      component: ClearInput,
+      component: ClearInput
     },
     {
       title: "Close on scroll",
-      component: CloseOnScroll,
+      component: CloseOnScroll
     },
     {
       title: "Close on scroll callback",
-      component: CloseOnScrollCallback,
+      component: CloseOnScrollCallback
     },
     {
       title: "Configure Popper Properties",
@@ -156,356 +156,356 @@ export default class exampleComponents extends React.Component {
             popper.js.org
           </a>
         </div>
-      ),
+      )
     },
     {
       title: "Custom input",
-      component: CustomInput,
+      component: CustomInput
     },
     {
       title: "Custom header",
-      component: RenderCustomHeader,
+      component: RenderCustomHeader
     },
     {
       title: "Custom header with two months displayed",
-      component: RenderCustomHeaderTwoMonths,
+      component: RenderCustomHeaderTwoMonths
     },
     {
       title: "Custom Day",
-      component: RenderCustomDay,
+      component: RenderCustomDay
     },
     {
       title: "Custom Month",
-      component: RenderCustomMonth,
+      component: RenderCustomMonth
     },
     {
       title: "Custom Quarter",
-      component: RenderCustomQuarter,
+      component: RenderCustomQuarter
     },
     {
       title: "Custom Year",
-      component: RenderCustomYear,
+      component: RenderCustomYear
     },
     {
       title: "Custom calendar class name",
-      component: CustomCalendarClassName,
+      component: CustomCalendarClassName
     },
     {
       title: "Custom class name",
-      component: CustomClassName,
+      component: CustomClassName
     },
     {
       title: "Custom day class name",
-      component: CustomDayClassName,
+      component: CustomDayClassName
     },
     {
       title: "Custom date format",
-      component: CustomDateFormat,
+      component: CustomDateFormat
     },
     {
       title: "Custom time class name",
-      component: CustomTimeClassName,
+      component: CustomTimeClassName
     },
     {
       title: "Custom time input",
-      component: CustomTimeInput,
+      component: CustomTimeInput
     },
     {
       title: "Date Range",
-      component: DateRange,
+      component: DateRange
     },
     {
       title: "Date range for one datepicker",
-      component: SelectsRange,
+      component: SelectsRange
     },
     {
       title: "Date range for one datepicker with disabled dates highlighted",
-      component: selectsRangeWithDisabledDates,
+      component: selectsRangeWithDisabledDates
     },
     {
       title: "Date Range with disabled navigation shown",
-      component: DateRangeWithShowDisabledNavigation,
+      component: DateRangeWithShowDisabledNavigation
     },
     {
       title: "Date Range using input with clear button",
-      component: DateRangeInputWithClearButton,
+      component: DateRangeInputWithClearButton
     },
     {
       title: "Date Range with Portal",
-      component: DateRangeWithPortal,
+      component: DateRangeWithPortal
     },
     {
       title: "Disable datepicker",
-      component: Disabled,
+      component: Disabled
     },
     {
       title: "Disable keyboard navigation",
-      component: DisabledKeyboardNavigation,
+      component: DisabledKeyboardNavigation
     },
     {
       title: "Display Week Numbers",
-      component: WeekNumbers,
+      component: WeekNumbers
     },
     {
       title: "Don't hide calendar on date selection",
-      component: DontCloseOnSelect,
+      component: DontCloseOnSelect
     },
     {
       title: "Exclude dates",
-      component: ExcludeDates,
+      component: ExcludeDates
     },
     {
       title: "Exclude date intervals",
-      component: ExcludeDateIntervals,
+      component: ExcludeDateIntervals
     },
     {
       title: "Exclude Months in Month Picker",
-      component: ExcludeDatesMonthPicker,
+      component: ExcludeDatesMonthPicker
     },
     {
       title: "Exclude Times",
-      component: ExcludeTimes,
+      component: ExcludeTimes
     },
     {
       title: "Filter dates",
-      component: FilterDates,
+      component: FilterDates
     },
     {
       title: "Filter times",
-      component: FilterTimes,
+      component: FilterTimes
     },
     {
       title: "Fixed height of Calendar",
-      component: FixedCalendar,
+      component: FixedCalendar
     },
     {
       title: "Get raw input value on change",
-      component: RawChange,
+      component: RawChange
     },
     {
       title: "Highlight dates",
-      component: HighlightDates,
+      component: HighlightDates
     },
     {
       title: "Highlight dates with custom class names and ranges",
-      component: HighlightDatesRanges,
+      component: HighlightDatesRanges
     },
     {
       title: "Include dates",
-      component: IncludeDates,
+      component: IncludeDates
     },
     {
       title: "Include date intervals",
-      component: IncludeDateIntervals,
+      component: IncludeDateIntervals
     },
     {
       title: "Include Months in Month Picker",
-      component: IncludeDatesMonthPicker,
+      component: IncludeDatesMonthPicker
     },
     {
       title: "Include Times",
-      component: IncludeTimes,
+      component: IncludeTimes
     },
     {
       title: "Inject Specific Times",
-      component: InjectTimes,
+      component: InjectTimes
     },
     {
       title: "Inline version",
-      component: Inline,
+      component: Inline
     },
     {
       title: "Button to show Inline version",
-      component: InlineVisible,
+      component: InlineVisible
     },
     {
       title: "Input time",
-      component: TimeInput,
+      component: TimeInput
     },
     {
       title: "Locale",
-      component: Locale,
+      component: Locale
     },
     {
       title: "Locale with time",
-      component: LocaleWithTime,
+      component: LocaleWithTime
     },
     {
       title: "Locale without global variables",
-      component: LocaleWithoutGlobalVariable,
+      component: LocaleWithoutGlobalVariable
     },
     {
       title: "Min date",
-      component: MinDate,
+      component: MinDate
     },
     {
       title: "Max date",
-      component: MaxDate,
+      component: MaxDate
     },
     {
       title: "Month Picker",
-      component: MonthPicker,
+      component: MonthPicker
     },
     {
       title: "Month Picker with Full Name",
-      component: monthPickerFullName,
+      component: monthPickerFullName
     },
     {
       title: "Month Picker Two Columns Layout",
-      component: monthPickerTwoColumns,
+      component: monthPickerTwoColumns
     },
     {
       title: "Month Picker Four Columns Layout",
-      component: monthPickerFourColumns,
+      component: monthPickerFourColumns
     },
     {
       title: "Month dropdown",
-      component: MonthDropdown,
+      component: MonthDropdown
     },
     {
       title: "Month dropdown short month",
-      component: MonthDropdownShort,
+      component: MonthDropdownShort
     },
     {
       title: "MonthYear dropdown",
-      component: MonthYearDropdown,
+      component: MonthYearDropdown
     },
     {
       title: "Multiple months",
-      component: MultiMonth,
+      component: MultiMonth
     },
     {
       title: "Multiple months with year dropdown",
-      component: MultiMonthDropdown,
+      component: MultiMonthDropdown
     },
     {
       title: "Multiple months inline",
-      component: MultiMonthInline,
+      component: MultiMonthInline
     },
     {
       title: "No Anchor Arrow",
-      component: NoAnchorArrow,
+      component: NoAnchorArrow
     },
     {
       title: "onBlur callbacks in console",
-      component: OnBlurCallbacks,
+      component: OnBlurCallbacks
     },
     {
       title: "Open to date",
-      component: OpenToDate,
+      component: OpenToDate
     },
     {
       title: "Placeholder text",
-      component: PlaceholderText,
+      component: PlaceholderText
     },
     {
       title: "Portal version",
-      component: Portal,
+      component: Portal
     },
     {
       title: "Portal by id",
       description:
         "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
-      component: PortalById,
+      component: PortalById
     },
     {
       title: "Portal version with portal by id",
       description:
         "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
-      component: WithPortalById,
+      component: WithPortalById
     },
     {
       title: "Quarter Picker",
-      component: QuarterPicker,
+      component: QuarterPicker
     },
     {
       title: "Range Month Picker",
-      component: RangeMonthPicker,
+      component: RangeMonthPicker
     },
     {
       title: "Range Month Picker for one month picker",
-      component: RangeMonthPickerSelectsRange,
+      component: RangeMonthPickerSelectsRange
     },
     {
       title: "Range Quarter Picker",
-      component: RangeQuarterPicker,
+      component: RangeQuarterPicker
     },
     {
       title: "Range Quarter Picker for one quarter picker",
-      component: RangeQuarterPickerSelectsRange,
+      component: RangeQuarterPickerSelectsRange
     },
     {
       title: "Read only datepicker",
-      component: ReadOnly,
+      component: ReadOnly
     },
     {
       title: "Select Time",
-      component: ShowTime,
+      component: ShowTime
     },
     {
       title: "Select Time Only",
-      component: ShowTimeOnly,
+      component: ShowTimeOnly
     },
     {
       title: "Show previous months",
-      component: MultiMonthPrevious,
+      component: MultiMonthPrevious
     },
     {
       title: "Specific date range",
-      component: SpecificDateRange,
+      component: SpecificDateRange
     },
     {
       title: "Specific Time Range",
-      component: ExcludeTimePeriod,
+      component: ExcludeTimePeriod
     },
     {
       title: "Strict parsing",
-      component: StrictParsing,
+      component: StrictParsing
     },
     {
       title: "TabIndex",
-      component: TabIndex,
+      component: TabIndex
     },
     {
       title: "Today button",
-      component: Today,
+      component: Today
     },
     {
       title: "Year Picker",
-      component: YearPicker,
+      component: YearPicker
     },
     {
       title: "Range Year Picker",
-      component: RangeYearPicker,
+      component: RangeYearPicker
     },
     {
       title: "Range Year Picker for one datepicker",
-      component: RangeYearPickerSelectsRange,
+      component: RangeYearPickerSelectsRange
     },
     {
       title: "Year dropdown",
-      component: YearDropdown,
+      component: YearDropdown
     },
     {
       title: "Year select dropdown",
-      component: YearSelectDropdown,
+      component: YearSelectDropdown
     },
     {
       title: "Year item number",
-      component: YearItemNumber,
+      component: YearItemNumber
     },
     {
       title: "Calendar Start day",
-      component: CalendarStartDay,
+      component: CalendarStartDay
     },
     {
       title: "External Form",
-      component: ExternalForm,
+      component: ExternalForm
     },
     {
       title: "Calendar with holiday list",
-      component: CalendarWithHolidays,
-    },
+      component: CalendarWithHolidays
+    }
   ];
 
   handleAnchorClick = (e, id) => {
@@ -531,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`,
+                    `example-${slugify(example.title, { lower: true })}`
                   )
                 }
               >
