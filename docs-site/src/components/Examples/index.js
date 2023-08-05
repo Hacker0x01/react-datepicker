@@ -156,7 +156,7 @@ export default class exampleComponents extends React.Component {
             popper.js.org
           </a>
         </div>
-      )
+      ),
     },
     {
       title: "Custom input",
