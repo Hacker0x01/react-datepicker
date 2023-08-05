@@ -31,6 +31,7 @@ import ExcludeDates from "../../examples/excludeDates";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
+import HolidayDates from "../../examples/holidayDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
 import IncludeDateIntervals from "../../examples/includeDateIntervals";
@@ -290,6 +291,10 @@ export default class exampleComponents extends React.Component {
       component: HighlightDatesRanges,
     },
     {
+      title: "Holidays dates",
+      component: HolidayDates,
+    },
+    {
       title: "Include dates",
       component: IncludeDates,
     },
@@ -526,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`
+                    `example-${slugify(example.title, { lower: true })}`,
                   )
                 }
               >

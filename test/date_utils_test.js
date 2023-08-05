@@ -35,6 +35,8 @@ import {
   yearsDisabledBefore,
   getWeek,
   safeDateRangeFormat,
+  stringToDate,
+  getHolidaysMap,
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -208,7 +210,7 @@ describe("date_utils", function () {
       expect(
         isDayDisabled(day, {
           excludeDateIntervals: [{ start: day, end: addDays(day, 1) }],
-        })
+        }),
       ).to.be.true;
     });
 
@@ -219,7 +221,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        })
+        }),
       ).to.be.true;
     });
 
@@ -228,7 +230,7 @@ describe("date_utils", function () {
       expect(
         isDayDisabled(day, {
           excludeDateIntervals: [{ start: subDays(day, 1), end: day }],
-        })
+        }),
       ).to.be.true;
     });
 
@@ -239,7 +241,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
-        })
+        }),
       ).to.throw("Invalid interval");
     });
 
@@ -255,7 +257,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        })
+        }),
       ).to.be.false;
     });
 
@@ -271,7 +273,7 @@ describe("date_utils", function () {
           includeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        })
+        }),
       ).to.be.false;
     });
 
@@ -288,7 +290,7 @@ describe("date_utils", function () {
           includeDateIntervals: [
             { start: subDays(day, 10), end: subDays(day, 5) },
           ],
-        })
+        }),
       ).to.be.true;
     });
 
@@ -329,7 +331,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        })
+        }),
       ).to.be.true;
     });
 
@@ -345,7 +347,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        })
+        }),
       ).to.be.false;
     });
 
@@ -356,7 +358,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
-        })
+        }),
       ).to.be.throw("Invalid interval");
     });
 
@@ -368,7 +370,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        })
+        }),
       ).to.be.false;
     });
 
@@ -1136,7 +1138,7 @@ describe("date_utils", function () {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = null;
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
-        "04/20/2021 - "
+        "04/20/2021 - ",
       );
     });
 
@@ -1144,7 +1146,42 @@ describe("date_utils", function () {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = new Date("2021-04-28 00:00:00");
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
-        "04/20/2021 - 04/28/2021"
+        "04/20/2021 - 04/28/2021",
+      );
+    });
+  });
+
+  describe("stringToDate", () => {
+    it("should return a formatted date when a valid string of a date is provided", () => {
+      const stringDate = "2023-12-22";
+      const result = `${stringToDate(stringDate)}`;
+      expect(result).to.equal(
+        "Fri Dec 22 2023 00:00:00 GMT+0530 (India Standard Time)",
+      );
+    });
+
+    it("should return null when no date is provided in string", () => {
+      const stringDate = "";
+      expect(stringToDate(stringDate)).to.equal(null);
+    });
+  });
+
+  describe("getHolidaysMap", () => {
+    it("should return a map of dateClasses", () => {
+      const holidayDates = [
+        {
+          date: new Date(2023, 7, 15),
+          holidayName: "India's Independence Day",
+        },
+        {
+          date: new Date(2023, 11, 25),
+          holidayName: "Christmas",
+        },
+      ];
+      expect(getHolidaysMap(holidayDates)).to.have.lengthOf(2);
+      expect(getHolidaysMap(holidayDates)).to.have.all.keys(
+        "08.15.2023",
+        "12.25.2023",
       );
     });
   });

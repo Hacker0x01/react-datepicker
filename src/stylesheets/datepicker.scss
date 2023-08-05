@@ -428,6 +428,39 @@
     }
   }
 
+  &--holidays {
+    position: relative;
+    border-radius: $datepicker__border-radius;
+    background-color: $datepicker__holidays-color;
+    color: #fff;
+
+    .holiday-overlay {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 4px;
+      border-radius: 4px;
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition:
+        visibility 0s,
+        opacity 0.3s ease-in-out;
+    }
+
+    &:hover {
+      background-color: darken($datepicker__holidays-color, 10%);
+    }
+
+    &:hover .holiday-overlay {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
   &--selected,
   &--in-selecting-range,
   &--in-range {
