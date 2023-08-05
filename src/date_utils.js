@@ -478,7 +478,7 @@ export function isMonthinRange(startDate, endDate, m, day) {
 
 export function isQuarterDisabled(
   quarter,
-  { minDate, maxDate, excludeDates, includeDates, filterDate } = {},
+  { minDate, maxDate, excludeDates, includeDates, filterDate } = {}
 ) {
   return (
     isOutOfBounds(quarter, { minDate, maxDate }) ||
