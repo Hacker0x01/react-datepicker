@@ -2,7 +2,6 @@ import React from "react";
 import Calendar from "../src/calendar";
 import Month from "../src/month";
 import Day from "../src/day";
-import ReactDOM from "react-dom";
 import { findDOMNode } from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import YearDropdown from "../src/year_dropdown";
