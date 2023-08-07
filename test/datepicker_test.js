@@ -94,8 +94,8 @@ describe("DatePicker", () => {
     var appHost = document.createElement("div");
     shadow.appendChild(appHost);
 
-    var root = createRoot(appHost);
-    var datePicker = root.render(
+    var rootPicker = createRoot(appHost);
+    var datePicker = rootPicker.render(
       <DatePicker portalId="test-portal" portalHost={shadow} />,
     );
 
