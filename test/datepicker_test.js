@@ -505,8 +505,8 @@ describe("DatePicker", () => {
         }}
       />,
     );
-
-    var input = ReactDOM.findDOMNode(datePicker.input);
+    var node = findDOMNode(datePicker.input);
+    var input = node;
     input.value = utils.newDate("2014-01-02");
     TestUtils.Simulate.change(input);
 
@@ -604,9 +604,11 @@ describe("DatePicker", () => {
       "react-datepicker__current-month",
     )[0];
 
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(header));
+    var node = findDOMNode(header);
 
-    TestUtils.Simulate.keyDown(ReactDOM.findDOMNode(header), getKey("Escape"));
+    TestUtils.Simulate.click(node);
+
+    TestUtils.Simulate.keyDown(node, getKey("Escape"));
 
     expect(datePicker.calendar).to.not.exist;
   });
@@ -1218,7 +1220,8 @@ describe("DatePicker", () => {
         onChange={handleChange}
       />,
     );
-    var input = ReactDOM.findDOMNode(datePicker.input);
+    var node = findDOMNode(datePicker.input);
+    var input = node;
     input.value = "";
     TestUtils.Simulate.change(input);
     expect(cleared).to.be.true;
@@ -1268,7 +1271,8 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy.called).to.be.false;
     expect(onSelectSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    var node = findDOMNode(datePicker.input);
+    const input = findDOMNode(node);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy.calledOnce).to.be.true;
@@ -1288,13 +1292,13 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy.called).to.be.false;
     expect(onSelectSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(datePicker.input);
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(input));
+    const input = findDOMNode(datePicker.input);
+    TestUtils.Simulate.focus(findDOMNode(input));
     const day = TestUtils.scryRenderedComponentsWithType(
       datePicker.calendar,
       Day,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    TestUtils.Simulate.click(findDOMNode(day));
     expect(onChangeRawSpy.calledOnce).to.be.true;
     expect(onSelectSpy.calledOnce).to.be.true;
   });
@@ -1321,7 +1325,7 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    const input = findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy.calledOnce).to.be.true;
@@ -1341,7 +1345,7 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    const input = findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy.calledOnce).to.be.true;
@@ -1662,7 +1666,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(selected, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
         utils.formatDate(selected, "yyyy-MM-dd"),
       );
@@ -1692,7 +1696,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(nextDay, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
         utils.formatDate(startDate, "yyyy-MM-dd"),
       );
@@ -1724,7 +1728,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(selected, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
         utils.formatDate(selected, "yyyy-MM-dd"),
       );
@@ -1754,7 +1758,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).to.equal(
         utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
       );
@@ -1802,7 +1806,7 @@ describe("DatePicker", () => {
       datePicker.setOpen(true);
 
       const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
-      const day = ReactDOM.findDOMNode(days[Math.floor(days.length / 2)]);
+      const day = findDOMNode(days[Math.floor(days.length / 2)]);
       TestUtils.Simulate.click(day);
       expect(datePicker.state.open).to.be.false;
     });
@@ -2014,7 +2018,7 @@ describe("DatePicker", () => {
         />,
       );
 
-      const input = ReactDOM.findDOMNode(datePicker.input);
+      const input = findDOMNode(datePicker.input);
       input.value = "8:22 AM";
       TestUtils.Simulate.change(input);
 

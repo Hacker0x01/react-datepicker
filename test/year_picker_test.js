@@ -4,6 +4,7 @@ import DatePicker from "../src/index.jsx";
 import Year from "../src/year";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
+import { findDOMNode } from "react-dom";
 import * as utils from "../src/date_utils";
 import Calendar from "../src/calendar";
 
@@ -33,7 +34,7 @@ describe("YearPicker", () => {
   it("should show year picker component with specific year item number", () => {
     const yearItemNumber = 9;
     const yearComponent = mount(
-      <Year date={new Date()} yearItemNumber={yearItemNumber} />
+      <Year date={new Date()} yearItemNumber={yearItemNumber} />,
     );
     const yearItems = yearComponent.find(".react-datepicker__year-text");
     expect(yearItems.length).to.be.eq(yearItemNumber);
@@ -42,7 +43,7 @@ describe("YearPicker", () => {
   it("should change the year when clicked on any option in the picker", () => {
     const onYearChangeSpy = sinon.spy();
     const yearComponent = mount(
-      <Year onDayClick={onYearChangeSpy} date={new Date("2020-05-05")} />
+      <Year onDayClick={onYearChangeSpy} date={new Date("2020-05-05")} />,
     );
     const firstYearDiv = yearComponent
       .find(".react-datepicker__year-text")
@@ -96,47 +97,47 @@ describe("YearPicker", () => {
         date={utils.newDate("2020-01-01")}
         minDate={utils.newDate("2018-01-01")}
         maxDate={utils.newDate("2025-01-01")}
-      />
+      />,
     );
     const year = yearComponent.find(".react-datepicker__year-text").at(0);
     expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-      true
+      true,
     );
   });
 
   it("should not return disabled class if current date is before minDate but same year", () => {
     const date = utils.newDate("2023-01-01");
     const yearComponent = mount(
-      <Year date={date} minDate={utils.newDate("2023-12-31")} />
+      <Year date={date} minDate={utils.newDate("2023-12-31")} />,
     );
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
     const firstYear = utils.getYearsPeriod(
       date,
-      utils.DEFAULT_YEAR_ITEM_NUMBER
+      utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     expect(
       yearTexts
         .at(2023 - firstYear)
-        .hasClass("react-datepicker__year-text--disabled")
+        .hasClass("react-datepicker__year-text--disabled"),
     ).to.equal(false);
   });
 
   it("should not return disabled class if current date is after maxDate but same year", () => {
     const date = utils.newDate("2023-12-31");
     const yearComponent = mount(
-      <Year date={date} maxDate={utils.newDate("2023-01-01")} />
+      <Year date={date} maxDate={utils.newDate("2023-01-01")} />,
     );
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
     const firstYear = utils.getYearsPeriod(
       date,
-      utils.DEFAULT_YEAR_ITEM_NUMBER
+      utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     expect(
       yearTexts
         .at(2023 - firstYear)
-        .hasClass("react-datepicker__year-text--disabled")
+        .hasClass("react-datepicker__year-text--disabled"),
     ).to.equal(false);
   });
 
@@ -144,7 +145,7 @@ describe("YearPicker", () => {
     const date = utils.newDate("2023-12-31");
     const firstYear = utils.getYearsPeriod(
       date,
-      utils.DEFAULT_YEAR_ITEM_NUMBER
+      utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     const excludeDates = [];
@@ -153,7 +154,7 @@ describe("YearPicker", () => {
     }
 
     const yearComponent = mount(
-      <Year date={utils.newDate("2023-01-01")} excludeDates={excludeDates} />
+      <Year date={utils.newDate("2023-01-01")} excludeDates={excludeDates} />,
     );
 
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
@@ -161,7 +162,7 @@ describe("YearPicker", () => {
     for (let i = 0; i <= 2023 - firstYear; i++) {
       const year = yearTexts.at(i);
       expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-        true
+        true,
       );
     }
   });
@@ -170,7 +171,7 @@ describe("YearPicker", () => {
     const date = utils.newDate("2023-12-31");
     const firstYear = utils.getYearsPeriod(
       date,
-      utils.DEFAULT_YEAR_ITEM_NUMBER
+      utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     const includeDates = [];
@@ -178,7 +179,7 @@ describe("YearPicker", () => {
       includeDates.push(utils.newDate(`${year}-01-01`));
     }
     const yearComponent = mount(
-      <Year date={utils.newDate("2023-01-01")} includeDates={includeDates} />
+      <Year date={utils.newDate("2023-01-01")} includeDates={includeDates} />,
     );
 
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
@@ -187,13 +188,13 @@ describe("YearPicker", () => {
     for (let i = 0; i <= pos; i++) {
       const year = yearTexts.at(i);
       expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-        false
+        false,
       );
     }
     for (let i = pos + 1; i < 12; i++) {
       const year = yearTexts.at(i);
       expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-        true
+        true,
       );
     }
   });
@@ -203,7 +204,7 @@ describe("YearPicker", () => {
       return <span>custom render</span>;
     }
     const yearComponent = mount(
-      <Year date={utils.newDate()} renderYearContent={renderYearContent} />
+      <Year date={utils.newDate()} renderYearContent={renderYearContent} />,
     );
     const year = yearComponent.find(".react-datepicker__year-text").at(0);
     expect(year.find("span").at(0).text()).to.equal("custom render");
@@ -216,11 +217,11 @@ describe("YearPicker", () => {
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
           endDate={utils.newDate("2012-01-01")}
-        />
+        />,
       );
 
       const inRangeYears = yearComponent.find(
-        ".react-datepicker__year-text--in-range"
+        ".react-datepicker__year-text--in-range",
       );
 
       expect(inRangeYears.length).to.equal(4);
@@ -230,14 +231,14 @@ describe("YearPicker", () => {
       expect(inRangeYears.at(3).text()).to.eq("2012");
 
       const rangeStartYear = yearComponent.find(
-        ".react-datepicker__year-text--range-start"
+        ".react-datepicker__year-text--range-start",
       );
 
       expect(rangeStartYear.length).to.equal(1);
       expect(rangeStartYear.at(0).text()).to.eq("2009");
 
       const rangeEndYear = yearComponent.find(
-        ".react-datepicker__year-text--range-end"
+        ".react-datepicker__year-text--range-end",
       );
 
       expect(rangeEndYear.length).to.equal(1);
@@ -249,17 +250,17 @@ describe("YearPicker", () => {
         <Year
           date={utils.newDate("2009-01-01")}
           endDate={utils.newDate("2012-01-01")}
-        />
+        />,
       );
 
       const inRangeYears = yearComponent.find(
-        ".react-datepicker__year-text--in-range"
+        ".react-datepicker__year-text--in-range",
       );
       const rangeStartYear = yearComponent.find(
-        ".react-datepicker__year-text--range-start"
+        ".react-datepicker__year-text--range-start",
       );
       const rangeEndYear = yearComponent.find(
-        ".react-datepicker__year-text--range-end"
+        ".react-datepicker__year-text--range-end",
       );
 
       expect(inRangeYears.length).to.equal(0);
@@ -272,17 +273,17 @@ describe("YearPicker", () => {
         <Year
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
-        />
+        />,
       );
 
       const inRangeYears = yearComponent.find(
-        ".react-datepicker__year-text--in-range"
+        ".react-datepicker__year-text--in-range",
       );
       const rangeStartYear = yearComponent.find(
-        ".react-datepicker__year-text--range-start"
+        ".react-datepicker__year-text--range-start",
       );
       const rangeEndYear = yearComponent.find(
-        ".react-datepicker__year-text--range-end"
+        ".react-datepicker__year-text--range-end",
       );
 
       expect(inRangeYears.length).to.equal(0);
@@ -299,11 +300,11 @@ describe("YearPicker", () => {
             endDate={utils.newDate("2016-01-01")}
             selectingDate={utils.newDate("2015-01-01")}
             selectsStart
-          />
+          />,
         );
 
         const years = yearComponent.find(
-          ".react-datepicker__year-text--in-selecting-range"
+          ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(2);
@@ -319,11 +320,11 @@ describe("YearPicker", () => {
             startDate={utils.newDate("2010-01-01")}
             selectingDate={utils.newDate("2011-01-01")}
             selectsEnd
-          />
+          />,
         );
 
         const years = yearComponent.find(
-          ".react-datepicker__year-text--in-selecting-range"
+          ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(2);
@@ -338,11 +339,11 @@ describe("YearPicker", () => {
             date={utils.newDate("2015-01-01")}
             startDate={utils.newDate("2010-01-01")}
             selectsEnd
-          />
+          />,
         );
 
         const years = yearComponent.find(
-          ".react-datepicker__year-text--in-selecting-range"
+          ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(2);
@@ -358,10 +359,10 @@ describe("YearPicker", () => {
             startDate={utils.newDate("2010-02-01")}
             selectingDate={utils.newDate("2011-01-01")}
             selectsRange
-          />
+          />,
         );
         const years = yearComponent.find(
-          ".react-datepicker__year-text--in-selecting-range"
+          ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(2);
@@ -376,10 +377,10 @@ describe("YearPicker", () => {
             date={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2014-01-01")}
             selectsRange
-          />
+          />,
         );
         const years = yearComponent.find(
-          ".react-datepicker__year-text--in-selecting-range"
+          ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(0);
@@ -393,10 +394,10 @@ describe("YearPicker", () => {
             selectingDate={utils.newDate("2014-01-01")}
             endDate={utils.newDate("2013-01-01")}
             selectsRange
-          />
+          />,
         );
         const years = yearComponent.find(
-          ".react-datepicker__month-text--in-selecting-range"
+          ".react-datepicker__month-text--in-selecting-range",
         );
 
         expect(years.length).to.equal(0);
@@ -410,10 +411,10 @@ describe("YearPicker", () => {
             endDate={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2012-01-01")}
             selectsStart
-          />
+          />,
         );
         const years = yearComponent.find(
-          ".react-datepicker__year-text--selecting-range-start"
+          ".react-datepicker__year-text--selecting-range-start",
         );
         expect(years.length).to.equal(1);
         expect(years.at(0).text()).to.eq("2012");
@@ -428,10 +429,10 @@ describe("YearPicker", () => {
             endDate={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2014-01-01")}
             selectsEnd
-          />
+          />,
         );
         const years = yearComponent.find(
-          ".react-datepicker__year-text--selecting-range-end"
+          ".react-datepicker__year-text--selecting-range-end",
         );
         expect(years.length).to.equal(1);
         expect(years.at(0).text()).to.eq("2014");
@@ -445,7 +446,7 @@ describe("YearPicker", () => {
     it("should set the date to the selected year of the previous period when previous button clicked", () => {
       let date;
       const expectedDate = utils.getStartOfYear(
-        utils.setYear(utils.newDate(), 2008)
+        utils.setYear(utils.newDate(), 2008),
       );
       const datePicker = TestUtils.renderIntoDocument(
         <DatePicker
@@ -455,28 +456,28 @@ describe("YearPicker", () => {
           onChange={(d) => {
             date = d;
           }}
-        />
+        />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
       const calendar = TestUtils.scryRenderedComponentsWithType(
         datePicker.calendar,
-        Calendar
+        Calendar,
       )[0];
       const year = TestUtils.scryRenderedComponentsWithType(
         datePicker,
-        Year
+        Year,
       )[0];
       const previousButton = TestUtils.findRenderedDOMComponentWithClass(
         calendar,
-        "react-datepicker__navigation--previous"
+        "react-datepicker__navigation--previous",
       );
       TestUtils.Simulate.click(previousButton);
       const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
         year,
-        className
+        className,
       );
       expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(
-        utils.formatDate(expectedDate, "dd.MM.yyyy")
+        utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
       expect(allPreselectedYears.length).to.equal(1);
     });
@@ -484,7 +485,7 @@ describe("YearPicker", () => {
     it("should set the date to the selected year of the next period when next button clicked", () => {
       let date;
       const expectedDate = utils.getStartOfYear(
-        utils.setYear(utils.newDate(), 2032)
+        utils.setYear(utils.newDate(), 2032),
       );
       const datePicker = TestUtils.renderIntoDocument(
         <DatePicker
@@ -494,28 +495,28 @@ describe("YearPicker", () => {
           onChange={(d) => {
             date = d;
           }}
-        />
+        />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
       const calendar = TestUtils.scryRenderedComponentsWithType(
         datePicker.calendar,
-        Calendar
+        Calendar,
       )[0];
       const year = TestUtils.scryRenderedComponentsWithType(
         datePicker,
-        Year
+        Year,
       )[0];
       const previousButton = TestUtils.findRenderedDOMComponentWithClass(
         calendar,
-        "react-datepicker__navigation--next"
+        "react-datepicker__navigation--next",
       );
       TestUtils.Simulate.click(previousButton);
       const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
         year,
-        className
+        className,
       );
       expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(
-        utils.formatDate(expectedDate, "dd.MM.yyyy")
+        utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
       expect(allPreselectedYears.length).to.equal(1);
     });
@@ -542,7 +543,7 @@ describe("YearPicker", () => {
           onDayClick={onDayClick}
           yearItemNumber={12}
           {...props}
-        />
+        />,
       );
 
     const simulateLeft = (target) =>
@@ -563,7 +564,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
       simulateLeft(target);
 
@@ -574,7 +575,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
       simulateRight(target);
 
@@ -585,7 +586,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
       simulateLeft(target);
 
@@ -596,7 +597,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
       simulateRight(target);
 
@@ -607,7 +608,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
 
       TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
@@ -620,7 +621,7 @@ describe("YearPicker", () => {
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
         yearPicker,
-        "react-datepicker__year-text--selected"
+        "react-datepicker__year-text--selected",
       );
       simulateRight(target);
 
