@@ -190,10 +190,13 @@ describe("DatePicker", () => {
   it("should keep the calendar shown when clicking the calendar", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
+
     var nodeDateInput = findDOMNode(dateInput);
-    var nodeCalendar = findDOMNode(datePicker.calendar);
     TestUtils.Simulate.focus(nodeDateInput);
+
+    var nodeCalendar = findDOMNode(datePicker.calendar);
     TestUtils.Simulate.click(nodeCalendar);
+
     expect(datePicker.calendar).to.exist;
   });
 
