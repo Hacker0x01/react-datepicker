@@ -120,8 +120,8 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    var root = createRoot(div);
-    var datePicker = root.render(<DatePicker />);
+    var datePicker = createRoot(div);
+    datePicker.render(<DatePicker />);
 
     // user focuses the input field, the calendar opens
     var dateInput = div.querySelector("input");
