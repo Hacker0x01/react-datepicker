@@ -1,8 +1,8 @@
 import React from "react";
 import DatePicker from "../src/index.jsx";
 import TestUtils from "react-dom/test-utils";
-import ReactDOM from "react-dom";
 import { findDOMNode } from "react-dom";
+import { createRoot } from "react-dom/client";
 import Time from "../src/time";
 import { newDate, formatDate } from "../src/date_utils";
 
@@ -227,7 +227,9 @@ describe("TimePicker", () => {
   }
 
   function renderDatePickerFor(selected, props) {
-    datePicker = ReactDOM.render(
+    const root = createRoot(div);
+
+    datePicker = root.render(
       <DatePicker
         selected={selected}
         dateFormat={"MMMM d, yyyy p"}
@@ -236,7 +238,6 @@ describe("TimePicker", () => {
         showTimeSelect
         {...props}
       />,
-      div,
     );
   }
 

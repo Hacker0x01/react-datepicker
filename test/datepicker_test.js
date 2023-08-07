@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 import { findDOMNode } from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import { enUS, enGB } from "date-fns/locale";
@@ -93,10 +93,12 @@ describe("DatePicker", () => {
     var shadow = root.attachShadow({ mode: "closed" });
     var appHost = document.createElement("div");
     shadow.appendChild(appHost);
-    var datePicker = ReactDOM.render(
+
+    const root = createRoot(appHost);
+    var datePicker = root.render(
       <DatePicker portalId="test-portal" portalHost={shadow} />,
-      appHost,
     );
+
     var dateInput = datePicker.input;
     var node = findDOMNode(dateInput);
     TestUtils.Simulate.click(node);
@@ -117,7 +119,9 @@ describe("DatePicker", () => {
     // Date Picker Dialog | Escape | Closes the dialog and returns focus to the Choose Date button.
     var div = document.createElement("div");
     document.body.appendChild(div);
-    var datePicker = ReactDOM.render(<DatePicker />, div);
+
+    const root = createRoot(div);
+    var datePicker = root.render(<DatePicker />);
 
     // user focuses the input field, the calendar opens
     var dateInput = div.querySelector("input");
@@ -1120,20 +1124,29 @@ describe("DatePicker", () => {
   it("should autofocus the input given the autoFocus prop", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
-    ReactDOM.render(<DatePicker autoFocus />, div);
+
+    const root = createRoot(div);
+    root.render(<DatePicker autoFocus />);
+
     expect(div.querySelector("input")).to.equal(document.activeElement);
   });
   it("should autofocus the input when calling the setFocus method", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
-    var datePicker = ReactDOM.render(<DatePicker />, div);
+
+    const root = createRoot(div);
+    var datePicker = root.render(<DatePicker />);
+
     datePicker.setFocus();
     expect(div.querySelector("input")).to.equal(document.activeElement);
   });
   it("should clear preventFocus timeout id when component is unmounted", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
-    var datePicker = ReactDOM.render(<DatePicker inline />, div);
+
+    const root = createRoot(div);
+    var datePicker = root.render(<DatePicker inline />);
+
     datePicker.clearPreventFocusTimeout = sinon.spy();
     ReactDOM.unmountComponentAtNode(div);
     assert(
