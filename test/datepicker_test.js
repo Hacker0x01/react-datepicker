@@ -94,7 +94,7 @@ describe("DatePicker", () => {
     var appHost = document.createElement("div");
     shadow.appendChild(appHost);
 
-    const root = createRoot(appHost);
+    var root = createRoot(appHost);
     var datePicker = root.render(
       <DatePicker portalId="test-portal" portalHost={shadow} />,
     );
@@ -120,7 +120,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    const root = createRoot(div);
+    var root = createRoot(div);
     var datePicker = root.render(<DatePicker />);
 
     // user focuses the input field, the calendar opens
@@ -1125,7 +1125,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    const root = createRoot(div);
+    var root = createRoot(div);
     root.render(<DatePicker autoFocus />);
 
     expect(div.querySelector("input")).to.equal(document.activeElement);
@@ -1134,7 +1134,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    const root = createRoot(div);
+    var root = createRoot(div);
     var datePicker = root.render(<DatePicker />);
 
     datePicker.setFocus();
@@ -1144,7 +1144,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    const root = createRoot(div);
+    var root = createRoot(div);
     var datePicker = root.render(<DatePicker inline />);
 
     datePicker.clearPreventFocusTimeout = sinon.spy();
