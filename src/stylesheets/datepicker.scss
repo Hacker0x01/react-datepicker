@@ -251,7 +251,7 @@
   clear: both;
   width: 100%;
   float: left;
-  margin: 5px 0 10px 15px;
+  margin: 5px 0 10px 0;
   text-align: left;
 
   .react-datepicker-time__caption {
@@ -263,10 +263,10 @@
 
     .react-datepicker-time__input {
       display: inline-block;
-      margin-left: 10px;
+      margin-left: 6px;
 
       input {
-        width: auto;
+        width: 85%;
       }
 
       input[type="time"]::-webkit-inner-spin-button,
