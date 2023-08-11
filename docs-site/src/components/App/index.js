@@ -3,6 +3,8 @@ import ExampleComponents from "../Examples";
 import ribbon from "./ribbon.png";
 import logo from "./logo.png";
 import DatePicker from "react-datepicker";
+import CustomDatePicker from "../CustomDatePicker/CustomDatePicker";
+import { holidayDates } from "../CustomDatePicker/holdayDates";
 
 const Example = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -52,7 +54,8 @@ const Root = () => (
           </a>
         </div>
         <div className="hero__example">
-          <Example />
+          {/* <Example /> */}
+          <CustomDatePicker holidayDates={holidayDates} />
         </div>
       </div>
     </div>
