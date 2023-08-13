@@ -116,7 +116,7 @@ export default class Day extends React.Component {
       return false;
     }
     const dayStr = formatDate(day, "MM.dd.yyyy");
-    // Looking for className in the Map of {'day string, ['className', 'holidayName']}
+    // Looking for className in the Map of {day string: {className, holidayName}}
     if (holidays.has(dayStr)) {
       return [holidays.get(dayStr).className];
     }
