@@ -1065,9 +1065,18 @@ describe("Day", () => {
       const holidays = new Map([
         [
           "08.15.2023",
-          ["react-datepicker__day--holidays", "India's Independence Day"],
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: "India's Independence Day",
+          },
         ],
-        ["12.25.2023", ["react-datepicker__day--holidays", "Christmas"]],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: "Christmas",
+          },
+        ],
       ]);
 
       const shallowDay = renderDay(day, {
@@ -1081,9 +1090,18 @@ describe("Day", () => {
       const holidays = new Map([
         [
           "08.15.2023",
-          ["react-datepicker__day--holidays", "India's Independence D"],
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: "India's Independence Day",
+          },
         ],
-        ["12.25.2023", ["react-datepicker__day--holidays", "Christmas"]],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: "Christmas",
+          },
+        ],
       ]);
 
       const shallowDay = renderDay(day, {

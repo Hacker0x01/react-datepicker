@@ -360,8 +360,9 @@ export default class DatePicker extends React.Component {
 
   calcInitialState = () => {
     // Convert the date from string format to standard Date format
-    this.props.holidays?.forEach((day) => {
+    const modifiedHolidays = this.props.holidays?.map((day) => {
       if (day.date.length <= 10) day.date = stringToDate(day.date);
+      return day;
     });
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
@@ -382,7 +383,7 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
-      holidays: getHolidaysMap(this.props.holidays),
+      holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render

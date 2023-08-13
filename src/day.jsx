@@ -118,9 +118,8 @@ export default class Day extends React.Component {
     const dayStr = formatDate(day, "MM.dd.yyyy");
     // Looking for className in the Map of {'day string, ['className', 'holidayName']}
     if (holidays.has(dayStr)) {
-      return [holidays.get(dayStr)[0]];
+      return [holidays.get(dayStr).className];
     }
-    return;
   };
 
   isInRange = () => {
@@ -298,15 +297,11 @@ export default class Day extends React.Component {
   // A function to return the holiday's name as title's content
   getTitle = () => {
     const { day, holidays = new Map() } = this.props;
-
-    const strMon =
-      day.getMonth() > 9 ? `${day.getMonth() + 1}` : `0${day.getMonth() + 1}`;
-    const strDate =
-      day.getDate() > 9 ? `${day.getDate()}` : `0${day.getDate()}`;
-    const stryear = day.getFullYear();
-    const compareDt = `${strMon}.${strDate}.${stryear}`;
+    const compareDt = formatDate(day, "MM.dd.yyyy");
     if (holidays.has(compareDt)) {
-      return holidays.get(compareDt)[1] ? `${holidays.get(compareDt)[1]}` : "";
+      return holidays.get(compareDt).holidayName
+        ? `${holidays.get(compareDt).holidayName}`
+        : "";
     }
     return "";
   };

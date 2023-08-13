@@ -744,7 +744,7 @@ export function stringToDate(dateString) {
   const month = parseInt(dateParts[1]);
   const day = parseInt(dateParts[2]);
 
-  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+  if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
     console.error(
       "Invalid date format. Please use numbers for year, month, and day.",
     );
@@ -771,11 +771,16 @@ export function getHolidaysMap(
     let obj = holidayDates[i].date;
     if (isDate(obj)) {
       let key = formatDate(obj, "MM.dd.yyyy");
-      const classNamesArr = dateClasses.get(key) || [];
-      if (!classNamesArr.includes(defaultClassName)) {
-        classNamesArr.push(defaultClassName);
-        classNamesArr.push(holidayDates[i].holidayName);
-        dateClasses.set(key, classNamesArr);
+      const classNamesObj = dateClasses.get(key) || {};
+      if (
+        !(
+          classNamesObj.hasOwnProperty("className") &&
+          classNamesObj["className"] === defaultClassName
+        )
+      ) {
+        classNamesObj["className"] = defaultClassName;
+        classNamesObj["holidayName"] = holidayDates[i].holidayName;
+        dateClasses.set(key, classNamesObj);
       }
     }
   }
