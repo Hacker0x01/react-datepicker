@@ -726,41 +726,6 @@ export function getHightLightDaysMap(
 }
 
 /**
- * Converts a string date from 'YYYY-MM-DD format to Date() format
- * @param {string} dateString Date string in 'YYYY-MM-DD format
- * @returns {Date}
- */
-export function stringToDate(dateString) {
-  if (
-    dateString === null ||
-    dateString.trim() === "" ||
-    dateString === undefined
-  ) {
-    return null; // Returning null to indicate no valid date provided
-  }
-
-  const dateParts = dateString.split("-");
-  if (dateParts.length !== 3) {
-    console.error("Invalid date format. Please use YYYY-MM-DD format.");
-    return null; // Returning null to indicate no valid date provided
-  }
-  const year = parseInt(dateParts[0]);
-  const month = parseInt(dateParts[1]);
-  const day = parseInt(dateParts[2]);
-
-  if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
-    console.error(
-      "Invalid date format. Please use numbers for year, month, and day.",
-    );
-    return null; // Returning null to indicate no valid date provided
-  }
-
-  // Create the Date object
-  const dateObject = new Date(year, month - 1, day);
-  return dateObject;
-}
-
-/**
  * Assign the custom class to each date
  * @param {Array} holidayDates array of object containing date and name of the holiday
  * @param {string} classname to be added.
@@ -771,23 +736,25 @@ export function getHolidaysMap(
   defaultClassName = "react-datepicker__day--holidays",
 ) {
   const dateClasses = new Map();
-  for (let i = 0; i < holidayDates.length; i++) {
-    let dateObj = holidayDates[i].date;
-    if (isDate(dateObj)) {
-      let key = formatDate(dateObj, "MM.dd.yyyy");
-      const classNamesObj = dateClasses.get(key) || {};
-      if (
-        !(
-          "className" in classNamesObj &&
-          classNamesObj["className"] === defaultClassName
-        )
-      ) {
-        classNamesObj["className"] = defaultClassName;
-        classNamesObj["holidayName"] = holidayDates[i].holidayName;
-        dateClasses.set(key, classNamesObj);
-      }
+  holidayDates.forEach((holiday) => {
+    const { date: dateObj, holidayName } = holiday;
+    if (!isDate(dateObj)) {
+      return;
     }
-  }
+
+    const key = formatDate(dateObj, "MM.dd.yyyy");
+    const classNamesObj = dateClasses.get(key) || {};
+    if (
+      "className" in classNamesObj &&
+      classNamesObj["className"] === defaultClassName
+    ) {
+      return;
+    }
+
+    classNamesObj["className"] = defaultClassName;
+    classNamesObj["holidayName"] = holidayName;
+    dateClasses.set(key, classNamesObj);
+  });
   return dateClasses;
 }
 

@@ -7,6 +7,7 @@ import classnames from "classnames";
 import set from "date-fns/set";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
+import isValid from "date-fns/isValid";
 import {
   newDate,
   isDate,
@@ -43,7 +44,6 @@ import {
   isMonthDisabled,
   isYearDisabled,
   getHolidaysMap,
-  stringToDate,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -360,10 +360,18 @@ export default class DatePicker extends React.Component {
 
   calcInitialState = () => {
     // Convert the date from string format to standard Date format
-    const modifiedHolidays = this.props.holidays?.map((day) => {
-      if (day.date.length <= 10) day.date = stringToDate(day.date);
-      return day;
-    });
+    const modifiedHolidays = this.props.holidays?.reduce(
+      (accumulator, holiday) => {
+        const date = new Date(holiday.date);
+        if (!isValid(date)) {
+          return accumulator;
+        }
+
+        return [...accumulator, { ...holiday, date }];
+      },
+      [],
+    );
+
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);

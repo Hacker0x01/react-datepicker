@@ -35,7 +35,6 @@ import {
   yearsDisabledBefore,
   getWeek,
   safeDateRangeFormat,
-  stringToDate,
   getHolidaysMap,
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
@@ -1148,21 +1147,6 @@ describe("date_utils", function () {
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
         "04/20/2021 - 04/28/2021",
       );
-    });
-  });
-
-  describe("stringToDate", () => {
-    it("should return a formatted date when a valid string of a date is provided", () => {
-      const stringDate = "2023-12-22";
-      const result = `${stringToDate(stringDate)}`;
-      expect(result).to.equal(
-        "Fri Dec 22 2023 00:00:00 GMT+0530 (India Standard Time)",
-      );
-    });
-
-    it("should return null when no date is provided in string", () => {
-      const stringDate = "";
-      expect(stringToDate(stringDate)).to.equal(null);
     });
   });
 
