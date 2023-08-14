@@ -731,7 +731,11 @@ export function getHightLightDaysMap(
  * @returns {Date}
  */
 export function stringToDate(dateString) {
-  if (dateString === null || dateString.trim() === "") {
+  if (
+    dateString === null ||
+    dateString.trim() === "" ||
+    dateString === undefined
+  ) {
     return null; // Returning null to indicate no valid date provided
   }
 
@@ -767,14 +771,14 @@ export function getHolidaysMap(
   defaultClassName = "react-datepicker__day--holidays",
 ) {
   const dateClasses = new Map();
-  for (let i = 0, len = holidayDates.length; i < len; i++) {
-    let obj = holidayDates[i].date;
-    if (isDate(obj)) {
-      let key = formatDate(obj, "MM.dd.yyyy");
+  for (let i = 0; i < holidayDates.length; i++) {
+    let dateObj = holidayDates[i].date;
+    if (isDate(dateObj)) {
+      let key = formatDate(dateObj, "MM.dd.yyyy");
       const classNamesObj = dateClasses.get(key) || {};
       if (
         !(
-          classNamesObj.hasOwnProperty("className") &&
+          "className" in classNamesObj &&
           classNamesObj["className"] === defaultClassName
         )
       ) {

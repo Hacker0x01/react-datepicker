@@ -109,7 +109,7 @@ export default class Day extends React.Component {
     return highlightDates.get(dayStr);
   };
 
-  // Function to return the classname associated to the date
+  // Function to return the array containing classname associated to the date
   getHolidaysClass = () => {
     const { day, holidays } = this.props;
     if (!holidays) {

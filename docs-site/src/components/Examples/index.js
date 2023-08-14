@@ -291,7 +291,7 @@ export default class exampleComponents extends React.Component {
       component: HighlightDatesRanges,
     },
     {
-      title: "Holidays dates",
+      title: "Holiday dates",
       component: HolidayDates,
     },
     {
