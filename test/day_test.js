@@ -220,8 +220,8 @@ describe("Day", () => {
     it("should apply the holidays class if in holidays array", () => {
       const day = newDate();
       const holidaysDates = [
-        { date: new Date(), holidayName: "India's Independence Day" },
-        { date: new Date(2023, 11, 25), holidayName: "Christmas" },
+        { date: new Date(), holidayName: ["India's Independence Day"] },
+        { date: new Date(2023, 11, 25), holidayName: ["Christmas"] },
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
       const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
@@ -229,13 +229,16 @@ describe("Day", () => {
     });
 
     it("should not apply the holiday class if not in holidays array", () => {
-      const day = newDate();
+      const day = new Date(2023, 7, 14);
       const holidaysDates = [
         {
           date: new Date(2023, 7, 15),
-          holidayName: "India's Independence Day",
+          holidayName: ["India's Independence Day"],
         },
-        { date: new Date(2023, 11, 25), holidayName: "Christmas" },
+        {
+          date: new Date(2023, 11, 25),
+          holidayName: ["Christmas"],
+        },
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
       const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
@@ -1067,14 +1070,14 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: "India's Independence Day",
+            holidayName: ["India's Independence Day"],
           },
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: "Christmas",
+            holidayName: ["Christmas"],
           },
         ],
       ]);
@@ -1085,6 +1088,33 @@ describe("Day", () => {
       expect(shallowDay.html().indexOf('title="Christmas"')).not.equal(-1);
     });
 
+    it("uses both the holiday names for a given date as the title", () => {
+      const day = new Date(2023, 7, 15);
+      const holidays = new Map([
+        [
+          "08.15.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: ["Holiday 1", "Holiday 2"],
+          },
+        ],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayName: ["Christmas"],
+          },
+        ],
+      ]);
+
+      const shallowDay = renderDay(day, {
+        holidays: holidays,
+      });
+      expect(
+        shallowDay.html().indexOf('title="Holiday 1,Holiday 2"'),
+      ).not.equal(-1);
+    });
+
     it("should have the title as empty string if date is not from holiday list", () => {
       const day = new Date(2023, 7, 14);
       const holidays = new Map([
@@ -1092,14 +1122,14 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: "India's Independence Day",
+            holidayName: ["India's Independence Day"],
           },
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: "Christmas",
+            holidayName: ["Christmas"],
           },
         ],
       ]);

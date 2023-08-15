@@ -726,6 +726,26 @@ export function getHightLightDaysMap(
 }
 
 /**
+ * Compare the two arrays
+ * @param {Array} array1
+ * @param {Array} array2
+ * @returns {Boolean} true, if the passed array are equal, false otherwise
+ */
+function arraysAreEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
  * Assign the custom class to each date
  * @param {Array} holidayDates array of object containing date and name of the holiday
  * @param {string} classname to be added.
@@ -746,13 +766,17 @@ export function getHolidaysMap(
     const classNamesObj = dateClasses.get(key) || {};
     if (
       "className" in classNamesObj &&
-      classNamesObj["className"] === defaultClassName
+      classNamesObj["className"] === defaultClassName &&
+      arraysAreEqual(classNamesObj["holidayName"], [holidayName])
     ) {
       return;
     }
 
     classNamesObj["className"] = defaultClassName;
-    classNamesObj["holidayName"] = holidayName;
+    const holidayNameArr = classNamesObj["holidayName"];
+    classNamesObj["holidayName"] = holidayNameArr
+      ? [...holidayNameArr, holidayName]
+      : [holidayName];
     dateClasses.set(key, classNamesObj);
   });
   return dateClasses;
