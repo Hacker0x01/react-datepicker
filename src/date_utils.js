@@ -731,7 +731,7 @@ export function getHightLightDaysMap(
  * @param {Array} array2
  * @returns {Boolean} true, if the passed array are equal, false otherwise
  */
-function arraysAreEqual(array1, array2) {
+export function arraysAreEqual(array1, array2) {
   if (array1.length !== array2.length) {
     return false;
   }
