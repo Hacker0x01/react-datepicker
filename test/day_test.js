@@ -1070,14 +1070,14 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["India's Independence Day"],
+            holidayNames: ["India's Independence Day"],
           },
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["Christmas"],
+            holidayNames: ["Christmas"],
           },
         ],
       ]);
@@ -1095,14 +1095,14 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["Holiday 1", "Holiday 2"],
+            holidayNames: ["Holiday 1", "Holiday 2"],
           },
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["Christmas"],
+            holidayNames: ["Christmas"],
           },
         ],
       ]);
@@ -1110,8 +1110,9 @@ describe("Day", () => {
       const shallowDay = renderDay(day, {
         holidays: holidays,
       });
+      console.log("TANMAY: ", shallowDay.debug());
       expect(
-        shallowDay.html().indexOf('title="Holiday 1,Holiday 2"'),
+        shallowDay.html().indexOf('title="Holiday 1, Holiday 2"'),
       ).not.equal(-1);
     });
 
@@ -1122,14 +1123,14 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["India's Independence Day"],
+            holidayNames: ["India's Independence Day"],
           },
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayName: ["Christmas"],
+            holidayNames: ["Christmas"],
           },
         ],
       ]);

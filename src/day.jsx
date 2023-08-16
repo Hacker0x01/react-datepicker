@@ -299,8 +299,8 @@ export default class Day extends React.Component {
     const { day, holidays = new Map() } = this.props;
     const compareDt = formatDate(day, "MM.dd.yyyy");
     if (holidays.has(compareDt)) {
-      return holidays.get(compareDt).holidayName
-        ? `${holidays.get(compareDt).holidayName}`
+      return holidays.get(compareDt).holidayNames.length > 0
+        ? holidays.get(compareDt).holidayNames.join(", ")
         : "";
     }
     return "";
