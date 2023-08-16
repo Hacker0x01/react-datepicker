@@ -1110,7 +1110,6 @@ describe("Day", () => {
       const shallowDay = renderDay(day, {
         holidays: holidays,
       });
-      console.log("TANMAY: ", shallowDay.debug());
       expect(
         shallowDay.html().indexOf('title="Holiday 1, Holiday 2"'),
       ).not.equal(-1);
