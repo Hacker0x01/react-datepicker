@@ -6,6 +6,17 @@
   padding: 0;
   border: 0;
 }
+.react-datepicker__day.indian-holiday {
+  background-color: orange;
+  color: white;
+  position: relative;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+.react-datepicker__day.indian-holiday:hover {
+  background-color: #ff8f00;
+}
 
 .react-datepicker {
   font-family: $datepicker__font-family;

@@ -23,7 +23,7 @@ export default class Week extends React.Component {
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
         end: PropTypes.instanceOf(Date),
-      })
+      }),
     ),
     filterDate: PropTypes.func,
     formatWeekNumber: PropTypes.func,
@@ -55,6 +55,7 @@ export default class Week extends React.Component {
     setOpen: PropTypes.func,
     shouldCloseOnSelect: PropTypes.bool,
     renderDayContents: PropTypes.func,
+    renderHolidayContents: PropTypes.array,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     containerRef: PropTypes.oneOfType([
@@ -97,7 +98,7 @@ export default class Week extends React.Component {
     const startOfWeek = utils.getStartOfWeek(
       this.props.day,
       this.props.locale,
-      this.props.calendarStartDay
+      this.props.calendarStartDay,
     );
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
@@ -111,7 +112,7 @@ export default class Week extends React.Component {
           weekNumber={weekNumber}
           onClick={onClickAction}
           ariaLabelPrefix={this.props.ariaLabelPrefix}
-        />
+        />,
       );
     }
     return days.concat(
@@ -145,6 +146,7 @@ export default class Week extends React.Component {
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}
             renderDayContents={this.props.renderDayContents}
+            renderHolidayContents={this.props.renderHolidayContents}
             disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
             handleOnKeyDown={this.props.handleOnKeyDown}
             isInputFocused={this.props.isInputFocused}
@@ -158,7 +160,7 @@ export default class Week extends React.Component {
             locale={this.props.locale}
           />
         );
-      })
+      }),
     );
   };
 

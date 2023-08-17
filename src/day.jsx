@@ -40,6 +40,7 @@ export default class Day extends React.Component {
     selectsDisabledDaysInRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
+    renderHolidayContents: PropTypes.array,
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
@@ -238,6 +239,11 @@ export default class Day extends React.Component {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
       : undefined;
+
+    const isHoliday = this.props.renderHolidayContents?.some((holiday) =>
+      isSameDay(holiday.date, date),
+    );
+
     return classnames(
       "react-datepicker__day",
       dayClassName,
@@ -245,6 +251,7 @@ export default class Day extends React.Component {
       {
         "react-datepicker__day--disabled": this.isDisabled(),
         "react-datepicker__day--excluded": this.isExcluded(),
+        "indian-holiday": isHoliday && !this.isSelected(),
         "react-datepicker__day--selected": this.isSelected(),
         "react-datepicker__day--keyboard-selected": this.isKeyboardSelected(),
         "react-datepicker__day--range-start": this.isRangeStart(),
@@ -260,7 +267,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
     );
   };
 
@@ -335,6 +342,16 @@ export default class Day extends React.Component {
     shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
   };
 
+  renderHolidayContents = (holidays) => {
+    const { day } = this.props;
+    const holiday = holidays?.find((holiday) => isSameDay(holiday.date, day));
+    return holiday ? (
+      <span title={holiday.name} className="tooltip">
+        {getDate(day)}
+      </span>
+    ) : null;
+  };
+
   renderDayContents = () => {
     if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
       return null;
@@ -359,7 +376,8 @@ export default class Day extends React.Component {
       aria-current={this.isCurrentDay() ? "date" : undefined}
       aria-selected={this.isSelected() || this.isInRange()}
     >
-      {this.renderDayContents()}
+      {this.renderHolidayContents(this.props.renderHolidayContents) ||
+        this.renderDayContents()}
     </div>
   );
 }
