@@ -5,9 +5,8 @@
 [![codecov](https://codecov.io/gh/Hacker0x01/react-datepicker/branch/main/graph/badge.svg)](https://codecov.io/gh/Hacker0x01/react-datepicker)
 [![Downloads](https://img.shields.io/npm/dm/react-datepicker.svg)](https://npmjs.org/package/react-datepicker)
 
-A simple and reusable Datepicker component for React ([Demo](https://reactdatepicker.com/))
-
-![](https://cloud.githubusercontent.com/assets/1412392/5339491/c40de124-7ee1-11e4-9f07-9276e2545f27.png)
+A simple and reusable Datepicker component for React with Holiday ([Demo](https://reactdatepicker.com/))
+![Screenshot from 2023-08-18 04-21-34](https://github.com/MAN-JAY/react-datepicker/assets/22654580/21ec56a2-add6-4cb2-a0e3-5d9ede154a3c)
 
 ## Installation
 
@@ -36,8 +35,16 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
+  // define an array of holiday objects
+  const holidays = [
+    { name: "Onam", date: new Date("2023-08-29") },
+    { name: "Independence Day", date: new Date("2023-08-15") },
+    { name: "Raksha Bandhan", date: new Date("2023-08-30") },
+    { name: "Janmashtami", date: new Date("2023-09-06") },
+    { name: "Ganesh Chaturthi", date: new Date("2023-09-19") },
+  ];
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+    <DatePicker selected={startDate} onChange={(date) => setStartDate(date) renderHolidayContents={holidays}} />
   );
 };
 ```
@@ -50,36 +57,16 @@ The most basic use of the DatePicker can be described with:
 <DatePicker selected={startdate} onChange={(date) => setStartDate(date)} />
 ```
 
-You can use `onSelect` event handler which fires each time some calendar date has been selected
+You can use `renderHolidayContents` to display Holiday in your calendar
 
 ```js
 <DatePicker
   selected={date}
-  onSelect={handleDateSelect} //when day is clicked
+  renderHolidayContents={holidays}  //only when you need to display holidays
   onChange={handleDateChange} //only when value has changed
 />
 ```
-
-`onClickOutside` handler may be useful to close datepicker in `inline` mode
-
-See [here](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
-
-### Time picker
-
-You can also include a time picker by adding the showTimeSelect prop
-
-```js
-<DatePicker
-  selected={date}
-  onChange={handleDateChange}
-  showTimeSelect
-  dateFormat="Pp"
-/>
-```
-
-Times will be displayed at 30-minute intervals by default (default configurable via timeIntervals prop)
-
-More examples of how to use the time picker are given on the [main website](https://hacker0x01.github.io/react-datepicker)
+ on the [main website](https://hacker0x01.github.io/react-datepicker)
 
 ### Localization
 
@@ -98,24 +85,7 @@ registerLocale('es', es)
   locale="es"
 />
 ```
-
-Locales can be changed in the following way:
-
-- **Globally** - `setDefaultLocale('es');`
-
-## Compatibility
-
-### React
-
-We're always trying to stay compatible with the latest version of React. We can't support all older versions of React.
-
-Latest compatible versions:
-
-- React 16 or newer: React-datepicker v2.9.4 and newer
-- React 15.5: React-datepicker v2.9.3
-- React 15.4.1: needs React-datepicker v0.40.0, newer won't work (due to react-onclickoutside dependencies)
-- React 0.14 or newer: All above React-datepicker v0.13.0
-- React 0.13: React-datepicker v0.13.0
+ React-datepicker v0.13.0
 - pre React 0.13: React-datepicker v0.6.2
 
 ### Moment.js
