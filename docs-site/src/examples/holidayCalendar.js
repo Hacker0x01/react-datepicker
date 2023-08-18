@@ -16,15 +16,15 @@
   const renderDayContents = (day, date) => {
     const overlayContent = holidaysList.find((items, index) => {
       if (holidays[index] === date.toDateString()) {
-        return items.reason;
+        return items;
       }
     });
     return (
       <span>
         {getDate(date)}
-        {holidays.includes(date.toDateString()) ? (
+        {overlayContent && (
           <span className="holiday-overlay">{overlayContent.reason} </span>
-        ) : null}
+        )}
       </span>
     );
   };
