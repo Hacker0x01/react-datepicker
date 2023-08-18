@@ -9,16 +9,20 @@
     { day: "2022-12-31", reason: "End Year off" },
   ];
 
+  const checkIfDayIsHoliday = (date) => {
+    return holidaysList.find((items, index) => {
+      if (holidays[index] === date.toDateString()) {
+        return items;
+      }
+    });
+  };
+
   const holidays = holidaysList.map((date) => {
     return new Date(date.day).toDateString();
   });
 
   const renderDayContents = (day, date) => {
-    const overlayContent = holidaysList.find((items, index) => {
-      if (holidays[index] === date.toDateString()) {
-        return items;
-      }
-    });
+    const overlayContent = checkIfDayIsHoliday(date);
     return (
       <span>
         {getDate(date)}
@@ -34,7 +38,7 @@
       selected={startDate}
       onChange={(date) => setStartDate(date)}
       dayClassName={(date) =>
-        holidays.includes(date.toDateString()) ? "highlight-holiday" : undefined
+        checkIfDayIsHoliday(date) ? "highlight-holiday" : undefined
       }
       renderDayContents={renderDayContents}
     />
