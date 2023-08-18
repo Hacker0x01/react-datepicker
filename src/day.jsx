@@ -241,7 +241,7 @@ export default class Day extends React.Component {
       : undefined;
 
     const isHoliday = this.props.renderHolidayContents?.some((holiday) =>
-      isSameDay(holiday.date, date),
+      isSameDay(holiday.date, date)
     );
 
     return classnames(
@@ -267,7 +267,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHighLightedClass("react-datepicker__day--highlighted")
     );
   };
 

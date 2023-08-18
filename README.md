@@ -44,7 +44,11 @@ const Example = () => {
     { name: "Ganesh Chaturthi", date: new Date("2023-09-19") },
   ];
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} renderHolidayContents={holidays} />
+    <DatePicker
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      renderHolidayContents={holidays}
+    />
   );
 };
 ```
@@ -62,11 +66,12 @@ You can use `renderHolidayContents` to display Holiday in your calendar
 ```js
 <DatePicker
   selected={date}
-  renderHolidayContents={holidays}  //only when you need to display holidays
+  renderHolidayContents={holidays} //only when you need to display holidays
   onChange={handleDateChange} //only when value has changed
 />
 ```
- on the [main website](https://hacker0x01.github.io/react-datepicker)
+
+on the [main website](https://hacker0x01.github.io/react-datepicker)
 
 ### Localization
 
@@ -85,7 +90,9 @@ registerLocale('es', es)
   locale="es"
 />
 ```
- React-datepicker v0.13.0
+
+React-datepicker v0.13.0
+
 - pre React 0.13: React-datepicker v0.6.2
 
 ### Moment.js
