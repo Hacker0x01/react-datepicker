@@ -5,6 +5,7 @@ import slugify from "slugify";
 import CodeExampleComponent from "../Example";
 
 import Default from "../../examples/default";
+import HolidayCalender from "../../examples/holidayCalendar";
 import NoAnchorArrow from "../../examples/noAnchorArrow";
 import ShowTime from "../../examples/showTime";
 import ShowTimeOnly from "../../examples/showTimeOnly";
@@ -109,6 +110,10 @@ export default class exampleComponents extends React.Component {
   }
 
   examples = [
+    {
+      title: "Holiday Calendar",
+      component: HolidayCalender,
+    },
     {
       title: "Default",
       component: Default,
@@ -526,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`
+                    `example-${slugify(example.title, { lower: true })}`,
                   )
                 }
               >
