@@ -14,6 +14,7 @@
       if (holidays[index] === date.toDateString()) {
         return items;
       }
+      return false;
     });
   };
 
