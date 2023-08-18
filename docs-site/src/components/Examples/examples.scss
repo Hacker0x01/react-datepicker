@@ -140,21 +140,26 @@
   font: inherit;
   color: #fff;
 }
+
 .highlight-holiday {
   background-color: chocolate;
   border-radius: 5px;
   color: white;
   position: relative;
 }
+
 .highlight-holiday:hover {
   color: black;
 }
+
 .react-datepicker__day--selected.highlight-holiday {
   background-color: #216ba5;
 }
+
 .react-datepicker__day--selected.highlight-holiday:hover {
   color: white;
 }
+
 .holiday-overlay {
   position: absolute;
   display: none;
@@ -164,6 +169,7 @@
   font-weight: bold;
   color: rgb(52, 52, 52);
 }
+
 .highlight-holiday:hover .holiday-overlay {
   display: block;
   background-color: rgb(219, 219, 219);
