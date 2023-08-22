@@ -275,7 +275,7 @@ export default class Day extends React.Component {
           this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted"),
-      this.getHolidaysClass(),
+      this.getHolidaysClass()
     );
   };
 
