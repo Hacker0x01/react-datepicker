@@ -531,7 +531,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`,
+                    `example-${slugify(example.title, { lower: true })}`
                   )
                 }
               >
