@@ -221,7 +221,7 @@ describe("Day", () => {
       const day = newDate();
       const holidaysDates = [
         { date: new Date(), holidayName: ["India's Independence Day"] },
-        { date: new Date(2023, 11, 25), holidayName: ["Christmas"] },
+        { date: new Date(2023, 11, 25), holidayName: ["Christmas"] }
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
       const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
@@ -233,12 +233,12 @@ describe("Day", () => {
       const holidaysDates = [
         {
           date: new Date(2023, 7, 15),
-          holidayName: ["India's Independence Day"],
+          holidayName: ["India's Independence Day"]
         },
         {
           date: new Date(2023, 11, 25),
-          holidayName: ["Christmas"],
-        },
+          holidayName: ["Christmas"]
+        }
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
       const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
@@ -696,7 +696,7 @@ describe("Day", () => {
     it("should hide days outside month at end when duplicates", () => {
       const day = newDate("2021-03-17");
       const wrapper = mount(
-        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />,
+        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />
       );
       expect(wrapper.text()).to.be.empty;
     });
@@ -714,7 +714,7 @@ describe("Day", () => {
           day={day}
           month={getMonth(day) + 1}
           monthShowsDuplicateDaysStart
-        />,
+        />
       );
       expect(wrapper.text()).to.be.empty;
     });
@@ -733,7 +733,7 @@ describe("Day", () => {
           month={getMonth(day)}
           monthShowsDuplicateDaysStart
           monthShowsDuplicateDaysEnd
-        />,
+        />
       );
       expect(wrapper.text()).to.equal(day.getDate().toString());
     });
@@ -796,7 +796,7 @@ describe("Day", () => {
         ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled,
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`),
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)
       ).not.equal(-1);
     });
 
@@ -807,7 +807,7 @@ describe("Day", () => {
         excludeDates: [day],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
       ).not.equal(-1);
     });
 
@@ -820,7 +820,7 @@ describe("Day", () => {
         ],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
       ).not.equal(-1);
     });
 
@@ -828,7 +828,7 @@ describe("Day", () => {
       const day = newDate("2021-05-26");
       const shallowDay = renderDay(day);
       expect(shallowDay.html().indexOf("Wednesday, May 26th, 2021")).not.equal(
-        -1,
+        -1
       );
     });
 
@@ -839,7 +839,7 @@ describe("Day", () => {
         locale: "es",
       });
       expect(
-        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021"),
+        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021")
       ).not.equal(-1);
     });
   });
@@ -865,7 +865,7 @@ describe("Day", () => {
     it("should not call onClick if day is disabled", () => {
       const day = newDate();
       const dayNode = shallow(
-        <Day day={day} excludeDates={[day]} onClick={onClick} />,
+        <Day day={day} excludeDates={[day]} onClick={onClick} />
       );
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).to.be.false;
@@ -880,7 +880,7 @@ describe("Day", () => {
             { start: subDays(day, 1), end: addDays(day, 1) },
           ]}
           onClick={onClick}
-        />,
+        />
       );
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).to.be.false;
@@ -1035,7 +1035,7 @@ describe("Day", () => {
     xit("should apply focus to the preselected day", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} />,
+        <Day day={day} preSelection={day} />
       ).instance();
 
       sandbox.spy(dayInstance.dayEl.current, "focus");
@@ -1050,7 +1050,7 @@ describe("Day", () => {
     xit("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} inline />,
+        <Day day={day} preSelection={day} inline />
       ).instance();
 
       sandbox.spy(dayInstance.dayEl.current, "focus");
@@ -1070,16 +1070,16 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["India's Independence Day"],
-          },
+            holidayNames: ["India's Independence Day"]
+          }
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["Christmas"],
-          },
-        ],
+            holidayNames: ["Christmas"]
+          }
+        ]
       ]);
 
       const shallowDay = renderDay(day, {
@@ -1095,23 +1095,23 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["Holiday 1", "Holiday 2"],
-          },
+            holidayNames: ["Holiday 1", "Holiday 2"]
+          }
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["Christmas"],
-          },
-        ],
+            holidayNames: ["Christmas"]
+          }
+        ]
       ]);
 
       const shallowDay = renderDay(day, {
         holidays: holidays,
       });
       expect(
-        shallowDay.html().indexOf('title="Holiday 1, Holiday 2"'),
+        shallowDay.html().indexOf('title="Holiday 1, Holiday 2"')
       ).not.equal(-1);
     });
 
@@ -1122,20 +1122,20 @@ describe("Day", () => {
           "08.15.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["India's Independence Day"],
-          },
+            holidayNames: ["India's Independence Day"]
+          }
         ],
         [
           "12.25.2023",
           {
             className: "react-datepicker__day--holidays",
-            holidayNames: ["Christmas"],
-          },
-        ],
+            holidayNames: ["Christmas"]
+          }
+        ]
       ]);
 
       const shallowDay = renderDay(day, {
-        holidays: holidays,
+        holidays: holidays
       });
       expect(shallowDay.html().indexOf('title=""')).not.equal(-1);
     });
