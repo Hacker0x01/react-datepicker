@@ -210,7 +210,7 @@ describe("date_utils", function () {
       expect(
         isDayDisabled(day, {
           excludeDateIntervals: [{ start: day, end: addDays(day, 1) }],
-        }),
+        })
       ).to.be.true;
     });
 
@@ -221,7 +221,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        }),
+        })
       ).to.be.true;
     });
 
@@ -230,7 +230,7 @@ describe("date_utils", function () {
       expect(
         isDayDisabled(day, {
           excludeDateIntervals: [{ start: subDays(day, 1), end: day }],
-        }),
+        })
       ).to.be.true;
     });
 
@@ -241,7 +241,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
-        }),
+        })
       ).to.throw("Invalid interval");
     });
 
@@ -257,7 +257,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        }),
+        })
       ).to.be.false;
     });
 
@@ -273,7 +273,7 @@ describe("date_utils", function () {
           includeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        }),
+        })
       ).to.be.false;
     });
 
@@ -290,7 +290,7 @@ describe("date_utils", function () {
           includeDateIntervals: [
             { start: subDays(day, 10), end: subDays(day, 5) },
           ],
-        }),
+        })
       ).to.be.true;
     });
 
@@ -331,7 +331,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: subDays(day, 1), end: addDays(day, 1) },
           ],
-        }),
+        })
       ).to.be.true;
     });
 
@@ -347,7 +347,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        }),
+        })
       ).to.be.false;
     });
 
@@ -358,7 +358,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
-        }),
+        })
       ).to.be.throw("Invalid interval");
     });
 
@@ -370,7 +370,7 @@ describe("date_utils", function () {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: addDays(day, 2) },
           ],
-        }),
+        })
       ).to.be.false;
     });
 
@@ -1138,7 +1138,7 @@ describe("date_utils", function () {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = null;
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
-        "04/20/2021 - ",
+        "04/20/2021 - "
       );
     });
 
@@ -1146,7 +1146,7 @@ describe("date_utils", function () {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = new Date("2021-04-28 00:00:00");
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
-        "04/20/2021 - 04/28/2021",
+        "04/20/2021 - 04/28/2021"
       );
     });
   });
@@ -1156,17 +1156,17 @@ describe("date_utils", function () {
       const holidayDates = [
         {
           date: new Date(2023, 7, 15),
-          holidayName: "India's Independence Day",
+          holidayName: "India's Independence Day"
         },
         {
           date: new Date(2023, 11, 25),
-          holidayName: "Christmas",
-        },
+          holidayName: "Christmas"
+        }
       ];
       expect(getHolidaysMap(holidayDates)).to.have.lengthOf(2);
       expect(getHolidaysMap(holidayDates)).to.have.all.keys(
         "08.15.2023",
-        "12.25.2023",
+        "12.25.2023"
       );
     });
 
@@ -1174,8 +1174,8 @@ describe("date_utils", function () {
       const holidayDates = [
         {
           date: "2024-02-31",
-          holidayName: "Fake holiday",
-        },
+          holidayName: "Fake holiday"
+        }
       ];
       expect(getHolidaysMap(holidayDates)).to.have.lengthOf(0);
     });
@@ -1184,12 +1184,12 @@ describe("date_utils", function () {
       const holidayDates = [
         {
           date: new Date(2023, 7, 15),
-          holidayName: "India's Independence Day",
+          holidayName: "India's Independence Day"
         },
         {
           date: new Date(2023, 7, 15),
-          holidayName: "India's Independence Day",
-        },
+          holidayName: "India's Independence Day"
+        }
       ];
       expect(getHolidaysMap(holidayDates)).to.have.lengthOf(1);
     });
