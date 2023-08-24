@@ -104,6 +104,7 @@ export default class Calendar extends React.Component {
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
+    holidays: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
@@ -904,6 +905,7 @@ export default class Calendar extends React.Component {
             excludeDates={this.props.excludeDates}
             excludeDateIntervals={this.props.excludeDateIntervals}
             highlightDates={this.props.highlightDates}
+            holidays={this.props.holidays}
             selectingDate={this.state.selectingDate}
             includeDates={this.props.includeDates}
             includeDateIntervals={this.props.includeDateIntervals}

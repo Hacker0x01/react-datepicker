@@ -35,6 +35,8 @@ import {
   yearsDisabledBefore,
   getWeek,
   safeDateRangeFormat,
+  getHolidaysMap,
+  arraysAreEqual,
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -1146,6 +1148,64 @@ describe("date_utils", function () {
       expect(safeDateRangeFormat(startDate, endDate, props)).to.equal(
         "04/20/2021 - 04/28/2021"
       );
+    });
+  });
+
+  describe("getHolidaysMap", () => {
+    it("should return a map of dateClasses", () => {
+      const holidayDates = [
+        {
+          date: new Date(2023, 7, 15),
+          holidayName: "India's Independence Day"
+        },
+        {
+          date: new Date(2023, 11, 25),
+          holidayName: "Christmas"
+        }
+      ];
+      expect(getHolidaysMap(holidayDates)).to.have.lengthOf(2);
+      expect(getHolidaysMap(holidayDates)).to.have.all.keys(
+        "08.15.2023",
+        "12.25.2023"
+      );
+    });
+
+    it("should return empty if invalid date is provided", () => {
+      const holidayDates = [
+        {
+          date: "2024-02-31",
+          holidayName: "Fake holiday"
+        }
+      ];
+      expect(getHolidaysMap(holidayDates)).to.have.lengthOf(0);
+    });
+
+    it("should not add duplicate entries", () => {
+      const holidayDates = [
+        {
+          date: new Date(2023, 7, 15),
+          holidayName: "India's Independence Day"
+        },
+        {
+          date: new Date(2023, 7, 15),
+          holidayName: "India's Independence Day"
+        }
+      ];
+      expect(getHolidaysMap(holidayDates)).to.have.lengthOf(1);
+    });
+  });
+
+  describe("arraysAreEqual", () => {
+    it("should return true if both arrays are equal", () => {
+      const array1 = ["India's Independence Day", "Christmas"];
+      const array2 = ["India's Independence Day", "Christmas"];
+      expect(arraysAreEqual(array1, array2)).to.be.true;
+    });
+
+    it("should return false if both arrays are not equal", () => {
+      const array1 = ["India's Independence Day", "Christmas"];
+      const array2 = ["New Year's day"];
+      expect(arraysAreEqual(array1, array2)).to.be.false;
     });
   });
 });

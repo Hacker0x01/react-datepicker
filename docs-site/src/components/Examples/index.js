@@ -31,6 +31,7 @@ import ExcludeDates from "../../examples/excludeDates";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
+import HolidayDates from "../../examples/holidayDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
 import IncludeDateIntervals from "../../examples/includeDateIntervals";
@@ -288,6 +289,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Highlight dates with custom class names and ranges",
       component: HighlightDatesRanges,
+    },
+    {
+      title: "Holiday dates",
+      component: HolidayDates,
     },
     {
       title: "Include dates",

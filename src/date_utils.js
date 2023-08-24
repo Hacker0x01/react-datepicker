@@ -722,7 +722,57 @@ export function getHightLightDaysMap(
       }
     }
   }
+  return dateClasses;
+}
 
+/**
+ * Compare the two arrays
+ * @param {Array} array1
+ * @param {Array} array2
+ * @returns {Boolean} true, if the passed array are equal, false otherwise
+ */
+export function arraysAreEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+
+  return array1.every((value, index) => value === array2[index]);
+}
+
+/**
+ * Assign the custom class to each date
+ * @param {Array} holidayDates array of object containing date and name of the holiday
+ * @param {string} classname to be added.
+ * @returns {Map} Map containing date as key and array of classname and holiday name as value
+ */
+export function getHolidaysMap(
+  holidayDates = [],
+  defaultClassName = "react-datepicker__day--holidays"
+) {
+  const dateClasses = new Map();
+  holidayDates.forEach((holiday) => {
+    const { date: dateObj, holidayName } = holiday;
+    if (!isDate(dateObj)) {
+      return;
+    }
+
+    const key = formatDate(dateObj, "MM.dd.yyyy");
+    const classNamesObj = dateClasses.get(key) || {};
+    if (
+      "className" in classNamesObj &&
+      classNamesObj["className"] === defaultClassName &&
+      arraysAreEqual(classNamesObj["holidayNames"], [holidayName])
+    ) {
+      return;
+    }
+
+    classNamesObj["className"] = defaultClassName;
+    const holidayNameArr = classNamesObj["holidayNames"];
+    classNamesObj["holidayNames"] = holidayNameArr
+      ? [...holidayNameArr, holidayName]
+      : [holidayName];
+    dateClasses.set(key, classNamesObj);
+  });
   return dateClasses;
 }
 

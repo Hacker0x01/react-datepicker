@@ -26,6 +26,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    holidays: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
@@ -106,6 +107,19 @@ export default class Day extends React.Component {
     // Looking for className in the Map of {'day string, 'className'}
     const dayStr = formatDate(day, "MM.dd.yyyy");
     return highlightDates.get(dayStr);
+  };
+
+  // Function to return the array containing classname associated to the date
+  getHolidaysClass = () => {
+    const { day, holidays } = this.props;
+    if (!holidays) {
+      return false;
+    }
+    const dayStr = formatDate(day, "MM.dd.yyyy");
+    // Looking for className in the Map of {day string: {className, holidayName}}
+    if (holidays.has(dayStr)) {
+      return [holidays.get(dayStr).className];
+    }
   };
 
   isInRange = () => {
@@ -260,7 +274,8 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHolidaysClass()
     );
   };
 
@@ -277,6 +292,18 @@ export default class Day extends React.Component {
         : ariaLabelPrefixWhenEnabled;
 
     return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
+  };
+
+  // A function to return the holiday's name as title's content
+  getTitle = () => {
+    const { day, holidays = new Map() } = this.props;
+    const compareDt = formatDate(day, "MM.dd.yyyy");
+    if (holidays.has(compareDt)) {
+      return holidays.get(compareDt).holidayNames.length > 0
+        ? holidays.get(compareDt).holidayNames.join(", ")
+        : "";
+    }
+    return "";
   };
 
   getTabIndex = (selected, preSelection) => {
@@ -355,11 +382,15 @@ export default class Day extends React.Component {
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="option"
+      title={this.getTitle()}
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
       aria-selected={this.isSelected() || this.isInRange()}
     >
       {this.renderDayContents()}
+      {this.getTitle() !== "" && (
+        <span className="holiday-overlay">{this.getTitle()}</span>
+      )}
     </div>
   );
 }

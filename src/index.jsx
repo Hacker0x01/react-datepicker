@@ -7,6 +7,7 @@ import classnames from "classnames";
 import set from "date-fns/set";
 import startOfDay from "date-fns/startOfDay";
 import endOfDay from "date-fns/endOfDay";
+import isValid from "date-fns/isValid";
 import {
   newDate,
   isDate,
@@ -42,6 +43,7 @@ import {
   isSameDay,
   isMonthDisabled,
   isYearDisabled,
+  getHolidaysMap,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -170,6 +172,7 @@ export default class DatePicker extends React.Component {
     form: PropTypes.string,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
+    holidays: PropTypes.array,
     id: PropTypes.string,
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
@@ -356,6 +359,19 @@ export default class DatePicker extends React.Component {
       : newDate();
 
   calcInitialState = () => {
+    // Convert the date from string format to standard Date format
+    const modifiedHolidays = this.props.holidays?.reduce(
+      (accumulator, holiday) => {
+        const date = new Date(holiday.date);
+        if (!isValid(date)) {
+          return accumulator;
+        }
+
+        return [...accumulator, { ...holiday, date }];
+      },
+      []
+    );
+
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
@@ -375,6 +391,7 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render
@@ -954,6 +971,7 @@ export default class DatePicker extends React.Component {
         onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
+        holidays={this.state.holidays}
         includeDates={this.props.includeDates}
         includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}

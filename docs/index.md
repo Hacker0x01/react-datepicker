@@ -45,6 +45,7 @@
 | `formatWeekDay`                 | `func`                         |                            |             |
 | `formatWeekNumber`              | `func`                         |                            |             |
 | `highlightDates`                | `array`                        |                            |             |
+| `holidays`                      | `array`                        |                            |             |
 | `id`                            | `string`                       |                            |             |
 | `includeDateIntervals`          | `array`                        |                            |             |
 | `includeDates`                  | `array`                        |                            |             |
