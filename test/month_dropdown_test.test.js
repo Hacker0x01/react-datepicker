@@ -14,7 +14,6 @@ describe("MonthDropdown", () => {
   const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput;
   };
-  let sandbox;
 
   function getMonthDropdown(overrideProps) {
     return mount(
@@ -23,26 +22,21 @@ describe("MonthDropdown", () => {
         month={11}
         onChange={mockHandleChange}
         {...overrideProps}
-      />
+      />,
     );
   }
 
   beforeEach(() => {
     handleChangeResult = null;
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
   });
 
   describe("scroll mode", () => {
-    beforeEach(function () {
+    beforeEach(() => {
       monthDropdown = getMonthDropdown();
     });
 
     it("shows the selected month in the initial view", () => {
-      expect(monthDropdown.text()).to.contain("December");
+      expect(monthDropdown.text()).toContain("December");
     });
 
     it("opens a list when read view is clicked", () => {
@@ -50,7 +44,7 @@ describe("MonthDropdown", () => {
         .find(".react-datepicker__month-read-view")
         .simulate("click");
       var optionsView = monthDropdown.find(MonthDropdownOptions);
-      expect(optionsView).to.exist;
+      expect(optionsView).not.toBeNull();
     });
 
     describe("with the selected month", () => {
@@ -61,17 +55,17 @@ describe("MonthDropdown", () => {
           .find(".react-datepicker__month-read-view")
           .simulate("click");
         selectedMonth = monthDropdown.find(
-          ".react-datepicker__month-option--selected_month"
+          ".react-datepicker__month-option--selected_month",
         );
       });
 
       it("applies the 'selected' modifier class to the selected month", () => {
-        expect(selectedMonth.text()).to.contain("December");
+        expect(selectedMonth.text()).toContain("December");
       });
 
       it("adds aria-selected property to the selected month", () => {
         const ariaSelected = selectedMonth.prop("aria-selected");
-        expect(ariaSelected).to.equal("true");
+        expect(ariaSelected).toEqual("true");
       });
     });
 
@@ -88,12 +82,12 @@ describe("MonthDropdown", () => {
       });
 
       it("does not apply the 'selected' modifier class to the selected month", () => {
-        expect(notSelectedMonth.text()).to.not.contain("December");
+        expect(notSelectedMonth.text()).not.toContain("December");
       });
 
       it("does not add aria-selected property to the selected month", () => {
         const ariaSelected = notSelectedMonth.prop("aria-selected");
-        expect(ariaSelected).to.be.undefined;
+        expect(ariaSelected).toBe(undefined);
       });
     });
 
@@ -105,22 +99,22 @@ describe("MonthDropdown", () => {
         .find(".react-datepicker__month-option")
         .at(1)
         .simulate("click");
-      expect(monthDropdown.find(MonthDropdownOptions)).to.have.length(0);
+      expect(monthDropdown.find(MonthDropdownOptions)).toHaveLength(0);
     });
 
     it("closes the dropdown if outside is clicked", () => {
       const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
-      const onCancelSpy = sandbox.spy();
+      const onCancelSpy = jest.fn();
       const monthDropdownOptionsInstance = mount(
         <MonthDropdownOptions
           onCancel={onCancelSpy}
-          onChange={sandbox.spy()}
+          onChange={onCancelSpy}
           month={11}
           monthNames={monthNames}
-        />
+        />,
       ).instance();
       monthDropdownOptionsInstance.handleClickOutside();
-      expect(onCancelSpy.calledOnce).to.be.true;
+      expect(onCancelSpy).toHaveBeenCalledTimes(1);
     });
 
     it("does not call the supplied onChange function when the same month is clicked", () => {
@@ -131,7 +125,7 @@ describe("MonthDropdown", () => {
         .find(".react-datepicker__month-option")
         .at(11)
         .simulate("click");
-      expect(handleChangeResult).to.be.null;
+      expect(handleChangeResult).toBeNull();
     });
 
     it("calls the supplied onChange function when a different month is clicked", () => {
@@ -142,7 +136,7 @@ describe("MonthDropdown", () => {
         .find(".react-datepicker__month-option")
         .at(2)
         .simulate("click");
-      expect(handleChangeResult).to.eq(2);
+      expect(handleChangeResult).toEqual(2);
     });
 
     it("should use locale stand-alone formatting to display month names", () => {
@@ -150,13 +144,13 @@ describe("MonthDropdown", () => {
       registerLocale("ru", ru);
 
       let dropdownDateFormat = getMonthDropdown();
-      expect(dropdownDateFormat.text()).to.contain("December");
+      expect(dropdownDateFormat.text()).toContain("December");
 
       dropdownDateFormat = getMonthDropdown({ locale: "el" });
-      expect(dropdownDateFormat.text()).to.contain("Δεκέμβριος");
+      expect(dropdownDateFormat.text()).toContain("Δεκέμβριος");
 
       dropdownDateFormat = getMonthDropdown({ locale: "ru" });
-      expect(dropdownDateFormat.text()).to.contain("декабрь");
+      expect(dropdownDateFormat.text()).toContain("декабрь");
     });
   });
 
@@ -164,16 +158,16 @@ describe("MonthDropdown", () => {
     it("renders a select", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select" });
       var select = monthDropdown.find(".react-datepicker__month-select");
-      expect(select).to.have.length(1);
-      expect(select.prop("value")).to.eq(11);
+      expect(select).toHaveLength(1);
+      expect(select.prop("value")).toEqual(11);
       var options = select.find("option");
-      expect(options.map((o) => o.prop("value"))).to.eql(range(0, 12));
+      expect(options.map((o) => o.prop("value"))).toEqual(range(0, 12));
     });
 
     it("renders month options with default locale", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select" });
       var options = monthDropdown.find("option");
-      expect(options.map((o) => o.text())).to.eql([
+      expect(options.map((o) => o.text())).toEqual([
         "January",
         "February",
         "March",
@@ -195,7 +189,7 @@ describe("MonthDropdown", () => {
         useShortMonthInDropdown: true,
       });
       var options = monthDropdown.find("option");
-      expect(options.map((o) => o.text())).to.eql([
+      expect(options.map((o) => o.text())).toEqual([
         "Jan",
         "Feb",
         "Mar",
@@ -218,7 +212,7 @@ describe("MonthDropdown", () => {
         locale: "zh-cn",
       });
       var options = monthDropdown.find("option");
-      expect(options.map((o) => o.text())).to.eql([
+      expect(options.map((o) => o.text())).toEqual([
         "一月",
         "二月",
         "三月",
@@ -238,14 +232,14 @@ describe("MonthDropdown", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select", month: 11 });
       var select = monthDropdown.find(".react-datepicker__month-select");
       select.simulate("change", { target: { value: 11 } });
-      expect(handleChangeResult).to.not.exist;
+      expect(handleChangeResult).toBeFalsy();
     });
 
     it("calls the supplied onChange function when a different month is clicked", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select", month: 11 });
       var select = monthDropdown.find(".react-datepicker__month-select");
       select.simulate("change", { target: { value: 9 } });
-      expect(handleChangeResult).to.equal(9);
+      expect(handleChangeResult).toEqual(9);
     });
   });
 });

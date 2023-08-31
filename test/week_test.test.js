@@ -3,13 +3,12 @@ import Week from "../src/week";
 import WeekNumber from "../src/week_number";
 import Day from "../src/day";
 import { shallow } from "enzyme";
-import sinon from "sinon";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {
     const week = shallow(<Week day={utils.newDate()} />);
-    expect(week.hasClass("react-datepicker__week")).to.equal(true);
+    expect(week.hasClass("react-datepicker__week")).toBe(true);
   });
 
   it("should render the days of the week", () => {
@@ -17,14 +16,14 @@ describe("Week", () => {
     const week = shallow(<Week day={weekStart} />);
 
     const days = week.find(Day);
-    expect(days.length).to.equal(7);
+    expect(days.length).toBe(7);
     days.forEach((day, offset) => {
       const expectedDay = utils.addDays(weekStart, offset);
-      assert(utils.isSameDay(day.prop("day"), expectedDay));
+      expect(day.prop("day")).toEqual(expectedDay);
     });
 
     const weekNumber = week.find(WeekNumber);
-    expect(weekNumber.length).to.equal(0);
+    expect(weekNumber.length).toBe(0);
   });
 
   it("should render the week number", () => {
@@ -32,14 +31,14 @@ describe("Week", () => {
     const week = shallow(<Week showWeekNumber day={weekStart} />);
 
     const days = week.find(Day);
-    expect(days.length).to.equal(7);
+    expect(days.length).toBe(7);
     days.forEach((day, offset) => {
       const expectedDay = utils.addDays(weekStart, offset);
-      assert(utils.isSameDay(day.prop("day"), expectedDay));
+      expect(day.prop("day")).toEqual(expectedDay);
     });
 
     const weekNumber = week.find(WeekNumber);
-    expect(weekNumber.length).to.equal(1);
+    expect(weekNumber.length).toBe(1);
   });
 
   it("should call the provided onDayClick function", () => {
@@ -53,7 +52,7 @@ describe("Week", () => {
     const week = shallow(<Week day={weekStart} onDayClick={onDayClick} />);
     const day = week.find(Day).at(0);
     day.simulate("click");
-    assert(utils.isSameDay(day.prop("day"), dayClicked));
+    expect(day.prop("day")).toEqual(dayClicked);
   });
 
   it("should call the provided onWeekSelect function and pass the first day of the week", () => {
@@ -64,23 +63,23 @@ describe("Week", () => {
     }
 
     const weekStart = utils.newDate("2015-12-20");
-    const setOpenSpy = sinon.spy();
+    const setOpenSpy = jest.fn();
     const week = shallow(
       <Week
         day={weekStart}
         showWeekNumber
         onWeekSelect={onWeekClick}
         setOpen={setOpenSpy}
-      />
+      />,
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
+    expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
   });
 
   it("should call the provided onWeekSelect function and call the setopen function", () => {
     const weekStart = utils.newDate("2015-12-20");
-    const setOpenSpy = sinon.spy();
+    const setOpenSpy = jest.fn();
 
     const week = shallow(
       <Week
@@ -89,31 +88,33 @@ describe("Week", () => {
         shouldCloseOnSelect
         onWeekSelect={() => {}}
         setOpen={setOpenSpy}
-      />
+      />,
     );
 
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    sinon.assert.calledOnce(setOpenSpy);
+    expect(setOpenSpy).toHaveBeenCalledTimes(1);
   });
 
   it("should call the provided onWeekSelect function and not call the setopen function when 'shouldCloseOnSelect' is false", () => {
     const weekStart = utils.newDate("2015-12-20");
-    const setOpenSpy = sinon.spy();
+    const setOpenSpy = jest.fn();
+    const setOnWeekSelect = jest.fn();
 
     const week = shallow(
       <Week
         day={weekStart}
         showWeekNumber
         shouldCloseOnSelect={false}
-        onWeekSelect={() => {}}
+        onWeekSelect={setOnWeekSelect}
         setOpen={setOpenSpy}
-      />
+      />,
     );
 
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    sinon.assert.notCalled(setOpenSpy);
+    expect(setOnWeekSelect).toHaveBeenCalledTimes(1);
+    expect(setOpenSpy).toHaveBeenCalledTimes(0);
   });
 
   it("should call the provided onWeekSelect function and pass the week number", () => {
@@ -131,11 +132,11 @@ describe("Week", () => {
         showWeekNumber
         shouldCloseOnSelect={false}
         onWeekSelect={onWeekClick}
-      />
+      />,
     );
     const weekNumberElement = week.find(WeekNumber);
     weekNumberElement.simulate("click");
-    expect(weekNumberReceived).to.equal(realWeekNumber);
+    expect(weekNumberReceived).toBe(realWeekNumber);
   });
 
   it("should set the week number with the provided formatWeekNumber function", () => {
@@ -152,12 +153,12 @@ describe("Week", () => {
         day={weekStart}
         showWeekNumber
         formatWeekNumber={weekNumberFormatter}
-      />
+      />,
     );
     const weekNumberElement = week.find(WeekNumber);
 
-    expect(utils.isEqual(firstDayReceived, weekStart)).to.be.true;
-    expect(weekNumberElement.prop("weekNumber")).to.equal(9);
+    expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
+    expect(weekNumberElement.prop("weekNumber")).toBe(9);
   });
 
   it("should call the provided onDayMouseEnter function", () => {
@@ -169,10 +170,10 @@ describe("Week", () => {
 
     const weekStart = utils.newDate();
     const week = shallow(
-      <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />
+      <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
     );
     const day = week.find(Day).first();
     day.simulate("mouseenter");
-    assert(utils.isSameDay(day.prop("day"), dayMouseEntered));
+    expect(day.prop("day")).toEqual(dayMouseEntered);
   });
 });

@@ -44,7 +44,7 @@ export default class Day extends React.Component {
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+      PropTypes.shape({ current: PropTypes.object }),
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
@@ -275,7 +275,7 @@ export default class Day extends React.Component {
           this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass("react-datepicker__day--highlighted"),
-      this.getHolidaysClass()
+      this.getHolidaysClass(),
     );
   };
 
@@ -359,7 +359,7 @@ export default class Day extends React.Component {
       }
     }
 
-    shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
+    shouldFocusDay && this.dayEl.current?.focus({ preventScroll: true });
   };
 
   renderDayContents = () => {
