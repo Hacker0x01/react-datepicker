@@ -4,16 +4,6 @@ import { setTime, newDate } from "../src/date_utils";
 import DatePicker from "../src/index.jsx";
 
 describe("DatePicker", () => {
-  let sandbox;
-
-  beforeEach(() => {
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
-  });
-
   it("should disable times specified in excludeTimes props", () => {
     var now = newDate();
     var datePicker = mount(
@@ -25,9 +15,10 @@ describe("DatePicker", () => {
           setTime(now, { hours: 19, minutes: 30 }),
           setTime(now, { hours: 17, minutes: 30 }),
         ]}
-      />
+      />,
     );
-    expect(datePicker.find(".react-datepicker__time-list-item--disabled")).to
-      .exist;
+    expect(
+      datePicker.find(".react-datepicker__time-list-item--disabled"),
+    ).not.toBeNull();
   });
 });
