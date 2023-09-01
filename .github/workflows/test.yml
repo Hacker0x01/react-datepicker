@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x] # we need to use node version 16 as we use Karma (#4107)
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
