@@ -119,7 +119,7 @@
     "prettier": "prettier --write '**/*.{js,jsx}'",
     "start": "yarn --cwd docs-site install && yarn --cwd docs-site start",
     "test": "NODE_ENV=test jest",
-    "test:ci": "NODE_ENV=test jest --ci",
+    "test:ci": "NODE_ENV=test jest --ci --coverage && codecov", 
     "test:watch": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test jest --watch",
     "build": "NODE_ENV=production yarn run build:js && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev",
     "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev",

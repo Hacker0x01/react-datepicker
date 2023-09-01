@@ -45,10 +45,7 @@ jobs:
         run: yarn lint
 
       - name: Test
-        run: yarn test:ci
-
-      - name: Codecov
-        run: yarn run codecov --disable=gcov
+        run: yarn test:ci 
 
       - name: Build
         run: yarn build
