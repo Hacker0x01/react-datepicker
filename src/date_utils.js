@@ -839,5 +839,5 @@ export function startOfMinute(d) {
 }
 
 export function isSameMinute(d1, d2) {
-  return +startOfMinute(d1) === +startOfMinute(d2);
+  return startOfMinute(d1).getTime() === startOfMinute(d2).getTime();
 }
