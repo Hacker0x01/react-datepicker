@@ -89,15 +89,8 @@ export default class Time extends React.Component {
     this.props.onChange(time);
   };
 
-  isSelectedTime = (time) => {
-    const result =
-      this.props.selected && isSameMinute(this.props.selected, time);
-
-    if (result) {
-      console.log(this.props.selected, time);
-    }
-    return result;
-  };
+  isSelectedTime = (time) =>
+    this.props.selected && isSameMinute(this.props.selected, time);
 
   liClasses = (time) => {
     let classes = [
