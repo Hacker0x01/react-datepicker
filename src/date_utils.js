@@ -831,17 +831,13 @@ export function getHoursInDay(d) {
   return Math.round((+startOfTheNextDay - +startOfDay) / 3_600_000);
 }
 
+export function startOfMinute(d) {
+  const seconds = d.getSeconds();
+  const milliseconds = d.getMilliseconds();
+
+  return toDate(d.getTime() - seconds * 1000 - milliseconds);
+}
+
 export function isSameMinute(d1, d2) {
-  const _date1 = toDate(d1);
-  const _date2 = toDate(d2);
-
-  const seconds1 = _date1.getSeconds();
-  const seconds2 = _date2.getSeconds();
-  const milliseconds1 = _date1.getMilliseconds();
-  const milliseconds2 = _date2.getMilliseconds();
-
-  return (
-    _date1.getTime() - seconds1 * 1000 - milliseconds1 ===
-    _date2.getTime() - seconds2 * 1000 - milliseconds2
-  );
+  return +startOfMinute(d1) === +startOfMinute(d2);
 }
