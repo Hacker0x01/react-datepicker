@@ -121,7 +121,7 @@ describe("TimeComponent", () => {
       var timeListItem = timeComponent.find(
         ".react-datepicker__time-list-item--selected",
       );
-      expect(timeListItem.at(0).prop("tabIndex")).toBe("0");
+      expect(timeListItem.at(0).prop("tabIndex")).toBe(0);
     });
 
     it("should not add the aria-selected property to a regular item", () => {
@@ -151,7 +151,7 @@ describe("TimeComponent", () => {
       var timeListItem = timeComponent.find(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.at(0).prop("tabIndex")).toBe("-1");
+      expect(timeListItem.at(0).prop("tabIndex")).toBe(-1);
     });
 
     it("when no selected time, should focus the time closest to the opened time", () => {
@@ -169,7 +169,7 @@ describe("TimeComponent", () => {
         timeListItem
           .findWhere((node) => node.type() && node.text() === "09:00")
           .prop("tabIndex"),
-      ).toBe("0");
+      ).toBe(0);
     });
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {

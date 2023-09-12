@@ -183,22 +183,29 @@ export default class Time extends React.Component {
       }
     }
 
+    // Determine which time to focus and scroll into view when component mounts
+    const timeToFocus = times.reduce((prev, time) => {
+      if (time.getTime() <= activeDate.getTime()) {
+        return time;
+      }
+      return prev;
+    }, times[0]);
+
     return times.map((time, i) => {
-      const isActiveTime = isSameMinute(time, activeDate);
       return (
         <li
           key={i}
           onClick={this.handleClick.bind(this, time)}
           className={this.liClasses(time)}
           ref={(li) => {
-            if (isActiveTime) {
+            if (time === timeToFocus) {
               this.centerLi = li;
             }
           }}
           onKeyDown={(ev) => {
             this.handleOnKeyDown(ev, time);
           }}
-          tabIndex={isActiveTime ? 0 : -1}
+          tabIndex={time === timeToFocus ? 0 : -1}
           role="option"
           aria-selected={this.isSelectedTime(time) ? "true" : undefined}
         >

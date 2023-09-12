@@ -57,10 +57,7 @@ describe("TimePicker", () => {
   });
 
   it("should show different colors for times", () => {
-    const handleTimeColors = (time, currH, currM) => {
-      if (!Number.isInteger(currH) || !Number.isInteger(currM)) {
-        return "wrong";
-      }
+    const handleTimeColors = (time) => {
       return time.getHours() < 12 ? "red" : "green";
     };
     const timePicker = TestUtils.renderIntoDocument(
