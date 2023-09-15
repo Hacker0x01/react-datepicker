@@ -4,6 +4,7 @@ import {
   addDays,
   subDays,
   isEqual,
+  isSameMinute,
   isSameDay,
   isSameMonth,
   isSameQuarter,
@@ -37,6 +38,7 @@ import {
   safeDateRangeFormat,
   getHolidaysMap,
   arraysAreEqual,
+  startOfMinute,
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -1221,6 +1223,29 @@ describe("date_utils", () => {
       const array1 = ["India's Independence Day", "Christmas"];
       const array2 = ["New Year's day"];
       expect(arraysAreEqual(array1, array2)).toBe(false);
+    });
+  });
+
+  describe("isSameMinute", () => {
+    it("should return true if two dates are within the same minute", () => {
+      const d1 = new Date(2020, 10, 10, 10, 10, 10); // Nov 10, 2020 10:10:10
+      const d2 = new Date(2020, 10, 10, 10, 10, 20); // Nov 10, 2020 10:10:20
+      expect(isSameMinute(d1, d2)).toBe(true);
+    });
+
+    it("should return false if two dates aren't within the same minute", () => {
+      const d1 = new Date(2020, 10, 10, 10, 10, 10); // Nov 10, 2020 10:10:10
+      const d2 = new Date(2020, 10, 10, 10, 11, 10); // Nov 10, 2020 10:11:10
+      expect(isSameMinute(d1, d2)).toBe(false);
+    });
+  });
+
+  describe("startOfMinute", () => {
+    it("should properly find the start of the minute", () => {
+      const d = new Date(2020, 10, 10, 10, 10, 10); // Nov 10, 2020 10:10:10
+      const expected = new Date(2020, 10, 10, 10, 10, 0); // Nov 10, 2020 10:10:00
+
+      expect(startOfMinute(d)).toEqual(expected);
     });
   });
 });

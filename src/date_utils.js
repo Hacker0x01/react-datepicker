@@ -818,3 +818,47 @@ export function getYearsPeriod(
   const startPeriod = endPeriod - (yearItemNumber - 1);
   return { startPeriod, endPeriod };
 }
+
+export function getHoursInDay(d) {
+  const startOfDay = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const startOfTheNextDay = new Date(
+    d.getFullYear(),
+    d.getMonth(),
+    d.getDate(),
+    24
+  );
+
+  return Math.round((+startOfTheNextDay - +startOfDay) / 3_600_000);
+}
+
+/**
+ * Returns the start of the minute for the given date
+ *
+ * NOTE: this function is a DST and timezone-safe analog of `date-fns/startOfMinute`
+ * do not make changes unless you know what you're doing
+ *
+ * See comments on https://github.com/Hacker0x01/react-datepicker/pull/4244
+ * for more details
+ *
+ * @param {Date} d date
+ * @returns {Date} start of the minute
+ */
+export function startOfMinute(d) {
+  const seconds = d.getSeconds();
+  const milliseconds = d.getMilliseconds();
+
+  return toDate(d.getTime() - seconds * 1000 - milliseconds);
+}
+
+/**
+ * Returns whether the given dates are in the same minute
+ *
+ * This function is a DST and timezone-safe analog of `date-fns/isSameMinute`
+ *
+ * @param {Date} d1
+ * @param {Date} d2
+ * @returns {boolean}
+ */
+export function isSameMinute(d1, d2) {
+  return startOfMinute(d1).getTime() === startOfMinute(d2).getTime();
+}
