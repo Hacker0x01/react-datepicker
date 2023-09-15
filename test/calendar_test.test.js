@@ -197,6 +197,20 @@ describe("Calendar", () => {
     });
   });
 
+  it("should render the months correctly adjusted by monthSelectedIn for showPreviousMonths", () => {
+    const selected = utils.newDate("2018-11-19");
+    const calendar = getCalendar({
+      inline: true,
+      monthsShown: 2,
+      selected,
+      showPreviousMonths: true,
+    });
+    calendar.setProps({ monthSelectedIn: 1 }, () => {
+      const renderedMonths = calendar.find(Month);
+      expect(utils.getMonth(renderedMonths.first().prop("day"))).toEqual(9);
+    });
+  });
+
   it("should render the correct default aria labels for next and prev months buttons", () => {
     const calendar = getCalendar();
     const previousButtonAriaLabel = calendar
