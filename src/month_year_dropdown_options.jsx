@@ -44,7 +44,7 @@ export default class MonthYearDropdownOptions extends React.Component {
     this.state = {
       monthYearsList: generateMonthYears(
         this.props.minDate,
-        this.props.maxDate
+        this.props.maxDate,
       ),
     };
   }

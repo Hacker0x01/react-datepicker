@@ -66,7 +66,7 @@ export default class Time extends React.Component {
         this.props.monthRef
           ? this.props.monthRef.clientHeight - this.header.clientHeight
           : this.list.clientHeight,
-        this.centerLi
+        this.centerLi,
       );
     if (this.props.monthRef && this.header) {
       this.setState({
@@ -177,7 +177,7 @@ export default class Time extends React.Component {
           currentTime,
           i,
           intervals,
-          sortedInjectTimes
+          sortedInjectTimes,
         );
         times = times.concat(timesToInject);
       }
