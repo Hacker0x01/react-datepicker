@@ -1,6 +1,6 @@
 () => {
   const [startDate, setStartDate] = useState(
-    setHours(setMinutes(new Date(), 0), 9)
+    setHours(setMinutes(new Date(), 0), 9),
   );
   const filterPassedTime = (time) => {
     const currentDate = new Date();

@@ -36,7 +36,7 @@ export default class Year extends React.Component {
   }
 
   YEAR_REFS = [...Array(this.props.yearItemNumber)].map(() =>
-    React.createRef()
+    React.createRef(),
   );
 
   isDisabled = (date) => utils.isDayDisabled(date, this.props);
@@ -166,13 +166,13 @@ export default class Year extends React.Component {
         case "ArrowRight":
           this.handleYearNavigation(
             y + 1,
-            utils.addYears(this.props.preSelection, 1)
+            utils.addYears(this.props.preSelection, 1),
           );
           break;
         case "ArrowLeft":
           this.handleYearNavigation(
             y - 1,
-            utils.subYears(this.props.preSelection, 1)
+            utils.subYears(this.props.preSelection, 1),
           );
           break;
       }
@@ -234,7 +234,7 @@ export default class Year extends React.Component {
       this.props;
     const { startPeriod, endPeriod } = utils.getYearsPeriod(
       date,
-      yearItemNumber
+      yearItemNumber,
     );
 
     for (let y = startPeriod; y <= endPeriod; y++) {
@@ -255,7 +255,7 @@ export default class Year extends React.Component {
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
           {this.getYearContent(y)}
-        </div>
+        </div>,
       );
     }
 

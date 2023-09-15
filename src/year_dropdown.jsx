@@ -34,7 +34,7 @@ export default class YearDropdown extends React.Component {
       options.push(
         <option key={i} value={i}>
           {i}
-        </option>
+        </option>,
       );
     }
     return options;
@@ -105,7 +105,7 @@ export default class YearDropdown extends React.Component {
         if (this.props.adjustDateOnChange) {
           this.handleYearChange(this.props.date, event);
         }
-      }
+      },
     );
   };
 

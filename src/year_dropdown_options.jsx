@@ -47,7 +47,7 @@ export default class YearDropdownOptions extends React.Component {
         this.props.year,
         noOfYear,
         this.props.minDate,
-        this.props.maxDate
+        this.props.maxDate,
       ),
     };
     this.dropdownRef = createRef();
@@ -105,7 +105,7 @@ export default class YearDropdownOptions extends React.Component {
           onClick={this.incrementYears}
         >
           <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming" />
-        </div>
+        </div>,
       );
     }
 
@@ -117,7 +117,7 @@ export default class YearDropdownOptions extends React.Component {
           onClick={this.decrementYears}
         >
           <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous" />
-        </div>
+        </div>,
       );
     }
 
