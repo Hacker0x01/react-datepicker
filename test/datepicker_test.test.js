@@ -97,7 +97,7 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).toBe(false);
   });
 
-  it("should close the popper and return focus to the date input.", (done) => {
+  it("should close the popper and return focus to the date input on Escape.", (done) => {
     // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
     // Date Picker Dialog | Escape | Closes the dialog and returns focus to the Choose Date button.
     var div = document.createElement("div");
@@ -119,6 +119,53 @@ describe("DatePicker", () => {
       expect(datePicker.calendar).toBeFalsy();
       expect(datePicker.state.preventFocus).toBe(false);
       expect(document.activeElement).toBe(div.querySelector("input"));
+      done();
+    });
+  });
+
+  it("should close the popper and return focus to the date input on Enter.", (done) => {
+    // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
+    // Date Picker Dialog | Date Grid | Enter | Closes the dialog and returns focus to the Choose Date button.
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(<DatePicker />, div);
+
+    // user focuses the input field, the calendar opens
+    var dateInput = div.querySelector("input");
+    TestUtils.Simulate.focus(dateInput);
+
+    // user may tab or arrow down to the current day (or some other element in the popper)
+    var today = div.querySelector(".react-datepicker__day--today");
+    today.focus();
+
+    // user hits Enter
+    TestUtils.Simulate.keyDown(today, getKey("Enter"));
+    defer(() => {
+      expect(datePicker.calendar).toBeFalsy();
+      expect(datePicker.state.preventFocus).toBe(false);
+      expect(document.activeElement).toBe(div.querySelector("input"));
+      done();
+    });
+  });
+
+  it("should not close the popper and keep focus on selected date if showTimeSelect is enabled.", (done) => {
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(<DatePicker showTimeSelect />, div);
+
+    // user focuses the input field, the calendar opens
+    var dateInput = div.querySelector("input");
+    TestUtils.Simulate.focus(dateInput);
+
+    // user may tab or arrow down to the current day (or some other element in the popper)
+    var today = div.querySelector(".react-datepicker__day--today");
+    today.focus();
+
+    // user hits Enter
+    TestUtils.Simulate.keyDown(today, getKey("Enter"));
+    defer(() => {
+      expect(datePicker.calendar).toBeTruthy();
+      expect(document.activeElement).toBe(today);
       done();
     });
   });
@@ -212,6 +259,24 @@ describe("DatePicker", () => {
     )[0];
     TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
     expect(datePicker.state.open).toBe(true);
+  });
+
+  it("should keep focus within calendar when clicking a day on the calendar and shouldCloseOnSelect prop is false", () => {
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    ReactDOM.render(<DatePicker shouldCloseOnSelect={false} />, div);
+
+    // user focuses the input field, the calendar opens
+    var dateInput = div.querySelector("input");
+    TestUtils.Simulate.focus(dateInput);
+
+    // user may tab or arrow down to the current day (or some other element in the popper)
+    var today = div.querySelector(".react-datepicker__day--today");
+    today.focus();
+
+    // user hits Enter
+    TestUtils.Simulate.keyDown(today, getKey("Enter"));
+    expect(document.activeElement).toBe(today);
   });
 
   it("should set open to true if showTimeInput is true", () => {
@@ -325,6 +390,23 @@ describe("DatePicker", () => {
     expect(datePicker.calendar).toBeFalsy();
   });
 
+  it("should hide the calendar and keep focus on input when pressing escape in the date input", (done) => {
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(<DatePicker />, div);
+
+    // user focuses the input field, the calendar opens
+    var dateInput = div.querySelector("input");
+    TestUtils.Simulate.focus(dateInput);
+
+    TestUtils.Simulate.keyDown(dateInput, getKey("Escape"));
+    defer(() => {
+      expect(datePicker.calendar).toBeFalsy();
+      expect(document.activeElement).toBe(dateInput);
+      done();
+    });
+  });
+
   it("should hide the calendar when the pressing Shift + Tab in the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker onBlur={onBlurSpy} />,
@@ -401,6 +483,26 @@ describe("DatePicker", () => {
     );
     TestUtils.Simulate.click(clearButton);
     expect(datePicker.state.inputValue).toBeNull();
+  });
+
+  it("should return focus to input when clear button is used", (done) => {
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+    var datePicker = ReactDOM.render(
+      <DatePicker selected={utils.newDate("2015-12-15")} isClearable />,
+      div,
+    );
+
+    var clearButton = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
+      "react-datepicker__close-icon",
+    );
+    TestUtils.Simulate.click(clearButton);
+
+    defer(() => {
+      expect(document.activeElement).toBe(div.querySelector("input"));
+      done();
+    });
   });
 
   it("should set the title attribute on the clear button if clearButtonTitle is supplied", () => {
