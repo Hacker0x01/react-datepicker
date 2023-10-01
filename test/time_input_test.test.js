@@ -69,4 +69,49 @@ describe("timeInput", () => {
       new Date(new Date().setHours(14, 0, 0, 0)),
     );
   });
+
+  it("should trigger onChange event with the specified date prop if available", () => {
+    const mockOnChange = jest.fn();
+    const mockDate = new Date("2023-09-30");
+
+    const timeComponent = shallow(
+      <InputTimeComponent date={mockDate} onChange={mockOnChange} />,
+    );
+
+    const newTime = "13:00";
+    const input = timeComponent.find("input");
+    input.simulate("change", { target: { value: newTime } });
+
+    const expectedDate = new Date(mockDate);
+    const [expectedHours, expectedMinutes] = newTime.split(":");
+    expectedDate.setHours(expectedHours);
+    expectedDate.setMinutes(expectedMinutes);
+
+    expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
+  });
+
+  it("should trigger onChange event with the default date when date prop is missing", () => {
+    const mockOnChange = jest.fn();
+    const mockCurrentDate = new Date("2023-09-30");
+    const dateSpy = jest
+      .spyOn(global, "Date")
+      .mockImplementation(() => mockCurrentDate);
+
+    const timeComponent = shallow(
+      <InputTimeComponent onChange={mockOnChange} />,
+    );
+
+    const newTime = "13:00";
+    const input = timeComponent.find("input");
+    input.simulate("change", { target: { value: newTime } });
+
+    const expectedDate = new Date(mockCurrentDate);
+    const [expectedHours, expectedMinutes] = newTime.split(":");
+    expectedDate.setHours(expectedHours);
+    expectedDate.setMinutes(expectedMinutes);
+
+    expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
+
+    dateSpy.mockRestore();
+  });
 });
