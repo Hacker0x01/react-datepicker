@@ -24,6 +24,24 @@ function getSelectedDayNode(datePicker) {
   );
 }
 
+function findSelectedDay(datePicker, targetDate) {
+  const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
+  return days.find(
+    (d) =>
+      utils.formatDate(d.props.day, "yyyy-MM-dd") ===
+      utils.formatDate(targetDate, "yyyy-MM-dd"),
+  );
+}
+
+function goToLastMonth(datePicker) {
+  const lastMonthButton = TestUtils.scryRenderedDOMComponentsWithClass(
+    datePicker,
+    "react-datepicker__navigation-icon--previous",
+  )[0];
+
+  TestUtils.Simulate.click(ReactDOM.findDOMNode(lastMonthButton));
+}
+
 describe("DatePicker", () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -1688,7 +1706,8 @@ describe("DatePicker", () => {
       const onChange = (dates = []) => {
         [startDate, endDate] = dates;
       };
-      let datePicker = TestUtils.renderIntoDocument(
+
+      const datePicker = TestUtils.renderIntoDocument(
         <DatePicker
           selected={selected}
           onChange={onChange}
@@ -1698,12 +1717,15 @@ describe("DatePicker", () => {
           inline
         />,
       );
-      let days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
-      const selectedDay = days.find(
-        (d) =>
-          utils.formatDate(d.props.day, "yyyy-MM-dd") ===
-          utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
-      );
+
+      let selectedDay = findSelectedDay(datePicker, selectedPrevious);
+      // Ensure that we're dealing with a date at the beginning of the month
+      if (!selectedDay) {
+        // If it's the beginning of the month & if the selectedPrevious is not being displayed, navigate to the previous month and reselect the selectedPrevious
+        goToLastMonth(datePicker);
+        selectedDay = findSelectedDay(datePicker, selectedPrevious);
+      }
+
       TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
         utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
