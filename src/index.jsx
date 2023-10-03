@@ -302,6 +302,7 @@ export default class DatePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.calcInitialState();
+    this.preventFocusTimeout = null;
   }
 
   componentDidMount() {
@@ -463,6 +464,23 @@ export default class DatePicker extends React.Component {
     this.setState({ focused: true });
   };
 
+  sendFocusBackToInput = () => {
+    // Clear previous timeout if it exists
+    if (this.preventFocusTimeout) {
+      this.clearPreventFocusTimeout();
+    }
+
+    // close the popper and refocus the input
+    // stop the input from auto opening onFocus
+    // setFocus to the input
+    this.setState({ preventFocus: true }, () => {
+      this.preventFocusTimeout = setTimeout(() => {
+        this.setFocus();
+        this.setState({ preventFocus: false });
+      });
+    });
+  };
+
   cancelFocusInput = () => {
     clearTimeout(this.inputFocusTimeout);
     this.inputFocusTimeout = null;
@@ -543,15 +561,11 @@ export default class DatePicker extends React.Component {
   };
 
   handleSelect = (date, event, monthSelectedIn) => {
-    // Preventing onFocus event to fix issue
-    // https://github.com/Hacker0x01/react-datepicker/issues/628
-    this.setState({ preventFocus: true }, () => {
-      this.preventFocusTimeout = setTimeout(
-        () => this.setState({ preventFocus: false }),
-        50,
-      );
-      return this.preventFocusTimeout;
-    });
+    if (this.props.shouldCloseOnSelect && !this.props.showTimeSelect) {
+      // Preventing onFocus event to fix issue
+      // https://github.com/Hacker0x01/react-datepicker/issues/628
+      this.sendFocusBackToInput();
+    }
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event);
     }
@@ -699,6 +713,7 @@ export default class DatePicker extends React.Component {
 
     this.props.onChange(changedDate);
     if (this.props.shouldCloseOnSelect) {
+      this.sendFocusBackToInput();
       this.setOpen(false);
     }
     if (this.props.showTimeInput) {
@@ -765,6 +780,7 @@ export default class DatePicker extends React.Component {
         }
       } else if (eventKey === "Escape") {
         event.preventDefault();
+        this.sendFocusBackToInput();
         this.setOpen(false);
       } else if (eventKey === "Tab") {
         this.setOpen(false);
@@ -875,24 +891,8 @@ export default class DatePicker extends React.Component {
   onPopperKeyDown = (event) => {
     const eventKey = event.key;
     if (eventKey === "Escape") {
-      // close the popper and refocus the input
-      // stop the input from auto opening onFocus
-      // close the popper
-      // setFocus to the input
-      // allow input auto opening onFocus
       event.preventDefault();
-      this.setState(
-        {
-          preventFocus: true,
-        },
-        () => {
-          this.setOpen(false);
-          setTimeout(() => {
-            this.setFocus();
-            this.setState({ preventFocus: false });
-          });
-        },
-      );
+      this.sendFocusBackToInput();
     }
   };
 
@@ -902,6 +902,9 @@ export default class DatePicker extends React.Component {
         event.preventDefault();
       }
     }
+
+    this.sendFocusBackToInput();
+
     if (this.props.selectsRange) {
       this.props.onChange([null, null], event);
     } else {

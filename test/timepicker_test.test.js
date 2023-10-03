@@ -1,4 +1,5 @@
 import React from "react";
+import defer from "lodash/defer";
 import DatePicker from "../src/index.jsx";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
@@ -163,6 +164,21 @@ describe("TimePicker", () => {
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey(" "));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
+  });
+
+  it("should return focus to input once time is selected", (done) => {
+    document.body.appendChild(div); // So we can check the dom later for activeElement
+    renderDatePicker("February 28, 2018 4:43 PM");
+    const dateInput = ReactDOM.findDOMNode(datePicker.input);
+    TestUtils.Simulate.focus(dateInput);
+    const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
+    const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
+    TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
+
+    defer(() => {
+      expect(document.activeElement).toBe(dateInput);
+      done();
+    });
   });
 
   it("should not select time when Escape is pressed", () => {
