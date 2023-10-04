@@ -1186,12 +1186,16 @@ describe("Calendar", () => {
   });
 
   describe("localization", () => {
-    function testLocale(calendar, selected, locale) {
+    function testLocale(calendar, selected, locale, calendarStartDay) {
       const calendarText = calendar.find(".react-datepicker__current-month");
       expect(calendarText.text()).toBe(
         utils.formatDate(selected, dateFormat, locale),
       );
-      const firstDateOfWeek = utils.getStartOfWeek(selected, locale);
+      const firstDateOfWeek = utils.getStartOfWeek(
+        selected,
+        locale,
+        calendarStartDay,
+      );
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
         firstDateOfWeek,
         locale,

@@ -55,6 +55,7 @@ export default class Day extends React.Component {
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
+    calendarStartDay: PropTypes.number,
   };
 
   componentDidMount() {
@@ -107,12 +108,23 @@ export default class Day extends React.Component {
   isStartOfWeek = () =>
     isSameDay(
       this.props.day,
-      getStartOfWeek(this.props.day, this.props.locale),
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
     );
 
   isSameWeek = (other) =>
     this.props.showWeekPicker &&
-    isSameDay(other, getStartOfWeek(this.props.day, this.props.locale));
+    isSameDay(
+      other,
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
+    );
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
