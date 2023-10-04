@@ -1,12 +1,9 @@
 import React from "react";
-import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import Day from "../src/day";
 import WeekNumber from "../src/week_number";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
-import * as utils from "../src/date_utils";
-import Calendar from "../src/calendar";
 
 describe("WeekPicker", () => {
   let sandbox;

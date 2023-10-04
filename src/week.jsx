@@ -103,7 +103,7 @@ export default class Week extends React.Component {
 
   renderDays = () => {
     // TODO: Ensure calendarStartDay is passed in all other occurrences in this PR
-    const startOfWeek = utils.getStartOfWeek(
+    const startOfWeek = getStartOfWeek(
       this.props.day,
       this.props.locale,
       this.props.calendarStartDay,
@@ -193,9 +193,6 @@ export default class Week extends React.Component {
     this.isSameDay(this.props.preSelection);
 
   render() {
-    const { day, locale, selected } = this.props;
-
-    const startOfWeek = getStartOfWeek(day, locale);
     const weekNumberClasses = {
       "react-datepicker__week": true,
       "react-datepicker__week--selected": this.isSameDay(this.props.selected),
