@@ -131,6 +131,7 @@
 | `showTimeSelectOnly`            | `bool`                         |                            |             |
 | `showTwoColumnMonthYearPicker`  | `bool`                         | `false`                    |             |
 | `showWeekNumbers`               | `bool`                         |                            |             |
+| `showWeekPicker`                | `bool`                         | `false`                    |             |
 | `showYearDropdown`              | `bool`                         |                            |             |
 | `showYearPicker`                | `bool`                         | `false`                    |             |
 | `startDate`                     | `instanceOfDate`               |                            |             |

@@ -14,6 +14,7 @@ import {
   isBefore,
   isAfter,
   getDayOfWeekCode,
+  getStartOfWeek,
   formatDate,
 } from "./date_utils";
 
@@ -38,6 +39,8 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
+    showWeekNumber: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
@@ -90,12 +93,26 @@ export default class Day extends React.Component {
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+    !(
+      this.isSameDay(this.props.selected) ||
+      this.isSameWeek(this.props.selected)
+    ) &&
+    (this.isSameDay(this.props.preSelection) ||
+      this.isSameWeek(this.props.preSelection));
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
+
+  isStartOfWeek = () =>
+    isSameDay(
+      this.props.day,
+      getStartOfWeek(this.props.day, this.props.locale),
+    );
+
+  isSameWeek = (other) =>
+    this.props.showWeekPicker &&
+    isSameDay(other, getStartOfWeek(this.props.day, this.props.locale));
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
@@ -246,7 +263,8 @@ export default class Day extends React.Component {
 
   isCurrentDay = () => this.isSameDay(newDate());
 
-  isSelected = () => this.isSameDay(this.props.selected);
+  isSelected = () =>
+    this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected);
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
@@ -309,10 +327,14 @@ export default class Day extends React.Component {
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
     const preSelectionDay = preSelection || this.props.preSelection;
-
     const tabIndex =
-      this.isKeyboardSelected() ||
-      (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+      !(
+        this.props.showWeekPicker &&
+        (this.props.showWeekNumber || !this.isStartOfWeek())
+      ) &&
+      (this.isKeyboardSelected() ||
+        (this.isSameDay(selectedDay) &&
+          isSameDay(preSelectionDay, selectedDay)))
         ? 0
         : -1;
 
