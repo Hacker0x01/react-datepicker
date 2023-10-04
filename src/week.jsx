@@ -106,7 +106,6 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    // TODO: Ensure calendarStartDay is passed in all other occurrences in this PR
     const startOfWeek = getStartOfWeek(
       this.props.day,
       this.props.locale,
