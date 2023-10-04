@@ -106,7 +106,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default class exampleComponents extends React.Component {
   componentDidMount() {
-    hljs.highlightAll();
+    hljs.initHighlightingOnLoad();
     hljs.registerLanguage("javascript", hljsJavaScriptLanguage);
   }
 
