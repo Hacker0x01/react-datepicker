@@ -117,15 +117,15 @@ export default class exampleComponents extends React.Component {
       component: Default,
     },
     {
-      title: "Calendar Icon Default",
+      title: "Calendar Icon",
       component: CalendarIcon,
     },
     {
-      title: "Calendar Icon React Svg Component",
+      title: "Calendar Icon using React Svg Component",
       component: CalendarIconSvgIcon,
     },
     {
-      title: "Calendar Icon External Lib",
+      title: "Calendar Icon using External Lib",
       component: CalendarIconExternal,
     },
     {
