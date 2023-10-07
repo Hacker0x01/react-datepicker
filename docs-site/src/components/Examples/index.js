@@ -99,6 +99,8 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
+import CalendarIconExternal from "../../examples/calendarIconExternal";
+import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -115,8 +117,16 @@ export default class exampleComponents extends React.Component {
       component: Default,
     },
     {
-      title: "Calendar Icon",
+      title: "Calendar Icon Default",
       component: CalendarIcon,
+    },
+    {
+      title: "Calendar Icon React Svg Component",
+      component: CalendarIconSvgIcon,
+    },
+    {
+      title: "Calendar Icon External Lib",
+      component: CalendarIconExternal,
     },
     {
       title: "Calendar container",

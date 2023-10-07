@@ -5,6 +5,7 @@
       showIcon
       selected={startDate}
       onChange={(date) => setStartDate(date)}
+      icon="fa fa-calendar"
     />
   );
 };
