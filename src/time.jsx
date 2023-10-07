@@ -70,6 +70,8 @@ export default class Time extends React.Component {
 
   scrollToTheSelectedTime = () => {
     requestAnimationFrame(() => {
+      if (!this.list) return;
+
       this.list.scrollTop =
         this.centerLi &&
         Time.calcCenterPosition(
