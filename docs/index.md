@@ -13,6 +13,7 @@
 | `autoFocus`                     | `bool`                         |                            |             |
 | `calendarClassName`             | `string`                       |                            |             |
 | `calendarContainer`             | `func`                         |                            |             |
+| `calendarIconClassname`         | `string`                       |                            |             |
 | `calendarStartDay`              | `number`                       | `undefined`                |             |
 | `children`                      | `node`                         |                            |             |
 | `chooseDayAriaLabelPrefix`      | `string`                       |                            |             |
@@ -46,6 +47,7 @@
 | `formatWeekNumber`              | `func`                         |                            |             |
 | `highlightDates`                | `array`                        |                            |             |
 | `holidays`                      | `array`                        |                            |             |
+| `icon`                          | `union(string\|node)`          |                            |             |
 | `id`                            | `string`                       |                            |             |
 | `includeDateIntervals`          | `array`                        |                            |             |
 | `includeDates`                  | `array`                        |                            |             |
