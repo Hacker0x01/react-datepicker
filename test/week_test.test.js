@@ -176,4 +176,101 @@ describe("Week", () => {
     day.simulate("mouseenter");
     expect(day.prop("day")).toEqual(dayMouseEntered);
   });
+
+  describe("handleWeekClick", () => {
+    it("should call onWeekSelect prop with correct arguments", () => {
+      const onWeekSelect = jest.fn();
+      const day = new Date("2022-02-01");
+      const weekNumber = 5;
+      const event = { target: {} };
+      const wrapper = shallow(
+        <Week
+          onWeekSelect={onWeekSelect}
+          showWeekPicker={false}
+          shouldCloseOnSelect={false}
+          setOpen={() => {}}
+        />,
+      );
+      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      expect(onWeekSelect).toHaveBeenCalledWith(day, weekNumber, event);
+    });
+
+    it("should call handleDayClick with start of week if showWeekPicker prop is true", () => {
+      const handleDayClick = jest.fn();
+      const day = new Date("2022-02-01");
+      const weekNumber = 5;
+      const event = { target: {} };
+      const wrapper = shallow(
+        <Week
+          onWeekSelect={() => {}}
+          showWeekPicker
+          shouldCloseOnSelect={false}
+          setOpen={() => {}}
+        />,
+      );
+      wrapper.instance().handleDayClick = handleDayClick;
+      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      const startOfWeek = utils.getStartOfWeek(day);
+      expect(handleDayClick).toHaveBeenCalledWith(startOfWeek, event);
+    });
+
+    it("should call setOpen prop with false if shouldCloseOnSelect prop is true", () => {
+      const setOpen = jest.fn();
+      const day = new Date("2022-02-01");
+      const weekNumber = 5;
+      const event = { target: {} };
+      const wrapper = shallow(
+        <Week
+          onWeekSelect={() => {}}
+          showWeekPicker={false}
+          shouldCloseOnSelect
+          setOpen={setOpen}
+        />,
+      );
+      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      expect(setOpen).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe("keyboard-selected", () => {
+    const className = "react-datepicker__week--keyboard-selected";
+
+    it("should apply the keyboard-selected class when pre-selected and another week is selected", () => {
+      const week = utils.newDate();
+      const selected = utils.addWeeks(week, 1);
+      const shallowWeek = shallow(
+        <Week day={week} selected={selected} preSelection={week} />,
+      );
+      expect(shallowWeek.hasClass(className)).toBe(true);
+    });
+
+    it("should apply the keyboard-selected class when pre-selected and the same week is selected", () => {
+      const week = utils.newDate();
+      const shallowWeek = shallow(
+        <Week day={week} selected={week} preSelection={week} />,
+      );
+      expect(shallowWeek.hasClass(className)).toBe(false);
+    });
+  });
+
+  describe("selected", () => {
+    const className = "react-datepicker__week--selected";
+
+    it("should apply the selected class when pre-selected and another week is selected", () => {
+      const week = utils.newDate();
+      const selected = utils.addWeeks(week, 1);
+      const shallowWeek = shallow(
+        <Week day={week} selected={selected} preSelection={week} />,
+      );
+      expect(shallowWeek.hasClass(className)).toBe(false);
+    });
+
+    it("should apply the selected class when pre-selected and same week is selected", () => {
+      const week = utils.newDate();
+      const shallowWeek = shallow(
+        <Week day={week} selected={week} preSelection={week} />,
+      );
+      expect(shallowWeek.hasClass(className)).toBe(true);
+    });
+  });
 });
