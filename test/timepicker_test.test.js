@@ -240,9 +240,7 @@ describe("TimePicker", () => {
   }
 
   function renderDatePickerFor(selected, props) {
-    const root = createRoot(div);
-
-    datePicker = root.render(
+    datePicker = ReactDOM.render(
       <DatePicker
         selected={selected}
         dateFormat={"MMMM d, yyyy p"}
