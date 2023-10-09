@@ -3,6 +3,7 @@ import defer from "lodash/defer";
 import DatePicker from "../src/index.jsx";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
+import { findDOMNode } from "react-dom";
 import Time from "../src/time.jsx";
 import { newDate, formatDate } from "../src/date_utils.js";
 
