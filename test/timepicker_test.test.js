@@ -170,7 +170,7 @@ describe("TimePicker", () => {
   it("should return focus to input once time is selected", (done) => {
     document.body.appendChild(div); // So we can check the dom later for activeElement
     renderDatePicker("February 28, 2018 4:43 PM");
-    const dateInput = ReactDOM.findDOMNode(datePicker.input);
+    const dateInput = findDOMNode(datePicker.input);
     TestUtils.Simulate.focus(dateInput);
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");

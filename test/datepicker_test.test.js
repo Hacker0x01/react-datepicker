@@ -40,7 +40,7 @@ function goToLastMonth(datePicker) {
     "react-datepicker__navigation-icon--previous",
   )[0];
 
-  TestUtils.Simulate.click(ReactDOM.findDOMNode(lastMonthButton));
+  TestUtils.Simulate.click(findDOMNode(lastMonthButton));
 }
 
 describe("DatePicker", () => {
@@ -51,7 +51,7 @@ describe("DatePicker", () => {
   it("should show the calendar when focusing on the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     expect(datePicker.calendar).toBeDefined();
   });
 
@@ -93,7 +93,7 @@ describe("DatePicker", () => {
   it("should show the calendar when clicking on the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(dateInput));
     expect(datePicker.calendar).toBeDefined();
   });
 
@@ -109,7 +109,7 @@ describe("DatePicker", () => {
     );
 
     var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(dateInput));
     expect(datePicker.calendar).toBeDefined();
     expect(shadow.getElementById("test-portal")).toBeDefined();
   });
@@ -117,7 +117,7 @@ describe("DatePicker", () => {
   it("should not set open state when it is disabled and gets clicked", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker disabled />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(false);
   });
 
@@ -126,8 +126,7 @@ describe("DatePicker", () => {
     // Date Picker Dialog | Escape | Closes the dialog and returns focus to the Choose Date button.
     var div = document.createElement("div");
     document.body.appendChild(div);
-
-    var datePicker = ReactDOM.render(<DatePicker />);
+    var datePicker = ReactDOM.render(<DatePicker />, div);
 
     // user focuses the input field, the calendar opens
     var dateInput = div.querySelector("input");
@@ -241,22 +240,22 @@ describe("DatePicker", () => {
   it("should keep the calendar shown when clicking the calendar", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(datePicker.calendar));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(datePicker.calendar));
     expect(datePicker.calendar).toBeDefined();
   });
 
   it("should not set open state when it is disabled and gets clicked", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker disabled />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(false);
   });
 
   it("should not set open state when it is readOnly and gets clicked", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker readOnly />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.click(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(false);
   });
 
@@ -269,7 +268,7 @@ describe("DatePicker", () => {
       datePicker.calendar,
       Day,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    TestUtils.Simulate.click(findDOMNode(day));
     expect(datePicker.calendar).toBeFalsy();
   });
 
@@ -284,7 +283,7 @@ describe("DatePicker", () => {
       datePicker.calendar,
       Day,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    TestUtils.Simulate.click(findDOMNode(day));
     expect(datePicker.state.open).toBe(true);
   });
 
@@ -321,10 +320,7 @@ describe("DatePicker", () => {
     var node = findDOMNode(dateInput);
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
-    TestUtils.Simulate.keyDown(
-      ReactDOM.findDOMNode(dateInput),
-      getKey("Enter"),
-    );
+    TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
     expect(data.datePicker.state.open).toBe(true);
   });
 
@@ -399,22 +395,16 @@ describe("DatePicker", () => {
   it("should hide the calendar when pressing enter in the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.keyDown(
-      ReactDOM.findDOMNode(dateInput),
-      getKey("Enter"),
-    );
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
+    TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
     expect(datePicker.calendar).toBeFalsy();
   });
 
   it("should hide the calendar when the pressing escape in the date input", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.keyDown(
-      ReactDOM.findDOMNode(dateInput),
-      getKey("Escape"),
-    );
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
+    TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Escape"));
     expect(datePicker.calendar).toBeFalsy();
   });
 
@@ -441,11 +431,8 @@ describe("DatePicker", () => {
     );
     var dateInput = datePicker.input;
     const onBlurSpy = jest.spyOn(dateInput, "blur");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    TestUtils.Simulate.keyDown(
-      ReactDOM.findDOMNode(dateInput),
-      getKey("Tab", true),
-    );
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
+    TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Tab", true));
 
     expect(datePicker.calendar).toBeNull();
     expect(onBlurSpy).toHaveBeenCalled();
@@ -454,7 +441,7 @@ describe("DatePicker", () => {
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    expect(ReactDOM.findDOMNode(dateInput).className).not.toContain(
+    expect(findDOMNode(dateInput).className).not.toContain(
       "react-datepicker-ignore-onclickoutside",
     );
   });
@@ -462,8 +449,8 @@ describe("DatePicker", () => {
   it("should apply the react-datepicker-ignore-onclickoutside class to date input when open", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-    expect(ReactDOM.findDOMNode(dateInput).className).toContain(
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
+    expect(findDOMNode(dateInput).className).toContain(
       "react-datepicker-ignore-onclickoutside",
     );
   });
@@ -1220,8 +1207,7 @@ describe("DatePicker", () => {
   it("should autofocus the input when calling the setFocus method", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
-
-    var datePicker = ReactDOM.render(<DatePicker />);
+    var datePicker = ReactDOM.render(<DatePicker />, div);
     datePicker.setFocus();
     expect(div.querySelector("input")).toBe(document.activeElement);
   });
@@ -1366,7 +1352,7 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
     expect(onSelectSpy).not.toHaveBeenCalled();
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    const input = findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
@@ -1386,13 +1372,13 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
     expect(onSelectSpy).not.toHaveBeenCalled();
-    const input = ReactDOM.findDOMNode(datePicker.input);
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(input));
+    const input = findDOMNode(datePicker.input);
+    TestUtils.Simulate.focus(findDOMNode(input));
     const day = TestUtils.scryRenderedComponentsWithType(
       datePicker.calendar,
       Day,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    TestUtils.Simulate.click(findDOMNode(day));
     expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
     expect(onSelectSpy).toHaveBeenCalledTimes(1);
   });
@@ -1419,7 +1405,7 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    const input = findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
@@ -1439,7 +1425,7 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
-    const input = ReactDOM.findDOMNode(datePicker.input);
+    const input = findDOMNode(datePicker.input);
     input.value = inputValue;
     TestUtils.Simulate.change(input);
     expect(onChangeRawSpy).toHaveBeenCalled();
@@ -1543,7 +1529,7 @@ describe("DatePicker", () => {
       <DatePicker preventOpenOnFocus />,
     );
     const dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(false);
   });
   it("should not set open state onInputKeyDown when preventOpenOnFocus prop is set", () => {
@@ -1551,10 +1537,7 @@ describe("DatePicker", () => {
       <DatePicker preventOpenOnFocus />,
     );
     const dateInput = datePicker.input;
-    TestUtils.Simulate.keyDown(
-      ReactDOM.findDOMNode(dateInput),
-      getKey("ArrowLeft"),
-    );
+    TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("ArrowLeft"));
     expect(datePicker.state.open).toBe(false);
   });
   it("should clear the input when clear() member function is called", () => {
@@ -1567,7 +1550,7 @@ describe("DatePicker", () => {
   it("should not open when open is false and input is focused", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker open={false} />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     expect(datePicker.calendar).toBeFalsy();
   });
   it("should open when open is true", () => {
@@ -1694,7 +1677,7 @@ describe("DatePicker", () => {
   it("should close the calendar after scrolling", () => {
     var datePicker = TestUtils.renderIntoDocument(<DatePicker closeOnScroll />);
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(true);
     datePicker.onScroll({ target: document });
     expect(datePicker.state.open).toBe(false);
@@ -1714,7 +1697,7 @@ describe("DatePicker", () => {
       <DatePicker closeOnScroll={() => true} />,
     );
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     expect(datePicker.state.open).toBe(true);
     datePicker.onScroll();
     expect(datePicker.state.open).toBe(false);
@@ -1755,7 +1738,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(selected, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
         utils.formatDate(selected, "yyyy-MM-dd"),
       );
@@ -1785,7 +1768,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(nextDay, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
         utils.formatDate(startDate, "yyyy-MM-dd"),
       );
@@ -1817,7 +1800,7 @@ describe("DatePicker", () => {
           utils.formatDate(d.props.day, "yyyy-MM-dd") ===
           utils.formatDate(selected, "yyyy-MM-dd"),
       );
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
         utils.formatDate(selected, "yyyy-MM-dd"),
       );
@@ -1851,7 +1834,7 @@ describe("DatePicker", () => {
         selectedDay = findSelectedDay(datePicker, selectedPrevious);
       }
 
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(selectedDay));
+      TestUtils.Simulate.click(findDOMNode(selectedDay));
       expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
         utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
       );
@@ -1869,7 +1852,7 @@ describe("DatePicker", () => {
       const dateInput = datePicker.input;
       var node = findDOMNode(dateInput);
       // Click to open
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.click(findDOMNode(dateInput));
       expect(datePicker.state.preSelection).toBe(startDate);
     });
 
@@ -1885,7 +1868,7 @@ describe("DatePicker", () => {
       TestUtils.Simulate.click(node);
       const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
       // Click the first Day
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(days[0]));
+      TestUtils.Simulate.click(findDOMNode(days[0]));
       expect(datePicker.state.open).toBe(true);
     });
 
@@ -2185,11 +2168,8 @@ describe("DatePicker", () => {
       const dateInput = datePicker.input;
       var node = findDOMNode(dateInput);
 
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-      TestUtils.Simulate.keyDown(
-        ReactDOM.findDOMNode(dateInput),
-        getKey("Enter"),
-      );
+      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
 
       const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
         datePicker,
@@ -2211,11 +2191,8 @@ describe("DatePicker", () => {
       const dateInput = datePicker.input;
       var node = findDOMNode(dateInput);
 
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-      TestUtils.Simulate.keyDown(
-        ReactDOM.findDOMNode(dateInput),
-        getKey("Enter"),
-      );
+      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
 
       const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
         datePicker,
