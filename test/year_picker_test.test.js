@@ -5,6 +5,7 @@ import Year from "../src/year.jsx";
 import TestUtils from "react-dom/test-utils";
 import * as utils from "../src/date_utils.js";
 import Calendar from "../src/calendar.jsx";
+import { findDOMNode } from "react-dom";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
