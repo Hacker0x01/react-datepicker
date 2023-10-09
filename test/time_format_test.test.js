@@ -3,6 +3,7 @@ import { mount } from "enzyme";
 import TimeComponent from "../src/time";
 import * as utils from "../src/date_utils";
 import ptBR from "date-fns/locale/pt-BR";
+import { waitFor } from "@testing-library/react";
 
 describe("TimeComponent", () => {
   utils.registerLocale("pt-BR", ptBR);
@@ -36,14 +37,18 @@ describe("TimeComponent", () => {
       expect(timeListItem.at(0).text()).toBe("00:00");
     });
 
-    it("should format the time based on the default locale (en-US)", () => {
+    it("should format the time based on the default locale (en-US)", async () => {
       mount(<TimeComponent format="p" />);
-      expect(spy.mock.calls[0][1].innerHTML).toBe("1:00 PM");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("1:00 PM");
+      });
     });
 
-    it("should format the time based on the pt-BR locale", () => {
+    it("should format the time based on the pt-BR locale", async () => {
       mount(<TimeComponent format="p" locale="pt-BR" />);
-      expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
+      });
     });
   });
 
@@ -53,22 +58,28 @@ describe("TimeComponent", () => {
       spy = jest.spyOn(TimeComponent, "calcCenterPosition");
     });
 
-    it("should call calcCenterPosition once", () => {
+    it("should call calcCenterPosition once", async () => {
       mount(<TimeComponent format="HH:mm" />);
-      expect(spy).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it("should call calcCenterPosition with centerLi ref, closest to the current time", () => {
+    it("should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
       mount(<TimeComponent format="HH:mm" />);
-      expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
+      });
     });
 
-    it("with five minute time interval, should call calcCenterPosition with centerLi ref, closest to the current time", () => {
+    it("with five minute time interval, should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
       mount(<TimeComponent format="HH:mm" intervals={5} />);
-      expect(spy.mock.calls[0][1].innerHTML).toBe("13:25");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("13:25");
+      });
     });
 
-    it("should call calcCenterPosition with centerLi ref, closest to the selected time", () => {
+    it("should call calcCenterPosition with centerLi ref, closest to the selected time", async () => {
       mount(
         <TimeComponent
           format="HH:mm"
@@ -76,10 +87,12 @@ describe("TimeComponent", () => {
           openToDate={new Date("1990-06-14 09:11")}
         />,
       );
-      expect(spy.mock.calls[0][1].innerHTML).toBe("08:00");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("08:00");
+      });
     });
 
-    it("should call calcCenterPosition with centerLi ref, which is selected", () => {
+    it("should call calcCenterPosition with centerLi ref, which is selected", async () => {
       mount(
         <TimeComponent
           format="HH:mm"
@@ -87,11 +100,13 @@ describe("TimeComponent", () => {
           openToDate={new Date("1990-06-14 09:00")}
         />,
       );
-      expect(
-        spy.mock.calls[0][1].classList.contains(
-          "react-datepicker__time-list-item--selected",
-        ),
-      ).toBe(true);
+      await waitFor(() => {
+        expect(
+          spy.mock.calls[0][1].classList.contains(
+            "react-datepicker__time-list-item--selected",
+          ),
+        ).toBe(true);
+      });
     });
 
     it("should add the aria-selected property to the selected item", () => {
@@ -172,28 +187,32 @@ describe("TimeComponent", () => {
       ).toBe(0);
     });
 
-    it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", () => {
+    it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", async () => {
       mount(
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:11")}
         />,
       );
-      expect(spy.mock.calls[0][1].innerHTML).toBe("09:00");
+      await waitFor(() => {
+        expect(spy.mock.calls[0][1].innerHTML).toBe("09:00");
+      });
     });
 
-    it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", () => {
+    it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", async () => {
       mount(
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:00")}
         />,
       );
-      expect(
-        spy.mock.calls[0][1].classList.contains(
-          "react-datepicker__time-list-item--selected",
-        ),
-      ).toBe(false);
+      await waitFor(() => {
+        expect(
+          spy.mock.calls[0][1].classList.contains(
+            "react-datepicker__time-list-item--selected",
+          ),
+        ).toBe(false);
+      });
     });
 
     it("should calculate scroll for the first item of 4 (even) items list", () => {

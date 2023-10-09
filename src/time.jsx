@@ -60,20 +60,28 @@ export default class Time extends React.Component {
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
-    this.list.scrollTop =
-      this.centerLi &&
-      Time.calcCenterPosition(
-        this.props.monthRef
-          ? this.props.monthRef.clientHeight - this.header.clientHeight
-          : this.list.clientHeight,
-        this.centerLi,
-      );
+    this.scrollToTheSelectedTime();
     if (this.props.monthRef && this.header) {
       this.setState({
         height: this.props.monthRef.clientHeight - this.header.clientHeight,
       });
     }
   }
+
+  scrollToTheSelectedTime = () => {
+    requestAnimationFrame(() => {
+      if (!this.list) return;
+
+      this.list.scrollTop =
+        this.centerLi &&
+        Time.calcCenterPosition(
+          this.props.monthRef
+            ? this.props.monthRef.clientHeight - this.header.clientHeight
+            : this.list.clientHeight,
+          this.centerLi,
+        );
+    });
+  };
 
   handleClick = (time) => {
     if (
