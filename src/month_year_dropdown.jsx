@@ -41,7 +41,7 @@ export default class MonthYearDropdown extends React.Component {
       options.push(
         <option key={timepoint} value={timepoint}>
           {formatDate(currDate, this.props.dateFormat, this.props.locale)}
-        </option>
+        </option>,
       );
 
       currDate = addMonths(currDate, 1);
@@ -68,7 +68,7 @@ export default class MonthYearDropdown extends React.Component {
     const yearMonth = formatDate(
       this.props.date,
       this.props.dateFormat,
-      this.props.locale
+      this.props.locale,
     );
 
     return (

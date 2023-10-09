@@ -34,7 +34,7 @@ export default class TabLoop extends React.Component {
       .call(
         this.tabLoopRef.current.querySelectorAll(focusableElementsSelector),
         1,
-        -1
+        -1,
       )
       .filter(focusableFilter);
 

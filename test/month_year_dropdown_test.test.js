@@ -9,7 +9,7 @@ import {
   formatDate,
   isAfter,
   registerLocale,
-} from "../src/date_utils";
+} from "../src/date_utils.js";
 import fi from "date-fns/locale/fi";
 
 describe("MonthYearDropdown", () => {
@@ -18,7 +18,6 @@ describe("MonthYearDropdown", () => {
   const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput;
   };
-  let sandbox;
 
   function getMonthYearDropdown(overrideProps) {
     const dateFormatCalendar = "LLLL yyyy";
@@ -35,29 +34,24 @@ describe("MonthYearDropdown", () => {
         maxDate={maxDate}
         onChange={mockHandleChange}
         {...overrideProps}
-      />
+      />,
     );
   }
 
   beforeEach(() => {
     handleChangeResult = null;
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
   });
 
   describe("scroll mode", () => {
     let selectedDate;
-    beforeEach(function () {
+    beforeEach(() => {
       selectedDate = newDate("2018-01");
       monthYearDropdown = getMonthYearDropdown({ date: selectedDate });
     });
 
     it("shows the selected month year in the initial view", () => {
       const selected_month_year_name = formatDate(selectedDate, "LLLL yyyy");
-      expect(monthYearDropdown.text()).to.contain(selected_month_year_name);
+      expect(monthYearDropdown.text()).toContain(selected_month_year_name);
     });
 
     it("opens a list when read view is clicked", () => {
@@ -65,7 +59,7 @@ describe("MonthYearDropdown", () => {
         .find(".react-datepicker__month-year-read-view")
         .simulate("click");
       var optionsView = monthYearDropdown.find(MonthYearDropdownOptions);
-      expect(optionsView).to.exist;
+      expect(optionsView).toBeDefined();
     });
 
     it("closes the dropdown when a month year is clicked", () => {
@@ -76,28 +70,26 @@ describe("MonthYearDropdown", () => {
         .find(".react-datepicker__month-year-option")
         .at(1)
         .simulate("click");
-      expect(monthYearDropdown.find(MonthYearDropdownOptions)).to.have.length(
-        0
-      );
+      expect(monthYearDropdown.find(MonthYearDropdownOptions)).toHaveLength(0);
     });
 
     it("closes the dropdown if outside is clicked", () => {
       const date = newDate();
       const dateFormatCalendar = "LLLL yyyy";
 
-      const onCancelSpy = sandbox.spy();
+      const onCancelSpy = jest.fn();
       const monthYearDropdownOptionsInstance = mount(
         <MonthYearDropdownOptions
           onCancel={onCancelSpy}
-          onChange={sandbox.spy()}
+          onChange={jest.fn()}
           dateFormat={dateFormatCalendar}
           date={date}
           minDate={subMonths(date, 6)}
           maxDate={addMonths(date, 6)}
-        />
+        />,
       ).instance();
       monthYearDropdownOptionsInstance.handleClickOutside();
-      expect(onCancelSpy.calledOnce).to.be.true;
+      expect(onCancelSpy).toHaveBeenCalledTimes(1);
     });
 
     it("does not call the supplied onChange function when the same month year is clicked", () => {
@@ -108,7 +100,7 @@ describe("MonthYearDropdown", () => {
       monthYearDropdown
         .find(".react-datepicker__month-year-option--selected_month-year")
         .simulate("click");
-      expect(handleChangeResult).to.be.null;
+      expect(handleChangeResult).toBeNull();
     });
 
     it("adds aria-selected to selected option", () => {
@@ -120,7 +112,7 @@ describe("MonthYearDropdown", () => {
         .find(".react-datepicker__month-year-option--selected_month-year")
         .prop("aria-selected");
 
-      expect(ariaSelected).to.equal("true");
+      expect(ariaSelected).toBe("true");
     });
 
     it("does not add aria-selected to non-selected option", () => {
@@ -133,7 +125,7 @@ describe("MonthYearDropdown", () => {
         .at(0)
         .prop("aria-selected");
 
-      expect(ariaSelected).to.be.undefined;
+      expect(ariaSelected).toBeUndefined();
     });
 
     it("calls the supplied onChange function when a different month year is clicked", () => {
@@ -147,7 +139,7 @@ describe("MonthYearDropdown", () => {
         .find(".react-datepicker__month-year-option")
         .at(5)
         .simulate("click");
-      expect(handleChangeResult.toString()).to.eq(expected_date.toString());
+      expect(handleChangeResult.toString()).toBe(expected_date.toString());
     });
 
     it("should use dateFormat to display date in dropdown", () => {
@@ -156,29 +148,29 @@ describe("MonthYearDropdown", () => {
         dateFormat: "LLLL yyyy",
       });
 
-      expect(dropdownDateFormat.text()).to.eq("January 2018");
+      expect(dropdownDateFormat.text()).toBe("January 2018");
 
       dropdownDateFormat = getMonthYearDropdown({ locale: "fi" });
 
-      expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
+      expect(dropdownDateFormat.text()).toBe("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
         locale: "fi",
         showMonthYearDropdown: true,
       });
-      expect(dropdownDateFormat.text()).to.eq("tammikuu 2018");
+      expect(dropdownDateFormat.text()).toBe("tammikuu 2018");
 
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
         locale: "fi",
       });
-      expect(dropdownDateFormat.text()).to.eq("2018 tammi");
+      expect(dropdownDateFormat.text()).toBe("2018 tammi");
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
         locale: "fi",
         showMonthYearDropdown: true,
       });
-      expect(dropdownDateFormat.text()).to.eq("2018 tammi");
+      expect(dropdownDateFormat.text()).toBe("2018 tammi");
     });
   });
 
@@ -198,19 +190,19 @@ describe("MonthYearDropdown", () => {
 
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
       var select = monthYearDropdown.find(
-        ".react-datepicker__month-year-select"
+        ".react-datepicker__month-year-select",
       );
-      expect(select).to.have.length(1);
-      expect(select.prop("value")).to.eq(expected_date.valueOf());
+      expect(select).toHaveLength(1);
+      expect(select.prop("value")).toBe(expected_date.valueOf());
       var options = select.find("option");
-      expect(options.map((o) => o.prop("value"))).to.eql(expected_values);
+      expect(options.map((o) => o.prop("value"))).toEqual(expected_values);
     });
 
     it("renders month options with default locale", () => {
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
       var options = monthYearDropdown.find("option");
 
-      expect(options.map((o) => o.text())).to.eql([
+      expect(options.map((o) => o.text())).toEqual([
         "July 2017",
         "August 2017",
         "September 2017",
@@ -233,7 +225,7 @@ describe("MonthYearDropdown", () => {
         locale: "fi",
       });
       var options = monthYearDropdown.find("option");
-      expect(options.map((o) => o.text())).to.eql([
+      expect(options.map((o) => o.text())).toEqual([
         "heinäkuu 2017",
         "elokuu 2017",
         "syyskuu 2017",
@@ -256,10 +248,10 @@ describe("MonthYearDropdown", () => {
         date: selectedMonth,
       });
       var select = monthYearDropdown.find(
-        ".react-datepicker__month-year-select"
+        ".react-datepicker__month-year-select",
       );
       select.simulate("change", { target: { value: selectedMonth.valueOf() } });
-      expect(handleChangeResult).to.not.exist;
+      expect(handleChangeResult).toBeFalsy();
     });
 
     it("calls the supplied onChange function when a different month is clicked", () => {
@@ -270,10 +262,10 @@ describe("MonthYearDropdown", () => {
         month: selectedMonth,
       });
       var select = monthYearDropdown.find(
-        ".react-datepicker__month-year-select"
+        ".react-datepicker__month-year-select",
       );
       select.simulate("change", { target: { value: monthToClick.valueOf() } });
-      expect(handleChangeResult.valueOf()).to.equal(monthToClick.valueOf());
+      expect(handleChangeResult.valueOf()).toBe(monthToClick.valueOf());
     });
   });
 });

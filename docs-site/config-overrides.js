@@ -11,7 +11,7 @@ module.exports = function override(config, env) {
     use: "raw-loader",
   });
   config.resolve.plugins = config.resolve.plugins.filter(
-    (plugin) => !(plugin instanceof ModuleScopePlugin)
+    (plugin) => !(plugin instanceof ModuleScopePlugin),
   );
   // Enable it, so that our custom .eslintrc for the examples will work
   for (let i = 0; i < config.module.rules.length; i++) {

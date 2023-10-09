@@ -2,8 +2,6 @@ import React from "react";
 import { es } from "date-fns/locale";
 import Day from "../src/day";
 import { mount, shallow } from "enzyme";
-import defer from "lodash/defer";
-import sinon from "sinon";
 import {
   getDayOfWeekCode,
   newDate,
@@ -12,6 +10,7 @@ import {
   subDays,
   getMonth,
   getHightLightDaysMap,
+  getHolidaysMap,
   registerLocale,
 } from "../src/date_utils";
 
@@ -24,8 +23,8 @@ describe("Day", () => {
     it("should render the specified day", () => {
       const day = newDate();
       const shallowDay = renderDay(day);
-      expect(shallowDay.hasClass("react-datepicker__day")).to.equal(true);
-      expect(shallowDay.text()).to.equal(getDate(day) + "");
+      expect(shallowDay.hasClass("react-datepicker__day")).toBe(true);
+      expect(shallowDay.text()).toBe(getDate(day) + "");
     });
 
     it("should apply the day of week class", () => {
@@ -33,7 +32,7 @@ describe("Day", () => {
       for (var i = 0; i < 7; i++) {
         const className = "react-datepicker__day--" + getDayOfWeekCode(day);
         const shallowDay = renderDay(day);
-        expect(shallowDay.hasClass(className)).to.equal(true);
+        expect(shallowDay.hasClass(className)).toBe(true);
         day = addDays(day, 1);
       }
     });
@@ -64,14 +63,14 @@ describe("Day", () => {
       });
 
       it("should apply the selected class", () => {
-        expect(shallowDay.hasClass(className)).to.equal(true);
+        expect(shallowDay.hasClass(className)).toBe(true);
       });
 
       it('should set aria-selected attribute to "true"', () => {
         const ariaSelected = mount(shallowDay.getElement())
           .getDOMNode()
           .getAttribute("aria-selected");
-        expect(ariaSelected).to.equal("true");
+        expect(ariaSelected).toBe("true");
       });
 
       it('should set aria-selected attribute to "true" if previous and after days selected', () => {
@@ -82,7 +81,7 @@ describe("Day", () => {
         const ariaSelected = mount(shallowDay.getElement())
           .getDOMNode()
           .getAttribute("aria-selected");
-        expect(ariaSelected).to.equal("true");
+        expect(ariaSelected).toBe("true");
       });
     });
 
@@ -94,14 +93,14 @@ describe("Day", () => {
       });
 
       it("should not apply the selected class", () => {
-        expect(shallowDay.hasClass(className)).to.equal(false);
+        expect(shallowDay.hasClass(className)).toBe(false);
       });
 
       it('should set aria-selected attribute to "false"', () => {
         const ariaSelected = mount(shallowDay.getElement())
           .getDOMNode()
           .getAttribute("aria-selected");
-        expect(ariaSelected).to.equal("false");
+        expect(ariaSelected).toBe("false");
       });
     });
   });
@@ -113,13 +112,13 @@ describe("Day", () => {
       const day = newDate();
       const selected = addDays(day, 1);
       const shallowDay = renderDay(day, { selected, preSelection: day });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the keyboard-selected class when selected", () => {
       const day = newDate();
       const shallowDay = renderDay(day, { selected: day, preSelection: day });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should not apply the keyboard-selected class when another day is pre-selected", () => {
@@ -127,7 +126,7 @@ describe("Day", () => {
       const selected = addDays(day, 1);
       const preSelection = addDays(day, 2);
       const shallowDay = renderDay(day, { selected, preSelection });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should apply the keyboard-selected class if in inline mode", () => {
@@ -138,7 +137,7 @@ describe("Day", () => {
         preSelection: day,
         inline: true,
       });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
   });
 
@@ -152,7 +151,7 @@ describe("Day", () => {
       const highlightDates = [highlightDay1, highlightDay2];
       const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the highlighted class if not in highlighted array", () => {
@@ -162,7 +161,7 @@ describe("Day", () => {
       const highlightDates = [highlightDay1, highlightDay2];
       const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     describe("prop is an array of objects with class name as a key and array of moments as a value", () => {
@@ -178,7 +177,7 @@ describe("Day", () => {
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });
-        expect(shallowDay.hasClass("testClassName")).to.equal(true);
+        expect(shallowDay.hasClass("testClassName")).toBe(true);
       });
 
       it("should not apply the highlighted class if not in highlighted array", () => {
@@ -193,7 +192,7 @@ describe("Day", () => {
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });
-        expect(shallowDay.hasClass("testClassName")).to.equal(false);
+        expect(shallowDay.hasClass("testClassName")).toBe(false);
       });
 
       it("should apply the highlighted classes even if the same day in highlighted array", () => {
@@ -206,10 +205,42 @@ describe("Day", () => {
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });
-        expect(shallowDay.hasClass("fooClassName")).to.equal(true);
-        expect(shallowDay.hasClass("barClassName")).to.equal(true);
-        expect(shallowDay.hasClass(className)).to.equal(true);
+        expect(shallowDay.hasClass("fooClassName")).toBe(true);
+        expect(shallowDay.hasClass("barClassName")).toBe(true);
+        expect(shallowDay.hasClass(className)).toBe(true);
       });
+    });
+  });
+
+  describe("holidays", () => {
+    const className = "react-datepicker__day--holidays";
+
+    it("should apply the holidays class if in holidays array", () => {
+      const day = newDate();
+      const holidaysDates = [
+        { date: new Date(), holidayName: ["India's Independence Day"] },
+        { date: new Date(2023, 11, 25), holidayName: ["Christmas"] },
+      ];
+      const holidaysDatesMap = getHolidaysMap(holidaysDates);
+      const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
+      expect(shallowDay.hasClass(className)).toBe(true);
+    });
+
+    it("should not apply the holiday class if not in holidays array", () => {
+      const day = new Date(2023, 7, 14);
+      const holidaysDates = [
+        {
+          date: new Date(2023, 7, 15),
+          holidayName: ["India's Independence Day"],
+        },
+        {
+          date: new Date(2023, 11, 25),
+          holidayName: ["Christmas"],
+        },
+      ];
+      const holidaysDatesMap = getHolidaysMap(holidaysDates);
+      const shallowDay = renderDay(day, { holidays: holidaysDatesMap });
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
   });
 
@@ -220,32 +251,32 @@ describe("Day", () => {
       const day = newDate();
       const dayClassNameFunc = () => className;
       const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should pass rendered days date to dayClassName func", () => {
       const day = newDate();
       const dayClassNameFunc = (date) => {
-        expect(date).to.equal(day);
+        expect(date).toBe(day);
         return className;
       };
       const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not add any additional className when passed dayClassName prop function returns undefined", () => {
       const day = newDate();
       const dayClassNameFunc = () => undefined;
       const shallowDay = renderDay(day, { dayClassName: dayClassNameFunc });
-      expect(shallowDay.hasClass(className)).to.equal(false);
-      expect(shallowDay.hasClass("undefined")).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
+      expect(shallowDay.hasClass("undefined")).toBe(false);
     });
 
     it("should not add any additional className when dayClassName prop is not passed", () => {
       const day = newDate();
       const shallowDay = renderDay(day);
-      expect(shallowDay.hasClass(className)).to.equal(false);
-      expect(shallowDay.hasClass("undefined")).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
+      expect(shallowDay.hasClass("undefined")).toBe(false);
     });
   });
 
@@ -257,7 +288,7 @@ describe("Day", () => {
       const startDate = subDays(day, 1);
       const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { startDate, endDate });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the in-range class if not in range", () => {
@@ -265,7 +296,7 @@ describe("Day", () => {
       const startDate = addDays(day, 1);
       const endDate = addDays(day, 2);
       const shallowDay = renderDay(day, { startDate, endDate });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should apply the in-range class if equal to start date", () => {
@@ -273,7 +304,7 @@ describe("Day", () => {
       const startDate = newDate(day);
       const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { startDate, endDate });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should apply the in-range class if equal to end date", () => {
@@ -281,21 +312,21 @@ describe("Day", () => {
       const startDate = subDays(day, 1);
       const endDate = newDate(day);
       const shallowDay = renderDay(day, { startDate, endDate });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the in-range class if start date missing", () => {
       const day = newDate();
       const startDate = subDays(day, 1);
       const shallowDay = renderDay(day, { startDate });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should not apply the in-range class if end date missing", () => {
       const day = newDate();
       const endDate = addDays(day, 1);
       const shallowDay = renderDay(day, { endDate });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
   });
 
@@ -326,7 +357,7 @@ describe("Day", () => {
             selectingDate,
             selectsStart: true,
           });
-          expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+          expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
         }
       });
 
@@ -340,22 +371,22 @@ describe("Day", () => {
           selectingDate,
           selectsStart: true,
         });
-        expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+        expect(shallowStartDay.hasClass(rangeDayStartClassName)).toBe(true);
 
         const shallowMidRangeDay = renderDay(midRangeDate, {
           endDate,
           selectingDate,
           selectsStart: true,
         });
-        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
-        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).toBe(false);
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).toBe(false);
 
         const shallowEndDay = renderDay(endDate, {
           endDate,
           selectingDate,
           selectsStart: true,
         });
-        expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+        expect(shallowEndDay.hasClass(rangeDayEndClassName)).toBe(true);
       });
 
       it("should not highlight for days after the end date", () => {
@@ -367,7 +398,7 @@ describe("Day", () => {
           selectingDate,
           selectsStart: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should not highlight if there is no end date selected", () => {
@@ -378,7 +409,7 @@ describe("Day", () => {
           selectingDate,
           selectsStart: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should not highlight for disabled dates when selectsDisabledDaysInRange is false (default)", () => {
@@ -390,7 +421,7 @@ describe("Day", () => {
           selectsStart: true,
           excludeDates: [selectingDate],
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should highlight for disabled dates when selectsDisabledDaysInRange is true", () => {
@@ -403,7 +434,7 @@ describe("Day", () => {
           excludeDates: [selectingDate],
           selectsDisabledDaysInRange: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
       });
 
       it("should not highlight for disabled dates within interval when selectsDisabledDaysInRange is false (default)", () => {
@@ -417,7 +448,7 @@ describe("Day", () => {
             { start: subDays(selectingDate, 1), end: endDate },
           ],
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should highlight for disabled dates within interval when selectsDisabledDaysInRange is true", () => {
@@ -432,7 +463,7 @@ describe("Day", () => {
           ],
           selectsDisabledDaysInRange: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
       });
     });
 
@@ -449,7 +480,7 @@ describe("Day", () => {
             selectingDate: day,
             selectsEnd: true,
           });
-          expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+          expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
         }
       });
 
@@ -463,22 +494,22 @@ describe("Day", () => {
           selectingDate,
           selectsEnd: true,
         });
-        expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+        expect(shallowStartDay.hasClass(rangeDayStartClassName)).toBe(true);
 
         const shallowMidRangeDay = renderDay(midRangeDate, {
           startDate,
           selectingDate,
           selectsEnd: true,
         });
-        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
-        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).toBe(false);
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).toBe(false);
 
         const shallowEndDay = renderDay(selectingDate, {
           startDate,
           selectingDate,
           selectsEnd: true,
         });
-        expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+        expect(shallowEndDay.hasClass(rangeDayEndClassName)).toBe(true);
       });
 
       it("should not highlight for days before the start date", () => {
@@ -489,7 +520,7 @@ describe("Day", () => {
           selectingDate,
           selectsEnd: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should not highlight if there is no start date selected", () => {
@@ -500,7 +531,7 @@ describe("Day", () => {
           selectingDate,
           selectsEnd: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should not highlight for disabled dates when selectsDisabledDaysInRange is false (default)", () => {
@@ -512,7 +543,7 @@ describe("Day", () => {
           selectsEnd: true,
           excludeDates: [selectingDate],
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should highlight for disabled dates when selectsDisabledDaysInRange is true", () => {
@@ -525,7 +556,7 @@ describe("Day", () => {
           excludeDates: [selectingDate],
           selectsDisabledDaysInRange: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
       });
 
       it("should not highlight for disabled dates within interval when selectsDisabledDaysInRange is false (default)", () => {
@@ -539,7 +570,7 @@ describe("Day", () => {
             { start: startDate, end: addDays(selectingDate, 1) },
           ],
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
       });
 
       it("should highlight for disabled dates within interval when selectsDisabledDaysInRange is true", () => {
@@ -554,7 +585,7 @@ describe("Day", () => {
           ],
           selectsDisabledDaysInRange: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
       });
     });
 
@@ -569,22 +600,22 @@ describe("Day", () => {
           selectingDate: endDate,
           selectsRange: true,
         });
-        expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+        expect(shallowStartDay.hasClass(rangeDayStartClassName)).toBe(true);
 
         const shallowMidRangeDay = renderDay(midRangeDate, {
           startDate,
           selectingDate: endDate,
           selectsRange: true,
         });
-        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
-        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+        expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).toBe(false);
+        expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).toBe(false);
 
         const shallowEndDay = renderDay(endDate, {
           startDate,
           selectingDate: endDate,
           selectsRange: true,
         });
-        expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+        expect(shallowEndDay.hasClass(rangeDayEndClassName)).toBe(true);
       });
     });
   });
@@ -594,26 +625,26 @@ describe("Day", () => {
 
     it("should apply the today class if today", () => {
       const shallowDay = renderDay(newDate());
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the today class if not today", () => {
       const shallowDay = renderDay(addDays(newDate(), 1));
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should apply the aria-current date attribute if today", () => {
       const shallowDay = renderDay(newDate());
       const ariaCurrent = shallowDay.prop("aria-current");
 
-      expect(ariaCurrent).to.equal("date");
+      expect(ariaCurrent).toBe("date");
     });
 
     it("should not apply the aria-current date attribute if not today", () => {
       const shallowDay = renderDay(addDays(newDate(), 1));
       const ariaCurrent = shallowDay.prop("aria-current");
 
-      expect(ariaCurrent).to.be.undefined;
+      expect(ariaCurrent).toBeUndefined();
     });
   });
 
@@ -622,17 +653,17 @@ describe("Day", () => {
 
     it("should apply the weekend class if Saturday", () => {
       const shallowDay = renderDay(newDate("2015-12-19"));
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should apply the weekend class if Sunday", () => {
       const shallowDay = renderDay(newDate("2015-12-20"));
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should not apply the today class if not the weekend", () => {
       const shallowDay = renderDay(newDate("2015-12-21"));
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
   });
 
@@ -642,7 +673,7 @@ describe("Day", () => {
     it("should not apply the outside-month class if in same month", () => {
       const day = newDate();
       const shallowDay = renderDay(day, { month: getMonth(day) });
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should apply the outside-month class if not in same month", () => {
@@ -654,38 +685,42 @@ describe("Day", () => {
       const shallowDay2 = renderDay(day2, { month: 11 });
       const shallowDay3 = renderDay(day3, { month: 4 });
       const shallowDay4 = renderDay(day4, { month: 2 });
-      expect(shallowDay1.hasClass(className)).to.equal(true);
-      expect(shallowDay2.hasClass(className)).to.equal(true);
-      expect(shallowDay3.hasClass(className)).to.equal(true);
-      expect(shallowDay4.hasClass(className)).to.equal(true);
+      expect(shallowDay1.hasClass(className)).toBe(true);
+      expect(shallowDay2.hasClass(className)).toBe(true);
+      expect(shallowDay3.hasClass(className)).toBe(true);
+      expect(shallowDay4.hasClass(className)).toBe(true);
     });
 
     it("should hide days outside month at end when duplicates", () => {
       const day = newDate("2021-03-17");
       const wrapper = mount(
-        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />
+        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />,
       );
-      expect(wrapper.text()).to.be.empty;
+      expect(wrapper.text()).toHaveLength(0);
     });
 
     it("should show days outside month at end when not duplicates", () => {
       const day = newDate("2020-03-17");
       const wrapper = mount(<Day day={day} month={getMonth(day) - 1} />);
-      expect(wrapper.text()).to.equal(day.getDate().toString());
+      expect(wrapper.text()).toBe(day.getDate().toString());
     });
 
     it("should hide days outside month at start when duplicates", () => {
       const day = newDate("2020-10-05");
       const wrapper = mount(
-        <Day day={day} month={getMonth(day) + 1} monthShowsDuplicateDaysStart />
+        <Day
+          day={day}
+          month={getMonth(day) + 1}
+          monthShowsDuplicateDaysStart
+        />,
       );
-      expect(wrapper.text()).to.be.empty;
+      expect(wrapper.text()).toHaveLength(0);
     });
 
     it("should show days outside month at start when not duplicates", () => {
       const day = newDate("2020-10-05");
       const wrapper = mount(<Day day={day} month={getMonth(day) + 1} />);
-      expect(wrapper.text()).to.equal(day.getDate().toString());
+      expect(wrapper.text()).toBe(day.getDate().toString());
     });
 
     it("should show days in month when duplicates at start/end", () => {
@@ -696,9 +731,9 @@ describe("Day", () => {
           month={getMonth(day)}
           monthShowsDuplicateDaysStart
           monthShowsDuplicateDaysEnd
-        />
+        />,
       );
-      expect(wrapper.text()).to.equal(day.getDate().toString());
+      expect(wrapper.text()).toBe(day.getDate().toString());
     });
   });
 
@@ -707,13 +742,13 @@ describe("Day", () => {
 
     it("should be enabled if date is enabled", () => {
       const shallowDay = renderDay(newDate());
-      expect(shallowDay.hasClass(className)).to.equal(false);
+      expect(shallowDay.hasClass(className)).toBe(false);
     });
 
     it("should be disabled if date is disabled", () => {
       const day = newDate();
       const shallowDay = renderDay(day, { excludeDates: [day] });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should be disabled if date is within excluded interval", () => {
@@ -723,13 +758,13 @@ describe("Day", () => {
           { start: subDays(day, 1), end: addDays(day, 1) },
         ],
       });
-      expect(shallowDay.hasClass(className)).to.equal(true);
+      expect(shallowDay.hasClass(className)).toBe(true);
     });
 
     it("should have aria-disabled attribute with true value if date is disabled", () => {
       const day = newDate();
       const shallowDay = renderDay(day, { excludeDates: [day] });
-      expect(shallowDay.prop("aria-disabled")).to.equal(true);
+      expect(shallowDay.prop("aria-disabled")).toBe(true);
     });
 
     it("should have aria-disabled attribute with true value if date is within excluded interval", () => {
@@ -739,12 +774,12 @@ describe("Day", () => {
           { start: subDays(day, 1), end: addDays(day, 1) },
         ],
       });
-      expect(shallowDay.prop("aria-disabled")).to.equal(true);
+      expect(shallowDay.prop("aria-disabled")).toBe(true);
     });
 
     it("should have aria-disabled attribute with false value if date is not disabled", () => {
       const shallowDay = renderDay(newDate());
-      expect(shallowDay.prop("aria-disabled")).to.equal(false);
+      expect(shallowDay.prop("aria-disabled")).toBe(false);
     });
   });
 
@@ -759,8 +794,8 @@ describe("Day", () => {
         ariaLabelPrefixWhenEnabled: ariaLabelPrefixWhenEnabled,
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`)
-      ).not.equal(-1);
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenEnabled}`),
+      ).not.toBe(-1);
     });
 
     it("should have the correct provided prefix if date is disabled", () => {
@@ -770,8 +805,8 @@ describe("Day", () => {
         excludeDates: [day],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
-      ).not.equal(-1);
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
+      ).not.toBe(-1);
     });
 
     it("should have the correct provided prefix if date is within excluded interval", () => {
@@ -783,15 +818,15 @@ describe("Day", () => {
         ],
       });
       expect(
-        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`)
-      ).not.equal(-1);
+        shallowDay.html().indexOf(`aria-label="${ariaLabelPrefixWhenDisabled}`),
+      ).not.toBe(-1);
     });
 
     it("should display date in English is locale is not provided", () => {
       const day = newDate("2021-05-26");
       const shallowDay = renderDay(day);
-      expect(shallowDay.html().indexOf("Wednesday, May 26th, 2021")).not.equal(
-        -1
+      expect(shallowDay.html().indexOf("Wednesday, May 26th, 2021")).not.toBe(
+        -1,
       );
     });
 
@@ -802,8 +837,8 @@ describe("Day", () => {
         locale: "es",
       });
       expect(
-        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021")
-      ).not.equal(-1);
+        shallowDay.html().indexOf("miércoles, 26 de mayo de 2021"),
+      ).not.toBe(-1);
     });
   });
 
@@ -822,16 +857,16 @@ describe("Day", () => {
       const day = newDate();
       const dayNode = shallow(<Day day={day} onClick={onClick} />);
       dayNode.find(".react-datepicker__day").simulate("click");
-      expect(onClickCalled).to.be.true;
+      expect(onClickCalled).toBe(true);
     });
 
     it("should not call onClick if day is disabled", () => {
       const day = newDate();
       const dayNode = shallow(
-        <Day day={day} excludeDates={[day]} onClick={onClick} />
+        <Day day={day} excludeDates={[day]} onClick={onClick} />,
       );
       dayNode.find(".react-datepicker__day").simulate("click");
-      expect(onClickCalled).to.be.false;
+      expect(onClickCalled).toBe(false);
     });
 
     it("should not call onClick if day is within excluded interval", () => {
@@ -843,10 +878,10 @@ describe("Day", () => {
             { start: subDays(day, 1), end: addDays(day, 1) },
           ]}
           onClick={onClick}
-        />
+        />,
       );
       dayNode.find(".react-datepicker__day").simulate("click");
-      expect(onClickCalled).to.be.false;
+      expect(onClickCalled).toBe(false);
     });
   });
 
@@ -864,7 +899,7 @@ describe("Day", () => {
     it("should call onMouseEnter if day is hovered", () => {
       const shallowDay = renderDay(newDate(), { onMouseEnter });
       shallowDay.find(".react-datepicker__day").simulate("mouseenter");
-      expect(onMouseEnterCalled).to.be.true;
+      expect(onMouseEnterCalled).toBe(true);
     });
   });
 
@@ -893,7 +928,7 @@ describe("Day", () => {
           selectingDate,
           selectsRange: true,
         });
-        expect(shallowDay.hasClass(rangeDayClassName)).to.be.true;
+        expect(shallowDay.hasClass(rangeDayClassName)).toBe(true);
       }
     });
 
@@ -905,7 +940,7 @@ describe("Day", () => {
         selectingDate,
         selectsRange: true,
       });
-      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
     });
 
     it("should have a class if it is a start or end date", () => {
@@ -918,23 +953,23 @@ describe("Day", () => {
         endDate,
         selectsRange: true,
       });
-      expect(shallowStartDay.hasClass(rangeDayStartClassName)).to.be.true;
+      expect(shallowStartDay.hasClass(rangeDayStartClassName)).toBe(true);
 
       const shallowMidRangeDay = renderDay(midRangeDate, {
         startDate,
         endDate,
         selectsRange: true,
       });
-      expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).to.be.false;
-      expect(shallowMidRangeDay.hasClass(rangeSetDayClassName)).to.be.true;
-      expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).to.be.false;
+      expect(shallowMidRangeDay.hasClass(rangeDayStartClassName)).toBe(false);
+      expect(shallowMidRangeDay.hasClass(rangeSetDayClassName)).toBe(true);
+      expect(shallowMidRangeDay.hasClass(rangeDayEndClassName)).toBe(false);
 
       const shallowEndDay = renderDay(endDate, {
         startDate,
         endDate,
         selectsRange: true,
       });
-      expect(shallowEndDay.hasClass(rangeDayEndClassName)).to.be.true;
+      expect(shallowEndDay.hasClass(rangeDayEndClassName)).toBe(true);
     });
 
     it("should not highlight for days after the end date", () => {
@@ -946,7 +981,7 @@ describe("Day", () => {
         selectingDate,
         selectsRange: true,
       });
-      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
     });
 
     it("should not highlight if there is no end date selected", () => {
@@ -957,7 +992,7 @@ describe("Day", () => {
         selectingDate,
         selectsRange: true,
       });
-      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
     });
 
     it("should not highlight for disabled (excluded) dates", () => {
@@ -969,7 +1004,7 @@ describe("Day", () => {
         selectsRange: true,
         excludeDates: [selectingDate],
       });
-      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
     });
 
     it("should not highlight for disabled (within excluded interval) dates", () => {
@@ -981,47 +1016,114 @@ describe("Day", () => {
         selectsRange: true,
         excludeDateIntervals: [{ start: selectingDate, end: endDate }],
       });
-      expect(shallowDay.hasClass(rangeDayClassName)).to.be.false;
+      expect(shallowDay.hasClass(rangeDayClassName)).toBe(false);
     });
   });
 
   describe("focus", () => {
-    let sandbox;
-    beforeEach(function () {
-      sandbox = sinon.createSandbox();
-    });
     afterEach(function () {
-      sandbox.restore();
+      jest.resetAllMocks();
     });
 
-    // skipping since running this test skips a whole set of othr tests
-    xit("should apply focus to the preselected day", () => {
+    it("should apply focus to the preselected day", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} />
+        <Day day={day} preSelection={day} />,
       ).instance();
 
-      sandbox.spy(dayInstance.dayEl.current, "focus");
+      jest.spyOn(dayInstance.dayEl.current, "focus");
       dayInstance.componentDidMount();
-      defer(() => {
-        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(true);
-        done();
-      });
+      expect(dayInstance.dayEl.current.focus).toHaveBeenCalledTimes(1);
     });
 
-    // skipping since running this test skips a whole set of othr tests
-    xit("should not apply focus to the preselected day if inline", () => {
+    it("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
       const dayInstance = mount(
-        <Day day={day} preSelection={day} inline />
+        <Day day={day} preSelection={day} inline />,
       ).instance();
 
-      sandbox.spy(dayInstance.dayEl.current, "focus");
+      jest.spyOn(dayInstance.dayEl.current, "focus");
       dayInstance.componentDidMount();
-      defer(() => {
-        expect(dayInstance.dayEl.current.focus.calledOnce).to.equal(false);
-        done();
+      expect(dayInstance.dayEl.current.focus).not.toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe("title", () => {
+    it("should have the correct title if date is from holiday list", () => {
+      const day = new Date(2023, 11, 25);
+      const holidays = new Map([
+        [
+          "08.15.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["India's Independence Day"],
+          },
+        ],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["Christmas"],
+          },
+        ],
+      ]);
+
+      const shallowDay = renderDay(day, {
+        holidays: holidays,
       });
+      expect(shallowDay.html().indexOf('title="Christmas"')).not.toBe(-1);
+    });
+
+    it("uses both the holiday names for a given date as the title", () => {
+      const day = new Date(2023, 7, 15);
+      const holidays = new Map([
+        [
+          "08.15.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["Holiday 1", "Holiday 2"],
+          },
+        ],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["Christmas"],
+          },
+        ],
+      ]);
+
+      const shallowDay = renderDay(day, {
+        holidays: holidays,
+      });
+      expect(
+        shallowDay.html().indexOf('title="Holiday 1, Holiday 2"'),
+      ).not.toBe(-1);
+    });
+
+    it("should have the title as empty string if date is not from holiday list", () => {
+      const day = new Date(2023, 7, 14);
+      const holidays = new Map([
+        [
+          "08.15.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["India's Independence Day"],
+          },
+        ],
+        [
+          "12.25.2023",
+          {
+            className: "react-datepicker__day--holidays",
+            holidayNames: ["Christmas"],
+          },
+        ],
+      ]);
+
+      const shallowDay = renderDay(day, {
+        holidays: holidays,
+      });
+      expect(shallowDay.html().indexOf('title=""')).not.toBe(-1);
     });
   });
 });

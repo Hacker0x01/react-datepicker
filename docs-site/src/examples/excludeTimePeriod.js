@@ -1,6 +1,6 @@
 () => {
   const [startDate, setStartDate] = useState(
-    setHours(setMinutes(new Date(), 30), 17)
+    setHours(setMinutes(new Date(), 30), 17),
   );
   return (
     <DatePicker

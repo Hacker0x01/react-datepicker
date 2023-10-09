@@ -3,17 +3,15 @@ import PropTypes from "prop-types";
 import {
   getHours,
   getMinutes,
-  setHours,
-  setMinutes,
   newDate,
   getStartOfDay,
   addMinutes,
   formatDate,
-  isBefore,
-  isEqual,
   isTimeInDisabledRange,
   isTimeDisabled,
   timesToInjectAfter,
+  getHoursInDay,
+  isSameMinute,
 } from "./date_utils";
 
 export default class Time extends React.Component {
@@ -62,20 +60,28 @@ export default class Time extends React.Component {
 
   componentDidMount() {
     // code to ensure selected time will always be in focus within time window when it first appears
-    this.list.scrollTop =
-      this.centerLi &&
-      Time.calcCenterPosition(
-        this.props.monthRef
-          ? this.props.monthRef.clientHeight - this.header.clientHeight
-          : this.list.clientHeight,
-        this.centerLi
-      );
+    this.scrollToTheSelectedTime();
     if (this.props.monthRef && this.header) {
       this.setState({
         height: this.props.monthRef.clientHeight - this.header.clientHeight,
       });
     }
   }
+
+  scrollToTheSelectedTime = () => {
+    requestAnimationFrame(() => {
+      if (!this.list) return;
+
+      this.list.scrollTop =
+        this.centerLi &&
+        Time.calcCenterPosition(
+          this.props.monthRef
+            ? this.props.monthRef.clientHeight - this.header.clientHeight
+            : this.list.clientHeight,
+          this.centerLi,
+        );
+    });
+  };
 
   handleClick = (time) => {
     if (
@@ -91,20 +97,16 @@ export default class Time extends React.Component {
     this.props.onChange(time);
   };
 
-  isSelectedTime = (time, currH, currM) =>
-    this.props.selected &&
-    currH === getHours(time) &&
-    currM === getMinutes(time);
+  isSelectedTime = (time) =>
+    this.props.selected && isSameMinute(this.props.selected, time);
 
-  liClasses = (time, currH, currM) => {
+  liClasses = (time) => {
     let classes = [
       "react-datepicker__time-list-item",
-      this.props.timeClassName
-        ? this.props.timeClassName(time, currH, currM)
-        : undefined,
+      this.props.timeClassName ? this.props.timeClassName(time) : undefined,
     ];
 
-    if (this.isSelectedTime(time, currH, currM)) {
+    if (this.isSelectedTime(time)) {
       classes.push("react-datepicker__time-list-item--selected");
     }
 
@@ -160,19 +162,18 @@ export default class Time extends React.Component {
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
 
-    const base = getStartOfDay(newDate(this.props.selected));
-    const multiplier = 1440 / intervals;
+    const activeDate =
+      this.props.selected || this.props.openToDate || newDate();
+
+    const base = getStartOfDay(activeDate);
     const sortedInjectTimes =
       this.props.injectTimes &&
       this.props.injectTimes.sort(function (a, b) {
         return a - b;
       });
 
-    const activeDate =
-      this.props.selected || this.props.openToDate || newDate();
-    const currH = getHours(activeDate);
-    const currM = getMinutes(activeDate);
-    const activeTime = setHours(setMinutes(base, currM), currH);
+    const minutesInDay = 60 * getHoursInDay(activeDate);
+    const multiplier = minutesInDay / intervals;
 
     for (let i = 0; i < multiplier; i++) {
       const currentTime = addMinutes(base, i * intervals);
@@ -184,7 +185,7 @@ export default class Time extends React.Component {
           currentTime,
           i,
           intervals,
-          sortedInjectTimes
+          sortedInjectTimes,
         );
         times = times.concat(timesToInject);
       }
@@ -192,11 +193,10 @@ export default class Time extends React.Component {
 
     // Determine which time to focus and scroll into view when component mounts
     const timeToFocus = times.reduce((prev, time) => {
-      if (isBefore(time, activeTime) || isEqual(time, activeTime)) {
+      if (time.getTime() <= activeDate.getTime()) {
         return time;
-      } else {
-        return prev;
       }
+      return prev;
     }, times[0]);
 
     return times.map((time, i) => {
@@ -204,7 +204,7 @@ export default class Time extends React.Component {
         <li
           key={i}
           onClick={this.handleClick.bind(this, time)}
-          className={this.liClasses(time, currH, currM)}
+          className={this.liClasses(time)}
           ref={(li) => {
             if (time === timeToFocus) {
               this.centerLi = li;
@@ -213,11 +213,9 @@ export default class Time extends React.Component {
           onKeyDown={(ev) => {
             this.handleOnKeyDown(ev, time);
           }}
-          tabIndex={time === timeToFocus ? "0" : "-1"}
+          tabIndex={time === timeToFocus ? 0 : -1}
           role="option"
-          aria-selected={
-            this.isSelectedTime(time, currH, currM) ? "true" : undefined
-          }
+          aria-selected={this.isSelectedTime(time) ? "true" : undefined}
         >
           {formatDate(time, format, this.props.locale)}
         </li>

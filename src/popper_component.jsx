@@ -90,7 +90,7 @@ export default class PopperComponent extends React.Component {
 
     const wrapperClasses = classnames(
       "react-datepicker-wrapper",
-      wrapperClassName
+      wrapperClassName,
     );
 
     return (

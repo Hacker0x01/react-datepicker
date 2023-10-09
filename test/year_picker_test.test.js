@@ -1,33 +1,23 @@
 import React from "react";
 import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
-import Year from "../src/year";
+import Year from "../src/year.jsx";
 import TestUtils from "react-dom/test-utils";
-import { findDOMNode } from "react-dom";
-import * as utils from "../src/date_utils";
-import Calendar from "../src/calendar";
+import ReactDOM from "react-dom";
+import * as utils from "../src/date_utils.js";
+import Calendar from "../src/calendar.jsx";
 
 describe("YearPicker", () => {
-  let sandbox;
-
-  beforeEach(() => {
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
-  });
-
   it("should show year picker component when showYearPicker prop is present", () => {
     const datePicker = mount(<DatePicker showYearPicker />);
     const component = datePicker.find(Year);
-    expect(component).to.exist;
+    expect(component).toBeDefined();
   });
 
   it("should show year picker component with default year item number", () => {
     const yearComponent = mount(<Year date={new Date()} />);
     const yearItems = yearComponent.find(".react-datepicker__year-text");
-    expect(yearItems.length).to.be.eq(utils.DEFAULT_YEAR_ITEM_NUMBER);
+    expect(yearItems.length).toBe(utils.DEFAULT_YEAR_ITEM_NUMBER);
   });
 
   it("should show year picker component with specific year item number", () => {
@@ -36,11 +26,11 @@ describe("YearPicker", () => {
       <Year date={new Date()} yearItemNumber={yearItemNumber} />,
     );
     const yearItems = yearComponent.find(".react-datepicker__year-text");
-    expect(yearItems.length).to.be.eq(yearItemNumber);
+    expect(yearItems.length).toBe(yearItemNumber);
   });
 
   it("should change the year when clicked on any option in the picker", () => {
-    const onYearChangeSpy = sinon.spy();
+    const onYearChangeSpy = jest.fn();
     const yearComponent = mount(
       <Year onDayClick={onYearChangeSpy} date={new Date("2020-05-05")} />,
     );
@@ -48,7 +38,7 @@ describe("YearPicker", () => {
       .find(".react-datepicker__year-text")
       .at(1);
     firstYearDiv.simulate("click");
-    expect(onYearChangeSpy.called).to.be.true;
+    expect(onYearChangeSpy).toHaveBeenCalled();
   });
 
   it("should has selected class when element of array equal of choosen year", () => {
@@ -58,7 +48,7 @@ describe("YearPicker", () => {
       .find(".react-datepicker__year-text--selected")
       .at(0)
       .text();
-    expect(year).to.equal(utils.getYear(date).toString());
+    expect(year).toBe(utils.getYear(date).toString());
   });
 
   it("should have current year class when element of array equal of current year", () => {
@@ -68,7 +58,7 @@ describe("YearPicker", () => {
       .find(".react-datepicker__year-text--today")
       .at(0)
       .text();
-    expect(year).to.equal(utils.getYear(date).toString());
+    expect(year).toBe(utils.getYear(date).toString());
   });
 
   it("should have aria-current date when element of array equal to current year", () => {
@@ -77,7 +67,7 @@ describe("YearPicker", () => {
     const ariaCurrent = yearComponent
       .find(".react-datepicker__year-text--today")
       .prop("aria-current");
-    expect(ariaCurrent).to.equal("date");
+    expect(ariaCurrent).toBe("date");
   });
 
   it("should not have aria-current date when element of array does not equal current year", () => {
@@ -87,7 +77,7 @@ describe("YearPicker", () => {
       .find(".react-datepicker__year-text")
       .at(0)
       .prop("aria-current");
-    expect(ariaCurrent).to.be.undefined;
+    expect(ariaCurrent).toBeUndefined();
   });
 
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
@@ -99,9 +89,7 @@ describe("YearPicker", () => {
       />,
     );
     const year = yearComponent.find(".react-datepicker__year-text").at(0);
-    expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-      true,
-    );
+    expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
   });
 
   it("should not return disabled class if current date is before minDate but same year", () => {
@@ -119,7 +107,7 @@ describe("YearPicker", () => {
       yearTexts
         .at(2023 - firstYear)
         .hasClass("react-datepicker__year-text--disabled"),
-    ).to.equal(false);
+    ).toBe(false);
   });
 
   it("should not return disabled class if current date is after maxDate but same year", () => {
@@ -137,7 +125,7 @@ describe("YearPicker", () => {
       yearTexts
         .at(2023 - firstYear)
         .hasClass("react-datepicker__year-text--disabled"),
-    ).to.equal(false);
+    ).toBe(false);
   });
 
   it("should return disabled class if specified excludeDate", () => {
@@ -160,9 +148,7 @@ describe("YearPicker", () => {
 
     for (let i = 0; i <= 2023 - firstYear; i++) {
       const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-        true,
-      );
+      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
     }
   });
 
@@ -186,15 +172,13 @@ describe("YearPicker", () => {
     const pos = 2023 - firstYear;
     for (let i = 0; i <= pos; i++) {
       const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
+      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(
         false,
       );
     }
     for (let i = pos + 1; i < 12; i++) {
       const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).to.equal(
-        true,
-      );
+      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
     }
   });
 
@@ -206,7 +190,7 @@ describe("YearPicker", () => {
       <Year date={utils.newDate()} renderYearContent={renderYearContent} />,
     );
     const year = yearComponent.find(".react-datepicker__year-text").at(0);
-    expect(year.find("span").at(0).text()).to.equal("custom render");
+    expect(year.find("span").at(0).text()).toBe("custom render");
   });
 
   describe("range", () => {
@@ -223,25 +207,25 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--in-range",
       );
 
-      expect(inRangeYears.length).to.equal(4);
-      expect(inRangeYears.at(0).text()).to.eq("2009");
-      expect(inRangeYears.at(1).text()).to.eq("2010");
-      expect(inRangeYears.at(2).text()).to.eq("2011");
-      expect(inRangeYears.at(3).text()).to.eq("2012");
+      expect(inRangeYears.length).toBe(4);
+      expect(inRangeYears.at(0).text()).toBe("2009");
+      expect(inRangeYears.at(1).text()).toBe("2010");
+      expect(inRangeYears.at(2).text()).toBe("2011");
+      expect(inRangeYears.at(3).text()).toBe("2012");
 
       const rangeStartYear = yearComponent.find(
         ".react-datepicker__year-text--range-start",
       );
 
-      expect(rangeStartYear.length).to.equal(1);
-      expect(rangeStartYear.at(0).text()).to.eq("2009");
+      expect(rangeStartYear.length).toBe(1);
+      expect(rangeStartYear.at(0).text()).toBe("2009");
 
       const rangeEndYear = yearComponent.find(
         ".react-datepicker__year-text--range-end",
       );
 
-      expect(rangeEndYear.length).to.equal(1);
-      expect(rangeEndYear.at(0).text()).to.eq("2012");
+      expect(rangeEndYear.length).toBe(1);
+      expect(rangeEndYear.at(0).text()).toBe("2012");
     });
 
     it("should not add range classes when start date is not defined", () => {
@@ -262,9 +246,9 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--range-end",
       );
 
-      expect(inRangeYears.length).to.equal(0);
-      expect(rangeEndYear.length).to.equal(0);
-      expect(rangeStartYear.length).to.equal(0);
+      expect(inRangeYears.length).toBe(0);
+      expect(rangeEndYear.length).toBe(0);
+      expect(rangeStartYear.length).toBe(0);
     });
 
     it("should not add range classes when end date is not defined", () => {
@@ -285,9 +269,9 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--range-end",
       );
 
-      expect(inRangeYears.length).to.equal(0);
-      expect(rangeEndYear.length).to.equal(0);
-      expect(rangeStartYear.length).to.equal(0);
+      expect(inRangeYears.length).toBe(0);
+      expect(rangeEndYear.length).toBe(0);
+      expect(rangeStartYear.length).toBe(0);
     });
 
     describe("selecting", () => {
@@ -306,9 +290,9 @@ describe("YearPicker", () => {
           ".react-datepicker__year-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(2);
-        expect(years.at(0).text()).to.eq("2015");
-        expect(years.at(1).text()).to.eq("2016");
+        expect(years.length).toBe(2);
+        expect(years.at(0).text()).toBe("2015");
+        expect(years.at(1).text()).toBe("2016");
       });
 
       it("should add in-selecting-range class if year is between the start date and selecting date", () => {
@@ -326,9 +310,9 @@ describe("YearPicker", () => {
           ".react-datepicker__year-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(2);
-        expect(years.at(0).text()).to.eq("2010");
-        expect(years.at(1).text()).to.eq("2011");
+        expect(years.length).toBe(2);
+        expect(years.at(0).text()).toBe("2010");
+        expect(years.at(1).text()).toBe("2011");
       });
 
       it("should use pre selection date if selecting date is not defined", () => {
@@ -345,9 +329,9 @@ describe("YearPicker", () => {
           ".react-datepicker__year-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(2);
-        expect(years.at(0).text()).to.eq("2010");
-        expect(years.at(1).text()).to.eq("2011");
+        expect(years.length).toBe(2);
+        expect(years.at(0).text()).toBe("2010");
+        expect(years.at(1).text()).toBe("2011");
       });
 
       it("should add in-selecting-range class for one year picker if year is between the start date and selecting date", () => {
@@ -364,9 +348,9 @@ describe("YearPicker", () => {
           ".react-datepicker__year-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(2);
-        expect(years.at(0).text()).to.eq("2010");
-        expect(years.at(1).text()).to.eq("2011");
+        expect(years.length).toBe(2);
+        expect(years.at(0).text()).toBe("2010");
+        expect(years.at(1).text()).toBe("2011");
       });
 
       it("should not add in-selecting-range class for one year picker if the start date is not defined", () => {
@@ -382,7 +366,7 @@ describe("YearPicker", () => {
           ".react-datepicker__year-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(0);
+        expect(years.length).toBe(0);
       });
 
       it("should not add in-selecting-range class for one year picker if the end date is defined", () => {
@@ -399,7 +383,7 @@ describe("YearPicker", () => {
           ".react-datepicker__month-text--in-selecting-range",
         );
 
-        expect(years.length).to.equal(0);
+        expect(years.length).toBe(0);
       });
 
       it("should add 'selecting-range-start' class to the start selecting year", () => {
@@ -415,8 +399,8 @@ describe("YearPicker", () => {
         const years = yearComponent.find(
           ".react-datepicker__year-text--selecting-range-start",
         );
-        expect(years.length).to.equal(1);
-        expect(years.at(0).text()).to.eq("2012");
+        expect(years.length).toBe(1);
+        expect(years.at(0).text()).toBe("2012");
       });
 
       it("should add 'selecting-range-end' class to the end selecting year", () => {
@@ -433,8 +417,8 @@ describe("YearPicker", () => {
         const years = yearComponent.find(
           ".react-datepicker__year-text--selecting-range-end",
         );
-        expect(years.length).to.equal(1);
-        expect(years.at(0).text()).to.eq("2014");
+        expect(years.length).toBe(1);
+        expect(years.at(0).text()).toBe("2014");
       });
     });
   });
@@ -475,10 +459,10 @@ describe("YearPicker", () => {
         year,
         className,
       );
-      expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(
+      expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
-      expect(allPreselectedYears.length).to.equal(1);
+      expect(allPreselectedYears.length).toBe(1);
     });
 
     it("should set the date to the selected year of the next period when next button clicked", () => {
@@ -514,10 +498,10 @@ describe("YearPicker", () => {
         year,
         className,
       );
-      expect(utils.formatDate(date, "dd.MM.yyyy")).to.equal(
+      expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
-      expect(allPreselectedYears.length).to.equal(1);
+      expect(allPreselectedYears.length).toBe(1);
     });
   });
 
@@ -567,7 +551,7 @@ describe("YearPicker", () => {
       );
       simulateLeft(target);
 
-      expect(utils.getYear(preSelected)).to.equal(2020);
+      expect(utils.getYear(preSelected)).toBe(2020);
     });
     it("should preSelect and set 2022 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
@@ -578,7 +562,7 @@ describe("YearPicker", () => {
       );
       simulateRight(target);
 
-      expect(utils.getYear(preSelected)).to.equal(2022);
+      expect(utils.getYear(preSelected)).toBe(2022);
     });
     it("should paginate from 2017 to 2016", () => {
       const yearPicker = getPicker("2017-01-01");
@@ -589,7 +573,7 @@ describe("YearPicker", () => {
       );
       simulateLeft(target);
 
-      expect(utils.getYear(preSelected)).to.equal(2016);
+      expect(utils.getYear(preSelected)).toBe(2016);
     });
     it("should paginate from 2028 to 2029", () => {
       const yearPicker = getPicker("2028-01-01");
@@ -600,7 +584,7 @@ describe("YearPicker", () => {
       );
       simulateRight(target);
 
-      expect(utils.getYear(preSelected)).to.equal(2029);
+      expect(utils.getYear(preSelected)).toBe(2029);
     });
     it("should select 2021 when Enter key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
@@ -611,7 +595,7 @@ describe("YearPicker", () => {
       );
 
       TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
-      expect(utils.getYear(selectedDay)).to.equal(2021);
+      expect(utils.getYear(selectedDay)).toBe(2021);
     });
     it("should disable keyboard navigation", () => {
       const yearPicker = getPicker("2021-01-01", {
@@ -624,7 +608,7 @@ describe("YearPicker", () => {
       );
       simulateRight(target);
 
-      expect(utils.getYear(preSelected)).to.equal(2021);
+      expect(utils.getYear(preSelected)).toBe(2021);
     });
   });
 });
