@@ -317,7 +317,6 @@ describe("DatePicker", () => {
   it("should not hide the calendar when selecting a day in the calendar with Enter press, and shouldCloseOnSelect prop is false", () => {
     var data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
     var dateInput = data.datePicker.input;
-    var node = findDOMNode(dateInput);
 
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowUp"));
     TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
@@ -1850,7 +1849,6 @@ describe("DatePicker", () => {
         <DatePicker selectsRange startDate={startDate} endDate={endDate} />,
       );
       const dateInput = datePicker.input;
-      var node = findDOMNode(dateInput);
       // Click to open
       TestUtils.Simulate.click(findDOMNode(dateInput));
       expect(datePicker.state.preSelection).toBe(startDate);
@@ -2166,7 +2164,6 @@ describe("DatePicker", () => {
         <DatePicker showDateSelect selected={utils.newDate()} />,
       );
       const dateInput = datePicker.input;
-      var node = findDOMNode(dateInput);
 
       TestUtils.Simulate.focus(findDOMNode(dateInput));
       TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
@@ -2189,7 +2186,6 @@ describe("DatePicker", () => {
         <DatePicker showTimeInput showDateSelect selected={utils.newDate()} />,
       );
       const dateInput = datePicker.input;
-      var node = findDOMNode(dateInput);
 
       TestUtils.Simulate.focus(findDOMNode(dateInput));
       TestUtils.Simulate.keyDown(findDOMNode(dateInput), getKey("Enter"));
