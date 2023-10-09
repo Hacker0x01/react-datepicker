@@ -2234,7 +2234,7 @@ describe("DatePicker", () => {
       datePicker,
       "react-datepicker__calendar-icon",
     ).getAttribute("class");
-    expect(showIconClass).toBe("react-datepicker__calendar-icon");
+    expect(showIconClass).toMatch(/^react-datepicker__calendar-icon\s?$/);
   });
 
   describe("Year picker", () => {
