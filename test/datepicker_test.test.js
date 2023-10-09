@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createRoot } from "react-dom/client";
 import { findDOMNode } from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import { enUS, enGB } from "date-fns/locale";
@@ -128,8 +127,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    var datePicker = createRoot(div);
-    datePicker.render(<DatePicker />);
+    var datePicker = ReactDOM.render(<DatePicker />);
 
     // user focuses the input field, the calendar opens
     var dateInput = div.querySelector("input");
@@ -1223,9 +1221,7 @@ describe("DatePicker", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
 
-    var root = createRoot(div);
-    var datePicker = root.render(<DatePicker />);
-
+    var datePicker = ReactDOM.render(<DatePicker />);
     datePicker.setFocus();
     expect(div.querySelector("input")).toBe(document.activeElement);
   });
