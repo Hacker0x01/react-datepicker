@@ -513,6 +513,7 @@
   .react-datepicker__calendar-icon {
     position: absolute;
     padding: 0.5rem;
+    box-sizing: content-box;
   }
 }
 

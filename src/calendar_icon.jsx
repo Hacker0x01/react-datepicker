@@ -22,7 +22,7 @@ const CalendarIcon = ({ icon, className }) => {
   // Default SVG Icon
   return (
     <svg
-      className="react-datepicker__calendar-icon"
+      className={`${defaultClass} ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
     >
