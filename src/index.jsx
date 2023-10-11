@@ -590,107 +590,103 @@ export default class DatePicker extends React.Component {
   };
 
   setSelected = (date, event, keepInput, monthSelectedIn) => {
-    try {
-      let changedDate = date;
+    let changedDate = date;
 
-      if (this.props.showYearPicker) {
+    if (this.props.showYearPicker) {
+      if (
+        changedDate !== null &&
+        isYearDisabled(getYear(changedDate), this.props)
+      ) {
+        return;
+      }
+    } else if (this.props.showMonthYearPicker) {
+      if (changedDate !== null && isMonthDisabled(changedDate, this.props)) {
+        return;
+      }
+    } else {
+      if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
+        return;
+      }
+    }
+
+    const {
+      onChange,
+      selectsRange,
+      startDate,
+      endDate,
+      selectsStart,
+      selectsEnd,
+    } = this.props;
+
+    if (
+      !isEqual(this.props.selected, changedDate) ||
+      this.props.allowSameDay ||
+      selectsRange
+    ) {
+      if (changedDate !== null) {
         if (
-          changedDate !== null &&
-          isYearDisabled(getYear(changedDate), this.props)
+          this.props.selected &&
+          (!keepInput ||
+            (!this.props.showTimeSelect &&
+              !this.props.showTimeSelectOnly &&
+              !this.props.showTimeInput))
         ) {
-          return;
+          changedDate = setTime(changedDate, {
+            hour: getHours(this.props.selected),
+            minute: getMinutes(this.props.selected),
+            second: getSeconds(this.props.selected),
+          });
         }
-      } else if (this.props.showMonthYearPicker) {
-        if (changedDate !== null && isMonthDisabled(changedDate, this.props)) {
-          return;
+        if (!this.props.inline) {
+          this.setState({
+            preSelection: changedDate,
+          });
+        }
+        if (!this.props.focusSelectedMonth) {
+          this.setState({ monthSelectedIn: monthSelectedIn });
+        }
+      }
+
+      if (selectsStart || selectsEnd) {
+        if (isValid(new Date(startDate)) && isValid(new Date(endDate))) {
+          if (
+            isAfter(new Date(changedDate), new Date(endDate)) &&
+            selectsStart
+          ) {
+            return;
+          } else if (
+            isBefore(new Date(changedDate), new Date(startDate)) &&
+            selectsEnd
+          ) {
+            return;
+          }
+        }
+      }
+
+      if (selectsRange) {
+        const noRanges = !startDate && !endDate;
+        const hasStartRange = startDate && !endDate;
+        const isRangeFilled = startDate && endDate;
+        if (noRanges) {
+          onChange([changedDate, null], event);
+        } else if (hasStartRange) {
+          if (isBefore(changedDate, startDate)) {
+            onChange([changedDate, null], event);
+          } else {
+            onChange([startDate, changedDate], event);
+          }
+        }
+        if (isRangeFilled) {
+          onChange([changedDate, null], event);
         }
       } else {
-        if (changedDate !== null && isDayDisabled(changedDate, this.props)) {
-          return;
-        }
+        onChange(changedDate, event);
       }
+    }
 
-      const {
-        onChange,
-        selectsRange,
-        startDate,
-        endDate,
-        selectsStart,
-        selectsEnd,
-      } = this.props;
-
-      if (
-        !isEqual(this.props.selected, changedDate) ||
-        this.props.allowSameDay ||
-        selectsRange
-      ) {
-        if (changedDate !== null) {
-          if (
-            this.props.selected &&
-            (!keepInput ||
-              (!this.props.showTimeSelect &&
-                !this.props.showTimeSelectOnly &&
-                !this.props.showTimeInput))
-          ) {
-            changedDate = setTime(changedDate, {
-              hour: getHours(this.props.selected),
-              minute: getMinutes(this.props.selected),
-              second: getSeconds(this.props.selected),
-            });
-          }
-          if (!this.props.inline) {
-            this.setState({
-              preSelection: changedDate,
-            });
-          }
-          if (!this.props.focusSelectedMonth) {
-            this.setState({ monthSelectedIn: monthSelectedIn });
-          }
-        }
-
-        if (selectsStart || selectsEnd) {
-          if (isValid(new Date(startDate)) && isValid(new Date(endDate))) {
-            if (
-              isAfter(new Date(changedDate), new Date(endDate)) &&
-              selectsStart
-            ) {
-              return;
-            } else if (
-              isBefore(new Date(changedDate), new Date(startDate)) &&
-              selectsEnd
-            ) {
-              return;
-            }
-          }
-        }
-
-        if (selectsRange) {
-          const noRanges = !startDate && !endDate;
-          const hasStartRange = startDate && !endDate;
-          const isRangeFilled = startDate && endDate;
-          if (noRanges) {
-            onChange([changedDate, null], event);
-          } else if (hasStartRange) {
-            if (isBefore(changedDate, startDate)) {
-              onChange([changedDate, null], event);
-            } else {
-              onChange([startDate, changedDate], event);
-            }
-          }
-          if (isRangeFilled) {
-            onChange([changedDate, null], event);
-          }
-        } else {
-          onChange(changedDate, event);
-        }
-      }
-
-      if (!keepInput) {
-        this.props.onSelect(changedDate, event);
-        this.setState({ inputValue: null });
-      }
-    } catch (error) {
-      console.log(error);
+    if (!keepInput) {
+      this.props.onSelect(changedDate, event);
+      this.setState({ inputValue: null });
     }
   };
 
