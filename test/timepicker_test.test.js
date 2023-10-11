@@ -1,3 +1,4 @@
+/* eslint-disable react/no-deprecated */
 import React from "react";
 import defer from "lodash/defer";
 import DatePicker from "../src/index.jsx";
