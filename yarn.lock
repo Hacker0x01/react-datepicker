@@ -1176,6 +1176,15 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@cfaester/enzyme-adapter-react-18@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@cfaester/enzyme-adapter-react-18/-/enzyme-adapter-react-18-0.7.1.tgz#487961110389e8285f076a965ad279f20a5ebf1e"
+  integrity sha512-Z3m1qNSlQdrcXdnPSGOAysLdgJFSowu7sbK1cHRcWXuZGS3WOTFOS0kIXbWMa1FnkEbswlIU6KgS+8qKgM6Kqw==
+  dependencies:
+    enzyme-shallow-equal "^1.0.0"
+    react-is "^18.2.0"
+    react-test-renderer "^18.2.0"
+
 "@csstools/css-parser-algorithms@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@csstools/css-parser-algorithms/-/css-parser-algorithms-2.3.1.tgz#ec4fc764ba45d2bb7ee2774667e056aa95003f3a"
@@ -2150,28 +2159,6 @@
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/@webpack-cli/serve/-/serve-2.0.5.tgz#325db42395cd49fe6c14057f9a900e427df8810e"
   integrity sha512-lqaoKnRYBdo1UgDX8uF24AfGMifWK19TxPmM5FHc2vAGxrJ/qtyUyFBWoY1tISZdelsQ5fBcOusifo5o5wSJxQ==
-
-"@wojtekmaj/enzyme-adapter-react-17@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@wojtekmaj/enzyme-adapter-react-17/-/enzyme-adapter-react-17-0.8.0.tgz#138f404f82f502d152242c049e87d9621dcda4bd"
-  integrity sha512-zeUGfQRziXW7R7skzNuJyi01ZwuKCH8WiBNnTgUJwdS/CURrJwAhWsfW7nG7E30ak8Pu3ZwD9PlK9skBfAoOBw==
-  dependencies:
-    "@wojtekmaj/enzyme-adapter-utils" "^0.2.0"
-    enzyme-shallow-equal "^1.0.0"
-    has "^1.0.0"
-    prop-types "^15.7.0"
-    react-is "^17.0.0"
-    react-test-renderer "^17.0.0"
-
-"@wojtekmaj/enzyme-adapter-utils@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@wojtekmaj/enzyme-adapter-utils/-/enzyme-adapter-utils-0.2.0.tgz#dc2a8c14f92e502da28ea6b3fad96a082076d028"
-  integrity sha512-ZvZm9kZxZEKAbw+M1/Q3iDuqQndVoN8uLnxZ8bzxm7KgGTBejrGRoJAp8f1EN8eoO3iAjBNEQnTDW/H4Ekb0FQ==
-  dependencies:
-    function.prototype.name "^1.1.0"
-    has "^1.0.0"
-    object.fromentries "^2.0.0"
-    prop-types "^15.7.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4537,7 +4524,7 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-function.prototype.name@^1.1.0, function.prototype.name@^1.1.2, function.prototype.name@^1.1.5:
+function.prototype.name@^1.1.2, function.prototype.name@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/function.prototype.name/-/function.prototype.name-1.1.5.tgz#cce0505fe1ffb80503e6f9e46cc64e46a12a9621"
   integrity sha512-uN7m/BzVKQnCUF/iW8jYea67v++2u7m5UgENbHRtdDVclOUP+FMPlCNdmk0h/ysGyo2tavMJEDqJAkJdRa1vMA==
@@ -4796,7 +4783,7 @@ has-unicode@^2.0.1:
   resolved "https://registry.yarnpkg.com/has-unicode/-/has-unicode-2.0.1.tgz#e0e6fe6a28cf51138855e086d1691e771de2a8b9"
   integrity sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ==
 
-has@^1.0.0, has@^1.0.3:
+has@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
@@ -6760,7 +6747,7 @@ object.entries@^1.1.1, object.entries@^1.1.6:
     define-properties "^1.1.4"
     es-abstract "^1.20.4"
 
-object.fromentries@^2.0.0, object.fromentries@^2.0.6:
+object.fromentries@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.6.tgz#cdb04da08c539cffa912dcd368b886e0904bfa73"
   integrity sha512-VciD13dswC4j1Xt5394WR4MzmAQmlgN72phd/riNp9vtD7tp4QQWJ0R4wvclXcafgcYK8veHRed2W6XeGBvcfg==
@@ -7199,7 +7186,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.0, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7344,7 +7331,7 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-is@^17.0.0, react-is@^17.0.1, react-is@^17.0.2:
+react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
@@ -7370,23 +7357,13 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-shallow-renderer@^16.13.1, react-shallow-renderer@^16.15.0:
+react-shallow-renderer@^16.15.0:
   version "16.15.0"
   resolved "https://registry.yarnpkg.com/react-shallow-renderer/-/react-shallow-renderer-16.15.0.tgz#48fb2cf9b23d23cde96708fe5273a7d3446f4457"
   integrity sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==
   dependencies:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
-
-react-test-renderer@^17.0.0:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-17.0.2.tgz#4cd4ae5ef1ad5670fc0ef776e8cc7e1231d9866c"
-  integrity sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==
-  dependencies:
-    object-assign "^4.1.1"
-    react-is "^17.0.2"
-    react-shallow-renderer "^16.13.1"
-    scheduler "^0.20.2"
 
 react-test-renderer@^18.2.0:
   version "18.2.0"
@@ -7829,14 +7806,6 @@ saxes@^6.0.0:
   integrity sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==
   dependencies:
     xmlchars "^2.2.0"
-
-scheduler@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
-  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.23.0:
   version "0.23.0"

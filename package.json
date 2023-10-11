@@ -44,7 +44,7 @@
     "@babel/preset-react": "^7.22.5",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.4",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
+    "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "axe-core": "^4.4.1",
     "babel-jest": "^29.6.4",
     "babel-loader": "^9.1.3",
