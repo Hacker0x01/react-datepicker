@@ -8,17 +8,18 @@ describe("DatePicker", () => {
     var now = newDate();
     var datePicker = mount(
       <DatePicker
+        open
         showTimeSelect
         excludeTimes={[
-          setTime(now, { hours: 17, minutes: 0 }),
-          setTime(now, { hours: 18, minutes: 30 }),
-          setTime(now, { hours: 19, minutes: 30 }),
-          setTime(now, { hours: 17, minutes: 30 }),
+          setTime(now, { hour: 17, minute: 0 }),
+          setTime(now, { hour: 18, minute: 30 }),
+          setTime(now, { hour: 19, minute: 30 }),
+          setTime(now, { hour: 17, minute: 30 }),
         ]}
       />,
     );
     expect(
       datePicker.find(".react-datepicker__time-list-item--disabled"),
-    ).not.toBeNull();
+    ).toHaveLength(4);
   });
 });
