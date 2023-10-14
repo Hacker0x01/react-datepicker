@@ -1,12 +1,13 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { setTime, newDate } from "../src/date_utils";
 import DatePicker from "../src/index.jsx";
 
 describe("DatePicker", () => {
   it("should disable times specified in excludeTimes props", () => {
-    var now = newDate();
-    var datePicker = mount(
+    const now = newDate();
+
+    const { container: datePicker } = render(
       <DatePicker
         open
         showTimeSelect
@@ -18,8 +19,10 @@ describe("DatePicker", () => {
         ]}
       />,
     );
-    expect(
-      datePicker.find(".react-datepicker__time-list-item--disabled"),
-    ).toHaveLength(4);
+
+    const disabledTimeItems = datePicker.querySelectorAll(
+      ".react-datepicker__time-list-item--disabled",
+    );
+    expect(disabledTimeItems.length).toBe(4);
   });
 });
