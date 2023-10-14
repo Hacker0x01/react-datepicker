@@ -24,5 +24,10 @@ describe("DatePicker", () => {
       ".react-datepicker__time-list-item--disabled",
     );
     expect(disabledTimeItems.length).toBe(4);
+
+    const ariaDisabledTimeItems = Array.from(disabledTimeItems).filter(
+      (time) => time.getAttribute("aria-disabled") === "true",
+    );
+    expect(ariaDisabledTimeItems.length).toBe(4);
   });
 });

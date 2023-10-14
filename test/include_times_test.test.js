@@ -20,5 +20,8 @@ describe("TimeComponent", () => {
       ".react-datepicker__time-list-item--disabled",
     );
     expect(disabledItems).toHaveLength(45);
+
+    const ariaDisabledTimes = timeComponent.find('[aria-disabled="true"]');
+    expect(ariaDisabledTimes).toHaveLength(45);
   });
 });
