@@ -14,9 +14,9 @@ describe("TimeComponent", () => {
     );
     expect(disabledTimeItems.length).toBe(2);
 
-    const ariaDisabledTimeItems = Array.from(disabledTimeItems).filter(
-      (time) => time.getAttribute("aria-disabled") === "true",
-    );
-    expect(ariaDisabledTimeItems.length).toBe(2);
+    const allDisabledTimeItemsHaveAriaDisabled = Array.from(
+      disabledTimeItems,
+    ).every((time) => time.getAttribute("aria-disabled") === "true");
+    expect(allDisabledTimeItemsHaveAriaDisabled).toBe(true);
   });
 });

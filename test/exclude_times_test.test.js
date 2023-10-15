@@ -25,9 +25,9 @@ describe("DatePicker", () => {
     );
     expect(disabledTimeItems.length).toBe(4);
 
-    const ariaDisabledTimeItems = Array.from(disabledTimeItems).filter(
-      (time) => time.getAttribute("aria-disabled") === "true",
-    );
-    expect(ariaDisabledTimeItems.length).toBe(4);
+    const allDisabledTimeItemsHaveAriaDisabled = Array.from(
+      disabledTimeItems,
+    ).every((time) => time.getAttribute("aria-disabled") === "true");
+    expect(allDisabledTimeItemsHaveAriaDisabled).toBe(true);
   });
 });
