@@ -1,12 +1,12 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import * as utils from "../src/date_utils";
 import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {
   it("should only enable times specified in includeTimes props", () => {
     const today = utils.getStartOfDay(utils.newDate());
-    const timeComponent = mount(
+    const { container: timeComponent } = render(
       <TimeComponent
         includeTimes={[
           utils.addMinutes(today, 60),
@@ -16,9 +16,14 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const disabledItems = timeComponent.find(
+    const disabledTimeItems = timeComponent.querySelectorAll(
       ".react-datepicker__time-list-item--disabled",
     );
-    expect(disabledItems).toHaveLength(45);
+    expect(disabledTimeItems.length).toBe(45);
+
+    const allDisabledTimeItemsHaveAriaDisabled = Array.from(
+      disabledTimeItems,
+    ).every((time) => time.getAttribute("aria-disabled") === "true");
+    expect(allDisabledTimeItemsHaveAriaDisabled).toBe(true);
   });
 });
