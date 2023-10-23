@@ -4,6 +4,7 @@ import { findDOMNode } from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import { enUS, enGB } from "date-fns/locale";
 import { mount } from "enzyme";
+import { render, fireEvent } from "@testing-library/react";
 import defer from "lodash/defer";
 import DatePicker, { registerLocale } from "../src/index.jsx";
 import Day from "../src/day.jsx";
@@ -2100,6 +2101,55 @@ describe("DatePicker", () => {
       expect(utils.getHours(date)).toBe(8);
       expect(utils.getMinutes(date)).toBe(22);
     });
+  });
+
+  it("clears the selected date on empty date input", () => {
+    let date = "2023-10-23 10:00:00";
+    const selected = utils.newDate(date);
+
+    const { container: datepicker } = render(
+      <DatePicker
+        selected={selected}
+        onChange={(d) => {
+          date = d;
+        }}
+        showTimeSelect
+        dateFormat="MMMM d, yyyy h:mm aa"
+      />,
+    );
+
+    const input = datepicker.querySelector(
+      ".react-datepicker__input-container > input",
+    );
+    fireEvent.change(input, { target: { value: "" } });
+
+    expect(date).toBe(null);
+  });
+
+  it("clears the selected date on empty date input with showTimeSelectOnly", () => {
+    const format = "h:mm aa";
+
+    let date = "2022-02-24 10:00:00";
+    const selected = utils.newDate(date);
+
+    const { container: datepicker } = render(
+      <DatePicker
+        selected={selected}
+        onChange={(d) => {
+          date = d;
+        }}
+        showTimeSelectOnly
+        dateFormat={format}
+        timeFormat={format}
+      />,
+    );
+
+    const input = datepicker.querySelector(
+      ".react-datepicker__input-container > input",
+    );
+    fireEvent.change(input, { target: { value: "" } });
+
+    expect(date).toBe(null);
   });
 
   it("should selected month when specified minDate same month", () => {
