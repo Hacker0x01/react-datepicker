@@ -542,21 +542,14 @@ export default class DatePicker extends React.Component {
     if (
       this.props.showTimeSelectOnly &&
       this.props.selected &&
+      date &&
       !isSameDay(date, this.props.selected)
     ) {
-      if (date == null) {
-        date = set(this.props.selected, {
-          hours: getHours(this.props.selected),
-          minutes: getMinutes(this.props.selected),
-          seconds: getSeconds(this.props.selected),
-        });
-      } else {
-        date = set(this.props.selected, {
-          hours: getHours(date),
-          minutes: getMinutes(date),
-          seconds: getSeconds(date),
-        });
-      }
+      date = set(this.props.selected, {
+        hours: getHours(date),
+        minutes: getMinutes(date),
+        seconds: getSeconds(date),
+      });
     }
     if (date || !event.target.value) {
       this.setSelected(date, event, true);
