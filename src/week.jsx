@@ -187,27 +187,28 @@ export default class Week extends React.Component {
     );
   };
 
-  isSameDay = (other) =>
-    isSameDay(
-      getStartOfWeek(
-        this.props.day,
-        this.props.locale,
-        this.props.calendarStartDay,
-      ),
-      other,
+  startOfWeek = () =>
+    getStartOfWeek(
+      this.props.day,
+      this.props.locale,
+      this.props.calendarStartDay,
     );
 
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+    !isSameDay(this.startOfWeek(), this.props.selected) &&
+    isSameDay(this.startOfWeek(), this.props.preSelection);
 
   render() {
     const weekNumberClasses = {
       "react-datepicker__week": true,
-      "react-datepicker__week--selected": this.isSameDay(this.props.selected),
+      "react-datepicker__week--selected": isSameDay(
+        this.startOfWeek(),
+        this.props.selected,
+      ),
       "react-datepicker__week--keyboard-selected": this.isKeyboardSelected(),
     };
+    console.log(weekNumberClasses);
     return (
       <div className={classnames(weekNumberClasses)}>{this.renderDays()}</div>
     );

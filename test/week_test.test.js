@@ -232,45 +232,66 @@ describe("Week", () => {
     });
   });
 
-  describe("keyboard-selected", () => {
-    const className = "react-datepicker__week--keyboard-selected";
-
-    it("should apply the keyboard-selected class when pre-selected and another week is selected", () => {
-      const week = utils.newDate();
-      const selected = utils.addWeeks(week, 1);
+  describe("selected and keyboard-selected", () => {
+    it("selected is current week and preselected is also current week", () => {
+      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
       const shallowWeek = shallow(
-        <Week day={week} selected={selected} preSelection={week} />,
+        <Week
+          day={currentWeek}
+          selected={currentWeek}
+          preSelection={currentWeek}
+        />,
       );
-      expect(shallowWeek.hasClass(className)).toBe(true);
+      expect(shallowWeek.hasClass("react-datepicker__week--selected")).toBe(
+        true,
+      );
     });
 
-    it("should apply the keyboard-selected class when pre-selected and the same week is selected", () => {
-      const week = utils.newDate();
+    it("selected is current week and preselected is not current week", () => {
+      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
+      const preSelection = utils.addWeeks(currentWeek, 1);
       const shallowWeek = shallow(
-        <Week day={week} selected={week} preSelection={week} />,
+        <Week
+          day={currentWeek}
+          selected={currentWeek}
+          preSelection={preSelection}
+        />,
       );
-      expect(shallowWeek.hasClass(className)).toBe(false);
-    });
-  });
-
-  describe("selected", () => {
-    const className = "react-datepicker__week--selected";
-
-    it("should apply the selected class when pre-selected and another week is selected", () => {
-      const week = utils.newDate();
-      const selected = utils.addWeeks(week, 1);
-      const shallowWeek = shallow(
-        <Week day={week} selected={selected} preSelection={week} />,
+      expect(shallowWeek.hasClass("react-datepicker__week--selected")).toBe(
+        true,
       );
-      expect(shallowWeek.hasClass(className)).toBe(false);
     });
 
-    it("should apply the selected class when pre-selected and same week is selected", () => {
-      const week = utils.newDate();
+    it("selected is not current week and preselect is current week", () => {
+      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
+      const selected = utils.addWeeks(currentWeek, 1);
       const shallowWeek = shallow(
-        <Week day={week} selected={week} preSelection={week} />,
+        <Week
+          day={currentWeek}
+          selected={selected}
+          preSelection={currentWeek}
+        />,
       );
-      expect(shallowWeek.hasClass(className)).toBe(true);
+      expect(shallowWeek.hasClass("react-datepicker__week--selected")).toBe(
+        false,
+      );
+      expect(
+        shallowWeek.hasClass("react-datepicker__week--keyboard-selected"),
+      ).toBe(true);
+    });
+
+    it("select is not current week and preselect is not current week", () => {
+      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
+      const selected = utils.addWeeks(currentWeek, 1);
+      const shallowWeek = shallow(
+        <Week day={currentWeek} selected={selected} preSelection={selected} />,
+      );
+      expect(shallowWeek.hasClass("react-datepicker__week--selected")).toBe(
+        false,
+      );
+      expect(
+        shallowWeek.hasClass("react-datepicker__week--keyboard-selected"),
+      ).toBe(false);
     });
   });
 });
