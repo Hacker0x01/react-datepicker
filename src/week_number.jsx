@@ -17,7 +17,6 @@ export default class WeekNumber extends React.Component {
     ariaLabelPrefix: PropTypes.string,
     selected: PropTypes.instanceOf(Date),
     preSelection: PropTypes.instanceOf(Date),
-    onClick: PropTypes.func,
     showWeekPicker: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     disabledKeyboardNavigation: PropTypes.bool,
