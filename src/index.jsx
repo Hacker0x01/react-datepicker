@@ -892,6 +892,10 @@ export default class DatePicker extends React.Component {
         case "End":
           newSelection = addYears(copy, 1);
           break;
+        default:
+          console.warn(`Unexpected key pressed: ${eventKey}`);
+          newSelection = null;
+          break;
       }
       if (!newSelection) {
         if (this.props.onInputError) {
