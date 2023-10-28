@@ -55,18 +55,16 @@ export default class WeekNumber extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = (other) => isSameDay(this.props.date, other);
-
   isKeyboardSelected = () =>
     !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+    !isSameDay(this.props.date, this.props.selected) &&
+    isSameDay(this.props.date, this.props.preSelection);
 
   getTabIndex = () =>
     this.props.showWeekPicker &&
     this.props.showWeekNumber &&
     (this.isKeyboardSelected() ||
-      (this.isSameDay(this.props.selected) &&
+      (isSameDay(this.props.date, this.props.selected) &&
         isSameDay(this.props.preSelection, this.props.selected)))
       ? 0
       : -1;
@@ -81,7 +79,7 @@ export default class WeekNumber extends React.Component {
     if (
       this.getTabIndex() === 0 &&
       !prevProps.isInputFocused &&
-      this.isSameDay(this.props.preSelection)
+      isSameDay(this.props.date, this.props.preSelection)
     ) {
       // there is currently no activeElement and not inline
       if (!document.activeElement || document.activeElement === document.body) {
@@ -113,17 +111,15 @@ export default class WeekNumber extends React.Component {
   };
 
   render() {
-    const {
-      weekNumber,
-      ariaLabelPrefix = "week ",
-      onClick,
-      selected,
-    } = this.props;
+    const { weekNumber, ariaLabelPrefix = "week ", onClick } = this.props;
 
     const weekNumberClasses = {
       "react-datepicker__week-number": true,
       "react-datepicker__week-number--clickable": !!onClick,
-      "react-datepicker__week-number--selected": this.isSameDay(selected),
+      "react-datepicker__week-number--selected": isSameDay(
+        this.props.date,
+        this.props.selected,
+      ),
       "react-datepicker__week-number--keyboard-selected":
         this.isKeyboardSelected(),
     };

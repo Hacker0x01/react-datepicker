@@ -2,8 +2,6 @@ import React from "react";
 import DatePicker from "../src/index.jsx";
 import Day from "../src/day";
 import WeekNumber from "../src/week_number";
-import TestUtils from "react-dom/test-utils";
-import ReactDOM from "react-dom";
 
 describe("WeekPicker", () => {
   let sandbox;
@@ -22,13 +20,12 @@ describe("WeekPicker", () => {
       <DatePicker onChange={onChangeSpy} showWeekPicker />,
     );
     expect(onChangeSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(weekPicker.input);
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(input));
+    TestUtils.Simulate.focus(weekPicker.inputRef.current);
     const day = TestUtils.scryRenderedComponentsWithType(
       weekPicker.calendar,
       Day,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(day));
+    TestUtils.Simulate.click(day.ref);
     expect(onChangeSpy.calledOnce).to.be.true;
   });
 
@@ -38,13 +35,12 @@ describe("WeekPicker", () => {
       <DatePicker onChange={onChangeSpy} showWeekPicker showWeekNumbers />,
     );
     expect(onChangeSpy.called).to.be.false;
-    const input = ReactDOM.findDOMNode(weekPicker.input);
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(input));
+    TestUtils.Simulate.focus(weekPicker.inputRef.current);
     const weekNumber = TestUtils.scryRenderedComponentsWithType(
       weekPicker.calendar,
       WeekNumber,
     )[0];
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(weekNumber));
+    TestUtils.Simulate.click(weekNumber.ref);
     expect(onChangeSpy.calledOnce).to.be.true;
   });
 });
