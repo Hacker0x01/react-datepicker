@@ -2,10 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import Year from "../src/year.jsx";
-import TestUtils from "react-dom/test-utils";
-import ReactDOM from "react-dom";
 import * as utils from "../src/date_utils.js";
-import Calendar from "../src/calendar.jsx";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
@@ -424,14 +421,12 @@ describe("YearPicker", () => {
   });
 
   describe("keyboard-selected", () => {
-    const className = "react-datepicker__year-text--keyboard-selected";
-
     it("should set the date to the selected year of the previous period when previous button clicked", () => {
       let date;
       const expectedDate = utils.getStartOfYear(
         utils.setYear(utils.newDate(), 2008),
       );
-      const datePicker = TestUtils.renderIntoDocument(
+      const datePicker = mount(
         <DatePicker
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
@@ -441,67 +436,47 @@ describe("YearPicker", () => {
           }}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-      const calendar = TestUtils.scryRenderedComponentsWithType(
-        datePicker.calendar,
-        Calendar,
-      )[0];
-      const year = TestUtils.scryRenderedComponentsWithType(
-        datePicker,
-        Year,
-      )[0];
-      const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__navigation--previous",
-      );
-      TestUtils.Simulate.click(previousButton);
-      const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
-        year,
-        className,
+      datePicker.find("input").simulate("focus");
+      datePicker
+        .find(".react-datepicker__navigation--previous")
+        .simulate("click");
+      const allPreselectedYears = datePicker.find(
+        ".react-datepicker__year-text--keyboard-selected",
       );
       expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
-      expect(allPreselectedYears.length).toBe(1);
+      expect(allPreselectedYears).toHaveLength(1);
     });
 
-    it("should set the date to the selected year of the next period when next button clicked", () => {
-      let date;
-      const expectedDate = utils.getStartOfYear(
+    it("should update the date to the next period's selected year when the next button is clicked", () => {
+      let selectedDate;
+      const targetDate = utils.getStartOfYear(
         utils.setYear(utils.newDate(), 2032),
       );
-      const datePicker = TestUtils.renderIntoDocument(
+
+      const handleDateChange = (d) => {
+        selectedDate = d;
+      };
+
+      const datePicker = mount(
         <DatePicker
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
           showYearPicker
-          onChange={(d) => {
-            date = d;
-          }}
+          onChange={handleDateChange}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-      const calendar = TestUtils.scryRenderedComponentsWithType(
-        datePicker.calendar,
-        Calendar,
-      )[0];
-      const year = TestUtils.scryRenderedComponentsWithType(
-        datePicker,
-        Year,
-      )[0];
-      const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__navigation--next",
+
+      datePicker.find("input").simulate("focus");
+      datePicker.find(".react-datepicker__navigation--next").simulate("click");
+      const allPreselectedYears = datePicker.find(
+        ".react-datepicker__year-text--keyboard-selected",
       );
-      TestUtils.Simulate.click(previousButton);
-      const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
-        year,
-        className,
+      expect(utils.formatDate(selectedDate, "dd.MM.yyyy")).toBe(
+        utils.formatDate(targetDate, "dd.MM.yyyy"),
       );
-      expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
-        utils.formatDate(expectedDate, "dd.MM.yyyy"),
-      );
-      expect(allPreselectedYears.length).toBe(1);
+      expect(allPreselectedYears).toHaveLength(1);
     });
   });
 
@@ -517,7 +492,7 @@ describe("YearPicker", () => {
     };
 
     const getPicker = (initialDate, props) =>
-      TestUtils.renderIntoDocument(
+      mount(
         <Year
           selected={utils.newDate(initialDate)}
           date={utils.newDate(initialDate)}
@@ -530,36 +505,22 @@ describe("YearPicker", () => {
       );
 
     const simulateLeft = (target) =>
-      TestUtils.Simulate.keyDown(target, {
-        key: "ArrowLeft",
-        keyCode: 37,
-        which: 37,
-      });
+      target.simulate("keydown", { key: "ArrowLeft", keyCode: 37, which: 37 });
     const simulateRight = (target) =>
-      TestUtils.Simulate.keyDown(target, {
-        key: "ArrowRight",
-        keyCode: 39,
-        which: 39,
-      });
+      target.simulate("keydown", { key: "ArrowRight", keyCode: 39, which: 39 });
+    const simulateEnter = (target) =>
+      target.simulate("keydown", { key: "Enter", keyCode: 13, which: 13 });
 
     it("should preSelect and set 2020 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
-
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
       simulateLeft(target);
 
       expect(utils.getYear(preSelected)).toBe(2020);
     });
     it("should preSelect and set 2022 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
-
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
       simulateRight(target);
 
       expect(utils.getYear(preSelected)).toBe(2022);
@@ -567,10 +528,7 @@ describe("YearPicker", () => {
     it("should paginate from 2017 to 2016", () => {
       const yearPicker = getPicker("2017-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
       simulateLeft(target);
 
       expect(utils.getYear(preSelected)).toBe(2016);
@@ -578,23 +536,16 @@ describe("YearPicker", () => {
     it("should paginate from 2028 to 2029", () => {
       const yearPicker = getPicker("2028-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
       simulateRight(target);
 
       expect(utils.getYear(preSelected)).toBe(2029);
     });
     it("should select 2021 when Enter key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
-
-      TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
+      simulateEnter(target);
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
     it("should disable keyboard navigation", () => {
@@ -602,10 +553,7 @@ describe("YearPicker", () => {
         disabledKeyboardNavigation: true,
       });
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
-      );
+      const target = yearPicker.find(".react-datepicker__year-text--selected");
       simulateRight(target);
 
       expect(utils.getYear(preSelected)).toBe(2021);
