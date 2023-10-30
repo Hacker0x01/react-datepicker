@@ -467,7 +467,6 @@ describe("YearPicker", () => {
           onChange={handleDateChange}
         />,
       );
-
       datePicker.find("input").simulate("focus");
       datePicker.find(".react-datepicker__navigation--next").simulate("click");
       const allPreselectedYears = datePicker.find(

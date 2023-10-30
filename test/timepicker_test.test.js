@@ -3,6 +3,7 @@ import defer from "lodash/defer";
 import DatePicker from "../src/index.jsx";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
+import { findDOMNode } from "react-dom";
 import Time from "../src/time.jsx";
 import { newDate, formatDate } from "../src/date_utils.js";
 
@@ -30,7 +31,7 @@ describe("TimePicker", () => {
   it("should allow time changes after input change", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.click(lis[1]);
@@ -50,7 +51,7 @@ describe("TimePicker", () => {
       <DatePicker shouldCloseOnSelect={false} showTimeSelect />,
     );
     var dateInput = datePicker.input;
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+    TestUtils.Simulate.focus(findDOMNode(dateInput));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.click(lis[0]);
@@ -94,7 +95,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    ReactDOM.findDOMNode(datePicker.input).focus();
+    findDOMNode(datePicker.input).focus();
 
     setManually("February 28, 2018 9:20 AM");
     expect(getInputString()).toBe("February 28, 2018 9:20 AM");
@@ -107,7 +108,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    ReactDOM.findDOMNode(datePicker.input).focus();
+    findDOMNode(datePicker.input).focus();
 
     setManually("February 28, 2018 9:53 AM");
     expect(getInputString()).toBe("February 28, 2018 9:53 AM");
@@ -120,7 +121,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("July 13, 2020 2:59 PM");
 
-    ReactDOM.findDOMNode(datePicker.input).focus();
+    findDOMNode(datePicker.input).focus();
 
     setManually("July 13, 2020 3:00 PM");
     expect(getInputString()).toBe("July 13, 2020 3:00 PM");
@@ -150,7 +151,7 @@ describe("TimePicker", () => {
 
   it("should select time when Enter is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
@@ -159,7 +160,7 @@ describe("TimePicker", () => {
 
   it("should select time when Space is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey(" "));
@@ -169,7 +170,7 @@ describe("TimePicker", () => {
   it("should return focus to input once time is selected", (done) => {
     document.body.appendChild(div); // So we can check the dom later for activeElement
     renderDatePicker("February 28, 2018 4:43 PM");
-    const dateInput = ReactDOM.findDOMNode(datePicker.input);
+    const dateInput = findDOMNode(datePicker.input);
     TestUtils.Simulate.focus(dateInput);
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
@@ -183,7 +184,7 @@ describe("TimePicker", () => {
 
   it("should not select time when Escape is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey("Escape"));
@@ -195,7 +196,7 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey("Escape"));
@@ -207,7 +208,7 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey("Enter"));
@@ -219,7 +220,7 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
     const time = TestUtils.findRenderedComponentWithType(datePicker, Time);
     const lis = TestUtils.scryRenderedDOMComponentsWithTag(time, "li");
     TestUtils.Simulate.keyDown(lis[1], getKey(" "));
@@ -232,7 +233,7 @@ describe("TimePicker", () => {
   }
 
   function getInputString() {
-    return ReactDOM.findDOMNode(datePicker.input).value;
+    return findDOMNode(datePicker.input).value;
   }
 
   function renderDatePicker(string, props) {

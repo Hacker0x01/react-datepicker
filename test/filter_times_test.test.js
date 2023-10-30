@@ -1,16 +1,50 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import { getHours } from "../src/date_utils";
 import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {
+  const HOUR_TO_DISABLE_IN_12_HR = 5;
+  const HOUR_TO_DISABLE_IN_24_HR = 17;
+
   it("should disable times matched by filterTime prop", () => {
-    const timeComponent = mount(
-      <TimeComponent filterTime={(time) => getHours(time) !== 17} />,
+    const { container: timeComponent } = render(
+      <TimeComponent
+        filterTime={(time) => getHours(time) !== HOUR_TO_DISABLE_IN_24_HR}
+      />,
     );
 
-    expect(
-      timeComponent.find(".react-datepicker__time-list-item--disabled"),
-    ).toHaveLength(2);
+    const disabledTimeItems = timeComponent.querySelectorAll(
+      ".react-datepicker__time-list-item--disabled",
+    );
+
+    const disabledAllFilterTimes = Array.from(disabledTimeItems).every(
+      (disabledTimeItem) => {
+        const disabledTimeItemValue = disabledTimeItem.textContent.trim();
+        return (
+          disabledTimeItemValue.startsWith(`${HOUR_TO_DISABLE_IN_12_HR}:`) ||
+          disabledTimeItemValue.startsWith(`${HOUR_TO_DISABLE_IN_24_HR}:`)
+        );
+      },
+    );
+
+    expect(disabledAllFilterTimes).toBe(true);
+  });
+
+  it("should add aria-disabled to the disabled times matched by filterTime prop", () => {
+    const { container: timeComponent } = render(
+      <TimeComponent
+        filterTime={(time) => getHours(time) !== HOUR_TO_DISABLE_IN_24_HR}
+      />,
+    );
+
+    const disabledTimeItems = timeComponent.querySelectorAll(
+      ".react-datepicker__time-list-item--disabled",
+    );
+
+    const allDisabledTimeItemsHaveAriaDisabled = Array.from(
+      disabledTimeItems,
+    ).every((time) => time.getAttribute("aria-disabled") === "true");
+    expect(allDisabledTimeItemsHaveAriaDisabled).toBe(true);
   });
 });

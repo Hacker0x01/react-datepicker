@@ -100,6 +100,14 @@ export default class Time extends React.Component {
   isSelectedTime = (time) =>
     this.props.selected && isSameMinute(this.props.selected, time);
 
+  isDisabledTime = (time) =>
+    ((this.props.minTime || this.props.maxTime) &&
+      isTimeInDisabledRange(time, this.props)) ||
+    ((this.props.excludeTimes ||
+      this.props.includeTimes ||
+      this.props.filterTime) &&
+      isTimeDisabled(time, this.props));
+
   liClasses = (time) => {
     let classes = [
       "react-datepicker__time-list-item",
@@ -110,14 +118,7 @@ export default class Time extends React.Component {
       classes.push("react-datepicker__time-list-item--selected");
     }
 
-    if (
-      ((this.props.minTime || this.props.maxTime) &&
-        isTimeInDisabledRange(time, this.props)) ||
-      ((this.props.excludeTimes ||
-        this.props.includeTimes ||
-        this.props.filterTime) &&
-        isTimeDisabled(time, this.props))
-    ) {
+    if (this.isDisabledTime(time)) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
     if (
@@ -216,6 +217,7 @@ export default class Time extends React.Component {
           tabIndex={time === timeToFocus ? 0 : -1}
           role="option"
           aria-selected={this.isSelectedTime(time) ? "true" : undefined}
+          aria-disabled={this.isDisabledTime(time) ? "true" : undefined}
         >
           {formatDate(time, format, this.props.locale)}
         </li>

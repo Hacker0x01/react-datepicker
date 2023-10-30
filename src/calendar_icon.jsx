@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CalendarIcon = ({ icon, className }) => {
+const CalendarIcon = ({ icon, className = "" }) => {
   const defaultClass = "react-datepicker__calendar-icon";
 
   if (React.isValidElement(icon)) {
@@ -34,10 +34,6 @@ const CalendarIcon = ({ icon, className }) => {
 CalendarIcon.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   className: PropTypes.string,
-};
-
-CalendarIcon.defaultProps = {
-  className: "",
 };
 
 export default CalendarIcon;

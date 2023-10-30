@@ -1714,7 +1714,6 @@ describe("Calendar", () => {
       const datePicker = mount(
         <DatePicker showYearDropdown selected={utils.newDate()} />,
       );
-
       datePicker.find("input").simulate("focus");
       datePicker.find(".react-datepicker__year-read-view").simulate("click");
       datePicker.find(".react-datepicker__year-option").at(7).simulate("click");
