@@ -27,6 +27,7 @@ describe("Calendar", () => {
 
   function getCalendar(extraProps) {
     return shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}
@@ -175,6 +176,7 @@ describe("Calendar", () => {
     const func = (date) => (isSunday(date) ? "sunday" : undefined);
 
     const calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={dateFormat}
         dropdownMode="scroll"
@@ -659,6 +661,7 @@ describe("Calendar", () => {
 
     it("should render custom header with show time select", () => {
       const calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           renderCustomHeader={renderCustomHeader}
           showTimeSelect
@@ -860,6 +863,7 @@ describe("Calendar", () => {
 
   it("should track the currently hovered day", () => {
     const calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={dateFormat}
         dropdownMode="scroll"
@@ -878,6 +882,7 @@ describe("Calendar", () => {
 
   it("should clear the hovered day when the mouse leaves", () => {
     const calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={dateFormat}
         dropdownMode="scroll"
@@ -895,6 +900,7 @@ describe("Calendar", () => {
 
   it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
     const calendarShort = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         locale="en"
         dateFormat={dateFormat}
@@ -904,6 +910,7 @@ describe("Calendar", () => {
       />,
     );
     const calendarMin = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         locale="en"
         dateFormat={dateFormat}
@@ -1023,6 +1030,7 @@ describe("Calendar", () => {
     beforeEach(() => {
       onMonthChangeSpy = jest.fn();
       calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1066,6 +1074,7 @@ describe("Calendar", () => {
     beforeEach(() => {
       onYearChangeSpy = jest.fn();
       calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1095,6 +1104,7 @@ describe("Calendar", () => {
       onYearChangeSpy = jest.fn();
       onMonthChangeSpy = jest.fn();
       calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1140,6 +1150,7 @@ describe("Calendar", () => {
     beforeEach(() => {
       onDropdownFocusSpy = jest.fn();
       calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1258,6 +1269,7 @@ describe("Calendar", () => {
   describe("renderInputTimeSection", () => {
     const renderCalendar = (props) =>
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1287,6 +1299,7 @@ describe("Calendar", () => {
   describe("renderYearPicker", () => {
     it("should render YearPicker component", () => {
       let calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1359,6 +1372,7 @@ describe("Calendar", () => {
 
   describe("when showMonthYearPicker is enabled", () => {
     let calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={DATE_FORMAT}
         onSelect={() => {}}
@@ -1376,6 +1390,7 @@ describe("Calendar", () => {
 
     it("should render custom next and previous labels", () => {
       var calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1424,6 +1439,7 @@ describe("Calendar", () => {
 
   describe("when showQuarterYearPicker is enabled", () => {
     let calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={DATE_FORMAT}
         onSelect={() => {}}
@@ -1441,6 +1457,7 @@ describe("Calendar", () => {
 
     it("should render custom next and previous labels", () => {
       var calendar = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1490,6 +1507,7 @@ describe("Calendar", () => {
   describe("using click outside", () => {
     const clickOutsideSpy = jest.fn();
     const calendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         dateFormat={DATE_FORMAT}
         onSelect={() => {}}
@@ -1516,6 +1534,7 @@ describe("Calendar", () => {
   it("should have a next-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for next year";
     const shallowCalendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         nextYearAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1532,6 +1551,7 @@ describe("Calendar", () => {
   it("should have a previous-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for previous year";
     const shallowCalendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         previousYearAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1548,6 +1568,7 @@ describe("Calendar", () => {
   it("should have a next-button with the provided aria-label for month", () => {
     const ariaLabel = "A label in my native language for next month";
     const shallowCalendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         nextMonthAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1563,6 +1584,7 @@ describe("Calendar", () => {
   it("should have a previous-button with the provided aria-label for month", () => {
     const ariaLabel = "A label in my native language for previous month";
     const shallowCalendar = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Calendar
         previousMonthAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1700,6 +1722,7 @@ describe("Calendar", () => {
   describe("renderChildren", () => {
     const renderCalendar = (props) =>
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}

@@ -29,7 +29,7 @@ describe("TimeComponent", () => {
     });
 
     it("should forward the time format provided in timeFormat props", () => {
-      var timeComponent = mount(<TimeComponent format="HH:mm" />);
+      var timeComponent = mount(<TimeComponent format="HH:mm" />); // eslint-disable-line enzyme-deprecation/no-mount
 
       var timeListItem = timeComponent.find(
         ".react-datepicker__time-list-item",
@@ -38,14 +38,14 @@ describe("TimeComponent", () => {
     });
 
     it("should format the time based on the default locale (en-US)", async () => {
-      mount(<TimeComponent format="p" />);
+      mount(<TimeComponent format="p" />); // eslint-disable-line enzyme-deprecation/no-mount
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("1:00 PM");
       });
     });
 
     it("should format the time based on the pt-BR locale", async () => {
-      mount(<TimeComponent format="p" locale="pt-BR" />);
+      mount(<TimeComponent format="p" locale="pt-BR" />); // eslint-disable-line enzyme-deprecation/no-mount
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
       });
@@ -59,21 +59,21 @@ describe("TimeComponent", () => {
     });
 
     it("should call calcCenterPosition once", async () => {
-      mount(<TimeComponent format="HH:mm" />);
+      mount(<TimeComponent format="HH:mm" />); // eslint-disable-line enzyme-deprecation/no-mount
       await waitFor(() => {
         expect(spy).toHaveBeenCalled();
       });
     });
 
     it("should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
-      mount(<TimeComponent format="HH:mm" />);
+      mount(<TimeComponent format="HH:mm" />); // eslint-disable-line enzyme-deprecation/no-mount
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
       });
     });
 
     it("with five minute time interval, should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
-      mount(<TimeComponent format="HH:mm" intervals={5} />);
+      mount(<TimeComponent format="HH:mm" intervals={5} />); // eslint-disable-line enzyme-deprecation/no-mount
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:25");
       });
@@ -81,6 +81,7 @@ describe("TimeComponent", () => {
 
     it("should call calcCenterPosition with centerLi ref, closest to the selected time", async () => {
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:11")}
@@ -94,6 +95,7 @@ describe("TimeComponent", () => {
 
     it("should call calcCenterPosition with centerLi ref, which is selected", async () => {
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -111,6 +113,7 @@ describe("TimeComponent", () => {
 
     it("should add the aria-selected property to the selected item", () => {
       var timeComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -126,6 +129,7 @@ describe("TimeComponent", () => {
 
     it("should enable keyboard focus on the selected item", () => {
       var timeComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -141,6 +145,7 @@ describe("TimeComponent", () => {
 
     it("should not add the aria-selected property to a regular item", () => {
       var timeComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -156,6 +161,7 @@ describe("TimeComponent", () => {
 
     it("should disable keyboard focus on a regular item", () => {
       var timeComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -171,6 +177,7 @@ describe("TimeComponent", () => {
 
     it("when no selected time, should focus the time closest to the opened time", () => {
       var timeComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:11")}
@@ -189,6 +196,7 @@ describe("TimeComponent", () => {
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", async () => {
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:11")}
@@ -201,6 +209,7 @@ describe("TimeComponent", () => {
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", async () => {
       mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:00")}

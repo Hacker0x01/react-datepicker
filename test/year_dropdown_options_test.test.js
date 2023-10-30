@@ -13,6 +13,7 @@ describe("YearDropdownOptions", () => {
   beforeEach(() => {
     onCancelSpy = jest.fn();
     yearDropdown = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         year={2015}
         onChange={mockHandleChange}
@@ -170,6 +171,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
     const yearDropdown = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -192,6 +194,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const minDate = utils.newDate();
     const maxDate = utils.addYears(utils.newDate(), 1);
     const yearDropdown = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -212,6 +215,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const minDate = utils.newDate();
     const maxDate = utils.addYears(utils.newDate(), 1);
     const yearDropdown = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -236,6 +240,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const minDate = utils.subYears(utils.newDate(), 11);
     const maxDate = utils.addYears(utils.newDate(), 11);
     const yearDropdown = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -298,6 +303,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onChangeSpy = jest.fn();
     const minDate = utils.subYears(utils.newDate(), 11);
     const yearDropdown = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -345,6 +351,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onChangeSpy = jest.fn();
     const maxDate = utils.addYears(utils.newDate(), 11);
     const yearDropdown = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -392,6 +399,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
     const yearDropdown = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -407,6 +415,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
     const yearDropdownInstance = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}

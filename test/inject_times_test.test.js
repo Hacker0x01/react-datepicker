@@ -7,6 +7,7 @@ describe("TimeComponent", () => {
   it("should show times specified in injectTimes props", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <TimeComponent
         injectTimes={[
           utils.addMinutes(today, 1),
@@ -25,6 +26,7 @@ describe("TimeComponent", () => {
   it("should not affect existing time intervals", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
@@ -44,6 +46,7 @@ describe("TimeComponent", () => {
   it("should allow multiple injected times per interval", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
@@ -63,6 +66,7 @@ describe("TimeComponent", () => {
   it("should sort injected times automatically", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <TimeComponent
         timeIntervals={60}
         injectTimes={[

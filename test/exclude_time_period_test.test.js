@@ -7,6 +7,7 @@ describe("DatePicker", () => {
   it("should only display times between minTime and maxTime", () => {
     var now = utils.newDate();
     var datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         showTimeSelect
         selected={now}

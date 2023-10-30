@@ -3,7 +3,7 @@ import WeekNumber from "../src/week_number";
 import { shallow } from "enzyme";
 
 function renderWeekNumber(weekNumber, props = {}) {
-  return shallow(<WeekNumber weekNumber={weekNumber} {...props} />);
+  return shallow(<WeekNumber weekNumber={weekNumber} {...props} />); // eslint-disable-line enzyme-deprecation/no-shallow
 }
 
 describe("WeekNumber", () => {
@@ -21,6 +21,7 @@ describe("WeekNumber", () => {
     it("should call the onClick function if it is defined", () => {
       const onClick = jest.fn();
       shallowWeekNumber = shallow(
+        // eslint-disable-line enzyme-deprecation/no-shallow
         <WeekNumber weekNumber={1} onClick={onClick} />,
       );
       shallowWeekNumber.instance().handleClick({});
@@ -30,6 +31,7 @@ describe("WeekNumber", () => {
     it("should have an aria-label containing the provided prefix", () => {
       const ariaLabelPrefix = "A prefix in my native language";
       const shallowWeekNumber = shallow(
+        // eslint-disable-line enzyme-deprecation/no-shallow
         <WeekNumber day={1} ariaLabelPrefix={ariaLabelPrefix} />,
       );
       expect(

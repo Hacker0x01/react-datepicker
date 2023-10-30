@@ -15,7 +15,7 @@ import {
 } from "../src/date_utils";
 
 function renderDay(day, props = {}) {
-  return shallow(<Day day={day} {...props} />);
+  return shallow(<Day day={day} {...props} />); // eslint-disable-line enzyme-deprecation/no-shallow
 }
 
 describe("Day", () => {
@@ -67,7 +67,7 @@ describe("Day", () => {
       });
 
       it('should set aria-selected attribute to "true"', () => {
-        const ariaSelected = mount(shallowDay.getElement())
+        const ariaSelected = mount(shallowDay.getElement()) // eslint-disable-line enzyme-deprecation/no-mount
           .getDOMNode()
           .getAttribute("aria-selected");
         expect(ariaSelected).toBe("true");
@@ -78,7 +78,7 @@ describe("Day", () => {
         const startDate = subDays(day, 1);
         const endDate = addDays(day, 1);
         const shallowDay = renderDay(day, { startDate, endDate });
-        const ariaSelected = mount(shallowDay.getElement())
+        const ariaSelected = mount(shallowDay.getElement()) // eslint-disable-line enzyme-deprecation/no-mount
           .getDOMNode()
           .getAttribute("aria-selected");
         expect(ariaSelected).toBe("true");
@@ -97,7 +97,7 @@ describe("Day", () => {
       });
 
       it('should set aria-selected attribute to "false"', () => {
-        const ariaSelected = mount(shallowDay.getElement())
+        const ariaSelected = mount(shallowDay.getElement()) // eslint-disable-line enzyme-deprecation/no-mount
           .getDOMNode()
           .getAttribute("aria-selected");
         expect(ariaSelected).toBe("false");
@@ -694,6 +694,7 @@ describe("Day", () => {
     it("should hide days outside month at end when duplicates", () => {
       const day = newDate("2021-03-17");
       const wrapper = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />,
       );
       expect(wrapper.text()).toHaveLength(0);
@@ -701,13 +702,14 @@ describe("Day", () => {
 
     it("should show days outside month at end when not duplicates", () => {
       const day = newDate("2020-03-17");
-      const wrapper = mount(<Day day={day} month={getMonth(day) - 1} />);
+      const wrapper = mount(<Day day={day} month={getMonth(day) - 1} />); // eslint-disable-line enzyme-deprecation/no-mount
       expect(wrapper.text()).toBe(day.getDate().toString());
     });
 
     it("should hide days outside month at start when duplicates", () => {
       const day = newDate("2020-10-05");
       const wrapper = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Day
           day={day}
           month={getMonth(day) + 1}
@@ -719,13 +721,14 @@ describe("Day", () => {
 
     it("should show days outside month at start when not duplicates", () => {
       const day = newDate("2020-10-05");
-      const wrapper = mount(<Day day={day} month={getMonth(day) + 1} />);
+      const wrapper = mount(<Day day={day} month={getMonth(day) + 1} />); // eslint-disable-line enzyme-deprecation/no-mount
       expect(wrapper.text()).toBe(day.getDate().toString());
     });
 
     it("should show days in month when duplicates at start/end", () => {
       const day = newDate("2020-11-15");
       const wrapper = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Day
           day={day}
           month={getMonth(day)}
@@ -855,7 +858,7 @@ describe("Day", () => {
 
     it("should call onClick if day is enabled", () => {
       const day = newDate();
-      const dayNode = shallow(<Day day={day} onClick={onClick} />);
+      const dayNode = shallow(<Day day={day} onClick={onClick} />); // eslint-disable-line enzyme-deprecation/no-shallow
       dayNode.find(".react-datepicker__day").simulate("click");
       expect(onClickCalled).toBe(true);
     });
@@ -863,6 +866,7 @@ describe("Day", () => {
     it("should not call onClick if day is disabled", () => {
       const day = newDate();
       const dayNode = shallow(
+        // eslint-disable-line enzyme-deprecation/no-shallow
         <Day day={day} excludeDates={[day]} onClick={onClick} />,
       );
       dayNode.find(".react-datepicker__day").simulate("click");
@@ -872,6 +876,7 @@ describe("Day", () => {
     it("should not call onClick if day is within excluded interval", () => {
       const day = newDate();
       const dayNode = shallow(
+        // eslint-disable-line enzyme-deprecation/no-shallow
         <Day
           day={day}
           excludeDateIntervals={[
@@ -1028,6 +1033,7 @@ describe("Day", () => {
     it("should apply focus to the preselected day", () => {
       const day = newDate();
       const dayInstance = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Day day={day} preSelection={day} />,
       ).instance();
 
@@ -1039,6 +1045,7 @@ describe("Day", () => {
     it("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
       const dayInstance = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Day day={day} preSelection={day} inline />,
       ).instance();
 

@@ -10,6 +10,7 @@ describe("Multi month calendar", function () {
 
   function getCalendar(extraProps) {
     return shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}

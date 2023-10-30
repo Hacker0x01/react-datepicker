@@ -25,13 +25,14 @@ describe("Month", () => {
     const className = "customClassName";
     const monthClassNameFunc = () => className;
     const month = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Month day={utils.newDate()} monthClassName={monthClassNameFunc} />,
     );
     expect(month.hasClass(className)).toBe(true);
   });
 
   it("should have the month CSS class", () => {
-    const month = shallow(<Month day={utils.newDate()} />);
+    const month = shallow(<Month day={utils.newDate()} />); // eslint-disable-line enzyme-deprecation/no-shallow
     expect(month.hasClass("react-datepicker__month")).toBe(true);
   });
 
@@ -50,6 +51,7 @@ describe("Month", () => {
   it("should have an aria-label containing the provided prefix", () => {
     const ariaLabelPrefix = "A prefix in my native language";
     const shallowMonth = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Month ariaLabelPrefix={ariaLabelPrefix} day={utils.newDate()} />,
     );
     expect(
@@ -61,7 +63,7 @@ describe("Month", () => {
     const monthStart = utils.newDate("2015-12-01");
 
     assertDateRangeInclusive(
-      mount(<Month day={monthStart} />),
+      mount(<Month day={monthStart} />), // eslint-disable-line enzyme-deprecation/no-mount
       utils.getStartOfWeek(monthStart),
       utils.getEndOfWeek(utils.getEndOfMonth(monthStart)),
     );
@@ -71,7 +73,7 @@ describe("Month", () => {
     const monthStart = utils.newDate("2015-12-01");
 
     assertDateRangeInclusive(
-      mount(<Month day={monthStart} peekNextMonth />),
+      mount(<Month day={monthStart} peekNextMonth />), // eslint-disable-line enzyme-deprecation/no-mount
       utils.getStartOfWeek(monthStart),
       utils.getEndOfWeek(utils.addWeeks(utils.addMonths(monthStart, 1), 1)),
     );
@@ -82,7 +84,7 @@ describe("Month", () => {
     const calendarStart = utils.getStartOfWeek(monthStart);
 
     assertDateRangeInclusive(
-      mount(<Month day={monthStart} fixedHeight />),
+      mount(<Month day={monthStart} fixedHeight />), // eslint-disable-line enzyme-deprecation/no-mount
       calendarStart,
       utils.getEndOfWeek(utils.addWeeks(calendarStart, 5)),
     );
@@ -93,7 +95,7 @@ describe("Month", () => {
     const calendarStart = utils.getStartOfWeek(monthStart);
 
     assertDateRangeInclusive(
-      mount(<Month day={monthStart} fixedHeight peekNextMonth />),
+      mount(<Month day={monthStart} fixedHeight peekNextMonth />), // eslint-disable-line enzyme-deprecation/no-mount
       calendarStart,
       utils.getEndOfWeek(utils.addWeeks(calendarStart, 6)),
     );
@@ -107,7 +109,7 @@ describe("Month", () => {
     }
 
     const monthStart = utils.newDate("2015-12-01");
-    const month = mount(<Month day={monthStart} onDayClick={onDayClick} />);
+    const month = mount(<Month day={monthStart} onDayClick={onDayClick} />); // eslint-disable-line enzyme-deprecation/no-mount
     const day = month.find(Day).at(0);
 
     day.simulate("click");
@@ -122,6 +124,7 @@ describe("Month", () => {
     }
 
     const month = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Month day={utils.newDate()} onMouseLeave={onMouseLeave} />,
     );
     month.simulate("mouseleave");
@@ -136,6 +139,7 @@ describe("Month", () => {
     }
 
     const month = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={utils.newDate()} onDayMouseEnter={onDayMouseEnter} />,
     );
     const day = month.find(Day).first();
@@ -152,6 +156,7 @@ describe("Month", () => {
     }
 
     const month = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate()}
         orderInDisplay={order}
@@ -165,7 +170,7 @@ describe("Month", () => {
   });
 
   it("should have the month picker CSS class", () => {
-    const month = shallow(<Month showMonthYearPicker day={utils.newDate()} />);
+    const month = shallow(<Month showMonthYearPicker day={utils.newDate()} />); // eslint-disable-line enzyme-deprecation/no-shallow
     expect(month.hasClass("react-datepicker__monthPicker")).toBe(true);
   });
 
@@ -178,6 +183,7 @@ describe("Month", () => {
 
     const monthStart = utils.newDate("2015-12-01");
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={monthStart} showMonthYearPicker onDayClick={onDayClick} />,
     );
     const month = monthComponent.find(".react-datepicker__month-text").at(6);
@@ -187,6 +193,7 @@ describe("Month", () => {
 
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-12-01")}
         minDate={utils.newDate("2016-02-01")}
@@ -200,6 +207,7 @@ describe("Month", () => {
 
   it("should not return disabled class if current date is before minDate but same month", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-01-01")}
         minDate={utils.newDate("2015-01-10")}
@@ -214,6 +222,7 @@ describe("Month", () => {
 
   it("should not return disabled class if current date is after maxDate but same month", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-01-10")}
         maxDate={utils.newDate("2015-01-01")}
@@ -228,6 +237,7 @@ describe("Month", () => {
 
   it("should return disabled class if specified excludeDate", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-01-01")}
         excludeDates={[
@@ -252,6 +262,7 @@ describe("Month", () => {
 
   it("should return disabled class if specified includeDate", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-01-01")}
         includeDates={[
@@ -282,6 +293,7 @@ describe("Month", () => {
 
   it("should have no axe violations", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-02-01")}
         selected={utils.newDate("2015-02-01")}
@@ -294,6 +306,7 @@ describe("Month", () => {
   describe("selecting month range", () => {
     it("should add in-selecting-range class if month is between the selecting date and end date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -313,6 +326,7 @@ describe("Month", () => {
 
     it("should add in-selecting-range class if month is between the start date and selecting date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -333,6 +347,7 @@ describe("Month", () => {
 
     it("should use pre selection date if selecting date is not defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-03-01")}
           day={utils.newDate("2015-01-01")}
@@ -352,6 +367,7 @@ describe("Month", () => {
 
     it("should add in-selecting-range class for one month picker if month is between the start date and selecting date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -372,6 +388,7 @@ describe("Month", () => {
 
     it("should not add in-selecting-range class for one month picker if the start date is not defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -389,6 +406,7 @@ describe("Month", () => {
 
     it("should not add in-selecting-range class for one month picker if the end date is defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -407,6 +425,7 @@ describe("Month", () => {
 
     it("should add 'selecting-range-start' class to the start selecting month", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -425,6 +444,7 @@ describe("Month", () => {
 
     it("should add 'selecting-range-end' class to the end selecting month", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -446,6 +466,7 @@ describe("Month", () => {
   describe("selecting quarter range", () => {
     it("should add in-selecting-range class if quarter is between the selecting date and end date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -467,6 +488,7 @@ describe("Month", () => {
 
     it("should add in-selecting-range class if quarter is between the start date and selecting date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -487,6 +509,7 @@ describe("Month", () => {
 
     it("should use pre selection date if selecting date is not defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-07-01")}
           day={utils.newDate("2015-01-01")}
@@ -506,6 +529,7 @@ describe("Month", () => {
 
     it("should add in-selecting-range class for one quarter picker if quarter is between the start date and selecting date", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -526,6 +550,7 @@ describe("Month", () => {
 
     it("should not add in-selecting-range class for one quarter picker if the start date is not defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -543,6 +568,7 @@ describe("Month", () => {
 
     it("should not add in-selecting-range class for one quarter picker if the end date is defined", () => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           preSelection={utils.newDate("2015-01-01")}
           day={utils.newDate("2015-01-01")}
@@ -566,6 +592,7 @@ describe("Month", () => {
 
     beforeEach(() => {
       monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
@@ -595,6 +622,7 @@ describe("Month", () => {
 
     beforeEach(() => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
@@ -617,6 +645,7 @@ describe("Month", () => {
 
   it("should return month-in-range class if month is between the start date and end date", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-02-01")}
         startDate={utils.newDate("2015-01-01")}
@@ -631,6 +660,7 @@ describe("Month", () => {
   it("should return month-text--today class if month is current year's month", () => {
     const date = new Date();
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={date} selected={date} showMonthYearPicker />,
     );
     const month = monthComponent
@@ -644,6 +674,7 @@ describe("Month", () => {
     const lastYearDate = new Date();
     lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={lastYearDate} selected={lastYearDate} showMonthYearPicker />,
     );
     const months = monthComponent.find(".react-datepicker__month-text--today");
@@ -653,6 +684,7 @@ describe("Month", () => {
   it("should include aria-current property if month is current year's month", () => {
     const date = new Date();
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={date} selected={date} showMonthYearPicker />,
     );
     const ariaCurrent = monthComponent
@@ -665,6 +697,7 @@ describe("Month", () => {
     const lastYearDate = new Date();
     lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={lastYearDate} selected={lastYearDate} showMonthYearPicker />,
     );
     const ariaCurrent = monthComponent
@@ -676,6 +709,7 @@ describe("Month", () => {
 
   it("should have the quarter picker CSS class", () => {
     const month = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Month showQuarterYearPicker day={utils.newDate()} />,
     );
     expect(month.hasClass("react-datepicker__quarterPicker")).toBe(true);
@@ -690,6 +724,7 @@ describe("Month", () => {
 
     const monthStart = utils.newDate("2015-12-01");
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={monthStart} showQuarterYearPicker onDayClick={onDayClick} />,
     );
     const quarter = monthComponent
@@ -701,6 +736,7 @@ describe("Month", () => {
 
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-12-01")}
         minDate={utils.newDate("2016-02-01")}
@@ -722,6 +758,7 @@ describe("Month", () => {
 
     beforeEach(() => {
       monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
@@ -751,6 +788,7 @@ describe("Month", () => {
 
     beforeEach(() => {
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate("2015-02-01")}
           selected={utils.newDate("2015-02-01")}
@@ -773,6 +811,7 @@ describe("Month", () => {
 
   it("should return quarter-in-range class if quarter is between the start date and end date", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-02-01")}
         startDate={utils.newDate("2015-01-01")}
@@ -790,6 +829,7 @@ describe("Month", () => {
 
   it("should enable keyboard focus on the preselected component", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         preSelection={utils.newDate("2015-02-01")}
         day={utils.newDate("2015-02-01")}
@@ -804,6 +844,7 @@ describe("Month", () => {
 
   it("should render full month name", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month
         day={utils.newDate("2015-12-01")}
         showMonthYearPicker
@@ -817,6 +858,7 @@ describe("Month", () => {
 
   it("should render short month name", () => {
     const monthComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Month day={utils.newDate("2015-12-01")} showMonthYearPicker />,
     );
     const month = monthComponent.find(".react-datepicker__month-1").at(0);
@@ -830,6 +872,7 @@ describe("Month", () => {
         return <span>custom render</span>;
       }
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate()}
           renderMonthContent={renderMonthContent}
@@ -845,6 +888,7 @@ describe("Month", () => {
         return <span>custom render</span>;
       }
       const monthComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Month
           day={utils.newDate()}
           renderQuarterContent={renderQuarterContent}
@@ -860,7 +904,7 @@ describe("Month", () => {
 
   describe("Keyboard navigation", () => {
     const renderQuarters = (props) =>
-      shallow(<Month showQuarterYearPicker {...props} />);
+      shallow(<Month showQuarterYearPicker {...props} />); // eslint-disable-line enzyme-deprecation/no-shallow
 
     it("should trigger setPreSelection and set Q3 as pre-selected on arrowRight", () => {
       let preSelected = false;
@@ -914,6 +958,7 @@ describe("Month", () => {
     describe("monthsFourColumns", () => {
       const renderMonth = (props) =>
         mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Month
             showMonthYearPicker
             showFourColumnMonthYearPicker
@@ -1095,7 +1140,7 @@ describe("Month", () => {
     });
     describe("monthsThreeColumns", () => {
       const renderMonth = (props) =>
-        mount(<Month showMonthYearPicker {...props} />);
+        mount(<Month showMonthYearPicker {...props} />); // eslint-disable-line enzyme-deprecation/no-mount
 
       it("should trigger setPreSelection and set March as pre-selected on arrowRight", () => {
         let preSelected = false;
@@ -1272,6 +1317,7 @@ describe("Month", () => {
     describe("monthsTwoColumns", () => {
       const renderMonth = (props) =>
         mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Month showMonthYearPicker showTwoColumnMonthYearPicker {...props} />,
         );
 
@@ -1449,7 +1495,7 @@ describe("Month", () => {
     });
 
     const renderMonth = (props) =>
-      mount(<Month showMonthYearPicker {...props} />);
+      mount(<Month showMonthYearPicker {...props} />); // eslint-disable-line enzyme-deprecation/no-mount
 
     it("should select March when Enter is pressed", () => {
       let preSelected = false;
@@ -1570,7 +1616,7 @@ describe("Month", () => {
 
   describe("if keyboard navigation is disabled", () => {
     const renderMonth = (props) =>
-      mount(<Month showMonthYearPicker {...props} />);
+      mount(<Month showMonthYearPicker {...props} />); // eslint-disable-line enzyme-deprecation/no-mount
 
     it("should not have the selected class", () => {
       let preSelected = utils.newDate("2015-08-01");

@@ -26,6 +26,7 @@ describe("MonthYearDropdown", () => {
     const maxDate = newDate("2018-06-30");
 
     return mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <MonthYearDropdown
         dropdownMode="scroll"
         date={date}
@@ -79,6 +80,7 @@ describe("MonthYearDropdown", () => {
 
       const onCancelSpy = jest.fn();
       const monthYearDropdownOptionsInstance = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <MonthYearDropdownOptions
           onCancel={onCancelSpy}
           onChange={jest.fn()}

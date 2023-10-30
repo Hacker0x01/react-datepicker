@@ -14,6 +14,7 @@ afterAll(() => {
 describe("CalendarIcon", () => {
   it("renders a custom SVG icon when provided", () => {
     const wrapper = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <CalendarIcon showIcon icon={<IconParkSolidApplication />} />,
     );
     expect(
@@ -22,12 +23,12 @@ describe("CalendarIcon", () => {
   });
 
   it("renders a FontAwesome icon when provided", () => {
-    const wrapper = mount(<CalendarIcon showIcon icon="fa-example-icon" />);
+    const wrapper = mount(<CalendarIcon showIcon icon="fa-example-icon" />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(wrapper.find("i.fa-example-icon")).toHaveLength(1);
   });
 
   it("does not render an icon when none is provided", () => {
-    const wrapper = mount(<CalendarIcon showIcon />);
+    const wrapper = mount(<CalendarIcon showIcon />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(wrapper.find("svg.react-datepicker__calendar-icon")).toHaveLength(1);
   });
 });

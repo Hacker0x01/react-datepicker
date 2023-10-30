@@ -17,6 +17,7 @@ describe("MonthDropdown", () => {
 
   function getMonthDropdown(overrideProps) {
     return mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <MonthDropdown
         dropdownMode="scroll"
         month={11}
@@ -106,6 +107,7 @@ describe("MonthDropdown", () => {
       const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
       const onCancelSpy = jest.fn();
       const monthDropdownOptionsInstance = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <MonthDropdownOptions
           onCancel={onCancelSpy}
           onChange={onCancelSpy}

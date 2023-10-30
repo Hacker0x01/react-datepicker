@@ -5,13 +5,13 @@ import TimeComponent from "../src/time.jsx";
 
 describe("DatePicker", () => {
   it("should show time component when showTimeSelect prop is present", () => {
-    var datePicker = mount(<DatePicker showTimeSelect />);
+    var datePicker = mount(<DatePicker showTimeSelect />); // eslint-disable-line enzyme-deprecation/no-mount
     var timeComponent = datePicker.find(TimeComponent);
     expect(timeComponent).not.toBeNull();
   });
 
   it("should have custom time caption", () => {
-    const timeComponent = mount(<TimeComponent timeCaption="Custom time" />);
+    const timeComponent = mount(<TimeComponent timeCaption="Custom time" />); // eslint-disable-line enzyme-deprecation/no-mount
 
     const caption = timeComponent.find(".react-datepicker-time__header");
     expect(caption.text()).toEqual("Custom time");
@@ -21,6 +21,7 @@ describe("DatePicker", () => {
     let datePicker;
     beforeEach(() => {
       datePicker = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <DatePicker showTimeSelect showTimeSelectOnly todayButton="Today" />,
       );
       datePicker.find("input").simulate("click");

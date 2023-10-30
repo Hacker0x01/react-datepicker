@@ -9,13 +9,13 @@ import { findDOMNode } from "react-dom";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
-    const datePicker = mount(<DatePicker showYearPicker />);
+    const datePicker = mount(<DatePicker showYearPicker />); // eslint-disable-line enzyme-deprecation/no-mount
     const component = datePicker.find(Year);
     expect(component).toBeDefined();
   });
 
   it("should show year picker component with default year item number", () => {
-    const yearComponent = mount(<Year date={new Date()} />);
+    const yearComponent = mount(<Year date={new Date()} />); // eslint-disable-line enzyme-deprecation/no-mount
     const yearItems = yearComponent.find(".react-datepicker__year-text");
     expect(yearItems.length).toBe(utils.DEFAULT_YEAR_ITEM_NUMBER);
   });
@@ -23,6 +23,7 @@ describe("YearPicker", () => {
   it("should show year picker component with specific year item number", () => {
     const yearItemNumber = 9;
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={new Date()} yearItemNumber={yearItemNumber} />,
     );
     const yearItems = yearComponent.find(".react-datepicker__year-text");
@@ -32,6 +33,7 @@ describe("YearPicker", () => {
   it("should change the year when clicked on any option in the picker", () => {
     const onYearChangeSpy = jest.fn();
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year onDayClick={onYearChangeSpy} date={new Date("2020-05-05")} />,
     );
     const firstYearDiv = yearComponent
@@ -43,7 +45,7 @@ describe("YearPicker", () => {
 
   it("should has selected class when element of array equal of choosen year", () => {
     const date = new Date("2015-01-01");
-    const yearComponent = mount(<Year selected={date} date={date} />);
+    const yearComponent = mount(<Year selected={date} date={date} />); // eslint-disable-line enzyme-deprecation/no-mount
     const year = yearComponent
       .find(".react-datepicker__year-text--selected")
       .at(0)
@@ -53,7 +55,7 @@ describe("YearPicker", () => {
 
   it("should have current year class when element of array equal of current year", () => {
     const date = new Date();
-    const yearComponent = mount(<Year date={date} />);
+    const yearComponent = mount(<Year date={date} />); // eslint-disable-line enzyme-deprecation/no-mount
     const year = yearComponent
       .find(".react-datepicker__year-text--today")
       .at(0)
@@ -63,7 +65,7 @@ describe("YearPicker", () => {
 
   it("should have aria-current date when element of array equal to current year", () => {
     const date = new Date();
-    const yearComponent = mount(<Year date={date} />);
+    const yearComponent = mount(<Year date={date} />); // eslint-disable-line enzyme-deprecation/no-mount
     const ariaCurrent = yearComponent
       .find(".react-datepicker__year-text--today")
       .prop("aria-current");
@@ -72,7 +74,7 @@ describe("YearPicker", () => {
 
   it("should not have aria-current date when element of array does not equal current year", () => {
     const date = new Date("2015-01-01");
-    const yearComponent = mount(<Year date={date} />);
+    const yearComponent = mount(<Year date={date} />); // eslint-disable-line enzyme-deprecation/no-mount
     const ariaCurrent = yearComponent
       .find(".react-datepicker__year-text")
       .at(0)
@@ -82,6 +84,7 @@ describe("YearPicker", () => {
 
   it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year
         date={utils.newDate("2020-01-01")}
         minDate={utils.newDate("2018-01-01")}
@@ -95,6 +98,7 @@ describe("YearPicker", () => {
   it("should not return disabled class if current date is before minDate but same year", () => {
     const date = utils.newDate("2023-01-01");
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={date} minDate={utils.newDate("2023-12-31")} />,
     );
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
@@ -113,6 +117,7 @@ describe("YearPicker", () => {
   it("should not return disabled class if current date is after maxDate but same year", () => {
     const date = utils.newDate("2023-12-31");
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={date} maxDate={utils.newDate("2023-01-01")} />,
     );
     const yearTexts = yearComponent.find(".react-datepicker__year-text");
@@ -141,6 +146,7 @@ describe("YearPicker", () => {
     }
 
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={utils.newDate("2023-01-01")} excludeDates={excludeDates} />,
     );
 
@@ -164,6 +170,7 @@ describe("YearPicker", () => {
       includeDates.push(utils.newDate(`${year}-01-01`));
     }
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={utils.newDate("2023-01-01")} includeDates={includeDates} />,
     );
 
@@ -187,6 +194,7 @@ describe("YearPicker", () => {
       return <span>custom render</span>;
     }
     const yearComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <Year date={utils.newDate()} renderYearContent={renderYearContent} />,
     );
     const year = yearComponent.find(".react-datepicker__year-text").at(0);
@@ -196,6 +204,7 @@ describe("YearPicker", () => {
   describe("range", () => {
     it("should add range classes", () => {
       const yearComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Year
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
@@ -230,6 +239,7 @@ describe("YearPicker", () => {
 
     it("should not add range classes when start date is not defined", () => {
       const yearComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Year
           date={utils.newDate("2009-01-01")}
           endDate={utils.newDate("2012-01-01")}
@@ -253,6 +263,7 @@ describe("YearPicker", () => {
 
     it("should not add range classes when end date is not defined", () => {
       const yearComponent = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <Year
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
@@ -277,6 +288,7 @@ describe("YearPicker", () => {
     describe("selecting", () => {
       it("should add in-selecting-range class if year is between the selecting date and end date", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2015-01-01")}
             date={utils.newDate("2012-01-01")}
@@ -297,6 +309,7 @@ describe("YearPicker", () => {
 
       it("should add in-selecting-range class if year is between the start date and selecting date", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
@@ -317,6 +330,7 @@ describe("YearPicker", () => {
 
       it("should use pre selection date if selecting date is not defined", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
@@ -336,6 +350,7 @@ describe("YearPicker", () => {
 
       it("should add in-selecting-range class for one year picker if year is between the start date and selecting date", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
@@ -355,6 +370,7 @@ describe("YearPicker", () => {
 
       it("should not add in-selecting-range class for one year picker if the start date is not defined", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2015-01-01")}
@@ -371,6 +387,7 @@ describe("YearPicker", () => {
 
       it("should not add in-selecting-range class for one year picker if the end date is defined", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2013-01-01")}
@@ -388,6 +405,7 @@ describe("YearPicker", () => {
 
       it("should add 'selecting-range-start' class to the start selecting year", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2012-01-01")}
             date={utils.newDate("2010-01-01")}
@@ -405,6 +423,7 @@ describe("YearPicker", () => {
 
       it("should add 'selecting-range-end' class to the end selecting year", () => {
         const yearComponent = mount(
+          // eslint-disable-line enzyme-deprecation/no-mount
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2012-01-01")}

@@ -7,13 +7,13 @@ import * as utils from "../src/date_utils";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {
-    const week = shallow(<Week day={utils.newDate()} />);
+    const week = shallow(<Week day={utils.newDate()} />); // eslint-disable-line enzyme-deprecation/no-shallow
     expect(week.hasClass("react-datepicker__week")).toBe(true);
   });
 
   it("should render the days of the week", () => {
     const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
-    const week = shallow(<Week day={weekStart} />);
+    const week = shallow(<Week day={weekStart} />); // eslint-disable-line enzyme-deprecation/no-shallow
 
     const days = week.find(Day);
     expect(days.length).toBe(7);
@@ -28,7 +28,7 @@ describe("Week", () => {
 
   it("should render the week number", () => {
     const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
-    const week = shallow(<Week showWeekNumber day={weekStart} />);
+    const week = shallow(<Week showWeekNumber day={weekStart} />); // eslint-disable-line enzyme-deprecation/no-shallow
 
     const days = week.find(Day);
     expect(days.length).toBe(7);
@@ -49,7 +49,7 @@ describe("Week", () => {
     }
 
     const weekStart = utils.newDate("2015-12-20");
-    const week = shallow(<Week day={weekStart} onDayClick={onDayClick} />);
+    const week = shallow(<Week day={weekStart} onDayClick={onDayClick} />); // eslint-disable-line enzyme-deprecation/no-shallow
     const day = week.find(Day).at(0);
     day.simulate("click");
     expect(day.prop("day")).toEqual(dayClicked);
@@ -65,6 +65,7 @@ describe("Week", () => {
     const weekStart = utils.newDate("2015-12-20");
     const setOpenSpy = jest.fn();
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week
         day={weekStart}
         showWeekNumber
@@ -82,6 +83,7 @@ describe("Week", () => {
     const setOpenSpy = jest.fn();
 
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week
         day={weekStart}
         showWeekNumber
@@ -102,6 +104,7 @@ describe("Week", () => {
     const setOnWeekSelect = jest.fn();
 
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week
         day={weekStart}
         showWeekNumber
@@ -127,6 +130,7 @@ describe("Week", () => {
     const weekStart = utils.newDate("2015-12-20");
     const realWeekNumber = utils.getWeek(weekStart);
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week
         day={weekStart}
         showWeekNumber
@@ -149,6 +153,7 @@ describe("Week", () => {
 
     const weekStart = utils.newDate("2015-12-20");
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week
         day={weekStart}
         showWeekNumber
@@ -170,6 +175,7 @@ describe("Week", () => {
 
     const weekStart = utils.newDate();
     const week = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
     );
     const day = week.find(Day).first();

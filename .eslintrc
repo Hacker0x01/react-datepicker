@@ -6,7 +6,8 @@
 
   "plugins": [
     "react",
-    "unused-imports"
+    "unused-imports",
+    "enzyme-deprecation"
   ],
 
   "parserOptions": {
@@ -20,6 +21,8 @@
   "parser": "@babel/eslint-parser",
 
   "rules": {
+    "enzyme-deprecation/no-shallow": 2,
+    "enzyme-deprecation/no-mount": 2,
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [

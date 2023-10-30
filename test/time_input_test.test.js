@@ -10,13 +10,14 @@ describe("timeInput", () => {
   });
 
   it("should show time component when showTimeSelect prop is present", () => {
-    const datePicker = mount(<DatePicker showTimeInput />);
+    const datePicker = mount(<DatePicker showTimeInput />); // eslint-disable-line enzyme-deprecation/no-mount
     const component = datePicker.find(InputTimeComponent);
     expect(component).not.toBeNull();
   });
 
   it("should have custom time caption", () => {
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <InputTimeComponent timeInputLabel="Custom time" />,
     );
     const caption = timeComponent.find(".react-datepicker-time__caption");
@@ -24,7 +25,7 @@ describe("timeInput", () => {
   });
 
   xit("should trigger onChange event", () => {
-    const timeComponent = shallow(<InputTimeComponent />);
+    const timeComponent = shallow(<InputTimeComponent />); // eslint-disable-line enzyme-deprecation/no-shallow
     const input = timeComponent.find("input");
     input.simulate("change", { target: { value: "13:00" } });
     expect(timeComponent.state("time")).toEqual("13:00");
@@ -32,6 +33,7 @@ describe("timeInput", () => {
 
   it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
     const timeComponent = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <InputTimeComponent timeString="13:00" onChange={() => {}} />,
     );
     const input = timeComponent.find("input");
@@ -41,6 +43,7 @@ describe("timeInput", () => {
 
   xit("should trigger onChange event on a custom time input without using the last valid timeString", () => {
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <InputTimeComponent
         timeString="13:00"
         customTimeInput={<CustomTimeInput />}
@@ -55,6 +58,7 @@ describe("timeInput", () => {
   xit("should pass pure Date to custom time input", () => {
     const onTimeChangeSpy = jest.fn();
     const timeComponent = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <InputTimeComponent
         date={new Date()}
         timeString="13:00"
@@ -75,6 +79,7 @@ describe("timeInput", () => {
     const mockDate = new Date("2023-09-30");
 
     const timeComponent = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <InputTimeComponent date={mockDate} onChange={mockOnChange} />,
     );
 
@@ -98,6 +103,7 @@ describe("timeInput", () => {
       .mockImplementation(() => mockCurrentDate);
 
     const timeComponent = shallow(
+      // eslint-disable-line enzyme-deprecation/no-shallow
       <InputTimeComponent onChange={mockOnChange} />,
     );
 

@@ -57,7 +57,7 @@ describe("DatePicker", () => {
   });
 
   it("should allow the user to supply a wrapper component for the popper", () => {
-    var datePicker = mount(<DatePicker popperContainer={TestWrapper} />);
+    var datePicker = mount(<DatePicker popperContainer={TestWrapper} />); // eslint-disable-line enzyme-deprecation/no-mount
 
     const dateInput = datePicker.instance().input;
     var node = findDOMNode(dateInput);
@@ -68,7 +68,7 @@ describe("DatePicker", () => {
   });
 
   it("should allow the user to pass a wrapper component for the calendar", () => {
-    var datePicker = mount(<DatePicker calendarContainer={TestWrapper} />);
+    var datePicker = mount(<DatePicker calendarContainer={TestWrapper} />); // eslint-disable-line enzyme-deprecation/no-mount
 
     let dateInput = datePicker.instance().input;
     var node = findDOMNode(dateInput);
@@ -80,7 +80,7 @@ describe("DatePicker", () => {
   });
 
   it("should pass a custom class to the popper container", () => {
-    var datePicker = mount(<DatePicker popperClassName="some-class-name" />);
+    var datePicker = mount(<DatePicker popperClassName="some-class-name" />); // eslint-disable-line enzyme-deprecation/no-mount
     var dateInput = datePicker.instance().input;
     var node = findDOMNode(dateInput);
     TestUtils.Simulate.focus(node);
@@ -198,6 +198,7 @@ describe("DatePicker", () => {
   it("should not re-focus the date input when focusing the year dropdown", () => {
     const onBlurSpy = jest.fn();
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         showMonthDropdown
         showYearDropdown
@@ -222,6 +223,7 @@ describe("DatePicker", () => {
   it("should fire onYearChange when the year is selected", () => {
     const onYearChangeSpy = jest.fn();
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         showYearDropdown
         dropdownMode="select"
@@ -1308,7 +1310,7 @@ describe("DatePicker", () => {
     expect(cleared).toBe(true);
   });
   it("should correctly update the input when the value prop changes", () => {
-    const datePicker = mount(<DatePicker />);
+    const datePicker = mount(<DatePicker />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(datePicker.find("input").prop("value")).toBe("");
     datePicker.setProps({ value: "foo" });
     expect(datePicker.find("input").prop("value")).toBe("foo");
@@ -1316,6 +1318,7 @@ describe("DatePicker", () => {
   it("should preserve user input as they are typing", () => {
     const onChange = (date) => datePicker.setProps({ selected: date });
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         dateFormat={["yyyy-MM-dd", "MM/dd/yyyy", "MM/dd/yy"]}
         onChange={onChange}
@@ -1384,7 +1387,7 @@ describe("DatePicker", () => {
   });
   it("should allow onChangeRaw to prevent a change", () => {
     const onChangeRaw = (e) => e.target.value > "2" && e.preventDefault();
-    const datePicker = mount(<DatePicker onChangeRaw={onChangeRaw} />);
+    const datePicker = mount(<DatePicker onChangeRaw={onChangeRaw} />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(datePicker.find("input").prop("value")).toBe("");
     datePicker.find("input").simulate("change", { target: { value: "3" } });
     datePicker.update();
@@ -1433,6 +1436,7 @@ describe("DatePicker", () => {
   });
   it("should handle a click outside of the calendar", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker selected={utils.newDate()} withPortal />,
     ).instance();
     const openSpy = jest.spyOn(datePicker, "setOpen");
@@ -1441,6 +1445,7 @@ describe("DatePicker", () => {
   });
   it("should default to the currently selected date", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker selected={utils.newDate("1988-12-30")} />,
     );
     expect(
@@ -1449,6 +1454,7 @@ describe("DatePicker", () => {
   });
   it("should default to the start date when selecting an end date", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker startDate={utils.newDate("1988-11-30")} selectsEnd />,
     );
     expect(
@@ -1457,6 +1463,7 @@ describe("DatePicker", () => {
   });
   it("should default to the end date when selecting a start date", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker endDate={utils.newDate("1988-12-31")} selectsStart />,
     );
     expect(
@@ -1465,6 +1472,7 @@ describe("DatePicker", () => {
   });
   it("should default to a date <= maxDate", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker maxDate={utils.newDate("1982-01-01")} />,
     );
     expect(
@@ -1473,6 +1481,7 @@ describe("DatePicker", () => {
   });
   it("should default to a date >= minDate", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker minDate={utils.newDate("2063-04-05")} />,
     );
     expect(
@@ -1481,6 +1490,7 @@ describe("DatePicker", () => {
   });
   it("should default to the openToDate if there is one", () => {
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker openToDate={utils.newDate("2020-01-23")} />,
     );
     expect(
@@ -1488,13 +1498,13 @@ describe("DatePicker", () => {
     ).toBe("2020-01-23");
   });
   it("should otherwise default to the current date", () => {
-    const datePicker = mount(<DatePicker />);
+    const datePicker = mount(<DatePicker />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(
       utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd"),
     ).toBe(utils.formatDate(utils.newDate(), "yyyy-MM-dd"));
   });
   it("should support an initial null `selected` value in inline mode", () => {
-    const datePicker = mount(<DatePicker inline selected={null} />);
+    const datePicker = mount(<DatePicker inline selected={null} />); // eslint-disable-line enzyme-deprecation/no-mount
 
     expect(() =>
       datePicker.setProps({ selected: utils.newDate() }),
@@ -1503,7 +1513,7 @@ describe("DatePicker", () => {
   it("should switch month in inline mode immediately", () => {
     const selected = utils.newDate();
     const future = utils.addDays(utils.newDate(), 100);
-    const datePicker = mount(<DatePicker inline selected={selected} />);
+    const datePicker = mount(<DatePicker inline selected={selected} />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(
       utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd"),
     ).toBe(utils.formatDate(selected, "yyyy-MM-dd"));
@@ -1515,7 +1525,7 @@ describe("DatePicker", () => {
   it("should switch month in inline mode immediately, when year is updated", () => {
     const selected = utils.newDate();
     const future = utils.addYears(utils.newDate(), 1);
-    const datePicker = mount(<DatePicker inline selected={selected} />);
+    const datePicker = mount(<DatePicker inline selected={selected} />); // eslint-disable-line enzyme-deprecation/no-mount
     expect(
       utils.formatDate(datePicker.state("preSelection"), "yyyy-MM-dd"),
     ).toBe(utils.formatDate(selected, "yyyy-MM-dd"));
@@ -1559,14 +1569,14 @@ describe("DatePicker", () => {
   });
   it("should fire onInputClick when input is clicked", () => {
     const onInputClickSpy = jest.fn();
-    mount(<DatePicker onInputClick={onInputClickSpy} />)
+    mount(<DatePicker onInputClick={onInputClickSpy} />) // eslint-disable-line enzyme-deprecation/no-mount
       .find("input")
       .simulate("click");
     expect(onInputClickSpy).toHaveBeenCalledTimes(1);
   });
 
   it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
-    const datePicker = mount(<DatePicker monthsShown={2} inline />);
+    const datePicker = mount(<DatePicker monthsShown={2} inline />); // eslint-disable-line enzyme-deprecation/no-mount
     datePicker.setState({ monthSelectedIn: 1 }, () => {
       expect(datePicker.state("monthSelectedIn")).toEqual(1);
       datePicker.setProps({ monthsShown: 1 }, () => {
@@ -1626,6 +1636,7 @@ describe("DatePicker", () => {
   it("should pass chooseDayAriaLabelPrefix prop to the correct child component", () => {
     const chooseDayAriaLabelPrefix = "My choose-day-prefix";
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker inline chooseDayAriaLabelPrefix={chooseDayAriaLabelPrefix} />,
     );
     expect(
@@ -1636,6 +1647,7 @@ describe("DatePicker", () => {
   it("should pass disabledDayAriaLabelPrefix prop to the correct child component", () => {
     const disabledDayAriaLabelPrefix = "My disabled-day-prefix";
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         inline
         disabledDayAriaLabelPrefix={disabledDayAriaLabelPrefix}
@@ -1649,6 +1661,7 @@ describe("DatePicker", () => {
   it("should pass weekAriaLabelPrefix prop to the correct child component", () => {
     const weekAriaLabelPrefix = "My week-prefix";
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         inline
         showWeekNumbers
@@ -1663,6 +1676,7 @@ describe("DatePicker", () => {
   it("should pass monthAriaLabelPrefix prop to the correct child component", () => {
     const monthAriaLabelPrefix = "My month-prefix";
     const datePicker = mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <DatePicker
         inline
         showWeekNumbers
@@ -1928,14 +1942,14 @@ describe("DatePicker", () => {
 
   describe("duplicate dates when multiple months", () => {
     it("should find duplicates at end on all months except last month", () => {
-      const twoMonths = mount(<DatePicker monthsShown={2} />);
+      const twoMonths = mount(<DatePicker monthsShown={2} />); // eslint-disable-line enzyme-deprecation/no-mount
       twoMonths.find("input").simulate("click");
       const months = twoMonths.find(Month);
       expect(months).toHaveLength(2);
       expect(months.first().props().monthShowsDuplicateDaysEnd).toBe(true);
       expect(months.last().props().monthShowsDuplicateDaysEnd).toBe(false);
 
-      const moreThanTwoMonths = mount(<DatePicker monthsShown={4} />);
+      const moreThanTwoMonths = mount(<DatePicker monthsShown={4} />); // eslint-disable-line enzyme-deprecation/no-mount
       moreThanTwoMonths.find("input").simulate("click");
       const monthsMore = moreThanTwoMonths.find(Month);
       expect(monthsMore).toHaveLength(4);
@@ -1946,14 +1960,14 @@ describe("DatePicker", () => {
     });
 
     it("should find duplicates at start on all months except first month", () => {
-      const twoMonths = mount(<DatePicker monthsShown={2} />);
+      const twoMonths = mount(<DatePicker monthsShown={2} />); // eslint-disable-line enzyme-deprecation/no-mount
       twoMonths.find("input").simulate("click");
       const months = twoMonths.find(Month);
       expect(months).toHaveLength(2);
       expect(months.first().props().monthShowsDuplicateDaysStart).toBe(false);
       expect(months.last().props().monthShowsDuplicateDaysStart).toBe(true);
 
-      const moreThanTwoMonths = mount(<DatePicker monthsShown={4} />);
+      const moreThanTwoMonths = mount(<DatePicker monthsShown={4} />); // eslint-disable-line enzyme-deprecation/no-mount
       moreThanTwoMonths.find("input").simulate("click");
       const monthsMore = moreThanTwoMonths.find(Month);
       expect(monthsMore).toHaveLength(4);
@@ -1966,7 +1980,7 @@ describe("DatePicker", () => {
     });
 
     it("should not find duplicates when single month displayed", () => {
-      const datepicker = mount(<DatePicker />);
+      const datepicker = mount(<DatePicker />); // eslint-disable-line enzyme-deprecation/no-mount
       datepicker.find("input").simulate("click");
       const months = datepicker.find(Month);
       expect(months).toHaveLength(1);
@@ -2042,7 +2056,7 @@ describe("DatePicker", () => {
   it("should show the correct start of week for GB locale", () => {
     registerLocale("en-GB", enGB);
 
-    const datePicker = mount(<DatePicker locale="en-GB" />);
+    const datePicker = mount(<DatePicker locale="en-GB" />); // eslint-disable-line enzyme-deprecation/no-mount
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
     jest.spyOn(dateInput, "focus");
@@ -2059,7 +2073,7 @@ describe("DatePicker", () => {
   it("should show the correct start of week for US locale", () => {
     registerLocale("en-US", enUS);
 
-    const datePicker = mount(<DatePicker locale="en-US" />);
+    const datePicker = mount(<DatePicker locale="en-US" />); // eslint-disable-line enzyme-deprecation/no-mount
     const dateInput = datePicker.instance().input;
     const dateInputWrapper = datePicker.find("input");
     jest.spyOn(dateInput, "focus");
@@ -2292,6 +2306,7 @@ describe("DatePicker", () => {
       const onYearMouseEnterSpy = jest.fn();
       const onYearMouseLeaveSpy = jest.fn();
       const datePicker = mount(
+        // eslint-disable-line enzyme-deprecation/no-mount
         <DatePicker
           selected={new Date(2023, 0, 1)}
           showYearPicker

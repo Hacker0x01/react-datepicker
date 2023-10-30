@@ -15,6 +15,7 @@ describe("YearDropdown", () => {
 
   function getYearDropdown(overrideProps) {
     return mount(
+      // eslint-disable-line enzyme-deprecation/no-mount
       <YearDropdown
         dropdownMode="scroll"
         year={2015}
