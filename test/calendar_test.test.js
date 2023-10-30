@@ -6,6 +6,8 @@ import React from "react";
 import Calendar from "../src/calendar";
 import Month from "../src/month";
 import Day from "../src/day";
+import ReactDOM from "react-dom";
+import TestUtils from "react-dom/test-utils";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
 import MonthYearDropdown from "../src/month_year_dropdown";
@@ -922,7 +924,7 @@ describe("Calendar", () => {
   it("should set the date to the selected day of the previous month when previous button clicked", () => {
     let date;
     const expectedDate = "28.06.2017";
-    const datePicker = mount(
+    const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         selected={utils.newDate("2017-07-28")}
         adjustDateOnChange
@@ -931,18 +933,23 @@ describe("Calendar", () => {
         }}
       />,
     );
-    datePicker.find("input").simulate("focus");
-    const previousButton = datePicker.find(
-      ".react-datepicker__navigation--previous",
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const calendar = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Calendar,
+    )[0];
+    const previousButton = TestUtils.findRenderedDOMComponentWithClass(
+      calendar,
+      "react-datepicker__navigation--previous",
     );
-    previousButton.simulate("click");
+    TestUtils.Simulate.click(previousButton);
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the selected day of the next when next button clicked", () => {
     let date;
     const expectedDate = "28.08.2017";
-    const datePicker = mount(
+    const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         selected={utils.newDate("2017-07-28")}
         adjustDateOnChange
@@ -951,16 +958,23 @@ describe("Calendar", () => {
         }}
       />,
     );
-    datePicker.find("input").simulate("focus");
-    const nextButton = datePicker.find(".react-datepicker__navigation--next");
-    nextButton.simulate("click");
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const calendar = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Calendar,
+    )[0];
+    const nextButton = TestUtils.findRenderedDOMComponentWithClass(
+      calendar,
+      "react-datepicker__navigation--next",
+    );
+    TestUtils.Simulate.click(nextButton);
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the last possible day of the previous month when previous button clicked", () => {
     let date;
     const expectedDate = "30.11.2017";
-    const datePicker = mount(
+    const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         selected={utils.newDate("2017-12-31")}
         adjustDateOnChange
@@ -969,26 +983,36 @@ describe("Calendar", () => {
         }}
       />,
     );
-    datePicker.find("input").simulate("focus");
-    const previousButton = datePicker.find(
-      ".react-datepicker__navigation--previous",
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const calendar = TestUtils.scryRenderedComponentsWithType(
+      datePicker.calendar,
+      Calendar,
+    )[0];
+    const previousButton = TestUtils.findRenderedDOMComponentWithClass(
+      calendar,
+      "react-datepicker__navigation--previous",
     );
-    previousButton.simulate("click");
+    TestUtils.Simulate.click(previousButton);
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should trigger onCalendarOpen and onCalendarClose", () => {
     const onCalendarOpen = jest.fn();
     const onCalendarClose = jest.fn();
-    const datePicker = mount(
+
+    const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
         onCalendarOpen={onCalendarOpen}
         onCalendarClose={onCalendarClose}
       />,
     );
-    datePicker.find("input").simulate("focus");
+
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+
     expect(onCalendarOpen).toHaveBeenCalled();
-    datePicker.find("input").simulate("blur");
+
+    TestUtils.Simulate.blur(ReactDOM.findDOMNode(datePicker.input));
+
     expect(onCalendarOpen).toHaveBeenCalled();
   });
 
@@ -1265,79 +1289,75 @@ describe("Calendar", () => {
   });
 
   describe("renderYearPicker", () => {
-    describe("when showYearPicker is enabled", () => {
-      it("should render YearPicker component", () => {
-        let calendar = mount(
-          <Calendar
-            dateFormat={dateFormat}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            hideCalendar={() => {}}
-            dropdownMode="select"
-            showYearPicker
-          />,
-        );
-        const timeInputClassname = calendar.find(".react-datepicker__year");
-        expect(timeInputClassname).toHaveLength(1);
-      });
+    it("should render YearPicker component", () => {
+      let calendar = mount(
+        <Calendar
+          dateFormat={dateFormat}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          dropdownMode="select"
+          showYearPicker
+        />,
+      );
+      const timeInputClassname = calendar.find(".react-datepicker__year");
+      expect(timeInputClassname).toHaveLength(1);
+    });
 
-      it("calls increaseYear when next year button clicked", () => {
-        const calendar = mount(
-          <Calendar
-            dateFormat={DATE_FORMAT}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            showYearPicker
-          />,
-        );
-        calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-        calendar.instance().increaseYear();
-        calendar.update(); // Forces a re-render
-        expect(utils.getYear(calendar.state("date"))).toBe(2005);
-      });
+    it("calls increaseYear when next year button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showYearPicker
+        />,
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(2005);
+    });
 
-      it("calls decreaseYear when previous year button clicked", () => {
-        let calendar = mount(
-          <Calendar
-            dateFormat={DATE_FORMAT}
-            onSelect={() => {}}
-            onClickOutside={() => {}}
-            showYearPicker
-          />,
-        );
-        calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-        calendar.instance().decreaseYear();
-        calendar.update(); // Forces a re-render
-        expect(utils.getYear(calendar.state("date"))).toBe(1981);
-      });
+    it("calls decreaseYear when previous year button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showYearPicker
+        />,
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1981);
+    });
 
-      it("calls increaseYear for custom year item number when next year button clicked", () => {
-        let calendar = mount(
-          <Calendar
-            dateFormat={DATE_FORMAT}
-            showYearPicker
-            yearItemNumber={10}
-          />,
-        );
-        calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-        calendar.instance().increaseYear();
-        calendar.update(); // Forces a re-render
-        expect(utils.getYear(calendar.state("date"))).toBe(2003);
-      });
+    it("calls increaseYear for custom year item number when next year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />,
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.increaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(2003);
+    });
 
-      it("calls decreaseYear for custom year item number when previous year button clicked", () => {
-        let calendar = mount(
-          <Calendar
-            dateFormat={DATE_FORMAT}
-            showYearPicker
-            yearItemNumber={10}
-          />,
-        );
-        calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-        calendar.instance().decreaseYear();
-        calendar.update(); // Forces a re-render
-        expect(utils.getYear(calendar.state("date"))).toBe(1983);
-      });
+    it("calls decreaseYear for custom year item number when previous year button clicked", () => {
+      let calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          showYearPicker
+          yearItemNumber={10}
+        />,
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      calendar.decreaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1983);
     });
   });
 
@@ -1376,7 +1396,7 @@ describe("Calendar", () => {
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      let calendar = mount(
+      var calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1384,26 +1404,26 @@ describe("Calendar", () => {
           showMonthYearPicker
         />,
       );
-      calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-      calendar.instance().decreaseYear();
-      calendar.update(); // Forces a re-render
-      expect(utils.getYear(calendar.state("date"))).toBe(1992);
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1992);
     });
-  });
 
-  it("calls increaseYear when next month button clicked", () => {
-    let calendar = mount(
-      <Calendar
-        dateFormat={DATE_FORMAT}
-        onSelect={() => {}}
-        onClickOutside={() => {}}
-        showMonthYearPicker
-      />,
-    );
-    calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-    calendar.instance().increaseYear();
-    calendar.update(); // Forces a re-render
-    expect(utils.getYear(calendar.state("date"))).toBe(1994);
+    it("calls increaseYear when next month button clicked", () => {
+      var calendar = TestUtils.renderIntoDocument(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          showMonthYearPicker
+        />,
+      );
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1994);
+    });
   });
 
   describe("when showQuarterYearPicker is enabled", () => {
@@ -1441,7 +1461,7 @@ describe("Calendar", () => {
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      let calendar = mount(
+      var calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1449,14 +1469,14 @@ describe("Calendar", () => {
           showQuarterYearPicker
         />,
       );
-      calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-      calendar.instance().decreaseYear();
-      calendar.update(); // Forces a re-render
-      expect(utils.getYear(calendar.state("date"))).toBe(1992);
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var decreaseYear = calendar.decreaseYear;
+      decreaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1992);
     });
 
     it("calls increaseYear when next month button clicked", () => {
-      let calendar = mount(
+      var calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1464,10 +1484,10 @@ describe("Calendar", () => {
           showQuarterYearPicker
         />,
       );
-      calendar.setState({ date: utils.parseDate("09/28/1993", DATE_FORMAT) });
-      calendar.instance().increaseYear();
-      calendar.update(); // Forces a re-render
-      expect(utils.getYear(calendar.state("date"))).toBe(1994);
+      calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
+      var increaseYear = calendar.increaseYear;
+      increaseYear();
+      expect(utils.getYear(calendar.state.date)).toBe(1994);
     });
   });
 
@@ -1564,24 +1584,39 @@ describe("Calendar", () => {
       let selected = new Date();
       selected.setDate(1);
       const currentMonth = selected.getMonth();
-      const calendar = mount(<DatePicker selected={selected} />);
-      calendar.find("input").simulate("focus");
-      calendar.find(".react-datepicker__navigation--next").simulate("click");
-      expect(calendar.state("preSelection").getMonth()).toBe(
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={selected} />,
+      );
+      const dateInput = datePicker.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.click(
+        TestUtils.findRenderedDOMComponentWithClass(
+          datePicker,
+          "react-datepicker__navigation--next",
+        ),
+      );
+      expect(datePicker.state.preSelection.getMonth()).toBe(
         currentMonth === 11 ? 0 : currentMonth + 1,
       );
     });
-
     it("updates the preselection when you choose Previous Month", () => {
       let selected = new Date();
       selected.setDate(1);
       const currentMonth = selected.getMonth();
-      const calendar = mount(<DatePicker selected={selected} />);
-      calendar.find("input").simulate("focus");
-      calendar
-        .find(".react-datepicker__navigation--previous")
-        .simulate("click");
-      expect(calendar.state("preSelection").getMonth()).toBe(
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={selected} />,
+      );
+      const dateInput = datePicker.input;
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+      TestUtils.Simulate.click(
+        TestUtils.findRenderedDOMComponentWithClass(
+          datePicker,
+          "react-datepicker__navigation--previous",
+        ),
+      );
+      expect(datePicker.state.preSelection.getMonth()).toBe(
         currentMonth === 0 ? 11 : currentMonth - 1,
       );
     });
@@ -1589,15 +1624,7 @@ describe("Calendar", () => {
 
   describe("showTimeSelect", () => {
     it("should not contain the time select classname in header by default", () => {
-      const calendar = getCalendar({ showTimeSelect: false });
-      const header = calendar.find(
-        ".react-datepicker__header--has-time-select",
-      );
-      expect(header).toHaveLength(0);
-    });
-
-    it("should not contain the time select classname in header by default", () => {
-      const calendar = getCalendar({ showTimeSelect: false });
+      const calendar = getCalendar();
       const header = calendar.find(
         ".react-datepicker__header--has-time-select",
       );
@@ -1632,33 +1659,40 @@ describe("Calendar", () => {
   describe("prev/next month button onKeyDown handler", () => {
     it("should call the prevMonthButton onKeyDown handler on Tab press", () => {
       const onKeyDownSpy = jest.fn();
-      const calendar = mount(
+
+      const datePicker = TestUtils.renderIntoDocument(
         <DatePicker
           selected={new Date("February 28, 2018 4:43 PM")}
           onKeyDown={onKeyDownSpy}
         />,
       );
-      calendar.find("input").simulate("focus");
-      calendar
-        .find(".react-datepicker__navigation--previous")
-        .simulate("keyDown", {
-          key: "Tab",
-          code: 9,
-          which: 9,
-        });
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      const prevMonthButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__navigation--previous",
+      );
+      TestUtils.Simulate.keyDown(prevMonthButton, {
+        key: "Tab",
+        code: 9,
+        which: 9,
+      });
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
-
     it("should call the nextMonthButton onKeyDown handler on Tab press", () => {
       const onKeyDownSpy = jest.fn();
-      const calendar = mount(
+
+      const datePicker = TestUtils.renderIntoDocument(
         <DatePicker
           selected={new Date("February 28, 2018 4:43 PM")}
           onKeyDown={onKeyDownSpy}
         />,
       );
-      calendar.find("input").simulate("focus");
-      calendar.find(".react-datepicker__navigation--next").simulate("keyDown", {
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+      const nextMonthButton = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__navigation--next",
+      );
+      TestUtils.Simulate.keyDown(nextMonthButton, {
         key: "Tab",
         code: 9,
         which: 9,
@@ -1696,36 +1730,73 @@ describe("Calendar", () => {
     });
   });
 
-  describe("should render aria live region after month change", () => {
+  describe("should render aria live region after month/year change", () => {
     it("should render aria live region after month change", () => {
-      const calendar = mount(<DatePicker selected={utils.newDate()} />);
-      calendar.find("input").simulate("focus");
-      calendar.find(".react-datepicker__navigation--next").simulate("click");
-      const currentMonthText = calendar
-        .find(".react-datepicker__current-month")
-        .text();
-      const ariaLiveMessage = calendar
-        .find(".react-datepicker__aria-live")
-        .text();
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker selected={utils.newDate()} />,
+      );
+      const dateInput = datePicker.input;
+
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+      const calendar = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Calendar,
+      )[0];
+      const nextNavigationButton = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__navigation--next",
+      );
+      nextNavigationButton.click();
+
+      const currentMonthText = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__current-month",
+      ).textContent;
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__aria-live",
+      ).textContent;
+
       expect(currentMonthText).toBe(ariaLiveMessage);
     });
 
     it("should render aria live region after year change", () => {
-      const datePicker = mount(
+      const datePicker = TestUtils.renderIntoDocument(
         <DatePicker showYearDropdown selected={utils.newDate()} />,
       );
-      datePicker.find("input").simulate("focus");
-      datePicker.find(".react-datepicker__year-read-view").simulate("click");
-      datePicker.find(".react-datepicker__year-option").at(7).simulate("click");
-      const ariaLiveMessage = datePicker
-        .find(".react-datepicker__aria-live")
-        .text();
-      const currentMonthText = utils.getMonthInLocale(
-        utils.getMonth(utils.newDate()),
-      );
-      const expectedYear = 2022;
+      const dateInput = datePicker.input;
 
-      expect(ariaLiveMessage).toBe(`${currentMonthText} ${expectedYear}`);
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
+
+      const calendar = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Calendar,
+      )[0];
+      const yearDropdown = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__year-read-view",
+      );
+      yearDropdown.click();
+
+      const option = TestUtils.scryRenderedDOMComponentsWithClass(
+        calendar,
+        "react-datepicker__year-option",
+      )[7];
+      option.click();
+
+      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
+        calendar,
+        "react-datepicker__aria-live",
+      ).textContent;
+
+      expect(ariaLiveMessage).toBe(
+        `${utils.getMonthInLocale(
+          utils.getMonth(calendar.state.date),
+          datePicker.props.locale,
+        )} ${utils.getYear(calendar.state.date)}`,
+      );
     });
   });
 });
