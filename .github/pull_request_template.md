@@ -15,7 +15,7 @@ the problems this PR aims to solve
 **Changes**
 changes you have made to address the issue
 
-## Screentshots
+## Screenshots
 If applicable, add screenshots to help explain your improvements
 
 ## To reviewers
