@@ -7,18 +7,16 @@ assignees: ""
 ---
 
 ## Description
-**Liked issue**: #(issue number) 
+**Linked issue**: #(issue number) 
 
 **Problem**
-
-the problems this PR aims to solve
+<!-- the problems this PR aims to solve -->
 
 **Changes**
-
-changes you have made to address the issue
+<!-- changes you have made to address the issue -->
 
 ## Screenshots
-If applicable, add screenshots to help explain your improvements
+<!-- If applicable, add screenshots to help explain your improvements -->
 
 ## To reviewers
-Additional comments for reviewers
+<!-- Additional comments for reviewers -->
