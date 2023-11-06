@@ -20,3 +20,7 @@ assignees: ""
 
 ## To reviewers
 <!-- Additional comments for reviewers -->
+
+## Contribution checklist
+- [ ] I have followed the [contributing guideline](https://github.com/Hacker0x01/react-datepicker/blob/main/CONTRIBUTING.md).
+- [ ] I added tests that prove my PR works.
