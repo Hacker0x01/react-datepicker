@@ -592,6 +592,7 @@ export default class Month extends React.Component {
       minDate,
       maxDate,
       preSelection,
+      disabledKeyboardNavigation
     } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
@@ -606,7 +607,7 @@ export default class Month extends React.Component {
           selected,
         ),
         "react-datepicker__quarter-text--keyboard-selected":
-          utils.getQuarter(preSelection) === q,
+          !disabledKeyboardNavigation && utils.getQuarter(preSelection) === q,
         "react-datepicker__quarter-text--in-selecting-range":
           this.isInSelectingRangeQuarter(q),
         "react-datepicker__quarter-text--in-range": utils.isQuarterInRange(
