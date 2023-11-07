@@ -1,6 +1,6 @@
 ---
 name: Pull Request
-about: create a pull request to improve
+about: Create a pull request to improve this repository
 title: ""
 labels: ""
 assignees: ""
