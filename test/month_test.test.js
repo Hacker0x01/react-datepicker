@@ -908,6 +908,29 @@ describe("Month", () => {
         utils.newDate("2015-01-01").toString(),
       );
     });
+
+    describe("if keyboard navigation is disabled", () => {
+      it("should not have the selected class", () => {
+        let preSelected = utils.newDate("2015-08-01");
+        const setPreSelection = (param) => {
+          preSelected = param;
+        };
+        const quartersComponent = renderQuarters({
+          selected: utils.newDate("2015-08-01"),
+          day: utils.newDate("2015-08-01"),
+          setPreSelection: setPreSelection,
+          preSelection: preSelected,
+          disabledKeyboardNavigation: true,
+          showQuarterYearPicker: true
+        });
+
+        expect(
+          quartersComponent
+            .find(".react-datepicker__quarter-text--selected")
+            .hasClass("react-datepicker__quarter-text--keyboard-selected"),
+        ).toBe(false);
+      });
+    });
   });
 
   describe("Keyboard navigation", () => {
