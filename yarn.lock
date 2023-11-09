@@ -360,9 +360,9 @@
     "@babel/plugin-transform-optional-chaining" "^7.22.15"
 
 "@babel/plugin-external-helpers@^7.22.5":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-external-helpers/-/plugin-external-helpers-7.22.5.tgz#92b0705b74756123f289388320e0e12c407fdf9a"
-  integrity sha512-ngnNEWxmykPk82mH4ajZT0qTztr3Je6hrMuKAslZVM8G1YZTENJSYwrIGtt6KOtznug3exmAtF4so/nPqJuA4A==
+  version "7.23.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-external-helpers/-/plugin-external-helpers-7.23.3.tgz#399aecdb85f220f62b8fb8df4522f5e6a4e116d5"
+  integrity sha512-W2kdnFytYsSB0X49op/t9Re68rb3m+RN+sK7aD/8lCutepSm22Ms4MmPzMQZ2FYSpItsKlRXG3osVYfLWb83Ug==
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
