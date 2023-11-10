@@ -9,10 +9,9 @@ import {
   addDays,
   subDays,
   getMonth,
-  getHightLightDaysMap,
+  getHighLightDaysMap,
   getHolidaysMap,
   registerLocale,
-  getHighLightDaysMap,
 } from "../src/date_utils";
 
 function renderDay(day, props = {}) {
