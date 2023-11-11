@@ -692,7 +692,7 @@ export function getEffectiveMaxDate({ maxDate, includeDates }) {
   }
 }
 
-export function getHightLightDaysMap(
+export function getHighLightDaysMap(
   highlightDates = [],
   defaultClassName = "react-datepicker__day--highlighted",
 ) {
