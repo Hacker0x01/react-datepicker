@@ -12,7 +12,6 @@ import {
   getHightLightDaysMap,
   getHolidaysMap,
   registerLocale,
-  getHighLightDaysMap,
 } from "../src/date_utils";
 
 function renderDay(day, props = {}) {
@@ -150,7 +149,7 @@ describe("Day", () => {
       const highlightDay1 = newDate(day);
       const highlightDay2 = addDays(day, 1);
       const highlightDates = [highlightDay1, highlightDay2];
-      const highlightDatesMap = getHighLightDaysMap(highlightDates);
+      const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
       expect(shallowDay.hasClass(className)).toBe(true);
     });
@@ -160,7 +159,7 @@ describe("Day", () => {
       const highlightDay1 = subDays(day, 1);
       const highlightDay2 = addDays(day, 1);
       const highlightDates = [highlightDay1, highlightDay2];
-      const highlightDatesMap = getHighLightDaysMap(highlightDates);
+      const highlightDatesMap = getHightLightDaysMap(highlightDates);
       const shallowDay = renderDay(day, { highlightDates: highlightDatesMap });
       expect(shallowDay.hasClass(className)).toBe(false);
     });
@@ -174,7 +173,7 @@ describe("Day", () => {
         const highlightDay2 = addDays(day, 2);
         const highlightDay3 = addDays(day, 3);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
-        const highlightDatesMap = getHighLightDaysMap(highlightDates);
+        const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });
@@ -189,7 +188,7 @@ describe("Day", () => {
         const highlightDay2 = addDays(day, 3);
         const highlightDay3 = addDays(day, 4);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
-        const highlightDatesMap = getHighLightDaysMap(highlightDates);
+        const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });
@@ -202,7 +201,7 @@ describe("Day", () => {
         const highlightDay2 = { barClassName: [newDate(day)] };
         const highlightDay3 = newDate(day);
         const highlightDates = [highlightDay1, highlightDay2, highlightDay3];
-        const highlightDatesMap = getHighLightDaysMap(highlightDates);
+        const highlightDatesMap = getHightLightDaysMap(highlightDates);
         const shallowDay = renderDay(day, {
           highlightDates: highlightDatesMap,
         });

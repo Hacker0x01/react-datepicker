@@ -34,7 +34,7 @@ import {
   parseDate,
   safeDateFormat,
   safeDateRangeFormat,
-  getHighLightDaysMap,
+  getHightLightDaysMap,
   getYear,
   getMonth,
   registerLocale,
@@ -327,7 +327,7 @@ export default class DatePicker extends React.Component {
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHighLightDaysMap(this.props.highlightDates),
+        highlightDates: getHightLightDaysMap(this.props.highlightDates),
       });
     }
     if (
@@ -394,7 +394,7 @@ export default class DatePicker extends React.Component {
           : this.props.selected) ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      highlightDates: getHighLightDaysMap(this.props.highlightDates),
+      highlightDates: getHightLightDaysMap(this.props.highlightDates),
       holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
