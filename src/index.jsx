@@ -362,20 +362,18 @@ export default class DatePicker extends React.Component {
       ? this.props.endDate
       : newDate();
 
+  // Convert the date from string format to standard Date format
+  modifyHolidays = () =>
+    this.props.holidays?.reduce((accumulator, holiday) => {
+      const date = new Date(holiday.date);
+      if (!isValid(date)) {
+        return accumulator;
+      }
+
+      return [...accumulator, { ...holiday, date }];
+    }, []);
+
   calcInitialState = () => {
-    // Convert the date from string format to standard Date format
-    const modifiedHolidays = this.props.holidays?.reduce(
-      (accumulator, holiday) => {
-        const date = new Date(holiday.date);
-        if (!isValid(date)) {
-          return accumulator;
-        }
-
-        return [...accumulator, { ...holiday, date }];
-      },
-      [],
-    );
-
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
@@ -395,7 +393,6 @@ export default class DatePicker extends React.Component {
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHightLightDaysMap(this.props.highlightDates),
-      holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render
@@ -972,7 +969,7 @@ export default class DatePicker extends React.Component {
         onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
-        holidays={this.state.holidays}
+        holidays={getHolidaysMap(this.modifyHolidays())}
         includeDates={this.props.includeDates}
         includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}
