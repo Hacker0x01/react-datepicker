@@ -74,7 +74,7 @@ export default class Month extends React.Component {
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
-    holidays: PropTypes.PropTypes.instanceOf(Map),
+    holidays: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
@@ -594,7 +594,7 @@ export default class Month extends React.Component {
       minDate,
       maxDate,
       preSelection,
-      disabledKeyboardNavigation
+      disabledKeyboardNavigation,
     } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
