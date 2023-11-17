@@ -6,7 +6,7 @@ import React from "react";
 import Calendar from "../src/calendar";
 import Month from "../src/month";
 import Day from "../src/day";
-import { findDOMNode } from "react-dom";
+import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
@@ -933,7 +933,7 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const calendar = TestUtils.scryRenderedComponentsWithType(
       datePicker.calendar,
       Calendar,
@@ -958,7 +958,7 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const calendar = TestUtils.scryRenderedComponentsWithType(
       datePicker.calendar,
       Calendar,
@@ -983,7 +983,7 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
     const calendar = TestUtils.scryRenderedComponentsWithType(
       datePicker.calendar,
       Calendar,
@@ -1007,11 +1007,11 @@ describe("Calendar", () => {
       />,
     );
 
-    TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
 
     expect(onCalendarOpen).toHaveBeenCalled();
 
-    TestUtils.Simulate.blur(findDOMNode(datePicker.input));
+    TestUtils.Simulate.blur(ReactDOM.findDOMNode(datePicker.input));
 
     expect(onCalendarOpen).toHaveBeenCalled();
   });
@@ -1186,12 +1186,16 @@ describe("Calendar", () => {
   });
 
   describe("localization", () => {
-    function testLocale(calendar, selected, locale) {
+    function testLocale(calendar, selected, locale, calendarStartDay) {
       const calendarText = calendar.find(".react-datepicker__current-month");
       expect(calendarText.text()).toBe(
         utils.formatDate(selected, dateFormat, locale),
       );
-      const firstDateOfWeek = utils.getStartOfWeek(selected, locale);
+      const firstDateOfWeek = utils.getStartOfWeek(
+        selected,
+        locale,
+        calendarStartDay,
+      );
       const firstWeekDayMin = utils.getWeekdayMinInLocale(
         firstDateOfWeek,
         locale,
@@ -1585,7 +1589,7 @@ describe("Calendar", () => {
         <DatePicker selected={selected} />,
       );
       const dateInput = datePicker.input;
-      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
       TestUtils.Simulate.click(
         TestUtils.findRenderedDOMComponentWithClass(
           datePicker,
@@ -1605,7 +1609,7 @@ describe("Calendar", () => {
         <DatePicker selected={selected} />,
       );
       const dateInput = datePicker.input;
-      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
       TestUtils.Simulate.click(
         TestUtils.findRenderedDOMComponentWithClass(
           datePicker,
@@ -1662,7 +1666,7 @@ describe("Calendar", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
       const prevMonthButton = TestUtils.findRenderedDOMComponentWithClass(
         datePicker,
         "react-datepicker__navigation--previous",
@@ -1683,7 +1687,7 @@ describe("Calendar", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
       const nextMonthButton = TestUtils.findRenderedDOMComponentWithClass(
         datePicker,
         "react-datepicker__navigation--next",
@@ -1733,7 +1737,7 @@ describe("Calendar", () => {
       );
       const dateInput = datePicker.input;
 
-      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
 
       const calendar = TestUtils.scryRenderedComponentsWithType(
         datePicker.calendar,
@@ -1764,7 +1768,7 @@ describe("Calendar", () => {
       );
       const dateInput = datePicker.input;
 
-      TestUtils.Simulate.focus(findDOMNode(dateInput));
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
 
       const calendar = TestUtils.scryRenderedComponentsWithType(
         datePicker.calendar,

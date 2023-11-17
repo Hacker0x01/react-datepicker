@@ -79,6 +79,7 @@ import RenderCustomYear from "../../examples/renderCustomYear";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
+import WeekPicker from "../../examples/weekPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -511,6 +512,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "Week Picker",
+      component: WeekPicker,
     },
     {
       title: "External Form",

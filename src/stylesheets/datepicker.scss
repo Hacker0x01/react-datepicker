@@ -368,20 +368,43 @@
   &.react-datepicker__week-number--clickable {
     cursor: pointer;
 
-    &:hover {
+    &:not(
+        .react-datepicker__week-number--selected,
+        .react-datepicker__week-number--keyboard-selected
+      ):hover {
       border-radius: $datepicker__border-radius;
       background-color: $datepicker__background-color;
     }
   }
-}
 
-.react-datepicker__day-names,
-.react-datepicker__week {
-  white-space: nowrap;
+  &--selected {
+    border-radius: $datepicker__border-radius;
+    background-color: $datepicker__selected-color;
+    color: #fff;
+
+    &:hover {
+      background-color: darken($datepicker__selected-color, 5%);
+    }
+  }
+
+  &--keyboard-selected {
+    border-radius: $datepicker__border-radius;
+    background-color: lighten($datepicker__selected-color, 10%);
+    color: #fff;
+
+    &:hover {
+      background-color: darken($datepicker__selected-color, 5%);
+    }
+  }
 }
 
 .react-datepicker__day-names {
+  white-space: nowrap;
   margin-bottom: -8px;
+}
+
+.react-datepicker__week {
+  white-space: nowrap;
 }
 
 .react-datepicker__day-name,
