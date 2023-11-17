@@ -60,7 +60,7 @@ export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
-var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
 
 // ** Date Constructors **
 
@@ -105,9 +105,9 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)
       .map(function (substring) {
-        var firstCharacter = substring[0];
+        const firstCharacter = substring[0];
         if (firstCharacter === "p" || firstCharacter === "P") {
-          var longFormatter = longFormatters[firstCharacter];
+          const longFormatter = longFormatters[firstCharacter];
           return localeObject
             ? longFormatter(substring, localeObject.formatLong)
             : firstCharacter;
@@ -497,8 +497,8 @@ export function isQuarterDisabled(
 
 /**
  * @param {number} year
- * @param {date} start
- * @param {date} end
+ * @param {Date} start
+ * @param {Date} end
  * @returns {boolean}
  */
 export function isYearInRange(year, start, end) {
