@@ -37,6 +37,7 @@ import {
   getHighLightDaysMap,
   getYear,
   getMonth,
+  getStartOfWeek,
   registerLocale,
   setDefaultLocale,
   getDefaultLocale,
@@ -108,6 +109,7 @@ export default class DatePicker extends React.Component {
       showFourColumnMonthYearPicker: false,
       showYearPicker: false,
       showQuarterYearPicker: false,
+      showWeekPicker: false,
       strictParsing: false,
       timeIntervals: 30,
       timeCaption: "Time",
@@ -256,6 +258,7 @@ export default class DatePicker extends React.Component {
     showFourColumnMonthYearPicker: PropTypes.bool,
     showYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     showDateSelect: PropTypes.bool,
     showTimeSelect: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
@@ -362,20 +365,18 @@ export default class DatePicker extends React.Component {
       ? this.props.endDate
       : newDate();
 
+  // Convert the date from string format to standard Date format
+  modifyHolidays = () =>
+    this.props.holidays?.reduce((accumulator, holiday) => {
+      const date = new Date(holiday.date);
+      if (!isValid(date)) {
+        return accumulator;
+      }
+
+      return [...accumulator, { ...holiday, date }];
+    }, []);
+
   calcInitialState = () => {
-    // Convert the date from string format to standard Date format
-    const modifiedHolidays = this.props.holidays?.reduce(
-      (accumulator, holiday) => {
-        const date = new Date(holiday.date);
-        if (!isValid(date)) {
-          return accumulator;
-        }
-
-        return [...accumulator, { ...holiday, date }];
-      },
-      [],
-    );
-
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
@@ -552,6 +553,13 @@ export default class DatePicker extends React.Component {
       });
     }
     if (date || !event.target.value) {
+      if (this.props.showWeekPicker) {
+        date = getStartOfWeek(
+          date,
+          this.props.locale,
+          this.props.calendarStartDay,
+        );
+      }
       this.setSelected(date, event, true);
     }
   };
@@ -564,6 +572,13 @@ export default class DatePicker extends React.Component {
     }
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event);
+    }
+    if (this.props.showWeekPicker) {
+      date = getStartOfWeek(
+        date,
+        this.props.locale,
+        this.props.calendarStartDay,
+      );
     }
     this.setSelected(date, event, false, monthSelectedIn);
     if (this.props.showDateSelect) {
@@ -665,6 +680,13 @@ export default class DatePicker extends React.Component {
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
+      if (this.props.showWeekPicker) {
+        date = getStartOfWeek(
+          date,
+          this.props.locale,
+          this.props.calendarStartDay,
+        );
+      }
       const dateStartOfDay = startOfDay(date);
       if (hasMinDate && hasMaxDate) {
         // isDayinRange uses startOfDay internally, so not necessary to manipulate times here
@@ -748,16 +770,18 @@ export default class DatePicker extends React.Component {
       return;
     }
 
-    // if calendar is open, these keys will focus the selected day
+    // if calendar is open, these keys will focus the selected item
     if (this.state.open) {
       if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         event.preventDefault();
-        const selectedDay =
+        const selectorString =
+          this.props.showWeekPicker && this.props.showWeekNumbers
+            ? '.react-datepicker__week-number[tabindex="0"]'
+            : '.react-datepicker__day[tabindex="0"]';
+        const selectedItem =
           this.calendar.componentNode &&
-          this.calendar.componentNode.querySelector(
-            '.react-datepicker__day[tabindex="0"]',
-          );
-        selectedDay && selectedDay.focus({ preventScroll: true });
+          this.calendar.componentNode.querySelector(selectorString);
+        selectedItem && selectedItem.focus({ preventScroll: true });
 
         return;
       }
@@ -828,10 +852,18 @@ export default class DatePicker extends React.Component {
       let newSelection;
       switch (eventKey) {
         case "ArrowLeft":
-          newSelection = subDays(copy, 1);
+          if (this.props.showWeekPicker) {
+            newSelection = subWeeks(copy, 1);
+          } else {
+            newSelection = subDays(copy, 1);
+          }
           break;
         case "ArrowRight":
-          newSelection = addDays(copy, 1);
+          if (this.props.showWeekPicker) {
+            newSelection = addWeeks(copy, 1);
+          } else {
+            newSelection = addDays(copy, 1);
+          }
           break;
         case "ArrowUp":
           newSelection = subWeeks(copy, 1);
@@ -850,6 +882,9 @@ export default class DatePicker extends React.Component {
           break;
         case "End":
           newSelection = addYears(copy, 1);
+          break;
+        default:
+          newSelection = null;
           break;
       }
       if (!newSelection) {
@@ -972,7 +1007,7 @@ export default class DatePicker extends React.Component {
         onClickOutside={this.handleCalendarClickOutside}
         formatWeekNumber={this.props.formatWeekNumber}
         highlightDates={this.state.highlightDates}
-        holidays={this.state.holidays}
+        holidays={getHolidaysMap(this.modifyHolidays())}
         includeDates={this.props.includeDates}
         includeDateIntervals={this.props.includeDateIntervals}
         includeTimes={this.props.includeTimes}
@@ -1047,6 +1082,7 @@ export default class DatePicker extends React.Component {
         showFourColumnMonthYearPicker={this.props.showFourColumnMonthYearPicker}
         showYearPicker={this.props.showYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
+        showWeekPicker={this.props.showWeekPicker}
         showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
         handleOnKeyDown={this.props.onKeyDown}

@@ -74,7 +74,7 @@ export default class Month extends React.Component {
     fixedHeight: PropTypes.bool,
     formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.instanceOf(Map),
-    holidays: PropTypes.PropTypes.instanceOf(Map),
+    holidays: PropTypes.instanceOf(Map),
     includeDates: PropTypes.array,
     includeDateIntervals: PropTypes.array,
     inline: PropTypes.bool,
@@ -111,6 +111,7 @@ export default class Month extends React.Component {
     showTwoColumnMonthYearPicker: PropTypes.bool,
     showFourColumnMonthYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     weekAriaLabelPrefix: PropTypes.string,
@@ -330,6 +331,7 @@ export default class Month extends React.Component {
           selectsRange={this.props.selectsRange}
           selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
           showWeekNumber={this.props.showWeekNumbers}
+          showWeekPicker={this.props.showWeekPicker}
           startDate={this.props.startDate}
           endDate={this.props.endDate}
           dayClassName={this.props.dayClassName}
@@ -592,7 +594,7 @@ export default class Month extends React.Component {
       minDate,
       maxDate,
       preSelection,
-      disabledKeyboardNavigation
+      disabledKeyboardNavigation,
     } = this.props;
     return classnames(
       "react-datepicker__quarter-text",
@@ -719,6 +721,7 @@ export default class Month extends React.Component {
       selectsEnd,
       showMonthYearPicker,
       showQuarterYearPicker,
+      showWeekPicker,
     } = this.props;
 
     return classnames(
@@ -729,6 +732,7 @@ export default class Month extends React.Component {
       },
       { "react-datepicker__monthPicker": showMonthYearPicker },
       { "react-datepicker__quarterPicker": showQuarterYearPicker },
+      { "react-datepicker__weekPicker": showWeekPicker },
     );
   };
 
