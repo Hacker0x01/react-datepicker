@@ -135,10 +135,10 @@ The `main` branch contains the latest version of the Datepicker component.
 To begin local development:
 
 1. Run `yarn link` from project root
-1. Run `cd docs-site && yarn link react-datepicker`
-1. Run `yarn install` from project root
-1. Run `yarn build` from project root
-1. Run `yarn start` from project root
+2. Run `cd docs-site && yarn link react-datepicker`
+3. Run `yarn install` from project root
+4. Run `yarn build` from project root
+5. Run `yarn start` from project root
 
 The last step starts documentation app as a simple webserver on http://localhost:3000.
 
