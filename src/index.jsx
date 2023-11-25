@@ -360,10 +360,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-      ? this.props.startDate
-      : this.props.selectsStart && this.props.endDate
-      ? this.props.endDate
-      : newDate();
+        ? this.props.startDate
+        : this.props.selectsStart && this.props.endDate
+          ? this.props.endDate
+          : newDate();
 
   // Convert the date from string format to standard Date format
   modifyHolidays = () =>
@@ -384,8 +384,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
         : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
-        ? maxDate
-        : defaultPreSelection;
+          ? maxDate
+          : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -1175,14 +1175,14 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-        ? this.state.inputValue
-        : this.props.selectsRange
-        ? safeDateRangeFormat(
-            this.props.startDate,
-            this.props.endDate,
-            this.props,
-          )
-        : safeDateFormat(this.props.selected, this.props);
+          ? this.state.inputValue
+          : this.props.selectsRange
+            ? safeDateRangeFormat(
+                this.props.startDate,
+                this.props.endDate,
+                this.props,
+              )
+            : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {
@@ -1216,6 +1216,7 @@ export default class DatePicker extends React.Component {
   renderClearButton = () => {
     const {
       isClearable,
+      disabled,
       selected,
       startDate,
       endDate,
@@ -1230,7 +1231,12 @@ export default class DatePicker extends React.Component {
       return (
         <button
           type="button"
-          className={`react-datepicker__close-icon ${clearButtonClassName}`.trim()}
+          className={classnames(
+            "react-datepicker__close-icon",
+            clearButtonClassName,
+            { "react-datepicker__close-icon--disabled": disabled },
+          )}
+          disabled={disabled}
           aria-label={ariaLabelClose}
           onClick={this.onClearClick}
           title={clearButtonTitle}
