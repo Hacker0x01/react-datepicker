@@ -663,6 +663,15 @@
     vertical-align: middle;
     content: "\00d7";
   }
+
+  &--disabled {
+    cursor: default;
+
+    &::after {
+      cursor: default;
+      background-color: $datepicker__muted-color;
+    }
+  }
 }
 
 .react-datepicker__today-button {

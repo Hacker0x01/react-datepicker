@@ -500,6 +500,23 @@ describe("DatePicker", () => {
     expect(datePicker.state.inputValue).toBeNull();
   });
 
+  it("should disable the clear button when the component is disabled", () => {
+    const onChange = jest.fn();
+    const { getByLabelText } = render(
+      <DatePicker
+        ariaLabelClose="clear"
+        disabled
+        selected={utils.newDate("2023-11-25")}
+        isClearable
+        onChange={onChange}
+      />,
+    );
+    const clearButton = getByLabelText("clear");
+    expect(clearButton).toHaveProperty("disabled", true);
+    fireEvent.click(clearButton);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it("should return focus to input when clear button is used", (done) => {
     var div = document.createElement("div");
     document.body.appendChild(div);
