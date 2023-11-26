@@ -160,11 +160,11 @@ export default class exampleComponents extends React.Component {
         <div>
           Full docs for the popper can be found at{" "}
           <a
-            href="https://popper.js.org"
+            href="https://floating-ui.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            popper.js.org
+            floating-ui.com
           </a>
         </div>
       ),

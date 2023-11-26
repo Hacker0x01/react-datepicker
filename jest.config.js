@@ -8,7 +8,7 @@ module.exports = {
     "!**/node_modules/**",
     "!**/vendor/**",
   ],
-  transformIgnorePatterns: ["/node_modules/(?!(@popperjs)|date-fns)"],
+  transformIgnorePatterns: ["/node_modules/(?!date-fns)"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
     "^.+\\.ts?$": "ts-jest",

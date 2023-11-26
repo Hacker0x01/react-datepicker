@@ -104,12 +104,11 @@
     "react-dom": "^16.9.0 || ^17 || ^18"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
+    "@floating-ui/react": "^0.26.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
     "prop-types": "^15.7.2",
-    "react-onclickoutside": "^6.13.0",
-    "react-popper": "^2.3.0"
+    "react-onclickoutside": "^6.13.0"
   },
   "scripts": {
     "eslint": "eslint --ext .js,.jsx src test",

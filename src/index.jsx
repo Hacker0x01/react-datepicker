@@ -1082,7 +1082,6 @@ export default class DatePicker extends React.Component {
         showYearPicker={this.props.showYearPicker}
         showQuarterYearPicker={this.props.showQuarterYearPicker}
         showWeekPicker={this.props.showWeekPicker}
-        showPopperArrow={this.props.showPopperArrow}
         excludeScrollbar={this.props.excludeScrollbar}
         handleOnKeyDown={this.props.onKeyDown}
         handleOnDayKeyDown={this.onDayKeyDown}
@@ -1318,6 +1317,7 @@ export default class DatePicker extends React.Component {
         popperProps={this.props.popperProps}
         popperOnKeyDown={this.onPopperKeyDown}
         enableTabLoop={this.props.enableTabLoop}
+        showArrow={this.props.showPopperArrow}
       />
     );
   }
