@@ -57,7 +57,7 @@ export class PopperComponent extends React.Component {
             data-placement={popperProps.placement}
             onKeyDown={popperOnKeyDown}
           >
-            {React.cloneElement(popperComponent)}
+            {popperComponent}
             {showArrow && (
               <FloatingArrow
                 ref={popperProps.arrowRef}
