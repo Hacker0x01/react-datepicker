@@ -27,6 +27,7 @@ export default function withFloating(Component) {
   const WithFloating = (props) => {
     const arrowRef = React.useRef();
     const floatingProps = useFloating({
+      open: !props.hidePopper,
       whileElementsMounted: autoUpdate,
       placement: props.popperPlacement,
       middleware: [
@@ -47,11 +48,13 @@ export default function withFloating(Component) {
     popperPlacement: PropTypes.oneOf(popperPlacementPositions),
     popperModifiers: PropTypes.arrayOf(PropTypes.object),
     popperProps: PropTypes.object,
+    hidePopper: PropTypes.bool,
   };
 
   WithFloating.defaultProps = {
     popperModifiers: [],
     popperProps: {},
+    hidePopper: true,
   };
 
   return WithFloating;

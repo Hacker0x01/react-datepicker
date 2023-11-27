@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager } from "react-popper";
 import { FloatingArrow } from "@floating-ui/react";
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
@@ -94,12 +93,12 @@ export class PopperComponent extends React.Component {
     );
 
     return (
-      <Manager className="react-datepicker-manager">
+      <React.Fragment>
         <div ref={popperProps.refs.setReference} className={wrapperClasses}>
           {targetComponent}
         </div>
         {popper}
-      </Manager>
+      </React.Fragment>
     );
   }
 }
