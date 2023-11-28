@@ -68,6 +68,12 @@ function hasPreSelectionChanged(date1, date2) {
   return date1 !== date2;
 }
 
+function getDateWithoutTime(date) {
+  const dateWithoutTime = new Date(date);
+  dateWithoutTime.setHours(0, 0, 0, 0);
+  return dateWithoutTime;
+}
+
 /**
  * General datepicker component.
  */
@@ -360,10 +366,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   // Convert the date from string format to standard Date format
   modifyHolidays = () =>
@@ -384,8 +390,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
         : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -589,8 +595,18 @@ export default class DatePicker extends React.Component {
       if (!this.props.selectsRange) {
         this.setOpen(false);
       }
+
       const { startDate, endDate } = this.props;
-      if (startDate && !endDate && !isBefore(date, startDate)) {
+
+      const startDateWithoutTime = isDate(startDate)
+        ? getDateWithoutTime(startDate)
+        : null;
+      const dateWithoutTime = isDate(date) ? getDateWithoutTime(date) : null;
+      if (
+        startDate &&
+        !endDate &&
+        !isBefore(dateWithoutTime, startDateWithoutTime)
+      ) {
         this.setOpen(false);
       }
     }
@@ -653,7 +669,10 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          if (isBefore(changedDate, startDate)) {
+          const startDateWithoutTime = getDateWithoutTime(startDate);
+          const changedDateWithoutTime = getDateWithoutTime(changedDate);
+
+          if (isBefore(changedDateWithoutTime, startDateWithoutTime)) {
             onChange([changedDate, null], event);
           } else {
             onChange([startDate, changedDate], event);
@@ -1175,14 +1194,14 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(
-                this.props.startDate,
-                this.props.endDate,
-                this.props,
-              )
-            : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : this.props.selectsRange
+        ? safeDateRangeFormat(
+            this.props.startDate,
+            this.props.endDate,
+            this.props,
+          )
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {
