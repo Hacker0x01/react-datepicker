@@ -68,7 +68,7 @@ function hasPreSelectionChanged(date1, date2) {
   return date1 !== date2;
 }
 
-function getDateWithoutTime(date) {
+function getMidnightDate(date) {
   const dateWithoutTime = new Date(date);
   dateWithoutTime.setHours(0, 0, 0, 0);
   return dateWithoutTime;
@@ -599,9 +599,9 @@ export default class DatePicker extends React.Component {
       const { startDate, endDate } = this.props;
 
       const startDateWithoutTime = isDate(startDate)
-        ? getDateWithoutTime(startDate)
+        ? getMidnightDate(startDate)
         : null;
-      const dateWithoutTime = isDate(date) ? getDateWithoutTime(date) : null;
+      const dateWithoutTime = isDate(date) ? getMidnightDate(date) : null;
       if (
         startDate &&
         !endDate &&
@@ -669,8 +669,8 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          const startDateWithoutTime = getDateWithoutTime(startDate);
-          const changedDateWithoutTime = getDateWithoutTime(changedDate);
+          const startDateWithoutTime = getMidnightDate(startDate);
+          const changedDateWithoutTime = getMidnightDate(changedDate);
 
           if (isBefore(changedDateWithoutTime, startDateWithoutTime)) {
             onChange([changedDate, null], event);
