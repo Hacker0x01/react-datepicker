@@ -317,8 +317,8 @@ export function isEqual(date1, date2) {
 
 export function isDayInRange(day, startDate, endDate) {
   let valid;
-  const start = startOfDay(startDate);
-  const end = endOfDay(endDate);
+  const start = startOfDay(isBefore(startDate, endDate) ? startDate : endDate);
+  const end = endOfDay(isAfter(endDate, startDate) ? endDate : startDate);
 
   try {
     valid = isWithinInterval(day, { start, end });

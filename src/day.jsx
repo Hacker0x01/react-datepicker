@@ -200,12 +200,12 @@ export default class Day extends React.Component {
       selectsRange &&
       startDate &&
       !endDate &&
-      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
+      (isAfter(selectingDate, startDate) ||
+        isEqual(selectingDate, startDate) ||
+        isBefore(selectingDate, startDate))
     ) {
       return isDayInRange(day, startDate, selectingDate);
     }
-
-    return false;
   };
 
   isSelectingRangeStart = () => {
@@ -219,7 +219,10 @@ export default class Day extends React.Component {
     if (selectsStart) {
       return isSameDay(day, selectingDate);
     } else {
-      return isSameDay(day, startDate);
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? selectingDate : startDate,
+      );
     }
   };
 
@@ -228,11 +231,14 @@ export default class Day extends React.Component {
       return false;
     }
 
-    const { day, endDate, selectsEnd, selectsRange } = this.props;
+    const { day, endDate, startDate, selectsEnd, selectsRange } = this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (selectsEnd || selectsRange) {
-      return isSameDay(day, selectingDate);
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? startDate : selectingDate,
+      );
     } else {
       return isSameDay(day, endDate);
     }

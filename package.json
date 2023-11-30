@@ -97,7 +97,8 @@
     "webpack-cli": "^5.1",
     "webpack-dev-middleware": "^6.1.1",
     "webpack-dev-server": "^4.15",
-    "webpack-hot-middleware": "^2.25.4"
+    "webpack-hot-middleware": "^2.25.4",
+    "win-node-env": "^0.6.1"
   },
   "peerDependencies": {
     "react": "^16.9.0 || ^17 || ^18",

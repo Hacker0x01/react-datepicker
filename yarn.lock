@@ -9381,6 +9381,11 @@ wildcard@^2.0.0:
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.1.tgz#5ab10d02487198954836b6349f74fff961e10f67"
   integrity sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
 
+win-node-env@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/win-node-env/-/win-node-env-0.6.1.tgz#6684e136ec064aa4d47093899b13d4027ed2778b"
+  integrity sha512-oR+MLQ6jdvwqkLEkKBYxRvBOYbTlQV9dJKn8vLzjA4HCzcqdlCE6H1oOvA7lAdCgNXiOX0xfjl/Y47ZcZN6FDA==
+
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
