@@ -626,11 +626,12 @@ export default class Month extends React.Component {
   };
 
   getMonthContent = (m) => {
-    const { showFullMonthYearPicker, renderMonthContent, locale } = this.props;
+    const { showFullMonthYearPicker, renderMonthContent, locale, day } =
+      this.props;
     const shortMonthText = utils.getMonthShortInLocale(m, locale);
     const fullMonthText = utils.getMonthInLocale(m, locale);
     if (renderMonthContent) {
-      return renderMonthContent(m, shortMonthText, fullMonthText);
+      return renderMonthContent(m, shortMonthText, fullMonthText, day);
     }
     return showFullMonthYearPicker ? fullMonthText : shortMonthText;
   };
@@ -753,8 +754,8 @@ export default class Month extends React.Component {
         {showMonthYearPicker
           ? this.renderMonths()
           : showQuarterYearPicker
-          ? this.renderQuarters()
-          : this.renderWeeks()}
+            ? this.renderQuarters()
+            : this.renderWeeks()}
       </div>
     );
   }

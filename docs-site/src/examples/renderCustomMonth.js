@@ -1,5 +1,5 @@
 () => {
-  const renderMonthContent = (month, shortMonth, longMonth) => {
+  const renderMonthContent = (month, shortMonth, longMonth, day) => {
     const tooltipText = `Tooltip for month: ${longMonth}`;
     return <span title={tooltipText}>{shortMonth}</span>;
   };
