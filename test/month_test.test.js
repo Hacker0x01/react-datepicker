@@ -826,18 +826,22 @@ describe("Month", () => {
 
   describe("custom renders", () => {
     it("should render custom month content", () => {
-      function renderMonthContent() {
-        return <span>custom render</span>;
+      function renderMonthContent(_, __, ___, day) {
+        return <span data-day={day}>custom render</span>;
       }
+      const day = utils.newDate();
+
       const monthComponent = mount(
         <Month
-          day={utils.newDate()}
+          day={day}
           renderMonthContent={renderMonthContent}
           showMonthYearPicker
         />,
       );
       const month = monthComponent.find(".react-datepicker__month-text").at(0);
-      expect(month.find("span").at(0).text()).toBe("custom render");
+      const span = month.find("span").at(0);
+      expect(span.text()).toBe("custom render");
+      expect(span.prop("data-day")).toBe(day);
     });
 
     it("should render custom quarter content", () => {
@@ -921,7 +925,7 @@ describe("Month", () => {
           setPreSelection: setPreSelection,
           preSelection: preSelected,
           disabledKeyboardNavigation: true,
-          showQuarterYearPicker: true
+          showQuarterYearPicker: true,
         });
 
         expect(
