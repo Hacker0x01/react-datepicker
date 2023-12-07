@@ -39,6 +39,8 @@ import {
   getHolidaysMap,
   arraysAreEqual,
   startOfMinute,
+  isDateBefore,
+  getMidnightDate,
 } from "../src/date_utils";
 import setMinutes from "date-fns/setMinutes";
 import setHours from "date-fns/setHours";
@@ -1246,6 +1248,53 @@ describe("date_utils", () => {
       const expected = new Date(2020, 10, 10, 10, 10, 0); // Nov 10, 2020 10:10:00
 
       expect(startOfMinute(d)).toEqual(expected);
+    });
+  });
+
+  describe("getMidnightDate", () => {
+    it("should return a date with midnight time when a valid date is provided", () => {
+      const inputDate = new Date(2023, 0, 1, 12, 30, 45); // January 1, 2023, 12:30:45 PM
+
+      const result = getMidnightDate(inputDate);
+
+      expect(result).toEqual(new Date(2023, 0, 1, 0, 0, 0, 0)); // January 1, 2023, 00:00:00.000
+    });
+
+    it("should throw an error when an invalid date is provided", () => {
+      const invalidDate = "not a date";
+
+      expect(() => {
+        getMidnightDate(invalidDate);
+      }).toThrowError("Invalid date");
+    });
+  });
+
+  describe("isDateBefore", () => {
+    it("should return true when date is before dateToCompare", () => {
+      const date = new Date(2022, 11, 31); // December 31, 2022
+      const dateToCompare = new Date(2023, 0, 1); // January 1, 2023
+
+      const result = isDateBefore(date, dateToCompare);
+
+      expect(result).toBe(true);
+    });
+
+    it("should return false when date is not before dateToCompare", () => {
+      const date = new Date(2023, 0, 1); // January 1, 2023
+      const dateToCompare = new Date(2022, 11, 31); // December 31, 2022
+
+      const result = isDateBefore(date, dateToCompare);
+
+      expect(result).toBe(false);
+    });
+
+    it("should return false when either date or dateToCompare is not a valid date", () => {
+      const invalidDate = "not a date";
+      const validDate = new Date(2023, 0, 1); // January 1, 2023
+
+      const result = isDateBefore(invalidDate, validDate);
+
+      expect(result).toBe(false);
     });
   });
 });

@@ -862,3 +862,40 @@ export function startOfMinute(d) {
 export function isSameMinute(d1, d2) {
   return startOfMinute(d1).getTime() === startOfMinute(d2).getTime();
 }
+
+/**
+ * Returns a cloned date with midnight time (00:00:00)
+ *
+ * @param {Date} date The date for which midnight time is required
+ * @param {Date} dateToCompare the date to compare with
+ * @returns {Date} A new datetime object representing the input date with midnight time
+ */
+export function getMidnightDate(date) {
+  if (!isDate(date)) {
+    throw new Error("Invalid date");
+  }
+
+  const dateWithoutTime = new Date(date);
+  dateWithoutTime.setHours(0, 0, 0, 0);
+  return dateWithoutTime;
+}
+
+/**
+ * Is the first date before the second one?
+ *
+ * @param {Date} date The date that should be before the other one to return true
+ * @param {Date} dateToCompare The date to compare with
+ * @returns {boolean} The first date is before the second date
+ *
+ * Note:
+ *  This function considers the mid-night of the given dates for comparison.
+ *  It evaluates whether date is before dateToCompare based on their mid-night timestamps.
+ */
+export function isDateBefore(date, dateToCompare) {
+  const midnightDate = isDate(date) ? getMidnightDate(date) : null;
+  const midnightDateToCompare = isDate(dateToCompare)
+    ? getMidnightDate(dateToCompare)
+    : null;
+
+  return isBefore(midnightDate, midnightDateToCompare);
+}
