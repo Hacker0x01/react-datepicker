@@ -46,6 +46,7 @@ import {
   isMonthDisabled,
   isYearDisabled,
   getHolidaysMap,
+  isDateBefore,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -66,12 +67,6 @@ function hasPreSelectionChanged(date1, date2) {
   }
 
   return date1 !== date2;
-}
-
-function getMidnightDate(date) {
-  const dateWithoutTime = new Date(date);
-  dateWithoutTime.setHours(0, 0, 0, 0);
-  return dateWithoutTime;
 }
 
 /**
@@ -598,15 +593,7 @@ export default class DatePicker extends React.Component {
 
       const { startDate, endDate } = this.props;
 
-      const startDateWithoutTime = isDate(startDate)
-        ? getMidnightDate(startDate)
-        : null;
-      const dateWithoutTime = isDate(date) ? getMidnightDate(date) : null;
-      if (
-        startDate &&
-        !endDate &&
-        !isBefore(dateWithoutTime, startDateWithoutTime)
-      ) {
+      if (startDate && !endDate && !isDateBefore(date, startDate)) {
         this.setOpen(false);
       }
     }
@@ -669,10 +656,7 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          const startDateWithoutTime = getMidnightDate(startDate);
-          const changedDateWithoutTime = getMidnightDate(changedDate);
-
-          if (isBefore(changedDateWithoutTime, startDateWithoutTime)) {
+          if (isDateBefore(changedDate, startDate)) {
             onChange([changedDate, null], event);
           } else {
             onChange([startDate, changedDate], event);
