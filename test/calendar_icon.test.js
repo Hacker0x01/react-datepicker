@@ -61,4 +61,29 @@ describe("CalendarIcon", () => {
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
+
+  it("should fire onClick event on the click of custom icon component when provided", () => {
+    const onClickCustomIcon = jest.fn();
+
+    const { container } = render(
+      <CalendarIcon
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 48 48"
+            onClick={onClickCustomIcon}
+          />
+        }
+        onClick={onClickMock}
+      />,
+    );
+
+    const icon = container.querySelector("svg.react-datepicker__calendar-icon");
+    fireEvent.click(icon);
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
+    expect(onClickCustomIcon).toHaveBeenCalledTimes(1);
+  });
 });

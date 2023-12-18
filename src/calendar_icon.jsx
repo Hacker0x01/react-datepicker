@@ -7,6 +7,15 @@ const CalendarIcon = ({ icon, className = "", onClick }) => {
   if (React.isValidElement(icon)) {
     return React.cloneElement(icon, {
       className: `${icon.props.className || ""} ${defaultClass} ${className}`,
+      onClick: (e) => {
+        if (typeof icon.props.onClick === "function") {
+          icon.props.onClick(e);
+        }
+
+        if (typeof onClick === "function") {
+          onClick(e);
+        }
+      },
     });
   }
 
