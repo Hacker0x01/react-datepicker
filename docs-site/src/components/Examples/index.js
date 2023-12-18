@@ -102,6 +102,7 @@ import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
+import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -128,6 +129,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Icon using External Lib",
       component: CalendarIconExternal,
+    },
+    {
+      title: "Toggle Calendar open status on click of the calendar icon",
+      component: ToggleCalendarOnIconClick,
     },
     {
       title: "Calendar container",
