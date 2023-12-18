@@ -360,10 +360,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   // Convert the date from string format to standard Date format
   modifyHolidays = () =>
@@ -384,8 +384,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
         : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -711,6 +711,10 @@ export default class DatePicker extends React.Component {
         preSelection: date,
       });
     }
+  };
+
+  toggleCalendar = () => {
+    this.setOpen(!this.state.open);
   };
 
   handleTimeChange = (time) => {
@@ -1175,14 +1179,14 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(
-                this.props.startDate,
-                this.props.endDate,
-                this.props,
-              )
-            : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : this.props.selectsRange
+        ? safeDateRangeFormat(
+            this.props.startDate,
+            this.props.endDate,
+            this.props,
+          )
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {
@@ -1250,6 +1254,8 @@ export default class DatePicker extends React.Component {
 
   renderInputContainer() {
     const { showIcon, icon, calendarIconClassname } = this.props;
+    const { open } = this.state;
+
     return (
       <div
         className={`react-datepicker__input-container${
@@ -1257,7 +1263,13 @@ export default class DatePicker extends React.Component {
         }`}
       >
         {showIcon && (
-          <CalendarIcon icon={icon} className={calendarIconClassname} />
+          <CalendarIcon
+            icon={icon}
+            className={`${calendarIconClassname} ${
+              open && "react-datepicker-ignore-onclickoutside"
+            }`}
+            onClick={this.toggleCalendar}
+          />
         )}
         {this.state.isRenderAriaLiveMessage && this.renderAriaLiveRegion()}
         {this.renderDateInput()}

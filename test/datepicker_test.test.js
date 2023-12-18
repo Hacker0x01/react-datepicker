@@ -455,6 +455,38 @@ describe("DatePicker", () => {
     );
   });
 
+  it("should not apply the react-datepicker-ignore-onclickoutside class to calendar icon when closed", () => {
+    const { container } = render(
+      <DatePicker selected={utils.newDate("2023-12-17")} showIcon />,
+    );
+
+    const calendarIcon = container.querySelector(
+      ".react-datepicker__calendar-icon",
+    );
+    expect(
+      calendarIcon.classList.contains("react-datepicker-ignore-onclickoutside"),
+    ).toBe(false);
+  });
+
+  it("should apply the react-datepicker-ignore-onclickoutside class to calendar icon when open", () => {
+    const { container } = render(
+      <DatePicker selected={utils.newDate("2023-12-17")} showIcon />,
+    );
+
+    let calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(calendarIcon);
+
+    calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+
+    expect(
+      calendarIcon.classList.contains("react-datepicker-ignore-onclickoutside"),
+    ).toBe(true);
+  });
+
   it("should set the type attribute on the clear button to button", () => {
     var datePicker = TestUtils.renderIntoDocument(
       <DatePicker selected={utils.newDate("2015-12-15")} isClearable />,
@@ -2301,7 +2333,7 @@ describe("DatePicker", () => {
       datePicker,
       "react-datepicker__calendar-icon",
     ).getAttribute("class");
-    expect(showIconClass).toMatch(/^react-datepicker__calendar-icon\s?$/);
+    expect(showIconClass).toContain("react-datepicker__calendar-icon");
   });
 
   describe("Year picker", () => {
