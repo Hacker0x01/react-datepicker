@@ -455,6 +455,48 @@ describe("DatePicker", () => {
     );
   });
 
+  it("should toggle the open status of calendar on click of the icon when toggleCalendarOnIconClick is set to true", () => {
+    const { container } = render(
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        toggleCalendarOnIconClick
+      />,
+    );
+
+    const calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(calendarIcon);
+
+    const reactCalendar = container.querySelector(
+      "div.react-datepicker-popper .react-datepicker",
+    );
+
+    expect(reactCalendar).not.toBeNull();
+  });
+
+  it("should not toggle the open status of calendar on click of the icon if toggleCalendarOnIconClick is set to false", () => {
+    const { container } = render(
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        toggleCalendarOnIconClick={false}
+      />,
+    );
+
+    const calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(calendarIcon);
+
+    const reactCalendar = container.querySelector(
+      "div.react-datepicker-popper .react-datepicker",
+    );
+
+    expect(reactCalendar).toBeNull();
+  });
+
   it("should not apply the react-datepicker-ignore-onclickoutside class to calendar icon when closed", () => {
     const { container } = render(
       <DatePicker selected={utils.newDate("2023-12-17")} showIcon />,
@@ -470,7 +512,11 @@ describe("DatePicker", () => {
 
   it("should apply the react-datepicker-ignore-onclickoutside class to calendar icon when open", () => {
     const { container } = render(
-      <DatePicker selected={utils.newDate("2023-12-17")} showIcon />,
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        toggleCalendarOnIconClick
+      />,
     );
 
     let calendarIcon = container.querySelector(

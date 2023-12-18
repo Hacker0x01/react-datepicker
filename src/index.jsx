@@ -129,6 +129,7 @@ export default class DatePicker extends React.Component {
       excludeScrollbar: true,
       customTimeInput: null,
       calendarStartDay: undefined,
+      toggleCalendarOnIconClick: false,
     };
   }
 
@@ -183,6 +184,7 @@ export default class DatePicker extends React.Component {
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
+    toggleCalendarOnIconClick: PropTypes.func,
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     calendarIconClassname: PropTypes.string,
@@ -1253,7 +1255,8 @@ export default class DatePicker extends React.Component {
   };
 
   renderInputContainer() {
-    const { showIcon, icon, calendarIconClassname } = this.props;
+    const { showIcon, icon, calendarIconClassname, toggleCalendarOnIconClick } =
+      this.props;
     const { open } = this.state;
 
     return (
@@ -1268,7 +1271,11 @@ export default class DatePicker extends React.Component {
             className={`${calendarIconClassname} ${
               open && "react-datepicker-ignore-onclickoutside"
             }`}
-            onClick={this.toggleCalendar}
+            {...(toggleCalendarOnIconClick
+              ? {
+                  onClick: this.toggleCalendar,
+                }
+              : null)}
           />
         )}
         {this.state.isRenderAriaLiveMessage && this.renderAriaLiveRegion()}
