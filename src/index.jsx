@@ -946,6 +946,7 @@ export default class DatePicker extends React.Component {
     } else {
       this.props.onChange(null, event);
     }
+    this.setState({ monthSelectedIn: 0 });
     this.setState({ inputValue: null });
   };
 
