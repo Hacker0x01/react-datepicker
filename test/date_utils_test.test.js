@@ -26,7 +26,7 @@ import {
   isTimeInDisabledRange,
   isDayInRange,
   parseDate,
-  isMonthinRange,
+  isMonthInRange,
   isQuarterInRange,
   isYearInRange,
   getStartOfYear,
@@ -974,13 +974,13 @@ describe("date_utils", () => {
     });
   });
 
-  describe("isMonthinRange", () => {
+  describe("isMonthInRange", () => {
     it("should return true if the month passed is in range", () => {
       const day = newDate("2015-02-01");
       const startDate = newDate("2015-01-01");
       const endDate = newDate("2015-08-01");
 
-      expect(isMonthinRange(startDate, endDate, 4, day)).toBe(true);
+      expect(isMonthInRange(startDate, endDate, 4, day)).toBe(true);
     });
 
     it("should return false if the month passed is not in range", () => {
@@ -988,7 +988,7 @@ describe("date_utils", () => {
       const startDate = newDate("2015-01-01");
       const endDate = newDate("2015-08-01");
 
-      expect(isMonthinRange(startDate, endDate, 9, day)).toBe(false);
+      expect(isMonthInRange(startDate, endDate, 9, day)).toBe(false);
     });
 
     it("should return true if the month passed is in range and maxDate +1 year", () => {
@@ -996,7 +996,7 @@ describe("date_utils", () => {
       const startDate = newDate("2019-06-04");
       const endDate = newDate("2020-02-01");
 
-      expect(isMonthinRange(startDate, endDate, 5, day)).toBe(true);
+      expect(isMonthInRange(startDate, endDate, 5, day)).toBe(true);
     });
   });
 
