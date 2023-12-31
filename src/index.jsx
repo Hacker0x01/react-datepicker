@@ -38,6 +38,7 @@ import {
   getYear,
   getMonth,
   getStartOfWeek,
+  getEndOfWeek,
   registerLocale,
   setDefaultLocale,
   getDefaultLocale,
@@ -877,10 +878,14 @@ export default class DatePicker extends React.Component {
           newSelection = addMonths(copy, 1);
           break;
         case "Home":
-          newSelection = subYears(copy, 1);
+          newSelection = getStartOfWeek(
+            copy,
+            this.props.locale,
+            this.props.calendarStartDay,
+          );
           break;
         case "End":
-          newSelection = addYears(copy, 1);
+          newSelection = getEndOfWeek(copy);
           break;
         default:
           newSelection = null;

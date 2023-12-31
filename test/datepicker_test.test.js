@@ -854,25 +854,25 @@ describe("DatePicker", () => {
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
   it("should handle onDayKeyDown End", () => {
-    var data = getOnInputKeyDownStuff();
+    const data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
     TestUtils.Simulate.keyDown(
       getSelectedDayNode(data.datePicker),
       getKey("End"),
     );
-    data.copyM = utils.addYears(data.copyM, 1);
+    data.copyM = utils.getEndOfWeek(data.copyM);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
   it("should handle onDayKeyDown Home", () => {
-    var data = getOnInputKeyDownStuff();
+    const data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
     TestUtils.Simulate.keyDown(
       getSelectedDayNode(data.datePicker),
       getKey("Home"),
     );
-    data.copyM = utils.subYears(data.copyM, 1);
+    data.copyM = utils.getStartOfWeek(data.copyM);
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
@@ -2036,21 +2036,6 @@ describe("DatePicker", () => {
       TestUtils.Simulate.keyDown(
         getSelectedDayNode(datePickerInline),
         getKey("PageDown"),
-      );
-      expect(datePickerInline.state.shouldFocusDayInline).toBe(true);
-    });
-
-    it("should be set to true when changing displayed month with End key", () => {
-      const datePickerInline = TestUtils.renderIntoDocument(
-        <DatePicker
-          selected={utils.newDate("2020-11-15")}
-          dateFormat={dateFormat}
-          inline
-        />,
-      );
-      TestUtils.Simulate.keyDown(
-        getSelectedDayNode(datePickerInline),
-        getKey("End"),
       );
       expect(datePickerInline.state.shouldFocusDayInline).toBe(true);
     });
