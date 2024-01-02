@@ -580,7 +580,7 @@ describe("date_utils", () => {
     });
 
     it("should be disabled if in excluded dates", () => {
-      const day = newDate();
+      const day = newDate(`${year}-02-01`);
       expect(isYearDisabled(year, { excludeDates: [day] })).toBe(true);
     });
 
