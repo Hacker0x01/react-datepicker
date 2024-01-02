@@ -147,6 +147,7 @@
 | `timeIntervals`                 | `number`                       | `30`                       |             |
 | `title`                         | `string`                       |                            |             |
 | `todayButton`                   | `node`                         |                            |             |
+| `toggleCalendarOnIconClick`     | `func`                         | `false`                    |             |
 | `useShortMonthInDropdown`       | `bool`                         |                            |             |
 | `useWeekdaysShort`              | `bool`                         |                            |             |
 | `value`                         | `string`                       |                            |             |
