@@ -56,6 +56,7 @@ export default class Day extends React.Component {
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
     calendarStartDay: PropTypes.number,
+    excludeDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   };
 
   componentDidMount() {
@@ -326,12 +327,22 @@ export default class Day extends React.Component {
 
   // A function to return the holiday's name as title's content
   getTitle = () => {
-    const { day, holidays = new Map() } = this.props;
+    const { day, holidays = new Map(), excludeDates } = this.props;
     const compareDt = formatDate(day, "MM.dd.yyyy");
     if (holidays.has(compareDt)) {
       return holidays.get(compareDt).holidayNames.length > 0
         ? holidays.get(compareDt).holidayNames.join(", ")
         : "";
+    }
+    if (this.isExcluded()) {
+      if (excludeDates) {
+        const excludeDate = excludeDates.find((excludeDate) =>
+          isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+        );
+        if (excludeDate) {
+          return excludeDate.message ? excludeDate.message : "";
+        }
+      }
     }
     return "";
   };
@@ -423,7 +434,7 @@ export default class Day extends React.Component {
     >
       {this.renderDayContents()}
       {this.getTitle() !== "" && (
-        <span className="holiday-overlay">{this.getTitle()}</span>
+        <span className="overlay">{this.getTitle()}</span>
       )}
     </div>
   );
