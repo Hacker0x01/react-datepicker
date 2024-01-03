@@ -160,8 +160,8 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 - _Down_: Move to the next week.
 - _PgUp_: Move to the previous month.
 - _PgDn_: Move to the next month.
-- _Home_: Move to the previous year.
-- _End_: Move to the next year.
+- _Home_: Move to the first day (e.g Sunday) of the current week.
+- _End_: Move to the last day (e.g. Saturday) of the current week.
 - _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
 
 #### For month picker
