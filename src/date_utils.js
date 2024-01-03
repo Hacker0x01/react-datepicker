@@ -459,7 +459,7 @@ export function isMonthDisabled(
   );
 }
 
-export function isMonthinRange(startDate, endDate, m, day) {
+export function isMonthInRange(startDate, endDate, m, day) {
   const startDateYear = getYear(startDate);
   const startDateMonth = getMonth(startDate);
   const endDateYear = getYear(endDate);

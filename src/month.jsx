@@ -191,15 +191,15 @@ export default class Month extends React.Component {
     }
 
     if (selectsStart && endDate) {
-      return utils.isMonthinRange(selectingDate, endDate, m, day);
+      return utils.isMonthInRange(selectingDate, endDate, m, day);
     }
 
     if (selectsEnd && startDate) {
-      return utils.isMonthinRange(startDate, selectingDate, m, day);
+      return utils.isMonthInRange(startDate, selectingDate, m, day);
     }
 
     if (selectsRange && startDate && !endDate) {
-      return utils.isMonthinRange(startDate, selectingDate, m, day);
+      return utils.isMonthInRange(startDate, selectingDate, m, day);
     }
 
     return false;
@@ -532,7 +532,7 @@ export default class Month extends React.Component {
           utils.getMonth(preSelection) === m,
         "react-datepicker__month-text--in-selecting-range":
           this.isInSelectingRangeMonth(m),
-        "react-datepicker__month-text--in-range": utils.isMonthinRange(
+        "react-datepicker__month-text--in-range": utils.isMonthInRange(
           startDate,
           endDate,
           m,
@@ -626,11 +626,12 @@ export default class Month extends React.Component {
   };
 
   getMonthContent = (m) => {
-    const { showFullMonthYearPicker, renderMonthContent, locale } = this.props;
+    const { showFullMonthYearPicker, renderMonthContent, locale, day } =
+      this.props;
     const shortMonthText = utils.getMonthShortInLocale(m, locale);
     const fullMonthText = utils.getMonthInLocale(m, locale);
     if (renderMonthContent) {
-      return renderMonthContent(m, shortMonthText, fullMonthText);
+      return renderMonthContent(m, shortMonthText, fullMonthText, day);
     }
     return showFullMonthYearPicker ? fullMonthText : shortMonthText;
   };
@@ -753,8 +754,8 @@ export default class Month extends React.Component {
         {showMonthYearPicker
           ? this.renderMonths()
           : showQuarterYearPicker
-          ? this.renderQuarters()
-          : this.renderWeeks()}
+            ? this.renderQuarters()
+            : this.renderWeeks()}
       </div>
     );
   }
