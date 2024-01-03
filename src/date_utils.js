@@ -892,10 +892,12 @@ export function getMidnightDate(date) {
  *  It evaluates whether date is before dateToCompare based on their mid-night timestamps.
  */
 export function isDateBefore(date, dateToCompare) {
-  const midnightDate = isDate(date) ? getMidnightDate(date) : null;
-  const midnightDateToCompare = isDate(dateToCompare)
-    ? getMidnightDate(dateToCompare)
-    : null;
+  if (!isDate(date) || !isDate(dateToCompare)) {
+    throw new Error("Invalid date received");
+  }
+
+  const midnightDate = getMidnightDate(date);
+  const midnightDateToCompare = getMidnightDate(dateToCompare);
 
   return isBefore(midnightDate, midnightDateToCompare);
 }

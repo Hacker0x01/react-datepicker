@@ -1288,13 +1288,13 @@ describe("date_utils", () => {
       expect(result).toBe(false);
     });
 
-    it("should return false when either date or dateToCompare is not a valid date", () => {
-      const invalidDate = "not a date";
-      const validDate = new Date(2023, 0, 1); // January 1, 2023
+    it("should throw an error when either date or dateToCompare is not a valid date", () => {
+      expect(() => {
+        const invalidDate = "not a date";
+        const validDate = new Date(2023, 0, 1); // January 1, 2023
 
-      const result = isDateBefore(invalidDate, validDate);
-
-      expect(result).toBe(false);
+        isDateBefore(invalidDate, validDate);
+      }).toThrowError();
     });
   });
 });
