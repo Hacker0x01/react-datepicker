@@ -76,7 +76,6 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
-    arrowProps: PropTypes.object,
     chooseDayAriaLabelPrefix: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.node,
@@ -1074,13 +1073,11 @@ export default class Calendar extends React.Component {
   render() {
     const Container = this.props.container || CalendarContainer;
     return (
-      <div style={{display: 'contents'}} ref={this.containerRef}>
+      <div style={{ display: "contents" }} ref={this.containerRef}>
         <Container
           className={classnames("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly,
           })}
-          showPopperArrow={this.props.showPopperArrow}
-          arrowProps={this.props.arrowProps}
         >
           {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}

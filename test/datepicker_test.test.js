@@ -10,7 +10,7 @@ import DatePicker, { registerLocale } from "../src/index.jsx";
 import Day from "../src/day.jsx";
 import WeekNumber from "../src/week_number.jsx";
 import TestWrapper from "./test_wrapper.jsx";
-import PopperComponent from "../src/popper_component.jsx";
+import { PopperComponent } from "../src/popper_component.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils.js";
 import Month from "../src/month.jsx";
@@ -1694,12 +1694,12 @@ describe("DatePicker", () => {
     var node = findDOMNode(dateInput);
     TestUtils.Simulate.click(node);
 
-    const arrow = TestUtils.scryRenderedDOMComponentsWithClass(
-      datePicker.calendar,
+    const arrow = TestUtils.findRenderedDOMComponentWithClass(
+      datePicker,
       "react-datepicker__triangle",
     );
 
-    expect(Object.keys(arrow)).not.toHaveLength(0);
+    expect(arrow).not.toBeNull();
   });
 
   it("should not show the popper arrow when showPopperArrow is false", () => {
