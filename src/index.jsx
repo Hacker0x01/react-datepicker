@@ -46,6 +46,7 @@ import {
   isMonthDisabled,
   isYearDisabled,
   getHolidaysMap,
+  isDateBefore,
 } from "./date_utils";
 import TabLoop from "./tab_loop";
 import onClickOutside from "react-onclickoutside";
@@ -591,8 +592,10 @@ export default class DatePicker extends React.Component {
       if (!this.props.selectsRange) {
         this.setOpen(false);
       }
+
       const { startDate, endDate } = this.props;
-      if (startDate && !endDate && !isBefore(date, startDate)) {
+
+      if (startDate && !endDate && !isDateBefore(date, startDate)) {
         this.setOpen(false);
       }
     }
@@ -655,7 +658,7 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          if (isBefore(changedDate, startDate)) {
+          if (isDateBefore(changedDate, startDate)) {
             onChange([changedDate, null], event);
           } else {
             onChange([startDate, changedDate], event);

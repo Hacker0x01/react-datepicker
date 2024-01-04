@@ -4,7 +4,7 @@ import { findDOMNode } from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import { enUS, enGB } from "date-fns/locale";
 import { mount } from "enzyme";
-import { render, fireEvent } from "@testing-library/react";
+import { render, act, waitFor, fireEvent } from "@testing-library/react";
 import defer from "lodash/defer";
 import DatePicker, { registerLocale } from "../src/index.jsx";
 import Day from "../src/day.jsx";
@@ -42,6 +42,18 @@ function goToLastMonth(datePicker) {
   )[0];
 
   TestUtils.Simulate.click(findDOMNode(lastMonthButton));
+}
+
+function formatDayWithZeros(day) {
+  const dayString = day.toString();
+
+  if (dayString.length === 1) {
+    return `00${dayString}`;
+  }
+  if (dayString.length === 2) {
+    return `0${dayString}`;
+  }
+  return dayString;
 }
 
 describe("DatePicker", () => {
@@ -2018,6 +2030,94 @@ describe("DatePicker", () => {
       expect(Array.isArray(onChangeSpy.mock.calls[0][0])).toBe(true);
       expect(onChangeSpy.mock.calls[0][0][0]).toBeNull();
       expect(onChangeSpy.mock.calls[0][0][1]).toBeNull();
+    });
+
+    it("should call the onChange even when the startDate and the endDate is same in the range (case when we programmatically set the startDate, but set the same endDate through UI)", async () => {
+      let startDate = new Date();
+      let endDate = null;
+
+      const onChangeSpy = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChangeSpy}
+          shouldCloseOnSelect
+          selectsRange
+        />,
+      );
+
+      const input = container.querySelector("input");
+      expect(input).toBeTruthy();
+      fireEvent.click(input);
+
+      let calendar = container.querySelector(".react-datepicker");
+      expect(calendar).toBeTruthy();
+
+      // Select the same date as the start date
+      const startDatePrefixedWithZeros = formatDayWithZeros(
+        startDate.getDate(),
+      );
+      const endDateElement = container.querySelector(
+        `.react-datepicker__day--${startDatePrefixedWithZeros}`,
+      );
+      fireEvent.click(endDateElement);
+
+      await act(async () => {
+        await waitFor(() => {
+          expect(onChangeSpy).toHaveBeenCalled();
+        });
+      });
+    });
+
+    it("should hide the calendar even when the startDate and the endDate is same in the range", async () => {
+      let startDate = new Date();
+      let endDate = null;
+
+      const onCalendarCloseSpy = jest.fn();
+
+      const onChange = (dates) => {
+        const [start, end] = dates;
+        startDate = start;
+        endDate = end;
+      };
+
+      const { container } = render(
+        <DatePicker
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          onCalendarClose={onCalendarCloseSpy}
+          shouldCloseOnSelect
+          selectsRange
+        />,
+      );
+
+      const input = container.querySelector("input");
+      expect(input).toBeTruthy();
+      fireEvent.click(input);
+
+      let calendar = container.querySelector(".react-datepicker");
+      expect(calendar).toBeTruthy();
+
+      // Select the same date as the start date
+      const startDatePrefixedWithZeros = formatDayWithZeros(
+        startDate.getDate(),
+      );
+      const endDateElement = container.querySelector(
+        `.react-datepicker__day--${startDatePrefixedWithZeros}`,
+      );
+      fireEvent.click(endDateElement);
+
+      await act(async () => {
+        await waitFor(() => {
+          calendar = container.querySelector(".react-datepicker");
+          expect(calendar).toBeFalsy();
+
+          expect(onCalendarCloseSpy).toHaveBeenCalled();
+        });
+      });
     });
   });
 
