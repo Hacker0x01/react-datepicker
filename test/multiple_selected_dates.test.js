@@ -1,22 +1,6 @@
 import React from "react";
 import DatePicker from "../src";
-import { mount } from "enzyme";
 import TestUtils from "react-dom/test-utils";
-
-function getSelectedDaysNode(datePicker) {
-  return datePicker.calendar.componentNode.querySelectorAll(
-    '.react-datepicker__day[tabindex="0"]',
-  );
-}
-
-function findSelectedDays(datePicker, targetDate) {
-  const days = TestUtils.scryRenderedComponentsWithType(datePicker, Day);
-  return days.filter(
-    (d) =>
-      utils.formatDate(d.props.day, "yyyy-MM-dd") ===
-      utils.formatDate(targetDate, "yyyy-MM-dd"),
-  );
-}
 
 describe("Multiple Dates Selected", function () {
   function getDatePicker(extraProps) {
