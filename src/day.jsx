@@ -329,22 +329,22 @@ export default class Day extends React.Component {
   getTitle = () => {
     const { day, holidays = new Map(), excludeDates } = this.props;
     const compareDt = formatDate(day, "MM.dd.yyyy");
+    const titles = [];
     if (holidays.has(compareDt)) {
-      return holidays.get(compareDt).holidayNames.length > 0
-        ? holidays.get(compareDt).holidayNames.join(", ")
-        : "";
+      titles.push(...holidays.get(compareDt).holidayNames);
     }
     if (this.isExcluded()) {
       if (excludeDates) {
-        const excludeDate = excludeDates.find((excludeDate) =>
-          isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+        titles.push(
+          excludeDates
+            ?.filter((excludeDate) =>
+              isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+            )
+            .map((excludeDate) => excludeDate.message),
         );
-        if (excludeDate) {
-          return excludeDate.message ? excludeDate.message : "";
-        }
       }
     }
-    return "";
+    return titles.join(", ");
   };
 
   getTabIndex = (selected, preSelection) => {
