@@ -15,7 +15,8 @@
     "dist",
     "lib",
     "es",
-    "src/stylesheets"
+    "src/stylesheets",
+    "src"
   ],
   "sideEffects": [
     "**/*.css"
