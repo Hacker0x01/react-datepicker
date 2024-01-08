@@ -409,7 +409,9 @@ export function isDayDisabled(
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
-      excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
+      excludeDates.some((excludeDate) =>
+        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate),
+      )) ||
     (excludeDateIntervals &&
       excludeDateIntervals.some(({ start, end }) =>
         isWithinInterval(day, { start, end }),
@@ -436,7 +438,9 @@ export function isDayExcluded(
   }
   return (
     (excludeDates &&
-      excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
+      excludeDates.some((excludeDate) =>
+        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate),
+      )) ||
     false
   );
 }
