@@ -85,7 +85,7 @@ export default class MonthDropdown extends React.Component {
     const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
         ? (M) => utils.getMonthShortInLocale(M, this.props.locale)
-        : (M) => utils.getMonthInLocale(M, this.props.locale)
+        : (M) => utils.getMonthInLocale(M, this.props.locale),
     );
 
     let renderedDropdown;

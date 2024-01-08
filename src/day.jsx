@@ -14,6 +14,7 @@ import {
   isBefore,
   isAfter,
   getDayOfWeekCode,
+  getStartOfWeek,
   formatDate,
 } from "./date_utils";
 
@@ -26,6 +27,7 @@ export default class Day extends React.Component {
     dayClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     highlightDates: PropTypes.instanceOf(Map),
+    holidays: PropTypes.instanceOf(Map),
     inline: PropTypes.bool,
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
@@ -37,6 +39,8 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
+    showWeekNumber: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
     selectsMultiple: PropTypes.bool,
     selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
@@ -45,7 +49,7 @@ export default class Day extends React.Component {
     handleOnKeyDown: PropTypes.func,
     containerRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+      PropTypes.shape({ current: PropTypes.object }),
     ]),
     monthShowsDuplicateDaysEnd: PropTypes.bool,
     monthShowsDuplicateDaysStart: PropTypes.bool,
@@ -53,6 +57,8 @@ export default class Day extends React.Component {
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
+    calendarStartDay: PropTypes.number,
+    excludeDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   };
 
   componentDidMount() {
@@ -99,9 +105,12 @@ export default class Day extends React.Component {
       );
       return !isSelectedDate && this.isSameDay(this.props.preSelection);
     } else {
-      return (
-        !this.isSameDay(this.props.selected) &&
-        this.isSameDay(this.props.preSelection)
+      return !(
+        this.isSameDay(this.props.selected) ||
+        this.isSameWeek(this.props.selected)
+      ) && (
+        this.isSameDay(this.props.preSelection) ||
+        this.isSameWeek(this.props.preSelection)
       );
     }
   };
@@ -110,7 +119,28 @@ export default class Day extends React.Component {
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
 
-  getHighLightedClass = (defaultClassName) => {
+  isStartOfWeek = () =>
+    isSameDay(
+      this.props.day,
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
+    );
+
+  isSameWeek = (other) =>
+    this.props.showWeekPicker &&
+    isSameDay(
+      other,
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
+    );
+
+  getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
 
     if (!highlightDates) {
@@ -120,6 +150,19 @@ export default class Day extends React.Component {
     // Looking for className in the Map of {'day string, 'className'}
     const dayStr = formatDate(day, "MM.dd.yyyy");
     return highlightDates.get(dayStr);
+  };
+
+  // Function to return the array containing classname associated to the date
+  getHolidaysClass = () => {
+    const { day, holidays } = this.props;
+    if (!holidays) {
+      return false;
+    }
+    const dayStr = formatDate(day, "MM.dd.yyyy");
+    // Looking for className in the Map of {day string: {className, holidayName}}
+    if (holidays.has(dayStr)) {
+      return [holidays.get(dayStr).className];
+    }
   };
 
   isInRange = () => {
@@ -245,13 +288,13 @@ export default class Day extends React.Component {
   };
 
   isCurrentDay = () => this.isSameDay(newDate());
-
+ 
   isSelected = () => {
     if (this.props.selectsMultiple && this.props.selectedDates) {
       return this.props.selectedDates.some((date) => this.isSameDay(date));
     }
-    return this.isSameDay(this.props.selected);
-  };
+    return this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected);
+  }; 
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
@@ -279,7 +322,8 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted")
+      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHolidaysClass(),
     );
   };
 
@@ -298,13 +342,37 @@ export default class Day extends React.Component {
     return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
   };
 
+  // A function to return the holiday's name as title's content
+  getTitle = () => {
+    const { day, holidays = new Map(), excludeDates } = this.props;
+    const compareDt = formatDate(day, "MM.dd.yyyy");
+    const titles = [];
+    if (holidays.has(compareDt)) {
+      titles.push(...holidays.get(compareDt).holidayNames);
+    }
+    if (this.isExcluded()) {
+      titles.push(
+        excludeDates
+          ?.filter((excludeDate) =>
+            isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+          )
+          .map((excludeDate) => excludeDate.message),
+      );
+    }
+    return titles.join(", ");
+  };
+
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
     const preSelectionDay = preSelection || this.props.preSelection;
-
     const tabIndex =
-      this.isKeyboardSelected() ||
-      (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+      !(
+        this.props.showWeekPicker &&
+        (this.props.showWeekNumber || !this.isStartOfWeek())
+      ) &&
+      (this.isKeyboardSelected() ||
+        (this.isSameDay(selectedDay) &&
+          isSameDay(preSelectionDay, selectedDay)))
         ? 0
         : -1;
 
@@ -351,7 +419,7 @@ export default class Day extends React.Component {
       }
     }
 
-    shouldFocusDay && this.dayEl.current.focus({ preventScroll: true });
+    shouldFocusDay && this.dayEl.current?.focus({ preventScroll: true });
   };
 
   renderDayContents = () => {
@@ -374,11 +442,15 @@ export default class Day extends React.Component {
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="option"
+      title={this.getTitle()}
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
-      aria-selected={this.isSelected()}
+      aria-selected={this.isSelected() || this.isInRange()}
     >
       {this.renderDayContents()}
+      {this.getTitle() !== "" && (
+        <span className="overlay">{this.getTitle()}</span>
+      )}
     </div>
   );
 }

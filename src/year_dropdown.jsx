@@ -4,7 +4,7 @@ import YearDropdownOptions from "./year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
 import { getYear } from "./date_utils";
 
-var WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
+const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
 
 export default class YearDropdown extends React.Component {
   static propTypes = {
@@ -34,7 +34,7 @@ export default class YearDropdown extends React.Component {
       options.push(
         <option key={i} value={i}>
           {i}
-        </option>
+        </option>,
       );
     }
     return options;
@@ -105,7 +105,7 @@ export default class YearDropdown extends React.Component {
         if (this.props.adjustDateOnChange) {
           this.handleYearChange(this.props.date, event);
         }
-      }
+      },
     );
   };
 

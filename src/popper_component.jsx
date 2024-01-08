@@ -1,20 +1,16 @@
 import classnames from "classnames";
 import React from "react";
 import PropTypes from "prop-types";
-import { Manager, Reference, Popper } from "react-popper";
-import { placements } from "@popperjs/core/lib";
+import { FloatingArrow } from "@floating-ui/react";
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
+import withFloating from "./with_floating";
 
-export const popperPlacementPositions = placements;
-
-export default class PopperComponent extends React.Component {
+// Exported for testing purposes
+export class PopperComponent extends React.Component {
   static get defaultProps() {
     return {
       hidePopper: true,
-      popperModifiers: [],
-      popperProps: {},
-      popperPlacement: "bottom-start",
     };
   }
 
@@ -23,13 +19,12 @@ export default class PopperComponent extends React.Component {
     wrapperClassName: PropTypes.string,
     hidePopper: PropTypes.bool,
     popperComponent: PropTypes.element,
-    popperModifiers: PropTypes.arrayOf(PropTypes.object), // <datepicker/> props
-    popperPlacement: PropTypes.oneOf(popperPlacementPositions), // <datepicker/> props
     popperContainer: PropTypes.func,
     popperProps: PropTypes.object,
     targetComponent: PropTypes.element,
     enableTabLoop: PropTypes.bool,
     popperOnKeyDown: PropTypes.func,
+    showArrow: PropTypes.bool,
     portalId: PropTypes.string,
     portalHost: PropTypes.instanceOf(ShadowRoot),
   };
@@ -40,14 +35,13 @@ export default class PopperComponent extends React.Component {
       wrapperClassName,
       hidePopper,
       popperComponent,
-      popperModifiers,
-      popperPlacement,
-      popperProps,
       targetComponent,
       enableTabLoop,
       popperOnKeyDown,
       portalId,
       portalHost,
+      popperProps,
+      showArrow,
     } = this.props;
 
     let popper;
@@ -55,24 +49,29 @@ export default class PopperComponent extends React.Component {
     if (!hidePopper) {
       const classes = classnames("react-datepicker-popper", className);
       popper = (
-        <Popper
-          modifiers={popperModifiers}
-          placement={popperPlacement}
-          {...popperProps}
-        >
-          {({ ref, style, placement, arrowProps }) => (
-            <TabLoop enableTabLoop={enableTabLoop}>
-              <div
-                {...{ ref, style }}
-                className={classes}
-                data-placement={placement}
-                onKeyDown={popperOnKeyDown}
-              >
-                {React.cloneElement(popperComponent, { arrowProps })}
-              </div>
-            </TabLoop>
-          )}
-        </Popper>
+        <TabLoop enableTabLoop={enableTabLoop}>
+          <div
+            ref={popperProps.refs.setFloating}
+            style={popperProps.floatingStyles}
+            className={classes}
+            data-placement={popperProps.placement}
+            onKeyDown={popperOnKeyDown}
+          >
+            {popperComponent}
+            {showArrow && (
+              <FloatingArrow
+                ref={popperProps.arrowRef}
+                context={popperProps.context}
+                fill="currentColor"
+                strokeWidth={1}
+                height={8}
+                width={16}
+                style={{ transform: "translateY(-1px)" }}
+                className="react-datepicker__triangle"
+              />
+            )}
+          </div>
+        </TabLoop>
       );
     }
 
@@ -90,20 +89,18 @@ export default class PopperComponent extends React.Component {
 
     const wrapperClasses = classnames(
       "react-datepicker-wrapper",
-      wrapperClassName
+      wrapperClassName,
     );
 
     return (
-      <Manager className="react-datepicker-manager">
-        <Reference>
-          {({ ref }) => (
-            <div ref={ref} className={wrapperClasses}>
-              {targetComponent}
-            </div>
-          )}
-        </Reference>
+      <React.Fragment>
+        <div ref={popperProps.refs.setReference} className={wrapperClasses}>
+          {targetComponent}
+        </div>
         {popper}
-      </Manager>
+      </React.Fragment>
     );
   }
 }
+
+export default withFloating(PopperComponent);

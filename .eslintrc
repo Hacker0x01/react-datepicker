@@ -5,7 +5,8 @@
   },
 
   "plugins": [
-    "react"
+    "react",
+    "unused-imports"
   ],
 
   "parserOptions": {
@@ -16,9 +17,15 @@
     }
   },
 
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
 
   "rules": {
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+        "warn",
+        { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
     "react/display-name": 2,
     "react/forbid-prop-types": 0,
     "react/jsx-boolean-value": 2,
@@ -42,6 +49,13 @@
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,
     "react/self-closing-comp": 2,
-    "react/sort-comp": 2,
+    "react/sort-comp": 2
+  },
+
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
   }
 }

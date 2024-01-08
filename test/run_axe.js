@@ -8,7 +8,7 @@ export function runAxe(domNode) {
   return axe
     .run(domNode)
     .then(({ violations }) => {
-      assert(violations.length === 0, JSON.stringify(violations, null, 2));
+      expect(violations).toHaveLength(0);
     })
     .finally(() => wrapper.removeChild(domNode));
 }

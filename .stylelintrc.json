@@ -1,11 +1,16 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": ["stylelint-config-standard", "stylelint-config-standard-scss"],
 
   "plugins": ["stylelint-scss"],
 
   "rules": {
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
+    "scss/dollar-variable-pattern": null,
+    "scss/at-import-partial-extension": null,
+    "scss/no-global-function-names": null,
+    "scss/percent-placeholder-pattern": null,
+    "media-feature-range-notation": null,
     "no-descending-specificity": null,
     "selector-class-pattern": null,
     "property-no-vendor-prefix": null,

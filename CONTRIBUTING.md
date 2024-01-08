@@ -8,9 +8,12 @@ We have a handful of Cucumber features, but most of our testbed consists of RSpe
 
 ## Submitting changes
 
-Please send a [GitHub Pull Request](https://github.com/Hacker0x01/react-datepicker/pull/new/master) with a clear list of what you've done (read more about [pull requests](https://help.github.com/articles/about-pull-requests/)). When you send a pull request, we will love you forever if you include a test to cover your changes. We can always use more test coverage.
+Please send a [GitHub Pull Request](https://github.com/Hacker0x01/react-datepicker/pull/new/main) with a clear list of what you've done (read more about [pull requests](https://help.github.com/articles/about-pull-requests/)). When you send a pull request, we will love you forever if you include a test to cover your changes. We can always use more test coverage.
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 \$ git commit -m "A summary of the commit > > A paragraph describing what changed and its impact."
+
+All pull requests are reviewed with :heart: by [PullRequest](https://www.pullrequest.com/).
+The GitHub user persona will be displayed as "pullrequest (bot)" but the written contents are from a human software engineer. You can respond to these comments as if they were any other GitHub user. More [here](https://docs.pullrequest.com/customer-documentation/assign-code-review-to-pull-request-network/collaborating-with-pullrequest-reviewers#addressing-pullrequest-reviewers-in-comments).
 
 ## Coding conventions
 
@@ -25,11 +28,16 @@ Start reading our code, and you'll get the hang of it. We optimize for readabili
 Local development configuration is pretty snappy. Here's how to get set up:
 
 1. Install/use node >=16.0.0
+1. Install/use yarn <=1.x.x
 1. Run `yarn link` from project root
 1. Run `cd docs-site && yarn link react-datepicker`
 1. Run `yarn install` from project root
 1. Run `yarn build` from project root (at least the first time, this will get you the `dist` directory that holds the code that will be linked to)
-1. Run `yarn start` from project root
+1. Run `yarn start` from project root. (This command launches a documentation app and runs it as a simple webserver at http://localhost:3000.)
 1. Open new terminal window
+1. Run `yarn build-dev` from project root. (This command sets up a development environment that keeps an eye on any file changes. When a file is updated, it auto-builds using the latest code.)
+
+You can run `yarn test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
+
 1. After each JS change run `yarn build:js` in project root
 1. After each SCSS change run `yarn run css:dev && yarn run css:modules:dev` in project root

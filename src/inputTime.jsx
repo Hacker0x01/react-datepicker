@@ -31,9 +31,14 @@ export default class inputTime extends React.Component {
 
   onTimeChange = (time) => {
     this.setState({ time });
-    const date = new Date();
+
+    const { date: propDate } = this.props;
+    const isPropDateValid = propDate instanceof Date && !isNaN(propDate);
+    const date = isPropDateValid ? propDate : new Date();
+
     date.setHours(time.split(":")[0]);
     date.setMinutes(time.split(":")[1]);
+
     this.props.onChange(date);
   };
 

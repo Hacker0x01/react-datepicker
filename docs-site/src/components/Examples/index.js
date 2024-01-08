@@ -28,9 +28,11 @@ import Locale from "../../examples/locale";
 import LocaleWithTime from "../../examples/localeWithTime";
 import LocaleWithoutGlobalVariable from "../../examples/localeWithoutGlobalVariable";
 import ExcludeDates from "../../examples/excludeDates";
+import ExcludedWithMessage from "../../examples/excludeDatesWithMessage";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
+import HolidayDates from "../../examples/holidayDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
 import IncludeDates from "../../examples/includeDates";
 import IncludeDateIntervals from "../../examples/includeDateIntervals";
@@ -44,7 +46,7 @@ import DisabledKeyboardNavigation from "../../examples/disabledKeyboardNavigatio
 import ReadOnly from "../../examples/readOnly";
 import ClearInput from "../../examples/clearInput";
 import OnBlurCallbacks from "../../examples/onBlurCallbacks";
-import ConfigurePopper from "../../examples/configurePopper";
+import ConfigureFloatingUI from "../../examples/configureFloatingUI";
 import Portal from "../../examples/portal";
 import PortalById from "../../examples/portalById";
 import WithPortalById from "../../examples/withPortalById";
@@ -72,10 +74,13 @@ import DontCloseOnSelect from "../../examples/dontCloseOnSelect";
 import RenderCustomHeader from "../../examples/renderCustomHeader";
 import RenderCustomHeaderTwoMonths from "../../examples/renderCustomHeaderTwoMonths";
 import RenderCustomDay from "../../examples/renderCustomDay";
+import RenderCustomMonth from "../../examples/renderCustomMonth";
+import RenderCustomQuarter from "../../examples/renderCustomQuarter";
+import RenderCustomYear from "../../examples/renderCustomYear";
 import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
-import YearPicker from "../../examples/yearPicker";
+import WeekPicker from "../../examples/weekPicker";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -84,6 +89,9 @@ import RangeMonthPickerSelectsRange from "../../examples/rangeMonthPickerSelects
 import QuarterPicker from "../../examples/quarterPicker";
 import RangeQuarterPicker from "../../examples/rangeQuarterPicker";
 import RangeQuarterPickerSelectsRange from "../../examples/rangeQuarterPickerSelectsRange";
+import YearPicker from "../../examples/yearPicker";
+import RangeYearPicker from "../../examples/rangeYearPicker";
+import RangeYearPickerSelectsRange from "../../examples/rangeYearPickerSelectsRange";
 import OnCalendarChangeStateCallbacks from "../../examples/onCalendarOpenStateCallbacks";
 import CustomTimeInput from "../../examples/customTimeInput";
 import CloseOnScroll from "../../examples/closeOnScroll";
@@ -94,6 +102,9 @@ import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
 import SelectsMultiple from "../../examples/selectsMultiple";
+import CalendarIconExternal from "../../examples/calendarIconExternal";
+import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
+import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -112,6 +123,18 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Icon",
       component: CalendarIcon,
+    },
+    {
+      title: "Calendar Icon using React Svg Component",
+      component: CalendarIconSvgIcon,
+    },
+    {
+      title: "Calendar Icon using External Lib",
+      component: CalendarIconExternal,
+    },
+    {
+      title: "Toggle Calendar open status on click of the calendar icon",
+      component: ToggleCalendarOnIconClick,
     },
     {
       title: "Calendar container",
@@ -138,17 +161,18 @@ export default class exampleComponents extends React.Component {
       component: CloseOnScrollCallback,
     },
     {
-      title: "Configure Popper Properties",
-      component: ConfigurePopper,
+      title: "Configure Floating UI Properties",
+      component: ConfigureFloatingUI,
       description: (
         <div>
-          Full docs for the popper can be found at{" "}
+          Full docs for the underlying library that manages the overlay used can
+          be found at{" "}
           <a
-            href="https://popper.js.org"
+            href="https://floating-ui.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            popper.js.org
+            floating-ui.com
           </a>
         </div>
       ),
@@ -168,6 +192,18 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom Day",
       component: RenderCustomDay,
+    },
+    {
+      title: "Custom Month",
+      component: RenderCustomMonth,
+    },
+    {
+      title: "Custom Quarter",
+      component: RenderCustomQuarter,
+    },
+    {
+      title: "Custom Year",
+      component: RenderCustomYear,
     },
     {
       title: "Custom calendar class name",
@@ -238,6 +274,10 @@ export default class exampleComponents extends React.Component {
       component: ExcludeDates,
     },
     {
+      title: "Exclude dates with message",
+      component: ExcludedWithMessage,
+    },
+    {
       title: "Exclude date intervals",
       component: ExcludeDateIntervals,
     },
@@ -272,6 +312,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Highlight dates with custom class names and ranges",
       component: HighlightDatesRanges,
+    },
+    {
+      title: "Holiday dates",
+      component: HolidayDates,
     },
     {
       title: "Include dates",
@@ -462,6 +506,14 @@ export default class exampleComponents extends React.Component {
       component: YearPicker,
     },
     {
+      title: "Range Year Picker",
+      component: RangeYearPicker,
+    },
+    {
+      title: "Range Year Picker for one datepicker",
+      component: RangeYearPickerSelectsRange,
+    },
+    {
       title: "Year dropdown",
       component: YearDropdown,
     },
@@ -476,6 +528,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Calendar Start day",
       component: CalendarStartDay,
+    },
+    {
+      title: "Week Picker",
+      component: WeekPicker,
     },
     {
       title: "External Form",
@@ -506,7 +562,7 @@ export default class exampleComponents extends React.Component {
                 onClick={(e) =>
                   this.handleAnchorClick(
                     e,
-                    `example-${slugify(example.title, { lower: true })}`
+                    `example-${slugify(example.title, { lower: true })}`,
                   )
                 }
               >

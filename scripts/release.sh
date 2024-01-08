@@ -2,7 +2,7 @@
 
 set -e
 
-git checkout master
+git checkout main
 
 git pull
 
