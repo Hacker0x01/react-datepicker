@@ -334,15 +334,13 @@ export default class Day extends React.Component {
       titles.push(...holidays.get(compareDt).holidayNames);
     }
     if (this.isExcluded()) {
-      if (excludeDates) {
-        titles.push(
-          excludeDates
-            ?.filter((excludeDate) =>
-              isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
-            )
-            .map((excludeDate) => excludeDate.message),
-        );
-      }
+      titles.push(
+        excludeDates
+          ?.filter((excludeDate) =>
+            isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+          )
+          .map((excludeDate) => excludeDate.message),
+      );
     }
     return titles.join(", ");
   };
