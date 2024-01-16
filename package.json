@@ -85,7 +85,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-uglify": "^6.0.4",
     "sass": "1.69.7",
-    "sass-loader": "^13.3.2",
+    "sass-loader": "^14.0.0",
     "slugify": "^1.6.6",
     "style-loader": "^3.3.3",
     "stylelint": "^15.10.1",
