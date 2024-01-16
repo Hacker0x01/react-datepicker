@@ -931,6 +931,21 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
+  it("should handle onDayKeyDown Shift+PageUp", () => {
+    const data = getOnInputKeyDownStuff();
+
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("PageUp", true),
+    );
+
+    data.copyM = utils.subYears(data.copyM, 1);
+
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+  });
   it("should handle onDayKeyDown PageDown", () => {
     var data = getOnInputKeyDownStuff();
     TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
@@ -939,6 +954,21 @@ describe("DatePicker", () => {
       getKey("PageDown"),
     );
     data.copyM = utils.addMonths(data.copyM, 1);
+    expect(
+      utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+  });
+  it("should handle onDayKeyDown Shift+PageDown", () => {
+    const data = getOnInputKeyDownStuff();
+
+    TestUtils.Simulate.keyDown(data.nodeInput, getKey("ArrowDown"));
+    TestUtils.Simulate.keyDown(
+      getSelectedDayNode(data.datePicker),
+      getKey("PageDown", true),
+    );
+
+    data.copyM = utils.addYears(data.copyM, 1);
+
     expect(
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));

@@ -159,7 +159,9 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 - _Up_: Move to the previous week.
 - _Down_: Move to the next week.
 - _PgUp_: Move to the previous month.
+- _Shift+PgUp_: Move to the same day and month of the previous year. If that day does not exist, moves focus to the last day of the month.
 - _PgDn_: Move to the next month.
+- _Shift+PgDn_: Move to the same day and month of the next year. If that day does not exist, moves focus to the last day of the month.
 - _Home_: Move to the first day (e.g Sunday) of the current week.
 - _End_: Move to the last day (e.g. Saturday) of the current week.
 - _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)

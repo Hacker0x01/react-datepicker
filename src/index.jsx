@@ -26,6 +26,8 @@ import {
   subDays,
   subMonths,
   subWeeks,
+  addYears,
+  subYears,
   isDayDisabled,
   isDayInRange,
   getEffectiveMinDate,
@@ -363,10 +365,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-      ? this.props.startDate
-      : this.props.selectsStart && this.props.endDate
-      ? this.props.endDate
-      : newDate();
+        ? this.props.startDate
+        : this.props.selectsStart && this.props.endDate
+          ? this.props.endDate
+          : newDate();
 
   // Convert the date from string format to standard Date format
   modifyHolidays = () =>
@@ -387,8 +389,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
         : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
-        ? maxDate
-        : defaultPreSelection;
+          ? maxDate
+          : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -843,6 +845,7 @@ export default class DatePicker extends React.Component {
   onDayKeyDown = (event) => {
     this.props.onKeyDown(event);
     const eventKey = event.key;
+    const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
     if (eventKey === "Enter") {
@@ -880,10 +883,14 @@ export default class DatePicker extends React.Component {
           newSelection = addWeeks(copy, 1);
           break;
         case "PageUp":
-          newSelection = subMonths(copy, 1);
+          newSelection = isShiftKeyActive
+            ? subYears(copy, 1)
+            : subMonths(copy, 1);
           break;
         case "PageDown":
-          newSelection = addMonths(copy, 1);
+          newSelection = isShiftKeyActive
+            ? addYears(copy, 1)
+            : addMonths(copy, 1);
           break;
         case "Home":
           newSelection = getStartOfWeek(
@@ -1187,14 +1194,14 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-        ? this.state.inputValue
-        : this.props.selectsRange
-        ? safeDateRangeFormat(
-            this.props.startDate,
-            this.props.endDate,
-            this.props,
-          )
-        : safeDateFormat(this.props.selected, this.props);
+          ? this.state.inputValue
+          : this.props.selectsRange
+            ? safeDateRangeFormat(
+                this.props.startDate,
+                this.props.endDate,
+                this.props,
+              )
+            : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {
