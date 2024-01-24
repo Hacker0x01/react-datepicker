@@ -141,7 +141,10 @@ export function isValid(date, minDate) {
 
 export function formatDate(date, formatStr, locale) {
   if (locale === "en") {
-    return format(date, formatStr, { awareOfUnicodeTokens: true });
+    return format(date, formatStr, {
+      useAdditionalWeekYearTokens: true,
+      useAdditionalDayOfYearTokens: true,
+    });
   }
   let localeObj = getLocaleObject(locale);
   if (locale && !localeObj) {
@@ -158,7 +161,8 @@ export function formatDate(date, formatStr, locale) {
   }
   return format(date, formatStr, {
     locale: localeObj ? localeObj : null,
-    awareOfUnicodeTokens: true,
+    useAdditionalWeekYearTokens: true,
+    useAdditionalDayOfYearTokens: true,
   });
 }
 
