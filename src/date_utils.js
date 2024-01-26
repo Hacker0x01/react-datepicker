@@ -82,6 +82,8 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     dateFormat.forEach((df) => {
       let tryParseDate = parse(value, df, new Date(), {
         locale: localeObject,
+        useAdditionalWeekYearTokens: true,
+        useAdditionalDayOfYearTokens: true,
       });
       if (strictParsing) {
         strictParsingValueMatch =
@@ -95,7 +97,11 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
+  parsedDate = parse(value, dateFormat, new Date(), {
+    locale: localeObject,
+    useAdditionalWeekYearTokens: true,
+    useAdditionalDayOfYearTokens: true,
+  });
 
   if (strictParsing) {
     strictParsingValueMatch =
@@ -117,7 +123,10 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date());
+      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date(), {
+        useAdditionalWeekYearTokens: true,
+        useAdditionalDayOfYearTokens: true,
+      });
     }
 
     if (!isValid(parsedDate)) {
