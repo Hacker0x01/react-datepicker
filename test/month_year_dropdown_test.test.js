@@ -10,7 +10,7 @@ import {
   isAfter,
   registerLocale,
 } from "../src/date_utils.js";
-import fi from "date-fns/locale/fi";
+import { fi } from "date-fns/locale/fi";
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown;

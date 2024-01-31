@@ -14,8 +14,8 @@ import MonthYearDropdown from "../src/month_year_dropdown";
 import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
 import * as utils from "../src/date_utils";
-import eo from "date-fns/locale/eo";
-import fi from "date-fns/locale/fi";
+import { eo } from "date-fns/locale/eo";
+import { fi } from "date-fns/locale/fi";
 import { isSunday } from "date-fns";
 
 // TODO Possibly rename

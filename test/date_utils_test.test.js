@@ -42,10 +42,10 @@ import {
   isDateBefore,
   getMidnightDate,
 } from "../src/date_utils";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
-import addQuarters from "date-fns/addQuarters";
-import ptBR from "date-fns/locale/pt-BR";
+import { setMinutes } from "date-fns/setMinutes";
+import { setHours } from "date-fns/setHours";
+import { addQuarters } from "date-fns/addQuarters";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { registerLocale } from "../src/date_utils";
 import { addYears } from "date-fns";
 
@@ -249,15 +249,15 @@ describe("date_utils", () => {
       ).toBe(true);
     });
 
-    it("should throw error if excluded date interval is invalid", () => {
+    it("should be enabled and normalize negative intervals correctly", () => {
       const day = newDate();
-      expect(() =>
+      expect(
         isDayDisabled(day, {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
         }),
-      ).toThrow("Invalid interval");
+      ).toBe(true);
     });
 
     it("should be enabled if excluded date interval is empty", () => {
@@ -366,15 +366,15 @@ describe("date_utils", () => {
       ).toBe(false);
     });
 
-    it("should throw error if excluded date interval is invalid", () => {
+    it("should be enabled and normalize negative intervals correctly", () => {
       const day = newDate();
-      expect(() =>
+      expect(
         isDayExcluded(day, {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
         }),
-      ).toThrow("Invalid interval");
+      ).toBe(true);
     });
 
     it("should not be excluded if in excluded dates and not within excluded date intervals", () => {
@@ -852,12 +852,12 @@ describe("date_utils", () => {
       expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(true);
     });
 
-    it("should not throw an exception if max time is before min time", () => {
+    it("should correctly handle max time is before min time", () => {
       const date = newDate("2016-03-15");
       const time = setHours(setMinutes(date, 30), 10);
       const minTime = setHours(setMinutes(date, 30), 5);
       const maxTime = setHours(setMinutes(date, 30), 0);
-      expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(false);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(true);
     });
   });
 
@@ -890,11 +890,11 @@ describe("date_utils", () => {
       expect(isDayInRange(day, startDate, endDate)).toBe(false);
     });
 
-    it("should not throw exception if end date is before start date", () => {
+    it("should correctly handle max time is before min time", () => {
       const day = newDate("2016-02-01 09:40");
       const startDate = newDate("2016-02-15 09:40");
       const endDate = newDate("2016-01-15 08:40");
-      expect(isDayInRange(day, startDate, endDate)).toBe(false);
+      expect(isDayInRange(day, startDate, endDate)).toBe(true);
     });
   });
 

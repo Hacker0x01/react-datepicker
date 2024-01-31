@@ -4,9 +4,9 @@ import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
 import { mount } from "enzyme";
 import { getMonthInLocale, registerLocale } from "../src/date_utils";
-import zh_cn from "date-fns/locale/zh-CN";
-import el from "date-fns/locale/el";
-import ru from "date-fns/locale/ru";
+import { zhCN } from "date-fns/locale/zh-CN";
+import { el } from "date-fns/locale/el";
+import { ru } from "date-fns/locale/ru";
 
 describe("MonthDropdown", () => {
   let monthDropdown;
@@ -206,7 +206,7 @@ describe("MonthDropdown", () => {
     });
 
     it("renders month options with specified locale", () => {
-      registerLocale("zh-cn", zh_cn);
+      registerLocale("zh-cn", zhCN);
       monthDropdown = getMonthDropdown({
         dropdownMode: "select",
         locale: "zh-cn",

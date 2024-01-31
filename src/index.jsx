@@ -6,10 +6,10 @@ import Portal from "./portal";
 import PopperComponent from "./popper_component";
 import { popperPlacementPositions } from "./with_floating";
 import classnames from "classnames";
-import set from "date-fns/set";
-import startOfDay from "date-fns/startOfDay";
-import endOfDay from "date-fns/endOfDay";
-import isValid from "date-fns/isValid";
+import { set } from "date-fns/set";
+import { startOfDay } from "date-fns/startOfDay";
+import { endOfDay } from "date-fns/endOfDay";
+import { isValid } from "date-fns/isValid";
 import {
   newDate,
   isDate,

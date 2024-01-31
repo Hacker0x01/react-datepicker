@@ -2,7 +2,7 @@ import React from "react";
 import { mount } from "enzyme";
 import TimeComponent from "../src/time";
 import * as utils from "../src/date_utils";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { waitFor } from "@testing-library/react";
 
 describe("TimeComponent", () => {
