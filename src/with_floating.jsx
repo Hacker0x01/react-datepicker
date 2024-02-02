@@ -25,22 +25,29 @@ export const popperPlacementPositions = [
 
 export default function withFloating(Component) {
   const WithFloating = (props) => {
+    const alt_props = {
+      ...props,
+      popperModifiers: props.popperModifiers || [],
+      popperProps: props.popperProps || {},
+      hidePopper:
+        typeof props.hidePopper === "boolean" ? props.hidePopper : true,
+    };
     const arrowRef = React.useRef();
     const floatingProps = useFloating({
-      open: !props.hidePopper,
+      open: !alt_props.hidePopper,
       whileElementsMounted: autoUpdate,
-      placement: props.popperPlacement,
+      placement: alt_props.popperPlacement,
       middleware: [
         flip({ padding: 15 }),
         offset(10),
         arrow({ element: arrowRef }),
-        ...props.popperModifiers,
+        ...alt_props.popperModifiers,
       ],
-      ...props.popperProps,
+      ...alt_props.popperProps,
     });
 
     return (
-      <Component {...props} popperProps={{ ...floatingProps, arrowRef }} />
+      <Component {...alt_props} popperProps={{ ...floatingProps, arrowRef }} />
     );
   };
 
@@ -49,12 +56,6 @@ export default function withFloating(Component) {
     popperModifiers: PropTypes.arrayOf(PropTypes.object),
     popperProps: PropTypes.object,
     hidePopper: PropTypes.bool,
-  };
-
-  WithFloating.defaultProps = {
-    popperModifiers: [],
-    popperProps: {},
-    hidePopper: true,
   };
 
   return WithFloating;
