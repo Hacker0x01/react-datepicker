@@ -997,7 +997,7 @@ describe("DatePicker", () => {
       utils.formatDate(data.datePicker.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
-  it("should call onMonthchange when keyboard navigation moves preSelection to different month", () => {
+  it("should call onMonthChange when keyboard navigation moves preSelection to different month", () => {
     var onMonthChangeSpy = jest.fn();
     var opts = { onMonthChange: onMonthChangeSpy };
     var data = getOnInputKeyDownStuff(opts);
@@ -1335,13 +1335,13 @@ describe("DatePicker", () => {
     );
   });
 
-  it("should autofocus the input given the autoFocus prop", () => {
+  it("should autoFocus the input given the autoFocus prop", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
     ReactDOM.render(<DatePicker autoFocus />, div);
     expect(div.querySelector("input")).toBe(document.activeElement);
   });
-  it("should autofocus the input when calling the setFocus method", () => {
+  it("should autoFocus the input when calling the setFocus method", () => {
     var div = document.createElement("div");
     document.body.appendChild(div);
     var datePicker = ReactDOM.render(<DatePicker />, div);
