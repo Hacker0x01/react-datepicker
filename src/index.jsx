@@ -695,7 +695,7 @@ export default class DatePicker extends React.Component {
       }
       const dateStartOfDay = startOfDay(date);
       if (hasMinDate && hasMaxDate) {
-        // isDayinRange uses startOfDay internally, so not necessary to manipulate times here
+        // isDayInRange uses startOfDay internally, so not necessary to manipulate times here
         isValidDateSelection = isDayInRange(
           date,
           this.props.minDate,
