@@ -80,7 +80,7 @@ describe("YearPicker", () => {
     expect(ariaCurrent).toBeUndefined();
   });
 
-  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
+  it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
     const yearComponent = mount(
       <Year
         date={utils.newDate("2020-01-01")}

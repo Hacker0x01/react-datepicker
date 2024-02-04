@@ -185,7 +185,7 @@ describe("Month", () => {
     expect(utils.getMonth(monthClicked)).toBe(6);
   });
 
-  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
+  it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
     const monthComponent = mount(
       <Month
         day={utils.newDate("2015-12-01")}
@@ -699,7 +699,7 @@ describe("Month", () => {
     expect(utils.getQuarter(quarterClicked)).toBe(4);
   });
 
-  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
+  it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
     const monthComponent = mount(
       <Month
         day={utils.newDate("2015-12-01")}
