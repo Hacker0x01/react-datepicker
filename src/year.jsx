@@ -245,6 +245,12 @@ export default class Year extends React.Component {
             this.onYearClick(ev, y);
           }}
           onKeyDown={(ev) => {
+            const SPACE_KEY = " ";
+            if (ev.key === SPACE_KEY) {
+              ev.preventDefault();
+              ev.key = "Enter";
+            }
+
             this.onYearKeyDown(ev, y);
           }}
           tabIndex={this.getYearTabIndex(y)}

@@ -1509,6 +1509,38 @@ describe("Month", () => {
       );
     });
 
+    it("should select March when Space is pressed", () => {
+      const SPACE_KEY = " ";
+      let preSelected = false;
+      let selectedDate = null;
+      const setPreSelection = () => {
+        preSelected = true;
+      };
+      const setSelectedDate = (param) => {
+        selectedDate = param;
+      };
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-02-01"),
+        day: utils.newDate("2015-02-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-02-01"),
+        onDayClick: setSelectedDate,
+      });
+
+      monthComponent
+        .find(".react-datepicker__month-1")
+        .simulate("keydown", getKey("ArrowLeft"));
+      monthComponent
+        .find(".react-datepicker__month-2")
+        .simulate("keydown", getKey(SPACE_KEY));
+
+      expect(preSelected).toBe(true);
+      expect(selectedDate.toString()).toBe(
+        utils.newDate("2015-03-01").toString(),
+      );
+    });
+
     it("should prevent navigation to disabled month", () => {
       let preSelected = utils.newDate("2015-08-01");
       const setPreSelection = (param) => {
