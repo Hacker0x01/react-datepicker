@@ -917,3 +917,8 @@ export function isDateBefore(date, dateToCompare) {
 
   return isBefore(midnightDate, midnightDateToCompare);
 }
+
+export function isSpaceKeyDown(event) {
+  const SPACE_KEY = " ";
+  return event.key === SPACE_KEY;
+}
