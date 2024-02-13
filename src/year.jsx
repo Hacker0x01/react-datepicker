@@ -245,8 +245,7 @@ export default class Year extends React.Component {
             this.onYearClick(ev, y);
           }}
           onKeyDown={(ev) => {
-            const SPACE_KEY = " ";
-            if (ev.key === SPACE_KEY) {
+            if (utils.isSpaceKeyDown(ev)) {
               ev.preventDefault();
               ev.key = "Enter";
             }
