@@ -599,7 +599,7 @@ describe("YearPicker", () => {
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
 
-    it("should select 2021 when Enter key is pressed", () => {
+    it("should select 2021 when Space key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
 
       const target = TestUtils.findRenderedDOMComponentWithClass(
