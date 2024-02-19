@@ -2595,9 +2595,9 @@ available-typed-arrays@^1.0.5:
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
 axe-core@^4.4.1:
-  version "4.8.3"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.3.tgz#205df863dd9917d5979e9435dab4d47692759051"
-  integrity sha512-d5ZQHPSPkF9Tw+yfyDcRoUOc4g/8UloJJe5J8m4L5+c7AtDdjDLRxew/knnI4CxvtdxEUVgWz4x3OIQUIFiMfw==
+  version "4.8.4"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.4.tgz#90db39a2b316f963f00196434d964e6e23648643"
+  integrity sha512-CZLSKisu/bhJ2awW4kJndluz2HLZYIHh5Uy1+ZwDRkJi69811xgIXXfdU9HSLX0Th+ILrHj8qfL/5wzamsFtQg==
 
 babel-code-frame@^6.26.0:
   version "6.26.0"
