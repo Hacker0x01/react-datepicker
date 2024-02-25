@@ -29,6 +29,7 @@ export default class Year extends React.Component {
     includeDates: PropTypes.array,
     filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
+    handleOnKeyDown: PropTypes.func,
   };
 
   constructor(props) {
@@ -157,6 +158,8 @@ export default class Year extends React.Component {
 
   onYearKeyDown = (e, y) => {
     const { key } = e;
+    const { handleOnKeyDown } = this.props;
+
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
         case "Enter":
@@ -177,6 +180,8 @@ export default class Year extends React.Component {
           break;
       }
     }
+
+    handleOnKeyDown && handleOnKeyDown(e);
   };
 
   getYearClassNames = (y) => {

@@ -1,6 +1,8 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Month from "../src/month";
 import Day from "../src/day";
+import DatePicker from "../src";
 import range from "lodash/range";
 import { mount, shallow } from "enzyme";
 import * as utils from "../src/date_utils";
@@ -934,6 +936,29 @@ describe("Month", () => {
             .hasClass("react-datepicker__quarter-text--keyboard-selected"),
         ).toBe(false);
       });
+    });
+
+    it("should call onKeyDown handler on any key press", () => {
+      const onKeyDownSpy = jest.fn();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={new Date()}
+          dateFormat="MM/yyyy"
+          showMonthYearPicker
+          onKeyDown={onKeyDownSpy}
+        />,
+      );
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+
+      const month = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__month-0",
+      );
+      TestUtils.Simulate.keyDown(month, {
+        key: "ArrowDown",
+      });
+      expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
   });
 

@@ -597,6 +597,32 @@ describe("YearPicker", () => {
       TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
+    it("should call onKeyDown handler on any key press", () => {
+      const onKeyDownSpy = jest.fn();
+
+      const datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          selected={new Date()}
+          showYearPicker
+          dateFormat="yyyy"
+          onKeyDown={onKeyDownSpy}
+        />,
+      );
+      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+
+      const yearPicker = TestUtils.findRenderedDOMComponentWithClass(
+        datePicker,
+        "react-datepicker__year-wrapper",
+      );
+
+      const year = yearPicker.children[0];
+      TestUtils.Simulate.keyDown(year, {
+        key: "ArrowDown",
+      });
+
+      expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
+    });
+
     it("should disable keyboard navigation", () => {
       const yearPicker = getPicker("2021-01-01", {
         disabledKeyboardNavigation: true,
