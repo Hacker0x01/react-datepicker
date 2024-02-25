@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 
 describe("Multiple Dates Selected", function () {
   function getDatePicker(extraProps) {
-    return TestUtils.renderIntoDocument(
+    return render(
       <DatePicker
         selectsMultiple
         onChange={() => {}}
