@@ -21,7 +21,7 @@ describe("Multiple Dates Selected", function () {
       selectedDates: [new Date("2024/01/01"), new Date("2024/01/15")],
     });
 
-    expect(datePicker.input.value).toBe("01/01/2024, 01/15/2024");
+    expect(datePicker.getByRole("textbox").value).toBe("01/01/2024, 01/15/2024");
   });
 
   
