@@ -113,6 +113,7 @@ export default class Month extends React.Component {
     showQuarterYearPicker: PropTypes.bool,
     showWeekPicker: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
+    handleOnMonthKeyDown: PropTypes.func,
     isInputFocused: PropTypes.bool,
     weekAriaLabelPrefix: PropTypes.string,
     containerRef: PropTypes.oneOfType([
@@ -400,6 +401,7 @@ export default class Month extends React.Component {
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
       setPreSelection,
+      handleOnMonthKeyDown,
     } = this.props;
     const eventKey = event.key;
     if (eventKey !== "Tab") {
@@ -451,6 +453,8 @@ export default class Month extends React.Component {
           break;
       }
     }
+
+    handleOnMonthKeyDown && handleOnMonthKeyDown(event);
   };
 
   onQuarterClick = (e, q) => {

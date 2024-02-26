@@ -894,6 +894,7 @@ export default class Calendar extends React.Component {
             monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnDayKeyDown}
+            handleOnMonthKeyDown={this.props.handleOnKeyDown}
             onDayMouseEnter={this.handleDayMouseEnter}
             onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}

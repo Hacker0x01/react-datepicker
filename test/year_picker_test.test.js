@@ -4,6 +4,7 @@ import DatePicker from "../src/index.jsx";
 import Year from "../src/year.jsx";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
+import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
 import Calendar from "../src/calendar.jsx";
 import { getKey } from "./test_utils.js";
@@ -597,6 +598,30 @@ describe("YearPicker", () => {
 
       TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
       expect(utils.getYear(selectedDay)).toBe(2021);
+    });
+
+    it("should call onKeyDown handler on any key press", () => {
+      const onKeyDownSpy = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selected={new Date()}
+          showYearPicker
+          dateFormat="yyyy"
+          onKeyDown={onKeyDownSpy}
+        />,
+      );
+
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
+
+      const year = container.querySelector(".react-datepicker__year-text");
+
+      fireEvent.keyDown(year, {
+        key: "ArrowDown",
+      });
+
+      expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should select 2021 when Space key is pressed", () => {
