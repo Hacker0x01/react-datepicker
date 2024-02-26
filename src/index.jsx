@@ -681,18 +681,16 @@ export default class DatePicker extends React.Component {
           onChange([changedDate, null], event);
         }
       } else if (selectsMultiple) {
-        const noSelectedDates = !selectedDates || selectedDates.length === 0;
-
-        if (noSelectedDates) {
+        if (!selectedDates?.length) {
           onChange([changedDate], event);
         } else {
           const isChangedDateAlreadySelected = selectedDates.some(
-            (selectedDate) => isSameDay(selectedDate, changedDate)
+            (selectedDate) => isSameDay(selectedDate, changedDate),
           );
 
           if (isChangedDateAlreadySelected) {
             const nextDates = selectedDates.filter(
-              (selectedDate) => !isSameDay(selectedDate, changedDate)
+              (selectedDate) => !isSameDay(selectedDate, changedDate),
             );
 
             onChange(nextDates, event);

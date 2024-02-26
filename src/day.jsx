@@ -100,19 +100,24 @@ export default class Day extends React.Component {
       return false;
     }
     if (this.props.selectsMultiple) {
-      const isSelectedDate = (this.props.selectedDates || []).some((date) =>
-        this.isSameDay(date)
+      const isSelectedDate = (this.props.selectedDates || []).some(
+        (date) => this.isSameDay(date) || this.isSameWeek(date),
       );
-      return !isSelectedDate && this.isSameDay(this.props.preSelection);
-    } else {
-      return !(
-        this.isSameDay(this.props.selected) ||
-        this.isSameWeek(this.props.selected)
-      ) && (
-        this.isSameDay(this.props.preSelection) ||
-        this.isSameWeek(this.props.preSelection)
+      return (
+        !isSelectedDate &&
+        (this.isSameDay(this.props.preSelection) ||
+          this.isSameWeek(this.props.preSelection))
       );
     }
+
+    return (
+      !(
+        this.isSameDay(this.props.selected) ||
+        this.isSameWeek(this.props.selected)
+      ) &&
+      (this.isSameDay(this.props.preSelection) ||
+        this.isSameWeek(this.props.preSelection))
+    );
   };
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
@@ -288,13 +293,21 @@ export default class Day extends React.Component {
   };
 
   isCurrentDay = () => this.isSameDay(newDate());
- 
+
   isSelected = () => {
-    if (this.props.selectsMultiple && this.props.selectedDates) {
-      return this.props.selectedDates.some((date) => this.isSameDay(date));
+    if (this.props.selectsMultiple) {
+      return (
+        this.props.selectedDates?.some(
+          (date) =>
+            this.isSameDay(date) || this.isSameWeek(this.props.selected),
+        ) ?? false
+      );
     }
-    return this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected);
-  }; 
+    return (
+      this.isSameDay(this.props.selected) ||
+      this.isSameWeek(this.props.selected)
+    );
+  };
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName

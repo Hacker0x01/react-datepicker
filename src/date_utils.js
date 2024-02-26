@@ -198,7 +198,7 @@ export function safeDateRangeFormat(startDate, endDate, props) {
 }
 
 export function safeMultipleDatesFormat(dates, props) {
-  if (!dates || !dates.length) {
+  if (!dates?.length) {
     return "";
   }
   const formattedFirstDate = safeDateFormat(dates[0], props);
