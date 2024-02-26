@@ -1275,10 +1275,14 @@ export default class DatePicker extends React.Component {
       clearButtonTitle,
       clearButtonClassName = "",
       ariaLabelClose = "Close",
+      selectedDates,
     } = this.props;
     if (
       isClearable &&
-      (selected != null || startDate != null || endDate != null)
+      (selected != null ||
+        startDate != null ||
+        endDate != null ||
+        selectedDates?.length)
     ) {
       return (
         <button
