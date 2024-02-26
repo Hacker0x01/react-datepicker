@@ -6,6 +6,7 @@ import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import * as utils from "../src/date_utils.js";
 import Calendar from "../src/calendar.jsx";
+import { getKey } from "./test_utils.js";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
@@ -597,6 +598,7 @@ describe("YearPicker", () => {
       TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
+
     it("should call onKeyDown handler on any key press", () => {
       const onKeyDownSpy = jest.fn();
 
@@ -621,6 +623,19 @@ describe("YearPicker", () => {
       });
 
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should select 2021 when Space key is pressed", () => {
+      const yearPicker = getPicker("2021-01-01");
+
+      const target = TestUtils.findRenderedDOMComponentWithClass(
+        yearPicker,
+        "react-datepicker__year-text--selected",
+      );
+
+      const SPACE_KEY = " ";
+      TestUtils.Simulate.keyDown(target, getKey(SPACE_KEY));
+      expect(utils.getYear(selectedDay)).toBe(2021);
     });
 
     it("should disable keyboard navigation", () => {

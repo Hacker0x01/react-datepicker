@@ -673,6 +673,11 @@ export default class Month extends React.Component {
               this.onMonthClick(ev, m);
             }}
             onKeyDown={(ev) => {
+              if (utils.isSpaceKeyDown(ev)) {
+                ev.preventDefault();
+                ev.key = "Enter";
+              }
+
               this.onMonthKeyDown(ev, m);
             }}
             onMouseEnter={() => this.onMonthMouseEnter(m)}
