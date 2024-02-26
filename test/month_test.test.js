@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render, fireEvent } from "@testing-library/react";
 import Month from "../src/month";
 import Day from "../src/day";
 import DatePicker from "../src";
@@ -941,7 +941,7 @@ describe("Month", () => {
     it("should call onKeyDown handler on any key press", () => {
       const onKeyDownSpy = jest.fn();
 
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={new Date()}
           dateFormat="MM/yyyy"
@@ -949,15 +949,16 @@ describe("Month", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
 
-      const month = TestUtils.findRenderedDOMComponentWithClass(
-        datePicker,
-        "react-datepicker__month-0",
-      );
-      TestUtils.Simulate.keyDown(month, {
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
+
+      const month = container.querySelector(".react-datepicker__month-0");
+
+      fireEvent.keyDown(month, {
         key: "ArrowDown",
       });
+
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
   });

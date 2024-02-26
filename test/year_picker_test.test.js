@@ -4,6 +4,7 @@ import DatePicker from "../src/index.jsx";
 import Year from "../src/year.jsx";
 import TestUtils from "react-dom/test-utils";
 import ReactDOM from "react-dom";
+import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
 import Calendar from "../src/calendar.jsx";
 import { getKey } from "./test_utils.js";
@@ -602,7 +603,7 @@ describe("YearPicker", () => {
     it("should call onKeyDown handler on any key press", () => {
       const onKeyDownSpy = jest.fn();
 
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={new Date()}
           showYearPicker
@@ -610,15 +611,13 @@ describe("YearPicker", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
 
-      const yearPicker = TestUtils.findRenderedDOMComponentWithClass(
-        datePicker,
-        "react-datepicker__year-wrapper",
-      );
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
 
-      const year = yearPicker.children[0];
-      TestUtils.Simulate.keyDown(year, {
+      const year = container.querySelector(".react-datepicker__year-text");
+
+      fireEvent.keyDown(year, {
         key: "ArrowDown",
       });
 
