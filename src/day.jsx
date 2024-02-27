@@ -101,10 +101,9 @@ export default class Day extends React.Component {
     }
 
     if (this.props.selectsMultiple) {
-      const isSelectedDate =
-        this.props.selectedDates?.some(
-          (date) => this.isSameDay(date) || this.isSameWeek(date),
-        ) ?? false;
+      const isSelectedDate = this.props.selectedDates?.some(
+        (date) => this.isSameDay(date) || this.isSameWeek(date),
+      );
 
       return (
         !isSelectedDate &&
@@ -299,11 +298,8 @@ export default class Day extends React.Component {
 
   isSelected = () => {
     if (this.props.selectsMultiple) {
-      return (
-        this.props.selectedDates?.some(
-          (date) =>
-            this.isSameDay(date) || this.isSameWeek(this.props.selected),
-        ) ?? false
+      return this.props.selectedDates?.some(
+        (date) => this.isSameDay(date) || this.isSameWeek(this.props.selected),
       );
     }
     return (
