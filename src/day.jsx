@@ -99,10 +99,13 @@ export default class Day extends React.Component {
     if (this.props.disabledKeyboardNavigation) {
       return false;
     }
+
     if (this.props.selectsMultiple) {
-      const isSelectedDate = (this.props.selectedDates || []).some(
-        (date) => this.isSameDay(date) || this.isSameWeek(date),
-      );
+      const isSelectedDate =
+        this.props.selectedDates?.some(
+          (date) => this.isSameDay(date) || this.isSameWeek(date),
+        ) ?? false;
+
       return (
         !isSelectedDate &&
         (this.isSameDay(this.props.preSelection) ||

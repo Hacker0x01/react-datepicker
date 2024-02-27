@@ -83,6 +83,14 @@ describe("Day", () => {
           .getAttribute("aria-selected");
         expect(ariaSelected).toBe("true");
       });
+
+      it("should apply the selected class for selectedDates", () => {
+        const shallowDay = renderDay(day, {
+          selectsMultiple: true,
+          selectedDates: [day],
+        });
+        expect(shallowDay.hasClass(className)).toBe(true);
+      });
     });
 
     describe("if not selected", () => {
@@ -115,9 +123,30 @@ describe("Day", () => {
       expect(shallowDay.hasClass(className)).toBe(true);
     });
 
+    it("should apply the keyboard-selected class when pre-selected and another days is multi-selected", () => {
+      const day = newDate();
+      const selected = addDays(day, 1);
+      const shallowDay = renderDay(day, {
+        selectedDates: [selected],
+        selectsMultiple: true,
+        preSelection: day,
+      });
+      expect(shallowDay.hasClass(className)).toBe(true);
+    });
+
     it("should not apply the keyboard-selected class when selected", () => {
       const day = newDate();
       const shallowDay = renderDay(day, { selected: day, preSelection: day });
+      expect(shallowDay.hasClass(className)).toBe(false);
+    });
+
+    it("should not apply the keyboard-selected class when selected a multi-selected day", () => {
+      const day = newDate();
+      const shallowDay = renderDay(day, {
+        selectedDates: [day],
+        selectsMultiple: true,
+        preSelection: day,
+      });
       expect(shallowDay.hasClass(className)).toBe(false);
     });
 
