@@ -100,26 +100,11 @@ export default class Day extends React.Component {
       return false;
     }
 
-    if (this.props.selectsMultiple) {
-      const isSelectedDate = this.props.selectedDates?.some(
-        (date) => this.isSameDay(date) || this.isSameWeek(date),
-      );
+    const isSelectedDate = this.props.selectsMultiple
+      ? this.props.selectedDates?.some((date) => this.isSameDayOrWeek(date))
+      : this.isSameDayOrWeek(this.props.selected);
 
-      return (
-        !isSelectedDate &&
-        (this.isSameDay(this.props.preSelection) ||
-          this.isSameWeek(this.props.preSelection))
-      );
-    }
-
-    return (
-      !(
-        this.isSameDay(this.props.selected) ||
-        this.isSameWeek(this.props.selected)
-      ) &&
-      (this.isSameDay(this.props.preSelection) ||
-        this.isSameWeek(this.props.preSelection))
-    );
+    return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
   };
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
@@ -146,6 +131,8 @@ export default class Day extends React.Component {
         this.props.calendarStartDay,
       ),
     );
+
+  isSameDayOrWeek = (other) => this.isSameDay(other) || this.isSameWeek(other);
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
@@ -298,14 +285,11 @@ export default class Day extends React.Component {
 
   isSelected = () => {
     if (this.props.selectsMultiple) {
-      return this.props.selectedDates?.some(
-        (date) => this.isSameDay(date) || this.isSameWeek(this.props.selected),
+      return this.props.selectedDates?.some((date) =>
+        this.isSameDayOrWeek(date),
       );
     }
-    return (
-      this.isSameDay(this.props.selected) ||
-      this.isSameWeek(this.props.selected)
-    );
+    return this.isSameDayOrWeek(this.props.selected);
   };
 
   getClassNames = (date) => {
