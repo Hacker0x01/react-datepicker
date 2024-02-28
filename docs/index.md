@@ -112,8 +112,10 @@
 | `scrollableMonthYearDropdown`   | `bool`                         |                            |             |
 | `scrollableYearDropdown`        | `bool`                         |                            |             |
 | `selected`                      | `instanceOfDate`               |                            |             |
+| `selectedDates`                 | `arrayOf[object Object]`       |                            |             |
 | `selectsDisabledDaysInRange`    | `bool`                         | `false`                    |             |
 | `selectsEnd`                    | `bool`                         |                            |             |
+| `selectsMultiple`               | `bool`                         |                            |             |
 | `selectsRange`                  | `bool`                         |                            |             |
 | `selectsStart`                  | `bool`                         |                            |             |
 | `shouldCloseOnSelect`           | `bool`                         | `true`                     |             |

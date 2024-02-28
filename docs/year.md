@@ -8,6 +8,7 @@
 | `endDate`                     | `instanceOfDate` |               |             |
 | `excludeDates`                | `array`          |               |             |
 | `filterDate`                  | `func`           |               |             |
+| `handleOnKeyDown`             | `func`           |               |             |
 | `includeDates`                | `array`          |               |             |
 | `inline`                      | `bool`           |               |             |
 | `maxDate`                     | `instanceOfDate` |               |             |
