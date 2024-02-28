@@ -161,20 +161,20 @@ describe("Week", () => {
     expect(weekNumberElement.prop("weekNumber")).toBe(9);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
-    let dayMouseEntered = null;
+  it("should call the provided onDayPointerEnter function", () => {
+    let dayPointerEntered = null;
 
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
+    function onDayPointerEnter(day) {
+      dayPointerEntered = day;
     }
 
     const weekStart = utils.newDate();
     const week = shallow(
-      <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
+      <Week day={weekStart} onDayPointerEnter={onDayPointerEnter} />,
     );
     const day = week.find(Day).first();
-    day.simulate("mouseenter");
-    expect(day.prop("day")).toEqual(dayMouseEntered);
+    day.simulate("pointerenter");
+    expect(day.prop("day")).toEqual(dayPointerEntered);
   });
 
   describe("handleWeekClick", () => {

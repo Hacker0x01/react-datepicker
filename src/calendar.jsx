@@ -196,10 +196,10 @@ export default class Calendar extends React.Component {
     renderMonthContent: PropTypes.func,
     renderQuarterContent: PropTypes.func,
     renderYearContent: PropTypes.func,
-    onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func,
-    onYearMouseEnter: PropTypes.func,
-    onYearMouseLeave: PropTypes.func,
+    onDayPointerEnter: PropTypes.func,
+    onMonthPointerLeave: PropTypes.func,
+    onYearPointerEnter: PropTypes.func,
+    onYearPointerLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     handleOnKeyDown: PropTypes.func,
     handleOnDayKeyDown: PropTypes.func,
@@ -316,23 +316,23 @@ export default class Calendar extends React.Component {
     this.props.setPreSelection && this.props.setPreSelection(day);
   };
 
-  handleDayMouseEnter = (day) => {
+  handleDayPointerEnter = (day) => {
     this.setState({ selectingDate: day });
-    this.props.onDayMouseEnter && this.props.onDayMouseEnter(day);
+    this.props.onDayPointerEnter && this.props.onDayPointerEnter(day);
   };
 
-  handleMonthMouseLeave = () => {
+  handleMonthPointerLeave = () => {
     this.setState({ selectingDate: null });
-    this.props.onMonthMouseLeave && this.props.onMonthMouseLeave();
+    this.props.onMonthPointerLeave && this.props.onMonthPointerLeave();
   };
 
-  handleYearMouseEnter = (event, year) => {
+  handleYearPointerEnter = (event, year) => {
     this.setState({ selectingDate: setYear(newDate(), year) });
-    !!this.props.onYearMouseEnter && this.props.onYearMouseEnter(event, year);
+    !!this.props.onYearPointerEnter && this.props.onYearPointerEnter(event, year);
   };
 
-  handleYearMouseLeave = (event, year) => {
-    !!this.props.onYearMouseLeave && this.props.onYearMouseLeave(event, year);
+  handleYearPointerLeave = (event, year) => {
+    !!this.props.onYearPointerLeave && this.props.onYearPointerLeave(event, year);
   };
 
   handleYearChange = (date) => {
@@ -897,8 +897,8 @@ export default class Calendar extends React.Component {
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnDayKeyDown}
             handleOnMonthKeyDown={this.props.handleOnKeyDown}
-            onDayMouseEnter={this.handleDayMouseEnter}
-            onMouseLeave={this.handleMonthMouseLeave}
+            onDayPointerEnter={this.handleDayPointerEnter}
+            onPointerLeave={this.handleMonthPointerLeave}
             onWeekSelect={this.props.onWeekSelect}
             orderInDisplay={i}
             formatWeekNumber={this.props.formatWeekNumber}
@@ -972,8 +972,8 @@ export default class Calendar extends React.Component {
             clearSelectingDate={this.clearSelectingDate}
             date={this.state.date}
             {...this.props}
-            onYearMouseEnter={this.handleYearMouseEnter}
-            onYearMouseLeave={this.handleYearMouseLeave}
+            onYearPointerEnter={this.handleYearPointerEnter}
+            onYearPointerLeave={this.handleYearPointerLeave}
           />
         </div>
       );

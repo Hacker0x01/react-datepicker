@@ -359,7 +359,7 @@ describe("DatePicker", () => {
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
 
-  xit("should update the preSelection state when a day is selected with mouse click", () => {
+  xit("should update the preSelection state when a day is selected with pointer click", () => {
     var data = getOnInputKeyDownStuff({
       shouldCloseOnSelect: false,
     });
@@ -2589,15 +2589,15 @@ describe("DatePicker", () => {
   });
 
   describe("Year picker", () => {
-    it("should call onYearMouseEnter and onYearMouseEnter", () => {
-      const onYearMouseEnterSpy = jest.fn();
-      const onYearMouseLeaveSpy = jest.fn();
+    it("should call onYearPointerEnter and onYearPointerEnter", () => {
+      const onYearPointerEnterSpy = jest.fn();
+      const onYearPointerLeaveSpy = jest.fn();
       const datePicker = mount(
         <DatePicker
           selected={new Date(2023, 0, 1)}
           showYearPicker
-          onYearMouseEnter={onYearMouseEnterSpy}
-          onYearMouseLeave={onYearMouseLeaveSpy}
+          onYearPointerEnter={onYearPointerEnterSpy}
+          onYearPointerLeave={onYearPointerLeaveSpy}
         />,
       );
 
@@ -2608,11 +2608,11 @@ describe("DatePicker", () => {
         ".react-datepicker__year-text--selected",
       );
 
-      selectedYear.simulate("mouseenter");
-      selectedYear.simulate("mouseleave");
+      selectedYear.simulate("pointerenter");
+      selectedYear.simulate("pointerleave");
 
-      expect(onYearMouseEnterSpy).toHaveBeenCalled();
-      expect(onYearMouseLeaveSpy).toHaveBeenCalled();
+      expect(onYearPointerEnterSpy).toHaveBeenCalled();
+      expect(onYearPointerLeaveSpy).toHaveBeenCalled();
     });
   });
 });

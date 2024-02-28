@@ -74,18 +74,18 @@
 | `onChange`                      | `func`                         | `() {}`                    |             |
 | `onChangeRaw`                   | `func`                         |                            |             |
 | `onClickOutside`                | `func`                         | `() {}`                    |             |
-| `onDayMouseEnter`               | `func`                         |                            |             |
+| `onDayPointerEnter`             | `func`                         |                            |             |
 | `onFocus`                       | `func`                         | `() {}`                    |             |
 | `onInputClick`                  | `func`                         | `() {}`                    |             |
 | `onInputError`                  | `func`                         | `() {}`                    |             |
 | `onKeyDown`                     | `func`                         | `() {}`                    |             |
 | `onMonthChange`                 | `func`                         | `() {}`                    |             |
-| `onMonthMouseLeave`             | `func`                         |                            |             |
+| `onMonthPointerLeave`           | `func`                         |                            |             |
 | `onSelect`                      | `func`                         | `() {}`                    |             |
 | `onWeekSelect`                  | `func`                         |                            |             |
 | `onYearChange`                  | `func`                         | `() {}`                    |             |
-| `onYearMouseEnter`              | `func`                         |                            |             |
-| `onYearMouseLeave`              | `func`                         |                            |             |
+| `onYearPointerEnter`            | `func`                         |                            |             |
+| `onYearPointerLeave`            | `func`                         |                            |             |
 | `open`                          | `bool`                         |                            |             |
 | `openToDate`                    | `instanceOfDate`               |                            |             |
 | `peekNextMonth`                 | `bool`                         |                            |             |

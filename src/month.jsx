@@ -86,8 +86,8 @@ export default class Month extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     onDayClick: PropTypes.func,
-    onDayMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
+    onDayPointerEnter: PropTypes.func,
+    onPointerLeave: PropTypes.func,
     onWeekSelect: PropTypes.func,
     peekNextMonth: PropTypes.bool,
     preSelection: PropTypes.instanceOf(Date),
@@ -139,15 +139,15 @@ export default class Month extends React.Component {
     }
   };
 
-  handleDayMouseEnter = (day) => {
-    if (this.props.onDayMouseEnter) {
-      this.props.onDayMouseEnter(day);
+  handleDayPointerEnter = (day) => {
+    if (this.props.onDayPointerEnter) {
+      this.props.onDayPointerEnter(day);
     }
   };
 
-  handleMouseLeave = () => {
-    if (this.props.onMouseLeave) {
-      this.props.onMouseLeave();
+  handlePointerLeave = () => {
+    if (this.props.onPointerLeave) {
+      this.props.onPointerLeave();
     }
   };
 
@@ -311,7 +311,7 @@ export default class Month extends React.Component {
           day={currentWeekStart}
           month={utils.getMonth(this.props.day)}
           onDayClick={this.handleDayClick}
-          onDayMouseEnter={this.handleDayMouseEnter}
+          onDayPointerEnter={this.handleDayPointerEnter}
           onWeekSelect={this.props.onWeekSelect}
           formatWeekNumber={this.props.formatWeekNumber}
           locale={this.props.locale}
@@ -384,8 +384,8 @@ export default class Month extends React.Component {
     );
   };
 
-  onMonthMouseEnter = (m) => {
-    this.handleDayMouseEnter(
+  onMonthPointerEnter = (m) => {
+    this.handleDayPointerEnter(
       utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
     );
   };
@@ -468,8 +468,8 @@ export default class Month extends React.Component {
     );
   };
 
-  onQuarterMouseEnter = (q) => {
-    this.handleDayMouseEnter(
+  onQuarterPointerEnter = (q) => {
+    this.handleDayPointerEnter(
       utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
     );
   };
@@ -684,7 +684,7 @@ export default class Month extends React.Component {
 
               this.onMonthKeyDown(ev, m);
             }}
-            onMouseEnter={() => this.onMonthMouseEnter(m)}
+            onPointerEnter={() => this.onMonthPointerEnter(m)}
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
             role="option"
@@ -715,7 +715,7 @@ export default class Month extends React.Component {
             onKeyDown={(ev) => {
               this.onQuarterKeyDown(ev, q);
             }}
-            onMouseEnter={() => this.onQuarterMouseEnter(q)}
+            onPointerEnter={() => this.onQuarterPointerEnter(q)}
             className={this.getQuarterClassNames(q)}
             aria-selected={this.isSelectedQuarter(day, q, selected)}
             tabIndex={this.getQuarterTabIndex(q)}
@@ -760,7 +760,7 @@ export default class Month extends React.Component {
     return (
       <div
         className={this.getClassNames()}
-        onMouseLeave={this.handleMouseLeave}
+        onPointerLeave={this.handlePointerLeave}
         aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
         role="listbox"
       >

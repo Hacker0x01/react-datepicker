@@ -301,10 +301,10 @@ export default class DatePicker extends React.Component {
     renderYearContent: PropTypes.func,
     wrapperClassName: PropTypes.string,
     focusSelectedMonth: PropTypes.bool,
-    onDayMouseEnter: PropTypes.func,
-    onMonthMouseLeave: PropTypes.func,
-    onYearMouseEnter: PropTypes.func,
-    onYearMouseLeave: PropTypes.func,
+    onDayPointerEnter: PropTypes.func,
+    onMonthPointerLeave: PropTypes.func,
+    onYearPointerEnter: PropTypes.func,
+    onYearPointerLeave: PropTypes.func,
     showPopperArrow: PropTypes.bool,
     excludeScrollbar: PropTypes.bool,
     enableTabLoop: PropTypes.bool,
@@ -1120,10 +1120,10 @@ export default class DatePicker extends React.Component {
         renderMonthContent={this.props.renderMonthContent}
         renderQuarterContent={this.props.renderQuarterContent}
         renderYearContent={this.props.renderYearContent}
-        onDayMouseEnter={this.props.onDayMouseEnter}
-        onMonthMouseLeave={this.props.onMonthMouseLeave}
-        onYearMouseEnter={this.props.onYearMouseEnter}
-        onYearMouseLeave={this.props.onYearMouseLeave}
+        onDayPointerEnter={this.props.onDayPointerEnter}
+        onMonthPointerLeave={this.props.onMonthPointerLeave}
+        onYearPointerEnter={this.props.onYearPointerEnter}
+        onYearPointerLeave={this.props.onYearPointerLeave}
         selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
         showTimeInput={this.props.showTimeInput}
         showMonthYearPicker={this.props.showMonthYearPicker}

@@ -17,8 +17,8 @@ export default class Year extends React.Component {
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
-    onYearMouseEnter: PropTypes.func.isRequired,
-    onYearMouseLeave: PropTypes.func.isRequired,
+    onYearPointerEnter: PropTypes.func.isRequired,
+    onYearPointerLeave: PropTypes.func.isRequired,
     selectingDate: PropTypes.instanceOf(Date),
     renderYearContent: PropTypes.func,
     selectsEnd: PropTypes.bool,
@@ -235,7 +235,7 @@ export default class Year extends React.Component {
 
   render() {
     const yearsList = [];
-    const { date, yearItemNumber, onYearMouseEnter, onYearMouseLeave } =
+    const { date, yearItemNumber, onYearPointerEnter, onYearPointerLeave } =
       this.props;
     const { startPeriod, endPeriod } = utils.getYearsPeriod(
       date,
@@ -259,8 +259,8 @@ export default class Year extends React.Component {
           }}
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
-          onMouseEnter={(ev) => onYearMouseEnter(ev, y)}
-          onMouseLeave={(ev) => onYearMouseLeave(ev, y)}
+          onPointerEnter={(ev) => onYearPointerEnter(ev, y)}
+          onPointerLeave={(ev) => onYearPointerLeave(ev, y)}
           key={y}
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
@@ -273,7 +273,7 @@ export default class Year extends React.Component {
       <div className={this.getYearContainerClassNames()}>
         <div
           className="react-datepicker__year-wrapper"
-          onMouseLeave={this.props.clearSelectingDate}
+          onPointerLeave={this.props.clearSelectingDate}
         >
           {yearsList}
         </div>

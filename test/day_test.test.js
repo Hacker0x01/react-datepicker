@@ -914,21 +914,21 @@ describe("Day", () => {
     });
   });
 
-  describe("mouse enter", () => {
-    var onMouseEnterCalled;
+  describe("pointer enter", () => {
+    var onPointerEnterCalled;
 
-    function onMouseEnter() {
-      onMouseEnterCalled = true;
+    function onPointerEnter() {
+      onPointerEnterCalled = true;
     }
 
     beforeEach(() => {
-      onMouseEnterCalled = false;
+      onPointerEnterCalled = false;
     });
 
-    it("should call onMouseEnter if day is hovered", () => {
-      const shallowDay = renderDay(newDate(), { onMouseEnter });
-      shallowDay.find(".react-datepicker__day").simulate("mouseenter");
-      expect(onMouseEnterCalled).toBe(true);
+    it("should call onPointerEnter if day is hovered", () => {
+      const shallowDay = renderDay(newDate(), { onPointerEnter });
+      shallowDay.find(".react-datepicker__day").simulate("pointerenter");
+      expect(onPointerEnterCalled).toBe(true);
     });
   });
 

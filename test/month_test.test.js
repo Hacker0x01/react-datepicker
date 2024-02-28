@@ -116,33 +116,33 @@ describe("Month", () => {
     expect(utils.isSameDay(day.prop("day"), dayClicked)).toBe(true);
   });
 
-  it("should call the provided onMouseLeave function", () => {
-    let mouseLeaveCalled = false;
+  it("should call the provided onPointerLeave function", () => {
+    let pointerLeaveCalled = false;
 
-    function onMouseLeave() {
-      mouseLeaveCalled = true;
+    function onPointerLeave() {
+      pointerLeaveCalled = true;
     }
 
     const month = shallow(
-      <Month day={utils.newDate()} onMouseLeave={onMouseLeave} />,
+      <Month day={utils.newDate()} onPointerLeave={onPointerLeave} />,
     );
-    month.simulate("mouseleave");
-    expect(mouseLeaveCalled).toBe(true);
+    month.simulate("pointerleave");
+    expect(pointerLeaveCalled).toBe(true);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
-    let dayMouseEntered = null;
+  it("should call the provided onDayPointerEnter function", () => {
+    let dayPointerEntered = null;
 
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
+    function onDayPointerEnter(day) {
+      dayPointerEntered = day;
     }
 
     const month = mount(
-      <Month day={utils.newDate()} onDayMouseEnter={onDayMouseEnter} />,
+      <Month day={utils.newDate()} onDayPointerEnter={onDayPointerEnter} />,
     );
     const day = month.find(Day).first();
-    day.simulate("mouseenter");
-    expect(utils.isSameDay(day.prop("day"), dayMouseEntered)).toBe(true);
+    day.simulate("pointerenter");
+    expect(utils.isSameDay(day.prop("day"), dayPointerEntered)).toBe(true);
   });
 
   it("should use its month order in handleDayClick", () => {

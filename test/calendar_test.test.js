@@ -868,7 +868,7 @@ describe("Calendar", () => {
       />,
     );
     const day = calendar.find(Day).first();
-    day.simulate("mouseenter");
+    day.simulate("pointerenter");
     const month = calendar.find(Month).first();
     expect(month.prop("selectingDate")).toBeDefined();
     expect(utils.isSameDay(month.prop("selectingDate"), day.prop("day"))).toBe(
@@ -876,7 +876,7 @@ describe("Calendar", () => {
     );
   });
 
-  it("should clear the hovered day when the mouse leaves", () => {
+  it("should clear the hovered day when the pointer leaves", () => {
     const calendar = mount(
       <Calendar
         dateFormat={dateFormat}
@@ -888,7 +888,7 @@ describe("Calendar", () => {
     calendar.setState({ selectingDate: utils.newDate() });
     const month = calendar.find(Month).first();
     expect(month.prop("selectingDate")).toBeDefined();
-    month.simulate("mouseleave");
+    month.simulate("pointerleave");
     calendar.update();
     expect(calendar.find(Month).first().prop("selectingDate")).toBeFalsy();
   });
