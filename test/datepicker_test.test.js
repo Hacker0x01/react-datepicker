@@ -2102,7 +2102,7 @@ describe("DatePicker", () => {
     });
 
     it("should hide the calendar even when the startDate and the endDate is same in the range", async () => {
-      let startDate = new Date();
+      let startDate = new Date("2021-01-21 00:00:00");
       let endDate = null;
 
       const onCalendarCloseSpy = jest.fn();
