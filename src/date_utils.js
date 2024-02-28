@@ -197,6 +197,23 @@ export function safeDateRangeFormat(startDate, endDate, props) {
   return `${formattedStartDate} - ${formattedEndDate}`;
 }
 
+export function safeMultipleDatesFormat(dates, props) {
+  if (!dates?.length) {
+    return "";
+  }
+  const formattedFirstDate = safeDateFormat(dates[0], props);
+  if (dates.length === 1) {
+    return formattedFirstDate;
+  }
+  if (dates.length === 2) {
+    const formattedSecondDate = safeDateFormat(dates[1], props);
+    return `${formattedFirstDate}, ${formattedSecondDate}`;
+  }
+
+  const extraDatesCount = dates.length - 1;
+  return `${formattedFirstDate} (+${extraDatesCount})`;
+}
+
 // ** Date Setters **
 
 export function setTime(date, { hour = 0, minute = 0, second = 0 }) {

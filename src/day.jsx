@@ -42,6 +42,8 @@ export default class Day extends React.Component {
     showWeekPicker: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -93,14 +95,17 @@ export default class Day extends React.Component {
 
   isSameDay = (other) => isSameDay(this.props.day, other);
 
-  isKeyboardSelected = () =>
-    !this.props.disabledKeyboardNavigation &&
-    !(
-      this.isSameDay(this.props.selected) ||
-      this.isSameWeek(this.props.selected)
-    ) &&
-    (this.isSameDay(this.props.preSelection) ||
-      this.isSameWeek(this.props.preSelection));
+  isKeyboardSelected = () => {
+    if (this.props.disabledKeyboardNavigation) {
+      return false;
+    }
+
+    const isSelectedDate = this.props.selectsMultiple
+      ? this.props.selectedDates?.some((date) => this.isSameDayOrWeek(date))
+      : this.isSameDayOrWeek(this.props.selected);
+
+    return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
+  };
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
@@ -126,6 +131,8 @@ export default class Day extends React.Component {
         this.props.calendarStartDay,
       ),
     );
+
+  isSameDayOrWeek = (other) => this.isSameDay(other) || this.isSameWeek(other);
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
@@ -276,8 +283,14 @@ export default class Day extends React.Component {
 
   isCurrentDay = () => this.isSameDay(newDate());
 
-  isSelected = () =>
-    this.isSameDay(this.props.selected) || this.isSameWeek(this.props.selected);
+  isSelected = () => {
+    if (this.props.selectsMultiple) {
+      return this.props.selectedDates?.some((date) =>
+        this.isSameDayOrWeek(date),
+      );
+    }
+    return this.isSameDayOrWeek(this.props.selected);
+  };
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName

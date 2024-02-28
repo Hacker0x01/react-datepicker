@@ -1851,6 +1851,97 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).toBe(true);
   });
 
+  describe("multiSelecting non-consecutive dates", () => {
+    const testDate = new Date("2024-02-02 00:00:00");
+
+    beforeAll(() => {
+      jest.useFakeTimers();
+      jest.setSystemTime(testDate);
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+    });
+
+    it("should return array of dates to onChange callback when day is selected in multiSelect mode", () => {
+      const onChange = jest.fn();
+
+      var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          shouldCloseOnSelect={false}
+          selectsMultiple
+          onChange={onChange}
+        />,
+      );
+      var dateInput = datePicker.input;
+      var node = findDOMNode(dateInput);
+      TestUtils.Simulate.focus(node);
+      var days = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Day,
+      );
+
+      // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
+      TestUtils.Simulate.click(findDOMNode(days[5]));
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith([testDate], expect.anything());
+    });
+
+    it("should remove previously selected date from array if date is selected again", () => {
+      const onChange = jest.fn();
+      const anotherDate = new Date("2024-01-01");
+      var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          shouldCloseOnSelect={false}
+          selectsMultiple
+          selectedDates={[anotherDate, testDate]}
+          onChange={onChange}
+        />,
+      );
+      var dateInput = datePicker.input;
+      var node = findDOMNode(dateInput);
+      TestUtils.Simulate.focus(node);
+      var days = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Day,
+      );
+
+      // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
+      TestUtils.Simulate.click(findDOMNode(days[5]));
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith([anotherDate], expect.anything());
+    });
+
+    it("should add newly selected date to array of selected dates", () => {
+      const onChange = jest.fn();
+      const previouslyAddedDate = new Date("2024-01-01");
+
+      var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          shouldCloseOnSelect={false}
+          selectsMultiple
+          selectedDates={[previouslyAddedDate]}
+          onChange={onChange}
+        />,
+      );
+      var dateInput = datePicker.input;
+      var node = findDOMNode(dateInput);
+      TestUtils.Simulate.focus(node);
+      var days = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Day,
+      );
+
+      // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
+      TestUtils.Simulate.click(findDOMNode(days[5]));
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(
+        [previouslyAddedDate, testDate],
+        expect.anything(),
+      );
+    });
+  });
+
   describe("selectsRange with inline", () => {
     it("should change dates of range when dates are empty", () => {
       const selected = utils.newDate();

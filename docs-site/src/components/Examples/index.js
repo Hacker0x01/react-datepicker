@@ -101,6 +101,7 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
+import SelectsMultiple from "../../examples/selectsMultiple";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
 import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
@@ -483,6 +484,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Specific Time Range",
       component: ExcludeTimePeriod,
+    },
+    {
+      title: "Select multiple dates",
+      component: SelectsMultiple,
     },
     {
       title: "Strict parsing",
