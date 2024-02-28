@@ -1851,6 +1851,42 @@ describe("DatePicker", () => {
     expect(datePicker.state.open).toBe(true);
   });
 
+  describe("multiSelect enabled", () => {
+    beforeAll(() => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date("2024-02-02"));
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+    });
+
+    it("should return array of dates to onChange callback when day is selected in multiSelect mode", () => {
+      const onChange = jest.fn();
+
+      var datePicker = TestUtils.renderIntoDocument(
+        <DatePicker
+          shouldCloseOnSelect={false}
+          selectsMultiple
+          onChange={onChange}
+        />,
+      );
+      var dateInput = datePicker.input;
+      var node = findDOMNode(dateInput);
+      TestUtils.Simulate.focus(node);
+      var days = TestUtils.scryRenderedComponentsWithType(
+        datePicker.calendar,
+        Day,
+      );
+
+      const date = new Date("2024-02-02 00:00:00");
+      // Might seem odd, but it's the first couple of days is in january, so days[5] is february 2nd
+      TestUtils.Simulate.click(findDOMNode(days[5]));
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith([date], expect.anything());
+    });
+  });
+
   describe("selectsRange with inline", () => {
     it("should change dates of range when dates are empty", () => {
       const selected = utils.newDate();
