@@ -1,49 +1,49 @@
-import YearDropdown from "./year_dropdown";
-import MonthDropdown from "./month_dropdown";
-import MonthYearDropdown from "./month_year_dropdown";
-import Month from "./month";
-import Time from "./time";
-import Year from "./year";
-import InputTime from "./inputTime";
-import React from "react";
-import PropTypes from "prop-types";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
 import CalendarContainer from "./calendar_container";
 import {
-  newDate,
-  setMonth,
-  getMonth,
-  addMonths,
-  subMonths,
-  getStartOfWeek,
-  getStartOfToday,
+  DEFAULT_YEAR_ITEM_NUMBER,
   addDays,
-  formatDate,
-  setYear,
-  getYear,
-  isBefore,
+  addMonths,
   addYears,
-  subYears,
-  isAfter,
+  addZero,
+  formatDate,
+  getEffectiveMaxDate,
+  getEffectiveMinDate,
   getFormattedWeekdayInLocale,
-  getWeekdayShortInLocale,
+  getMonth,
+  getMonthInLocale,
+  getStartOfToday,
+  getStartOfWeek,
   getWeekdayMinInLocale,
+  getWeekdayShortInLocale,
+  getYear,
+  getYearsPeriod,
+  isAfter,
+  isBefore,
   isSameDay,
   isSameMonth,
-  monthDisabledBefore,
+  isValid,
   monthDisabledAfter,
-  yearDisabledBefore,
+  monthDisabledBefore,
+  newDate,
+  setMonth,
+  setYear,
+  subMonths,
+  subYears,
   yearDisabledAfter,
+  yearDisabledBefore,
   yearsDisabledAfter,
   yearsDisabledBefore,
-  getEffectiveMinDate,
-  getEffectiveMaxDate,
-  addZero,
-  isValid,
-  getYearsPeriod,
-  DEFAULT_YEAR_ITEM_NUMBER,
-  getMonthInLocale,
 } from "./date_utils";
+import InputTime from "./inputTime";
+import Month from "./month";
+import MonthDropdown from "./month_dropdown";
+import MonthYearDropdown from "./month_year_dropdown";
+import Time from "./time";
+import Year from "./year";
+import YearDropdown from "./year_dropdown";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__year-select",
@@ -236,6 +236,10 @@ export default class Calendar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.openToDate) {
+      this.props.openToDate = newDate()
+    }
+
     if (
       this.props.preSelection &&
       (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
