@@ -8,6 +8,7 @@ import Month from "../src/month";
 import Day from "../src/day";
 import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
+import { render } from "@testing-library/react";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
 import MonthYearDropdown from "../src/month_year_dropdown";
@@ -1797,6 +1798,17 @@ describe("Calendar", () => {
           datePicker.props.locale,
         )} ${utils.getYear(calendar.state.date)}`,
       );
+    });
+  });
+
+  describe("calendar container", () => {
+    it("should work", () => {
+      const { container } = render(<Calendar dateFormat={dateFormat} />);
+
+      const dialog = container.querySelector(".react-datepicker");
+      expect(dialog).not.toBeNull();
+      expect(dialog.getAttribute("role")).toBe("dialog");
+      expect(dialog.getAttribute("aria-modal")).toBe("true");
     });
   });
 });
