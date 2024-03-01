@@ -2589,7 +2589,7 @@ describe("DatePicker", () => {
   });
 
   describe("Year picker", () => {
-    it("should call onYearMouseEnter and onYearMouseEnter", () => {
+    it("should call onYearMouseEnter and onYearMouseEnter (Mouse Event)", () => {
       const onYearMouseEnterSpy = jest.fn();
       const onYearMouseLeaveSpy = jest.fn();
       const datePicker = mount(
@@ -2610,6 +2610,33 @@ describe("DatePicker", () => {
 
       selectedYear.simulate("mouseenter");
       selectedYear.simulate("mouseleave");
+
+      expect(onYearMouseEnterSpy).toHaveBeenCalled();
+      expect(onYearMouseLeaveSpy).toHaveBeenCalled();
+    });
+
+    it("should call onYearMouseEnter and onYearMouseEnter (Pointer Event)", () => {
+      const onYearMouseEnterSpy = jest.fn();
+      const onYearMouseLeaveSpy = jest.fn();
+      const datePicker = mount(
+        <DatePicker
+          selected={new Date(2023, 0, 1)}
+          showYearPicker
+          onYearMouseEnter={onYearMouseEnterSpy}
+          onYearMouseLeave={onYearMouseLeaveSpy}
+          usePointerEvent
+        />,
+      );
+
+      const dateInputWrapper = datePicker.find("input");
+      dateInputWrapper.simulate("click");
+      const calendarWrapper = datePicker.find("Calendar");
+      const selectedYear = calendarWrapper.find(
+        ".react-datepicker__year-text--selected",
+      );
+
+      selectedYear.simulate("pointerenter");
+      selectedYear.simulate("pointerleave");
 
       expect(onYearMouseEnterSpy).toHaveBeenCalled();
       expect(onYearMouseLeaveSpy).toHaveBeenCalled();

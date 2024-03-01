@@ -930,6 +930,15 @@ describe("Day", () => {
       shallowDay.find(".react-datepicker__day").simulate("mouseenter");
       expect(onMouseEnterCalled).toBe(true);
     });
+
+    it("should call onPointerEnter if day is hovered", () => {
+      const shallowDay = renderDay(newDate(), {
+        onMouseEnter,
+        usePointerEvent: true,
+      });
+      shallowDay.find(".react-datepicker__day").simulate("pointerenter");
+      expect(onMouseEnterCalled).toBe(true);
+    });
   });
 
   describe("for a start date picker with selectsRange prop", () => {

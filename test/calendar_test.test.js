@@ -859,7 +859,7 @@ describe("Calendar", () => {
     expect(weekLabel.at(0).text()).toBe("Foo");
   });
 
-  it("should track the currently hovered day", () => {
+  it("should track the currently hovered day (Mouse Event)", () => {
     const calendar = mount(
       <Calendar
         dateFormat={dateFormat}
@@ -870,6 +870,25 @@ describe("Calendar", () => {
     );
     const day = calendar.find(Day).first();
     day.simulate("mouseenter");
+    const month = calendar.find(Month).first();
+    expect(month.prop("selectingDate")).toBeDefined();
+    expect(utils.isSameDay(month.prop("selectingDate"), day.prop("day"))).toBe(
+      true,
+    );
+  });
+
+  it("should track the currently hovered day  (Pointer Event)", () => {
+    const calendar = mount(
+      <Calendar
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        usePointerEvent
+      />,
+    );
+    const day = calendar.find(Day).first();
+    day.simulate("pointerenter");
     const month = calendar.find(Month).first();
     expect(month.prop("selectingDate")).toBeDefined();
     expect(utils.isSameDay(month.prop("selectingDate"), day.prop("day"))).toBe(

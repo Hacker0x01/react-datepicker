@@ -26,3 +26,4 @@
 | `setPreSelection`             | `func`           |               |             |
 | `startDate`                   | `instanceOfDate` |               |             |
 | `yearItemNumber`              | `number`         |               |             |
+| `usePointerEvent`             | `bool`           |               |             |

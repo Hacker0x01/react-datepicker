@@ -196,6 +196,7 @@ export default class Calendar extends React.Component {
     renderMonthContent: PropTypes.func,
     renderQuarterContent: PropTypes.func,
     renderYearContent: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     onYearMouseEnter: PropTypes.func,
@@ -897,6 +898,7 @@ export default class Calendar extends React.Component {
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnDayKeyDown}
             handleOnMonthKeyDown={this.props.handleOnKeyDown}
+            usePointerEvent={this.props.usePointerEvent}
             onDayMouseEnter={this.handleDayMouseEnter}
             onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}

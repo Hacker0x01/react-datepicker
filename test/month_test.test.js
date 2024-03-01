@@ -130,7 +130,7 @@ describe("Month", () => {
     expect(mouseLeaveCalled).toBe(true);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
     let dayMouseEntered = null;
 
     function onDayMouseEnter(day) {
@@ -142,6 +142,25 @@ describe("Month", () => {
     );
     const day = month.find(Day).first();
     day.simulate("mouseenter");
+    expect(utils.isSameDay(day.prop("day"), dayMouseEntered)).toBe(true);
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    let dayMouseEntered = null;
+
+    function onDayMouseEnter(day) {
+      dayMouseEntered = day;
+    }
+
+    const month = mount(
+      <Month
+        day={utils.newDate()}
+        onDayMouseEnter={onDayMouseEnter}
+        usePointerEvent
+      />,
+    );
+    const day = month.find(Day).first();
+    day.simulate("pointerenter");
     expect(utils.isSameDay(day.prop("day"), dayMouseEntered)).toBe(true);
   });
 

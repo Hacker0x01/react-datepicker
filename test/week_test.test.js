@@ -2,7 +2,7 @@ import React from "react";
 import Week from "../src/week";
 import WeekNumber from "../src/week_number";
 import Day from "../src/day";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
@@ -161,7 +161,7 @@ describe("Week", () => {
     expect(weekNumberElement.prop("weekNumber")).toBe(9);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
     let dayMouseEntered = null;
 
     function onDayMouseEnter(day) {
@@ -169,11 +169,32 @@ describe("Week", () => {
     }
 
     const weekStart = utils.newDate();
-    const week = shallow(
+    const week = mount(
       <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
     );
     const day = week.find(Day).first();
     day.simulate("mouseenter");
+    expect(day.prop("day")).toEqual(dayMouseEntered);
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    let dayMouseEntered = null;
+
+    function onDayMouseEnter(day) {
+      dayMouseEntered = day;
+    }
+
+    const weekStart = utils.newDate();
+    // NOTE: `shallow` cannot correctly perform `simulate("pointerenter")`, so `mount` is used
+    const week = mount(
+      <Week
+        day={weekStart}
+        onDayMouseEnter={onDayMouseEnter}
+        usePointerEvent
+      />,
+    );
+    const day = week.find(Day).first();
+    day.simulate("pointerenter");
     expect(day.prop("day")).toEqual(dayMouseEntered);
   });
 

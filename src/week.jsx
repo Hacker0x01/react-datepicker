@@ -44,6 +44,7 @@ export default class Week extends React.Component {
     minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
     onDayClick: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onWeekSelect: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
@@ -149,6 +150,7 @@ export default class Week extends React.Component {
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
+            usePointerEvent={this.props.usePointerEvent}
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
