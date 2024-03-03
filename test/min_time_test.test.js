@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "../src/index.jsx";
-import { mount } from "enzyme";
-import Day from "../src/day.jsx";
+import { fireEvent, render } from "@testing-library/react";
 
 const DatePickerWithState = (props) => {
   const [selected, setSelected] = useState(null);
@@ -20,33 +19,30 @@ const DatePickerWithState = (props) => {
 
 describe("Datepicker minTime", () => {
   it("should select time 12:00 AM when no minTime constraint is set.", () => {
-    const datepicker = mount(<DatePickerWithState />);
-    const day = datepicker.find(Day).first();
+    const { getByText, container } = render(<DatePickerWithState />);
+    const day = container.getElementsByClassName("react-datepicker__day")[0];
 
-    day.simulate("click");
+    fireEvent.click(day);
 
-    const selectedTime = datepicker.find(
-      ".react-datepicker__time-list-item--selected",
-    );
+    const selectedTime = getByText("12:00 AM");
 
-    expect(selectedTime.text()).toBe("12:00 AM");
+    expect(selectedTime.getAttribute("aria-selected")).toBe("true");
   });
 
   it("should select the minimum allowable time upon choosing a day.", () => {
     const minTime = new Date("2023-03-10 13:00");
     const maxTime = new Date("2023-03-10 18:00");
 
-    const datepicker = mount(
+    const { container, getByText } = render(
       <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
     );
-    const day = datepicker.find(Day).first();
 
-    day.simulate("click");
+    const day = container.getElementsByClassName("react-datepicker__day")[0];
 
-    const selectedTime = datepicker.find(
-      ".react-datepicker__time-list-item--selected",
-    );
+    fireEvent.click(day);
 
-    expect(selectedTime.text()).toBe("1:00 PM");
+    const selectedTime = getByText("1:00 PM");
+
+    expect(selectedTime.getAttribute("aria-selected")).toBe("true");
   });
 });
