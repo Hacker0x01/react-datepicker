@@ -20,6 +20,7 @@ const DatePickerWithState = (props) => {
 describe("Datepicker minTime", () => {
   it("should select time 12:00 AM when no minTime constraint is set.", () => {
     const { getByText, container } = render(<DatePickerWithState />);
+
     const day = container.getElementsByClassName("react-datepicker__day")[0];
 
     fireEvent.click(day);
