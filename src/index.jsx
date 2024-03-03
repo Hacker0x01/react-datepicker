@@ -633,6 +633,7 @@ export default class DatePicker extends React.Component {
       endDate,
       selectsMultiple,
       selectedDates,
+      minTime,
     } = this.props;
 
     if (
@@ -655,6 +656,18 @@ export default class DatePicker extends React.Component {
             second: getSeconds(this.props.selected),
           });
         }
+
+        // If minTime is present then set the time to minTime
+        if (this.props.showTimeSelect || this.props.showTimeSelectOnly) {
+          if (minTime) {
+            changedDate = setTime(changedDate, {
+              hour: minTime.getHours(),
+              minute: minTime.getMinutes(),
+              second: minTime.getSeconds(),
+            });
+          }
+        }
+
         if (!this.props.inline) {
           this.setState({
             preSelection: changedDate,
