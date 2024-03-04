@@ -86,6 +86,7 @@ export default class Month extends React.Component {
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     onDayClick: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     onWeekSelect: PropTypes.func,
@@ -311,6 +312,7 @@ export default class Month extends React.Component {
           day={currentWeekStart}
           month={utils.getMonth(this.props.day)}
           onDayClick={this.handleDayClick}
+          usePointerEvent={this.props.usePointerEvent}
           onDayMouseEnter={this.handleDayMouseEnter}
           onWeekSelect={this.props.onWeekSelect}
           formatWeekNumber={this.props.formatWeekNumber}
@@ -684,7 +686,8 @@ export default class Month extends React.Component {
 
               this.onMonthKeyDown(ev, m);
             }}
-            onMouseEnter={() => this.onMonthMouseEnter(m)}
+            onMouseEnter={!this.props.usePointerEvent ? () => this.onMonthMouseEnter(m) : undefined}
+            onPointerEnter={this.props.usePointerEvent ? () => this.onMonthMouseEnter(m) : undefined}
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
             role="option"
@@ -715,7 +718,8 @@ export default class Month extends React.Component {
             onKeyDown={(ev) => {
               this.onQuarterKeyDown(ev, q);
             }}
-            onMouseEnter={() => this.onQuarterMouseEnter(q)}
+            onMouseEnter={!this.props.usePointerEvent ? () => this.onQuarterMouseEnter(q) : undefined}
+            onPointerEnter={this.props.usePointerEvent ? () => this.onQuarterMouseEnter(q) : undefined}
             className={this.getQuarterClassNames(q)}
             aria-selected={this.isSelectedQuarter(day, q, selected)}
             tabIndex={this.getQuarterTabIndex(q)}
@@ -760,7 +764,8 @@ export default class Month extends React.Component {
     return (
       <div
         className={this.getClassNames()}
-        onMouseLeave={this.handleMouseLeave}
+        onMouseLeave={!this.props.usePointerEvent ? this.handleMouseLeave : undefined}
+        onPointerLeave={this.props.usePointerEvent ? this.handleMouseLeave : undefined}
         aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
         role="listbox"
       >

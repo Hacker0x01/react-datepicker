@@ -5,10 +5,9 @@
 import React from "react";
 import Calendar from "../src/calendar";
 import Month from "../src/month";
-import Day from "../src/day";
 import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import YearDropdown from "../src/year_dropdown";
 import MonthDropdown from "../src/month_dropdown";
 import MonthYearDropdown from "../src/month_year_dropdown";
@@ -859,21 +858,46 @@ describe("Calendar", () => {
     expect(weekLabel.at(0).text()).toBe("Foo");
   });
 
-  it("should track the currently hovered day", () => {
-    const calendar = mount(
+  it("should track the currently hovered day (Mouse Event)", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const { container } = render(
       <Calendar
         dateFormat={dateFormat}
         dropdownMode="scroll"
         onClickOutside={() => {}}
         onSelect={() => {}}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
-    const day = calendar.find(Day).first();
-    day.simulate("mouseenter");
-    const month = calendar.find(Month).first();
-    expect(month.prop("selectingDate")).toBeDefined();
-    expect(utils.isSameDay(month.prop("selectingDate"), day.prop("day"))).toBe(
-      true,
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.mouseEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(utils.getStartOfMonth(utils.newDate())),
+    );
+  });
+
+  it("should track the currently hovered day (Pointer Event)", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const { container } = render(
+      <Calendar
+        dateFormat={dateFormat}
+        dropdownMode="scroll"
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        onDayMouseEnter={onDayMouseEnterSpy}
+        usePointerEvent
+      />,
+    );
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.pointerEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(utils.getStartOfMonth(utils.newDate())),
     );
   });
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { render, fireEvent } from "@testing-library/react";
 import { es } from "date-fns/locale";
 import Day from "../src/day";
 import { mount, shallow } from "enzyme";
@@ -915,20 +916,30 @@ describe("Day", () => {
   });
 
   describe("mouse enter", () => {
-    var onMouseEnterCalled;
+    it("should call onMouseEnter if day is hovered", () => {
+      const onMouseEnterSpy = jest.fn();
 
-    function onMouseEnter() {
-      onMouseEnterCalled = true;
-    }
+      const day = newDate();
 
-    beforeEach(() => {
-      onMouseEnterCalled = false;
+      const { container } = render(
+        <Day day={day} onMouseEnter={onMouseEnterSpy} />,
+      );
+
+      fireEvent.mouseEnter(container.querySelector(".react-datepicker__day"));
+      expect(onMouseEnterSpy).toHaveBeenCalled();
     });
 
-    it("should call onMouseEnter if day is hovered", () => {
-      const shallowDay = renderDay(newDate(), { onMouseEnter });
-      shallowDay.find(".react-datepicker__day").simulate("mouseenter");
-      expect(onMouseEnterCalled).toBe(true);
+    it("should call onPointerEnter if day is hovered", () => {
+      const onMouseEnterSpy = jest.fn();
+
+      const day = newDate();
+
+      const { container } = render(
+        <Day day={day} onMouseEnter={onMouseEnterSpy} usePointerEvent />,
+      );
+
+      fireEvent.pointerEnter(container.querySelector(".react-datepicker__day"));
+      expect(onMouseEnterSpy).toHaveBeenCalled();
     });
   });
 

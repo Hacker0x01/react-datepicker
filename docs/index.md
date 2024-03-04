@@ -160,3 +160,4 @@
 | `wrapperClassName`              | `string`                       |                            |             |
 | `yearDropdownItemNumber`        | `number`                       |                            |             |
 | `yearItemNumber`                | `number`                       | `DEFAULT_YEAR_ITEM_NUMBER` |             |
+| `usePointerEvent`               | `bool`                         | `false`                    |             |

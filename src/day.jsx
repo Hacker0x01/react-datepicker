@@ -32,6 +32,7 @@ export default class Day extends React.Component {
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
     selected: PropTypes.object,
@@ -434,7 +435,8 @@ export default class Day extends React.Component {
       className={this.getClassNames(this.props.day)}
       onKeyDown={this.handleOnKeyDown}
       onClick={this.handleClick}
-      onMouseEnter={this.handleMouseEnter}
+      onMouseEnter={!this.props.usePointerEvent ? this.handleMouseEnter : undefined}
+      onPointerEnter={this.props.usePointerEvent ? this.handleMouseEnter : undefined}
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="option"

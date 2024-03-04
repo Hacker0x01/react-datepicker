@@ -134,6 +134,7 @@ export default class DatePicker extends React.Component {
       customTimeInput: null,
       calendarStartDay: undefined,
       toggleCalendarOnIconClick: false,
+      usePointerEvent: false,
     };
   }
 
@@ -311,6 +312,7 @@ export default class DatePicker extends React.Component {
     customTimeInput: PropTypes.element,
     weekAriaLabelPrefix: PropTypes.string,
     monthAriaLabelPrefix: PropTypes.string,
+    usePointerEvent: PropTypes.bool,
   };
 
   constructor(props) {
@@ -1152,6 +1154,7 @@ export default class DatePicker extends React.Component {
         isInputFocused={this.state.focused}
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
+        usePointerEvent={this.props.usePointerEvent}
       >
         {this.props.children}
       </WrappedCalendar>

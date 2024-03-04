@@ -1,4 +1,5 @@
 import React from "react";
+import { render, fireEvent } from "@testing-library/react";
 import Week from "../src/week";
 import WeekNumber from "../src/week_number";
 import Day from "../src/day";
@@ -161,20 +162,38 @@ describe("Week", () => {
     expect(weekNumberElement.prop("weekNumber")).toBe(9);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
-    let dayMouseEntered = null;
-
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
-    }
-
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
     const weekStart = utils.newDate();
-    const week = shallow(
-      <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
+    const { container } = render(
+      <Week day={weekStart} onDayMouseEnter={onDayMouseEnterSpy} />,
     );
-    const day = week.find(Day).first();
-    day.simulate("mouseenter");
-    expect(day.prop("day")).toEqual(dayMouseEntered);
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.mouseEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(weekStart),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+    const weekStart = utils.newDate();
+    const { container } = render(
+      <Week
+        day={weekStart}
+        onDayMouseEnter={onDayMouseEnterSpy}
+        usePointerEvent
+      />,
+    );
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.pointerEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(weekStart),
+    );
   });
 
   describe("handleWeekClick", () => {

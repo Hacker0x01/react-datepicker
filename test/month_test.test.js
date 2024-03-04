@@ -130,19 +130,42 @@ describe("Month", () => {
     expect(mouseLeaveCalled).toBe(true);
   });
 
-  it("should call the provided onDayMouseEnter function", () => {
-    let dayMouseEntered = null;
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
 
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
-    }
+    const startDay = utils.newDate();
 
-    const month = mount(
-      <Month day={utils.newDate()} onDayMouseEnter={onDayMouseEnter} />,
+    const { container } = render(
+      <Month day={startDay} onDayMouseEnter={onDayMouseEnterSpy} />,
     );
-    const day = month.find(Day).first();
-    day.simulate("mouseenter");
-    expect(utils.isSameDay(day.prop("day"), dayMouseEntered)).toBe(true);
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.mouseEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(utils.getStartOfMonth(startDay)),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const startDay = utils.newDate();
+
+    const { container } = render(
+      <Month
+        day={startDay}
+        onDayMouseEnter={onDayMouseEnterSpy}
+        usePointerEvent
+      />,
+    );
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.pointerEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(utils.getStartOfMonth(startDay)),
+    );
   });
 
   it("should use its month order in handleDayClick", () => {
