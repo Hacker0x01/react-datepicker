@@ -2592,7 +2592,7 @@ describe("DatePicker", () => {
     it("should call onYearMouseEnter and onYearMouseEnter (Mouse Event)", () => {
       const onYearMouseEnterSpy = jest.fn();
       const onYearMouseLeaveSpy = jest.fn();
-      const datePicker = mount(
+      const { container } = render(
         <DatePicker
           selected={new Date(2023, 0, 1)}
           showYearPicker
@@ -2601,15 +2601,14 @@ describe("DatePicker", () => {
         />,
       );
 
-      const dateInputWrapper = datePicker.find("input");
-      dateInputWrapper.simulate("click");
-      const calendarWrapper = datePicker.find("Calendar");
-      const selectedYear = calendarWrapper.find(
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
+      const selectedYear = container.querySelector(
         ".react-datepicker__year-text--selected",
       );
 
-      selectedYear.simulate("mouseenter");
-      selectedYear.simulate("mouseleave");
+      fireEvent.mouseEnter(selectedYear);
+      fireEvent.mouseLeave(selectedYear);
 
       expect(onYearMouseEnterSpy).toHaveBeenCalled();
       expect(onYearMouseLeaveSpy).toHaveBeenCalled();
@@ -2618,7 +2617,7 @@ describe("DatePicker", () => {
     it("should call onYearMouseEnter and onYearMouseEnter (Pointer Event)", () => {
       const onYearMouseEnterSpy = jest.fn();
       const onYearMouseLeaveSpy = jest.fn();
-      const datePicker = mount(
+      const { container } = render(
         <DatePicker
           selected={new Date(2023, 0, 1)}
           showYearPicker
@@ -2628,15 +2627,14 @@ describe("DatePicker", () => {
         />,
       );
 
-      const dateInputWrapper = datePicker.find("input");
-      dateInputWrapper.simulate("click");
-      const calendarWrapper = datePicker.find("Calendar");
-      const selectedYear = calendarWrapper.find(
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
+      const selectedYear = container.querySelector(
         ".react-datepicker__year-text--selected",
       );
 
-      selectedYear.simulate("pointerenter");
-      selectedYear.simulate("pointerleave");
+      fireEvent.pointerEnter(selectedYear);
+      fireEvent.pointerLeave(selectedYear);
 
       expect(onYearMouseEnterSpy).toHaveBeenCalled();
       expect(onYearMouseLeaveSpy).toHaveBeenCalled();

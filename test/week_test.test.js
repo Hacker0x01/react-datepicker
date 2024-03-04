@@ -1,8 +1,9 @@
 import React from "react";
+import { render, fireEvent } from "@testing-library/react";
 import Week from "../src/week";
 import WeekNumber from "../src/week_number";
 import Day from "../src/day";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
@@ -162,40 +163,37 @@ describe("Week", () => {
   });
 
   it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
-    let dayMouseEntered = null;
-
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
-    }
-
+    const onDayMouseEnterSpy = jest.fn();
     const weekStart = utils.newDate();
-    const week = mount(
-      <Week day={weekStart} onDayMouseEnter={onDayMouseEnter} />,
+    const { container } = render(
+      <Week day={weekStart} onDayMouseEnter={onDayMouseEnterSpy} />,
     );
-    const day = week.find(Day).first();
-    day.simulate("mouseenter");
-    expect(day.prop("day")).toEqual(dayMouseEntered);
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.mouseEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(weekStart),
+    );
   });
 
   it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
-    let dayMouseEntered = null;
-
-    function onDayMouseEnter(day) {
-      dayMouseEntered = day;
-    }
-
+    const onDayMouseEnterSpy = jest.fn();
     const weekStart = utils.newDate();
-    // NOTE: `shallow` cannot correctly perform `simulate("pointerenter")`, so `mount` is used
-    const week = mount(
+    const { container } = render(
       <Week
         day={weekStart}
-        onDayMouseEnter={onDayMouseEnter}
+        onDayMouseEnter={onDayMouseEnterSpy}
         usePointerEvent
       />,
     );
-    const day = week.find(Day).first();
-    day.simulate("pointerenter");
-    expect(day.prop("day")).toEqual(dayMouseEntered);
+
+    const day = container.querySelector(".react-datepicker__day");
+    fireEvent.pointerEnter(day);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfWeek(weekStart),
+    );
   });
 
   describe("handleWeekClick", () => {
