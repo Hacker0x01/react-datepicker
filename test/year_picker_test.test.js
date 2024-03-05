@@ -7,9 +7,9 @@ import { getKey } from "./test_utils.js";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
-    const { container } = render(<DatePicker showYearPicker />);
+    const { container } = render(<DatePicker showYearPicker open />);
     const year = container.querySelector(".react-datepicker__year");
-    expect(year).toBeDefined();
+    expect(year).not.toBeNull();
   });
 
   it("should show year picker component with default year item number", () => {
