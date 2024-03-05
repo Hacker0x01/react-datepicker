@@ -234,17 +234,6 @@ describe("MonthDropdown", () => {
       ]);
     });
 
-    // Native select elements do not fire onChange for the same value, so no testing is required.
-    // However, in RTL, the test is skipped because the Event is fired.
-    xit("does not call the supplied onChange function when the same month is clicked", () => {
-      monthDropdown = getMonthDropdown({ dropdownMode: "select", month: 11 });
-      const select = monthDropdown.querySelector(
-        ".react-datepicker__month-select",
-      );
-      fireEvent.change(select, { target: { value: 11 } });
-      expect(handleChangeResult).toBeNull();
-    });
-
     it("calls the supplied onChange function when a different month is clicked", () => {
       monthDropdown = getMonthDropdown({ dropdownMode: "select", month: 11 });
       const select = monthDropdown.querySelector(
