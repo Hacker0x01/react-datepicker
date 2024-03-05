@@ -2583,12 +2583,24 @@ arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha512-3CYzex9M9FGQjCGMGyi6/31c8GJbgb0qGyrx5HWxPd0aCwh4cB2YjMb2Xf9UuoogrMrlO9cTqnB5rI5GHZTcUA==
 
+ascii-horizontal-barchart@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/ascii-horizontal-barchart/-/ascii-horizontal-barchart-1.3.3.tgz#2389c5220188a3c605e17daaa3e8c228c15474e0"
+  integrity sha512-GReX6WxocwDHs5lEHq/3VgdmOmhamepeBqLJy9UmYRawq6pYD4arKiVaYXWZ0C2uBYm9Z34vxbkwqMef7mnkrA==
+
 ast-types@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.14.2.tgz#600b882df8583e3cd4f2df5fa20fa83759d4bdfd"
   integrity sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==
   dependencies:
     tslib "^2.0.1"
+
+ast-utils@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ast-utils/-/ast-utils-1.0.0.tgz#42517e2d0f6f354595b061ba80d5e467500eec13"
+  integrity sha512-i1c8M+A8GiOKkPsIljnlKqZuvxNNSJJmpreexwxs9nnczMBaC9Ev29OdrwBNo5/DirQBm4+D6b1XvKw47iN/aA==
+  dependencies:
+    lodash.get "^4.4.2"
 
 astral-regex@^2.0.0:
   version "2.0.0"
@@ -4094,6 +4106,16 @@ eslint-module-utils@^2.8.0:
   dependencies:
     debug "^3.2.7"
 
+eslint-plugin-enzyme-deprecation@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-enzyme-deprecation/-/eslint-plugin-enzyme-deprecation-0.7.7.tgz#c444095c76c9e3d2d227785c4e2c5786c627dac4"
+  integrity sha512-2L86vZN4MiT+NSkmHU5TuLxchE0308Cxoud/xf8Kid0hv4rGbdg45slQclGb+PndB7KQHzWwLjARCuRxlhJAVQ==
+  dependencies:
+    ascii-horizontal-barchart "^1.3.3"
+    ast-utils "^1.0.0"
+    chalk "^4.0.0"
+    figlet "^1.5.2"
+
 eslint-plugin-es@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-es/-/eslint-plugin-es-3.0.1.tgz#75a7cdfdccddc0589934aeeb384175f221c57893"
@@ -4485,6 +4507,11 @@ fb-watchman@^2.0.0:
   integrity sha512-p5161BqbuCaSnB8jIbzQHOlpgsPmK5rJVDfDKO91Axs5NC1uu3HRQm6wt9cd9/+GtQQIO53JdGXXoyDpTAsgYA==
   dependencies:
     bser "2.1.1"
+
+figlet@^1.5.2:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/figlet/-/figlet-1.7.0.tgz#46903a04603fd19c3e380358418bb2703587a72e"
+  integrity sha512-gO8l3wvqo0V7wEFLXPbkX83b7MVjRrk1oRLfYlZXol8nEpb/ON9pcKLI4qpBv5YtOTfrINtqb7b40iYY2FTWFg==
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -6354,6 +6381,11 @@ lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
   integrity sha512-uHaJFihxmJcEX3kT4I23ABqKKalJ/zDrDg0lsFtc1h+3uw49SIJ5beyhx5ExVRti3AvKoOJngIj7xz3oylPdWQ==
+
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==
 
 lodash.isequal@^4.5.0:
   version "4.5.0"
