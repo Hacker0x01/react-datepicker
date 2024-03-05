@@ -189,7 +189,10 @@ export default class DatePicker extends React.Component {
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
-    toggleCalendarOnIconClick: PropTypes.func,
+    toggleCalendarOnIconClick: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.bool,
+    ]),
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     calendarIconClassname: PropTypes.string,
