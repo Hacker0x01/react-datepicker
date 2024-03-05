@@ -25,8 +25,9 @@ describe("timeInput", () => {
     expect(caption.textContent).toEqual("Custom time");
   });
 
-  xit("should trigger onChange event", () => {
-    const { container } = render(<InputTimeComponent />);
+  it("should trigger onChange event", () => {
+    const onChangeSpy = jest.fn();
+    const { container } = render(<InputTimeComponent onChange={onChangeSpy} />);
     const input = container.querySelector("input");
     fireEvent.change(input, { target: { value: "13:00" } });
     expect(input.value).toEqual("13:00");
@@ -41,35 +42,46 @@ describe("timeInput", () => {
     expect(input.value).toEqual("13:00");
   });
 
-  xit("should trigger onChange event on a custom time input without using the last valid timeString", () => {
+  it("should trigger onChange event on a custom time input without using the last valid timeString", () => {
+    const onChangeSpy = jest.fn();
+    const mockDate = new Date("2023-09-30");
     const { container } = render(
       <InputTimeComponent
+        date={mockDate}
         timeString="13:00"
         customTimeInput={<CustomTimeInput />}
+        onChange={onChangeSpy}
       />,
     );
 
+    const newTime = "14:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: "14:00" } });
-    expect(input.value).toEqual("14:00");
+    fireEvent.change(input, { target: { value: newTime } });
+
+    const expectedDate = new Date(mockDate);
+    const [expectedHours, expectedMinutes] = newTime.split(":");
+    expectedDate.setHours(expectedHours);
+    expectedDate.setMinutes(expectedMinutes);
+
+    expect(onChangeSpy).toHaveBeenCalledWith(expectedDate);
   });
 
-  xit("should pass pure Date to custom time input", () => {
+  it("should pass pure Date to custom time input", () => {
     const onTimeChangeSpy = jest.fn();
+    const mockDate = new Date("2023-09-30");
     const { container } = render(
       <InputTimeComponent
-        date={new Date()}
+        date={mockDate}
         timeString="13:00"
         customTimeInput={<CustomTimeInput onTimeChange={onTimeChangeSpy} />}
       />,
     );
 
+    const newTime = "14:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: "14:00" } });
+    fireEvent.change(input, { target: { value: newTime } });
 
-    expect(onTimeChangeSpy).toHaveBeenCalledWith(
-      new Date(new Date().setHours(14, 0, 0, 0)),
-    );
+    expect(onTimeChangeSpy).toHaveBeenCalledWith(mockDate);
   });
 
   it("should trigger onChange event with the specified date prop if available", () => {
