@@ -1,5 +1,4 @@
 import React from "react";
-import { mount } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import CalendarIcon from "../src/calendar_icon";
 import { IconParkSolidApplication } from "./helper_components/calendar_icon";
@@ -22,22 +21,26 @@ describe("CalendarIcon", () => {
   });
 
   it("renders a custom SVG icon when provided", () => {
-    const wrapper = mount(
+    const { container } = render(
       <CalendarIcon showIcon icon={<IconParkSolidApplication />} />,
     );
     expect(
-      wrapper.find('[data-testid="icon-park-solid-application"]'),
+      container.querySelectorAll('[data-testid="icon-park-solid-application"]'),
     ).toHaveLength(1);
   });
 
   it("renders a FontAwesome icon when provided", () => {
-    const wrapper = mount(<CalendarIcon showIcon icon="fa-example-icon" />);
-    expect(wrapper.find("i.fa-example-icon")).toHaveLength(1);
+    const { container } = render(
+      <CalendarIcon showIcon icon="fa-example-icon" />,
+    );
+    expect(container.querySelectorAll("i.fa-example-icon")).toHaveLength(1);
   });
 
   it("does not render an icon when none is provided", () => {
-    const wrapper = mount(<CalendarIcon showIcon />);
-    expect(wrapper.find("svg.react-datepicker__calendar-icon")).toHaveLength(1);
+    const { container } = render(<CalendarIcon showIcon />);
+    expect(
+      container.querySelectorAll("svg.react-datepicker__calendar-icon"),
+    ).toHaveLength(1);
   });
 
   it("should fire onClick event when the icon is clicked", () => {
