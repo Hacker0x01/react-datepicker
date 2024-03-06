@@ -759,14 +759,19 @@ export default class Month extends React.Component {
       showMonthYearPicker,
       showQuarterYearPicker,
       day,
-      ariaLabelPrefix = "month ",
+      ariaLabelPrefix = "Month ",
     } = this.props;
+
+    const formattedAriaLabelPrefix = ariaLabelPrefix
+      ? ariaLabelPrefix.trim() + " "
+      : "";
+
     return (
       <div
         className={this.getClassNames()}
         onMouseLeave={!this.props.usePointerEvent ? this.handleMouseLeave : undefined}
         onPointerLeave={this.props.usePointerEvent ? this.handleMouseLeave : undefined}
-        aria-label={`${ariaLabelPrefix} ${utils.formatDate(day, "yyyy-MM")}`}
+        aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(day, "MMMM, yyyy")}`}
         role="listbox"
       >
         {showMonthYearPicker
