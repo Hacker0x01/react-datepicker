@@ -1,41 +1,50 @@
 import React from "react";
 import WeekNumber from "../src/week_number";
 import { shallow } from "enzyme";
+import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils";
 
 function renderWeekNumber(weekNumber, props = {}) {
-  return shallow(<WeekNumber weekNumber={weekNumber} {...props} />);
+  return render(
+    <WeekNumber weekNumber={weekNumber} date={new Date()} {...props} />,
+  ).container;
 }
 
 describe("WeekNumber", () => {
-  let shallowWeekNumber, instance;
+  let weekNumber, instance;
 
   describe("Rendering", () => {
     it("should render the specified Week Number", () => {
-      const weekNumber = 1;
-      shallowWeekNumber = renderWeekNumber(weekNumber);
-      expect(shallowWeekNumber.hasClass("react-datepicker__week-number")).toBe(
-        true,
-      );
-      expect(shallowWeekNumber.text()).toBe(weekNumber + "");
+      weekNumber = renderWeekNumber(1);
+      expect(
+        weekNumber.querySelector(".react-datepicker__week-number"),
+      ).not.toBeNull();
+      expect(weekNumber.textContent).toBe(1 + "");
     });
 
     it("should handle onClick function", () => {
       const onClickMock = jest.fn();
-      const shallowWeekNumber = shallow(
-        <WeekNumber weekNumber={1} onClick={onClickMock} />,
+      const { container } = render(
+        <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
       );
-      shallowWeekNumber.instance().handleClick({});
+      fireEvent.click(
+        container.querySelector(".react-datepicker__week-number"),
+      );
       expect(onClickMock).toHaveBeenCalledTimes(1);
     });
 
     it("should have an aria-label containing the provided prefix", () => {
       const ariaLabelPrefix = "A prefix in my native language";
-      shallowWeekNumber = shallow(
-        <WeekNumber day={1} ariaLabelPrefix={ariaLabelPrefix} />,
-      );
+      weekNumber = render(
+        <WeekNumber
+          weekNumber={1}
+          date={new Date()}
+          day={1}
+          ariaLabelPrefix={ariaLabelPrefix}
+        />,
+      ).container;
       expect(
-        shallowWeekNumber.html().indexOf(`aria-label="${ariaLabelPrefix}`),
+        weekNumber.innerHTML.indexOf(`aria-label="${ariaLabelPrefix}`),
       ).not.toBe(-1);
     });
   });
@@ -44,8 +53,8 @@ describe("WeekNumber", () => {
     const handleFocusWeekNumberMock = jest.fn();
 
     beforeEach(() => {
-      shallowWeekNumber = shallow(<WeekNumber />);
-      instance = shallowWeekNumber.instance();
+      weekNumber = shallow(<WeekNumber weekNumber={1} date={new Date()} />);
+      instance = weekNumber.instance();
       instance.handleFocusWeekNumber = handleFocusWeekNumberMock;
     });
 
@@ -68,10 +77,13 @@ describe("WeekNumber", () => {
   describe("Event Handling", () => {
     it("should call onClick prop when handleClick is triggered", () => {
       const onClickMock = jest.fn();
-      const eventMock = { target: {} };
-      const shallowWeekNumber = shallow(<WeekNumber onClick={onClickMock} />);
-      shallowWeekNumber.simulate("click", eventMock);
-      expect(onClickMock).toHaveBeenCalledWith(eventMock);
+      const { container } = render(
+        <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
+      );
+      fireEvent.click(
+        container.querySelector(".react-datepicker__week-number"),
+      );
+      expect(onClickMock).toHaveBeenCalled();
     });
 
     describe("handleOnKeyDown", () => {
@@ -103,132 +115,194 @@ describe("WeekNumber", () => {
   });
 
   describe("Utility Functions", () => {
-    beforeEach(() => {
-      shallowWeekNumber = shallow(<WeekNumber />);
-      instance = shallowWeekNumber.instance();
-    });
-
     describe("getTabIndex", () => {
       it("should return 0 if showWeekPicker and showWeekNumber are true and the day is selected", () => {
-        const shallowWeekNumber = shallow(
-          <WeekNumber showWeekPicker showWeekNumber selected={new Date()} />,
+        const currentWeekNumber = new Date();
+        const selected = currentWeekNumber;
+        const preSelection = currentWeekNumber;
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            showWeekPicker
+            showWeekNumber
+            date={currentWeekNumber}
+            selected={selected}
+            preSelection={preSelection}
+          />,
         );
-        const instance = shallowWeekNumber.instance();
-        instance.isKeyboardSelected = jest.fn(() => true);
-        instance.isSameDay = jest.fn(() => true);
-        const props = { ...instance.props, preSelection: new Date() };
-        instance.props = props;
-        expect(instance.getTabIndex()).toBe(0),
-          expect(instance.isSameDay()).toBe(true);
+
+        expect(
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains(
+              "react-datepicker__week-number--keyboard-selected",
+            ),
+        ).toBe(false);
+        expect(
+          container.querySelector(".react-datepicker__week-number").tabIndex,
+        ).toBe(0);
       });
 
       it("should return 0 if showWeekPicker and showWeekNumber are true and the day is the preSelection", () => {
-        const shallowWeekNumber = shallow(
-          <WeekNumber showWeekPicker showWeekNumber selected={new Date()} />,
+        const currentWeekNumber = new Date();
+        const selected = utils.addWeeks(currentWeekNumber, 1);
+        const preSelection = currentWeekNumber;
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            showWeekPicker
+            showWeekNumber
+            date={currentWeekNumber}
+            selected={selected}
+            preSelection={preSelection}
+          />,
         );
-        const instance = shallowWeekNumber.instance();
-        instance.isKeyboardSelected = jest.fn(() => true);
-        instance.isSameDay = jest.fn(() => true);
-        const props = { ...instance.props, preSelection: new Date() };
-        instance.props = props;
-        expect(instance.getTabIndex()).toBe(0);
+
+        expect(
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains(
+              "react-datepicker__week-number--keyboard-selected",
+            ),
+        ).toBe(true);
+        expect(
+          container.querySelector(".react-datepicker__week-number").tabIndex,
+        ).toBe(0);
       });
 
       it("should return -1 if showWeekPicker is false", () => {
-        const shallowWeekNumber = shallow(
-          <WeekNumber showWeekNumber selected={new Date()} />,
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            showWeekNumber
+            selected={new Date()}
+          />,
         );
-        const instance = shallowWeekNumber.instance();
-        expect(instance.getTabIndex()).toBe(-1);
+        expect(
+          container.querySelector(".react-datepicker__week-number").tabIndex,
+        ).toBe(-1);
       });
 
       it("should return -1 if showWeekNumber is false", () => {
-        const shallowWeekNumber = shallow(
-          <WeekNumber showWeekPicker selected={new Date()} />,
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            showWeekPicker
+            selected={new Date()}
+          />,
         );
-        const instance = shallowWeekNumber.instance();
-        expect(instance.getTabIndex()).toBe(-1);
+        expect(
+          container.querySelector(".react-datepicker__week-number").tabIndex,
+        ).toBe(-1);
       });
 
       it("should return -1 if the day is not selected or the preSelection", () => {
-        const shallowWeekNumber = shallow(
-          <WeekNumber showWeekPicker showWeekNumber selected={new Date()} />,
+        const currentWeekNumber = new Date();
+        const selected = utils.addWeeks(currentWeekNumber, 1);
+        const preSelection = utils.addWeeks(currentWeekNumber, 2);
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            showWeekPicker
+            showWeekNumber
+            date={currentWeekNumber}
+            selected={selected}
+            preSelection={preSelection}
+          />,
         );
-        const instance = shallowWeekNumber.instance();
-        instance.isKeyboardSelected = jest.fn(() => false);
-        instance.isSameDay = jest.fn(() => false);
-        const props = { ...instance.props, preSelection: new Date() };
-        instance.props = props;
-        expect(instance.getTabIndex()).toBe(-1);
+        expect(
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains(
+              "react-datepicker__week-number--keyboard-selected",
+            ),
+        ).toBe(false);
+        expect(
+          container.querySelector(".react-datepicker__week-number").tabIndex,
+        ).toBe(-1);
       });
     });
 
     describe("weekNumberClasses should return the correct classes", () => {
       it("should have the class 'react-datepicker__week-number'", () => {
-        const weekNumber = 1;
-        const shallowWeekNumber = shallow(
-          <WeekNumber weekNumber={weekNumber} />,
+        const { container } = render(
+          <WeekNumber weekNumber={1} date={new Date()} />,
         );
         expect(
-          shallowWeekNumber.hasClass("react-datepicker__week-number"),
-        ).toBe(true);
+          container.querySelector(".react-datepicker__week-number"),
+        ).not.toBeNull();
       });
 
       it("should have the class 'react-datepicker__week-number--clickable' if onClick is defined", () => {
-        const shallowWeekNumber = shallow(<WeekNumber onClick={() => {}} />);
+        const { container } = render(
+          <WeekNumber weekNumber={1} date={new Date()} onClick={() => {}} />,
+        );
         expect(
-          shallowWeekNumber.hasClass(
-            "react-datepicker__week-number--clickable",
-          ),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--clickable"),
         ).toBe(true);
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
-        const shallowWeekNumber = shallow(
+        const { container } = render(
           <WeekNumber
+            weekNumber={1}
             date={currentWeekNumber}
             selected={currentWeekNumber}
             preSelection={currentWeekNumber}
           />,
         );
         expect(
-          shallowWeekNumber.hasClass("react-datepicker__week-number--selected"),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
         ).toBe(true);
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
         const preSelection = utils.addWeeks(currentWeekNumber, 1);
-        const shallowWeekNumber = shallow(
+        const { container } = render(
           <WeekNumber
+            weekNumber={1}
             date={currentWeekNumber}
             selected={currentWeekNumber}
             preSelection={preSelection}
           />,
         );
         expect(
-          shallowWeekNumber.hasClass("react-datepicker__week-number--selected"),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
         ).toBe(true);
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is not current week and preselected is current week", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
         const selected = utils.addWeeks(currentWeekNumber, 1);
-        const shallowWeekNumber = shallow(
+        const { container } = render(
           <WeekNumber
+            weekNumber={1}
             date={currentWeekNumber}
             selected={selected}
             preSelection={currentWeekNumber}
           />,
         );
         expect(
-          shallowWeekNumber.hasClass("react-datepicker__week-number--selected"),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
         ).toBe(false);
         expect(
-          shallowWeekNumber.hasClass(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains(
+              "react-datepicker__week-number--keyboard-selected",
+            ),
         ).toBe(true);
       });
 
@@ -236,20 +310,25 @@ describe("WeekNumber", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
         const selected = utils.addWeeks(currentWeekNumber, 1);
         const preSelection = utils.addWeeks(currentWeekNumber, 2);
-        const shallowWeekNumber = shallow(
+        const { container } = render(
           <WeekNumber
+            weekNumber={1}
             date={currentWeekNumber}
             selected={selected}
             preSelection={preSelection}
           />,
         );
         expect(
-          shallowWeekNumber.hasClass("react-datepicker__week-number--selected"),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
         ).toBe(false);
         expect(
-          shallowWeekNumber.hasClass(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains(
+              "react-datepicker__week-number--keyboard-selected",
+            ),
         ).toBe(false);
       });
     });
@@ -259,7 +338,18 @@ describe("WeekNumber", () => {
     let weekNumberEl, instance, shallowWeekNumber;
 
     const createComponentWithProps = (props = {}) => {
-      shallowWeekNumber = shallow(<WeekNumber {...props} />);
+      const currentWeekNumber = new Date();
+      const selected = currentWeekNumber;
+      const preSelection = currentWeekNumber;
+      shallowWeekNumber = shallow(
+        <WeekNumber
+          weekNumber={1}
+          date={currentWeekNumber}
+          selected={selected}
+          preSelection={preSelection}
+          {...props}
+        />,
+      );
       instance = shallowWeekNumber.instance();
       instance.weekNumberEl = weekNumberEl;
       instance.getTabIndex = jest.fn(() => 0);
