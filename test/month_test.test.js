@@ -38,15 +38,54 @@ describe("Month", () => {
   });
 
   it("should have the month aria-label", () => {
-    const dateString = "2015-12";
+    const date = utils.newDate("2015-12-01");
+
+    const month = TestUtils.renderIntoDocument(<Month day={date} />);
+    const month_dom = TestUtils.findRenderedDOMComponentWithClass(
+      month,
+      "react-datepicker__month",
+    );
+
+    const expectedAriaLabel = utils.formatDate(date, "MMMM, yyyy");
+    expect(month_dom.getAttribute("aria-label")).toContain(expectedAriaLabel);
+  });
+
+  it("should have the month aria-label with the specified prefix", () => {
+    const date = utils.newDate("2015-12-01");
+    const ariaLabelPrefix = "Selected Month";
+
     const month = TestUtils.renderIntoDocument(
-      <Month day={utils.newDate(`${dateString}-01`)} />,
+      <Month day={date} ariaLabelPrefix={ariaLabelPrefix} />,
     );
     const month_dom = TestUtils.findRenderedDOMComponentWithClass(
       month,
       "react-datepicker__month",
     );
-    expect(month_dom.getAttribute("aria-label")).toContain(dateString);
+
+    const expectedAriaLabel =
+      `${ariaLabelPrefix} ${utils.formatDate(date, "MMMM, yyyy")}`.toLowerCase();
+    expect(month_dom.getAttribute("aria-label").toLowerCase()).toEqual(
+      expectedAriaLabel,
+    );
+  });
+
+  it("should have the month aria-label without any prefix when ariaLabelPrefix is null", () => {
+    const date = utils.newDate("2015-12-01");
+    const ariaLabelPrefix = null;
+
+    const month = TestUtils.renderIntoDocument(
+      <Month day={date} ariaLabelPrefix={ariaLabelPrefix} />,
+    );
+    const month_dom = TestUtils.findRenderedDOMComponentWithClass(
+      month,
+      "react-datepicker__month",
+    );
+
+    const expectedAriaLabel =
+      `${utils.formatDate(date, "MMMM, yyyy")}`.toLowerCase();
+    expect(month_dom.getAttribute("aria-label").toLowerCase()).toEqual(
+      expectedAriaLabel,
+    );
   });
 
   it("should have an aria-label containing the provided prefix", () => {
