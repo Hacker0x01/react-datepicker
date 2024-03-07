@@ -1833,6 +1833,7 @@ describe("Calendar", () => {
       expect(dialog).not.toBeNull();
       expect(dialog.getAttribute("role")).toBe("dialog");
       expect(dialog.getAttribute("aria-modal")).toBe("true");
+      expect(dialog.getAttribute("aria-label")).toBe("Choose Date");
     });
   });
 });
