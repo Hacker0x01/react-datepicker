@@ -5,9 +5,9 @@
   },
 
   "plugins": [
+    "enzyme-deprecation",
     "react",
-    "unused-imports",
-    "enzyme-deprecation"
+    "unused-imports"
   ],
 
   "parserOptions": {
