@@ -8,8 +8,6 @@ import Month from "../src/month";
 import ReactDOM from "react-dom";
 import TestUtils from "react-dom/test-utils";
 import { render, fireEvent } from "@testing-library/react";
-import YearDropdown from "../src/year_dropdown";
-import MonthDropdown from "../src/month_dropdown";
 import MonthYearDropdown from "../src/month_year_dropdown";
 import DatePicker from "../src/index.jsx";
 import { shallow, mount } from "enzyme";
@@ -17,6 +15,7 @@ import * as utils from "../src/date_utils";
 import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";
 import { isSunday } from "date-fns";
+import { getKey } from "./test_utils";
 
 // TODO Possibly rename
 const DATE_FORMAT = "MM/dd/yyyy";
@@ -26,6 +25,22 @@ describe("Calendar", () => {
   utils.registerLocale("fi", fi);
 
   function getCalendar(extraProps) {
+    return render(
+      <Calendar
+        dateFormat={dateFormat}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        hideCalendar={() => {}}
+        dropdownMode="scroll"
+        {...extraProps}
+      />,
+    ).container;
+  }
+
+  /**
+   * @deprecated
+   */
+  function getShallowCalendar(extraProps) {
     return shallow(
       <Calendar
         dateFormat={dateFormat}
@@ -40,20 +55,20 @@ describe("Calendar", () => {
 
   it("should start with the current date in view if no date range", () => {
     const now = utils.newDate();
-    const calendar = getCalendar();
+    const calendar = getShallowCalendar();
     expect(utils.isSameDay(calendar.date, now));
   });
 
   it("should start with the selected date in view if provided", () => {
     const selected = utils.addYears(utils.newDate(), 1);
-    const calendar = getCalendar({ selected });
+    const calendar = getShallowCalendar({ selected });
     expect(utils.isSameDay(calendar.date, selected));
   });
 
   it("should start with the pre-selected date in view if provided", () => {
     const preSelected = utils.addYears(utils.newDate(), 2);
     const selected = utils.addYears(utils.newDate(), 1);
-    const calendar = getCalendar({ preSelected, selected });
+    const calendar = getShallowCalendar({ preSelected, selected });
     expect(utils.isSameDay(calendar.date, selected));
   });
 
@@ -61,51 +76,51 @@ describe("Calendar", () => {
     const now = utils.newDate();
     const minDate = utils.subYears(now, 1);
     const maxDate = utils.addYears(now, 1);
-    const calendar = getCalendar({ minDate, maxDate });
+    const calendar = getShallowCalendar({ minDate, maxDate });
     expect(utils.isSameDay(calendar.date, now));
   });
 
   it("should start with the min date in view if after the current date", () => {
     const minDate = utils.addYears(utils.newDate(), 1);
-    const calendar = getCalendar({ minDate });
+    const calendar = getShallowCalendar({ minDate });
     expect(utils.isSameDay(calendar.date, minDate));
   });
 
   it("should start with the min include date in view if after the current date", () => {
     const minDate = utils.addYears(utils.newDate(), 1);
-    const calendar = getCalendar({ includeDates: [minDate] });
+    const calendar = getShallowCalendar({ includeDates: [minDate] });
     expect(utils.isSameDay(calendar.date, minDate));
   });
 
   it("should start with the max date in view if before the current date", () => {
     const maxDate = utils.subYears(utils.newDate(), 1);
-    const calendar = getCalendar({ maxDate });
+    const calendar = getShallowCalendar({ maxDate });
     expect(utils.isSameDay(calendar.date, maxDate));
   });
 
   it("should start with the max include date in view if before the current date", () => {
     const maxDate = utils.subYears(utils.newDate(), 1);
-    const calendar = getCalendar({ includeDates: [maxDate] });
+    const calendar = getShallowCalendar({ includeDates: [maxDate] });
     expect(utils.isSameDay(calendar.date, maxDate));
   });
 
   it("should start with the open to date in view if given and no selected/min/max dates given", () => {
     const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
-    const calendar = getCalendar({ openToDate });
+    const calendar = getShallowCalendar({ openToDate });
     expect(utils.isSameDay(calendar.date, openToDate));
   });
 
   it("should start with the open to date in view if given and after a min date", () => {
     const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
     const minDate = utils.parseDate("01/01/1993", DATE_FORMAT);
-    const calendar = getCalendar({ openToDate, minDate });
+    const calendar = getShallowCalendar({ openToDate, minDate });
     expect(utils.isSameDay(calendar.date, openToDate));
   });
 
   it("should start with the open to date in view if given and before a max date", () => {
     const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
     const maxDate = utils.parseDate("12/31/1993", DATE_FORMAT);
-    const calendar = getCalendar({ openToDate, maxDate });
+    const calendar = getShallowCalendar({ openToDate, maxDate });
     expect(utils.isSameDay(calendar.date, openToDate));
   });
 
@@ -113,21 +128,21 @@ describe("Calendar", () => {
     const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
     const minDate = utils.parseDate("01/01/1993", DATE_FORMAT);
     const maxDate = utils.parseDate("12/31/1993", DATE_FORMAT);
-    const calendar = getCalendar({ openToDate, minDate, maxDate });
+    const calendar = getShallowCalendar({ openToDate, minDate, maxDate });
     expect(utils.isSameDay(calendar.date, openToDate));
   });
 
   it("should open on openToDate date rather than selected date when both are specified", () => {
-    var openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
-    var selected = utils.parseDate("09/28/1995", DATE_FORMAT);
-    var calendar = getCalendar({ openToDate, selected });
+    const openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
+    const selected = utils.parseDate("09/28/1995", DATE_FORMAT);
+    const calendar = getShallowCalendar({ openToDate, selected });
     expect(utils.isSameDay(calendar.date, openToDate));
   });
 
   it("should trigger date change when openToDate prop is set after calcInitialState()", () => {
     let openToDate = utils.parseDate("09/28/1993", DATE_FORMAT);
     const oneMonthFromOpenToDate = utils.parseDate("10/28/1993", DATE_FORMAT);
-    const calendar = getCalendar({ openToDate });
+    const calendar = getShallowCalendar({ openToDate });
 
     expect(utils.isSameDay(calendar.date, openToDate));
     // openToDate = oneMonthFromOpenToDate
@@ -137,19 +152,25 @@ describe("Calendar", () => {
 
   it("should not show the year dropdown menu by default", () => {
     const calendar = getCalendar();
-    const yearReadView = calendar.find(YearDropdown);
+    const yearReadView = calendar.querySelectorAll(
+      ".react-datepicker__year-dropdown-container",
+    );
     expect(yearReadView).toHaveLength(0);
   });
 
   it("should show the year dropdown menu if toggled on", () => {
     const calendar = getCalendar({ showYearDropdown: true });
-    const yearReadView = calendar.find(YearDropdown);
+    const yearReadView = calendar.querySelectorAll(
+      ".react-datepicker__year-dropdown-container",
+    );
     expect(yearReadView).toHaveLength(1);
   });
 
   it("should show only one year dropdown menu if toggled on and multiple month mode on", () => {
     const calendar = getCalendar({ showYearDropdown: true, monthsShown: 2 });
-    const monthReadView = calendar.find(YearDropdown);
+    const monthReadView = calendar.querySelectorAll(
+      ".react-datepicker__year-dropdown-container",
+    );
     expect(monthReadView).toHaveLength(1);
   });
 
@@ -158,7 +179,7 @@ describe("Calendar", () => {
       includeDates: [utils.newDate()],
       forceShowMonthNavigation: true,
     });
-    const nextNavigationButton = calendar.find(
+    const nextNavigationButton = calendar.querySelectorAll(
       ".react-datepicker__navigation--next",
     );
     expect(nextNavigationButton).toHaveLength(1);
@@ -167,14 +188,14 @@ describe("Calendar", () => {
   it("should correctly format weekday using formatWeekDay prop", () => {
     const calendar = getCalendar({ formatWeekDay: (day) => day[0] });
     calendar
-      .find(".react-datepicker__day-name")
-      .forEach((dayName) => expect(dayName.text()).toHaveLength(1));
+      .querySelectorAll(".react-datepicker__day-name")
+      .forEach((dayName) => expect(dayName.textContent).toHaveLength(1));
   });
 
   it("should contain the correct class when using the weekDayClassName prop", () => {
     const func = (date) => (isSunday(date) ? "sunday" : undefined);
 
-    const calendar = mount(
+    const { container } = render(
       <Calendar
         dateFormat={dateFormat}
         dropdownMode="scroll"
@@ -184,13 +205,19 @@ describe("Calendar", () => {
       />,
     );
 
-    const sunday = calendar.find(".react-datepicker__day-name.sunday");
+    const sunday = container.querySelectorAll(
+      ".react-datepicker__day-name.sunday",
+    );
     expect(sunday).toHaveLength(1);
   });
 
   it("should render the months correctly adjusted by monthSelectedIn", () => {
     const selected = utils.newDate("2018-11-19");
-    const calendar = getCalendar({ inline: true, monthsShown: 2, selected });
+    const calendar = getShallowCalendar({
+      inline: true,
+      monthsShown: 2,
+      selected,
+    });
     calendar.setProps({ monthSelectedIn: 1 }, () => {
       const renderedMonths = calendar.find(Month);
       expect(utils.getMonth(renderedMonths.first().prop("day"))).toEqual(9);
@@ -199,7 +226,7 @@ describe("Calendar", () => {
 
   it("should render the months correctly adjusted by monthSelectedIn for showPreviousMonths", () => {
     const selected = utils.newDate("2018-11-19");
-    const calendar = getCalendar({
+    const calendar = getShallowCalendar({
       inline: true,
       monthsShown: 2,
       selected,
@@ -214,11 +241,11 @@ describe("Calendar", () => {
   it("should render the correct default aria labels for next and prev months buttons", () => {
     const calendar = getCalendar();
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe("Previous Month");
     expect(nextButtonAriaLabel).toBe("Next Month");
@@ -233,11 +260,11 @@ describe("Calendar", () => {
     });
 
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe(previousMonthButtonLabel);
     expect(nextButtonAriaLabel).toBe(nextMonthButtonLabel);
@@ -254,11 +281,11 @@ describe("Calendar", () => {
     });
 
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe(previousButtonAriaLabel);
     expect(nextButtonAriaLabel).toBe(nextButtonAriaLabel);
@@ -267,11 +294,11 @@ describe("Calendar", () => {
   it("should render the correct default aria labels for next and prev year buttons", () => {
     const calendar = getCalendar({ showYearPicker: true });
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe("Previous Year");
     expect(nextButtonAriaLabel).toBe("Next Year");
@@ -287,11 +314,11 @@ describe("Calendar", () => {
     });
 
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe(previousYearButtonLabel);
     expect(nextButtonAriaLabel).toBe(nextYearButtonLabel);
@@ -309,11 +336,11 @@ describe("Calendar", () => {
     });
 
     const previousButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--previous")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--previous")
+      .getAttribute("aria-label");
     const nextButtonAriaLabel = calendar
-      .find(".react-datepicker__navigation--next")
-      .prop("aria-label");
+      .querySelector(".react-datepicker__navigation--next")
+      .getAttribute("aria-label");
 
     expect(previousButtonAriaLabel).toBe(previousYearAriaLabel);
     expect(nextButtonAriaLabel).toBe(nextYearAriaLabel);
@@ -421,10 +448,10 @@ describe("Calendar", () => {
     it("should render only custom header", () => {
       const calendar = getCalendar({ renderCustomHeader });
 
-      const nextMontButton = calendar.find(
+      const nextMontButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--next",
       );
-      const prevMontButton = calendar.find(
+      const prevMontButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--previous",
       );
 
@@ -437,15 +464,15 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
-      expect(calendar.find(".custom-header")).toHaveLength(1);
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
+      expect(calendar.querySelectorAll(".custom-header")).toHaveLength(1);
 
-      const yearSelect = calendar.find(".year-select");
-      const monthSelect = calendar.find(".month-select");
-      const prevMonth = calendar.find(".prevMonth");
-      const nextMonth = calendar.find(".nextMonth");
+      const yearSelect = calendar.querySelectorAll(".year-select");
+      const monthSelect = calendar.querySelectorAll(".month-select");
+      const prevMonth = calendar.querySelectorAll(".prevMonth");
+      const nextMonth = calendar.querySelectorAll(".nextMonth");
 
       expect(yearSelect).toHaveLength(1);
       expect(monthSelect).toHaveLength(1);
@@ -459,13 +486,13 @@ describe("Calendar", () => {
         showYearPicker: true,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
 
-      expect(calendar.find(".react-datepicker__year--container")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__year--container"),
+      ).toHaveLength(1);
     });
 
     it("should render day names with renderCustomHeader", () => {
@@ -473,11 +500,13 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
 
-      expect(calendar.find(".react-datepicker__day-names")).toHaveLength(1);
+      expect(
+        calendar.querySelectorAll(".react-datepicker__day-names"),
+      ).toHaveLength(1);
     });
 
     it("should not render day names with renderCustomHeader & showMonthYearPicker", () => {
@@ -486,11 +515,13 @@ describe("Calendar", () => {
         showMonthYearPicker: true,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
 
-      expect(calendar.find(".react-datepicker__day-names")).toHaveLength(0);
+      expect(
+        calendar.querySelectorAll(".react-datepicker__day-names"),
+      ).toHaveLength(0);
     });
 
     it("should not render day names with renderCustomHeader & showYearPicker", () => {
@@ -499,11 +530,13 @@ describe("Calendar", () => {
         showYearPicker: true,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
 
-      expect(calendar.find(".react-datepicker__day-names")).toHaveLength(0);
+      expect(
+        calendar.querySelectorAll(".react-datepicker__day-names"),
+      ).toHaveLength(0);
     });
 
     it("should not render day names with renderCustomHeader & showQuarterYearPicker", () => {
@@ -512,15 +545,17 @@ describe("Calendar", () => {
         showQuarterYearPicker: true,
       });
 
-      expect(calendar.find(".react-datepicker__header--custom")).toHaveLength(
-        1,
-      );
+      expect(
+        calendar.querySelectorAll(".react-datepicker__header--custom"),
+      ).toHaveLength(1);
 
-      expect(calendar.find(".react-datepicker__day-names")).toHaveLength(0);
+      expect(
+        calendar.querySelectorAll(".react-datepicker__day-names"),
+      ).toHaveLength(0);
     });
 
     it("should go to previous month", () => {
-      const calendar = getCalendar({
+      const calendar = getShallowCalendar({
         renderCustomHeader,
       });
 
@@ -535,7 +570,7 @@ describe("Calendar", () => {
     });
 
     it("should go to next month", () => {
-      const calendar = getCalendar({
+      const calendar = getShallowCalendar({
         renderCustomHeader,
       });
 
@@ -584,7 +619,7 @@ describe("Calendar", () => {
     });
 
     it("should select april from month select", () => {
-      const calendar = getCalendar({
+      const calendar = getShallowCalendar({
         renderCustomHeader,
       });
 
@@ -598,7 +633,7 @@ describe("Calendar", () => {
     });
 
     it("should select 2017 from month select", () => {
-      const calendar = getCalendar({
+      const calendar = getShallowCalendar({
         renderCustomHeader,
       });
 
@@ -617,7 +652,7 @@ describe("Calendar", () => {
         monthsShown: 2,
       });
       expect(
-        twoMonthsCalendar.find(".react-datepicker__header--custom"),
+        twoMonthsCalendar.querySelectorAll(".react-datepicker__header--custom"),
       ).toHaveLength(2);
 
       const fourMonthsCalendar = getCalendar({
@@ -625,7 +660,9 @@ describe("Calendar", () => {
         monthsShown: 4,
       });
       expect(
-        fourMonthsCalendar.find(".react-datepicker__header--custom"),
+        fourMonthsCalendar.querySelectorAll(
+          ".react-datepicker__header--custom",
+        ),
       ).toHaveLength(4);
     });
 
@@ -640,14 +677,12 @@ describe("Calendar", () => {
 
       const firstDate = new Date();
       const secondDate = utils.addMonths(new Date(), 1);
-      const firstDateInCustomHeader = twoMonthsCalendar
-        .find(".customheader-monthdate")
-        .at(0)
-        .text();
-      const secondDateInCustomHeader = twoMonthsCalendar
-        .find(".customheader-monthdate")
-        .at(1)
-        .text();
+      const firstDateInCustomHeader = twoMonthsCalendar.querySelectorAll(
+        ".customheader-monthdate",
+      )[0].textContent;
+      const secondDateInCustomHeader = twoMonthsCalendar.querySelectorAll(
+        ".customheader-monthdate",
+      )[1].textContent;
 
       expect(firstDateInCustomHeader).toBe(
         `${firstDate.getFullYear()}-${firstDate.getMonth()}-${firstDate.getDate()}`,
@@ -658,7 +693,7 @@ describe("Calendar", () => {
     });
 
     it("should render custom header with show time select", () => {
-      const calendar = mount(
+      const { container } = render(
         <Calendar
           renderCustomHeader={renderCustomHeader}
           showTimeSelect
@@ -668,8 +703,10 @@ describe("Calendar", () => {
           onSelect={() => {}}
         />,
       );
-      const header = calendar.find(".react-datepicker__header--custom");
-      const time = calendar.find(".react-datepicker__time");
+      const header = container.querySelectorAll(
+        ".react-datepicker__header--custom",
+      );
+      const time = container.querySelectorAll(".react-datepicker__time");
       expect(header).toHaveLength(1);
       expect(time).toHaveLength(1);
     });
@@ -689,11 +726,11 @@ describe("Calendar", () => {
         showDisabledMonthNavigation: true,
       });
 
-      const prevDisabledNavigationButton = calendar.find(
+      const prevDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--previous--disabled",
       );
 
-      const nextDisabledNavigationButton = calendar.find(
+      const nextDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--next--disabled",
       );
       expect(prevDisabledNavigationButton).toHaveLength(1);
@@ -706,11 +743,11 @@ describe("Calendar", () => {
         maxDate: utils.newDate(),
         showDisabledMonthNavigation: true,
       });
-      const prevDisabledNavigationButton = calendar.find(
+      const prevDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--previous--disabled",
       );
 
-      const nextDisabledNavigationButton = calendar.find(
+      const nextDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--next--disabled",
       );
       expect(prevDisabledNavigationButton).toHaveLength(0);
@@ -723,11 +760,11 @@ describe("Calendar", () => {
         maxDate: utils.addMonths(utils.newDate(), 3),
         showDisabledMonthNavigation: true,
       });
-      const prevDisabledNavigationButton = calendar.find(
+      const prevDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--previous--disabled",
       );
 
-      const nextDisabledNavigationButton = calendar.find(
+      const nextDisabledNavigationButton = calendar.querySelectorAll(
         ".react-datepicker__navigation--next--disabled",
       );
       expect(prevDisabledNavigationButton).toHaveLength(0);
@@ -741,19 +778,19 @@ describe("Calendar", () => {
         showDisabledMonthNavigation: true,
         onMonthChange: onMonthChangeSpy,
       });
-      const prevNavigationButton = calendar.find(
+      const prevNavigationButton = calendar.querySelector(
         ".react-datepicker__navigation--previous",
       );
 
-      const nextNavigationButton = calendar.find(
+      const nextNavigationButton = calendar.querySelector(
         ".react-datepicker__navigation--next",
       );
 
-      prevNavigationButton.simulate("click");
+      fireEvent.click(prevNavigationButton);
 
       expect(onMonthChangeSpy).toHaveBeenCalledTimes(0);
 
-      nextNavigationButton.simulate("click");
+      fireEvent.click(nextNavigationButton);
 
       expect(onMonthChangeSpy).toHaveBeenCalledTimes(0);
     });
@@ -766,16 +803,16 @@ describe("Calendar", () => {
         showDisabledMonthNavigation: true,
         onMonthChange: onMonthChangeSpy,
       });
-      const prevNavigationButton = calendar.find(
+      const prevNavigationButton = calendar.querySelector(
         ".react-datepicker__navigation--previous",
       );
 
-      const nextNavigationButton = calendar.find(
+      const nextNavigationButton = calendar.querySelector(
         ".react-datepicker__navigation--next",
       );
 
-      prevNavigationButton.simulate("click");
-      nextNavigationButton.simulate("click");
+      fireEvent.click(prevNavigationButton);
+      fireEvent.click(nextNavigationButton);
 
       expect(onMonthChangeSpy).toHaveBeenCalledTimes(2);
     });
@@ -783,25 +820,33 @@ describe("Calendar", () => {
 
   it("should not show the month dropdown menu by default", () => {
     const calendar = getCalendar();
-    const monthReadView = calendar.find(MonthDropdown);
+    const monthReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-dropdown-container",
+    );
     expect(monthReadView).toHaveLength(0);
   });
 
   it("should show the month dropdown menu if toggled on", () => {
     const calendar = getCalendar({ showMonthDropdown: true });
-    const monthReadView = calendar.find(MonthDropdown);
+    const monthReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-dropdown-container",
+    );
     expect(monthReadView).toHaveLength(1);
   });
 
   it("should show only one month dropdown menu if toggled on and multiple month mode on", () => {
     const calendar = getCalendar({ showMonthDropdown: true, monthsShown: 2 });
-    const monthReadView = calendar.find(MonthDropdown);
+    const monthReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-dropdown-container",
+    );
     expect(monthReadView).toHaveLength(1);
   });
 
   it("should not show the month-year dropdown menu by default", () => {
     const calendar = getCalendar();
-    const monthYearReadView = calendar.find(MonthYearDropdown);
+    const monthYearReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-year-dropdown-container",
+    );
     expect(monthYearReadView).toHaveLength(0);
   });
 
@@ -811,7 +856,9 @@ describe("Calendar", () => {
       minDate: utils.subYears(utils.newDate(), 1),
       maxDate: utils.addYears(utils.newDate(), 1),
     });
-    const monthYearReadView = calendar.find(MonthYearDropdown);
+    const monthYearReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-year-dropdown-container",
+    );
     expect(monthYearReadView).toHaveLength(1);
   });
 
@@ -822,25 +869,31 @@ describe("Calendar", () => {
       maxDate: utils.addYears(utils.newDate(), 1),
       monthsShown: 2,
     });
-    const monthReadView = calendar.find(MonthYearDropdown);
+    const monthReadView = calendar.querySelectorAll(
+      ".react-datepicker__month-year-dropdown-container",
+    );
     expect(monthReadView).toHaveLength(1);
   });
 
   it("should not show the today button by default", () => {
     const calendar = getCalendar();
-    const todayButton = calendar.find(".react-datepicker__today-button");
+    const todayButton = calendar.querySelectorAll(
+      ".react-datepicker__today-button",
+    );
     expect(todayButton).toHaveLength(0);
   });
 
   it("should show the today button if toggled on", () => {
     const calendar = getCalendar({ todayButton: "Vandaag" });
-    const todayButton = calendar.find(".react-datepicker__today-button");
+    const todayButton = calendar.querySelectorAll(
+      ".react-datepicker__today-button",
+    );
     expect(todayButton).toHaveLength(1);
-    expect(todayButton.text()).toBe("Vandaag");
+    expect(todayButton[0].textContent).toBe("Vandaag");
   });
 
   it("should set the date when pressing todayButton", () => {
-    const calendar = getCalendar({ todayButton: "Vandaag" });
+    const calendar = getShallowCalendar({ todayButton: "Vandaag" });
     const todayButton = calendar.find(".react-datepicker__today-button");
     todayButton.simulate("click");
     expect(utils.isSameDay(calendar.state().date, utils.newDate()));
@@ -848,14 +901,14 @@ describe("Calendar", () => {
 
   it("should use a hash for week label if weekLabel is NOT provided", () => {
     const calendar = getCalendar({ showWeekNumbers: true });
-    const weekLabel = calendar.find(".react-datepicker__day-name");
-    expect(weekLabel.at(0).text()).toBe("#");
+    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    expect(weekLabel[0].textContent).toBe("#");
   });
 
   it("should set custom week label if weekLabel is provided", () => {
     const calendar = getCalendar({ showWeekNumbers: true, weekLabel: "Foo" });
-    const weekLabel = calendar.find(".react-datepicker__day-name");
-    expect(weekLabel.at(0).text()).toBe("Foo");
+    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    expect(weekLabel[0].textContent).toBe("Foo");
   });
 
   it("should track the currently hovered day (Mouse Event)", () => {
@@ -919,7 +972,7 @@ describe("Calendar", () => {
   });
 
   it("uses weekdaysShort instead of weekdaysMin provided useWeekdaysShort prop is present", () => {
-    const calendarShort = mount(
+    const calendarShort = render(
       <Calendar
         locale="en"
         dateFormat={dateFormat}
@@ -927,29 +980,33 @@ describe("Calendar", () => {
         onSelect={() => {}}
         useWeekdaysShort
       />,
-    );
-    const calendarMin = mount(
+    ).container;
+    const calendarMin = render(
       <Calendar
         locale="en"
         dateFormat={dateFormat}
         onClickOutside={() => {}}
         onSelect={() => {}}
       />,
+    ).container;
+
+    const daysNamesShort = calendarShort.querySelectorAll(
+      ".react-datepicker__day-name",
     );
+    expect(daysNamesShort[0].textContent).toBe("Sun");
+    expect(daysNamesShort[6].textContent).toBe("Sat");
 
-    const daysNamesShort = calendarShort.find(".react-datepicker__day-name");
-    expect(daysNamesShort.at(0).text()).toBe("Sun");
-    expect(daysNamesShort.at(6).text()).toBe("Sat");
-
-    const daysNamesMin = calendarMin.find(".react-datepicker__day-name");
-    expect(daysNamesMin.at(0).text()).toBe("Su");
-    expect(daysNamesMin.at(6).text()).toBe("Sa");
+    const daysNamesMin = calendarMin.querySelectorAll(
+      ".react-datepicker__day-name",
+    );
+    expect(daysNamesMin[0].textContent).toBe("Su");
+    expect(daysNamesMin[6].textContent).toBe("Sa");
   });
 
   it("should set the date to the selected day of the previous month when previous button clicked", () => {
     let date;
     const expectedDate = "28.06.2017";
-    const datePicker = TestUtils.renderIntoDocument(
+    const { container } = render(
       <DatePicker
         selected={utils.newDate("2017-07-28")}
         adjustDateOnChange
@@ -958,23 +1015,19 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-    const calendar = TestUtils.scryRenderedComponentsWithType(
-      datePicker.calendar,
-      Calendar,
-    )[0];
-    const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-      calendar,
-      "react-datepicker__navigation--previous",
+    fireEvent.focus(container.querySelector("input"));
+    const previousButton = container.querySelector(
+      ".react-datepicker__navigation--previous",
     );
-    TestUtils.Simulate.click(previousButton);
+    fireEvent.click(previousButton);
+
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the selected day of the next when next button clicked", () => {
     let date;
     const expectedDate = "28.08.2017";
-    const datePicker = TestUtils.renderIntoDocument(
+    const { container } = render(
       <DatePicker
         selected={utils.newDate("2017-07-28")}
         adjustDateOnChange
@@ -983,23 +1036,18 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-    const calendar = TestUtils.scryRenderedComponentsWithType(
-      datePicker.calendar,
-      Calendar,
-    )[0];
-    const nextButton = TestUtils.findRenderedDOMComponentWithClass(
-      calendar,
-      "react-datepicker__navigation--next",
+    fireEvent.focus(container.querySelector("input"));
+    const nextButton = container.querySelector(
+      ".react-datepicker__navigation--next",
     );
-    TestUtils.Simulate.click(nextButton);
+    fireEvent.click(nextButton);
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the last possible day of the previous month when previous button clicked", () => {
     let date;
     const expectedDate = "30.11.2017";
-    const datePicker = TestUtils.renderIntoDocument(
+    const { container } = render(
       <DatePicker
         selected={utils.newDate("2017-12-31")}
         adjustDateOnChange
@@ -1008,16 +1056,11 @@ describe("Calendar", () => {
         }}
       />,
     );
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-    const calendar = TestUtils.scryRenderedComponentsWithType(
-      datePicker.calendar,
-      Calendar,
-    )[0];
-    const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-      calendar,
-      "react-datepicker__navigation--previous",
+    fireEvent.focus(container.querySelector("input"));
+    const previousButton = container.querySelector(
+      ".react-datepicker__navigation--previous",
     );
-    TestUtils.Simulate.click(previousButton);
+    fireEvent.click(previousButton);
     expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
@@ -1025,19 +1068,19 @@ describe("Calendar", () => {
     const onCalendarOpen = jest.fn();
     const onCalendarClose = jest.fn();
 
-    const datePicker = TestUtils.renderIntoDocument(
+    const { container } = render(
       <DatePicker
         onCalendarOpen={onCalendarOpen}
         onCalendarClose={onCalendarClose}
       />,
     );
 
-    TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
+    const input = container.querySelector("input");
 
+    fireEvent.focus(input);
     expect(onCalendarOpen).toHaveBeenCalled();
 
-    TestUtils.Simulate.blur(ReactDOM.findDOMNode(datePicker.input));
-
+    fireEvent.blur(input);
     expect(onCalendarOpen).toHaveBeenCalled();
   });
 
@@ -1047,7 +1090,7 @@ describe("Calendar", () => {
 
     beforeEach(() => {
       onMonthChangeSpy = jest.fn();
-      calendar = mount(
+      calendar = render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1059,26 +1102,32 @@ describe("Calendar", () => {
           forceShowMonthNavigation
           onMonthChange={onMonthChangeSpy}
         />,
-      );
+      ).container;
     });
 
     it("calls onMonthChange prop when previous month button clicked", () => {
-      const select = calendar.find(".react-datepicker__navigation--previous");
-      select.simulate("click");
+      const select = calendar.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when next month button clicked", () => {
-      const select = calendar.find(".react-datepicker__navigation--next");
-      select.simulate("click");
+      const select = calendar.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when month changed from month dropdown", () => {
-      const select = calendar.find(MonthDropdown).find("select");
-      select.simulate("change");
+      const select = calendar
+        .querySelector(".react-datepicker__month-dropdown-container")
+        .querySelector("select");
+      fireEvent.change(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
@@ -1090,7 +1139,7 @@ describe("Calendar", () => {
 
     beforeEach(() => {
       onYearChangeSpy = jest.fn();
-      calendar = mount(
+      calendar = render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1100,12 +1149,14 @@ describe("Calendar", () => {
           showYearDropdown
           onYearChange={onYearChangeSpy}
         />,
-      );
+      ).container;
     });
 
     it("calls onYearChange prop when year changed from year dropdown", () => {
-      const select = calendar.find(YearDropdown).find("select");
-      select.simulate("change");
+      const select = calendar
+        .querySelector(".react-datepicker__year-dropdown-container")
+        .querySelector("select");
+      fireEvent.change(select);
 
       expect(onYearChangeSpy).toHaveBeenCalled();
     });
@@ -1164,7 +1215,7 @@ describe("Calendar", () => {
 
     beforeEach(() => {
       onDropdownFocusSpy = jest.fn();
-      calendar = mount(
+      calendar = render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1178,33 +1229,37 @@ describe("Calendar", () => {
           maxDate={utils.addYears(utils.newDate(), 1)}
           onDropdownFocus={onDropdownFocusSpy}
         />,
-      );
+      ).container;
     });
 
     it("calls onDropdownFocus prop when year select is focused", () => {
-      const select = calendar.find(".react-datepicker__year-select");
-      select.simulate("focus");
+      const select = calendar.querySelector(".react-datepicker__year-select");
+      fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when month select is focused", () => {
-      const select = calendar.find(".react-datepicker__month-select");
-      select.simulate("focus");
+      const select = calendar.querySelector(".react-datepicker__month-select");
+      fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when year-month select is focused", () => {
-      const select = calendar.find(".react-datepicker__month-year-select");
-      select.simulate("focus");
+      const select = calendar.querySelector(
+        ".react-datepicker__month-year-select",
+      );
+      fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("does not call onDropdownFocus prop when the dropdown container div is focused", () => {
-      const select = calendar.find(".react-datepicker__header__dropdown");
-      select.simulate("focus");
+      const select = calendar.querySelector(
+        ".react-datepicker__header__dropdown",
+      );
+      fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalledTimes(0);
     });
@@ -1212,8 +1267,10 @@ describe("Calendar", () => {
 
   describe("localization", () => {
     function testLocale(calendar, selected, locale, calendarStartDay) {
-      const calendarText = calendar.find(".react-datepicker__current-month");
-      expect(calendarText.text()).toBe(
+      const calendarText = calendar.querySelector(
+        ".react-datepicker__current-month",
+      );
+      expect(calendarText.textContent).toBe(
         utils.formatDate(selected, dateFormat, locale),
       );
       const firstDateOfWeek = utils.getStartOfWeek(
@@ -1225,8 +1282,8 @@ describe("Calendar", () => {
         firstDateOfWeek,
         locale,
       );
-      const firstHeader = calendar.find(".react-datepicker__day-name").at(0);
-      expect(firstHeader.text()).toBe(firstWeekDayMin);
+      const firstHeader = calendar.querySelector(".react-datepicker__day-name");
+      expect(firstHeader.textContent).toBe(firstWeekDayMin);
     }
 
     it("should use the 'en' locale by default", () => {
@@ -1279,14 +1336,16 @@ describe("Calendar", () => {
     it("should render empty custom header", () => {
       const calendar = getCalendar({ renderCustomHeader: () => {} });
 
-      const header = calendar.find(".react-datepicker__header--custom");
+      const header = calendar.querySelectorAll(
+        ".react-datepicker__header--custom",
+      );
       expect(header).toHaveLength(1);
     });
   });
 
   describe("renderInputTimeSection", () => {
     const renderCalendar = (props) =>
-      mount(
+      render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1301,21 +1360,21 @@ describe("Calendar", () => {
     const timeInputSelector = ".react-datepicker__input-time-container";
 
     it("should render InputTime component", () => {
-      const calendar = renderCalendar();
-      const timeInputClassname = calendar.find(timeInputSelector);
+      const { container } = renderCalendar();
+      const timeInputClassname = container.querySelectorAll(timeInputSelector);
       expect(timeInputClassname).toHaveLength(1);
     });
 
     it("should pass empty string to InputTime when no selected date", () => {
-      const calendar = renderCalendar();
-      const timeInputEl = calendar.find(`${timeInputSelector} input`);
-      expect(timeInputEl.prop("value")).toBe("");
+      const { container } = renderCalendar();
+      const timeInputEl = container.querySelector(`${timeInputSelector} input`);
+      expect(timeInputEl.value).toBe("");
     });
   });
 
   describe("renderYearPicker", () => {
     it("should render YearPicker component", () => {
-      let calendar = mount(
+      const { container } = render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1325,12 +1384,14 @@ describe("Calendar", () => {
           showYearPicker
         />,
       );
-      const timeInputClassname = calendar.find(".react-datepicker__year");
+      const timeInputClassname = container.querySelectorAll(
+        ".react-datepicker__year",
+      );
       expect(timeInputClassname).toHaveLength(1);
     });
 
     it("calls increaseYear when next year button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1339,13 +1400,13 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var increaseYear = calendar.increaseYear;
+      const increaseYear = calendar.increaseYear;
       increaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(2005);
     });
 
     it("calls decreaseYear when previous year button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1354,7 +1415,7 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var decreaseYear = calendar.decreaseYear;
+      const decreaseYear = calendar.decreaseYear;
       decreaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(1981);
     });
@@ -1387,24 +1448,29 @@ describe("Calendar", () => {
   });
 
   describe("when showMonthYearPicker is enabled", () => {
-    let calendar = mount(
-      <Calendar
-        dateFormat={DATE_FORMAT}
-        onSelect={() => {}}
-        onClickOutside={() => {}}
-        hideCalendar={() => {}}
-        showMonthYearPicker
-      />,
-    );
     it("should change the next and previous labels", () => {
-      const previous = calendar.find(".react-datepicker__navigation--previous");
-      const next = calendar.find(".react-datepicker__navigation--next");
-      expect(previous.text()).toBe("Previous Year");
-      expect(next.text()).toBe("Next Year");
+      const { container } = render(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          showMonthYearPicker
+        />,
+      );
+
+      const previous = container.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const next = container.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(previous.textContent).toBe("Previous Year");
+      expect(next.textContent).toBe("Next Year");
     });
 
     it("should render custom next and previous labels", () => {
-      var calendar = mount(
+      const { container } = render(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1414,14 +1480,18 @@ describe("Calendar", () => {
           nextYearButtonLabel="Custom Next Year Label"
         />,
       );
-      const previous = calendar.find(".react-datepicker__navigation--previous");
-      const next = calendar.find(".react-datepicker__navigation--next");
-      expect(previous.text()).toBe("Custom Previous Year Label");
-      expect(next.text()).toBe("Custom Next Year Label");
+      const previous = container.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const next = container.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(previous.textContent).toBe("Custom Previous Year Label");
+      expect(next.textContent).toBe("Custom Next Year Label");
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1430,13 +1500,13 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var decreaseYear = calendar.decreaseYear;
+      const decreaseYear = calendar.decreaseYear;
       decreaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(1992);
     });
 
     it("calls increaseYear when next month button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1445,31 +1515,36 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var increaseYear = calendar.increaseYear;
+      const increaseYear = calendar.increaseYear;
       increaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(1994);
     });
   });
 
   describe("when showQuarterYearPicker is enabled", () => {
-    let calendar = mount(
-      <Calendar
-        dateFormat={DATE_FORMAT}
-        onSelect={() => {}}
-        onClickOutside={() => {}}
-        hideCalendar={() => {}}
-        showQuarterYearPicker
-      />,
-    );
     it("should change the next and previous labels", () => {
-      const previous = calendar.find(".react-datepicker__navigation--previous");
-      const next = calendar.find(".react-datepicker__navigation--next");
-      expect(previous.text()).toBe("Previous Year");
-      expect(next.text()).toBe("Next Year");
+      const { container } = render(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          hideCalendar={() => {}}
+          showQuarterYearPicker
+        />,
+      );
+
+      const previous = container.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const next = container.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(previous.textContent).toBe("Previous Year");
+      expect(next.textContent).toBe("Next Year");
     });
 
     it("should render custom next and previous labels", () => {
-      var calendar = mount(
+      const { container } = render(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1479,14 +1554,18 @@ describe("Calendar", () => {
           nextYearButtonLabel="Custom Next Year Label"
         />,
       );
-      const previous = calendar.find(".react-datepicker__navigation--previous");
-      const next = calendar.find(".react-datepicker__navigation--next");
-      expect(previous.text()).toBe("Custom Previous Year Label");
-      expect(next.text()).toBe("Custom Next Year Label");
+      const previous = container.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const next = container.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(previous.textContent).toBe("Custom Previous Year Label");
+      expect(next.textContent).toBe("Custom Next Year Label");
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1495,13 +1574,13 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var decreaseYear = calendar.decreaseYear;
+      const decreaseYear = calendar.decreaseYear;
       decreaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(1992);
     });
 
     it("calls increaseYear when next month button clicked", () => {
-      var calendar = TestUtils.renderIntoDocument(
+      const calendar = TestUtils.renderIntoDocument(
         <Calendar
           dateFormat={DATE_FORMAT}
           onSelect={() => {}}
@@ -1510,7 +1589,7 @@ describe("Calendar", () => {
         />,
       );
       calendar.state.date = utils.parseDate("09/28/1993", DATE_FORMAT);
-      var increaseYear = calendar.increaseYear;
+      const increaseYear = calendar.increaseYear;
       increaseYear();
       expect(utils.getYear(calendar.state.date)).toBe(1994);
     });
@@ -1544,7 +1623,7 @@ describe("Calendar", () => {
 
   it("should have a next-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for next year";
-    const shallowCalendar = mount(
+    const { container } = render(
       <Calendar
         nextYearAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1553,14 +1632,14 @@ describe("Calendar", () => {
         showQuarterYearPicker
       />,
     );
-    expect(
-      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`),
-    ).not.toBe(-1);
+    expect(container.innerHTML.indexOf(`aria-label="${ariaLabel}"`)).not.toBe(
+      -1,
+    );
   });
 
   it("should have a previous-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for previous year";
-    const shallowCalendar = mount(
+    const { container } = render(
       <Calendar
         previousYearAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1569,14 +1648,14 @@ describe("Calendar", () => {
         showQuarterYearPicker
       />,
     );
-    expect(
-      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`),
-    ).not.toBe(-1);
+    expect(container.innerHTML.indexOf(`aria-label="${ariaLabel}"`)).not.toBe(
+      -1,
+    );
   });
 
   it("should have a next-button with the provided aria-label for month", () => {
     const ariaLabel = "A label in my native language for next month";
-    const shallowCalendar = mount(
+    const { container } = render(
       <Calendar
         nextMonthAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1584,14 +1663,14 @@ describe("Calendar", () => {
         onClickOutside={() => {}}
       />,
     );
-    expect(
-      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`),
-    ).not.toBe(-1);
+    expect(container.innerHTML.indexOf(`aria-label="${ariaLabel}"`)).not.toBe(
+      -1,
+    );
   });
 
   it("should have a previous-button with the provided aria-label for month", () => {
     const ariaLabel = "A label in my native language for previous month";
-    const shallowCalendar = mount(
+    const { container } = render(
       <Calendar
         previousMonthAriaLabel={ariaLabel}
         dateFormat={DATE_FORMAT}
@@ -1599,9 +1678,9 @@ describe("Calendar", () => {
         onClickOutside={() => {}}
       />,
     );
-    expect(
-      shallowCalendar.html().indexOf(`aria-label="${ariaLabel}"`),
-    ).not.toBe(-1);
+    expect(container.innerHTML.indexOf(`aria-label="${ariaLabel}"`)).not.toBe(
+      -1,
+    );
   });
 
   describe("changing the month also changes the preselection to preserve keyboard navigation abilities", () => {
@@ -1650,7 +1729,7 @@ describe("Calendar", () => {
   describe("showTimeSelect", () => {
     it("should not contain the time select classname in header by default", () => {
       const calendar = getCalendar();
-      const header = calendar.find(
+      const header = calendar.querySelectorAll(
         ".react-datepicker__header--has-time-select",
       );
       expect(header).toHaveLength(0);
@@ -1658,7 +1737,7 @@ describe("Calendar", () => {
 
     it("should contain the time select classname in header if enabled", () => {
       const calendar = getCalendar({ showTimeSelect: true });
-      const header = calendar.find(
+      const header = calendar.querySelectorAll(
         ".react-datepicker__header--has-time-select",
       );
       expect(header).toHaveLength(1);
@@ -1668,16 +1747,20 @@ describe("Calendar", () => {
   describe("calendarStartDay", () => {
     it("should have default sunday as start day if No prop passed", () => {
       const calendar = getCalendar();
-      const calendarDays = calendar.find(".react-datepicker__day-name");
-      expect(calendarDays.at(0).text()).toBe("Su");
-      expect(calendarDays.at(6).text()).toBe("Sa");
+      const calendarDays = calendar.querySelectorAll(
+        ".react-datepicker__day-name",
+      );
+      expect(calendarDays[0].textContent).toBe("Su");
+      expect(calendarDays[6].textContent).toBe("Sa");
     });
 
     it("should have default wednesday as start day if No prop passed", () => {
       const calendar = getCalendar({ calendarStartDay: 3 });
-      const calendarDays = calendar.find(".react-datepicker__day-name");
-      expect(calendarDays.at(0).text()).toBe("We");
-      expect(calendarDays.at(6).text()).toBe("Tu");
+      const calendarDays = calendar.querySelectorAll(
+        ".react-datepicker__day-name",
+      );
+      expect(calendarDays[0].textContent).toBe("We");
+      expect(calendarDays[6].textContent).toBe("Tu");
     });
   });
 
@@ -1685,50 +1768,40 @@ describe("Calendar", () => {
     it("should call the prevMonthButton onKeyDown handler on Tab press", () => {
       const onKeyDownSpy = jest.fn();
 
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={new Date("February 28, 2018 4:43 PM")}
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-      const prevMonthButton = TestUtils.findRenderedDOMComponentWithClass(
-        datePicker,
-        "react-datepicker__navigation--previous",
+      fireEvent.focus(container.querySelector("input"));
+      const prevMonthButton = container.querySelector(
+        ".react-datepicker__navigation--previous",
       );
-      TestUtils.Simulate.keyDown(prevMonthButton, {
-        key: "Tab",
-        code: 9,
-        which: 9,
-      });
+      fireEvent.keyDown(prevMonthButton, getKey("Tab"));
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
     it("should call the nextMonthButton onKeyDown handler on Tab press", () => {
       const onKeyDownSpy = jest.fn();
 
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={new Date("February 28, 2018 4:43 PM")}
           onKeyDown={onKeyDownSpy}
         />,
       );
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(datePicker.input));
-      const nextMonthButton = TestUtils.findRenderedDOMComponentWithClass(
-        datePicker,
-        "react-datepicker__navigation--next",
+      fireEvent.focus(container.querySelector("input"));
+      const nextMonthButton = container.querySelector(
+        ".react-datepicker__navigation--next",
       );
-      TestUtils.Simulate.keyDown(nextMonthButton, {
-        key: "Tab",
-        code: 9,
-        which: 9,
-      });
+      fireEvent.keyDown(nextMonthButton, getKey("Tab"));
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
   });
 
   describe("renderChildren", () => {
     const renderCalendar = (props) =>
-      mount(
+      render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
@@ -1741,47 +1814,40 @@ describe("Calendar", () => {
     const childrenContainerSelector = ".react-datepicker__children-container";
 
     it("should render children components", () => {
-      const calendar = renderCalendar({
+      const { container } = renderCalendar({
         children: <div>This is a child component for test.</div>,
       });
-      const childrenContainer = calendar.find(childrenContainerSelector);
+      const childrenContainer = container.querySelectorAll(
+        childrenContainerSelector,
+      );
       expect(childrenContainer).toHaveLength(1);
     });
 
     it("should not render children components", () => {
-      const calendar = renderCalendar();
-      const childrenContainer = calendar.find(childrenContainerSelector);
+      const { container } = renderCalendar();
+      const childrenContainer = container.querySelectorAll(
+        childrenContainerSelector,
+      );
       expect(childrenContainer).toHaveLength(0);
     });
   });
 
   describe("should render aria live region after month/year change", () => {
     it("should render aria live region after month change", () => {
-      const datePicker = TestUtils.renderIntoDocument(
-        <DatePicker selected={utils.newDate()} />,
+      const { container } = render(<DatePicker selected={utils.newDate()} />);
+      fireEvent.focus(container.querySelector("input"));
+
+      const nextNavigationButton = container.querySelector(
+        ".react-datepicker__navigation--next",
       );
-      const dateInput = datePicker.input;
+      fireEvent.click(nextNavigationButton);
 
-      TestUtils.Simulate.focus(ReactDOM.findDOMNode(dateInput));
-
-      const calendar = TestUtils.scryRenderedComponentsWithType(
-        datePicker.calendar,
-        Calendar,
-      )[0];
-      const nextNavigationButton = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__navigation--next",
-      );
-      nextNavigationButton.click();
-
-      const currentMonthText = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__current-month",
+      const currentMonthText = container.querySelector(
+        ".react-datepicker__current-month",
       ).textContent;
 
-      const ariaLiveMessage = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__aria-live",
+      const ariaLiveMessage = container.querySelector(
+        ".react-datepicker__aria-live",
       ).textContent;
 
       expect(currentMonthText).toBe(ariaLiveMessage);
