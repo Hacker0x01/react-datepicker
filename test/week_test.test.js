@@ -1,7 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Week from "../src/week";
-import { shallow } from "enzyme";
 import * as utils from "../src/date_utils";
 
 describe("Week", () => {
@@ -221,33 +220,42 @@ describe("Week", () => {
       const day = new Date("2022-02-01");
       const weekNumber = 5;
       const event = { target: {} };
-      const wrapper = shallow(
+      let instance;
+      render(
         <Week
+          ref={(node) => {
+            instance = node;
+          }}
+          day={day}
           onWeekSelect={onWeekSelect}
           showWeekPicker={false}
           shouldCloseOnSelect={false}
           setOpen={() => {}}
         />,
       );
-      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      instance.handleWeekClick(day, weekNumber, event);
       expect(onWeekSelect).toHaveBeenCalledWith(day, weekNumber, event);
     });
 
     it("should call handleDayClick with start of week if showWeekPicker prop is true", () => {
-      const handleDayClick = jest.fn();
       const day = new Date("2022-02-01");
       const weekNumber = 5;
       const event = { target: {} };
-      const wrapper = shallow(
+      let instance;
+      render(
         <Week
+          ref={(node) => {
+            instance = node;
+          }}
+          day={day}
           onWeekSelect={() => {}}
           showWeekPicker
           shouldCloseOnSelect={false}
           setOpen={() => {}}
         />,
       );
-      wrapper.instance().handleDayClick = handleDayClick;
-      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      const handleDayClick = jest.spyOn(instance, "handleDayClick");
+      instance.handleWeekClick(day, weekNumber, event);
       const startOfWeek = utils.getStartOfWeek(day);
       expect(handleDayClick).toHaveBeenCalledWith(startOfWeek, event);
     });
@@ -257,15 +265,20 @@ describe("Week", () => {
       const day = new Date("2022-02-01");
       const weekNumber = 5;
       const event = { target: {} };
-      const wrapper = shallow(
+      let instance;
+      render(
         <Week
+          ref={(node) => {
+            instance = node;
+          }}
+          day={day}
           onWeekSelect={() => {}}
           showWeekPicker={false}
           shouldCloseOnSelect
           setOpen={setOpen}
         />,
       );
-      wrapper.instance().handleWeekClick(day, weekNumber, event);
+      instance.handleWeekClick(day, weekNumber, event);
       expect(setOpen).toHaveBeenCalledWith(false);
     });
   });

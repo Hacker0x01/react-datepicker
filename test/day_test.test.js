@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { es } from "date-fns/locale";
 import Day from "../src/day";
-import { mount } from "enzyme";
 import {
   getDayOfWeekCode,
   newDate,
@@ -30,7 +29,7 @@ describe("Day", () => {
 
     it("should apply the day of week class", () => {
       let day = newDate();
-      for (var i = 0; i < 7; i++) {
+      for (let i = 0; i < 7; i++) {
         const className = "react-datepicker__day--" + getDayOfWeekCode(day);
         const container = renderDay(day);
         expect(
@@ -1178,7 +1177,7 @@ describe("Day", () => {
   });
 
   describe("click", () => {
-    var onClickCalled;
+    let onClickCalled;
 
     function onClick() {
       onClickCalled = true;
@@ -1414,26 +1413,53 @@ describe("Day", () => {
       jest.resetAllMocks();
     });
 
-    it("should apply focus to the preselected day", () => {
+    it("should apply focus to the preselected day", async () => {
       const day = newDate();
-      const dayInstance = mount(
-        <Day day={day} preSelection={day} />,
-      ).instance();
+      let instance;
+      render(
+        <Day
+          ref={(node) => {
+            instance = node;
+          }}
+          day={day}
+          preSelection={day}
+        />,
+      );
 
-      jest.spyOn(dayInstance.dayEl.current, "focus");
-      dayInstance.componentDidMount();
-      expect(dayInstance.dayEl.current.focus).toHaveBeenCalledTimes(1);
+      const focusSpy = jest
+        .spyOn(instance.dayEl.current, "focus")
+        .mockImplementation();
+      Object.defineProperty(document, "activeElement", {
+        value: undefined,
+        writable: false,
+      });
+
+      instance.componentDidMount();
+      expect(focusSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
-      const dayInstance = mount(
-        <Day day={day} preSelection={day} inline />,
-      ).instance();
+      let instance;
+      render(
+        <Day
+          ref={(node) => {
+            instance = node;
+          }}
+          day={day}
+          preSelection={day}
+          inline
+        />,
+      );
 
-      jest.spyOn(dayInstance.dayEl.current, "focus");
-      dayInstance.componentDidMount();
-      expect(dayInstance.dayEl.current.focus).not.toHaveBeenCalledTimes(1);
+      const focusSpy = jest.spyOn(instance.dayEl.current, "focus");
+      Object.defineProperty(document, "activeElement", {
+        value: undefined,
+        writable: false,
+      });
+
+      instance.componentDidMount();
+      expect(focusSpy).not.toHaveBeenCalledTimes(1);
     });
   });
 
