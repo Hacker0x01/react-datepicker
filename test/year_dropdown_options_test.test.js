@@ -3,6 +3,7 @@ import YearDropdownOptions from "../src/year_dropdown_options.jsx";
 import { mount } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
+import onClickOutside from "react-onclickoutside";
 
 describe("YearDropdownOptions", () => {
   let yearDropdown, handleChangeResult;
@@ -125,15 +126,17 @@ describe("YearDropdownOptions", () => {
   });
 
   it("calls the supplied onCancel function on handleClickOutside", () => {
-    const instance = mount(
-      <YearDropdownOptions
+    const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
+    render(
+      <WrappedYearDropdownOptions
         year={2015}
         onChange={mockHandleChange}
         onCancel={onCancelSpy}
-      />,
-    ).instance();
-    instance.handleClickOutside();
-    expect(onCancelSpy).toHaveBeenCalled();
+      />
+    );
+    fireEvent.mouseDown(document.body)
+    fireEvent.touchStart(document.body)
+    expect(onCancelSpy).toHaveBeenCalledTimes(2);
   });
 
   describe("selected", () => {

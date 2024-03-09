@@ -2,12 +2,12 @@ import React from "react";
 import range from "lodash/range";
 import MonthDropdown from "../src/month_dropdown.jsx";
 import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
-import { mount } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import { getMonthInLocale, registerLocale } from "../src/date_utils";
 import { zhCN } from "date-fns/locale/zh-CN";
 import { el } from "date-fns/locale/el";
 import { ru } from "date-fns/locale/ru";
+import onClickOutside from "react-onclickoutside";
 
 describe("MonthDropdown", () => {
   let monthDropdown;
@@ -108,17 +108,20 @@ describe("MonthDropdown", () => {
 
     it("closes the dropdown if outside is clicked", () => {
       const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
+      
       const onCancelSpy = jest.fn();
-      const monthDropdownOptionsInstance = mount(
-        <MonthDropdownOptions
+      const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions)
+      render(
+        <WrappedMonthDropdownOptions
           onCancel={onCancelSpy}
           onChange={onCancelSpy}
           month={11}
           monthNames={monthNames}
         />,
-      ).instance();
-      monthDropdownOptionsInstance.handleClickOutside();
-      expect(onCancelSpy).toHaveBeenCalledTimes(1);
+      );
+      fireEvent.mouseDown(document.body)
+      fireEvent.touchStart(document.body)
+      expect(onCancelSpy).toHaveBeenCalledTimes(2);
     });
 
     it("does not call the supplied onChange function when the same month is clicked", () => {

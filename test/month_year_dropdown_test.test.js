@@ -1,7 +1,6 @@
 import React from "react";
 import MonthYearDropdown from "../src/month_year_dropdown.jsx";
 import MonthYearDropdownOptions from "../src/month_year_dropdown_options.jsx";
-import { mount } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import {
   newDate,
@@ -12,6 +11,7 @@ import {
   registerLocale,
 } from "../src/date_utils.js";
 import { fi } from "date-fns/locale/fi";
+import onClickOutside from "react-onclickoutside";
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown;
@@ -90,8 +90,9 @@ describe("MonthYearDropdown", () => {
       const dateFormatCalendar = "LLLL yyyy";
 
       const onCancelSpy = jest.fn();
-      const monthYearDropdownOptionsInstance = mount(
-        <MonthYearDropdownOptions
+      const WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions)
+      render(
+        <WrappedMonthYearDropdownOptions
           onCancel={onCancelSpy}
           onChange={jest.fn()}
           dateFormat={dateFormatCalendar}
@@ -99,9 +100,10 @@ describe("MonthYearDropdown", () => {
           minDate={subMonths(date, 6)}
           maxDate={addMonths(date, 6)}
         />,
-      ).instance();
-      monthYearDropdownOptionsInstance.handleClickOutside();
-      expect(onCancelSpy).toHaveBeenCalledTimes(1);
+      );
+      fireEvent.mouseDown(document.body)
+      fireEvent.touchStart(document.body)
+      expect(onCancelSpy).toHaveBeenCalledTimes(2);
     });
 
     it("does not call the supplied onChange function when the same month year is clicked", () => {
