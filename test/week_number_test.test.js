@@ -1,6 +1,5 @@
 import React from "react";
 import WeekNumber from "../src/week_number";
-import { shallow } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils";
 
@@ -50,27 +49,30 @@ describe("WeekNumber", () => {
   });
 
   describe("Component Lifecycle", () => {
-    const handleFocusWeekNumberMock = jest.fn();
+    let handleFocusWeekNumberSpy;
 
     beforeEach(() => {
-      weekNumber = shallow(<WeekNumber weekNumber={1} date={new Date()} />);
-      instance = weekNumber.instance();
-      instance.handleFocusWeekNumber = handleFocusWeekNumberMock;
-    });
-
-    afterEach(() => {
-      handleFocusWeekNumberMock.mockClear();
+      weekNumber = render(
+        <WeekNumber
+          ref={(node) => {
+            instance = node;
+          }}
+          weekNumber={1}
+          date={new Date()}
+        />,
+      );
+      handleFocusWeekNumberSpy = jest.spyOn(instance, "handleFocusWeekNumber");
     });
 
     it("should call handleFocusWeeknumber on mount", () => {
       instance.componentDidMount();
-      expect(handleFocusWeekNumberMock).toHaveBeenCalledTimes(1);
+      expect(handleFocusWeekNumberSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should call handleFocusWeekNumber with prevProps on update", () => {
       const prevProps = { someProp: "someValue" };
       instance.componentDidUpdate(prevProps);
-      expect(handleFocusWeekNumberMock).toHaveBeenCalledWith(prevProps);
+      expect(handleFocusWeekNumberSpy).toHaveBeenCalledWith(prevProps);
     });
   });
 
@@ -335,14 +337,17 @@ describe("WeekNumber", () => {
   });
 
   describe("handleFocusWeekNumber", () => {
-    let weekNumberEl, instance, shallowWeekNumber;
+    let weekNumberEl, instance;
 
     const createComponentWithProps = (props = {}) => {
       const currentWeekNumber = new Date();
       const selected = currentWeekNumber;
       const preSelection = currentWeekNumber;
-      shallowWeekNumber = shallow(
+      render(
         <WeekNumber
+          ref={(node) => {
+            instance = node;
+          }}
           weekNumber={1}
           date={currentWeekNumber}
           selected={selected}
@@ -350,7 +355,6 @@ describe("WeekNumber", () => {
           {...props}
         />,
       );
-      instance = shallowWeekNumber.instance();
       instance.weekNumberEl = weekNumberEl;
       instance.getTabIndex = jest.fn(() => 0);
       instance.isSameDay = jest.fn(() => true);
