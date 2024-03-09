@@ -5,8 +5,8 @@ import { render, fireEvent } from "@testing-library/react";
 import { newDate } from "../src/date_utils.js";
 
 describe("YearDropdown", () => {
-  var yearDropdown;
-  var lastOnChangeValue;
+  let yearDropdown;
+  let lastOnChangeValue;
 
   function onChangeMock(value) {
     lastOnChangeValue = value;
@@ -37,7 +37,7 @@ describe("YearDropdown", () => {
     });
 
     it("starts with the year options list hidden", () => {
-      var optionsView = yearDropdown.querySelectorAll(
+      const optionsView = yearDropdown.querySelectorAll(
         "react-datepicker__year-dropdown",
       );
       expect(optionsView).toHaveLength(0);
@@ -47,7 +47,7 @@ describe("YearDropdown", () => {
       fireEvent.click(
         yearDropdown.querySelector(".react-datepicker__year-read-view"),
       );
-      var optionsView = yearDropdown.querySelectorAll(
+      const optionsView = yearDropdown.querySelectorAll(
         "react-datepicker__year-dropdown",
       );
       expect(optionsView).not.toBeNull();
@@ -138,8 +138,8 @@ describe("YearDropdown", () => {
     });
 
     it("calls the supplied onChange function when a different year is clicked", () => {
-      var onSelectSpy = jest.fn();
-      var setOpenSpy = jest.fn();
+      const onSelectSpy = jest.fn();
+      const setOpenSpy = jest.fn();
       yearDropdown = getYearDropdown({
         dropdownMode: "select",
         onSelect: onSelectSpy,

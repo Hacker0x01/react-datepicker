@@ -1,6 +1,5 @@
 import React from "react";
 import YearDropdownOptions from "../src/year_dropdown_options.jsx";
-import { mount } from "enzyme";
 import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
 import onClickOutside from "react-onclickoutside";
@@ -126,16 +125,16 @@ describe("YearDropdownOptions", () => {
   });
 
   it("calls the supplied onCancel function on handleClickOutside", () => {
-    const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions)
+    const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
     render(
       <WrappedYearDropdownOptions
         year={2015}
         onChange={mockHandleChange}
         onCancel={onCancelSpy}
-      />
+      />,
     );
-    fireEvent.mouseDown(document.body)
-    fireEvent.touchStart(document.body)
+    fireEvent.mouseDown(document.body);
+    fireEvent.touchStart(document.body);
     expect(onCancelSpy).toHaveBeenCalledTimes(2);
   });
 
@@ -473,21 +472,25 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should scroll year dropdown to the middle on open", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const yearDropdownInstance = mount(
+    let instance;
+    render(
       <YearDropdownOptions
+        ref={(node) => {
+          instance = node;
+        }}
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
         year={2015}
         yearDropdownItemNumber={25}
       />,
-    ).instance();
+    );
 
-    yearDropdownInstance.dropdownRef.current = {
+    instance.dropdownRef.current = {
       scrollHeight: 800,
       clientHeight: 400,
     };
-    yearDropdownInstance.componentDidMount();
-    expect(yearDropdownInstance.dropdownRef.current.scrollTop).toBe(200);
+    instance.componentDidMount();
+    expect(instance.dropdownRef.current.scrollTop).toBe(200);
   });
 });
