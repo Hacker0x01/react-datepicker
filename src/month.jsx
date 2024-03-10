@@ -63,7 +63,15 @@ export default class Month extends React.Component {
     monthClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     orderInDisplay: PropTypes.number,
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
@@ -686,8 +694,16 @@ export default class Month extends React.Component {
 
               this.onMonthKeyDown(ev, m);
             }}
-            onMouseEnter={!this.props.usePointerEvent ? () => this.onMonthMouseEnter(m) : undefined}
-            onPointerEnter={this.props.usePointerEvent ? () => this.onMonthMouseEnter(m) : undefined}
+            onMouseEnter={
+              !this.props.usePointerEvent
+                ? () => this.onMonthMouseEnter(m)
+                : undefined
+            }
+            onPointerEnter={
+              this.props.usePointerEvent
+                ? () => this.onMonthMouseEnter(m)
+                : undefined
+            }
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
             role="option"
@@ -718,8 +734,16 @@ export default class Month extends React.Component {
             onKeyDown={(ev) => {
               this.onQuarterKeyDown(ev, q);
             }}
-            onMouseEnter={!this.props.usePointerEvent ? () => this.onQuarterMouseEnter(q) : undefined}
-            onPointerEnter={this.props.usePointerEvent ? () => this.onQuarterMouseEnter(q) : undefined}
+            onMouseEnter={
+              !this.props.usePointerEvent
+                ? () => this.onQuarterMouseEnter(q)
+                : undefined
+            }
+            onPointerEnter={
+              this.props.usePointerEvent
+                ? () => this.onQuarterMouseEnter(q)
+                : undefined
+            }
             className={this.getQuarterClassNames(q)}
             aria-selected={this.isSelectedQuarter(day, q, selected)}
             tabIndex={this.getQuarterTabIndex(q)}
@@ -769,8 +793,12 @@ export default class Month extends React.Component {
     return (
       <div
         className={this.getClassNames()}
-        onMouseLeave={!this.props.usePointerEvent ? this.handleMouseLeave : undefined}
-        onPointerLeave={this.props.usePointerEvent ? this.handleMouseLeave : undefined}
+        onMouseLeave={
+          !this.props.usePointerEvent ? this.handleMouseLeave : undefined
+        }
+        onPointerLeave={
+          this.props.usePointerEvent ? this.handleMouseLeave : undefined
+        }
         aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(day, "MMMM, yyyy")}`}
         role="listbox"
       >
