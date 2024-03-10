@@ -90,7 +90,9 @@ describe("MonthYearDropdown", () => {
       const dateFormatCalendar = "LLLL yyyy";
 
       const onCancelSpy = jest.fn();
-      const WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions)
+      const WrappedMonthYearDropdownOptions = onClickOutside(
+        MonthYearDropdownOptions,
+      );
       render(
         <WrappedMonthYearDropdownOptions
           onCancel={onCancelSpy}
@@ -101,8 +103,8 @@ describe("MonthYearDropdown", () => {
           maxDate={addMonths(date, 6)}
         />,
       );
-      fireEvent.mouseDown(document.body)
-      fireEvent.touchStart(document.body)
+      fireEvent.mouseDown(document.body);
+      fireEvent.touchStart(document.body);
       expect(onCancelSpy).toHaveBeenCalledTimes(2);
     });
 

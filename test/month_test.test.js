@@ -5,7 +5,6 @@ import DatePicker from "../src";
 import range from "lodash/range";
 import * as utils from "../src/date_utils";
 import { runAxe } from "./run_axe";
-
 import { getKey } from "./test_utils";
 
 describe("Month", () => {
@@ -261,6 +260,92 @@ describe("Month", () => {
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
       utils.getStartOfWeek(utils.getStartOfMonth(startDay)),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const startDay = utils.newDate("2024-02-02");
+
+    const { container } = render(
+      <Month
+        day={startDay}
+        showMonthYearPicker
+        onDayMouseEnter={onDayMouseEnterSpy}
+      />,
+    );
+
+    const month = container.querySelector(".react-datepicker__month-text");
+    fireEvent.mouseEnter(month);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfMonth(utils.setMonth(startDay, 0)),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const startDay = utils.newDate("2024-02-02");
+
+    const { container } = render(
+      <Month
+        day={startDay}
+        showMonthYearPicker
+        onDayMouseEnter={onDayMouseEnterSpy}
+        usePointerEvent
+      />,
+    );
+
+    const month = container.querySelector(".react-datepicker__month-text");
+    fireEvent.pointerEnter(month);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfMonth(utils.setMonth(startDay, 0)),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const startDay = utils.newDate("2024-02-02");
+
+    const { container } = render(
+      <Month
+        day={startDay}
+        showQuarterYearPicker
+        onDayMouseEnter={onDayMouseEnterSpy}
+      />,
+    );
+
+    const quarter = container.querySelector(".react-datepicker__quarter-text");
+    fireEvent.mouseEnter(quarter);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfQuarter(utils.setQuarter(startDay, 1)),
+    );
+  });
+
+  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+    const onDayMouseEnterSpy = jest.fn();
+
+    const startDay = utils.newDate("2024-02-02");
+
+    const { container } = render(
+      <Month
+        day={startDay}
+        showQuarterYearPicker
+        onDayMouseEnter={onDayMouseEnterSpy}
+        usePointerEvent
+      />,
+    );
+
+    const quarter = container.querySelector(".react-datepicker__quarter-text");
+    fireEvent.pointerEnter(quarter);
+
+    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+      utils.getStartOfQuarter(utils.setQuarter(startDay, 1)),
     );
   });
 

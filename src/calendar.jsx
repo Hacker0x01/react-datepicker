@@ -91,7 +91,15 @@ export default class Calendar extends React.Component {
     calendarStartDay: PropTypes.number,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
