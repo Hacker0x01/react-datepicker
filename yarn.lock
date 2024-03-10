@@ -7622,7 +7622,7 @@ react-deep-force-update@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.1.2.tgz#3d2ae45c2c9040cbb1772be52f8ea1ade6ca2ee1"
   integrity sha512-WUSQJ4P/wWcusaH+zZmbECOk7H5N2pOIl0vzheeornkIMhu+qrNdGFm0bDZLCb0hSF0jf/kH1SgkNGfBdTc4wA==
 
-react-docgen@7.0.3, react-docgen@^7.0.3:
+react-docgen@7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-7.0.3.tgz#f811b785f07b1f2023cb899b6bcf9d522b21b95d"
   integrity sha512-i8aF1nyKInZnANZ4uZrH49qn1paRgBZ7wZiCNBMnenlPzEv0mRl+ShpTVEI6wZNl8sSc79xZkivtgLKQArcanQ==
