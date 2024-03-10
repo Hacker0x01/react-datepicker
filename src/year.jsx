@@ -26,7 +26,15 @@ export default class Year extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     includeDates: PropTypes.array,
     filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
