@@ -86,7 +86,7 @@ function generateMarkdown(name, reactAPI) {
     "\n" +
     generateDescription(reactAPI.description) +
     "\n" +
-    generateProps(reactAPI.props);
+    generateProps(reactAPI[0].props);
 
   return markdownString;
 }
