@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Check Code Formatter
+        run: yarn prettier:check
+
       - name: Lint
         run: yarn lint
 
