@@ -5,7 +5,6 @@ import DatePicker from "../src";
 import range from "lodash/range";
 import * as utils from "../src/date_utils";
 import { runAxe } from "./run_axe";
-
 import { getKey } from "./test_utils";
 
 describe("Month", () => {

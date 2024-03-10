@@ -108,9 +108,9 @@ describe("MonthDropdown", () => {
 
     it("closes the dropdown if outside is clicked", () => {
       const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
-      
+
       const onCancelSpy = jest.fn();
-      const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions)
+      const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions);
       render(
         <WrappedMonthDropdownOptions
           onCancel={onCancelSpy}
@@ -119,8 +119,8 @@ describe("MonthDropdown", () => {
           monthNames={monthNames}
         />,
       );
-      fireEvent.mouseDown(document.body)
-      fireEvent.touchStart(document.body)
+      fireEvent.mouseDown(document.body);
+      fireEvent.touchStart(document.body);
       expect(onCancelSpy).toHaveBeenCalledTimes(2);
     });
 
