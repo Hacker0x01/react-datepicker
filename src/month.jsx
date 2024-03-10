@@ -63,15 +63,7 @@ export default class Month extends React.Component {
     monthClassName: PropTypes.func,
     endDate: PropTypes.instanceOf(Date),
     orderInDisplay: PropTypes.number,
-    excludeDates: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.instanceOf(Date),
-        PropTypes.shape({
-          date: PropTypes.instanceOf(Date).isRequired,
-          message: PropTypes.string,
-        }),
-      ]),
-    ),
+    excludeDates: PropTypes.array,
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
