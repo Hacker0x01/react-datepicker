@@ -59,7 +59,15 @@ export default class Day extends React.Component {
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
     calendarStartDay: PropTypes.number,
-    excludeDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
   };
 
   componentDidMount() {
@@ -435,8 +443,12 @@ export default class Day extends React.Component {
       className={this.getClassNames(this.props.day)}
       onKeyDown={this.handleOnKeyDown}
       onClick={this.handleClick}
-      onMouseEnter={!this.props.usePointerEvent ? this.handleMouseEnter : undefined}
-      onPointerEnter={this.props.usePointerEvent ? this.handleMouseEnter : undefined}
+      onMouseEnter={
+        !this.props.usePointerEvent ? this.handleMouseEnter : undefined
+      }
+      onPointerEnter={
+        this.props.usePointerEvent ? this.handleMouseEnter : undefined
+      }
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="option"

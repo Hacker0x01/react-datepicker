@@ -26,7 +26,15 @@ export default class Year extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     includeDates: PropTypes.array,
     filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
@@ -260,10 +268,26 @@ export default class Year extends React.Component {
           }}
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
-          onMouseEnter={!this.props.usePointerEvent ? (ev) => onYearMouseEnter(ev, y) : undefined}
-          onPointerEnter={this.props.usePointerEvent ? (ev) => onYearMouseEnter(ev, y) : undefined}
-          onMouseLeave={!this.props.usePointerEvent ? (ev) => onYearMouseLeave(ev, y) : undefined}
-          onPointerLeave={this.props.usePointerEvent ? (ev) => onYearMouseLeave(ev, y) : undefined}
+          onMouseEnter={
+            !this.props.usePointerEvent
+              ? (ev) => onYearMouseEnter(ev, y)
+              : undefined
+          }
+          onPointerEnter={
+            this.props.usePointerEvent
+              ? (ev) => onYearMouseEnter(ev, y)
+              : undefined
+          }
+          onMouseLeave={
+            !this.props.usePointerEvent
+              ? (ev) => onYearMouseLeave(ev, y)
+              : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent
+              ? (ev) => onYearMouseLeave(ev, y)
+              : undefined
+          }
           key={y}
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
@@ -276,8 +300,16 @@ export default class Year extends React.Component {
       <div className={this.getYearContainerClassNames()}>
         <div
           className="react-datepicker__year-wrapper"
-          onMouseLeave={!this.props.usePointerEvent ? this.props.clearSelectingDate : undefined}
-          onPointerLeave={this.props.usePointerEvent ? this.props.clearSelectingDate : undefined}
+          onMouseLeave={
+            !this.props.usePointerEvent
+              ? this.props.clearSelectingDate
+              : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent
+              ? this.props.clearSelectingDate
+              : undefined
+          }
         >
           {yearsList}
         </div>
