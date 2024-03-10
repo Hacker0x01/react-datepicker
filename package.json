@@ -117,6 +117,7 @@
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
     "lint": "yarn run eslint && yarn run sass-lint",
     "prettier": "prettier --write '**/*.{js,jsx}'",
+    "prettier:check": "prettier --check '**/*.{js,jsx}'",
     "start": "yarn --cwd docs-site install && yarn --cwd docs-site start",
     "test": "NODE_ENV=test jest",
     "test:ci": "NODE_ENV=test jest --ci --coverage",
