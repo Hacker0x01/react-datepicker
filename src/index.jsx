@@ -416,8 +416,8 @@ export default class DatePicker extends React.Component {
           : this.props.selected) ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-
       highlightDates: getHighLightDaysMap(this.props.highlightDates),
+      holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render
