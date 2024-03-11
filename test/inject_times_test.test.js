@@ -1,12 +1,12 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import * as utils from "../src/date_utils";
 import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {
   it("should show times specified in injectTimes props", () => {
     const today = utils.getStartOfDay(utils.newDate());
-    const timeComponent = mount(
+    const { container } = render(
       <TimeComponent
         injectTimes={[
           utils.addMinutes(today, 1),
@@ -16,7 +16,7 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const injectedItems = timeComponent.find(
+    const injectedItems = container.querySelectorAll(
       ".react-datepicker__time-list-item--injected",
     );
     expect(injectedItems).toHaveLength(3);
@@ -24,7 +24,7 @@ describe("TimeComponent", () => {
 
   it("should not affect existing time intervals", () => {
     const today = utils.getStartOfDay(utils.newDate());
-    const timeComponent = mount(
+    const { container } = render(
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
@@ -35,7 +35,7 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const injectedItems = timeComponent.find(
+    const injectedItems = container.querySelectorAll(
       ".react-datepicker__time-list-item--injected",
     );
     expect(injectedItems).toHaveLength(0);
@@ -43,7 +43,7 @@ describe("TimeComponent", () => {
 
   it("should allow multiple injected times per interval", () => {
     const today = utils.getStartOfDay(utils.newDate());
-    const timeComponent = mount(
+    const { container } = render(
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
@@ -54,7 +54,7 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const injectedItems = timeComponent.find(
+    const injectedItems = container.querySelectorAll(
       ".react-datepicker__time-list-item--injected",
     );
     expect(injectedItems).toHaveLength(3);
@@ -62,7 +62,7 @@ describe("TimeComponent", () => {
 
   it("should sort injected times automatically", () => {
     const today = utils.getStartOfDay(utils.newDate());
-    const timeComponent = mount(
+    const { container } = render(
       <TimeComponent
         timeIntervals={60}
         injectTimes={[
@@ -73,10 +73,10 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const injectedItems = timeComponent.find(
+    const injectedItems = container.querySelectorAll(
       ".react-datepicker__time-list-item--injected",
     );
-    expect(injectedItems.map((node) => node.text())).toEqual([
+    expect(Array.from(injectedItems).map((node) => node.textContent)).toEqual([
       "12:01 AM",
       "12:02 AM",
       "12:03 AM",

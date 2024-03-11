@@ -1,7 +1,8 @@
 import React from "react";
 import YearDropdownOptions from "../src/year_dropdown_options.jsx";
-import { mount, shallow } from "enzyme";
+import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
+import onClickOutside from "react-onclickoutside";
 
 describe("YearDropdownOptions", () => {
   let yearDropdown, handleChangeResult;
@@ -12,20 +13,20 @@ describe("YearDropdownOptions", () => {
 
   beforeEach(() => {
     onCancelSpy = jest.fn();
-    yearDropdown = mount(
+    yearDropdown = render(
       <YearDropdownOptions
         year={2015}
         onChange={mockHandleChange}
         onCancel={onCancelSpy}
       />,
-    );
+    ).container;
   });
 
   it("shows the available years in the initial view", () => {
-    const yearDropdownNode = yearDropdown.find("div");
-    const textContents = yearDropdownNode
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    const yearDropdownNode = yearDropdown.querySelector("div");
+    const textContents = Array.from(
+      yearDropdownNode.querySelectorAll(".react-datepicker__year-option"),
+    ).map((node) => node.textContent);
 
     expect(textContents).toEqual(
       expect.arrayContaining([
@@ -47,18 +48,22 @@ describe("YearDropdownOptions", () => {
   });
 
   it("generate 10 years, 5 below and 5 above the selected one, if prop scrollableYearDropdown is false", () => {
-    const yearsListLength = yearDropdown.state().yearsList.length;
+    const yearsListLength = Array.from(
+      yearDropdown.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent).length;
     expect(yearsListLength).toBe(11);
   });
 
   it("increments the available years when the 'upcoming years' button is clicked", () => {
-    yearDropdown
-      .find(".react-datepicker__navigation--years-upcoming")
-      .simulate("click");
+    fireEvent.click(
+      yearDropdown.querySelector(
+        ".react-datepicker__navigation--years-upcoming",
+      ),
+    );
 
-    const textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    const textContents = Array.from(
+      yearDropdown.querySelectorAll(".react-datepicker__year-option"),
+    ).map((node) => node.textContent);
 
     expect(textContents).toEqual(
       expect.arrayContaining([
@@ -80,13 +85,15 @@ describe("YearDropdownOptions", () => {
   });
 
   it("decrements the available years when the 'previous years' button is clicked", () => {
-    yearDropdown
-      .find(".react-datepicker__navigation--years-previous")
-      .simulate("click");
+    fireEvent.click(
+      yearDropdown.querySelector(
+        ".react-datepicker__navigation--years-previous",
+      ),
+    );
 
-    const textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    const textContents = Array.from(
+      yearDropdown.querySelectorAll(".react-datepicker__year-option"),
+    ).map((node) => node.textContent);
 
     expect(textContents).toEqual(
       expect.arrayContaining([
@@ -108,17 +115,27 @@ describe("YearDropdownOptions", () => {
   });
 
   it("calls the supplied onChange function when a year is clicked", () => {
-    yearDropdown
-      .find(".react-datepicker__year-option")
-      .filterWhere((e) => e.text().includes("2015"))
-      .simulate("click");
+    fireEvent.click(
+      Array.from(
+        yearDropdown.querySelectorAll(".react-datepicker__year-option"),
+      ).find((node) => node.textContent.includes("2015")),
+    );
+
     expect(handleChangeResult).toBe(2015);
   });
 
   it("calls the supplied onCancel function on handleClickOutside", () => {
-    const instance = yearDropdown.instance();
-    instance.handleClickOutside();
-    expect(onCancelSpy).toBeCalled();
+    const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
+    render(
+      <WrappedYearDropdownOptions
+        year={2015}
+        onChange={mockHandleChange}
+        onCancel={onCancelSpy}
+      />,
+    );
+    fireEvent.mouseDown(document.body);
+    fireEvent.touchStart(document.body);
+    expect(onCancelSpy).toHaveBeenCalledTimes(2);
   });
 
   describe("selected", () => {
@@ -126,22 +143,24 @@ describe("YearDropdownOptions", () => {
     let yearOptions;
 
     beforeEach(() => {
-      yearOptions = yearDropdown.find(".react-datepicker__year-option");
+      yearOptions = Array.from(
+        yearDropdown.querySelectorAll(".react-datepicker__year-option"),
+      );
     });
 
     describe("if selected", () => {
       let selectedYearOption;
       beforeEach(() => {
-        selectedYearOption = yearOptions.filterWhere((o) =>
-          o.hasClass(className),
+        selectedYearOption = yearOptions.find((o) =>
+          o.classList.contains(className),
         );
       });
       it("should apply the selected class", () => {
-        expect(selectedYearOption.hasClass(className)).toBe(true);
+        expect(selectedYearOption.classList.contains(className)).toBe(true);
       });
 
       it("should add aria-selected property with the value of true", () => {
-        const ariaSelected = selectedYearOption.prop("aria-selected");
+        const ariaSelected = selectedYearOption.getAttribute("aria-selected");
         expect(ariaSelected).toBe("true");
       });
     });
@@ -149,17 +168,17 @@ describe("YearDropdownOptions", () => {
     describe("if not selected", () => {
       let selectedYearOption;
       beforeEach(() => {
-        selectedYearOption = yearOptions
-          .filterWhere((o) => !o.hasClass(className))
-          .at(0);
+        selectedYearOption = yearOptions.find(
+          (o) => !o.classList.contains(className),
+        );
       });
       it("should not apply the selected class", () => {
-        expect(selectedYearOption.hasClass(className)).toBe(false);
+        expect(selectedYearOption.classList.contains(className)).toBe(false);
       });
 
       it("should not add aria-selected property with the value of true", () => {
-        const ariaSelected = selectedYearOption.prop("aria-selected");
-        expect(ariaSelected).toBeUndefined();
+        const ariaSelected = selectedYearOption.getAttribute("aria-selected");
+        expect(ariaSelected).toBeNull();
       });
     });
   });
@@ -169,7 +188,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show upcoming and previous links and generate 10 years if prop scrollableYearDropdown is true", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const yearDropdown = shallow(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -177,12 +196,20 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
         year={2015}
       />,
     );
-    expect(yearDropdown.state().yearsList.length).toBe(21);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      Array.from(
+        container.querySelectorAll(".react-datepicker__year-option"),
+      ).filter((node) => node.textContent).length,
+    ).toBe(21);
+    expect(
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(1);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(1);
   });
 
@@ -191,7 +218,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onChangeSpy = jest.fn();
     const minDate = utils.newDate();
     const maxDate = utils.addYears(utils.newDate(), 1);
-    const yearDropdown = shallow(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -201,9 +228,15 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
         maxDate={maxDate}
       />,
     );
-    expect(yearDropdown.state().yearsList.length).toBe(2);
-    expect(yearDropdown.state().yearsList).toContain(utils.getYear(minDate));
-    expect(yearDropdown.state().yearsList).toContain(utils.getYear(maxDate));
+    const yearsList = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    )
+      .filter((node) => node.textContent)
+      .map((node) => node.textContent.replace("✓", ""));
+
+    expect(yearsList.length).toBe(2);
+    expect(yearsList).toContain(`${utils.getYear(minDate)}`);
+    expect(yearsList).toContain(`${utils.getYear(maxDate)}`);
   });
 
   it("should hide arrows to add years, if not between minDate and maxDate", () => {
@@ -211,7 +244,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onChangeSpy = jest.fn();
     const minDate = utils.newDate();
     const maxDate = utils.addYears(utils.newDate(), 1);
-    const yearDropdown = mount(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -223,10 +256,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     );
 
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(0);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(0);
   });
 
@@ -235,7 +272,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onChangeSpy = jest.fn();
     const minDate = utils.subYears(utils.newDate(), 11);
     const maxDate = utils.addYears(utils.newDate(), 11);
-    const yearDropdown = mount(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -247,15 +284,19 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     );
 
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(1);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(1);
 
-    let textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    let textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
 
     expect(
       textContents.find((year) => year === utils.getYear(minDate)),
@@ -264,27 +305,31 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       textContents.find((year) => year === utils.getYear(maxDate)),
     ).toBeUndefined();
 
-    yearDropdown
-      .find(".react-datepicker__navigation--years-previous")
-      .simulate("click");
-    textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    fireEvent.click(
+      container.querySelector(".react-datepicker__navigation--years-previous"),
+    );
+
+    textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
+
     const x = textContents.find((year) => year === utils.getYear(minDate));
     expect(x).toBeUndefined();
     expect(
       textContents.find((year) => year === utils.getYear(maxDate)),
     ).toBeUndefined();
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(0);
 
-    yearDropdown
-      .find(".react-datepicker__navigation--years-upcoming")
-      .simulate("click");
-    textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    fireEvent.click(
+      container.querySelector(".react-datepicker__navigation--years-upcoming"),
+    );
+    textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
     expect(
       textContents.find((year) => year === utils.getYear(minDate)),
     ).toBeUndefined();
@@ -297,7 +342,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
     const minDate = utils.subYears(utils.newDate(), 11);
-    const yearDropdown = mount(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -308,35 +353,44 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     );
 
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(1);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(1);
 
-    let textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    let textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
 
     expect(
       textContents.find((year) => year === utils.getYear(minDate)),
     ).toBeUndefined();
 
-    yearDropdown
-      .find(".react-datepicker__navigation--years-previous")
-      .simulate("click");
+    fireEvent.click(
+      container.querySelector(".react-datepicker__navigation--years-previous"),
+    );
 
-    textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
+
     expect(
       textContents.find((year) => year === utils.getYear(minDate)),
     ).toBeUndefined();
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(1);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(0);
   });
 
@@ -344,7 +398,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
     const maxDate = utils.addYears(utils.newDate(), 11);
-    const yearDropdown = mount(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -355,43 +409,51 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     );
 
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(1);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(1);
 
-    let textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    let textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
 
     expect(
       textContents.find((year) => year === utils.getYear(maxDate)),
     ).toBeUndefined();
 
-    yearDropdown
-      .find(".react-datepicker__navigation--years-upcoming")
-      .simulate("click");
+    fireEvent.click(
+      container.querySelector(".react-datepicker__navigation--years-upcoming"),
+    );
 
-    textContents = yearDropdown
-      .find(".react-datepicker__year-option")
-      .map((node) => node.text());
+    textContents = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
 
     expect(
       textContents.find((year) => year === utils.getYear(maxDate)),
     ).toBeUndefined();
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-upcoming").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-upcoming",
+      ).length,
     ).toBe(0);
     expect(
-      yearDropdown.find(".react-datepicker__navigation--years-previous").length,
+      container.querySelectorAll(
+        ".react-datepicker__navigation--years-previous",
+      ).length,
     ).toBe(1);
   });
 
   it("should generate 25 years (25 above, 25 below selected) if prop yearDropdownItemNumber is set to 25", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const yearDropdown = shallow(
+    const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
@@ -400,27 +462,35 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
         yearDropdownItemNumber={25}
       />,
     );
-    expect(yearDropdown.state().yearsList.length).toBe(51);
+
+    const yearsList = Array.from(
+      container.querySelectorAll(".react-datepicker__year-option"),
+    ).filter((node) => node.textContent);
+    expect(yearsList.length).toBe(51);
   });
 
   it("should scroll year dropdown to the middle on open", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const yearDropdownInstance = mount(
+    let instance;
+    render(
       <YearDropdownOptions
+        ref={(node) => {
+          instance = node;
+        }}
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
         year={2015}
         yearDropdownItemNumber={25}
       />,
-    ).instance();
+    );
 
-    yearDropdownInstance.dropdownRef.current = {
+    instance.dropdownRef.current = {
       scrollHeight: 800,
       clientHeight: 400,
     };
-    yearDropdownInstance.componentDidMount();
-    expect(yearDropdownInstance.dropdownRef.current.scrollTop).toBe(200);
+    instance.componentDidMount();
+    expect(instance.dropdownRef.current.scrollTop).toBe(200);
   });
 });

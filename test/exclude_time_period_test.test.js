@@ -1,21 +1,24 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import * as utils from "../src/date_utils";
 import DatePicker from "../src/index.jsx";
 
 describe("DatePicker", () => {
   it("should only display times between minTime and maxTime", () => {
-    var now = utils.newDate();
-    var datePicker = mount(
+    const now = utils.newDate();
+    const { container } = render(
       <DatePicker
         showTimeSelect
         selected={now}
         onChange={() => null}
         minTime={utils.setTime(now, { hours: 17, minutes: 0 })}
         maxTime={utils.setTime(now, { hours: 18, minutes: 0 })}
+        open
       />,
     );
-    var times = datePicker.find("li.react-datepicker__time-list-item");
+    const times = container.querySelector(
+      "li.react-datepicker__time-list-item",
+    );
     expect(times).not.toBeNull();
   });
 });

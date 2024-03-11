@@ -28,6 +28,7 @@ import Locale from "../../examples/locale";
 import LocaleWithTime from "../../examples/localeWithTime";
 import LocaleWithoutGlobalVariable from "../../examples/localeWithoutGlobalVariable";
 import ExcludeDates from "../../examples/excludeDates";
+import ExcludedWithMessage from "../../examples/excludeDatesWithMessage";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
@@ -45,7 +46,7 @@ import DisabledKeyboardNavigation from "../../examples/disabledKeyboardNavigatio
 import ReadOnly from "../../examples/readOnly";
 import ClearInput from "../../examples/clearInput";
 import OnBlurCallbacks from "../../examples/onBlurCallbacks";
-import ConfigurePopper from "../../examples/configurePopper";
+import ConfigureFloatingUI from "../../examples/configureFloatingUI";
 import Portal from "../../examples/portal";
 import PortalById from "../../examples/portalById";
 import WithPortalById from "../../examples/withPortalById";
@@ -100,8 +101,10 @@ import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabl
 import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
+import SelectsMultiple from "../../examples/selectsMultiple";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
+import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -130,6 +133,10 @@ export default class exampleComponents extends React.Component {
       component: CalendarIconExternal,
     },
     {
+      title: "Toggle Calendar open status on click of the calendar icon",
+      component: ToggleCalendarOnIconClick,
+    },
+    {
       title: "Calendar container",
       component: CalendarContainer,
     },
@@ -154,17 +161,18 @@ export default class exampleComponents extends React.Component {
       component: CloseOnScrollCallback,
     },
     {
-      title: "Configure Popper Properties",
-      component: ConfigurePopper,
+      title: "Configure Floating UI Properties",
+      component: ConfigureFloatingUI,
       description: (
         <div>
-          Full docs for the popper can be found at{" "}
+          Full docs for the underlying library that manages the overlay used can
+          be found at{" "}
           <a
-            href="https://popper.js.org"
+            href="https://floating-ui.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            popper.js.org
+            floating-ui.com
           </a>
         </div>
       ),
@@ -264,6 +272,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Exclude dates",
       component: ExcludeDates,
+    },
+    {
+      title: "Exclude dates with message",
+      component: ExcludedWithMessage,
     },
     {
       title: "Exclude date intervals",
@@ -472,6 +484,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Specific Time Range",
       component: ExcludeTimePeriod,
+    },
+    {
+      title: "Select multiple dates",
+      component: SelectsMultiple,
     },
     {
       title: "Strict parsing",

@@ -21,7 +21,7 @@ function generateTitle(name) {
   return title + "\n" + stringOfLength("=", title.length) + "\n";
 }
 
-function generateDesciption(description) {
+function generateDescription(description) {
   if (description) return description + "\n";
 
   return "";
@@ -84,9 +84,9 @@ function generateMarkdown(name, reactAPI) {
   var markdownString =
     generateTitle(name) +
     "\n" +
-    generateDesciption(reactAPI.description) +
+    generateDescription(reactAPI[0].description) +
     "\n" +
-    generateProps(reactAPI.props);
+    generateProps(reactAPI[0].props);
 
   return markdownString;
 }

@@ -1,9 +1,8 @@
 import React from "react";
-import { mount } from "enzyme";
 import TimeComponent from "../src/time";
 import * as utils from "../src/date_utils";
-import ptBR from "date-fns/locale/pt-BR";
-import { waitFor } from "@testing-library/react";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { render, waitFor } from "@testing-library/react";
 
 describe("TimeComponent", () => {
   utils.registerLocale("pt-BR", ptBR);
@@ -29,23 +28,23 @@ describe("TimeComponent", () => {
     });
 
     it("should forward the time format provided in timeFormat props", () => {
-      var timeComponent = mount(<TimeComponent format="HH:mm" />);
+      const { container } = render(<TimeComponent format="HH:mm" />);
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.at(0).text()).toBe("00:00");
+      expect(timeListItem.textContent).toBe("00:00");
     });
 
     it("should format the time based on the default locale (en-US)", async () => {
-      mount(<TimeComponent format="p" />);
+      render(<TimeComponent format="p" />);
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("1:00 PM");
       });
     });
 
     it("should format the time based on the pt-BR locale", async () => {
-      mount(<TimeComponent format="p" locale="pt-BR" />);
+      render(<TimeComponent format="p" locale="pt-BR" />);
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
       });
@@ -59,28 +58,28 @@ describe("TimeComponent", () => {
     });
 
     it("should call calcCenterPosition once", async () => {
-      mount(<TimeComponent format="HH:mm" />);
+      render(<TimeComponent format="HH:mm" />);
       await waitFor(() => {
         expect(spy).toHaveBeenCalled();
       });
     });
 
     it("should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
-      mount(<TimeComponent format="HH:mm" />);
+      render(<TimeComponent format="HH:mm" />);
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:00");
       });
     });
 
     it("with five minute time interval, should call calcCenterPosition with centerLi ref, closest to the current time", async () => {
-      mount(<TimeComponent format="HH:mm" intervals={5} />);
+      render(<TimeComponent format="HH:mm" intervals={5} />);
       await waitFor(() => {
         expect(spy.mock.calls[0][1].innerHTML).toBe("13:25");
       });
     });
 
     it("should call calcCenterPosition with centerLi ref, closest to the selected time", async () => {
-      mount(
+      render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:11")}
@@ -93,7 +92,7 @@ describe("TimeComponent", () => {
     });
 
     it("should call calcCenterPosition with centerLi ref, which is selected", async () => {
-      mount(
+      render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -110,7 +109,7 @@ describe("TimeComponent", () => {
     });
 
     it("should add the aria-selected property to the selected item", () => {
-      var timeComponent = mount(
+      const { container } = render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -118,14 +117,14 @@ describe("TimeComponent", () => {
         />,
       );
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item--selected",
       );
-      expect(timeListItem.at(0).prop("aria-selected")).toBe("true");
+      expect(timeListItem.getAttribute("aria-selected")).toBe("true");
     });
 
     it("should enable keyboard focus on the selected item", () => {
-      var timeComponent = mount(
+      const { container } = render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -133,14 +132,14 @@ describe("TimeComponent", () => {
         />,
       );
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item--selected",
       );
-      expect(timeListItem.at(0).prop("tabIndex")).toBe(0);
+      expect(timeListItem.tabIndex).toBe(0);
     });
 
     it("should not add the aria-selected property to a regular item", () => {
-      var timeComponent = mount(
+      const { container } = render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -148,14 +147,14 @@ describe("TimeComponent", () => {
         />,
       );
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.at(0).prop("aria-selected")).toBeUndefined();
+      expect(timeListItem.getAttribute("aria-selected")).toBeNull();
     });
 
     it("should disable keyboard focus on a regular item", () => {
-      var timeComponent = mount(
+      const { container } = render(
         <TimeComponent
           format="HH:mm"
           selected={new Date("1990-06-14 08:00")}
@@ -163,32 +162,32 @@ describe("TimeComponent", () => {
         />,
       );
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.at(0).prop("tabIndex")).toBe(-1);
+      expect(timeListItem.tabIndex).toBe(-1);
     });
 
     it("when no selected time, should focus the time closest to the opened time", () => {
-      var timeComponent = mount(
+      const { container } = render(
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:11")}
         />,
       );
 
-      var timeListItem = timeComponent.find(
+      const timeListItem = container.querySelectorAll(
         ".react-datepicker__time-list-item",
       );
       expect(
-        timeListItem
-          .findWhere((node) => node.type() && node.text() === "09:00")
-          .prop("tabIndex"),
+        Array.from(timeListItem).find(
+          (node) => node.tagName && node.textContent === "09:00",
+        ).tabIndex,
       ).toBe(0);
     });
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, closest to the opened time", async () => {
-      mount(
+      render(
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:11")}
@@ -200,7 +199,7 @@ describe("TimeComponent", () => {
     });
 
     it("when no selected time, should call calcCenterPosition with centerLi ref, and no time should be selected", async () => {
-      mount(
+      render(
         <TimeComponent
           format="HH:mm"
           openToDate={new Date("1990-06-14 09:00")}

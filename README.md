@@ -83,7 +83,7 @@ More examples of how to use the time picker are given on the [main website](http
 
 ### Localization
 
-The date picker relies on [date-fns internationalization](https://date-fns.org/v2.0.0-alpha.18/docs/I18n) to localize its display components. By default, the date picker will use the locale globally set, which is English. Provided are 3 helper methods to set the locale:
+The date picker relies on [date-fns internationalization](https://date-fns.org/v3.3.1/docs/I18n) to localize its display components. By default, the date picker will use the locale globally set, which is English. Provided are 3 helper methods to set the locale:
 
 - **registerLocale** (string, object): loads an imported locale object from date-fns
 - **setDefaultLocale** (string): sets a registered locale as the default for all datepicker instances
@@ -91,7 +91,7 @@ The date picker relies on [date-fns internationalization](https://date-fns.org/v
 
 ```js
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import es from 'date-fns/locale/es';
+import { es } from 'date-fns/locale/es';
 registerLocale('es', es)
 
 <DatePicker
@@ -134,13 +134,17 @@ The `main` branch contains the latest version of the Datepicker component.
 
 To begin local development:
 
-1. `yarn install`
-2. `yarn build-dev`
-3. `yarn start`
+1. Run `yarn link` from project root
+2. Run `cd docs-site && yarn link react-datepicker`
+3. Run `yarn install` from project root
+4. Run `yarn build` from project root
+5. Run `yarn start` from project root
 
 The last step starts documentation app as a simple webserver on http://localhost:3000.
 
 You can run `yarn test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
+
+Please refer to `CONTRIBUTING.md` file for more details about getting set up.
 
 ### The examples
 
@@ -155,9 +159,11 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 - _Up_: Move to the previous week.
 - _Down_: Move to the next week.
 - _PgUp_: Move to the previous month.
+- _Shift+PgUp_: Move to the same day and month of the previous year. If that day does not exist, moves focus to the last day of the month.
 - _PgDn_: Move to the next month.
-- _Home_: Move to the previous year.
-- _End_: Move to the next year.
+- _Shift+PgDn_: Move to the same day and month of the next year. If that day does not exist, moves focus to the last day of the month.
+- _Home_: Move to the first day (e.g Sunday) of the current week.
+- _End_: Move to the last day (e.g. Saturday) of the current week.
 - _Enter/Esc/Tab_: close the calendar. (Enter & Esc calls preventDefault)
 
 #### For month picker

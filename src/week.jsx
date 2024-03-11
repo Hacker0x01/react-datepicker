@@ -20,7 +20,15 @@ export default class Week extends React.Component {
     disabledDayAriaLabelPrefix: PropTypes.string,
     chooseDayAriaLabelPrefix: PropTypes.string,
     endDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
@@ -44,6 +52,7 @@ export default class Week extends React.Component {
     minDate: PropTypes.instanceOf(Date),
     month: PropTypes.number,
     onDayClick: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onWeekSelect: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
@@ -52,6 +61,8 @@ export default class Week extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     selectsDisabledDaysInRange: PropTypes.bool,
     showWeekNumber: PropTypes.bool,
     showWeekPicker: PropTypes.bool,
@@ -147,6 +158,7 @@ export default class Week extends React.Component {
             day={day}
             month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
+            usePointerEvent={this.props.usePointerEvent}
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
@@ -166,6 +178,8 @@ export default class Week extends React.Component {
             showWeekPicker={this.props.showWeekPicker}
             showWeekNumber={this.props.showWeekNumber}
             selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
+            selectsMultiple={this.props.selectsMultiple}
+            selectedDates={this.props.selectedDates}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
             dayClassName={this.props.dayClassName}

@@ -26,7 +26,7 @@ import {
   isTimeInDisabledRange,
   isDayInRange,
   parseDate,
-  isMonthinRange,
+  isMonthInRange,
   isQuarterInRange,
   isYearInRange,
   getStartOfYear,
@@ -39,11 +39,13 @@ import {
   getHolidaysMap,
   arraysAreEqual,
   startOfMinute,
+  isDateBefore,
+  getMidnightDate,
 } from "../src/date_utils";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
-import addQuarters from "date-fns/addQuarters";
-import ptBR from "date-fns/locale/pt-BR";
+import { setMinutes } from "date-fns/setMinutes";
+import { setHours } from "date-fns/setHours";
+import { addQuarters } from "date-fns/addQuarters";
+import { ptBR } from "date-fns/locale/pt-BR";
 import { registerLocale } from "../src/date_utils";
 import { addYears } from "date-fns";
 
@@ -247,15 +249,15 @@ describe("date_utils", () => {
       ).toBe(true);
     });
 
-    it("should throw error if excluded date interval is invalid", () => {
+    it("should be enabled and normalize negative intervals correctly", () => {
       const day = newDate();
-      expect(() =>
+      expect(
         isDayDisabled(day, {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
         }),
-      ).toThrow("Invalid interval");
+      ).toBe(true);
     });
 
     it("should be enabled if excluded date interval is empty", () => {
@@ -364,15 +366,15 @@ describe("date_utils", () => {
       ).toBe(false);
     });
 
-    it("should throw error if excluded date interval is invalid", () => {
+    it("should be enabled and normalize negative intervals correctly", () => {
       const day = newDate();
-      expect(() =>
+      expect(
         isDayExcluded(day, {
           excludeDateIntervals: [
             { start: addDays(day, 1), end: subDays(day, 1) },
           ],
         }),
-      ).toThrow("Invalid interval");
+      ).toBe(true);
     });
 
     it("should not be excluded if in excluded dates and not within excluded date intervals", () => {
@@ -580,7 +582,7 @@ describe("date_utils", () => {
     });
 
     it("should be disabled if in excluded dates", () => {
-      const day = newDate();
+      const day = newDate(`${year}-02-01`);
       expect(isYearDisabled(year, { excludeDates: [day] })).toBe(true);
     });
 
@@ -850,12 +852,12 @@ describe("date_utils", () => {
       expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(true);
     });
 
-    it("should not throw an exception if max time is before min time", () => {
+    it("should correctly handle max time is before min time", () => {
       const date = newDate("2016-03-15");
       const time = setHours(setMinutes(date, 30), 10);
       const minTime = setHours(setMinutes(date, 30), 5);
       const maxTime = setHours(setMinutes(date, 30), 0);
-      expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(false);
+      expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(true);
     });
   });
 
@@ -888,11 +890,11 @@ describe("date_utils", () => {
       expect(isDayInRange(day, startDate, endDate)).toBe(false);
     });
 
-    it("should not throw exception if end date is before start date", () => {
+    it("should correctly handle max time is before min time", () => {
       const day = newDate("2016-02-01 09:40");
       const startDate = newDate("2016-02-15 09:40");
       const endDate = newDate("2016-01-15 08:40");
-      expect(isDayInRange(day, startDate, endDate)).toBe(false);
+      expect(isDayInRange(day, startDate, endDate)).toBe(true);
     });
   });
 
@@ -974,13 +976,13 @@ describe("date_utils", () => {
     });
   });
 
-  describe("isMonthinRange", () => {
+  describe("isMonthInRange", () => {
     it("should return true if the month passed is in range", () => {
       const day = newDate("2015-02-01");
       const startDate = newDate("2015-01-01");
       const endDate = newDate("2015-08-01");
 
-      expect(isMonthinRange(startDate, endDate, 4, day)).toBe(true);
+      expect(isMonthInRange(startDate, endDate, 4, day)).toBe(true);
     });
 
     it("should return false if the month passed is not in range", () => {
@@ -988,7 +990,7 @@ describe("date_utils", () => {
       const startDate = newDate("2015-01-01");
       const endDate = newDate("2015-08-01");
 
-      expect(isMonthinRange(startDate, endDate, 9, day)).toBe(false);
+      expect(isMonthInRange(startDate, endDate, 9, day)).toBe(false);
     });
 
     it("should return true if the month passed is in range and maxDate +1 year", () => {
@@ -996,7 +998,7 @@ describe("date_utils", () => {
       const startDate = newDate("2019-06-04");
       const endDate = newDate("2020-02-01");
 
-      expect(isMonthinRange(startDate, endDate, 5, day)).toBe(true);
+      expect(isMonthInRange(startDate, endDate, 5, day)).toBe(true);
     });
   });
 
@@ -1246,6 +1248,53 @@ describe("date_utils", () => {
       const expected = new Date(2020, 10, 10, 10, 10, 0); // Nov 10, 2020 10:10:00
 
       expect(startOfMinute(d)).toEqual(expected);
+    });
+  });
+
+  describe("getMidnightDate", () => {
+    it("should return a date with midnight time when a valid date is provided", () => {
+      const inputDate = new Date(2023, 0, 1, 12, 30, 45); // January 1, 2023, 12:30:45 PM
+
+      const result = getMidnightDate(inputDate);
+
+      expect(result).toEqual(new Date(2023, 0, 1, 0, 0, 0, 0)); // January 1, 2023, 00:00:00.000
+    });
+
+    it("should throw an error when an invalid date is provided", () => {
+      const invalidDate = "not a date";
+
+      expect(() => {
+        getMidnightDate(invalidDate);
+      }).toThrowError("Invalid date");
+    });
+  });
+
+  describe("isDateBefore", () => {
+    it("should return true when date is before dateToCompare", () => {
+      const date = new Date(2022, 11, 31); // December 31, 2022
+      const dateToCompare = new Date(2023, 0, 1); // January 1, 2023
+
+      const result = isDateBefore(date, dateToCompare);
+
+      expect(result).toBe(true);
+    });
+
+    it("should return false when date is not before dateToCompare", () => {
+      const date = new Date(2023, 0, 1); // January 1, 2023
+      const dateToCompare = new Date(2022, 11, 31); // December 31, 2022
+
+      const result = isDateBefore(date, dateToCompare);
+
+      expect(result).toBe(false);
+    });
+
+    it("should throw an error when either date or dateToCompare is not a valid date", () => {
+      expect(() => {
+        const invalidDate = "not a date";
+        const validDate = new Date(2023, 0, 1); // January 1, 2023
+
+        isDateBefore(invalidDate, validDate);
+      }).toThrowError();
     });
   });
 });
