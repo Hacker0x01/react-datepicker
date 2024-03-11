@@ -1,130 +1,189 @@
 import React from "react";
-import { mount } from "enzyme";
 import DatePicker from "../src/index.jsx";
 import Year from "../src/year.jsx";
-import TestUtils from "react-dom/test-utils";
+import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.js";
-import Calendar from "../src/calendar.jsx";
-import { findDOMNode } from "react-dom";
+import { getKey } from "./test_utils.js";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
-    const datePicker = mount(<DatePicker showYearPicker />);
-    const component = datePicker.find(Year);
-    expect(component).toBeDefined();
+    const { container } = render(<DatePicker showYearPicker open />);
+    const year = container.querySelector(".react-datepicker__year");
+    expect(year).not.toBeNull();
   });
 
   it("should show year picker component with default year item number", () => {
-    const yearComponent = mount(<Year date={new Date()} />);
-    const yearItems = yearComponent.find(".react-datepicker__year-text");
+    const { container } = render(
+      <Year
+        date={new Date()}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const yearItems = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
     expect(yearItems.length).toBe(utils.DEFAULT_YEAR_ITEM_NUMBER);
   });
 
   it("should show year picker component with specific year item number", () => {
     const yearItemNumber = 9;
-    const yearComponent = mount(
-      <Year date={new Date()} yearItemNumber={yearItemNumber} />,
+    const { container } = render(
+      <Year
+        date={new Date()}
+        yearItemNumber={yearItemNumber}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
-    const yearItems = yearComponent.find(".react-datepicker__year-text");
+    const yearItems = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
     expect(yearItems.length).toBe(yearItemNumber);
   });
 
   it("should change the year when clicked on any option in the picker", () => {
     const onYearChangeSpy = jest.fn();
-    const yearComponent = mount(
-      <Year onDayClick={onYearChangeSpy} date={new Date("2020-05-05")} />,
+    const { container } = render(
+      <Year
+        onDayClick={onYearChangeSpy}
+        date={new Date("2020-05-05")}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
-    const firstYearDiv = yearComponent
-      .find(".react-datepicker__year-text")
-      .at(1);
-    firstYearDiv.simulate("click");
+    const firstYearDiv = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    )[1];
+    fireEvent.click(firstYearDiv);
     expect(onYearChangeSpy).toHaveBeenCalled();
   });
 
   it("should has selected class when element of array equal of choosen year", () => {
     const date = new Date("2015-01-01");
-    const yearComponent = mount(<Year selected={date} date={date} />);
-    const year = yearComponent
-      .find(".react-datepicker__year-text--selected")
-      .at(0)
-      .text();
+    const { container } = render(
+      <Year
+        selected={date}
+        date={date}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const year = container.querySelectorAll(
+      ".react-datepicker__year-text--selected",
+    )[0].textContent;
     expect(year).toBe(utils.getYear(date).toString());
   });
 
   it("should have current year class when element of array equal of current year", () => {
     const date = new Date();
-    const yearComponent = mount(<Year date={date} />);
-    const year = yearComponent
-      .find(".react-datepicker__year-text--today")
-      .at(0)
-      .text();
+    const { container } = render(
+      <Year
+        date={date}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const year = container.querySelector(
+      ".react-datepicker__year-text--today",
+    ).textContent;
     expect(year).toBe(utils.getYear(date).toString());
   });
 
   it("should have aria-current date when element of array equal to current year", () => {
     const date = new Date();
-    const yearComponent = mount(<Year date={date} />);
-    const ariaCurrent = yearComponent
-      .find(".react-datepicker__year-text--today")
-      .prop("aria-current");
+    const { container } = render(
+      <Year
+        date={date}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const ariaCurrent = container
+      .querySelector(".react-datepicker__year-text--today")
+      .getAttribute("aria-current");
+
     expect(ariaCurrent).toBe("date");
   });
 
   it("should not have aria-current date when element of array does not equal current year", () => {
     const date = new Date("2015-01-01");
-    const yearComponent = mount(<Year date={date} />);
-    const ariaCurrent = yearComponent
-      .find(".react-datepicker__year-text")
-      .at(0)
-      .prop("aria-current");
-    expect(ariaCurrent).toBeUndefined();
+    const { container } = render(
+      <Year
+        date={date}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const ariaCurrent = container
+      .querySelector(".react-datepicker__year-text")
+      .getAttribute("aria-current");
+    expect(ariaCurrent).toBeNull();
   });
 
-  it("should return disabled class if current date is out of bound of minDate and maxdate", () => {
-    const yearComponent = mount(
+  it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
+    const { container } = render(
       <Year
         date={utils.newDate("2020-01-01")}
         minDate={utils.newDate("2018-01-01")}
         maxDate={utils.newDate("2025-01-01")}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
       />,
     );
-    const year = yearComponent.find(".react-datepicker__year-text").at(0);
-    expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
+    const year = container.querySelector(".react-datepicker__year-text");
+    expect(
+      year.classList.contains("react-datepicker__year-text--disabled"),
+    ).toBe(true);
   });
 
   it("should not return disabled class if current date is before minDate but same year", () => {
     const date = utils.newDate("2023-01-01");
-    const yearComponent = mount(
-      <Year date={date} minDate={utils.newDate("2023-12-31")} />,
+    const { container } = render(
+      <Year
+        date={date}
+        minDate={utils.newDate("2023-12-31")}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
-    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const yearTexts = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
     const firstYear = utils.getYearsPeriod(
       date,
       utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     expect(
-      yearTexts
-        .at(2023 - firstYear)
-        .hasClass("react-datepicker__year-text--disabled"),
+      yearTexts[2023 - firstYear].classList.contains(
+        "react-datepicker__year-text--disabled",
+      ),
     ).toBe(false);
   });
 
   it("should not return disabled class if current date is after maxDate but same year", () => {
     const date = utils.newDate("2023-12-31");
-    const yearComponent = mount(
-      <Year date={date} maxDate={utils.newDate("2023-01-01")} />,
+    const { container } = render(
+      <Year
+        date={date}
+        maxDate={utils.newDate("2023-01-01")}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
-    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const yearTexts = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
     const firstYear = utils.getYearsPeriod(
       date,
       utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
     expect(
-      yearTexts
-        .at(2023 - firstYear)
-        .hasClass("react-datepicker__year-text--disabled"),
+      yearTexts[2023 - firstYear].classList.contains(
+        "react-datepicker__year-text--disabled",
+      ),
     ).toBe(false);
   });
 
@@ -140,15 +199,24 @@ describe("YearPicker", () => {
       excludeDates.push(utils.newDate(`${year}-01-01`));
     }
 
-    const yearComponent = mount(
-      <Year date={utils.newDate("2023-01-01")} excludeDates={excludeDates} />,
+    const { container } = render(
+      <Year
+        date={utils.newDate("2023-01-01")}
+        excludeDates={excludeDates}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
 
-    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const yearTexts = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
 
     for (let i = 0; i <= 2023 - firstYear; i++) {
-      const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
+      const year = yearTexts[i];
+      expect(
+        year.classList.contains("react-datepicker__year-text--disabled"),
+      ).toBe(true);
     }
   });
 
@@ -163,22 +231,31 @@ describe("YearPicker", () => {
     for (let year = firstYear; year <= 2023; year++) {
       includeDates.push(utils.newDate(`${year}-01-01`));
     }
-    const yearComponent = mount(
-      <Year date={utils.newDate("2023-01-01")} includeDates={includeDates} />,
+    const { container } = render(
+      <Year
+        date={utils.newDate("2023-01-01")}
+        includeDates={includeDates}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
 
-    const yearTexts = yearComponent.find(".react-datepicker__year-text");
+    const yearTexts = container.querySelectorAll(
+      ".react-datepicker__year-text",
+    );
 
     const pos = 2023 - firstYear;
     for (let i = 0; i <= pos; i++) {
-      const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(
-        false,
-      );
+      const year = yearTexts[i];
+      expect(
+        year.classList.contains("react-datepicker__year-text--disabled"),
+      ).toBe(false);
     }
     for (let i = pos + 1; i < 12; i++) {
-      const year = yearTexts.at(i);
-      expect(year.hasClass("react-datepicker__year-text--disabled")).toBe(true);
+      const year = yearTexts[i];
+      expect(
+        year.classList.contains("react-datepicker__year-text--disabled"),
+      ).toBe(true);
     }
   });
 
@@ -186,63 +263,72 @@ describe("YearPicker", () => {
     function renderYearContent() {
       return <span>custom render</span>;
     }
-    const yearComponent = mount(
-      <Year date={utils.newDate()} renderYearContent={renderYearContent} />,
+    const { container } = render(
+      <Year
+        date={utils.newDate()}
+        renderYearContent={renderYearContent}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
     );
-    const year = yearComponent.find(".react-datepicker__year-text").at(0);
-    expect(year.find("span").at(0).text()).toBe("custom render");
+    const year = container.querySelector(".react-datepicker__year-text");
+    expect(year.querySelector("span").textContent).toBe("custom render");
   });
 
   describe("range", () => {
     it("should add range classes", () => {
-      const yearComponent = mount(
+      const { container } = render(
         <Year
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
           endDate={utils.newDate("2012-01-01")}
+          onYearMouseEnter={() => {}}
+          onYearMouseLeave={() => {}}
         />,
       );
 
-      const inRangeYears = yearComponent.find(
+      const inRangeYears = container.querySelectorAll(
         ".react-datepicker__year-text--in-range",
       );
 
       expect(inRangeYears.length).toBe(4);
-      expect(inRangeYears.at(0).text()).toBe("2009");
-      expect(inRangeYears.at(1).text()).toBe("2010");
-      expect(inRangeYears.at(2).text()).toBe("2011");
-      expect(inRangeYears.at(3).text()).toBe("2012");
+      expect(inRangeYears[0].textContent).toBe("2009");
+      expect(inRangeYears[1].textContent).toBe("2010");
+      expect(inRangeYears[2].textContent).toBe("2011");
+      expect(inRangeYears[3].textContent).toBe("2012");
 
-      const rangeStartYear = yearComponent.find(
+      const rangeStartYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-start",
       );
 
       expect(rangeStartYear.length).toBe(1);
-      expect(rangeStartYear.at(0).text()).toBe("2009");
+      expect(rangeStartYear[0].textContent).toBe("2009");
 
-      const rangeEndYear = yearComponent.find(
+      const rangeEndYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-end",
       );
 
       expect(rangeEndYear.length).toBe(1);
-      expect(rangeEndYear.at(0).text()).toBe("2012");
+      expect(rangeEndYear[0].textContent).toBe("2012");
     });
 
     it("should not add range classes when start date is not defined", () => {
-      const yearComponent = mount(
+      const { container } = render(
         <Year
           date={utils.newDate("2009-01-01")}
           endDate={utils.newDate("2012-01-01")}
+          onYearMouseEnter={() => {}}
+          onYearMouseLeave={() => {}}
         />,
       );
 
-      const inRangeYears = yearComponent.find(
+      const inRangeYears = container.querySelectorAll(
         ".react-datepicker__year-text--in-range",
       );
-      const rangeStartYear = yearComponent.find(
+      const rangeStartYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-start",
       );
-      const rangeEndYear = yearComponent.find(
+      const rangeEndYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-end",
       );
 
@@ -252,20 +338,22 @@ describe("YearPicker", () => {
     });
 
     it("should not add range classes when end date is not defined", () => {
-      const yearComponent = mount(
+      const { container } = render(
         <Year
           date={utils.newDate("2009-01-01")}
           startDate={utils.newDate("2009-01-01")}
+          onYearMouseEnter={() => {}}
+          onYearMouseLeave={() => {}}
         />,
       );
 
-      const inRangeYears = yearComponent.find(
+      const inRangeYears = container.querySelectorAll(
         ".react-datepicker__year-text--in-range",
       );
-      const rangeStartYear = yearComponent.find(
+      const rangeStartYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-start",
       );
-      const rangeEndYear = yearComponent.find(
+      const rangeEndYear = container.querySelectorAll(
         ".react-datepicker__year-text--range-end",
       );
 
@@ -276,93 +364,103 @@ describe("YearPicker", () => {
 
     describe("selecting", () => {
       it("should add in-selecting-range class if year is between the selecting date and end date", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2015-01-01")}
             date={utils.newDate("2012-01-01")}
             endDate={utils.newDate("2016-01-01")}
             selectingDate={utils.newDate("2015-01-01")}
             selectsStart
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
 
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).toBe(2);
-        expect(years.at(0).text()).toBe("2015");
-        expect(years.at(1).text()).toBe("2016");
+        expect(years[0].textContent).toBe("2015");
+        expect(years[1].textContent).toBe("2016");
       });
 
       it("should add in-selecting-range class if year is between the start date and selecting date", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
             startDate={utils.newDate("2010-01-01")}
             selectingDate={utils.newDate("2011-01-01")}
             selectsEnd
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
 
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).toBe(2);
-        expect(years.at(0).text()).toBe("2010");
-        expect(years.at(1).text()).toBe("2011");
+        expect(years[0].textContent).toBe("2010");
+        expect(years[1].textContent).toBe("2011");
       });
 
       it("should use pre selection date if selecting date is not defined", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
             startDate={utils.newDate("2010-01-01")}
             selectsEnd
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
 
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).toBe(2);
-        expect(years.at(0).text()).toBe("2010");
-        expect(years.at(1).text()).toBe("2011");
+        expect(years[0].textContent).toBe("2010");
+        expect(years[1].textContent).toBe("2011");
       });
 
       it("should add in-selecting-range class for one year picker if year is between the start date and selecting date", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2011-01-01")}
             date={utils.newDate("2015-01-01")}
             startDate={utils.newDate("2010-02-01")}
             selectingDate={utils.newDate("2011-01-01")}
             selectsRange
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--in-selecting-range",
         );
 
         expect(years.length).toBe(2);
-        expect(years.at(0).text()).toBe("2010");
-        expect(years.at(1).text()).toBe("2011");
+        expect(years[0].textContent).toBe("2010");
+        expect(years[1].textContent).toBe("2011");
       });
 
       it("should not add in-selecting-range class for one year picker if the start date is not defined", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2014-01-01")}
             selectsRange
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--in-selecting-range",
         );
 
@@ -370,16 +468,18 @@ describe("YearPicker", () => {
       });
 
       it("should not add in-selecting-range class for one year picker if the end date is defined", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2013-01-01")}
             selectingDate={utils.newDate("2014-01-01")}
             endDate={utils.newDate("2013-01-01")}
             selectsRange
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__month-text--in-selecting-range",
         );
 
@@ -387,24 +487,26 @@ describe("YearPicker", () => {
       });
 
       it("should add 'selecting-range-start' class to the start selecting year", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2012-01-01")}
             date={utils.newDate("2010-01-01")}
             endDate={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2012-01-01")}
             selectsStart
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--selecting-range-start",
         );
         expect(years.length).toBe(1);
-        expect(years.at(0).text()).toBe("2012");
+        expect(years[0].textContent).toBe("2012");
       });
 
       it("should add 'selecting-range-end' class to the end selecting year", () => {
-        const yearComponent = mount(
+        const { container } = render(
           <Year
             preSelection={utils.newDate("2014-01-01")}
             date={utils.newDate("2012-01-01")}
@@ -412,13 +514,15 @@ describe("YearPicker", () => {
             endDate={utils.newDate("2015-01-01")}
             selectingDate={utils.newDate("2014-01-01")}
             selectsEnd
+            onYearMouseEnter={() => {}}
+            onYearMouseLeave={() => {}}
           />,
         );
-        const years = yearComponent.find(
+        const years = container.querySelectorAll(
           ".react-datepicker__year-text--selecting-range-end",
         );
         expect(years.length).toBe(1);
-        expect(years.at(0).text()).toBe("2014");
+        expect(years[0].textContent).toBe("2014");
       });
     });
   });
@@ -431,7 +535,7 @@ describe("YearPicker", () => {
       const expectedDate = utils.getStartOfYear(
         utils.setYear(utils.newDate(), 2008),
       );
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
@@ -441,24 +545,18 @@ describe("YearPicker", () => {
           }}
         />,
       );
-      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
-      const calendar = TestUtils.scryRenderedComponentsWithType(
-        datePicker.calendar,
-        Calendar,
-      )[0];
-      const year = TestUtils.scryRenderedComponentsWithType(
-        datePicker,
-        Year,
-      )[0];
-      const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__navigation--previous",
+
+      fireEvent.focus(container.querySelector("input"));
+
+      const calendar = container.querySelector(".react-datepicker");
+      const previousButton = calendar.querySelector(
+        ".react-datepicker__navigation--previous",
       );
-      TestUtils.Simulate.click(previousButton);
-      const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
-        year,
-        className,
-      );
+      fireEvent.click(previousButton);
+
+      const year = container.querySelector(".react-datepicker__year");
+      const allPreselectedYears = year.querySelectorAll(`.${className}`);
+
       expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
@@ -470,7 +568,7 @@ describe("YearPicker", () => {
       const expectedDate = utils.getStartOfYear(
         utils.setYear(utils.newDate(), 2032),
       );
-      const datePicker = TestUtils.renderIntoDocument(
+      const { container } = render(
         <DatePicker
           selected={utils.newDate("2020-01-01")}
           adjustDateOnChange
@@ -480,24 +578,19 @@ describe("YearPicker", () => {
           }}
         />,
       );
-      TestUtils.Simulate.focus(findDOMNode(datePicker.input));
-      const calendar = TestUtils.scryRenderedComponentsWithType(
-        datePicker.calendar,
-        Calendar,
-      )[0];
-      const year = TestUtils.scryRenderedComponentsWithType(
-        datePicker,
-        Year,
-      )[0];
-      const previousButton = TestUtils.findRenderedDOMComponentWithClass(
-        calendar,
-        "react-datepicker__navigation--next",
+
+      fireEvent.focus(container.querySelector("input"));
+
+      const calendar = container.querySelector(".react-datepicker");
+      const nextButton = calendar.querySelector(
+        ".react-datepicker__navigation--next",
       );
-      TestUtils.Simulate.click(previousButton);
-      const allPreselectedYears = TestUtils.scryRenderedDOMComponentsWithClass(
-        year,
-        className,
-      );
+
+      fireEvent.click(nextButton);
+
+      const year = container.querySelector(".react-datepicker__year");
+      const allPreselectedYears = year.querySelectorAll(`.${className}`);
+
       expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
       );
@@ -517,7 +610,7 @@ describe("YearPicker", () => {
     };
 
     const getPicker = (initialDate, props) =>
-      TestUtils.renderIntoDocument(
+      render(
         <Year
           selected={utils.newDate(initialDate)}
           date={utils.newDate(initialDate)}
@@ -525,18 +618,20 @@ describe("YearPicker", () => {
           preSelection={utils.newDate(initialDate)}
           onDayClick={onDayClick}
           yearItemNumber={12}
+          onYearMouseEnter={() => {}}
+          onYearMouseLeave={() => {}}
           {...props}
         />,
-      );
+      ).container;
 
     const simulateLeft = (target) =>
-      TestUtils.Simulate.keyDown(target, {
+      fireEvent.keyDown(target, {
         key: "ArrowLeft",
         keyCode: 37,
         which: 37,
       });
     const simulateRight = (target) =>
-      TestUtils.Simulate.keyDown(target, {
+      fireEvent.keyDown(target, {
         key: "ArrowRight",
         keyCode: 39,
         which: 39,
@@ -545,9 +640,8 @@ describe("YearPicker", () => {
     it("should preSelect and set 2020 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
       simulateLeft(target);
 
@@ -556,9 +650,8 @@ describe("YearPicker", () => {
     it("should preSelect and set 2022 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
       simulateRight(target);
 
@@ -567,9 +660,8 @@ describe("YearPicker", () => {
     it("should paginate from 2017 to 2016", () => {
       const yearPicker = getPicker("2017-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
       simulateLeft(target);
 
@@ -578,9 +670,8 @@ describe("YearPicker", () => {
     it("should paginate from 2028 to 2029", () => {
       const yearPicker = getPicker("2028-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
       simulateRight(target);
 
@@ -589,22 +680,57 @@ describe("YearPicker", () => {
     it("should select 2021 when Enter key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
 
-      TestUtils.Simulate.keyDown(target, { key: "Enter", code: 13, which: 13 });
+      fireEvent.keyDown(target, { key: "Enter", code: 13, which: 13 });
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
+
+    it("should call onKeyDown handler on any key press", () => {
+      const onKeyDownSpy = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selected={new Date()}
+          showYearPicker
+          dateFormat="yyyy"
+          onKeyDown={onKeyDownSpy}
+        />,
+      );
+
+      const dateInput = container.querySelector("input");
+      fireEvent.focus(dateInput);
+
+      const year = container.querySelector(".react-datepicker__year-text");
+
+      fireEvent.keyDown(year, {
+        key: "ArrowDown",
+      });
+
+      expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should select 2021 when Space key is pressed", () => {
+      const yearPicker = getPicker("2021-01-01");
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+
+      const SPACE_KEY = " ";
+      fireEvent.keyDown(target, getKey(SPACE_KEY));
+      expect(utils.getYear(selectedDay)).toBe(2021);
+    });
+
     it("should disable keyboard navigation", () => {
       const yearPicker = getPicker("2021-01-01", {
         disabledKeyboardNavigation: true,
       });
 
-      const target = TestUtils.findRenderedDOMComponentWithClass(
-        yearPicker,
-        "react-datepicker__year-text--selected",
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
       );
       simulateRight(target);
 

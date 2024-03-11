@@ -1,15 +1,13 @@
 import React from "react";
 import Calendar from "../src/calendar";
-import Month from "../src/month";
-import YearDropdown from "../src/year_dropdown";
 import * as utils from "../src/date_utils";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 
 describe("Multi month calendar", function () {
-  var dateFormat = "LLLL yyyy";
+  const dateFormat = "LLLL yyyy";
 
   function getCalendar(extraProps) {
-    return shallow(
+    return render(
       <Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}
@@ -18,25 +16,29 @@ describe("Multi month calendar", function () {
         dropdownMode="scroll"
         {...extraProps}
       />,
-    );
+    ).container;
   }
 
   it("should render multiple months if the months property is present", () => {
-    var calendar = getCalendar({ monthsShown: 2 });
-    var months = calendar.find(Month);
+    const calendar = getCalendar({ monthsShown: 2 });
+    const months = calendar.querySelectorAll(".react-datepicker__month");
     expect(months).toHaveLength(2);
   });
 
   it("should render dropdown only on first month", () => {
-    var calendar = getCalendar({ monthsShown: 2, showYearDropdown: true });
-    var datepickers = calendar.find(YearDropdown);
+    const calendar = getCalendar({ monthsShown: 2, showYearDropdown: true });
+    const datepickers = calendar.querySelectorAll(
+      ".react-datepicker__year-dropdown-container",
+    );
     expect(datepickers).toHaveLength(1);
   });
 
   it("should render previous months", () => {
-    var calendar = getCalendar({ monthsShown: 2, showPreviousMonths: true });
-    var monthDate = calendar.find(Month).first().prop("day");
-    var previousMonth = utils.subMonths(utils.newDate(), 1);
-    expect(utils.isSameMonth(previousMonth, monthDate)).toBe(true);
+    const calendar = getCalendar({ monthsShown: 2, showPreviousMonths: true });
+    const monthDate = calendar.querySelector(
+      ".react-datepicker__current-month",
+    ).textContent;
+    const previousMonth = utils.subMonths(utils.newDate(), 1);
+    expect(monthDate).toBe(utils.formatDate(previousMonth, "LLLL yyyy"));
   });
 });

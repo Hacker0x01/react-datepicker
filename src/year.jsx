@@ -17,6 +17,7 @@ export default class Year extends React.Component {
     inline: PropTypes.bool,
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
+    usePointerEvent: PropTypes.bool,
     onYearMouseEnter: PropTypes.func.isRequired,
     onYearMouseLeave: PropTypes.func.isRequired,
     selectingDate: PropTypes.instanceOf(Date),
@@ -25,10 +26,19 @@ export default class Year extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     includeDates: PropTypes.array,
     filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
+    handleOnKeyDown: PropTypes.func,
   };
 
   constructor(props) {
@@ -157,6 +167,8 @@ export default class Year extends React.Component {
 
   onYearKeyDown = (e, y) => {
     const { key } = e;
+    const { handleOnKeyDown } = this.props;
+
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
         case "Enter":
@@ -177,6 +189,8 @@ export default class Year extends React.Component {
           break;
       }
     }
+
+    handleOnKeyDown && handleOnKeyDown(e);
   };
 
   getYearClassNames = (y) => {
@@ -245,12 +259,35 @@ export default class Year extends React.Component {
             this.onYearClick(ev, y);
           }}
           onKeyDown={(ev) => {
+            if (utils.isSpaceKeyDown(ev)) {
+              ev.preventDefault();
+              ev.key = "Enter";
+            }
+
             this.onYearKeyDown(ev, y);
           }}
           tabIndex={this.getYearTabIndex(y)}
           className={this.getYearClassNames(y)}
-          onMouseEnter={(ev) => onYearMouseEnter(ev, y)}
-          onMouseLeave={(ev) => onYearMouseLeave(ev, y)}
+          onMouseEnter={
+            !this.props.usePointerEvent
+              ? (ev) => onYearMouseEnter(ev, y)
+              : undefined
+          }
+          onPointerEnter={
+            this.props.usePointerEvent
+              ? (ev) => onYearMouseEnter(ev, y)
+              : undefined
+          }
+          onMouseLeave={
+            !this.props.usePointerEvent
+              ? (ev) => onYearMouseLeave(ev, y)
+              : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent
+              ? (ev) => onYearMouseLeave(ev, y)
+              : undefined
+          }
           key={y}
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
@@ -263,7 +300,16 @@ export default class Year extends React.Component {
       <div className={this.getYearContainerClassNames()}>
         <div
           className="react-datepicker__year-wrapper"
-          onMouseLeave={this.props.clearSelectingDate}
+          onMouseLeave={
+            !this.props.usePointerEvent
+              ? this.props.clearSelectingDate
+              : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent
+              ? this.props.clearSelectingDate
+              : undefined
+          }
         >
           {yearsList}
         </div>

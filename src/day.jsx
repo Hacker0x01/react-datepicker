@@ -14,6 +14,7 @@ import {
   isBefore,
   isAfter,
   getDayOfWeekCode,
+  getStartOfWeek,
   formatDate,
 } from "./date_utils";
 
@@ -31,6 +32,7 @@ export default class Day extends React.Component {
     shouldFocusDayInline: PropTypes.bool,
     month: PropTypes.number,
     onClick: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onMouseEnter: PropTypes.func,
     preSelection: PropTypes.instanceOf(Date),
     selected: PropTypes.object,
@@ -38,7 +40,11 @@ export default class Day extends React.Component {
     selectsEnd: PropTypes.bool,
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
+    showWeekNumber: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     startDate: PropTypes.instanceOf(Date),
     renderDayContents: PropTypes.func,
     handleOnKeyDown: PropTypes.func,
@@ -52,6 +58,16 @@ export default class Day extends React.Component {
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
     ]),
+    calendarStartDay: PropTypes.number,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
   };
 
   componentDidMount() {
@@ -88,14 +104,44 @@ export default class Day extends React.Component {
 
   isSameDay = (other) => isSameDay(this.props.day, other);
 
-  isKeyboardSelected = () =>
-    !this.props.disabledKeyboardNavigation &&
-    !this.isSameDay(this.props.selected) &&
-    this.isSameDay(this.props.preSelection);
+  isKeyboardSelected = () => {
+    if (this.props.disabledKeyboardNavigation) {
+      return false;
+    }
+
+    const isSelectedDate = this.props.selectsMultiple
+      ? this.props.selectedDates?.some((date) => this.isSameDayOrWeek(date))
+      : this.isSameDayOrWeek(this.props.selected);
+
+    return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
+  };
 
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
+
+  isStartOfWeek = () =>
+    isSameDay(
+      this.props.day,
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
+    );
+
+  isSameWeek = (other) =>
+    this.props.showWeekPicker &&
+    isSameDay(
+      other,
+      getStartOfWeek(
+        this.props.day,
+        this.props.locale,
+        this.props.calendarStartDay,
+      ),
+    );
+
+  isSameDayOrWeek = (other) => this.isSameDay(other) || this.isSameWeek(other);
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
@@ -246,7 +292,14 @@ export default class Day extends React.Component {
 
   isCurrentDay = () => this.isSameDay(newDate());
 
-  isSelected = () => this.isSameDay(this.props.selected);
+  isSelected = () => {
+    if (this.props.selectsMultiple) {
+      return this.props.selectedDates?.some((date) =>
+        this.isSameDayOrWeek(date),
+      );
+    }
+    return this.isSameDayOrWeek(this.props.selected);
+  };
 
   getClassNames = (date) => {
     const dayClassName = this.props.dayClassName
@@ -296,23 +349,35 @@ export default class Day extends React.Component {
 
   // A function to return the holiday's name as title's content
   getTitle = () => {
-    const { day, holidays = new Map() } = this.props;
+    const { day, holidays = new Map(), excludeDates } = this.props;
     const compareDt = formatDate(day, "MM.dd.yyyy");
+    const titles = [];
     if (holidays.has(compareDt)) {
-      return holidays.get(compareDt).holidayNames.length > 0
-        ? holidays.get(compareDt).holidayNames.join(", ")
-        : "";
+      titles.push(...holidays.get(compareDt).holidayNames);
     }
-    return "";
+    if (this.isExcluded()) {
+      titles.push(
+        excludeDates
+          ?.filter((excludeDate) =>
+            isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
+          )
+          .map((excludeDate) => excludeDate.message),
+      );
+    }
+    return titles.join(", ");
   };
 
   getTabIndex = (selected, preSelection) => {
     const selectedDay = selected || this.props.selected;
     const preSelectionDay = preSelection || this.props.preSelection;
-
     const tabIndex =
-      this.isKeyboardSelected() ||
-      (this.isSameDay(selectedDay) && isSameDay(preSelectionDay, selectedDay))
+      !(
+        this.props.showWeekPicker &&
+        (this.props.showWeekNumber || !this.isStartOfWeek())
+      ) &&
+      (this.isKeyboardSelected() ||
+        (this.isSameDay(selectedDay) &&
+          isSameDay(preSelectionDay, selectedDay)))
         ? 0
         : -1;
 
@@ -378,7 +443,12 @@ export default class Day extends React.Component {
       className={this.getClassNames(this.props.day)}
       onKeyDown={this.handleOnKeyDown}
       onClick={this.handleClick}
-      onMouseEnter={this.handleMouseEnter}
+      onMouseEnter={
+        !this.props.usePointerEvent ? this.handleMouseEnter : undefined
+      }
+      onPointerEnter={
+        this.props.usePointerEvent ? this.handleMouseEnter : undefined
+      }
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
       role="option"
@@ -389,7 +459,7 @@ export default class Day extends React.Component {
     >
       {this.renderDayContents()}
       {this.getTitle() !== "" && (
-        <span className="holiday-overlay">{this.getTitle()}</span>
+        <span className="overlay">{this.getTitle()}</span>
       )}
     </div>
   );

@@ -37,9 +37,9 @@ export default class MonthYearDropdown extends React.Component {
     const options = [];
 
     while (!isAfter(currDate, lastDate)) {
-      const timepoint = getTime(currDate);
+      const timePoint = getTime(currDate);
       options.push(
-        <option key={timepoint} value={timepoint}>
+        <option key={timePoint} value={timePoint}>
           {formatDate(currDate, this.props.dateFormat, this.props.locale)}
         </option>,
       );

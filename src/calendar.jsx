@@ -76,7 +76,6 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     adjustDateOnChange: PropTypes.bool,
-    arrowProps: PropTypes.object,
     chooseDayAriaLabelPrefix: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.node,
@@ -92,7 +91,15 @@ export default class Calendar extends React.Component {
     calendarStartDay: PropTypes.number,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),
     endDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.array,
+    excludeDates: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.shape({
+          date: PropTypes.instanceOf(Date).isRequired,
+          message: PropTypes.string,
+        }),
+      ]),
+    ),
     excludeDateIntervals: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.instanceOf(Date),
@@ -140,6 +147,7 @@ export default class Calendar extends React.Component {
     showFourColumnMonthYearPicker: PropTypes.bool,
     showYearPicker: PropTypes.bool,
     showQuarterYearPicker: PropTypes.bool,
+    showWeekPicker: PropTypes.bool,
     showTimeSelectOnly: PropTypes.bool,
     timeFormat: PropTypes.string,
     timeIntervals: PropTypes.number,
@@ -162,6 +170,8 @@ export default class Calendar extends React.Component {
     selectsStart: PropTypes.bool,
     selectsRange: PropTypes.bool,
     selectsDisabledDaysInRange: PropTypes.bool,
+    selectsMultiple: PropTypes.bool,
+    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     showMonthDropdown: PropTypes.bool,
     showPreviousMonths: PropTypes.bool,
     showMonthYearDropdown: PropTypes.bool,
@@ -194,6 +204,7 @@ export default class Calendar extends React.Component {
     renderMonthContent: PropTypes.func,
     renderQuarterContent: PropTypes.func,
     renderYearContent: PropTypes.func,
+    usePointerEvent: PropTypes.bool,
     onDayMouseEnter: PropTypes.func,
     onMonthMouseLeave: PropTypes.func,
     onYearMouseEnter: PropTypes.func,
@@ -861,18 +872,18 @@ export default class Calendar extends React.Component {
       return;
     }
 
-    var monthList = [];
-    var monthsToSubtract = this.props.showPreviousMonths
+    const monthList = [];
+    const monthsToSubtract = this.props.showPreviousMonths
       ? this.props.monthsShown - 1
       : 0;
-    var fromMonthDate = subMonths(this.state.date, monthsToSubtract);
-    var monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
-    for (var i = 0; i < this.props.monthsShown; ++i) {
-      var monthsToAdd = i - monthSelectedIn + monthsToSubtract;
-      var monthDate = addMonths(fromMonthDate, monthsToAdd);
-      var monthKey = `month-${i}`;
-      var monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
-      var monthShowsDuplicateDaysStart = i > 0;
+    const fromMonthDate = subMonths(this.state.date, monthsToSubtract);
+    const monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
+    for (let i = 0; i < this.props.monthsShown; ++i) {
+      const monthsToAdd = i - monthSelectedIn + monthsToSubtract;
+      const monthDate = addMonths(fromMonthDate, monthsToAdd);
+      const monthKey = `month-${i}`;
+      const monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
+      const monthShowsDuplicateDaysStart = i > 0;
       monthList.push(
         <div
           key={monthKey}
@@ -894,6 +905,8 @@ export default class Calendar extends React.Component {
             monthClassName={this.props.monthClassName}
             onDayClick={this.handleDayClick}
             handleOnKeyDown={this.props.handleOnDayKeyDown}
+            handleOnMonthKeyDown={this.props.handleOnKeyDown}
+            usePointerEvent={this.props.usePointerEvent}
             onDayMouseEnter={this.handleDayMouseEnter}
             onMouseLeave={this.handleMonthMouseLeave}
             onWeekSelect={this.props.onWeekSelect}
@@ -920,6 +933,8 @@ export default class Calendar extends React.Component {
             selectsEnd={this.props.selectsEnd}
             selectsRange={this.props.selectsRange}
             selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
+            selectsMultiple={this.props.selectsMultiple}
+            selectedDates={this.props.selectedDates}
             showWeekNumbers={this.props.showWeekNumbers}
             startDate={this.props.startDate}
             endDate={this.props.endDate}
@@ -941,6 +956,7 @@ export default class Calendar extends React.Component {
             }
             showYearPicker={this.props.showYearPicker}
             showQuarterYearPicker={this.props.showQuarterYearPicker}
+            showWeekPicker={this.props.showWeekPicker}
             isInputFocused={this.props.isInputFocused}
             containerRef={this.containerRef}
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
@@ -1072,13 +1088,11 @@ export default class Calendar extends React.Component {
   render() {
     const Container = this.props.container || CalendarContainer;
     return (
-      <div ref={this.containerRef}>
+      <div style={{ display: "contents" }} ref={this.containerRef}>
         <Container
           className={classnames("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly,
           })}
-          showPopperArrow={this.props.showPopperArrow}
-          arrowProps={this.props.arrowProps}
         >
           {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}

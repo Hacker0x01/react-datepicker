@@ -1,10 +1,6 @@
-`calendar_container` (component)
-================================
+# `calendar_container` (component)
 
-
-| name  | type  | default value  | description  |
-|---|---|---|---|
-|`arrowProps`|`object`|`{}`||
-|`children`|`node`|||
-|`className`|`string`|||
-|`showPopperArrow`|`bool`|||
+| name        | type     | default value | description |
+| ----------- | -------- | ------------- | ----------- |
+| `children`  | `node`   |               |             |
+| `className` | `string` |               |             |

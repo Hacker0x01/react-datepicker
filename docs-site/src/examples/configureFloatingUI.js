@@ -8,17 +8,10 @@
       popperPlacement="top-end"
       popperModifiers={[
         {
-          name: "offset",
-          options: {
-            offset: [5, 10],
-          },
-        },
-        {
-          name: "preventOverflow",
-          options: {
-            rootBoundary: "viewport",
-            tether: false,
-            altAxis: true,
+          name: "myModifier",
+          fn(state) {
+            // Do something with the state
+            return state;
           },
         },
       ]}

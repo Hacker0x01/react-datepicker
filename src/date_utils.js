@@ -1,66 +1,65 @@
-import isDate from "date-fns/isDate";
-import isValidDate from "date-fns/isValid";
-import format from "date-fns/format";
-import addMinutes from "date-fns/addMinutes";
-import addHours from "date-fns/addHours";
-import addDays from "date-fns/addDays";
-import addWeeks from "date-fns/addWeeks";
-import addMonths from "date-fns/addMonths";
-import addQuarters from "date-fns/addQuarters";
-import addYears from "date-fns/addYears";
-import subDays from "date-fns/subDays";
-import subWeeks from "date-fns/subWeeks";
-import subMonths from "date-fns/subMonths";
-import subQuarters from "date-fns/subQuarters";
-import subYears from "date-fns/subYears";
-import getSeconds from "date-fns/getSeconds";
-import getMinutes from "date-fns/getMinutes";
-import getHours from "date-fns/getHours";
-import getDay from "date-fns/getDay";
-import getDate from "date-fns/getDate";
-import getISOWeek from "date-fns/getISOWeek";
-import getMonth from "date-fns/getMonth";
-import getQuarter from "date-fns/getQuarter";
-import getYear from "date-fns/getYear";
-import getTime from "date-fns/getTime";
-import setSeconds from "date-fns/setSeconds";
-import setMinutes from "date-fns/setMinutes";
-import setHours from "date-fns/setHours";
-import setMonth from "date-fns/setMonth";
-import setQuarter from "date-fns/setQuarter";
-import setYear from "date-fns/setYear";
-import min from "date-fns/min";
-import max from "date-fns/max";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import differenceInCalendarMonths from "date-fns/differenceInCalendarMonths";
-import differenceInCalendarYears from "date-fns/differenceInCalendarYears";
-import startOfDay from "date-fns/startOfDay";
-import startOfWeek from "date-fns/startOfWeek";
-import startOfMonth from "date-fns/startOfMonth";
-import startOfQuarter from "date-fns/startOfQuarter";
-import startOfYear from "date-fns/startOfYear";
-import endOfDay from "date-fns/endOfDay";
-import endOfWeek from "date-fns/endOfWeek";
-import endOfMonth from "date-fns/endOfMonth";
-import endOfYear from "date-fns/endOfYear";
-import dfIsEqual from "date-fns/isEqual";
-import dfIsSameDay from "date-fns/isSameDay";
-import dfIsSameMonth from "date-fns/isSameMonth";
-import dfIsSameYear from "date-fns/isSameYear";
-import dfIsSameQuarter from "date-fns/isSameQuarter";
-import isAfter from "date-fns/isAfter";
-import isBefore from "date-fns/isBefore";
-import isWithinInterval from "date-fns/isWithinInterval";
-import toDate from "date-fns/toDate";
-import parse from "date-fns/parse";
-import parseISO from "date-fns/parseISO";
-import longFormatters from "date-fns/esm/_lib/format/longFormatters";
+import { isDate } from "date-fns/isDate";
+import { isValid as isValidDate } from "date-fns/isValid";
+import { format, longFormatters } from "date-fns/format";
+import { addMinutes } from "date-fns/addMinutes";
+import { addHours } from "date-fns/addHours";
+import { addDays } from "date-fns/addDays";
+import { addWeeks } from "date-fns/addWeeks";
+import { addMonths } from "date-fns/addMonths";
+import { addQuarters } from "date-fns/addQuarters";
+import { addYears } from "date-fns/addYears";
+import { subDays } from "date-fns/subDays";
+import { subWeeks } from "date-fns/subWeeks";
+import { subMonths } from "date-fns/subMonths";
+import { subQuarters } from "date-fns/subQuarters";
+import { subYears } from "date-fns/subYears";
+import { getSeconds } from "date-fns/getSeconds";
+import { getMinutes } from "date-fns/getMinutes";
+import { getHours } from "date-fns/getHours";
+import { getDay } from "date-fns/getDay";
+import { getDate } from "date-fns/getDate";
+import { getISOWeek } from "date-fns/getISOWeek";
+import { getMonth } from "date-fns/getMonth";
+import { getQuarter } from "date-fns/getQuarter";
+import { getYear } from "date-fns/getYear";
+import { getTime } from "date-fns/getTime";
+import { setSeconds } from "date-fns/setSeconds";
+import { setMinutes } from "date-fns/setMinutes";
+import { setHours } from "date-fns/setHours";
+import { setMonth } from "date-fns/setMonth";
+import { setQuarter } from "date-fns/setQuarter";
+import { setYear } from "date-fns/setYear";
+import { min } from "date-fns/min";
+import { max } from "date-fns/max";
+import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
+import { differenceInCalendarMonths } from "date-fns/differenceInCalendarMonths";
+import { differenceInCalendarYears } from "date-fns/differenceInCalendarYears";
+import { startOfDay } from "date-fns/startOfDay";
+import { startOfWeek } from "date-fns/startOfWeek";
+import { startOfMonth } from "date-fns/startOfMonth";
+import { startOfQuarter } from "date-fns/startOfQuarter";
+import { startOfYear } from "date-fns/startOfYear";
+import { endOfDay } from "date-fns/endOfDay";
+import { endOfWeek } from "date-fns/endOfWeek";
+import { endOfMonth } from "date-fns/endOfMonth";
+import { endOfYear } from "date-fns/endOfYear";
+import { isEqual as dfIsEqual } from "date-fns/isEqual";
+import { isSameDay as dfIsSameDay } from "date-fns/isSameDay";
+import { isSameMonth as dfIsSameMonth } from "date-fns/isSameMonth";
+import { isSameYear as dfIsSameYear } from "date-fns/isSameYear";
+import { isSameQuarter as dfIsSameQuarter } from "date-fns/isSameQuarter";
+import { isAfter } from "date-fns/isAfter";
+import { isBefore } from "date-fns/isBefore";
+import { isWithinInterval } from "date-fns/isWithinInterval";
+import { toDate } from "date-fns/toDate";
+import { parse } from "date-fns/parse";
+import { parseISO } from "date-fns/parseISO";
 
 export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
-var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
 
 // ** Date Constructors **
 
@@ -82,6 +81,8 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     dateFormat.forEach((df) => {
       let tryParseDate = parse(value, df, new Date(), {
         locale: localeObject,
+        useAdditionalWeekYearTokens: true,
+        useAdditionalDayOfYearTokens: true,
       });
       if (strictParsing) {
         strictParsingValueMatch =
@@ -95,7 +96,11 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     return parsedDate;
   }
 
-  parsedDate = parse(value, dateFormat, new Date(), { locale: localeObject });
+  parsedDate = parse(value, dateFormat, new Date(), {
+    locale: localeObject,
+    useAdditionalWeekYearTokens: true,
+    useAdditionalDayOfYearTokens: true,
+  });
 
   if (strictParsing) {
     strictParsingValueMatch =
@@ -105,9 +110,9 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
     dateFormat = dateFormat
       .match(longFormattingTokensRegExp)
       .map(function (substring) {
-        var firstCharacter = substring[0];
+        const firstCharacter = substring[0];
         if (firstCharacter === "p" || firstCharacter === "P") {
-          var longFormatter = longFormatters[firstCharacter];
+          const longFormatter = longFormatters[firstCharacter];
           return localeObject
             ? longFormatter(substring, localeObject.formatLong)
             : firstCharacter;
@@ -117,7 +122,10 @@ export function parseDate(value, dateFormat, locale, strictParsing, minDate) {
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date());
+      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date(), {
+        useAdditionalWeekYearTokens: true,
+        useAdditionalDayOfYearTokens: true,
+      });
     }
 
     if (!isValid(parsedDate)) {
@@ -141,7 +149,10 @@ export function isValid(date, minDate) {
 
 export function formatDate(date, formatStr, locale) {
   if (locale === "en") {
-    return format(date, formatStr, { awareOfUnicodeTokens: true });
+    return format(date, formatStr, {
+      useAdditionalWeekYearTokens: true,
+      useAdditionalDayOfYearTokens: true,
+    });
   }
   let localeObj = getLocaleObject(locale);
   if (locale && !localeObj) {
@@ -158,7 +169,8 @@ export function formatDate(date, formatStr, locale) {
   }
   return format(date, formatStr, {
     locale: localeObj ? localeObj : null,
-    awareOfUnicodeTokens: true,
+    useAdditionalWeekYearTokens: true,
+    useAdditionalDayOfYearTokens: true,
   });
 }
 
@@ -183,6 +195,23 @@ export function safeDateRangeFormat(startDate, endDate, props) {
   const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
 
   return `${formattedStartDate} - ${formattedEndDate}`;
+}
+
+export function safeMultipleDatesFormat(dates, props) {
+  if (!dates?.length) {
+    return "";
+  }
+  const formattedFirstDate = safeDateFormat(dates[0], props);
+  if (dates.length === 1) {
+    return formattedFirstDate;
+  }
+  if (dates.length === 2) {
+    const formattedSecondDate = safeDateFormat(dates[1], props);
+    return `${formattedFirstDate}, ${formattedSecondDate}`;
+  }
+
+  const extraDatesCount = dates.length - 1;
+  return `${formattedFirstDate} (+${extraDatesCount})`;
 }
 
 // ** Date Setters **
@@ -409,7 +438,9 @@ export function isDayDisabled(
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
-      excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
+      excludeDates.some((excludeDate) =>
+        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate),
+      )) ||
     (excludeDateIntervals &&
       excludeDateIntervals.some(({ start, end }) =>
         isWithinInterval(day, { start, end }),
@@ -436,7 +467,9 @@ export function isDayExcluded(
   }
   return (
     (excludeDates &&
-      excludeDates.some((excludeDate) => isSameDay(day, excludeDate))) ||
+      excludeDates.some((excludeDate) =>
+        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate),
+      )) ||
     false
   );
 }
@@ -459,7 +492,7 @@ export function isMonthDisabled(
   );
 }
 
-export function isMonthinRange(startDate, endDate, m, day) {
+export function isMonthInRange(startDate, endDate, m, day) {
   const startDateYear = getYear(startDate);
   const startDateMonth = getMonth(startDate);
   const endDateYear = getYear(endDate);
@@ -497,8 +530,8 @@ export function isQuarterDisabled(
 
 /**
  * @param {number} year
- * @param {date} start
- * @param {date} end
+ * @param {Date} start
+ * @param {Date} end
  * @returns {boolean}
  */
 export function isYearInRange(year, start, end) {
@@ -861,4 +894,48 @@ export function startOfMinute(d) {
  */
 export function isSameMinute(d1, d2) {
   return startOfMinute(d1).getTime() === startOfMinute(d2).getTime();
+}
+
+/**
+ * Returns a cloned date with midnight time (00:00:00)
+ *
+ * @param {Date} date The date for which midnight time is required
+ * @param {Date} dateToCompare the date to compare with
+ * @returns {Date} A new datetime object representing the input date with midnight time
+ */
+export function getMidnightDate(date) {
+  if (!isDate(date)) {
+    throw new Error("Invalid date");
+  }
+
+  const dateWithoutTime = new Date(date);
+  dateWithoutTime.setHours(0, 0, 0, 0);
+  return dateWithoutTime;
+}
+
+/**
+ * Is the first date before the second one?
+ *
+ * @param {Date} date The date that should be before the other one to return true
+ * @param {Date} dateToCompare The date to compare with
+ * @returns {boolean} The first date is before the second date
+ *
+ * Note:
+ *  This function considers the mid-night of the given dates for comparison.
+ *  It evaluates whether date is before dateToCompare based on their mid-night timestamps.
+ */
+export function isDateBefore(date, dateToCompare) {
+  if (!isDate(date) || !isDate(dateToCompare)) {
+    throw new Error("Invalid date received");
+  }
+
+  const midnightDate = getMidnightDate(date);
+  const midnightDateToCompare = getMidnightDate(dateToCompare);
+
+  return isBefore(midnightDate, midnightDateToCompare);
+}
+
+export function isSpaceKeyDown(event) {
+  const SPACE_KEY = " ";
+  return event.key === SPACE_KEY;
 }
