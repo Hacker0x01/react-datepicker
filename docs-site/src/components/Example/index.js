@@ -11,7 +11,7 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import { enGB } from "date-fns/locale/en-GB";
 import slugify from "slugify";
 import range from "lodash/range";
-import prismGitHubTheme from "prism-react-renderer/themes/github";
+import { themes } from "prism-react-renderer";
 import editIcon from "./edit-regular.svg";
 
 export default class CodeExampleComponent extends React.Component {
@@ -47,7 +47,7 @@ export default class CodeExampleComponent extends React.Component {
               fi,
               forwardRef,
             }}
-            theme={prismGitHubTheme}
+            theme={themes.github}
           >
             <pre className="example__code">
               <img
