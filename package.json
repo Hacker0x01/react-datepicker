@@ -10,9 +10,11 @@
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
+  "types": "./types/react-datepicker.d.ts",
   "files": [
     "*.md",
     "dist",
+    "types",
     "lib",
     "es",
     "src/stylesheets"
@@ -99,6 +101,7 @@
     "test": "NODE_ENV=test jest",
     "test:ci": "NODE_ENV=test jest --ci --coverage",
     "test:watch": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test jest --watch",
+    "test:types": "yarn --cwd types install && yarn --cwd types test",
     "build": "NODE_ENV=production yarn run build:js && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev",
     "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev",
     "css:prod": "sass --style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",

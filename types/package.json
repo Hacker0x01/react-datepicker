@@ -1,0 +1,11 @@
+{
+  "name": "react-datepicker-types-test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "npx tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
