@@ -73,10 +73,10 @@
     "rollup-plugin-terser": "^7.0.2",
     "sass": "1.71.1",
     "slugify": "^1.6.6",
-    "stylelint": "^15.10.1",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.0.0",
-    "stylelint-scss": "^5.0.1",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-scss": "^6.2.1",
     "ts-jest": "^29.1.1"
   },
   "peerDependencies": {
