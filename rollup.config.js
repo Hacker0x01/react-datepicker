@@ -2,11 +2,9 @@ import fs from "fs";
 import path from "path";
 
 import babel from "rollup-plugin-babel";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import filesize from "rollup-plugin-filesize";
-import localResolve from "rollup-plugin-local-resolve";
 import { terser } from "rollup-plugin-terser";
 
 import replace from "rollup-plugin-replace";
@@ -61,9 +59,7 @@ const config = {
       mainFields: ["module"],
       extensions: [".js", ".jsx"],
     }),
-    peerDepsExternal(),
     babel(),
-    localResolve(),
     commonjs(),
     filesize(),
     terser(),
