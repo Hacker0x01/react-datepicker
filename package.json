@@ -49,7 +49,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.4",
-    "@types/node": "16.x",
+    "@types/node": "20",
     "axe-core": "^4.4.1",
     "babel-jest": "^29.6.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
