@@ -33,7 +33,7 @@
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.71.1"
+    "sass": "^1.72.0"
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
