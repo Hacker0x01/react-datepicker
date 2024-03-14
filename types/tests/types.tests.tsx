@@ -97,6 +97,7 @@ const topLogger = {
     onChange={(date: Date | [Date | null, Date | null] | null) => {}}
     onChangeRaw={(event) => null}
     onClickOutside={(event) => null}
+    usePointerEvent
     onDayMouseEnter={(date: Date) => {}}
     onFocus={(event) => null}
     onInputClick={() => null}

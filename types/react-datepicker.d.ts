@@ -82,7 +82,7 @@ export interface ReactDatePickerProps<
   disabledKeyboardNavigation?: boolean | undefined;
   dropdownMode?: "scroll" | "select" | undefined;
   endDate?: Date | null | undefined;
-  excludeDates?: Date[] | Array<{ date: Date; message: string }> | undefined;
+  excludeDates?: Date[] | Array<{ date: Date; message?: string }> | undefined;
   excludeDateIntervals?: Array<{ start: Date; end: Date }> | undefined;
   excludeTimes?: Date[] | undefined;
   filterDate?(date: Date): boolean;
@@ -126,6 +126,7 @@ export interface ReactDatePickerProps<
   ): void;
   onChangeRaw?(event: React.FocusEvent<HTMLInputElement>): void;
   onClickOutside?(event: React.MouseEvent<HTMLDivElement>): void;
+  usePointerEvent?: boolean;
   onDayMouseEnter?: ((date: Date) => void) | undefined;
   onFocus?(event: React.FocusEvent<HTMLInputElement>): void;
   onInputClick?(): void;
