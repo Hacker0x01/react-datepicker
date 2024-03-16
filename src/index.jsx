@@ -697,7 +697,9 @@ export default class DatePicker extends React.Component {
         if (noRanges) {
           onChange([changedDate, null], event);
         } else if (hasStartRange) {
-          if (isDateBefore(changedDate, startDate)) {
+          if (changedDate === null) {
+            onChange([null, null], event);
+          } else if (isDateBefore(changedDate, startDate)) {
             onChange([changedDate, null], event);
           } else {
             onChange([startDate, changedDate], event);

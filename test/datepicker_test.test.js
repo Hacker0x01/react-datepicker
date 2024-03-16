@@ -1444,6 +1444,30 @@ describe("DatePicker", () => {
     });
     expect(cleared).toBe(true);
   });
+  it("should correctly clear date with empty input string (selectsRange)", () => {
+    let instance;
+    const onChangeSpy = jest.fn();
+
+    render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selectsRange
+        startDate={utils.newDate("2016-11-22")}
+        endDate={null}
+        onChange={onChangeSpy}
+        isClearable
+      />,
+    );
+    fireEvent.change(instance.input, {
+      target: {
+        value: "",
+      },
+    });
+
+    expect(onChangeSpy.mock.calls.at(-1)[0]).toStrictEqual([null, null]);
+  });
   it("should correctly update the input when the value prop changes", () => {
     let instance;
     const { rerender } = render(
