@@ -97,12 +97,7 @@ export default class Week extends React.Component {
       this.props.onWeekSelect(day, weekNumber, event);
     }
     if (this.props.showWeekPicker) {
-      const startOfWeek = getStartOfWeek(
-        day,
-        this.props.locale,
-        this.props.calendarStartDay,
-      );
-      this.handleDayClick(startOfWeek, event);
+      this.handleDayClick(day, event);
     }
     if (this.props.shouldCloseOnSelect) {
       this.props.setOpen(false);
@@ -117,11 +112,7 @@ export default class Week extends React.Component {
   };
 
   renderDays = () => {
-    const startOfWeek = getStartOfWeek(
-      this.props.day,
-      this.props.locale,
-      this.props.calendarStartDay,
-    );
+    const startOfWeek = this.startOfWeek();
     const days = [];
     const weekNumber = this.formatWeekNumber(startOfWeek);
     if (this.props.showWeekNumber) {

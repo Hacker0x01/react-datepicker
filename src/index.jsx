@@ -573,13 +573,6 @@ export default class DatePicker extends React.Component {
       });
     }
     if (date || !event.target.value) {
-      if (this.props.showWeekPicker) {
-        date = getStartOfWeek(
-          date,
-          this.props.locale,
-          this.props.calendarStartDay,
-        );
-      }
       this.setSelected(date, event, true);
     }
   };
@@ -592,13 +585,6 @@ export default class DatePicker extends React.Component {
     }
     if (this.props.onChangeRaw) {
       this.props.onChangeRaw(event);
-    }
-    if (this.props.showWeekPicker) {
-      date = getStartOfWeek(
-        date,
-        this.props.locale,
-        this.props.calendarStartDay,
-      );
     }
     this.setSelected(date, event, false, monthSelectedIn);
     if (this.props.showDateSelect) {
@@ -743,13 +729,6 @@ export default class DatePicker extends React.Component {
     const hasMaxDate = typeof this.props.maxDate !== "undefined";
     let isValidDateSelection = true;
     if (date) {
-      if (this.props.showWeekPicker) {
-        date = getStartOfWeek(
-          date,
-          this.props.locale,
-          this.props.calendarStartDay,
-        );
-      }
       const dateStartOfDay = startOfDay(date);
       if (hasMinDate && hasMaxDate) {
         // isDayInRange uses startOfDay internally, so not necessary to manipulate times here

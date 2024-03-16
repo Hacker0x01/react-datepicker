@@ -256,8 +256,7 @@ describe("Week", () => {
       );
       const handleDayClick = jest.spyOn(instance, "handleDayClick");
       instance.handleWeekClick(day, weekNumber, event);
-      const startOfWeek = utils.getStartOfWeek(day);
-      expect(handleDayClick).toHaveBeenCalledWith(startOfWeek, event);
+      expect(handleDayClick).toHaveBeenCalledWith(day, event);
     });
 
     it("should call setOpen prop with false if shouldCloseOnSelect prop is true", () => {
