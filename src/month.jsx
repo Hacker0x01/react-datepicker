@@ -310,6 +310,22 @@ export default class Month extends React.Component {
       this.props.calendarStartDay,
     );
 
+    const selected = this.props.showWeekPicker
+      ? utils.getStartOfWeek(
+          this.props.selected,
+          this.props.locale,
+          this.props.calendarStartDay,
+        )
+      : this.props.selected;
+
+    const preSelection = this.props.showWeekPicker
+      ? utils.getStartOfWeek(
+          this.props.preSelection,
+          this.props.locale,
+          this.props.calendarStartDay,
+        )
+      : this.props.preSelection;
+
     while (true) {
       weeks.push(
         <Week
@@ -337,8 +353,8 @@ export default class Month extends React.Component {
           holidays={this.props.holidays}
           selectingDate={this.props.selectingDate}
           filterDate={this.props.filterDate}
-          preSelection={this.props.preSelection}
-          selected={this.props.selected}
+          preSelection={preSelection}
+          selected={selected}
           selectsStart={this.props.selectsStart}
           selectsEnd={this.props.selectsEnd}
           selectsRange={this.props.selectsRange}
