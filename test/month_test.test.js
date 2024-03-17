@@ -400,12 +400,16 @@ describe("Month", () => {
   });
 
   it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
       <Month
         day={utils.newDate("2015-12-01")}
         minDate={utils.newDate("2016-02-01")}
         maxDate={utils.newDate()}
         showMonthYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
     const month = container.querySelectorAll(
@@ -414,14 +418,22 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).toBe(true);
+    fireEvent.click(month);
+    expect(onDayClickSpy).not.toHaveBeenCalled();
+    fireEvent.mouseEnter(month);
+    expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
   });
 
   it("should not return disabled class if current date is before minDate but same month", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
       <Month
         day={utils.newDate("2015-01-01")}
         minDate={utils.newDate("2015-01-10")}
         showMonthYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
     const month = container.querySelectorAll(
@@ -430,14 +442,22 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).not.toBe(true);
+    fireEvent.click(month);
+    expect(onDayClickSpy).toHaveBeenCalled();
+    fireEvent.mouseEnter(month);
+    expect(onDayMouseEnterSpy).toHaveBeenCalled();
   });
 
   it("should not return disabled class if current date is after maxDate but same month", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
       <Month
         day={utils.newDate("2015-01-10")}
         maxDate={utils.newDate("2015-01-01")}
         showMonthYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
     const month = container.querySelectorAll(
@@ -446,9 +466,15 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).not.toBe(true);
+    fireEvent.click(month);
+    expect(onDayClickSpy).toHaveBeenCalled();
+    fireEvent.mouseEnter(month);
+    expect(onDayMouseEnterSpy).toHaveBeenCalled();
   });
 
   it("should return disabled class if specified excludeDate", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
       <Month
         day={utils.newDate("2015-01-01")}
@@ -459,6 +485,8 @@ describe("Month", () => {
           utils.newDate("2015-10-04"),
         ]}
         showMonthYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
     // exclude month index
@@ -471,6 +499,10 @@ describe("Month", () => {
       expect(
         month.classList.contains("react-datepicker__month-text--disabled"),
       ).toBe(true);
+      fireEvent.click(month);
+      expect(onDayClickSpy).not.toHaveBeenCalled();
+      fireEvent.mouseEnter(month);
+      expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -937,12 +969,16 @@ describe("Month", () => {
   });
 
   it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
       <Month
         day={utils.newDate("2015-12-01")}
         minDate={utils.newDate("2016-02-01")}
         maxDate={utils.newDate()}
         showQuarterYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
       />,
     );
     const quarter = container.querySelectorAll(
@@ -951,6 +987,10 @@ describe("Month", () => {
     expect(
       quarter.classList.contains("react-datepicker__quarter-text--disabled"),
     ).toBe(true);
+    fireEvent.click(quarter);
+    expect(onDayClickSpy).not.toHaveBeenCalled();
+    fireEvent.mouseEnter(quarter);
+    expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
   });
 
   describe("if quarter is selected", () => {
