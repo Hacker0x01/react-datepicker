@@ -15,15 +15,3 @@
     cursor: default;
   }
 }
-
-%triangle-arrow-up {
-  fill: $datepicker__background-color;
-  color: $datepicker__background-color;
-  stroke: $datepicker__border-color;
-}
-
-%triangle-arrow-down {
-  fill: #fff;
-  color: #fff;
-  stroke: $datepicker__border-color;
-}
