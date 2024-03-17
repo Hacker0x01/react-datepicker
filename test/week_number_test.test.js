@@ -248,7 +248,25 @@ describe("WeekNumber", () => {
         ).toBe(true);
       });
 
-      it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week", () => {
+      it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week and has the onClick Props", () => {
+        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={currentWeekNumber}
+            selected={currentWeekNumber}
+            preSelection={currentWeekNumber}
+            onClick={() => {}}
+          />,
+        );
+        expect(
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
+        ).toBe(true);
+      });
+
+      it("should not have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week and doesn't have the onClick Props", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
         const { container } = render(
           <WeekNumber
@@ -262,10 +280,29 @@ describe("WeekNumber", () => {
           container
             .querySelector(".react-datepicker__week-number")
             .classList.contains("react-datepicker__week-number--selected"),
+        ).toBe(false);
+      });
+
+      it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week and has the onClick Props", () => {
+        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
+        const preSelection = utils.addWeeks(currentWeekNumber, 1);
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={currentWeekNumber}
+            selected={currentWeekNumber}
+            preSelection={preSelection}
+            onClick={() => {}}
+          />,
+        );
+        expect(
+          container
+            .querySelector(".react-datepicker__week-number")
+            .classList.contains("react-datepicker__week-number--selected"),
         ).toBe(true);
       });
 
-      it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week", () => {
+      it("should not have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week and doesn't have onClick Props", () => {
         const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
         const preSelection = utils.addWeeks(currentWeekNumber, 1);
         const { container } = render(
@@ -280,7 +317,7 @@ describe("WeekNumber", () => {
           container
             .querySelector(".react-datepicker__week-number")
             .classList.contains("react-datepicker__week-number--selected"),
-        ).toBe(true);
+        ).toBe(false);
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is not current week and preselected is current week", () => {
