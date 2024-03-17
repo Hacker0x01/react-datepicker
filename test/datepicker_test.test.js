@@ -2517,6 +2517,100 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("multiple MonthYearPicker", () => {
+    const selected = utils.newDate("2023-05-15");
+
+    it("should contain a different year all headers.", () => {
+      let instance;
+      // 2 Years
+      const { rerender } = render(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          monthsShown={2}
+          selected={selected}
+          showMonthYearPicker
+        />,
+      );
+      fireEvent.click(instance.input);
+      const headers = instance.calendar.componentNode.querySelectorAll(
+        ".react-datepicker__header",
+      );
+      expect(headers).toHaveLength(2);
+      expect(headers[0].textContent).toBe("2023");
+      expect(headers[1].textContent).toBe("2024");
+
+      // 4 Years
+      rerender(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          monthsShown={4}
+          selected={selected}
+          showMonthYearPicker
+        />,
+      );
+      fireEvent.click(instance.input);
+      const headersMore = instance.calendar.componentNode.querySelectorAll(
+        ".react-datepicker__header",
+      );
+      expect(headersMore).toHaveLength(4);
+      expect(headersMore[0].textContent).toBe("2023");
+      expect(headersMore[1].textContent).toBe("2024");
+      expect(headersMore[2].textContent).toBe("2025");
+      expect(headersMore[3].textContent).toBe("2026");
+    });
+  });
+
+  describe("multiple QuarterYearPicker", () => {
+    const selected = utils.newDate("2023-05-15");
+
+    it("should contain a different year all headers.", () => {
+      let instance;
+      // 2 Years
+      const { rerender } = render(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          monthsShown={2}
+          selected={selected}
+          showQuarterYearPicker
+        />,
+      );
+      fireEvent.click(instance.input);
+      const headers = instance.calendar.componentNode.querySelectorAll(
+        ".react-datepicker__header",
+      );
+      expect(headers).toHaveLength(2);
+      expect(headers[0].textContent).toBe("2023");
+      expect(headers[1].textContent).toBe("2024");
+
+      // 4 Years
+      rerender(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          monthsShown={4}
+          selected={selected}
+          showQuarterYearPicker
+        />,
+      );
+      fireEvent.click(instance.input);
+      const headersMore = instance.calendar.componentNode.querySelectorAll(
+        ".react-datepicker__header",
+      );
+      expect(headersMore).toHaveLength(4);
+      expect(headersMore[0].textContent).toBe("2023");
+      expect(headersMore[1].textContent).toBe("2024");
+      expect(headersMore[2].textContent).toBe("2025");
+      expect(headersMore[3].textContent).toBe("2026");
+    });
+  });
+
   describe("shouldFocusDayInline state", () => {
     const dateFormat = "yyyy-MM-dd";
 

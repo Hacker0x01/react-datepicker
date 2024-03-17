@@ -843,13 +843,15 @@ export default class Calendar extends React.Component {
     );
   };
 
-  renderYearHeader = () => {
-    const { date } = this.state;
+  renderYearHeader = ({ monthDate }) => {
     const { showYearPicker, yearItemNumber } = this.props;
-    const { startPeriod, endPeriod } = getYearsPeriod(date, yearItemNumber);
+    const { startPeriod, endPeriod } = getYearsPeriod(
+      monthDate,
+      yearItemNumber,
+    );
     return (
       <div className="react-datepicker__header react-datepicker-year-header">
-        {showYearPicker ? `${startPeriod} - ${endPeriod}` : getYear(date)}
+        {showYearPicker ? `${startPeriod} - ${endPeriod}` : getYear(monthDate)}
       </div>
     );
   };
@@ -876,11 +878,17 @@ export default class Calendar extends React.Component {
     const monthsToSubtract = this.props.showPreviousMonths
       ? this.props.monthsShown - 1
       : 0;
-    const fromMonthDate = subMonths(this.state.date, monthsToSubtract);
+    const fromMonthDate =
+      this.props.showMonthYearPicker || this.props.showQuarterYearPicker
+        ? addYears(this.state.date, monthsToSubtract)
+        : subMonths(this.state.date, monthsToSubtract);
     const monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
     for (let i = 0; i < this.props.monthsShown; ++i) {
       const monthsToAdd = i - monthSelectedIn + monthsToSubtract;
-      const monthDate = addMonths(fromMonthDate, monthsToAdd);
+      const monthDate =
+        this.props.showMonthYearPicker || this.props.showQuarterYearPicker
+          ? addYears(fromMonthDate, monthsToAdd)
+          : addMonths(fromMonthDate, monthsToAdd);
       const monthKey = `month-${i}`;
       const monthShowsDuplicateDaysEnd = i < this.props.monthsShown - 1;
       const monthShowsDuplicateDaysStart = i > 0;
@@ -975,7 +983,7 @@ export default class Calendar extends React.Component {
     if (this.props.showYearPicker) {
       return (
         <div className="react-datepicker__year--container">
-          {this.renderHeader()}
+          {this.renderHeader({ monthDate: this.state.date })}
           <Year
             onDayClick={this.handleDayClick}
             selectingDate={this.state.selectingDate}
