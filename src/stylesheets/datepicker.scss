@@ -39,15 +39,21 @@
   // Eliminating extra space at the bottom of the container
   line-height: 0;
 
+  .react-datepicker__triangle {
+    stroke: $datepicker__border-color;
+  }
+
   &[data-placement^="bottom"] {
     .react-datepicker__triangle {
-      @extend %triangle-arrow-up;
+      fill: $datepicker__background-color;
+      color: $datepicker__background-color;
     }
   }
 
   &[data-placement^="top"] {
     .react-datepicker__triangle {
-      @extend %triangle-arrow-down;
+      fill: #fff;
+      color: #fff;
     }
   }
 }
