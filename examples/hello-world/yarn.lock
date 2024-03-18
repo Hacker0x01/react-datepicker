@@ -7340,10 +7340,10 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
-react-datepicker@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-6.3.0.tgz#1258db8cfaf937354f656c90ba7f39a0e9d8f0f1"
-  integrity sha512-1kDbFRDxfV7IMO/m6DgCHk+mzSbFMtJC1YTwp34rcBEMd6lVTROH7IUcCgl08rwTnjqV0iG3IzGlspB8wgjaBA==
+react-datepicker@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-6.4.0.tgz#e47e410d3bcb836b2943e91cdc46ecb0f019d321"
+  integrity sha512-TXvxJVCOKZVqJGsZgf1fvzqhuSySaGR84OGyppn46BVsvlyOizfBzOnwDMxi+1erIThlVhYyIK7+1Tb5fieXgg==
   dependencies:
     "@floating-ui/react" "^0.26.2"
     classnames "^2.2.6"
