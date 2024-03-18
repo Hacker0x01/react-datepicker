@@ -657,7 +657,10 @@ export default class DatePicker extends React.Component {
         }
 
         // If minTime is present then set the time to minTime
-        if (this.props.showTimeSelect || this.props.showTimeSelectOnly) {
+        if (
+          !keepInput &&
+          (this.props.showTimeSelect || this.props.showTimeSelectOnly)
+        ) {
           if (minTime) {
             changedDate = setTime(changedDate, {
               hour: minTime.getHours(),

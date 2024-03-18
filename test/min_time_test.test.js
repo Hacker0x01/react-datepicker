@@ -12,6 +12,7 @@ const DatePickerWithState = (props) => {
         setSelected(date);
       }}
       showTimeSelect
+      dateFormat="MM/dd/yyyy HH:mm"
       {...props}
     />
   );
@@ -45,5 +46,19 @@ describe("Datepicker minTime", () => {
     const selectedTime = getByText("1:00 PM");
 
     expect(selectedTime.getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("should select time from input instead of minimum allowable time when time is typed in", () => {
+    const minTime = new Date("2023-03-10 13:00");
+    const maxTime = new Date("2023-03-10 18:00");
+
+    const { container } = render(
+      <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
+    );
+    const input = container.querySelector("input");
+    fireEvent.change(input, { target: { value: "2023-03-10 16:00" } });
+    fireEvent.focusOut(input);
+
+    expect(input.value).toEqual("03/10/2023 16:00");
   });
 });
