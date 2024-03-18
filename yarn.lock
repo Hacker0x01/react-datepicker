@@ -3316,9 +3316,9 @@ escodegen@^2.0.0:
     source-map "~0.6.1"
 
 eslint-plugin-react@^7.32.2:
-  version "7.34.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.34.0.tgz#ab71484d54fc409c37025c5eca00eb4177a5e88c"
-  integrity sha512-MeVXdReleBTdkz/bvcQMSnCXGi+c9kvy51IpinjnJgutl3YTHWsDdke7Z1ufZpGfDG8xduBDKyjtB9JH1eBKIQ==
+  version "7.34.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.34.1.tgz#6806b70c97796f5bbfb235a5d3379ece5f4da997"
+  integrity sha512-N97CxlouPT1AHt8Jn0mhhN2RrADlUAsk1/atcT2KyA/l9Q/E6ll7OIGwNumFmWfZ9skV3XXccYS19h80rHtgkw==
   dependencies:
     array-includes "^3.1.7"
     array.prototype.findlast "^1.2.4"
