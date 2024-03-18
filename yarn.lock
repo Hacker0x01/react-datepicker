@@ -2841,9 +2841,9 @@ data-urls@^3.0.2:
     whatwg-url "^11.0.0"
 
 date-fns@^3.3.1:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.5.0.tgz#d4f89de9b347ce9b14e4d05701f5d150a6591547"
-  integrity sha512-a+DwyXn7NOfdJireCzAA0B9p7jIXEu/Q9JKCyMYvH6+0vPUNbQceA0neXrdfJ/xzl3mhOh5vibQQ3936Tssm6A==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.6.0.tgz#f20ca4fe94f8b754951b24240676e8618c0206bf"
+  integrity sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==
 
 debug@4, debug@4.3.4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4:
   version "4.3.4"
