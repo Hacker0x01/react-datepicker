@@ -344,4 +344,41 @@ describe("Week", () => {
       ).toBeNull();
     });
   });
+  describe("selected and calendarStartDay", () => {
+    it("shoud starts the selected day on the Wednesday immediately preceding that day, When the calendarStartDay Props is 3.", () => {
+      const calendarStartDay = 3;
+      const currentWeek = utils.getStartOfWeek(
+        utils.newDate("2024-03-01"),
+        null,
+        calendarStartDay,
+      );
+      const selected = utils.addWeeks(currentWeek, 0);
+      const { container } = render(
+        <Week
+          day={currentWeek}
+          selected={selected}
+          preSelection={currentWeek}
+          calendarStartDay={calendarStartDay}
+          showWeekPicker
+        />,
+      );
+      const week = container.querySelector(".react-datepicker__week--selected");
+
+      expect(week).not.toBeNull();
+
+      const days = container.querySelectorAll(
+        ".react-datepicker__day--selected",
+      );
+
+      expect(days).toHaveLength(7);
+      // 2024-02-28 to 2024-03-05
+      expect(days[0].textContent).toBe("28");
+      expect(days[1].textContent).toBe("29");
+      expect(days[2].textContent).toBe("1");
+      expect(days[3].textContent).toBe("2");
+      expect(days[4].textContent).toBe("3");
+      expect(days[5].textContent).toBe("4");
+      expect(days[6].textContent).toBe("5");
+    });
+  });
 });
