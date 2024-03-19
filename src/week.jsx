@@ -153,6 +153,7 @@ export default class Week extends React.Component {
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
+            calendarStartDay={this.props.calendarStartDay}
             excludeDates={this.props.excludeDates}
             excludeDateIntervals={this.props.excludeDateIntervals}
             includeDates={this.props.includeDates}
