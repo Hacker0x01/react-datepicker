@@ -20,7 +20,7 @@ const topLogger = {
     },
     fn(state: MiddlewareState): MiddlewareReturn {
         if (state.placement === "top") {
-            console.log("Popper is on the top");
+            // console.log("Popper is on the top");
         }
         return state;
     },
@@ -146,7 +146,7 @@ const topLogger = {
     ref={(instance) => {
         if (instance !== null) {
             // $ExpectType ReactDatePicker<true>
-            instance;
+            // instance;
         }
     }}
     renderCustomHeader={({
@@ -209,7 +209,7 @@ const topLogger = {
     weekLabel=""
     withPortal
     portalId=""
-    portalHost={document.body.shadowRoot!}
+    portalHost={document.body.shadowRoot ?? undefined}
     wrapperClassName=""
     weekAriaLabelPrefix=""
     monthAriaLabelPrefix=""
