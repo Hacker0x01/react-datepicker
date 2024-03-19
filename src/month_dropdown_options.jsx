@@ -1,6 +1,19 @@
+//@ts-check
 import React from "react";
 import PropTypes from "prop-types";
 
+/**
+ * @typedef {Object} Props
+ * @property {number} month
+ * @property {VoidFunction} onCancel
+ * @property {(month:number) => void} onChange
+ * @property {string[]} monthNames
+ */
+
+/**
+ * @class
+ * @extends {React.Component<Props, {}>}
+ */
 export default class MonthDropdownOptions extends React.Component {
   static propTypes = {
     onCancel: PropTypes.func.isRequired,
@@ -9,8 +22,15 @@ export default class MonthDropdownOptions extends React.Component {
     monthNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
 
+  /**
+   * @param {number} i
+   * @returns {boolean}
+   */
   isSelectedMonth = (i) => this.props.month === i;
 
+  /**
+   * @returns {React.ReactNode[]}
+   */
   renderOptions = () => {
     return this.props.monthNames.map((month, i) => (
       <div
@@ -33,10 +53,21 @@ export default class MonthDropdownOptions extends React.Component {
     ));
   };
 
+  /**
+   *
+   * @param {number} month
+   * @returns {void}
+   */
   onChange = (month) => this.props.onChange(month);
 
+  /**
+   * @returns {void}
+   */
   handleClickOutside = () => this.props.onCancel();
 
+  /**
+   * @returns {React.ReactElement}
+   */
   render() {
     return (
       <div className="react-datepicker__month-dropdown">

@@ -1,8 +1,16 @@
+//@ts-check
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { getYear } from "./date_utils";
 
+/**
+ * @param {number} year
+ * @param {number} noOfYear
+ * @param {Date|undefined} minDate
+ * @param {Date|undefined} maxDate
+ * @returns {number[]}
+ */
 function generateYears(year, noOfYear, minDate, maxDate) {
   const list = [];
   for (let i = 0; i < 2 * noOfYear + 1; i++) {
@@ -25,6 +33,26 @@ function generateYears(year, noOfYear, minDate, maxDate) {
   return list;
 }
 
+/**
+ * @typedef {Object} Props
+ * @property {Date|undefined} minDate
+ * @property {Date|undefined} maxDate
+ * @property {VoidFunction} onCancel
+ * @property {(year:number) => void} onChange
+ * @property {boolean|undefined} scrollableYearDropdown
+ * @property {number} year
+ * @property {number|undefined} yearDropdownItemNumber
+ */
+
+/**
+ * @typedef {Object} State
+ * @property {number[]} yearsList
+ */
+
+/**
+ * @class
+ * @extends {React.Component<Props, State>}
+ */
 export default class YearDropdownOptions extends React.Component {
   static propTypes = {
     minDate: PropTypes.instanceOf(Date),
@@ -36,6 +64,10 @@ export default class YearDropdownOptions extends React.Component {
     yearDropdownItemNumber: PropTypes.number,
   };
 
+  /**
+   * @constructor
+   * @param {Props}  props
+   */
   constructor(props) {
     super(props);
     const { yearDropdownItemNumber, scrollableYearDropdown } = props;
@@ -50,9 +82,13 @@ export default class YearDropdownOptions extends React.Component {
         this.props.maxDate,
       ),
     };
+    /** @type {React.RefObject<HTMLDivElement>} */
     this.dropdownRef = createRef();
   }
 
+  /**
+   * @returns {void}
+   */
   componentDidMount() {
     const dropdownCurrent = this.dropdownRef.current;
 
@@ -72,6 +108,9 @@ export default class YearDropdownOptions extends React.Component {
     }
   }
 
+  /**
+   * @returns {React.ReactNode[]}
+   */
   renderOptions = () => {
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
@@ -124,14 +163,25 @@ export default class YearDropdownOptions extends React.Component {
     return options;
   };
 
+  /**
+   * @param {number} year
+   * @returns {void}
+   */
   onChange = (year) => {
     this.props.onChange(year);
   };
 
+  /**
+   * @returns {void}
+   */
   handleClickOutside = () => {
     this.props.onCancel();
   };
 
+  /**
+   * @param {number} amount
+   * @returns {void}
+   */
   shiftYears = (amount) => {
     const years = this.state.yearsList.map(function (year) {
       return year + amount;
@@ -142,14 +192,23 @@ export default class YearDropdownOptions extends React.Component {
     });
   };
 
+  /**
+   * @returns {void}
+   */
   incrementYears = () => {
     return this.shiftYears(1);
   };
 
+  /**
+   * @returns {void}
+   */
   decrementYears = () => {
     return this.shiftYears(-1);
   };
 
+  /**
+   * @returns {React.ReactElement}
+   */
   render() {
     let dropdownClass = classNames({
       "react-datepicker__year-dropdown": true,
