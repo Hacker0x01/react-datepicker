@@ -404,16 +404,23 @@ export default class Month extends React.Component {
   };
 
   onMonthClick = (e, m) => {
-    this.handleDayClick(
-      utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
-      e,
-    );
+    const labelDate = utils.setMonth(this.props.day, m);
+
+    if (utils.isMonthDisabled(labelDate, this.props)) {
+      return;
+    }
+
+    this.handleDayClick(utils.getStartOfMonth(labelDate), e);
   };
 
   onMonthMouseEnter = (m) => {
-    this.handleDayMouseEnter(
-      utils.getStartOfMonth(utils.setMonth(this.props.day, m)),
-    );
+    const labelDate = utils.setMonth(this.props.day, m);
+
+    if (utils.isMonthDisabled(labelDate, this.props)) {
+      return;
+    }
+
+    this.handleDayMouseEnter(utils.getStartOfMonth(labelDate));
   };
 
   handleMonthNavigation = (newMonth, newDate) => {
@@ -488,16 +495,23 @@ export default class Month extends React.Component {
   };
 
   onQuarterClick = (e, q) => {
-    this.handleDayClick(
-      utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
-      e,
-    );
+    const labelDate = utils.setQuarter(this.props.day, q);
+
+    if (utils.isQuarterDisabled(labelDate, this.props)) {
+      return;
+    }
+
+    this.handleDayClick(utils.getStartOfQuarter(labelDate), e);
   };
 
   onQuarterMouseEnter = (q) => {
-    this.handleDayMouseEnter(
-      utils.getStartOfQuarter(utils.setQuarter(this.props.day, q)),
-    );
+    const labelDate = utils.setQuarter(this.props.day, q);
+
+    if (utils.isQuarterDisabled(labelDate, this.props)) {
+      return;
+    }
+
+    this.handleDayMouseEnter(utils.getStartOfQuarter(labelDate));
   };
 
   handleQuarterNavigation = (newQuarter, newDate) => {
