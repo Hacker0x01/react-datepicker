@@ -5,7 +5,7 @@
 */
 
 /*!
-  react-datepicker v6.4.0
+  react-datepicker v6.5.0
   https://github.com/Hacker0x01/react-datepicker
   Released under the MIT License.
 */
