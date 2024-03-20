@@ -2,8 +2,6 @@
 
 set -e
 
-nvm use v20.11.0
-
 git checkout main
 
 git pull
