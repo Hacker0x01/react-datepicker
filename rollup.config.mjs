@@ -17,6 +17,12 @@ const pkg = JSON.parse(
     .toString()
 );
 
+const banner = `/*!
+  ${pkg.name} v${pkg.version}
+  ${pkg.homepage}
+  Released under the ${pkg.license} License.
+*/`;
+
 // it's important to mark all subpackages of data-fns as externals
 // see https://github.com/Hacker0x01/react-datepicker/issues/1606
 // We're relying on date-fn's package.json `exports` field to
@@ -44,10 +50,12 @@ const globals = {
 };
 
 // NOTE:https://rollupjs.org/migration/#changed-defaults
+/** @type {import('rollup').OutputOptions} */
 const migrateRollup2to3OutputOptions = {
   interop: "compat",
 };
 
+/** @type {import('rollup').RollupOptions} */
 const config = {
   input: "src/index.jsx",
   output: [
@@ -56,24 +64,32 @@ const config = {
       format: "umd",
       name: "DatePicker",
       globals,
+      banner,
       ...migrateRollup2to3OutputOptions,
+      plugins: [terser()],
     },
     {
-      file: "dist/react-datepicker.js",
+      file: pkg.browser.replace(".min.js", ".js"),
       format: "umd",
+      sourcemap: "inline",
       name: "DatePicker",
       globals,
+      banner,
       ...migrateRollup2to3OutputOptions,
     },
     {
       file: pkg.main,
       format: "cjs",
+      sourcemap: "inline",
       name: "DatePicker",
+      banner,
       ...migrateRollup2to3OutputOptions,
     },
     {
       file: pkg.module,
       format: "es",
+      sourcemap: "inline",
+      banner,
       ...migrateRollup2to3OutputOptions,
     },
   ],
@@ -85,7 +101,6 @@ const config = {
     babel(),
     commonjs(),
     filesize(),
-    terser(),
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}),
