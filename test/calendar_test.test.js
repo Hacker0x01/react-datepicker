@@ -2145,7 +2145,7 @@ describe("Calendar", () => {
   });
 
   describe("calendar container", () => {
-    it("should work", () => {
+    it("should render Calendar with accessibility props", () => {
       const { container } = render(
         <Calendar
           dateFormat={dateFormat}
@@ -2159,6 +2159,42 @@ describe("Calendar", () => {
       expect(dialog.getAttribute("role")).toBe("dialog");
       expect(dialog.getAttribute("aria-modal")).toBe("true");
       expect(dialog.getAttribute("aria-label")).toBe("Choose Date");
+    });
+
+    it("should display corresponding aria-label for Calendar with showTimeSelect", () => {
+      const { container } = render(
+        <Calendar dateFormat={dateFormat} showTimeSelect />,
+      );
+
+      const dialog = container.querySelector(".react-datepicker");
+      expect(dialog).not.toBeNull();
+      expect(dialog.getAttribute("aria-label").toLowerCase().trim()).toBe(
+        "choose date and time",
+      );
+    });
+
+    it("should display corresponding aria-label for Calendar with showTimeInput", () => {
+      const { container } = render(
+        <Calendar dateFormat={dateFormat} showTimeInput />,
+      );
+
+      const dialog = container.querySelector(".react-datepicker");
+      expect(dialog).not.toBeNull();
+      expect(dialog.getAttribute("aria-label").toLowerCase().trim()).toBe(
+        "choose date and time",
+      );
+    });
+
+    it("should display corresponding aria-label for Calendar with showTimeSelectOnly", () => {
+      const { container } = render(
+        <Calendar dateFormat={dateFormat} showTimeSelectOnly />,
+      );
+
+      const dialog = container.querySelector(".react-datepicker");
+      expect(dialog).not.toBeNull();
+      expect(dialog.getAttribute("aria-label").toLowerCase().trim()).toBe(
+        "choose time",
+      );
     });
   });
 });

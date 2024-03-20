@@ -1101,6 +1101,8 @@ export default class Calendar extends React.Component {
           className={classnames("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly,
           })}
+          showTime={this.props.showTimeSelect || this.props.showTimeInput}
+          showTimeSelectOnly={this.props.showTimeSelectOnly}
         >
           {this.renderAriaLiveRegion()}
           {this.renderPreviousButton()}
