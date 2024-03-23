@@ -156,6 +156,7 @@
 | `value`                         | `string`                                                                                                                                             |                    |             |
 | `weekAriaLabelPrefix`           | `string`                                                                                                                                             |                    |             |
 | `weekDayClassName`              | `func`                                                                                                                                               |                    |             |
+| `yearClassName`                 | `func`                                                                                                                                               |                    |             |
 | `weekLabel`                     | `string`                                                                                                                                             |                    |             |
 | `withPortal`                    | `bool`                                                                                                                                               | `false`            |             |
 | `wrapperClassName`              | `string`                                                                                                                                             |                    |             |

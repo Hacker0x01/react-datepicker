@@ -324,6 +324,7 @@ export default class DatePicker extends React.Component {
     weekAriaLabelPrefix: PropTypes.string,
     monthAriaLabelPrefix: PropTypes.string,
     usePointerEvent: PropTypes.bool,
+    yearClassName: PropTypes.func,
   };
 
   constructor(props) {
@@ -1150,6 +1151,7 @@ export default class DatePicker extends React.Component {
         customTimeInput={this.props.customTimeInput}
         setPreSelection={this.setPreSelection}
         usePointerEvent={this.props.usePointerEvent}
+        yearClassName={this.props.yearClassName}
       >
         {this.props.children}
       </WrappedCalendar>

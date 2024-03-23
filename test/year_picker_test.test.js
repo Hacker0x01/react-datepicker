@@ -737,4 +737,27 @@ describe("YearPicker", () => {
       expect(utils.getYear(preSelected)).toBe(2021);
     });
   });
+
+  it("should apply className returned from passed yearClassName prop function", () => {
+    const className = "customClassName";
+    const yearClassNameFunc = () => className;
+    const date = new Date();
+    const { container } = render(
+      <Year
+        date={date}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+        yearClassName={yearClassNameFunc}
+      />,
+    );
+    expect(
+      container
+        .querySelector(".react-datepicker__year-text")
+        .classList.contains(className),
+    ).toBe(true);
+
+    expect(
+      container.querySelector(`.react-datepicker__year-${date.getFullYear()}`),
+    ).not.toBeNull();
+  });
 });

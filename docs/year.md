@@ -27,3 +27,4 @@
 | `startDate`                   | `instanceOfDate`         |               |             |
 | `usePointerEvent`             | `bool`                   |               |             |
 | `yearItemNumber`              | `number`                 |               |             |
+| `yearClassName`               | `func`                   |               |             |
