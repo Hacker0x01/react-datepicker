@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import Week from "./week";
 import * as utils from "./date_utils";
 
@@ -562,7 +562,7 @@ export default class Month extends React.Component {
       ? monthClassName(utils.setMonth(day, m))
       : undefined;
     const labelDate = utils.setMonth(day, m);
-    return classnames(
+    return clsx(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       _monthClassName,
@@ -644,7 +644,7 @@ export default class Month extends React.Component {
       preSelection,
       disabledKeyboardNavigation,
     } = this.props;
-    return classnames(
+    return clsx(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
       {
@@ -797,7 +797,7 @@ export default class Month extends React.Component {
       showWeekPicker,
     } = this.props;
 
-    return classnames(
+    return clsx(
       "react-datepicker__month",
       {
         "react-datepicker__month--selecting-range":

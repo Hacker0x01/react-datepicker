@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import {
   addMonths,
   formatDate,
@@ -87,7 +87,7 @@ export default class MonthYearDropdownOptions extends React.Component {
   };
 
   render() {
-    let dropdownClass = classNames({
+    let dropdownClass = clsx({
       "react-datepicker__month-year-dropdown": true,
       "react-datepicker__month-year-dropdown--scrollable":
         this.props.scrollableMonthYearDropdown,

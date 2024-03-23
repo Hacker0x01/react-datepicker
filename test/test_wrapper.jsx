@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 const TestWrapper = ({ className, children }) => (
-  <div className={classNames("test-wrapper", className)}>{children}</div>
+  <div className={clsx("test-wrapper", className)}>{children}</div>
 );
 
 TestWrapper.propTypes = {

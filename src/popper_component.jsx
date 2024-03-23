@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import React from "react";
 import PropTypes from "prop-types";
 import { FloatingArrow } from "@floating-ui/react";
@@ -47,7 +47,7 @@ export class PopperComponent extends React.Component {
     let popper;
 
     if (!hidePopper) {
-      const classes = classnames("react-datepicker-popper", className);
+      const classes = clsx("react-datepicker-popper", className);
       popper = (
         <TabLoop enableTabLoop={enableTabLoop}>
           <div
@@ -87,10 +87,7 @@ export class PopperComponent extends React.Component {
       );
     }
 
-    const wrapperClasses = classnames(
-      "react-datepicker-wrapper",
-      wrapperClassName,
-    );
+    const wrapperClasses = clsx("react-datepicker-wrapper", wrapperClassName);
 
     return (
       <React.Fragment>

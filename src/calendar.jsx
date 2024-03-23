@@ -7,7 +7,7 @@ import Year from "./year";
 import InputTime from "./inputTime";
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import CalendarContainer from "./calendar_container";
 import {
   newDate,
@@ -441,10 +441,7 @@ export default class Calendar extends React.Component {
         return (
           <div
             key={offset}
-            className={classnames(
-              "react-datepicker__day-name",
-              weekDayClassName,
-            )}
+            className={clsx("react-datepicker__day-name", weekDayClassName)}
           >
             {weekDayName}
           </div>
@@ -1098,7 +1095,7 @@ export default class Calendar extends React.Component {
     return (
       <div style={{ display: "contents" }} ref={this.containerRef}>
         <Container
-          className={classnames("react-datepicker", this.props.className, {
+          className={clsx("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly,
           })}
           showTime={this.props.showTimeSelect || this.props.showTimeInput}

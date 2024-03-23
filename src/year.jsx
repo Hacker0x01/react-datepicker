@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { getYear, newDate } from "./date_utils";
 import * as utils from "./date_utils";
-import classnames from "classnames";
+import { clsx } from "clsx";
 
 export default class Year extends React.Component {
   static propTypes = {
@@ -202,7 +202,7 @@ export default class Year extends React.Component {
       includeDates,
       filterDate,
     } = this.props;
-    return classnames("react-datepicker__year-text", {
+    return clsx("react-datepicker__year-text", {
       "react-datepicker__year-text--selected": y === getYear(selected),
       "react-datepicker__year-text--disabled":
         (minDate || maxDate || excludeDates || includeDates || filterDate) &&
@@ -232,7 +232,7 @@ export default class Year extends React.Component {
   getYearContainerClassNames = () => {
     const { selectingDate, selectsStart, selectsEnd, selectsRange } =
       this.props;
-    return classnames("react-datepicker__year", {
+    return clsx("react-datepicker__year", {
       "react-datepicker__year--selecting-range":
         selectingDate && (selectsStart || selectsEnd || selectsRange),
     });

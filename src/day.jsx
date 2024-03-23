@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   getDay,
   getMonth,
@@ -305,7 +305,7 @@ export default class Day extends React.Component {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
       : undefined;
-    return classnames(
+    return clsx(
       "react-datepicker__day",
       dayClassName,
       "react-datepicker__day--" + getDayOfWeekCode(this.props.day),
