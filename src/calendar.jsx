@@ -87,6 +87,7 @@ export default class Calendar extends React.Component {
     disabledDayAriaLabelPrefix: PropTypes.string,
     monthClassName: PropTypes.func,
     timeClassName: PropTypes.func,
+    yearClassName: PropTypes.func,
     disabledKeyboardNavigation: PropTypes.bool,
     calendarStartDay: PropTypes.number,
     dropdownMode: PropTypes.oneOf(["scroll", "select"]),

@@ -39,6 +39,7 @@ export default class Year extends React.Component {
     filterDate: PropTypes.func,
     yearItemNumber: PropTypes.number,
     handleOnKeyDown: PropTypes.func,
+    yearClassName: PropTypes.func,
   };
 
   constructor(props) {
@@ -195,31 +196,39 @@ export default class Year extends React.Component {
 
   getYearClassNames = (y) => {
     const {
+      date,
       minDate,
       maxDate,
       selected,
       excludeDates,
       includeDates,
       filterDate,
+      yearClassName,
     } = this.props;
-    return clsx("react-datepicker__year-text", {
-      "react-datepicker__year-text--selected": y === getYear(selected),
-      "react-datepicker__year-text--disabled":
-        (minDate || maxDate || excludeDates || includeDates || filterDate) &&
-        utils.isYearDisabled(y, this.props),
-      "react-datepicker__year-text--keyboard-selected":
-        this.isKeyboardSelected(y),
-      "react-datepicker__year-text--range-start": this.isRangeStart(y),
-      "react-datepicker__year-text--range-end": this.isRangeEnd(y),
-      "react-datepicker__year-text--in-range": this.isInRange(y),
-      "react-datepicker__year-text--in-selecting-range":
-        this.isInSelectingRange(y),
-      "react-datepicker__year-text--selecting-range-start":
-        this.isSelectingRangeStart(y),
-      "react-datepicker__year-text--selecting-range-end":
-        this.isSelectingRangeEnd(y),
-      "react-datepicker__year-text--today": this.isCurrentYear(y),
-    });
+
+    return clsx(
+      "react-datepicker__year-text",
+      `react-datepicker__year-${y}`,
+      yearClassName ? yearClassName(utils.setYear(date, y)) : undefined,
+      {
+        "react-datepicker__year-text--selected": y === getYear(selected),
+        "react-datepicker__year-text--disabled":
+          (minDate || maxDate || excludeDates || includeDates || filterDate) &&
+          utils.isYearDisabled(y, this.props),
+        "react-datepicker__year-text--keyboard-selected":
+          this.isKeyboardSelected(y),
+        "react-datepicker__year-text--range-start": this.isRangeStart(y),
+        "react-datepicker__year-text--range-end": this.isRangeEnd(y),
+        "react-datepicker__year-text--in-range": this.isInRange(y),
+        "react-datepicker__year-text--in-selecting-range":
+          this.isInSelectingRange(y),
+        "react-datepicker__year-text--selecting-range-start":
+          this.isSelectingRangeStart(y),
+        "react-datepicker__year-text--selecting-range-end":
+          this.isSelectingRangeEnd(y),
+        "react-datepicker__year-text--today": this.isCurrentYear(y),
+      },
+    );
   };
 
   getYearTabIndex = (y) => {
