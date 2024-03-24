@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.2",
-    "classnames": "^2.2.6",
+    "clsx": "^2.1.0",
     "date-fns": "^3.3.1",
     "prop-types": "^15.7.2",
     "react-onclickoutside": "^6.13.0"

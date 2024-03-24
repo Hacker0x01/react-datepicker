@@ -1,6 +1,6 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { getYear } from "./date_utils";
 
 function generateYears(year, noOfYear, minDate, maxDate) {
@@ -151,7 +151,7 @@ export default class YearDropdownOptions extends React.Component {
   };
 
   render() {
-    let dropdownClass = classNames({
+    let dropdownClass = clsx({
       "react-datepicker__year-dropdown": true,
       "react-datepicker__year-dropdown--scrollable":
         this.props.scrollableYearDropdown,

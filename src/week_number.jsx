@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { isSameDay } from "./date_utils";
 
 export default class WeekNumber extends React.Component {
@@ -124,7 +124,7 @@ export default class WeekNumber extends React.Component {
     return (
       <div
         ref={this.weekNumberEl}
-        className={classnames(weekNumberClasses)}
+        className={clsx(weekNumberClasses)}
         aria-label={`${ariaLabelPrefix} ${this.props.weekNumber}`}
         onClick={this.handleClick}
         onKeyDown={this.handleOnKeyDown}

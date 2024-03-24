@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Day from "./day";
 import WeekNumber from "./week_number";
-import classnames from "classnames";
+import { clsx } from "clsx";
 
 import { addDays, getWeek, getStartOfWeek, isSameDay } from "./date_utils";
 
@@ -214,8 +214,6 @@ export default class Week extends React.Component {
       ),
       "react-datepicker__week--keyboard-selected": this.isKeyboardSelected(),
     };
-    return (
-      <div className={classnames(weekNumberClasses)}>{this.renderDays()}</div>
-    );
+    return <div className={clsx(weekNumberClasses)}>{this.renderDays()}</div>;
   }
 }

@@ -46,7 +46,6 @@ const globals = {
   react: "React",
   "prop-types": "PropTypes",
   "react-onclickoutside": "onClickOutside",
-  classnames: "classNames",
 };
 
 // NOTE:https://rollupjs.org/migration/#changed-defaults

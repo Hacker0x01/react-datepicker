@@ -5,7 +5,7 @@ import CalendarIcon from "./calendar_icon";
 import Portal from "./portal";
 import PopperComponent from "./popper_component";
 import { popperPlacementPositions } from "./with_floating";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { set } from "date-fns/set";
 import { startOfDay } from "date-fns/startOfDay";
 import { endOfDay } from "date-fns/endOfDay";
@@ -1226,7 +1226,7 @@ export default class DatePicker extends React.Component {
   };
 
   renderDateInput = () => {
-    const className = classnames(this.props.className, {
+    const className = clsx(this.props.className, {
       [outsideClickIgnoreClass]: this.state.open,
     });
 
@@ -1264,7 +1264,7 @@ export default class DatePicker extends React.Component {
       placeholder: this.props.placeholderText,
       disabled: this.props.disabled,
       autoComplete: this.props.autoComplete,
-      className: classnames(customInput.props.className, className),
+      className: clsx(customInput.props.className, className),
       title: this.props.title,
       readOnly: this.props.readOnly,
       required: this.props.required,
@@ -1298,7 +1298,7 @@ export default class DatePicker extends React.Component {
       return (
         <button
           type="button"
-          className={classnames(
+          className={clsx(
             "react-datepicker__close-icon",
             clearButtonClassName,
             { "react-datepicker__close-icon--disabled": disabled },
