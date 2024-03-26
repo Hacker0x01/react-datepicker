@@ -67,8 +67,10 @@ describe("Month", () => {
       <Month day={date} ariaLabelPrefix={ariaLabelPrefix} />,
     );
 
-    const expectedAriaLabel =
-      `${ariaLabelPrefix} ${utils.formatDate(date, "MMMM, yyyy")}`.toLowerCase();
+    const expectedAriaLabel = `${ariaLabelPrefix} ${utils.formatDate(
+      date,
+      "MMMM, yyyy",
+    )}`.toLowerCase();
     expect(
       container
         .querySelector(".react-datepicker__month")
@@ -85,8 +87,10 @@ describe("Month", () => {
       <Month day={date} ariaLabelPrefix={ariaLabelPrefix} />,
     );
 
-    const expectedAriaLabel =
-      `${utils.formatDate(date, "MMMM, yyyy")}`.toLowerCase();
+    const expectedAriaLabel = `${utils.formatDate(
+      date,
+      "MMMM, yyyy",
+    )}`.toLowerCase();
     expect(
       container
         .querySelector(".react-datepicker__month")

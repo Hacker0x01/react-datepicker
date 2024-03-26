@@ -35,7 +35,7 @@ import {
   parseDate,
   safeDateFormat,
   safeDateRangeFormat,
-  getHightLightDaysMap,
+  getHighLightDaysMap,
   getYear,
   getMonth,
   getStartOfWeek,
@@ -352,7 +352,7 @@ export default class DatePicker extends React.Component {
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHightLightDaysMap(this.props.highlightDates),
+        highlightDates: getHighLightDaysMap(this.props.highlightDates),
       });
     }
     if (
@@ -382,10 +382,10 @@ export default class DatePicker extends React.Component {
     this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
-        ? this.props.startDate
-        : this.props.selectsStart && this.props.endDate
-          ? this.props.endDate
-          : newDate();
+      ? this.props.startDate
+      : this.props.selectsStart && this.props.endDate
+      ? this.props.endDate
+      : newDate();
 
   // Convert the date from string format to standard Date format
   modifyHolidays = () =>
@@ -406,8 +406,8 @@ export default class DatePicker extends React.Component {
       minDate && isBefore(defaultPreSelection, startOfDay(minDate))
         ? minDate
         : maxDate && isAfter(defaultPreSelection, endOfDay(maxDate))
-          ? maxDate
-          : defaultPreSelection;
+        ? maxDate
+        : defaultPreSelection;
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
@@ -417,7 +417,8 @@ export default class DatePicker extends React.Component {
           : this.props.selected) ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      highlightDates: getHighLightDaysMap(this.props.highlightDates),
+      holidays: getHolidaysMap(modifiedHolidays),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render
@@ -1238,16 +1239,16 @@ export default class DatePicker extends React.Component {
       typeof this.props.value === "string"
         ? this.props.value
         : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(
-                this.props.startDate,
-                this.props.endDate,
-                this.props,
-              )
-            : this.props.selectsMultiple
-              ? safeMultipleDatesFormat(this.props.selectedDates, this.props)
-              : safeDateFormat(this.props.selected, this.props);
+        ? this.state.inputValue
+        : this.props.selectsRange
+        ? safeDateRangeFormat(
+            this.props.startDate,
+            this.props.endDate,
+            this.props,
+          )
+        : this.props.selectsMultiple
+        ? safeMultipleDatesFormat(this.props.selectedDates, this.props)
+        : safeDateFormat(this.props.selected, this.props);
 
     return React.cloneElement(customInput, {
       [customInputRef]: (input) => {

@@ -830,14 +830,17 @@ export default class Month extends React.Component {
         onPointerLeave={
           this.props.usePointerEvent ? this.handleMouseLeave : undefined
         }
-        aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(day, "MMMM, yyyy")}`}
+        aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(
+          day,
+          "MMMM, yyyy",
+        )}`}
         role="listbox"
       >
         {showMonthYearPicker
           ? this.renderMonths()
           : showQuarterYearPicker
-            ? this.renderQuarters()
-            : this.renderWeeks()}
+          ? this.renderQuarters()
+          : this.renderWeeks()}
       </div>
     );
   }
