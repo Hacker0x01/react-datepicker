@@ -14,6 +14,7 @@
 | `calendarClassName`             | `string`                                                                                                                                             |                    |             |
 | `calendarContainer`             | `func`                                                                                                                                               |                    |             |
 | `calendarIconClassname`         | `string`                                                                                                                                             |                    |             |
+| `calendarIconClassName`         | `string`                                                                                                                                             |                    |             |
 | `calendarStartDay`              | `number`                                                                                                                                             | `undefined`        |             |
 | `children`                      | `node`                                                                                                                                               |                    |             |
 | `chooseDayAriaLabelPrefix`      | `string`                                                                                                                                             |                    |             |
