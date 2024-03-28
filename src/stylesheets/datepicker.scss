@@ -224,7 +224,7 @@
   clear: both;
   width: 100%;
   float: left;
-  margin: 5px 0 10px 15px;
+  margin: 5px 0 10px;
   text-align: left;
 
   .react-datepicker-time__caption {
@@ -236,7 +236,7 @@
 
     .react-datepicker-time__input {
       display: inline-block;
-      margin-left: 10px;
+      margin-left: 6px;
 
       input {
         width: auto;
