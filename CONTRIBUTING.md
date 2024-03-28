@@ -41,3 +41,15 @@ You can run `yarn test` to execute the test suite and linters. To help you devel
 
 1. After each JS change run `yarn build:js` in project root
 1. After each SCSS change run `yarn run css:dev && yarn run css:modules:dev` in project root
+
+## Getting set up (type)
+
+Here's how to get set up:
+
+1. Install/use node >=16.0.0
+1. Install/use yarn <=1.x.x
+1. Run `yarn link` from project root
+1. Run `cd types && yarn link react-datepicker`
+1. Run `yarn install` from project root
+1. Run `yarn build` from project root (at least the first time, this will get you the `dist` directory that holds the code that will be linked to)
+1. Run `yarn test:types` from project root. (This command performs type checking of test tsx placed in the `types` directory.)
