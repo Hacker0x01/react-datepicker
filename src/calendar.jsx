@@ -36,6 +36,8 @@ import {
   yearDisabledAfter,
   yearsDisabledAfter,
   yearsDisabledBefore,
+  quarterDisabledBefore,
+  quarterDisabledAfter,
   getEffectiveMinDate,
   getEffectiveMaxDate,
   addZero,
@@ -489,6 +491,12 @@ export default class Calendar extends React.Component {
       case this.props.showYearPicker:
         allPrevDaysDisabled = yearsDisabledBefore(this.state.date, this.props);
         break;
+      case this.props.showQuarterYearPicker:
+        allPrevDaysDisabled = quarterDisabledBefore(
+          this.state.date,
+          this.props,
+        );
+        break;
       default:
         allPrevDaysDisabled = monthDisabledBefore(this.state.date, this.props);
         break;
@@ -585,6 +593,9 @@ export default class Calendar extends React.Component {
         break;
       case this.props.showYearPicker:
         allNextDaysDisabled = yearsDisabledAfter(this.state.date, this.props);
+        break;
+      case this.props.showQuarterYearPicker:
+        allNextDaysDisabled = quarterDisabledAfter(this.state.date, this.props);
         break;
       default:
         allNextDaysDisabled = monthDisabledAfter(this.state.date, this.props);

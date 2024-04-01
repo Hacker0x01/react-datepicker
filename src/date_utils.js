@@ -34,6 +34,7 @@ import { max } from "date-fns/max";
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { differenceInCalendarMonths } from "date-fns/differenceInCalendarMonths";
 import { differenceInCalendarYears } from "date-fns/differenceInCalendarYears";
+import { differenceInCalendarQuarters } from "date-fns/differenceInCalendarQuarters";
 import { startOfDay } from "date-fns/startOfDay";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { startOfMonth } from "date-fns/startOfMonth";
@@ -649,6 +650,36 @@ export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
     (includeDates &&
       includeDates.every(
         (includeDate) => differenceInCalendarMonths(nextMonth, includeDate) > 0,
+      )) ||
+    false
+  );
+}
+
+export function quarterDisabledBefore(date, { minDate, includeDates } = {}) {
+  const firstDateOfYear = startOfYear(date);
+  const previousQuarter = subQuarters(firstDateOfYear, 1);
+
+  return (
+    (minDate && differenceInCalendarQuarters(minDate, previousQuarter) > 0) ||
+    (includeDates &&
+      includeDates.every(
+        (includeDate) =>
+          differenceInCalendarQuarters(includeDate, previousQuarter) > 0,
+      )) ||
+    false
+  );
+}
+
+export function quarterDisabledAfter(date, { maxDate, includeDates } = {}) {
+  const lastDateOfYear = endOfYear(date);
+  const nextQuarter = addQuarters(lastDateOfYear, 1);
+
+  return (
+    (maxDate && differenceInCalendarQuarters(nextQuarter, maxDate) > 0) ||
+    (includeDates &&
+      includeDates.every(
+        (includeDate) =>
+          differenceInCalendarQuarters(nextQuarter, includeDate) > 0,
       )) ||
     false
   );
