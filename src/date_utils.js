@@ -655,9 +655,9 @@ export function monthDisabledAfter(day, { maxDate, includeDates } = {}) {
   );
 }
 
-export function quarterDisabledBefore(day, { minDate, includeDates } = {}) {
-  const firstDayOfYear = startOfYear(day);
-  const previousQuarter = subQuarters(firstDayOfYear, 1);
+export function quarterDisabledBefore(date, { minDate, includeDates } = {}) {
+  const firstDateOfYear = startOfYear(date);
+  const previousQuarter = subQuarters(firstDateOfYear, 1);
 
   return (
     (minDate && differenceInCalendarQuarters(minDate, previousQuarter) > 0) ||
@@ -670,9 +670,9 @@ export function quarterDisabledBefore(day, { minDate, includeDates } = {}) {
   );
 }
 
-export function quarterDisabledAfter(day, { maxDate, includeDates } = {}) {
-  const lastDayOfYear = endOfYear(day);
-  const nextQuarter = addQuarters(lastDayOfYear, 1);
+export function quarterDisabledAfter(date, { maxDate, includeDates } = {}) {
+  const lastDateOfYear = endOfYear(date);
+  const nextQuarter = addQuarters(lastDateOfYear, 1);
 
   return (
     (maxDate && differenceInCalendarQuarters(nextQuarter, maxDate) > 0) ||
