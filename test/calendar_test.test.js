@@ -9,7 +9,7 @@ import DatePicker from "../src/index.jsx";
 import * as utils from "../src/date_utils";
 import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";
-import { isSunday } from "date-fns";
+import { endOfYear, isSunday, startOfMonth } from "date-fns";
 import { getKey } from "./test_utils";
 
 // TODO Possibly rename
@@ -1821,6 +1821,27 @@ describe("Calendar", () => {
         increaseYear();
       });
       expect(utils.getYear(instance.state.date)).toBe(1994);
+    });
+
+    it("should hide the previous year navigation arrow button when the minDate falls under the currently visible year ", () => {
+      const { container } = render(
+        <Calendar showQuarterYearPicker minDate={startOfMonth(new Date())} />,
+      );
+      const previous = container.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      expect(previous).toBeNull();
+    });
+
+    it("should hide the next year navigation arrow button when the maxDate falls under the currently visible year ", () => {
+      const { container } = render(
+        <Calendar showQuarterYearPicker maxDate={endOfYear(new Date())} />,
+      );
+
+      const next = container.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(next).toBeNull();
     });
   });
 

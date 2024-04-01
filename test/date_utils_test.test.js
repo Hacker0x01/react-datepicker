@@ -34,6 +34,8 @@ import {
   setDefaultLocale,
   yearsDisabledAfter,
   yearsDisabledBefore,
+  quarterDisabledBefore,
+  quarterDisabledAfter,
   getWeek,
   safeDateRangeFormat,
   getHolidaysMap,
@@ -662,6 +664,54 @@ describe("date_utils", () => {
       const day = newDate("2016-03-19");
       const includeDates = [newDate("2016-03-01")];
       expect(monthDisabledAfter(day, { includeDates })).toBe(true);
+    });
+  });
+
+  describe("quarterDisabledBefore", () => {
+    it("should return false by default", () => {
+      expect(quarterDisabledBefore(newDate())).toBe(false);
+    });
+
+    it("should return true if min date is in the same year", () => {
+      const day = newDate("2016-02-19");
+      const minDate = newDate("2016-03-01");
+      expect(quarterDisabledBefore(day, { minDate })).toBe(true);
+    });
+
+    it("should return false if min date is in the previous year", () => {
+      const day = newDate("2016-03-19");
+      const minDate = newDate("2015-03-29");
+      expect(quarterDisabledBefore(day, { minDate })).toBe(false);
+    });
+
+    it("should return true if previous year is before include dates", () => {
+      const day = newDate("2016-03-19");
+      const includeDates = [newDate("2016-03-01")];
+      expect(quarterDisabledBefore(day, { includeDates })).toBe(true);
+    });
+  });
+
+  describe("quarterDisabledAfter", () => {
+    it("should return false by default", () => {
+      expect(quarterDisabledAfter(newDate())).toBe(false);
+    });
+
+    it("should return true if max date is in the same year", () => {
+      const day = newDate("2016-03-19");
+      const maxDate = newDate("2016-08-31");
+      expect(quarterDisabledAfter(day, { maxDate })).toBe(true);
+    });
+
+    it("should return false if max date is in the next year", () => {
+      const day = newDate("2016-03-19");
+      const maxDate = newDate("2017-04-01");
+      expect(quarterDisabledAfter(day, { maxDate })).toBe(false);
+    });
+
+    it("should return true if next year is after include dates", () => {
+      const day = newDate("2016-03-19");
+      const includeDates = [newDate("2016-03-01")];
+      expect(quarterDisabledAfter(day, { includeDates })).toBe(true);
     });
   });
 
