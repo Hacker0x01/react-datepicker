@@ -2217,6 +2217,42 @@ describe("DatePicker", () => {
       );
       expect(endDate).toBeNull();
     });
+
+    it("should swap dates of range when endDate set before startDate", () => {
+      const selected = utils.newDate();
+      const selectedPrevious = utils.subDays(utils.newDate(), 3);
+      let [startDate, endDate] = [selected, null];
+      const onChange = (dates = []) => {
+        [startDate, endDate] = dates;
+      };
+      const { container } = render(
+        <DatePicker
+          swapRange
+          selected={startDate}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />,
+      );
+
+      let selectedDay = findSelectedDay(container, selectedPrevious);
+      // Ensure that we're dealing with a date at the beginning of the month
+      if (!selectedDay) {
+        // If it's the beginning of the month & if the selectedPrevious is not being displayed, navigate to the previous month and reselect the selectedPrevious
+        goToLastMonth(container);
+        selectedDay = findSelectedDay(container, selectedPrevious);
+      }
+
+      fireEvent.click(selectedDay);
+      expect(utils.formatDate(startDate, "yyyy-MM-dd")).toBe(
+        utils.formatDate(selectedPrevious, "yyyy-MM-dd"),
+      );
+      expect(utils.formatDate(endDate, "yyyy-MM-dd")).toBe(
+        utils.formatDate(selected, "yyyy-MM-dd"),
+      );
+    });
   });
 
   describe("selectsRange without inline", () => {

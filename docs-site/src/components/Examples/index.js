@@ -105,6 +105,7 @@ import SelectsMultiple from "../../examples/selectsMultiple";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
 import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
+import SwapRange from "../../examples/rangeSwapRange";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -460,6 +461,12 @@ export default class exampleComponents extends React.Component {
     {
       title: "Range Quarter Picker for one quarter picker",
       component: RangeQuarterPickerSelectsRange,
+    },
+    {
+      title: "Range Swap Range",
+      description:
+        "Swap the start and end date if the end date is before the start date in a pick sequence.",
+      component: SwapRange,
     },
     {
       title: "Read only datepicker",
