@@ -115,6 +115,7 @@ export default class DatePicker extends React.Component {
       showQuarterYearPicker: false,
       showWeekPicker: false,
       strictParsing: false,
+      swapRange: false,
       timeIntervals: 30,
       timeCaption: "Time",
       previousMonthAriaLabel: "Previous Month",
@@ -253,6 +254,7 @@ export default class DatePicker extends React.Component {
     showWeekNumbers: PropTypes.bool,
     showYearDropdown: PropTypes.bool,
     strictParsing: PropTypes.bool,
+    swapRange: PropTypes.bool,
     forceShowMonthNavigation: PropTypes.bool,
     showDisabledMonthNavigation: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
@@ -634,6 +636,7 @@ export default class DatePicker extends React.Component {
       selectsMultiple,
       selectedDates,
       minTime,
+      swapRange,
     } = this.props;
 
     if (
@@ -690,7 +693,11 @@ export default class DatePicker extends React.Component {
           if (changedDate === null) {
             onChange([null, null], event);
           } else if (isDateBefore(changedDate, startDate)) {
-            onChange([changedDate, null], event);
+            if (swapRange) {
+              onChange([changedDate, startDate], event);
+            } else {
+              onChange([changedDate, null], event);
+            }
           } else {
             onChange([startDate, changedDate], event);
           }
