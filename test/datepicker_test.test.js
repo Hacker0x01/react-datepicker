@@ -2219,8 +2219,8 @@ describe("DatePicker", () => {
     });
 
     it("should swap dates of range when endDate set before startDate", () => {
-      const selected = utils.newDate();
-      const selectedPrevious = utils.subDays(utils.newDate(), 3);
+      const selected = utils.newDate("2024-04-03");
+      const selectedPrevious = utils.subDays(selected, 3);
       let [startDate, endDate] = [selected, null];
       const onChange = (dates = []) => {
         [startDate, endDate] = dates;
