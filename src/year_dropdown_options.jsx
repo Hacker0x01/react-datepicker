@@ -143,11 +143,11 @@ export default class YearDropdownOptions extends React.Component {
   };
 
   incrementYears = () => {
-    return this.shiftYears(1);
+    return this.shiftYears(10);
   };
 
   decrementYears = () => {
-    return this.shiftYears(-1);
+    return this.shiftYears(-10);
   };
 
   render() {

@@ -688,6 +688,7 @@ export default class Calendar extends React.Component {
     return (
       <div className={classes.join(" ")}>
         {formatDate(date, this.props.dateFormat, this.props.locale)}
+        {this.renderYearDropdown(0)}
       </div>
     );
   };
@@ -780,7 +781,6 @@ export default class Calendar extends React.Component {
       >
         {this.renderMonthDropdown(i !== 0)}
         {this.renderMonthYearDropdown(i !== 0)}
-        {this.renderYearDropdown(i !== 0)}
       </div>
       <div className="react-datepicker__day-names">
         {this.header(monthDate)}

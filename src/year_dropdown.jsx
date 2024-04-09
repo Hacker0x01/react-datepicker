@@ -57,12 +57,14 @@ export default class YearDropdown extends React.Component {
   renderReadView = (visible) => (
     <div
       key="read"
-      style={{ visibility: visible ? "visible" : "hidden" }}
+      // style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
       onClick={(event) => this.toggleDropdown(event)}
     >
-      <span className="react-datepicker__year-read-view--down-arrow" />
-      <span className="react-datepicker__year-read-view--selected-year">
+      <span
+        className="react-datepicker__year-read-view--selected-year"
+        style={{ textDecoration: "underline" }}
+      >
         {this.props.year}
       </span>
     </div>
