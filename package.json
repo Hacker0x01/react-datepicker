@@ -47,7 +47,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^15.0.0",
     "@types/jest": "^29.5.4",
     "@types/node": "20",
     "axe-core": "^4.4.1",
