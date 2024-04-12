@@ -1822,9 +1822,9 @@
     pretty-format "^27.0.2"
 
 "@testing-library/react@^15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-15.0.0.tgz#13cdc21aa83c60c48bd05cfec3d7725dd775c6c5"
-  integrity sha512-Nb2Sq8MoSvGVdOGGppRqXeafLtvXCOwiOQtcbqCfkpVNZZNUqIjeSOwrfJ59zBfmZbAn8PitnWEzUKD1YwMrCg==
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-15.0.1.tgz#d67258ddc7b175e00aa9d8ddeada60ff8ac03ff8"
+  integrity sha512-I8u4qqGAuBg7C1/kRB9n7Oz9Pc/UHEkmiQRbJziSG8B13eZfAcAUn8TSP26ZIvfSeb68CngmtZbKKcRqcQKa3g==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^10.0.0"
