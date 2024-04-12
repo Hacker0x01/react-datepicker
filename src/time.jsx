@@ -189,7 +189,6 @@ export default class Time extends React.Component {
           sortedInjectTimes,
         );
         times = times.concat(timesToInject);
-        console.log(times);
       }
     }
 
