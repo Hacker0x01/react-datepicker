@@ -55,6 +55,7 @@ import { isWithinInterval } from "date-fns/isWithinInterval";
 import { toDate } from "date-fns/toDate";
 import { parse } from "date-fns/parse";
 import { parseISO } from "date-fns/parseISO";
+import { addSeconds } from "date-fns";
 
 export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 
@@ -850,10 +851,11 @@ export function timesToInjectAfter(
   const l = injectedTimes.length;
   const times = [];
   for (let i = 0; i < l; i++) {
-    const injectedTime = addMinutes(
-      addHours(startOfDay, getHours(injectedTimes[i])),
-      getMinutes(injectedTimes[i]),
-    );
+    let injectedTime = startOfDay;
+    injectedTime = addHours(injectedTime, getHours(injectedTimes[i]));
+    injectedTime = addMinutes(injectedTime, getMinutes(injectedTimes[i]));
+    injectedTime = addSeconds(injectedTime, getSeconds(injectedTimes[i]));
+
     const nextTime = addMinutes(
       startOfDay,
       (currentMultiplier + 1) * intervals,

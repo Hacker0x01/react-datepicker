@@ -7,9 +7,9 @@
       selected={startDate}
       onChange={(date) => setStartDate(date)}
       showTimeSelect
-      timeFormat="HH:mm"
+      timeFormat="HH:mm:ss"
       injectTimes={[
-        setHours(setMinutes(new Date(), 1), 0),
+        setHours(setMinutes(setSeconds(new Date(), 10), 1), 0),
         setHours(setMinutes(new Date(), 5), 12),
         setHours(setMinutes(new Date(), 59), 23),
       ]}
