@@ -296,7 +296,15 @@ export function getEndOfMonth(date) {
 
 // *** Addition ***
 
-export { addMinutes, addDays, addWeeks, addMonths, addQuarters, addYears };
+export {
+  addSeconds,
+  addMinutes,
+  addDays,
+  addWeeks,
+  addMonths,
+  addQuarters,
+  addYears,
+};
 
 // *** Subtraction ***
 
