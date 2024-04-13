@@ -50,8 +50,10 @@ jobs:
       - name: Test
         run: yarn test:ci
 
-      - name: Codecov
-        run: yarn run codecov --disable=gcov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build
         run: yarn build
