@@ -52,8 +52,6 @@ jobs:
 
       - name: Codecov
         run: yarn run codecov --disable=gcov
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build
         run: yarn build
