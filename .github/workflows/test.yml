@@ -50,10 +50,11 @@ jobs:
       - name: Test
         run: yarn test:ci
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true # optional (default = false)
+          token: ${{ secrets.CODECOV_TOKEN }} # required
+          verbose: true # optional (default = false)
 
       - name: Build
         run: yarn build
