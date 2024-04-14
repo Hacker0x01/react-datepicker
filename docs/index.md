@@ -141,6 +141,7 @@
 | `startDate`                     | `instanceOfDate`                                                                                                                                     |                    |             |
 | `startOpen`                     | `bool`                                                                                                                                               |                    |             |
 | `strictParsing`                 | `bool`                                                                                                                                               | `false`            |             |
+| `swapRange`                     | `bool`                                                                                                                                               | `false`            |             |
 | `tabIndex`                      | `number`                                                                                                                                             |                    |             |
 | `timeCaption`                   | `string`                                                                                                                                             | `"Time"`           |             |
 | `timeClassName`                 | `func`                                                                                                                                               |                    |             |
