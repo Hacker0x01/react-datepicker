@@ -84,7 +84,7 @@ describe("TimeComponent", () => {
     ]);
   });
 
-  it.only("should support hours, minutes, and seconds", () => {
+  it("should support hours, minutes, and seconds", () => {
     const today = utils.getStartOfDay(utils.newDate());
 
     const { container } = render(
@@ -103,7 +103,6 @@ describe("TimeComponent", () => {
       ".react-datepicker__time-list-item--injected",
     );
 
-    console.log(Array.from(injectedItems).map((node) => node.textContent));
     expect(Array.from(injectedItems).map((node) => node.textContent)).toEqual([
       "00:00:01",
       "00:30:01",

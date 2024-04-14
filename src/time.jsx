@@ -123,7 +123,7 @@ export default class Time extends React.Component {
       classes.push("react-datepicker__time-list-item--disabled");
     }
 
-    //this.props.intervals is in minutes
+    //convert this.props.intervals and the relevant time to seconds and check if it it's a clean multiple of the interval
     if (
       this.props.injectTimes &&
       (getHours(time) * 3600 + getMinutes(time) * 60 + getSeconds(time)) %
