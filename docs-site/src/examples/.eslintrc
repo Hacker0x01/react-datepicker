@@ -15,6 +15,7 @@
         "DatePicker": false,
         "getHours": false,
         "setHours": false,
+        "setSeconds": false,
         "setMinutes": false,
         "getDate": false,
         "addDays": false,

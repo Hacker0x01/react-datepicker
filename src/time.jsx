@@ -13,6 +13,7 @@ import {
   getHoursInDay,
   isSameMinute,
 } from "./date_utils";
+import { getSeconds } from "date-fns";
 
 export default class Time extends React.Component {
   static get defaultProps() {
@@ -121,9 +122,13 @@ export default class Time extends React.Component {
     if (this.isDisabledTime(time)) {
       classes.push("react-datepicker__time-list-item--disabled");
     }
+
+    //convert this.props.intervals and the relevant time to seconds and check if it it's a clean multiple of the interval
     if (
       this.props.injectTimes &&
-      (getHours(time) * 60 + getMinutes(time)) % this.props.intervals !== 0
+      (getHours(time) * 3600 + getMinutes(time) * 60 + getSeconds(time)) %
+        (this.props.intervals * 60) !==
+        0
     ) {
       classes.push("react-datepicker__time-list-item--injected");
     }

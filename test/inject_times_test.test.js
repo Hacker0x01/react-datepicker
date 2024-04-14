@@ -26,7 +26,7 @@ describe("TimeComponent", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const { container } = render(
       <TimeComponent
-        timeIntervals={60}
+        intervals={60}
         injectTimes={[
           utils.addMinutes(today, 0),
           utils.addMinutes(today, 60),
@@ -45,7 +45,7 @@ describe("TimeComponent", () => {
     const today = utils.getStartOfDay(utils.newDate());
     const { container } = render(
       <TimeComponent
-        timeIntervals={60}
+        intervals={60}
         injectTimes={[
           utils.addMinutes(today, 1),
           utils.addMinutes(today, 2),
@@ -62,9 +62,10 @@ describe("TimeComponent", () => {
 
   it("should sort injected times automatically", () => {
     const today = utils.getStartOfDay(utils.newDate());
+
     const { container } = render(
       <TimeComponent
-        timeIntervals={60}
+        intervals={60}
         injectTimes={[
           utils.addMinutes(today, 3),
           utils.addMinutes(today, 1),
@@ -80,6 +81,32 @@ describe("TimeComponent", () => {
       "12:01 AM",
       "12:02 AM",
       "12:03 AM",
+    ]);
+  });
+
+  it("should support hours, minutes, and seconds", () => {
+    const today = utils.getStartOfDay(utils.newDate());
+
+    const { container } = render(
+      <TimeComponent
+        format="HH:mm:ss"
+        intervals={60}
+        injectTimes={[
+          utils.addSeconds(today, 1),
+          utils.addMinutes(utils.addSeconds(today, 1), 30),
+          utils.addHours(utils.addMinutes(utils.addSeconds(today, 1), 30), 1),
+        ]}
+      />,
+    );
+
+    const injectedItems = container.querySelectorAll(
+      ".react-datepicker__time-list-item--injected",
+    );
+
+    expect(Array.from(injectedItems).map((node) => node.textContent)).toEqual([
+      "00:00:01",
+      "00:30:01",
+      "01:30:01",
     ]);
   });
 });
