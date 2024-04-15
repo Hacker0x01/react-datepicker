@@ -444,6 +444,7 @@ export default class Calendar extends React.Component {
         return (
           <div
             key={offset}
+            aria-label={formatDate(day, "EEEE", this.props.locale)}
             className={clsx("react-datepicker__day-name", weekDayClassName)}
           >
             {weekDayName}
