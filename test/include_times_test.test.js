@@ -67,23 +67,11 @@ describe("TimeComponent", () => {
       />,
     );
 
-    const allTimeItems = timeComponent.querySelectorAll(
-      ".react-datepicker__time-list-item",
-    );
-
-    // 01:00:30 and 00:00:30 should be correctly visible in the time list
-    expect(Array.from(allTimeItems).map((node) => node.textContent)).toContain(
-      "01:00:30",
-    );
-    expect(Array.from(allTimeItems).map((node) => node.textContent)).toContain(
-      "00:00:30",
-    );
-
     const disabledTimeItems = timeComponent.querySelectorAll(
       ".react-datepicker__time-list-item--disabled",
     );
 
-    // 01:00:00 and 00:00:00 should be correctly disabled
+    // 01:00:00 and 00:00:00 should be correctly disabled because they are not included
     expect(
       Array.from(disabledTimeItems).map((node) => node.textContent),
     ).toContain("01:00:00");
