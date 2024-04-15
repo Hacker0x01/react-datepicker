@@ -54,4 +54,28 @@ describe("TimeComponent", () => {
     });
     expect(enabledTimeItemsHasNoAriaDisabled).toBe(true);
   });
+
+  it.only("should factor in seconds", () => {
+    const includeHoursMinutesSeconds = [
+      utils.addHours(utils.addSeconds(today, 30), 1), //01:00:30
+      utils.addSeconds(today, 30), //00:00:30
+    ];
+    const { container: timeComponent } = render(
+      <TimeComponent
+        format="HH:mm:ss"
+        includeTimes={includeHoursMinutesSeconds}
+      />,
+    );
+
+    const disabledTimeItems = timeComponent.querySelectorAll(
+      ".react-datepicker__time-list-item--disabled",
+    );
+
+    expect(
+      Array.from(disabledTimeItems).map((node) => node.textContent),
+    ).toContain("01:00:00");
+    expect(
+      Array.from(disabledTimeItems).map((node) => node.textContent),
+    ).toContain("00:00:00");
+  });
 });

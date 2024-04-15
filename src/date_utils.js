@@ -599,7 +599,8 @@ export function isTimeInList(time, times) {
   return times.some(
     (listTime) =>
       getHours(listTime) === getHours(time) &&
-      getMinutes(listTime) === getMinutes(time),
+      getMinutes(listTime) === getMinutes(time) &&
+      getSeconds(listTime) === getSeconds(time),
   );
 }
 
