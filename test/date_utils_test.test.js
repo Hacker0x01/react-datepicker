@@ -49,7 +49,7 @@ import { setHours } from "date-fns/setHours";
 import { addQuarters } from "date-fns/addQuarters";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { registerLocale } from "../src/date_utils";
-import { addYears } from "date-fns";
+import { addYears, setSeconds } from "date-fns";
 
 registerLocale("pt-BR", ptBR);
 
@@ -888,9 +888,12 @@ describe("date_utils", () => {
   describe("isTimeInDisabledRange", () => {
     it("should tell if time is in disabled range", () => {
       const date = newDate("2016-03-15");
-      const time = setHours(setMinutes(date, 30), 1);
-      const minTime = setHours(setMinutes(date, 30), 0);
-      const maxTime = setHours(setMinutes(date, 30), 5);
+      let time = setHours(date, 1);
+      time = setMinutes(time, 30);
+      time = setSeconds(time, 30); // 2016-03-15 01:30:30
+
+      const minTime = setHours(setMinutes(date, 30), 0); //2016-03-15 00:30:00
+      const maxTime = setHours(setMinutes(setSeconds(date, 35), 30), 1); //2016-03-15 01:30:35
       expect(isTimeInDisabledRange(time, { minTime, maxTime })).toBe(false);
     });
 

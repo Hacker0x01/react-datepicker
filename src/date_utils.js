@@ -599,7 +599,8 @@ export function isTimeInList(time, times) {
   return times.some(
     (listTime) =>
       getHours(listTime) === getHours(time) &&
-      getMinutes(listTime) === getMinutes(time),
+      getMinutes(listTime) === getMinutes(time) &&
+      getSeconds(listTime) === getSeconds(time),
   );
 }
 
@@ -619,16 +620,20 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
   }
-  const base = newDate();
-  const baseTime = setHours(setMinutes(base, getMinutes(time)), getHours(time));
-  const min = setHours(
-    setMinutes(base, getMinutes(minTime)),
-    getHours(minTime),
-  );
-  const max = setHours(
-    setMinutes(base, getMinutes(maxTime)),
-    getHours(maxTime),
-  );
+  let baseTime = newDate();
+  baseTime = setHours(baseTime, getHours(time));
+  baseTime = setMinutes(baseTime, getMinutes(time));
+  baseTime = setSeconds(baseTime, getSeconds(time));
+
+  let min = newDate();
+  min = setHours(min, getHours(minTime));
+  min = setMinutes(min, getMinutes(minTime));
+  min = setSeconds(min, getSeconds(minTime));
+
+  let max = newDate();
+  max = setHours(max, getHours(maxTime));
+  max = setMinutes(max, getMinutes(maxTime));
+  max = setSeconds(max, getSeconds(maxTime));
 
   let valid;
   try {
