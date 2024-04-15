@@ -838,7 +838,10 @@ export default class DatePicker extends React.Component {
         const selectorString =
           this.props.showWeekPicker && this.props.showWeekNumbers
             ? '.react-datepicker__week-number[tabindex="0"]'
-            : '.react-datepicker__day[tabindex="0"]';
+            : this.props.showFullMonthYearPicker ||
+                this.props.showMonthYearPicker
+              ? '.react-datepicker__month-text[tabindex="0"]'
+              : '.react-datepicker__day[tabindex="0"]';
         const selectedItem =
           this.calendar.componentNode &&
           this.calendar.componentNode.querySelector(selectorString);

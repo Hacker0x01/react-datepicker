@@ -1285,6 +1285,25 @@ describe("DatePicker", () => {
     fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
     expect(data.instance.state.open).toBe(true);
   });
+  it("should focus first month when the down arrow key is pressed", async () => {
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+    render(<DatePicker showMonthYearPicker />, {
+      container: div,
+    });
+
+    // user focuses the input field, the calendar opens
+    const dateInput = div.querySelector("input");
+    fireEvent.focus(dateInput);
+    fireEvent.keyDown(dateInput, getKey("ArrowDown"));
+
+    await waitFor(() => {
+      const selectedMonth = div.querySelector(
+        '.react-datepicker__month-text[tabindex="0"]',
+      );
+      expect(document.activeElement).toBe(selectedMonth);
+    });
+  });
   it("should not open the calendar when the left arrow key is pressed", () => {
     const data = getOnInputKeyDownStuff();
     act(() => {
