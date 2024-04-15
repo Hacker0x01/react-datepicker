@@ -2301,6 +2301,25 @@ describe("DatePicker", () => {
       expect(container.querySelector(".react-datepicker")).toBeNull();
     });
 
+    it("should be closed after clicking day when startDate has a value (endDate is being selected) and swapRange prop was passed", () => {
+      const startDate = new Date("2021-01-01 00:00:00");
+      const endDate = null;
+      const { container } = render(
+        <DatePicker
+          swapRange
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+        />,
+      );
+      fireEvent.click(container.querySelector("input"));
+
+      const days = container.querySelectorAll(".react-datepicker__day");
+      const day = days[Math.floor(days.length / 2)];
+      fireEvent.click(day);
+      expect(container.querySelector(".react-datepicker")).toBeNull();
+    });
+
     it("has clear button rendered when isClearable is true and startDate has value", () => {
       const startDate = new Date("2021-01-01 00:00:00");
       const endDate = new Date("2021-01-21 00:00:00");

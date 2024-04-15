@@ -602,7 +602,11 @@ export default class DatePicker extends React.Component {
 
       const { startDate, endDate } = this.props;
 
-      if (startDate && !endDate && !isDateBefore(date, startDate)) {
+      if (
+        startDate &&
+        !endDate &&
+        (this.props.swapRange || !isDateBefore(date, startDate))
+      ) {
         this.setOpen(false);
       }
     }
