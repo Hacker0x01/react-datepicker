@@ -1882,6 +1882,37 @@ describe("Calendar", () => {
     });
   });
 
+  it("should add the aria-label correctly to day names", () => {
+    const expectedAriaLabels = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    const { container } = render(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+      />,
+    );
+
+    const header = container.querySelector(".react-datepicker__header");
+    const dayNameElements = header.querySelectorAll(
+      ".react-datepicker__day-name",
+    );
+
+    dayNameElements.forEach((element, index) => {
+      expect(element.getAttribute("aria-label")).toBe(
+        expectedAriaLabels[index],
+      );
+    });
+  });
+
   it("should have a next-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for next year";
     const { container } = render(
