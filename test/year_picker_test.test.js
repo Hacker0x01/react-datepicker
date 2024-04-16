@@ -637,6 +637,20 @@ describe("YearPicker", () => {
         which: 39,
       });
 
+    const simulateUp = (target) =>
+      fireEvent.keyDown(target, {
+        key: "ArrowUp",
+        keyCode: 38,
+        which: 38,
+      });
+
+    const simulateDown = (target) =>
+      fireEvent.keyDown(target, {
+        key: "ArrowDown",
+        keyCode: 40,
+        which: 40,
+      });
+
     it("should preSelect and set 2020 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
 
@@ -656,6 +670,86 @@ describe("YearPicker", () => {
       simulateRight(target);
 
       expect(utils.getYear(preSelected)).toBe(2022);
+    });
+    it("should preSelect and set 2021 on up arrow press", () => {
+      const yearPicker = getPicker("2024-01-01");
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateUp(target);
+
+      expect(utils.getYear(preSelected)).toBe(2021);
+    });
+    it("should preSelect and set 2027 on down arrow press", () => {
+      const yearPicker = getPicker("2024-01-01");
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateDown(target);
+
+      expect(utils.getYear(preSelected)).toBe(2027);
+    });
+    it("should paginate from 2018 to 2015", () => {
+      const yearPicker = getPicker("2018-01-01");
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateUp(target);
+
+      expect(utils.getYear(preSelected)).toBe(2015);
+    });
+    it("should paginate from 2018 to 2016 with custom yearItemNumber", () => {
+      const yearPicker = getPicker("2018-01-01", { yearItemNumber: 8 });
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateUp(target);
+
+      expect(utils.getYear(preSelected)).toBe(2016);
+    });
+    it("should paginate from 2019 to 2014 with custom yearItemNumber", () => {
+      const yearPicker = getPicker("2019-01-01", { yearItemNumber: 8 });
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateUp(target);
+
+      expect(utils.getYear(preSelected)).toBe(2014);
+    });
+    it("should paginate from 2028 to 2031", () => {
+      const yearPicker = getPicker("2028-01-01");
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateDown(target);
+
+      expect(utils.getYear(preSelected)).toBe(2031);
+    });
+    it("should paginate from 2024 to 2026 with custom yearItemNumber", () => {
+      const yearPicker = getPicker("2024-01-01", { yearItemNumber: 8 });
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateDown(target);
+
+      expect(utils.getYear(preSelected)).toBe(2026);
+    });
+    it("should paginate from 2022 to 2027 with custom yearItemNumber", () => {
+      const yearPicker = getPicker("2022-01-01", { yearItemNumber: 8 });
+
+      const target = yearPicker.querySelector(
+        ".react-datepicker__year-text--selected",
+      );
+      simulateDown(target);
+
+      expect(utils.getYear(preSelected)).toBe(2027);
     });
     it("should paginate from 2017 to 2016", () => {
       const yearPicker = getPicker("2017-01-01");
