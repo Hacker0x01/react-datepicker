@@ -6,6 +6,7 @@ import range from "lodash/range";
 import * as utils from "../src/date_utils";
 import { runAxe } from "./run_axe";
 import { getKey } from "./test_utils";
+import { es } from "date-fns/locale";
 
 describe("Month", () => {
   function assertDateRangeInclusive(month, start, end) {
@@ -55,6 +56,36 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
+        .getAttribute("aria-label"),
+    ).toContain(expectedAriaLabel);
+  });
+
+  it("should display month listbox aria-label in Spanish if Spanish locale is provided", () => {
+    utils.registerLocale("es", es);
+    const date = utils.newDate("2015-12-01");
+    const { container } = render(
+      <Month day={date} locale="es" showMonthYearPicker />,
+    );
+    const expectedAriaLabel = utils.formatDate(date, "MMMM, yyyy", "es");
+
+    expect(
+      container
+        .querySelector(".react-datepicker__month")
+        .getAttribute("aria-label"),
+    ).toContain(expectedAriaLabel);
+  });
+
+  it("should display month options aria-label in Spanish if Spanish locale is provided", () => {
+    utils.registerLocale("es", es);
+    const date = utils.newDate("2015-01-01");
+    const { container } = render(
+      <Month day={date} locale="es" showMonthYearPicker />,
+    );
+    const expectedAriaLabel = utils.formatDate(date, "MMMM yyyy", "es");
+
+    expect(
+      container
+        .querySelectorAll(".react-datepicker__month-text")[0]
         .getAttribute("aria-label"),
     ).toContain(expectedAriaLabel);
   });
