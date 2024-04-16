@@ -622,15 +622,15 @@ export default class Month extends React.Component {
       chooseDayAriaLabelPrefix = "Choose",
       disabledDayAriaLabelPrefix = "Not available",
       day,
+      locale,
     } = this.props;
-
     const labelDate = utils.setMonth(day, month);
     const prefix =
       this.isDisabled(labelDate) || this.isExcluded(labelDate)
         ? disabledDayAriaLabelPrefix
         : chooseDayAriaLabelPrefix;
 
-    return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy")}`;
+    return `${prefix} ${utils.formatDate(labelDate, "MMMM yyyy", locale)}`;
   };
 
   getQuarterClassNames = (q) => {
@@ -830,7 +830,7 @@ export default class Month extends React.Component {
         onPointerLeave={
           this.props.usePointerEvent ? this.handleMouseLeave : undefined
         }
-        aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(day, "MMMM, yyyy")}`}
+        aria-label={`${formattedAriaLabelPrefix}${utils.formatDate(day, "MMMM, yyyy", this.props.locale)}`}
         role="listbox"
       >
         {showMonthYearPicker
