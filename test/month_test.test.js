@@ -430,7 +430,7 @@ describe("Month", () => {
     expect(utils.getMonth(monthClicked)).toBe(6);
   });
 
-  it("should return disabled class if current date is out of bound of minDate and maxDate", () => {
+  it("should return disabled month if current date is out of bound of minDate and maxDate", () => {
     const onDayClickSpy = jest.fn();
     const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
@@ -449,13 +449,14 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).toBe(true);
+    expect(month.getAttribute("aria-disabled")).toBe("true");
     fireEvent.click(month);
     expect(onDayClickSpy).not.toHaveBeenCalled();
     fireEvent.mouseEnter(month);
     expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
   });
 
-  it("should not return disabled class if current date is before minDate but same month", () => {
+  it("should not return disabled month if current date is before minDate but same month", () => {
     const onDayClickSpy = jest.fn();
     const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
@@ -473,13 +474,14 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).not.toBe(true);
+    expect(month.getAttribute("aria-disabled")).not.toBe("true");
     fireEvent.click(month);
     expect(onDayClickSpy).toHaveBeenCalled();
     fireEvent.mouseEnter(month);
     expect(onDayMouseEnterSpy).toHaveBeenCalled();
   });
 
-  it("should not return disabled class if current date is after maxDate but same month", () => {
+  it("should not return disabled month if current date is after maxDate but same month", () => {
     const onDayClickSpy = jest.fn();
     const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
@@ -497,13 +499,14 @@ describe("Month", () => {
     expect(
       month.classList.contains("react-datepicker__month-text--disabled"),
     ).not.toBe(true);
+    expect(month.getAttribute("aria-disabled")).not.toBe("true");
     fireEvent.click(month);
     expect(onDayClickSpy).toHaveBeenCalled();
     fireEvent.mouseEnter(month);
     expect(onDayMouseEnterSpy).toHaveBeenCalled();
   });
 
-  it("should return disabled class if specified excludeDate", () => {
+  it("should return disabled month if specified excludeDate", () => {
     const onDayClickSpy = jest.fn();
     const onDayMouseEnterSpy = jest.fn();
     const { container } = render(
@@ -530,6 +533,7 @@ describe("Month", () => {
       expect(
         month.classList.contains("react-datepicker__month-text--disabled"),
       ).toBe(true);
+      expect(month.getAttribute("aria-disabled")).toBe("true");
       fireEvent.click(month);
       expect(onDayClickSpy).not.toHaveBeenCalled();
       fireEvent.mouseEnter(month);
@@ -537,7 +541,7 @@ describe("Month", () => {
     });
   });
 
-  it("should return disabled class if specified includeDate", () => {
+  it("should return disabled month if specified includeDate", () => {
     const { container } = render(
       <Month
         day={utils.newDate("2015-01-01")}
@@ -566,6 +570,7 @@ describe("Month", () => {
       expect(
         month.classList.contains("react-datepicker__month-text--disabled"),
       ).toBe(true);
+      expect(month.getAttribute("aria-disabled")).toBe("true");
     }
   });
 

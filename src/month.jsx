@@ -545,31 +545,27 @@ export default class Month extends React.Component {
     }
   };
 
+  isMonthDisabled = (month) => {
+    const { day, minDate, maxDate, excludeDates, includeDates } = this.props;
+    const labelDate = utils.setMonth(day, month);
+    return (
+      (minDate || maxDate || excludeDates || includeDates) &&
+      utils.isMonthDisabled(labelDate, this.props)
+    );
+  };
+
   getMonthClassNames = (m) => {
-    const {
-      day,
-      startDate,
-      endDate,
-      selected,
-      minDate,
-      maxDate,
-      preSelection,
-      monthClassName,
-      excludeDates,
-      includeDates,
-    } = this.props;
+    const { day, startDate, endDate, selected, preSelection, monthClassName } =
+      this.props;
     const _monthClassName = monthClassName
       ? monthClassName(utils.setMonth(day, m))
       : undefined;
-    const labelDate = utils.setMonth(day, m);
     return clsx(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       _monthClassName,
       {
-        "react-datepicker__month-text--disabled":
-          (minDate || maxDate || excludeDates || includeDates) &&
-          utils.isMonthDisabled(labelDate, this.props),
+        "react-datepicker__month-text--disabled": this.isMonthDisabled(m),
         "react-datepicker__month-text--selected": this.isSelectedMonth(
           day,
           m,
@@ -737,6 +733,7 @@ export default class Month extends React.Component {
             }
             tabIndex={this.getTabIndex(m)}
             className={this.getMonthClassNames(m)}
+            aria-disabled={this.isMonthDisabled(m)}
             role="option"
             aria-label={this.getAriaLabel(m)}
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
