@@ -4,6 +4,8 @@ import { getYear, newDate } from "./date_utils";
 import * as utils from "./date_utils";
 import { clsx } from "clsx";
 
+const VERTICAL_NAVIGATION_OFFSET = 3;
+
 export default class Year extends React.Component {
   static propTypes = {
     clearSelectingDate: PropTypes.func,
@@ -77,10 +79,12 @@ export default class Year extends React.Component {
     if (this.isDisabled(newDate) || this.isExcluded(newDate)) return;
     this.props.setPreSelection(newDate);
 
-    if (newYear - startPeriod === -1) {
-      this.updateFocusOnPaginate(yearItemNumber - 1);
-    } else if (newYear - startPeriod === yearItemNumber) {
-      this.updateFocusOnPaginate(0);
+    if (newYear - startPeriod < 0) {
+      this.updateFocusOnPaginate(yearItemNumber - (startPeriod - newYear));
+    } else if (newYear - startPeriod >= yearItemNumber) {
+      this.updateFocusOnPaginate(
+        Math.abs(yearItemNumber - (newYear - startPeriod)),
+      );
     } else this.YEAR_REFS[newYear - startPeriod].current.focus();
   };
 
@@ -168,7 +172,12 @@ export default class Year extends React.Component {
 
   onYearKeyDown = (e, y) => {
     const { key } = e;
-    const { handleOnKeyDown } = this.props;
+    const { date, yearItemNumber, handleOnKeyDown } = this.props;
+
+    if (key !== "Tab") {
+      // preventDefault on tab event blocks focus change
+      e.preventDefault();
+    }
 
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
@@ -188,6 +197,52 @@ export default class Year extends React.Component {
             utils.subYears(this.props.preSelection, 1),
           );
           break;
+        case "ArrowUp": {
+          const { startPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+          let offset = VERTICAL_NAVIGATION_OFFSET;
+          let newYear = y - offset;
+
+          if (newYear < startPeriod) {
+            const leftOverOffset = yearItemNumber % offset;
+
+            if (y >= startPeriod && y < startPeriod + leftOverOffset) {
+              offset = leftOverOffset;
+            } else {
+              offset += leftOverOffset;
+            }
+
+            newYear = y - offset;
+          }
+
+          this.handleYearNavigation(
+            newYear,
+            utils.subYears(this.props.preSelection, offset),
+          );
+          break;
+        }
+        case "ArrowDown": {
+          const { endPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+          let offset = VERTICAL_NAVIGATION_OFFSET;
+          let newYear = y + offset;
+
+          if (newYear > endPeriod) {
+            const leftOverOffset = yearItemNumber % offset;
+
+            if (y <= endPeriod && y > endPeriod - leftOverOffset) {
+              offset = leftOverOffset;
+            } else {
+              offset += leftOverOffset;
+            }
+
+            newYear = y + offset;
+          }
+
+          this.handleYearNavigation(
+            newYear,
+            utils.addYears(this.props.preSelection, offset),
+          );
+          break;
+        }
       }
     }
 
