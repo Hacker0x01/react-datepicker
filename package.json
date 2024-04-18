@@ -47,6 +47,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@testing-library/react": "^15.0.0",
     "@types/jest": "^29.5.4",
     "@types/node": "20",
@@ -74,7 +75,9 @@
     "stylelint-config-standard": "^36.0.0",
     "stylelint-config-standard-scss": "^13.0.0",
     "stylelint-scss": "^6.2.1",
-    "ts-jest": "^29.1.1"
+    "ts-jest": "^29.1.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "react": "^16.9.0 || ^17 || ^18",
@@ -98,12 +101,15 @@
     "test": "NODE_ENV=test jest",
     "test:ci": "NODE_ENV=test jest --ci --coverage",
     "test:watch": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test jest --watch",
-    "build": "NODE_ENV=production yarn run build:js && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev",
-    "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev",
+    "build": "NODE_ENV=production yarn run build:js && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run build:types",
+    "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev && NODE_ENV=production yarn run build:types",
     "css:prod": "sass --style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
     "css:modules:prod": "sass --style compressed src/stylesheets/datepicker-cssmodules.scss | tee dist/react-datepicker-cssmodules.min.css dist/react-datepicker-min.module.css",
     "css:dev": "sass --style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
     "css:modules:dev": "sass --style expanded src/stylesheets/datepicker-cssmodules.scss | tee dist/react-datepicker-cssmodules.css dist/react-datepicker.module.css",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
     "js:dev": "rollup -cw",
     "prepare": "husky install"

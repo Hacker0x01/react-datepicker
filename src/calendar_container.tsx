@@ -1,12 +1,18 @@
-import PropTypes from "prop-types";
 import React from "react";
+
+interface CalendarContainerProps {
+  showTimeSelectOnly?: boolean;
+  showTime?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
 
 export default function CalendarContainer({
   showTimeSelectOnly = false,
   showTime = false,
   className,
   children,
-}) {
+}: Readonly<CalendarContainerProps>) {
   let ariaLabel = showTimeSelectOnly
     ? "Choose Time"
     : `Choose Date${showTime ? " and Time" : ""}`;
@@ -22,10 +28,3 @@ export default function CalendarContainer({
     </div>
   );
 }
-
-CalendarContainer.propTypes = {
-  showTimeSelectOnly: PropTypes.bool,
-  showTime: PropTypes.bool,
-  className: PropTypes.string,
-  children: PropTypes.node,
-};
