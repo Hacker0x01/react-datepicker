@@ -102,7 +102,7 @@
     "test": "NODE_ENV=test jest",
     "test:ci": "NODE_ENV=test jest --ci --coverage",
     "test:watch": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test jest --watch",
-    "build": "NODE_ENV=production yarn run build:js && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run build:types",
+    "build": "NODE_ENV=production yarn run build:src && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run build:types",
     "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev && NODE_ENV=production yarn run build:types",
     "css:prod": "sass --style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
     "css:modules:prod": "sass --style compressed src/stylesheets/datepicker-cssmodules.scss | tee dist/react-datepicker-cssmodules.min.css dist/react-datepicker-min.module.css",
@@ -111,7 +111,7 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "rollup -c",
+    "build:src": "rollup -c",
     "js:dev": "rollup -cw",
     "prepare": "husky install"
   },
