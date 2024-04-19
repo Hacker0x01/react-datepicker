@@ -8,6 +8,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import filesize from "rollup-plugin-filesize";
 import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
 
 const pkg = JSON.parse(
   fs
@@ -95,10 +96,15 @@ const config = {
   plugins: [
     resolve({
       mainFields: ["module"],
-      extensions: [".js", ".jsx"],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
     babel(),
     commonjs(),
+    typescript({
+      tsconfig: "./tsconfig.json",
+      declaration: true,
+      declarationDir: "dist",
+    }),
     filesize(),
   ],
   external: [

@@ -1,6 +1,10 @@
 const { NODE_ENV } = process.env;
 
-const presets = ["@babel/preset-env", "@babel/preset-react"];
+const presets = [
+  "@babel/preset-typescript",
+  "@babel/preset-env",
+  "@babel/preset-react",
+];
 const plugins = [
   "@babel/plugin-transform-react-jsx",
   "@babel/plugin-proposal-class-properties",

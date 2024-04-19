@@ -4,13 +4,13 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/test/index.js"],
   testEnvironment: "jest-environment-jsdom",
   collectCoverageFrom: [
-    "**/*.{js,jsx}",
+    "**/*.{js,jsx, ts, tsx}",
     "!**/node_modules/**",
     "!**/vendor/**",
   ],
   transformIgnorePatterns: ["/node_modules/(?!date-fns)"],
   transform: {
-    "^.+\\.(js|jsx)$": "babel-jest",
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
     "^.+\\.ts?$": "ts-jest",
     "node_modules/(?!date-fns/.*)": "ts-jest",
   },
