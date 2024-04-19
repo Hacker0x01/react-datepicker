@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import DatePicker from "../src/index.jsx";
-import InputTimeComponent from "../src/inputTime.jsx";
+import InputTimeComponent from "../src/input_time.tsx";
 import CustomTimeInput from "./helper_components/custom_time_input.jsx";
 
 describe("timeInput", () => {

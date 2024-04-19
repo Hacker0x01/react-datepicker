@@ -1,16 +1,22 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-export default class inputTime extends React.Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    date: PropTypes.instanceOf(Date),
-    timeString: PropTypes.string,
-    timeInputLabel: PropTypes.string,
-    customTimeInput: PropTypes.element,
-  };
+interface InputTimeProps {
+  onChange?: (date: Date) => void;
+  date?: Date;
+  timeString?: string;
+  timeInputLabel?: string;
+  customTimeInput?: JSX.Element;
+}
 
-  constructor(props) {
+interface InputTimeState {
+  time?: string;
+}
+
+export default class InputTime extends React.Component<
+  InputTimeProps,
+  InputTimeState
+> {
+  constructor(props: InputTimeProps) {
     super(props);
 
     this.state = {
@@ -18,7 +24,10 @@ export default class inputTime extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(
+    props: InputTimeProps,
+    state: InputTimeState
+  ) {
     if (props.timeString !== state.time) {
       return {
         time: props.timeString,
@@ -29,17 +38,20 @@ export default class inputTime extends React.Component {
     return null;
   }
 
-  onTimeChange = (time) => {
+  onTimeChange = (time: InputTimeState["time"]) => {
     this.setState({ time });
 
     const { date: propDate } = this.props;
-    const isPropDateValid = propDate instanceof Date && !isNaN(propDate);
+    const isPropDateValid = propDate instanceof Date && !isNaN(+propDate);
     const date = isPropDateValid ? propDate : new Date();
 
-    date.setHours(time.split(":")[0]);
-    date.setMinutes(time.split(":")[1]);
+    if (time && time.includes(":")) {
+      const [hours, minutes] = time.split(":") as [string, string];
+      date.setHours(Number(hours));
+      date.setMinutes(Number(minutes));
+    }
 
-    this.props.onChange(date);
+    this.props.onChange?.(date);
   };
 
   renderTimeInput = () => {
