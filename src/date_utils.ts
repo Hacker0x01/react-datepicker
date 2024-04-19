@@ -55,12 +55,13 @@ import { isWithinInterval } from "date-fns/isWithinInterval";
 import { toDate } from "date-fns/toDate";
 import { parse } from "date-fns/parse";
 import { parseISO } from "date-fns/parseISO";
-import { type Locale, addSeconds } from "date-fns";
+import { type Locale, addSeconds, Day } from "date-fns";
 
-interface LocaleObj extends Pick<Locale, "options" | "match" | "formatLong"> {}
+interface LocaleObj
+  extends Pick<Locale, "options" | "formatLong" | "localize" | "match"> {}
 
 function getLocaleScope() {
-  // Use this cast to avoid messing with users global types (like window) and the rest of keys in the globalThis object we don't care about
+  // Use this cast to avoid messing with users globalThis (like window) and the rest of keys in the globalThis object we don't care about
   const scope = (typeof window !== "undefined"
     ? window
     : globalThis) as unknown as {
@@ -79,19 +80,19 @@ const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
 
 // ** Date Constructors **
 
-export function newDate(value?: string | Date | number | null): Date | null {
+export function newDate(value?: string | Date | number | null): Date {
   if (value == null) {
     return new Date();
   }
 
   const d = typeof value === "string" ? parseISO(value) : toDate(value);
-  return isValid(d) ? d : null;
+  return isValid(d) ? d : new Date();
 }
 
 /**
  * Parses a date.
  *
- * @param value - The value.
+ * @param value - The string representing the Date in a parsable form, e.g., ISO 1861
  * @param dateFormat - The date format.
  * @param locale - The locale.
  * @param strictParsing - The strict parsing flag.
@@ -101,7 +102,7 @@ export function newDate(value?: string | Date | number | null): Date | null {
 export function parseDate(
   value: string,
   dateFormat: string | string[],
-  locale: string | object,
+  locale: string | LocaleObj,
   strictParsing: boolean,
   minDate: Date
 ): Date | null {
@@ -139,12 +140,12 @@ export function parseDate(
       isValid(parsedDate) &&
       value === formatDate(parsedDate, dateFormat, locale);
   } else if (!isValid(parsedDate)) {
-    dateFormat = dateFormat
-      .match(longFormattingTokensRegExp)
+    dateFormat = (dateFormat.match(longFormattingTokensRegExp) ?? [])
       .map(function (substring) {
         const firstCharacter = substring[0];
         if (firstCharacter === "p" || firstCharacter === "P") {
-          const longFormatter = longFormatters[firstCharacter];
+          // The type in date-fns is `Record<string, LongFormatter>` so we can do our firstCharacter a bit loos but I don't think that this is a good idea
+          const longFormatter = longFormatters[firstCharacter]!;
           return localeObject
             ? longFormatter(substring, localeObject.formatLong)
             : firstCharacter;
@@ -175,11 +176,11 @@ export { isDate };
 /**
  * Checks if a given date is valid and not before the minimum date.
  * @param date - The date to be checked.
- * @param minDate - The minimum date allowed. If not provided, defaults to "1/1/1000".
+ * @param minDate - The minimum date allowed. If not provided, defaults to "1/1/1970".
  * @returns A boolean value indicating whether the date is valid and not before the minimum date.
  */
 export function isValid(date: Date, minDate?: Date): boolean {
-  minDate = minDate ? minDate : new Date("1/1/1000");
+  minDate = minDate ? minDate : new Date("1/1/1970");
   return isValidDate(date) && !isBefore(date, minDate);
 }
 
@@ -204,7 +205,7 @@ export function formatDate(
       useAdditionalDayOfYearTokens: true,
     });
   }
-  let localeObj = getLocaleObject(locale);
+  let localeObj = locale ? getLocaleObject(locale) : undefined;
   if (locale && !localeObj) {
     console.warn(
       `A locale object was not found for the provided string ["${locale}"].`
@@ -218,7 +219,7 @@ export function formatDate(
     localeObj = getLocaleObject(getDefaultLocale());
   }
   return format(date, formatStr, {
-    locale: localeObj ? localeObj : null,
+    locale: localeObj,
     useAdditionalWeekYearTokens: true,
     useAdditionalDayOfYearTokens: true,
   });
@@ -236,17 +237,14 @@ export function safeDateFormat(
   {
     dateFormat,
     locale,
-  }: { dateFormat: string | string[]; locale: string | object }
+  }: { dateFormat: string | string[]; locale: string | LocaleObj }
 ): string {
-  return (
-    (date &&
-      formatDate(
-        date,
-        Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
-        locale
-      )) ||
-    ""
-  );
+  const formatStr = (
+    Array.isArray(dateFormat) && dateFormat.length > 0
+      ? dateFormat[0]
+      : dateFormat
+  ) as string; // Cast to string because it's impossible to get `string | string[] | undefined` here and typescript doesn't know that
+  return (date && formatDate(date, formatStr, locale)) || "";
 }
 
 /**
@@ -260,7 +258,7 @@ export function safeDateFormat(
 export function safeDateRangeFormat(
   startDate: Date,
   endDate: Date,
-  props: { dateFormat: string | string[]; locale: string | object }
+  props: { dateFormat: string | string[]; locale: string | LocaleObj }
 ): string {
   if (!startDate) {
     return "";
@@ -281,16 +279,20 @@ export function safeDateRangeFormat(
  */
 export function safeMultipleDatesFormat(
   dates: Date[],
-  props: { dateFormat: string | string[]; locale: string | object }
+  props: { dateFormat: string | string[]; locale: string | LocaleObj }
 ): string {
   if (!dates?.length) {
     return "";
   }
-  const formattedFirstDate = safeDateFormat(dates[0], props);
-  if (dates.length === 1) {
+
+  let formattedFirstDate = "";
+  // instead dates.length === 1 to satisfy typescript noUncheckedIndexedAccess
+  if (dates[0]) {
+    formattedFirstDate = safeDateFormat(dates[0], props);
     return formattedFirstDate;
   }
-  if (dates.length === 2) {
+  // instead dates.length === 2 to satisfy typescript noUncheckedIndexedAccess
+  if (dates[1]) {
     const formattedSecondDate = safeDateFormat(dates[1], props);
     return `${formattedFirstDate}, ${formattedSecondDate}`;
   }
@@ -335,14 +337,10 @@ export {
  * Gets the week of the year for a given date.
  *
  * @param date - The date.
- * @param locale - The locale.
  * @returns - The week of the year.
  */
-export function getWeek(date: Date, locale: string | LocaleObj): number {
-  let localeObj =
-    (locale && getLocaleObject(locale)) ||
-    (getDefaultLocale() && getLocaleObject(getDefaultLocale()));
-  return getISOWeek(date, localeObj ? { locale: localeObj } : null);
+export function getWeek(date: Date): number {
+  return getISOWeek(date);
 }
 
 /**
@@ -381,15 +379,14 @@ export function getStartOfDay(date: Date): Date {
  */
 export function getStartOfWeek(
   date: Date,
-  locale: string | object,
-  calendarStartDay: number
+  locale: string | LocaleObj,
+  calendarStartDay: Day
 ): Date {
   let localeObj = locale
     ? getLocaleObject(locale)
     : getLocaleObject(getDefaultLocale());
   return startOfWeek(date, {
     locale: localeObj,
-
     weekStartsOn: calendarStartDay,
   });
 }
@@ -641,11 +638,12 @@ export function getDefaultLocale(): string {
  */
 export function getLocaleObject(
   localeSpec: string | LocaleObj
-): LocaleObj | null {
+): LocaleObj | undefined {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
     const scope = getLocaleScope();
-    return scope.__localeData__ ? scope.__localeData__[localeSpec] : null;
+    // Null was replaced with undefined to avoid type coercion
+    return scope.__localeData__ ? scope.__localeData__[localeSpec] : undefined;
   } else {
     // Treat it as a raw date-fns locale object
     return localeSpec;
@@ -763,9 +761,15 @@ export function isDayDisabled(
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
-      excludeDates.some((excludeDate) =>
-        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate)
-      )) ||
+      excludeDates.some((excludeDate) => {
+        if (excludeDate instanceof Date) {
+          {
+            return isSameDay(day, excludeDate);
+          }
+        } else {
+          return isSameDay(day, excludeDate.date ?? new Date());
+        }
+      })) ||
     (excludeDateIntervals &&
       excludeDateIntervals.some(({ start, end }) =>
         isWithinInterval(day, { start, end })
@@ -804,9 +808,15 @@ export function isDayExcluded(
   }
   return (
     (excludeDates &&
-      excludeDates.some((excludeDate) =>
-        isSameDay(day, excludeDate.date ? excludeDate.date : excludeDate)
-      )) ||
+      excludeDates.some((excludeDate) => {
+        if (excludeDate instanceof Date) {
+          {
+            return isSameDay(day, excludeDate);
+          }
+        } else {
+          return isSameDay(day, excludeDate.date ?? new Date());
+        }
+      })) ||
     false
   );
 }
@@ -822,8 +832,8 @@ interface MonthDisabledOptions {
 export function isMonthDisabled(
   month: Date,
   {
-    minDate,
-    maxDate,
+    minDate = new Date(),
+    maxDate = new Date(),
     excludeDates,
     includeDates,
     filterDate,
@@ -918,8 +928,8 @@ interface YearDisabledOptions {
 export function isYearDisabled(
   year: number,
   {
-    minDate,
-    maxDate,
+    minDate = new Date(),
+    maxDate = new Date(),
     excludeDates,
     includeDates,
     filterDate,
