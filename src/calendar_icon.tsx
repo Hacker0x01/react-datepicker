@@ -39,7 +39,7 @@ const CalendarIcon = ({ icon, className = "", onClick }: CalendarIconProps) => {
   }
 
   if (React.isValidElement(icon)) {
-    // Because of the check above, we can safely cast icon as React.ReactElement
+    // Because we are checking that typeof icon is string first, we can safely cast icon as React.ReactElement on types level and code level
     return React.cloneElement(icon as React.ReactElement, {
       className: `${icon.props.className || ""} ${defaultClass} ${className}`,
       onClick: (e: React.MouseEvent) => {
