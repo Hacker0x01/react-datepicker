@@ -11,7 +11,8 @@ module.exports = {
   transformIgnorePatterns: ["/node_modules/(?!date-fns)"],
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
-    "^.+\\.ts?$": "ts-jest",
+    // TODO: use it after the migration
+    // "^.+\\.ts?$": "ts-jest",
     "node_modules/(?!date-fns/.*)": "ts-jest",
   },
 };
