@@ -1,30 +1,25 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import {
   useFloating,
   arrow,
   offset,
   flip,
   autoUpdate,
+  Middleware,
+  Placement,
 } from "@floating-ui/react";
-import PropTypes from "prop-types";
 
-export const popperPlacementPositions = [
-  "top-start",
-  "top-end",
-  "bottom-start",
-  "bottom-end",
-  "right-start",
-  "right-end",
-  "left-start",
-  "left-end",
-  "top",
-  "right",
-  "bottom",
-  "left",
-];
+interface WithFloatingProps {
+  popperModifiers?: Middleware[];
+  popperProps?: object;
+  hidePopper?: boolean;
+  popperPlacement?: Placement;
+}
 
-export default function withFloating(Component) {
-  const WithFloating = (props) => {
+export default function withFloating<T extends {}>(
+  Component: ComponentType<T>
+) {
+  const WithFloating: React.FC<T & WithFloatingProps> = (props) => {
     const alt_props = {
       ...props,
       popperModifiers: props.popperModifiers || [],
@@ -32,7 +27,7 @@ export default function withFloating(Component) {
       hidePopper:
         typeof props.hidePopper === "boolean" ? props.hidePopper : true,
     };
-    const arrowRef = React.useRef();
+    const arrowRef: React.RefObject<HTMLElement> = React.useRef(null);
     const floatingProps = useFloating({
       open: !alt_props.hidePopper,
       whileElementsMounted: autoUpdate,
@@ -49,13 +44,6 @@ export default function withFloating(Component) {
     return (
       <Component {...alt_props} popperProps={{ ...floatingProps, arrowRef }} />
     );
-  };
-
-  WithFloating.propTypes = {
-    popperPlacement: PropTypes.oneOf(popperPlacementPositions),
-    popperModifiers: PropTypes.arrayOf(PropTypes.object),
-    popperProps: PropTypes.object,
-    hidePopper: PropTypes.bool,
   };
 
   return WithFloating;
