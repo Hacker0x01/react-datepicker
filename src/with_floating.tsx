@@ -39,8 +39,8 @@ export default function withFloating<T extends {}>(
   const WithFloating: React.FC<T & WithFloatingProps> = (props) => {
     const alt_props = {
       ...props,
-      popperModifiers: props.popperModifiers || [],
-      popperProps: props.popperProps || {},
+      popperModifiers: props.popperModifiers ?? [],
+      popperProps: props.popperProps ?? {},
       hidePopper:
         typeof props.hidePopper === "boolean" ? props.hidePopper : true,
     };
