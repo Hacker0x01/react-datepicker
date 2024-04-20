@@ -61,7 +61,7 @@ export default class InputTime extends React.Component<
     const isPropDateValid = propDate instanceof Date && !isNaN(+propDate);
     const date = isPropDateValid ? propDate : new Date();
 
-    if (time && time.includes(":")) {
+    if (time?.includes(":")) {
       const [hours, minutes] = time.split(":") as [string, string];
       date.setHours(Number(hours));
       date.setMinutes(Number(minutes));
