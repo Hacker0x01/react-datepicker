@@ -1057,6 +1057,7 @@ export function isTimeInDisabledRange(
 
 interface DisabledOptions {
   minDate?: Date;
+  maxDate?: Date;
   includeDates?: Date[];
 }
 
@@ -1074,12 +1075,6 @@ export function monthDisabledBefore(
       )) ||
     false
   );
-}
-
-interface DisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  includeDates?: Date[];
 }
 
 export function monthDisabledAfter(
