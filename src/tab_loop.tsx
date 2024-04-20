@@ -1,27 +1,39 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 // TabLoop prevents the user from tabbing outside of the popper
 // It creates a tabindex loop so that "Tab" on the last element will focus the first element
 // and "Shift Tab" on the first element will focus the last element
 
+interface TabLoopProps {
+  children?: React.ReactNode;
+  enableTabLoop?: boolean;
+}
+
 const focusableElementsSelector =
   "[tabindex], a, button, input, select, textarea";
-const focusableFilter = (node) => !node.disabled && node.tabIndex !== -1;
-
-export default class TabLoop extends React.Component {
-  static get defaultProps() {
-    return {
-      enableTabLoop: true,
-    };
+const focusableFilter = (
+  node:
+    | HTMLButtonElement
+    | HTMLInputElement
+    | HTMLSelectElement
+    | HTMLTextAreaElement
+    | HTMLAnchorElement
+) => {
+  if (node instanceof HTMLAnchorElement) {
+    return node.tabIndex !== -1;
   }
 
-  static propTypes = {
-    children: PropTypes.any,
-    enableTabLoop: PropTypes.bool,
+  return !node.disabled && node.tabIndex !== -1;
+};
+
+export default class TabLoop extends React.Component<TabLoopProps> {
+  static defaultProps = {
+    enableTabLoop: true,
   };
 
-  constructor(props) {
+  private tabLoopRef: React.RefObject<HTMLDivElement>;
+
+  constructor(props: TabLoopProps) {
     super(props);
 
     this.tabLoopRef = React.createRef();
@@ -32,9 +44,9 @@ export default class TabLoop extends React.Component {
   getTabChildren = () =>
     Array.prototype.slice
       .call(
-        this.tabLoopRef.current.querySelectorAll(focusableElementsSelector),
+        this.tabLoopRef.current?.querySelectorAll(focusableElementsSelector),
         1,
-        -1,
+        -1
       )
       .filter(focusableFilter);
 
@@ -58,13 +70,13 @@ export default class TabLoop extends React.Component {
       <div className="react-datepicker__tab-loop" ref={this.tabLoopRef}>
         <div
           className="react-datepicker__tab-loop__start"
-          tabIndex="0"
+          tabIndex={0}
           onFocus={this.handleFocusStart}
         />
         {this.props.children}
         <div
           className="react-datepicker__tab-loop__end"
-          tabIndex="0"
+          tabIndex={0}
           onFocus={this.handleFocusEnd}
         />
       </div>
