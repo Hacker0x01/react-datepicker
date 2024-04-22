@@ -42,7 +42,7 @@ export default class InputTime extends React.Component<
 
   static getDerivedStateFromProps(
     props: InputTimeProps,
-    state: InputTimeState
+    state: InputTimeState,
   ) {
     if (props.timeString !== state.time) {
       return {

@@ -34,7 +34,7 @@ interface WithFloatingProps {
  * @returns A new component with floating behavior.
  */
 export default function withFloating<T extends {}>(
-  Component: ComponentType<T>
+  Component: ComponentType<T>,
 ) {
   const WithFloating: React.FC<T & WithFloatingProps> = (props) => {
     const alt_props = {
