@@ -832,8 +832,8 @@ interface MonthDisabledOptions {
 export function isMonthDisabled(
   month: Date,
   {
-    minDate = new Date(),
-    maxDate = new Date(),
+    minDate,
+    maxDate,
     excludeDates,
     includeDates,
     filterDate,
@@ -841,8 +841,8 @@ export function isMonthDisabled(
 ): boolean {
   return (
     isOutOfBounds(month, {
-      minDate: startOfMonth(minDate),
-      maxDate: endOfMonth(maxDate),
+      minDate: minDate ? startOfMonth(minDate) : undefined,
+      maxDate: maxDate ? endOfMonth(maxDate) : undefined,
     }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameMonth(month, excludeDate))) ||
@@ -928,8 +928,8 @@ interface YearDisabledOptions {
 export function isYearDisabled(
   year: number,
   {
-    minDate = new Date(),
-    maxDate = new Date(),
+    minDate,
+    maxDate,
     excludeDates,
     includeDates,
     filterDate,
@@ -938,8 +938,8 @@ export function isYearDisabled(
   const date = new Date(year, 0, 1);
   return (
     isOutOfBounds(date, {
-      minDate: startOfYear(minDate),
-      maxDate: endOfYear(maxDate),
+      minDate: minDate ? startOfYear(minDate) : undefined,
+      maxDate: maxDate ? endOfYear(maxDate) : undefined,
     }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) => isSameYear(date, excludeDate))) ||

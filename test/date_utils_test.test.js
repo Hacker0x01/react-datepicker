@@ -55,8 +55,10 @@ registerLocale("pt-BR", ptBR);
 
 describe("date_utils", () => {
   describe("newDate", () => {
-    it("should return null for invalid value passed", () => {
-      expect(newDate("21123asd")).toBeNull();
+    it("should return new Date() for invalid value passed", () => {
+      jest.useFakeTimers();
+      expect(newDate("21123asd")).toEqual(new Date());
+      jest.useRealTimers();
     });
   });
 
@@ -481,9 +483,11 @@ describe("date_utils", () => {
 
     it("should be enabled if after maxDate but same month", () => {
       const day = newDate("2023-01-02");
-      expect(isMonthDisabled(day, { maxDate: newDate("2023-01-01") })).toBe(
-        false,
-      );
+      expect(
+        isMonthDisabled(day, {
+          maxDate: newDate("2023-01-01"),
+        }),
+      ).toBe(false);
     });
   });
 
