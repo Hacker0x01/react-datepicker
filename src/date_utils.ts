@@ -285,14 +285,12 @@ export function safeMultipleDatesFormat(
     return "";
   }
 
-  let formattedFirstDate = "";
-  // instead dates.length === 1 to satisfy typescript noUncheckedIndexedAccess
-  if (dates[0]) {
-    formattedFirstDate = safeDateFormat(dates[0], props);
+  let formattedFirstDate = dates[0] ? safeDateFormat(dates[0], props) : "";
+  if (dates.length === 1) {
     return formattedFirstDate;
   }
-  // instead dates.length === 2 to satisfy typescript noUncheckedIndexedAccess
-  if (dates[1]) {
+
+  if (dates.length === 2 && dates[1]) {
     const formattedSecondDate = safeDateFormat(dates[1], props);
     return `${formattedFirstDate}, ${formattedSecondDate}`;
   }
