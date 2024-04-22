@@ -429,8 +429,7 @@ export function getStartOfQuarter(date: Date): Date {
  * @returns - The start of today.
  */
 export function getStartOfToday(): Date {
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  return startOfDay(newDate() as Date);
+  return startOfDay(newDate());
 }
 
 // *** End of ***
@@ -698,8 +697,7 @@ export function getWeekdayShortInLocale(date: Date, locale: string): string {
  * @returns - The month.
  */
 export function getMonthInLocale(month: number, locale: string): string {
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  return formatDate(setMonth(newDate() as Date, month), "LLLL", locale);
+  return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
 /**
@@ -710,8 +708,7 @@ export function getMonthInLocale(month: number, locale: string): string {
  * @returns - The short month.
  */
 export function getMonthShortInLocale(month: number, locale: string): string {
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  return formatDate(setMonth(newDate() as Date, month), "LLL", locale);
+  return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
 /**
@@ -725,8 +722,7 @@ export function getQuarterShortInLocale(
   quarter: number,
   locale: string
 ): string {
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  return formatDate(setQuarter(newDate() as Date, quarter), "QQQ", locale);
+  return formatDate(setQuarter(newDate(), quarter), "QQQ", locale);
 }
 
 // ** Utils for some components **
@@ -765,9 +761,7 @@ export function isDayDisabled(
     (excludeDates &&
       excludeDates.some((excludeDate) => {
         if (excludeDate instanceof Date) {
-          {
-            return isSameDay(day, excludeDate);
-          }
+          return isSameDay(day, excludeDate);
         } else {
           return isSameDay(day, excludeDate.date ?? new Date());
         }
@@ -812,9 +806,7 @@ export function isDayExcluded(
     (excludeDates &&
       excludeDates.some((excludeDate) => {
         if (excludeDate instanceof Date) {
-          {
-            return isSameDay(day, excludeDate);
-          }
+          return isSameDay(day, excludeDate);
         } else {
           return isSameDay(day, excludeDate.date ?? new Date());
         }
@@ -1030,20 +1022,17 @@ export function isTimeInDisabledRange(
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
   }
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  let baseTime = newDate() as Date;
+  let baseTime = newDate();
   baseTime = setHours(baseTime, getHours(time));
   baseTime = setMinutes(baseTime, getMinutes(time));
   baseTime = setSeconds(baseTime, getSeconds(time));
 
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  let min = newDate() as Date;
+  let min = newDate();
   min = setHours(min, getHours(minTime));
   min = setMinutes(min, getMinutes(minTime));
   min = setSeconds(min, getSeconds(minTime));
 
-  // Safe to cast as Date because newDate() without arguments returns a Date
-  let max = newDate() as Date;
+  let max = newDate();
   max = setHours(max, getHours(maxTime));
   max = setMinutes(max, getMinutes(maxTime));
   max = setSeconds(max, getSeconds(maxTime));
@@ -1263,7 +1252,7 @@ export function getHightLightDaysMap(
       }
     } else if (typeof obj === "object") {
       const keys = Object.keys(obj);
-      const className = keys[0] || "";
+      const className = keys[0] ?? "";
       const arrOfDates = obj[className];
       if (typeof className === "string" && Array.isArray(arrOfDates)) {
         for (let k = 0, len = arrOfDates.length; k < len; k++) {
