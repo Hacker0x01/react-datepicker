@@ -205,6 +205,7 @@ export default class DatePicker extends React.Component {
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     calendarIconClassname: PropTypes.string,
+    calendarIconClassName: PropTypes.string,
     locale: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({ locale: PropTypes.object }),
@@ -1332,9 +1333,20 @@ export default class DatePicker extends React.Component {
   };
 
   renderInputContainer() {
-    const { showIcon, icon, calendarIconClassname, toggleCalendarOnIconClick } =
-      this.props;
+    const {
+      showIcon,
+      icon,
+      calendarIconClassname,
+      calendarIconClassName,
+      toggleCalendarOnIconClick,
+    } = this.props;
     const { open } = this.state;
+
+    if (calendarIconClassname) {
+      console.warn(
+        `calendarIconClassname props is deprecated. should use calendarIconClassName props.`,
+      );
+    }
 
     return (
       <div
@@ -1345,9 +1357,11 @@ export default class DatePicker extends React.Component {
         {showIcon && (
           <CalendarIcon
             icon={icon}
-            className={`${calendarIconClassname} ${
-              open && "react-datepicker-ignore-onclickoutside"
-            }`}
+            className={clsx(
+              calendarIconClassName,
+              !calendarIconClassName && calendarIconClassname,
+              open && "react-datepicker-ignore-onclickoutside",
+            )}
             {...(toggleCalendarOnIconClick
               ? {
                   onClick: this.toggleCalendar,

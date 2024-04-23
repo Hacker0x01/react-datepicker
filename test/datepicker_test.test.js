@@ -577,6 +577,63 @@ describe("DatePicker", () => {
     ).toBe(true);
   });
 
+  it("should apply the calendarIconClassName to calendar icon", () => {
+    const customClassName = "customClassName";
+    const { container } = render(
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        calendarIconClassName={customClassName}
+        toggleCalendarOnIconClick
+      />,
+    );
+
+    const calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+
+    expect(calendarIcon.classList.contains(customClassName)).toBe(true);
+  });
+
+  it("should not apply the calendarIconClassname to calendar icon with calendarIconClassName", () => {
+    const customClassName = "customClassName";
+    const customClassname = "customClassname";
+    const { container } = render(
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        calendarIconClassName={customClassName}
+        calendarIconClassname={customClassname}
+        toggleCalendarOnIconClick
+      />,
+    );
+
+    const calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+
+    expect(calendarIcon.classList.contains(customClassName)).toBe(true);
+    expect(calendarIcon.classList.contains(customClassname)).toBe(false);
+  });
+
+  it("should apply the calendarIconClassname to calendar icon without calendarIconClassName", () => {
+    const customClassname = "customClassName";
+    const { container } = render(
+      <DatePicker
+        selected={utils.newDate("2023-12-17")}
+        showIcon
+        calendarIconClassname={customClassname}
+        toggleCalendarOnIconClick
+      />,
+    );
+
+    const calendarIcon = container.querySelector(
+      "svg.react-datepicker__calendar-icon",
+    );
+
+    expect(calendarIcon.classList.contains(customClassname)).toBe(true);
+  });
+
   it("should set the type attribute on the clear button to button", () => {
     const { container } = render(
       <DatePicker selected={utils.newDate("2015-12-15")} isClearable />,
