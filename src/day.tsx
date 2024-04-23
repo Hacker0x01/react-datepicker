@@ -542,6 +542,7 @@ export default class Day extends React.Component<DayProps> {
   };
 
   render = () => (
+    // TODO: Use <option> instead of the "option" role to ensure accessibility across all devices.
     <div
       ref={this.dayEl}
       className={this.getClassNames(this.props.day)}
