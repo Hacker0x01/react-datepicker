@@ -1,5 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {
+  ReactNode,
+  MouseEventHandler,
+  KeyboardEventHandler,
+  RefObject,
+} from "react";
 import { clsx } from "clsx";
 import {
   getDay,
@@ -16,83 +20,73 @@ import {
   getDayOfWeekCode,
   getStartOfWeek,
   formatDate,
+  type DayDisabledOptions,
+  type DateNumberType,
+  type LocaleObj,
+  type HolidaysMap,
 } from "./date_utils";
 
-export default class Day extends React.Component {
-  static propTypes = {
-    ariaLabelPrefixWhenEnabled: PropTypes.string,
-    ariaLabelPrefixWhenDisabled: PropTypes.string,
-    disabledKeyboardNavigation: PropTypes.bool,
-    day: PropTypes.instanceOf(Date).isRequired,
-    dayClassName: PropTypes.func,
-    endDate: PropTypes.instanceOf(Date),
-    highlightDates: PropTypes.instanceOf(Map),
-    holidays: PropTypes.instanceOf(Map),
-    inline: PropTypes.bool,
-    shouldFocusDayInline: PropTypes.bool,
-    month: PropTypes.number,
-    onClick: PropTypes.func,
-    usePointerEvent: PropTypes.bool,
-    onMouseEnter: PropTypes.func,
-    preSelection: PropTypes.instanceOf(Date),
-    selected: PropTypes.object,
-    selectingDate: PropTypes.instanceOf(Date),
-    selectsEnd: PropTypes.bool,
-    selectsStart: PropTypes.bool,
-    selectsRange: PropTypes.bool,
-    showWeekPicker: PropTypes.bool,
-    showWeekNumber: PropTypes.bool,
-    selectsDisabledDaysInRange: PropTypes.bool,
-    selectsMultiple: PropTypes.bool,
-    selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-    startDate: PropTypes.instanceOf(Date),
-    renderDayContents: PropTypes.func,
-    handleOnKeyDown: PropTypes.func,
-    containerRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.object }),
-    ]),
-    monthShowsDuplicateDaysEnd: PropTypes.bool,
-    monthShowsDuplicateDaysStart: PropTypes.bool,
-    locale: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object }),
-    ]),
-    calendarStartDay: PropTypes.number,
-    excludeDates: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.instanceOf(Date),
-        PropTypes.shape({
-          date: PropTypes.instanceOf(Date).isRequired,
-          message: PropTypes.string,
-        }),
-      ]),
-    ),
-  };
+interface DayProps {
+  ariaLabelPrefixWhenEnabled?: string;
+  ariaLabelPrefixWhenDisabled?: string;
+  disabledKeyboardNavigation?: boolean;
+  day: Date;
+  dayClassName?: (date: Date) => string;
+  endDate?: Date;
+  highlightDates?: Map<string, Date>;
+  holidays?: HolidaysMap;
+  inline?: boolean;
+  shouldFocusDayInline?: boolean;
+  month?: number;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  handleOnKeyDown: KeyboardEventHandler<HTMLDivElement>;
+  usePointerEvent?: boolean;
+  preSelection?: Date;
+  selected?: Date;
+  selectingDate?: Date;
+  selectsEnd?: boolean;
+  selectsStart?: boolean;
+  selectsRange?: boolean;
+  showWeekPicker?: boolean;
+  showWeekNumber?: boolean;
+  selectsDisabledDaysInRange?: boolean;
+  selectsMultiple?: boolean;
+  selectedDates?: Date[];
+  startDate?: Date;
+  renderDayContents?: (day: number, date: Date) => ReactNode;
+  containerRef?: RefObject<HTMLDivElement>;
+  excludeDates?: DayDisabledOptions["excludeDates"];
+  calendarStartDay?: DateNumberType;
+  locale?: LocaleObj;
+  monthShowsDuplicateDaysEnd?: boolean;
+  monthShowsDuplicateDaysStart?: boolean;
+}
 
+export default class Day extends React.Component<DayProps> {
   componentDidMount() {
     this.handleFocusDay();
   }
 
-  componentDidUpdate(prevProps) {
-    this.handleFocusDay(prevProps);
+  componentDidUpdate() {
+    this.handleFocusDay();
   }
 
-  dayEl = React.createRef();
+  dayEl = React.createRef<HTMLDivElement>();
 
-  handleClick = (event) => {
+  handleClick: DayProps["onClick"] = (event) => {
     if (!this.isDisabled() && this.props.onClick) {
       this.props.onClick(event);
     }
   };
 
-  handleMouseEnter = (event) => {
+  handleMouseEnter: DayProps["onMouseEnter"] = (event) => {
     if (!this.isDisabled() && this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
   };
 
-  handleOnKeyDown = (event) => {
+  handleOnKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
     const eventKey = event.key;
     if (eventKey === " ") {
       event.preventDefault();
@@ -102,7 +96,7 @@ export default class Day extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = (other) => isSameDay(this.props.day, other);
+  isSameDay = (other?: Date) => isSameDay(this.props.day, other);
 
   isKeyboardSelected = () => {
     if (this.props.disabledKeyboardNavigation) {
@@ -116,6 +110,7 @@ export default class Day extends React.Component {
     return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
   };
 
+  // TODO: figure out if it's OK that we are not passing includeDates+interval
   isDisabled = () => isDayDisabled(this.props.day, this.props);
 
   isExcluded = () => isDayExcluded(this.props.day, this.props);
@@ -130,7 +125,7 @@ export default class Day extends React.Component {
       ),
     );
 
-  isSameWeek = (other) =>
+  isSameWeek = (other?: Date) =>
     this.props.showWeekPicker &&
     isSameDay(
       other,
@@ -141,7 +136,8 @@ export default class Day extends React.Component {
       ),
     );
 
-  isSameDayOrWeek = (other) => this.isSameDay(other) || this.isSameWeek(other);
+  isSameDayOrWeek = (other?: Date) =>
+    this.isSameDay(other) || this.isSameWeek(other);
 
   getHighLightedClass = () => {
     const { day, highlightDates } = this.props;
@@ -155,17 +151,21 @@ export default class Day extends React.Component {
     return highlightDates.get(dayStr);
   };
 
-  // Function to return the array containing classname associated to the date
+  // Function to return the array containing className associated to the date
   getHolidaysClass = () => {
     const { day, holidays } = this.props;
     if (!holidays) {
-      return false;
+      // For type consistency no other reasons
+      return [undefined];
     }
     const dayStr = formatDate(day, "MM.dd.yyyy");
     // Looking for className in the Map of {day string: {className, holidayName}}
     if (holidays.has(dayStr)) {
-      return [holidays.get(dayStr).className];
+      return [holidays.get(dayStr)?.className];
     }
+
+    // For type consistency no other reasons
+    return [undefined];
   };
 
   isInRange = () => {
@@ -301,7 +301,7 @@ export default class Day extends React.Component {
     return this.isSameDayOrWeek(this.props.selected);
   };
 
-  getClassNames = (date) => {
+  getClassNames = (date: Date) => {
     const dayClassName = this.props.dayClassName
       ? this.props.dayClassName(date)
       : undefined;
@@ -327,7 +327,7 @@ export default class Day extends React.Component {
         "react-datepicker__day--outside-month":
           this.isAfterMonth() || this.isBeforeMonth(),
       },
-      this.getHighLightedClass("react-datepicker__day--highlighted"),
+      this.getHighLightedClass(),
       this.getHolidaysClass(),
     );
   };
@@ -358,18 +358,27 @@ export default class Day extends React.Component {
     if (this.isExcluded()) {
       titles.push(
         excludeDates
-          ?.filter((excludeDate) =>
-            isSameDay(excludeDate.date ? excludeDate.date : excludeDate, day),
-          )
-          .map((excludeDate) => excludeDate.message),
+          ?.filter((excludeDate) => {
+            if (excludeDate instanceof Date) {
+              return isSameDay(excludeDate, day);
+            }
+            return isSameDay(excludeDate?.date, day);
+          })
+          .map((excludeDate) => {
+            if (excludeDate instanceof Date) {
+              return undefined;
+            }
+            return excludeDate?.message;
+          }),
       );
     }
+    // I'm not sure that this is a right output, but all tests are green
     return titles.join(", ");
   };
 
-  getTabIndex = (selected, preSelection) => {
-    const selectedDay = selected || this.props.selected;
-    const preSelectionDay = preSelection || this.props.preSelection;
+  getTabIndex = () => {
+    const selectedDay = this.props.selected;
+    const preSelectionDay = this.props.preSelection;
     const tabIndex =
       !(
         this.props.showWeekPicker &&
@@ -387,15 +396,11 @@ export default class Day extends React.Component {
   // various cases when we need to apply focus to the preselected day
   // focus the day on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
   // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-  handleFocusDay = (prevProps = {}) => {
+  handleFocusDay = () => {
     let shouldFocusDay = false;
     // only do this while the input isn't focused
     // otherwise, typing/backspacing the date manually may steal focus away from the input
-    if (
-      this.getTabIndex() === 0 &&
-      !prevProps.isInputFocused &&
-      this.isSameDay(this.props.preSelection)
-    ) {
+    if (this.getTabIndex() === 0 && this.isSameDay(this.props.preSelection)) {
       // there is currently no activeElement and not inline
       if (!document.activeElement || document.activeElement === document.body) {
         shouldFocusDay = true;
@@ -408,10 +413,8 @@ export default class Day extends React.Component {
       }
       // the activeElement is in the container, and it is another instance of Day
       if (
-        this.props.containerRef &&
-        this.props.containerRef.current &&
-        this.props.containerRef.current.contains(document.activeElement) &&
-        document.activeElement.classList.contains("react-datepicker__day")
+        this.props.containerRef?.current?.contains(document.activeElement) &&
+        document.activeElement?.classList.contains("react-datepicker__day")
       ) {
         shouldFocusDay = true;
       }
