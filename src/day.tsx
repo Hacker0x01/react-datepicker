@@ -57,10 +57,16 @@ interface DayProps {
   renderDayContents?: (day: number, date: Date) => ReactNode;
   containerRef?: RefObject<HTMLDivElement>;
   excludeDates?: DayDisabledOptions["excludeDates"];
+  excludeDateIntervals?: DayDisabledOptions["excludeDateIntervals"];
   calendarStartDay?: DateNumberType;
   locale?: LocaleObj;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
+  includeDates?: DayDisabledOptions["includeDates"];
+  includeDateIntervals?: DayDisabledOptions["includeDateIntervals"];
+  minDate?: Date;
+  maxDate?: Date;
+  filterDate?: (date: Date) => boolean;
 }
 
 /**
@@ -101,6 +107,10 @@ interface DayProps {
  * @prop locale - The locale object.
  * @prop monthShowsDuplicateDaysEnd - Whether to show duplicate days at the end of the month.
  * @prop monthShowsDuplicateDaysStart - Whether to show duplicate days at the start of the month.
+ * @prop includeDates - Array of dates to be included.
+ * @prop includeDateIntervals - Array of date intervals to be included.
+ * @prop minDate - The minimum date that can be selected.
+ * @prop maxDate - The maximum date that can be selected.
  *
  * @example
  * ```tsx
@@ -180,10 +190,26 @@ export default class Day extends React.Component<DayProps> {
     return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
   };
 
-  // TODO: figure out if it's OK that we are not passing includeDates+interval
-  isDisabled = () => isDayDisabled(this.props.day, this.props);
+  isDisabled = () =>
+    // Almost all props previously were passed as this.props w/o proper typing with prop-types
+    // after the migration to TS i made it explicit
+    isDayDisabled(this.props.day, {
+      minDate: this.props.minDate,
+      maxDate: this.props.maxDate,
+      excludeDates: this.props.excludeDates,
+      excludeDateIntervals: this.props.excludeDateIntervals,
+      includeDateIntervals: this.props.includeDateIntervals,
+      includeDates: this.props.includeDates,
+      filterDate: this.props.filterDate,
+    });
 
-  isExcluded = () => isDayExcluded(this.props.day, this.props);
+  isExcluded = () =>
+    // Almost all props previously were passed as this.props w/o proper typing with prop-types
+    // after the migration to TS i made it explicit
+    isDayExcluded(this.props.day, {
+      excludeDates: this.props.excludeDates,
+      excludeDateIntervals: this.props.excludeDateIntervals,
+    });
 
   isStartOfWeek = () =>
     isSameDay(
