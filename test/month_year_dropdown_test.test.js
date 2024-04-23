@@ -9,7 +9,7 @@ import {
   formatDate,
   isAfter,
   registerLocale,
-} from "../src/date_utils.js";
+} from "../src/date_utils.ts";
 import { fi } from "date-fns/locale/fi";
 import onClickOutside from "react-onclickoutside";
 

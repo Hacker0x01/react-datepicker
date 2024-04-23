@@ -1,7 +1,7 @@
 import React from "react";
 import YearDropdownOptions from "../src/year_dropdown_options.jsx";
 import { render, fireEvent } from "@testing-library/react";
-import * as utils from "../src/date_utils.js";
+import * as utils from "../src/date_utils.ts";
 import onClickOutside from "react-onclickoutside";
 
 describe("YearDropdownOptions", () => {

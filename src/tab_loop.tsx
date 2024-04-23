@@ -13,7 +13,7 @@ const focusableFilter = (
     | HTMLInputElement
     | HTMLSelectElement
     | HTMLTextAreaElement
-    | HTMLAnchorElement
+    | HTMLAnchorElement,
 ) => {
   if (node instanceof HTMLAnchorElement) {
     return node.tabIndex !== -1;
@@ -67,7 +67,7 @@ export default class TabLoop extends React.Component<TabLoopProps> {
       .call(
         this.tabLoopRef.current?.querySelectorAll(focusableElementsSelector),
         1,
-        -1
+        -1,
       )
       .filter(focusableFilter);
 

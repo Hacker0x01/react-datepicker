@@ -4,7 +4,7 @@ import { render, act, waitFor, fireEvent } from "@testing-library/react";
 import DatePicker, { registerLocale } from "../src/index.jsx";
 import TestWrapper from "./test_wrapper.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
-import * as utils from "../src/date_utils.js";
+import * as utils from "../src/date_utils.ts";
 import { getKey } from "./test_utils.js";
 
 function getSelectedDayNode(datePicker) {
