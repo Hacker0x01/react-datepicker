@@ -527,7 +527,7 @@ export function isSameQuarter(date1: Date | null, date2: Date | null): boolean {
  * @param date2 - The second date.
  * @returns - True if the dates are on the same day, false otherwise.
  */
-export function isSameDay(date1: Date | null, date2: Date | null): boolean {
+export function isSameDay(date1?: Date | null, date2?: Date | null): boolean {
   if (date1 && date2) {
     return dfIsSameDay(date1, date2);
   } else {
