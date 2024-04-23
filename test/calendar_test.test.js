@@ -155,6 +155,12 @@ describe("Calendar", () => {
     expect(utils.isSameDay(instance.date, oneMonthFromOpenToDate));
   });
 
+  it("should render month and year as a header of datepicker by default", () => {
+    const { calendar } = getCalendar();
+    const header = calendar.querySelector("h2.react-datepicker__current-month");
+    expect(header).not.toBeNull();
+  });
+
   it("should not show the year dropdown menu by default", () => {
     const { calendar } = getCalendar();
     const yearReadView = calendar.querySelectorAll(
