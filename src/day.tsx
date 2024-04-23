@@ -493,38 +493,43 @@ export default class Day extends React.Component<DayProps> {
   // focus the day on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
   // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
   handleFocusDay = () => {
-    let shouldFocusDay = false;
     // only do this while the input isn't focused
     // otherwise, typing/backspacing the date manually may steal focus away from the input
+    this.shouldFocusDay() && this.dayEl.current?.focus({ preventScroll: true });
+  };
+
+  private shouldFocusDay() {
+    let shouldFocusDay = false;
     if (this.getTabIndex() === 0 && this.isSameDay(this.props.preSelection)) {
-      // there is currently no activeElement and not inline
       if (!document.activeElement || document.activeElement === document.body) {
         shouldFocusDay = true;
       }
-      // inline version:
-      // do not focus on initial render to prevent autoFocus issue
-      // focus after month has changed via keyboard
       if (this.props.inline && !this.props.shouldFocusDayInline) {
         shouldFocusDay = false;
       }
-      // the activeElement is in the container, and it is another instance of Day
-      if (
-        this.props.containerRef?.current?.contains(document.activeElement) &&
-        document.activeElement?.classList.contains("react-datepicker__day")
-      ) {
+      if (this.isDayActiveElement()) {
         shouldFocusDay = true;
       }
-      //day is one of the non rendered duplicate days
-      if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth()) {
-        shouldFocusDay = false;
-      }
-      if (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth()) {
+      if (this.isDuplicateDay()) {
         shouldFocusDay = false;
       }
     }
+    return shouldFocusDay;
+  }
 
-    shouldFocusDay && this.dayEl.current?.focus({ preventScroll: true });
-  };
+  private isDayActiveElement() {
+    return (
+      this.props.containerRef?.current?.contains(document.activeElement) &&
+      document.activeElement?.classList.contains("react-datepicker__day")
+    );
+  }
+
+  private isDuplicateDay() {
+    return (
+      (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth()) ||
+      (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
+    );
+  }
 
   renderDayContents = () => {
     if (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth())
