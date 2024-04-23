@@ -1,51 +1,53 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { clsx } from "clsx";
 import { isSameDay } from "./date_utils";
 
-export default class WeekNumber extends React.Component {
-  static get defaultProps() {
+interface WeekNumberProps {
+  weekNumber: number;
+  date: Date;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+  ariaLabelPrefix?: string;
+  selected?: Date;
+  preSelection?: Date;
+  showWeekPicker: boolean;
+  showWeekNumber: boolean;
+  disabledKeyboardNavigation: boolean;
+  inline: boolean;
+  shouldFocusDayInline: boolean;
+  handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
+  containerRef?: React.RefObject<HTMLDivElement>;
+  isInputFocused?: boolean;
+}
+
+interface WeekNumberState {}
+
+export default class WeekNumber extends React.Component<
+  WeekNumberProps,
+  WeekNumberState
+> {
+  static get defaultProps(): Partial<WeekNumberProps> {
     return {
       ariaLabelPrefix: "week ",
     };
   }
 
-  static propTypes = {
-    weekNumber: PropTypes.number.isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
-    onClick: PropTypes.func,
-    ariaLabelPrefix: PropTypes.string,
-    selected: PropTypes.instanceOf(Date),
-    preSelection: PropTypes.instanceOf(Date),
-    showWeekPicker: PropTypes.bool,
-    showWeekNumber: PropTypes.bool,
-    disabledKeyboardNavigation: PropTypes.bool,
-    inline: PropTypes.bool,
-    shouldFocusDayInline: PropTypes.bool,
-    handleOnKeyDown: PropTypes.func,
-    containerRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]),
-  };
-
-  componentDidMount() {
+  componentDidMount(): void {
     this.handleFocusWeekNumber();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Readonly<WeekNumberProps>): void {
     this.handleFocusWeekNumber(prevProps);
   }
 
-  weekNumberEl = React.createRef();
+  weekNumberEl = React.createRef<HTMLDivElement>();
 
-  handleClick = (event) => {
+  handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
   };
 
-  handleOnKeyDown = (event) => {
+  handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const eventKey = event.key;
     if (eventKey === " ") {
       event.preventDefault();
@@ -55,12 +57,12 @@ export default class WeekNumber extends React.Component {
     this.props.handleOnKeyDown(event);
   };
 
-  isKeyboardSelected = () =>
+  isKeyboardSelected = (): boolean =>
     !this.props.disabledKeyboardNavigation &&
     !isSameDay(this.props.date, this.props.selected) &&
     isSameDay(this.props.date, this.props.preSelection);
 
-  getTabIndex = () =>
+  getTabIndex = (): number =>
     this.props.showWeekPicker &&
     this.props.showWeekNumber &&
     (this.isKeyboardSelected() ||
@@ -72,13 +74,13 @@ export default class WeekNumber extends React.Component {
   // various cases when we need to apply focus to the preselected week-number
   // focus the week-number on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
   // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-  handleFocusWeekNumber = (prevProps = {}) => {
+  handleFocusWeekNumber = (prevProps?: Readonly<WeekNumberProps>): void => {
     let shouldFocusWeekNumber = false;
     // only do this while the input isn't focused
     // otherwise, typing/backspacing the date manually may steal focus away from the input
     if (
       this.getTabIndex() === 0 &&
-      !prevProps.isInputFocused &&
+      !prevProps?.isInputFocused &&
       isSameDay(this.props.date, this.props.preSelection)
     ) {
       // there is currently no activeElement and not inline
@@ -110,7 +112,7 @@ export default class WeekNumber extends React.Component {
       this.weekNumberEl.current.focus({ preventScroll: true });
   };
 
-  render() {
+  render(): JSX.Element {
     const { weekNumber, ariaLabelPrefix = "week ", onClick } = this.props;
 
     const weekNumberClasses = {
