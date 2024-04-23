@@ -63,6 +63,76 @@ interface DayProps {
   monthShowsDuplicateDaysStart?: boolean;
 }
 
+/**
+ * `Day` is a React component that represents a single day in a date picker.
+ * It handles the rendering and interaction of a day.
+ *
+ * @prop ariaLabelPrefixWhenEnabled - Aria label prefix when the day is enabled.
+ * @prop ariaLabelPrefixWhenDisabled - Aria label prefix when the day is disabled.
+ * @prop disabledKeyboardNavigation - Whether keyboard navigation is disabled.
+ * @prop day - The day to be displayed.
+ * @prop dayClassName - Function to customize the CSS class of the day.
+ * @prop endDate - The end date in a range.
+ * @prop highlightDates - Map of dates to be highlighted.
+ * @prop holidays - Map of holiday dates.
+ * @prop inline - Whether the date picker is inline.
+ * @prop shouldFocusDayInline - Whether the day should be focused when date picker is inline.
+ * @prop month - The month the day belongs to.
+ * @prop onClick - Click event handler.
+ * @prop onMouseEnter - Mouse enter event handler.
+ * @prop handleOnKeyDown - Key down event handler.
+ * @prop usePointerEvent - Whether to use pointer events.
+ * @prop preSelection - The date that is currently selected.
+ * @prop selected - The selected date.
+ * @prop selectingDate - The date currently being selected.
+ * @prop selectsEnd - Whether the day can be the end date in a range.
+ * @prop selectsStart - Whether the day can be the start date in a range.
+ * @prop selectsRange - Whether the day can be in a range.
+ * @prop showWeekPicker - Whether to show week picker.
+ * @prop showWeekNumber - Whether to show week numbers.
+ * @prop selectsDisabledDaysInRange - Whether to select disabled days in a range.
+ * @prop selectsMultiple - Whether to allow multiple date selection.
+ * @prop selectedDates - Array of selected dates.
+ * @prop startDate - The start date in a range.
+ * @prop renderDayContents - Function to customize the rendering of the day's contents.
+ * @prop containerRef - Ref for the container.
+ * @prop excludeDates - Array of dates to be excluded.
+ * @prop calendarStartDay - The start day of the week.
+ * @prop locale - The locale object.
+ * @prop monthShowsDuplicateDaysEnd - Whether to show duplicate days at the end of the month.
+ * @prop monthShowsDuplicateDaysStart - Whether to show duplicate days at the start of the month.
+ *
+ * @example
+ * ```tsx
+ * import React from 'react';
+ * import Day from './day';
+ *
+ * function MyComponent() {
+ *   const handleDayClick = (event) => {
+ *     console.log('Day clicked', event);
+ *   };
+ *
+ *   const handleDayMouseEnter = (event) => {
+ *     console.log('Mouse entered day', event);
+ *   };
+ *
+ *   const renderDayContents = (date) => {
+ *     return <div>{date.getDate()}</div>;
+ *   };
+ *
+ *   return (
+ *     <Day
+ *       day={new Date()}
+ *       onClick={handleDayClick}
+ *       onMouseEnter={handleDayMouseEnter}
+ *       renderDayContents={renderDayContents}
+ *     />
+ *   );
+ * }
+ *
+ * export default MyComponent;
+ * ```
+ */
 export default class Day extends React.Component<DayProps> {
   componentDidMount() {
     this.handleFocusDay();
@@ -121,8 +191,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay,
-      ),
+        this.props.calendarStartDay
+      )
     );
 
   isSameWeek = (other?: Date) =>
@@ -132,8 +202,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay,
-      ),
+        this.props.calendarStartDay
+      )
     );
 
   isSameDayOrWeek = (other?: Date) =>
@@ -295,7 +365,7 @@ export default class Day extends React.Component<DayProps> {
   isSelected = () => {
     if (this.props.selectsMultiple) {
       return this.props.selectedDates?.some((date) =>
-        this.isSameDayOrWeek(date),
+        this.isSameDayOrWeek(date)
       );
     }
     return this.isSameDayOrWeek(this.props.selected);
@@ -328,7 +398,7 @@ export default class Day extends React.Component<DayProps> {
           this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass(),
-      this.getHolidaysClass(),
+      this.getHolidaysClass()
     );
   };
 
@@ -369,7 +439,7 @@ export default class Day extends React.Component<DayProps> {
               return undefined;
             }
             return excludeDate?.message;
-          }),
+          })
       );
     }
     // I'm not sure that this is a right output, but all tests are green
