@@ -1,10 +1,14 @@
 import React, { createRef } from "react";
-import PropTypes from "prop-types";
 import { clsx } from "clsx";
 import { getYear } from "./date_utils";
 
-function generateYears(year, noOfYear, minDate, maxDate) {
-  const list = [];
+function generateYears(
+  year: number,
+  noOfYear: number,
+  minDate?: Date,
+  maxDate?: Date,
+): number[] {
+  const list: number[] = [];
   for (let i = 0; i < 2 * noOfYear + 1; i++) {
     const newYear = year + noOfYear - i;
     let isInRange = true;
@@ -25,18 +29,27 @@ function generateYears(year, noOfYear, minDate, maxDate) {
   return list;
 }
 
-export default class YearDropdownOptions extends React.Component {
-  static propTypes = {
-    minDate: PropTypes.instanceOf(Date),
-    maxDate: PropTypes.instanceOf(Date),
-    onCancel: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-    scrollableYearDropdown: PropTypes.bool,
-    year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number,
-  };
+interface YearDropdownOptionsProps {
+  minDate?: Date;
+  maxDate?: Date;
+  onChange: (year: number) => void;
+  onCancel: VoidFunction;
+  scrollableYearDropdown?: boolean;
+  year: number;
+  yearDropdownItemNumber?: number;
+}
 
-  constructor(props) {
+interface YearDropdownOptionsState {
+  yearsList: number[];
+}
+
+export default class YearDropdownOptions extends React.Component<
+  YearDropdownOptionsProps,
+  YearDropdownOptionsState
+> {
+  dropdownRef: React.RefObject<HTMLDivElement>;
+
+  constructor(props: YearDropdownOptionsProps) {
     super(props);
     const { yearDropdownItemNumber, scrollableYearDropdown } = props;
     const noOfYear =
@@ -50,10 +63,10 @@ export default class YearDropdownOptions extends React.Component {
         this.props.maxDate,
       ),
     };
-    this.dropdownRef = createRef();
+    this.dropdownRef = createRef<HTMLDivElement>();
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const dropdownCurrent = this.dropdownRef.current;
 
     if (dropdownCurrent) {
@@ -65,14 +78,16 @@ export default class YearDropdownOptions extends React.Component {
         ? dropdownCurrentChildren.find((childEl) => childEl.ariaSelected)
         : null;
 
-      dropdownCurrent.scrollTop = selectedYearOptionEl
-        ? selectedYearOptionEl.offsetTop +
-          (selectedYearOptionEl.clientHeight - dropdownCurrent.clientHeight) / 2
-        : (dropdownCurrent.scrollHeight - dropdownCurrent.clientHeight) / 2;
+      dropdownCurrent.scrollTop =
+        selectedYearOptionEl && selectedYearOptionEl instanceof HTMLElement
+          ? selectedYearOptionEl.offsetTop +
+            (selectedYearOptionEl.clientHeight - dropdownCurrent.clientHeight) /
+              2
+          : (dropdownCurrent.scrollHeight - dropdownCurrent.clientHeight) / 2;
     }
   }
 
-  renderOptions = () => {
+  renderOptions = (): JSX.Element[] => {
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
       <div
@@ -124,15 +139,15 @@ export default class YearDropdownOptions extends React.Component {
     return options;
   };
 
-  onChange = (year) => {
+  onChange = (year: number): void => {
     this.props.onChange(year);
   };
 
-  handleClickOutside = () => {
+  handleClickOutside = (): void => {
     this.props.onCancel();
   };
 
-  shiftYears = (amount) => {
+  shiftYears = (amount: number): void => {
     const years = this.state.yearsList.map(function (year) {
       return year + amount;
     });
@@ -142,11 +157,11 @@ export default class YearDropdownOptions extends React.Component {
     });
   };
 
-  incrementYears = () => {
+  incrementYears = (): void => {
     return this.shiftYears(1);
   };
 
-  decrementYears = () => {
+  decrementYears = (): void => {
     return this.shiftYears(-1);
   };
 
