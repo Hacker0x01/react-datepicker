@@ -217,8 +217,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay,
-      ),
+        this.props.calendarStartDay
+      )
     );
 
   isSameWeek = (other?: Date) =>
@@ -228,8 +228,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay,
-      ),
+        this.props.calendarStartDay
+      )
     );
 
   isSameDayOrWeek = (other?: Date) =>
@@ -391,7 +391,7 @@ export default class Day extends React.Component<DayProps> {
   isSelected = () => {
     if (this.props.selectsMultiple) {
       return this.props.selectedDates?.some((date) =>
-        this.isSameDayOrWeek(date),
+        this.isSameDayOrWeek(date)
       );
     }
     return this.isSameDayOrWeek(this.props.selected);
@@ -424,7 +424,7 @@ export default class Day extends React.Component<DayProps> {
           this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass(),
-      this.getHolidaysClass(),
+      this.getHolidaysClass()
     );
   };
 
@@ -465,7 +465,7 @@ export default class Day extends React.Component<DayProps> {
               return undefined;
             }
             return excludeDate?.message;
-          }),
+          })
       );
     }
     // I'm not sure that this is a right output, but all tests are green
@@ -501,9 +501,13 @@ export default class Day extends React.Component<DayProps> {
   private shouldFocusDay() {
     let shouldFocusDay = false;
     if (this.getTabIndex() === 0 && this.isSameDay(this.props.preSelection)) {
+      // there is currently no activeElement and not inline
       if (!document.activeElement || document.activeElement === document.body) {
         shouldFocusDay = true;
       }
+      // inline version:
+      // do not focus on initial render to prevent autoFocus issue
+      // focus after month has changed via keyboard
       if (this.props.inline && !this.props.shouldFocusDayInline) {
         shouldFocusDay = false;
       }
@@ -517,6 +521,7 @@ export default class Day extends React.Component<DayProps> {
     return shouldFocusDay;
   }
 
+  // the activeElement is in the container, and it is another instance of Day
   private isDayActiveElement() {
     return (
       this.props.containerRef?.current?.contains(document.activeElement) &&
@@ -526,6 +531,7 @@ export default class Day extends React.Component<DayProps> {
 
   private isDuplicateDay() {
     return (
+      //day is one of the non rendered duplicate days
       (this.props.monthShowsDuplicateDaysEnd && this.isAfterMonth()) ||
       (this.props.monthShowsDuplicateDaysStart && this.isBeforeMonth())
     );
