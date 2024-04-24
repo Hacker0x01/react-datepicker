@@ -57,7 +57,8 @@ import { parse } from "date-fns/parse";
 import { parseISO } from "date-fns/parseISO";
 import { type Locale, addSeconds, Day } from "date-fns";
 
-interface LocaleObj
+export type DateNumberType = Day;
+export interface LocaleObj
   extends Pick<Locale, "options" | "formatLong" | "localize" | "match"> {}
 
 function getLocaleScope() {
@@ -354,7 +355,7 @@ export function getWeek(date: Date): number {
  */
 export function getDayOfWeekCode(
   day: Date,
-  locale: string | LocaleObj,
+  locale?: string | LocaleObj,
 ): string {
   return formatDate(day, "ddd", locale);
 }
@@ -381,8 +382,8 @@ export function getStartOfDay(date: Date): Date {
  */
 export function getStartOfWeek(
   date: Date,
-  locale: string | LocaleObj,
-  calendarStartDay: Day,
+  locale?: string | LocaleObj,
+  calendarStartDay?: Day,
 ): Date {
   let localeObj = locale
     ? getLocaleObject(locale)
@@ -727,10 +728,10 @@ export function getQuarterShortInLocale(
 
 // ** Utils for some components **
 
-interface DayDisabledOptions {
+export interface DayDisabledOptions {
   minDate?: Date;
   maxDate?: Date;
-  excludeDates?: { date?: Date }[] | Date[];
+  excludeDates?: { date?: Date; message?: string }[] | Date[];
   excludeDateIntervals?: { start: Date; end: Date }[];
   includeDates?: Date[];
   includeDateIntervals?: { start: Date; end: Date }[];
@@ -1296,6 +1297,8 @@ interface ClassNamesObj {
   holidayNames: string[];
 }
 
+export type HolidaysMap = Map<string, ClassNamesObj>;
+
 /**
  * Assign the custom class to each date
  * @param holidayDates array of object containing date and name of the holiday
@@ -1305,7 +1308,7 @@ interface ClassNamesObj {
 export function getHolidaysMap(
   holidayDates: Holiday[] = [],
   defaultClassName: string = "react-datepicker__day--holidays",
-): Map<string, ClassNamesObj> {
+): HolidaysMap {
   const dateClasses = new Map<string, ClassNamesObj>();
   holidayDates.forEach((holiday) => {
     const { date: dateObj, holidayName } = holiday;
