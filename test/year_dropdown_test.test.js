@@ -1,6 +1,6 @@
 import React from "react";
 import range from "lodash/range";
-import YearDropdown from "../src/year_dropdown.jsx";
+import YearDropdown from "../src/year_dropdown";
 import { render, fireEvent } from "@testing-library/react";
 import { newDate } from "../src/date_utils.ts";
 

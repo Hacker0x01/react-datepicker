@@ -1,31 +1,37 @@
 import React from "react";
-import PropTypes from "prop-types";
 import YearDropdownOptions from "./year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
 import { getYear } from "./date_utils";
 
 const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
 
-export default class YearDropdown extends React.Component {
-  static propTypes = {
-    adjustDateOnChange: PropTypes.bool,
-    dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
-    maxDate: PropTypes.instanceOf(Date),
-    minDate: PropTypes.instanceOf(Date),
-    onChange: PropTypes.func.isRequired,
-    scrollableYearDropdown: PropTypes.bool,
-    year: PropTypes.number.isRequired,
-    yearDropdownItemNumber: PropTypes.number,
-    date: PropTypes.instanceOf(Date),
-    onSelect: PropTypes.func,
-    setOpen: PropTypes.func,
-  };
+interface YearDropdownProps {
+  adjustDateOnChange?: boolean;
+  dropdownMode: "scroll" | "select";
+  maxDate?: Date;
+  minDate?: Date;
+  onChange: (year: number | string) => void;
+  scrollableYearDropdown?: boolean;
+  year: number;
+  yearDropdownItemNumber?: number;
+  date?: Date;
+  onSelect?: (date?: Date, event?: React.MouseEvent<HTMLDivElement>) => void;
+  setOpen?: (open?: boolean) => void;
+}
 
+interface YearDropdownState {
+  dropdownVisible: boolean;
+}
+
+export default class YearDropdown extends React.Component<
+  YearDropdownProps,
+  YearDropdownState
+> {
   state = {
     dropdownVisible: false,
   };
 
-  renderSelectOptions = () => {
+  renderSelectOptions = (): JSX.Element[] => {
     const minYear = this.props.minDate ? getYear(this.props.minDate) : 1900;
     const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : 2100;
 
@@ -40,11 +46,11 @@ export default class YearDropdown extends React.Component {
     return options;
   };
 
-  onSelectChange = (e) => {
+  onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     this.onChange(e.target.value);
   };
 
-  renderSelectMode = () => (
+  renderSelectMode = (): JSX.Element => (
     <select
       value={this.props.year}
       className="react-datepicker__year-select"
@@ -54,12 +60,14 @@ export default class YearDropdown extends React.Component {
     </select>
   );
 
-  renderReadView = (visible) => (
+  renderReadView = (visible: boolean): JSX.Element => (
     <div
       key="read"
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
-      onClick={(event) => this.toggleDropdown(event)}
+      onClick={(event: React.MouseEvent<HTMLDivElement>): void =>
+        this.toggleDropdown(event)
+      }
     >
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">
@@ -68,7 +76,7 @@ export default class YearDropdown extends React.Component {
     </div>
   );
 
-  renderDropdown = () => (
+  renderDropdown = (): JSX.Element => (
     <WrappedYearDropdownOptions
       key="dropdown"
       year={this.props.year}
@@ -81,22 +89,22 @@ export default class YearDropdown extends React.Component {
     />
   );
 
-  renderScrollMode = () => {
+  renderScrollMode = (): JSX.Element[] => {
     const { dropdownVisible } = this.state;
-    let result = [this.renderReadView(!dropdownVisible)];
+    const result = [this.renderReadView(!dropdownVisible)];
     if (dropdownVisible) {
       result.unshift(this.renderDropdown());
     }
     return result;
   };
 
-  onChange = (year) => {
+  onChange = (year: number | string): void => {
     this.toggleDropdown();
     if (year === this.props.year) return;
     this.props.onChange(year);
   };
 
-  toggleDropdown = (event) => {
+  toggleDropdown = (event?: React.MouseEvent<HTMLDivElement>): void => {
     this.setState(
       {
         dropdownVisible: !this.state.dropdownVisible,
@@ -109,24 +117,27 @@ export default class YearDropdown extends React.Component {
     );
   };
 
-  handleYearChange = (date, event) => {
+  handleYearChange = (
+    date?: Date,
+    event?: React.MouseEvent<HTMLDivElement>,
+  ): void => {
     this.onSelect(date, event);
     this.setOpen();
   };
 
-  onSelect = (date, event) => {
+  onSelect = (date?: Date, event?: React.MouseEvent<HTMLDivElement>): void => {
     if (this.props.onSelect) {
       this.props.onSelect(date, event);
     }
   };
 
-  setOpen = () => {
+  setOpen = (): void => {
     if (this.props.setOpen) {
       this.props.setOpen(true);
     }
   };
 
-  render() {
+  render(): JSX.Element {
     let renderedDropdown;
     switch (this.props.dropdownMode) {
       case "scroll":

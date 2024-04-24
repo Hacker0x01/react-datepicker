@@ -52,6 +52,7 @@
     "@testing-library/react": "^15.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "20",
+    "@types/react-onclickoutside": "^6.7.10",
     "axe-core": "^4.4.1",
     "babel-jest": "^29.6.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
