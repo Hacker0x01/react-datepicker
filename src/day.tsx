@@ -217,8 +217,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay
-      )
+        this.props.calendarStartDay,
+      ),
     );
 
   isSameWeek = (other?: Date) =>
@@ -228,8 +228,8 @@ export default class Day extends React.Component<DayProps> {
       getStartOfWeek(
         this.props.day,
         this.props.locale,
-        this.props.calendarStartDay
-      )
+        this.props.calendarStartDay,
+      ),
     );
 
   isSameDayOrWeek = (other?: Date) =>
@@ -391,7 +391,7 @@ export default class Day extends React.Component<DayProps> {
   isSelected = () => {
     if (this.props.selectsMultiple) {
       return this.props.selectedDates?.some((date) =>
-        this.isSameDayOrWeek(date)
+        this.isSameDayOrWeek(date),
       );
     }
     return this.isSameDayOrWeek(this.props.selected);
@@ -424,7 +424,7 @@ export default class Day extends React.Component<DayProps> {
           this.isAfterMonth() || this.isBeforeMonth(),
       },
       this.getHighLightedClass(),
-      this.getHolidaysClass()
+      this.getHolidaysClass(),
     );
   };
 
@@ -465,7 +465,7 @@ export default class Day extends React.Component<DayProps> {
               return undefined;
             }
             return excludeDate?.message;
-          })
+          }),
       );
     }
     // I'm not sure that this is a right output, but all tests are green
