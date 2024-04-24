@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import MonthYearDropdownOptions from "./month_year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
+import type { LocaleObj } from "./date_utils";
 import {
   addMonths,
   formatDate,
@@ -13,25 +13,34 @@ import {
   getTime,
 } from "./date_utils";
 
-var WrappedMonthYearDropdownOptions = onClickOutside(MonthYearDropdownOptions);
+const WrappedMonthYearDropdownOptions = onClickOutside(
+  MonthYearDropdownOptions,
+);
 
-export default class MonthYearDropdown extends React.Component {
-  static propTypes = {
-    dropdownMode: PropTypes.oneOf(["scroll", "select"]).isRequired,
-    dateFormat: PropTypes.string.isRequired,
-    locale: PropTypes.string,
-    maxDate: PropTypes.instanceOf(Date).isRequired,
-    minDate: PropTypes.instanceOf(Date).isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
-    onChange: PropTypes.func.isRequired,
-    scrollableMonthYearDropdown: PropTypes.bool,
-  };
+interface MonthYearDropdownProps {
+  dropdownMode: "scroll" | "select";
+  dateFormat: string;
+  locale?: string | LocaleObj;
+  minDate: Date;
+  maxDate: Date;
+  date: Date;
+  onChange: (monthYear: Date) => void;
+  scrollableMonthYearDropdown?: boolean;
+}
 
-  state = {
+interface MonthYearDropdownState {
+  dropdownVisible: boolean;
+}
+
+export default class MonthYearDropdown extends React.Component<
+  MonthYearDropdownProps,
+  MonthYearDropdownState
+> {
+  state: MonthYearDropdownState = {
     dropdownVisible: false,
   };
 
-  renderSelectOptions = () => {
+  renderSelectOptions = (): JSX.Element[] => {
     let currDate = getStartOfMonth(this.props.minDate);
     const lastDate = getStartOfMonth(this.props.maxDate);
     const options = [];
@@ -50,11 +59,11 @@ export default class MonthYearDropdown extends React.Component {
     return options;
   };
 
-  onSelectChange = (e) => {
+  onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     this.onChange(e.target.value);
   };
 
-  renderSelectMode = () => (
+  renderSelectMode = (): JSX.Element => (
     <select
       value={getTime(getStartOfMonth(this.props.date))}
       className="react-datepicker__month-year-select"
@@ -64,7 +73,7 @@ export default class MonthYearDropdown extends React.Component {
     </select>
   );
 
-  renderReadView = (visible) => {
+  renderReadView = (visible: boolean): JSX.Element => {
     const yearMonth = formatDate(
       this.props.date,
       this.props.dateFormat,
@@ -73,10 +82,9 @@ export default class MonthYearDropdown extends React.Component {
 
     return (
       <div
-        key="read"
         style={{ visibility: visible ? "visible" : "hidden" }}
         className="react-datepicker__month-year-read-view"
-        onClick={(event) => this.toggleDropdown(event)}
+        onClick={this.toggleDropdown}
       >
         <span className="react-datepicker__month-year-read-view--down-arrow" />
         <span className="react-datepicker__month-year-read-view--selected-month-year">
@@ -86,9 +94,8 @@ export default class MonthYearDropdown extends React.Component {
     );
   };
 
-  renderDropdown = () => (
+  renderDropdown = (): JSX.Element => (
     <WrappedMonthYearDropdownOptions
-      key="dropdown"
       date={this.props.date}
       dateFormat={this.props.dateFormat}
       onChange={this.onChange}
@@ -100,19 +107,23 @@ export default class MonthYearDropdown extends React.Component {
     />
   );
 
-  renderScrollMode = () => {
+  renderScrollMode = (): JSX.Element[] => {
     const { dropdownVisible } = this.state;
-    let result = [this.renderReadView(!dropdownVisible)];
+    const result = [this.renderReadView(!dropdownVisible)];
     if (dropdownVisible) {
       result.unshift(this.renderDropdown());
     }
     return result;
   };
 
-  onChange = (monthYearPoint) => {
+  onChange = (monthYearPoint: number | string): void => {
     this.toggleDropdown();
 
-    const changedDate = newDate(parseInt(monthYearPoint));
+    const changedDate = newDate(
+      typeof monthYearPoint === "string"
+        ? parseInt(monthYearPoint)
+        : monthYearPoint,
+    );
 
     if (
       isSameYear(this.props.date, changedDate) &&
@@ -124,12 +135,12 @@ export default class MonthYearDropdown extends React.Component {
     this.props.onChange(changedDate);
   };
 
-  toggleDropdown = () =>
+  toggleDropdown = (): void =>
     this.setState({
       dropdownVisible: !this.state.dropdownVisible,
     });
 
-  render() {
+  render(): JSX.Element {
     let renderedDropdown;
     switch (this.props.dropdownMode) {
       case "scroll":
