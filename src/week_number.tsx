@@ -9,22 +9,17 @@ interface WeekNumberProps {
   ariaLabelPrefix?: string;
   selected?: Date;
   preSelection?: Date;
-  showWeekPicker: boolean;
-  showWeekNumber: boolean;
-  disabledKeyboardNavigation: boolean;
-  inline: boolean;
-  shouldFocusDayInline: boolean;
+  showWeekPicker?: boolean;
+  showWeekNumber?: boolean;
+  disabledKeyboardNavigation?: boolean;
+  inline?: boolean;
+  shouldFocusDayInline?: boolean;
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   containerRef?: React.RefObject<HTMLDivElement>;
   isInputFocused?: boolean;
 }
 
-interface WeekNumberState {}
-
-export default class WeekNumber extends React.Component<
-  WeekNumberProps,
-  WeekNumberState
-> {
+export default class WeekNumber extends React.Component<WeekNumberProps> {
   static get defaultProps(): Partial<WeekNumberProps> {
     return {
       ariaLabelPrefix: "week ",
