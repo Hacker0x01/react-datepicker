@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import type { LocaleObj } from "./date_utils";
 import {
   getHours,
   getMinutes,
@@ -12,54 +12,63 @@ import {
   timesToInjectAfter,
   getHoursInDay,
   isSameMinute,
+  getSeconds,
 } from "./date_utils";
-import { getSeconds } from "date-fns";
 
-export default class Time extends React.Component {
-  static get defaultProps() {
+interface TimeProps {
+  format?: string;
+  includeTimes?: Date[];
+  intervals: number;
+  selected?: Date;
+  openToDate?: Date;
+  onChange?: (time: Date) => void;
+  timeClassName?: (time: Date) => string;
+  todayButton?: React.ReactNode;
+  minTime?: Date;
+  maxTime?: Date;
+  excludeTimes?: Date[];
+  filterTime?: (time: Date) => boolean;
+  monthRef?: HTMLDivElement;
+  timeCaption?: string;
+  injectTimes?: Date[];
+  handleOnKeyDown?: React.KeyboardEventHandler<HTMLLIElement>;
+  locale?: string | LocaleObj;
+  showTimeSelectOnly?: boolean;
+}
+
+interface TimeState {
+  height: number | null;
+}
+
+export default class Time extends React.Component<TimeProps, TimeState> {
+  static get defaultProps(): Partial<TimeProps> {
     return {
       intervals: 30,
-      onTimeChange: () => {},
       todayButton: null,
       timeCaption: "Time",
     };
   }
 
-  static calcCenterPosition = (listHeight, centerLiRef) => {
+  static calcCenterPosition = (
+    listHeight: number,
+    centerLiRef: HTMLLIElement,
+  ): number => {
     return (
       centerLiRef.offsetTop - (listHeight / 2 - centerLiRef.clientHeight / 2)
     );
   };
 
-  static propTypes = {
-    format: PropTypes.string,
-    includeTimes: PropTypes.array,
-    intervals: PropTypes.number,
-    selected: PropTypes.instanceOf(Date),
-    openToDate: PropTypes.instanceOf(Date),
-    onChange: PropTypes.func,
-    timeClassName: PropTypes.func,
-    todayButton: PropTypes.node,
-    minTime: PropTypes.instanceOf(Date),
-    maxTime: PropTypes.instanceOf(Date),
-    excludeTimes: PropTypes.array,
-    filterTime: PropTypes.func,
-    monthRef: PropTypes.object,
-    timeCaption: PropTypes.string,
-    injectTimes: PropTypes.array,
-    handleOnKeyDown: PropTypes.func,
-    locale: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({ locale: PropTypes.object }),
-    ]),
-    showTimeSelectOnly: PropTypes.bool,
-  };
-
-  state = {
+  state: TimeState = {
     height: null,
   };
 
-  componentDidMount() {
+  private header?: HTMLDivElement;
+
+  private list?: HTMLUListElement;
+
+  private centerLi?: HTMLLIElement;
+
+  componentDidMount(): void {
     // code to ensure selected time will always be in focus within time window when it first appears
     this.scrollToTheSelectedTime();
     if (this.props.monthRef && this.header) {
@@ -69,22 +78,24 @@ export default class Time extends React.Component {
     }
   }
 
-  scrollToTheSelectedTime = () => {
-    requestAnimationFrame(() => {
+  scrollToTheSelectedTime = (): void => {
+    requestAnimationFrame((): void => {
       if (!this.list) return;
 
       this.list.scrollTop =
-        this.centerLi &&
-        Time.calcCenterPosition(
-          this.props.monthRef
-            ? this.props.monthRef.clientHeight - this.header.clientHeight
-            : this.list.clientHeight,
-          this.centerLi,
-        );
+        (this.centerLi &&
+          Time.calcCenterPosition(
+            this.props.monthRef
+              ? this.props.monthRef.clientHeight -
+                  (this.header?.clientHeight ?? 0)
+              : this.list.clientHeight,
+            this.centerLi,
+          )) ??
+        0;
     });
   };
 
-  handleClick = (time) => {
+  handleClick = (time: Date): void => {
     if (
       ((this.props.minTime || this.props.maxTime) &&
         isTimeInDisabledRange(time, this.props)) ||
@@ -95,13 +106,13 @@ export default class Time extends React.Component {
     ) {
       return;
     }
-    this.props.onChange(time);
+    this.props.onChange?.(time);
   };
 
-  isSelectedTime = (time) =>
+  isSelectedTime = (time: Date) =>
     this.props.selected && isSameMinute(this.props.selected, time);
 
-  isDisabledTime = (time) =>
+  isDisabledTime = (time: Date): boolean | undefined =>
     ((this.props.minTime || this.props.maxTime) &&
       isTimeInDisabledRange(time, this.props)) ||
     ((this.props.excludeTimes ||
@@ -109,8 +120,8 @@ export default class Time extends React.Component {
       this.props.filterTime) &&
       isTimeDisabled(time, this.props));
 
-  liClasses = (time) => {
-    let classes = [
+  liClasses = (time: Date): string => {
+    const classes = [
       "react-datepicker__time-list-item",
       this.props.timeClassName ? this.props.timeClassName(time) : undefined,
     ];
@@ -136,7 +147,10 @@ export default class Time extends React.Component {
     return classes.join(" ");
   };
 
-  handleOnKeyDown = (event, time) => {
+  handleOnKeyDown = (
+    event: React.KeyboardEvent<HTMLLIElement>,
+    time: Date,
+  ): void => {
     if (event.key === " ") {
       event.preventDefault();
       event.key = "Enter";
@@ -144,27 +158,31 @@ export default class Time extends React.Component {
 
     if (
       (event.key === "ArrowUp" || event.key === "ArrowLeft") &&
+      event.target instanceof HTMLElement &&
       event.target.previousSibling
     ) {
       event.preventDefault();
-      event.target.previousSibling.focus();
+      event.target.previousSibling instanceof HTMLElement &&
+        event.target.previousSibling.focus();
     }
     if (
       (event.key === "ArrowDown" || event.key === "ArrowRight") &&
+      event.target instanceof HTMLElement &&
       event.target.nextSibling
     ) {
       event.preventDefault();
-      event.target.nextSibling.focus();
+      event.target.nextSibling instanceof HTMLElement &&
+        event.target.nextSibling.focus();
     }
 
     if (event.key === "Enter") {
       this.handleClick(time);
     }
-    this.props.handleOnKeyDown(event);
+    this.props.handleOnKeyDown?.(event);
   };
 
-  renderTimes = () => {
-    let times = [];
+  renderTimes = (): JSX.Element[] => {
+    let times: Date[] = [];
     const format = this.props.format ? this.props.format : "p";
     const intervals = this.props.intervals;
 
@@ -174,8 +192,8 @@ export default class Time extends React.Component {
     const base = getStartOfDay(activeDate);
     const sortedInjectTimes =
       this.props.injectTimes &&
-      this.props.injectTimes.sort(function (a, b) {
-        return a - b;
+      this.props.injectTimes.sort(function (a: Date, b: Date): number {
+        return a.getTime() - b.getTime();
       });
 
     const minutesInDay = 60 * getHoursInDay(activeDate);
@@ -198,25 +216,25 @@ export default class Time extends React.Component {
     }
 
     // Determine which time to focus and scroll into view when component mounts
-    const timeToFocus = times.reduce((prev, time) => {
+    const timeToFocus = times.reduce<Date | undefined>((prev, time) => {
       if (time.getTime() <= activeDate.getTime()) {
         return time;
       }
       return prev;
     }, times[0]);
 
-    return times.map((time, i) => {
+    return times.map<JSX.Element>((time): JSX.Element => {
       return (
         <li
-          key={i}
+          key={time.valueOf()}
           onClick={this.handleClick.bind(this, time)}
           className={this.liClasses(time)}
-          ref={(li) => {
+          ref={(li: HTMLLIElement): void => {
             if (time === timeToFocus) {
               this.centerLi = li;
             }
           }}
-          onKeyDown={(ev) => {
+          onKeyDown={(ev: React.KeyboardEvent<HTMLLIElement>): void => {
             this.handleOnKeyDown(ev, time);
           }}
           tabIndex={time === timeToFocus ? 0 : -1}
@@ -247,7 +265,7 @@ export default class Time extends React.Component {
               ? "react-datepicker__header--time--only"
               : ""
           }`}
-          ref={(header) => {
+          ref={(header: HTMLDivElement) => {
             this.header = header;
           }}
         >
@@ -259,7 +277,7 @@ export default class Time extends React.Component {
           <div className="react-datepicker__time-box">
             <ul
               className="react-datepicker__time-list"
-              ref={(list) => {
+              ref={(list: HTMLUListElement) => {
                 this.list = list;
               }}
               style={height ? { height } : {}}
