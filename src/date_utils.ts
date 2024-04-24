@@ -697,7 +697,10 @@ export function getWeekdayShortInLocale(date: Date, locale: string): string {
  * @param locale - The locale to use for formatting.
  * @returns - The month.
  */
-export function getMonthInLocale(month: number, locale: string): string {
+export function getMonthInLocale(
+  month: number,
+  locale?: string | LocaleObj,
+): string {
   return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
@@ -708,7 +711,10 @@ export function getMonthInLocale(month: number, locale: string): string {
  * @param locale - The locale to use for formatting.
  * @returns - The short month.
  */
-export function getMonthShortInLocale(month: number, locale: string): string {
+export function getMonthShortInLocale(
+  month: number,
+  locale?: string | LocaleObj,
+): string {
   return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 

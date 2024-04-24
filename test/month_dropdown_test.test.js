@@ -1,7 +1,7 @@
 import React from "react";
 import range from "lodash/range";
-import MonthDropdown from "../src/month_dropdown.jsx";
-import MonthDropdownOptions from "../src/month_dropdown_options.jsx";
+import MonthDropdown from "../src/month_dropdown";
+import MonthDropdownOptions from "../src/month_dropdown_options";
 import { render, fireEvent } from "@testing-library/react";
 import { getMonthInLocale, registerLocale } from "../src/date_utils";
 import { zhCN } from "date-fns/locale/zh-CN";
