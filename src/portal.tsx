@@ -1,22 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-export default class Portal extends React.Component {
-  static propTypes = {
-    children: PropTypes.any,
-    portalId: PropTypes.string,
-    portalHost: PropTypes.instanceOf(ShadowRoot),
-  };
+interface PortalProps {
+  children: React.ReactNode;
+  portalId: string;
+  portalHost?: ShadowRoot;
+}
 
-  constructor(props) {
+class Portal extends Component<PortalProps> {
+  private el: HTMLDivElement;
+  private portalRoot!: HTMLElement | null;
+
+  constructor(props: PortalProps) {
     super(props);
     this.el = document.createElement("div");
   }
 
   componentDidMount() {
     this.portalRoot = (this.props.portalHost || document).getElementById(
-      this.props.portalId,
+      this.props.portalId
     );
     if (!this.portalRoot) {
       this.portalRoot = document.createElement("div");
@@ -27,10 +29,14 @@ export default class Portal extends React.Component {
   }
 
   componentWillUnmount() {
-    this.portalRoot.removeChild(this.el);
+    if (this.portalRoot) {
+      this.portalRoot.removeChild(this.el);
+    }
   }
 
   render() {
     return ReactDOM.createPortal(this.props.children, this.el);
   }
 }
+
+export default Portal;
