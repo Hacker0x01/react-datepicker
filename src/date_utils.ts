@@ -498,7 +498,7 @@ export function isSameYear(date1: Date | null, date2: Date | null): boolean {
  * @param date2 - The second date.
  * @returns - True if the dates are in the same month, false otherwise.
  */
-export function isSameMonth(date1: Date | null, date2: Date | null): boolean {
+export function isSameMonth(date1: Date | null, date2?: Date | null): boolean {
   if (date1 && date2) {
     return dfIsSameMonth(date1, date2);
   } else {
