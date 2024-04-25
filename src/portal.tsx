@@ -28,7 +28,7 @@ class Portal extends Component<PortalProps> {
 
   componentDidMount() {
     this.portalRoot = (this.props.portalHost || document).getElementById(
-      this.props.portalId
+      this.props.portalId,
     );
     if (!this.portalRoot) {
       this.portalRoot = document.createElement("div");
