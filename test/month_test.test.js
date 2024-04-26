@@ -1951,12 +1951,12 @@ describe("Month", () => {
         month: 7,
         preSelection: excludeDates[0],
         setPreSelection: () => {},
-        excludeDates: excludeDates
+        excludeDates: excludeDates,
       });
 
       fireEvent.keyDown(
         monthComponent.querySelector(".react-datepicker__month-7"),
-        getKey("Enter")
+        getKey("Enter"),
       );
 
       expect(selected).not.toBe(excludeDates[0]);
