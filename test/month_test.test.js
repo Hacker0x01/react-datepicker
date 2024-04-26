@@ -1940,6 +1940,28 @@ describe("Month", () => {
       );
     });
 
+    it("should prevent selection of disabled month", () => {
+      const excludeDates = [utils.newDate("2015-08-01")];
+      let selected = utils.newDate("2015-07-01");
+      let day = utils.newDate("2015-08-01");
+
+      const monthComponent = renderMonth({
+        selected: selected,
+        day: day,
+        month: 7,
+        preSelection: excludeDates[0],
+        setPreSelection: () => {},
+        excludeDates: excludeDates,
+      });
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-7"),
+        getKey("Enter"),
+      );
+
+      expect(selected).not.toBe(excludeDates[0]);
+    });
+
     it("should prevent navigation", () => {
       let preSelected = utils.newDate("2015-08-01");
       const setPreSelection = (param) => {

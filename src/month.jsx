@@ -52,7 +52,7 @@ function getMonthColumnsLayout(
   return MONTH_COLUMNS_LAYOUT.THREE_COLUMNS;
 }
 
-export default class Month extends React.Component {
+class Month extends React.Component {
   static propTypes = {
     ariaLabelPrefix: PropTypes.string,
     chooseDayAriaLabelPrefix: PropTypes.string,
@@ -455,8 +455,10 @@ export default class Month extends React.Component {
       const monthsGrid = MONTH_COLUMNS[monthColumnsLayout].grid;
       switch (eventKey) {
         case "Enter":
-          this.onMonthClick(event, month);
-          setPreSelection(selected);
+          if (!this.isMonthDisabled(month)) {
+            this.onMonthClick(event, month);
+            setPreSelection(selected);
+          }
           break;
         case "ArrowRight":
           this.handleMonthNavigation(
@@ -839,3 +841,5 @@ export default class Month extends React.Component {
     );
   }
 }
+
+export default Month;
