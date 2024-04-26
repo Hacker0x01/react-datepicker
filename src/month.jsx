@@ -52,7 +52,7 @@ function getMonthColumnsLayout(
   return MONTH_COLUMNS_LAYOUT.THREE_COLUMNS;
 }
 
-export default class Month extends React.Component {
+class Month extends React.Component {
   static propTypes = {
     ariaLabelPrefix: PropTypes.string,
     chooseDayAriaLabelPrefix: PropTypes.string,
@@ -841,3 +841,5 @@ export default class Month extends React.Component {
     );
   }
 }
+
+export default Month;
