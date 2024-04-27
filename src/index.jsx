@@ -836,8 +836,9 @@ export default class DatePicker extends React.Component {
     if (this.state.open) {
       if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
         event.preventDefault();
-        const selectorString =
-          this.props.showWeekPicker && this.props.showWeekNumbers
+        const selectorString = this.props.showTimeSelectOnly
+          ? ".react-datepicker__time-list-item[tabindex='0']"
+          : this.props.showWeekPicker && this.props.showWeekNumbers
             ? '.react-datepicker__week-number[tabindex="0"]'
             : this.props.showFullMonthYearPicker ||
                 this.props.showMonthYearPicker

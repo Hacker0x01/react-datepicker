@@ -219,6 +219,17 @@ describe("TimePicker", () => {
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
+  it("should call the onKeyDown handler on key arrow down", () => {
+    const onKeyDownSpy = jest.fn();
+    renderDatePicker("February 28, 2018 4:43 PM", {
+      onKeyDown: onKeyDownSpy,
+      showTimeSelectOnly: true,
+    });
+    fireEvent.focus(instance.input);
+    fireEvent.keyDown(instance.input, { key: "ArrowDown" });
+    expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
+  });
+
   function setManually(string) {
     fireEvent.focus(instance.input);
     fireEvent.change(instance.input, { target: { value: string } });
