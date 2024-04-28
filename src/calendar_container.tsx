@@ -1,19 +1,18 @@
 import React from "react";
 
-interface CalendarContainerProps {
+interface CalendarContainerProps extends React.PropsWithChildren {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
   className?: string;
-  children?: React.ReactNode;
 }
 
-export default function CalendarContainer({
+const CalendarContainer: React.FC<CalendarContainerProps> = function ({
   showTimeSelectOnly = false,
   showTime = false,
   className,
   children,
 }: Readonly<CalendarContainerProps>) {
-  let ariaLabel = showTimeSelectOnly
+  const ariaLabel = showTimeSelectOnly
     ? "Choose Time"
     : `Choose Date${showTime ? " and Time" : ""}`;
 
@@ -27,4 +26,6 @@ export default function CalendarContainer({
       {children}
     </div>
   );
-}
+};
+
+export default CalendarContainer;

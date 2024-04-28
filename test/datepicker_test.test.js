@@ -387,10 +387,11 @@ describe("DatePicker", () => {
     fireEvent.keyDown(data.dateInput, getKey("ArrowDown")); // put focus on current day
     const today = getSelectedDayNode(data.instance); // store current day node
     const dayToClick = today.nextElementSibling || today.previousElementSibling; // choose next or previous day
-    fireEvent.click(dayToClick); // will update the preSelection
-    data.copyM = today.nextElementSibling
+    const copyM = today.nextElementSibling
       ? utils.addDays(data.copyM, 1)
       : utils.subDays(data.copyM, 1); // update copyM to expected date
+    fireEvent.click(dayToClick); // will update the preSelection
+    data.copyM = copyM;
 
     expect(
       utils.formatDate(data.instance.state.preSelection, data.testFormat),

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, cloneElement } from "react";
 
 interface InputTimeProps {
   onChange?: (date: Date) => void;
@@ -28,7 +28,7 @@ interface InputTimeState {
  *
  * @returns The `InputTime` component.
  */
-export default class InputTime extends React.Component<
+export default class InputTime extends Component<
   InputTimeProps,
   InputTimeState
 > {
@@ -75,7 +75,7 @@ export default class InputTime extends React.Component<
     const { date, timeString, customTimeInput } = this.props;
 
     if (customTimeInput) {
-      return React.cloneElement(customTimeInput, {
+      return cloneElement(customTimeInput, {
         date,
         value: time,
         onChange: this.onTimeChange,

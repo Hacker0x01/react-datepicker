@@ -1,5 +1,4 @@
-import React from "react";
-import type { LocaleObj } from "./date_utils";
+import React, { Component } from "react";
 import {
   getHours,
   getMinutes,
@@ -13,6 +12,7 @@ import {
   getHoursInDay,
   isSameMinute,
   getSeconds,
+  type Locale,
 } from "./date_utils";
 
 interface TimeProps {
@@ -32,7 +32,7 @@ interface TimeProps {
   timeCaption?: string;
   injectTimes?: Date[];
   handleOnKeyDown?: React.KeyboardEventHandler<HTMLLIElement>;
-  locale?: string | LocaleObj;
+  locale?: Locale;
   showTimeSelectOnly?: boolean;
 }
 
@@ -40,7 +40,7 @@ interface TimeState {
   height: number | null;
 }
 
-export default class Time extends React.Component<TimeProps, TimeState> {
+export default class Time extends Component<TimeProps, TimeState> {
   static get defaultProps(): Partial<TimeProps> {
     return {
       intervals: 30,

@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react";
+import React, { useRef } from "react";
 import {
   useFloating,
   arrow,
@@ -37,7 +37,7 @@ export interface WithFloatingProps {
 export default function withFloating<
   T extends {},
   RT extends ReferenceType = ReferenceType,
->(Component: ComponentType<T>) {
+>(Component: React.ComponentType<T>) {
   const WithFloating: React.FC<T & WithFloatingProps> = (
     props,
   ): JSX.Element => {
@@ -48,7 +48,7 @@ export default function withFloating<
       hidePopper:
         typeof props.hidePopper === "boolean" ? props.hidePopper : true,
     };
-    const arrowRef: React.RefObject<HTMLElement> = React.useRef(null);
+    const arrowRef: React.RefObject<HTMLElement> = useRef(null);
     const floatingProps = useFloating<RT>({
       open: !alt_props.hidePopper,
       whileElementsMounted: autoUpdate,

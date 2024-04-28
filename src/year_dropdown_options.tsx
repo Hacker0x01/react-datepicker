@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
 import { getYear } from "./date_utils";
 
@@ -43,7 +43,7 @@ interface YearDropdownOptionsState {
   yearsList: number[];
 }
 
-export default class YearDropdownOptions extends React.Component<
+export default class YearDropdownOptions extends Component<
   YearDropdownOptionsProps,
   YearDropdownOptionsState
 > {
@@ -166,7 +166,7 @@ export default class YearDropdownOptions extends React.Component<
   };
 
   render() {
-    let dropdownClass = clsx({
+    const dropdownClass = clsx({
       "react-datepicker__year-dropdown": true,
       "react-datepicker__year-dropdown--scrollable":
         this.props.scrollableYearDropdown,

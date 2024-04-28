@@ -1,7 +1,6 @@
-import React from "react";
+import React, { Component, createRef } from "react";
 
-interface TabLoopProps {
-  children?: React.ReactNode;
+interface TabLoopProps extends React.PropsWithChildren {
   enableTabLoop?: boolean;
 }
 
@@ -41,7 +40,7 @@ const focusableFilter = (
  *
  * @returns The `TabLoop` component.
  */
-export default class TabLoop extends React.Component<TabLoopProps> {
+export default class TabLoop extends Component<TabLoopProps> {
   static defaultProps = {
     enableTabLoop: true,
   };
@@ -51,7 +50,7 @@ export default class TabLoop extends React.Component<TabLoopProps> {
   constructor(props: TabLoopProps) {
     super(props);
 
-    this.tabLoopRef = React.createRef();
+    this.tabLoopRef = createRef();
   }
 
   /**

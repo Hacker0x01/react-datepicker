@@ -25,7 +25,11 @@ interface CalendarIconProps {
  *
  * @returns  The `CalendarIcon` component.
  */
-const CalendarIcon = ({ icon, className = "", onClick }: CalendarIconProps) => {
+const CalendarIcon: React.FC<CalendarIconProps> = ({
+  icon,
+  className = "",
+  onClick,
+}: CalendarIconProps): JSX.Element => {
   const defaultClass = "react-datepicker__calendar-icon";
 
   if (typeof icon === "string") {

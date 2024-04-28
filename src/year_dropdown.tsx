@@ -1,19 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 import YearDropdownOptions from "./year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
 import { getYear } from "./date_utils";
 
+interface YearDropdownOptionsProps
+  extends React.ComponentPropsWithoutRef<typeof YearDropdownOptions> {}
+
 const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
 
-interface YearDropdownProps {
+interface YearDropdownProps
+  extends Pick<
+    YearDropdownOptionsProps,
+    | "minDate"
+    | "maxDate"
+    | "scrollableYearDropdown"
+    | "year"
+    | "yearDropdownItemNumber"
+  > {
   adjustDateOnChange?: boolean;
   dropdownMode: "scroll" | "select";
-  maxDate?: Date;
-  minDate?: Date;
   onChange: (year: number | string) => void;
-  scrollableYearDropdown?: boolean;
-  year: number;
-  yearDropdownItemNumber?: number;
   date?: Date;
   onSelect?: (date?: Date, event?: React.MouseEvent<HTMLDivElement>) => void;
   setOpen?: (open?: boolean) => void;
@@ -23,19 +29,23 @@ interface YearDropdownState {
   dropdownVisible: boolean;
 }
 
-export default class YearDropdown extends React.Component<
+export default class YearDropdown extends Component<
   YearDropdownProps,
   YearDropdownState
 > {
-  state = {
+  state: YearDropdownState = {
     dropdownVisible: false,
   };
 
   renderSelectOptions = (): JSX.Element[] => {
-    const minYear = this.props.minDate ? getYear(this.props.minDate) : 1900;
-    const maxYear = this.props.maxDate ? getYear(this.props.maxDate) : 2100;
+    const minYear: number = this.props.minDate
+      ? getYear(this.props.minDate)
+      : 1900;
+    const maxYear: number = this.props.maxDate
+      ? getYear(this.props.maxDate)
+      : 2100;
 
-    const options = [];
+    const options: JSX.Element[] = [];
     for (let i = minYear; i <= maxYear; i++) {
       options.push(
         <option key={i} value={i}>
