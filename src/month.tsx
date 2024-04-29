@@ -135,89 +135,99 @@ interface MonthProps {
   monthShowsDuplicateDaysStart?: boolean;
 }
 
+/**
+ * `Month` is a React component that represents a month in a calendar.
+ * It accepts a `MonthProps` object as props which provides various configurations and event handlers.
+ *
+ * @prop dayClassName - Function to determine the class name for a day.
+ * @prop monthClassName - Function to determine the class name for a month.
+ * @prop filterDate - Function to filter dates.
+ * @prop formatWeekNumber - Function to format the week number.
+ * @prop onDayClick - Function to handle day click events.
+ * @prop onDayMouseEnter - Function to handle mouse enter events on a day.
+ * @prop onMouseLeave - Function to handle mouse leave events.
+ * @prop onWeekSelect - Function to handle week selection.
+ * @prop setPreSelection - Function to set pre-selection.
+ * @prop setOpen - Function to set open state.
+ * @prop renderDayContents - Function to render day contents.
+ * @prop renderMonthContent - Function to render month content.
+ * @prop renderQuarterContent - Function to render quarter content.
+ * @prop handleOnKeyDown - Function to handle key down events.
+ * @prop handleOnMonthKeyDown - Function to handle key down events on a month.
+ * @prop ariaLabelPrefix - Aria label prefix.
+ * @prop chooseDayAriaLabelPrefix - Aria label prefix for choosing a day.
+ * @prop disabledDayAriaLabelPrefix - Aria label prefix for disabled day.
+ * @prop disabledKeyboardNavigation - Flag to disable keyboard navigation.
+ * @prop day - The day.
+ * @prop endDate - The end date.
+ * @prop orderInDisplay - The order in display.
+ * @prop excludeDates - Dates to exclude.
+ * @prop excludeDateIntervals - Date intervals to exclude.
+ * @prop fixedHeight - Flag to set fixed height.
+ * @prop highlightDates - Dates to highlight.
+ * @prop holidays - Holidays.
+ * @prop includeDates - Dates to include.
+ * @prop includeDateIntervals - Date intervals to include.
+ * @prop inline - Flag to set inline.
+ * @prop shouldFocusDayInline - Flag to set focus on day inline.
+ * @prop locale - The locale.
+ * @prop maxDate - The maximum date.
+ * @prop minDate - The minimum date.
+ * @prop usePointerEvent - Flag to use pointer event.
+ * @prop peekNextMonth - Flag to peek next month.
+ * @prop preSelection - The pre-selection.
+ * @prop selected - The selected date.
+ * @prop selectingDate - The selecting date.
+ * @prop calendarStartDay - The calendar start day.
+ * @prop selectsEnd - Flag to select end.
+ * @prop selectsStart - Flag to select start.
+ * @prop selectsRange - Flag to select range.
+ * @prop selectsDisabledDaysInRange - Flag to select disabled days in range.
+ * @prop selectsMultiple - Flag to select multiple.
+ * @prop selectedDates - The selected dates.
+ * @prop showWeekNumbers - Flag to show week numbers.
+ * @prop startDate - The start date.
+ * @prop shouldCloseOnSelect - Flag to close on select.
+ * @prop showMonthYearPicker - Flag to show month year picker.
+ * @prop showFullMonthYearPicker - Flag to show full month year picker.
+ * @prop showTwoColumnMonthYearPicker - Flag to show two column month year picker.
+ * @prop showFourColumnMonthYearPicker - Flag to show four column month year picker.
+ * @prop showQuarterYearPicker - Flag to show quarter year picker.
+ * @prop showWeekPicker - Flag to show week picker.
+ * @prop isInputFocused - Flag to set input focus.
+ * @prop weekAriaLabelPrefix - Aria label prefix for week.
+ * @prop containerRef - The container reference.
+ * @prop monthShowsDuplicateDaysEnd - Flag to show duplicate days at the end of the month.
+ * @prop monthShowsDuplicateDaysStart - Flag to show duplicate days at the start of the month.
+ *
+ * @example
+ * ```tsx
+ * function App() {
+ *  const handleDayClick = (date) => {
+ *     console.log('Day clicked: ', date);
+ *   };
+ *
+ *   const handleDayMouseEnter = (date) => {
+ *     console.log('Mouse entered on day: ', date);
+ *   };
+ *
+ *   return (
+ *     <div>
+ *       <Month
+ *         day={new Date()}
+ *         endDate={new Date()}
+ *         onDayClick={handleDayClick}
+ *         onDayMouseEnter={handleDayMouseEnter}
+ *         disabledKeyboardNavigation={false}
+ *         showWeekNumbers={true}
+ *         showMonthYearPicker={false}
+ *       />
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export default class Month extends React.Component<MonthProps> {
-  // static propTypes = {
-  //   ariaLabelPrefix: PropTypes.string,
-  //   chooseDayAriaLabelPrefix: PropTypes.string,
-  //   disabledDayAriaLabelPrefix: PropTypes.string,
-  //   disabledKeyboardNavigation: PropTypes.bool,
-  //   day: PropTypes.instanceOf(Date).isRequired,
-  //   dayClassName: PropTypes.func,
-  //   monthClassName: PropTypes.func,
-  //   endDate: PropTypes.instanceOf(Date),
-  //   orderInDisplay: PropTypes.number,
-  //   excludeDates: PropTypes.arrayOf(
-  //     PropTypes.oneOfType([
-  //       PropTypes.instanceOf(Date),
-  //       PropTypes.shape({
-  //         date: PropTypes.instanceOf(Date).isRequired,
-  //         message: PropTypes.string,
-  //       }),
-  //     ])
-  //   ),
-  //   excludeDateIntervals: PropTypes.arrayOf(
-  //     PropTypes.shape({
-  //       start: PropTypes.instanceOf(Date),
-  //       end: PropTypes.instanceOf(Date),
-  //     })
-  //   ),
-  //   filterDate: PropTypes.func,
-  //   fixedHeight: PropTypes.bool,
-  //   formatWeekNumber: PropTypes.func,
-  //   highlightDates: PropTypes.instanceOf(Map),
-  //   holidays: PropTypes.instanceOf(Map),
-  //   includeDates: PropTypes.array,
-  //   includeDateIntervals: PropTypes.array,
-  //   inline: PropTypes.bool,
-  //   shouldFocusDayInline: PropTypes.bool,
-  //   locale: PropTypes.oneOfType([
-  //     PropTypes.string,
-  //     PropTypes.shape({ locale: PropTypes.object }),
-  //   ]),
-  //   maxDate: PropTypes.instanceOf(Date),
-  //   minDate: PropTypes.instanceOf(Date),
-  //   onDayClick: PropTypes.func,
-  //   usePointerEvent: PropTypes.bool,
-  //   onDayMouseEnter: PropTypes.func,
-  //   onMouseLeave: PropTypes.func,
-  //   onWeekSelect: PropTypes.func,
-  //   peekNextMonth: PropTypes.bool,
-  //   preSelection: PropTypes.instanceOf(Date),
-  //   setPreSelection: PropTypes.func,
-  //   selected: PropTypes.instanceOf(Date),
-  //   selectingDate: PropTypes.instanceOf(Date),
-  //   calendarStartDay: PropTypes.number,
-  //   selectsEnd: PropTypes.bool,
-  //   selectsStart: PropTypes.bool,
-  //   selectsRange: PropTypes.bool,
-  //   selectsDisabledDaysInRange: PropTypes.bool,
-  //   selectsMultiple: PropTypes.bool,
-  //   selectedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-  //   showWeekNumbers: PropTypes.bool,
-  //   startDate: PropTypes.instanceOf(Date),
-  //   setOpen: PropTypes.func,
-  //   shouldCloseOnSelect: PropTypes.bool,
-  //   renderDayContents: PropTypes.func,
-  //   renderMonthContent: PropTypes.func,
-  //   renderQuarterContent: PropTypes.func,
-  //   showMonthYearPicker: PropTypes.bool,
-  //   showFullMonthYearPicker: PropTypes.bool,
-  //   showTwoColumnMonthYearPicker: PropTypes.bool,
-  //   showFourColumnMonthYearPicker: PropTypes.bool,
-  //   showQuarterYearPicker: PropTypes.bool,
-  //   showWeekPicker: PropTypes.bool,
-  //   handleOnKeyDown: PropTypes.func,
-  //   handleOnMonthKeyDown: PropTypes.func,
-  //   isInputFocused: PropTypes.bool,
-  //   weekAriaLabelPrefix: PropTypes.string,
-  //   containerRef: PropTypes.oneOfType([
-  //     PropTypes.func,
-  //     PropTypes.shape({ current: PropTypes.object }),
-  //   ]),
-  //   monthShowsDuplicateDaysEnd: PropTypes.bool,
-  //   monthShowsDuplicateDaysStart: PropTypes.bool,
-  // };
-
   MONTH_REFS = [...Array(12)].map(() => React.createRef<HTMLDivElement>());
   QUARTER_REFS = [...Array(4)].map(() => React.createRef<HTMLDivElement>());
 
