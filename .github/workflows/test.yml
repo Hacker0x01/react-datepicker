@@ -44,7 +44,7 @@ jobs:
       - name: Check Code Formatter
         run: yarn prettier:check
 
-      - name: Typecheck
+      - name: Type check
         run: yarn type-check
 
       - name: Lint
