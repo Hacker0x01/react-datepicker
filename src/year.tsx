@@ -1,5 +1,6 @@
 import React, { Component, createRef } from "react";
 import {
+  type DateFilterOptions,
   addYears,
   getStartOfYear,
   getYear,
@@ -19,8 +20,12 @@ import { clsx } from "clsx";
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
 
-interface YearProps {
-  clearSelectingDate?: () => void;
+interface YearProps
+  extends Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+  > {
+  clearSelectingDate?: VoidFunction;
   date?: Date;
   disabledKeyboardNavigation?: boolean;
   endDate?: Date;
@@ -30,19 +35,17 @@ interface YearProps {
       | React.MouseEvent<HTMLDivElement>
       | React.KeyboardEvent<HTMLDivElement>,
   ) => void;
-  preSelection?: Date;
-  setPreSelection?: (date: Date) => void;
-  selected?: Date;
+  preSelection?: Date | null;
+  setPreSelection?: (date?: Date | null) => void;
+  selected?: Date | null;
   inline?: boolean;
-  maxDate?: Date;
-  minDate?: Date;
   usePointerEvent?: boolean;
   onYearMouseEnter: (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     year: number,
   ) => void;
   onYearMouseLeave: (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     year: number,
   ) => void;
   selectingDate?: Date;
@@ -51,11 +54,8 @@ interface YearProps {
   selectsStart?: boolean;
   selectsRange?: boolean;
   startDate?: Date;
-  excludeDates?: Date[] | { date: Date; message?: string }[];
-  includeDates?: [];
-  filterDate?: (date: Date) => boolean;
   yearItemNumber?: number;
-  handleOnKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  handleOnKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   yearClassName?: (date: Date) => string;
 }
 
@@ -64,7 +64,7 @@ interface YearProps {
  *
  * @class
  * @param {YearProps} props - The properties that define the `Year` component.
- * @property {() => void} [props.clearSelectingDate] - Function to clear the selected date.
+ * @property {VoidFunction} [props.clearSelectingDate] - Function to clear the selected date.
  * @property {Date} [props.date] - The currently selected date.
  * @property {boolean} [props.disabledKeyboardNavigation] - If true, keyboard navigation is disabled.
  * @property {Date} [props.endDate] - The end date in a range selection.
@@ -215,8 +215,8 @@ export default class Year extends Component<YearProps> {
   isKeyboardSelected = (y: number) => {
     if (
       this.props.date === undefined ||
-      this.props.selected === undefined ||
-      this.props.preSelection === undefined
+      this.props.selected == null ||
+      this.props.preSelection == null
     ) {
       return;
     }
@@ -230,7 +230,7 @@ export default class Year extends Component<YearProps> {
   };
 
   onYearClick = (
-    e:
+    event:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLDivElement>,
     y: number,
@@ -239,29 +239,29 @@ export default class Year extends Component<YearProps> {
     if (date === undefined) {
       return;
     }
-    this.handleYearClick(getStartOfYear(setYear(date, y)), e);
+    this.handleYearClick(getStartOfYear(setYear(date, y)), event);
   };
 
-  onYearKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, y: number) => {
-    const { key } = e;
+  onYearKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, y: number) => {
+    const { key } = event;
     const { date, yearItemNumber, handleOnKeyDown } = this.props;
 
     if (key !== "Tab") {
       // preventDefault on tab event blocks focus change
-      e.preventDefault();
+      event.preventDefault();
     }
 
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
         case "Enter":
-          if (this.props.selected === undefined) {
+          if (this.props.selected == null) {
             break;
           }
-          this.onYearClick(e, y);
+          this.onYearClick(event, y);
           this.props.setPreSelection?.(this.props.selected);
           break;
         case "ArrowRight":
-          if (this.props.preSelection === undefined) {
+          if (this.props.preSelection == null) {
             break;
           }
           this.handleYearNavigation(
@@ -270,7 +270,7 @@ export default class Year extends Component<YearProps> {
           );
           break;
         case "ArrowLeft":
-          if (this.props.preSelection === undefined) {
+          if (this.props.preSelection == null) {
             break;
           }
           this.handleYearNavigation(
@@ -282,7 +282,7 @@ export default class Year extends Component<YearProps> {
           if (
             date === undefined ||
             yearItemNumber === undefined ||
-            this.props.preSelection === undefined
+            this.props.preSelection == null
           ) {
             break;
           }
@@ -312,7 +312,7 @@ export default class Year extends Component<YearProps> {
           if (
             date === undefined ||
             yearItemNumber === undefined ||
-            this.props.preSelection === undefined
+            this.props.preSelection == null
           ) {
             break;
           }
@@ -341,7 +341,7 @@ export default class Year extends Component<YearProps> {
       }
     }
 
-    handleOnKeyDown && handleOnKeyDown(e);
+    handleOnKeyDown && handleOnKeyDown(event);
   };
 
   getYearClassNames = (y: number) => {
@@ -366,20 +366,7 @@ export default class Year extends Component<YearProps> {
           : undefined,
         "react-datepicker__year-text--disabled":
           (minDate || maxDate || excludeDates || includeDates || filterDate) &&
-          isYearDisabled(y, {
-            minDate: this.props.minDate,
-            maxDate: this.props.maxDate,
-            excludeDates: this.props.excludeDates?.reduce((acc, item) => {
-              if (item instanceof Date) {
-                acc.push(item);
-              } else {
-                acc.push(item.date);
-              }
-              return acc;
-            }, [] as Date[]),
-            includeDates: this.props.includeDates,
-            filterDate: this.props.filterDate,
-          }),
+          isYearDisabled(y, this.props),
         "react-datepicker__year-text--keyboard-selected":
           this.isKeyboardSelected(y),
         "react-datepicker__year-text--range-start": this.isRangeStart(y),
@@ -399,7 +386,7 @@ export default class Year extends Component<YearProps> {
   getYearTabIndex = (y: number) => {
     if (
       this.props.disabledKeyboardNavigation ||
-      this.props.preSelection === undefined
+      this.props.preSelection == null
     ) {
       return "-1";
     }
@@ -434,37 +421,37 @@ export default class Year extends Component<YearProps> {
       yearsList.push(
         <div
           ref={this.YEAR_REFS[y - startPeriod]}
-          onClick={(ev) => {
-            this.onYearClick(ev, y);
+          onClick={(event) => {
+            this.onYearClick(event, y);
           }}
-          onKeyDown={(ev) => {
-            if (isSpaceKeyDown(ev)) {
-              ev.preventDefault();
-              ev.key = "Enter";
+          onKeyDown={(event) => {
+            if (isSpaceKeyDown(event)) {
+              event.preventDefault();
+              event.key = "Enter";
             }
 
-            this.onYearKeyDown(ev, y);
+            this.onYearKeyDown(event, y);
           }}
           tabIndex={Number(this.getYearTabIndex(y))}
           className={this.getYearClassNames(y)}
           onMouseEnter={
             !this.props.usePointerEvent
-              ? (ev) => onYearMouseEnter(ev, y)
+              ? (event) => onYearMouseEnter(event, y)
               : undefined
           }
           onPointerEnter={
             this.props.usePointerEvent
-              ? (ev) => onYearMouseEnter(ev, y)
+              ? (event) => onYearMouseEnter(event, y)
               : undefined
           }
           onMouseLeave={
             !this.props.usePointerEvent
-              ? (ev) => onYearMouseLeave(ev, y)
+              ? (event) => onYearMouseLeave(event, y)
               : undefined
           }
           onPointerLeave={
             this.props.usePointerEvent
-              ? (ev) => onYearMouseLeave(ev, y)
+              ? (event) => onYearMouseLeave(event, y)
               : undefined
           }
           key={y}

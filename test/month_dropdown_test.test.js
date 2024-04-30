@@ -243,7 +243,7 @@ describe("MonthDropdown", () => {
         ".react-datepicker__month-select",
       );
       fireEvent.change(select, { target: { value: 9 } });
-      expect(handleChangeResult).toEqual("9");
+      expect(handleChangeResult).toEqual(9);
     });
   });
 });

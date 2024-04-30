@@ -9,20 +9,13 @@ interface YearDropdownOptionsProps
 const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
 
 interface YearDropdownProps
-  extends Pick<
-    YearDropdownOptionsProps,
-    | "minDate"
-    | "maxDate"
-    | "scrollableYearDropdown"
-    | "year"
-    | "yearDropdownItemNumber"
-  > {
+  extends Omit<YearDropdownOptionsProps, "onChange" | "onCancel"> {
   adjustDateOnChange?: boolean;
   dropdownMode: "scroll" | "select";
-  onChange: (year: number | string) => void;
-  date?: Date;
-  onSelect?: (date?: Date, event?: React.MouseEvent<HTMLDivElement>) => void;
-  setOpen?: (open?: boolean) => void;
+  onChange: (year: number) => void;
+  date: Date;
+  onSelect?: (date: Date, event?: React.MouseEvent<HTMLDivElement>) => void;
+  setOpen?: (open: boolean) => void;
 }
 
 interface YearDropdownState {
@@ -56,8 +49,8 @@ export default class YearDropdown extends Component<
     return options;
   };
 
-  onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    this.onChange(e.target.value);
+  onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    this.onChange(parseInt(event.target.value));
   };
 
   renderSelectMode = (): JSX.Element => (
@@ -89,13 +82,9 @@ export default class YearDropdown extends Component<
   renderDropdown = (): JSX.Element => (
     <WrappedYearDropdownOptions
       key="dropdown"
-      year={this.props.year}
+      {...this.props}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
-      minDate={this.props.minDate}
-      maxDate={this.props.maxDate}
-      scrollableYearDropdown={this.props.scrollableYearDropdown}
-      yearDropdownItemNumber={this.props.yearDropdownItemNumber}
     />
   );
 
@@ -108,7 +97,7 @@ export default class YearDropdown extends Component<
     return result;
   };
 
-  onChange = (year: number | string): void => {
+  onChange = (year: number): void => {
     this.toggleDropdown();
     if (year === this.props.year) return;
     this.props.onChange(year);
@@ -128,14 +117,14 @@ export default class YearDropdown extends Component<
   };
 
   handleYearChange = (
-    date?: Date,
+    date: Date,
     event?: React.MouseEvent<HTMLDivElement>,
   ): void => {
     this.onSelect(date, event);
     this.setOpen();
   };
 
-  onSelect = (date?: Date, event?: React.MouseEvent<HTMLDivElement>): void => {
+  onSelect = (date: Date, event?: React.MouseEvent<HTMLDivElement>): void => {
     if (this.props.onSelect) {
       this.props.onSelect(date, event);
     }

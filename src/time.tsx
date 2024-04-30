@@ -13,21 +13,21 @@ import {
   isSameMinute,
   getSeconds,
   type Locale,
+  type TimeFilterOptions,
 } from "./date_utils";
 
-interface TimeProps {
+interface TimeProps
+  extends Pick<
+    TimeFilterOptions,
+    "minTime" | "maxTime" | "excludeTimes" | "includeTimes" | "filterTime"
+  > {
   format?: string;
-  includeTimes?: Date[];
   intervals: number;
-  selected?: Date;
+  selected?: Date | null;
   openToDate?: Date;
   onChange?: (time: Date) => void;
   timeClassName?: (time: Date) => string;
   todayButton?: React.ReactNode;
-  minTime?: Date;
-  maxTime?: Date;
-  excludeTimes?: Date[];
-  filterTime?: (time: Date) => boolean;
   monthRef?: HTMLDivElement;
   timeCaption?: string;
   injectTimes?: Date[];
@@ -234,8 +234,8 @@ export default class Time extends Component<TimeProps, TimeState> {
               this.centerLi = li;
             }
           }}
-          onKeyDown={(ev: React.KeyboardEvent<HTMLLIElement>): void => {
-            this.handleOnKeyDown(ev, time);
+          onKeyDown={(event: React.KeyboardEvent<HTMLLIElement>): void => {
+            this.handleOnKeyDown(event, time);
           }}
           tabIndex={time === timeToFocus ? 0 : -1}
           role="option"

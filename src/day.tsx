@@ -15,30 +15,40 @@ import {
   getDayOfWeekCode,
   getStartOfWeek,
   formatDate,
-  type DayDisabledOptions,
+  type DateFilterOptions,
   type DateNumberType,
   type Locale,
   type HolidaysMap,
 } from "./date_utils";
 
-interface DayProps {
+interface DayProps
+  extends Pick<
+    DateFilterOptions,
+    | "minDate"
+    | "maxDate"
+    | "excludeDates"
+    | "excludeDateIntervals"
+    | "includeDateIntervals"
+    | "includeDates"
+    | "filterDate"
+  > {
   ariaLabelPrefixWhenEnabled?: string;
   ariaLabelPrefixWhenDisabled?: string;
   disabledKeyboardNavigation?: boolean;
   day: Date;
   dayClassName?: (date: Date) => string;
   endDate?: Date;
-  highlightDates?: Map<string, Date>;
+  highlightDates?: Map<string, string[]>;
   holidays?: HolidaysMap;
   inline?: boolean;
   shouldFocusDayInline?: boolean;
-  month?: number;
+  month: number;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   usePointerEvent?: boolean;
-  preSelection?: Date;
-  selected?: Date;
+  preSelection?: Date | null;
+  selected?: Date | null;
   selectingDate?: Date;
   selectsEnd?: boolean;
   selectsStart?: boolean;
@@ -51,17 +61,10 @@ interface DayProps {
   startDate?: Date;
   renderDayContents?: (day: number, date: Date) => React.ReactNode;
   containerRef?: React.RefObject<HTMLDivElement>;
-  excludeDates?: DayDisabledOptions["excludeDates"];
-  excludeDateIntervals?: DayDisabledOptions["excludeDateIntervals"];
   calendarStartDay?: DateNumberType;
   locale?: Locale;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
-  includeDates?: DayDisabledOptions["includeDates"];
-  includeDateIntervals?: DayDisabledOptions["includeDateIntervals"];
-  minDate?: Date;
-  maxDate?: Date;
-  filterDate?: (date: Date) => boolean;
 }
 
 /**
@@ -171,7 +174,8 @@ export default class Day extends Component<DayProps> {
     this.props.handleOnKeyDown(event);
   };
 
-  isSameDay = (other?: Date) => isSameDay(this.props.day, other);
+  isSameDay = (other: Date | null | undefined) =>
+    isSameDay(this.props.day, other);
 
   isKeyboardSelected = () => {
     if (this.props.disabledKeyboardNavigation) {
@@ -216,7 +220,7 @@ export default class Day extends Component<DayProps> {
       ),
     );
 
-  isSameWeek = (other?: Date) =>
+  isSameWeek = (other?: Date | null) =>
     this.props.showWeekPicker &&
     isSameDay(
       other,
@@ -227,7 +231,7 @@ export default class Day extends Component<DayProps> {
       ),
     );
 
-  isSameDayOrWeek = (other?: Date) =>
+  isSameDayOrWeek = (other?: Date | null) =>
     this.isSameDay(other) || this.isSameWeek(other);
 
   getHighLightedClass = () => {

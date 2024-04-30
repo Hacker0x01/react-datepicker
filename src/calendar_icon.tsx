@@ -3,7 +3,7 @@ import React from "react";
 interface CalendarIconProps {
   icon: string | React.ReactNode;
   className?: string;
-  onClick?: (e: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 /**
@@ -46,13 +46,13 @@ const CalendarIcon: React.FC<CalendarIconProps> = ({
     // Because we are checking that typeof icon is string first, we can safely cast icon as React.ReactElement on types level and code level
     return React.cloneElement(icon as React.ReactElement, {
       className: `${icon.props.className || ""} ${defaultClass} ${className}`,
-      onClick: (e: React.MouseEvent) => {
+      onClick: (event: React.MouseEvent) => {
         if (typeof icon.props.onClick === "function") {
-          icon.props.onClick(e);
+          icon.props.onClick(event);
         }
 
         if (typeof onClick === "function") {
-          onClick(e);
+          onClick(event);
         }
       },
     });

@@ -1185,7 +1185,11 @@ describe("Calendar", () => {
       const select = calendar
         .querySelector(".react-datepicker__month-dropdown-container")
         .querySelector("select");
-      fireEvent.change(select);
+      fireEvent.change(select, {
+        target: {
+          value: Array.from(select.querySelectorAll("option")).at(-2).value,
+        },
+      });
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
@@ -1214,7 +1218,11 @@ describe("Calendar", () => {
       const select = calendar
         .querySelector(".react-datepicker__year-dropdown-container")
         .querySelector("select");
-      fireEvent.change(select);
+      fireEvent.change(select, {
+        target: {
+          value: Array.from(select.querySelectorAll("option")).at(-2).value,
+        },
+      });
 
       expect(onYearChangeSpy).toHaveBeenCalled();
     });

@@ -7,8 +7,8 @@ interface WeekNumberProps {
   date: Date;
   onClick: React.MouseEventHandler<HTMLDivElement>;
   ariaLabelPrefix?: string;
-  selected?: Date;
-  preSelection?: Date;
+  selected?: Date | null;
+  preSelection?: Date | null;
   showWeekPicker?: boolean;
   showWeekNumber?: boolean;
   disabledKeyboardNavigation?: boolean;

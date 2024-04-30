@@ -90,8 +90,8 @@ export default class InputTime extends Component<
         name="time-input"
         required
         value={time}
-        onChange={(ev) => {
-          this.onTimeChange(ev.target.value || timeString);
+        onChange={(event) => {
+          this.onTimeChange(event.target.value || timeString);
         }}
       />
     );

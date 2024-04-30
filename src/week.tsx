@@ -17,10 +17,7 @@ interface WeekProps
       | "onClick"
       | "onMouseEnter"
     >,
-    Omit<
-      WeekNumberProps,
-      "weekNumber" | "date" | "onClick" | "handleOnKeyDown"
-    > {
+    Omit<WeekNumberProps, "weekNumber" | "date" | "onClick"> {
   day: Date;
   chooseDayAriaLabelPrefix: DayProps["ariaLabelPrefixWhenEnabled"];
   disabledDayAriaLabelPrefix: DayProps["ariaLabelPrefixWhenDisabled"];
@@ -93,18 +90,10 @@ export default class Week extends Component<WeekProps> {
       days.push(
         <WeekNumber
           key="W"
+          {...this.props}
           weekNumber={weekNumber}
           date={startOfWeek}
           onClick={onClickAction}
-          selected={this.props.selected}
-          preSelection={this.props.preSelection}
-          ariaLabelPrefix={this.props.ariaLabelPrefix}
-          showWeekPicker={this.props.showWeekPicker}
-          showWeekNumber={this.props.showWeekNumber}
-          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
-          handleOnKeyDown={this.props.handleOnKeyDown}
-          isInputFocused={this.props.isInputFocused}
-          containerRef={this.props.containerRef}
         />,
       );
     }
@@ -113,49 +102,13 @@ export default class Week extends Component<WeekProps> {
         const day = addDays(startOfWeek, offset);
         return (
           <Day
+            {...this.props}
             ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
             ariaLabelPrefixWhenDisabled={this.props.disabledDayAriaLabelPrefix}
             key={day.valueOf()}
             day={day}
-            month={this.props.month}
             onClick={this.handleDayClick.bind(this, day)}
-            usePointerEvent={this.props.usePointerEvent}
             onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            calendarStartDay={this.props.calendarStartDay}
-            excludeDates={this.props.excludeDates}
-            excludeDateIntervals={this.props.excludeDateIntervals}
-            includeDates={this.props.includeDates}
-            includeDateIntervals={this.props.includeDateIntervals}
-            highlightDates={this.props.highlightDates}
-            holidays={this.props.holidays}
-            selectingDate={this.props.selectingDate}
-            filterDate={this.props.filterDate}
-            preSelection={this.props.preSelection}
-            selected={this.props.selected}
-            selectsStart={this.props.selectsStart}
-            selectsEnd={this.props.selectsEnd}
-            selectsRange={this.props.selectsRange}
-            showWeekPicker={this.props.showWeekPicker}
-            showWeekNumber={this.props.showWeekNumber}
-            selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
-            selectsMultiple={this.props.selectsMultiple}
-            selectedDates={this.props.selectedDates}
-            startDate={this.props.startDate}
-            endDate={this.props.endDate}
-            dayClassName={this.props.dayClassName}
-            renderDayContents={this.props.renderDayContents}
-            disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
-            handleOnKeyDown={this.props.handleOnKeyDown}
-            containerRef={this.props.containerRef}
-            inline={this.props.inline}
-            shouldFocusDayInline={this.props.shouldFocusDayInline}
-            monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
-            monthShowsDuplicateDaysStart={
-              this.props.monthShowsDuplicateDaysStart
-            }
-            locale={this.props.locale}
           />
         );
       }),

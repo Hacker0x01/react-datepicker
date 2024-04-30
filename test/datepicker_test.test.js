@@ -279,7 +279,11 @@ describe("DatePicker", () => {
     const yearSelect = container.querySelector(
       ".react-datepicker__year-select",
     );
-    fireEvent.change(yearSelect);
+    fireEvent.change(yearSelect, {
+      target: {
+        value: Array.from(yearSelect.querySelectorAll("option")).at(-2).value,
+      },
+    });
     expect(onYearChangeSpy).toHaveBeenCalled();
   });
 

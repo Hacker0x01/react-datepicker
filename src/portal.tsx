@@ -19,7 +19,7 @@ interface PortalProps {
  */
 class Portal extends Component<PortalProps> {
   private el: HTMLDivElement;
-  private portalRoot!: HTMLElement | null;
+  private portalRoot!: HTMLElement | null = null;
 
   constructor(props: PortalProps) {
     super(props);

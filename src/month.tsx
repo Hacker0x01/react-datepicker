@@ -31,12 +31,6 @@ import {
   subMonths,
   subQuarters,
 } from "./date_utils";
-import type {
-  Locale,
-  DayDisabledOptions,
-  DateNumberType,
-  HolidaysMap,
-} from "./date_utils";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -90,11 +84,21 @@ function getMonthColumnsLayout(
   return MONTH_COLUMNS_LAYOUT.THREE_COLUMNS;
 }
 
-interface MonthProps {
-  dayClassName?: (date: Date) => string;
+interface WeekProps extends React.ComponentPropsWithoutRef<typeof Week> {}
+
+interface MonthProps
+  extends Omit<
+    WeekProps,
+    | "ariaLabelPrefix"
+    | "day"
+    | "month"
+    | "onDayClick"
+    | "onDayMouseEnter"
+    | "preSelection"
+    | "selected"
+    | "showWeekNumber"
+  > {
   monthClassName?: (date: Date) => string;
-  filterDate?: (date: Date) => boolean;
-  formatWeekNumber?: (date: Date) => number;
   onDayClick?: (
     date: Date,
     event:
@@ -103,11 +107,8 @@ interface MonthProps {
     orderInDisplay?: number,
   ) => void;
   onDayMouseEnter?: (date: Date) => void;
-  onMouseLeave?: () => void;
-  onWeekSelect?: (date: Date) => void;
-  setPreSelection?: (date?: Date) => void;
-  setOpen?: (open: boolean) => void;
-  renderDayContents?: (day: number, date: Date) => React.ReactNode;
+  onMouseLeave?: VoidFunction;
+  setPreSelection?: (date?: Date | null) => void;
   renderMonthContent?: (
     m: number,
     shortMonthText: string,
@@ -115,53 +116,21 @@ interface MonthProps {
     day: Date,
   ) => React.ReactNode;
   renderQuarterContent?: (q: number, shortQuarter: string) => React.ReactNode;
-  handleOnKeyDown?: (event: React.KeyboardEvent) => void;
-  handleOnMonthKeyDown?: (event: React.KeyboardEvent) => void;
+  handleOnMonthKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   ariaLabelPrefix?: string;
-  chooseDayAriaLabelPrefix?: string;
-  disabledDayAriaLabelPrefix?: string;
-  disabledKeyboardNavigation?: boolean;
   day: Date;
-  endDate?: Date;
   orderInDisplay?: number;
-  excludeDates?: DayDisabledOptions["excludeDates"];
-  excludeDateIntervals?: DayDisabledOptions["excludeDateIntervals"];
   fixedHeight?: boolean;
-  highlightDates?: Map<string, Date>;
-  holidays?: HolidaysMap;
-  includeDates?: DayDisabledOptions["includeDates"];
-  includeDateIntervals?: DayDisabledOptions["includeDateIntervals"];
-  inline?: boolean;
-  shouldFocusDayInline?: boolean;
-  locale?: Locale;
-  maxDate?: Date;
-  minDate?: Date;
-  usePointerEvent?: boolean;
   peekNextMonth?: boolean;
-  preSelection?: Date;
-  selected?: Date;
-  selectingDate?: Date;
-  calendarStartDay?: DateNumberType;
-  selectsEnd?: boolean;
-  selectsStart?: boolean;
-  selectsRange?: boolean;
-  selectsDisabledDaysInRange?: boolean;
-  selectsMultiple?: boolean;
-  selectedDates?: Date[];
-  showWeekNumbers?: boolean;
-  startDate?: Date;
-  shouldCloseOnSelect?: boolean;
+  preSelection?: Date | null;
+  selected?: Date | null;
+  showWeekNumbers?: WeekProps["showWeekNumber"];
   showMonthYearPicker?: boolean;
   showFullMonthYearPicker?: boolean;
   showTwoColumnMonthYearPicker?: boolean;
   showFourColumnMonthYearPicker?: boolean;
   showQuarterYearPicker?: boolean;
-  showWeekPicker?: boolean;
-  isInputFocused?: boolean;
-  weekAriaLabelPrefix?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
-  monthShowsDuplicateDaysEnd?: boolean;
-  monthShowsDuplicateDaysStart?: boolean;
+  weekAriaLabelPrefix?: WeekProps["ariaLabelPrefix"];
 }
 
 /**
@@ -427,7 +396,7 @@ export default class Month extends Component<MonthProps> {
   isSelectedMonth = (day: Date, m: number, selected: Date) =>
     getMonth(selected) === m && getYear(day) === getYear(selected);
 
-  isSelectedQuarter = (day: Date, q: number, selected: Date) =>
+  isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
     getQuarter(day) === q && getYear(day) === getYear(selected);
 
   renderWeeks = () => {
@@ -471,53 +440,16 @@ export default class Month extends Component<MonthProps> {
     while (true) {
       weeks.push(
         <Week
+          {...this.props}
           ariaLabelPrefix={this.props.weekAriaLabelPrefix}
-          chooseDayAriaLabelPrefix={this.props.chooseDayAriaLabelPrefix}
-          disabledDayAriaLabelPrefix={this.props.disabledDayAriaLabelPrefix}
           key={i}
           day={currentWeekStart}
           month={getMonth(this.props.day)}
           onDayClick={this.handleDayClick}
-          usePointerEvent={this.props.usePointerEvent}
           onDayMouseEnter={this.handleDayMouseEnter}
-          onWeekSelect={this.props.onWeekSelect}
-          formatWeekNumber={this.props.formatWeekNumber}
-          locale={this.props.locale}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate}
-          excludeDates={this.props.excludeDates}
-          excludeDateIntervals={this.props.excludeDateIntervals}
-          includeDates={this.props.includeDates}
-          includeDateIntervals={this.props.includeDateIntervals}
-          inline={this.props.inline}
-          shouldFocusDayInline={this.props.shouldFocusDayInline}
-          highlightDates={this.props.highlightDates}
-          holidays={this.props.holidays}
-          selectingDate={this.props.selectingDate}
-          filterDate={this.props.filterDate}
-          preSelection={preSelection}
           selected={selected}
-          selectsStart={this.props.selectsStart}
-          selectsEnd={this.props.selectsEnd}
-          selectsRange={this.props.selectsRange}
-          selectsDisabledDaysInRange={this.props.selectsDisabledDaysInRange}
-          selectsMultiple={this.props.selectsMultiple}
-          selectedDates={this.props.selectedDates}
+          preSelection={preSelection}
           showWeekNumber={this.props.showWeekNumbers}
-          showWeekPicker={this.props.showWeekPicker}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          dayClassName={this.props.dayClassName}
-          setOpen={this.props.setOpen}
-          shouldCloseOnSelect={this.props.shouldCloseOnSelect}
-          disabledKeyboardNavigation={this.props.disabledKeyboardNavigation}
-          renderDayContents={this.props.renderDayContents}
-          handleOnKeyDown={this.props.handleOnKeyDown}
-          isInputFocused={this.props.isInputFocused}
-          containerRef={this.props.containerRef}
-          calendarStartDay={this.props.calendarStartDay}
-          monthShowsDuplicateDaysEnd={this.props.monthShowsDuplicateDaysEnd}
-          monthShowsDuplicateDaysStart={this.props.monthShowsDuplicateDaysStart}
         />,
       );
 
@@ -546,7 +478,7 @@ export default class Month extends Component<MonthProps> {
   };
 
   onMonthClick = (
-    e:
+    event:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLDivElement>,
     m: number,
@@ -557,7 +489,7 @@ export default class Month extends Component<MonthProps> {
       return;
     }
 
-    this.handleDayClick(getStartOfMonth(labelDate), e);
+    this.handleDayClick(getStartOfMonth(labelDate), event);
   };
 
   onMonthMouseEnter = (m: number) => {
@@ -664,46 +596,25 @@ export default class Month extends Component<MonthProps> {
     handleOnMonthKeyDown && handleOnMonthKeyDown(event);
   };
 
-  private propsToOnDisableClick = (
-    prps: MonthProps,
-  ): {
-    minDate?: Date;
-    maxDate?: Date;
-    excludeDates?: Date[];
-    includeDates?: Date[];
-    filterDate?: (date: Date) => boolean;
-  } => ({
-    minDate: prps.minDate,
-    maxDate: prps.maxDate,
-    excludeDates: prps.excludeDates?.reduce((acc, itm) => {
-      if (itm instanceof Date) {
-        acc.push(itm);
-      } else if (itm.date) {
-        acc.push(itm.date);
-      }
-      return acc;
-    }, [] as Date[]),
-    includeDates: prps.includeDates,
-    filterDate: prps.filterDate,
-  });
-
   onQuarterClick = (
-    e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
+    event:
+      | React.MouseEvent<HTMLDivElement>
+      | React.KeyboardEvent<HTMLDivElement>,
     q: number,
   ) => {
     const labelDate = setQuarter(this.props.day, q);
 
-    if (isQuarterDisabled(labelDate, this.propsToOnDisableClick(this.props))) {
+    if (isQuarterDisabled(labelDate, this.props)) {
       return;
     }
 
-    this.handleDayClick(getStartOfQuarter(labelDate), e);
+    this.handleDayClick(getStartOfQuarter(labelDate), event);
   };
 
   onQuarterMouseEnter = (q: number) => {
     const labelDate = setQuarter(this.props.day, q);
 
-    if (isQuarterDisabled(labelDate, this.propsToOnDisableClick(this.props))) {
+    if (isQuarterDisabled(labelDate, this.props)) {
       return;
     }
 
@@ -762,7 +673,7 @@ export default class Month extends Component<MonthProps> {
     return {
       isDisabled:
         ((minDate || maxDate || excludeDates || includeDates) &&
-          isMonthDisabled(labelDate, this.propsToOnDisableClick(this.props))) ??
+          isMonthDisabled(labelDate, this.props)) ??
         false,
       labelDate,
     };
@@ -868,10 +779,7 @@ export default class Month extends Component<MonthProps> {
       {
         "react-datepicker__quarter-text--disabled":
           (minDate || maxDate) &&
-          isQuarterDisabled(
-            setQuarter(day, q),
-            this.propsToOnDisableClick(this.props),
-          ),
+          isQuarterDisabled(setQuarter(day, q), this.props),
         "react-datepicker__quarter-text--selected": selected
           ? this.isSelectedQuarter(day, q, selected)
           : undefined,
@@ -930,16 +838,16 @@ export default class Month extends Component<MonthProps> {
           <div
             ref={this.MONTH_REFS[m]}
             key={j}
-            onClick={(ev) => {
-              this.onMonthClick(ev, m);
+            onClick={(event) => {
+              this.onMonthClick(event, m);
             }}
-            onKeyDown={(ev) => {
-              if (isSpaceKeyDown(ev)) {
-                ev.preventDefault();
-                ev.key = "Enter";
+            onKeyDown={(event) => {
+              if (isSpaceKeyDown(event)) {
+                event.preventDefault();
+                event.key = "Enter";
               }
 
-              this.onMonthKeyDown(ev, m);
+              this.onMonthKeyDown(event, m);
             }}
             onMouseEnter={
               !this.props.usePointerEvent
@@ -957,7 +865,9 @@ export default class Month extends Component<MonthProps> {
             role="option"
             aria-label={this.getAriaLabel(m)}
             aria-current={this.isCurrentMonth(day, m) ? "date" : undefined}
-            aria-selected={selected && this.isSelectedMonth(day, m, selected)}
+            aria-selected={
+              selected ? this.isSelectedMonth(day, m, selected) : undefined
+            }
           >
             {this.getMonthContent(m)}
           </div>
@@ -976,11 +886,11 @@ export default class Month extends Component<MonthProps> {
             key={j}
             ref={this.QUARTER_REFS[j]}
             role="option"
-            onClick={(ev) => {
-              this.onQuarterClick(ev, q);
+            onClick={(event) => {
+              this.onQuarterClick(event, q);
             }}
-            onKeyDown={(ev) => {
-              this.onQuarterKeyDown(ev, q);
+            onKeyDown={(event) => {
+              this.onQuarterKeyDown(event, q);
             }}
             onMouseEnter={
               !this.props.usePointerEvent
@@ -993,7 +903,9 @@ export default class Month extends Component<MonthProps> {
                 : undefined
             }
             className={this.getQuarterClassNames(q)}
-            aria-selected={selected && this.isSelectedQuarter(day, q, selected)}
+            aria-selected={
+              selected ? this.isSelectedQuarter(day, q, selected) : undefined
+            }
             tabIndex={Number(this.getQuarterTabIndex(q))}
             aria-current={this.isCurrentQuarter(day, q) ? "date" : undefined}
           >
