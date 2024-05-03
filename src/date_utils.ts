@@ -105,7 +105,7 @@ export function parseDate(
   dateFormat: string | string[],
   locale: string | LocaleObj,
   strictParsing: boolean,
-  minDate: Date
+  minDate: Date,
 ): Date | null {
   let parsedDate = null;
   let localeObject =
@@ -202,7 +202,7 @@ export function isValid(date: Date, minDate?: Date): boolean {
 export function formatDate(
   date: Date,
   formatStr: string,
-  locale?: string | LocaleObj
+  locale?: string | LocaleObj,
 ): string {
   if (locale === "en") {
     return format(date, formatStr, {
@@ -213,7 +213,7 @@ export function formatDate(
   let localeObj = locale ? getLocaleObject(locale) : undefined;
   if (locale && !localeObj) {
     console.warn(
-      `A locale object was not found for the provided string ["${locale}"].`
+      `A locale object was not found for the provided string ["${locale}"].`,
     );
   }
   if (
@@ -242,7 +242,7 @@ export function safeDateFormat(
   {
     dateFormat,
     locale,
-  }: { dateFormat: string | string[]; locale: string | LocaleObj }
+  }: { dateFormat: string | string[]; locale: string | LocaleObj },
 ): string {
   const formatStr = (
     Array.isArray(dateFormat) && dateFormat.length > 0
@@ -263,7 +263,7 @@ export function safeDateFormat(
 export function safeDateRangeFormat(
   startDate: Date,
   endDate: Date,
-  props: { dateFormat: string | string[]; locale: string | LocaleObj }
+  props: { dateFormat: string | string[]; locale: string | LocaleObj },
 ): string {
   if (!startDate) {
     return "";
@@ -284,7 +284,7 @@ export function safeDateRangeFormat(
  */
 export function safeMultipleDatesFormat(
   dates: Date[],
-  props: { dateFormat: string | string[]; locale: string | LocaleObj }
+  props: { dateFormat: string | string[]; locale: string | LocaleObj },
 ): string {
   if (!dates?.length) {
     return "";
@@ -314,7 +314,7 @@ export function safeMultipleDatesFormat(
  */
 export function setTime(
   date: Date,
-  { hour = 0, minute = 0, second = 0 }
+  { hour = 0, minute = 0, second = 0 },
 ): Date {
   return setHours(setMinutes(setSeconds(date, second), minute), hour);
 }
@@ -355,7 +355,7 @@ export function getWeek(date: Date): number {
  */
 export function getDayOfWeekCode(
   day: Date,
-  locale?: string | LocaleObj
+  locale?: string | LocaleObj,
 ): string {
   return formatDate(day, "ddd", locale);
 }
@@ -383,7 +383,7 @@ export function getStartOfDay(date: Date): Date {
 export function getStartOfWeek(
   date: Date,
   locale?: string | LocaleObj,
-  calendarStartDay?: Day
+  calendarStartDay?: Day,
 ): Date {
   let localeObj = locale
     ? getLocaleObject(locale)
@@ -562,7 +562,7 @@ export function isEqual(date1: Date | null, date2: Date | null): boolean {
 export function isDayInRange(
   day: Date,
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): boolean {
   let valid;
   const start = startOfDay(startDate);
@@ -600,7 +600,7 @@ export function getDaysDiff(date1: Date, date2: Date): number {
 
 export function registerLocale(
   localeName: string,
-  localeData: LocaleObj
+  localeData: LocaleObj,
 ): void {
   const scope = getLocaleScope();
 
@@ -639,7 +639,7 @@ export function getDefaultLocale(): string {
  * @returns - The locale object.
  */
 export function getLocaleObject(
-  localeSpec: string | LocaleObj
+  localeSpec: string | LocaleObj,
 ): LocaleObj | undefined {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
@@ -663,7 +663,7 @@ export function getLocaleObject(
 export function getFormattedWeekdayInLocale(
   date: Date,
   formatFunc: (date: string) => string,
-  locale: string
+  locale: string,
 ): string {
   return formatFunc(formatDate(date, "EEEE", locale));
 }
@@ -699,7 +699,7 @@ export function getWeekdayShortInLocale(date: Date, locale: string): string {
  */
 export function getMonthInLocale(
   month: number,
-  locale?: string | LocaleObj
+  locale?: string | LocaleObj,
 ): string {
   return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
@@ -713,7 +713,7 @@ export function getMonthInLocale(
  */
 export function getMonthShortInLocale(
   month: number,
-  locale?: string | LocaleObj
+  locale?: string | LocaleObj,
 ): string {
   return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
@@ -727,7 +727,7 @@ export function getMonthShortInLocale(
  */
 export function getQuarterShortInLocale(
   quarter: number,
-  locale: string
+  locale: string,
 ): string {
   return formatDate(setQuarter(newDate(), quarter), "QQQ", locale);
 }
@@ -761,7 +761,7 @@ export function isDayDisabled(
     includeDates,
     includeDateIntervals,
     filterDate,
-  }: DayDisabledOptions = {}
+  }: DayDisabledOptions = {},
 ): boolean {
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
@@ -775,13 +775,13 @@ export function isDayDisabled(
       })) ||
     (excludeDateIntervals &&
       excludeDateIntervals.some(({ start, end }) =>
-        isWithinInterval(day, { start, end })
+        isWithinInterval(day, { start, end }),
       )) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameDay(day, includeDate))) ||
     (includeDateIntervals &&
       !includeDateIntervals.some(({ start, end }) =>
-        isWithinInterval(day, { start, end })
+        isWithinInterval(day, { start, end }),
       )) ||
     (filterDate && !filterDate(newDate(day))) ||
     false
@@ -802,11 +802,11 @@ interface DayExcludedOptions {
  */
 export function isDayExcluded(
   day: Date,
-  { excludeDates, excludeDateIntervals }: DayExcludedOptions = {}
+  { excludeDates, excludeDateIntervals }: DayExcludedOptions = {},
 ): boolean {
   if (excludeDateIntervals && excludeDateIntervals.length > 0) {
     return excludeDateIntervals.some(({ start, end }) =>
-      isWithinInterval(day, { start, end })
+      isWithinInterval(day, { start, end }),
     );
   }
   return (
@@ -838,7 +838,7 @@ export function isMonthDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: MonthDisabledOptions = {}
+  }: MonthDisabledOptions = {},
 ): boolean {
   return (
     isOutOfBounds(month, {
@@ -858,7 +858,7 @@ export function isMonthInRange(
   startDate: Date,
   endDate: Date,
   m: number,
-  day: Date
+  day: Date,
 ): boolean {
   const startDateYear = getYear(startDate);
   const startDateMonth = getMonth(startDate);
@@ -893,17 +893,17 @@ export function isQuarterDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: QuarterDisabledOptions = {}
+  }: QuarterDisabledOptions = {},
 ): boolean {
   return (
     isOutOfBounds(quarter, { minDate, maxDate }) ||
     (excludeDates &&
       excludeDates.some((excludeDate) =>
-        isSameQuarter(quarter, excludeDate)
+        isSameQuarter(quarter, excludeDate),
       )) ||
     (includeDates &&
       !includeDates.some((includeDate) =>
-        isSameQuarter(quarter, includeDate)
+        isSameQuarter(quarter, includeDate),
       )) ||
     (filterDate && !filterDate(newDate(quarter))) ||
     false
@@ -935,7 +935,7 @@ export function isYearDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: YearDisabledOptions = {}
+  }: YearDisabledOptions = {},
 ): boolean {
   const date = new Date(year, 0, 1);
   return (
@@ -956,7 +956,7 @@ export function isQuarterInRange(
   startDate: Date,
   endDate: Date,
   q: number,
-  day: Date
+  day: Date,
 ): boolean {
   const startDateYear = getYear(startDate);
   const startDateQuarter = getQuarter(startDate);
@@ -982,7 +982,7 @@ interface BoundsOptions {
 
 export function isOutOfBounds(
   day: Date,
-  { minDate, maxDate }: BoundsOptions = {}
+  { minDate, maxDate }: BoundsOptions = {},
 ): boolean {
   return (
     ((minDate && differenceInCalendarDays(day, minDate) < 0) ||
@@ -996,7 +996,7 @@ export function isTimeInList(time: Date, times: Date[]): boolean {
     (listTime) =>
       getHours(listTime) === getHours(time) &&
       getMinutes(listTime) === getMinutes(time) &&
-      getSeconds(listTime) === getSeconds(time)
+      getSeconds(listTime) === getSeconds(time),
   );
 }
 
@@ -1008,7 +1008,7 @@ interface TimeDisabledOptions {
 
 export function isTimeDisabled(
   time: Date,
-  { excludeTimes, includeTimes, filterTime }: TimeDisabledOptions = {}
+  { excludeTimes, includeTimes, filterTime }: TimeDisabledOptions = {},
 ): boolean {
   return (
     (excludeTimes && isTimeInList(time, excludeTimes)) ||
@@ -1025,7 +1025,7 @@ interface TimeDisabledOptions {
 
 export function isTimeInDisabledRange(
   time: Date,
-  { minTime, maxTime }: TimeDisabledOptions
+  { minTime, maxTime }: TimeDisabledOptions,
 ): boolean {
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
@@ -1062,7 +1062,7 @@ interface DisabledOptions {
 
 export function monthDisabledBefore(
   day: Date,
-  { minDate, includeDates }: DisabledOptions = {}
+  { minDate, includeDates }: DisabledOptions = {},
 ): boolean {
   const previousMonth = subMonths(day, 1);
   return (
@@ -1070,7 +1070,7 @@ export function monthDisabledBefore(
     (includeDates &&
       includeDates.every(
         (includeDate) =>
-          differenceInCalendarMonths(includeDate, previousMonth) > 0
+          differenceInCalendarMonths(includeDate, previousMonth) > 0,
       )) ||
     false
   );
@@ -1078,14 +1078,14 @@ export function monthDisabledBefore(
 
 export function monthDisabledAfter(
   day: Date,
-  { maxDate, includeDates }: DisabledOptions = {}
+  { maxDate, includeDates }: DisabledOptions = {},
 ): boolean {
   const nextMonth = addMonths(day, 1);
   return (
     (maxDate && differenceInCalendarMonths(nextMonth, maxDate) > 0) ||
     (includeDates &&
       includeDates.every(
-        (includeDate) => differenceInCalendarMonths(nextMonth, includeDate) > 0
+        (includeDate) => differenceInCalendarMonths(nextMonth, includeDate) > 0,
       )) ||
     false
   );
@@ -1093,7 +1093,7 @@ export function monthDisabledAfter(
 
 export function quarterDisabledBefore(
   date: Date,
-  { minDate, includeDates }: DisabledOptions = {}
+  { minDate, includeDates }: DisabledOptions = {},
 ): boolean {
   const firstDateOfYear = startOfYear(date);
   const previousQuarter = subQuarters(firstDateOfYear, 1);
@@ -1103,7 +1103,7 @@ export function quarterDisabledBefore(
     (includeDates &&
       includeDates.every(
         (includeDate) =>
-          differenceInCalendarQuarters(includeDate, previousQuarter) > 0
+          differenceInCalendarQuarters(includeDate, previousQuarter) > 0,
       )) ||
     false
   );
@@ -1111,7 +1111,7 @@ export function quarterDisabledBefore(
 
 export function quarterDisabledAfter(
   date: Date,
-  { maxDate, includeDates }: DisabledOptions = {}
+  { maxDate, includeDates }: DisabledOptions = {},
 ): boolean {
   const lastDateOfYear = endOfYear(date);
   const nextQuarter = addQuarters(lastDateOfYear, 1);
@@ -1121,7 +1121,7 @@ export function quarterDisabledAfter(
     (includeDates &&
       includeDates.every(
         (includeDate) =>
-          differenceInCalendarQuarters(nextQuarter, includeDate) > 0
+          differenceInCalendarQuarters(nextQuarter, includeDate) > 0,
       )) ||
     false
   );
@@ -1136,7 +1136,7 @@ interface YearDisabledOptions {
 
 export function yearDisabledBefore(
   day: Date,
-  { minDate, includeDates }: YearDisabledOptions = {}
+  { minDate, includeDates }: YearDisabledOptions = {},
 ): boolean {
   const previousYear = subYears(day, 1);
   return (
@@ -1144,7 +1144,7 @@ export function yearDisabledBefore(
     (includeDates &&
       includeDates.every(
         (includeDate) =>
-          differenceInCalendarYears(includeDate, previousYear) > 0
+          differenceInCalendarYears(includeDate, previousYear) > 0,
       )) ||
     false
   );
@@ -1155,7 +1155,7 @@ export function yearsDisabledBefore(
   {
     minDate,
     yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER,
-  }: YearDisabledOptions = {}
+  }: YearDisabledOptions = {},
 ): boolean {
   const previousYear = getStartOfYear(subYears(day, yearItemNumber));
   const { endPeriod } = getYearsPeriod(previousYear, yearItemNumber);
@@ -1165,14 +1165,14 @@ export function yearsDisabledBefore(
 
 export function yearDisabledAfter(
   day: Date,
-  { maxDate, includeDates }: YearDisabledOptions = {}
+  { maxDate, includeDates }: YearDisabledOptions = {},
 ): boolean {
   const nextYear = addYears(day, 1);
   return (
     (maxDate && differenceInCalendarYears(nextYear, maxDate) > 0) ||
     (includeDates &&
       includeDates.every(
-        (includeDate) => differenceInCalendarYears(nextYear, includeDate) > 0
+        (includeDate) => differenceInCalendarYears(nextYear, includeDate) > 0,
       )) ||
     false
   );
@@ -1188,7 +1188,7 @@ export function yearsDisabledAfter(
   {
     maxDate,
     yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER,
-  }: YearsDisabledAfterOptions = {}
+  }: YearsDisabledAfterOptions = {},
 ): boolean {
   const nextYear = addYears(day, yearItemNumber);
   const { startPeriod } = getYearsPeriod(nextYear, yearItemNumber);
@@ -1208,7 +1208,7 @@ export function getEffectiveMinDate({
 }: EffectiveDateOptions): Date | undefined {
   if (includeDates && minDate) {
     let minDates = includeDates.filter(
-      (includeDate) => differenceInCalendarDays(includeDate, minDate) >= 0
+      (includeDate) => differenceInCalendarDays(includeDate, minDate) >= 0,
     );
     return min(minDates);
   } else if (includeDates) {
@@ -1224,7 +1224,7 @@ export function getEffectiveMaxDate({
 }: EffectiveDateOptions): Date | undefined {
   if (includeDates && maxDate) {
     let maxDates = includeDates.filter(
-      (includeDate) => differenceInCalendarDays(includeDate, maxDate) <= 0
+      (includeDate) => differenceInCalendarDays(includeDate, maxDate) <= 0,
     );
     return max(maxDates);
   } else if (includeDates) {
@@ -1246,7 +1246,7 @@ interface HighlightDate {
  */
 export function getHightLightDaysMap(
   highlightDates: (Date | HighlightDate)[] = [],
-  defaultClassName: string = "react-datepicker__day--highlighted"
+  defaultClassName: string = "react-datepicker__day--highlighted",
 ): Map<string, string[]> {
   const dateClasses = new Map<string, string[]>();
   for (let i = 0, len = highlightDates.length; i < len; i++) {
@@ -1314,7 +1314,7 @@ export type HolidaysMap = Map<string, ClassNamesObj>;
  */
 export function getHolidaysMap(
   holidayDates: Holiday[] = [],
-  defaultClassName: string = "react-datepicker__day--holidays"
+  defaultClassName: string = "react-datepicker__day--holidays",
 ): HolidaysMap {
   const dateClasses = new Map<string, ClassNamesObj>();
   holidayDates.forEach((holiday) => {
@@ -1360,7 +1360,7 @@ export function timesToInjectAfter(
   currentTime: Date,
   currentMultiplier: number,
   intervals: number,
-  injectedTimes: Date[]
+  injectedTimes: Date[],
 ): Date[] {
   const l = injectedTimes.length;
   const times: Date[] = [];
@@ -1375,7 +1375,7 @@ export function timesToInjectAfter(
 
     const nextTime = addMinutes(
       startOfDay,
-      (currentMultiplier + 1) * intervals
+      (currentMultiplier + 1) * intervals,
     );
 
     if (
@@ -1407,7 +1407,7 @@ export function addZero(i: number): string {
  */
 export function getYearsPeriod(
   date: Date,
-  yearItemNumber: number = DEFAULT_YEAR_ITEM_NUMBER
+  yearItemNumber: number = DEFAULT_YEAR_ITEM_NUMBER,
 ): { startPeriod: number; endPeriod: number } {
   const endPeriod = Math.ceil(getYear(date) / yearItemNumber) * yearItemNumber;
   const startPeriod = endPeriod - (yearItemNumber - 1);
@@ -1425,7 +1425,7 @@ export function getHoursInDay(d: Date): number {
     d.getFullYear(),
     d.getMonth(),
     d.getDate(),
-    24
+    24,
   );
 
   return Math.round((+startOfTheNextDay - +startOfDay) / 3_600_000);
@@ -1506,7 +1506,7 @@ export function isDateBefore(date: Date, dateToCompare: Date): boolean {
  * @returns - Returns true if the space key was pressed down, false otherwise.
  */
 export function isSpaceKeyDown(
-  event: React.KeyboardEvent<HTMLDivElement>
+  event: React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
   const SPACE_KEY = " ";
   return event.key === SPACE_KEY;

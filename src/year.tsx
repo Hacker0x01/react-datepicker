@@ -14,7 +14,7 @@ interface YearProps {
     date: Date,
     event:
       | React.MouseEvent<HTMLDivElement>
-      | React.KeyboardEvent<HTMLDivElement>
+      | React.KeyboardEvent<HTMLDivElement>,
   ) => void;
   preSelection?: Date;
   setPreSelection?: (date: Date) => void;
@@ -25,11 +25,11 @@ interface YearProps {
   usePointerEvent?: boolean;
   onYearMouseEnter: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    year: number
+    year: number,
   ) => void;
   onYearMouseLeave: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    year: number
+    year: number,
   ) => void;
   selectingDate?: Date;
   renderYearContent?: (year: number) => React.ReactNode;
@@ -71,7 +71,7 @@ export default class Year extends Component<YearProps> {
   }
 
   YEAR_REFS = [...Array(this.props.yearItemNumber)].map(() =>
-    React.createRef<HTMLDivElement>()
+    React.createRef<HTMLDivElement>(),
   );
 
   isDisabled = (date: Date) =>
@@ -102,7 +102,7 @@ export default class Year extends Component<YearProps> {
     day: Date,
     event:
       | React.MouseEvent<HTMLDivElement>
-      | React.KeyboardEvent<HTMLDivElement>
+      | React.KeyboardEvent<HTMLDivElement>,
   ) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event);
@@ -126,7 +126,7 @@ export default class Year extends Component<YearProps> {
       this.updateFocusOnPaginate(yearItemNumber - (startPeriod - newYear));
     } else if (newYear - startPeriod >= yearItemNumber) {
       this.updateFocusOnPaginate(
-        Math.abs(yearItemNumber - (newYear - startPeriod))
+        Math.abs(yearItemNumber - (newYear - startPeriod)),
       );
     } else this.YEAR_REFS[newYear - startPeriod]?.current?.focus();
   };
@@ -219,7 +219,7 @@ export default class Year extends Component<YearProps> {
     e:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLDivElement>,
-    y: number
+    y: number,
   ) => {
     const { date } = this.props;
     if (date === undefined) {
@@ -252,7 +252,7 @@ export default class Year extends Component<YearProps> {
           }
           this.handleYearNavigation(
             y + 1,
-            utils.addYears(this.props.preSelection, 1)
+            utils.addYears(this.props.preSelection, 1),
           );
           break;
         case "ArrowLeft":
@@ -261,7 +261,7 @@ export default class Year extends Component<YearProps> {
           }
           this.handleYearNavigation(
             y - 1,
-            utils.subYears(this.props.preSelection, 1)
+            utils.subYears(this.props.preSelection, 1),
           );
           break;
         case "ArrowUp": {
@@ -290,7 +290,7 @@ export default class Year extends Component<YearProps> {
 
           this.handleYearNavigation(
             newYear,
-            utils.subYears(this.props.preSelection, offset)
+            utils.subYears(this.props.preSelection, offset),
           );
           break;
         }
@@ -320,7 +320,7 @@ export default class Year extends Component<YearProps> {
 
           this.handleYearNavigation(
             newYear,
-            utils.addYears(this.props.preSelection, offset)
+            utils.addYears(this.props.preSelection, offset),
           );
           break;
         }
@@ -378,7 +378,7 @@ export default class Year extends Component<YearProps> {
         "react-datepicker__year-text--selecting-range-end":
           this.isSelectingRangeEnd(y),
         "react-datepicker__year-text--today": this.isCurrentYear(y),
-      }
+      },
     );
   };
 
@@ -416,7 +416,7 @@ export default class Year extends Component<YearProps> {
     }
     const { startPeriod, endPeriod } = utils.getYearsPeriod(
       date,
-      yearItemNumber
+      yearItemNumber,
     );
 
     for (let y = startPeriod; y <= endPeriod; y++) {
@@ -460,7 +460,7 @@ export default class Year extends Component<YearProps> {
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
           {this.getYearContent(y)}
-        </div>
+        </div>,
       );
     }
 
