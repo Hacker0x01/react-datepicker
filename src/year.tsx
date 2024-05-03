@@ -46,7 +46,7 @@ interface YearProps {
 }
 
 /**
- * `Year` is a React component that represents a year in a date picker.
+ * `Year` is a component that represents a year in a date picker.
  *
  * @class
  * @param {YearProps} props - The properties that define the `Year` component.
