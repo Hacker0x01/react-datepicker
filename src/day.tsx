@@ -59,7 +59,7 @@ interface DayProps {
   excludeDates?: DayDisabledOptions["excludeDates"];
   excludeDateIntervals?: DayDisabledOptions["excludeDateIntervals"];
   calendarStartDay?: DateNumberType;
-  locale?: LocaleObj;
+  locale?: string | LocaleObj;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
   includeDates?: DayDisabledOptions["includeDates"];

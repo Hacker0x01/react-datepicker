@@ -498,7 +498,7 @@ export function isSameYear(date1: Date | null, date2: Date | null): boolean {
  * @param date2 - The second date.
  * @returns - True if the dates are in the same month, false otherwise.
  */
-export function isSameMonth(date1: Date | null, date2: Date | null): boolean {
+export function isSameMonth(date1: Date | null, date2?: Date | null): boolean {
   if (date1 && date2) {
     return dfIsSameMonth(date1, date2);
   } else {
@@ -727,7 +727,7 @@ export function getMonthShortInLocale(
  */
 export function getQuarterShortInLocale(
   quarter: number,
-  locale: string,
+  locale?: string | LocaleObj,
 ): string {
   return formatDate(setQuarter(newDate(), quarter), "QQQ", locale);
 }
@@ -845,8 +845,7 @@ export function isMonthDisabled(
       minDate: minDate ? startOfMonth(minDate) : undefined,
       maxDate: maxDate ? endOfMonth(maxDate) : undefined,
     }) ||
-    (excludeDates &&
-      excludeDates.some((excludeDate) => isSameMonth(month, excludeDate))) ||
+    excludeDates?.some((excludeDate) => isSameMonth(month, excludeDate)) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameMonth(month, includeDate))) ||
     (filterDate && !filterDate(newDate(month))) ||
@@ -897,10 +896,7 @@ export function isQuarterDisabled(
 ): boolean {
   return (
     isOutOfBounds(quarter, { minDate, maxDate }) ||
-    (excludeDates &&
-      excludeDates.some((excludeDate) =>
-        isSameQuarter(quarter, excludeDate),
-      )) ||
+    excludeDates?.some((excludeDate) => isSameQuarter(quarter, excludeDate)) ||
     (includeDates &&
       !includeDates.some((includeDate) =>
         isSameQuarter(quarter, includeDate),
@@ -942,8 +938,7 @@ export function isYearDisabled(
       minDate: minDate ? startOfYear(minDate) : undefined,
       maxDate: maxDate ? endOfYear(maxDate) : undefined,
     }) ||
-    (excludeDates &&
-      excludeDates.some((excludeDate) => isSameYear(date, excludeDate))) ||
+    excludeDates?.some((excludeDate) => isSameYear(date, excludeDate)) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameYear(date, includeDate))) ||
     (filterDate && !filterDate(newDate(date))) ||
@@ -1504,7 +1499,9 @@ export function isDateBefore(date: Date, dateToCompare: Date): boolean {
  * @param event - The keyboard event.
  * @returns - Returns true if the space key was pressed down, false otherwise.
  */
-export function isSpaceKeyDown(event: KeyboardEvent): boolean {
+export function isSpaceKeyDown(
+  event: React.KeyboardEvent<HTMLDivElement>,
+): boolean {
   const SPACE_KEY = " ";
   return event.key === SPACE_KEY;
 }
