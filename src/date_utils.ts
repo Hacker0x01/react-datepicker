@@ -906,7 +906,8 @@ export function isQuarterDisabled(
   );
 }
 
-export function isYearInRange(year: number, start: Date, end: Date): boolean {
+export function isYearInRange(year: number, start?: Date, end?: Date): boolean {
+  if (!start || !end) return false;
   if (!isValidDate(start) || !isValidDate(end)) return false;
   const startYear = getYear(start);
   const endYear = getYear(end);
