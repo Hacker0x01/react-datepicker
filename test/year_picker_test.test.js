@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "../src/index.jsx";
-import Year from "../src/year.jsx";
+import Year from "../src/year.tsx";
 import { render, fireEvent } from "@testing-library/react";
 import * as utils from "../src/date_utils.ts";
 import { getKey } from "./test_utils.js";

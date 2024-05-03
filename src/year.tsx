@@ -1,64 +1,64 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { getYear, newDate } from "./date_utils";
 import * as utils from "./date_utils";
 import { clsx } from "clsx";
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
 
-export default class Year extends React.Component {
-  static propTypes = {
-    clearSelectingDate: PropTypes.func,
-    date: PropTypes.instanceOf(Date),
-    disabledKeyboardNavigation: PropTypes.bool,
-    endDate: PropTypes.instanceOf(Date),
-    onDayClick: PropTypes.func,
-    preSelection: PropTypes.instanceOf(Date),
-    setPreSelection: PropTypes.func,
-    selected: PropTypes.object,
-    inline: PropTypes.bool,
-    maxDate: PropTypes.instanceOf(Date),
-    minDate: PropTypes.instanceOf(Date),
-    usePointerEvent: PropTypes.bool,
-    onYearMouseEnter: PropTypes.func.isRequired,
-    onYearMouseLeave: PropTypes.func.isRequired,
-    selectingDate: PropTypes.instanceOf(Date),
-    renderYearContent: PropTypes.func,
-    selectsEnd: PropTypes.bool,
-    selectsStart: PropTypes.bool,
-    selectsRange: PropTypes.bool,
-    startDate: PropTypes.instanceOf(Date),
-    excludeDates: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.instanceOf(Date),
-        PropTypes.shape({
-          date: PropTypes.instanceOf(Date).isRequired,
-          message: PropTypes.string,
-        }),
-      ]),
-    ),
-    includeDates: PropTypes.array,
-    filterDate: PropTypes.func,
-    yearItemNumber: PropTypes.number,
-    handleOnKeyDown: PropTypes.func,
-    yearClassName: PropTypes.func,
-  };
-
-  constructor(props) {
+interface YearProps {
+  clearSelectingDate?: () => void;
+  date?: Date;
+  disabledKeyboardNavigation?: boolean;
+  endDate?: Date;
+  onDayClick?: (date: Date, event: React.MouseEvent<HTMLDivElement>) => void;
+  preSelection?: Date;
+  setPreSelection?: (date: Date) => void;
+  selected?: { [key: string]: any };
+  inline?: boolean;
+  maxDate?: Date;
+  minDate?: Date;
+  usePointerEvent?: boolean;
+  onYearMouseEnter: (date: Date) => void;
+  onYearMouseLeave: (date: Date) => void;
+  selectingDate?: Date;
+  renderYearContent?: () => void;
+  selectsEnd?: boolean;
+  selectsStart?: boolean;
+  selectsRange?: boolean;
+  startDate?: Date;
+  excludeDates?: Date[] | { date: Date; message?: string }[];
+  includeDates?: [];
+  filterDate?: (date: Date) => boolean;
+  yearItemNumber?: number;
+  handleOnKeyDown?: () => void;
+  yearClassName?: () => void;
+}
+export default class Year extends Component<YearProps> {
+  constructor(props: YearProps) {
     super(props);
   }
 
   YEAR_REFS = [...Array(this.props.yearItemNumber)].map(() =>
-    React.createRef(),
+    React.createRef<HTMLDivElement>()
   );
 
-  isDisabled = (date) => utils.isDayDisabled(date, this.props);
+  isDisabled = (date: Date) =>
+    utils.isDayDisabled(date, {
+      minDate: this.props.minDate,
+      maxDate: this.props.maxDate,
+      excludeDates: this.props.excludeDates,
+      includeDates: this.props.includeDates,
+      filterDate: this.props.filterDate,
+    });
 
-  isExcluded = (date) => utils.isDayExcluded(date, this.props);
+  isExcluded = (date: Date) =>
+    utils.isDayExcluded(date, {
+      excludeDates: this.props.excludeDates,
+    });
 
   selectingDate = () => this.props.selectingDate ?? this.props.preSelection;
 
-  updateFocusOnPaginate = (refIndex) => {
+  updateFocusOnPaginate = (refIndex: number) => {
     const waitForReRender = function () {
       this.YEAR_REFS[refIndex].current.focus();
     }.bind(this);
@@ -66,43 +66,49 @@ export default class Year extends React.Component {
     window.requestAnimationFrame(waitForReRender);
   };
 
-  handleYearClick = (day, event) => {
+  handleYearClick = (day: Date, event: React.MouseEvent<HTMLDivElement>) => {
     if (this.props.onDayClick) {
       this.props.onDayClick(day, event);
     }
   };
 
-  handleYearNavigation = (newYear, newDate) => {
+  handleYearNavigation = (newYear: number, newDate: Date) => {
     const { date, yearItemNumber } = this.props;
+    if (date === undefined || yearItemNumber === undefined) {
+      return;
+    }
+
     const { startPeriod } = utils.getYearsPeriod(date, yearItemNumber);
 
-    if (this.isDisabled(newDate) || this.isExcluded(newDate)) return;
-    this.props.setPreSelection(newDate);
+    if (this.isDisabled(newDate) || this.isExcluded(newDate)) {
+      return;
+    }
+    this.props.setPreSelection?.(newDate);
 
     if (newYear - startPeriod < 0) {
       this.updateFocusOnPaginate(yearItemNumber - (startPeriod - newYear));
     } else if (newYear - startPeriod >= yearItemNumber) {
       this.updateFocusOnPaginate(
-        Math.abs(yearItemNumber - (newYear - startPeriod)),
+        Math.abs(yearItemNumber - (newYear - startPeriod))
       );
-    } else this.YEAR_REFS[newYear - startPeriod].current.focus();
+    } else this.YEAR_REFS[newYear - startPeriod]?.current?.focus();
   };
 
-  isSameDay = (y, other) => utils.isSameDay(y, other);
+  isSameDay = (y: Date, other: Date) => utils.isSameDay(y, other);
 
-  isCurrentYear = (y) => y === getYear(newDate());
+  isCurrentYear = (y: number) => y === getYear(newDate());
 
-  isRangeStart = (y) =>
+  isRangeStart = (y: number) =>
     this.props.startDate &&
     this.props.endDate &&
     utils.isSameYear(utils.setYear(newDate(), y), this.props.startDate);
 
-  isRangeEnd = (y) =>
+  isRangeEnd = (y: number) =>
     this.props.startDate &&
     this.props.endDate &&
     utils.isSameYear(utils.setYear(newDate(), y), this.props.endDate);
 
-  isInRange = (y) =>
+  isInRange = (y: number) =>
     utils.isYearInRange(y, this.props.startDate, this.props.endDate);
 
   isInSelectingRange = (y) => {
@@ -188,13 +194,13 @@ export default class Year extends React.Component {
         case "ArrowRight":
           this.handleYearNavigation(
             y + 1,
-            utils.addYears(this.props.preSelection, 1),
+            utils.addYears(this.props.preSelection, 1)
           );
           break;
         case "ArrowLeft":
           this.handleYearNavigation(
             y - 1,
-            utils.subYears(this.props.preSelection, 1),
+            utils.subYears(this.props.preSelection, 1)
           );
           break;
         case "ArrowUp": {
@@ -216,7 +222,7 @@ export default class Year extends React.Component {
 
           this.handleYearNavigation(
             newYear,
-            utils.subYears(this.props.preSelection, offset),
+            utils.subYears(this.props.preSelection, offset)
           );
           break;
         }
@@ -239,7 +245,7 @@ export default class Year extends React.Component {
 
           this.handleYearNavigation(
             newYear,
-            utils.addYears(this.props.preSelection, offset),
+            utils.addYears(this.props.preSelection, offset)
           );
           break;
         }
@@ -282,7 +288,7 @@ export default class Year extends React.Component {
         "react-datepicker__year-text--selecting-range-end":
           this.isSelectingRangeEnd(y),
         "react-datepicker__year-text--today": this.isCurrentYear(y),
-      },
+      }
     );
   };
 
@@ -312,7 +318,7 @@ export default class Year extends React.Component {
       this.props;
     const { startPeriod, endPeriod } = utils.getYearsPeriod(
       date,
-      yearItemNumber,
+      yearItemNumber
     );
 
     for (let y = startPeriod; y <= endPeriod; y++) {
@@ -356,7 +362,7 @@ export default class Year extends React.Component {
           aria-current={this.isCurrentYear(y) ? "date" : undefined}
         >
           {this.getYearContent(y)}
-        </div>,
+        </div>
       );
     }
 
