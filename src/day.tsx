@@ -1,9 +1,4 @@
-import React, {
-  ReactNode,
-  MouseEventHandler,
-  KeyboardEventHandler,
-  RefObject,
-} from "react";
+import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
 import {
   getDay,
@@ -22,7 +17,7 @@ import {
   formatDate,
   type DayDisabledOptions,
   type DateNumberType,
-  type LocaleObj,
+  type Locale,
   type HolidaysMap,
 } from "./date_utils";
 
@@ -38,9 +33,9 @@ interface DayProps {
   inline?: boolean;
   shouldFocusDayInline?: boolean;
   month?: number;
-  onClick?: MouseEventHandler<HTMLDivElement>;
-  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
-  handleOnKeyDown: KeyboardEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   usePointerEvent?: boolean;
   preSelection?: Date;
   selected?: Date;
@@ -54,12 +49,12 @@ interface DayProps {
   selectsMultiple?: boolean;
   selectedDates?: Date[];
   startDate?: Date;
-  renderDayContents?: (day: number, date: Date) => ReactNode;
-  containerRef?: RefObject<HTMLDivElement>;
+  renderDayContents?: (day: number, date: Date) => React.ReactNode;
+  containerRef?: React.RefObject<HTMLDivElement>;
   excludeDates?: DayDisabledOptions["excludeDates"];
   excludeDateIntervals?: DayDisabledOptions["excludeDateIntervals"];
   calendarStartDay?: DateNumberType;
-  locale?: string | LocaleObj;
+  locale?: Locale;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
   includeDates?: DayDisabledOptions["includeDates"];
@@ -143,7 +138,7 @@ interface DayProps {
  * export default MyComponent;
  * ```
  */
-export default class Day extends React.Component<DayProps> {
+export default class Day extends Component<DayProps> {
   componentDidMount() {
     this.handleFocusDay();
   }
@@ -152,7 +147,7 @@ export default class Day extends React.Component<DayProps> {
     this.handleFocusDay();
   }
 
-  dayEl = React.createRef<HTMLDivElement>();
+  dayEl = createRef<HTMLDivElement>();
 
   handleClick: DayProps["onClick"] = (event) => {
     if (!this.isDisabled() && this.props.onClick) {
@@ -166,7 +161,7 @@ export default class Day extends React.Component<DayProps> {
     }
   };
 
-  handleOnKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+  handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
     const eventKey = event.key;
     if (eventKey === " ") {
       event.preventDefault();

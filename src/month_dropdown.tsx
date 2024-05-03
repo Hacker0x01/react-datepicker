@@ -1,15 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 import MonthDropdownOptions from "./month_dropdown_options";
 import onClickOutside from "react-onclickoutside";
-import type { LocaleObj } from "./date_utils";
-import { getMonthShortInLocale, getMonthInLocale } from "./date_utils";
+import {
+  getMonthShortInLocale,
+  getMonthInLocale,
+  type Locale,
+} from "./date_utils";
+
+interface MonthDropdownOptionsProps
+  extends React.ComponentPropsWithoutRef<typeof MonthDropdownOptions> {}
 
 const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions);
 
-interface MonthDropdownProps {
+interface MonthDropdownProps extends Pick<MonthDropdownOptionsProps, "month"> {
   dropdownMode: "scroll" | "select";
-  locale?: string | LocaleObj;
-  month: number;
+  locale?: Locale;
   onChange: (month: number | string) => void;
   useShortMonthInDropdown?: boolean;
 }
@@ -18,7 +23,7 @@ interface MonthDropdownState {
   dropdownVisible: boolean;
 }
 
-export default class MonthDropdown extends React.Component<
+export default class MonthDropdown extends Component<
   MonthDropdownProps,
   MonthDropdownState
 > {
@@ -91,13 +96,13 @@ export default class MonthDropdown extends React.Component<
     });
 
   render(): JSX.Element {
-    const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
+    const monthNames: string[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
-        ? (m) => getMonthShortInLocale(m, this.props.locale)
-        : (m) => getMonthInLocale(m, this.props.locale),
+        ? (m: number): string => getMonthShortInLocale(m, this.props.locale)
+        : (m: number): string => getMonthInLocale(m, this.props.locale),
     );
 
-    let renderedDropdown;
+    let renderedDropdown: JSX.Element | JSX.Element[];
     switch (this.props.dropdownMode) {
       case "scroll":
         renderedDropdown = this.renderScrollMode(monthNames);

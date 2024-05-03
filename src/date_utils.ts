@@ -55,11 +55,16 @@ import { isWithinInterval } from "date-fns/isWithinInterval";
 import { toDate } from "date-fns/toDate";
 import { parse } from "date-fns/parse";
 import { parseISO } from "date-fns/parseISO";
-import { type Locale, addSeconds, Day } from "date-fns";
+import { type Locale as DateFnsLocale, addSeconds, Day } from "date-fns";
 
 export type DateNumberType = Day;
-export interface LocaleObj
-  extends Pick<Locale, "options" | "formatLong" | "localize" | "match"> {}
+interface LocaleObj
+  extends Pick<
+    DateFnsLocale,
+    "options" | "formatLong" | "localize" | "match"
+  > {}
+
+export type Locale = string | LocaleObj;
 
 function getLocaleScope() {
   // Use this cast to avoid messing with users globalThis (like window) and the rest of keys in the globalThis object we don't care about
@@ -103,7 +108,7 @@ export function newDate(value?: string | Date | number | null): Date {
 export function parseDate(
   value: string,
   dateFormat: string | string[],
-  locale: string | LocaleObj,
+  locale: Locale,
   strictParsing: boolean,
   minDate: Date,
 ): Date | null {
@@ -202,7 +207,7 @@ export function isValid(date: Date, minDate?: Date): boolean {
 export function formatDate(
   date: Date,
   formatStr: string,
-  locale?: string | LocaleObj,
+  locale?: Locale,
 ): string {
   if (locale === "en") {
     return format(date, formatStr, {
@@ -239,10 +244,7 @@ export function formatDate(
  */
 export function safeDateFormat(
   date: Date,
-  {
-    dateFormat,
-    locale,
-  }: { dateFormat: string | string[]; locale: string | LocaleObj },
+  { dateFormat, locale }: { dateFormat: string | string[]; locale: Locale },
 ): string {
   const formatStr = (
     Array.isArray(dateFormat) && dateFormat.length > 0
@@ -263,7 +265,7 @@ export function safeDateFormat(
 export function safeDateRangeFormat(
   startDate: Date,
   endDate: Date,
-  props: { dateFormat: string | string[]; locale: string | LocaleObj },
+  props: { dateFormat: string | string[]; locale: Locale },
 ): string {
   if (!startDate) {
     return "";
@@ -284,7 +286,7 @@ export function safeDateRangeFormat(
  */
 export function safeMultipleDatesFormat(
   dates: Date[],
-  props: { dateFormat: string | string[]; locale: string | LocaleObj },
+  props: { dateFormat: string | string[]; locale: Locale },
 ): string {
   if (!dates?.length) {
     return "";
@@ -353,10 +355,7 @@ export function getWeek(date: Date): number {
  * @param locale - The locale.
  * @returns - The day of the week code.
  */
-export function getDayOfWeekCode(
-  day: Date,
-  locale?: string | LocaleObj,
-): string {
+export function getDayOfWeekCode(day: Date, locale?: Locale): string {
   return formatDate(day, "ddd", locale);
 }
 
@@ -382,7 +381,7 @@ export function getStartOfDay(date: Date): Date {
  */
 export function getStartOfWeek(
   date: Date,
-  locale?: string | LocaleObj,
+  locale?: Locale,
   calendarStartDay?: Day,
 ): Date {
   let localeObj = locale
@@ -638,9 +637,7 @@ export function getDefaultLocale(): string {
  * @param localeSpec - The locale specification.
  * @returns - The locale object.
  */
-export function getLocaleObject(
-  localeSpec: string | LocaleObj,
-): LocaleObj | undefined {
+export function getLocaleObject(localeSpec?: Locale): LocaleObj | undefined {
   if (typeof localeSpec === "string") {
     // Treat it as a locale name registered by registerLocale
     const scope = getLocaleScope();
@@ -663,7 +660,7 @@ export function getLocaleObject(
 export function getFormattedWeekdayInLocale(
   date: Date,
   formatFunc: (date: string) => string,
-  locale: string,
+  locale?: Locale,
 ): string {
   return formatFunc(formatDate(date, "EEEE", locale));
 }
@@ -675,7 +672,7 @@ export function getFormattedWeekdayInLocale(
  * @param locale - The locale to use for formatting.
  * @returns - The minimum weekday.
  */
-export function getWeekdayMinInLocale(date: Date, locale: string): string {
+export function getWeekdayMinInLocale(date: Date, locale?: Locale): string {
   return formatDate(date, "EEEEEE", locale);
 }
 
@@ -686,7 +683,7 @@ export function getWeekdayMinInLocale(date: Date, locale: string): string {
  * @param locale - The locale to use for formatting.
  * @returns - The short weekday.
  */
-export function getWeekdayShortInLocale(date: Date, locale: string): string {
+export function getWeekdayShortInLocale(date: Date, locale?: Locale): string {
   return formatDate(date, "EEE", locale);
 }
 
@@ -697,10 +694,7 @@ export function getWeekdayShortInLocale(date: Date, locale: string): string {
  * @param locale - The locale to use for formatting.
  * @returns - The month.
  */
-export function getMonthInLocale(
-  month: number,
-  locale?: string | LocaleObj,
-): string {
+export function getMonthInLocale(month: number, locale?: Locale): string {
   return formatDate(setMonth(newDate(), month), "LLLL", locale);
 }
 
@@ -711,10 +705,7 @@ export function getMonthInLocale(
  * @param locale - The locale to use for formatting.
  * @returns - The short month.
  */
-export function getMonthShortInLocale(
-  month: number,
-  locale?: string | LocaleObj,
-): string {
+export function getMonthShortInLocale(month: number, locale?: Locale): string {
   return formatDate(setMonth(newDate(), month), "LLL", locale);
 }
 
@@ -727,7 +718,7 @@ export function getMonthShortInLocale(
  */
 export function getQuarterShortInLocale(
   quarter: number,
-  locale?: string | LocaleObj,
+  locale?: Locale,
 ): string {
   return formatDate(setQuarter(newDate(), quarter), "QQQ", locale);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 interface MonthDropdownOptionsProps {
   onCancel: VoidFunction;
@@ -7,7 +7,7 @@ interface MonthDropdownOptionsProps {
   monthNames: string[];
 }
 
-export default class MonthDropdownOptions extends React.Component<MonthDropdownOptionsProps> {
+export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
   isSelectedMonth = (i: number): boolean => this.props.month === i;
 
   renderOptions = (): JSX.Element[] => {

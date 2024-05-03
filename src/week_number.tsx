@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
 import { isSameDay } from "./date_utils";
 
@@ -19,7 +19,7 @@ interface WeekNumberProps {
   isInputFocused?: boolean;
 }
 
-export default class WeekNumber extends React.Component<WeekNumberProps> {
+export default class WeekNumber extends Component<WeekNumberProps> {
   static get defaultProps(): Partial<WeekNumberProps> {
     return {
       ariaLabelPrefix: "week ",
@@ -34,7 +34,7 @@ export default class WeekNumber extends React.Component<WeekNumberProps> {
     this.handleFocusWeekNumber(prevProps);
   }
 
-  weekNumberEl = React.createRef<HTMLDivElement>();
+  weekNumberEl = createRef<HTMLDivElement>();
 
   handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     if (this.props.onClick) {

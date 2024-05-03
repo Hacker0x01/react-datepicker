@@ -1,7 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import MonthYearDropdownOptions from "./month_year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
-import type { LocaleObj } from "./date_utils";
 import {
   addMonths,
   formatDate,
@@ -13,26 +12,32 @@ import {
   getTime,
 } from "./date_utils";
 
+interface MonthYearDropdownOptionsProps
+  extends React.ComponentPropsWithoutRef<typeof MonthYearDropdownOptions> {}
+
 const WrappedMonthYearDropdownOptions = onClickOutside(
   MonthYearDropdownOptions,
 );
 
-interface MonthYearDropdownProps {
+interface MonthYearDropdownProps
+  extends Pick<
+    MonthYearDropdownOptionsProps,
+    | "date"
+    | "dateFormat"
+    | "minDate"
+    | "maxDate"
+    | "scrollableMonthYearDropdown"
+    | "locale"
+  > {
   dropdownMode: "scroll" | "select";
-  dateFormat: string;
-  locale?: string | LocaleObj;
-  minDate: Date;
-  maxDate: Date;
-  date: Date;
   onChange: (monthYear: Date) => void;
-  scrollableMonthYearDropdown?: boolean;
 }
 
 interface MonthYearDropdownState {
   dropdownVisible: boolean;
 }
 
-export default class MonthYearDropdown extends React.Component<
+export default class MonthYearDropdown extends Component<
   MonthYearDropdownProps,
   MonthYearDropdownState
 > {
@@ -82,6 +87,7 @@ export default class MonthYearDropdown extends React.Component<
 
     return (
       <div
+        key="read"
         style={{ visibility: visible ? "visible" : "hidden" }}
         className="react-datepicker__month-year-read-view"
         onClick={this.toggleDropdown}
@@ -96,6 +102,7 @@ export default class MonthYearDropdown extends React.Component<
 
   renderDropdown = (): JSX.Element => (
     <WrappedMonthYearDropdownOptions
+      key="dropdown"
       date={this.props.date}
       dateFormat={this.props.dateFormat}
       onChange={this.onChange}

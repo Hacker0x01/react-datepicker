@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
 import { clsx } from "clsx";
-import type { LocaleObj } from "./date_utils";
 import {
   addMonths,
   formatDate,
@@ -10,6 +9,7 @@ import {
   isSameMonth,
   isSameYear,
   getTime,
+  type Locale,
 } from "./date_utils";
 
 function generateMonthYears(minDate: Date, maxDate: Date): Date[] {
@@ -34,14 +34,14 @@ interface MonthYearDropdownOptionsProps {
   scrollableMonthYearDropdown?: boolean;
   date: Date;
   dateFormat: string;
-  locale?: string | LocaleObj;
+  locale?: Locale;
 }
 
 interface MonthYearDropdownOptionsState {
   monthYearsList: Date[];
 }
 
-export default class MonthYearDropdownOptions extends React.Component<
+export default class MonthYearDropdownOptions extends Component<
   MonthYearDropdownOptionsProps,
   MonthYearDropdownOptionsState
 > {
@@ -89,7 +89,7 @@ export default class MonthYearDropdownOptions extends React.Component<
     );
   };
 
-  onChange = (monthYear: number) => this.props.onChange(monthYear);
+  onChange = (monthYear: number): void => this.props.onChange(monthYear);
 
   handleClickOutside = (): void => {
     this.props.onCancel();

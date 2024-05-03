@@ -1,6 +1,20 @@
-import React, { Component } from "react";
-import { getYear, newDate } from "./date_utils";
-import * as utils from "./date_utils";
+import React, { Component, createRef } from "react";
+import {
+  addYears,
+  getStartOfYear,
+  getYear,
+  getYearsPeriod,
+  isDayDisabled,
+  isDayExcluded,
+  isSameDay,
+  isSameYear,
+  isSpaceKeyDown,
+  isYearDisabled,
+  isYearInRange,
+  newDate,
+  setYear,
+  subYears,
+} from "./date_utils";
 import { clsx } from "clsx";
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
@@ -71,11 +85,11 @@ export default class Year extends Component<YearProps> {
   }
 
   YEAR_REFS = [...Array(this.props.yearItemNumber)].map(() =>
-    React.createRef<HTMLDivElement>(),
+    createRef<HTMLDivElement>(),
   );
 
   isDisabled = (date: Date) =>
-    utils.isDayDisabled(date, {
+    isDayDisabled(date, {
       minDate: this.props.minDate,
       maxDate: this.props.maxDate,
       excludeDates: this.props.excludeDates,
@@ -84,7 +98,7 @@ export default class Year extends Component<YearProps> {
     });
 
   isExcluded = (date: Date) =>
-    utils.isDayExcluded(date, {
+    isDayExcluded(date, {
       excludeDates: this.props.excludeDates,
     });
 
@@ -115,7 +129,7 @@ export default class Year extends Component<YearProps> {
       return;
     }
 
-    const { startPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+    const { startPeriod } = getYearsPeriod(date, yearItemNumber);
 
     if (this.isDisabled(newDate) || this.isExcluded(newDate)) {
       return;
@@ -131,22 +145,22 @@ export default class Year extends Component<YearProps> {
     } else this.YEAR_REFS[newYear - startPeriod]?.current?.focus();
   };
 
-  isSameDay = (y: Date, other: Date) => utils.isSameDay(y, other);
+  isSameDay = (y: Date, other: Date) => isSameDay(y, other);
 
   isCurrentYear = (y: number) => y === getYear(newDate());
 
   isRangeStart = (y: number) =>
     this.props.startDate &&
     this.props.endDate &&
-    utils.isSameYear(utils.setYear(newDate(), y), this.props.startDate);
+    isSameYear(setYear(newDate(), y), this.props.startDate);
 
   isRangeEnd = (y: number) =>
     this.props.startDate &&
     this.props.endDate &&
-    utils.isSameYear(utils.setYear(newDate(), y), this.props.endDate);
+    isSameYear(setYear(newDate(), y), this.props.endDate);
 
   isInRange = (y: number) =>
-    utils.isYearInRange(y, this.props.startDate, this.props.endDate);
+    isYearInRange(y, this.props.startDate, this.props.endDate);
 
   isInSelectingRange = (y: number) => {
     const { selectsStart, selectsEnd, selectsRange, startDate, endDate } =
@@ -159,13 +173,13 @@ export default class Year extends Component<YearProps> {
       return false;
     }
     if (selectsStart && endDate) {
-      return utils.isYearInRange(y, this.selectingDate(), endDate);
+      return isYearInRange(y, this.selectingDate(), endDate);
     }
     if (selectsEnd && startDate) {
-      return utils.isYearInRange(y, startDate, this.selectingDate());
+      return isYearInRange(y, startDate, this.selectingDate());
     }
     if (selectsRange && startDate && !endDate) {
-      return utils.isYearInRange(y, startDate, this.selectingDate());
+      return isYearInRange(y, startDate, this.selectingDate());
     }
     return false;
   };
@@ -176,12 +190,12 @@ export default class Year extends Component<YearProps> {
     }
 
     const { startDate, selectsStart } = this.props;
-    const _year = utils.setYear(newDate(), y);
+    const _year = setYear(newDate(), y);
 
     if (selectsStart) {
-      return utils.isSameYear(_year, this.selectingDate() ?? null);
+      return isSameYear(_year, this.selectingDate() ?? null);
     }
-    return utils.isSameYear(_year, startDate ?? null);
+    return isSameYear(_year, startDate ?? null);
   };
 
   isSelectingRangeEnd = (y: number) => {
@@ -190,12 +204,12 @@ export default class Year extends Component<YearProps> {
     }
 
     const { endDate, selectsEnd, selectsRange } = this.props;
-    const _year = utils.setYear(newDate(), y);
+    const _year = setYear(newDate(), y);
 
     if (selectsEnd || selectsRange) {
-      return utils.isSameYear(_year, this.selectingDate() ?? null);
+      return isSameYear(_year, this.selectingDate() ?? null);
     }
-    return utils.isSameYear(_year, endDate ?? null);
+    return isSameYear(_year, endDate ?? null);
   };
 
   isKeyboardSelected = (y: number) => {
@@ -206,12 +220,12 @@ export default class Year extends Component<YearProps> {
     ) {
       return;
     }
-    const date = utils.getStartOfYear(utils.setYear(this.props.date, y));
+    const date = getStartOfYear(setYear(this.props.date, y));
     return (
       !this.props.disabledKeyboardNavigation &&
       !this.props.inline &&
-      !utils.isSameDay(date, utils.getStartOfYear(this.props.selected)) &&
-      utils.isSameDay(date, utils.getStartOfYear(this.props.preSelection))
+      !isSameDay(date, getStartOfYear(this.props.selected)) &&
+      isSameDay(date, getStartOfYear(this.props.preSelection))
     );
   };
 
@@ -225,7 +239,7 @@ export default class Year extends Component<YearProps> {
     if (date === undefined) {
       return;
     }
-    this.handleYearClick(utils.getStartOfYear(utils.setYear(date, y)), e);
+    this.handleYearClick(getStartOfYear(setYear(date, y)), e);
   };
 
   onYearKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, y: number) => {
@@ -252,7 +266,7 @@ export default class Year extends Component<YearProps> {
           }
           this.handleYearNavigation(
             y + 1,
-            utils.addYears(this.props.preSelection, 1),
+            addYears(this.props.preSelection, 1),
           );
           break;
         case "ArrowLeft":
@@ -261,7 +275,7 @@ export default class Year extends Component<YearProps> {
           }
           this.handleYearNavigation(
             y - 1,
-            utils.subYears(this.props.preSelection, 1),
+            subYears(this.props.preSelection, 1),
           );
           break;
         case "ArrowUp": {
@@ -272,7 +286,7 @@ export default class Year extends Component<YearProps> {
           ) {
             break;
           }
-          const { startPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+          const { startPeriod } = getYearsPeriod(date, yearItemNumber);
           let offset = VERTICAL_NAVIGATION_OFFSET;
           let newYear = y - offset;
 
@@ -290,7 +304,7 @@ export default class Year extends Component<YearProps> {
 
           this.handleYearNavigation(
             newYear,
-            utils.subYears(this.props.preSelection, offset),
+            subYears(this.props.preSelection, offset),
           );
           break;
         }
@@ -302,7 +316,7 @@ export default class Year extends Component<YearProps> {
           ) {
             break;
           }
-          const { endPeriod } = utils.getYearsPeriod(date, yearItemNumber);
+          const { endPeriod } = getYearsPeriod(date, yearItemNumber);
           let offset = VERTICAL_NAVIGATION_OFFSET;
           let newYear = y + offset;
 
@@ -320,7 +334,7 @@ export default class Year extends Component<YearProps> {
 
           this.handleYearNavigation(
             newYear,
-            utils.addYears(this.props.preSelection, offset),
+            addYears(this.props.preSelection, offset),
           );
           break;
         }
@@ -345,14 +359,14 @@ export default class Year extends Component<YearProps> {
     return clsx(
       "react-datepicker__year-text",
       `react-datepicker__year-${y}`,
-      date ? yearClassName?.(utils.setYear(date, y)) : undefined,
+      date ? yearClassName?.(setYear(date, y)) : undefined,
       {
         "react-datepicker__year-text--selected": selected
           ? y === getYear(selected)
           : undefined,
         "react-datepicker__year-text--disabled":
           (minDate || maxDate || excludeDates || includeDates || filterDate) &&
-          utils.isYearDisabled(y, {
+          isYearDisabled(y, {
             minDate: this.props.minDate,
             maxDate: this.props.maxDate,
             excludeDates: this.props.excludeDates?.reduce((acc, item) => {
@@ -389,7 +403,7 @@ export default class Year extends Component<YearProps> {
     ) {
       return "-1";
     }
-    const preSelected = utils.getYear(this.props.preSelection);
+    const preSelected = getYear(this.props.preSelection);
 
     return y === preSelected ? "0" : "-1";
   };
@@ -414,10 +428,7 @@ export default class Year extends Component<YearProps> {
     if (date === undefined) {
       return null;
     }
-    const { startPeriod, endPeriod } = utils.getYearsPeriod(
-      date,
-      yearItemNumber,
-    );
+    const { startPeriod, endPeriod } = getYearsPeriod(date, yearItemNumber);
 
     for (let y = startPeriod; y <= endPeriod; y++) {
       yearsList.push(
@@ -427,7 +438,7 @@ export default class Year extends Component<YearProps> {
             this.onYearClick(ev, y);
           }}
           onKeyDown={(ev) => {
-            if (utils.isSpaceKeyDown(ev)) {
+            if (isSpaceKeyDown(ev)) {
               ev.preventDefault();
               ev.key = "Enter";
             }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Day from "./day";
 import WeekNumber from "./week_number";
 import { clsx } from "clsx";
@@ -36,7 +36,7 @@ interface WeekProps
   ) => void;
 }
 
-export default class Week extends React.Component<WeekProps> {
+export default class Week extends Component<WeekProps> {
   static get defaultProps(): Partial<WeekProps> {
     return {
       shouldCloseOnSelect: true,
@@ -92,6 +92,7 @@ export default class Week extends React.Component<WeekProps> {
           : undefined;
       days.push(
         <WeekNumber
+          key="W"
           weekNumber={weekNumber}
           date={startOfWeek}
           onClick={onClickAction}
