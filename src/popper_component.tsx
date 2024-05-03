@@ -1,35 +1,43 @@
 import { clsx } from "clsx";
-import React from "react";
-import PropTypes from "prop-types";
+import React, { createElement, Component } from "react";
 import { FloatingArrow } from "@floating-ui/react";
+import type { ReferenceType, UseFloatingReturn } from "@floating-ui/react";
 import TabLoop from "./tab_loop";
 import Portal from "./portal";
 import withFloating from "./with_floating";
 
+interface PortalProps
+  extends Omit<React.ComponentPropsWithoutRef<typeof Portal>, "children"> {}
+interface TabLoopProps
+  extends Omit<React.ComponentPropsWithoutRef<typeof TabLoop>, "children"> {}
+
+interface PopperComponentProps<RT extends ReferenceType = ReferenceType>
+  extends PortalProps,
+    TabLoopProps {
+  className?: string;
+  wrapperClassName?: string;
+  hidePopper?: boolean;
+  popperComponent: React.ReactNode;
+  popperContainer?: React.FC<React.PropsWithChildren>;
+  popperProps: UseFloatingReturn<RT> & {
+    arrowRef: React.RefObject<SVGSVGElement>;
+  };
+  targetComponent: React.ReactNode;
+  popperOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
+  showArrow?: boolean;
+}
+
 // Exported for testing purposes
-export class PopperComponent extends React.Component {
-  static get defaultProps() {
+export class PopperComponent<
+  RT extends ReferenceType = ReferenceType,
+> extends Component<PopperComponentProps<RT>> {
+  static get defaultProps(): Partial<PopperComponentProps> {
     return {
       hidePopper: true,
     };
   }
 
-  static propTypes = {
-    className: PropTypes.string,
-    wrapperClassName: PropTypes.string,
-    hidePopper: PropTypes.bool,
-    popperComponent: PropTypes.element,
-    popperContainer: PropTypes.func,
-    popperProps: PropTypes.object,
-    targetComponent: PropTypes.element,
-    enableTabLoop: PropTypes.bool,
-    popperOnKeyDown: PropTypes.func,
-    showArrow: PropTypes.bool,
-    portalId: PropTypes.string,
-    portalHost: PropTypes.instanceOf(ShadowRoot),
-  };
-
-  render() {
+  render(): JSX.Element {
     const {
       className,
       wrapperClassName,
@@ -44,7 +52,7 @@ export class PopperComponent extends React.Component {
       showArrow,
     } = this.props;
 
-    let popper;
+    let popper: JSX.Element | undefined = undefined;
 
     if (!hidePopper) {
       const classes = clsx("react-datepicker-popper", className);
@@ -76,7 +84,7 @@ export class PopperComponent extends React.Component {
     }
 
     if (this.props.popperContainer) {
-      popper = React.createElement(this.props.popperContainer, {}, popper);
+      popper = createElement(this.props.popperContainer, {}, popper);
     }
 
     if (portalId && !hidePopper) {
@@ -90,14 +98,14 @@ export class PopperComponent extends React.Component {
     const wrapperClasses = clsx("react-datepicker-wrapper", wrapperClassName);
 
     return (
-      <React.Fragment>
+      <>
         <div ref={popperProps.refs.setReference} className={wrapperClasses}>
           {targetComponent}
         </div>
         {popper}
-      </React.Fragment>
+      </>
     );
   }
 }
 
-export default withFloating(PopperComponent);
+export default withFloating<PopperComponentProps>(PopperComponent);

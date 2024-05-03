@@ -8,9 +8,10 @@ import {
   Middleware,
   Placement,
   type UseFloatingOptions,
+  type ReferenceType,
 } from "@floating-ui/react";
 
-interface WithFloatingProps {
+export interface WithFloatingProps {
   popperModifiers?: Middleware[];
   popperProps?: Omit<UseFloatingOptions, "middleware">;
   hidePopper?: boolean;
@@ -33,10 +34,13 @@ interface WithFloatingProps {
  *
  * @returns A new component with floating behavior.
  */
-export default function withFloating<T extends {}>(
-  Component: ComponentType<T>,
-) {
-  const WithFloating: React.FC<T & WithFloatingProps> = (props) => {
+export default function withFloating<
+  T extends {},
+  RT extends ReferenceType = ReferenceType,
+>(Component: ComponentType<T>) {
+  const WithFloating: React.FC<T & WithFloatingProps> = (
+    props,
+  ): JSX.Element => {
     const alt_props = {
       ...props,
       popperModifiers: props.popperModifiers ?? [],
@@ -45,7 +49,7 @@ export default function withFloating<T extends {}>(
         typeof props.hidePopper === "boolean" ? props.hidePopper : true,
     };
     const arrowRef: React.RefObject<HTMLElement> = React.useRef(null);
-    const floatingProps = useFloating({
+    const floatingProps = useFloating<RT>({
       open: !alt_props.hidePopper,
       whileElementsMounted: autoUpdate,
       placement: alt_props.popperPlacement,
