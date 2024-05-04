@@ -463,9 +463,9 @@ describe("Calendar", () => {
         nextYearButtonDisabled: expect.any(Boolean),
         prevYearButtonDisabled: expect.any(Boolean),
         isRenderAriaLiveMessage: expect.any(Boolean),
-        monthContainer: null,
+        monthContainer: undefined,
         monthDate: expect.any(Date),
-        selectingDate: null,
+        selectingDate: undefined,
       };
 
       expect(renderCustomHeader).toHaveBeenCalledWith(match);
