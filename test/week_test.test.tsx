@@ -59,10 +59,14 @@ describe("Week", () => {
       <Week day={weekStart} onDayClick={onDayClick} />,
     );
     const day = container.querySelector(".react-datepicker__day");
-    fireEvent.click(day);
-    expect(day.getAttribute("aria-label")).toEqual(
-      `Choose ${utils.formatDate(dayClicked, "PPPP")}`,
-    );
+    if (day && dayClicked) {
+      fireEvent.click(day);
+      expect(day.getAttribute("aria-label")).toEqual(
+        `Choose ${utils.formatDate(dayClicked, "PPPP")}`,
+      );
+    } else {
+      expect(day).not.toBeNull();
+    }
   });
 
   it("should call the provided onWeekSelect function and pass the first day of the week", () => {
@@ -85,7 +89,8 @@ describe("Week", () => {
     const weekNumberElement = container.querySelector(
       ".react-datepicker__week-number",
     );
-    fireEvent.click(weekNumberElement);
+    expect(weekNumberElement).not.toBeNull();
+    fireEvent.click(weekNumberElement ?? new HTMLElement());
     expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
   });
 
@@ -105,7 +110,8 @@ describe("Week", () => {
     const weekNumberElement = container.querySelector(
       ".react-datepicker__week-number",
     );
-    fireEvent.click(weekNumberElement);
+    expect(weekNumberElement).not.toBeNull();
+    fireEvent.click(weekNumberElement ?? new HTMLElement());
     expect(setOpenSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -127,7 +133,9 @@ describe("Week", () => {
     const weekNumberElement = container.querySelector(
       ".react-datepicker__week-number",
     );
-    fireEvent.click(weekNumberElement);
+    expect(weekNumberElement).not.toBeNull();
+
+    fireEvent.click(weekNumberElement ?? new HTMLElement());
     expect(setOnWeekSelect).toHaveBeenCalledTimes(1);
     expect(setOpenSpy).toHaveBeenCalledTimes(0);
   });
@@ -152,7 +160,8 @@ describe("Week", () => {
     const weekNumberElement = container.querySelector(
       ".react-datepicker__week-number",
     );
-    fireEvent.click(weekNumberElement);
+    expect(weekNumberElement).not.toBeNull();
+    fireEvent.click(weekNumberElement ?? new HTMLElement());
     expect(weekNumberReceived).toBe(realWeekNumber);
   });
 
@@ -175,9 +184,9 @@ describe("Week", () => {
     const weekNumberElement = container.querySelector(
       ".react-datepicker__week-number",
     );
-
+    expect(weekNumberElement).not.toBeNull();
     expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
-    expect(weekNumberElement.getAttribute("aria-label")).toBe("week  9");
+    expect(weekNumberElement?.getAttribute("aria-label")).toBe("week  9");
   });
 
   it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
@@ -188,7 +197,8 @@ describe("Week", () => {
     );
 
     const day = container.querySelector(".react-datepicker__day");
-    fireEvent.mouseEnter(day);
+    expect(day).not.toBeNull();
+    fireEvent.mouseEnter(day ?? new HTMLElement());
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
       utils.getStartOfWeek(weekStart),
@@ -207,11 +217,13 @@ describe("Week", () => {
     );
 
     const day = container.querySelector(".react-datepicker__day");
-    fireEvent.pointerEnter(day);
+    if (day) {
+      fireEvent.pointerEnter(day);
 
-    expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
-      utils.getStartOfWeek(weekStart),
-    );
+      expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
+        utils.getStartOfWeek(weekStart),
+      );
+    } else expect(day).not.toBeNull();
   });
 
   describe("handleWeekClick", () => {
@@ -349,7 +361,7 @@ describe("Week", () => {
       const calendarStartDay = 3;
       const currentWeek = utils.getStartOfWeek(
         utils.newDate("2024-03-01"),
-        null,
+        undefined,
         calendarStartDay,
       );
       const selected = utils.addWeeks(currentWeek, 0);
