@@ -244,17 +244,16 @@ export function formatDate(
  */
 export function safeDateFormat(
   date?: Date,
-  {
-    dateFormat,
-    locale,
-  }: { dateFormat?: string | string[]; locale?: Locale } = {},
+  { dateFormat, locale }: { dateFormat: string | string[]; locale?: Locale } = {
+    dateFormat: "yyyy-MM-dd",
+  },
 ): string {
   const formatStr = (
     Array.isArray(dateFormat) && dateFormat.length > 0
       ? dateFormat[0]
       : dateFormat
-  ) as string | undefined; // Cast to string because it's impossible to get `string | string[] | undefined` here and typescript doesn't know that
-  return (date && formatStr && formatDate(date, formatStr, locale)) || "";
+  ) as string; // Cast to string because it's impossible to get `string | string[] | undefined` here and typescript doesn't know that
+  return (date && formatDate(date, formatStr, locale)) || "";
 }
 
 /**
