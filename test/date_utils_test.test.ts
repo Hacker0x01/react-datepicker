@@ -1249,11 +1249,10 @@ describe("date_utils", () => {
     it("should return empty if invalid date is provided", () => {
       const holidayDates = [
         {
-          date: "invalid date" as any, // cast `any` to sake of testing
+          date: "invalid date" as any, // cast to any for the sake of testing
           holidayName: "Fake holiday",
         },
       ];
-      console.log(holidayDates[0].date);
       expect([...getHolidaysMap(holidayDates).keys()]).toHaveLength(0);
     });
 
@@ -1319,7 +1318,7 @@ describe("date_utils", () => {
     });
 
     it("should throw an error when an invalid date is provided", () => {
-      const invalidDate = "not a date" as any; // cast `any` to sake of testing
+      const invalidDate = "not a date" as any; // cast to any for the sake of testing
 
       expect(() => {
         getMidnightDate(invalidDate);
@@ -1348,7 +1347,7 @@ describe("date_utils", () => {
 
     it("should throw an error when either date or dateToCompare is not a valid date", () => {
       expect(() => {
-        const invalidDate = "not a date" as any; // cast `any` to sake of testing
+        const invalidDate = "not a date" as any; // cast to any for the sake of testing
         const validDate = new Date(2023, 0, 1); // January 1, 2023
 
         isDateBefore(invalidDate, validDate);
