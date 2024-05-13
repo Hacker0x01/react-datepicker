@@ -5,7 +5,7 @@
 import React from "react";
 import Calendar from "../src/calendar";
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import * as utils from "../src/date_utils";
 import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";

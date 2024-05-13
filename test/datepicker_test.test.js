@@ -1,7 +1,7 @@
 import React from "react";
 import { enUS, enGB } from "date-fns/locale";
 import { render, act, waitFor, fireEvent } from "@testing-library/react";
-import DatePicker, { registerLocale } from "../src/index.jsx";
+import DatePicker, { registerLocale } from "../src/index";
 import TestWrapper from "./test_wrapper.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils.ts";

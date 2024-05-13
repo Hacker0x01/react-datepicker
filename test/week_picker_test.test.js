@@ -1,5 +1,5 @@
 import React from "react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import { render, fireEvent } from "@testing-library/react";
 
 describe("WeekPicker", () => {

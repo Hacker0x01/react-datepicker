@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { setTime, newDate } from "../src/date_utils";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 
 describe("DatePicker", () => {
   let now, excludeTimes;

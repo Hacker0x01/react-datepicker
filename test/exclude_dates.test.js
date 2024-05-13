@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import { subDays } from "date-fns";
 
 describe("DatePicker", () => {
