@@ -71,7 +71,7 @@ function getLocaleScope() {
   const scope = (typeof window !== "undefined"
     ? window
     : globalThis) as unknown as {
-    __localeId__: string;
+    __localeId__?: string;
     __localeData__: Record<string, LocaleObj>;
   };
 
@@ -108,9 +108,9 @@ export function newDate(value?: string | Date | number | null): Date {
 export function parseDate(
   value: string,
   dateFormat: string | string[],
-  locale: Locale,
-  strictParsing: boolean,
-  minDate: Date,
+  locale?: Locale,
+  strictParsing?: boolean,
+  minDate?: Date,
 ): Date | null {
   let parsedDate = null;
   let localeObject =
@@ -243,8 +243,10 @@ export function formatDate(
  * @returns - The formatted date or an empty string.
  */
 export function safeDateFormat(
-  date: Date,
-  { dateFormat, locale }: { dateFormat: string | string[]; locale: Locale },
+  date?: Date,
+  { dateFormat, locale }: { dateFormat: string | string[]; locale?: Locale } = {
+    dateFormat: "yyyy-MM-dd",
+  },
 ): string {
   const formatStr = (
     Array.isArray(dateFormat) && dateFormat.length > 0
@@ -263,9 +265,9 @@ export function safeDateFormat(
  * @returns - The formatted date range or an empty string.
  */
 export function safeDateRangeFormat(
-  startDate: Date,
-  endDate: Date,
-  props: { dateFormat: string | string[]; locale: Locale },
+  startDate?: Date,
+  endDate?: Date,
+  props?: { dateFormat: string | string[]; locale: Locale },
 ): string {
   if (!startDate) {
     return "";
@@ -614,7 +616,7 @@ export function registerLocale(
  *
  * @param localeName - The name of the locale.
  */
-export function setDefaultLocale(localeName: string): void {
+export function setDefaultLocale(localeName?: string): void {
   const scope = getLocaleScope();
 
   scope.__localeId__ = localeName;
@@ -625,7 +627,7 @@ export function setDefaultLocale(localeName: string): void {
  *
  * @returns - The default locale.
  */
-export function getDefaultLocale(): string {
+export function getDefaultLocale(): string | undefined {
   const scope = getLocaleScope();
 
   return scope.__localeId__;

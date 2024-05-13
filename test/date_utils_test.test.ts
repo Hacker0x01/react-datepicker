@@ -960,7 +960,7 @@ describe("date_utils", () => {
       const value = "01/15/2019";
       const dateFormat = "MM/dd/yyyy";
 
-      expect(parseDate(value, dateFormat, null, true)).not.toBeNull();
+      expect(parseDate(value, dateFormat, undefined, true)).not.toBeNull();
     });
 
     it("should parse date based on locale", () => {
@@ -977,28 +977,28 @@ describe("date_utils", () => {
       const value = "01/15/2019";
       const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
 
-      expect(parseDate(value, dateFormat, null, true)).not.toBeNull();
+      expect(parseDate(value, dateFormat, undefined, true)).not.toBeNull();
     });
 
     it("should not parse date that does not match the format", () => {
       const value = "01/15/20";
       const dateFormat = "MM/dd/yyyy";
 
-      expect(parseDate(value, dateFormat, null, true)).toBeNull();
+      expect(parseDate(value, dateFormat, undefined, true)).toBeNull();
     });
 
     it("should not parse date that does not match any of the formats", () => {
       const value = "01/15/20";
       const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
 
-      expect(parseDate(value, dateFormat, null, true)).toBeNull();
+      expect(parseDate(value, dateFormat, undefined, true)).toBeNull();
     });
 
     it("should parse date without strict parsing", () => {
       const value = "01/15/20";
       const dateFormat = "MM/dd/yyyy";
 
-      expect(parseDate(value, dateFormat, null, false)).not.toBeNull();
+      expect(parseDate(value, dateFormat, undefined, false)).not.toBeNull();
     });
 
     it("should parse date based on locale without strict parsing", () => {
@@ -1015,7 +1015,7 @@ describe("date_utils", () => {
       const value = "26/05/1995";
       const dateFormat = "P";
 
-      const actual = parseDate(value, dateFormat, null, false);
+      const actual = parseDate(value, dateFormat, undefined, false);
 
       expect(actual).toBeNull();
     });
@@ -1026,8 +1026,8 @@ describe("date_utils", () => {
 
       const expected = new Date("05/26/1995");
       setDefaultLocale("pt-BR");
-      const actual = parseDate(value, dateFormat, null, false);
-      setDefaultLocale(null);
+      const actual = parseDate(value, dateFormat, undefined, false);
+      setDefaultLocale(undefined);
 
       expect(actual).toEqual(expected);
     });
@@ -1205,14 +1205,14 @@ describe("date_utils", () => {
     };
 
     it("should return blank string when startDate and endDate are both null", () => {
-      const startDate = null;
-      const endDate = null;
+      const startDate = undefined;
+      const endDate = undefined;
       expect(safeDateRangeFormat(startDate, endDate, props)).toBe("");
     });
 
     it("should return a formatted startDate followed by a dash when endDate is null", () => {
       const startDate = new Date("2021-04-20 00:00:00");
-      const endDate = null;
+      const endDate = undefined;
       expect(safeDateRangeFormat(startDate, endDate, props)).toBe(
         "04/20/2021 - ",
       );
@@ -1249,7 +1249,7 @@ describe("date_utils", () => {
     it("should return empty if invalid date is provided", () => {
       const holidayDates = [
         {
-          date: "2024-02-31",
+          date: "invalid date" as any, // cast to any for the sake of testing
           holidayName: "Fake holiday",
         },
       ];
@@ -1318,11 +1318,11 @@ describe("date_utils", () => {
     });
 
     it("should throw an error when an invalid date is provided", () => {
-      const invalidDate = "not a date";
+      const invalidDate = "not a date" as any; // cast to any for the sake of testing
 
       expect(() => {
         getMidnightDate(invalidDate);
-      }).toThrowError("Invalid date");
+      }).toThrow("Invalid date");
     });
   });
 
@@ -1347,11 +1347,11 @@ describe("date_utils", () => {
 
     it("should throw an error when either date or dateToCompare is not a valid date", () => {
       expect(() => {
-        const invalidDate = "not a date";
+        const invalidDate = "not a date" as any; // cast to any for the sake of testing
         const validDate = new Date(2023, 0, 1); // January 1, 2023
 
         isDateBefore(invalidDate, validDate);
-      }).toThrowError();
+      }).toThrow();
     });
   });
 });
