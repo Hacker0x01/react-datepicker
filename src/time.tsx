@@ -62,12 +62,6 @@ export default class Time extends Component<TimeProps, TimeState> {
     height: null,
   };
 
-  private header?: HTMLDivElement;
-
-  private list?: HTMLUListElement;
-
-  private centerLi?: HTMLLIElement;
-
   componentDidMount(): void {
     // code to ensure selected time will always be in focus within time window when it first appears
     this.scrollToTheSelectedTime();
@@ -77,6 +71,12 @@ export default class Time extends Component<TimeProps, TimeState> {
       });
     }
   }
+
+  private header?: HTMLDivElement;
+
+  private list?: HTMLUListElement;
+
+  private centerLi?: HTMLLIElement;
 
   scrollToTheSelectedTime = (): void => {
     requestAnimationFrame((): void => {

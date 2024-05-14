@@ -45,6 +45,8 @@ import {
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
   getMonthInLocale,
+  // eslint-disable-next-line unused-imports/no-unused-imports
+  type  Locale,
 } from "./date_utils";
 
 const DROPDOWN_FOCUS_CLASSNAMES = [

@@ -16,6 +16,7 @@ interface WeekNumberProps {
   shouldFocusDayInline?: boolean;
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   containerRef?: React.RefObject<HTMLDivElement>;
+  // eslint-disable-next-line react/no-unused-prop-types
   isInputFocused?: boolean;
 }
 

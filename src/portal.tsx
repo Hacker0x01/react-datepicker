@@ -18,9 +18,6 @@ interface PortalProps {
  * @property {ShadowRoot} [props.portalHost] - The DOM node to host the `Portal`.
  */
 class Portal extends Component<PortalProps> {
-  private el: HTMLDivElement;
-  private portalRoot!: HTMLElement | null = null;
-
   constructor(props: PortalProps) {
     super(props);
     this.el = document.createElement("div");
@@ -43,6 +40,9 @@ class Portal extends Component<PortalProps> {
       this.portalRoot.removeChild(this.el);
     }
   }
+
+  private el: HTMLDivElement;
+  private portalRoot: HTMLElement | null = null;
 
   render() {
     return ReactDOM.createPortal(this.props.children, this.el);
