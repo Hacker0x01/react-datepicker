@@ -1,62 +1,64 @@
-import { isDate } from "date-fns/isDate";
-import { isValid as isValidDate } from "date-fns/isValid";
-import { format, longFormatters } from "date-fns/format";
-import { addMinutes } from "date-fns/addMinutes";
-import { addHours } from "date-fns/addHours";
 import { addDays } from "date-fns/addDays";
-import { addWeeks } from "date-fns/addWeeks";
+import { addHours } from "date-fns/addHours";
+import { addMinutes } from "date-fns/addMinutes";
 import { addMonths } from "date-fns/addMonths";
 import { addQuarters } from "date-fns/addQuarters";
+import { addSeconds } from "date-fns/addSeconds";
+import { addWeeks } from "date-fns/addWeeks";
 import { addYears } from "date-fns/addYears";
-import { subDays } from "date-fns/subDays";
-import { subWeeks } from "date-fns/subWeeks";
-import { subMonths } from "date-fns/subMonths";
-import { subQuarters } from "date-fns/subQuarters";
-import { subYears } from "date-fns/subYears";
-import { getSeconds } from "date-fns/getSeconds";
-import { getMinutes } from "date-fns/getMinutes";
-import { getHours } from "date-fns/getHours";
-import { getDay } from "date-fns/getDay";
-import { getDate } from "date-fns/getDate";
-import { getISOWeek } from "date-fns/getISOWeek";
-import { getMonth } from "date-fns/getMonth";
-import { getQuarter } from "date-fns/getQuarter";
-import { getYear } from "date-fns/getYear";
-import { getTime } from "date-fns/getTime";
-import { setSeconds } from "date-fns/setSeconds";
-import { setMinutes } from "date-fns/setMinutes";
-import { setHours } from "date-fns/setHours";
-import { setMonth } from "date-fns/setMonth";
-import { setQuarter } from "date-fns/setQuarter";
-import { setYear } from "date-fns/setYear";
-import { min } from "date-fns/min";
-import { max } from "date-fns/max";
-import { set } from "date-fns/set";
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { differenceInCalendarMonths } from "date-fns/differenceInCalendarMonths";
-import { differenceInCalendarYears } from "date-fns/differenceInCalendarYears";
 import { differenceInCalendarQuarters } from "date-fns/differenceInCalendarQuarters";
-import { startOfDay } from "date-fns/startOfDay";
-import { startOfWeek } from "date-fns/startOfWeek";
-import { startOfMonth } from "date-fns/startOfMonth";
-import { startOfQuarter } from "date-fns/startOfQuarter";
-import { startOfYear } from "date-fns/startOfYear";
+import { differenceInCalendarYears } from "date-fns/differenceInCalendarYears";
 import { endOfDay } from "date-fns/endOfDay";
-import { endOfWeek } from "date-fns/endOfWeek";
 import { endOfMonth } from "date-fns/endOfMonth";
+import { endOfWeek } from "date-fns/endOfWeek";
 import { endOfYear } from "date-fns/endOfYear";
+import { format, longFormatters } from "date-fns/format";
+import { getDate } from "date-fns/getDate";
+import { getDay } from "date-fns/getDay";
+import { getHours } from "date-fns/getHours";
+import { getISOWeek } from "date-fns/getISOWeek";
+import { getMinutes } from "date-fns/getMinutes";
+import { getMonth } from "date-fns/getMonth";
+import { getQuarter } from "date-fns/getQuarter";
+import { getSeconds } from "date-fns/getSeconds";
+import { getTime } from "date-fns/getTime";
+import { getYear } from "date-fns/getYear";
+import { isAfter } from "date-fns/isAfter";
+import { isBefore } from "date-fns/isBefore";
+import { isDate } from "date-fns/isDate";
 import { isEqual as dfIsEqual } from "date-fns/isEqual";
 import { isSameDay as dfIsSameDay } from "date-fns/isSameDay";
 import { isSameMonth as dfIsSameMonth } from "date-fns/isSameMonth";
-import { isSameYear as dfIsSameYear } from "date-fns/isSameYear";
 import { isSameQuarter as dfIsSameQuarter } from "date-fns/isSameQuarter";
-import { isAfter } from "date-fns/isAfter";
-import { isBefore } from "date-fns/isBefore";
+import { isSameYear as dfIsSameYear } from "date-fns/isSameYear";
+import { isValid as isValidDate } from "date-fns/isValid";
 import { isWithinInterval } from "date-fns/isWithinInterval";
-import { toDate } from "date-fns/toDate";
+import { max } from "date-fns/max";
+import { min } from "date-fns/min";
 import { parse } from "date-fns/parse";
 import { parseISO } from "date-fns/parseISO";
-import { type Locale as DateFnsLocale, addSeconds, Day } from "date-fns";
+import { set } from "date-fns/set";
+import { setHours } from "date-fns/setHours";
+import { setMinutes } from "date-fns/setMinutes";
+import { setMonth } from "date-fns/setMonth";
+import { setQuarter } from "date-fns/setQuarter";
+import { setSeconds } from "date-fns/setSeconds";
+import { setYear } from "date-fns/setYear";
+import { startOfDay } from "date-fns/startOfDay";
+import { startOfMonth } from "date-fns/startOfMonth";
+import { startOfQuarter } from "date-fns/startOfQuarter";
+import { startOfWeek } from "date-fns/startOfWeek";
+import { startOfYear } from "date-fns/startOfYear";
+import { subDays } from "date-fns/subDays";
+import { subMonths } from "date-fns/subMonths";
+import { subQuarters } from "date-fns/subQuarters";
+import { subWeeks } from "date-fns/subWeeks";
+import { subYears } from "date-fns/subYears";
+import { toDate } from "date-fns/toDate";
+
+import type { Day, Locale as DateFnsLocale } from "date-fns";
 
 export type DateNumberType = Day;
 interface LocaleObj
@@ -114,12 +116,12 @@ export function parseDate(
   minDate?: Date,
 ): Date | null {
   let parsedDate = null;
-  let localeObject =
+  const localeObject =
     getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
   let strictParsingValueMatch = true;
   if (Array.isArray(dateFormat)) {
     dateFormat.forEach((df) => {
-      let tryParseDate = parse(value, df, new Date(), {
+      const tryParseDate = parse(value, df, new Date(), {
         locale: localeObject,
         useAdditionalWeekYearTokens: true,
         useAdditionalDayOfYearTokens: true,
@@ -147,7 +149,7 @@ export function parseDate(
       isValid(parsedDate) &&
       value === formatDate(parsedDate, dateFormat, locale);
   } else if (!isValid(parsedDate)) {
-    dateFormat = (dateFormat.match(longFormattingTokensRegExp) ?? [])
+    const format = (dateFormat.match(longFormattingTokensRegExp) ?? [])
       .map(function (substring) {
         const firstCharacter = substring[0];
         if (firstCharacter === "p" || firstCharacter === "P") {
@@ -162,7 +164,7 @@ export function parseDate(
       .join("");
 
     if (value.length > 0) {
-      parsedDate = parse(value, dateFormat.slice(0, value.length), new Date(), {
+      parsedDate = parse(value, format.slice(0, value.length), new Date(), {
         useAdditionalWeekYearTokens: true,
         useAdditionalDayOfYearTokens: true,
       });
@@ -191,8 +193,7 @@ export function isValid(date: Date, minDate?: Date): boolean {
    * `should auto update calendar when the updated date text is after props.minDate`
    * and backward compatibility respectfully
    */
-  minDate = minDate ?? new Date("1/1/1800");
-  return isValidDate(date) && !isBefore(date, minDate);
+  return isValidDate(date) && !isBefore(date, minDate ?? new Date("1/1/1800"));
 }
 
 // ** Date Formatting **
@@ -293,7 +294,7 @@ export function safeMultipleDatesFormat(
     return "";
   }
 
-  let formattedFirstDate = dates[0] ? safeDateFormat(dates[0], props) : "";
+  const formattedFirstDate = dates[0] ? safeDateFormat(dates[0], props) : "";
   if (dates.length === 1) {
     return formattedFirstDate;
   }
@@ -385,7 +386,7 @@ export function getStartOfWeek(
   locale?: Locale,
   calendarStartDay?: Day,
 ): Date {
-  let localeObj = locale
+  const localeObj = locale
     ? getLocaleObject(locale)
     : getLocaleObject(getDefaultLocale());
   return startOfWeek(date, {
@@ -1203,7 +1204,7 @@ export function getEffectiveMinDate({
   includeDates,
 }: Pick<DateFilterOptions, "minDate" | "includeDates">): Date | undefined {
   if (includeDates && minDate) {
-    let minDates = includeDates.filter(
+    const minDates = includeDates.filter(
       (includeDate) => differenceInCalendarDays(includeDate, minDate) >= 0,
     );
     return min(minDates);
@@ -1219,7 +1220,7 @@ export function getEffectiveMaxDate({
   includeDates,
 }: Pick<DateFilterOptions, "maxDate" | "includeDates">): Date | undefined {
   if (includeDates && maxDate) {
-    let maxDates = includeDates.filter(
+    const maxDates = includeDates.filter(
       (includeDate) => differenceInCalendarDays(includeDate, maxDate) <= 0,
     );
     return max(maxDates);

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import MonthDropdownOptions from "./month_dropdown_options";
 import onClickOutside from "react-onclickoutside";
+
 import {
   getMonthShortInLocale,
   getMonthInLocale,
   type Locale,
 } from "./date_utils";
+import MonthDropdownOptions from "./month_dropdown_options";
 
 interface MonthDropdownOptionsProps
   extends React.ComponentPropsWithoutRef<typeof MonthDropdownOptions> {}

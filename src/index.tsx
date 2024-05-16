@@ -1,9 +1,12 @@
+import { clsx } from "clsx";
 import React, { Component, cloneElement } from "react";
+import onClickOutside, {
+  type WrapperInstance,
+  type AdditionalProps,
+} from "react-onclickoutside";
+
 import Calendar from "./calendar";
 import CalendarIcon from "./calendar_icon";
-import Portal from "./portal";
-import PopperComponent from "./popper_component";
-import { clsx } from "clsx";
 import {
   set,
   newDate,
@@ -51,12 +54,9 @@ import {
   type HighlightDate,
   type HolidayItem,
 } from "./date_utils";
+import PopperComponent from "./popper_component";
+import Portal from "./portal";
 import TabLoop from "./tab_loop";
-import onClickOutside, {
-  // eslint-disable-next-line unused-imports/no-unused-imports
-  type WrapperInstance,
-  type AdditionalProps,
-} from "react-onclickoutside";
 
 export { default as CalendarContainer } from "./calendar_container";
 

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import YearDropdownOptions from "./year_dropdown_options";
 import onClickOutside from "react-onclickoutside";
+
 import { getYear } from "./date_utils";
+import YearDropdownOptions from "./year_dropdown_options";
 
 interface YearDropdownOptionsProps
   extends React.ComponentPropsWithoutRef<typeof YearDropdownOptions> {}

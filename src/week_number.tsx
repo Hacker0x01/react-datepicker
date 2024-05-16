@@ -1,5 +1,6 @@
-import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
+import React, { Component, createRef } from "react";
+
 import { isSameDay } from "./date_utils";
 
 interface WeekNumberProps {
@@ -16,7 +17,6 @@ interface WeekNumberProps {
   shouldFocusDayInline?: boolean;
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   containerRef?: React.RefObject<HTMLDivElement>;
-  // eslint-disable-next-line react/no-unused-prop-types
   isInputFocused?: boolean;
 }
 

@@ -1,3 +1,9 @@
+import { addYears, setSeconds } from "date-fns";
+import { addQuarters } from "date-fns/addQuarters";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { setHours } from "date-fns/setHours";
+import { setMinutes } from "date-fns/setMinutes";
+
 import {
   newDate,
   addHours,
@@ -43,13 +49,8 @@ import {
   startOfMinute,
   isDateBefore,
   getMidnightDate,
+  registerLocale,
 } from "../src/date_utils";
-import { setMinutes } from "date-fns/setMinutes";
-import { setHours } from "date-fns/setHours";
-import { addQuarters } from "date-fns/addQuarters";
-import { ptBR } from "date-fns/locale/pt-BR";
-import { registerLocale } from "../src/date_utils";
-import { addYears, setSeconds } from "date-fns";
 
 registerLocale("pt-BR", ptBR);
 
@@ -132,7 +133,7 @@ describe("date_utils", () => {
       expect(isSameMonth(null, newDate())).toBe(false);
     });
 
-    it("should return false for non-equal months ", () => {
+    it("should return false for non-equal months", () => {
       expect(isSameMonth(newDate("2016-02-10"), newDate("2016-03-10"))).toBe(
         false,
       );
@@ -155,7 +156,7 @@ describe("date_utils", () => {
       expect(isSameQuarter(null, newDate())).toBe(false);
     });
 
-    it("should return false for non-equal quarters ", () => {
+    it("should return false for non-equal quarters", () => {
       expect(isSameQuarter(newDate("2016-02-10"), newDate("2016-04-10"))).toBe(
         false,
       );
@@ -178,7 +179,7 @@ describe("date_utils", () => {
       expect(isSameYear(null, newDate())).toBe(false);
     });
 
-    it("should return false for non-equal years ", () => {
+    it("should return false for non-equal years", () => {
       expect(isSameYear(newDate("2016-02-10"), newDate("2015-02-10"))).toBe(
         false,
       );
@@ -302,6 +303,7 @@ describe("date_utils", () => {
       expect(isDayDisabled(day, { includeDates })).toBe(true);
     });
 
+    // eslint-disable-next-line jest/no-identical-title
     it("should be disabled if not in included dates", () => {
       const day = newDate();
       expect(
@@ -403,7 +405,7 @@ describe("date_utils", () => {
       const excludedDay = newDate();
       const currentMonth = excludedDay.getMonth();
       excludedDay.setMonth(currentMonth === 11 ? 0 : currentMonth + 1);
-      expect(isDayExcluded(day, { excludeDates: [] }));
+      expect(isDayExcluded(day, { excludeDates: [] })).toBeFalsy();
     });
   });
 
@@ -1249,7 +1251,7 @@ describe("date_utils", () => {
     it("should return empty if invalid date is provided", () => {
       const holidayDates = [
         {
-          date: "invalid date" as any, // cast to any for the sake of testing
+          date: "invalid date" as unknown as Date, // cast to any for the sake of testing
           holidayName: "Fake holiday",
         },
       ];
@@ -1318,7 +1320,7 @@ describe("date_utils", () => {
     });
 
     it("should throw an error when an invalid date is provided", () => {
-      const invalidDate = "not a date" as any; // cast to any for the sake of testing
+      const invalidDate = "not a date" as unknown as Date; // cast to any for the sake of testing
 
       expect(() => {
         getMidnightDate(invalidDate);
@@ -1347,7 +1349,7 @@ describe("date_utils", () => {
 
     it("should throw an error when either date or dateToCompare is not a valid date", () => {
       expect(() => {
-        const invalidDate = "not a date" as any; // cast to any for the sake of testing
+        const invalidDate = "not a date" as unknown as Date; // cast to any for the sake of testing
         const validDate = new Date(2023, 0, 1); // January 1, 2023
 
         isDateBefore(invalidDate, validDate);

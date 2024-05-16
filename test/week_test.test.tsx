@@ -1,7 +1,8 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import Week from "../src/week";
+import React from "react";
+
 import * as utils from "../src/date_utils";
+import Week from "../src/week";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {
@@ -61,10 +62,12 @@ describe("Week", () => {
     const day = container.querySelector(".react-datepicker__day");
     if (day && dayClicked) {
       fireEvent.click(day);
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(day.getAttribute("aria-label")).toEqual(
         `Choose ${utils.formatDate(dayClicked, "PPPP")}`,
       );
     } else {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(day).not.toBeNull();
     }
   });
@@ -219,10 +222,11 @@ describe("Week", () => {
     const day = container.querySelector(".react-datepicker__day");
     if (day) {
       fireEvent.pointerEnter(day);
-
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
         utils.getStartOfWeek(weekStart),
       );
+      // eslint-disable-next-line jest/no-conditional-expect
     } else expect(day).not.toBeNull();
   });
 

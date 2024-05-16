@@ -1,6 +1,6 @@
-import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
-import Week from "./week";
+import React, { Component, createRef } from "react";
+
 import {
   addDays,
   addMonths,
@@ -31,6 +31,7 @@ import {
   subMonths,
   subQuarters,
 } from "./date_utils";
+import Week from "./week";
 
 const FIXED_HEIGHT_STANDARD_WEEK_COUNT = 6;
 
@@ -401,7 +402,7 @@ export default class Month extends Component<MonthProps> {
 
   renderWeeks = () => {
     const weeks = [];
-    let isFixedHeight = this.props.fixedHeight;
+    const isFixedHeight = this.props.fixedHeight;
 
     let i = 0;
     let breakAfterNextPush = false;
@@ -437,6 +438,7 @@ export default class Month extends Component<MonthProps> {
       ? isPreSelected(this.props.preSelection)
       : undefined;
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       weeks.push(
         <Week
