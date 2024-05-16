@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import { fireEvent, render } from "@testing-library/react";
 
 const DatePickerWithState = (props) => {

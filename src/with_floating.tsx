@@ -8,6 +8,7 @@ import {
   Middleware,
   Placement,
   type UseFloatingOptions,
+  // eslint-disable-next-line unused-imports/no-unused-imports
   type ReferenceType,
 } from "@floating-ui/react";
 

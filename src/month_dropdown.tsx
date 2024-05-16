@@ -12,10 +12,14 @@ interface MonthDropdownOptionsProps
 
 const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions);
 
-interface MonthDropdownProps extends Pick<MonthDropdownOptionsProps, "month"> {
+interface MonthDropdownProps
+  extends Omit<
+    MonthDropdownOptionsProps,
+    "monthNames" | "onChange" | "onCancel"
+  > {
   dropdownMode: "scroll" | "select";
   locale?: Locale;
-  onChange: (month: number | string) => void;
+  onChange: (month: number) => void;
   useShortMonthInDropdown?: boolean;
 }
 
@@ -44,7 +48,7 @@ export default class MonthDropdown extends Component<
     <select
       value={this.props.month}
       className="react-datepicker__month-select"
-      onChange={(e) => this.onChange(e.target.value)}
+      onChange={(e) => this.onChange(parseInt(e.target.value))}
     >
       {this.renderSelectOptions(monthNames)}
     </select>
@@ -67,7 +71,7 @@ export default class MonthDropdown extends Component<
   renderDropdown = (monthNames: string[]): JSX.Element => (
     <WrappedMonthDropdownOptions
       key="dropdown"
-      month={this.props.month}
+      {...this.props}
       monthNames={monthNames}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
@@ -83,7 +87,7 @@ export default class MonthDropdown extends Component<
     return result;
   };
 
-  onChange = (month: number | string): void => {
+  onChange = (month: number): void => {
     this.toggleDropdown();
     if (month !== this.props.month) {
       this.props.onChange(month);

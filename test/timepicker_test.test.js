@@ -1,5 +1,5 @@
 import React from "react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import { newDate, formatDate } from "../src/date_utils.ts";
 import { getKey } from "./test_utils.js";
 import { render, fireEvent, waitFor } from "@testing-library/react";

@@ -7,8 +7,8 @@ interface WeekNumberProps {
   date: Date;
   onClick: React.MouseEventHandler<HTMLDivElement>;
   ariaLabelPrefix?: string;
-  selected?: Date;
-  preSelection?: Date;
+  selected?: Date | null;
+  preSelection?: Date | null;
   showWeekPicker?: boolean;
   showWeekNumber?: boolean;
   disabledKeyboardNavigation?: boolean;
@@ -16,6 +16,7 @@ interface WeekNumberProps {
   shouldFocusDayInline?: boolean;
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   containerRef?: React.RefObject<HTMLDivElement>;
+  // eslint-disable-next-line react/no-unused-prop-types
   isInputFocused?: boolean;
 }
 

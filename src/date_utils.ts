@@ -31,6 +31,7 @@ import { setQuarter } from "date-fns/setQuarter";
 import { setYear } from "date-fns/setYear";
 import { min } from "date-fns/min";
 import { max } from "date-fns/max";
+import { set } from "date-fns/set";
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { differenceInCalendarMonths } from "date-fns/differenceInCalendarMonths";
 import { differenceInCalendarYears } from "date-fns/differenceInCalendarYears";
@@ -108,8 +109,8 @@ export function newDate(value?: string | Date | number | null): Date {
 export function parseDate(
   value: string,
   dateFormat: string | string[],
-  locale?: Locale,
-  strictParsing?: boolean,
+  locale: Locale | undefined,
+  strictParsing: boolean,
   minDate?: Date,
 ): Date | null {
   let parsedDate = null;
@@ -177,7 +178,7 @@ export function parseDate(
 
 // ** Date "Reflection" **
 
-export { isDate };
+export { isDate, set };
 
 /**
  * Checks if a given date is valid and not before the minimum date.
@@ -243,10 +244,8 @@ export function formatDate(
  * @returns - The formatted date or an empty string.
  */
 export function safeDateFormat(
-  date?: Date,
-  { dateFormat, locale }: { dateFormat: string | string[]; locale?: Locale } = {
-    dateFormat: "yyyy-MM-dd",
-  },
+  date: Date | null | undefined,
+  { dateFormat, locale }: { dateFormat: string | string[]; locale?: Locale },
 ): string {
   const formatStr = (
     Array.isArray(dateFormat) && dateFormat.length > 0
@@ -265,9 +264,9 @@ export function safeDateFormat(
  * @returns - The formatted date range or an empty string.
  */
 export function safeDateRangeFormat(
-  startDate?: Date,
-  endDate?: Date,
-  props?: { dateFormat: string | string[]; locale: Locale },
+  startDate: Date | null | undefined,
+  endDate: Date | null | undefined,
+  props: { dateFormat: string | string[]; locale?: Locale },
 ): string {
   if (!startDate) {
     return "";
@@ -288,7 +287,7 @@ export function safeDateRangeFormat(
  */
 export function safeMultipleDatesFormat(
   dates: Date[],
-  props: { dateFormat: string | string[]; locale: Locale },
+  props: { dateFormat: string | string[]; locale?: Locale },
 ): string {
   if (!dates?.length) {
     return "";
@@ -436,6 +435,16 @@ export function getStartOfToday(): Date {
 
 // *** End of ***
 /**
+ * Gets the end of the day for a given date.
+ *
+ * @param date - The date.
+ * @returns - The end of the day.
+ */
+export function getEndOfDay(date: Date): Date {
+  return endOfDay(date);
+}
+
+/**
  * Gets the end of the week for a given date.
  *
  * @param date - The date.
@@ -544,7 +553,10 @@ export function isSameDay(date1?: Date | null, date2?: Date | null): boolean {
  * @param date2 - The second date.
  * @returns - True if the dates are equal, false otherwise.
  */
-export function isEqual(date1: Date | null, date2: Date | null): boolean {
+export function isEqual(
+  date1: Date | null | undefined,
+  date2: Date | null | undefined,
+): boolean {
   if (date1 && date2) {
     return dfIsEqual(date1, date2);
   } else {
@@ -727,14 +739,15 @@ export function getQuarterShortInLocale(
 
 // ** Utils for some components **
 
-export interface DayDisabledOptions {
+export interface DateFilterOptions {
   minDate?: Date;
   maxDate?: Date;
-  excludeDates?: { date?: Date; message?: string }[] | Date[];
+  excludeDates?: { date: Date; message?: string }[] | Date[];
   excludeDateIntervals?: { start: Date; end: Date }[];
   includeDates?: Date[];
   includeDateIntervals?: { start: Date; end: Date }[];
   filterDate?: (date: Date) => boolean;
+  yearItemNumber?: number;
 }
 
 /**
@@ -754,7 +767,7 @@ export function isDayDisabled(
     includeDates,
     includeDateIntervals,
     filterDate,
-  }: DayDisabledOptions = {},
+  }: DateFilterOptions = {},
 ): boolean {
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
@@ -781,11 +794,6 @@ export function isDayDisabled(
   );
 }
 
-interface DayExcludedOptions {
-  excludeDates?: { date?: Date }[] | Date[];
-  excludeDateIntervals?: { start: Date; end: Date }[];
-}
-
 /**
  * Checks if a day is excluded.
  *
@@ -795,7 +803,10 @@ interface DayExcludedOptions {
  */
 export function isDayExcluded(
   day: Date,
-  { excludeDates, excludeDateIntervals }: DayExcludedOptions = {},
+  {
+    excludeDates,
+    excludeDateIntervals,
+  }: Pick<DateFilterOptions, "excludeDates" | "excludeDateIntervals"> = {},
 ): boolean {
   if (excludeDateIntervals && excludeDateIntervals.length > 0) {
     return excludeDateIntervals.some(({ start, end }) =>
@@ -815,14 +826,6 @@ export function isDayExcluded(
   );
 }
 
-interface MonthDisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  excludeDates?: Date[];
-  includeDates?: Date[];
-  filterDate?: (date: Date) => boolean;
-}
-
 export function isMonthDisabled(
   month: Date,
   {
@@ -831,14 +834,22 @@ export function isMonthDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: MonthDisabledOptions = {},
+  }: Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+  > = {},
 ): boolean {
   return (
     isOutOfBounds(month, {
       minDate: minDate ? startOfMonth(minDate) : undefined,
       maxDate: maxDate ? endOfMonth(maxDate) : undefined,
     }) ||
-    excludeDates?.some((excludeDate) => isSameMonth(month, excludeDate)) ||
+    excludeDates?.some((excludeDate) =>
+      isSameMonth(
+        month,
+        excludeDate instanceof Date ? excludeDate : excludeDate.date,
+      ),
+    ) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameMonth(month, includeDate))) ||
     (filterDate && !filterDate(newDate(month))) ||
@@ -869,14 +880,6 @@ export function isMonthInRange(
   return false;
 }
 
-interface QuarterDisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  excludeDates?: Date[];
-  includeDates?: Date[];
-  filterDate?: (date: Date) => boolean;
-}
-
 export function isQuarterDisabled(
   quarter: Date,
   {
@@ -885,11 +888,19 @@ export function isQuarterDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: QuarterDisabledOptions = {},
+  }: Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+  > = {},
 ): boolean {
   return (
     isOutOfBounds(quarter, { minDate, maxDate }) ||
-    excludeDates?.some((excludeDate) => isSameQuarter(quarter, excludeDate)) ||
+    excludeDates?.some((excludeDate) =>
+      isSameQuarter(
+        quarter,
+        excludeDate instanceof Date ? excludeDate : excludeDate.date,
+      ),
+    ) ||
     (includeDates &&
       !includeDates.some((includeDate) =>
         isSameQuarter(quarter, includeDate),
@@ -899,21 +910,17 @@ export function isQuarterDisabled(
   );
 }
 
-export function isYearInRange(year: number, start?: Date, end?: Date): boolean {
+export function isYearInRange(
+  year: number,
+  start?: Date | null,
+  end?: Date | null,
+): boolean {
   if (!start || !end) return false;
   if (!isValidDate(start) || !isValidDate(end)) return false;
   const startYear = getYear(start);
   const endYear = getYear(end);
 
   return startYear <= year && endYear >= year;
-}
-
-interface YearDisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  excludeDates?: Date[];
-  includeDates?: Date[];
-  filterDate?: (date: Date) => boolean;
 }
 
 export function isYearDisabled(
@@ -924,7 +931,10 @@ export function isYearDisabled(
     excludeDates,
     includeDates,
     filterDate,
-  }: YearDisabledOptions = {},
+  }: Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+  > = {},
 ): boolean {
   const date = new Date(year, 0, 1);
   return (
@@ -932,7 +942,12 @@ export function isYearDisabled(
       minDate: minDate ? startOfYear(minDate) : undefined,
       maxDate: maxDate ? endOfYear(maxDate) : undefined,
     }) ||
-    excludeDates?.some((excludeDate) => isSameYear(date, excludeDate)) ||
+    excludeDates?.some((excludeDate) =>
+      isSameYear(
+        date,
+        excludeDate instanceof Date ? excludeDate : excludeDate.date,
+      ),
+    ) ||
     (includeDates &&
       !includeDates.some((includeDate) => isSameYear(date, includeDate))) ||
     (filterDate && !filterDate(newDate(date))) ||
@@ -963,14 +978,9 @@ export function isQuarterInRange(
   return false;
 }
 
-interface BoundsOptions {
-  minDate?: Date;
-  maxDate?: Date;
-}
-
 export function isOutOfBounds(
   day: Date,
-  { minDate, maxDate }: BoundsOptions = {},
+  { minDate, maxDate }: Pick<DateFilterOptions, "minDate" | "maxDate"> = {},
 ): boolean {
   return (
     ((minDate && differenceInCalendarDays(day, minDate) < 0) ||
@@ -988,7 +998,9 @@ export function isTimeInList(time: Date, times: Date[]): boolean {
   );
 }
 
-interface TimeDisabledOptions {
+export interface TimeFilterOptions {
+  minTime?: Date;
+  maxTime?: Date;
   excludeTimes?: Date[];
   includeTimes?: Date[];
   filterTime?: (time: Date) => boolean;
@@ -996,7 +1008,14 @@ interface TimeDisabledOptions {
 
 export function isTimeDisabled(
   time: Date,
-  { excludeTimes, includeTimes, filterTime }: TimeDisabledOptions = {},
+  {
+    excludeTimes,
+    includeTimes,
+    filterTime,
+  }: Pick<
+    TimeFilterOptions,
+    "excludeTimes" | "includeTimes" | "filterTime"
+  > = {},
 ): boolean {
   return (
     (excludeTimes && isTimeInList(time, excludeTimes)) ||
@@ -1006,14 +1025,9 @@ export function isTimeDisabled(
   );
 }
 
-interface TimeDisabledOptions {
-  minTime?: Date;
-  maxTime?: Date;
-}
-
 export function isTimeInDisabledRange(
   time: Date,
-  { minTime, maxTime }: TimeDisabledOptions,
+  { minTime, maxTime }: Pick<TimeFilterOptions, "minTime" | "maxTime">,
 ): boolean {
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
@@ -1042,15 +1056,12 @@ export function isTimeInDisabledRange(
   return valid;
 }
 
-interface DisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  includeDates?: Date[];
-}
-
 export function monthDisabledBefore(
   day: Date,
-  { minDate, includeDates }: DisabledOptions = {},
+  {
+    minDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "minDate" | "includeDates"> = {},
 ): boolean {
   const previousMonth = subMonths(day, 1);
   return (
@@ -1066,7 +1077,10 @@ export function monthDisabledBefore(
 
 export function monthDisabledAfter(
   day: Date,
-  { maxDate, includeDates }: DisabledOptions = {},
+  {
+    maxDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "maxDate" | "includeDates"> = {},
 ): boolean {
   const nextMonth = addMonths(day, 1);
   return (
@@ -1081,7 +1095,10 @@ export function monthDisabledAfter(
 
 export function quarterDisabledBefore(
   date: Date,
-  { minDate, includeDates }: DisabledOptions = {},
+  {
+    minDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "minDate" | "includeDates"> = {},
 ): boolean {
   const firstDateOfYear = startOfYear(date);
   const previousQuarter = subQuarters(firstDateOfYear, 1);
@@ -1099,7 +1116,10 @@ export function quarterDisabledBefore(
 
 export function quarterDisabledAfter(
   date: Date,
-  { maxDate, includeDates }: DisabledOptions = {},
+  {
+    maxDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "maxDate" | "includeDates"> = {},
 ): boolean {
   const lastDateOfYear = endOfYear(date);
   const nextQuarter = addQuarters(lastDateOfYear, 1);
@@ -1115,16 +1135,12 @@ export function quarterDisabledAfter(
   );
 }
 
-interface YearDisabledOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  includeDates?: Date[];
-  yearItemNumber?: number;
-}
-
 export function yearDisabledBefore(
   day: Date,
-  { minDate, includeDates }: YearDisabledOptions = {},
+  {
+    minDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "minDate" | "includeDates"> = {},
 ): boolean {
   const previousYear = subYears(day, 1);
   return (
@@ -1143,7 +1159,7 @@ export function yearsDisabledBefore(
   {
     minDate,
     yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER,
-  }: YearDisabledOptions = {},
+  }: Pick<DateFilterOptions, "minDate" | "yearItemNumber"> = {},
 ): boolean {
   const previousYear = getStartOfYear(subYears(day, yearItemNumber));
   const { endPeriod } = getYearsPeriod(previousYear, yearItemNumber);
@@ -1153,7 +1169,10 @@ export function yearsDisabledBefore(
 
 export function yearDisabledAfter(
   day: Date,
-  { maxDate, includeDates }: YearDisabledOptions = {},
+  {
+    maxDate,
+    includeDates,
+  }: Pick<DateFilterOptions, "maxDate" | "includeDates"> = {},
 ): boolean {
   const nextYear = addYears(day, 1);
   return (
@@ -1166,17 +1185,12 @@ export function yearDisabledAfter(
   );
 }
 
-interface YearsDisabledAfterOptions {
-  maxDate?: Date;
-  yearItemNumber?: number;
-}
-
 export function yearsDisabledAfter(
   day: Date,
   {
     maxDate,
     yearItemNumber = DEFAULT_YEAR_ITEM_NUMBER,
-  }: YearsDisabledAfterOptions = {},
+  }: Pick<DateFilterOptions, "maxDate" | "yearItemNumber"> = {},
 ): boolean {
   const nextYear = addYears(day, yearItemNumber);
   const { startPeriod } = getYearsPeriod(nextYear, yearItemNumber);
@@ -1184,16 +1198,10 @@ export function yearsDisabledAfter(
   return (maxDateYear && maxDateYear < startPeriod) || false;
 }
 
-interface EffectiveDateOptions {
-  minDate?: Date;
-  maxDate?: Date;
-  includeDates?: Date[];
-}
-
 export function getEffectiveMinDate({
   minDate,
   includeDates,
-}: EffectiveDateOptions): Date | undefined {
+}: Pick<DateFilterOptions, "minDate" | "includeDates">): Date | undefined {
   if (includeDates && minDate) {
     let minDates = includeDates.filter(
       (includeDate) => differenceInCalendarDays(includeDate, minDate) >= 0,
@@ -1209,7 +1217,7 @@ export function getEffectiveMinDate({
 export function getEffectiveMaxDate({
   maxDate,
   includeDates,
-}: EffectiveDateOptions): Date | undefined {
+}: Pick<DateFilterOptions, "maxDate" | "includeDates">): Date | undefined {
   if (includeDates && maxDate) {
     let maxDates = includeDates.filter(
       (includeDate) => differenceInCalendarDays(includeDate, maxDate) <= 0,
@@ -1222,7 +1230,7 @@ export function getEffectiveMaxDate({
   }
 }
 
-interface HighlightDate {
+export interface HighlightDate {
   [className: string]: Date[];
 }
 
@@ -1282,7 +1290,7 @@ export function arraysAreEqual<T>(array1: T[], array2: T[]): boolean {
   return array1.every((value, index) => value === array2[index]);
 }
 
-interface Holiday {
+export interface HolidayItem {
   date: Date;
   holidayName: string;
 }
@@ -1301,7 +1309,7 @@ export type HolidaysMap = Map<string, ClassNamesObj>;
  * @returns Map containing date as key and array of className and holiday name as value
  */
 export function getHolidaysMap(
-  holidayDates: Holiday[] = [],
+  holidayDates: HolidayItem[] = [],
   defaultClassName: string = "react-datepicker__day--holidays",
 ): HolidaysMap {
   const dateClasses = new Map<string, ClassNamesObj>();

@@ -5,7 +5,7 @@
 import React from "react";
 import Calendar from "../src/calendar";
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import * as utils from "../src/date_utils";
 import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";
@@ -463,9 +463,9 @@ describe("Calendar", () => {
         nextYearButtonDisabled: expect.any(Boolean),
         prevYearButtonDisabled: expect.any(Boolean),
         isRenderAriaLiveMessage: expect.any(Boolean),
-        monthContainer: null,
+        monthContainer: undefined,
         monthDate: expect.any(Date),
-        selectingDate: null,
+        selectingDate: undefined,
       };
 
       expect(renderCustomHeader).toHaveBeenCalledWith(match);
@@ -1185,7 +1185,11 @@ describe("Calendar", () => {
       const select = calendar
         .querySelector(".react-datepicker__month-dropdown-container")
         .querySelector("select");
-      fireEvent.change(select);
+      fireEvent.change(select, {
+        target: {
+          value: Array.from(select.querySelectorAll("option")).at(-2).value,
+        },
+      });
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
@@ -1214,7 +1218,11 @@ describe("Calendar", () => {
       const select = calendar
         .querySelector(".react-datepicker__year-dropdown-container")
         .querySelector("select");
-      fireEvent.change(select);
+      fireEvent.change(select, {
+        target: {
+          value: Array.from(select.querySelectorAll("option")).at(-2).value,
+        },
+      });
 
       expect(onYearChangeSpy).toHaveBeenCalled();
     });

@@ -10,23 +10,9 @@
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
-  "files": [
-    "*.md",
-    "dist",
-    "lib",
-    "es",
-    "src/stylesheets"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "keywords": [
-    "react",
-    "datepicker",
-    "calendar",
-    "date",
-    "react-component"
-  ],
+  "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
+  "sideEffects": ["**/*.css"],
+  "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
@@ -93,7 +79,7 @@
     "react-onclickoutside": "^6.13.0"
   },
   "scripts": {
-    "eslint": "eslint --ext .js,.jsx src test",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx src test",
     "precommit": "lint-staged --allow-empty",
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
     "lint": "yarn run eslint && yarn run sass-lint",
@@ -117,10 +103,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,scss,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
   },
   "packageManager": "yarn@1.22.17"
 }

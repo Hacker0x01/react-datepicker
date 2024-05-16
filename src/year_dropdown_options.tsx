@@ -47,8 +47,6 @@ export default class YearDropdownOptions extends Component<
   YearDropdownOptionsProps,
   YearDropdownOptionsState
 > {
-  dropdownRef: React.RefObject<HTMLDivElement>;
-
   constructor(props: YearDropdownOptionsProps) {
     super(props);
     const { yearDropdownItemNumber, scrollableYearDropdown } = props;
@@ -86,6 +84,8 @@ export default class YearDropdownOptions extends Component<
           : (dropdownCurrent.scrollHeight - dropdownCurrent.clientHeight) / 2;
     }
   }
+
+  dropdownRef: React.RefObject<HTMLDivElement>;
 
   renderOptions = (): JSX.Element[] => {
     const selectedYear = this.props.year;

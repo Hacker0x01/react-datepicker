@@ -10,6 +10,7 @@ import {
   isSameYear,
   newDate,
   getTime,
+  type Locale,
 } from "./date_utils";
 
 interface MonthYearDropdownOptionsProps
@@ -20,17 +21,10 @@ const WrappedMonthYearDropdownOptions = onClickOutside(
 );
 
 interface MonthYearDropdownProps
-  extends Pick<
-    MonthYearDropdownOptionsProps,
-    | "date"
-    | "dateFormat"
-    | "minDate"
-    | "maxDate"
-    | "scrollableMonthYearDropdown"
-    | "locale"
-  > {
+  extends Omit<MonthYearDropdownOptionsProps, "onChange" | "onCancel"> {
   dropdownMode: "scroll" | "select";
   onChange: (monthYear: Date) => void;
+  locale?: Locale;
 }
 
 interface MonthYearDropdownState {
@@ -64,8 +58,8 @@ export default class MonthYearDropdown extends Component<
     return options;
   };
 
-  onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    this.onChange(e.target.value);
+  onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    this.onChange(parseInt(event.target.value));
   };
 
   renderSelectMode = (): JSX.Element => (
@@ -103,14 +97,9 @@ export default class MonthYearDropdown extends Component<
   renderDropdown = (): JSX.Element => (
     <WrappedMonthYearDropdownOptions
       key="dropdown"
-      date={this.props.date}
-      dateFormat={this.props.dateFormat}
+      {...this.props}
       onChange={this.onChange}
       onCancel={this.toggleDropdown}
-      minDate={this.props.minDate}
-      maxDate={this.props.maxDate}
-      scrollableMonthYearDropdown={this.props.scrollableMonthYearDropdown}
-      locale={this.props.locale}
     />
   );
 
@@ -123,14 +112,10 @@ export default class MonthYearDropdown extends Component<
     return result;
   };
 
-  onChange = (monthYearPoint: number | string): void => {
+  onChange = (monthYearPoint: number): void => {
     this.toggleDropdown();
 
-    const changedDate = newDate(
-      typeof monthYearPoint === "string"
-        ? parseInt(monthYearPoint)
-        : monthYearPoint,
-    );
+    const changedDate = newDate(monthYearPoint);
 
     if (
       isSameYear(this.props.date, changedDate) &&

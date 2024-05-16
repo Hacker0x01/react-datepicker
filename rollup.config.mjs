@@ -57,7 +57,7 @@ const migrateRollup2to3OutputOptions = {
 
 /** @type {import('rollup').RollupOptions} */
 const config = {
-  input: "src/index.jsx",
+  input: "src/index.tsx",
   output: [
     {
       file: pkg.browser,

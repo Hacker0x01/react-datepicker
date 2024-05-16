@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import DatePicker from "../src/index.jsx";
+import DatePicker from "../src/index";
 import TimeComponent from "../src/time";
 
 describe("DatePicker", () => {

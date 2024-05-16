@@ -134,7 +134,7 @@ describe("YearDropdown", () => {
         ".react-datepicker__year-select",
       );
       fireEvent.change(select, { target: { value: 2014 } });
-      expect(lastOnChangeValue).toEqual("2014");
+      expect(lastOnChangeValue).toEqual(2014);
     });
 
     it("calls the supplied onChange function when a different year is clicked", () => {

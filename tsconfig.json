@@ -10,7 +10,7 @@
     "noUncheckedIndexedAccess": true,
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["ES2021", "dom"],
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -20,7 +20,8 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "baseUrl": "src/"
+    "baseUrl": "src/",
+    "typeRoots": ["./src/@types"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
