@@ -629,7 +629,7 @@ export default class Month extends Component<MonthProps> {
       // preventDefault on tab event blocks focus change
       event.preventDefault();
     }
-    if (!disabledKeyboardNavigation) {
+    if (!disabledKeyboardNavigation && preSelection) {
       const monthColumnsLayout = getMonthColumnsLayout(
         showFourColumnMonthYearPicker,
         showTwoColumnMonthYearPicker,
