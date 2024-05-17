@@ -509,13 +509,108 @@ export default class Month extends Component<MonthProps> {
   };
 
   handleMonthNavigation = (newMonth: number, newDate: Date) => {
-    if (this.isDisabled(newDate) || this.isExcluded(newDate)) {
-      return;
-    }
-
     this.props.setPreSelection?.(newDate);
 
     this.MONTH_REFS[newMonth]?.current?.focus();
+  };
+
+  triggerKeyboardNavigation = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    eventKey: string,
+    month: number,
+    preSelection: Date | undefined,
+    monthColumnsLayout: string,
+  ) => {
+    if (!preSelection) return;
+    const { selected, setPreSelection, minDate, maxDate } = this.props;
+
+    const verticalOffset = this.getVerticalOffset(monthColumnsLayout);
+
+    const monthsGrid = MONTH_COLUMNS[monthColumnsLayout]?.grid;
+
+    const getNewMonth = (eventKey: string, month: number): number => {
+      const months: {
+        [key: string]: number;
+      } = {
+        ArrowRight:
+          month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+        ArrowLeft:
+          month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+        ArrowUp: monthsGrid?.[0]?.includes(month)
+          ? month + 12 - verticalOffset
+          : month - verticalOffset,
+        ArrowDown: monthsGrid?.[monthsGrid.length - 1]?.includes(month)
+          ? month - 12 + verticalOffset
+          : month + verticalOffset,
+      };
+      return months[eventKey] as number;
+    };
+
+    const getNewPreSelection = (eventKey: string, selectedDate: Date): Date => {
+      const obj: {
+        [key: string]: Date;
+      } = {
+        ArrowRight: addMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
+        ArrowLeft: subMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
+        ArrowUp: subMonths(selectedDate, verticalOffset),
+        ArrowDown: addMonths(selectedDate, verticalOffset),
+      };
+
+      return obj[eventKey] as Date;
+    };
+
+    if (minDate) {
+      if (
+        getNewPreSelection(eventKey, preSelection) <
+        getNewPreSelection(eventKey, minDate)
+      ) {
+        return;
+      }
+    }
+
+    if (maxDate) {
+      if (
+        getNewPreSelection(eventKey, preSelection) >
+        getNewPreSelection(eventKey, maxDate)
+      ) {
+        return;
+      }
+    }
+
+    if (
+      this.isDisabled(getNewPreSelection(eventKey, preSelection)) ||
+      this.isExcluded(getNewPreSelection(eventKey, preSelection))
+    ) {
+      this.triggerKeyboardNavigation(
+        event,
+        eventKey,
+        getNewMonth(eventKey, month),
+        getNewPreSelection(eventKey, preSelection),
+        monthColumnsLayout,
+      );
+    } else {
+      switch (eventKey) {
+        case "Enter":
+          if (!this.isMonthDisabled(month)) {
+            this.onMonthClick(event, month);
+            setPreSelection?.(selected);
+          }
+          break;
+        case "ArrowRight":
+        case "ArrowLeft":
+        case "ArrowUp":
+        case "ArrowDown":
+          this.handleMonthNavigation(
+            getNewMonth(eventKey, month),
+            getNewPreSelection(eventKey, preSelection),
+          );
+          break;
+      }
+    }
+  };
+
+  getVerticalOffset = (monthColumnsLayout: string) => {
+    return MONTH_COLUMNS[monthColumnsLayout]?.verticalNavigationOffset ?? 0;
   };
 
   onMonthKeyDown = (
@@ -523,13 +618,11 @@ export default class Month extends Component<MonthProps> {
     month: number,
   ) => {
     const {
-      selected,
-      preSelection,
       disabledKeyboardNavigation,
       showTwoColumnMonthYearPicker,
       showFourColumnMonthYearPicker,
-      setPreSelection,
       handleOnMonthKeyDown,
+      preSelection,
     } = this.props;
     const eventKey = event.key;
     if (eventKey !== "Tab") {
@@ -542,61 +635,13 @@ export default class Month extends Component<MonthProps> {
         showTwoColumnMonthYearPicker,
       );
 
-      const verticalOffset =
-        MONTH_COLUMNS[monthColumnsLayout]?.verticalNavigationOffset;
-
-      const monthsGrid = MONTH_COLUMNS[monthColumnsLayout]?.grid;
-
-      switch (eventKey) {
-        case "Enter":
-          if (!this.isMonthDisabled(month)) {
-            this.onMonthClick(event, month);
-            setPreSelection?.(selected);
-          }
-          break;
-        case "ArrowRight":
-          if (!preSelection) {
-            break;
-          }
-          this.handleMonthNavigation(
-            month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET,
-            addMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
-          );
-          break;
-        case "ArrowLeft":
-          if (!preSelection) {
-            break;
-          }
-          this.handleMonthNavigation(
-            month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET,
-            subMonths(preSelection, MONTH_NAVIGATION_HORIZONTAL_OFFSET),
-          );
-          break;
-        case "ArrowUp":
-          if (!preSelection) {
-            break;
-          }
-          this.handleMonthNavigation(
-            // Check if month on the first row
-            monthsGrid?.[0]?.includes(month)
-              ? month + 12 - (verticalOffset ?? 0)
-              : month - (verticalOffset ?? 0),
-            subMonths(preSelection, verticalOffset ?? 0),
-          );
-          break;
-        case "ArrowDown":
-          if (!preSelection) {
-            break;
-          }
-          this.handleMonthNavigation(
-            // Check if month on the last row
-            monthsGrid?.[monthsGrid.length - 1]?.includes(month)
-              ? month - 12 + (verticalOffset ?? 0)
-              : month + (verticalOffset ?? 0),
-            addMonths(preSelection, verticalOffset ?? 0),
-          );
-          break;
-      }
+      this.triggerKeyboardNavigation(
+        event,
+        eventKey,
+        month,
+        preSelection,
+        monthColumnsLayout,
+      );
     }
 
     handleOnMonthKeyDown && handleOnMonthKeyDown(event);
