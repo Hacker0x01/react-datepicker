@@ -559,22 +559,20 @@ export default class Month extends Component<MonthProps> {
       return obj[eventKey] as Date;
     };
 
-    if (minDate) {
-      if (
-        getNewPreSelection(eventKey, preSelection) <
-        getNewPreSelection(eventKey, minDate)
-      ) {
-        return;
-      }
+    // if minDate exists and the new month is before the minimum month, return
+    if (minDate && (
+      getNewPreSelection(eventKey, preSelection) <
+      getNewPreSelection(eventKey, minDate)
+    )) {
+      return;
     }
 
-    if (maxDate) {
-      if (
-        getNewPreSelection(eventKey, preSelection) >
-        getNewPreSelection(eventKey, maxDate)
-      ) {
-        return;
-      }
+    // if maxDate exists and the new month is after the maximum month, return
+    if (maxDate && (
+      getNewPreSelection(eventKey, preSelection) >
+      getNewPreSelection(eventKey, maxDate)
+    )) {
+      return;
     }
 
     if (
