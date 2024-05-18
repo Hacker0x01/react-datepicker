@@ -8,7 +8,7 @@ If you believe you've found a security issue in software that is maintained in t
 
 | Version | In scope | Source code |
 | ------- | -------- | ----------- |
-| >= 2.0.0 | ✅ | https://github.com/Hacker0x01/react-datepicker |
+| >= 6.0.0 | ✅ | https://github.com/Hacker0x01/react-datepicker |
 | < 2.0.0 | ❌ | https://github.com/Hacker0x01/react-datepicker/releases |
 
 # How to Submit a Report
