@@ -814,7 +814,7 @@ export default class DatePicker extends Component<
     });
 
     this.props.onChange(changedDate);
-    if (this.props.shouldCloseOnSelect) {
+    if (this.props.shouldCloseOnSelect && !this.props.showTimeInput) {
       this.sendFocusBackToInput();
       this.setOpen(false);
     }
