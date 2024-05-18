@@ -26,9 +26,11 @@ describe("WeekNumber", () => {
       const { container } = render(
         <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
       );
-      fireEvent.click(
-        container.querySelector(".react-datepicker__week-number"),
+      const weekNumber = container.querySelector(
+        ".react-datepicker__week-number",
       );
+      expect(weekNumber).not.toBeNull();
+      fireEvent.click(weekNumber ?? new HTMLDivElement());
       expect(onClickMock).toHaveBeenCalledTimes(1);
     });
 
@@ -38,7 +40,6 @@ describe("WeekNumber", () => {
         <WeekNumber
           weekNumber={1}
           date={new Date()}
-          day={1}
           ariaLabelPrefix={ariaLabelPrefix}
         />,
       ).container;
@@ -82,9 +83,11 @@ describe("WeekNumber", () => {
       const { container } = render(
         <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
       );
-      fireEvent.click(
-        container.querySelector(".react-datepicker__week-number"),
+      const weekNumber = container.querySelector(
+        ".react-datepicker__week-number",
       );
+      expect(weekNumber).not.toBeNull();
+      fireEvent.click(weekNumber ?? new HTMLDivElement());
       expect(onClickMock).toHaveBeenCalled();
     });
 
@@ -132,17 +135,17 @@ describe("WeekNumber", () => {
             preSelection={preSelection}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        ) as HTMLDivElement;
+        expect(weekNumber).not.toBeNull();
 
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains(
-              "react-datepicker__week-number--keyboard-selected",
-            ),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--keyboard-selected",
+          ),
         ).toBe(false);
-        expect(
-          container.querySelector(".react-datepicker__week-number").tabIndex,
-        ).toBe(0);
+        expect(weekNumber?.tabIndex).toBe(0);
       });
 
       it("should return 0 if showWeekPicker and showWeekNumber are true and the day is the preSelection", () => {
@@ -159,17 +162,16 @@ describe("WeekNumber", () => {
             preSelection={preSelection}
           />,
         );
-
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        ) as HTMLDivElement;
+        expect(weekNumber).not.toBeNull();
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains(
-              "react-datepicker__week-number--keyboard-selected",
-            ),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--keyboard-selected",
+          ),
         ).toBe(true);
-        expect(
-          container.querySelector(".react-datepicker__week-number").tabIndex,
-        ).toBe(0);
+        expect(weekNumber.tabIndex).toBe(0);
       });
 
       it("should return -1 if showWeekPicker is false", () => {
@@ -181,9 +183,10 @@ describe("WeekNumber", () => {
             selected={new Date()}
           />,
         );
-        expect(
-          container.querySelector(".react-datepicker__week-number").tabIndex,
-        ).toBe(-1);
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        ) as HTMLDivElement;
+        expect(weekNumber.tabIndex).toBe(-1);
       });
 
       it("should return -1 if showWeekNumber is false", () => {
@@ -195,9 +198,10 @@ describe("WeekNumber", () => {
             selected={new Date()}
           />,
         );
-        expect(
-          container.querySelector(".react-datepicker__week-number").tabIndex,
-        ).toBe(-1);
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        ) as HTMLDivElement;
+        expect(weekNumber.tabIndex).toBe(-1);
       });
 
       it("should return -1 if the day is not selected or the preSelection", () => {
@@ -214,16 +218,15 @@ describe("WeekNumber", () => {
             preSelection={preSelection}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        ) as HTMLDivElement;
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains(
-              "react-datepicker__week-number--keyboard-selected",
-            ),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--keyboard-selected",
+          ),
         ).toBe(false);
-        expect(
-          container.querySelector(".react-datepicker__week-number").tabIndex,
-        ).toBe(-1);
+        expect(weekNumber.tabIndex).toBe(-1);
       });
     });
 
@@ -241,10 +244,13 @@ describe("WeekNumber", () => {
         const { container } = render(
           <WeekNumber weekNumber={1} date={new Date()} onClick={() => {}} />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--clickable"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--clickable",
+          ),
         ).toBe(true);
       });
 
@@ -259,10 +265,13 @@ describe("WeekNumber", () => {
             onClick={() => {}}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(true);
       });
 
@@ -276,10 +285,13 @@ describe("WeekNumber", () => {
             preSelection={currentWeekNumber}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(false);
       });
 
@@ -295,10 +307,13 @@ describe("WeekNumber", () => {
             onClick={() => {}}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(true);
       });
 
@@ -313,10 +328,13 @@ describe("WeekNumber", () => {
             preSelection={preSelection}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(false);
       });
 
@@ -331,17 +349,18 @@ describe("WeekNumber", () => {
             preSelection={currentWeekNumber}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(false);
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains(
-              "react-datepicker__week-number--keyboard-selected",
-            ),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--keyboard-selected",
+          ),
         ).toBe(true);
       });
 
@@ -357,17 +376,18 @@ describe("WeekNumber", () => {
             preSelection={preSelection}
           />,
         );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains("react-datepicker__week-number--selected"),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--selected",
+          ),
         ).toBe(false);
         expect(
-          container
-            .querySelector(".react-datepicker__week-number")
-            .classList.contains(
-              "react-datepicker__week-number--keyboard-selected",
-            ),
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--keyboard-selected",
+          ),
         ).toBe(false);
       });
     });
