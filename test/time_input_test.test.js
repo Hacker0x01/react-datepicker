@@ -33,6 +33,22 @@ describe("timeInput", () => {
     expect(input.value).toEqual("13:00");
   });
 
+  it("should retain the focus on onChange event", () => {
+    const onChangeSpy = jest.fn();
+    const { container } = render(
+      <DatePicker showTimeInput onChange={onChangeSpy} />,
+    );
+    const input = container.querySelector("input");
+
+    input.focus();
+    expect(document.activeElement).toBe(input);
+
+    fireEvent.change(input, { target: { value: "13:00" } });
+
+    expect(input.value).toEqual("13:00");
+    expect(document.activeElement).toBe(input);
+  });
+
   it("should trigger onChange event and set the value as last valid timeString if empty string is passed as time input value", () => {
     const { container } = render(
       <InputTimeComponent timeString="13:00" onChange={() => {}} />,
