@@ -11,11 +11,12 @@
         new Date("2024-01-01"),
         new Date("2024-11-01"),
       ]}
+      minDate={new Date("2023-06-01")}
+      maxDate={new Date("2025-02-01")}
       dateFormat="MM/yyyy"
       placeholderText="Select a month other than the disabled months"
       showMonthYearPicker
-      minDate={new Date("2023-06-01")}
-      maxDate={new Date("2025-02-01")}
+      selectsRange
     />
   );
 };

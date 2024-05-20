@@ -31,7 +31,7 @@ import ExcludeDates from "../../examples/excludeDates";
 import ExcludedWithMessage from "../../examples/excludeDatesWithMessage";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
-import ExcludeMonths from "../../examples/excludeMonths";
+import ExcludeDatesRangeMonthPicker from "../../examples/excludeDatesRangeMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
 import HolidayDates from "../../examples/holidayDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
@@ -288,12 +288,12 @@ export default class exampleComponents extends React.Component {
       component: ExcludeDatesMonthPicker,
     },
     {
-      title: "Exclude Times",
-      component: ExcludeTimes,
+      title: "Exclude Months in Range Month Picker",
+      component: ExcludeDatesRangeMonthPicker,
     },
     {
-      title: "Exclude months",
-      component: ExcludeMonths,
+      title: "Exclude Times",
+      component: ExcludeTimes,
     },
     {
       title: "Filter dates",
