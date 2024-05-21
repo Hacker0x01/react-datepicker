@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CalendarIconProps {
-  icon: string | React.ReactNode;
+  icon?: string | React.ReactNode;
   className?: string;
   onClick?: (event: React.MouseEvent) => void;
 }

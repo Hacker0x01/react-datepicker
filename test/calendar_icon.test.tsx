@@ -3,14 +3,6 @@ import { render, fireEvent } from "@testing-library/react";
 import CalendarIcon from "../src/calendar_icon";
 import { IconParkSolidApplication } from "./helper_components/calendar_icon";
 
-beforeAll(() => {
-  jest.spyOn(console, "error").mockImplementation(() => {});
-});
-
-afterAll(() => {
-  console.error.mockRestore();
-});
-
 describe("CalendarIcon", () => {
   let onClickMock;
   beforeEach(() => {
@@ -22,7 +14,7 @@ describe("CalendarIcon", () => {
 
   it("renders a custom SVG icon when provided", () => {
     const { container } = render(
-      <CalendarIcon showIcon icon={<IconParkSolidApplication />} />,
+      <CalendarIcon icon={<IconParkSolidApplication />} />,
     );
     expect(
       container.querySelectorAll('[data-testid="icon-park-solid-application"]'),
@@ -30,37 +22,35 @@ describe("CalendarIcon", () => {
   });
 
   it("renders a FontAwesome icon when provided", () => {
-    const { container } = render(
-      <CalendarIcon showIcon icon="fa-example-icon" />,
-    );
+    const { container } = render(<CalendarIcon icon="fa-example-icon" />);
     expect(container.querySelectorAll("i.fa-example-icon")).toHaveLength(1);
   });
 
-  it("does not render an icon when none is provided", () => {
-    const { container } = render(<CalendarIcon showIcon />);
+  it("renders a default SVG icon when no icon is provided", () => {
+    const { container } = render(<CalendarIcon />);
     expect(
       container.querySelectorAll("svg.react-datepicker__calendar-icon"),
     ).toHaveLength(1);
   });
 
   it("should fire onClick event when the icon is clicked", () => {
-    const { container } = render(
-      <CalendarIcon showIcon onClick={onClickMock} />,
-    );
+    const { container } = render(<CalendarIcon onClick={onClickMock} />);
 
     const icon = container.querySelector("svg.react-datepicker__calendar-icon");
-    fireEvent.click(icon);
+    expect(icon).not.toBeNull();
+    fireEvent.click(icon ?? new Element());
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
   it("should fire onClick event on the click of font-awesome icon when provided", () => {
     const { container } = render(
-      <CalendarIcon showIcon icon="fa-example-icon" onClick={onClickMock} />,
+      <CalendarIcon icon="fa-example-icon" onClick={onClickMock} />,
     );
 
     const icon = container.querySelector("i.fa-example-icon");
-    fireEvent.click(icon);
+    expect(icon).not.toBeNull();
+    fireEvent.click(icon ?? new Element());
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
@@ -84,7 +74,7 @@ describe("CalendarIcon", () => {
     );
 
     const icon = container.querySelector("svg.react-datepicker__calendar-icon");
-    fireEvent.click(icon);
+    fireEvent.click(icon ?? new Element());
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
     expect(onClickCustomIcon).toHaveBeenCalledTimes(1);
