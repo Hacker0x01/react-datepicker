@@ -593,7 +593,6 @@ export default class Month extends Component<MonthProps> {
       return { newDate, newMonth };
     };
 
-    console.log(eventKey);
     const { newDate, newMonth } = getNewDateAndMonth(
       eventKey,
       preSelection,
