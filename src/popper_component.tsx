@@ -1,10 +1,12 @@
+import { FloatingArrow } from "@floating-ui/react";
 import { clsx } from "clsx";
 import React, { createElement, Component } from "react";
-import { FloatingArrow } from "@floating-ui/react";
-import type { ReferenceType, UseFloatingReturn } from "@floating-ui/react";
-import TabLoop from "./tab_loop";
+
 import Portal from "./portal";
+import TabLoop from "./tab_loop";
 import withFloating from "./with_floating";
+
+import type { ReferenceType, UseFloatingReturn } from "@floating-ui/react";
 
 interface PortalProps
   extends Omit<React.ComponentPropsWithoutRef<typeof Portal>, "children"> {}

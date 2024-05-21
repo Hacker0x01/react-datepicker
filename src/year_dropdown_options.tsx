@@ -1,5 +1,6 @@
-import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
+import React, { Component, createRef } from "react";
+
 import { getYear } from "./date_utils";
 
 function generateYears(

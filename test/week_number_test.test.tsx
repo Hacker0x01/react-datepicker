@@ -1,7 +1,8 @@
-import React from "react";
-import WeekNumber from "../src/week_number";
 import { render, fireEvent } from "@testing-library/react";
+import React from "react";
+
 import * as utils from "../src/date_utils";
+import WeekNumber from "../src/week_number";
 
 function renderWeekNumber(weekNumber, props = {}) {
   return render(

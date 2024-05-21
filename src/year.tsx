@@ -1,4 +1,6 @@
+import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
+
 import {
   type DateFilterOptions,
   addYears,
@@ -16,7 +18,6 @@ import {
   setYear,
   subYears,
 } from "./date_utils";
-import { clsx } from "clsx";
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
 

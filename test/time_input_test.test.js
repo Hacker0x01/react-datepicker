@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import DatePicker from "../src/index";
 import InputTimeComponent from "../src/input_time.tsx";
 import CustomTimeInput from "./helper_components/custom_time_input.jsx";
@@ -40,7 +40,9 @@ describe("timeInput", () => {
     );
     const input = container.querySelector("input");
 
-    input.focus();
+    act(() => {
+      input.focus();
+    });
     expect(document.activeElement).toBe(input);
 
     fireEvent.change(input, { target: { value: "13:00" } });

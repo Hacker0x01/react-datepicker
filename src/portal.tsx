@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ReactDOM from "react-dom";
+
+import type React from "react";
 
 interface PortalProps {
   children: React.ReactNode;

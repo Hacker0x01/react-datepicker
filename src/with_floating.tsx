@@ -1,16 +1,15 @@
-import React, { useRef } from "react";
 import {
   useFloating,
   arrow,
   offset,
   flip,
   autoUpdate,
-  Middleware,
-  Placement,
   type UseFloatingOptions,
-  // eslint-disable-next-line unused-imports/no-unused-imports
   type ReferenceType,
+  type Middleware,
+  type Placement,
 } from "@floating-ui/react";
+import React, { useRef } from "react";
 
 export interface WithFloatingProps {
   popperModifiers?: Middleware[];
@@ -36,7 +35,7 @@ export interface WithFloatingProps {
  * @returns A new component with floating behavior.
  */
 export default function withFloating<
-  T extends {},
+  T extends object,
   RT extends ReferenceType = ReferenceType,
 >(Component: React.ComponentType<T>) {
   const WithFloating: React.FC<T & WithFloatingProps> = (

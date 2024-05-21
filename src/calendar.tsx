@@ -1,12 +1,6 @@
-import YearDropdown from "./year_dropdown";
-import MonthDropdown from "./month_dropdown";
-import MonthYearDropdown from "./month_year_dropdown";
-import Month from "./month";
-import Time from "./time";
-import Year from "./year";
-import InputTime from "./input_time";
-import React, { Component, createRef } from "react";
 import { clsx } from "clsx";
+import React, { Component, createRef } from "react";
+
 import CalendarContainer from "./calendar_container";
 import {
   newDate,
@@ -44,10 +38,17 @@ import {
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
   getMonthInLocale,
-  // eslint-disable-next-line unused-imports/no-unused-imports
   type Locale,
 } from "./date_utils";
-import { Day } from "date-fns/types";
+import InputTime from "./input_time";
+import Month from "./month";
+import MonthDropdown from "./month_dropdown";
+import MonthYearDropdown from "./month_year_dropdown";
+import Time from "./time";
+import Year from "./year";
+import YearDropdown from "./year_dropdown";
+
+import type { Day } from "date-fns/types";
 
 interface YearDropdownProps
   extends React.ComponentPropsWithoutRef<typeof YearDropdown> {}

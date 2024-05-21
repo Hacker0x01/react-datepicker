@@ -1,8 +1,9 @@
+import { clsx } from "clsx";
 import React, { Component } from "react";
+
+import { addDays, getWeek, getStartOfWeek, isSameDay } from "./date_utils";
 import Day from "./day";
 import WeekNumber from "./week_number";
-import { clsx } from "clsx";
-import { addDays, getWeek, getStartOfWeek, isSameDay } from "./date_utils";
 
 interface DayProps extends React.ComponentPropsWithoutRef<typeof Day> {}
 interface WeekNumberProps
