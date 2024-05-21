@@ -586,7 +586,7 @@ export default class Month extends Component<MonthProps> {
         return getNewDateAndMonth("ArrowLeft", newDate, newMonth);
       }
 
-      if (this.isDisabled(newDate) || this.isExcluded(newDate)) {
+      if (this.isMonthDisabled(newDate.getMonth())) {
         return getNewDateAndMonth(eventKey, newDate, newMonth);
       }
 
