@@ -547,6 +547,10 @@ export default class Month extends Component<MonthProps> {
       let newDate = selectedDate;
       let newMonth = month;
 
+      if (eventKey === "Enter") {
+        return { newDate, newMonth };
+      }
+
       switch (eventKey) {
         case "ArrowRight":
           newDate = addMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET);
@@ -574,12 +578,12 @@ export default class Month extends Component<MonthProps> {
 
       // if minDate exists and the new month is before the minimum month, return
       if (minDate && newDate < minDate) {
-        return { newDate, newMonth };
+        return getNewDateAndMonth("ArrowRight", newDate, newMonth);
       }
 
       // if maxDate exists and the new month is after the maximum month, return
       if (maxDate && newDate > maxDate) {
-        return { newDate, newMonth };
+        return getNewDateAndMonth("ArrowLeft", newDate, newMonth);
       }
 
       if (this.isDisabled(newDate) || this.isExcluded(newDate)) {
@@ -589,6 +593,7 @@ export default class Month extends Component<MonthProps> {
       return { newDate, newMonth };
     };
 
+    console.log(eventKey);
     const { newDate, newMonth } = getNewDateAndMonth(
       eventKey,
       preSelection,

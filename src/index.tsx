@@ -922,11 +922,81 @@ export default class DatePicker extends Component<
 
   // keyDown events passed down to day.jsx
   onDayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { minDate, maxDate } = this.props;
     this.props.onKeyDown?.(event);
     const eventKey = event.key;
     const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
+    const getNewDate = (eventKey: string, date: Date): Date => {
+      let newSelection = date;
+
+      if (eventKey === "Enter") {
+        return newSelection;
+      }
+
+      switch (eventKey) {
+        case "ArrowRight":
+          newSelection = this.props.showWeekPicker
+            ? addWeeks(date, 1)
+            : addDays(date, 1);
+          break;
+        case "ArrowLeft":
+          newSelection = this.props.showWeekPicker
+            ? subWeeks(date, 1)
+            : subDays(date, 1);
+          break;
+        case "ArrowUp":
+          newSelection = subWeeks(date, 1);
+          break;
+        case "ArrowDown":
+          newSelection = addWeeks(date, 1);
+          break;
+        case "PageUp":
+          newSelection = isShiftKeyActive
+            ? subYears(date, 1)
+            : subMonths(date, 1);
+          break;
+        case "PageDown":
+          newSelection = isShiftKeyActive
+            ? addYears(date, 1)
+            : addMonths(date, 1);
+          break;
+        case "Home":
+          newSelection = getStartOfWeek(
+            date,
+            this.props.locale,
+            this.props.calendarStartDay,
+          );
+          break;
+        case "End":
+          newSelection = getEndOfWeek(date);
+          break;
+      }
+
+      // if minDate exists and the new selection is before the min date, return
+      if (minDate && newSelection < minDate) {
+        return getNewDate("ArrowRight", newSelection);
+      }
+
+      // if maxDate exists and the new selection is after the max date, return
+      if (maxDate && newSelection > maxDate) {
+        return getNewDate("ArrowLeft", newSelection);
+      }
+
+      if (isDayDisabled(newSelection, this.props)) {
+        if (
+          eventKey === "PageUp" ||
+          eventKey === "PageDown" ||
+          eventKey === "Home"
+        ) {
+          eventKey = "ArrowRight";
+        }
+        return getNewDate(eventKey, newSelection);
+      }
+      return newSelection;
+    };
+
     if (eventKey === "Enter") {
       event.preventDefault();
       this.handleSelect(copy, event);
@@ -942,44 +1012,14 @@ export default class DatePicker extends Component<
       let newSelection;
       switch (eventKey) {
         case "ArrowLeft":
-          if (this.props.showWeekPicker) {
-            newSelection = subWeeks(copy, 1);
-          } else {
-            newSelection = subDays(copy, 1);
-          }
-          break;
         case "ArrowRight":
-          if (this.props.showWeekPicker) {
-            newSelection = addWeeks(copy, 1);
-          } else {
-            newSelection = addDays(copy, 1);
-          }
-          break;
         case "ArrowUp":
-          newSelection = subWeeks(copy, 1);
-          break;
         case "ArrowDown":
-          newSelection = addWeeks(copy, 1);
-          break;
         case "PageUp":
-          newSelection = isShiftKeyActive
-            ? subYears(copy, 1)
-            : subMonths(copy, 1);
-          break;
         case "PageDown":
-          newSelection = isShiftKeyActive
-            ? addYears(copy, 1)
-            : addMonths(copy, 1);
-          break;
         case "Home":
-          newSelection = getStartOfWeek(
-            copy,
-            this.props.locale,
-            this.props.calendarStartDay,
-          );
-          break;
         case "End":
-          newSelection = getEndOfWeek(copy);
+          newSelection = getNewDate(eventKey, copy);
           break;
         default:
           newSelection = null;
