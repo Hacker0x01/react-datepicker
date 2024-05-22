@@ -990,9 +990,8 @@ export default class DatePicker extends Component<
           eventKey === "PageDown" ||
           eventKey === "Home"
         ) {
-          eventKey = "ArrowRight";
+          return getNewDate("ArrowRight", newSelection);
         }
-        return getNewDate(eventKey, newSelection);
       }
       return newSelection;
     };

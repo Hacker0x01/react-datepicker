@@ -2034,6 +2034,120 @@ describe("Month", () => {
         `Can't select this January 2015`,
       );
     });
+
+    it("should skip over excluded date from all 4 directions", () => {
+      const excludeDates = [utils.newDate("2015-08-01")];
+      let preSelected = false;
+      const setPreSelection = (param) => {
+        preSelected = param;
+      };
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-07-01"),
+        day: utils.newDate("2015-07-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-08-01"),
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-12-01"),
+        excludeDates,
+      });
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-7"),
+        getKey("ArrowRight"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-09-01").toString(),
+      );
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-9"),
+        getKey("ArrowLeft"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-07-01").toString(),
+      );
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-7"),
+        getKey("ArrowUp"),
+      );
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-4"),
+        getKey("ArrowRight"),
+      );
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-5"),
+        getKey("ArrowDown"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-11-01").toString(),
+      );
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-11"),
+        getKey("ArrowUp"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-05-01").toString(),
+      );
+    });
+
+    it("should prevent navigation when cursor is next to minimum date and the left arrow is pressed", () => {
+      let preSelected = utils.newDate("2015-04-01");
+      const setPreSelection = (param) => {
+        preSelected = param;
+      };
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-03-01"),
+        day: utils.newDate("2015-03-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01"),
+      });
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-3"),
+        getKey("ArrowLeft"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-03-01").toString(),
+      );
+    });
+
+    it("should prevent navigation when cursor is next to maximum date and right arrow is pressed", () => {
+      let preSelected = utils.newDate("2015-08-01");
+      const setPreSelection = (param) => {
+        preSelected = param;
+      };
+
+      const monthComponent = renderMonth({
+        selected: utils.newDate("2015-08-01"),
+        day: utils.newDate("2015-08-01"),
+        setPreSelection: setPreSelection,
+        preSelection: preSelected,
+        minDate: utils.newDate("2015-03-01"),
+        maxDate: utils.newDate("2015-08-01"),
+      });
+
+      fireEvent.keyDown(
+        monthComponent.querySelector(".react-datepicker__month-8"),
+        getKey("ArrowRight"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-08-01").toString(),
+      );
+    });
   });
 
   describe("if keyboard navigation is disabled", () => {
