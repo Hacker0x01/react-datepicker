@@ -91,7 +91,9 @@ interface MonthProps
   extends Omit<
     WeekProps,
     | "ariaLabelPrefix"
+    | "chooseDayAriaLabelPrefix"
     | "day"
+    | "disabledDayAriaLabelPrefix"
     | "month"
     | "onDayClick"
     | "onDayMouseEnter"
@@ -132,6 +134,8 @@ interface MonthProps
   showFourColumnMonthYearPicker?: boolean;
   showQuarterYearPicker?: boolean;
   weekAriaLabelPrefix?: WeekProps["ariaLabelPrefix"];
+  chooseDayAriaLabelPrefix?: WeekProps["chooseDayAriaLabelPrefix"];
+  disabledDayAriaLabelPrefix?: WeekProps["disabledDayAriaLabelPrefix"];
 }
 
 /**
