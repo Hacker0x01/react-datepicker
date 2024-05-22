@@ -985,12 +985,12 @@ export default class DatePicker extends Component<
       }
 
       if (isDayDisabled(newSelection, this.props)) {
-        if (
-          eventKey === "PageUp" ||
-          eventKey === "PageDown" ||
-          eventKey === "Home"
-        ) {
+        if (eventKey === "PageUp" || eventKey === "Home") {
           return getNewDate("ArrowRight", newSelection);
+        }
+
+        if (eventKey === "PageDown" || eventKey === "End") {
+          return getNewDate("ArrowLeft", newSelection);
         }
       }
       return newSelection;
