@@ -3,8 +3,10 @@ module.exports = {
   setupFiles: ["<rootDir>/test/text_encoder.js"],
   setupFilesAfterEnv: ["<rootDir>/test/index.js"],
   testEnvironment: "jest-environment-jsdom",
+  collectCoverage: true,
+  coverageReporters: ["json", "lcov", "text", "clover"],
   collectCoverageFrom: [
-    "**/*.{js,jsx, ts, tsx}",
+    "**/*.{js,jsx,ts,tsx}",
     "!**/node_modules/**",
     "!**/vendor/**",
   ],
