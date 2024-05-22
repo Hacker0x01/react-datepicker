@@ -34,7 +34,7 @@ import {
   parseDate,
   safeDateFormat,
   safeDateRangeFormat,
-  getHightLightDaysMap,
+  getHighLightDaysMap,
   getYear,
   getMonth,
   getStartOfWeek,
@@ -339,7 +339,7 @@ export default class DatePicker extends Component<
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
-        highlightDates: getHightLightDaysMap(this.props.highlightDates),
+        highlightDates: getHighLightDaysMap(this.props.highlightDates),
       });
     }
     if (
@@ -414,7 +414,7 @@ export default class DatePicker extends Component<
           : this.props.selected) ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
-      highlightDates: getHightLightDaysMap(this.props.highlightDates),
+      highlightDates: getHighLightDaysMap(this.props.highlightDates),
       focused: false,
       // used to focus day in inline version after month has changed, but not on
       // initial render

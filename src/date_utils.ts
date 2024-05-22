@@ -1241,7 +1241,7 @@ export interface HighlightDate {
  * @param defaultClassName The default class to use for highlighting.
  * @returns A map with dates as keys and arrays of class names as values.
  */
-export function getHightLightDaysMap(
+export function getHighLightDaysMap(
   highlightDates: (Date | HighlightDate)[] = [],
   defaultClassName: string = "react-datepicker__day--highlighted",
 ): Map<string, string[]> {
