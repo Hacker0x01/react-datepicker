@@ -5,11 +5,18 @@ import {
   flip,
   autoUpdate,
   type UseFloatingOptions,
-  type ReferenceType,
   type Middleware,
   type Placement,
+  type UseFloatingReturn,
 } from "@floating-ui/react";
 import React, { useRef } from "react";
+
+export interface FloatingProps {
+  hidePopper?: boolean;
+  popperProps: UseFloatingReturn & {
+    arrowRef: React.RefObject<SVGSVGElement>;
+  };
+}
 
 export interface WithFloatingProps {
   popperModifiers?: Middleware[];
@@ -34,37 +41,34 @@ export interface WithFloatingProps {
  *
  * @returns A new component with floating behavior.
  */
-export default function withFloating<
-  T extends object,
-  RT extends ReferenceType = ReferenceType,
->(Component: React.ComponentType<T>) {
-  const WithFloating: React.FC<T & WithFloatingProps> = (
-    props,
-  ): JSX.Element => {
-    const alt_props = {
-      ...props,
-      popperModifiers: props.popperModifiers ?? [],
-      popperProps: props.popperProps ?? {},
-      hidePopper:
-        typeof props.hidePopper === "boolean" ? props.hidePopper : true,
-    };
+export default function withFloating<T extends FloatingProps>(
+  Component: React.ComponentType<T>,
+) {
+  type R = Omit<T, "popperProps"> & WithFloatingProps;
+  const WithFloating: React.FC<R> = (props): JSX.Element => {
+    const hidePopper: boolean =
+      typeof props.hidePopper === "boolean" ? props.hidePopper : true;
     const arrowRef: React.RefObject<HTMLElement> = useRef(null);
-    const floatingProps = useFloating<RT>({
-      open: !alt_props.hidePopper,
+    const floatingProps = useFloating({
+      open: !hidePopper,
       whileElementsMounted: autoUpdate,
-      placement: alt_props.popperPlacement,
+      placement: props.popperPlacement,
       middleware: [
         flip({ padding: 15 }),
         offset(10),
         arrow({ element: arrowRef }),
-        ...alt_props.popperModifiers,
+        ...(props.popperModifiers ?? []),
       ],
-      ...alt_props.popperProps,
+      ...props.popperProps,
     });
 
-    return (
-      <Component {...alt_props} popperProps={{ ...floatingProps, arrowRef }} />
-    );
+    const componentProps = {
+      ...props,
+      hidePopper,
+      popperProps: { ...floatingProps, arrowRef },
+    } as unknown as T;
+
+    return <Component {...componentProps} />;
   };
 
   return WithFloating;

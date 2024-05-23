@@ -124,7 +124,7 @@ export type DatePickerProps = Omit<
 > &
   Pick<AdditionalProps, "excludeScrollbar"> &
   Pick<CalendarIconProps, "icon"> &
-  Omit<PortalProps, "children"> &
+  Omit<PortalProps, "children" | "portalId"> &
   Omit<
     PopperComponentProps,
     | "className"
@@ -1332,7 +1332,11 @@ export default class DatePicker extends Component<
       ) : null;
 
       if (this.state.open && this.props.portalId) {
-        portalContainer = <Portal {...this.props}>{portalContainer}</Portal>;
+        portalContainer = (
+          <Portal portalId={this.props.portalId} {...this.props}>
+            {portalContainer}
+          </Portal>
+        );
       }
 
       return (

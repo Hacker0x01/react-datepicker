@@ -1,5 +1,6 @@
-import React from "react";
 import { render } from "@testing-library/react";
+import React from "react";
+
 import { setTime, newDate } from "../src/date_utils";
 import DatePicker from "../src/index";
 

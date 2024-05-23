@@ -6,33 +6,29 @@ import Portal from "./portal";
 import TabLoop from "./tab_loop";
 import withFloating from "./with_floating";
 
-import type { ReferenceType, UseFloatingReturn } from "@floating-ui/react";
+import type { FloatingProps } from "./with_floating";
 
 interface PortalProps
   extends Omit<React.ComponentPropsWithoutRef<typeof Portal>, "children"> {}
 interface TabLoopProps
   extends Omit<React.ComponentPropsWithoutRef<typeof TabLoop>, "children"> {}
 
-interface PopperComponentProps<RT extends ReferenceType = ReferenceType>
-  extends PortalProps,
-    TabLoopProps {
+interface PopperComponentProps
+  extends Omit<PortalProps, "portalId">,
+    TabLoopProps,
+    FloatingProps {
   className?: string;
   wrapperClassName?: string;
-  hidePopper?: boolean;
   popperComponent: React.ReactNode;
   popperContainer?: React.FC<React.PropsWithChildren>;
-  popperProps: UseFloatingReturn<RT> & {
-    arrowRef: React.RefObject<SVGSVGElement>;
-  };
   targetComponent: React.ReactNode;
   popperOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   showArrow?: boolean;
+  portalId?: PortalProps["portalId"];
 }
 
 // Exported for testing purposes
-export class PopperComponent<
-  RT extends ReferenceType = ReferenceType,
-> extends Component<PopperComponentProps<RT>> {
+export class PopperComponent extends Component<PopperComponentProps> {
   static get defaultProps(): Partial<PopperComponentProps> {
     return {
       hidePopper: true,
