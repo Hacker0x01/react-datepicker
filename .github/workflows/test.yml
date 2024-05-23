@@ -54,9 +54,10 @@ jobs:
         run: yarn test:ci
 
       - uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           fail_ci_if_error: true # optional (default = false)
-          token: ${{ secrets.CODECOV_TOKEN }} # required
           verbose: true # optional (default = false)
 
       - name: Build
