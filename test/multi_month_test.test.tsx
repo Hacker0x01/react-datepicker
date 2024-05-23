@@ -1,7 +1,8 @@
+import { render } from "@testing-library/react";
 import React from "react";
+
 import Calendar from "../src/calendar";
 import * as utils from "../src/date_utils";
-import { render } from "@testing-library/react";
 
 describe("Multi month calendar", function () {
   const dateFormat = "LLLL yyyy";
@@ -37,7 +38,7 @@ describe("Multi month calendar", function () {
     const calendar = getCalendar({ monthsShown: 2, showPreviousMonths: true });
     const monthDate = calendar.querySelector(
       ".react-datepicker__current-month",
-    ).textContent;
+    )?.textContent;
     const previousMonth = utils.subMonths(utils.newDate(), 1);
     expect(monthDate).toBe(utils.formatDate(previousMonth, "LLLL yyyy"));
   });
