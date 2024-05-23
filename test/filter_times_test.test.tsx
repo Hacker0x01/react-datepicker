@@ -1,5 +1,6 @@
-import React from "react";
 import { render } from "@testing-library/react";
+import React from "react";
+
 import { getHours } from "../src/date_utils";
 import TimeComponent from "../src/time";
 
@@ -20,7 +21,9 @@ describe("TimeComponent", () => {
 
     const disabledAllFilterTimes = Array.from(disabledTimeItems).every(
       (disabledTimeItem) => {
-        const disabledTimeItemValue = disabledTimeItem.textContent.trim();
+        const disabledTimeItemValue = (
+          disabledTimeItem.textContent ?? ""
+        ).trim();
         return (
           disabledTimeItemValue.startsWith(`${HOUR_TO_DISABLE_IN_12_HR}:`) ||
           disabledTimeItemValue.startsWith(`${HOUR_TO_DISABLE_IN_24_HR}:`)
