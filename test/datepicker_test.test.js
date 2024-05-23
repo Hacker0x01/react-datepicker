@@ -1054,6 +1054,38 @@ describe("DatePicker", () => {
       utils.formatDate(data.instance.state.preSelection, data.testFormat),
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
+
+  // excluded stuff
+  it("using keyboard, should not navigate to dates before minDate", () => {
+    const date = new Date("2024-05-01");
+    const data = getOnInputKeyDownStuff({
+      minDate: date,
+      selected: date,
+      preSelection: date,
+    });
+
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowLeft"));
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(date, data.testFormat));
+  });
+
+  it("using keyboard, should not navigate to dates after maxDate", () => {
+    const date = new Date("2024-05-01");
+    const data = getOnInputKeyDownStuff({
+      maxDate: date,
+      selected: date,
+      preSelection: date,
+    });
+
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowRight"));
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(date, data.testFormat));
+  });
+
   it("should call onMonthChange when keyboard navigation moves preSelection to different month", () => {
     const onMonthChangeSpy = jest.fn();
     const opts = { onMonthChange: onMonthChangeSpy };
