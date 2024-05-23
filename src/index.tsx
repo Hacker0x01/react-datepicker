@@ -975,12 +975,16 @@ export default class DatePicker extends Component<
 
       // if minDate exists and the new selection is before the min date, return
       if (minDate && newSelection < minDate) {
-        newSelection = minDate;
+        return isDayDisabled(minDate, this.props)
+          ? getNewDate("ArrowRight", minDate)
+          : minDate;
       }
 
       // if maxDate exists and the new selection is after the max date, return
       if (maxDate && newSelection > maxDate) {
-        newSelection = maxDate;
+        return isDayDisabled(maxDate, this.props)
+          ? getNewDate("ArrowLeft", maxDate)
+          : maxDate;
       }
 
       if (isDayDisabled(newSelection, this.props)) {
