@@ -518,17 +518,17 @@ export default class Month extends Component<MonthProps> {
     event: React.KeyboardEvent<HTMLDivElement>,
     eventKey: string,
     month: number,
-    preSelection: Date | undefined,
   ) => {
-    if (!preSelection) return;
     const {
       selected,
+      preSelection,
       setPreSelection,
       minDate,
       maxDate,
       showFourColumnMonthYearPicker,
       showTwoColumnMonthYearPicker,
     } = this.props;
+    if (!preSelection) return;
 
     const monthColumnsLayout = getMonthColumnsLayout(
       showFourColumnMonthYearPicker,
@@ -599,16 +599,6 @@ export default class Month extends Component<MonthProps> {
       month,
     );
 
-    // if minDate exists and the new month is before the minimum month, return
-    if (minDate && newDate < minDate) {
-      return;
-    }
-
-    // if maxDate exists and the new month is after the maximum month, return
-    if (maxDate && newDate > maxDate) {
-      return;
-    }
-
     switch (eventKey) {
       case "Enter":
         if (!this.isMonthDisabled(month)) {
@@ -633,15 +623,14 @@ export default class Month extends Component<MonthProps> {
     event: React.KeyboardEvent<HTMLDivElement>,
     month: number,
   ) => {
-    const { disabledKeyboardNavigation, handleOnMonthKeyDown, preSelection } =
-      this.props;
+    const { disabledKeyboardNavigation, handleOnMonthKeyDown } = this.props;
     const eventKey = event.key;
     if (eventKey !== "Tab") {
       // preventDefault on tab event blocks focus change
       event.preventDefault();
     }
-    if (!disabledKeyboardNavigation && preSelection) {
-      this.triggerKeyboardNavigation(event, eventKey, month, preSelection);
+    if (!disabledKeyboardNavigation) {
+      this.triggerKeyboardNavigation(event, eventKey, month);
     }
 
     handleOnMonthKeyDown && handleOnMonthKeyDown(event);
