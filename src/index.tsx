@@ -924,16 +924,13 @@ export default class DatePicker extends Component<
   onDayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { minDate, maxDate } = this.props;
     this.props.onKeyDown?.(event);
+    if (this.props.disabledKeyboardNavigation) return;
     const eventKey = event.key;
     const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
     const getNewDate = (eventKey: string, date: Date): Date => {
       let newSelection = date;
-
-      if (eventKey === "Enter") {
-        return newSelection;
-      }
 
       switch (eventKey) {
         case "ArrowRight":
@@ -1000,6 +997,7 @@ export default class DatePicker extends Component<
       event.preventDefault();
       this.handleSelect(copy, event);
       !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
+      return;
     } else if (eventKey === "Escape") {
       event.preventDefault();
 
@@ -1007,49 +1005,50 @@ export default class DatePicker extends Component<
       if (!this.inputOk()) {
         this.props.onInputError?.({ code: 1, msg: INPUT_ERR_1 });
       }
-    } else if (!this.props.disabledKeyboardNavigation) {
-      let newSelection;
-      switch (eventKey) {
-        case "ArrowLeft":
-        case "ArrowRight":
-        case "ArrowUp":
-        case "ArrowDown":
-        case "PageUp":
-        case "PageDown":
-        case "Home":
-        case "End":
-          newSelection = getNewDate(eventKey, copy);
-          break;
-        default:
-          newSelection = null;
-          break;
-      }
-      if (!newSelection) {
-        if (this.props.onInputError) {
-          this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
-        }
-        return;
-      }
-      event.preventDefault();
-      this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
-      if (this.props.adjustDateOnChange) {
-        this.setSelected(newSelection);
-      }
-      this.setPreSelection(newSelection);
-      // need to figure out whether month has changed to focus day in inline version
-      if (this.props.inline) {
-        const prevMonth = getMonth(copy);
-        const newMonth = getMonth(newSelection);
-        const prevYear = getYear(copy);
-        const newYear = getYear(newSelection);
+      return;
+    }
 
-        if (prevMonth !== newMonth || prevYear !== newYear) {
-          // month has changed
-          this.setState({ shouldFocusDayInline: true });
-        } else {
-          // month hasn't changed
-          this.setState({ shouldFocusDayInline: false });
-        }
+    let newSelection;
+    switch (eventKey) {
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "ArrowUp":
+      case "ArrowDown":
+      case "PageUp":
+      case "PageDown":
+      case "Home":
+      case "End":
+        newSelection = getNewDate(eventKey, copy);
+        break;
+      default:
+        newSelection = null;
+        break;
+    }
+    if (!newSelection) {
+      if (this.props.onInputError) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+      }
+      return;
+    }
+    event.preventDefault();
+    this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
+    if (this.props.adjustDateOnChange) {
+      this.setSelected(newSelection);
+    }
+    this.setPreSelection(newSelection);
+    // need to figure out whether month has changed to focus day in inline version
+    if (this.props.inline) {
+      const prevMonth = getMonth(copy);
+      const newMonth = getMonth(newSelection);
+      const prevYear = getYear(copy);
+      const newYear = getYear(newSelection);
+
+      if (prevMonth !== newMonth || prevYear !== newYear) {
+        // month has changed
+        this.setState({ shouldFocusDayInline: true });
+      } else {
+        // month hasn't changed
+        this.setState({ shouldFocusDayInline: false });
       }
     }
   };
