@@ -922,9 +922,19 @@ export default class DatePicker extends Component<
 
   // keyDown events passed down to day.jsx
   onDayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { minDate, maxDate } = this.props;
+    const {
+      minDate,
+      maxDate,
+      disabledKeyboardNavigation,
+      showWeekPicker,
+      shouldCloseOnSelect,
+      locale,
+      calendarStartDay,
+      adjustDateOnChange,
+      inline,
+    } = this.props;
     this.props.onKeyDown?.(event);
-    if (this.props.disabledKeyboardNavigation) return;
+    if (disabledKeyboardNavigation) return;
     const eventKey = event.key;
     const isShiftKeyActive = event.shiftKey;
 
@@ -934,14 +944,10 @@ export default class DatePicker extends Component<
 
       switch (eventKey) {
         case "ArrowRight":
-          newSelection = this.props.showWeekPicker
-            ? addWeeks(date, 1)
-            : addDays(date, 1);
+          newSelection = showWeekPicker ? addWeeks(date, 1) : addDays(date, 1);
           break;
         case "ArrowLeft":
-          newSelection = this.props.showWeekPicker
-            ? subWeeks(date, 1)
-            : subDays(date, 1);
+          newSelection = showWeekPicker ? subWeeks(date, 1) : subDays(date, 1);
           break;
         case "ArrowUp":
           newSelection = subWeeks(date, 1);
@@ -960,11 +966,7 @@ export default class DatePicker extends Component<
             : addMonths(date, 1);
           break;
         case "Home":
-          newSelection = getStartOfWeek(
-            date,
-            this.props.locale,
-            this.props.calendarStartDay,
-          );
+          newSelection = getStartOfWeek(date, locale, calendarStartDay);
           break;
         case "End":
           newSelection = getEndOfWeek(date);
@@ -996,7 +998,7 @@ export default class DatePicker extends Component<
     if (eventKey === "Enter") {
       event.preventDefault();
       this.handleSelect(copy, event);
-      !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
+      !shouldCloseOnSelect && this.setPreSelection(copy);
       return;
     } else if (eventKey === "Escape") {
       event.preventDefault();
@@ -1032,12 +1034,12 @@ export default class DatePicker extends Component<
     }
     event.preventDefault();
     this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
-    if (this.props.adjustDateOnChange) {
+    if (adjustDateOnChange) {
       this.setSelected(newSelection);
     }
     this.setPreSelection(newSelection);
     // need to figure out whether month has changed to focus day in inline version
-    if (this.props.inline) {
+    if (inline) {
       const prevMonth = getMonth(copy);
       const newMonth = getMonth(newSelection);
       const prevYear = getYear(copy);
