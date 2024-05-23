@@ -1,5 +1,6 @@
-import React from "react";
 import { render } from "@testing-library/react";
+import React from "react";
+
 import * as utils from "../src/date_utils";
 import DatePicker from "../src/index";
 
@@ -11,8 +12,8 @@ describe("DatePicker", () => {
         showTimeSelect
         selected={now}
         onChange={() => null}
-        minTime={utils.setTime(now, { hours: 17, minutes: 0 })}
-        maxTime={utils.setTime(now, { hours: 18, minutes: 0 })}
+        minTime={utils.setTime(now, { hour: 17, minute: 0 })}
+        maxTime={utils.setTime(now, { hour: 18, minute: 0 })}
         open
       />,
     );
