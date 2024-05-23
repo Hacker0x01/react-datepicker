@@ -1,5 +1,6 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
+import React from "react";
+
 import DatePicker from "../src/index";
 import TimeComponent from "../src/time";
 
@@ -16,7 +17,7 @@ describe("DatePicker", () => {
     const { container } = render(<TimeComponent timeCaption="Custom time" />);
 
     const caption = container.querySelector(".react-datepicker-time__header");
-    expect(caption.textContent).toEqual("Custom time");
+    expect(caption?.textContent).toEqual("Custom time");
   });
 
   describe("Time Select Only", () => {
