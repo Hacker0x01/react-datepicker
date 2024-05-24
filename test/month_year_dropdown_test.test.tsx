@@ -1,7 +1,8 @@
-import React from "react";
-import MonthYearDropdown from "../src/month_year_dropdown";
-import MonthYearDropdownOptions from "../src/month_year_dropdown_options";
 import { render, fireEvent } from "@testing-library/react";
+import { fi } from "date-fns/locale/fi";
+import React from "react";
+import onClickOutside from "react-onclickoutside";
+
 import {
   newDate,
   addMonths,
@@ -9,12 +10,12 @@ import {
   formatDate,
   isAfter,
   registerLocale,
-} from "../src/date_utils.ts";
-import { fi } from "date-fns/locale/fi";
-import onClickOutside from "react-onclickoutside";
+} from "../src/date_utils";
+import MonthYearDropdown from "../src/month_year_dropdown";
+import MonthYearDropdownOptions from "../src/month_year_dropdown_options";
 
 describe("MonthYearDropdown", () => {
-  let monthYearDropdown;
+  let monthYearDropdown: HTMLElement | null = null;
   let handleChangeResult;
   const mockHandleChange = function (changeInput) {
     handleChangeResult = changeInput;
@@ -52,16 +53,18 @@ describe("MonthYearDropdown", () => {
 
     it("shows the selected month year in the initial view", () => {
       const selected_month_year_name = formatDate(selectedDate, "LLLL yyyy");
-      expect(monthYearDropdown.textContent).toContain(selected_month_year_name);
+      expect(monthYearDropdown?.textContent).toContain(
+        selected_month_year_name,
+      );
     });
 
     it("opens a list when read view is clicked", () => {
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
-      const optionsView = monthYearDropdown.querySelector(
+      const optionsView = monthYearDropdown?.querySelector(
         ".react-datepicker__month-year-dropdown",
       );
       expect(optionsView).not.toBeNull();
@@ -69,17 +72,17 @@ describe("MonthYearDropdown", () => {
 
     it("closes the dropdown when a month year is clicked", () => {
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
       fireEvent.click(
-        monthYearDropdown.querySelectorAll(
+        (monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-option",
-        )[1],
+        ) ?? [])[1],
       );
       expect(
-        monthYearDropdown.querySelectorAll(
+        monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-dropdown",
         ),
       ).toHaveLength(0);
@@ -110,44 +113,44 @@ describe("MonthYearDropdown", () => {
 
     it("does not call the supplied onChange function when the same month year is clicked", () => {
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-option--selected_month-year",
-        ),
+        ) ?? new HTMLElement(),
       );
       expect(handleChangeResult).toBeNull();
     });
 
     it("adds aria-selected to selected option", () => {
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
 
       const ariaSelected = monthYearDropdown
-        .querySelector(
+        ?.querySelector(
           ".react-datepicker__month-year-option--selected_month-year",
         )
-        .getAttribute("aria-selected");
+        ?.getAttribute("aria-selected");
 
       expect(ariaSelected).toBe("true");
     });
 
     it("does not add aria-selected to non-selected option", () => {
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
 
       const ariaSelected = monthYearDropdown
-        .querySelector(".react-datepicker__month-year-option")
-        .getAttribute("aria-selected");
+        ?.querySelector(".react-datepicker__month-year-option")
+        ?.getAttribute("aria-selected");
 
       expect(ariaSelected).toBeNull();
     });
@@ -156,15 +159,15 @@ describe("MonthYearDropdown", () => {
       const expected_date = newDate("2017-12");
 
       fireEvent.click(
-        monthYearDropdown.querySelector(
+        monthYearDropdown?.querySelector(
           ".react-datepicker__month-year-read-view",
-        ),
+        ) ?? new HTMLElement(),
       );
 
       fireEvent.click(
-        monthYearDropdown.querySelectorAll(
+        (monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-option",
-        )[5],
+        ) ?? [])[5],
       );
 
       expect(handleChangeResult.toString()).toBe(expected_date.toString());
@@ -208,7 +211,7 @@ describe("MonthYearDropdown", () => {
       let currentMonth = newDate("2017-07");
       const maxMonth = newDate("2018-06");
 
-      const expected_values = [];
+      const expected_values: string[] = [];
 
       while (!isAfter(currentMonth, maxMonth)) {
         expected_values.push(`${currentMonth.valueOf()}`);
@@ -217,13 +220,15 @@ describe("MonthYearDropdown", () => {
       }
 
       monthYearDropdown = getMonthYearDropdown({ dropdownMode: "select" });
-      const select = monthYearDropdown.querySelector(
+      const select = monthYearDropdown.querySelector<HTMLSelectElement>(
         ".react-datepicker__month-year-select",
       );
       expect(select).not.toBeNull();
-      expect(select.value).toBe(`${expected_date.valueOf()}`);
-      const options = select.querySelectorAll("option");
-      expect(Array.from(options).map((o) => o.value)).toEqual(expected_values);
+      expect(select?.value).toBe(`${expected_date.valueOf()}`);
+      const options = select?.querySelectorAll("option");
+      expect(Array.from(options ?? []).map((o) => o.value)).toEqual(
+        expected_values,
+      );
     });
 
     it("renders month options with default locale", () => {
@@ -278,7 +283,9 @@ describe("MonthYearDropdown", () => {
       const select = monthYearDropdown.querySelector(
         ".react-datepicker__month-year-select",
       );
-      fireEvent.change(select, { target: { value: selectedMonth.valueOf() } });
+      fireEvent.change(select ?? new HTMLElement(), {
+        target: { value: selectedMonth.valueOf() },
+      });
       expect(handleChangeResult).toBeFalsy();
     });
 
@@ -292,7 +299,9 @@ describe("MonthYearDropdown", () => {
       const select = monthYearDropdown.querySelector(
         ".react-datepicker__month-year-select",
       );
-      fireEvent.change(select, { target: { value: monthToClick.valueOf() } });
+      fireEvent.change(select ?? new HTMLElement(), {
+        target: { value: monthToClick.valueOf() },
+      });
       expect(handleChangeResult.valueOf()).toBe(monthToClick.valueOf());
     });
   });
