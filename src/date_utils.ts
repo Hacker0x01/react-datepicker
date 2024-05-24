@@ -888,12 +888,16 @@ export function isMonthInRange(
  */
 export function isMonthYearDisabled(
   date: Date,
-  props: Pick<
+  {
+    minDate,
+    maxDate,
+    excludeDates,
+    includeDates,
+  }: Pick<
     DateFilterOptions,
     "minDate" | "maxDate" | "excludeDates" | "includeDates"
   > = {},
 ): boolean {
-  const { minDate, maxDate, excludeDates, includeDates } = props;
   return (
     isOutOfBounds(date, { minDate, maxDate }) ||
     (excludeDates &&

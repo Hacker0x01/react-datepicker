@@ -1016,7 +1016,7 @@ export default class DatePicker extends Component<
       return;
     }
 
-    let newSelection;
+    let newSelection = null;
     switch (eventKey) {
       case "ArrowLeft":
       case "ArrowRight":
@@ -1027,9 +1027,6 @@ export default class DatePicker extends Component<
       case "Home":
       case "End":
         newSelection = getNewDate(eventKey, copy);
-        break;
-      default:
-        newSelection = null;
         break;
     }
     if (!newSelection) {

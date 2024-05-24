@@ -1392,9 +1392,9 @@ describe("date_utils", () => {
       ).toBe(false);
     });
 
-    it("should return false if props are empty", () => {
+    it("should return false by default", () => {
       const date = new Date(new Date(2023, 3, 1));
-      expect(isMonthYearDisabled(date, {})).toBe(false);
+      expect(isMonthYearDisabled(date)).toBe(false);
     });
   });
 });
