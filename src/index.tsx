@@ -53,6 +53,7 @@ import {
   getEndOfDay,
   type HighlightDate,
   type HolidayItem,
+  KeyType,
 } from "./date_utils";
 import PopperComponent from "./popper_component";
 import Portal from "./portal";
@@ -845,9 +846,9 @@ export default class DatePicker extends Component<
       !this.props.preventOpenOnFocus
     ) {
       if (
-        eventKey === "ArrowDown" ||
-        eventKey === "ArrowUp" ||
-        eventKey === "Enter"
+        eventKey === KeyType.ArrowDown ||
+        eventKey === KeyType.ArrowUp ||
+        eventKey === KeyType.Enter
       ) {
         this.onInputClick();
       }
@@ -856,7 +857,7 @@ export default class DatePicker extends Component<
 
     // if calendar is open, these keys will focus the selected item
     if (this.state.open) {
-      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
+      if (eventKey === KeyType.ArrowDown || eventKey === KeyType.ArrowUp) {
         event.preventDefault();
         const selectorString = this.props.showTimeSelectOnly
           ? ".react-datepicker__time-list-item[tabindex='0']"
@@ -935,7 +936,7 @@ export default class DatePicker extends Component<
     } = this.props;
     this.props.onKeyDown?.(event);
     if (disabledKeyboardNavigation) return;
-    const eventKey = event.key;
+    const eventKey = event.key as KeyType;
     const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
@@ -943,32 +944,32 @@ export default class DatePicker extends Component<
       let newSelection = date;
 
       switch (eventKey) {
-        case "ArrowRight":
+        case KeyType.ArrowRight:
           newSelection = showWeekPicker ? addWeeks(date, 1) : addDays(date, 1);
           break;
-        case "ArrowLeft":
+        case KeyType.ArrowLeft:
           newSelection = showWeekPicker ? subWeeks(date, 1) : subDays(date, 1);
           break;
-        case "ArrowUp":
+        case KeyType.ArrowUp:
           newSelection = subWeeks(date, 1);
           break;
-        case "ArrowDown":
+        case KeyType.ArrowDown:
           newSelection = addWeeks(date, 1);
           break;
-        case "PageUp":
+        case KeyType.PageUp:
           newSelection = isShiftKeyActive
             ? subYears(date, 1)
             : subMonths(date, 1);
           break;
-        case "PageDown":
+        case KeyType.PageDown:
           newSelection = isShiftKeyActive
             ? addYears(date, 1)
             : addMonths(date, 1);
           break;
-        case "Home":
+        case KeyType.Home:
           newSelection = getStartOfWeek(date, locale, calendarStartDay);
           break;
-        case "End":
+        case KeyType.End:
           newSelection = getEndOfWeek(date);
           break;
       }
@@ -976,24 +977,24 @@ export default class DatePicker extends Component<
       // if minDate exists and the new selection is before the min date, return
       if (minDate && newSelection < minDate) {
         return isDayDisabled(minDate, this.props)
-          ? getNewDate("ArrowRight", minDate)
+          ? getNewDate(KeyType.ArrowRight, minDate)
           : minDate;
       }
 
       // if maxDate exists and the new selection is after the max date, return
       if (maxDate && newSelection > maxDate) {
         return isDayDisabled(maxDate, this.props)
-          ? getNewDate("ArrowLeft", maxDate)
+          ? getNewDate(KeyType.ArrowLeft, maxDate)
           : maxDate;
       }
 
       if (isDayDisabled(newSelection, this.props)) {
-        if (eventKey === "PageUp" || eventKey === "Home") {
-          return getNewDate("ArrowRight", newSelection);
+        if (eventKey === KeyType.PageUp || eventKey === KeyType.Home) {
+          return getNewDate(KeyType.ArrowRight, newSelection);
         }
 
-        if (eventKey === "PageDown" || eventKey === "End") {
-          return getNewDate("ArrowLeft", newSelection);
+        if (eventKey === KeyType.PageDown || eventKey === KeyType.End) {
+          return getNewDate(KeyType.ArrowLeft, newSelection);
         }
 
         return getNewDate(eventKey, newSelection);
@@ -1001,12 +1002,12 @@ export default class DatePicker extends Component<
       return newSelection;
     };
 
-    if (eventKey === "Enter") {
+    if (eventKey === KeyType.Enter) {
       event.preventDefault();
       this.handleSelect(copy, event);
       !shouldCloseOnSelect && this.setPreSelection(copy);
       return;
-    } else if (eventKey === "Escape") {
+    } else if (eventKey === KeyType.Escape) {
       event.preventDefault();
 
       this.setOpen(false);
@@ -1018,14 +1019,14 @@ export default class DatePicker extends Component<
 
     let newSelection = null;
     switch (eventKey) {
-      case "ArrowLeft":
-      case "ArrowRight":
-      case "ArrowUp":
-      case "ArrowDown":
-      case "PageUp":
-      case "PageDown":
-      case "Home":
-      case "End":
+      case KeyType.ArrowLeft:
+      case KeyType.ArrowRight:
+      case KeyType.ArrowUp:
+      case KeyType.ArrowDown:
+      case KeyType.PageUp:
+      case KeyType.PageDown:
+      case KeyType.Home:
+      case KeyType.End:
         newSelection = getNewDate(eventKey, copy);
         break;
     }

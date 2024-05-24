@@ -69,6 +69,21 @@ interface LocaleObj
 
 export type Locale = string | LocaleObj;
 
+export enum KeyType {
+  ArrowUp = "ArrowUp",
+  ArrowDown = "ArrowDown",
+  ArrowLeft = "ArrowLeft",
+  ArrowRight = "ArrowRight",
+  PageUp = "PageUp",
+  PageDown = "PageDown",
+  Home = "Home",
+  End = "End",
+  Enter = "Enter",
+  Space = " ",
+  Tab = "Tab",
+  Escape = "Escape",
+}
+
 function getLocaleScope() {
   // Use this cast to avoid messing with users globalThis (like window) and the rest of keys in the globalThis object we don't care about
   const scope = (typeof window !== "undefined"
@@ -1537,6 +1552,5 @@ export function isDateBefore(date: Date, dateToCompare: Date): boolean {
 export function isSpaceKeyDown(
   event: React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
-  const SPACE_KEY = " ";
-  return event.key === SPACE_KEY;
+  return event.key === KeyType.Space;
 }

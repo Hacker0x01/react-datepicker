@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
 import {
+  KeyType,
   addDays,
   addMonths,
   addQuarters,
@@ -517,7 +518,7 @@ export default class Month extends Component<MonthProps> {
 
   triggerKeyboardNavigation = (
     event: React.KeyboardEvent<HTMLDivElement>,
-    eventKey: string,
+    eventKey: KeyType,
     month: number,
   ) => {
     const {
@@ -541,35 +542,35 @@ export default class Month extends Component<MonthProps> {
     const monthsGrid = MONTH_COLUMNS[monthColumnsLayout]?.grid;
 
     const getNewDateAndMonth = (
-      eventKey: string,
+      eventKey: KeyType,
       selectedDate: Date,
       month: number,
     ): { newDate: Date; newMonth: number } => {
       let newDate = selectedDate;
       let newMonth = month;
 
-      if (eventKey === "Enter") {
+      if (eventKey === KeyType.Enter) {
         return { newDate, newMonth };
       }
 
       switch (eventKey) {
-        case "ArrowRight":
+        case KeyType.ArrowRight:
           newDate = addMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET);
           newMonth =
             month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET;
           break;
-        case "ArrowLeft":
+        case KeyType.ArrowLeft:
           newDate = subMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET);
           newMonth =
             month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET;
           break;
-        case "ArrowUp":
+        case KeyType.ArrowUp:
           newDate = subMonths(selectedDate, verticalOffset);
           newMonth = monthsGrid?.[0]?.includes(month)
             ? month + 12 - verticalOffset
             : month - verticalOffset;
           break;
-        case "ArrowDown":
+        case KeyType.ArrowDown:
           newDate = addMonths(selectedDate, verticalOffset);
           newMonth = monthsGrid?.[monthsGrid.length - 1]?.includes(month)
             ? month - 12 + verticalOffset
@@ -579,12 +580,12 @@ export default class Month extends Component<MonthProps> {
 
       // if minDate exists and the new month is before the minimum month, return
       if (minDate && newDate < minDate) {
-        return getNewDateAndMonth("ArrowRight", newDate, newMonth);
+        return getNewDateAndMonth(KeyType.ArrowRight, newDate, newMonth);
       }
 
       // if maxDate exists and the new month is after the maximum month, return
       if (maxDate && newDate > maxDate) {
-        return getNewDateAndMonth("ArrowLeft", newDate, newMonth);
+        return getNewDateAndMonth(KeyType.ArrowLeft, newDate, newMonth);
       }
 
       if (isMonthYearDisabled(newDate, this.props)) {
@@ -601,16 +602,16 @@ export default class Month extends Component<MonthProps> {
     );
 
     switch (eventKey) {
-      case "Enter":
+      case KeyType.Enter:
         if (!this.isMonthDisabled(month)) {
           this.onMonthClick(event, month);
           setPreSelection?.(selected);
         }
         break;
-      case "ArrowRight":
-      case "ArrowLeft":
-      case "ArrowUp":
-      case "ArrowDown":
+      case KeyType.ArrowRight:
+      case KeyType.ArrowLeft:
+      case KeyType.ArrowUp:
+      case KeyType.ArrowDown:
         this.handleMonthNavigation(newMonth, newDate);
         break;
     }
@@ -625,8 +626,8 @@ export default class Month extends Component<MonthProps> {
     month: number,
   ) => {
     const { disabledKeyboardNavigation, handleOnMonthKeyDown } = this.props;
-    const eventKey = event.key;
-    if (eventKey !== "Tab") {
+    const eventKey = event.key as KeyType;
+    if (eventKey !== KeyType.Tab) {
       // preventDefault on tab event blocks focus change
       event.preventDefault();
     }
@@ -677,11 +678,11 @@ export default class Month extends Component<MonthProps> {
     const eventKey = event.key;
     if (!this.props.disabledKeyboardNavigation) {
       switch (eventKey) {
-        case "Enter":
+        case KeyType.Enter:
           this.onQuarterClick(event, quarter);
           this.props.setPreSelection?.(this.props.selected);
           break;
-        case "ArrowRight":
+        case KeyType.ArrowRight:
           if (!this.props.preSelection) {
             break;
           }
@@ -690,7 +691,7 @@ export default class Month extends Component<MonthProps> {
             addQuarters(this.props.preSelection, 1),
           );
           break;
-        case "ArrowLeft":
+        case KeyType.ArrowLeft:
           if (!this.props.preSelection) {
             break;
           }

@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
-import { isSameDay } from "./date_utils";
+import { KeyType, isSameDay } from "./date_utils";
 
 interface WeekNumberProps {
   weekNumber: number;
@@ -45,7 +45,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
 
   handleOnKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const eventKey = event.key;
-    if (eventKey === " ") {
+    if (eventKey === KeyType.Space) {
       event.preventDefault();
       event.key = "Enter";
     }
