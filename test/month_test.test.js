@@ -1180,6 +1180,33 @@ describe("Month", () => {
     const renderQuarters = (props) =>
       render(<Month showQuarterYearPicker {...props} />).container;
 
+    it("should select Q2 when pressing Enter", () => {
+      let preSelected = false;
+      const setPreSelection = (param) => {
+        preSelected = param;
+      };
+
+      const quartersComponent = renderQuarters({
+        selected: utils.newDate("2015-04-01"),
+        day: utils.newDate("2015-04-01"),
+        setPreSelection: setPreSelection,
+        preSelection: utils.newDate("2015-04-01"),
+      });
+      fireEvent.keyDown(
+        quartersComponent.querySelector(".react-datepicker__quarter-2"),
+        getKey("Tab"),
+      );
+
+      fireEvent.keyDown(
+        quartersComponent.querySelector(".react-datepicker__quarter-2"),
+        getKey("Enter"),
+      );
+
+      expect(preSelected.toString()).toBe(
+        utils.newDate("2015-04-01").toString(),
+      );
+    });
+
     it("should trigger setPreSelection and set Q3 as pre-selected on arrowRight", () => {
       let preSelected = false;
       const setPreSelection = (param) => {
