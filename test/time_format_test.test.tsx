@@ -1,8 +1,9 @@
-import React from "react";
-import TimeComponent from "../src/time";
-import * as utils from "../src/date_utils";
-import { ptBR } from "date-fns/locale/pt-BR";
 import { render, waitFor } from "@testing-library/react";
+import { ptBR } from "date-fns/locale/pt-BR";
+import React from "react";
+
+import * as utils from "../src/date_utils";
+import TimeComponent from "../src/time";
 
 describe("TimeComponent", () => {
   utils.registerLocale("pt-BR", ptBR);
@@ -33,7 +34,7 @@ describe("TimeComponent", () => {
       const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.textContent).toBe("00:00");
+      expect(timeListItem?.textContent).toBe("00:00");
     });
 
     it("should format the time based on the default locale (en-US)", async () => {
@@ -120,7 +121,7 @@ describe("TimeComponent", () => {
       const timeListItem = container.querySelector(
         ".react-datepicker__time-list-item--selected",
       );
-      expect(timeListItem.getAttribute("aria-selected")).toBe("true");
+      expect(timeListItem?.getAttribute("aria-selected")).toBe("true");
     });
 
     it("should enable keyboard focus on the selected item", () => {
@@ -132,10 +133,10 @@ describe("TimeComponent", () => {
         />,
       );
 
-      const timeListItem = container.querySelector(
+      const timeListItem = container.querySelector<HTMLElement>(
         ".react-datepicker__time-list-item--selected",
       );
-      expect(timeListItem.tabIndex).toBe(0);
+      expect(timeListItem?.tabIndex).toBe(0);
     });
 
     it("should not add the aria-selected property to a regular item", () => {
@@ -147,10 +148,10 @@ describe("TimeComponent", () => {
         />,
       );
 
-      const timeListItem = container.querySelector(
+      const timeListItem = container.querySelector<HTMLElement>(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.getAttribute("aria-selected")).toBeNull();
+      expect(timeListItem?.getAttribute("aria-selected")).toBeNull();
     });
 
     it("should disable keyboard focus on a regular item", () => {
@@ -162,10 +163,10 @@ describe("TimeComponent", () => {
         />,
       );
 
-      const timeListItem = container.querySelector(
+      const timeListItem = container.querySelector<HTMLElement>(
         ".react-datepicker__time-list-item",
       );
-      expect(timeListItem.tabIndex).toBe(-1);
+      expect(timeListItem?.tabIndex).toBe(-1);
     });
 
     it("when no selected time, should focus the time closest to the opened time", () => {
@@ -176,13 +177,13 @@ describe("TimeComponent", () => {
         />,
       );
 
-      const timeListItem = container.querySelectorAll(
+      const timeListItem = container.querySelectorAll<HTMLElement>(
         ".react-datepicker__time-list-item",
       );
       expect(
-        Array.from(timeListItem).find(
+        Array.from(timeListItem ?? []).find(
           (node) => node.tagName && node.textContent === "09:00",
-        ).tabIndex,
+        )?.tabIndex,
       ).toBe(0);
     });
 
@@ -219,7 +220,7 @@ describe("TimeComponent", () => {
         TimeComponent.calcCenterPosition(200, {
           offsetTop: 0,
           clientHeight: 50,
-        }),
+        } as HTMLLIElement),
       ).toBe(-75);
     });
 
@@ -228,7 +229,7 @@ describe("TimeComponent", () => {
         TimeComponent.calcCenterPosition(200, {
           offsetTop: 150,
           clientHeight: 50,
-        }),
+        } as HTMLLIElement),
       ).toBe(75);
     });
 
@@ -237,7 +238,7 @@ describe("TimeComponent", () => {
         TimeComponent.calcCenterPosition(90, {
           offsetTop: 0,
           clientHeight: 30,
-        }),
+        } as HTMLLIElement),
       ).toBe(-30);
     });
 
@@ -246,7 +247,7 @@ describe("TimeComponent", () => {
         TimeComponent.calcCenterPosition(90, {
           offsetTop: 60,
           clientHeight: 30,
-        }),
+        } as HTMLLIElement),
       ).toBe(30);
     });
   });
