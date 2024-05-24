@@ -881,6 +881,34 @@ export function isMonthInRange(
   return false;
 }
 
+/**
+ * To check if a date's month and year are disabled/excluded
+ * @param date Date to check
+ * @returns {boolean} true if month and year are disabled/excluded, false otherwise
+ */
+export function isMonthYearDisabled(
+  date: Date,
+  props: Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates"
+  > = {},
+): boolean {
+  const { minDate, maxDate, excludeDates, includeDates } = props;
+  return (
+    isOutOfBounds(date, { minDate, maxDate }) ||
+    (excludeDates &&
+      excludeDates.some((excludedDate) =>
+        isSameMonth(
+          excludedDate instanceof Date ? excludedDate : excludedDate.date,
+          date,
+        ),
+      )) ||
+    (includeDates &&
+      !includeDates.some((includedDate) => isSameMonth(includedDate, date))) ||
+    false
+  );
+}
+
 export function isQuarterDisabled(
   quarter: Date,
   {

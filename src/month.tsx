@@ -20,6 +20,7 @@ import {
   isDayExcluded,
   isMonthDisabled,
   isMonthInRange,
+  isMonthYearDisabled,
   isQuarterDisabled,
   isQuarterInRange,
   isSameMonth,
@@ -586,7 +587,7 @@ export default class Month extends Component<MonthProps> {
         return getNewDateAndMonth("ArrowLeft", newDate, newMonth);
       }
 
-      if (this.isMonthDisabled(newDate.getMonth())) {
+      if (isMonthYearDisabled(newDate, this.props)) {
         return getNewDateAndMonth(eventKey, newDate, newMonth);
       }
 
