@@ -940,65 +940,90 @@ export default class DatePicker extends Component<
     const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
-    const getNewDate = (eventKey: string, date: Date): Date => {
-      let newSelection = date;
 
+    const calculateNewDate = (eventKey: KeyType, date: Date): Date => {
+      let newCalculatedDate = date;
       switch (eventKey) {
         case KeyType.ArrowRight:
-          newSelection = showWeekPicker ? addWeeks(date, 1) : addDays(date, 1);
+          newCalculatedDate = showWeekPicker
+            ? addWeeks(date, 1)
+            : addDays(date, 1);
           break;
         case KeyType.ArrowLeft:
-          newSelection = showWeekPicker ? subWeeks(date, 1) : subDays(date, 1);
+          newCalculatedDate = showWeekPicker
+            ? subWeeks(date, 1)
+            : subDays(date, 1);
           break;
         case KeyType.ArrowUp:
-          newSelection = subWeeks(date, 1);
+          newCalculatedDate = subWeeks(date, 1);
           break;
         case KeyType.ArrowDown:
-          newSelection = addWeeks(date, 1);
+          newCalculatedDate = addWeeks(date, 1);
           break;
         case KeyType.PageUp:
-          newSelection = isShiftKeyActive
+          newCalculatedDate = isShiftKeyActive
             ? subYears(date, 1)
             : subMonths(date, 1);
           break;
         case KeyType.PageDown:
-          newSelection = isShiftKeyActive
+          newCalculatedDate = isShiftKeyActive
             ? addYears(date, 1)
             : addMonths(date, 1);
           break;
         case KeyType.Home:
-          newSelection = getStartOfWeek(date, locale, calendarStartDay);
+          newCalculatedDate = getStartOfWeek(date, locale, calendarStartDay);
           break;
         case KeyType.End:
-          newSelection = getEndOfWeek(date);
+          newCalculatedDate = getEndOfWeek(date);
           break;
       }
+      return newCalculatedDate;
+    };
 
-      // if minDate exists and the new selection is before the min date, return
-      if (minDate && newSelection < minDate) {
-        return isDayDisabled(minDate, this.props)
-          ? getNewDate(KeyType.ArrowRight, minDate)
-          : minDate;
-      }
+    const getNewDate = (eventKey: KeyType, date: Date): Date => {
+      let eventKeyCopy = eventKey;
+      let validDateFound = false;
+      let newSelection = calculateNewDate(eventKey, date);
 
-      // if maxDate exists and the new selection is after the max date, return
-      if (maxDate && newSelection > maxDate) {
-        return isDayDisabled(maxDate, this.props)
-          ? getNewDate(KeyType.ArrowLeft, maxDate)
-          : maxDate;
-      }
-
-      if (isDayDisabled(newSelection, this.props)) {
-        if (eventKey === KeyType.PageUp || eventKey === KeyType.Home) {
-          return getNewDate(KeyType.ArrowRight, newSelection);
+      while (!validDateFound) {
+        // if minDate exists and the new selection is before the min date, get the nearest date that isn't disabled
+        if (minDate && newSelection < minDate) {
+          eventKeyCopy = KeyType.ArrowRight;
+          newSelection = isDayDisabled(minDate, this.props)
+            ? calculateNewDate(eventKeyCopy, newSelection)
+            : minDate;
         }
 
-        if (eventKey === KeyType.PageDown || eventKey === KeyType.End) {
-          return getNewDate(KeyType.ArrowLeft, newSelection);
+        // if maxDate exists and the new selection is after the max date, get the nearest date that isn't disabled
+        if (maxDate && newSelection > maxDate) {
+          eventKeyCopy = KeyType.ArrowLeft;
+          newSelection = isDayDisabled(maxDate, this.props)
+            ? calculateNewDate(eventKeyCopy, newSelection)
+            : maxDate;
         }
 
-        return getNewDate(eventKey, newSelection);
+        if (isDayDisabled(newSelection, this.props)) {
+          // if PageUp and Home is pressed to a disabled date, it will try to find the next available date after
+          if (
+            eventKeyCopy === KeyType.PageUp ||
+            eventKeyCopy === KeyType.Home
+          ) {
+            eventKeyCopy = KeyType.ArrowRight;
+          }
+
+          // if PageDown and End is pressed to a disabled date, it will try to find the next available date before
+          if (
+            eventKeyCopy === KeyType.PageDown ||
+            eventKeyCopy === KeyType.End
+          ) {
+            eventKeyCopy = KeyType.ArrowLeft;
+          }
+          newSelection = calculateNewDate(eventKeyCopy, newSelection);
+        } else {
+          validDateFound = true;
+        }
       }
+
       return newSelection;
     };
 
