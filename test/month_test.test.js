@@ -1176,7 +1176,7 @@ describe("Month", () => {
     });
   });
 
-  describe("Keyboard navigation", () => {
+  describe("Quarters keyboard navigation", () => {
     const renderQuarters = (props) =>
       render(<Month showQuarterYearPicker {...props} />).container;
 
@@ -2164,6 +2164,33 @@ describe("Month", () => {
 
         expect(preSelected.toString()).toBe(
           utils.newDate("2015-11-01").toString(),
+        );
+      });
+
+      it("should not navigate to any date when all dates are disabled (edge case)", () => {
+        const date = utils.newDate("2015-05-01");
+        let preSelected = false;
+        const setPreSelection = (param) => {
+          preSelected = param;
+        };
+
+        const monthComponent = renderMonth({
+          selected: date,
+          day: date,
+          setPreSelection,
+          preSelection: date,
+          minDate: date,
+          maxDate: date,
+          excludeDates: [date],
+        });
+
+        fireEvent.keyDown(
+          monthComponent.querySelector(".react-datepicker__month-4"),
+          getKey("ArrowDown"),
+        );
+
+        expect(preSelected.toString()).toBe(
+          utils.newDate("2015-05-01").toString(),
         );
       });
     });

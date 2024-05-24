@@ -589,8 +589,10 @@ export default class Month extends Component<MonthProps> {
       selectedDate: Date,
       month: number,
     ): { newCalculatedDate: Date; newCalculatedMonth: number } => {
+      const MAX_ITERATIONS = 40;
       let eventKeyCopy = eventKey;
       let validDateFound = false;
+      let iterations = 0;
       let { newCalculatedDate, newCalculatedMonth } = calculateNewDateAndMonth(
         eventKeyCopy,
         selectedDate,
@@ -598,6 +600,11 @@ export default class Month extends Component<MonthProps> {
       );
 
       while (!validDateFound) {
+        if (iterations >= MAX_ITERATIONS) {
+          newCalculatedDate = selectedDate;
+          newCalculatedMonth = month;
+          break;
+        }
         // if minDate exists and the new month is before the minimum month, it will try to find the next available month after
         if (minDate && newCalculatedDate < minDate) {
           eventKeyCopy = KeyType.ArrowRight;
@@ -633,6 +640,7 @@ export default class Month extends Component<MonthProps> {
         } else {
           validDateFound = true;
         }
+        iterations++;
       }
 
       return { newCalculatedDate, newCalculatedMonth };

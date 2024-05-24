@@ -981,11 +981,17 @@ export default class DatePicker extends Component<
     };
 
     const getNewDate = (eventKey: KeyType, date: Date): Date => {
+      const MAX_ITERATIONS = 40;
       let eventKeyCopy = eventKey;
       let validDateFound = false;
+      let iterations = 0;
       let newSelection = calculateNewDate(eventKey, date);
 
       while (!validDateFound) {
+        if (iterations >= MAX_ITERATIONS) {
+          newSelection = date;
+          break;
+        }
         // if minDate exists and the new selection is before the min date, get the nearest date that isn't disabled
         if (minDate && newSelection < minDate) {
           eventKeyCopy = KeyType.ArrowRight;
@@ -1022,6 +1028,7 @@ export default class DatePicker extends Component<
         } else {
           validDateFound = true;
         }
+        iterations++;
       }
 
       return newSelection;
