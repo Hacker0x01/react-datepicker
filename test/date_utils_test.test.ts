@@ -1392,6 +1392,13 @@ describe("date_utils", () => {
       ).toBe(false);
     });
 
+    it("should return false if two dates have the same month but different years", () => {
+      const date = new Date(2021, 5, 1);
+      expect(
+        isMonthYearDisabled(date, { excludeDates: [new Date(2023, 5, 1)] }),
+      ).toBe(false);
+    });
+
     it("should return false by default", () => {
       const date = new Date(new Date(2023, 3, 1));
       expect(isMonthYearDisabled(date)).toBe(false);
