@@ -1,8 +1,10 @@
-import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
+import React from "react";
+
 import DatePicker from "../src/index";
-import InputTimeComponent from "../src/input_time.tsx";
-import CustomTimeInput from "./helper_components/custom_time_input.jsx";
+import InputTimeComponent from "../src/input_time";
+
+import CustomTimeInput from "./helper_components/custom_time_input";
 
 describe("timeInput", () => {
   afterEach(() => {
@@ -22,15 +24,17 @@ describe("timeInput", () => {
       <InputTimeComponent timeInputLabel="Custom time" />,
     );
     const caption = container.querySelector(".react-datepicker-time__caption");
-    expect(caption.textContent).toEqual("Custom time");
+    expect(caption?.textContent).toEqual("Custom time");
   });
 
   it("should trigger onChange event", () => {
     const onChangeSpy = jest.fn();
     const { container } = render(<InputTimeComponent onChange={onChangeSpy} />);
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: "13:00" } });
-    expect(input.value).toEqual("13:00");
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: "13:00" },
+    });
+    expect(input?.value).toEqual("13:00");
   });
 
   it("should retain the focus on onChange event", () => {
@@ -41,13 +45,15 @@ describe("timeInput", () => {
     const input = container.querySelector("input");
 
     act(() => {
-      input.focus();
+      input?.focus();
     });
     expect(document.activeElement).toBe(input);
 
-    fireEvent.change(input, { target: { value: "13:00" } });
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: "13:00" },
+    });
 
-    expect(input.value).toEqual("13:00");
+    expect(input?.value).toEqual("13:00");
     expect(document.activeElement).toBe(input);
   });
 
@@ -56,8 +62,8 @@ describe("timeInput", () => {
       <InputTimeComponent timeString="13:00" onChange={() => {}} />,
     );
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: "" } });
-    expect(input.value).toEqual("13:00");
+    fireEvent.change(input ?? new HTMLElement(), { target: { value: "" } });
+    expect(input?.value).toEqual("13:00");
   });
 
   it("should trigger onChange event on a custom time input without using the last valid timeString", () => {
@@ -74,12 +80,14 @@ describe("timeInput", () => {
 
     const newTime = "14:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: newTime } });
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: newTime },
+    });
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(expectedHours);
-    expectedDate.setMinutes(expectedMinutes);
+    expectedDate.setHours(parseInt(expectedHours));
+    expectedDate.setMinutes(parseInt(expectedMinutes));
 
     expect(onChangeSpy).toHaveBeenCalledWith(expectedDate);
   });
@@ -97,7 +105,9 @@ describe("timeInput", () => {
 
     const newTime = "14:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: newTime } });
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: newTime },
+    });
 
     expect(onTimeChangeSpy).toHaveBeenCalledWith(mockDate);
   });
@@ -112,12 +122,14 @@ describe("timeInput", () => {
 
     const newTime = "13:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: newTime } });
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: newTime },
+    });
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(expectedHours);
-    expectedDate.setMinutes(expectedMinutes);
+    expectedDate.setHours(parseInt(expectedHours));
+    expectedDate.setMinutes(parseInt(expectedMinutes));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
   });
@@ -135,12 +147,14 @@ describe("timeInput", () => {
 
     const newTime = "13:00";
     const input = container.querySelector("input");
-    fireEvent.change(input, { target: { value: newTime } });
+    fireEvent.change(input ?? new HTMLElement(), {
+      target: { value: newTime },
+    });
 
     const expectedDate = new Date(mockCurrentDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(expectedHours);
-    expectedDate.setMinutes(expectedMinutes);
+    expectedDate.setHours(parseInt(expectedHours));
+    expectedDate.setMinutes(parseInt(expectedMinutes));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
 
