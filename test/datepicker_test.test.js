@@ -3292,4 +3292,188 @@ describe("DatePicker", () => {
       expect(onYearMouseLeaveSpy).toHaveBeenCalled();
     });
   });
+
+  describe("Week picker", () => {
+    describe("Keyboard navigation", () => {
+      it("should navigate to the previous week when pressing ArrowUp", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowUp"));
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-01"), data.testFormat));
+      });
+      it("should navigate to the previous week when pressing ArrowLeft", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowLeft"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-01"), data.testFormat));
+      });
+      it("should navigate to the next week when pressing ArrowDown", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowDown"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-15"), data.testFormat));
+      });
+      it("should navigate to the next week when pressing ArrowRight", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowRight"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-15"), data.testFormat));
+      });
+      it("should skip excluded week when pressing ArrowUp", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-02-01"), end: new Date("2021-02-07") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowUp"));
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-01-25"), data.testFormat));
+      });
+      it("should skip excluded week when pressing ArrowLeft", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-02-01"), end: new Date("2021-02-07") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowLeft"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-01-25"), data.testFormat));
+      });
+      it("should skip excluded week when pressing ArrowDown", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-02-15"), end: new Date("2021-02-21") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowDown"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-22"), data.testFormat));
+      });
+      it("should skip excluded week when pressing ArrowRight", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-02-15"), end: new Date("2021-02-21") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowRight"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-02-22"), data.testFormat));
+      });
+      it("should move to the next available week after pressing PageUp to a disabled date", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-01-04"), end: new Date("2021-01-10") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("PageUp"));
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-01-15"), data.testFormat));
+      });
+      it("should move to the previous available week after pressing PageDown to a disabled date", () => {
+        const date = new Date("2021-02-08");
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          excludeDateIntervals: [
+            { start: new Date("2021-03-08"), end: new Date("2021-03-14") },
+          ],
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("PageDown"),
+        );
+        expect(
+          utils.formatDate(data.instance.state.preSelection, data.testFormat),
+        ).toBe(utils.formatDate(new Date("2021-03-01"), data.testFormat));
+      });
+    });
+  });
 });
