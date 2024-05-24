@@ -82,6 +82,7 @@ import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import WeekPicker from "../../examples/weekPicker";
+import ExcludeWeeks from "../../examples/excludeWeeks";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -544,6 +545,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Week Picker",
       component: WeekPicker,
+    },
+    {
+      title: "Exclude Weeks",
+      component: ExcludeWeeks,
     },
     {
       title: "External Form",
