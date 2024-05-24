@@ -516,7 +516,7 @@ export default class Month extends Component<MonthProps> {
     this.MONTH_REFS[newMonth]?.current?.focus();
   };
 
-  triggerKeyboardNavigation = (
+  handleKeyboardNavigation = (
     event: React.KeyboardEvent<HTMLDivElement>,
     eventKey: KeyType,
     month: number,
@@ -541,78 +541,123 @@ export default class Month extends Component<MonthProps> {
 
     const monthsGrid = MONTH_COLUMNS[monthColumnsLayout]?.grid;
 
-    const getNewDateAndMonth = (
+    const calculateNewDateAndMonth = (
       eventKey: KeyType,
-      selectedDate: Date,
+      date: Date,
       month: number,
-    ): { newDate: Date; newMonth: number } => {
-      let newDate = selectedDate;
-      let newMonth = month;
-
-      if (eventKey === KeyType.Enter) {
-        return { newDate, newMonth };
-      }
-
+    ): { newCalculatedDate: Date; newCalculatedMonth: number } => {
+      let newCalculatedDate = date;
+      let newCalculatedMonth = month;
       switch (eventKey) {
         case KeyType.ArrowRight:
-          newDate = addMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET);
-          newMonth =
+          newCalculatedDate = addMonths(
+            date,
+            MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+          );
+          newCalculatedMonth =
             month === 11 ? 0 : month + MONTH_NAVIGATION_HORIZONTAL_OFFSET;
           break;
         case KeyType.ArrowLeft:
-          newDate = subMonths(selectedDate, MONTH_NAVIGATION_HORIZONTAL_OFFSET);
-          newMonth =
+          newCalculatedDate = subMonths(
+            date,
+            MONTH_NAVIGATION_HORIZONTAL_OFFSET,
+          );
+          newCalculatedMonth =
             month === 0 ? 11 : month - MONTH_NAVIGATION_HORIZONTAL_OFFSET;
           break;
         case KeyType.ArrowUp:
-          newDate = subMonths(selectedDate, verticalOffset);
-          newMonth = monthsGrid?.[0]?.includes(month)
+          newCalculatedDate = subMonths(date, verticalOffset);
+          newCalculatedMonth = monthsGrid?.[0]?.includes(month)
             ? month + 12 - verticalOffset
             : month - verticalOffset;
           break;
         case KeyType.ArrowDown:
-          newDate = addMonths(selectedDate, verticalOffset);
-          newMonth = monthsGrid?.[monthsGrid.length - 1]?.includes(month)
+          newCalculatedDate = addMonths(date, verticalOffset);
+          newCalculatedMonth = monthsGrid?.[monthsGrid.length - 1]?.includes(
+            month,
+          )
             ? month - 12 + verticalOffset
             : month + verticalOffset;
           break;
       }
 
-      // if minDate exists and the new month is before the minimum month, return
-      if (minDate && newDate < minDate) {
-        return getNewDateAndMonth(KeyType.ArrowRight, newDate, newMonth);
-      }
-
-      // if maxDate exists and the new month is after the maximum month, return
-      if (maxDate && newDate > maxDate) {
-        return getNewDateAndMonth(KeyType.ArrowLeft, newDate, newMonth);
-      }
-
-      if (isMonthYearDisabled(newDate, this.props)) {
-        return getNewDateAndMonth(eventKey, newDate, newMonth);
-      }
-
-      return { newDate, newMonth };
+      return { newCalculatedDate, newCalculatedMonth };
     };
 
-    const { newDate, newMonth } = getNewDateAndMonth(
+    const getNewDateAndMonth = (
+      eventKey: KeyType,
+      selectedDate: Date,
+      month: number,
+    ): { newCalculatedDate: Date; newCalculatedMonth: number } => {
+      let eventKeyCopy = eventKey;
+      let validDateFound = false;
+      let { newCalculatedDate, newCalculatedMonth } = calculateNewDateAndMonth(
+        eventKeyCopy,
+        selectedDate,
+        month,
+      );
+
+      while (!validDateFound) {
+        // if minDate exists and the new month is before the minimum month, it will try to find the next available month after
+        if (minDate && newCalculatedDate < minDate) {
+          eventKeyCopy = KeyType.ArrowRight;
+          const obj = calculateNewDateAndMonth(
+            eventKeyCopy,
+            newCalculatedDate,
+            newCalculatedMonth,
+          );
+          newCalculatedDate = obj.newCalculatedDate;
+          newCalculatedMonth = obj.newCalculatedMonth;
+        }
+
+        // if maxDate exists and the new month is after the maximum month, it will try to find the next available month before
+        if (maxDate && newCalculatedDate > maxDate) {
+          eventKeyCopy = KeyType.ArrowLeft;
+          const obj = calculateNewDateAndMonth(
+            eventKeyCopy,
+            newCalculatedDate,
+            newCalculatedMonth,
+          );
+          newCalculatedDate = obj.newCalculatedDate;
+          newCalculatedMonth = obj.newCalculatedMonth;
+        }
+
+        if (isMonthYearDisabled(newCalculatedDate, this.props)) {
+          const obj = calculateNewDateAndMonth(
+            eventKeyCopy,
+            newCalculatedDate,
+            newCalculatedMonth,
+          );
+          newCalculatedDate = obj.newCalculatedDate;
+          newCalculatedMonth = obj.newCalculatedMonth;
+        } else {
+          validDateFound = true;
+        }
+      }
+
+      return { newCalculatedDate, newCalculatedMonth };
+    };
+
+    if (eventKey === KeyType.Enter) {
+      if (!this.isMonthDisabled(month)) {
+        this.onMonthClick(event, month);
+        setPreSelection?.(selected);
+      }
+      return;
+    }
+
+    const { newCalculatedDate, newCalculatedMonth } = getNewDateAndMonth(
       eventKey,
       preSelection,
       month,
     );
 
     switch (eventKey) {
-      case KeyType.Enter:
-        if (!this.isMonthDisabled(month)) {
-          this.onMonthClick(event, month);
-          setPreSelection?.(selected);
-        }
-        break;
       case KeyType.ArrowRight:
       case KeyType.ArrowLeft:
       case KeyType.ArrowUp:
       case KeyType.ArrowDown:
-        this.handleMonthNavigation(newMonth, newDate);
+        this.handleMonthNavigation(newCalculatedMonth, newCalculatedDate);
         break;
     }
   };
@@ -632,7 +677,7 @@ export default class Month extends Component<MonthProps> {
       event.preventDefault();
     }
     if (!disabledKeyboardNavigation) {
-      this.triggerKeyboardNavigation(event, eventKey, month);
+      this.handleKeyboardNavigation(event, eventKey, month);
     }
 
     handleOnMonthKeyDown && handleOnMonthKeyDown(event);
