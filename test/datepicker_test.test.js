@@ -1244,6 +1244,38 @@ describe("DatePicker", () => {
     ).toBe(utils.formatDate(new Date("2024-05-10"), data.testFormat));
   });
 
+  it("using keyboard, should not navigate to excluded date when excluded date and minDate are the same (edge case)", () => {
+    const date = new Date("2024-05-03");
+    const data = getOnInputKeyDownStuff({
+      minDate: new Date("2024-05-02"),
+      excludeDates: [new Date("2024-05-02")],
+      selected: date,
+      preSelection: date,
+    });
+
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("PageUp"));
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(new Date("2024-05-03"), data.testFormat));
+  });
+
+  it("using keyboard, should not navigate to excluded date when excluded date and maxDate are the same (edge case)", () => {
+    const date = new Date("2024-05-03");
+    const data = getOnInputKeyDownStuff({
+      maxDate: new Date("2024-05-04"),
+      excludeDates: [new Date("2024-05-04")],
+      selected: date,
+      preSelection: date,
+    });
+
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("PageDown"));
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(new Date("2024-05-03"), data.testFormat));
+  });
+
   it("should call onMonthChange when keyboard navigation moves preSelection to different month", () => {
     const onMonthChangeSpy = jest.fn();
     const opts = { onMonthChange: onMonthChangeSpy };
