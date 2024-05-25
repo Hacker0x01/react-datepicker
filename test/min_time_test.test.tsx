@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import DatePicker from "../src/index";
 import { fireEvent, render } from "@testing-library/react";
+import React, { useState } from "react";
+
+import DatePicker from "../src/index";
 
 const DatePickerWithState = (props) => {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<Date | null>(null);
   return (
     <DatePicker
       open
@@ -55,7 +56,7 @@ describe("Datepicker minTime", () => {
     const { container } = render(
       <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
     );
-    const input = container.querySelector("input");
+    const input = container.querySelector("input") ?? new HTMLInputElement();
     fireEvent.change(input, { target: { value: "2023-03-10 16:00" } });
     fireEvent.focusOut(input);
 
