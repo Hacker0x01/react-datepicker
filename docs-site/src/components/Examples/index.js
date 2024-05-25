@@ -31,6 +31,7 @@ import ExcludeDates from "../../examples/excludeDates";
 import ExcludedWithMessage from "../../examples/excludeDatesWithMessage";
 import ExcludeDateIntervals from "../../examples/excludeDateIntervals";
 import ExcludeDatesMonthPicker from "../../examples/excludeDatesMonthPicker";
+import ExcludeDatesRangeMonthPicker from "../../examples/excludeDatesRangeMonthPicker";
 import HighlightDates from "../../examples/highlightDates";
 import HolidayDates from "../../examples/holidayDates";
 import HighlightDatesRanges from "../../examples/highlightDatesRanges";
@@ -81,6 +82,7 @@ import TimeInput from "../../examples/timeInput";
 import StrictParsing from "../../examples/strictParsing";
 import MonthPicker from "../../examples/monthPicker";
 import WeekPicker from "../../examples/weekPicker";
+import ExcludeWeeks from "../../examples/excludeWeeks";
 import monthPickerFullName from "../../examples/monthPickerFullName";
 import monthPickerTwoColumns from "../../examples/monthPickerTwoColumns";
 import monthPickerFourColumns from "../../examples/monthPickerFourColumns";
@@ -285,6 +287,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Exclude Months in Month Picker",
       component: ExcludeDatesMonthPicker,
+    },
+    {
+      title: "Exclude Months in Range Month Picker",
+      component: ExcludeDatesRangeMonthPicker,
     },
     {
       title: "Exclude Times",
@@ -539,6 +545,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Week Picker",
       component: WeekPicker,
+    },
+    {
+      title: "Exclude Weeks",
+      component: ExcludeWeeks,
     },
     {
       title: "External Form",

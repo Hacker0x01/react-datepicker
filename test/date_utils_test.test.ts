@@ -50,6 +50,7 @@ import {
   isDateBefore,
   getMidnightDate,
   registerLocale,
+  isMonthYearDisabled,
 } from "../src/date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1354,6 +1355,53 @@ describe("date_utils", () => {
 
         isDateBefore(invalidDate, validDate);
       }).toThrow();
+    });
+  });
+
+  describe("isMonthYearDisabled", () => {
+    const props = {
+      minDate: new Date(2023, 2, 1),
+      maxDate: new Date(2023, 11, 31),
+      excludeDates: [new Date(2023, 5, 1)],
+    };
+
+    it("should return true if month is disabled", () => {
+      const date = new Date(new Date(2023, 5, 1));
+      expect(isMonthYearDisabled(date, props)).toBe(true);
+    });
+
+    it("should return true if month is before the min date", () => {
+      const date = new Date(new Date(2023, 1, 1));
+      expect(isMonthYearDisabled(date, props)).toBe(true);
+    });
+
+    it("should return true if month is after the max date", () => {
+      const date = new Date(new Date(2024, 1, 1));
+      expect(isMonthYearDisabled(date, props)).toBe(true);
+    });
+
+    it("should return false if month is not disabled", () => {
+      const date = new Date(new Date(2023, 3, 1));
+      expect(isMonthYearDisabled(date, props)).toBe(false);
+    });
+
+    it("should return false if month is in include dates", () => {
+      const date = new Date(2024, 2, 1);
+      expect(
+        isMonthYearDisabled(date, { includeDates: [new Date(2024, 2, 1)] }),
+      ).toBe(false);
+    });
+
+    it("should return false if two dates have the same month but different years", () => {
+      const date = new Date(2021, 5, 1);
+      expect(
+        isMonthYearDisabled(date, { excludeDates: [new Date(2023, 5, 1)] }),
+      ).toBe(false);
+    });
+
+    it("should return false by default", () => {
+      const date = new Date(new Date(2023, 3, 1));
+      expect(isMonthYearDisabled(date)).toBe(false);
     });
   });
 });

@@ -53,6 +53,7 @@ import {
   getEndOfDay,
   type HighlightDate,
   type HolidayItem,
+  KeyType,
 } from "./date_utils";
 import PopperComponent from "./popper_component";
 import Portal from "./portal";
@@ -845,9 +846,9 @@ export default class DatePicker extends Component<
       !this.props.preventOpenOnFocus
     ) {
       if (
-        eventKey === "ArrowDown" ||
-        eventKey === "ArrowUp" ||
-        eventKey === "Enter"
+        eventKey === KeyType.ArrowDown ||
+        eventKey === KeyType.ArrowUp ||
+        eventKey === KeyType.Enter
       ) {
         this.onInputClick();
       }
@@ -856,7 +857,7 @@ export default class DatePicker extends Component<
 
     // if calendar is open, these keys will focus the selected item
     if (this.state.open) {
-      if (eventKey === "ArrowDown" || eventKey === "ArrowUp") {
+      if (eventKey === KeyType.ArrowDown || eventKey === KeyType.ArrowUp) {
         event.preventDefault();
         const selectorString = this.props.showTimeSelectOnly
           ? ".react-datepicker__time-list-item[tabindex='0']"
@@ -922,95 +923,170 @@ export default class DatePicker extends Component<
 
   // keyDown events passed down to day.jsx
   onDayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const {
+      minDate,
+      maxDate,
+      disabledKeyboardNavigation,
+      showWeekPicker,
+      shouldCloseOnSelect,
+      locale,
+      calendarStartDay,
+      adjustDateOnChange,
+      inline,
+    } = this.props;
     this.props.onKeyDown?.(event);
-    const eventKey = event.key;
+    if (disabledKeyboardNavigation) return;
+    const eventKey = event.key as KeyType;
     const isShiftKeyActive = event.shiftKey;
 
     const copy = newDate(this.state.preSelection);
-    if (eventKey === "Enter") {
+
+    const calculateNewDate = (eventKey: KeyType, date: Date): Date => {
+      let newCalculatedDate = date;
+      switch (eventKey) {
+        case KeyType.ArrowRight:
+          newCalculatedDate = showWeekPicker
+            ? addWeeks(date, 1)
+            : addDays(date, 1);
+          break;
+        case KeyType.ArrowLeft:
+          newCalculatedDate = showWeekPicker
+            ? subWeeks(date, 1)
+            : subDays(date, 1);
+          break;
+        case KeyType.ArrowUp:
+          newCalculatedDate = subWeeks(date, 1);
+          break;
+        case KeyType.ArrowDown:
+          newCalculatedDate = addWeeks(date, 1);
+          break;
+        case KeyType.PageUp:
+          newCalculatedDate = isShiftKeyActive
+            ? subYears(date, 1)
+            : subMonths(date, 1);
+          break;
+        case KeyType.PageDown:
+          newCalculatedDate = isShiftKeyActive
+            ? addYears(date, 1)
+            : addMonths(date, 1);
+          break;
+        case KeyType.Home:
+          newCalculatedDate = getStartOfWeek(date, locale, calendarStartDay);
+          break;
+        case KeyType.End:
+          newCalculatedDate = getEndOfWeek(date);
+          break;
+      }
+      return newCalculatedDate;
+    };
+
+    const getNewDate = (eventKey: KeyType, date: Date): Date => {
+      const MAX_ITERATIONS = 40;
+      let eventKeyCopy = eventKey;
+      let validDateFound = false;
+      let iterations = 0;
+      let newSelection = calculateNewDate(eventKey, date);
+
+      while (!validDateFound) {
+        if (iterations >= MAX_ITERATIONS) {
+          newSelection = date;
+          break;
+        }
+        // if minDate exists and the new selection is before the min date, get the nearest date that isn't disabled
+        if (minDate && newSelection < minDate) {
+          eventKeyCopy = KeyType.ArrowRight;
+          newSelection = isDayDisabled(minDate, this.props)
+            ? calculateNewDate(eventKeyCopy, newSelection)
+            : minDate;
+        }
+
+        // if maxDate exists and the new selection is after the max date, get the nearest date that isn't disabled
+        if (maxDate && newSelection > maxDate) {
+          eventKeyCopy = KeyType.ArrowLeft;
+          newSelection = isDayDisabled(maxDate, this.props)
+            ? calculateNewDate(eventKeyCopy, newSelection)
+            : maxDate;
+        }
+
+        if (isDayDisabled(newSelection, this.props)) {
+          // if PageUp and Home is pressed to a disabled date, it will try to find the next available date after
+          if (
+            eventKeyCopy === KeyType.PageUp ||
+            eventKeyCopy === KeyType.Home
+          ) {
+            eventKeyCopy = KeyType.ArrowRight;
+          }
+
+          // if PageDown and End is pressed to a disabled date, it will try to find the next available date before
+          if (
+            eventKeyCopy === KeyType.PageDown ||
+            eventKeyCopy === KeyType.End
+          ) {
+            eventKeyCopy = KeyType.ArrowLeft;
+          }
+          newSelection = calculateNewDate(eventKeyCopy, newSelection);
+        } else {
+          validDateFound = true;
+        }
+        iterations++;
+      }
+
+      return newSelection;
+    };
+
+    if (eventKey === KeyType.Enter) {
       event.preventDefault();
       this.handleSelect(copy, event);
-      !this.props.shouldCloseOnSelect && this.setPreSelection(copy);
-    } else if (eventKey === "Escape") {
+      !shouldCloseOnSelect && this.setPreSelection(copy);
+      return;
+    } else if (eventKey === KeyType.Escape) {
       event.preventDefault();
 
       this.setOpen(false);
       if (!this.inputOk()) {
         this.props.onInputError?.({ code: 1, msg: INPUT_ERR_1 });
       }
-    } else if (!this.props.disabledKeyboardNavigation) {
-      let newSelection;
-      switch (eventKey) {
-        case "ArrowLeft":
-          if (this.props.showWeekPicker) {
-            newSelection = subWeeks(copy, 1);
-          } else {
-            newSelection = subDays(copy, 1);
-          }
-          break;
-        case "ArrowRight":
-          if (this.props.showWeekPicker) {
-            newSelection = addWeeks(copy, 1);
-          } else {
-            newSelection = addDays(copy, 1);
-          }
-          break;
-        case "ArrowUp":
-          newSelection = subWeeks(copy, 1);
-          break;
-        case "ArrowDown":
-          newSelection = addWeeks(copy, 1);
-          break;
-        case "PageUp":
-          newSelection = isShiftKeyActive
-            ? subYears(copy, 1)
-            : subMonths(copy, 1);
-          break;
-        case "PageDown":
-          newSelection = isShiftKeyActive
-            ? addYears(copy, 1)
-            : addMonths(copy, 1);
-          break;
-        case "Home":
-          newSelection = getStartOfWeek(
-            copy,
-            this.props.locale,
-            this.props.calendarStartDay,
-          );
-          break;
-        case "End":
-          newSelection = getEndOfWeek(copy);
-          break;
-        default:
-          newSelection = null;
-          break;
-      }
-      if (!newSelection) {
-        if (this.props.onInputError) {
-          this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
-        }
-        return;
-      }
-      event.preventDefault();
-      this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
-      if (this.props.adjustDateOnChange) {
-        this.setSelected(newSelection);
-      }
-      this.setPreSelection(newSelection);
-      // need to figure out whether month has changed to focus day in inline version
-      if (this.props.inline) {
-        const prevMonth = getMonth(copy);
-        const newMonth = getMonth(newSelection);
-        const prevYear = getYear(copy);
-        const newYear = getYear(newSelection);
+      return;
+    }
 
-        if (prevMonth !== newMonth || prevYear !== newYear) {
-          // month has changed
-          this.setState({ shouldFocusDayInline: true });
-        } else {
-          // month hasn't changed
-          this.setState({ shouldFocusDayInline: false });
-        }
+    let newSelection = null;
+    switch (eventKey) {
+      case KeyType.ArrowLeft:
+      case KeyType.ArrowRight:
+      case KeyType.ArrowUp:
+      case KeyType.ArrowDown:
+      case KeyType.PageUp:
+      case KeyType.PageDown:
+      case KeyType.Home:
+      case KeyType.End:
+        newSelection = getNewDate(eventKey, copy);
+        break;
+    }
+    if (!newSelection) {
+      if (this.props.onInputError) {
+        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
+      }
+      return;
+    }
+    event.preventDefault();
+    this.setState({ lastPreSelectChange: PRESELECT_CHANGE_VIA_NAVIGATE });
+    if (adjustDateOnChange) {
+      this.setSelected(newSelection);
+    }
+    this.setPreSelection(newSelection);
+    // need to figure out whether month has changed to focus day in inline version
+    if (inline) {
+      const prevMonth = getMonth(copy);
+      const newMonth = getMonth(newSelection);
+      const prevYear = getYear(copy);
+      const newYear = getYear(newSelection);
+
+      if (prevMonth !== newMonth || prevYear !== newYear) {
+        // month has changed
+        this.setState({ shouldFocusDayInline: true });
+      } else {
+        // month hasn't changed
+        this.setState({ shouldFocusDayInline: false });
       }
     }
   };

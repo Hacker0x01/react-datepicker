@@ -20,6 +20,7 @@ import {
   type DateNumberType,
   type Locale,
   type HolidaysMap,
+  KeyType,
 } from "./date_utils";
 
 interface DayProps
@@ -167,7 +168,7 @@ export default class Day extends Component<DayProps> {
 
   handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
     const eventKey = event.key;
-    if (eventKey === " ") {
+    if (eventKey === KeyType.Space) {
       event.preventDefault();
       event.key = "Enter";
     }

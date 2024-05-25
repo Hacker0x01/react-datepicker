@@ -15,6 +15,7 @@ import {
   getSeconds,
   type Locale,
   type TimeFilterOptions,
+  KeyType,
 } from "./date_utils";
 
 interface TimeProps
@@ -152,13 +153,13 @@ export default class Time extends Component<TimeProps, TimeState> {
     event: React.KeyboardEvent<HTMLLIElement>,
     time: Date,
   ): void => {
-    if (event.key === " ") {
+    if (event.key === KeyType.Space) {
       event.preventDefault();
-      event.key = "Enter";
+      event.key = KeyType.Enter;
     }
 
     if (
-      (event.key === "ArrowUp" || event.key === "ArrowLeft") &&
+      (event.key === KeyType.ArrowUp || event.key === KeyType.ArrowLeft) &&
       event.target instanceof HTMLElement &&
       event.target.previousSibling
     ) {
@@ -167,7 +168,7 @@ export default class Time extends Component<TimeProps, TimeState> {
         event.target.previousSibling.focus();
     }
     if (
-      (event.key === "ArrowDown" || event.key === "ArrowRight") &&
+      (event.key === KeyType.ArrowDown || event.key === KeyType.ArrowRight) &&
       event.target instanceof HTMLElement &&
       event.target.nextSibling
     ) {
@@ -176,7 +177,7 @@ export default class Time extends Component<TimeProps, TimeState> {
         event.target.nextSibling.focus();
     }
 
-    if (event.key === "Enter") {
+    if (event.key === KeyType.Enter) {
       this.handleClick(time);
     }
     this.props.handleOnKeyDown?.(event);

@@ -69,6 +69,21 @@ interface LocaleObj
 
 export type Locale = string | LocaleObj;
 
+export enum KeyType {
+  ArrowUp = "ArrowUp",
+  ArrowDown = "ArrowDown",
+  ArrowLeft = "ArrowLeft",
+  ArrowRight = "ArrowRight",
+  PageUp = "PageUp",
+  PageDown = "PageDown",
+  Home = "Home",
+  End = "End",
+  Enter = "Enter",
+  Space = " ",
+  Tab = "Tab",
+  Escape = "Escape",
+}
+
 function getLocaleScope() {
   // Use this cast to avoid messing with users globalThis (like window) and the rest of keys in the globalThis object we don't care about
   const scope = (typeof window !== "undefined"
@@ -881,6 +896,38 @@ export function isMonthInRange(
   return false;
 }
 
+/**
+ * To check if a date's month and year are disabled/excluded
+ * @param date Date to check
+ * @returns {boolean} true if month and year are disabled/excluded, false otherwise
+ */
+export function isMonthYearDisabled(
+  date: Date,
+  {
+    minDate,
+    maxDate,
+    excludeDates,
+    includeDates,
+  }: Pick<
+    DateFilterOptions,
+    "minDate" | "maxDate" | "excludeDates" | "includeDates"
+  > = {},
+): boolean {
+  return (
+    isOutOfBounds(date, { minDate, maxDate }) ||
+    (excludeDates &&
+      excludeDates.some((excludedDate) =>
+        isSameMonth(
+          excludedDate instanceof Date ? excludedDate : excludedDate.date,
+          date,
+        ),
+      )) ||
+    (includeDates &&
+      !includeDates.some((includedDate) => isSameMonth(includedDate, date))) ||
+    false
+  );
+}
+
 export function isQuarterDisabled(
   quarter: Date,
   {
@@ -1505,6 +1552,5 @@ export function isDateBefore(date: Date, dateToCompare: Date): boolean {
 export function isSpaceKeyDown(
   event: React.KeyboardEvent<HTMLDivElement>,
 ): boolean {
-  const SPACE_KEY = " ";
-  return event.key === SPACE_KEY;
+  return event.key === KeyType.Space;
 }

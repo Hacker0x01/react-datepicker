@@ -17,6 +17,7 @@ import {
   newDate,
   setYear,
   subYears,
+  KeyType,
 } from "./date_utils";
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
@@ -254,14 +255,14 @@ export default class Year extends Component<YearProps> {
 
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
-        case "Enter":
+        case KeyType.Enter:
           if (this.props.selected == null) {
             break;
           }
           this.onYearClick(event, y);
           this.props.setPreSelection?.(this.props.selected);
           break;
-        case "ArrowRight":
+        case KeyType.ArrowRight:
           if (this.props.preSelection == null) {
             break;
           }
@@ -270,7 +271,7 @@ export default class Year extends Component<YearProps> {
             addYears(this.props.preSelection, 1),
           );
           break;
-        case "ArrowLeft":
+        case KeyType.ArrowLeft:
           if (this.props.preSelection == null) {
             break;
           }
@@ -279,7 +280,7 @@ export default class Year extends Component<YearProps> {
             subYears(this.props.preSelection, 1),
           );
           break;
-        case "ArrowUp": {
+        case KeyType.ArrowUp: {
           if (
             date === undefined ||
             yearItemNumber === undefined ||
@@ -309,7 +310,7 @@ export default class Year extends Component<YearProps> {
           );
           break;
         }
-        case "ArrowDown": {
+        case KeyType.ArrowDown: {
           if (
             date === undefined ||
             yearItemNumber === undefined ||
