@@ -1,7 +1,7 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { es } from "date-fns/locale";
-import Day from "../src/day";
+import React from "react";
+
 import {
   getDayOfWeekCode,
   newDate,
@@ -13,9 +13,12 @@ import {
   getHolidaysMap,
   registerLocale,
 } from "../src/date_utils";
+import Day from "../src/day";
 
 function renderDay(day, props = {}) {
-  return render(<Day day={day} {...props} />).container;
+  return render(
+    <Day day={day} month={0} handleOnKeyDown={() => {}} {...props} />,
+  ).container;
 }
 
 describe("Day", () => {
@@ -35,7 +38,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(className),
+            ?.classList.contains(className),
         ).toBe(true);
         day = addDays(day, 1);
       }
@@ -70,7 +73,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(className),
+            ?.classList.contains(className),
         ).toBe(true);
       });
 
@@ -90,7 +93,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .getAttribute("aria-selected"),
+            ?.getAttribute("aria-selected"),
         ).toBe("true");
       });
 
@@ -102,7 +105,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(className),
+            ?.classList.contains(className),
         ).toBe(true);
       });
     });
@@ -118,7 +121,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(className),
+            ?.classList.contains(className),
         ).toBe(false);
       });
 
@@ -142,7 +145,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -157,7 +160,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -167,7 +170,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -181,7 +184,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -193,7 +196,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -208,7 +211,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
   });
@@ -226,7 +229,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -240,7 +243,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -260,7 +263,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains("testClassName"),
+            ?.classList.contains("testClassName"),
         ).toBe(true);
       });
 
@@ -279,7 +282,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains("testClassName"),
+            ?.classList.contains("testClassName"),
         ).toBe(false);
       });
 
@@ -296,17 +299,17 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains("fooClassName"),
+            ?.classList.contains("fooClassName"),
         ).toBe(true);
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains("barClassName"),
+            ?.classList.contains("barClassName"),
         ).toBe(true);
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(className),
+            ?.classList.contains(className),
         ).toBe(true);
       });
     });
@@ -318,15 +321,15 @@ describe("Day", () => {
     it("should apply the holidays class if in holidays array", () => {
       const day = newDate();
       const holidaysDates = [
-        { date: new Date(), holidayName: ["India's Independence Day"] },
-        { date: new Date(2023, 11, 25), holidayName: ["Christmas"] },
+        { date: new Date(), holidayName: "India's Independence Day" },
+        { date: new Date(2023, 11, 25), holidayName: "Christmas" },
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
       const container = renderDay(day, { holidays: holidaysDatesMap });
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -335,11 +338,11 @@ describe("Day", () => {
       const holidaysDates = [
         {
           date: new Date(2023, 7, 15),
-          holidayName: ["India's Independence Day"],
+          holidayName: "India's Independence Day",
         },
         {
           date: new Date(2023, 11, 25),
-          holidayName: ["Christmas"],
+          holidayName: "Christmas",
         },
       ];
       const holidaysDatesMap = getHolidaysMap(holidaysDates);
@@ -347,7 +350,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
   });
@@ -362,7 +365,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -376,7 +379,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -387,12 +390,12 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains("undefined"),
+          ?.classList.contains("undefined"),
       ).toBe(false);
     });
 
@@ -402,12 +405,12 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains("undefined"),
+          ?.classList.contains("undefined"),
       ).toBe(false);
     });
   });
@@ -423,7 +426,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -435,7 +438,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -447,7 +450,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -459,7 +462,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -470,7 +473,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -481,7 +484,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
   });
@@ -516,7 +519,7 @@ describe("Day", () => {
           expect(
             container
               .querySelector(".react-datepicker__day")
-              .classList.contains(rangeDayClassName),
+              ?.classList.contains(rangeDayClassName),
           ).toBe(true);
         }
       });
@@ -534,7 +537,7 @@ describe("Day", () => {
         expect(
           containertartDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(true);
 
         const containerMidRangeDay = renderDay(midRangeDate, {
@@ -545,12 +548,12 @@ describe("Day", () => {
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(false);
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(false);
 
         const containerEndDay = renderDay(endDate, {
@@ -561,7 +564,7 @@ describe("Day", () => {
         expect(
           containerEndDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayEndClassName),
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
       });
 
@@ -577,7 +580,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -592,7 +595,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -608,7 +611,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -625,7 +628,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(true);
       });
 
@@ -643,7 +646,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -662,7 +665,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(true);
       });
     });
@@ -683,7 +686,7 @@ describe("Day", () => {
           expect(
             container
               .querySelector(".react-datepicker__day")
-              .classList.contains(rangeDayClassName),
+              ?.classList.contains(rangeDayClassName),
           ).toBe(true);
         }
       });
@@ -701,7 +704,7 @@ describe("Day", () => {
         expect(
           containerStartDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(true);
 
         const containerMidRangeDay = renderDay(midRangeDate, {
@@ -712,12 +715,12 @@ describe("Day", () => {
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(false);
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayEndClassName),
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(false);
 
         const containerEndDay = renderDay(selectingDate, {
@@ -728,7 +731,7 @@ describe("Day", () => {
         expect(
           containerEndDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayEndClassName),
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
       });
 
@@ -743,7 +746,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -758,7 +761,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -774,7 +777,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -791,7 +794,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(true);
       });
 
@@ -809,7 +812,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(false);
       });
 
@@ -828,7 +831,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(true);
       });
     });
@@ -847,7 +850,7 @@ describe("Day", () => {
         expect(
           containerStartDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(true);
 
         const containerMidRangeDay = renderDay(midRangeDate, {
@@ -858,12 +861,12 @@ describe("Day", () => {
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayStartClassName),
+            ?.classList.contains(rangeDayStartClassName),
         ).toBe(false);
         expect(
           containerMidRangeDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayEndClassName),
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(false);
 
         const containerEndDay = renderDay(endDate, {
@@ -874,7 +877,7 @@ describe("Day", () => {
         expect(
           containerEndDay
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayEndClassName),
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
       });
     });
@@ -888,7 +891,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -897,7 +900,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -906,7 +909,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .getAttribute("aria-current"),
+          ?.getAttribute("aria-current"),
       ).toBe("date");
     });
 
@@ -915,7 +918,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .getAttribute("aria-current"),
+          ?.getAttribute("aria-current"),
       ).toBeNull();
     });
   });
@@ -928,7 +931,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -937,7 +940,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -946,7 +949,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
   });
@@ -960,7 +963,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -976,36 +979,43 @@ describe("Day", () => {
       expect(
         container1
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
       expect(
         container2
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
       expect(
         container3
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
       expect(
         container4
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
     it("should hide days outside month at end when duplicates", () => {
       const day = newDate("2021-03-17");
       const { container } = render(
-        <Day day={day} month={getMonth(day) - 1} monthShowsDuplicateDaysEnd />,
+        <Day
+          day={day}
+          month={getMonth(day) - 1}
+          handleOnKeyDown={() => {}}
+          monthShowsDuplicateDaysEnd
+        />,
       );
       expect(container.textContent).toHaveLength(0);
     });
 
     it("should show days outside month at end when not duplicates", () => {
       const day = newDate("2020-03-17");
-      const { container } = render(<Day day={day} month={getMonth(day) - 1} />);
+      const { container } = render(
+        <Day day={day} month={getMonth(day) - 1} handleOnKeyDown={() => {}} />,
+      );
       expect(container.textContent).toBe(day.getDate().toString());
     });
 
@@ -1015,6 +1025,7 @@ describe("Day", () => {
         <Day
           day={day}
           month={getMonth(day) + 1}
+          handleOnKeyDown={() => {}}
           monthShowsDuplicateDaysStart
         />,
       );
@@ -1023,7 +1034,9 @@ describe("Day", () => {
 
     it("should show days outside month at start when not duplicates", () => {
       const day = newDate("2020-10-05");
-      const { container } = render(<Day day={day} month={getMonth(day) + 1} />);
+      const { container } = render(
+        <Day day={day} month={getMonth(day) + 1} handleOnKeyDown={() => {}} />,
+      );
       expect(container.textContent).toBe(day.getDate().toString());
     });
 
@@ -1033,6 +1046,7 @@ describe("Day", () => {
         <Day
           day={day}
           month={getMonth(day)}
+          handleOnKeyDown={() => {}}
           monthShowsDuplicateDaysStart
           monthShowsDuplicateDaysEnd
         />,
@@ -1049,7 +1063,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(false);
     });
 
@@ -1059,7 +1073,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -1073,7 +1087,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(className),
+          ?.classList.contains(className),
       ).toBe(true);
     });
 
@@ -1083,7 +1097,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .getAttribute("aria-disabled"),
+          ?.getAttribute("aria-disabled"),
       ).toBe("true");
     });
 
@@ -1097,7 +1111,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .getAttribute("aria-disabled"),
+          ?.getAttribute("aria-disabled"),
       ).toBe("true");
     });
 
@@ -1106,7 +1120,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .getAttribute("aria-disabled"),
+          ?.getAttribute("aria-disabled"),
       ).toBe("false");
     });
   });
@@ -1189,17 +1203,34 @@ describe("Day", () => {
 
     it("should call onClick if day is enabled", () => {
       const day = newDate();
-      const { container } = render(<Day day={day} onClick={onClick} />);
-      fireEvent.click(container.querySelector(".react-datepicker__day"));
+      const { container } = render(
+        <Day
+          day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
+          onClick={onClick}
+        />,
+      );
+      fireEvent.click(
+        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+      );
       expect(onClickCalled).toBe(true);
     });
 
     it("should not call onClick if day is disabled", () => {
       const day = newDate();
       const { container } = render(
-        <Day day={day} excludeDates={[day]} onClick={onClick} />,
+        <Day
+          day={day}
+          month={0}
+          excludeDates={[day]}
+          handleOnKeyDown={() => {}}
+          onClick={onClick}
+        />,
       );
-      fireEvent.click(container.querySelector(".react-datepicker__day"));
+      fireEvent.click(
+        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+      );
       expect(onClickCalled).toBe(false);
     });
 
@@ -1208,13 +1239,17 @@ describe("Day", () => {
       const { container } = render(
         <Day
           day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
           excludeDateIntervals={[
             { start: subDays(day, 1), end: addDays(day, 1) },
           ]}
           onClick={onClick}
         />,
       );
-      fireEvent.click(container.querySelector(".react-datepicker__day"));
+      fireEvent.click(
+        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+      );
       expect(onClickCalled).toBe(false);
     });
   });
@@ -1226,10 +1261,17 @@ describe("Day", () => {
       const day = newDate();
 
       const { container } = render(
-        <Day day={day} onMouseEnter={onMouseEnterSpy} />,
+        <Day
+          day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
+          onMouseEnter={onMouseEnterSpy}
+        />,
       );
 
-      fireEvent.mouseEnter(container.querySelector(".react-datepicker__day"));
+      fireEvent.mouseEnter(
+        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+      );
       expect(onMouseEnterSpy).toHaveBeenCalled();
     });
 
@@ -1239,10 +1281,18 @@ describe("Day", () => {
       const day = newDate();
 
       const { container } = render(
-        <Day day={day} onMouseEnter={onMouseEnterSpy} usePointerEvent />,
+        <Day
+          day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
+          onMouseEnter={onMouseEnterSpy}
+          usePointerEvent
+        />,
       );
 
-      fireEvent.pointerEnter(container.querySelector(".react-datepicker__day"));
+      fireEvent.pointerEnter(
+        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+      );
       expect(onMouseEnterSpy).toHaveBeenCalled();
     });
   });
@@ -1275,7 +1325,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .classList.contains(rangeDayClassName),
+            ?.classList.contains(rangeDayClassName),
         ).toBe(true);
       }
     });
@@ -1291,7 +1341,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayClassName),
+          ?.classList.contains(rangeDayClassName),
       ).toBe(false);
     });
 
@@ -1308,7 +1358,7 @@ describe("Day", () => {
       expect(
         containerStartDay
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayStartClassName),
+          ?.classList.contains(rangeDayStartClassName),
       ).toBe(true);
 
       const containerMidRangeDay = renderDay(midRangeDate, {
@@ -1319,17 +1369,17 @@ describe("Day", () => {
       expect(
         containerMidRangeDay
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayStartClassName),
+          ?.classList.contains(rangeDayStartClassName),
       ).toBe(false);
       expect(
         containerMidRangeDay
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeSetDayClassName),
+          ?.classList.contains(rangeSetDayClassName),
       ).toBe(true);
       expect(
         containerMidRangeDay
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayEndClassName),
+          ?.classList.contains(rangeDayEndClassName),
       ).toBe(false);
 
       const containerEndDay = renderDay(endDate, {
@@ -1340,7 +1390,7 @@ describe("Day", () => {
       expect(
         containerEndDay
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayEndClassName),
+          ?.classList.contains(rangeDayEndClassName),
       ).toBe(true);
     });
 
@@ -1356,7 +1406,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayClassName),
+          ?.classList.contains(rangeDayClassName),
       ).toBe(false);
     });
 
@@ -1371,7 +1421,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayClassName),
+          ?.classList.contains(rangeDayClassName),
       ).toBe(false);
     });
 
@@ -1387,7 +1437,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayClassName),
+          ?.classList.contains(rangeDayClassName),
       ).toBe(false);
     });
 
@@ -1403,7 +1453,7 @@ describe("Day", () => {
       expect(
         container
           .querySelector(".react-datepicker__day")
-          .classList.contains(rangeDayClassName),
+          ?.classList.contains(rangeDayClassName),
       ).toBe(false);
     });
   });
@@ -1422,6 +1472,8 @@ describe("Day", () => {
             instance = node;
           }}
           day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
           preSelection={day}
         />,
       );
@@ -1447,6 +1499,8 @@ describe("Day", () => {
             instance = node;
           }}
           day={day}
+          month={0}
+          handleOnKeyDown={() => {}}
           preSelection={day}
           inline
         />,
