@@ -1,6 +1,6 @@
 module.exports = {
   roots: ["./test"],
-  setupFiles: ["<rootDir>/test/text_encoder.js"],
+  setupFiles: ["<rootDir>/test/text_encoder.ts"],
   setupFilesAfterEnv: ["<rootDir>/test/index.ts"],
   testEnvironment: "jest-environment-jsdom",
   collectCoverage: true,
