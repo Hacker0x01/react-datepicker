@@ -1,14 +1,16 @@
-import React from "react";
-import DatePicker from "../src/index";
-import { newDate, formatDate } from "../src/date_utils.ts";
-import { getKey } from "./test_utils.js";
 import { render, fireEvent, waitFor } from "@testing-library/react";
+import React from "react";
+
+import { newDate, formatDate } from "../src/date_utils";
+import DatePicker from "../src/index";
+
+import { getKey } from "./test_utils";
 
 describe("TimePicker", () => {
-  let datePicker;
-  let div;
-  let onChangeMoment;
-  let instance;
+  let datePicker: HTMLDivElement | undefined;
+  let div: HTMLDivElement | undefined;
+  let onChangeMoment: Date | undefined;
+  let instance: DatePicker | null = null;
 
   beforeEach(() => {
     div = document.createElement("div");
@@ -19,7 +21,7 @@ describe("TimePicker", () => {
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
 
     setManually("February 28, 2018 4:45 PM");
-    expect(formatDate(onChangeMoment, "MMMM d, yyyy p")).toBe(
+    expect(formatDate(onChangeMoment ?? new Date(), "MMMM d, yyyy p")).toBe(
       "February 28, 2018 4:45 PM",
     );
   });
@@ -27,10 +29,12 @@ describe("TimePicker", () => {
   it("should allow time changes after input change", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance?.input ?? new HTMLElement());
 
-    const time = datePicker.querySelector(".react-datepicker__time-container");
-    const lis = time.querySelectorAll("li");
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
+    const lis = time?.querySelectorAll("li");
     fireEvent.click(lis[1]);
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
@@ -38,7 +42,7 @@ describe("TimePicker", () => {
   it("should allow for injected date if input does not have focus", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    fireEvent.blur(instance.input);
+    fireEvent.blur(instance?.input ?? new HTMLElement());
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
@@ -56,7 +60,7 @@ describe("TimePicker", () => {
     );
     fireEvent.focus(instance.input);
     const time = container.querySelector(".react-datepicker__time-container");
-    const lis = time.querySelectorAll("li");
+    const lis = time?.querySelectorAll("li") ?? [];
     fireEvent.click(lis[0]);
     expect(instance.state.open).toBe(true);
   });
@@ -71,7 +75,6 @@ describe("TimePicker", () => {
         showTimeSelectOnly
         timeClassName={handleTimeColors}
         open
-        focus
       />,
     );
     const redItems = container.querySelectorAll(
@@ -92,7 +95,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance?.input ?? new HTMLElement());
 
     setManually("February 28, 2018 9:20 AM");
     expect(getInputString()).toBe("February 28, 2018 9:20 AM");
@@ -105,7 +108,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance?.input ?? new HTMLElement());
 
     setManually("February 28, 2018 9:53 AM");
     expect(getInputString()).toBe("February 28, 2018 9:53 AM");
@@ -118,7 +121,7 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("July 13, 2020 2:59 PM");
 
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance?.input ?? new HTMLElement());
 
     setManually("July 13, 2020 3:00 PM");
     expect(getInputString()).toBe("July 13, 2020 3:00 PM");
@@ -144,8 +147,10 @@ describe("TimePicker", () => {
 
   it("should select time when Enter is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey("Enter"));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
@@ -153,19 +158,23 @@ describe("TimePicker", () => {
 
   it("should select time when Space is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey(" "));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
   it("should return focus to input once time is selected", async () => {
-    document.body.appendChild(div); // So we can check the dom later for activeElement
+    document.body.appendChild(div ?? new HTMLElement()); // So we can check the dom later for activeElement
     renderDatePicker("February 28, 2018 4:43 PM");
-    const input = datePicker.querySelector("input");
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    const input = datePicker?.querySelector("input") ?? new HTMLElement();
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey("Enter"));
 
@@ -176,8 +185,10 @@ describe("TimePicker", () => {
 
   it("should not select time when Escape is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey("Escape"));
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
@@ -188,8 +199,10 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey("Escape"));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
@@ -200,8 +213,10 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey("Enter"));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
@@ -212,8 +227,10 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance.input);
-    const time = datePicker.querySelector(".react-datepicker__time-container");
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    const time =
+      datePicker?.querySelector(".react-datepicker__time-container") ??
+      new HTMLElement();
     const lis = time.querySelectorAll("li");
     fireEvent.keyDown(lis[1], getKey(" "));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
@@ -225,25 +242,32 @@ describe("TimePicker", () => {
       onKeyDown: onKeyDownSpy,
       showTimeSelectOnly: true,
     });
-    fireEvent.focus(instance.input);
-    fireEvent.keyDown(instance.input, { key: "ArrowDown" });
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    fireEvent.keyDown(instance?.input ?? new HTMLElement(), {
+      key: "ArrowDown",
+    });
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
   function setManually(string) {
-    fireEvent.focus(instance.input);
-    fireEvent.change(instance.input, { target: { value: string } });
+    fireEvent.focus(instance?.input ?? new HTMLElement());
+    fireEvent.change(instance?.input ?? new HTMLElement(), {
+      target: { value: string },
+    });
   }
 
   function getInputString() {
-    return instance.input.value;
+    return (instance?.input as HTMLInputElement | null | undefined)?.value;
   }
 
-  function renderDatePicker(string, props) {
+  function renderDatePicker(string: string, props = {}) {
     return renderDatePickerFor(new Date(string), props);
   }
 
-  function renderDatePickerFor(selected, props) {
+  function renderDatePickerFor(
+    selected: React.ComponentProps<typeof DatePicker>["selected"],
+    props: Partial<React.ComponentProps<typeof DatePicker>["selected"]>,
+  ) {
     datePicker = render(
       <DatePicker
         selected={selected}
@@ -256,7 +280,7 @@ describe("TimePicker", () => {
           instance = node;
         }}
       />,
-      div,
+      { container: div },
     ).container;
   }
 

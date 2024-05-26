@@ -1,7 +1,7 @@
 module.exports = {
   roots: ["./test"],
-  setupFiles: ["<rootDir>/test/text_encoder.js"],
-  setupFilesAfterEnv: ["<rootDir>/test/index.js"],
+  setupFiles: ["<rootDir>/test/text_encoder.ts"],
+  setupFilesAfterEnv: ["<rootDir>/test/index.ts"],
   testEnvironment: "jest-environment-jsdom",
   collectCoverage: true,
   coverageReporters: ["json", "lcov", "text", "clover"],
