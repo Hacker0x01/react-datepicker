@@ -1,8 +1,10 @@
-import React from "react";
-import DatePicker from "../src/index";
-import Year from "../src/year.tsx";
 import { render, fireEvent } from "@testing-library/react";
-import * as utils from "../src/date_utils.ts";
+import React from "react";
+
+import * as utils from "../src/date_utils";
+import DatePicker from "../src/index";
+import Year from "../src/year";
+
 import { getKey } from "./test_utils.js";
 
 describe("YearPicker", () => {
@@ -86,7 +88,7 @@ describe("YearPicker", () => {
     );
     const year = container.querySelector(
       ".react-datepicker__year-text--today",
-    ).textContent;
+    )?.textContent;
     expect(year).toBe(utils.getYear(date).toString());
   });
 
@@ -101,7 +103,7 @@ describe("YearPicker", () => {
     );
     const ariaCurrent = container
       .querySelector(".react-datepicker__year-text--today")
-      .getAttribute("aria-current");
+      ?.getAttribute("aria-current");
 
     expect(ariaCurrent).toBe("date");
   });
@@ -117,7 +119,7 @@ describe("YearPicker", () => {
     );
     const ariaCurrent = container
       .querySelector(".react-datepicker__year-text")
-      .getAttribute("aria-current");
+      ?.getAttribute("aria-current");
     expect(ariaCurrent).toBeNull();
   });
 
@@ -133,7 +135,7 @@ describe("YearPicker", () => {
     );
     const year = container.querySelector(".react-datepicker__year-text");
     expect(
-      year.classList.contains("react-datepicker__year-text--disabled"),
+      year?.classList.contains("react-datepicker__year-text--disabled"),
     ).toBe(true);
   });
 
@@ -194,7 +196,7 @@ describe("YearPicker", () => {
       utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
-    const excludeDates = [];
+    const excludeDates: Date[] = [];
     for (let year = firstYear; year <= 2023; year++) {
       excludeDates.push(utils.newDate(`${year}-01-01`));
     }
@@ -227,7 +229,7 @@ describe("YearPicker", () => {
       utils.DEFAULT_YEAR_ITEM_NUMBER,
     ).startPeriod;
 
-    const includeDates = [];
+    const includeDates: Date[] = [];
     for (let year = firstYear; year <= 2023; year++) {
       includeDates.push(utils.newDate(`${year}-01-01`));
     }
@@ -272,7 +274,7 @@ describe("YearPicker", () => {
       />,
     );
     const year = container.querySelector(".react-datepicker__year-text");
-    expect(year.querySelector("span").textContent).toBe("custom render");
+    expect(year?.querySelector("span")?.textContent).toBe("custom render");
   });
 
   describe("range", () => {
@@ -546,16 +548,16 @@ describe("YearPicker", () => {
         />,
       );
 
-      fireEvent.focus(container.querySelector("input"));
+      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
 
       const calendar = container.querySelector(".react-datepicker");
-      const previousButton = calendar.querySelector(
+      const previousButton = calendar?.querySelector(
         ".react-datepicker__navigation--previous",
       );
-      fireEvent.click(previousButton);
+      fireEvent.click(previousButton ?? new HTMLElement());
 
       const year = container.querySelector(".react-datepicker__year");
-      const allPreselectedYears = year.querySelectorAll(`.${className}`);
+      const allPreselectedYears = year?.querySelectorAll(`.${className}`) ?? [];
 
       expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
@@ -579,17 +581,17 @@ describe("YearPicker", () => {
         />,
       );
 
-      fireEvent.focus(container.querySelector("input"));
+      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
 
       const calendar = container.querySelector(".react-datepicker");
-      const nextButton = calendar.querySelector(
+      const nextButton = calendar?.querySelector(
         ".react-datepicker__navigation--next",
       );
 
-      fireEvent.click(nextButton);
+      fireEvent.click(nextButton ?? new HTMLElement());
 
       const year = container.querySelector(".react-datepicker__year");
-      const allPreselectedYears = year.querySelectorAll(`.${className}`);
+      const allPreselectedYears = year?.querySelectorAll(`.${className}`) ?? [];
 
       expect(utils.formatDate(date, "dd.MM.yyyy")).toBe(
         utils.formatDate(expectedDate, "dd.MM.yyyy"),
@@ -609,7 +611,7 @@ describe("YearPicker", () => {
       selectedDay = day;
     };
 
-    const getPicker = (initialDate, props) =>
+    const getPicker = (initialDate, props = {}) =>
       render(
         <Year
           selected={utils.newDate(initialDate)}
@@ -778,7 +780,11 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--selected",
       );
 
-      fireEvent.keyDown(target, { key: "Enter", code: 13, which: 13 });
+      fireEvent.keyDown(target ?? new HTMLElement(), {
+        key: "Enter",
+        code: 13,
+        which: 13,
+      });
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
 
@@ -795,11 +801,11 @@ describe("YearPicker", () => {
       );
 
       const dateInput = container.querySelector("input");
-      fireEvent.focus(dateInput);
+      fireEvent.focus(dateInput ?? new HTMLElement());
 
       const year = container.querySelector(".react-datepicker__year-text");
 
-      fireEvent.keyDown(year, {
+      fireEvent.keyDown(year ?? new HTMLElement(), {
         key: "ArrowDown",
       });
 
@@ -814,7 +820,7 @@ describe("YearPicker", () => {
       );
 
       const SPACE_KEY = " ";
-      fireEvent.keyDown(target, getKey(SPACE_KEY));
+      fireEvent.keyDown(target ?? new HTMLElement(), getKey(SPACE_KEY));
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
 
@@ -847,7 +853,7 @@ describe("YearPicker", () => {
     expect(
       container
         .querySelector(".react-datepicker__year-text")
-        .classList.contains(className),
+        ?.classList.contains(className),
     ).toBe(true);
 
     expect(
