@@ -94,20 +94,20 @@ describe("WeekNumber", () => {
 
     describe("handleOnKeyDown", () => {
       const handleOnKeyDownMock = jest.fn((event) => {
-        if (event.key === " ") {
+        if (event.key === utils.KeyType.Space) {
           event.preventDefault();
-          event.key = "Enter";
+          event.key = utils.KeyType.Enter;
         }
       });
 
       it("should change space key to Enter", () => {
         const eventSpace = {
-          key: " ",
+          key: utils.KeyType.Space,
           preventDefault: jest.fn(),
         };
         handleOnKeyDownMock(eventSpace);
         expect(eventSpace.preventDefault).toHaveBeenCalled();
-        expect(eventSpace.key).toBe("Enter");
+        expect(eventSpace.key).toBe(utils.KeyType.Enter);
       });
 
       it("should not change any other key", () => {

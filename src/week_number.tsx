@@ -47,7 +47,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
     const eventKey = event.key;
     if (eventKey === KeyType.Space) {
       event.preventDefault();
-      event.key = "Enter";
+      event.key = KeyType.Enter;
     }
 
     this.props.handleOnKeyDown(event);

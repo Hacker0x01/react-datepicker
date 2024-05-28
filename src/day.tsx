@@ -170,7 +170,7 @@ export default class Day extends Component<DayProps> {
     const eventKey = event.key;
     if (eventKey === KeyType.Space) {
       event.preventDefault();
-      event.key = "Enter";
+      event.key = KeyType.Enter;
     }
 
     this.props.handleOnKeyDown(event);

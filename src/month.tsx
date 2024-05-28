@@ -939,7 +939,7 @@ export default class Month extends Component<MonthProps> {
             onKeyDown={(event) => {
               if (isSpaceKeyDown(event)) {
                 event.preventDefault();
-                event.key = "Enter";
+                event.key = KeyType.Enter;
               }
 
               this.onMonthKeyDown(event, m);
