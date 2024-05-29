@@ -1478,6 +1478,19 @@ describe("DatePicker", () => {
         utils.formatDate(data.copyM, data.testFormat),
       );
     });
+    it("should update the selected date when spacebar is pressed", () => {
+      const data = getOnInputKeyDownStuff();
+      fireEvent.keyDown(data.dateInput, getKey("ArrowDown")); // puts focus on the calendar day
+      fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowLeft"));
+      fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(" "));
+
+      data.copyM = utils.subDays(data.copyM, 1);
+      expect(data.callback).toHaveBeenCalled();
+      const result = data.callback.mock.calls[0][0];
+      expect(utils.formatDate(result, data.testFormat)).toBe(
+        utils.formatDate(data.copyM, data.testFormat),
+      );
+    });
     it("should update the selected date on manual input", () => {
       const data = getOnInputKeyDownStuff();
       fireEvent.change(data.dateInput, {
@@ -3344,6 +3357,52 @@ describe("DatePicker", () => {
 
   describe("Week picker", () => {
     describe("Keyboard navigation", () => {
+      it("should select the week when pressing Enter", () => {
+        const date = new Date("2021-02-08");
+        let selected = date;
+        const onChange = (d) => {
+          selected = d;
+        };
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          onChange,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown")); // open
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowDown"),
+        ); // navigate to week
+        fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("Enter"));
+        expect(utils.formatDate(selected, data.testFormat)).toBe(
+          utils.formatDate(new Date("2021-02-15"), data.testFormat),
+        );
+      });
+      it("should select the week when pressing Space", () => {
+        const date = new Date("2021-02-08");
+        let selected = date;
+        const onChange = (d) => {
+          selected = d;
+        };
+        const data = getOnInputKeyDownStuff({
+          showWeekPicker: true,
+          selected: date,
+          preSelection: date,
+          onChange,
+        });
+
+        fireEvent.keyDown(data.dateInput, getKey("ArrowDown")); // open
+        fireEvent.keyDown(
+          getSelectedDayNode(data.instance),
+          getKey("ArrowDown"),
+        ); // navigate to week
+        fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(" "));
+        expect(utils.formatDate(selected, data.testFormat)).toBe(
+          utils.formatDate(new Date("2021-02-15"), data.testFormat),
+        );
+      });
       it("should navigate to the previous week when pressing ArrowUp", () => {
         const date = new Date("2021-02-08");
         const data = getOnInputKeyDownStuff({
