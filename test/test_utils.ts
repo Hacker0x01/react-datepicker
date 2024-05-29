@@ -2,8 +2,7 @@ import { KeyType } from "../src/date_utils";
 
 interface KeyEvent {
   key: string;
-  keyCode?: number;
-  code?: number;
+  code: number;
   which: number;
 }
 
@@ -26,16 +25,16 @@ export function getKey(key: KeyType, shiftKey: boolean = false) {
       event = { key, code: 32, which: 32 };
       break;
     case KeyType.PageUp:
-      event = { key, keyCode: 33, which: 33 };
+      event = { key, code: 33, which: 33 };
       break;
     case KeyType.PageDown:
-      event = { key, keyCode: 34, which: 34 };
+      event = { key, code: 34, which: 34 };
       break;
     case KeyType.End:
-      event = { key, keyCode: 35, which: 35 };
+      event = { key, code: 35, which: 35 };
       break;
     case KeyType.Home:
-      event = { key, keyCode: 36, which: 36 };
+      event = { key, code: 36, which: 36 };
       break;
     case KeyType.ArrowLeft:
       event = { key, code: 37, which: 37 };
