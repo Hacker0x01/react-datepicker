@@ -877,7 +877,7 @@ export default class DatePicker extends Component<
       }
 
       const copy = newDate(this.state.preSelection);
-      if (eventKey === "Enter") {
+      if (eventKey === KeyType.Enter) {
         event.preventDefault();
         if (
           this.inputOk() &&
@@ -888,11 +888,11 @@ export default class DatePicker extends Component<
         } else {
           this.setOpen(false);
         }
-      } else if (eventKey === "Escape") {
+      } else if (eventKey === KeyType.Escape) {
         event.preventDefault();
         this.sendFocusBackToInput();
         this.setOpen(false);
-      } else if (eventKey === "Tab") {
+      } else if (eventKey === KeyType.Tab) {
         this.setOpen(false);
       }
 
@@ -904,7 +904,7 @@ export default class DatePicker extends Component<
 
   onPortalKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const eventKey = event.key;
-    if (eventKey === "Escape") {
+    if (eventKey === KeyType.Escape) {
       event.preventDefault();
       this.setState(
         {
@@ -1095,7 +1095,7 @@ export default class DatePicker extends Component<
   // ex: while focusing prev and next month buttons
   onPopperKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const eventKey = event.key;
-    if (eventKey === "Escape") {
+    if (eventKey === KeyType.Escape) {
       event.preventDefault();
       this.sendFocusBackToInput();
     }

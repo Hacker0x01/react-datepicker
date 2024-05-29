@@ -5,7 +5,7 @@ import * as utils from "../src/date_utils";
 import DatePicker from "../src/index";
 import Year from "../src/year";
 
-import { getKey } from "./test_utils.js";
+import { getKey } from "./test_utils";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
@@ -627,31 +627,13 @@ describe("YearPicker", () => {
       ).container;
 
     const simulateLeft = (target) =>
-      fireEvent.keyDown(target, {
-        key: "ArrowLeft",
-        keyCode: 37,
-        which: 37,
-      });
+      fireEvent.keyDown(target, getKey(utils.KeyType.ArrowLeft));
     const simulateRight = (target) =>
-      fireEvent.keyDown(target, {
-        key: "ArrowRight",
-        keyCode: 39,
-        which: 39,
-      });
-
+      fireEvent.keyDown(target, getKey(utils.KeyType.ArrowRight));
     const simulateUp = (target) =>
-      fireEvent.keyDown(target, {
-        key: "ArrowUp",
-        keyCode: 38,
-        which: 38,
-      });
-
+      fireEvent.keyDown(target, getKey(utils.KeyType.ArrowUp));
     const simulateDown = (target) =>
-      fireEvent.keyDown(target, {
-        key: "ArrowDown",
-        keyCode: 40,
-        which: 40,
-      });
+      fireEvent.keyDown(target, getKey(utils.KeyType.ArrowDown));
 
     it("should preSelect and set 2020 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
@@ -780,11 +762,10 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--selected",
       );
 
-      fireEvent.keyDown(target ?? new HTMLElement(), {
-        key: "Enter",
-        code: 13,
-        which: 13,
-      });
+      fireEvent.keyDown(
+        target ?? new HTMLElement(),
+        getKey(utils.KeyType.Enter),
+      );
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
 
@@ -805,9 +786,10 @@ describe("YearPicker", () => {
 
       const year = container.querySelector(".react-datepicker__year-text");
 
-      fireEvent.keyDown(year ?? new HTMLElement(), {
-        key: "ArrowDown",
-      });
+      fireEvent.keyDown(
+        year ?? new HTMLElement(),
+        getKey(utils.KeyType.ArrowDown),
+      );
 
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
@@ -819,8 +801,10 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--selected",
       );
 
-      const SPACE_KEY = " ";
-      fireEvent.keyDown(target ?? new HTMLElement(), getKey(SPACE_KEY));
+      fireEvent.keyDown(
+        target ?? new HTMLElement(),
+        getKey(utils.KeyType.Space),
+      );
       expect(utils.getYear(selectedDay)).toBe(2021);
     });
 

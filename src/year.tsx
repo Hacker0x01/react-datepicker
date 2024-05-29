@@ -248,7 +248,7 @@ export default class Year extends Component<YearProps> {
     const { key } = event;
     const { date, yearItemNumber, handleOnKeyDown } = this.props;
 
-    if (key !== "Tab") {
+    if (key !== KeyType.Tab) {
       // preventDefault on tab event blocks focus change
       event.preventDefault();
     }
@@ -429,7 +429,7 @@ export default class Year extends Component<YearProps> {
           onKeyDown={(event) => {
             if (isSpaceKeyDown(event)) {
               event.preventDefault();
-              event.key = "Enter";
+              event.key = KeyType.Enter;
             }
 
             this.onYearKeyDown(event, y);
