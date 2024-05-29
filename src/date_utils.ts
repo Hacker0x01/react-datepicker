@@ -83,7 +83,6 @@ export enum KeyType {
   Tab = "Tab",
   Escape = "Escape",
   Backspace = "Backspace",
-  X = "x",
 }
 
 function getLocaleScope() {

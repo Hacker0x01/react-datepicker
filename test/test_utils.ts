@@ -49,7 +49,7 @@ export function getKey(key: KeyType, shiftKey: boolean = false) {
     case KeyType.ArrowDown:
       event = { key, code: 40, which: 40 };
       break;
-    case KeyType.X:
+    case "x" as KeyType:
       event = { key, code: 88, which: 88 };
       break;
   }
