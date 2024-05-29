@@ -6,7 +6,7 @@ interface KeyEvent {
   which: number;
 }
 
-export function getKey(key: KeyType, shiftKey: boolean = false) {
+export function getKey(key: KeyType, shiftKey = false) {
   let event: KeyEvent = null as unknown as KeyEvent;
   switch (key) {
     case KeyType.Backspace:
