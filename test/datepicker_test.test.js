@@ -5,7 +5,7 @@ import DatePicker, { registerLocale } from "../src/index";
 import TestWrapper from "./test_wrapper.jsx";
 import CustomInput from "./helper_components/custom_input.jsx";
 import * as utils from "../src/date_utils.ts";
-import { getKey } from "./test_utils.js";
+import { getKey } from "./test_utils";
 
 function getSelectedDayNode(datePicker) {
   return (

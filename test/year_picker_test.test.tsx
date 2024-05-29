@@ -5,7 +5,7 @@ import * as utils from "../src/date_utils";
 import DatePicker from "../src/index";
 import Year from "../src/year";
 
-import { getKey } from "./test_utils.js";
+import { getKey } from "./test_utils";
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
