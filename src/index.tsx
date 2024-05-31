@@ -760,8 +760,8 @@ export default class DatePicker extends Component<
 
   // When checking preSelection via min/maxDate, times need to be manipulated via getStartOfDay/getEndOfDay
   setPreSelection = (date?: Date | null): void => {
-    const hasMinDate = this.props.minDate !== undefined;
-    const hasMaxDate = this.props.maxDate !== undefined;
+    const hasMinDate = isDate(this.props.minDate);
+    const hasMaxDate = isDate(this.props.maxDate);
     let isValidDateSelection = true;
     if (date) {
       const dateStartOfDay = getStartOfDay(date);

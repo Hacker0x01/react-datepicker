@@ -1055,6 +1055,45 @@ describe("DatePicker", () => {
     ).toBe(utils.formatDate(data.copyM, data.testFormat));
   });
 
+  it("should handle onDayKeyDown when the minDate is null", () => {
+    const data = getOnInputKeyDownStuff({ minDate: null });
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowLeft"));
+
+    data.copyM = utils.subDays(data.copyM, 1);
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+  });
+
+  it("should handle onDayKeyDown when the maxDate is null", () => {
+    const data = getOnInputKeyDownStuff({ minDate: null });
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowRight"));
+
+    data.copyM = utils.addDays(data.copyM, 1);
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+  });
+
+  it("should handle onDayKeyDown when both the minDate and the maxDate is null", () => {
+    const data = getOnInputKeyDownStuff({ minDate: null });
+    fireEvent.keyDown(data.dateInput, getKey("ArrowDown"));
+
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowLeft"));
+    data.copyM = utils.subDays(data.copyM, 1);
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+
+    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey("ArrowRight"));
+    data.copyM = utils.addDays(data.copyM, 1);
+    expect(
+      utils.formatDate(data.instance.state.preSelection, data.testFormat),
+    ).toBe(utils.formatDate(data.copyM, data.testFormat));
+  });
+
   // excluded stuff
   it("should skip over excluded date when ArrowRight is pressed", () => {
     const date = new Date("2024-05-01");
