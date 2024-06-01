@@ -47,7 +47,7 @@ interface DayProps
   month: number;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
-  handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
+  handleOnKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   usePointerEvent?: boolean;
   preSelection?: Date | null;
   selected?: Date | null;
@@ -173,7 +173,9 @@ export default class Day extends Component<DayProps> {
       event.key = KeyType.Enter;
     }
 
-    this.props.handleOnKeyDown(event);
+    if (this.props.handleOnKeyDown) {
+      this.props.handleOnKeyDown(event);
+    }
   };
 
   isSameDay = (other: Date | null | undefined) =>

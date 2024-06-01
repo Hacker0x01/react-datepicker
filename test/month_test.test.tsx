@@ -1,22 +1,32 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import Month from "../src/month";
-import DatePicker from "../src";
+/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "assertDateRangeInclusive", "runAxe"] }] */
+import { render, fireEvent, RenderResult } from "@testing-library/react";
+import { es } from "date-fns/locale";
 import range from "lodash/range";
+import React from "react";
+
+import DatePicker from "../src";
 import * as utils from "../src/date_utils";
+import Month from "../src/month";
+
 import { runAxe } from "./run_axe";
 import { getKey } from "./test_utils";
-import { es } from "date-fns/locale";
 
 describe("Month", () => {
-  function assertDateRangeInclusive(month, start, end) {
+  function assertDateRangeInclusive(
+    month: RenderResult,
+    start: Date,
+    end: Date,
+  ) {
     const dayCount = utils.getDaysDiff(end, start) + 1;
     const days = month.container.querySelectorAll(".react-datepicker__day");
     expect(days).toHaveLength(dayCount);
     range(0, dayCount).forEach((offset) => {
       const expectedDay = utils.addDays(start, offset);
       expect(
-        utils.isSameDay(days[offset].textContent, expectedDay.toString()),
+        utils.isSameDay(
+          new Date(days[offset].textContent as string),
+          expectedDay,
+        ),
       ).toBe(true);
     });
   }
@@ -38,7 +48,7 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month-text")
-        .classList.contains(className),
+        ?.classList.contains(className),
     ).toBe(true);
   });
 
@@ -56,7 +66,7 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .getAttribute("aria-label"),
+        ?.getAttribute("aria-label"),
     ).toContain(expectedAriaLabel);
   });
 
@@ -71,7 +81,7 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .getAttribute("aria-label"),
+        ?.getAttribute("aria-label"),
     ).toContain(expectedAriaLabel);
   });
 
@@ -103,14 +113,14 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .getAttribute("aria-label")
-        .toLowerCase(),
+        ?.getAttribute("aria-label")
+        ?.toLowerCase(),
     ).toContain(expectedAriaLabel);
   });
 
   it("should have the month aria-label without any prefix when ariaLabelPrefix is null", () => {
     const date = utils.newDate("2015-12-01");
-    const ariaLabelPrefix = null;
+    const ariaLabelPrefix = undefined;
 
     const { container } = render(
       <Month day={date} ariaLabelPrefix={ariaLabelPrefix} />,
@@ -121,8 +131,8 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .getAttribute("aria-label")
-        .toLowerCase(),
+        ?.getAttribute("aria-label")
+        ?.toLowerCase(),
     ).toContain(expectedAriaLabel);
   });
 
@@ -134,7 +144,7 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .getAttribute("aria-label"),
+        ?.getAttribute("aria-label"),
     ).toContain(ariaLabelPrefix);
   });
 
@@ -214,7 +224,7 @@ describe("Month", () => {
     fireEvent.click(
       container.querySelector(
         ".react-datepicker__day:not(.react-datepicker__day--outside-month)",
-      ),
+      ) as Element,
     );
 
     expect(utils.isSameDay(monthStart, dayClicked)).toBe(true);
@@ -231,12 +241,14 @@ describe("Month", () => {
       <Month day={utils.newDate()} onMouseLeave={onMouseLeave} />,
     );
 
-    fireEvent.mouseLeave(container.querySelector(".react-datepicker__month"));
+    fireEvent.mouseLeave(
+      container.querySelector(".react-datepicker__month") as Element,
+    );
 
     expect(mouseLeaveCalled).toBe(true);
   });
 
-  it("should call the provided onMouseLeave function", () => {
+  it("should call the provided onMouseLeave function with usePointerEvent", () => {
     let mouseLeaveCalled = false;
 
     function onMouseLeave() {
@@ -251,12 +263,14 @@ describe("Month", () => {
       />,
     );
 
-    fireEvent.pointerLeave(container.querySelector(".react-datepicker__month"));
+    fireEvent.pointerLeave(
+      container.querySelector(".react-datepicker__month") as Element,
+    );
 
     expect(mouseLeaveCalled).toBe(true);
   });
 
-  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+  it("month: should call the provided onDayMouseEnter (Mouse Event) function", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate();
@@ -265,7 +279,7 @@ describe("Month", () => {
       <Month day={startDay} onDayMouseEnter={onDayMouseEnterSpy} />,
     );
 
-    const day = container.querySelector(".react-datepicker__day");
+    const day = container.querySelector(".react-datepicker__day") as Element;
     fireEvent.mouseEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -273,7 +287,7 @@ describe("Month", () => {
     );
   });
 
-  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+  it("month: should call the provided onDayMouseEnter (Pointer Event) function with usePointerEvent", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate();
@@ -286,7 +300,7 @@ describe("Month", () => {
       />,
     );
 
-    const day = container.querySelector(".react-datepicker__day");
+    const day = container.querySelector(".react-datepicker__day") as Element;
     fireEvent.pointerEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -294,7 +308,7 @@ describe("Month", () => {
     );
   });
 
-  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+  it("month year picker: should call the provided onDayMouseEnter (Mouse Event) function", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate("2024-02-02");
@@ -307,7 +321,9 @@ describe("Month", () => {
       />,
     );
 
-    const month = container.querySelector(".react-datepicker__month-text");
+    const month = container.querySelector(
+      ".react-datepicker__month-text",
+    ) as Element;
     fireEvent.mouseEnter(month);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -315,7 +331,7 @@ describe("Month", () => {
     );
   });
 
-  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+  it("month year picker: should call the provided onDayMouseEnter (Pointer Event) function with usePointerEvent", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate("2024-02-02");
@@ -329,7 +345,9 @@ describe("Month", () => {
       />,
     );
 
-    const month = container.querySelector(".react-datepicker__month-text");
+    const month = container.querySelector(
+      ".react-datepicker__month-text",
+    ) as Element;
     fireEvent.pointerEnter(month);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -337,7 +355,7 @@ describe("Month", () => {
     );
   });
 
-  it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
+  it("quarter year picker: should call the provided onDayMouseEnter (Mouse Event) function", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate("2024-02-02");
@@ -350,7 +368,9 @@ describe("Month", () => {
       />,
     );
 
-    const quarter = container.querySelector(".react-datepicker__quarter-text");
+    const quarter = container.querySelector(
+      ".react-datepicker__quarter-text",
+    ) as Element;
     fireEvent.mouseEnter(quarter);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -358,7 +378,7 @@ describe("Month", () => {
     );
   });
 
-  it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
+  it("quarter year picker: should call the provided onDayMouseEnter (Pointer Event) function with usePointerEvent", () => {
     const onDayMouseEnterSpy = jest.fn();
 
     const startDay = utils.newDate("2024-02-02");
@@ -372,7 +392,9 @@ describe("Month", () => {
       />,
     );
 
-    const quarter = container.querySelector(".react-datepicker__quarter-text");
+    const quarter = container.querySelector(
+      ".react-datepicker__quarter-text",
+    ) as Element;
     fireEvent.pointerEnter(quarter);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -396,7 +418,9 @@ describe("Month", () => {
       />,
     );
 
-    fireEvent.click(container.querySelector(".react-datepicker__day"));
+    fireEvent.click(
+      container.querySelector(".react-datepicker__day") as Element,
+    );
 
     expect(orderValueMatched).toBe(true);
   });
@@ -408,12 +432,12 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .classList.contains("react-datepicker__monthPicker"),
+        ?.classList.contains("react-datepicker__monthPicker"),
     ).toBe(true);
   });
 
   it("should call the provided onMonthClick function", () => {
-    let monthClicked = null;
+    let monthClicked = 0;
 
     function onDayClick(day) {
       monthClicked = day;
@@ -528,7 +552,7 @@ describe("Month", () => {
       ".react-datepicker__month-text",
     );
 
-    [(1, 3, 6, 9)].forEach((i) => {
+    [1, 3, 6, 9].forEach((i) => {
       const month = monthTexts[i];
       expect(
         month.classList.contains("react-datepicker__month-text--disabled"),
@@ -959,7 +983,7 @@ describe("Month", () => {
     );
     const ariaCurrent = container
       .querySelector(".react-datepicker__month-text--today")
-      .getAttribute("aria-current");
+      ?.getAttribute("aria-current");
     expect(ariaCurrent).toBe("date");
   });
 
@@ -971,7 +995,7 @@ describe("Month", () => {
     );
     const ariaCurrent = container
       .querySelector(".react-datepicker__month-text")
-      .getAttribute("aria-current");
+      ?.getAttribute("aria-current");
     expect(ariaCurrent).toBeNull();
   });
 
@@ -982,12 +1006,12 @@ describe("Month", () => {
     expect(
       container
         .querySelector(".react-datepicker__month")
-        .classList.contains("react-datepicker__quarterPicker"),
+        ?.classList.contains("react-datepicker__quarterPicker"),
     ).toBe(true);
   });
 
   it("should call the provided onQuarterClick function", () => {
-    let quarterClicked = null;
+    let quarterClicked = 1;
 
     function onDayClick(day) {
       quarterClicked = day;
@@ -1112,7 +1136,9 @@ describe("Month", () => {
         showQuarterYearPicker
       />,
     );
-    const quarter = container.querySelector(".react-datepicker__quarter-1");
+    const quarter = container.querySelector(
+      ".react-datepicker__quarter-1",
+    ) as HTMLElement;
     expect(quarter.tabIndex).toBe(0);
   });
 
@@ -1124,7 +1150,9 @@ describe("Month", () => {
         showFullMonthYearPicker
       />,
     );
-    const month = container.querySelector(".react-datepicker__month-1");
+    const month = container.querySelector(
+      ".react-datepicker__month-1",
+    ) as Element;
 
     expect(month.textContent).toBe("February");
   });
@@ -1133,7 +1161,9 @@ describe("Month", () => {
     const { container } = render(
       <Month day={utils.newDate("2015-12-01")} showMonthYearPicker />,
     );
-    const month = container.querySelector(".react-datepicker__month-1");
+    const month = container.querySelector(
+      ".react-datepicker__month-1",
+    ) as Element;
 
     expect(month.textContent).toBe("Feb");
   });
@@ -1152,8 +1182,10 @@ describe("Month", () => {
           showMonthYearPicker
         />,
       );
-      const month = container.querySelector(".react-datepicker__month-text");
-      const span = month.querySelector("span");
+      const month = container.querySelector(
+        ".react-datepicker__month-text",
+      ) as Element;
+      const span = month.querySelector("span") as HTMLSpanElement;
       expect(span.textContent).toBe("custom render");
       expect(span.dataset.day).toBe(day.toString());
     });
@@ -1171,8 +1203,10 @@ describe("Month", () => {
       );
       const quarter = container.querySelector(
         ".react-datepicker__quarter-text",
-      );
-      expect(quarter.querySelector("span").textContent).toBe("custom render");
+      ) as Element;
+      expect(
+        (quarter.querySelector("span") as HTMLSpanElement).textContent,
+      ).toBe("custom render");
     });
   });
 
@@ -1193,13 +1227,17 @@ describe("Month", () => {
         preSelection: utils.newDate("2015-04-01"),
       });
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("Tab"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.Tab),
       );
 
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("Enter"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.Enter),
       );
 
       expect(preSelected.toString()).toBe(
@@ -1220,12 +1258,16 @@ describe("Month", () => {
         preSelection: utils.newDate("2015-04-01"),
       });
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("Tab"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.Tab),
       );
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("ArrowRight"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.ArrowRight),
       );
 
       expect(preSelected.toString()).toBe(
@@ -1245,12 +1287,16 @@ describe("Month", () => {
         preSelection: utils.newDate("2015-04-01"),
       });
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("Tab"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.Tab),
       );
       fireEvent.keyDown(
-        quartersComponent.querySelector(".react-datepicker__quarter-2"),
-        getKey("ArrowLeft"),
+        quartersComponent.querySelector(
+          ".react-datepicker__quarter-2",
+        ) as Element,
+        getKey(utils.KeyType.ArrowLeft),
       );
 
       expect(preSelected.toString()).toBe(
@@ -1276,7 +1322,7 @@ describe("Month", () => {
         expect(
           quartersComponent
             .querySelector(".react-datepicker__quarter-text--selected")
-            .classList.contains(
+            ?.classList.contains(
               "react-datepicker__quarter-text--keyboard-selected",
             ),
         ).toBe(false);
@@ -1295,10 +1341,12 @@ describe("Month", () => {
         />,
       );
 
-      const dateInput = container.querySelector("input");
+      const dateInput = container.querySelector("input") as HTMLInputElement;
       fireEvent.focus(dateInput);
 
-      const month = container.querySelector(".react-datepicker__month-0");
+      const month = container.querySelector(
+        ".react-datepicker__month-0",
+      ) as Element;
 
       fireEvent.keyDown(month, {
         key: "ArrowDown",
@@ -1332,12 +1380,12 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("Tab"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.Tab),
         );
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1357,8 +1405,8 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1380,8 +1428,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1403,8 +1451,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1426,8 +1474,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-11"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-11",
+          ) as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-01-01").toString(),
@@ -1448,8 +1498,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-0"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-0") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-12-01").toString(),
@@ -1470,8 +1520,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-10-01").toString(),
@@ -1492,8 +1542,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-10"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-10",
+          ) as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-03-01").toString(),
@@ -1517,12 +1569,12 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("Tab"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.Tab),
         );
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1542,8 +1594,8 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1565,8 +1617,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1588,8 +1640,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1611,8 +1663,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-11"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-11",
+          ) as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-01-01").toString(),
@@ -1633,8 +1687,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-0"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-0") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-12-01").toString(),
@@ -1655,8 +1709,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-11-01").toString(),
@@ -1677,8 +1731,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-10"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-10",
+          ) as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-02-01").toString(),
@@ -1704,12 +1760,12 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("Tab"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.Tab),
         );
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1729,8 +1785,8 @@ describe("Month", () => {
           preSelection: utils.newDate("2015-02-01"),
         });
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-1"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-1") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1752,8 +1808,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1775,8 +1831,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-7"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(".react-datepicker__month-7") as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
 
         expect(preSelected.toString()).toBe(
@@ -1798,8 +1854,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-11"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-11",
+          ) as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-01-01").toString(),
@@ -1820,8 +1878,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-0"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-0") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-12-01").toString(),
@@ -1842,8 +1900,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-0"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(".react-datepicker__month-0") as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2014-11-01").toString(),
@@ -1864,8 +1922,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-10"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-10",
+          ) as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
         expect(preSelected.toString()).toBe(
           utils.newDate("2016-01-01").toString(),
@@ -1878,7 +1938,7 @@ describe("Month", () => {
 
     it("should select March when Enter is pressed", () => {
       let preSelected = false;
-      let selectedDate = null;
+      let selectedDate = utils.newDate("2015-02-01");
       const setPreSelection = () => {
         preSelected = true;
       };
@@ -1887,20 +1947,20 @@ describe("Month", () => {
       };
 
       const monthComponent = renderMonth({
-        selected: utils.newDate("2015-02-01"),
-        day: utils.newDate("2015-02-01"),
+        selected: selectedDate,
+        day: selectedDate,
         setPreSelection: setPreSelection,
-        preSelection: utils.newDate("2015-02-01"),
+        preSelection: selectedDate,
         onDayClick: setSelectedDate,
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-1"),
-        getKey("ArrowLeft"),
+        monthComponent.querySelector(".react-datepicker__month-1") as Element,
+        getKey(utils.KeyType.ArrowLeft),
       );
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-2"),
-        getKey("Enter"),
+        monthComponent.querySelector(".react-datepicker__month-2") as Element,
+        getKey(utils.KeyType.Enter),
       );
 
       expect(preSelected).toBe(true);
@@ -1910,9 +1970,8 @@ describe("Month", () => {
     });
 
     it("should select March when Space is pressed", () => {
-      const SPACE_KEY = " ";
       let preSelected = false;
-      let selectedDate = null;
+      let selectedDate = utils.newDate("2015-02-01");
       const setPreSelection = () => {
         preSelected = true;
       };
@@ -1921,20 +1980,20 @@ describe("Month", () => {
       };
 
       const monthComponent = renderMonth({
-        selected: utils.newDate("2015-02-01"),
-        day: utils.newDate("2015-02-01"),
+        selected: selectedDate,
+        day: selectedDate,
         setPreSelection: setPreSelection,
-        preSelection: utils.newDate("2015-02-01"),
+        preSelection: selectedDate,
         onDayClick: setSelectedDate,
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-1"),
-        getKey("ArrowLeft"),
+        monthComponent.querySelector(".react-datepicker__month-1") as Element,
+        getKey(utils.KeyType.ArrowLeft),
       );
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-2"),
-        getKey(SPACE_KEY),
+        monthComponent.querySelector(".react-datepicker__month-2") as Element,
+        getKey(utils.KeyType.Space),
       );
 
       expect(preSelected).toBe(true);
@@ -1959,8 +2018,8 @@ describe("Month", () => {
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-7"),
-        getKey("ArrowRight"),
+        monthComponent.querySelector(".react-datepicker__month-7") as Element,
+        getKey(utils.KeyType.ArrowRight),
       );
       expect(preSelected.toString()).toBe(
         utils.newDate("2015-08-01").toString(),
@@ -1969,8 +2028,8 @@ describe("Month", () => {
 
     it("should prevent selection of disabled month", () => {
       const excludeDates = [utils.newDate("2015-08-01")];
-      let selected = utils.newDate("2015-07-01");
-      let day = utils.newDate("2015-08-01");
+      const selected = utils.newDate("2015-07-01");
+      const day = utils.newDate("2015-08-01");
 
       const monthComponent = renderMonth({
         selected: selected,
@@ -1982,8 +2041,8 @@ describe("Month", () => {
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-7"),
-        getKey("Enter"),
+        monthComponent.querySelector(".react-datepicker__month-7") as Element,
+        getKey(utils.KeyType.Enter),
       );
 
       expect(selected).not.toBe(excludeDates[0]);
@@ -2004,8 +2063,8 @@ describe("Month", () => {
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-7"),
-        getKey("ArrowRight"),
+        monthComponent.querySelector(".react-datepicker__month-7") as Element,
+        getKey(utils.KeyType.ArrowRight),
       );
       expect(preSelected.toString()).toBe(
         utils.newDate("2015-08-01").toString(),
@@ -2024,11 +2083,11 @@ describe("Month", () => {
 
       const enabled = monthComponent.querySelector(
         ".react-datepicker__month-4",
-      );
+      ) as Element;
 
       const disabled = monthComponent.querySelector(
         ".react-datepicker__month-0",
-      );
+      ) as Element;
 
       expect(enabled.getAttribute("aria-label")).toBe("Choose May 2015");
       expect(disabled.getAttribute("aria-label")).toBe(
@@ -2050,11 +2109,11 @@ describe("Month", () => {
 
       const enabled = monthComponent.querySelector(
         ".react-datepicker__month-4",
-      );
+      ) as Element;
 
       const disabled = monthComponent.querySelector(
         ".react-datepicker__month-0",
-      );
+      ) as Element;
 
       expect(enabled.getAttribute("aria-label")).toBe("Select this May 2015");
       expect(disabled.getAttribute("aria-label")).toBe(
@@ -2080,8 +2139,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-6"),
-          getKey("ArrowRight"),
+          monthComponent.querySelector(".react-datepicker__month-6") as Element,
+          getKey(utils.KeyType.ArrowRight),
         );
 
         expect(preSelected.toString()).toBe(
@@ -2106,8 +2165,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-8"),
-          getKey("ArrowLeft"),
+          monthComponent.querySelector(".react-datepicker__month-8") as Element,
+          getKey(utils.KeyType.ArrowLeft),
         );
 
         expect(preSelected.toString()).toBe(
@@ -2132,8 +2191,10 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-10"),
-          getKey("ArrowUp"),
+          monthComponent.querySelector(
+            ".react-datepicker__month-10",
+          ) as Element,
+          getKey(utils.KeyType.ArrowUp),
         );
 
         expect(preSelected.toString()).toBe(
@@ -2158,8 +2219,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-4"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(".react-datepicker__month-4") as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
 
         expect(preSelected.toString()).toBe(
@@ -2185,8 +2246,8 @@ describe("Month", () => {
         });
 
         fireEvent.keyDown(
-          monthComponent.querySelector(".react-datepicker__month-4"),
-          getKey("ArrowDown"),
+          monthComponent.querySelector(".react-datepicker__month-4") as Element,
+          getKey(utils.KeyType.ArrowDown),
         );
 
         expect(preSelected.toString()).toBe(
@@ -2210,8 +2271,8 @@ describe("Month", () => {
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-2"),
-        getKey("ArrowLeft"),
+        monthComponent.querySelector(".react-datepicker__month-2") as Element,
+        getKey(utils.KeyType.ArrowLeft),
       );
 
       expect(preSelected.toString()).toBe(
@@ -2235,8 +2296,8 @@ describe("Month", () => {
       });
 
       fireEvent.keyDown(
-        monthComponent.querySelector(".react-datepicker__month-8"),
-        getKey("ArrowRight"),
+        monthComponent.querySelector(".react-datepicker__month-8") as Element,
+        getKey(utils.KeyType.ArrowRight),
       );
 
       expect(preSelected.toString()).toBe(
@@ -2266,7 +2327,7 @@ describe("Month", () => {
       expect(
         monthComponent
           .querySelector(".react-datepicker__month-text--selected")
-          .classList.contains(
+          ?.classList.contains(
             "react-datepicker__month-text--keyboard-selected",
           ),
       ).toBe(false);
