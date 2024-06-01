@@ -1,5 +1,5 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "assertDateRangeInclusive", "runAxe"] }] */
-import { render, fireEvent, RenderResult } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { es } from "date-fns/locale";
 import range from "lodash/range";
 import React from "react";
@@ -10,6 +10,8 @@ import Month from "../src/month";
 
 import { runAxe } from "./run_axe";
 import { getKey } from "./test_utils";
+
+import type { RenderResult } from "@testing-library/react";
 
 describe("Month", () => {
   function assertDateRangeInclusive(

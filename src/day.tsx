@@ -173,9 +173,7 @@ export default class Day extends Component<DayProps> {
       event.key = KeyType.Enter;
     }
 
-    if (this.props.handleOnKeyDown) {
-      this.props.handleOnKeyDown(event);
-    }
+    this.props.handleOnKeyDown?.(event);
   };
 
   isSameDay = (other: Date | null | undefined) =>

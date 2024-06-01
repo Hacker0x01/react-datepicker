@@ -50,9 +50,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       event.key = KeyType.Enter;
     }
 
-    if (this.props.handleOnKeyDown) {
-      this.props.handleOnKeyDown(event);
-    }
+    this.props.handleOnKeyDown?.(event);
   };
 
   isKeyboardSelected = (): boolean =>
