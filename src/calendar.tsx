@@ -179,7 +179,7 @@ type CalendarProps = React.PropsWithChildren &
     onYearMouseEnter?: YearProps["onYearMouseEnter"];
     onYearMouseLeave?: YearProps["onYearMouseLeave"];
     monthAriaLabelPrefix?: MonthProps["ariaLabelPrefix"];
-    handleOnDayKeyDown: MonthProps["handleOnKeyDown"];
+    handleOnDayKeyDown?: MonthProps["handleOnKeyDown"];
     handleOnKeyDown?: (
       event:
         | React.KeyboardEvent<HTMLDivElement>
@@ -188,7 +188,7 @@ type CalendarProps = React.PropsWithChildren &
     ) => void;
     onTimeChange?: TimeProps["onChange"] | InputTimeProps["onChange"];
     timeFormat?: TimeProps["format"];
-    timeIntervals: TimeProps["intervals"];
+    timeIntervals?: TimeProps["intervals"];
   } & (
     | ({
         showMonthYearDropdown: true;
