@@ -26,8 +26,8 @@ import {
 import DatePicker, { registerLocale } from "../src/index";
 
 import CustomInput from "./helper_components/custom_input";
+import TestWrapper from "./helper_components/test_wrapper";
 import { getKey } from "./test_utils";
-import TestWrapper from "./test_wrapper";
 
 function getSelectedDayNode(datePicker) {
   return (
