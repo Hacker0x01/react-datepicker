@@ -15,7 +15,7 @@ interface WeekNumberProps {
   disabledKeyboardNavigation?: boolean;
   inline?: boolean;
   shouldFocusDayInline?: boolean;
-  handleOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
+  handleOnKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   containerRef?: React.RefObject<HTMLDivElement>;
   isInputFocused?: boolean;
 }
@@ -50,7 +50,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       event.key = KeyType.Enter;
     }
 
-    this.props.handleOnKeyDown(event);
+    this.props.handleOnKeyDown?.(event);
   };
 
   isKeyboardSelected = (): boolean =>
