@@ -1,6 +1,8 @@
 import React from "react";
 
-export function IconParkSolidApplication(props) {
+type Props = React.ComponentPropsWithoutRef<"svg">;
+
+export const IconParkSolidApplication: React.FC<Props> = (props) => {
   return (
     <svg
       data-testid="icon-park-solid-application"
@@ -26,4 +28,4 @@ export function IconParkSolidApplication(props) {
       />
     </svg>
   );
-}
+};

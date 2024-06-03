@@ -24,7 +24,7 @@ interface TimeProps
     "minTime" | "maxTime" | "excludeTimes" | "includeTimes" | "filterTime"
   > {
   format?: string;
-  intervals: number;
+  intervals?: number;
   selected?: Date | null;
   openToDate?: Date;
   onChange?: (time: Date) => void;
@@ -43,7 +43,7 @@ interface TimeState {
 }
 
 export default class Time extends Component<TimeProps, TimeState> {
-  static get defaultProps(): Partial<TimeProps> {
+  static get defaultProps() {
     return {
       intervals: 30,
       todayButton: null,
@@ -140,7 +140,7 @@ export default class Time extends Component<TimeProps, TimeState> {
     if (
       this.props.injectTimes &&
       (getHours(time) * 3600 + getMinutes(time) * 60 + getSeconds(time)) %
-        (this.props.intervals * 60) !==
+        ((this.props.intervals ?? Time.defaultProps.intervals) * 60) !==
         0
     ) {
       classes.push("react-datepicker__time-list-item--injected");
@@ -186,7 +186,7 @@ export default class Time extends Component<TimeProps, TimeState> {
   renderTimes = (): JSX.Element[] => {
     let times: Date[] = [];
     const format = this.props.format ? this.props.format : "p";
-    const intervals = this.props.intervals;
+    const intervals = this.props.intervals ?? Time.defaultProps.intervals;
 
     const activeDate =
       this.props.selected || this.props.openToDate || newDate();
