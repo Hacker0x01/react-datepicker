@@ -10,9 +10,9 @@ import {
   formatDate,
   isAfter,
   registerLocale,
-} from "../src/date_utils";
-import MonthYearDropdown from "../src/month_year_dropdown";
-import MonthYearDropdownOptions from "../src/month_year_dropdown_options";
+} from "../date_utils";
+import MonthYearDropdown from "../month_year_dropdown";
+import MonthYearDropdownOptions from "../month_year_dropdown_options";
 
 describe("MonthYearDropdown", () => {
   let monthYearDropdown: HTMLElement | null = null;

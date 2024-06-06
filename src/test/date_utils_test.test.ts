@@ -51,7 +51,7 @@ import {
   getMidnightDate,
   registerLocale,
   isMonthYearDisabled,
-} from "../src/date_utils";
+} from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
 

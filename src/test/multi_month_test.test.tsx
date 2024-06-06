@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import Calendar from "../src/calendar";
-import * as utils from "../src/date_utils";
+import Calendar from "../calendar";
+import * as utils from "../date_utils";
 
 describe("Multi month calendar", function () {
   const dateFormat = "LLLL yyyy";

@@ -1,6 +1,6 @@
 module.exports = {
-  roots: ["./test"],
-  setupFilesAfterEnv: ["<rootDir>/test/index.ts"],
+  roots: ["./src/test"],
+  setupFilesAfterEnv: ["<rootDir>/src/test/index.ts"],
   testEnvironment: "jest-environment-jsdom",
   collectCoverage: true,
   coverageReporters: ["json", "lcov", "text", "clover"],

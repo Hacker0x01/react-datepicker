@@ -1,8 +1,8 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 
-import { newDate, formatDate, KeyType } from "../src/date_utils";
-import DatePicker from "../src/index";
+import { newDate, formatDate, KeyType } from "../date_utils";
+import DatePicker from "../index";
 
 import { getKey } from "./test_utils";
 

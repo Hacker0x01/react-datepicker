@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import { getHours } from "../src/date_utils";
-import TimeComponent from "../src/time";
+import { getHours } from "../date_utils";
+import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
   const HOUR_TO_DISABLE_IN_12_HR = 5;

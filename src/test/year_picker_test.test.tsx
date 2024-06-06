@@ -1,9 +1,9 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import DatePicker from "../src/index";
-import Year from "../src/year";
+import * as utils from "../date_utils";
+import DatePicker from "../index";
+import Year from "../year";
 
 import { getKey } from "./test_utils";
 

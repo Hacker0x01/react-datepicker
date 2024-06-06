@@ -1,8 +1,8 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import DatePicker from "../src/index";
-import TimeComponent from "../src/time";
+import DatePicker from "../index";
+import TimeComponent from "../time";
 
 describe("DatePicker", () => {
   it("should show time component when showTimeSelect prop is present", () => {

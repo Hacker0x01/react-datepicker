@@ -2,8 +2,8 @@ import { render, fireEvent } from "@testing-library/react";
 import range from "lodash/range";
 import React from "react";
 
-import { newDate } from "../src/date_utils";
-import YearDropdown from "../src/year_dropdown";
+import { newDate } from "../date_utils";
+import YearDropdown from "../year_dropdown";
 
 describe("YearDropdown", () => {
   let yearDropdown: HTMLElement | null = null;

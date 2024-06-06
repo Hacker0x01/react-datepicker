@@ -9,7 +9,7 @@ import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";
 import React from "react";
 
-import Calendar from "../src/calendar";
+import Calendar from "../calendar";
 import {
   KeyType,
   getMonthInLocale,
@@ -28,12 +28,12 @@ import {
   isSameDay,
   subMonths,
   subYears,
-} from "../src/date_utils";
-import DatePicker from "../src/index";
+} from "../date_utils";
+import DatePicker from "../index";
 
 import { getKey } from "./test_utils";
 
-import type { Locale } from "../src/date_utils";
+import type { Locale } from "../date_utils";
 import type { Day } from "date-fns";
 
 // TODO Possibly rename

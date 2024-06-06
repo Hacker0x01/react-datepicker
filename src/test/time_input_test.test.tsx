@@ -1,8 +1,8 @@
 import { render, fireEvent, act } from "@testing-library/react";
 import React from "react";
 
-import DatePicker from "../src/index";
-import InputTimeComponent from "../src/input_time";
+import DatePicker from "../index";
+import InputTimeComponent from "../input_time";
 
 import CustomTimeInput from "./helper_components/custom_time_input";
 

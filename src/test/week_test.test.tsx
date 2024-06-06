@@ -1,8 +1,8 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import Week from "../src/week";
+import * as utils from "../date_utils";
+import Week from "../week";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {

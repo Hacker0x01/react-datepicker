@@ -1,7 +1,7 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import DatePicker from "../src/index";
+import DatePicker from "../index";
 
 describe("WeekPicker", () => {
   it("should change the week when clicked on any option in the picker", () => {

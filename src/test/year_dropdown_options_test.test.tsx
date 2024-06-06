@@ -2,8 +2,8 @@ import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 import onClickOutside from "react-onclickoutside";
 
-import * as utils from "../src/date_utils";
-import YearDropdownOptions from "../src/year_dropdown_options";
+import * as utils from "../date_utils";
+import YearDropdownOptions from "../year_dropdown_options";
 
 describe("YearDropdownOptions", () => {
   let yearDropdown: HTMLElement | null = null,

@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import TimeComponent from "../src/time";
+import * as utils from "../date_utils";
+import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
   let today, includeTimes;

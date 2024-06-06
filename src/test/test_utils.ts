@@ -1,4 +1,4 @@
-import { KeyType } from "../src/date_utils";
+import { KeyType } from "../date_utils";
 
 interface KeyEvent {
   key: string;

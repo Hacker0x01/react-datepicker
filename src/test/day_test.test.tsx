@@ -12,8 +12,8 @@ import {
   getHighLightDaysMap,
   getHolidaysMap,
   registerLocale,
-} from "../src/date_utils";
-import Day from "../src/day";
+} from "../date_utils";
+import Day from "../day";
 
 function renderDay(day, props = {}) {
   return render(

@@ -2,8 +2,8 @@ import { render, waitFor } from "@testing-library/react";
 import { ptBR } from "date-fns/locale/pt-BR";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import TimeComponent from "../src/time";
+import * as utils from "../date_utils";
+import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
   utils.registerLocale("pt-BR", ptBR);

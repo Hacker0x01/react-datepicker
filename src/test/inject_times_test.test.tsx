@@ -1,18 +1,24 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import TimeComponent from "../src/time";
+import {
+  addHours,
+  addMinutes,
+  addSeconds,
+  getStartOfDay,
+  newDate,
+} from "../date_utils";
+import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
   it("should show times specified in injectTimes props", () => {
-    const today = utils.getStartOfDay(utils.newDate());
+    const today = getStartOfDay(newDate());
     const { container } = render(
       <TimeComponent
         injectTimes={[
-          utils.addMinutes(today, 1),
-          utils.addMinutes(today, 725),
-          utils.addMinutes(today, 1439),
+          addMinutes(today, 1),
+          addMinutes(today, 725),
+          addMinutes(today, 1439),
         ]}
       />,
     );
@@ -24,14 +30,14 @@ describe("TimeComponent", () => {
   });
 
   it("should not affect existing time intervals", () => {
-    const today = utils.getStartOfDay(utils.newDate());
+    const today = getStartOfDay(newDate());
     const { container } = render(
       <TimeComponent
         intervals={60}
         injectTimes={[
-          utils.addMinutes(today, 0),
-          utils.addMinutes(today, 60),
-          utils.addMinutes(today, 1440),
+          addMinutes(today, 0),
+          addMinutes(today, 60),
+          addMinutes(today, 1440),
         ]}
       />,
     );
@@ -43,14 +49,14 @@ describe("TimeComponent", () => {
   });
 
   it("should allow multiple injected times per interval", () => {
-    const today = utils.getStartOfDay(utils.newDate());
+    const today = getStartOfDay(newDate());
     const { container } = render(
       <TimeComponent
         intervals={60}
         injectTimes={[
-          utils.addMinutes(today, 1),
-          utils.addMinutes(today, 2),
-          utils.addMinutes(today, 3),
+          addMinutes(today, 1),
+          addMinutes(today, 2),
+          addMinutes(today, 3),
         ]}
       />,
     );
@@ -62,15 +68,15 @@ describe("TimeComponent", () => {
   });
 
   it("should sort injected times automatically", () => {
-    const today = utils.getStartOfDay(utils.newDate());
+    const today = getStartOfDay(newDate());
 
     const { container } = render(
       <TimeComponent
         intervals={60}
         injectTimes={[
-          utils.addMinutes(today, 3),
-          utils.addMinutes(today, 1),
-          utils.addMinutes(today, 2),
+          addMinutes(today, 3),
+          addMinutes(today, 1),
+          addMinutes(today, 2),
         ]}
       />,
     );
@@ -86,16 +92,16 @@ describe("TimeComponent", () => {
   });
 
   it("should support hours, minutes, and seconds", () => {
-    const today = utils.getStartOfDay(utils.newDate());
+    const today = getStartOfDay(newDate());
 
     const { container } = render(
       <TimeComponent
         format="HH:mm:ss"
         intervals={60}
         injectTimes={[
-          utils.addSeconds(today, 1),
-          utils.addMinutes(utils.addSeconds(today, 1), 30),
-          utils.addHours(utils.addMinutes(utils.addSeconds(today, 1), 30), 1),
+          addSeconds(today, 1),
+          addMinutes(addSeconds(today, 1), 30),
+          addHours(addMinutes(addSeconds(today, 1), 30), 1),
         ]}
       />,
     );

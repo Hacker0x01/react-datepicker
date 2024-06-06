@@ -14,7 +14,7 @@ const config = {
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "import", "unused-imports"],
   parserOptions: {
-    project: ["./tsconfig.dev.json"],
+    project: ["./tsconfig.json"],
   },
   rules: {
     "no-unused-vars": "off", // Duplicate with unused-import/no-unused-vars

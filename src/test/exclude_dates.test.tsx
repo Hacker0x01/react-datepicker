@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { subDays } from "date-fns";
 import React from "react";
 
-import DatePicker from "../src/index";
+import DatePicker from "../index";
 
 describe("DatePicker", () => {
   const excludeDates = [new Date(), subDays(new Date(), 1)];

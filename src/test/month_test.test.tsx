@@ -4,9 +4,9 @@ import { es } from "date-fns/locale";
 import range from "lodash/range";
 import React from "react";
 
-import DatePicker from "../src";
-import * as utils from "../src/date_utils";
-import Month from "../src/month";
+import DatePicker from "../";
+import * as utils from "../date_utils";
+import Month from "../month";
 
 import { runAxe } from "./run_axe";
 import { getKey } from "./test_utils";
