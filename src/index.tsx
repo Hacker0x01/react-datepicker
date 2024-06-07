@@ -234,6 +234,7 @@ export type DatePickerProps = Omit<
 
 interface DatePickerState {
   open: boolean;
+  wasHidden: boolean;
   lastPreSelectChange?:
     | typeof PRESELECT_CHANGE_VIA_INPUT
     | typeof PRESELECT_CHANGE_VIA_NAVIGATE;
@@ -320,6 +321,10 @@ export default class DatePicker extends Component<
 
   componentDidMount(): void {
     window.addEventListener("scroll", this.onScroll, true);
+    document.addEventListener(
+      "visibilitychange",
+      this.setHiddenStateOnVisibilityHidden,
+    );
   }
 
   componentDidUpdate(
@@ -364,6 +369,10 @@ export default class DatePicker extends Component<
   componentWillUnmount(): void {
     this.clearPreventFocusTimeout();
     window.removeEventListener("scroll", this.onScroll, true);
+    document.removeEventListener(
+      "visibilitychange",
+      this.setHiddenStateOnVisibilityHidden,
+    );
   }
 
   preventFocusTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -421,7 +430,30 @@ export default class DatePicker extends Component<
       // initial render
       shouldFocusDayInline: false,
       isRenderAriaLiveMessage: false,
+      wasHidden: false,
     };
+  };
+
+  resetHiddenStatus = (): void => {
+    this.setState({
+      ...this.state,
+      wasHidden: false,
+    });
+  };
+
+  setHiddenStatus = (): void => {
+    this.setState({
+      ...this.state,
+      wasHidden: true,
+    });
+  };
+
+  setHiddenStateOnVisibilityHidden = (): void => {
+    if (document.visibilityState !== "hidden") {
+      return;
+    }
+
+    this.setHiddenStatus();
   };
 
   clearPreventFocusTimeout = () => {
@@ -478,7 +510,14 @@ export default class DatePicker extends Component<
       : this.props.open;
 
   handleFocus = (event: React.FocusEvent<HTMLElement>): void => {
-    if (!this.state.preventFocus) {
+    const isAutoReFocus = this.state.wasHidden;
+    const isOpenAllowed = isAutoReFocus ? this.state.open : true;
+
+    if (isAutoReFocus) {
+      this.resetHiddenStatus();
+    }
+
+    if (!this.state.preventFocus && isOpenAllowed) {
       this.props.onFocus?.(event);
       if (!this.props.preventOpenOnFocus && !this.props.readOnly) {
         this.setOpen(true);

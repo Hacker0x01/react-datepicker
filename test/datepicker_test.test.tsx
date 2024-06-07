@@ -68,9 +68,60 @@ function formatDayWithZeros(day) {
   return dayString;
 }
 
+const hideDocument = (calendarInput) => {
+  jest.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
+  fireEvent(document, new Event("visibilitychange"));
+  // Blur, To simulate the browser auto-blur the input before document hide
+  fireEvent.blur(calendarInput);
+};
+
+const showDocument = (calendarInput) => {
+  jest.spyOn(document, "visibilityState", "get").mockReturnValue("visible");
+  fireEvent(document, new Event("visibilitychange"));
+  // Focus, To simulate the browser auto-refocus of the input
+  fireEvent.focus(calendarInput);
+};
+
 describe("DatePicker", () => {
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  it("should retain the calendar open status when the document visibility change", () => {
+    const { container } = render(<DatePicker />);
+    const input = container.querySelector("input");
+
+    if (!input) {
+      throw new Error("Input element not found");
+    }
+
+    fireEvent.click(input);
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+
+    hideDocument(input);
+    showDocument(input);
+
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+  });
+
+  it("should retain the calendar close status when the document visibility change", () => {
+    const { container } = render(<DatePicker />);
+    const input = container.querySelector("input");
+
+    if (!input) {
+      throw new Error("Input element not found");
+    }
+
+    fireEvent.click(input);
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+
+    fireEvent.keyDown(input, getKey(KeyType.Escape));
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    hideDocument(input);
+    showDocument(input);
+
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
   });
 
   it("should show the calendar when focusing on the date input", () => {
