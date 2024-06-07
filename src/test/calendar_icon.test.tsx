@@ -6,7 +6,7 @@ import CalendarIcon from "../calendar_icon";
 import { IconParkSolidApplication } from "./helper_components/calendar_icon";
 
 describe("CalendarIcon", () => {
-  let onClickMock;
+  let onClickMock: jest.Mock;
   beforeEach(() => {
     onClickMock = jest.fn();
   });
