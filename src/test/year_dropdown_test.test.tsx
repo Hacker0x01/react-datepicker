@@ -7,9 +7,9 @@ import YearDropdown from "../year_dropdown";
 
 describe("YearDropdown", () => {
   let yearDropdown: HTMLElement | null = null;
-  let lastOnChangeValue;
+  let lastOnChangeValue: number | null;
 
-  function onChangeMock(value) {
+  function onChangeMock(value: number) {
     lastOnChangeValue = value;
   }
 
@@ -66,7 +66,7 @@ describe("YearDropdown", () => {
       );
       fireEvent.click(
         (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[0],
+          [])[0] ?? new HTMLElement(),
       );
       expect(
         yearDropdown?.querySelectorAll("react-datepicker__year-dropdown"),
@@ -80,7 +80,7 @@ describe("YearDropdown", () => {
       );
       fireEvent.click(
         (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[6],
+          [])[6] ?? new HTMLElement(),
       );
       expect(lastOnChangeValue).toBeNull();
     });
@@ -92,7 +92,7 @@ describe("YearDropdown", () => {
       );
       fireEvent.click(
         (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[7],
+          [])[7] ?? new HTMLElement(),
       );
       expect(lastOnChangeValue).toEqual(2014);
     });
@@ -104,9 +104,9 @@ describe("YearDropdown", () => {
       const select: NodeListOf<HTMLSelectElement> =
         yearDropdown.querySelectorAll(".react-datepicker__year-select");
       expect(select).toHaveLength(1);
-      expect(select[0].value).toBe("2015");
+      expect(select[0]?.value).toBe("2015");
 
-      const options = select[0].querySelectorAll("option");
+      const options = select[0]?.querySelectorAll("option") ?? [];
       expect(Array.from(options).map((o) => o.textContent)).toEqual(
         range(1900, 2101).map((n) => `${n}`),
       );
@@ -121,9 +121,9 @@ describe("YearDropdown", () => {
       const select: NodeListOf<HTMLSelectElement> =
         yearDropdown.querySelectorAll(".react-datepicker__year-select");
       expect(select).toHaveLength(1);
-      expect(select[0].value).toEqual("2015");
+      expect(select[0]?.value).toEqual("2015");
 
-      const options = select[0].querySelectorAll("option");
+      const options = select[0]?.querySelectorAll("option") ?? [];
       expect(Array.from(options).map((o) => o.textContent)).toEqual(
         range(1988, 2017).map((n) => `${n}`),
       );
