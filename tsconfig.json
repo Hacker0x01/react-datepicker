@@ -8,7 +8,7 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "module": "esnext",
-    "target": "es5",
+    "target": "ES2015",
     "lib": ["ES2021", "dom"],
     "sourceMap": true,
     "jsx": "react",
