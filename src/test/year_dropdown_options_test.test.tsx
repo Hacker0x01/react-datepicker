@@ -7,11 +7,11 @@ import YearDropdownOptions from "../year_dropdown_options";
 
 describe("YearDropdownOptions", () => {
   let yearDropdown: HTMLElement | null = null,
-    handleChangeResult;
-  const mockHandleChange = function (changeInput) {
+    handleChangeResult: number;
+  const mockHandleChange = function (changeInput: number) {
     handleChangeResult = changeInput;
   };
-  let onCancelSpy;
+  let onCancelSpy: jest.Mock;
 
   beforeEach(() => {
     onCancelSpy = jest.fn();
@@ -143,7 +143,7 @@ describe("YearDropdownOptions", () => {
 
   describe("selected", () => {
     const className = "react-datepicker__year-option--selected_year";
-    let yearOptions;
+    let yearOptions: HTMLElement[];
 
     beforeEach(() => {
       yearOptions = Array.from(
@@ -152,11 +152,11 @@ describe("YearDropdownOptions", () => {
     });
 
     describe("if selected", () => {
-      let selectedYearOption;
+      let selectedYearOption: HTMLElement;
       beforeEach(() => {
         selectedYearOption = yearOptions.find((o) =>
           o.classList.contains(className),
-        );
+        )!;
       });
       it("should apply the selected class", () => {
         expect(selectedYearOption.classList.contains(className)).toBe(true);
@@ -169,11 +169,11 @@ describe("YearDropdownOptions", () => {
     });
 
     describe("if not selected", () => {
-      let selectedYearOption;
+      let selectedYearOption: HTMLElement;
       beforeEach(() => {
         selectedYearOption = yearOptions.find(
           (o) => !o.classList.contains(className),
-        );
+        )!;
       });
       it("should not apply the selected class", () => {
         expect(selectedYearOption.classList.contains(className)).toBe(false);
@@ -504,7 +504,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should scroll year dropdown to the middle on open", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    let instance;
+    let instance: YearDropdownOptions | null;
     render(
       <YearDropdownOptions
         ref={(node) => {
@@ -518,11 +518,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       />,
     );
 
-    instance.dropdownRef.current = {
+    (
+      instance!.dropdownRef as { current: Record<string, number> | null }
+    ).current = {
       scrollHeight: 800,
       clientHeight: 400,
     };
-    instance.componentDidMount();
-    expect(instance.dropdownRef.current.scrollTop).toBe(200);
+    instance!.componentDidMount();
+    expect(instance!.dropdownRef.current!.scrollTop).toBe(200);
   });
 });
