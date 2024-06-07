@@ -2,11 +2,11 @@ import { render, waitFor } from "@testing-library/react";
 import { ptBR } from "date-fns/locale/pt-BR";
 import React from "react";
 
-import * as utils from "../date_utils";
+import { registerLocale } from "../date_utils";
 import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
-  utils.registerLocale("pt-BR", ptBR);
+  registerLocale("pt-BR", ptBR);
 
   beforeEach(() => {
     // sandbox = sinon.createSandbox();
@@ -23,7 +23,7 @@ describe("TimeComponent", () => {
   });
 
   describe("Format", () => {
-    let spy;
+    let spy: jest.SpyInstance;
     beforeEach(() => {
       spy = jest.spyOn(TimeComponent, "calcCenterPosition");
     });
@@ -53,7 +53,7 @@ describe("TimeComponent", () => {
   });
 
   describe("Initial position", () => {
-    let spy;
+    let spy: jest.SpyInstance;
     beforeEach(() => {
       spy = jest.spyOn(TimeComponent, "calcCenterPosition");
     });
