@@ -1,18 +1,24 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../date_utils";
+import {
+  addHours,
+  addMinutes,
+  addSeconds,
+  getStartOfDay,
+  newDate,
+} from "../date_utils";
 import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
-  let today, includeTimes;
+  let today: Date, includeTimes: Date[];
 
   beforeEach(() => {
-    today = utils.getStartOfDay(utils.newDate());
+    today = getStartOfDay(newDate());
     includeTimes = [
-      utils.addMinutes(today, 60),
-      utils.addMinutes(today, 120),
-      utils.addMinutes(today, 150),
+      addMinutes(today, 60),
+      addMinutes(today, 120),
+      addMinutes(today, 150),
     ];
   });
 
@@ -58,8 +64,8 @@ describe("TimeComponent", () => {
 
   it("should factor in seconds", () => {
     const includeHoursMinutesSeconds = [
-      utils.addHours(utils.addSeconds(today, 30), 1), //01:00:30
-      utils.addSeconds(today, 30), //00:00:30
+      addHours(addSeconds(today, 30), 1), //01:00:30
+      addSeconds(today, 30), //00:00:30
     ];
     const { container: timeComponent } = render(
       <TimeComponent
