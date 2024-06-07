@@ -86,8 +86,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(onChangeSpy).toHaveBeenCalledWith(expectedDate);
   });
@@ -128,8 +128,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
   });
@@ -153,8 +153,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockCurrentDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
 
