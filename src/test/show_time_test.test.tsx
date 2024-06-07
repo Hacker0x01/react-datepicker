@@ -21,12 +21,12 @@ describe("DatePicker", () => {
   });
 
   describe("Time Select Only", () => {
-    let datePicker;
+    let datePicker: HTMLElement;
     beforeEach(() => {
       datePicker = render(
         <DatePicker showTimeSelect showTimeSelectOnly todayButton="Today" />,
       ).container;
-      fireEvent.click(datePicker.querySelector("input"));
+      fireEvent.click(datePicker.querySelector("input") ?? new HTMLElement());
     });
 
     it("should not show month container when showTimeSelectOnly prop is present", () => {
