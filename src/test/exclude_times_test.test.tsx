@@ -5,7 +5,7 @@ import { setTime, newDate } from "../date_utils";
 import DatePicker from "../index";
 
 describe("DatePicker", () => {
-  let now, excludeTimes;
+  let now: Date, excludeTimes: Date[];
 
   beforeEach(() => {
     now = newDate();
