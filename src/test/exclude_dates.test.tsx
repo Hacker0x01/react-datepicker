@@ -40,10 +40,10 @@ describe("DatePicker", () => {
     );
 
     expect(disabledTimeItems.length).toBe(excludeDatesWithMessages.length);
-    expect(disabledTimeItems[0].getAttribute("title")).toBe(
+    expect(disabledTimeItems[0]?.getAttribute("title")).toBe(
       "This day is excluded",
     );
-    expect(disabledTimeItems[1].getAttribute("title")).toBe(
+    expect(disabledTimeItems[1]?.getAttribute("title")).toBe(
       "Today is excluded",
     );
   });
