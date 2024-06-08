@@ -12,10 +12,10 @@ import {
   getHighLightDaysMap,
   getHolidaysMap,
   registerLocale,
-} from "../src/date_utils";
-import Day from "../src/day";
+} from "../date_utils";
+import Day from "../day";
 
-function renderDay(day, props = {}) {
+function renderDay(day: Date, props = {}) {
   return render(
     <Day day={day} month={0} handleOnKeyDown={() => {}} {...props} />,
   ).container;
@@ -46,7 +46,7 @@ describe("Day", () => {
 
     it("should render custom day contents", () => {
       const day = newDate();
-      function renderDayContents(day, date) {
+      function renderDayContents(_day: Date, date: Date) {
         const tooltipText = `Tooltip for date: ${date}`;
         return <span title={tooltipText}>{getDate(date)}</span>;
       }
@@ -57,14 +57,14 @@ describe("Day", () => {
 
   describe("selected", () => {
     const className = "react-datepicker__day--selected";
-    let day;
+    let day: Date;
 
     beforeEach(() => {
       day = newDate();
     });
 
     describe("if selected", () => {
-      let container;
+      let container: HTMLElement;
       beforeEach(() => {
         container = renderDay(day, { selected: day });
       });
@@ -81,7 +81,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .getAttribute("aria-selected"),
+            ?.getAttribute("aria-selected"),
         ).toBe("true");
       });
 
@@ -111,7 +111,7 @@ describe("Day", () => {
     });
 
     describe("if not selected", () => {
-      let container;
+      let container: HTMLElement;
       beforeEach(() => {
         const selected = addDays(day, 1);
         container = renderDay(day, { selected });
@@ -129,7 +129,7 @@ describe("Day", () => {
         expect(
           container
             .querySelector(".react-datepicker__day")
-            .getAttribute("aria-selected"),
+            ?.getAttribute("aria-selected"),
         ).toBe("false");
       });
     });
@@ -371,7 +371,7 @@ describe("Day", () => {
 
     it("should pass rendered days date to dayClassName func", () => {
       const day = newDate();
-      const dayClassNameFunc = (date) => {
+      const dayClassNameFunc = (date: Date) => {
         expect(date).toBe(day);
         return className;
       };
@@ -495,7 +495,11 @@ describe("Day", () => {
       "react-datepicker__day--selecting-range-start";
     const rangeDayEndClassName = "react-datepicker__day--selecting-range-end";
 
-    function createDateRange(beforeDays, afterDays, day = newDate()) {
+    function createDateRange(
+      beforeDays: number,
+      afterDays: number,
+      day = newDate(),
+    ) {
       return {
         startDate: subDays(day, beforeDays),
         endDate: addDays(day, afterDays),
@@ -1191,7 +1195,7 @@ describe("Day", () => {
   });
 
   describe("click", () => {
-    let onClickCalled;
+    let onClickCalled: boolean;
 
     function onClick() {
       onClickCalled = true;
@@ -1303,7 +1307,11 @@ describe("Day", () => {
     const rangeDayStartClassName = "react-datepicker__day--range-start";
     const rangeDayEndClassName = "react-datepicker__day--range-end";
 
-    function createDateRange(beforeDays, afterDays, day = newDate()) {
+    function createDateRange(
+      beforeDays: number,
+      afterDays: number,
+      day = newDate(),
+    ) {
       return {
         startDate: subDays(day, beforeDays),
         endDate: addDays(day, afterDays),
@@ -1465,7 +1473,7 @@ describe("Day", () => {
 
     it("should apply focus to the preselected day", async () => {
       const day = newDate();
-      let instance;
+      let instance: Day | null = null;
       render(
         <Day
           ref={(node) => {
@@ -1479,20 +1487,20 @@ describe("Day", () => {
       );
 
       const focusSpy = jest
-        .spyOn(instance.dayEl.current, "focus")
+        .spyOn(instance!.dayEl.current!, "focus")
         .mockImplementation();
       Object.defineProperty(document, "activeElement", {
         value: undefined,
         writable: false,
       });
 
-      instance.componentDidMount();
+      instance!.componentDidMount();
       expect(focusSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should not apply focus to the preselected day if inline", () => {
       const day = newDate();
-      let instance;
+      let instance: Day | null;
       render(
         <Day
           ref={(node) => {
@@ -1506,13 +1514,13 @@ describe("Day", () => {
         />,
       );
 
-      const focusSpy = jest.spyOn(instance.dayEl.current, "focus");
+      const focusSpy = jest.spyOn(instance!.dayEl.current!, "focus");
       Object.defineProperty(document, "activeElement", {
         value: undefined,
         writable: false,
       });
 
-      instance.componentDidMount();
+      instance!.componentDidMount();
       expect(focusSpy).not.toHaveBeenCalledTimes(1);
     });
   });

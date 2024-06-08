@@ -1,8 +1,8 @@
 import { render, fireEvent, act } from "@testing-library/react";
 import React from "react";
 
-import DatePicker from "../src/index";
-import InputTimeComponent from "../src/input_time";
+import DatePicker from "../index";
+import InputTimeComponent from "../input_time";
 
 import CustomTimeInput from "./helper_components/custom_time_input";
 
@@ -86,8 +86,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(onChangeSpy).toHaveBeenCalledWith(expectedDate);
   });
@@ -128,8 +128,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
   });
@@ -153,8 +153,8 @@ describe("timeInput", () => {
 
     const expectedDate = new Date(mockCurrentDate);
     const [expectedHours, expectedMinutes] = newTime.split(":");
-    expectedDate.setHours(parseInt(expectedHours));
-    expectedDate.setMinutes(parseInt(expectedMinutes));
+    expectedDate.setHours(parseInt(expectedHours!));
+    expectedDate.setMinutes(parseInt(expectedMinutes!));
 
     expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
 

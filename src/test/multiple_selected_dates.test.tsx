@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import DatePicker from "../src";
+import DatePicker from "../";
 
 describe("Multiple Dates Selected", function () {
   function getDatePicker(extraProps) {

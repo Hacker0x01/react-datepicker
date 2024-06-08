@@ -1,4 +1,4 @@
-import { KeyType } from "../src/date_utils";
+import { KeyType } from "../date_utils";
 
 interface KeyEvent {
   key: string;
@@ -57,3 +57,11 @@ export function getKey(key: KeyType, shiftKey = false) {
   }
   return { ...event, shiftKey };
 }
+
+export const range = (from: number, to: number): number[] => {
+  const list: number[] = [];
+  for (let i = from; i < to; i++) {
+    list.push(i);
+  }
+  return list;
+};

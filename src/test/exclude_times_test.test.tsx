@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import React from "react";
 
-import { setTime, newDate } from "../src/date_utils";
-import DatePicker from "../src/index";
+import { setTime, newDate } from "../date_utils";
+import DatePicker from "../index";
 
 describe("DatePicker", () => {
-  let now, excludeTimes;
+  let now: Date, excludeTimes: Date[];
 
   beforeEach(() => {
     now = newDate();

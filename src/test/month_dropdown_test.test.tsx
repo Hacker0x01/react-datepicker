@@ -6,9 +6,9 @@ import range from "lodash/range";
 import React from "react";
 import onClickOutside from "react-onclickoutside";
 
-import { getMonthInLocale, registerLocale } from "../src/date_utils";
-import MonthDropdown from "../src/month_dropdown";
-import MonthDropdownOptions from "../src/month_dropdown_options";
+import { getMonthInLocale, registerLocale } from "../date_utils";
+import MonthDropdown from "../month_dropdown";
+import MonthDropdownOptions from "../month_dropdown_options";
 
 describe("MonthDropdown", () => {
   let monthDropdown: HTMLElement | null = null;

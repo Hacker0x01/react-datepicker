@@ -1,8 +1,8 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 
-import { newDate, formatDate, KeyType } from "../src/date_utils";
-import DatePicker from "../src/index";
+import { formatDate, KeyType } from "../date_utils";
+import DatePicker from "../index";
 
 import { getKey } from "./test_utils";
 
@@ -35,7 +35,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time?.querySelectorAll("li");
-    fireEvent.click(lis[1]);
+    fireEvent.click(lis[1] ?? new HTMLElement());
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -48,7 +48,7 @@ describe("TimePicker", () => {
   });
 
   it("should not close datepicker after time clicked when shouldCloseOnSelect is false", () => {
-    let instance;
+    let instance: DatePicker | null;
     const { container } = render(
       <DatePicker
         ref={(node) => {
@@ -58,15 +58,15 @@ describe("TimePicker", () => {
         showTimeSelect
       />,
     );
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance!.input!);
     const time = container.querySelector(".react-datepicker__time-container");
     const lis = time?.querySelectorAll("li") ?? [];
-    fireEvent.click(lis[0]);
-    expect(instance.state.open).toBe(true);
+    fireEvent.click(lis?.[0] ?? new HTMLElement());
+    expect(instance!.state.open).toBe(true);
   });
 
   it("should show different colors for times", () => {
-    const handleTimeColors = (time) => {
+    const handleTimeColors = (time: Date) => {
       return time.getHours() < 12 ? "red" : "green";
     };
     const { container } = render(
@@ -152,7 +152,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Enter));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -163,7 +163,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Space));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Space));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -176,7 +176,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Enter));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
 
     await waitFor(() => {
       expect(document.activeElement).toBe(input);
@@ -190,7 +190,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Escape));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Escape));
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
 
@@ -204,7 +204,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Escape));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Escape));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -218,7 +218,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Enter));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -232,7 +232,7 @@ describe("TimePicker", () => {
       datePicker?.querySelector(".react-datepicker__time-container") ??
       new HTMLElement();
     const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1], getKey(KeyType.Space));
+    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Space));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -250,7 +250,7 @@ describe("TimePicker", () => {
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
-  function setManually(string) {
+  function setManually(string: string) {
     fireEvent.focus(instance?.input ?? new HTMLElement());
     fireEvent.change(instance?.input ?? new HTMLElement(), {
       target: { value: string },
@@ -285,8 +285,8 @@ describe("TimePicker", () => {
     ).container;
   }
 
-  function onChange(m) {
-    onChangeMoment = newDate(m);
-    renderDatePicker(m);
+  function onChange(m: Date | null) {
+    onChangeMoment = m ?? undefined;
+    renderDatePicker(m?.toISOString() ?? "");
   }
 });

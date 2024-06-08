@@ -51,7 +51,7 @@ import {
   getMidnightDate,
   registerLocale,
   isMonthYearDisabled,
-} from "../src/date_utils";
+} from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
 
@@ -318,20 +318,20 @@ describe("date_utils", () => {
 
     it("should be enabled if date filter returns true", () => {
       const day = newDate();
-      const filterDate = (d) => isEqual(d, day);
+      const filterDate = (d: Date) => isEqual(d, day);
       expect(isDayDisabled(day, { filterDate })).toBe(false);
     });
 
     it("should be disabled if date filter returns false", () => {
       const day = newDate();
-      const filterDate = (d) => !isEqual(d, day);
+      const filterDate = (d: Date) => !isEqual(d, day);
       expect(isDayDisabled(day, { filterDate })).toBe(true);
     });
 
     it("should not allow date filter to modify input date", () => {
       const day = newDate();
       const dayClone = newDate(day);
-      const filterDate = (d) => {
+      const filterDate = (d: Date) => {
         addDays(d, 1);
         return true;
       };
@@ -456,20 +456,20 @@ describe("date_utils", () => {
 
     it("should be enabled if date filter returns true", () => {
       const day = newDate();
-      const filterDate = (d) => isEqual(d, day);
+      const filterDate = (d: Date) => isEqual(d, day);
       expect(isMonthDisabled(day, { filterDate })).toBe(false);
     });
 
     it("should be disabled if date filter returns false", () => {
       const day = newDate();
-      const filterDate = (d) => !isEqual(d, day);
+      const filterDate = (d: Date) => !isEqual(d, day);
       expect(isMonthDisabled(day, { filterDate })).toBe(true);
     });
 
     it("should not allow date filter to modify input date", () => {
       const day = newDate();
       const dayClone = newDate(day);
-      const filterDate = (d) => {
+      const filterDate = (d: Date) => {
         addDays(d, 40);
         return true;
       };
@@ -540,20 +540,20 @@ describe("date_utils", () => {
 
     it("should be enabled if date filter returns true", () => {
       const day = newDate();
-      const filterDate = (d) => isEqual(d, day);
+      const filterDate = (d: Date) => isEqual(d, day);
       expect(isQuarterDisabled(day, { filterDate })).toBe(false);
     });
 
     it("should be disabled if date filter returns false", () => {
       const day = newDate();
-      const filterDate = (d) => !isEqual(d, day);
+      const filterDate = (d: Date) => !isEqual(d, day);
       expect(isQuarterDisabled(day, { filterDate })).toBe(true);
     });
 
     it("should not allow date filter to modify input date", () => {
       const day = newDate();
       const dayClone = newDate(day);
-      const filterDate = (d) => {
+      const filterDate = (d: Date) => {
         addDays(d, 40);
         return true;
       };
@@ -605,12 +605,12 @@ describe("date_utils", () => {
     });
 
     it("should be enabled if date filter returns true", () => {
-      const filterDate = (d) => isSameYear(d, newYearsDay);
+      const filterDate = (d: Date) => isSameYear(d, newYearsDay);
       expect(isYearDisabled(year, { filterDate })).toBe(false);
     });
 
     it("should be disabled if date filter returns false", () => {
-      const filterDate = (d) => !isSameYear(d, newYearsDay);
+      const filterDate = (d: Date) => !isSameYear(d, newYearsDay);
       expect(isYearDisabled(year, { filterDate })).toBe(true);
     });
   });
@@ -868,14 +868,14 @@ describe("date_utils", () => {
     it("should be enabled if time filter returns true", () => {
       const date = newDate();
       const time = setHours(setMinutes(date, 30), 1);
-      const filterTime = (t) => isEqual(t, time);
+      const filterTime = (t: Date) => isEqual(t, time);
       expect(isTimeDisabled(time, { filterTime })).toBe(false);
     });
 
     it("should be disabled if time filter returns false", () => {
       const date = newDate();
       const time = setHours(setMinutes(date, 30), 1);
-      const filterTime = (t) => !isEqual(t, time);
+      const filterTime = (t: Date) => !isEqual(t, time);
       expect(isTimeDisabled(time, { filterTime })).toBe(true);
     });
 
@@ -883,7 +883,7 @@ describe("date_utils", () => {
       const date = newDate();
       const time = setHours(setMinutes(date, 30), 1);
       const timeClone = newDate(time);
-      const filterTime = (t) => {
+      const filterTime = (t: Date) => {
         addHours(t, 1);
         return true;
       };

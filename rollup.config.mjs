@@ -13,9 +13,9 @@ import typescript from "@rollup/plugin-typescript";
 const pkg = JSON.parse(
   fs
     .readFileSync(
-      path.join(path.dirname(fileURLToPath(import.meta.url)), "package.json")
+      path.join(path.dirname(fileURLToPath(import.meta.url)), "package.json"),
     )
-    .toString()
+    .toString(),
 );
 
 const banner = `/*!
@@ -33,10 +33,10 @@ const dateFnsPackageJson = JSON.parse(
     .readFileSync(
       path.join(
         path.dirname(fileURLToPath(import.meta.url)),
-        "node_modules/date-fns/package.json"
-      )
+        "node_modules/date-fns/package.json",
+      ),
     )
-    .toString()
+    .toString(),
 );
 const dateFnsSubpackages = Object.keys(dateFnsPackageJson.exports)
   .map((key) => key.replace("./", ""))
@@ -101,7 +101,7 @@ const config = {
     babel(),
     commonjs(),
     typescript({
-      tsconfig: "./tsconfig.json",
+      tsconfig: "./tsconfig.build.json",
       declaration: true,
       declarationDir: "dist",
     }),

@@ -1,12 +1,12 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import CalendarIcon from "../src/calendar_icon";
+import CalendarIcon from "../calendar_icon";
 
 import { IconParkSolidApplication } from "./helper_components/calendar_icon";
 
 describe("CalendarIcon", () => {
-  let onClickMock;
+  let onClickMock: jest.Mock;
   beforeEach(() => {
     onClickMock = jest.fn();
   });

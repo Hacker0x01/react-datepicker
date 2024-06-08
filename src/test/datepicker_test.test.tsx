@@ -22,8 +22,8 @@ import {
   subMonths,
   subWeeks,
   subYears,
-} from "../src/date_utils";
-import DatePicker, { registerLocale } from "../src/index";
+} from "../date_utils";
+import DatePicker, { registerLocale } from "../index";
 
 import CustomInput from "./helper_components/custom_input";
 import TestWrapper from "./helper_components/test_wrapper";

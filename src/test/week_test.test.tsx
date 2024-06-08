@@ -1,25 +1,33 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../src/date_utils";
-import Week from "../src/week";
+import {
+  addDays,
+  addWeeks,
+  formatDate,
+  getStartOfWeek,
+  getWeek,
+  isEqual,
+  newDate,
+} from "../date_utils";
+import Week from "../week";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {
-    const { container } = render(<Week day={utils.newDate()} />);
+    const { container } = render(<Week day={newDate()} />);
     expect(container.querySelector(".react-datepicker__week")).not.toBeNull();
   });
 
   it("should render the days of the week", () => {
-    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
+    const weekStart = getStartOfWeek(newDate("2015-12-20"));
     const { container } = render(<Week day={weekStart} />);
 
     const days = container.querySelectorAll(".react-datepicker__day");
     expect(days.length).toBe(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(weekStart, offset);
+      const expectedDay = addDays(weekStart, offset);
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${utils.formatDate(expectedDay, "PPPP")}`,
+        `Choose ${formatDate(expectedDay, "PPPP")}`,
       );
     });
 
@@ -30,15 +38,15 @@ describe("Week", () => {
   });
 
   it("should render the week number", () => {
-    const weekStart = utils.getStartOfWeek(utils.newDate("2015-12-20"));
+    const weekStart = getStartOfWeek(newDate("2015-12-20"));
     const { container } = render(<Week showWeekNumber day={weekStart} />);
 
     const days = container.querySelectorAll(".react-datepicker__day");
     expect(days.length).toBe(7);
     days.forEach((day, offset) => {
-      const expectedDay = utils.addDays(weekStart, offset);
+      const expectedDay = addDays(weekStart, offset);
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${utils.formatDate(expectedDay, "PPPP")}`,
+        `Choose ${formatDate(expectedDay, "PPPP")}`,
       );
     });
 
@@ -49,13 +57,13 @@ describe("Week", () => {
   });
 
   it("should call the provided onDayClick function", () => {
-    let dayClicked = null;
+    let dayClicked: Date | null = null;
 
-    function onDayClick(day) {
+    function onDayClick(day: Date) {
       dayClicked = day;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = newDate("2015-12-20");
     const { container } = render(
       <Week day={weekStart} onDayClick={onDayClick} />,
     );
@@ -64,7 +72,7 @@ describe("Week", () => {
       fireEvent.click(day);
       // eslint-disable-next-line jest/no-conditional-expect
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${utils.formatDate(dayClicked, "PPPP")}`,
+        `Choose ${formatDate(dayClicked, "PPPP")}`,
       );
     } else {
       // eslint-disable-next-line jest/no-conditional-expect
@@ -73,13 +81,13 @@ describe("Week", () => {
   });
 
   it("should call the provided onWeekSelect function and pass the first day of the week", () => {
-    let firstDayReceived = null;
+    let firstDayReceived: Date | null = null;
 
-    function onWeekClick(newFirstWeekDay) {
+    function onWeekClick(newFirstWeekDay: Date) {
       firstDayReceived = newFirstWeekDay;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = newDate("2015-12-20");
     const setOpenSpy = jest.fn();
     const { container } = render(
       <Week
@@ -94,11 +102,11 @@ describe("Week", () => {
     );
     expect(weekNumberElement).not.toBeNull();
     fireEvent.click(weekNumberElement ?? new HTMLElement());
-    expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
+    expect(isEqual(firstDayReceived, weekStart)).toBe(true);
   });
 
   it("should call the provided onWeekSelect function and call the setopen function", () => {
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = newDate("2015-12-20");
     const setOpenSpy = jest.fn();
 
     const { container } = render(
@@ -119,7 +127,7 @@ describe("Week", () => {
   });
 
   it("should call the provided onWeekSelect function and not call the setopen function when 'shouldCloseOnSelect' is false", () => {
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = newDate("2015-12-20");
     const setOpenSpy = jest.fn();
     const setOnWeekSelect = jest.fn();
 
@@ -144,14 +152,14 @@ describe("Week", () => {
   });
 
   it("should call the provided onWeekSelect function and pass the week number", () => {
-    let weekNumberReceived = null;
+    let weekNumberReceived: number | null = null;
 
-    function onWeekClick(unused, newWeekNumber) {
+    function onWeekClick(_unused: Date, newWeekNumber: number) {
       weekNumberReceived = newWeekNumber;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
-    const realWeekNumber = utils.getWeek(weekStart);
+    const weekStart = newDate("2015-12-20");
+    const realWeekNumber = getWeek(weekStart);
     const { container } = render(
       <Week
         day={weekStart}
@@ -169,14 +177,14 @@ describe("Week", () => {
   });
 
   it("should set the week number with the provided formatWeekNumber function", () => {
-    let firstDayReceived = null;
+    let firstDayReceived: Date | null = null;
 
-    function weekNumberFormatter(newFirstWeekDay) {
+    function weekNumberFormatter(newFirstWeekDay: Date) {
       firstDayReceived = newFirstWeekDay;
       return 9;
     }
 
-    const weekStart = utils.newDate("2015-12-20");
+    const weekStart = newDate("2015-12-20");
     const { container } = render(
       <Week
         day={weekStart}
@@ -188,13 +196,13 @@ describe("Week", () => {
       ".react-datepicker__week-number",
     );
     expect(weekNumberElement).not.toBeNull();
-    expect(utils.isEqual(firstDayReceived, weekStart)).toBe(true);
+    expect(isEqual(firstDayReceived, weekStart)).toBe(true);
     expect(weekNumberElement?.getAttribute("aria-label")).toBe("week  9");
   });
 
   it("should call the provided onDayMouseEnter (Mouse Event) function", () => {
     const onDayMouseEnterSpy = jest.fn();
-    const weekStart = utils.newDate();
+    const weekStart = newDate();
     const { container } = render(
       <Week day={weekStart} onDayMouseEnter={onDayMouseEnterSpy} />,
     );
@@ -204,13 +212,13 @@ describe("Week", () => {
     fireEvent.mouseEnter(day ?? new HTMLElement());
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
-      utils.getStartOfWeek(weekStart),
+      getStartOfWeek(weekStart),
     );
   });
 
   it("should call the provided onDayMouseEnter (Pointer Event) function", () => {
     const onDayMouseEnterSpy = jest.fn();
-    const weekStart = utils.newDate();
+    const weekStart = newDate();
     const { container } = render(
       <Week
         day={weekStart}
@@ -224,7 +232,7 @@ describe("Week", () => {
       fireEvent.pointerEnter(day);
       // eslint-disable-next-line jest/no-conditional-expect
       expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
-        utils.getStartOfWeek(weekStart),
+        getStartOfWeek(weekStart),
       );
       // eslint-disable-next-line jest/no-conditional-expect
     } else expect(day).not.toBeNull();
@@ -235,8 +243,8 @@ describe("Week", () => {
       const onWeekSelect = jest.fn();
       const day = new Date("2022-02-01");
       const weekNumber = 5;
-      const event = { target: {} };
-      let instance;
+      const event = { target: {} } as React.MouseEvent<HTMLDivElement>;
+      let instance: Week | null;
       render(
         <Week
           ref={(node) => {
@@ -249,15 +257,15 @@ describe("Week", () => {
           setOpen={() => {}}
         />,
       );
-      instance.handleWeekClick(day, weekNumber, event);
+      instance!.handleWeekClick(day, weekNumber, event);
       expect(onWeekSelect).toHaveBeenCalledWith(day, weekNumber, event);
     });
 
     it("should call handleDayClick with start of week if showWeekPicker prop is true", () => {
       const day = new Date("2022-02-01");
       const weekNumber = 5;
-      const event = { target: {} };
-      let instance;
+      const event = { target: {} } as React.MouseEvent<HTMLDivElement>;
+      let instance: Week | null;
       render(
         <Week
           ref={(node) => {
@@ -270,8 +278,8 @@ describe("Week", () => {
           setOpen={() => {}}
         />,
       );
-      const handleDayClick = jest.spyOn(instance, "handleDayClick");
-      instance.handleWeekClick(day, weekNumber, event);
+      const handleDayClick = jest.spyOn(instance!, "handleDayClick");
+      instance!.handleWeekClick(day, weekNumber, event);
       expect(handleDayClick).toHaveBeenCalledWith(day, event);
     });
 
@@ -279,8 +287,8 @@ describe("Week", () => {
       const setOpen = jest.fn();
       const day = new Date("2022-02-01");
       const weekNumber = 5;
-      const event = { target: {} };
-      let instance;
+      const event = { target: {} } as React.MouseEvent<HTMLDivElement>;
+      let instance: Week | null;
       render(
         <Week
           ref={(node) => {
@@ -293,14 +301,14 @@ describe("Week", () => {
           setOpen={setOpen}
         />,
       );
-      instance.handleWeekClick(day, weekNumber, event);
+      instance!.handleWeekClick(day, weekNumber, event);
       expect(setOpen).toHaveBeenCalledWith(false);
     });
   });
 
   describe("selected and keyboard-selected", () => {
     it("selected is current week and preselected is also current week", () => {
-      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
+      const currentWeek = newDate("2023-10-22T13:09:53+02:00");
       const { container } = render(
         <Week
           day={currentWeek}
@@ -314,8 +322,8 @@ describe("Week", () => {
     });
 
     it("selected is current week and preselected is not current week", () => {
-      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
-      const preSelection = utils.addWeeks(currentWeek, 1);
+      const currentWeek = newDate("2023-10-22T13:09:53+02:00");
+      const preSelection = addWeeks(currentWeek, 1);
       const { container } = render(
         <Week
           day={currentWeek}
@@ -329,8 +337,8 @@ describe("Week", () => {
     });
 
     it("selected is not current week and preselect is current week", () => {
-      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
-      const selected = utils.addWeeks(currentWeek, 1);
+      const currentWeek = newDate("2023-10-22T13:09:53+02:00");
+      const selected = addWeeks(currentWeek, 1);
       const { container } = render(
         <Week
           day={currentWeek}
@@ -347,8 +355,8 @@ describe("Week", () => {
     });
 
     it("select is not current week and preselect is not current week", () => {
-      const currentWeek = utils.newDate("2023-10-22T13:09:53+02:00");
-      const selected = utils.addWeeks(currentWeek, 1);
+      const currentWeek = newDate("2023-10-22T13:09:53+02:00");
+      const selected = addWeeks(currentWeek, 1);
       const { container } = render(
         <Week day={currentWeek} selected={selected} preSelection={selected} />,
       );
@@ -363,12 +371,12 @@ describe("Week", () => {
   describe("selected and calendarStartDay", () => {
     it("shoud starts the selected day on the Wednesday immediately preceding that day, When the calendarStartDay Props is 3.", () => {
       const calendarStartDay = 3;
-      const currentWeek = utils.getStartOfWeek(
-        utils.newDate("2024-03-01"),
+      const currentWeek = getStartOfWeek(
+        newDate("2024-03-01"),
         undefined,
         calendarStartDay,
       );
-      const selected = utils.addWeeks(currentWeek, 0);
+      const selected = addWeeks(currentWeek, 0);
       const { container } = render(
         <Week
           day={currentWeek}
@@ -388,13 +396,13 @@ describe("Week", () => {
 
       expect(days).toHaveLength(7);
       // 2024-02-28 to 2024-03-05
-      expect(days[0].textContent).toBe("28");
-      expect(days[1].textContent).toBe("29");
-      expect(days[2].textContent).toBe("1");
-      expect(days[3].textContent).toBe("2");
-      expect(days[4].textContent).toBe("3");
-      expect(days[5].textContent).toBe("4");
-      expect(days[6].textContent).toBe("5");
+      expect(days[0]?.textContent).toBe("28");
+      expect(days[1]?.textContent).toBe("29");
+      expect(days[2]?.textContent).toBe("1");
+      expect(days[3]?.textContent).toBe("2");
+      expect(days[4]?.textContent).toBe("3");
+      expect(days[5]?.textContent).toBe("4");
+      expect(days[6]?.textContent).toBe("5");
     });
   });
 });
