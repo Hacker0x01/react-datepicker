@@ -141,7 +141,7 @@ type CalendarProps = React.PropsWithChildren &
     showTimeInput?: boolean;
     showYearDropdown?: boolean;
     showMonthDropdown?: boolean;
-    yearItemNumber: number;
+    yearItemNumber?: number;
     useWeekdaysShort?: boolean;
     forceShowMonthNavigation?: boolean;
     showDisabledMonthNavigation?: boolean;
@@ -498,7 +498,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       ({ date }) => ({
         date: subYears(
           date,
-          this.props.showYearPicker ? this.props.yearItemNumber : 1,
+          this.props.showYearPicker
+            ? this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber
+            : 1,
         ),
       }),
       () => this.handleYearChange(this.state.date),
@@ -606,7 +608,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       ({ date }) => ({
         date: addYears(
           date,
-          this.props.showYearPicker ? this.props.yearItemNumber : 1,
+          this.props.showYearPicker
+            ? this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber
+            : 1,
         ),
       }),
       () => this.handleYearChange(this.state.date),
