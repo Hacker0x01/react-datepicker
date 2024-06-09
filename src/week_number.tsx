@@ -70,7 +70,9 @@ export default class WeekNumber extends Component<WeekNumberProps> {
   // various cases when we need to apply focus to the preselected week-number
   // focus the week-number on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
   // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-  handleFocusWeekNumber = (prevProps?: Readonly<WeekNumberProps>): void => {
+  handleFocusWeekNumber = (
+    prevProps?: Readonly<Partial<WeekNumberProps>>,
+  ): void => {
     let shouldFocusWeekNumber = false;
     // only do this while the input isn't focused
     // otherwise, typing/backspacing the date manually may steal focus away from the input

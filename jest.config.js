@@ -6,7 +6,6 @@ const babelTargetList = [
   "month_test\\.test\\.tsx",
   "multi_month_test\\.test\\.tsx",
   "multiple_selected_dates\\.test\\.tsx",
-  "week_number_test\\.test\\.tsx",
 ];
 
 const tsTargetList = [
@@ -38,7 +37,7 @@ const tsTargetList = [
   "time_format_test\\.test\\.tsx",
   "time_input_test\\.test\\.tsx",
   "timepicker_test\\.test\\.tsx",
-  // "week_number_test\\.test\\.tsx",
+  "week_number_test\\.test\\.tsx",
   "week_picker_test\\.test\\.tsx",
   "week_test\\.test\\.tsx",
   "year_dropdown_options_test\\.test\\.tsx",
