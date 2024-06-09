@@ -3,7 +3,6 @@ const babelTargetList = [
   "calendar_test\\.test\\.tsx",
   "datepicker_test\\.test\\.tsx",
   "min_time_test\\.test\\.tsx",
-  "month_test\\.test\\.tsx",
   "multi_month_test\\.test\\.tsx",
   "multiple_selected_dates\\.test\\.tsx",
 ];
@@ -27,7 +26,7 @@ const tsTargetList = [
   "inject_times_test\\.test\\.tsx",
   // "min_time_test\\.test\\.tsx",
   "month_dropdown_test\\.test\\.tsx",
-  // "month_test\\.test\\.tsx",
+  "month_test\\.test\\.tsx",
   "month_year_dropdown_test\\.test\\.tsx",
   // "multi_month_test\\.test\\.tsx",
   // "multiple_selected_dates\\.test\\.tsx",
