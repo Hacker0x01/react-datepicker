@@ -2,7 +2,6 @@ import { render, fireEvent } from "@testing-library/react";
 import { el } from "date-fns/locale/el";
 import { ru } from "date-fns/locale/ru";
 import { zhCN } from "date-fns/locale/zh-CN";
-import range from "lodash/range";
 import React from "react";
 import onClickOutside from "react-onclickoutside";
 
@@ -10,14 +9,23 @@ import { getMonthInLocale, registerLocale } from "../date_utils";
 import MonthDropdown from "../month_dropdown";
 import MonthDropdownOptions from "../month_dropdown_options";
 
+import { range } from "./test_utils";
+
+type MonthDropdownProps = React.ComponentProps<typeof MonthDropdown>;
+
 describe("MonthDropdown", () => {
   let monthDropdown: HTMLElement | null = null;
-  let handleChangeResult;
-  const mockHandleChange = function (changeInput) {
+  let handleChangeResult: number | null;
+  const mockHandleChange = function (changeInput: number) {
     handleChangeResult = changeInput;
   };
 
-  function getMonthDropdown(overrideProps?) {
+  function getMonthDropdown(
+    overrideProps?: Partial<
+      Pick<MonthDropdownProps, "dropdownMode" | "month" | "onChange">
+    > &
+      Omit<MonthDropdownProps, "dropdownMode" | "month" | "onChange">,
+  ) {
     return render(
       <MonthDropdown
         dropdownMode="scroll"
@@ -105,7 +113,7 @@ describe("MonthDropdown", () => {
       );
       fireEvent.click(
         (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[1],
+          [])[1] ?? new HTMLElement(),
       );
       expect(
         monthDropdown?.querySelectorAll(".react-datepicker__month-dropdown"),
@@ -137,7 +145,7 @@ describe("MonthDropdown", () => {
       );
       fireEvent.click(
         (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[11],
+          [])[11] ?? new HTMLElement(),
       );
       expect(handleChangeResult).toBeNull();
     });
@@ -149,7 +157,7 @@ describe("MonthDropdown", () => {
       );
       fireEvent.click(
         (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[2],
+          [])[2] ?? new HTMLElement(),
       );
       expect(handleChangeResult).toEqual(2);
     });

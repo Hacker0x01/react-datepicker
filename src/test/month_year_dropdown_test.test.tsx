@@ -14,14 +14,37 @@ import {
 import MonthYearDropdown from "../month_year_dropdown";
 import MonthYearDropdownOptions from "../month_year_dropdown_options";
 
+type MonthYearDropdownProps = React.ComponentProps<typeof MonthYearDropdown>;
+
 describe("MonthYearDropdown", () => {
   let monthYearDropdown: HTMLElement | null = null;
-  let handleChangeResult;
-  const mockHandleChange = function (changeInput) {
+  let handleChangeResult: Date | null = null;
+  const mockHandleChange = function (changeInput: Date) {
     handleChangeResult = changeInput;
   };
 
-  function getMonthYearDropdown(overrideProps) {
+  function getMonthYearDropdown(
+    overrideProps: Partial<
+      Pick<
+        MonthYearDropdownProps,
+        | "dropdownMode"
+        | "date"
+        | "dateFormat"
+        | "minDate"
+        | "maxDate"
+        | "onChange"
+      >
+    > &
+      Omit<
+        MonthYearDropdownProps,
+        | "dropdownMode"
+        | "date"
+        | "dateFormat"
+        | "minDate"
+        | "maxDate"
+        | "onChange"
+      >,
+  ) {
     const dateFormatCalendar = "LLLL yyyy";
     const date = newDate("2018-01");
     const minDate = newDate("2017-07-01");
@@ -45,7 +68,7 @@ describe("MonthYearDropdown", () => {
   });
 
   describe("scroll mode", () => {
-    let selectedDate;
+    let selectedDate: Date;
     beforeEach(() => {
       selectedDate = newDate("2018-01");
       monthYearDropdown = getMonthYearDropdown({ date: selectedDate });
@@ -79,7 +102,7 @@ describe("MonthYearDropdown", () => {
       fireEvent.click(
         (monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-option",
-        ) ?? [])[1],
+        ) ?? [])[1] ?? new HTMLElement(),
       );
       expect(
         monthYearDropdown?.querySelectorAll(
@@ -167,10 +190,10 @@ describe("MonthYearDropdown", () => {
       fireEvent.click(
         (monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-option",
-        ) ?? [])[5],
+        ) ?? [])[5] ?? new HTMLElement(),
       );
 
-      expect(handleChangeResult.toString()).toBe(expected_date.toString());
+      expect(handleChangeResult?.toString()).toBe(expected_date.toString());
     });
 
     it("should use dateFormat to display date in dropdown", () => {
@@ -187,7 +210,6 @@ describe("MonthYearDropdown", () => {
 
       dropdownDateFormat = getMonthYearDropdown({
         locale: "fi",
-        showMonthYearDropdown: true,
       });
       expect(dropdownDateFormat.textContent).toBe("tammikuu 2018");
 
@@ -199,7 +221,6 @@ describe("MonthYearDropdown", () => {
       dropdownDateFormat = getMonthYearDropdown({
         dateFormat: "yyyy LLL",
         locale: "fi",
-        showMonthYearDropdown: true,
       });
       expect(dropdownDateFormat.textContent).toBe("2018 tammi");
     });
@@ -294,7 +315,7 @@ describe("MonthYearDropdown", () => {
       const monthToClick = newDate("2017-09");
       monthYearDropdown = getMonthYearDropdown({
         dropdownMode: "select",
-        month: selectedMonth,
+        date: selectedMonth,
       });
       const select = monthYearDropdown.querySelector(
         ".react-datepicker__month-year-select",
@@ -302,7 +323,7 @@ describe("MonthYearDropdown", () => {
       fireEvent.change(select ?? new HTMLElement(), {
         target: { value: monthToClick.valueOf() },
       });
-      expect(handleChangeResult.valueOf()).toBe(monthToClick.valueOf());
+      expect(handleChangeResult?.valueOf()).toBe(monthToClick.valueOf());
     });
   });
 });
