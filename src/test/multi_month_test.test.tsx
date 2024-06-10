@@ -2,18 +2,34 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import Calendar from "../calendar";
-import * as utils from "../date_utils";
+import { formatDate, newDate, subMonths } from "../date_utils";
+
+type CalendarProps = React.ComponentProps<typeof Calendar>;
 
 describe("Multi month calendar", function () {
   const dateFormat = "LLLL yyyy";
 
-  function getCalendar(extraProps) {
+  function getCalendar(
+    extraProps: Partial<
+      Pick<
+        CalendarProps,
+        "dateFormat" | "onSelect" | "onClickOutside" | "dropdownMode"
+      >
+    > &
+      Omit<
+        CalendarProps,
+        | "dateFormat"
+        | "onSelect"
+        | "onClickOutside"
+        | "dropdownMode"
+        | "showMonthYearDropdown"
+      >,
+  ) {
     return render(
       <Calendar
         dateFormat={dateFormat}
         onSelect={() => {}}
         onClickOutside={() => {}}
-        hideCalendar={() => {}}
         dropdownMode="scroll"
         {...extraProps}
       />,
@@ -39,7 +55,7 @@ describe("Multi month calendar", function () {
     const monthDate = calendar.querySelector(
       ".react-datepicker__current-month",
     )?.textContent;
-    const previousMonth = utils.subMonths(utils.newDate(), 1);
-    expect(monthDate).toBe(utils.formatDate(previousMonth, "LLLL yyyy"));
+    const previousMonth = subMonths(newDate(), 1);
+    expect(monthDate).toBe(formatDate(previousMonth, "LLLL yyyy"));
   });
 });

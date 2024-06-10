@@ -3,14 +3,36 @@ import React from "react";
 
 import DatePicker from "../";
 
+import type { DatePickerProps } from "../index";
+
 describe("Multiple Dates Selected", function () {
-  function getDatePicker(extraProps) {
+  function getDatePicker(
+    extraProps: Partial<
+      Pick<
+        DatePickerProps,
+        | "selectsMultiple"
+        | "shouldCloseOnSelect"
+        | "disabledKeyboardNavigation"
+        | "onSelect"
+      >
+    > &
+      Omit<
+        DatePickerProps,
+        | "selectsMultiple"
+        | "onChange"
+        | "shouldCloseOnSelect"
+        | "disabledKeyboardNavigation"
+        | "onSelect"
+        | "selectsRange"
+      >,
+  ) {
     return render(
       <DatePicker
         selectsMultiple
         onChange={() => {}}
         shouldCloseOnSelect={false}
         disabledKeyboardNavigation
+        onSelect={() => {}}
         {...extraProps}
       />,
     );

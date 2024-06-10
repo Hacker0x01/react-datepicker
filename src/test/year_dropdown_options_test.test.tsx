@@ -2,7 +2,7 @@ import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 import onClickOutside from "react-onclickoutside";
 
-import * as utils from "../date_utils";
+import { addYears, getYear, newDate, subYears } from "../date_utils";
 import YearDropdownOptions from "../year_dropdown_options";
 
 describe("YearDropdownOptions", () => {
@@ -219,14 +219,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should generate years between minDate and maxDate if prop scrollableYearDropdown is true", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const minDate = utils.newDate();
-    const maxDate = utils.addYears(utils.newDate(), 1);
+    const minDate = newDate();
+    const maxDate = addYears(newDate(), 1);
     const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={utils.getYear(utils.newDate())}
+        year={getYear(newDate())}
         minDate={minDate}
         maxDate={maxDate}
       />,
@@ -238,21 +238,21 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
       .map((node) => node.textContent?.replace("✓", ""));
 
     expect(yearsList.length).toBe(2);
-    expect(yearsList).toContain(`${utils.getYear(minDate)}`);
-    expect(yearsList).toContain(`${utils.getYear(maxDate)}`);
+    expect(yearsList).toContain(`${getYear(minDate)}`);
+    expect(yearsList).toContain(`${getYear(maxDate)}`);
   });
 
   it("should hide arrows to add years, if not between minDate and maxDate", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const minDate = utils.newDate();
-    const maxDate = utils.addYears(utils.newDate(), 1);
+    const minDate = newDate();
+    const maxDate = addYears(newDate(), 1);
     const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={utils.getYear(utils.newDate())}
+        year={getYear(newDate())}
         minDate={minDate}
         maxDate={maxDate}
       />,
@@ -273,14 +273,14 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add years, if actual years list contains years between minDate and maxDate", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const minDate = utils.subYears(utils.newDate(), 11);
-    const maxDate = utils.addYears(utils.newDate(), 11);
+    const minDate = subYears(newDate(), 11);
+    const maxDate = addYears(newDate(), 11);
     const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={utils.getYear(utils.newDate())}
+        year={getYear(newDate())}
         minDate={minDate}
         maxDate={maxDate}
       />,
@@ -303,12 +303,12 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(minDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(minDate),
       ),
     ).toBeUndefined();
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(maxDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(maxDate),
       ),
     ).toBeUndefined();
 
@@ -323,12 +323,12 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
     ).filter((node) => node.textContent);
 
     const x = textContents.find(
-      (year) => parseInt(year.textContent ?? "") === utils.getYear(minDate),
+      (year) => parseInt(year.textContent ?? "") === getYear(minDate),
     );
     expect(x).not.toBeUndefined();
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(maxDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(maxDate),
       ),
     ).toBeUndefined();
     expect(
@@ -348,12 +348,12 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(minDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(minDate),
       ),
     ).toBeUndefined();
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(maxDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(maxDate),
       ),
     ).toBeUndefined();
   });
@@ -361,13 +361,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add previous years, if actual years list does not contain minDate year, if only minDate is provided", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const minDate = utils.subYears(utils.newDate(), 11);
+    const minDate = subYears(newDate(), 11);
     const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={utils.getYear(utils.newDate())}
+        year={getYear(newDate())}
         minDate={minDate}
       />,
     );
@@ -389,7 +389,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(minDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(minDate),
       ),
     ).toBeUndefined();
 
@@ -405,7 +405,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(minDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(minDate),
       ),
     ).not.toBeUndefined();
     expect(
@@ -423,13 +423,13 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
   it("should show arrows to add upcoming years, if actual years list does not contain maxDate year, if only maxDate is provided", () => {
     const onCancelSpy = jest.fn();
     const onChangeSpy = jest.fn();
-    const maxDate = utils.addYears(utils.newDate(), 11);
+    const maxDate = addYears(newDate(), 11);
     const { container } = render(
       <YearDropdownOptions
         onCancel={onCancelSpy}
         onChange={onChangeSpy}
         scrollableYearDropdown
-        year={utils.getYear(utils.newDate())}
+        year={getYear(newDate())}
         maxDate={maxDate}
       />,
     );
@@ -451,7 +451,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(maxDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(maxDate),
       ),
     ).toBeUndefined();
 
@@ -467,7 +467,7 @@ describe("YearDropdownOptions with scrollable dropwdown", () => {
 
     expect(
       textContents.find(
-        (year) => parseInt(year.textContent ?? "") === utils.getYear(maxDate),
+        (year) => parseInt(year.textContent ?? "") === getYear(maxDate),
       ),
     ).not.toBeUndefined();
     expect(

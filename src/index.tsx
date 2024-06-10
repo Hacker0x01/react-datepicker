@@ -122,6 +122,7 @@ export type DatePickerProps = Omit<
   | "setPreSelection"
   | "selectsRange"
   | "selectsMultiple"
+  | "dropdownMode"
 > &
   Pick<AdditionalProps, "excludeScrollbar"> &
   Pick<CalendarIconProps, "icon"> &
@@ -135,9 +136,10 @@ export type DatePickerProps = Omit<
     | "popperOnKeyDown"
     | "showArrow"
   > & {
-    dateFormatCalendar: CalendarProps["dateFormat"];
+    dateFormatCalendar?: CalendarProps["dateFormat"];
     calendarClassName?: CalendarProps["className"];
     calendarContainer?: CalendarProps["container"];
+    dropdownMode?: CalendarProps["dropdownMode"];
     onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
     popperClassName?: PopperComponentProps["className"];
     showPopperArrow?: PopperComponentProps["showArrow"];
@@ -260,7 +262,7 @@ export default class DatePicker extends Component<
       onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
-      dropdownMode: "scroll",
+      dropdownMode: "scroll" as const,
       onFocus() {},
       onBlur() {},
       onKeyDown() {},
@@ -1199,7 +1201,10 @@ export default class DatePicker extends Component<
         {...this.props}
         {...this.state}
         setOpen={this.setOpen}
-        dateFormat={this.props.dateFormatCalendar}
+        dateFormat={
+          this.props.dateFormatCalendar ??
+          DatePicker.defaultProps.dateFormatCalendar
+        }
         onSelect={this.handleSelect}
         onClickOutside={this.handleCalendarClickOutside}
         holidays={getHolidaysMap(this.modifyHolidays())}
@@ -1211,6 +1216,9 @@ export default class DatePicker extends Component<
         handleOnKeyDown={this.props.onKeyDown}
         handleOnDayKeyDown={this.onDayKeyDown}
         setPreSelection={this.setPreSelection}
+        dropdownMode={
+          this.props.dropdownMode ?? DatePicker.defaultProps.dropdownMode
+        }
       >
         {this.props.children}
       </WrappedCalendar>

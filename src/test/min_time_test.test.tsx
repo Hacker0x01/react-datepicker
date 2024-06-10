@@ -3,17 +3,35 @@ import React, { useState } from "react";
 
 import DatePicker from "../index";
 
-const DatePickerWithState = (props) => {
+import type { DatePickerProps } from "../index";
+
+const DatePickerWithState = (
+  props: Partial<
+    Pick<DatePickerProps, "open" | "selected" | "showTimeSelect" | "dateFormat">
+  > &
+    Omit<
+      DatePickerProps,
+      | "open"
+      | "selected"
+      | "onChange"
+      | "showTimeSelect"
+      | "dateFormat"
+      | "selectsRange"
+      | "selectsMultiple"
+      | "onSelect"
+    >,
+) => {
   const [selected, setSelected] = useState<Date | null>(null);
   return (
     <DatePicker
       open
       selected={selected}
-      onChange={(date) => {
+      onChange={(date: Date | null) => {
         setSelected(date);
       }}
       showTimeSelect
       dateFormat="MM/dd/yyyy HH:mm"
+      onSelect={() => {}}
       {...props}
     />
   );
@@ -23,7 +41,7 @@ describe("Datepicker minTime", () => {
   it("should select time 12:00 AM when no minTime constraint is set.", () => {
     const { getByText, container } = render(<DatePickerWithState />);
 
-    const day = container.getElementsByClassName("react-datepicker__day")[0];
+    const day = container.getElementsByClassName("react-datepicker__day")[0]!;
 
     fireEvent.click(day);
 
@@ -40,7 +58,7 @@ describe("Datepicker minTime", () => {
       <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
     );
 
-    const day = container.getElementsByClassName("react-datepicker__day")[0];
+    const day = container.getElementsByClassName("react-datepicker__day")[0]!;
 
     fireEvent.click(day);
 

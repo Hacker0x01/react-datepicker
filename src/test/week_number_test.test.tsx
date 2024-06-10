@@ -1,17 +1,27 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import * as utils from "../date_utils";
+import { KeyType, addWeeks, newDate } from "../date_utils";
 import WeekNumber from "../week_number";
 
-function renderWeekNumber(weekNumber, props = {}) {
+type WeekNumberProps = React.ComponentProps<typeof WeekNumber>;
+
+function renderWeekNumber(
+  weekNumber: number,
+  props: Partial<WeekNumberProps> = {},
+): HTMLElement {
   return render(
-    <WeekNumber weekNumber={weekNumber} date={new Date()} {...props} />,
+    <WeekNumber
+      weekNumber={weekNumber}
+      date={new Date()}
+      onClick={() => {}}
+      {...props}
+    />,
   ).container;
 }
 
 describe("WeekNumber", () => {
-  let weekNumber, instance;
+  let weekNumber: HTMLElement | null, instance: WeekNumber | null;
 
   describe("Rendering", () => {
     it("should render the specified Week Number", () => {
@@ -51,7 +61,7 @@ describe("WeekNumber", () => {
   });
 
   describe("Component Lifecycle", () => {
-    let handleFocusWeekNumberSpy;
+    let handleFocusWeekNumberSpy: jest.SpyInstance;
 
     beforeEach(() => {
       weekNumber = render(
@@ -61,19 +71,29 @@ describe("WeekNumber", () => {
           }}
           weekNumber={1}
           date={new Date()}
+          onClick={() => {}}
         />,
-      );
-      handleFocusWeekNumberSpy = jest.spyOn(instance, "handleFocusWeekNumber");
+      ).container;
+      if (instance) {
+        handleFocusWeekNumberSpy = jest.spyOn(
+          instance,
+          "handleFocusWeekNumber",
+        );
+      }
     });
 
     it("should call handleFocusWeeknumber on mount", () => {
-      instance.componentDidMount();
+      instance?.componentDidMount();
       expect(handleFocusWeekNumberSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should call handleFocusWeekNumber with prevProps on update", () => {
-      const prevProps = { someProp: "someValue" };
-      instance.componentDidUpdate(prevProps);
+      const prevProps = {
+        weekNumber: 1,
+        date: new Date(),
+        onClick: () => {},
+      };
+      instance?.componentDidUpdate(prevProps);
       expect(handleFocusWeekNumberSpy).toHaveBeenCalledWith(prevProps);
     });
   });
@@ -94,20 +114,20 @@ describe("WeekNumber", () => {
 
     describe("handleOnKeyDown", () => {
       const handleOnKeyDownMock = jest.fn((event) => {
-        if (event.key === utils.KeyType.Space) {
+        if (event.key === KeyType.Space) {
           event.preventDefault();
-          event.key = utils.KeyType.Enter;
+          event.key = KeyType.Enter;
         }
       });
 
       it("should change space key to Enter", () => {
         const eventSpace = {
-          key: utils.KeyType.Space,
+          key: KeyType.Space,
           preventDefault: jest.fn(),
         };
         handleOnKeyDownMock(eventSpace);
         expect(eventSpace.preventDefault).toHaveBeenCalled();
-        expect(eventSpace.key).toBe(utils.KeyType.Enter);
+        expect(eventSpace.key).toBe(KeyType.Enter);
       });
 
       it("should not change any other key", () => {
@@ -151,7 +171,7 @@ describe("WeekNumber", () => {
 
       it("should return 0 if showWeekPicker and showWeekNumber are true and the day is the preSelection", () => {
         const currentWeekNumber = new Date();
-        const selected = utils.addWeeks(currentWeekNumber, 1);
+        const selected = addWeeks(currentWeekNumber, 1);
         const preSelection = currentWeekNumber;
         const { container } = render(
           <WeekNumber
@@ -207,8 +227,8 @@ describe("WeekNumber", () => {
 
       it("should return -1 if the day is not selected or the preSelection", () => {
         const currentWeekNumber = new Date();
-        const selected = utils.addWeeks(currentWeekNumber, 1);
-        const preSelection = utils.addWeeks(currentWeekNumber, 2);
+        const selected = addWeeks(currentWeekNumber, 1);
+        const preSelection = addWeeks(currentWeekNumber, 2);
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -256,7 +276,7 @@ describe("WeekNumber", () => {
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week and has the onClick Props", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -277,7 +297,7 @@ describe("WeekNumber", () => {
       });
 
       it("should not have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week and doesn't have the onClick Props", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -297,8 +317,8 @@ describe("WeekNumber", () => {
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week and has the onClick Props", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
-        const preSelection = utils.addWeeks(currentWeekNumber, 1);
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
+        const preSelection = addWeeks(currentWeekNumber, 1);
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -319,8 +339,8 @@ describe("WeekNumber", () => {
       });
 
       it("should not have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is not current week and doesn't have onClick Props", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
-        const preSelection = utils.addWeeks(currentWeekNumber, 1);
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
+        const preSelection = addWeeks(currentWeekNumber, 1);
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -340,8 +360,8 @@ describe("WeekNumber", () => {
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is not current week and preselected is current week", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
-        const selected = utils.addWeeks(currentWeekNumber, 1);
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
+        const selected = addWeeks(currentWeekNumber, 1);
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -366,9 +386,9 @@ describe("WeekNumber", () => {
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is not current week and preselected is not current week", () => {
-        const currentWeekNumber = utils.newDate("2023-10-22T13:09:53+02:00");
-        const selected = utils.addWeeks(currentWeekNumber, 1);
-        const preSelection = utils.addWeeks(currentWeekNumber, 2);
+        const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
+        const selected = addWeeks(currentWeekNumber, 1);
+        const preSelection = addWeeks(currentWeekNumber, 2);
         const { container } = render(
           <WeekNumber
             weekNumber={1}
@@ -395,7 +415,8 @@ describe("WeekNumber", () => {
   });
 
   describe("handleFocusWeekNumber", () => {
-    let weekNumberEl, instance;
+    let weekNumberEl: React.RefObject<HTMLDivElement>,
+      instance: WeekNumber | null;
 
     const createComponentWithProps = (props = {}) => {
       const currentWeekNumber = new Date();
@@ -413,17 +434,20 @@ describe("WeekNumber", () => {
           {...props}
         />,
       );
-      instance.weekNumberEl = weekNumberEl;
-      instance.getTabIndex = jest.fn(() => 0);
-      instance.isSameDay = jest.fn(() => true);
+      if (instance) {
+        instance.weekNumberEl = weekNumberEl;
+        instance.getTabIndex = jest.fn(() => 0);
+      }
     };
 
     beforeEach(() => {
-      weekNumberEl = { current: { focus: jest.fn() } };
+      weekNumberEl = {
+        current: { focus: jest.fn() },
+      } as unknown as React.RefObject<HTMLDivElement>;
       createComponentWithProps();
     });
 
-    const setActiveElement = (element) => {
+    const setActiveElement = (element: HTMLElement) => {
       Object.defineProperty(document, "activeElement", {
         value: element,
         writable: false,
@@ -433,21 +457,21 @@ describe("WeekNumber", () => {
 
     it("should focus if conditions are met", () => {
       setActiveElement(document.body);
-      instance.handleFocusWeekNumber();
-      expect(weekNumberEl.current.focus).toHaveBeenCalled();
+      instance?.handleFocusWeekNumber();
+      expect(weekNumberEl.current?.focus).toHaveBeenCalled();
     });
 
     it("should not focus if input is focused", () => {
       const inputElement = document.createElement("input");
       setActiveElement(inputElement);
-      instance.handleFocusWeekNumber({ isInputFocused: true });
-      expect(weekNumberEl.current.focus).not.toHaveBeenCalled();
+      instance?.handleFocusWeekNumber({ isInputFocused: true });
+      expect(weekNumberEl.current?.focus).not.toHaveBeenCalled();
     });
 
     it("should not focus if inline prop set and shouldFocusDayInline is false", () => {
       createComponentWithProps({ inline: true, shouldFocusDayInline: false });
-      instance.handleFocusWeekNumber();
-      expect(weekNumberEl.current.focus).not.toHaveBeenCalled();
+      instance?.handleFocusWeekNumber();
+      expect(weekNumberEl.current?.focus).not.toHaveBeenCalled();
     });
 
     it("should focus if active element is another instance of WeekNumber", () => {
@@ -457,8 +481,8 @@ describe("WeekNumber", () => {
       const containerRef = { current: document.createElement("div") };
       createComponentWithProps({ containerRef });
       containerRef.current.appendChild(activeElement);
-      instance.handleFocusWeekNumber();
-      expect(weekNumberEl.current.focus).toHaveBeenCalled();
+      instance?.handleFocusWeekNumber();
+      expect(weekNumberEl.current?.focus).toHaveBeenCalled();
     });
   });
 });
