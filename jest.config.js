@@ -1,6 +1,5 @@
 const babelTargetList = [
   "helper_components/custom_input\\.tsx",
-  "calendar_test\\.test\\.tsx",
   "datepicker_test\\.test\\.tsx",
 ];
 
@@ -10,7 +9,7 @@ const tsTargetList = [
   "helper_components/custom_time_input\\.tsx",
   "helper_components/test_wrapper\\.tsx",
   "calendar_icon\\.test\\.tsx",
-  // "calendar_test\\.test\\.tsx",
+  "calendar_test\\.test\\.tsx",
   "date_utils_test\\.test\\.ts",
   // "datepicker_test\\.test\\.tsx",
   "day_test\\.test\\.tsx",
