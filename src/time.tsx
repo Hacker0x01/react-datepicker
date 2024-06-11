@@ -256,7 +256,7 @@ export default class Time extends Component<TimeProps, TimeState> {
     return (
       <div
         className={`react-datepicker__time-container ${
-          this.props.todayButton
+          this.props.todayButton ?? Time.defaultProps.todayButton
             ? "react-datepicker__time-container--with-today-button"
             : ""
         }`}

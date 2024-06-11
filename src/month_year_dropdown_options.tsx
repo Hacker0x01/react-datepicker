@@ -46,7 +46,7 @@ export default class MonthYearDropdownOptions extends Component<
   MonthYearDropdownOptionsProps,
   MonthYearDropdownOptionsState
 > {
-  constructor(props: Readonly<MonthYearDropdownOptionsProps>) {
+  constructor(props: MonthYearDropdownOptionsProps) {
     super(props);
 
     this.state = {

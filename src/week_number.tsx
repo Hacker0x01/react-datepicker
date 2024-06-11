@@ -6,7 +6,7 @@ import { KeyType, isSameDay } from "./date_utils";
 interface WeekNumberProps {
   weekNumber: number;
   date: Date;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
   ariaLabelPrefix?: string;
   selected?: Date | null;
   preSelection?: Date | null;
@@ -21,7 +21,7 @@ interface WeekNumberProps {
 }
 
 export default class WeekNumber extends Component<WeekNumberProps> {
-  static get defaultProps(): Partial<WeekNumberProps> {
+  static get defaultProps() {
     return {
       ariaLabelPrefix: "week ",
     };
@@ -31,7 +31,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
     this.handleFocusWeekNumber();
   }
 
-  componentDidUpdate(prevProps: Readonly<WeekNumberProps>): void {
+  componentDidUpdate(prevProps: WeekNumberProps): void {
     this.handleFocusWeekNumber(prevProps);
   }
 
@@ -70,9 +70,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
   // various cases when we need to apply focus to the preselected week-number
   // focus the week-number on mount/update so that keyboard navigation works while cycling through months with up or down keys (not for prev and next month buttons)
   // prevent focus for these activeElement cases so we don't pull focus from the input as the calendar opens
-  handleFocusWeekNumber = (
-    prevProps?: Readonly<Partial<WeekNumberProps>>,
-  ): void => {
+  handleFocusWeekNumber = (prevProps?: Partial<WeekNumberProps>): void => {
     let shouldFocusWeekNumber = false;
     // only do this while the input isn't focused
     // otherwise, typing/backspacing the date manually may steal focus away from the input
@@ -111,7 +109,11 @@ export default class WeekNumber extends Component<WeekNumberProps> {
   };
 
   render(): JSX.Element {
-    const { weekNumber, ariaLabelPrefix = "week ", onClick } = this.props;
+    const {
+      weekNumber,
+      ariaLabelPrefix = WeekNumber.defaultProps.ariaLabelPrefix,
+      onClick,
+    } = this.props;
 
     const weekNumberClasses = {
       "react-datepicker__week-number": true,

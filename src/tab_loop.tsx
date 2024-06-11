@@ -83,7 +83,7 @@ export default class TabLoop extends Component<TabLoopProps> {
   };
 
   render() {
-    if (!this.props.enableTabLoop) {
+    if (!(this.props.enableTabLoop ?? TabLoop.defaultProps.enableTabLoop)) {
       return this.props.children;
     }
     return (

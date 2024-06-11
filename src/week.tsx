@@ -13,15 +13,15 @@ interface WeekProps
   extends Omit<
       DayProps,
       | "ariaLabelPrefixWhenEnabled"
-      | "disabledDayAriaLabelPrefix"
+      | "ariaLabelPrefixWhenDisabled"
       | "day"
       | "onClick"
       | "onMouseEnter"
     >,
     Omit<WeekNumberProps, "weekNumber" | "date" | "onClick"> {
   day: Date;
-  chooseDayAriaLabelPrefix: DayProps["ariaLabelPrefixWhenEnabled"];
-  disabledDayAriaLabelPrefix: DayProps["ariaLabelPrefixWhenDisabled"];
+  chooseDayAriaLabelPrefix?: DayProps["ariaLabelPrefixWhenEnabled"];
+  disabledDayAriaLabelPrefix?: DayProps["ariaLabelPrefixWhenDisabled"];
   onDayClick?: (day: Date, event: React.MouseEvent<HTMLDivElement>) => void;
   onDayMouseEnter?: (day: Date) => void;
   shouldCloseOnSelect?: boolean;
@@ -35,7 +35,7 @@ interface WeekProps
 }
 
 export default class Week extends Component<WeekProps> {
-  static get defaultProps(): Partial<WeekProps> {
+  static get defaultProps() {
     return {
       shouldCloseOnSelect: true,
     };
@@ -67,7 +67,10 @@ export default class Week extends Component<WeekProps> {
     if (this.props.showWeekPicker) {
       this.handleDayClick(day, event);
     }
-    if (this.props.shouldCloseOnSelect) {
+    if (
+      this.props.shouldCloseOnSelect ??
+      Week.defaultProps.shouldCloseOnSelect
+    ) {
       this.props.setOpen?.(false);
     }
   };
@@ -91,6 +94,7 @@ export default class Week extends Component<WeekProps> {
       days.push(
         <WeekNumber
           key="W"
+          {...Week.defaultProps}
           {...this.props}
           weekNumber={weekNumber}
           date={startOfWeek}
@@ -103,6 +107,7 @@ export default class Week extends Component<WeekProps> {
         const day = addDays(startOfWeek, offset);
         return (
           <Day
+            {...Week.defaultProps}
             {...this.props}
             ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
             ariaLabelPrefixWhenDisabled={this.props.disabledDayAriaLabelPrefix}

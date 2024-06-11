@@ -315,7 +315,7 @@ export default class DatePicker extends Component<
     };
   }
 
-  constructor(props: Readonly<DatePickerProps>) {
+  constructor(props: DatePickerProps) {
     super(props);
     this.state = this.calcInitialState();
     this.preventFocusTimeout = undefined;
@@ -330,8 +330,8 @@ export default class DatePicker extends Component<
   }
 
   componentDidUpdate(
-    prevProps: Readonly<DatePickerProps>,
-    prevState: Readonly<DatePickerState>,
+    prevProps: DatePickerProps,
+    prevState: DatePickerState,
   ): void {
     if (
       prevProps.inline &&
@@ -381,8 +381,7 @@ export default class DatePicker extends Component<
 
   inputFocusTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  calendar: WrapperInstance<Readonly<CalendarProps>, typeof Calendar> | null =
-    null;
+  calendar: WrapperInstance<CalendarProps, typeof Calendar> | null = null;
 
   input: HTMLElement | null = null;
 

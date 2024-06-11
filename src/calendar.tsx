@@ -234,7 +234,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     };
   }
 
-  constructor(props: Readonly<CalendarProps>) {
+  constructor(props: CalendarProps) {
     super(props);
 
     this.containerRef = createRef<HTMLDivElement>();
@@ -259,7 +259,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
   }
 
-  componentDidUpdate(prevProps: Readonly<CalendarProps>) {
+  componentDidUpdate(prevProps: CalendarProps) {
     if (
       this.props.preSelection &&
       (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
