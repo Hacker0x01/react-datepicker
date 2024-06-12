@@ -1,8 +1,8 @@
-const babelTargetList = ["helper_components/custom_input\\.tsx"];
+const babelTargetList = [];
 
 const tsTargetList = [
   "helper_components/calendar_icon\\.tsx",
-  // "helper_components/custom_input\\.tsx",
+  "helper_components/custom_input\\.tsx",
   "helper_components/custom_time_input\\.tsx",
   "helper_components/test_wrapper\\.tsx",
   "calendar_icon\\.test\\.tsx",

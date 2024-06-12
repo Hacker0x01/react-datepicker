@@ -1,7 +1,10 @@
 import React from "react";
 
 type Props = {
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    value: string,
+  ) => void;
   onChangeArgs?: (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => [React.ChangeEvent<HTMLInputElement>, string];
