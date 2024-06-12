@@ -5,6 +5,7 @@ import {
   addDays,
   addWeeks,
   formatDate,
+  getMonth,
   getStartOfWeek,
   getWeek,
   isEqual,
@@ -14,13 +15,17 @@ import Week from "../week";
 
 describe("Week", () => {
   it("should have the week CSS class", () => {
-    const { container } = render(<Week day={newDate()} />);
+    const { container } = render(
+      <Week day={newDate()} month={getMonth(newDate())} />,
+    );
     expect(container.querySelector(".react-datepicker__week")).not.toBeNull();
   });
 
   it("should render the days of the week", () => {
     const weekStart = getStartOfWeek(newDate("2015-12-20"));
-    const { container } = render(<Week day={weekStart} />);
+    const { container } = render(
+      <Week day={weekStart} month={getMonth(weekStart)} />,
+    );
 
     const days = container.querySelectorAll(".react-datepicker__day");
     expect(days.length).toBe(7);
@@ -39,7 +44,9 @@ describe("Week", () => {
 
   it("should render the week number", () => {
     const weekStart = getStartOfWeek(newDate("2015-12-20"));
-    const { container } = render(<Week showWeekNumber day={weekStart} />);
+    const { container } = render(
+      <Week showWeekNumber day={weekStart} month={getMonth(weekStart)} />,
+    );
 
     const days = container.querySelectorAll(".react-datepicker__day");
     expect(days.length).toBe(7);
@@ -65,7 +72,11 @@ describe("Week", () => {
 
     const weekStart = newDate("2015-12-20");
     const { container } = render(
-      <Week day={weekStart} onDayClick={onDayClick} />,
+      <Week
+        day={weekStart}
+        onDayClick={onDayClick}
+        month={getMonth(weekStart)}
+      />,
     );
     const day = container.querySelector(".react-datepicker__day");
     if (day && dayClicked) {
@@ -95,6 +106,7 @@ describe("Week", () => {
         showWeekNumber
         onWeekSelect={onWeekClick}
         setOpen={setOpenSpy}
+        month={getMonth(weekStart)}
       />,
     );
     const weekNumberElement = container.querySelector(
@@ -116,6 +128,7 @@ describe("Week", () => {
         shouldCloseOnSelect
         onWeekSelect={() => {}}
         setOpen={setOpenSpy}
+        month={getMonth(weekStart)}
       />,
     );
     const weekNumberElement = container.querySelector(
@@ -138,6 +151,7 @@ describe("Week", () => {
         shouldCloseOnSelect={false}
         onWeekSelect={setOnWeekSelect}
         setOpen={setOpenSpy}
+        month={getMonth(weekStart)}
       />,
     );
 
@@ -166,6 +180,7 @@ describe("Week", () => {
         showWeekNumber
         shouldCloseOnSelect={false}
         onWeekSelect={onWeekClick}
+        month={getMonth(weekStart)}
       />,
     );
     const weekNumberElement = container.querySelector(
@@ -190,6 +205,7 @@ describe("Week", () => {
         day={weekStart}
         showWeekNumber
         formatWeekNumber={weekNumberFormatter}
+        month={getMonth(weekStart)}
       />,
     );
     const weekNumberElement = container.querySelector(
@@ -204,7 +220,11 @@ describe("Week", () => {
     const onDayMouseEnterSpy = jest.fn();
     const weekStart = newDate();
     const { container } = render(
-      <Week day={weekStart} onDayMouseEnter={onDayMouseEnterSpy} />,
+      <Week
+        day={weekStart}
+        onDayMouseEnter={onDayMouseEnterSpy}
+        month={getMonth(weekStart)}
+      />,
     );
 
     const day = container.querySelector(".react-datepicker__day");
@@ -224,6 +244,7 @@ describe("Week", () => {
         day={weekStart}
         onDayMouseEnter={onDayMouseEnterSpy}
         usePointerEvent
+        month={getMonth(weekStart)}
       />,
     );
 
@@ -255,6 +276,7 @@ describe("Week", () => {
           showWeekPicker={false}
           shouldCloseOnSelect={false}
           setOpen={() => {}}
+          month={getMonth(day)}
         />,
       );
       instance!.handleWeekClick(day, weekNumber, event);
@@ -276,6 +298,7 @@ describe("Week", () => {
           showWeekPicker
           shouldCloseOnSelect={false}
           setOpen={() => {}}
+          month={getMonth(day)}
         />,
       );
       const handleDayClick = jest.spyOn(instance!, "handleDayClick");
@@ -299,6 +322,7 @@ describe("Week", () => {
           showWeekPicker={false}
           shouldCloseOnSelect
           setOpen={setOpen}
+          month={getMonth(day)}
         />,
       );
       instance!.handleWeekClick(day, weekNumber, event);
@@ -314,6 +338,7 @@ describe("Week", () => {
           day={currentWeek}
           selected={currentWeek}
           preSelection={currentWeek}
+          month={getMonth(currentWeek)}
         />,
       );
       expect(
@@ -329,6 +354,7 @@ describe("Week", () => {
           day={currentWeek}
           selected={currentWeek}
           preSelection={preSelection}
+          month={getMonth(currentWeek)}
         />,
       );
       expect(
@@ -344,6 +370,7 @@ describe("Week", () => {
           day={currentWeek}
           selected={selected}
           preSelection={currentWeek}
+          month={getMonth(currentWeek)}
         />,
       );
       expect(
@@ -358,7 +385,12 @@ describe("Week", () => {
       const currentWeek = newDate("2023-10-22T13:09:53+02:00");
       const selected = addWeeks(currentWeek, 1);
       const { container } = render(
-        <Week day={currentWeek} selected={selected} preSelection={selected} />,
+        <Week
+          day={currentWeek}
+          selected={selected}
+          preSelection={selected}
+          month={getMonth(currentWeek)}
+        />,
       );
       expect(
         container.querySelector(".react-datepicker__week--selected"),
@@ -384,6 +416,7 @@ describe("Week", () => {
           preSelection={currentWeek}
           calendarStartDay={calendarStartDay}
           showWeekPicker
+          month={getMonth(currentWeek)}
         />,
       );
       const week = container.querySelector(".react-datepicker__week--selected");

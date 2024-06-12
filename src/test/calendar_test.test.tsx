@@ -33,18 +33,59 @@ import DatePicker from "../index";
 
 import { getKey } from "./test_utils";
 
+import type { ReactDatePickerCustomHeaderProps } from "../calendar";
 import type { Locale } from "../date_utils";
 import type { Day } from "date-fns";
+import type Month from "month";
+import type MonthYearDropdown from "month_year_dropdown";
+import type Year from "year";
+import type YearDropdown from "year_dropdown";
 
-// TODO Possibly rename
 const DATE_FORMAT = "MM/dd/yyyy";
+
+type CalendarProps = React.ComponentProps<typeof Calendar>;
+
+interface YearDropdownProps
+  extends React.ComponentPropsWithoutRef<typeof YearDropdown> {}
+
+interface MonthYearDropdownProps
+  extends React.ComponentPropsWithoutRef<typeof MonthYearDropdown> {}
+
+interface YearProps extends React.ComponentPropsWithoutRef<typeof Year> {}
+
+interface MonthProps extends React.ComponentPropsWithoutRef<typeof Month> {}
 
 describe("Calendar", () => {
   const dateFormat = "MMMM yyyy";
   registerLocale("fi", fi);
 
-  function getCalendar(extraProps?) {
-    let instance;
+  function getCalendar(
+    extraProps?: Partial<
+      Pick<
+        CalendarProps,
+        "dateFormat" | "onSelect" | "onClickOutside" | "dropdownMode"
+      >
+    > &
+      Omit<
+        CalendarProps,
+        | "dateFormat"
+        | "onSelect"
+        | "onClickOutside"
+        | "dropdownMode"
+        | "showMonthYearDropdown"
+      > &
+      (
+        | ({
+            showMonthYearDropdown: true;
+          } & Pick<MonthYearDropdownProps, "maxDate" | "minDate">)
+        | ({
+            showMonthYearDropdown?: never;
+          } & Pick<YearDropdownProps, "maxDate" | "minDate"> &
+            Pick<YearProps, "maxDate" | "minDate"> &
+            Pick<MonthProps, "maxDate" | "minDate">)
+      ),
+  ) {
+    let instance: Calendar | null = null;
     const { container, rerender } = render(
       <Calendar
         ref={(node) => {
@@ -53,12 +94,13 @@ describe("Calendar", () => {
         dateFormat={dateFormat}
         onSelect={() => {}}
         onClickOutside={() => {}}
-        hideCalendar={() => {}}
         dropdownMode="scroll"
         {...extraProps}
       />,
     );
-    const rerenderFunc = (props?) => {
+    const rerenderFunc = (
+      props?: Partial<Omit<CalendarProps, "showMonthYearDropdown">>,
+    ) => {
       return rerender(
         <Calendar
           ref={(node) => {
@@ -67,7 +109,6 @@ describe("Calendar", () => {
           dateFormat={dateFormat}
           onSelect={() => {}}
           onClickOutside={() => {}}
-          hideCalendar={() => {}}
           dropdownMode="scroll"
           {...extraProps}
           {...props}
@@ -76,7 +117,7 @@ describe("Calendar", () => {
     };
     return {
       calendar: container,
-      instance,
+      instance: instance as unknown as Calendar | null,
       rerender: rerenderFunc,
     };
   }
@@ -84,20 +125,13 @@ describe("Calendar", () => {
   it("should start with the current date in view if no date range", () => {
     const now = newDate();
     const { instance } = getCalendar();
-    expect(isSameDay(instance.date, now)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, now)).toBeTruthy();
   });
 
   it("should start with the selected date in view if provided", () => {
     const selected = addYears(newDate(), 1);
     const { instance } = getCalendar({ selected });
-    expect(isSameDay(instance.date, selected)).toBeFalsy();
-  });
-
-  it("should start with the pre-selected date in view if provided", () => {
-    const preSelected = addYears(newDate(), 2);
-    const selected = addYears(newDate(), 1);
-    const { instance } = getCalendar({ preSelected, selected });
-    expect(isSameDay(instance.date, selected)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, selected)).toBeTruthy();
   });
 
   it("should start with the current date in view if in date range", () => {
@@ -105,83 +139,92 @@ describe("Calendar", () => {
     const minDate = subYears(now, 1);
     const maxDate = addYears(now, 1);
     const { instance } = getCalendar({ minDate, maxDate });
-    expect(isSameDay(instance.date, now)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, now)).toBeTruthy();
   });
 
   it("should start with the min date in view if after the current date", () => {
     const minDate = addYears(newDate(), 1);
     const { instance } = getCalendar({ minDate });
-    expect(isSameDay(instance.date, minDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, minDate)).toBeTruthy();
   });
 
   it("should start with the min include date in view if after the current date", () => {
     const minDate = addYears(newDate(), 1);
     const { instance } = getCalendar({ includeDates: [minDate] });
-    expect(isSameDay(instance.date, minDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, minDate)).toBeTruthy();
   });
 
   it("should start with the max date in view if before the current date", () => {
     const maxDate = subYears(newDate(), 1);
     const { instance } = getCalendar({ maxDate });
-    expect(isSameDay(instance.date, maxDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, maxDate)).toBeTruthy();
   });
 
   it("should start with the max include date in view if before the current date", () => {
     const maxDate = subYears(newDate(), 1);
     const { instance } = getCalendar({ includeDates: [maxDate] });
-    expect(isSameDay(instance.date, maxDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, maxDate)).toBeTruthy();
   });
 
   it("should start with the open to date in view if given and no selected/min/max dates given", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance } = getCalendar({ openToDate });
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
   it("should start with the open to date in view if given and after a min date", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
-    const minDate = parseDate("01/01/1993", DATE_FORMAT, undefined, false);
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const minDate =
+      parseDate("01/01/1993", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance } = getCalendar({ openToDate, minDate });
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
   it("should start with the open to date in view if given and before a max date", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
-    const maxDate = parseDate("12/31/1993", DATE_FORMAT, undefined, false);
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const maxDate =
+      parseDate("12/31/1993", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance } = getCalendar({ openToDate, maxDate });
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
   it("should start with the open to date in view if given and in range of the min/max dates", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
-    const minDate = parseDate("01/01/1993", DATE_FORMAT, undefined, false);
-    const maxDate = parseDate("12/31/1993", DATE_FORMAT, undefined, false);
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const minDate =
+      parseDate("01/01/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const maxDate =
+      parseDate("12/31/1993", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance } = getCalendar({ openToDate, minDate, maxDate });
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
   it("should open on openToDate date rather than selected date when both are specified", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
-    const selected = parseDate("09/28/1995", DATE_FORMAT, undefined, false);
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const selected =
+      parseDate("09/28/1995", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance } = getCalendar({ openToDate, selected });
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
   it("should trigger date change when openToDate prop is set after calcInitialState()", () => {
-    const openToDate = parseDate("09/28/1993", DATE_FORMAT, undefined, false);
-    const oneMonthFromOpenToDate = parseDate(
-      "10/28/1993",
-      DATE_FORMAT,
-      undefined,
-      false,
-    );
+    const openToDate =
+      parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
+    const oneMonthFromOpenToDate =
+      parseDate("10/28/1993", DATE_FORMAT, undefined, false) ?? undefined;
     const { instance, rerender } = getCalendar({ openToDate });
 
-    expect(isSameDay(instance.date, openToDate)).toBeFalsy();
+    expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
     rerender({
       openToDate: oneMonthFromOpenToDate,
     });
-    expect(isSameDay(instance.date, oneMonthFromOpenToDate)).toBeFalsy();
+    expect(
+      isSameDay(instance?.state.date, oneMonthFromOpenToDate),
+    ).toBeTruthy();
   });
 
   it("should render month and year as a header of datepicker by default", () => {
@@ -229,7 +272,7 @@ describe("Calendar", () => {
   });
 
   it("should correctly format weekday using formatWeekDay prop", () => {
-    const { calendar } = getCalendar({ formatWeekDay: (day) => day[0] });
+    const { calendar } = getCalendar({ formatWeekDay: (day) => day.charAt(0) });
     calendar
       .querySelectorAll(".react-datepicker__day-name")
       .forEach((dayName) => expect(dayName.textContent).toHaveLength(1));
@@ -256,41 +299,35 @@ describe("Calendar", () => {
 
   it("should render the months correctly adjusted by monthSelectedIn", () => {
     const selected = newDate("2018-11-19");
-    const { calendar, instance, rerender } = getCalendar({
+    const { calendar, rerender } = getCalendar({
       inline: true,
       monthsShown: 2,
       selected,
-    });
-    act(() => {
-      instance.state.monthSelectedIn = 1;
     });
     rerender();
     const renderedMonths = calendar.querySelectorAll(
       ".react-datepicker__month",
     );
-    expect(getMonth(renderedMonths[0].getAttribute("aria-label") ?? 0)).toEqual(
-      10,
-    );
+    expect(
+      getMonth(renderedMonths[0]?.getAttribute("aria-label") ?? 0),
+    ).toEqual(10);
   });
 
   it("should render the months correctly adjusted by monthSelectedIn for showPreviousMonths", () => {
     const selected = newDate("2018-11-19");
-    const { calendar, instance, rerender } = getCalendar({
+    const { calendar, rerender } = getCalendar({
       inline: true,
       monthsShown: 2,
       selected,
       showPreviousMonths: true,
     });
-    act(() => {
-      instance.state.monthSelectedIn = 1;
-    });
     rerender();
     const renderedMonths = calendar.querySelectorAll(
       ".react-datepicker__month",
     );
-    expect(getMonth(renderedMonths[0].getAttribute("aria-label") ?? 0)).toEqual(
-      9,
-    );
+    expect(
+      getMonth(renderedMonths[0]?.getAttribute("aria-label") ?? 0),
+    ).toEqual(9);
   });
 
   it("should render the correct default aria labels for next and prev months buttons", () => {
@@ -417,7 +454,7 @@ describe("Calendar", () => {
       "December",
     ];
 
-    const renderCustomHeader = (params) => {
+    const renderCustomHeader = (params: ReactDatePickerCustomHeaderProps) => {
       const {
         date,
         changeYear,
@@ -441,7 +478,7 @@ describe("Calendar", () => {
           <select
             value={getYear(date)}
             className="year-select"
-            onChange={({ target: { value } }) => changeYear(value)}
+            onChange={({ target: { value } }) => changeYear(Number(value))}
           >
             {[2017, 2018, 2019].map((year) => (
               <option key={year} value={year}>
@@ -453,7 +490,7 @@ describe("Calendar", () => {
           <select
             className="month-select"
             value={months[getMonth(date)]}
-            onChange={({ target: { value } }) => changeMonth(value)}
+            onChange={({ target: { value } }) => changeMonth(Number(value))}
           >
             {months.map((option, index) => (
               <option key={option} value={index}>
@@ -614,13 +651,15 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      const selected = newDate(instance.state.date);
+      const selected = newDate(instance?.state.date);
       const prevMonth =
         calendar.querySelector(".prevMonth") ?? new HTMLElement();
 
       fireEvent.click(prevMonth);
 
-      expect(getMonth(selected)).toBe((getMonth(instance.state.date) + 1) % 12);
+      expect(getMonth(selected)).toBe(
+        (getMonth(instance!.state.date) + 1) % 12,
+      );
     });
 
     it("should go to next month", () => {
@@ -628,13 +667,13 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      const selected = newDate(instance.state.date);
+      const selected = newDate(instance?.state.date);
       const nextMonth =
         calendar.querySelector(".nextMonth") ?? new HTMLElement();
 
       fireEvent.click(nextMonth);
 
-      const newMonth = getMonth(instance.state.date) - 1;
+      const newMonth = getMonth(instance!.state.date) - 1;
 
       const resultMonth = newMonth === -1 ? 11 : newMonth;
 
@@ -682,7 +721,7 @@ describe("Calendar", () => {
         calendar.querySelector(".month-select") ?? new HTMLElement();
       fireEvent.change(monthSelect, { target: { value: 4 } });
 
-      const selected = newDate(instance.state.date);
+      const selected = newDate(instance?.state.date);
 
       expect(getMonth(selected)).toBe(4);
     });
@@ -697,7 +736,7 @@ describe("Calendar", () => {
 
       fireEvent.change(yearSelect, { target: { value: 2017 } });
 
-      const selected = newDate(instance.state.date);
+      const selected = newDate(instance?.state.date);
 
       expect(getYear(selected)).toBe(2017);
     });
@@ -723,7 +762,11 @@ describe("Calendar", () => {
     });
 
     it("should set monthDate prop correctly when rendering custom headers", () => {
-      const renderMonthDateInCustomHeader = ({ monthDate }) => (
+      const renderMonthDateInCustomHeader = ({
+        monthDate,
+      }: {
+        monthDate: Date;
+      }) => (
         <div className="customheader-monthdate">{`${monthDate.getFullYear()}-${monthDate.getMonth()}-${monthDate.getDate()}`}</div>
       );
       const { calendar: twoMonthsCalendar } = getCalendar({
@@ -735,10 +778,10 @@ describe("Calendar", () => {
       const secondDate = addMonths(new Date(), 1);
       const firstDateInCustomHeader = twoMonthsCalendar.querySelectorAll(
         ".customheader-monthdate",
-      )[0].textContent;
+      )[0]?.textContent;
       const secondDateInCustomHeader = twoMonthsCalendar.querySelectorAll(
         ".customheader-monthdate",
-      )[1].textContent;
+      )[1]?.textContent;
 
       expect(firstDateInCustomHeader).toBe(
         `${firstDate.getFullYear()}-${firstDate.getMonth()}-${firstDate.getDate()}`,
@@ -948,7 +991,7 @@ describe("Calendar", () => {
       ".react-datepicker__today-button",
     );
     expect(todayButton).toHaveLength(1);
-    expect(todayButton[0].textContent).toBe("Vandaag");
+    expect(todayButton[0]?.textContent).toBe("Vandaag");
   });
 
   it("should set the date when pressing todayButton", () => {
@@ -957,13 +1000,13 @@ describe("Calendar", () => {
       calendar.querySelector(".react-datepicker__today-button") ??
       new HTMLElement();
     fireEvent.click(todayButton);
-    expect(isSameDay(instance.state.date, newDate())).toBeTruthy();
+    expect(isSameDay(instance?.state.date, newDate())).toBeTruthy();
   });
 
   it("should use a hash for week label if weekLabel is NOT provided", () => {
     const { calendar } = getCalendar({ showWeekNumbers: true });
     const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
-    expect(weekLabel[0].textContent).toBe("#");
+    expect(weekLabel[0]?.textContent).toBe("#");
   });
 
   it("should set custom week label if weekLabel is provided", () => {
@@ -972,7 +1015,7 @@ describe("Calendar", () => {
       weekLabel: "Foo",
     });
     const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
-    expect(weekLabel[0].textContent).toBe("Foo");
+    expect(weekLabel[0]?.textContent).toBe("Foo");
   });
 
   it("should track the currently hovered day (Mouse Event)", () => {
@@ -1021,7 +1064,7 @@ describe("Calendar", () => {
   });
 
   it("should clear the hovered day when the mouse leaves", () => {
-    let instance;
+    let instance: Calendar | null = null;
     const { container, rerender } = render(
       <Calendar
         ref={(node) => {
@@ -1034,8 +1077,10 @@ describe("Calendar", () => {
         onSelect={() => {}}
       />,
     );
+    expect(instance).not.toBeFalsy();
     act(() => {
-      instance.state.selectingDate = newDate();
+      (instance!.state as Pick<MonthProps, "selectingDate">).selectingDate =
+        newDate();
     });
     rerender(
       <Calendar
@@ -1086,18 +1131,18 @@ describe("Calendar", () => {
     const daysNamesShort = calendarShort.querySelectorAll(
       ".react-datepicker__day-name",
     );
-    expect(daysNamesShort[0].textContent).toBe("Sun");
-    expect(daysNamesShort[6].textContent).toBe("Sat");
+    expect(daysNamesShort[0]?.textContent).toBe("Sun");
+    expect(daysNamesShort[6]?.textContent).toBe("Sat");
 
     const daysNamesMin = calendarMin.querySelectorAll(
       ".react-datepicker__day-name",
     );
-    expect(daysNamesMin[0].textContent).toBe("Su");
-    expect(daysNamesMin[6].textContent).toBe("Sa");
+    expect(daysNamesMin[0]?.textContent).toBe("Su");
+    expect(daysNamesMin[6]?.textContent).toBe("Sa");
   });
 
   it("should set the date to the selected day of the previous month when previous button clicked", () => {
-    let date;
+    let date: Date | null = null;
     const expectedDate = "28.06.2017";
     const { container } = render(
       <DatePicker
@@ -1114,11 +1159,12 @@ describe("Calendar", () => {
       new HTMLElement();
     fireEvent.click(previousButton);
 
-    expect(formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
+    expect(date).not.toBeNull();
+    expect(formatDate(date!, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the selected day of the next when next button clicked", () => {
-    let date;
+    let date: Date | null = null;
     const expectedDate = "28.08.2017";
     const { container } = render(
       <DatePicker
@@ -1134,11 +1180,12 @@ describe("Calendar", () => {
       ".react-datepicker__navigation--next",
     );
     fireEvent.click(nextButton ?? new HTMLElement());
-    expect(formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
+    expect(date).not.toBeNull();
+    expect(formatDate(date!, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should set the date to the last possible day of the previous month when previous button clicked", () => {
-    let date;
+    let date: Date | null = null;
     const expectedDate = "30.11.2017";
     const { container } = render(
       <DatePicker
@@ -1154,7 +1201,8 @@ describe("Calendar", () => {
       ".react-datepicker__navigation--previous",
     );
     fireEvent.click(previousButton ?? new HTMLElement());
-    expect(formatDate(date, "dd.MM.yyyy")).toBe(expectedDate);
+    expect(date).not.toBeNull();
+    expect(formatDate(date!, "dd.MM.yyyy")).toBe(expectedDate);
   });
 
   it("should trigger onCalendarOpen and onCalendarClose", () => {
@@ -1179,7 +1227,7 @@ describe("Calendar", () => {
 
   describe("onMonthChange", () => {
     let onMonthChangeSpy = jest.fn();
-    let calendar;
+    let calendar: HTMLElement;
 
     beforeEach(() => {
       onMonthChangeSpy = jest.fn();
@@ -1198,27 +1246,28 @@ describe("Calendar", () => {
     });
 
     it("calls onMonthChange prop when previous month button clicked", () => {
-      const select = calendar.querySelector(
-        ".react-datepicker__navigation--previous",
-      );
+      const select =
+        calendar.querySelector(".react-datepicker__navigation--previous") ??
+        new HTMLElement();
       fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when next month button clicked", () => {
-      const select = calendar.querySelector(
-        ".react-datepicker__navigation--next",
-      );
+      const select =
+        calendar.querySelector(".react-datepicker__navigation--next") ??
+        new HTMLElement();
       fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when month changed from month dropdown", () => {
-      const select = calendar
-        .querySelector(".react-datepicker__month-dropdown-container")
-        .querySelector("select");
+      const select =
+        calendar
+          .querySelector(".react-datepicker__month-dropdown-container")
+          ?.querySelector("select") ?? new HTMLElement();
       fireEvent.change(select, {
         target: {
           value: Array.from<HTMLOptionElement>(
@@ -1233,7 +1282,7 @@ describe("Calendar", () => {
 
   describe("onYearChange", () => {
     let onYearChangeSpy = jest.fn();
-    let calendar;
+    let calendar: HTMLElement;
 
     beforeEach(() => {
       onYearChangeSpy = jest.fn();
@@ -1250,9 +1299,10 @@ describe("Calendar", () => {
     });
 
     it("calls onYearChange prop when year changed from year dropdown", () => {
-      const select = calendar
-        .querySelector(".react-datepicker__year-dropdown-container")
-        .querySelector("select");
+      const select =
+        calendar
+          .querySelector(".react-datepicker__year-dropdown-container")
+          ?.querySelector("select") ?? new HTMLElement();
       fireEvent.change(select, {
         target: {
           value: Array.from<HTMLOptionElement>(
@@ -1275,7 +1325,7 @@ describe("Calendar", () => {
     });
 
     const renderCalendar = () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { container } = render(
         <Calendar
           ref={(node) => {
@@ -1305,7 +1355,8 @@ describe("Calendar", () => {
         calendar
           .querySelector(".react-datepicker__month-year-dropdown-container")
           ?.querySelector("select") ?? new HTMLElement();
-      const option = select?.querySelectorAll("option")[3];
+      const option =
+        select?.querySelectorAll("option")[3] ?? new HTMLOptionElement();
       fireEvent.change(select, {
         target: {
           value: option.value,
@@ -1321,7 +1372,8 @@ describe("Calendar", () => {
         calendar
           .querySelector(".react-datepicker__month-year-dropdown-container")
           ?.querySelector("select") ?? new HTMLElement();
-      const option = select.querySelectorAll("option")[3];
+      const option =
+        select.querySelectorAll("option")[3] ?? new HTMLOptionElement();
       fireEvent.change(select, {
         target: {
           value: option.value,
@@ -1334,7 +1386,7 @@ describe("Calendar", () => {
 
   describe("onDropdownFocus", () => {
     let onDropdownFocusSpy = jest.fn();
-    let calendar;
+    let calendar: HTMLElement;
 
     beforeEach(() => {
       onDropdownFocusSpy = jest.fn();
@@ -1355,32 +1407,36 @@ describe("Calendar", () => {
     });
 
     it("calls onDropdownFocus prop when year select is focused", () => {
-      const select = calendar.querySelector(".react-datepicker__year-select");
+      const select =
+        calendar.querySelector(".react-datepicker__year-select") ??
+        new HTMLElement();
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when month select is focused", () => {
-      const select = calendar.querySelector(".react-datepicker__month-select");
+      const select =
+        calendar.querySelector(".react-datepicker__month-select") ??
+        new HTMLElement();
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when year-month select is focused", () => {
-      const select = calendar.querySelector(
-        ".react-datepicker__month-year-select",
-      );
+      const select =
+        calendar.querySelector(".react-datepicker__month-year-select") ??
+        new HTMLElement();
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("does not call onDropdownFocus prop when the dropdown container div is focused", () => {
-      const select = calendar.querySelector(
-        ".react-datepicker__header__dropdown",
-      );
+      const select =
+        calendar.querySelector(".react-datepicker__header__dropdown") ??
+        new HTMLElement();
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalledTimes(0);
@@ -1458,11 +1514,15 @@ describe("Calendar", () => {
 
       // Other tests touch this global, so it will always be present, but at the
       // very least we can make sure the test worked without 'eo' being added.
-      expect(window["__localeData__"]).not.toHaveProperty("eo");
+      expect(
+        window as unknown as { __localeData__: object }["__localeData__"],
+      ).not.toHaveProperty("eo");
     });
 
     it("should render empty custom header", () => {
-      const { calendar } = getCalendar({ renderCustomHeader: () => {} });
+      const { calendar } = getCalendar({
+        renderCustomHeader: (_props: ReactDatePickerCustomHeaderProps) => <></>,
+      });
 
       const header = calendar.querySelectorAll(
         ".react-datepicker__header--custom",
@@ -1472,13 +1532,29 @@ describe("Calendar", () => {
   });
 
   describe("renderInputTimeSection", () => {
-    const renderCalendar = (props?) =>
+    const renderCalendar = (
+      props?: Partial<
+        Pick<
+          CalendarProps,
+          "dateFormat" | "onSelect" | "onClickOutside" | "dropdownMode"
+        >
+      > &
+        Omit<
+          CalendarProps,
+          | "dateFormat"
+          | "onSelect"
+          | "onClickOutside"
+          | "dropdownMode"
+          | "showMonthYearDropdown"
+          | "showYearDropdown"
+          | "showTimeInput"
+        >,
+    ) =>
       render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
           onClickOutside={() => {}}
-          hideCalendar={() => {}}
           dropdownMode="select"
           showYearDropdown
           showTimeInput
@@ -1520,7 +1596,7 @@ describe("Calendar", () => {
     });
 
     it("calls increaseYear when next year button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1533,13 +1609,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1553,15 +1626,15 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const increaseYear = instance.increaseYear;
+      const increaseYear = instance!.increaseYear;
       act(() => {
         increaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(2005);
+      expect(getYear(instance!.state.date)).toBe(2005);
     });
 
     it("calls decreaseYear when previous year button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1574,13 +1647,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1594,15 +1664,15 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const decreaseYear = instance.decreaseYear;
+      const decreaseYear = instance!.decreaseYear;
       act(() => {
         decreaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1981);
+      expect(getYear(instance!.state.date)).toBe(1981);
     });
 
     it("calls increaseYear for custom year item number when next year button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1616,13 +1686,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          true,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, true)!;
       });
       rerender(
         <Calendar
@@ -1638,13 +1705,13 @@ describe("Calendar", () => {
         />,
       );
       act(() => {
-        instance.increaseYear();
+        instance!.increaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(2003);
+      expect(getYear(instance!.state.date)).toBe(2003);
     });
 
     it("calls decreaseYear for custom year item number when previous year button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1658,13 +1725,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          true,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, true)!;
       });
       rerender(
         <Calendar
@@ -1680,9 +1744,9 @@ describe("Calendar", () => {
         />,
       );
       act(() => {
-        instance.decreaseYear();
+        instance!.decreaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1983);
+      expect(getYear(instance!.state.date)).toBe(1983);
     });
   });
 
@@ -1731,7 +1795,7 @@ describe("Calendar", () => {
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1744,13 +1808,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1764,15 +1825,15 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const decreaseYear = instance.decreaseYear;
+      const decreaseYear = instance!.decreaseYear;
       act(() => {
         decreaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1992);
+      expect(getYear(instance!.state.date)).toBe(1992);
     });
 
     it("calls increaseYear when next month button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1785,13 +1846,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1805,11 +1863,11 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const increaseYear = instance.increaseYear;
+      const increaseYear = instance!.increaseYear;
       act(() => {
         increaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1994);
+      expect(getYear(instance!.state.date)).toBe(1994);
     });
   });
 
@@ -1858,7 +1916,7 @@ describe("Calendar", () => {
     });
 
     it("calls decreaseYear when previous month button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1871,13 +1929,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1891,15 +1946,15 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const decreaseYear = instance.decreaseYear;
+      const decreaseYear = instance!.decreaseYear;
       act(() => {
         decreaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1992);
+      expect(getYear(instance!.state.date)).toBe(1992);
     });
 
     it("calls increaseYear when next month button clicked", () => {
-      let instance;
+      let instance: Calendar | null = null;
       const { rerender } = render(
         <Calendar
           ref={(node) => {
@@ -1912,13 +1967,10 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       act(() => {
-        instance.state.date = parseDate(
-          "09/28/1993",
-          DATE_FORMAT,
-          undefined,
-          false,
-        );
+        (instance!.state as { date: Required<YearProps>["date"] }).date =
+          parseDate("09/28/1993", DATE_FORMAT, undefined, false)!;
       });
       rerender(
         <Calendar
@@ -1932,11 +1984,11 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
-      const increaseYear = instance.increaseYear;
+      const increaseYear = instance!.increaseYear;
       act(() => {
         increaseYear();
       });
-      expect(getYear(instance.state.date)).toBe(1994);
+      expect(getYear(instance!.state.date)).toBe(1994);
     });
 
     it("should hide the previous year navigation arrow button when the minDate falls under the currently visible year", () => {
@@ -1978,7 +2030,7 @@ describe("Calendar", () => {
   describe("using click outside", () => {
     const clickOutsideSpy = jest.fn();
     const renderCalendar = () => {
-      let instance;
+      let instance: Calendar | null = null;
       render(
         <Calendar
           ref={(node) => {
@@ -1990,15 +2042,18 @@ describe("Calendar", () => {
           dropdownMode="scroll"
         />,
       );
+      expect(instance).not.toBeFalsy();
       return {
-        instance,
+        instance: instance!,
       };
     };
 
     it("calls onClickOutside prop when handles click outside", () => {
       const { instance } = renderCalendar();
       act(() => {
-        instance.handleClickOutside("__event__");
+        instance.handleClickOutside(
+          "__event__" as unknown as React.MouseEvent<HTMLElement>,
+        );
       });
 
       expect(clickOutsideSpy).toHaveBeenCalledWith("__event__");
@@ -2117,7 +2172,7 @@ describe("Calendar", () => {
       selected.setDate(1);
       const currentMonth = selected.getMonth();
 
-      let instance;
+      let instance: DatePicker | null = null;
       render(
         <DatePicker
           ref={(node) => {
@@ -2126,14 +2181,17 @@ describe("Calendar", () => {
           selected={selected}
         />,
       );
-      const dateInput = instance.input;
+      expect(instance).not.toBeFalsy();
+      expect(instance!.input).not.toBeFalsy();
+      const dateInput = instance!.input!;
       fireEvent.focus(dateInput);
-      fireEvent.click(
-        instance.calendar.componentNode.querySelector(
-          ".react-datepicker__navigation--next",
-        ),
+      const calendar = instance!.calendar?.getInstance().containerRef.current;
+      const navigation = calendar?.querySelector(
+        ".react-datepicker__navigation--next",
       );
-      expect(instance.state.preSelection.getMonth()).toBe(
+      expect(navigation).not.toBeFalsy();
+      fireEvent.click(navigation!);
+      expect(instance!.state.preSelection?.getMonth()).toBe(
         currentMonth === 11 ? 0 : currentMonth + 1,
       );
     });
@@ -2142,7 +2200,7 @@ describe("Calendar", () => {
       selected.setDate(1);
       const currentMonth = selected.getMonth();
 
-      let instance;
+      let instance: DatePicker | null = null;
       render(
         <DatePicker
           ref={(node) => {
@@ -2151,14 +2209,18 @@ describe("Calendar", () => {
           selected={selected}
         />,
       );
-      const dateInput = instance.input;
+      expect(instance).not.toBeFalsy();
+      expect(instance!.input).not.toBeFalsy();
+      const dateInput = instance!.input!;
       fireEvent.focus(dateInput);
-      fireEvent.click(
-        instance.calendar.componentNode.querySelector(
-          ".react-datepicker__navigation--previous",
-        ),
+      const calendar = instance!.calendar?.getInstance().containerRef.current;
+      expect(calendar).not.toBeFalsy();
+      const navigation = calendar!.querySelector(
+        ".react-datepicker__navigation--previous",
       );
-      expect(instance.state.preSelection.getMonth()).toBe(
+      expect(navigation).not.toBeFalsy();
+      fireEvent.click(navigation!);
+      expect(instance!.state.preSelection?.getMonth()).toBe(
         currentMonth === 0 ? 11 : currentMonth - 1,
       );
     });
@@ -2188,8 +2250,8 @@ describe("Calendar", () => {
       const calendarDays = calendar.querySelectorAll(
         ".react-datepicker__day-name",
       );
-      expect(calendarDays[0].textContent).toBe("Su");
-      expect(calendarDays[6].textContent).toBe("Sa");
+      expect(calendarDays[0]?.textContent).toBe("Su");
+      expect(calendarDays[6]?.textContent).toBe("Sa");
     });
 
     it("should have default wednesday as start day if No prop passed", () => {
@@ -2197,8 +2259,8 @@ describe("Calendar", () => {
       const calendarDays = calendar.querySelectorAll(
         ".react-datepicker__day-name",
       );
-      expect(calendarDays[0].textContent).toBe("We");
-      expect(calendarDays[6].textContent).toBe("Tu");
+      expect(calendarDays[0]?.textContent).toBe("We");
+      expect(calendarDays[6]?.textContent).toBe("Tu");
     });
   });
 
@@ -2238,13 +2300,27 @@ describe("Calendar", () => {
   });
 
   describe("renderChildren", () => {
-    const renderCalendar = (props?) =>
+    const renderCalendar = (
+      props?: Partial<
+        Pick<
+          CalendarProps,
+          "dateFormat" | "onSelect" | "onClickOutside" | "dropdownMode"
+        >
+      > &
+        Omit<
+          CalendarProps,
+          | "dateFormat"
+          | "onSelect"
+          | "onClickOutside"
+          | "dropdownMode"
+          | "showMonthYearDropdown"
+        >,
+    ) =>
       render(
         <Calendar
           dateFormat={dateFormat}
           onSelect={() => {}}
           onClickOutside={() => {}}
-          hideCalendar={() => {}}
           dropdownMode="scroll"
           {...props}
         />,
@@ -2292,7 +2368,7 @@ describe("Calendar", () => {
     });
 
     it("should render aria live region after year change", async () => {
-      let instance;
+      let instance: DatePicker | null = null;
       render(
         <DatePicker
           ref={(node) => {
@@ -2302,31 +2378,37 @@ describe("Calendar", () => {
           selected={newDate()}
         />,
       );
-      const dateInput = instance.input;
+
+      expect((instance as DatePicker | null)?.input).not.toBeFalsy();
+      const dateInput = instance!.input!;
 
       fireEvent.focus(dateInput);
 
-      const calendar = instance.calendar.componentNode;
-      const yearDropdown = calendar.querySelector(
+      expect((instance as DatePicker | null)?.calendar).not.toBeFalsy();
+      const calendar = instance!.calendar!.getInstance().containerRef.current;
+      const yearDropdown = calendar?.querySelector(
         ".react-datepicker__year-read-view",
       );
-      fireEvent.click(yearDropdown);
+      expect(yearDropdown).not.toBeFalsy();
+      fireEvent.click(yearDropdown!);
 
-      const option = calendar.querySelectorAll(
+      const option = calendar?.querySelectorAll(
         ".react-datepicker__year-option",
       )[7];
-      fireEvent.click(option);
+      expect(option).not.toBeFalsy();
+      fireEvent.click(option!);
 
-      const ariaLiveMessage = calendar.querySelector(
+      const ariaLiveMessage = calendar?.querySelector(
         ".react-datepicker__aria-live",
-      ).textContent;
+      )?.textContent;
 
       await waitFor(() => {
+        expect((instance as DatePicker | null)?.calendar).not.toBeFalsy();
         expect(ariaLiveMessage).toBe(
           `${getMonthInLocale(
-            getMonth(instance.calendar.getInstance().state.date),
-            instance.props.locale,
-          )} ${getYear(instance.calendar.getInstance().state.date)}`,
+            getMonth(instance!.calendar!.getInstance().state.date),
+            instance!.props.locale,
+          )} ${getYear(instance!.calendar!.getInstance().state.date)}`,
         );
       });
     });

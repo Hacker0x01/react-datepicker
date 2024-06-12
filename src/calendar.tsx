@@ -209,19 +209,7 @@ interface CalendarState
 }
 
 export default class Calendar extends Component<CalendarProps, CalendarState> {
-  static get defaultProps(): Required<
-    Pick<
-      CalendarProps,
-      | "monthsShown"
-      | "forceShowMonthNavigation"
-      | "timeCaption"
-      | "previousYearButtonLabel"
-      | "nextYearButtonLabel"
-      | "previousMonthButtonLabel"
-      | "nextMonthButtonLabel"
-      | "yearItemNumber"
-    >
-  > {
+  static get defaultProps() {
     return {
       monthsShown: 1,
       forceShowMonthNavigation: false,
@@ -234,7 +222,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     };
   }
 
-  constructor(props: Readonly<CalendarProps>) {
+  constructor(props: CalendarProps) {
     super(props);
 
     this.containerRef = createRef<HTMLDivElement>();
@@ -259,7 +247,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
   }
 
-  componentDidUpdate(prevProps: Readonly<CalendarProps>) {
+  componentDidUpdate(prevProps: CalendarProps) {
     if (
       this.props.preSelection &&
       (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
@@ -536,7 +524,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     if (
-      (!this.props.forceShowMonthNavigation &&
+      (!(
+        this.props.forceShowMonthNavigation ??
+        Calendar.defaultProps.forceShowMonthNavigation
+      ) &&
         !this.props.showDisabledMonthNavigation &&
         allPrevDaysDisabled) ||
       this.props.showTimeSelectOnly
@@ -575,7 +566,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
-    const { previousMonthButtonLabel, previousYearButtonLabel } = this.props;
+    const {
+      previousMonthButtonLabel = Calendar.defaultProps.previousMonthButtonLabel,
+      previousYearButtonLabel = Calendar.defaultProps.previousYearButtonLabel,
+    } = this.props;
 
     const {
       previousMonthAriaLabel = typeof previousMonthButtonLabel === "string"
@@ -595,9 +589,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         aria-label={isForYear ? previousYearAriaLabel : previousMonthAriaLabel}
       >
         <span className={iconClasses.join(" ")}>
-          {isForYear
-            ? this.props.previousYearButtonLabel
-            : this.props.previousMonthButtonLabel}
+          {isForYear ? previousYearButtonLabel : previousMonthButtonLabel}
         </span>
       </button>
     );
@@ -639,7 +631,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     if (
-      (!this.props.forceShowMonthNavigation &&
+      (!(
+        this.props.forceShowMonthNavigation ??
+        Calendar.defaultProps.forceShowMonthNavigation
+      ) &&
         !this.props.showDisabledMonthNavigation &&
         allNextDaysDisabled) ||
       this.props.showTimeSelectOnly
@@ -683,7 +678,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.props.showQuarterYearPicker ||
       this.props.showYearPicker;
 
-    const { nextMonthButtonLabel, nextYearButtonLabel } = this.props;
+    const {
+      nextMonthButtonLabel = Calendar.defaultProps.nextMonthButtonLabel,
+      nextYearButtonLabel = Calendar.defaultProps.nextYearButtonLabel,
+    } = this.props;
     const {
       nextMonthAriaLabel = typeof nextMonthButtonLabel === "string"
         ? nextMonthButtonLabel
@@ -702,9 +700,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         aria-label={isForYear ? nextYearAriaLabel : nextMonthAriaLabel}
       >
         <span className={iconClasses.join(" ")}>
-          {isForYear
-            ? this.props.nextYearButtonLabel
-            : this.props.nextMonthButtonLabel}
+          {isForYear ? nextYearButtonLabel : nextMonthButtonLabel}
         </span>
       </button>
     );
@@ -737,6 +733,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
     return (
       <YearDropdown
+        {...Calendar.defaultProps}
         {...this.props}
         date={this.state.date}
         onChange={this.changeYear}
@@ -753,6 +750,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
     return (
       <MonthDropdown
+        {...Calendar.defaultProps}
         {...this.props}
         month={getMonth(this.state.date)}
         onChange={this.changeMonth}
@@ -768,6 +766,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
     return (
       <MonthYearDropdown
+        {...Calendar.defaultProps}
         {...this.props}
         date={this.state.date}
         onChange={this.changeMonthYear}
@@ -882,7 +881,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   renderYearHeader = ({ monthDate }: { monthDate: Date }): JSX.Element => {
-    const { showYearPicker, yearItemNumber } = this.props;
+    const {
+      showYearPicker,
+      yearItemNumber = Calendar.defaultProps.yearItemNumber,
+    } = this.props;
     const { startPeriod, endPeriod } = getYearsPeriod(
       monthDate,
       yearItemNumber,
@@ -949,6 +951,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         >
           {this.renderHeader({ monthDate, i })}
           <Month
+            {...Calendar.defaultProps}
             {...this.props}
             ariaLabelPrefix={this.props.monthAriaLabelPrefix}
             day={monthDate}
@@ -977,6 +980,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         <div className="react-datepicker__year--container">
           {this.renderHeader({ monthDate: this.state.date })}
           <Year
+            {...Calendar.defaultProps}
             {...this.props}
             selectingDate={this.state.selectingDate}
             date={this.state.date}
@@ -998,6 +1002,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     ) {
       return (
         <Time
+          {...Calendar.defaultProps}
           {...this.props}
           onChange={this.props.onTimeChange}
           format={this.props.timeFormat}
@@ -1020,6 +1025,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (this.props.showTimeInput) {
       return (
         <InputTime
+          {...Calendar.defaultProps}
           {...this.props}
           date={time}
           timeString={timeString}
@@ -1033,7 +1039,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   renderAriaLiveRegion = (): JSX.Element => {
     const { startPeriod, endPeriod } = getYearsPeriod(
       this.state.date,
-      this.props.yearItemNumber,
+      this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber,
     );
     let ariaLiveMessage;
 

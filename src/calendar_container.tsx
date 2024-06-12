@@ -11,7 +11,7 @@ const CalendarContainer: React.FC<CalendarContainerProps> = function ({
   showTime = false,
   className,
   children,
-}: Readonly<CalendarContainerProps>) {
+}: CalendarContainerProps) {
   const ariaLabel = showTimeSelectOnly
     ? "Choose Time"
     : `Choose Date${showTime ? " and Time" : ""}`;

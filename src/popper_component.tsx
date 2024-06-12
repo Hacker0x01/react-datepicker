@@ -29,7 +29,7 @@ interface PopperComponentProps
 
 // Exported for testing purposes
 export class PopperComponent extends Component<PopperComponentProps> {
-  static get defaultProps(): Partial<PopperComponentProps> {
+  static get defaultProps() {
     return {
       hidePopper: true,
     };
@@ -39,7 +39,7 @@ export class PopperComponent extends Component<PopperComponentProps> {
     const {
       className,
       wrapperClassName,
-      hidePopper,
+      hidePopper = PopperComponent.defaultProps.hidePopper,
       popperComponent,
       targetComponent,
       enableTabLoop,
