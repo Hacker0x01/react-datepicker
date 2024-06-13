@@ -29,18 +29,15 @@ import CustomInput from "./helper_components/custom_input";
 import TestWrapper from "./helper_components/test_wrapper";
 import { getKey } from "./test_utils";
 
-function getSelectedDayNode(datePicker) {
+function getSelectedDayNode(container: HTMLElement) {
   return (
-    datePicker.calendar &&
-    datePicker.calendar.componentNode.querySelector(
-      '.react-datepicker__day[tabindex="0"]',
-    )
+    container.querySelector('.react-datepicker__day[tabindex="0"]') ?? undefined
   );
 }
 
-function findSelectedDay(datePicker, targetDate) {
+function findSelectedDay(container: HTMLElement, targetDate: Date) {
   const days = Array.from<HTMLElement>(
-    datePicker.querySelectorAll(".react-datepicker__day"),
+    container.querySelectorAll(".react-datepicker__day"),
   );
   return days.find(
     (d) =>
@@ -49,14 +46,15 @@ function findSelectedDay(datePicker, targetDate) {
   );
 }
 
-function goToLastMonth(datePicker) {
-  const lastMonthButton = datePicker.querySelector(
+function goToLastMonth(container: HTMLElement) {
+  const lastMonthButton = container.querySelector(
     ".react-datepicker__navigation-icon--previous",
   );
-  fireEvent.click(lastMonthButton);
+  expect(lastMonthButton).toBeTruthy();
+  fireEvent.click(lastMonthButton!);
 }
 
-function formatDayWithZeros(day) {
+function formatDayWithZeros(day: number) {
   const dayString = day.toString();
 
   if (dayString.length === 1) {
@@ -68,14 +66,14 @@ function formatDayWithZeros(day) {
   return dayString;
 }
 
-const hideDocument = (calendarInput) => {
+const hideDocument = (calendarInput: HTMLElement) => {
   jest.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
   fireEvent(document, new Event("visibilitychange"));
   // Blur, To simulate the browser auto-blur the input before document hide
   fireEvent.blur(calendarInput);
 };
 
-const showDocument = (calendarInput) => {
+const showDocument = (calendarInput: HTMLElement) => {
   jest.spyOn(document, "visibilityState", "get").mockReturnValue("visible");
   fireEvent(document, new Event("visibilitychange"));
   // Focus, To simulate the browser auto-refocus of the input
@@ -159,7 +157,7 @@ describe("DatePicker", () => {
 
     const popper = container.querySelectorAll(".react-datepicker-popper");
     expect(popper.length).toBe(1);
-    expect(popper[0].classList.contains("some-class-name")).toBe(true);
+    expect(popper[0]?.classList.contains("some-class-name")).toBe(true);
   });
 
   it("should show the calendar when clicking on the date input", () => {
@@ -176,7 +174,7 @@ describe("DatePicker", () => {
     const appHost = document.createElement("div");
     shadow.appendChild(appHost);
 
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -190,8 +188,10 @@ describe("DatePicker", () => {
       },
     );
 
-    fireEvent.click(instance.input);
-    expect(instance.calendar).toBeDefined();
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.click(instance!.input!);
+    expect(instance!.calendar).toBeDefined();
     expect(shadow.getElementById("test-portal")).toBeDefined();
   });
 
@@ -208,7 +208,7 @@ describe("DatePicker", () => {
     // Date Picker Dialog | Escape | Closes the dialog and returns focus to the Choose Date button.
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -221,7 +221,9 @@ describe("DatePicker", () => {
     );
 
     // user focuses the input field, the calendar opens
-    fireEvent.focus(instance.input);
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.click(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
     const today = div.querySelector<HTMLElement>(
@@ -234,10 +236,10 @@ describe("DatePicker", () => {
     // user hits Escape
     fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Escape));
 
-    expect(instance.calendar).toBeFalsy();
+    expect(instance!.calendar).toBeFalsy();
 
     await waitFor(() => {
-      expect(instance.state.preventFocus).toBe(false);
+      expect(instance!.state.preventFocus).toBe(false);
       expect(document.activeElement).toBe(div.querySelector("input"));
     });
   });
@@ -247,7 +249,7 @@ describe("DatePicker", () => {
     // Date Picker Dialog | Date Grid | Enter | Closes the dialog and returns focus to the Choose Date button.
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -260,7 +262,9 @@ describe("DatePicker", () => {
     );
 
     // user focuses the input field, the calendar opens
-    fireEvent.focus(instance.input);
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.focus(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
     const today = div.querySelector<HTMLElement>(
@@ -273,10 +277,10 @@ describe("DatePicker", () => {
     // user hits Enter
     fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Enter));
 
-    expect(instance.calendar).toBeFalsy();
+    expect(instance!.calendar).toBeFalsy();
 
     await waitFor(() => {
-      expect(instance.state.preventFocus).toBe(false);
+      expect(instance!.state.preventFocus).toBe(false);
       expect(document.activeElement).toBe(div.querySelector("input"));
     });
   });
@@ -284,7 +288,7 @@ describe("DatePicker", () => {
   it("should not close the popper and keep focus on selected date if showTimeSelect is enabled.", async () => {
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -298,7 +302,9 @@ describe("DatePicker", () => {
     );
 
     // user focuses the input field, the calendar opens
-    fireEvent.focus(instance.input);
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.focus(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
     const today = div.querySelector<HTMLElement>(
@@ -311,7 +317,7 @@ describe("DatePicker", () => {
     // user hits Enter
     fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Enter));
 
-    expect(instance.calendar).toBeTruthy();
+    expect(instance!.calendar).toBeTruthy();
 
     await waitFor(() => {
       expect(document.activeElement).toBe(today);
@@ -429,7 +435,7 @@ describe("DatePicker", () => {
   });
 
   it("should set open to true if showTimeInput is true", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -439,11 +445,12 @@ describe("DatePicker", () => {
         showTimeInput
       />,
     );
-    const handleTimeChange = instance.handleTimeChange;
+    expect(instance).toBeTruthy();
+    const handleTimeChange = instance!.handleTimeChange;
     act(() => {
-      handleTimeChange("13:00");
+      handleTimeChange(newDate());
     });
-    expect(instance.state.open).toBe(true);
+    expect(instance!.state.open).toBe(true);
   });
 
   it("should not hide the calendar when selecting a day in the calendar with Enter press, and shouldCloseOnSelect prop is false", () => {
@@ -458,18 +465,15 @@ describe("DatePicker", () => {
     const data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowDown),
-    );
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowDown),
-    );
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.Enter));
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Enter));
 
     data.copyM = addWeeks(data.copyM, 2);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -480,47 +484,51 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown)); // put focus on current day
-    const today = getSelectedDayNode(data.instance); // store current day node
-    const dayToClick = today.nextElementSibling || today.previousElementSibling; // choose next or previous day
-    const copyM = today.nextElementSibling
+    const today = getSelectedDayNode(data.container); // store current day node
+    const dayToClick =
+      today?.nextElementSibling || today?.previousElementSibling; // choose next or previous day
+    const copyM = today?.nextElementSibling
       ? addDays(data.copyM, 1)
       : subDays(data.copyM, 1); // update copyM to expected date
-    fireEvent.click(dayToClick); // will update the preSelection
+    expect(dayToClick).toBeTruthy();
+    fireEvent.click(dayToClick!); // will update the preSelection
     data.copyM = copyM;
 
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
 
   it("should update the preSelection state when Today button is clicked after selecting a different day for inline mode", () => {
-    let instance;
-    render(
+    let instance: DatePicker | null = null;
+    const { container } = render(
       <DatePicker
         todayButton="Today"
         selected={newDate()}
         inline
-        onChange={(d) => {
-          // eslint-disable-next-line
-          const date = d;
-        }}
+        onChange={() => {}}
         ref={(node) => {
           instance = node;
         }}
       />,
     );
 
-    const today = getSelectedDayNode(instance);
+    expect(instance).toBeTruthy();
+    const today = getSelectedDayNode(container!);
     const anyOtherDay =
-      today.nextElementSibling || today.previousElementSibling;
-    fireEvent.click(anyOtherDay); // will update the preSelection to next or previous day
+      today?.nextElementSibling || today?.previousElementSibling;
+    expect(anyOtherDay).toBeTruthy();
+    fireEvent.click(anyOtherDay!); // will update the preSelection to next or previous day
 
-    const todayBtn = instance.calendar.componentNode.querySelector(
-      ".react-datepicker__today-button",
-    );
-    fireEvent.click(todayBtn); // will update the preSelection
+    const todayBtn = instance!.calendar
+      ?.getInstance()
+      .containerRef.current?.querySelector(".react-datepicker__today-button");
+    expect(anyOtherDay).toBeTruthy();
+    fireEvent.click(todayBtn!); // will update the preSelection
 
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(newDate(), "yyyy-MM-dd"),
     );
   });
@@ -544,7 +552,7 @@ describe("DatePicker", () => {
   it("should hide the calendar and keep focus on input when pressing escape in the date input", async () => {
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -557,20 +565,22 @@ describe("DatePicker", () => {
     );
 
     // user focuses the input field, the calendar opens
-    fireEvent.focus(instance.input);
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.focus(instance!.input!);
 
-    fireEvent.keyDown(instance.input, getKey(KeyType.Escape));
+    fireEvent.keyDown(instance!.input!, getKey(KeyType.Escape));
 
-    expect(instance.calendar).toBeFalsy();
+    expect(instance!.calendar).toBeFalsy();
 
     await waitFor(() => {
-      expect(document.activeElement).toBe(instance.input);
+      expect(document.activeElement).toBe(instance!.input);
     });
   });
 
   it("should hide the calendar when the pressing Shift + Tab in the date input", () => {
     // eslint-disable-next-line prefer-const
-    let onBlurSpy;
+    let onBlurSpy: ReturnType<typeof jest.spyOn>;
     const onBlur: React.FocusEventHandler<HTMLElement> = (
       event: React.FocusEvent<HTMLElement>,
     ): void => {
@@ -757,7 +767,7 @@ describe("DatePicker", () => {
 
   it("should allow clearing the date when isClearable is true", () => {
     let cleared = false;
-    function handleChange(d) {
+    function handleChange(d: Date | null) {
       if (d === null) {
         cleared = true;
       }
@@ -777,7 +787,7 @@ describe("DatePicker", () => {
   });
 
   it("should clear input value in the local state", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const { container } = render(
       <DatePicker
         ref={(node) => {
@@ -787,11 +797,12 @@ describe("DatePicker", () => {
         isClearable
       />,
     );
+    expect(instance).toBeTruthy();
     const clearButton = container.querySelector(
       ".react-datepicker__close-icon",
     );
     fireEvent.click(clearButton ?? new HTMLElement());
-    expect(instance.state.inputValue).toBeNull();
+    expect(instance!.state.inputValue).toBeNull();
   });
 
   it("should disable the clear button when the component is disabled", () => {
@@ -863,7 +874,7 @@ describe("DatePicker", () => {
 
   it("should save time from the selected date during day change", () => {
     const selected = newDate("2015-12-20 10:11:12");
-    let date;
+    let date: Date | null = null;
 
     const { container } = render(
       <DatePicker
@@ -877,14 +888,15 @@ describe("DatePicker", () => {
     const dayButton = container.querySelector(".react-datepicker__day");
     fireEvent.click(dayButton ?? new HTMLElement());
 
-    expect(getHours(date)).toBe(10);
-    expect(getMinutes(date)).toBe(11);
-    expect(getSeconds(date)).toBe(12);
+    expect(date).toBeTruthy();
+    expect(getHours(date!)).toBe(10);
+    expect(getMinutes(date!)).toBe(11);
+    expect(getSeconds(date!)).toBe(12);
   });
 
   it("should save time from the selected date during date change", () => {
     const selected = newDate("2015-12-20 10:11:12");
-    let date;
+    let date: Date | null = null;
 
     const { container } = render(
       <DatePicker
@@ -901,9 +913,10 @@ describe("DatePicker", () => {
       },
     });
 
-    expect(getHours(date)).toBe(10);
-    expect(getMinutes(date)).toBe(11);
-    expect(getSeconds(date)).toBe(12);
+    expect(date).toBeTruthy();
+    expect(getHours(date!)).toBe(10);
+    expect(getMinutes(date!)).toBe(11);
+    expect(getSeconds(date!)).toBe(12);
   });
 
   // eslint-disable-next-line jest/expect-expect
@@ -921,7 +934,7 @@ describe("DatePicker", () => {
         return this.state.mounted ? <DatePicker /> : null;
       }
     }
-    let instance;
+    let instance: TestComponent | null = null;
     const { rerender } = render(
       <TestComponent
         ref={(node) => {
@@ -929,8 +942,9 @@ describe("DatePicker", () => {
         }}
       />,
     );
+    expect(instance).toBeTruthy();
     act(() => {
-      instance.state.mounted = false;
+      (instance!.state as unknown as { mounted: boolean }).mounted = false;
     });
     rerender(
       <TestComponent
@@ -978,7 +992,7 @@ describe("DatePicker", () => {
   });
 
   it("should render Calendar in portal when withPortal is set and should close on Escape key when focus is on header", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -988,21 +1002,24 @@ describe("DatePicker", () => {
         portalId="portal-id-dom-test"
       />,
     );
-    fireEvent.focus(instance.input);
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.focus(instance!.input!);
 
     expect(
       document.body.querySelector(".react-datepicker__portal"),
     ).not.toBeNull();
-    expect(instance.calendar).toBeDefined();
+    expect(instance!.calendar).toBeDefined();
 
-    const header = instance.calendar.componentNode.querySelector(
-      ".react-datepicker__current-month",
-    );
+    const header = instance!.calendar
+      ?.getInstance()
+      .containerRef.current?.querySelector(".react-datepicker__current-month");
 
-    fireEvent.click(header);
-    fireEvent.keyDown(header, getKey(KeyType.Escape));
+    expect(header).toBeTruthy();
+    fireEvent.click(header!);
+    fireEvent.keyDown(header!, getKey(KeyType.Escape));
 
-    expect(instance.calendar).toBeFalsy();
+    expect(instance!.calendar).toBeFalsy();
   });
 
   it("should not render Calendar when withPortal is set and no focus is given to input", () => {
@@ -1029,7 +1046,7 @@ describe("DatePicker", () => {
     const exactishFormat = "yyyy-MM-dd hh: zzzz";
     const callback = jest.fn();
     const onInputErrorCallback = jest.fn();
-    let instance;
+    let instance: DatePicker | null = null;
 
     const { container, rerender } = render(
       <DatePicker
@@ -1043,8 +1060,10 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    const dateInput = instance.input;
-    const dateCalendar = instance.calendar;
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    const dateInput = instance!.input!;
+    const dateCalendar = instance!.calendar;
     fireEvent.focus(dateInput);
     return {
       m,
@@ -1057,67 +1076,67 @@ describe("DatePicker", () => {
       dateInput,
       dateCalendar,
       rerender,
-      instance,
+      instance: instance!,
+      container,
     };
   }
   it("should handle onDayKeyDown ArrowLeft", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
-
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
     data.copyM = subDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown ArrowRight", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
     data.copyM = addDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown ArrowUp", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowUp),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowUp));
     data.copyM = subWeeks(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown ArrowDown", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowDown),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
     data.copyM = addWeeks(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown PageUp", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageUp),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp));
     data.copyM = subMonths(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1125,26 +1144,26 @@ describe("DatePicker", () => {
     const data = getOnInputKeyDownStuff();
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageUp, true),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp, true));
 
     data.copyM = subYears(data.copyM, 1);
 
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown PageDown", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
     data.copyM = addMonths(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1152,32 +1171,38 @@ describe("DatePicker", () => {
     const data = getOnInputKeyDownStuff();
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown, true),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown, true));
 
     data.copyM = addYears(data.copyM, 1);
 
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown End", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.End));
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.End));
     data.copyM = getEndOfWeek(data.copyM);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should handle onDayKeyDown Home", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.Home));
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Home));
     data.copyM = getStartOfWeek(data.copyM);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1185,13 +1210,13 @@ describe("DatePicker", () => {
   it("should handle onDayKeyDown when the minDate is null", () => {
     const data = getOnInputKeyDownStuff({ minDate: null });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
 
     data.copyM = subDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1199,13 +1224,13 @@ describe("DatePicker", () => {
   it("should handle onDayKeyDown when the maxDate is null", () => {
     const data = getOnInputKeyDownStuff({ minDate: null });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
 
     data.copyM = addDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1214,21 +1239,18 @@ describe("DatePicker", () => {
     const data = getOnInputKeyDownStuff({ minDate: null });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
 
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
     data.copyM = subDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
-
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
     data.copyM = addDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1243,11 +1265,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-03"), data.testFormat),
     );
   });
@@ -1261,11 +1283,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-04-29"), data.testFormat),
     );
   });
@@ -1279,11 +1301,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowUp),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowUp));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-08"), data.testFormat),
     );
   });
@@ -1297,11 +1319,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowDown),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-22"), data.testFormat),
     );
   });
@@ -1315,11 +1337,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1333,11 +1355,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1351,15 +1373,17 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageUp),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.Home));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Home));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1373,11 +1397,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageUp),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-04-02"), data.testFormat),
     );
   });
@@ -1391,8 +1415,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.Home));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Home));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-06"), data.testFormat),
     );
   });
@@ -1406,15 +1433,17 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.End));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.End));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1428,11 +1457,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-31"), data.testFormat),
     );
   });
@@ -1446,8 +1475,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(getSelectedDayNode(data.instance), getKey(KeyType.End));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.End));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(new Date("2024-05-10"), data.testFormat),
     );
   });
@@ -1462,11 +1494,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageUp),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1481,11 +1513,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1501,11 +1533,11 @@ describe("DatePicker", () => {
     });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(date, data.testFormat),
     );
   });
@@ -1515,10 +1547,9 @@ describe("DatePicker", () => {
     const opts = { onMonthChange: onMonthChangeSpy };
     const data = getOnInputKeyDownStuff(opts);
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
 
     expect(onMonthChangeSpy).toHaveBeenCalledTimes(1);
   });
@@ -1527,10 +1558,9 @@ describe("DatePicker", () => {
     const opts = { onSelect: onSelectSpy, adjustDateOnChange: true };
     const data = getOnInputKeyDownStuff(opts);
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.PageDown),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
     expect(onSelectSpy).toHaveBeenCalledTimes(1);
   });
   it("should not preSelect date if not between minDate and maxDate", () => {
@@ -1539,7 +1569,8 @@ describe("DatePicker", () => {
       maxDate: addDays(newDate(), 1),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1548,7 +1579,8 @@ describe("DatePicker", () => {
       minDate: subDays(newDate(), 1),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowUp));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1557,7 +1589,8 @@ describe("DatePicker", () => {
       maxDate: addDays(newDate(), 1),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1567,16 +1600,15 @@ describe("DatePicker", () => {
       minDate: newDate(),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
-      formatDate(data.instance.props.minDate, data.testFormat),
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(data.instance.props.minDate).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
+      formatDate(data.instance.props.minDate!, data.testFormat),
     );
   });
 
@@ -1586,16 +1618,15 @@ describe("DatePicker", () => {
       maxDate: addDays(newDate(), 20),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
-      formatDate(data.instance.props.minDate, data.testFormat),
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(data.instance.props.minDate).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
+      formatDate(data.instance.props.minDate!, data.testFormat),
     );
   });
 
@@ -1604,12 +1635,13 @@ describe("DatePicker", () => {
       maxDate: addDays(newDate(), 1),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
-      formatDate(data.instance.props.maxDate, data.testFormat),
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(data.instance.props.maxDate).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
+      formatDate(data.instance.props.maxDate!, data.testFormat),
     );
   });
 
@@ -1619,19 +1651,21 @@ describe("DatePicker", () => {
       maxDate: addDays(newDate(), 1),
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowRight),
-    );
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
-      formatDate(data.instance.props.maxDate, data.testFormat),
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(data.instance.props.maxDate).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
+      formatDate(data.instance.props.maxDate!, data.testFormat),
     );
   });
 
   it("should not clear the preSelect date when a pressed key is not a navigation key", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.X));
-    expect(data.instance.state.preSelection.valueOf()).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(data.instance.state.preSelection!.valueOf()).toBe(
       data.copyM.valueOf(),
     );
   });
@@ -1709,14 +1743,11 @@ describe("DatePicker", () => {
     it("should update the selected date", () => {
       const data = getOnInputKeyDownStuff();
       fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown)); // puts focus on the calendar day
-      fireEvent.keyDown(
-        getSelectedDayNode(data.instance),
-        getKey(KeyType.ArrowLeft),
-      );
-      fireEvent.keyDown(
-        getSelectedDayNode(data.instance),
-        getKey(KeyType.Enter),
-      );
+      const selectedDayNode = getSelectedDayNode(data.container);
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Enter));
 
       data.copyM = subDays(data.copyM, 1);
       expect(data.callback).toHaveBeenCalled();
@@ -1728,14 +1759,11 @@ describe("DatePicker", () => {
     it("should update the selected date when spacebar is pressed", () => {
       const data = getOnInputKeyDownStuff();
       fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown)); // puts focus on the calendar day
-      fireEvent.keyDown(
-        getSelectedDayNode(data.instance),
-        getKey(KeyType.ArrowLeft),
-      );
-      fireEvent.keyDown(
-        getSelectedDayNode(data.instance),
-        getKey(KeyType.Space),
-      );
+      const selectedDayNode = getSelectedDayNode(data.container);
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Space));
 
       data.copyM = subDays(data.copyM, 1);
       expect(data.callback).toHaveBeenCalled();
@@ -1805,7 +1833,8 @@ describe("DatePicker", () => {
     });
     it("should not select dates excluded from filterDate", () => {
       const data = getOnInputKeyDownStuff({
-        filterDate: (date) => getDay(date) !== getDay(subDays(newDate(), 1)),
+        filterDate: (date: Date) =>
+          getDay(date) !== getDay(subDays(newDate(), 1)),
       });
       fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowLeft));
       fireEvent.keyDown(data.dateInput, getKey(KeyType.Enter));
@@ -1828,19 +1857,20 @@ describe("DatePicker", () => {
     act(() => {
       data.instance.setOpen(false);
     });
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
   it("should retain the keyboard selection when already open", () => {
     const data = getOnInputKeyDownStuff();
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-    fireEvent.keyDown(
-      getSelectedDayNode(data.instance),
-      getKey(KeyType.ArrowLeft),
-    );
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
     data.copyM = subDays(data.copyM, 1);
-    expect(formatDate(data.instance.state.preSelection, data.testFormat)).toBe(
+    expect(data.instance.state.preSelection).toBeTruthy();
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
   });
@@ -1902,7 +1932,7 @@ describe("DatePicker", () => {
   it("should autoFocus the input when calling the setFocus method", () => {
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -1913,15 +1943,16 @@ describe("DatePicker", () => {
         container: div,
       },
     );
+    expect(instance).toBeTruthy();
     act(() => {
-      instance.setFocus();
+      instance!.setFocus();
     });
     expect(div.querySelector("input")).toBe(document.activeElement);
   });
   it("should clear preventFocus timeout id when component is unmounted", () => {
     const div = document.createElement("div");
     document.body.appendChild(div);
-    let instance;
+    let instance: DatePicker | null = null;
     const { unmount } = render(
       <DatePicker
         ref={(node) => {
@@ -1933,8 +1964,9 @@ describe("DatePicker", () => {
         container: div,
       },
     );
+    expect(instance).toBeTruthy();
     const clearPreventFocusTimeoutMock = jest.fn();
-    instance.clearPreventFocusTimeout = clearPreventFocusTimeoutMock;
+    instance!.clearPreventFocusTimeout = clearPreventFocusTimeoutMock;
     unmount();
     expect(clearPreventFocusTimeoutMock).toHaveBeenCalledTimes(1);
   });
@@ -1944,7 +1976,7 @@ describe("DatePicker", () => {
     const copyM = newDate(m);
     const testFormat = "yyyy-MM-dd";
     const callback = jest.fn();
-    let instance;
+    let instance: DatePicker | null = null;
     const { container, rerender } = render(
       <DatePicker
         selected={m}
@@ -1955,7 +1987,9 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    const dateInput = instance.input;
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    const dateInput = instance!.input!;
     fireEvent.focus(dateInput);
     return {
       m,
@@ -2010,7 +2044,7 @@ describe("DatePicker", () => {
   });
   it("should correctly clear date with empty input string", () => {
     let cleared = false;
-    function handleChange(d) {
+    function handleChange(d: Date | null) {
       // Internally DateInput calls it's onChange prop with null
       // when the input value is an empty string
       if (d === null) {
@@ -2029,7 +2063,7 @@ describe("DatePicker", () => {
     expect(cleared).toBe(true);
   });
   it("should correctly clear date with empty input string (selectsRange)", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const onChangeSpy = jest.fn();
 
     render(
@@ -2044,7 +2078,9 @@ describe("DatePicker", () => {
         isClearable
       />,
     );
-    fireEvent.change(instance.input, {
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    fireEvent.change(instance!.input!, {
       target: {
         value: "",
       },
@@ -2053,7 +2089,7 @@ describe("DatePicker", () => {
     expect(onChangeSpy.mock.calls.at(-1)[0]).toStrictEqual([null, null]);
   });
   it("should correctly update the input when the value prop changes", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const { rerender } = render(
       <DatePicker
         ref={(node) => {
@@ -2061,7 +2097,9 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    expect(instance.input.value).toBe("");
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    expect((instance!.input! as HTMLInputElement).value).toBe("");
     rerender(
       <DatePicker
         ref={(node) => {
@@ -2070,13 +2108,13 @@ describe("DatePicker", () => {
         value="foo"
       />,
     );
-    expect(instance.input.value).toBe("foo");
+    expect((instance!.input! as HTMLInputElement).value).toBe("foo");
   });
   it("should preserve user input as they are typing", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     let selected: Date | null = null;
 
-    const onChange = (date) => {
+    const onChange = (date: Date | null) => {
       selected = date;
     };
     const { rerender } = render(
@@ -2089,13 +2127,15 @@ describe("DatePicker", () => {
       />,
     );
 
-    expect(instance.input.value).toBe("");
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+    expect((instance!.input! as HTMLInputElement).value).toBe("");
 
     const str = "12/30/1982";
-    fireEvent.focus(instance.input);
+    fireEvent.focus(instance!.input!);
     str.split("").forEach((c, i) => {
-      fireEvent.change(instance.input, {
-        target: { value: instance.input.value + c },
+      fireEvent.change(instance!.input!, {
+        target: { value: (instance!.input! as HTMLInputElement).value + c },
       });
       rerender(
         <DatePicker
@@ -2107,7 +2147,9 @@ describe("DatePicker", () => {
           selected={selected}
         />,
       );
-      expect(instance.input.value).toBe(str.substring(0, i + 1));
+      expect((instance!.input! as HTMLInputElement).value).toBe(
+        str.substring(0, i + 1),
+      );
     });
     expect(selected).not.toBeNull();
     expect(formatDate(selected as unknown as Date, "yyyy-MM-dd")).toBe(
@@ -2159,7 +2201,12 @@ describe("DatePicker", () => {
     expect(onSelectSpy).toHaveBeenCalledTimes(1);
   });
   it("should allow onChangeRaw to prevent a change", () => {
-    const onChangeRaw = (e) => e.target.value > "2" && e.preventDefault();
+    const onChangeRaw = (
+      event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    ) =>
+      event &&
+      (event.target as unknown as HTMLInputElement).value > "2" &&
+      event.preventDefault();
     const { container } = render(<DatePicker onChangeRaw={onChangeRaw} />);
     const input = container.querySelector("input") ?? new HTMLInputElement();
     expect(input.value).toBe("");
@@ -2223,7 +2270,7 @@ describe("DatePicker", () => {
     expect(onChangeRawSpy.mock.calls[0][1]).toBe("test");
   });
   it("should handle a click outside of the calendar", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2233,14 +2280,17 @@ describe("DatePicker", () => {
         withPortal
       />,
     );
-    const openSpy = jest.spyOn(instance, "setOpen");
+    expect(instance).toBeTruthy();
+    const openSpy = jest.spyOn(instance!, "setOpen");
     act(() => {
-      instance.handleCalendarClickOutside({ preventDefault: jest.fn() });
+      instance!.handleCalendarClickOutside({
+        preventDefault: jest.fn(),
+      } as unknown as React.MouseEvent<HTMLElement, MouseEvent>);
     });
     expect(openSpy).toHaveBeenCalledWith(false);
   });
   it("should default to the currently selected date", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2249,12 +2299,14 @@ describe("DatePicker", () => {
         selected={newDate("1988-12-30")}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "1988-12-30",
     );
   });
   it("should default to the start date when selecting an end date", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2264,12 +2316,14 @@ describe("DatePicker", () => {
         selectsEnd
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "1988-11-30",
     );
   });
   it("should default to the end date when selecting a start date", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2279,12 +2333,14 @@ describe("DatePicker", () => {
         selectsStart
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "1988-12-31",
     );
   });
   it("should default to a date <= maxDate", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2293,12 +2349,14 @@ describe("DatePicker", () => {
         maxDate={newDate("1982-01-01")}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "1982-01-01",
     );
   });
   it("should default to a date >= minDate", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2307,12 +2365,14 @@ describe("DatePicker", () => {
         minDate={newDate("2063-04-05")}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "2063-04-05",
     );
   });
   it("should default to the openToDate if there is one", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2321,12 +2381,14 @@ describe("DatePicker", () => {
         openToDate={newDate("2020-01-23")}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       "2020-01-23",
     );
   });
   it("should otherwise default to the current date", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2334,7 +2396,9 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(newDate(), "yyyy-MM-dd"),
     );
   });
@@ -2346,7 +2410,7 @@ describe("DatePicker", () => {
     ).not.toThrow();
   });
   it("should switch month in inline mode immediately", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const selected = newDate();
     const future = addDays(newDate(), 100);
     const { rerender } = render(
@@ -2358,7 +2422,9 @@ describe("DatePicker", () => {
         selected={selected}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(selected, "yyyy-MM-dd"),
     );
     rerender(
@@ -2370,12 +2436,14 @@ describe("DatePicker", () => {
         selected={future}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(future, "yyyy-MM-dd"),
     );
   });
   it("should switch month in inline mode immediately, when year is updated", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const selected = newDate();
     const future = addYears(newDate(), 1);
     const { rerender } = render(
@@ -2387,7 +2455,9 @@ describe("DatePicker", () => {
         selected={selected}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(selected, "yyyy-MM-dd"),
     );
     rerender(
@@ -2399,7 +2469,9 @@ describe("DatePicker", () => {
         selected={future}
       />,
     );
-    expect(formatDate(instance.state.preSelection, "yyyy-MM-dd")).toBe(
+    expect(instance).toBeTruthy();
+    expect(instance!.state.preSelection).toBeTruthy();
+    expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
       formatDate(future, "yyyy-MM-dd"),
     );
   });
@@ -2417,7 +2489,7 @@ describe("DatePicker", () => {
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
   it("should clear the input when clear() member function is called", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     render(
       <DatePicker
         ref={(node) => {
@@ -2426,11 +2498,12 @@ describe("DatePicker", () => {
         selected={newDate("2015-12-15")}
       />,
     );
+    expect(instance).toBeTruthy();
     act(() => {
-      instance.clear();
+      instance!.clear();
     });
 
-    expect(instance.state.inputValue).toBeNull();
+    expect(instance!.state.inputValue).toBeNull();
   });
   it("should not open when open is false and input is focused", () => {
     const { container } = render(<DatePicker open={false} />);
@@ -2449,7 +2522,7 @@ describe("DatePicker", () => {
   });
 
   it("should set monthSelectedIn to 0 if monthsShown prop changes", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const { rerender } = render(
       <DatePicker
         ref={(node) => {
@@ -2459,10 +2532,13 @@ describe("DatePicker", () => {
         inline
       />,
     );
+    expect(instance).toBeTruthy();
     act(() => {
-      instance.state.monthSelectedIn = 1;
+      (
+        instance!.state as unknown as { monthSelectedIn: number }
+      ).monthSelectedIn = 1;
     });
-    expect(instance.state.monthSelectedIn).toEqual(1);
+    expect(instance!.state.monthSelectedIn).toEqual(1);
 
     rerender(
       <DatePicker
@@ -2474,11 +2550,11 @@ describe("DatePicker", () => {
       />,
     );
 
-    expect(instance.state.monthSelectedIn).toEqual(0);
+    expect(instance!.state.monthSelectedIn).toEqual(0);
   });
 
   it("should disable non-jumping if prop focusSelectedMonth is true", () => {
-    let instance;
+    let instance: DatePicker | null = null;
     const { container } = render(
       <DatePicker
         ref={(node) => {
@@ -2492,8 +2568,10 @@ describe("DatePicker", () => {
     const dayButtonInline = container.querySelectorAll(
       ".react-datepicker__day",
     )[40];
-    fireEvent.click(dayButtonInline);
-    expect(instance.state.monthSelectedIn).toEqual(undefined);
+    expect(dayButtonInline).toBeTruthy();
+    fireEvent.click(dayButtonInline!);
+    expect(instance).toBeTruthy();
+    expect(instance!.state.monthSelectedIn).toEqual(undefined);
   });
 
   it("should show the popper arrow when showPopperArrow is true", () => {
@@ -2643,8 +2721,9 @@ describe("DatePicker", () => {
 
       const days = container.querySelectorAll(".react-datepicker__day");
 
+      expect(days[5]).toBeTruthy();
       // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
-      fireEvent.click(days[5]);
+      fireEvent.click(days[5]!);
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith([testDate], expect.anything());
     });
@@ -2663,8 +2742,9 @@ describe("DatePicker", () => {
       fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
       const days = container.querySelectorAll(".react-datepicker__day");
 
+      expect(days[5]).toBeTruthy();
       // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
-      fireEvent.click(days[5]);
+      fireEvent.click(days[5]!);
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith([anotherDate], expect.anything());
     });
@@ -2684,8 +2764,9 @@ describe("DatePicker", () => {
       fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
       const days = container.querySelectorAll(".react-datepicker__day");
 
+      expect(days[5]).toBeTruthy();
       // Might seem odd, but the first couple of days of the calendar is in january, so days[5] is february 2nd
-      fireEvent.click(days[5]);
+      fireEvent.click(days[5]!);
       expect(onChange).toHaveBeenCalled();
       expect(onChange).toHaveBeenCalledWith(
         [previouslyAddedDate, testDate],
@@ -2715,7 +2796,8 @@ describe("DatePicker", () => {
 
       const day = container.querySelector(".react-datepicker__day--selected");
       fireEvent.click(day ?? new HTMLElement());
-      expect(formatDate(startDate, "yyyy-MM-dd")).toBe(
+      expect(startDate).toBeTruthy();
+      expect(formatDate(startDate!, "yyyy-MM-dd")).toBe(
         formatDate(selected, "yyyy-MM-dd"),
       );
       expect(endDate).toBeUndefined();
@@ -2866,7 +2948,7 @@ describe("DatePicker", () => {
     it("should have preSelection set to startDate upon opening", () => {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = undefined;
-      let instance;
+      let instance: DatePicker | null = null;
       render(
         <DatePicker
           ref={(node) => {
@@ -2877,9 +2959,11 @@ describe("DatePicker", () => {
           endDate={endDate}
         />,
       );
+      expect(instance).toBeTruthy();
+      expect(instance!.input).toBeTruthy();
       // Click to open
-      fireEvent.click(instance.input);
-      expect(instance.state.preSelection).toBe(startDate);
+      fireEvent.click(instance!.input!);
+      expect(instance!.state.preSelection).toBe(startDate);
     });
 
     it("should remain open after clicking day when startDate is null", () => {
@@ -2906,7 +2990,8 @@ describe("DatePicker", () => {
 
       const days = container.querySelectorAll(".react-datepicker__day");
       const day = days[Math.floor(days.length / 2)];
-      fireEvent.click(day);
+      expect(day).toBeTruthy();
+      fireEvent.click(day!);
       expect(container.querySelector(".react-datepicker")).toBeNull();
     });
 
@@ -2925,7 +3010,8 @@ describe("DatePicker", () => {
 
       const days = container.querySelectorAll(".react-datepicker__day");
       const day = days[Math.floor(days.length / 2)];
-      fireEvent.click(day);
+      expect(day).toBeTruthy();
+      fireEvent.click(day!);
       expect(container.querySelector(".react-datepicker")).toBeNull();
     });
 
@@ -2950,7 +3036,7 @@ describe("DatePicker", () => {
 
     it("clearing calls onChange with [null, null] in first argument making it consistent with the onChange behaviour for selecting days for selectsRange", () => {
       const onChangeSpy = jest.fn();
-      let instance;
+      let instance: DatePicker | null = null;
       render(
         <DatePicker
           selectsRange
@@ -2964,8 +3050,9 @@ describe("DatePicker", () => {
         />,
       );
 
+      expect(instance).toBeTruthy();
       act(() => {
-        instance.clear();
+        instance!.clear();
       });
 
       expect(onChangeSpy).toHaveBeenCalled();
@@ -3010,12 +3097,12 @@ describe("DatePicker", () => {
     });
 
     it("should hide the calendar even when the startDate and the endDate is same in the range", () => {
-      let startDate = new Date("2021-01-21 00:00:00");
-      let endDate = undefined;
+      let startDate: Date | null = new Date("2021-01-21 00:00:00");
+      let endDate: Date | null = null;
 
       const onCalendarCloseSpy = jest.fn();
 
-      const onChange = (dates) => {
+      const onChange = (dates: [Date | null, Date | null]) => {
         const [start, end] = dates;
         startDate = start;
         endDate = end;
@@ -3023,8 +3110,8 @@ describe("DatePicker", () => {
 
       const { container } = render(
         <DatePicker
-          startDate={startDate}
-          endDate={endDate}
+          startDate={startDate ?? undefined}
+          endDate={endDate ?? undefined}
           onChange={onChange}
           onCalendarClose={onCalendarCloseSpy}
           shouldCloseOnSelect
@@ -3034,7 +3121,7 @@ describe("DatePicker", () => {
 
       const input = container.querySelector("input");
       expect(input).toBeTruthy();
-      fireEvent.click(input ?? new HTMLElement());
+      fireEvent.click(input!);
 
       let calendar = container.querySelector(".react-datepicker");
       expect(calendar).toBeTruthy();
@@ -3069,14 +3156,16 @@ describe("DatePicker", () => {
       // 2023-05 monthShowsDuplicateDaysEnd:true
       // 2023-06-03
       expect(
-        Array.from(months[0].querySelectorAll(".react-datepicker__day")).at(-1)
-          ?.textContent,
+        Array.from(
+          months[0]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("");
       // 2023-06 monthShowsDuplicateDaysEnd: false
       // 2023-07-01
       expect(
-        Array.from(months[1].querySelectorAll(".react-datepicker__day")).at(-1)
-          ?.textContent,
+        Array.from(
+          months[1]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("1");
 
       // moreThanTwoMonths
@@ -3087,30 +3176,30 @@ describe("DatePicker", () => {
       // 2023-05 monthShowsDuplicateDaysEnd:true
       // 2023-06-03
       expect(
-        Array.from(monthsMore[0].querySelectorAll(".react-datepicker__day")).at(
-          -1,
-        )?.textContent,
+        Array.from(
+          monthsMore[0]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("");
       // 2023-06 monthShowsDuplicateDaysEnd:true
       // 2023-07-01
       expect(
-        Array.from(monthsMore[1].querySelectorAll(".react-datepicker__day")).at(
-          -1,
-        )?.textContent,
+        Array.from(
+          monthsMore[1]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("");
       // 2023-07 monthShowsDuplicateDaysEnd:true
       // 2023-08-05
       expect(
-        Array.from(monthsMore[2].querySelectorAll(".react-datepicker__day")).at(
-          -1,
-        )?.textContent,
+        Array.from(
+          monthsMore[2]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("");
       // 2023-08 monthShowsDuplicateDaysEnd:false
       // 2023-09-02
       expect(
-        Array.from(monthsMore[3].querySelectorAll(".react-datepicker__day")).at(
-          -1,
-        )?.textContent,
+        Array.from(
+          monthsMore[3]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("2");
     });
 
@@ -3126,12 +3215,12 @@ describe("DatePicker", () => {
       // 2023-05 monthShowsDuplicateDaysStart:false
       // 2023-04-30
       expect(
-        months[0].querySelector(".react-datepicker__day")?.textContent,
+        months[0]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("30");
       // 2023-06 monthShowsDuplicateDaysStart:true
       // 2023-05-28
       expect(
-        months[1].querySelector(".react-datepicker__day")?.textContent,
+        months[1]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("");
 
       // moreThanTwoMonths
@@ -3142,22 +3231,22 @@ describe("DatePicker", () => {
       // 2023-05 monthShowsDuplicateDaysStart:false
       // 2023-04-30
       expect(
-        monthsMore[0].querySelector(".react-datepicker__day")?.textContent,
+        monthsMore[0]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("30");
       // 2023-06 monthShowsDuplicateDaysStart:true
       // 2023-05-28
       expect(
-        monthsMore[1].querySelector(".react-datepicker__day")?.textContent,
+        monthsMore[1]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("");
       // 2023-07 monthShowsDuplicateDaysStart:true
       // 2023-06-25
       expect(
-        monthsMore[2].querySelector(".react-datepicker__day")?.textContent,
+        monthsMore[2]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("");
       // 2023-08 monthShowsDuplicateDaysStart:true
       // 2023-08-30
       expect(
-        monthsMore[3].querySelector(".react-datepicker__day")?.textContent,
+        monthsMore[3]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("");
     });
 
@@ -3170,13 +3259,14 @@ describe("DatePicker", () => {
       // 2023-05 monthShowsDuplicateDaysEnd:false
       // 2023-06-03
       expect(
-        Array.from(months[0].querySelectorAll(".react-datepicker__day")).at(-1)
-          ?.textContent,
+        Array.from(
+          months[0]?.querySelectorAll(".react-datepicker__day") ?? [],
+        ).at(-1)?.textContent,
       ).toBe("3");
       // 2023-05 monthShowsDuplicateDaysStart:false
       // 2023-04-30
       expect(
-        months[0].querySelector(".react-datepicker__day")?.textContent,
+        months[0]?.querySelector(".react-datepicker__day")?.textContent,
       ).toBe("30");
     });
   });
@@ -3185,7 +3275,7 @@ describe("DatePicker", () => {
     const selected = newDate("2023-05-15");
 
     it("should contain a different year all headers.", () => {
-      let instance;
+      let instance: DatePicker | null = null;
       // 2 Years
       const { rerender } = render(
         <DatePicker
@@ -3197,13 +3287,18 @@ describe("DatePicker", () => {
           showMonthYearPicker
         />,
       );
-      fireEvent.click(instance.input);
-      const headers = instance.calendar.componentNode.querySelectorAll(
-        ".react-datepicker__header",
-      );
+      expect(instance).toBeTruthy();
+      expect(instance!.input).toBeTruthy();
+      fireEvent.click(instance!.input!);
+      const headers =
+        instance!.calendar
+          ?.getInstance()
+          .containerRef.current?.querySelectorAll(
+            ".react-datepicker__header",
+          ) ?? [];
       expect(headers).toHaveLength(2);
-      expect(headers[0].textContent).toBe("2023");
-      expect(headers[1].textContent).toBe("2024");
+      expect(headers[0]!.textContent).toBe("2023");
+      expect(headers[1]!.textContent).toBe("2024");
 
       // 4 Years
       rerender(
@@ -3216,15 +3311,19 @@ describe("DatePicker", () => {
           showMonthYearPicker
         />,
       );
-      fireEvent.click(instance.input);
-      const headersMore = instance.calendar.componentNode.querySelectorAll(
-        ".react-datepicker__header",
-      );
+      expect(instance!.input).toBeTruthy();
+      fireEvent.click(instance!.input!);
+      const headersMore =
+        instance!.calendar
+          ?.getInstance()
+          .containerRef.current?.querySelectorAll(
+            ".react-datepicker__header",
+          ) ?? [];
       expect(headersMore).toHaveLength(4);
-      expect(headersMore[0].textContent).toBe("2023");
-      expect(headersMore[1].textContent).toBe("2024");
-      expect(headersMore[2].textContent).toBe("2025");
-      expect(headersMore[3].textContent).toBe("2026");
+      expect(headersMore[0]!.textContent).toBe("2023");
+      expect(headersMore[1]!.textContent).toBe("2024");
+      expect(headersMore[2]!.textContent).toBe("2025");
+      expect(headersMore[3]!.textContent).toBe("2026");
     });
   });
 
@@ -3232,7 +3331,7 @@ describe("DatePicker", () => {
     const selected = newDate("2023-05-15");
 
     it("should contain a different year all headers.", () => {
-      let instance;
+      let instance: DatePicker | null = null;
       // 2 Years
       const { rerender } = render(
         <DatePicker
@@ -3244,13 +3343,18 @@ describe("DatePicker", () => {
           showQuarterYearPicker
         />,
       );
-      fireEvent.click(instance.input);
-      const headers = instance.calendar.componentNode.querySelectorAll(
-        ".react-datepicker__header",
-      );
+      expect(instance).toBeTruthy();
+      expect(instance!.input).toBeTruthy();
+      fireEvent.click(instance!.input!);
+      const headers =
+        instance!.calendar
+          ?.getInstance()
+          .containerRef.current?.querySelectorAll(
+            ".react-datepicker__header",
+          ) ?? [];
       expect(headers).toHaveLength(2);
-      expect(headers[0].textContent).toBe("2023");
-      expect(headers[1].textContent).toBe("2024");
+      expect(headers[0]!.textContent).toBe("2023");
+      expect(headers[1]!.textContent).toBe("2024");
 
       // 4 Years
       rerender(
@@ -3263,15 +3367,19 @@ describe("DatePicker", () => {
           showQuarterYearPicker
         />,
       );
-      fireEvent.click(instance.input);
-      const headersMore = instance.calendar.componentNode.querySelectorAll(
-        ".react-datepicker__header",
-      );
+      expect(instance!.input).toBeTruthy();
+      fireEvent.click(instance!.input!);
+      const headersMore =
+        instance!.calendar
+          ?.getInstance()
+          .containerRef.current?.querySelectorAll(
+            ".react-datepicker__header",
+          ) ?? [];
       expect(headersMore).toHaveLength(4);
-      expect(headersMore[0].textContent).toBe("2023");
-      expect(headersMore[1].textContent).toBe("2024");
-      expect(headersMore[2].textContent).toBe("2025");
-      expect(headersMore[3].textContent).toBe("2026");
+      expect(headersMore[0]!.textContent).toBe("2023");
+      expect(headersMore[1]!.textContent).toBe("2024");
+      expect(headersMore[2]!.textContent).toBe("2025");
+      expect(headersMore[3]!.textContent).toBe("2026");
     });
   });
 
@@ -3279,8 +3387,8 @@ describe("DatePicker", () => {
     const dateFormat = "yyyy-MM-dd";
 
     it("should not be updated when navigating with ArrowRight key without changing displayed month", () => {
-      let instance;
-      render(
+      let instance: DatePicker | null = null;
+      const { container } = render(
         <DatePicker
           selected={newDate("2020-11-15")}
           dateFormat={dateFormat}
@@ -3290,16 +3398,16 @@ describe("DatePicker", () => {
           }}
         />,
       );
-      fireEvent.keyDown(
-        getSelectedDayNode(instance),
-        getKey(KeyType.ArrowRight),
-      );
-      expect(instance.state.shouldFocusDayInline).toBe(false);
+      const selectedDayNode = getSelectedDayNode(container);
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+      expect(instance).toBeTruthy();
+      expect(instance!.state.shouldFocusDayInline).toBe(false);
     });
 
     it("should be set to true when changing displayed month with ArrowRight key", () => {
       let instance;
-      render(
+      const { container } = render(
         <DatePicker
           selected={newDate("2020-11-30")}
           dateFormat={dateFormat}
@@ -3309,16 +3417,16 @@ describe("DatePicker", () => {
           }}
         />,
       );
-      fireEvent.keyDown(
-        getSelectedDayNode(instance),
-        getKey(KeyType.ArrowRight),
-      );
-      expect(instance.state.shouldFocusDayInline).toBe(true);
+      const selectedDayNode = getSelectedDayNode(container);
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+      expect(instance).toBeTruthy();
+      expect(instance!.state.shouldFocusDayInline).toBe(true);
     });
 
     it("should be set to true when changing displayed month with PageDown key", () => {
       let instance;
-      render(
+      const { container } = render(
         <DatePicker
           selected={newDate("2020-11-15")}
           dateFormat={dateFormat}
@@ -3328,8 +3436,11 @@ describe("DatePicker", () => {
           }}
         />,
       );
-      fireEvent.keyDown(getSelectedDayNode(instance), getKey(KeyType.PageDown));
-      expect(instance.state.shouldFocusDayInline).toBe(true);
+      const selectedDayNode = getSelectedDayNode(container);
+      expect(selectedDayNode).toBeTruthy();
+      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+      expect(instance).toBeTruthy();
+      expect(instance!.state.shouldFocusDayInline).toBe(true);
     });
   });
 
@@ -3342,7 +3453,7 @@ describe("DatePicker", () => {
     fireEvent.focus(input);
 
     const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0].textContent;
+      ?.childNodes[0]?.textContent;
     expect(firstDay).toBe("Mo");
   });
 
@@ -3355,7 +3466,7 @@ describe("DatePicker", () => {
     fireEvent.focus(input);
 
     const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0].textContent;
+      ?.childNodes[0]?.textContent;
     expect(firstDay).toBe("Su");
   });
 
@@ -3386,9 +3497,10 @@ describe("DatePicker", () => {
         },
       });
 
+      expect(date).toBeTruthy();
       expect(isSameDay(date, selected)).toBe(true);
-      expect(getHours(date)).toBe(8);
-      expect(getMinutes(date)).toBe(22);
+      expect(getHours(date!)).toBe(8);
+      expect(getMinutes(date!)).toBe(22);
     });
   });
 
@@ -3501,7 +3613,7 @@ describe("DatePicker", () => {
 
   describe("should render aria live region after date selection", () => {
     it("should have correct format if datepicker does not contain time", () => {
-      let instance;
+      let instance: DatePicker | null = null;
       const { container } = render(
         <DatePicker
           ref={(node) => {
@@ -3512,23 +3624,25 @@ describe("DatePicker", () => {
         />,
       );
 
-      fireEvent.focus(instance.input);
-      fireEvent.keyDown(instance.input, getKey(KeyType.Enter));
+      expect(instance).toBeTruthy();
+      expect(instance!.input).toBeTruthy();
+      fireEvent.focus(instance!.input!);
+      fireEvent.keyDown(instance!.input!, getKey(KeyType.Enter));
 
       const ariaLiveMessage = container.querySelector(
         ".react-datepicker__aria-live",
       )?.textContent;
 
       expect(ariaLiveMessage).toBe(
-        `Selected date: ${safeDateFormat(instance.props.selected, {
+        `Selected date: ${safeDateFormat(instance!.props.selected, {
           dateFormat: "PPPP",
-          locale: instance.props.locale,
+          locale: instance!.props.locale,
         })}`,
       );
     });
 
     it("should have correct format if datepicker contains time", () => {
-      let instance;
+      let instance: DatePicker | null = null;
       const { container } = render(
         <DatePicker
           ref={(node) => {
@@ -3540,17 +3654,19 @@ describe("DatePicker", () => {
         />,
       );
 
-      fireEvent.focus(instance.input);
-      fireEvent.keyDown(instance.input, getKey(KeyType.Enter));
+      expect(instance).toBeTruthy();
+      expect(instance!.input).toBeTruthy();
+      fireEvent.focus(instance!.input!);
+      fireEvent.keyDown(instance!.input!, getKey(KeyType.Enter));
 
       const ariaLiveMessage = container.querySelector(
         ".react-datepicker__aria-live",
       )?.textContent;
 
       expect(ariaLiveMessage).toBe(
-        `Selected date: ${safeDateFormat(instance.props.selected, {
+        `Selected date: ${safeDateFormat(instance!.props.selected, {
           dateFormat: "PPPPp",
-          locale: instance.props.locale,
+          locale: instance!.props.locale,
         })}`,
       );
     });
@@ -3641,8 +3757,8 @@ describe("DatePicker", () => {
     describe("Keyboard navigation", () => {
       it("should select the week when pressing Enter", () => {
         const date = new Date("2021-02-08");
-        let selected = date;
-        const onChange = (d) => {
+        let selected: Date | null = date;
+        const onChange = (d: Date | null) => {
           selected = d;
         };
         const data = getOnInputKeyDownStuff({
@@ -3653,22 +3769,18 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown)); // open
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowDown),
-        ); // navigate to week
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.Enter),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown)); // navigate to week
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Enter));
         expect(formatDate(selected, data.testFormat)).toBe(
           formatDate(new Date("2021-02-15"), data.testFormat),
         );
       });
       it("should select the week when pressing Space", () => {
         const date = new Date("2021-02-08");
-        let selected = date;
-        const onChange = (d) => {
+        let selected: Date | null = date;
+        const onChange = (d: Date | null) => {
           selected = d;
         };
         const data = getOnInputKeyDownStuff({
@@ -3679,14 +3791,10 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown)); // open
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowDown),
-        ); // navigate to week
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.Space),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown)); // navigate to week
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Space));
         expect(formatDate(selected, data.testFormat)).toBe(
           formatDate(new Date("2021-02-15"), data.testFormat),
         );
@@ -3700,12 +3808,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowUp),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowUp));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-01"), data.testFormat));
       });
       it("should navigate to the previous week when pressing ArrowLeft", () => {
@@ -3717,12 +3825,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowLeft),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-01"), data.testFormat));
       });
       it("should navigate to the next week when pressing ArrowDown", () => {
@@ -3734,12 +3842,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowDown),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-15"), data.testFormat));
       });
       it("should navigate to the next week when pressing ArrowRight", () => {
@@ -3751,12 +3859,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowRight),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-15"), data.testFormat));
       });
       it("should skip excluded week when pressing ArrowUp", () => {
@@ -3771,12 +3879,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowUp),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowUp));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-01-25"), data.testFormat));
       });
       it("should skip excluded week when pressing ArrowLeft", () => {
@@ -3791,12 +3899,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowLeft),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-01-25"), data.testFormat));
       });
       it("should skip excluded week when pressing ArrowDown", () => {
@@ -3811,12 +3919,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowDown),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowDown));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-22"), data.testFormat));
       });
       it("should skip excluded week when pressing ArrowRight", () => {
@@ -3831,12 +3939,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.ArrowRight),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-02-22"), data.testFormat));
       });
       it("should move to the next available week after pressing PageUp to a disabled date", () => {
@@ -3851,12 +3959,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.PageUp),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageUp));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-01-15"), data.testFormat));
       });
       it("should move to the previous available week after pressing PageDown to a disabled date", () => {
@@ -3871,12 +3979,12 @@ describe("DatePicker", () => {
         });
 
         fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
-        fireEvent.keyDown(
-          getSelectedDayNode(data.instance),
-          getKey(KeyType.PageDown),
-        );
+        const selectedDayNode = getSelectedDayNode(data.container);
+        expect(selectedDayNode).toBeTruthy();
+        fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
+        expect(data.instance.state.preSelection).toBeTruthy();
         expect(
-          formatDate(data.instance.state.preSelection, data.testFormat),
+          formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-03-01"), data.testFormat));
       });
     });
