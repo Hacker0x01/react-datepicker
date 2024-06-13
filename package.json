@@ -44,7 +44,6 @@
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "axe-core": "^4.4.1",
-    "babel-jest": "^29.6.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "core-js": "^3.29.1",
     "eslint": "^8.56.0",
@@ -83,7 +82,6 @@
     "@floating-ui/react": "^0.26.2",
     "clsx": "^2.1.0",
     "date-fns": "^3.3.1",
-    "prop-types": "^15.7.2",
     "react-onclickoutside": "^6.13.0"
   },
   "scripts": {
