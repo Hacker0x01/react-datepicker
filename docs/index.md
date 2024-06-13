@@ -1,166 +1,93 @@
 # `index` (component)
 
-| name                            | type                                                                                                                                                 | default value      | description |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ----------- |
-| `adjustDateOnChange`            | `bool`                                                                                                                                               |                    |             |
-| `allowSameDay`                  | `bool`                                                                                                                                               | `false`            |             |
-| `ariaDescribedBy`               | `string`                                                                                                                                             |                    |             |
-| `ariaInvalid`                   | `string`                                                                                                                                             |                    |             |
-| `ariaLabelClose`                | `string`                                                                                                                                             |                    |             |
-| `ariaLabelledBy`                | `string`                                                                                                                                             |                    |             |
-| `ariaRequired`                  | `string`                                                                                                                                             |                    |             |
-| `autoComplete`                  | `string`                                                                                                                                             |                    |             |
-| `autoFocus`                     | `bool`                                                                                                                                               |                    |             |
-| `calendarClassName`             | `string`                                                                                                                                             |                    |             |
-| `calendarContainer`             | `func`                                                                                                                                               |                    |             |
-| `calendarIconClassname`         | `string`                                                                                                                                             |                    |             |
-| `calendarIconClassName`         | `string`                                                                                                                                             |                    |             |
-| `calendarStartDay`              | `number`                                                                                                                                             | `undefined`        |             |
-| `children`                      | `node`                                                                                                                                               |                    |             |
-| `chooseDayAriaLabelPrefix`      | `string`                                                                                                                                             |                    |             |
-| `className`                     | `string`                                                                                                                                             |                    |             |
-| `clearButtonClassName`          | `string`                                                                                                                                             |                    |             |
-| `clearButtonTitle`              | `string`                                                                                                                                             |                    |             |
-| `closeOnScroll`                 | `union(bool\|func)`                                                                                                                                  |                    |             |
-| `customInput`                   | `element`                                                                                                                                            |                    |             |
-| `customInputRef`                | `string`                                                                                                                                             |                    |             |
-| `customTimeInput`               | `element`                                                                                                                                            | `null`             |             |
-| `dateFormat`                    | `union(string\|array)`                                                                                                                               | `"MM/dd/yyyy"`     |             |
-| `dateFormatCalendar`            | `string`                                                                                                                                             | `"LLLL yyyy"`      |             |
-| `dayClassName`                  | `func`                                                                                                                                               |                    |             |
-| `disabled`                      | `bool`                                                                                                                                               | `false`            |             |
-| `disabledDayAriaLabelPrefix`    | `string`                                                                                                                                             |                    |             |
-| `disabledKeyboardNavigation`    | `bool`                                                                                                                                               | `false`            |             |
-| `dropdownMode`                  | `enum("scroll"\|"select")`                                                                                                                           | `"scroll"`         |             |
-| `enableTabLoop`                 | `bool`                                                                                                                                               | `true`             |             |
-| `endDate`                       | `instanceOfDate`                                                                                                                                     |                    |             |
-| `excludeDateIntervals`          | `arrayOf[object Object]`                                                                                                                             |                    |             |
-| `excludeDates`                  | `arrayOf[object Object]`                                                                                                                             |                    |             |
-| `excludeScrollbar`              | `bool`                                                                                                                                               | `true`             |             |
-| `excludeTimes`                  | `array`                                                                                                                                              |                    |             |
-| `filterDate`                    | `func`                                                                                                                                               |                    |             |
-| `filterTime`                    | `func`                                                                                                                                               |                    |             |
-| `fixedHeight`                   | `bool`                                                                                                                                               |                    |             |
-| `focusSelectedMonth`            | `bool`                                                                                                                                               | `false`            |             |
-| `forceShowMonthNavigation`      | `bool`                                                                                                                                               |                    |             |
-| `form`                          | `string`                                                                                                                                             |                    |             |
-| `formatWeekDay`                 | `func`                                                                                                                                               |                    |             |
-| `formatWeekNumber`              | `func`                                                                                                                                               |                    |             |
-| `highlightDates`                | `array`                                                                                                                                              |                    |             |
-| `holidays`                      | `array`                                                                                                                                              |                    |             |
-| `icon`                          | `union(string\|node)`                                                                                                                                |                    |             |
-| `id`                            | `string`                                                                                                                                             |                    |             |
-| `includeDateIntervals`          | `array`                                                                                                                                              |                    |             |
-| `includeDates`                  | `array`                                                                                                                                              |                    |             |
-| `includeTimes`                  | `array`                                                                                                                                              |                    |             |
-| `injectTimes`                   | `array`                                                                                                                                              |                    |             |
-| `inline`                        | `bool`                                                                                                                                               |                    |             |
-| `isClearable`                   | `bool`                                                                                                                                               |                    |             |
-| `locale`                        | `union(string\|shape)`                                                                                                                               |                    |             |
-| `maxDate`                       | `instanceOfDate`                                                                                                                                     |                    |             |
-| `maxTime`                       | `instanceOfDate`                                                                                                                                     |                    |             |
-| `minDate`                       | `instanceOfDate`                                                                                                                                     |                    |             |
-| `minTime`                       | `instanceOfDate`                                                                                                                                     |                    |             |
-| `monthAriaLabelPrefix`          | `string`                                                                                                                                             |                    |             |
-| `monthClassName`                | `func`                                                                                                                                               |                    |             |
-| `monthsShown`                   | `number`                                                                                                                                             | `1`                |             |
-| `name`                          | `string`                                                                                                                                             |                    |             |
-| `nextMonthAriaLabel`            | `string`                                                                                                                                             | `"Next Month"`     |             |
-| `nextMonthButtonLabel`          | `union(string\|node)`                                                                                                                                | `"Next Month"`     |             |
-| `nextYearAriaLabel`             | `string`                                                                                                                                             | `"Next Year"`      |             |
-| `nextYearButtonLabel`           | `string`                                                                                                                                             | `"Next Year"`      |             |
-| `onBlur`                        | `func`                                                                                                                                               |                    |             |
-| `onCalendarClose`               | `func`                                                                                                                                               |                    |             |
-| `onCalendarOpen`                | `func`                                                                                                                                               |                    |             |
-| `onChange` (required)           | `func`                                                                                                                                               |                    |             |
-| `onChangeRaw`                   | `func`                                                                                                                                               |                    |             |
-| `onClickOutside`                | `func`                                                                                                                                               |                    |             |
-| `onDayMouseEnter`               | `func`                                                                                                                                               |                    |             |
-| `onFocus`                       | `func`                                                                                                                                               |                    |             |
-| `onInputClick`                  | `func`                                                                                                                                               |                    |             |
-| `onInputError`                  | `func`                                                                                                                                               |                    |             |
-| `onKeyDown`                     | `func`                                                                                                                                               |                    |             |
-| `onMonthChange`                 | `func`                                                                                                                                               |                    |             |
-| `onMonthMouseLeave`             | `func`                                                                                                                                               |                    |             |
-| `onSelect`                      | `func`                                                                                                                                               |                    |             |
-| `onWeekSelect`                  | `func`                                                                                                                                               |                    |             |
-| `onYearChange`                  | `func`                                                                                                                                               |                    |             |
-| `onYearMouseEnter`              | `func`                                                                                                                                               |                    |             |
-| `onYearMouseLeave`              | `func`                                                                                                                                               |                    |             |
-| `open`                          | `bool`                                                                                                                                               |                    |             |
-| `openToDate`                    | `instanceOfDate`                                                                                                                                     |                    |             |
-| `peekNextMonth`                 | `bool`                                                                                                                                               |                    |             |
-| `placeholderText`               | `string`                                                                                                                                             |                    |             |
-| `popperClassName`               | `string`                                                                                                                                             |                    |             |
-| `popperContainer`               | `func`                                                                                                                                               |                    |             |
-| `popperModifiers`               | `arrayOf[object Object]`                                                                                                                             |                    |             |
-| `popperPlacement`               | `enum("top-start"\|"top-end"\|"bottom-start"\|"bottom-end"\|"right-start"\|"right-end"\|"left-start"\|"left-end"\|"top"\|"right"\|"bottom"\|"left")` |                    |             |
-| `popperProps`                   | `object`                                                                                                                                             |                    |             |
-| `portalHost`                    | `instanceOfShadowRoot`                                                                                                                               |                    |             |
-| `portalId`                      | `string`                                                                                                                                             |                    |             |
-| `preventOpenOnFocus`            | `bool`                                                                                                                                               | `false`            |             |
-| `previousMonthAriaLabel`        | `string`                                                                                                                                             | `"Previous Month"` |             |
-| `previousMonthButtonLabel`      | `union(string\|node)`                                                                                                                                | `"Previous Month"` |             |
-| `previousYearAriaLabel`         | `string`                                                                                                                                             | `"Previous Year"`  |             |
-| `previousYearButtonLabel`       | `string`                                                                                                                                             | `"Previous Year"`  |             |
-| `readOnly`                      | `bool`                                                                                                                                               | `false`            |             |
-| `renderCustomHeader`            | `func`                                                                                                                                               |                    |             |
-| `renderDayContents`             | `func`                                                                                                                                               |                    |             |
-| `renderMonthContent`            | `func`                                                                                                                                               |                    |             |
-| `renderQuarterContent`          | `func`                                                                                                                                               |                    |             |
-| `renderYearContent`             | `func`                                                                                                                                               |                    |             |
-| `required`                      | `bool`                                                                                                                                               |                    |             |
-| `scrollableMonthYearDropdown`   | `bool`                                                                                                                                               |                    |             |
-| `scrollableYearDropdown`        | `bool`                                                                                                                                               |                    |             |
-| `selected`                      | `instanceOfDate`                                                                                                                                     |                    |             |
-| `selectedDates`                 | `arrayOf[object Object]`                                                                                                                             |                    |             |
-| `selectsDisabledDaysInRange`    | `bool`                                                                                                                                               | `false`            |             |
-| `selectsEnd`                    | `bool`                                                                                                                                               |                    |             |
-| `selectsMultiple`               | `bool`                                                                                                                                               |                    |             |
-| `selectsRange`                  | `bool`                                                                                                                                               |                    |             |
-| `selectsStart`                  | `bool`                                                                                                                                               |                    |             |
-| `shouldCloseOnSelect`           | `bool`                                                                                                                                               | `true`             |             |
-| `showDateSelect`                | `bool`                                                                                                                                               |                    |             |
-| `showDisabledMonthNavigation`   | `bool`                                                                                                                                               |                    |             |
-| `showFourColumnMonthYearPicker` | `bool`                                                                                                                                               | `false`            |             |
-| `showFullMonthYearPicker`       | `bool`                                                                                                                                               | `false`            |             |
-| `showIcon`                      | `bool`                                                                                                                                               |                    |             |
-| `showMonthDropdown`             | `bool`                                                                                                                                               |                    |             |
-| `showMonthYearDropdown`         | `bool`                                                                                                                                               |                    |             |
-| `showMonthYearPicker`           | `bool`                                                                                                                                               | `false`            |             |
-| `showPopperArrow`               | `bool`                                                                                                                                               | `true`             |             |
-| `showPreviousMonths`            | `bool`                                                                                                                                               | `false`            |             |
-| `showQuarterYearPicker`         | `bool`                                                                                                                                               | `false`            |             |
-| `showTimeInput`                 | `bool`                                                                                                                                               | `false`            |             |
-| `showTimeSelect`                | `bool`                                                                                                                                               | `false`            |             |
-| `showTimeSelectOnly`            | `bool`                                                                                                                                               |                    |             |
-| `showTwoColumnMonthYearPicker`  | `bool`                                                                                                                                               | `false`            |             |
-| `showWeekNumbers`               | `bool`                                                                                                                                               |                    |             |
-| `showWeekPicker`                | `bool`                                                                                                                                               | `false`            |             |
-| `showYearDropdown`              | `bool`                                                                                                                                               |                    |             |
-| `showYearPicker`                | `bool`                                                                                                                                               | `false`            |             |
-| `startDate`                     | `instanceOfDate`                                                                                                                                     |                    |             |
-| `startOpen`                     | `bool`                                                                                                                                               |                    |             |
-| `strictParsing`                 | `bool`                                                                                                                                               | `false`            |             |
-| `swapRange`                     | `bool`                                                                                                                                               | `false`            |             |
-| `tabIndex`                      | `number`                                                                                                                                             |                    |             |
-| `timeCaption`                   | `string`                                                                                                                                             | `"Time"`           |             |
-| `timeClassName`                 | `func`                                                                                                                                               |                    |             |
-| `timeFormat`                    | `string`                                                                                                                                             |                    |             |
-| `timeInputLabel`                | `string`                                                                                                                                             | `"Time"`           |             |
-| `timeIntervals`                 | `number`                                                                                                                                             | `30`               |             |
-| `title`                         | `string`                                                                                                                                             |                    |             |
-| `todayButton`                   | `node`                                                                                                                                               |                    |             |
-| `toggleCalendarOnIconClick`     | `union(func\|bool)`                                                                                                                                  | `false`            |             |
-| `usePointerEvent`               | `bool`                                                                                                                                               | `false`            |             |
-| `useShortMonthInDropdown`       | `bool`                                                                                                                                               |                    |             |
-| `useWeekdaysShort`              | `bool`                                                                                                                                               |                    |             |
-| `value`                         | `string`                                                                                                                                             |                    |             |
-| `weekAriaLabelPrefix`           | `string`                                                                                                                                             |                    |             |
-| `weekDayClassName`              | `func`                                                                                                                                               |                    |             |
-| `weekLabel`                     | `string`                                                                                                                                             |                    |             |
-| `withPortal`                    | `bool`                                                                                                                                               | `false`            |             |
-| `wrapperClassName`              | `string`                                                                                                                                             |                    |             |
-| `yearClassName`                 | `func`                                                                                                                                               |                    |             |
-| `yearDropdownItemNumber`        | `number`                                                                                                                                             |                    |             |
-| `yearItemNumber`                | `number`                                                                                                                                             | `12`               |             |
+| name                            | type | default value      | description |
+| ------------------------------- | ---- | ------------------ | ----------- |
+| `allowSameDay`                  |      | `false`            |             |
+| `ariaDescribedBy`               |      |                    |             |
+| `ariaInvalid`                   |      |                    |             |
+| `ariaLabelClose`                |      |                    |             |
+| `ariaLabelledBy`                |      |                    |             |
+| `ariaRequired`                  |      |                    |             |
+| `autoComplete`                  |      |                    |             |
+| `autoFocus`                     |      |                    |             |
+| `calendarClassName`             |      |                    |             |
+| `calendarContainer`             |      |                    |             |
+| `calendarIconClassName`         |      |                    |             |
+| `calendarIconClassname`         |      |                    |             |
+| `calendarStartDay`              |      | `undefined`        |             |
+| `className`                     |      |                    |             |
+| `clearButtonClassName`          |      |                    |             |
+| `clearButtonTitle`              |      |                    |             |
+| `closeOnScroll`                 |      |                    |             |
+| `customInput`                   |      |                    |             |
+| `customInputRef`                |      |                    |             |
+| `customTimeInput`               |      | `null`             |             |
+| `dateFormat`                    |      | `"MM/dd/yyyy"`     |             |
+| `dateFormatCalendar`            |      | `"LLLL yyyy"`      |             |
+| `disabled`                      |      | `false`            |             |
+| `disabledKeyboardNavigation`    |      | `false`            |             |
+| `dropdownMode`                  |      | `"scroll"`         |             |
+| `enableTabLoop`                 |      | `true`             |             |
+| `excludeScrollbar`              |      | `true`             |             |
+| `focusSelectedMonth`            |      | `false`            |             |
+| `form`                          |      |                    |             |
+| `highlightDates`                |      |                    |             |
+| `holidays`                      |      |                    |             |
+| `id`                            |      |                    |             |
+| `isClearable`                   |      |                    |             |
+| `monthsShown`                   |      | `1`                |             |
+| `name`                          |      |                    |             |
+| `nextMonthAriaLabel`            |      | `"Next Month"`     |             |
+| `nextMonthButtonLabel`          |      | `"Next Month"`     |             |
+| `nextYearAriaLabel`             |      | `"Next Year"`      |             |
+| `nextYearButtonLabel`           |      | `"Next Year"`      |             |
+| `onBlur`                        |      |                    |             |
+| `onCalendarClose`               |      |                    |             |
+| `onCalendarOpen`                |      |                    |             |
+| `onChangeRaw`                   |      |                    |             |
+| `onClickOutside`                |      |                    |             |
+| `onFocus`                       |      |                    |             |
+| `onInputClick`                  |      |                    |             |
+| `onInputError`                  |      |                    |             |
+| `onKeyDown`                     |      |                    |             |
+| `onSelect` (required)           |      |                    |             |
+| `open`                          |      |                    |             |
+| `placeholderText`               |      |                    |             |
+| `popperClassName`               |      |                    |             |
+| `preventOpenOnFocus`            |      | `false`            |             |
+| `previousMonthAriaLabel`        |      | `"Previous Month"` |             |
+| `previousMonthButtonLabel`      |      | `"Previous Month"` |             |
+| `previousYearAriaLabel`         |      | `"Previous Year"`  |             |
+| `previousYearButtonLabel`       |      | `"Previous Year"`  |             |
+| `readOnly`                      |      | `false`            |             |
+| `required`                      |      |                    |             |
+| `selected`                      |      |                    |             |
+| `selectsDisabledDaysInRange`    |      | `false`            |             |
+| `shouldCloseOnSelect`           |      | `true`             |             |
+| `showDateSelect`                |      |                    |             |
+| `showFourColumnMonthYearPicker` |      | `false`            |             |
+| `showFullMonthYearPicker`       |      | `false`            |             |
+| `showIcon`                      |      |                    |             |
+| `showMonthYearPicker`           |      | `false`            |             |
+| `showPopperArrow`               |      | `true`             |             |
+| `showPreviousMonths`            |      | `false`            |             |
+| `showQuarterYearPicker`         |      | `false`            |             |
+| `showTimeInput`                 |      | `false`            |             |
+| `showTimeSelect`                |      | `false`            |             |
+| `showTwoColumnMonthYearPicker`  |      | `false`            |             |
+| `showWeekPicker`                |      | `false`            |             |
+| `showYearPicker`                |      | `false`            |             |
+| `startDate`                     |      |                    |             |
+| `startOpen`                     |      |                    |             |
+| `strictParsing`                 |      | `false`            |             |
+| `swapRange`                     |      | `false`            |             |
+| `tabIndex`                      |      |                    |             |
+| `timeCaption`                   |      | `"Time"`           |             |
+| `timeInputLabel`                |      | `"Time"`           |             |
+| `timeIntervals`                 |      | `30`               |             |
+| `title`                         |      |                    |             |
+| `toggleCalendarOnIconClick`     |      | `false`            |             |
+| `usePointerEvent`               |      | `false`            |             |
+| `value`                         |      |                    |             |
+| `withPortal`                    |      | `false`            |             |
+| `yearItemNumber`                |      | `12`               |             |

@@ -1,17 +1,18 @@
 # `week_number` (component)
 
-| name                         | type                 | default value | description |
-| ---------------------------- | -------------------- | ------------- | ----------- |
-| `ariaLabelPrefix`            | `string`             | `"week "`     |             |
-| `containerRef`               | `union(func\|shape)` |               |             |
-| `date` (required)            | `instanceOfDate`     |               |             |
-| `disabledKeyboardNavigation` | `bool`               |               |             |
-| `handleOnKeyDown`            | `func`               |               |             |
-| `inline`                     | `bool`               |               |             |
-| `onClick`                    | `func`               |               |             |
-| `preSelection`               | `instanceOfDate`     |               |             |
-| `selected`                   | `instanceOfDate`     |               |             |
-| `shouldFocusDayInline`       | `bool`               |               |             |
-| `showWeekNumber`             | `bool`               |               |             |
-| `showWeekPicker`             | `bool`               |               |             |
-| `weekNumber` (required)      | `number`             |               |             |
+| name                         | type | default value | description |
+| ---------------------------- | ---- | ------------- | ----------- |
+| `ariaLabelPrefix`            |      | `"week "`     |             |
+| `containerRef`               |      |               |             |
+| `date` (required)            |      |               |             |
+| `disabledKeyboardNavigation` |      |               |             |
+| `handleOnKeyDown`            |      |               |             |
+| `inline`                     |      |               |             |
+| `isInputFocused`             |      |               |             |
+| `onClick`                    |      |               |             |
+| `preSelection`               |      |               |             |
+| `selected`                   |      |               |             |
+| `shouldFocusDayInline`       |      |               |             |
+| `showWeekNumber`             |      |               |             |
+| `showWeekPicker`             |      |               |             |
+| `weekNumber` (required)      |      |               |             |

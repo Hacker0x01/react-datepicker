@@ -1,11 +1,8 @@
-`month_dropdown` (component)
-============================
+# `month_dropdown` (component)
 
-
-| name  | type  | default value  | description  |
-|---|---|---|---|
-|`dropdownMode` (required)|`enum("scroll"\|"select")`|||
-|`locale`|`string`|||
-|`month` (required)|`number`|||
-|`onChange` (required)|`func`|||
-|`useShortMonthInDropdown`|`bool`|||
+| name                      | type | default value | description |
+| ------------------------- | ---- | ------------- | ----------- |
+| `dropdownMode` (required) |      |               |             |
+| `locale`                  |      |               |             |
+| `onChange` (required)     |      |               |             |
+| `useShortMonthInDropdown` |      |               |             |
