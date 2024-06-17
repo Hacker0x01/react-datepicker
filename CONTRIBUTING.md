@@ -34,9 +34,9 @@ Local development configuration is pretty snappy. Here's how to get set up:
 1. Run `npm run build` from project root (at least the first time, this will get you the `dist` directory that holds the code that will be linked to)
 1. Run `npm run start` from project root. (This command launches a documentation app and runs it as a simple webserver at http://localhost:3000.)
 1. Open new terminal window
-1. Run `npm run build-dev` from project root. (This command sets up a development environment that keeps an eye on any file changes. When a file is updated, it auto-builds using the latest code.)
+1. Run `npm run dev` from project root. (This command sets up a development environment that keeps an eye on any file changes. When a file is updated, it auto-builds using the latest code.)
 
 You can run `npm run test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/src/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
 1. After each JS change run `npm run build:js` in project root
-1. After each SCSS change run `npm run css:dev && npm run css:modules:dev` in project root
+1. After each SCSS change run `npm run dev:css && npm run dev:css:modules` in project root

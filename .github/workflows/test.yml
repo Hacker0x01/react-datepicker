@@ -36,10 +36,7 @@ jobs:
         run: npm ci --no-audit --progress=false --silent
 
       - name: Check Code Formatter
-        run: npm run prettier:check
-
-      - name: Type Check
-        run: npm run type-check
+        run: npm run format
 
       - name: Lint
         run: npm run lint
