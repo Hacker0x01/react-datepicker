@@ -11,9 +11,23 @@
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
-  "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
-  "sideEffects": ["**/*.css"],
-  "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
+  "files": [
+    "*.md",
+    "dist",
+    "lib",
+    "es",
+    "src/stylesheets"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "keywords": [
+    "react",
+    "datepicker",
+    "calendar",
+    "date",
+    "react-component"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
@@ -90,15 +104,15 @@
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "precommit": "lint-staged --allow-empty",
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
-    "lint": "yarn run eslint && yarn run sass-lint",
+    "lint": "npm run eslint && npm run sass-lint",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
     "prettier:check": "prettier --check '**/*.{js,jsx,ts,tsx}'",
-    "start": "yarn --cwd docs-site install && yarn --cwd docs-site start",
+    "start": "npm install --prefix docs-site && npm start --prefix docs-site",
     "test": "NODE_ENV=test jest",
     "test:ci": "NODE_ENV=test jest --ci --coverage",
     "test:watch": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=test jest --watch",
-    "build": "NODE_ENV=production yarn run build:src && NODE_ENV=production yarn run css:prod && NODE_ENV=production yarn run css:modules:dev && NODE_ENV=production yarn run css:dev && NODE_ENV=production yarn run css:modules:dev",
-    "build-dev": "NODE_ENV=development yarn run js:dev && NODE_ENV=development yarn run css:dev && NODE_ENV=development yarn run css:modules:dev",
+    "build": "NODE_ENV=production npm run build:src && NODE_ENV=production npm run css:prod && NODE_ENV=production npm run css:modules:dev && NODE_ENV=production npm run css:dev && NODE_ENV=production npm run css:modules:dev",
+    "build-dev": "NODE_ENV=development npm run js:dev && NODE_ENV=development npm run css:dev && NODE_ENV=development npm run css:modules:dev",
     "css:prod": "sass --style compressed src/stylesheets/datepicker.scss > dist/react-datepicker.min.css",
     "css:modules:prod": "sass --style compressed src/stylesheets/datepicker-cssmodules.scss | tee dist/react-datepicker-cssmodules.min.css dist/react-datepicker-min.module.css",
     "css:dev": "sass --style expanded src/stylesheets/datepicker.scss > dist/react-datepicker.css",
@@ -110,7 +124,9 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
-  },
-  "packageManager": "yarn@1.22.17"
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

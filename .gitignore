@@ -109,7 +109,8 @@ docs/week.md
 docs/year_dropdown_options.md
 docs/year_dropdown.md
 
-# We are using Yarn
-package-lock.json
+# We are using npm
+yarn.lock
+
 scripts/.DS_Store
 .DS_Store

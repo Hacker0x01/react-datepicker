@@ -36,9 +36,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
-  return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-  );
+  return <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />;
 };
 ```
 
@@ -69,12 +67,7 @@ See [here](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/datepic
 You can also include a time picker by adding the showTimeSelect prop
 
 ```js
-<DatePicker
-  selected={date}
-  onChange={handleDateChange}
-  showTimeSelect
-  dateFormat="Pp"
-/>
+<DatePicker selected={date} onChange={handleDateChange} showTimeSelect dateFormat="Pp" />
 ```
 
 Times will be displayed at 30-minute intervals by default (default configurable via timeIntervals prop)
@@ -134,15 +127,15 @@ The `main` branch contains the latest version of the Datepicker component.
 
 To begin local development:
 
-1. Run `yarn link` from project root
-2. Run `cd docs-site && yarn link react-datepicker`
-3. Run `yarn install` from project root
-4. Run `yarn build` from project root
-5. Run `yarn start` from project root
+1. Run `npm link` from project root
+2. Run `cd docs-site && npm link react-datepicker`
+3. Run `npm ci` from project root
+4. Run `npm run build` from project root
+5. Run `npm run start` from project root
 
 The last step starts documentation app as a simple webserver on http://localhost:3000.
 
-You can run `yarn test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
+You can run `npm run test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/src/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
 Please refer to `CONTRIBUTING.md` file for more details about getting set up.
 

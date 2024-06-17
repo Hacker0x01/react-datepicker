@@ -10,34 +10,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Set Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
+          cache: npm
+
+      - name: Cache Dependency
+        uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: yarn install
+        if: ${{ steps.cache_dependency.outputs.cache-hit != 'true' }}
+        run: npm ci --no-audit --progress=false --silent
 
       - name: Install docs dependencies
-        run: yarn --cwd docs-site install
+        if: ${{ steps.cache_dependency.outputs.cache-hit != 'true' }}
+        run: npm ci --no-audit --progress=false --silent --prefix docs-site
 
       - name: Build datepicker
-        run: yarn build
+        run: npm run build
 
       - name: Build docs
-        run: yarn --cwd docs-site build
+        run: npm run build --prefix docs-site
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4

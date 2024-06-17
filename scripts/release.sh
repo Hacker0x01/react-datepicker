@@ -7,7 +7,7 @@ git checkout main
 git pull
 
 rm -rf ./node_modules ./lib ./dist
-yarn
+npm install
 
 git checkout .
 
@@ -23,7 +23,7 @@ git push
 
 git push --tags
 
-yarn run build
+npm run build
 
 npm publish
 

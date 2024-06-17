@@ -18,38 +18,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup kernel for react, increase watchers
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Cache Dependency
+        uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: yarn install
+        if: ${{ steps.cache_dependency.outputs.cache-hit != 'true' }}
+        run: npm ci --no-audit --progress=false --silent
 
       - name: Check Code Formatter
-        run: yarn prettier:check
+        run: npm run prettier:check
 
       - name: Type Check
-        run: yarn type-check
+        run: npm run type-check
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
 
       - name: Test
-        run: yarn test:ci
+        run: npm run test:ci
 
       - uses: codecov/codecov-action@v4
         env:
@@ -59,4 +55,4 @@ jobs:
           verbose: true # optional (default = false)
 
       - name: Build
-        run: yarn build
+        run: npm run build
