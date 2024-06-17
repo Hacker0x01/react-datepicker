@@ -1,7 +1,13 @@
 import { clsx } from "clsx";
 import React, { Component } from "react";
 
-import { addDays, getWeek, getStartOfWeek, isSameDay } from "./date_utils";
+import {
+  addDays,
+  getWeek,
+  getStartOfWeek,
+  isSameDay,
+  isDayDisabled,
+} from "./date_utils";
 import Day from "./day";
 import WeekNumber from "./week_number";
 
@@ -41,6 +47,17 @@ export default class Week extends Component<WeekProps> {
     };
   }
 
+  isDisabled = (day: Date): boolean =>
+    isDayDisabled(day, {
+      minDate: this.props.minDate,
+      maxDate: this.props.maxDate,
+      excludeDates: this.props.excludeDates,
+      excludeDateIntervals: this.props.excludeDateIntervals,
+      includeDateIntervals: this.props.includeDateIntervals,
+      includeDates: this.props.includeDates,
+      filterDate: this.props.filterDate,
+    });
+
   handleDayClick = (
     day: Date,
     event: React.MouseEvent<HTMLDivElement>,
@@ -61,11 +78,25 @@ export default class Week extends Component<WeekProps> {
     weekNumber: number,
     event: React.MouseEvent<HTMLDivElement>,
   ) => {
+    let enabledWeekDay = new Date(day);
+
+    for (let i = 0; i < 7; i++) {
+      const processingDay = new Date(day);
+      processingDay.setDate(processingDay.getDate() + i);
+
+      const isEnabled = !this.isDisabled(processingDay);
+
+      if (isEnabled) {
+        enabledWeekDay = processingDay;
+        break;
+      }
+    }
+
     if (typeof this.props.onWeekSelect === "function") {
-      this.props.onWeekSelect(day, weekNumber, event);
+      this.props.onWeekSelect(enabledWeekDay, weekNumber, event);
     }
     if (this.props.showWeekPicker) {
-      this.handleDayClick(day, event);
+      this.handleDayClick(enabledWeekDay, event);
     }
     if (
       this.props.shouldCloseOnSelect ??
