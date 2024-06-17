@@ -186,8 +186,8 @@ export type DatePickerProps = Omit<
     placeholderText?: string;
     autoComplete?: string;
     title?: string;
-    required?: string;
-    tabIndex?: string;
+    required?: boolean;
+    tabIndex?: number;
     ariaDescribedBy?: string;
     ariaInvalid?: string;
     ariaLabelledBy?: string;
