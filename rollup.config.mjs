@@ -45,7 +45,6 @@ const dateFnsSubpackages = Object.keys(dateFnsPackageJson.exports)
 
 const globals = {
   react: "React",
-  "prop-types": "PropTypes",
   "react-onclickoutside": "onClickOutside",
 };
 
