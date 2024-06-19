@@ -1,6 +1,6 @@
 import React from "react";
 
-interface CalendarContainerProps extends React.PropsWithChildren {
+export interface CalendarContainerProps extends React.PropsWithChildren {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
   className?: string;
