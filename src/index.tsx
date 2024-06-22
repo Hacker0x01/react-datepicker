@@ -66,6 +66,8 @@ export { registerLocale, setDefaultLocale, getDefaultLocale };
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
 const WrappedCalendar = onClickOutside(Calendar);
 
+export { ReactDatePickerCustomHeaderProps } from "./calendar";
+
 // Compares dates year+month combinations
 function hasPreSelectionChanged(
   date1?: Date | null,
