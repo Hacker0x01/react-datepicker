@@ -7188,9 +7188,9 @@ stylelint-config-standard@^36.0.0:
     stylelint-config-recommended "^14.0.1"
 
 stylelint-scss@^6.0.0, stylelint-scss@^6.2.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-6.3.1.tgz#eb56f23f4d3e0896647365ab1681653a00bdbc2b"
-  integrity sha512-w/czBoWUZxJNk5fBRPODcXSN4qcPv3WHjTSSpFovVY+TE3MZTMR0yRlbmaDYrm8tTWHvpwQAuEBZ0lk2wwkboQ==
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-6.3.2.tgz#085072e774e5a31e65aa2acefaad5417a29d6ec1"
+  integrity sha512-pNk9mXOVKkQtd+SROPC9io8ISSgX+tOVPhFdBE+LaKQnJMLdWPbGKAGYv4Wmf/RrnOjkutunNTN9kKMhkdE5qA==
   dependencies:
     known-css-properties "^0.31.0"
     postcss-media-query-parser "^0.2.3"
