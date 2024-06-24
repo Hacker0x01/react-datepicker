@@ -462,7 +462,10 @@ describe("DatePicker", () => {
   });
 
   it("should update the preSelection state when a day is selected with Enter press", () => {
-    const data = getOnInputKeyDownStuff({ shouldCloseOnSelect: false });
+    const data = getOnInputKeyDownStuff({
+      shouldCloseOnSelect: false,
+      selected: "2024-06-06",
+    });
 
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
     const selectedDayNode = getSelectedDayNode(data.container);
@@ -1039,8 +1042,9 @@ describe("DatePicker", () => {
     expect(document.body.querySelector("#portal-id-dom-test")).not.toBeNull();
   });
 
-  function getOnInputKeyDownStuff(opts = {}) {
-    const m = newDate();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function getOnInputKeyDownStuff(opts: { [key: string]: any } = {}) {
+    const m = newDate(opts.selected);
     const copyM = newDate(m);
     const testFormat = "yyyy-MM-dd";
     const exactishFormat = "yyyy-MM-dd hh: zzzz";
