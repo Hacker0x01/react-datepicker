@@ -188,13 +188,20 @@ export default class Day extends Component<DayProps> {
       ? this.props.selectedDates?.some((date) => this.isSameDayOrWeek(date))
       : this.isSameDayOrWeek(this.props.selected);
 
-    return !isSelectedDate && this.isSameDayOrWeek(this.props.preSelection);
+    const isDisabled =
+      this.props.preSelection && this.isDisabled(this.props.preSelection);
+
+    return (
+      !isSelectedDate &&
+      this.isSameDayOrWeek(this.props.preSelection) &&
+      !isDisabled
+    );
   };
 
-  isDisabled = () =>
+  isDisabled = (day = this.props.day) =>
     // Almost all props previously were passed as this.props w/o proper typing with prop-types
     // after the migration to TS i made it explicit
-    isDayDisabled(this.props.day, {
+    isDayDisabled(day, {
       minDate: this.props.minDate,
       maxDate: this.props.maxDate,
       excludeDates: this.props.excludeDates,

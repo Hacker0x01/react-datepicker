@@ -2372,4 +2372,53 @@ describe("Month", () => {
       ).toBe(false);
     });
   });
+
+  describe("keyboard-selected", () => {
+    it("should not apply the keyboard-selected class when the month is a part of disabled dates", () => {
+      const keyboardSelectedDate = newDate("2024-06-03");
+      const excludeDates = [addWeeks(keyboardSelectedDate, 1)];
+
+      const { container } = render(
+        <Month
+          day={keyboardSelectedDate}
+          preSelection={keyboardSelectedDate}
+          excludeDates={excludeDates}
+          showMonthYearPicker
+        />,
+      );
+      expect(
+        container.querySelector(
+          ".react-datepicker__month-text--keyboard-selected",
+        ),
+      ).toBeNull();
+    });
+
+    it("should not apply the keyboard-selected class when the quarter is a part of disabled dates", () => {
+      const currentSelectedDate = newDate("2023-08-08");
+      const maxDate = newDate("2024-08-03");
+
+      const { container } = render(
+        <DatePicker
+          selected={currentSelectedDate}
+          maxDate={maxDate}
+          dateFormat="yyyy, QQQ"
+          showQuarterYearPicker
+        />,
+      );
+      const dateInput = container.querySelector("input")!;
+      fireEvent.focus(dateInput);
+
+      const calendar = container.querySelector(".react-datepicker")!;
+      const nextButton = calendar.querySelector(
+        ".react-datepicker__navigation--next",
+      )!;
+      fireEvent.click(nextButton);
+
+      expect(
+        container.querySelector(
+          ".react-datepicker__quarter-text--keyboard-selected",
+        ),
+      ).toBeNull();
+    });
+  });
 });

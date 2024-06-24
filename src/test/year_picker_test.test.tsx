@@ -603,6 +603,35 @@ describe("YearPicker", () => {
       );
       expect(allPreselectedYears.length).toBe(1);
     });
+
+    it("should not set the key-selected class when the year is a part of disabled dates", () => {
+      const date = newDate("2024-06-01");
+      const excludeDates = [newDate("2036-05-05")];
+
+      const { container } = render(
+        <DatePicker
+          selected={date}
+          excludeDates={excludeDates}
+          showYearPicker
+          dateFormat="yyyy"
+        />,
+      );
+
+      const dateInput = container.querySelector("input")!;
+      fireEvent.focus(dateInput);
+
+      const calendar = container.querySelector(".react-datepicker")!;
+      const nextButton = calendar.querySelector(
+        ".react-datepicker__navigation--next",
+      )!;
+      fireEvent.click(nextButton);
+
+      expect(
+        container.querySelector(
+          ".react-datepicker__year-text--keyboard-selected",
+        ),
+      ).toBeNull();
+    });
   });
 
   describe("Keyboard navigation", () => {
