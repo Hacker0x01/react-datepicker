@@ -1,5 +1,5 @@
 /*!
-  react-datepicker v7.1.0
+  react-datepicker v7.2.0
   https://github.com/Hacker0x01/react-datepicker
   Released under the MIT License.
 */
