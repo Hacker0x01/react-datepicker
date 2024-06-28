@@ -104,6 +104,7 @@ import CalendarStartDay from "../../examples/calendarStartDay";
 import ExternalForm from "../../examples/externalForm";
 import CalendarIcon from "../../examples/calendarIcon";
 import SelectsMultiple from "../../examples/selectsMultiple";
+import SelectsMultipleMonths from "../../examples/selectsMultipleMonths";
 import CalendarIconExternal from "../../examples/calendarIconExternal";
 import CalendarIconSvgIcon from "../../examples/calendarIconSvgIcon";
 import ToggleCalendarOnIconClick from "../../examples/toggleCalendarOnIconClick";
@@ -501,6 +502,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Select multiple dates",
       component: SelectsMultiple,
+    },
+    {
+      title: "Select multiple months",
+      component: SelectsMultipleMonths,
     },
     {
       title: "Strict parsing",

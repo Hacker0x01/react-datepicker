@@ -403,6 +403,11 @@ export default class Month extends Component<MonthProps> {
   isSelectedMonth = (day: Date, m: number, selected: Date) =>
     getMonth(selected) === m && getYear(day) === getYear(selected);
 
+  isSelectMonthInList = (day: Date, m: number, selectedDates: Date[]) =>
+    selectedDates.some((selectedDate) =>
+      this.isSelectedMonth(day, m, selectedDate),
+    );
+
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
     getQuarter(day) === q && getYear(day) === getYear(selected);
 
@@ -779,20 +784,37 @@ export default class Month extends Component<MonthProps> {
     return isDisabled;
   };
 
+  getSelection() {
+    const { selected, selectedDates, selectsMultiple } = this.props;
+
+    if (selectsMultiple) {
+      return selectedDates;
+    }
+
+    if (selected) {
+      return [selected];
+    }
+
+    return undefined;
+  }
+
   getMonthClassNames = (m: number) => {
-    const { day, startDate, endDate, selected, preSelection, monthClassName } =
+    const { day, startDate, endDate, preSelection, monthClassName } =
       this.props;
     const _monthClassName = monthClassName
       ? monthClassName(setMonth(day, m))
       : undefined;
+
+    const selection = this.getSelection();
+
     return clsx(
       "react-datepicker__month-text",
       `react-datepicker__month-${m}`,
       _monthClassName,
       {
         "react-datepicker__month-text--disabled": this.isMonthDisabled(m),
-        "react-datepicker__month-text--selected": selected
-          ? this.isSelectedMonth(day, m, selected)
+        "react-datepicker__month-text--selected": selection
+          ? this.isSelectMonthInList(day, m, selection)
           : undefined,
         "react-datepicker__month-text--keyboard-selected":
           !this.props.disabledKeyboardNavigation &&

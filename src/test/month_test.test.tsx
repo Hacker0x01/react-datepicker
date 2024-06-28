@@ -924,6 +924,52 @@ describe("Month", () => {
     it("should have no axe violations", () => runAxe(monthComponent));
   });
 
+  describe("if 2 months are selected in a multi selection", () => {
+    let monthComponent: HTMLElement;
+
+    beforeEach(() => {
+      monthComponent = render(
+        <Month
+          day={newDate("2015-02-01")}
+          selectedDates={[newDate("2015-02-01"), newDate("2015-03-01")]}
+          selectsMultiple
+          showMonthYearPicker
+        />,
+      ).container;
+    });
+
+    it("should return 2 selected classes in the current year", () => {
+      expect(
+        monthComponent.querySelectorAll<HTMLElement>(
+          ".react-datepicker__month-text--selected",
+        ).length,
+      ).toBe(2);
+    });
+  });
+
+  describe("if no months are selected in a multi selection", () => {
+    let monthComponent: HTMLElement;
+
+    beforeEach(() => {
+      monthComponent = render(
+        <Month
+          day={newDate("2015-02-01")}
+          selectedDates={[]}
+          selectsMultiple
+          showMonthYearPicker
+        />,
+      ).container;
+    });
+
+    it("should return 0 selected classes in the current year", () => {
+      expect(
+        monthComponent.querySelectorAll<HTMLElement>(
+          ".react-datepicker__month-text--selected",
+        ).length,
+      ).toBe(0);
+    });
+  });
+
   describe("if month is not selected", () => {
     let month: HTMLElement;
 
