@@ -73,10 +73,10 @@ const Root = () => (
             className="badge"
           />
         </a>
-        <a href="https://david-dm.org/Hacker0x01/react-datepicker">
+        <a href="https://codecov.io/gh/Hacker0x01/react-datepicker">
           <img
-            src="https://david-dm.org/Hacker0x01/react-datepicker.svg"
-            alt="Dependency status badge"
+            src="https://codecov.io/gh/Hacker0x01/react-datepicker/branch/main/graph/badge.svg"
+            alt="codecov"
             className="badge"
           />
         </a>
