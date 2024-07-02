@@ -888,6 +888,8 @@ export default class Month extends Component<MonthProps> {
       minDate,
       maxDate,
       excludeDates,
+      includeDates,
+      filterDate,
       preSelection,
       disabledKeyboardNavigation,
     } = this.props;
@@ -896,7 +898,7 @@ export default class Month extends Component<MonthProps> {
       `react-datepicker__quarter-${q}`,
       {
         "react-datepicker__quarter-text--disabled":
-          (minDate || maxDate || excludeDates) &&
+          (minDate || maxDate || excludeDates || includeDates || filterDate) &&
           isQuarterDisabled(setQuarter(day, q), this.props),
         "react-datepicker__quarter-text--selected": selected
           ? this.isSelectedQuarter(day, q, selected)
