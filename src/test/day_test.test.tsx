@@ -164,6 +164,17 @@ describe("Day", () => {
       ).toBe(true);
     });
 
+    it("should not apply the key-selected class when pre-selected is a part of disabled dates", () => {
+      const day = newDate();
+      const container = renderDay(day, {
+        excludeDates: [day],
+        preSelection: day,
+      });
+      const dayNode = container.querySelector(".react-datepicker__day")!;
+
+      expect(dayNode.classList.contains(className)).toBe(false);
+    });
+
     it("should not apply the keyboard-selected class when selected", () => {
       const day = newDate();
       const container = renderDay(day, { selected: day, preSelection: day });

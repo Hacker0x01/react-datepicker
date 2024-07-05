@@ -222,12 +222,21 @@ export default class Year extends Component<YearProps> {
     ) {
       return;
     }
+
+    const { minDate, maxDate, excludeDates, includeDates, filterDate } =
+      this.props;
+
     const date = getStartOfYear(setYear(this.props.date, y));
+    const isDisabled =
+      (minDate || maxDate || excludeDates || includeDates || filterDate) &&
+      isYearDisabled(y, this.props);
+
     return (
       !this.props.disabledKeyboardNavigation &&
       !this.props.inline &&
       !isSameDay(date, getStartOfYear(this.props.selected)) &&
-      isSameDay(date, getStartOfYear(this.props.preSelection))
+      isSameDay(date, getStartOfYear(this.props.preSelection)) &&
+      !isDisabled
     );
   };
 
