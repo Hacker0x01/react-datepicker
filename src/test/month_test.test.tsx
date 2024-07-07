@@ -1120,10 +1120,7 @@ describe("Month", () => {
     const { container } = render(
       <Month
         day={newDate("2015-12-01")}
-        excludeDates={[
-          newDate("2015-02-01"),
-          newDate("2015-07-03"),
-        ]}
+        excludeDates={[newDate("2015-02-01"), newDate("2015-07-03")]}
         showQuarterYearPicker
         onDayClick={onDayClickSpy}
         onDayMouseEnter={onDayMouseEnterSpy}
@@ -1152,10 +1149,7 @@ describe("Month", () => {
     const { container } = render(
       <Month
         day={newDate("2015-12-01")}
-        includeDates={[
-          newDate("2015-02-01"),
-          newDate("2015-07-03"),
-        ]}
+        includeDates={[newDate("2015-02-01"), newDate("2015-07-03")]}
         showQuarterYearPicker
         onDayClick={onDayClickSpy}
         onDayMouseEnter={onDayMouseEnterSpy}
