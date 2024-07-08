@@ -1114,6 +1114,64 @@ describe("Month", () => {
     expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
   });
 
+  it("should return disabled class if specified excludeDate", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
+    const { container } = render(
+      <Month
+        day={newDate("2015-12-01")}
+        excludeDates={[newDate("2015-02-01"), newDate("2015-07-03")]}
+        showQuarterYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
+      />,
+    );
+    // exclude quarter index
+    const quarterTexts = container.querySelectorAll(
+      ".react-datepicker__quarter-text",
+    );
+
+    [0, 2].forEach((i) => {
+      const quarter = quarterTexts[i]!;
+      expect(
+        quarter.classList.contains("react-datepicker__quarter-text--disabled"),
+      ).toBe(true);
+      fireEvent.click(quarter);
+      expect(onDayClickSpy).not.toHaveBeenCalled();
+      fireEvent.mouseEnter(quarter);
+      expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  it("should return disabled class if specified includeDate", () => {
+    const onDayClickSpy = jest.fn();
+    const onDayMouseEnterSpy = jest.fn();
+    const { container } = render(
+      <Month
+        day={newDate("2015-12-01")}
+        includeDates={[newDate("2015-02-01"), newDate("2015-07-03")]}
+        showQuarterYearPicker
+        onDayClick={onDayClickSpy}
+        onDayMouseEnter={onDayMouseEnterSpy}
+      />,
+    );
+    // include quarter index
+    const quarterTexts = container.querySelectorAll(
+      ".react-datepicker__quarter-text",
+    );
+
+    [1, 3].forEach((i) => {
+      const quarter = quarterTexts[i]!;
+      expect(
+        quarter.classList.contains("react-datepicker__quarter-text--disabled"),
+      ).toBe(true);
+      fireEvent.click(quarter);
+      expect(onDayClickSpy).not.toHaveBeenCalled();
+      fireEvent.mouseEnter(quarter);
+      expect(onDayMouseEnterSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe("if quarter is selected", () => {
     let monthComponent: HTMLElement;
     let quarter: HTMLElement;
