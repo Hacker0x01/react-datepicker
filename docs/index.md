@@ -50,7 +50,7 @@
 | `onInputClick`                  |      |                    |             |
 | `onInputError`                  |      |                    |             |
 | `onKeyDown`                     |      |                    |             |
-| `onSelect` (required)           |      |                    |             |
+| `onSelect`                      |      |                    |             |
 | `open`                          |      |                    |             |
 | `placeholderText`               |      |                    |             |
 | `popperClassName`               |      |                    |             |
