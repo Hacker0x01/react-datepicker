@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
+import { ClickOutsideWrapper } from "./click_outside_wrapper";
 import { getYear } from "./date_utils";
 
 function generateYears(
@@ -174,9 +175,13 @@ export default class YearDropdownOptions extends Component<
     });
 
     return (
-      <div className={dropdownClass} ref={this.dropdownRef}>
+      <ClickOutsideWrapper
+        className={dropdownClass}
+        containerRef={this.dropdownRef}
+        onClickOutside={this.handleClickOutside}
+      >
         {this.renderOptions()}
-      </div>
+      </ClickOutsideWrapper>
     );
   }
 }

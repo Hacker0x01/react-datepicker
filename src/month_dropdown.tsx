@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import onClickOutside from "react-onclickoutside";
 
 import {
   getMonthShortInLocale,
@@ -10,8 +9,6 @@ import MonthDropdownOptions from "./month_dropdown_options";
 
 interface MonthDropdownOptionsProps
   extends React.ComponentPropsWithoutRef<typeof MonthDropdownOptions> {}
-
-const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions);
 
 interface MonthDropdownProps
   extends Omit<
@@ -70,7 +67,7 @@ export default class MonthDropdown extends Component<
   );
 
   renderDropdown = (monthNames: string[]): JSX.Element => (
-    <WrappedMonthDropdownOptions
+    <MonthDropdownOptions
       key="dropdown"
       {...this.props}
       monthNames={monthNames}

@@ -2051,9 +2051,7 @@ describe("Calendar", () => {
     it("calls onClickOutside prop when handles click outside", () => {
       const { instance } = renderCalendar();
       act(() => {
-        instance.handleClickOutside(
-          "__event__" as unknown as React.MouseEvent<HTMLElement>,
-        );
+        instance.handleClickOutside("__event__" as unknown as MouseEvent);
       });
 
       expect(clickOutsideSpy).toHaveBeenCalledWith("__event__");
@@ -2185,7 +2183,7 @@ describe("Calendar", () => {
       expect(instance!.input).not.toBeFalsy();
       const dateInput = instance!.input!;
       fireEvent.focus(dateInput);
-      const calendar = instance!.calendar?.getInstance().containerRef.current;
+      const calendar = instance!.calendar?.containerRef.current;
       const navigation = calendar?.querySelector(
         ".react-datepicker__navigation--next",
       );
@@ -2213,7 +2211,7 @@ describe("Calendar", () => {
       expect(instance!.input).not.toBeFalsy();
       const dateInput = instance!.input!;
       fireEvent.focus(dateInput);
-      const calendar = instance!.calendar?.getInstance().containerRef.current;
+      const calendar = instance!.calendar?.containerRef.current;
       expect(calendar).not.toBeFalsy();
       const navigation = calendar!.querySelector(
         ".react-datepicker__navigation--previous",
@@ -2385,7 +2383,7 @@ describe("Calendar", () => {
       fireEvent.focus(dateInput);
 
       expect((instance as DatePicker | null)?.calendar).not.toBeFalsy();
-      const calendar = instance!.calendar!.getInstance().containerRef.current;
+      const calendar = instance!.calendar!.containerRef.current;
       const yearDropdown = calendar?.querySelector(
         ".react-datepicker__year-read-view",
       );
@@ -2406,9 +2404,9 @@ describe("Calendar", () => {
         expect((instance as DatePicker | null)?.calendar).not.toBeFalsy();
         expect(ariaLiveMessage).toBe(
           `${getMonthInLocale(
-            getMonth(instance!.calendar!.getInstance().state.date),
+            getMonth(instance!.calendar!.state.date),
             instance!.props.locale,
-          )} ${getYear(instance!.calendar!.getInstance().state.date)}`,
+          )} ${getYear(instance!.calendar!.state.date)}`,
         );
       });
     });

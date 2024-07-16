@@ -1,9 +1,5 @@
 import { clsx } from "clsx";
 import React, { Component, cloneElement } from "react";
-import onClickOutside, {
-  type WrapperInstance,
-  type AdditionalProps,
-} from "react-onclickoutside";
 
 import Calendar from "./calendar";
 import CalendarIcon from "./calendar_icon";
@@ -59,12 +55,13 @@ import PopperComponent from "./popper_component";
 import Portal from "./portal";
 import TabLoop from "./tab_loop";
 
+import type { ClickOutsideHandler } from "./click_outside_wrapper";
+
 export { default as CalendarContainer } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
 
 const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
-const WrappedCalendar = onClickOutside(Calendar);
 
 export { ReactDatePickerCustomHeaderProps } from "./calendar";
 
@@ -102,7 +99,10 @@ interface PortalProps extends React.ComponentPropsWithoutRef<typeof Portal> {}
 interface PopperComponentProps
   extends React.ComponentPropsWithoutRef<typeof PopperComponent> {}
 
-export type DatePickerProps = Omit<
+// see https://github.com/microsoft/TypeScript/issues/31501
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type OmitUnion<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+export type DatePickerProps = OmitUnion<
   CalendarProps,
   | "setOpen"
   | "dateFormat"
@@ -126,10 +126,9 @@ export type DatePickerProps = Omit<
   | "selectsMultiple"
   | "dropdownMode"
 > &
-  Partial<Pick<AdditionalProps, "excludeScrollbar">> &
   Pick<CalendarIconProps, "icon"> &
-  Omit<PortalProps, "children" | "portalId"> &
-  Omit<
+  OmitUnion<PortalProps, "children" | "portalId"> &
+  OmitUnion<
     PopperComponentProps,
     | "className"
     | "hidePopper"
@@ -151,7 +150,7 @@ export type DatePickerProps = Omit<
     startOpen?: boolean;
     onFocus?: React.FocusEventHandler<HTMLElement>;
     onBlur?: React.FocusEventHandler<HTMLElement>;
-    onClickOutside?: React.MouseEventHandler<HTMLElement>;
+    onClickOutside?: ClickOutsideHandler;
     onInputClick?: VoidFunction;
     preventOpenOnFocus?: boolean;
     closeOnScroll?: boolean | ((event: Event) => boolean);
@@ -383,7 +382,7 @@ export default class DatePicker extends Component<
 
   inputFocusTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  calendar: WrapperInstance<CalendarProps, typeof Calendar> | null = null;
+  calendar: Calendar | null = null;
 
   input: HTMLElement | null = null;
 
@@ -568,7 +567,7 @@ export default class DatePicker extends Component<
     this.setState({ focused: false });
   };
 
-  handleCalendarClickOutside = (event: React.MouseEvent<HTMLElement>) => {
+  handleCalendarClickOutside = (event: MouseEvent) => {
     if (!this.props.inline) {
       this.setOpen(false);
     }
@@ -932,8 +931,8 @@ export default class DatePicker extends Component<
               ? '.react-datepicker__month-text[tabindex="0"]'
               : '.react-datepicker__day[tabindex="0"]';
         const selectedItem =
-          this.calendar?.componentNode instanceof Element &&
-          this.calendar.componentNode.querySelector(selectorString);
+          this.calendar?.containerRef.current instanceof Element &&
+          this.calendar.containerRef.current.querySelector(selectorString);
         selectedItem instanceof HTMLElement &&
           selectedItem.focus({ preventScroll: true });
 
@@ -1214,7 +1213,8 @@ export default class DatePicker extends Component<
       return null;
     }
     return (
-      <WrappedCalendar
+      <Calendar
+        showMonthYearDropdown={undefined}
         ref={(elem) => {
           this.calendar = elem;
         }}
@@ -1241,7 +1241,7 @@ export default class DatePicker extends Component<
         }
       >
         {this.props.children}
-      </WrappedCalendar>
+      </Calendar>
     );
   };
 

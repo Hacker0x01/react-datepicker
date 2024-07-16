@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import onClickOutside from "react-onclickoutside";
 
 import {
   addMonths,
@@ -16,10 +15,6 @@ import MonthYearDropdownOptions from "./month_year_dropdown_options";
 
 interface MonthYearDropdownOptionsProps
   extends React.ComponentPropsWithoutRef<typeof MonthYearDropdownOptions> {}
-
-const WrappedMonthYearDropdownOptions = onClickOutside(
-  MonthYearDropdownOptions,
-);
 
 interface MonthYearDropdownProps
   extends Omit<MonthYearDropdownOptionsProps, "onChange" | "onCancel"> {
@@ -96,7 +91,7 @@ export default class MonthYearDropdown extends Component<
   };
 
   renderDropdown = (): JSX.Element => (
-    <WrappedMonthYearDropdownOptions
+    <MonthYearDropdownOptions
       key="dropdown"
       {...this.props}
       onChange={this.onChange}
