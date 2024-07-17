@@ -2293,6 +2293,38 @@ describe("DatePicker", () => {
     });
     expect(openSpy).toHaveBeenCalledWith(false);
   });
+
+  it("should close date picker on outside click", () => {
+    const onClickOutsideSpy = jest.fn();
+    const { container } = render(
+      <div>
+        <span className="testText">test text</span>
+        <DatePicker onClickOutside={onClickOutsideSpy} />
+      </div>,
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    fireEvent.mouseDown(
+      container.querySelector(".testText") ?? new HTMLElement(),
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    expect(onClickOutsideSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should not close date picker on input click", () => {
+    const onClickOutsideSpy = jest.fn();
+    const { container } = render(
+      <DatePicker onClickOutside={onClickOutsideSpy} />,
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    fireEvent.mouseDown(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    expect(onClickOutsideSpy).not.toHaveBeenCalled();
+  });
+
   it("should default to the currently selected date", () => {
     let instance: DatePicker | null = null;
     render(
