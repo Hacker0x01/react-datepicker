@@ -113,29 +113,52 @@ describe("WeekNumber", () => {
     });
 
     describe("handleOnKeyDown", () => {
-      const handleOnKeyDownMock = jest.fn((event) => {
-        if (event.key === KeyType.Space) {
-          event.preventDefault();
-          event.key = KeyType.Enter;
-        }
+      it("should not change any other key", () => {
+        const onKeyDownMock = jest.fn();
+
+        const container = renderWeekNumber(1, {
+          handleOnKeyDown: onKeyDownMock,
+        });
+
+        const weekNumberElement = container.querySelector(
+          ".react-datepicker__week-number",
+        )!;
+
+        fireEvent.keyDown(weekNumberElement, {
+          key: KeyType.Enter,
+          preventDefault: jest.fn(),
+        });
+
+        expect(onKeyDownMock).toHaveBeenCalledTimes(1);
+        expect(onKeyDownMock).toHaveBeenCalledWith(
+          expect.objectContaining({
+            key: KeyType.Enter,
+          }),
+        );
       });
 
       it("should change space key to Enter", () => {
-        const eventSpace = {
+        const onKeyDownMock = jest.fn();
+
+        const container = renderWeekNumber(1, {
+          handleOnKeyDown: onKeyDownMock,
+        });
+
+        const weekNumberElement = container.querySelector(
+          ".react-datepicker__week-number",
+        )!;
+
+        fireEvent.keyDown(weekNumberElement, {
           key: KeyType.Space,
           preventDefault: jest.fn(),
-        };
-        handleOnKeyDownMock(eventSpace);
-        expect(eventSpace.preventDefault).toHaveBeenCalled();
-        expect(eventSpace.key).toBe(KeyType.Enter);
-      });
+        });
 
-      it("should not change any other key", () => {
-        const eventA = {
-          key: "a",
-        };
-        handleOnKeyDownMock(eventA);
-        expect(eventA.key).toBe("a");
+        expect(onKeyDownMock).toHaveBeenCalledTimes(1);
+        expect(onKeyDownMock).toHaveBeenCalledWith(
+          expect.objectContaining({
+            key: KeyType.Enter,
+          }),
+        );
       });
     });
   });
