@@ -4,7 +4,7 @@
     const handleInputClick = () => {
       inputRef.current.focus();
     };
-    const inputRef = React.createRef(); 
+    const inputRef = React.createRef();
     return (
       <input
         ref={inputRef}
