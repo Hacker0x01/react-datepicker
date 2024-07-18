@@ -402,7 +402,7 @@ h2.react-datepicker__current-month {
 .react-datepicker__year-text {
   cursor: pointer;
 
-  &:hover {
+  &:not([aria-disabled="true"]):hover {
     border-radius: $datepicker__border-radius;
     background-color: $datepicker__background-color;
   }
@@ -416,7 +416,7 @@ h2.react-datepicker__current-month {
     background-color: $datepicker__highlighted-color;
     color: #fff;
 
-    &:hover {
+    &:not([aria-disabled="true"]):hover {
       background-color: darken($datepicker__highlighted-color, 5%);
     }
 
@@ -452,7 +452,7 @@ h2.react-datepicker__current-month {
         opacity 0.3s ease-in-out;
     }
 
-    &:hover {
+    &:not([aria-disabled="true"]):hover {
       background-color: darken($datepicker__holidays-color, 10%);
     }
 
@@ -469,7 +469,7 @@ h2.react-datepicker__current-month {
     background-color: $datepicker__selected-color;
     color: #fff;
 
-    &:hover {
+    &:not([aria-disabled="true"]):hover {
       background-color: darken($datepicker__selected-color, 5%);
     }
   }
@@ -479,7 +479,7 @@ h2.react-datepicker__current-month {
     background-color: lighten($datepicker__selected-color, 45%);
     color: rgb(0, 0, 0);
 
-    &:hover {
+    &:not([aria-disabled="true"]):hover {
       background-color: darken($datepicker__selected-color, 5%);
     }
   }
@@ -499,10 +499,6 @@ h2.react-datepicker__current-month {
   &--disabled {
     cursor: default;
     color: $datepicker__muted-color;
-
-    &:hover {
-      background-color: transparent;
-    }
 
     .overlay {
       position: absolute;
