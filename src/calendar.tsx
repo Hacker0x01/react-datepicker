@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
 import CalendarContainer from "./calendar_container";
+import { ClickOutsideWrapper } from "./click_outside_wrapper";
 import {
   newDate,
   setMonth,
@@ -48,6 +49,7 @@ import Time from "./time";
 import Year from "./year";
 import YearDropdown from "./year_dropdown";
 
+import type { ClickOutsideHandler } from "./click_outside_wrapper";
 import type { Day } from "date-fns/types";
 
 interface YearDropdownProps
@@ -154,7 +156,8 @@ type CalendarProps = React.PropsWithChildren &
     onDayMouseEnter?: (date: Date) => void;
     onMonthMouseLeave?: VoidFunction;
     weekLabel?: string;
-    onClickOutside: React.MouseEventHandler<HTMLElement>;
+    onClickOutside: ClickOutsideHandler;
+    outsideClickIgnoreClass?: string;
     previousMonthButtonLabel?: React.ReactNode;
     previousYearButtonLabel?: string;
     previousMonthAriaLabel?: string;
@@ -279,7 +282,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   assignMonthContainer: void | undefined;
 
-  handleClickOutside = (event: React.MouseEvent<HTMLElement>): void => {
+  handleClickOutside = (event: MouseEvent): void => {
     this.props.onClickOutside(event);
   };
 
@@ -1084,7 +1087,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   render(): JSX.Element {
     const Container = this.props.container || CalendarContainer;
     return (
-      <div style={{ display: "contents" }} ref={this.containerRef}>
+      <ClickOutsideWrapper
+        onClickOutside={this.handleClickOutside}
+        style={{ display: "contents" }}
+        containerRef={this.containerRef}
+        ignoreClass={this.props.outsideClickIgnoreClass}
+      >
         <Container
           className={clsx("react-datepicker", this.props.className, {
             "react-datepicker--time-only": this.props.showTimeSelectOnly,
@@ -1102,7 +1110,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           {this.renderInputTimeSection()}
           {this.renderChildren()}
         </Container>
-      </div>
+      </ClickOutsideWrapper>
     );
   }
 }

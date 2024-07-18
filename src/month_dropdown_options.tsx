@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { ClickOutsideWrapper } from "./click_outside_wrapper";
+
 interface MonthDropdownOptionsProps {
   onCancel: VoidFunction;
   onChange: (month: number) => void;
@@ -40,9 +42,12 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
 
   render(): JSX.Element {
     return (
-      <div className="react-datepicker__month-dropdown">
+      <ClickOutsideWrapper
+        className="react-datepicker__month-dropdown"
+        onClickOutside={this.handleClickOutside}
+      >
         {this.renderOptions()}
-      </div>
+      </ClickOutsideWrapper>
     );
   }
 }

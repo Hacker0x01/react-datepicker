@@ -1,6 +1,5 @@
 import { render, fireEvent } from "@testing-library/react";
 import React from "react";
-import onClickOutside from "react-onclickoutside";
 
 import { addYears, getYear, newDate, subYears } from "../date_utils";
 import YearDropdownOptions from "../year_dropdown_options";
@@ -128,9 +127,8 @@ describe("YearDropdownOptions", () => {
   });
 
   it("calls the supplied onCancel function on handleClickOutside", () => {
-    const WrappedYearDropdownOptions = onClickOutside(YearDropdownOptions);
     render(
-      <WrappedYearDropdownOptions
+      <YearDropdownOptions
         year={2015}
         onChange={mockHandleChange}
         onCancel={onCancelSpy}

@@ -2040,13 +2040,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-onclickoutside@^6.7.10":
-  version "6.7.10"
-  resolved "https://registry.yarnpkg.com/@types/react-onclickoutside/-/react-onclickoutside-6.7.10.tgz#aeaf56aac4b67185a69038d22c55bd0726f13123"
-  integrity sha512-Do2eOuqlJ9amXAuQO5gbhp5MAPnzZ7cknmYqX4U44tX22eAAnHgQKjp3SaNhSAuUHBTANWEqn1N+nWd3ea8FyQ==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*":
   version "18.2.21"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.21.tgz#774c37fd01b522d0b91aed04811b58e4e0514ed9"
@@ -6398,11 +6391,6 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
-
-react-onclickoutside@^6.13.0:
-  version "6.13.1"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.13.1.tgz#1f5e0241c08784b6e65745d91aca0d700c548a89"
-  integrity sha512-LdrrxK/Yh9zbBQdFbMTXPp3dTSN9B+9YJQucdDu3JNKRrbdU+H+/TVONJoWtOwy4II8Sqf1y/DTI6w/vGPYW0w==
 
 react@^18.2.0:
   version "18.3.1"

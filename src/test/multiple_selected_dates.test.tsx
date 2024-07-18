@@ -5,6 +5,10 @@ import DatePicker from "../";
 
 import type { DatePickerProps } from "../index";
 
+// see https://github.com/microsoft/TypeScript/issues/31501
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type OmitUnion<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+
 describe("Multiple Dates Selected", function () {
   function getDatePicker(
     extraProps: Partial<
@@ -16,7 +20,7 @@ describe("Multiple Dates Selected", function () {
         | "onSelect"
       >
     > &
-      Omit<
+      OmitUnion<
         DatePickerProps,
         | "selectsMultiple"
         | "onChange"

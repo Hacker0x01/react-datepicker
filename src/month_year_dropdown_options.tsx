@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import React, { Component } from "react";
 
+import { ClickOutsideWrapper } from "./click_outside_wrapper";
 import {
   addMonths,
   formatDate,
@@ -103,6 +104,13 @@ export default class MonthYearDropdownOptions extends Component<
         this.props.scrollableMonthYearDropdown,
     });
 
-    return <div className={dropdownClass}>{this.renderOptions()}</div>;
+    return (
+      <ClickOutsideWrapper
+        className={dropdownClass}
+        onClickOutside={this.handleClickOutside}
+      >
+        {this.renderOptions()}
+      </ClickOutsideWrapper>
+    );
   }
 }

@@ -3,7 +3,6 @@ import { el } from "date-fns/locale/el";
 import { ru } from "date-fns/locale/ru";
 import { zhCN } from "date-fns/locale/zh-CN";
 import React from "react";
-import onClickOutside from "react-onclickoutside";
 
 import { getMonthInLocale, registerLocale } from "../date_utils";
 import MonthDropdown from "../month_dropdown";
@@ -124,9 +123,8 @@ describe("MonthDropdown", () => {
       const monthNames = range(0, 12).map((M) => getMonthInLocale(M));
 
       const onCancelSpy = jest.fn();
-      const WrappedMonthDropdownOptions = onClickOutside(MonthDropdownOptions);
       render(
-        <WrappedMonthDropdownOptions
+        <MonthDropdownOptions
           onCancel={onCancelSpy}
           onChange={onCancelSpy}
           month={11}
@@ -135,7 +133,7 @@ describe("MonthDropdown", () => {
       );
       fireEvent.mouseDown(document.body);
       fireEvent.touchStart(document.body);
-      expect(onCancelSpy).toHaveBeenCalledTimes(2);
+      expect(onCancelSpy).toHaveBeenCalledTimes(1);
     });
 
     it("does not call the supplied onChange function when the same month is clicked", () => {

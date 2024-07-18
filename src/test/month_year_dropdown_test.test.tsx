@@ -1,7 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import { fi } from "date-fns/locale/fi";
 import React from "react";
-import onClickOutside from "react-onclickoutside";
 
 import {
   newDate,
@@ -116,11 +115,8 @@ describe("MonthYearDropdown", () => {
       const dateFormatCalendar = "LLLL yyyy";
 
       const onCancelSpy = jest.fn();
-      const WrappedMonthYearDropdownOptions = onClickOutside(
-        MonthYearDropdownOptions,
-      );
       render(
-        <WrappedMonthYearDropdownOptions
+        <MonthYearDropdownOptions
           onCancel={onCancelSpy}
           onChange={jest.fn()}
           dateFormat={dateFormatCalendar}
@@ -131,7 +127,7 @@ describe("MonthYearDropdown", () => {
       );
       fireEvent.mouseDown(document.body);
       fireEvent.touchStart(document.body);
-      expect(onCancelSpy).toHaveBeenCalledTimes(2);
+      expect(onCancelSpy).toHaveBeenCalledTimes(1);
     });
 
     it("does not call the supplied onChange function when the same month year is clicked", () => {

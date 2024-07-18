@@ -524,9 +524,9 @@ describe("DatePicker", () => {
     expect(anyOtherDay).toBeTruthy();
     fireEvent.click(anyOtherDay!); // will update the preSelection to next or previous day
 
-    const todayBtn = instance!.calendar
-      ?.getInstance()
-      .containerRef.current?.querySelector(".react-datepicker__today-button");
+    const todayBtn = instance!.calendar?.containerRef.current?.querySelector(
+      ".react-datepicker__today-button",
+    );
     expect(anyOtherDay).toBeTruthy();
     fireEvent.click(todayBtn!); // will update the preSelection
 
@@ -1014,9 +1014,9 @@ describe("DatePicker", () => {
     ).not.toBeNull();
     expect(instance!.calendar).toBeDefined();
 
-    const header = instance!.calendar
-      ?.getInstance()
-      .containerRef.current?.querySelector(".react-datepicker__current-month");
+    const header = instance!.calendar?.containerRef.current?.querySelector(
+      ".react-datepicker__current-month",
+    );
 
     expect(header).toBeTruthy();
     fireEvent.click(header!);
@@ -2289,10 +2289,42 @@ describe("DatePicker", () => {
     act(() => {
       instance!.handleCalendarClickOutside({
         preventDefault: jest.fn(),
-      } as unknown as React.MouseEvent<HTMLElement, MouseEvent>);
+      } as unknown as MouseEvent);
     });
     expect(openSpy).toHaveBeenCalledWith(false);
   });
+
+  it("should close date picker on outside click", () => {
+    const onClickOutsideSpy = jest.fn();
+    const { container } = render(
+      <div>
+        <span className="testText">test text</span>
+        <DatePicker onClickOutside={onClickOutsideSpy} />
+      </div>,
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    fireEvent.mouseDown(
+      container.querySelector(".testText") ?? new HTMLElement(),
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    expect(onClickOutsideSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("should not close date picker on input click", () => {
+    const onClickOutsideSpy = jest.fn();
+    const { container } = render(
+      <DatePicker onClickOutside={onClickOutsideSpy} />,
+    );
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    fireEvent.mouseDown(container.querySelector("input") ?? new HTMLElement());
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+    expect(onClickOutsideSpy).not.toHaveBeenCalled();
+  });
+
   it("should default to the currently selected date", () => {
     let instance: DatePicker | null = null;
     render(
@@ -3295,11 +3327,9 @@ describe("DatePicker", () => {
       expect(instance!.input).toBeTruthy();
       fireEvent.click(instance!.input!);
       const headers =
-        instance!.calendar
-          ?.getInstance()
-          .containerRef.current?.querySelectorAll(
-            ".react-datepicker__header",
-          ) ?? [];
+        instance!.calendar?.containerRef.current?.querySelectorAll(
+          ".react-datepicker__header",
+        ) ?? [];
       expect(headers).toHaveLength(2);
       expect(headers[0]!.textContent).toBe("2023");
       expect(headers[1]!.textContent).toBe("2024");
@@ -3318,11 +3348,9 @@ describe("DatePicker", () => {
       expect(instance!.input).toBeTruthy();
       fireEvent.click(instance!.input!);
       const headersMore =
-        instance!.calendar
-          ?.getInstance()
-          .containerRef.current?.querySelectorAll(
-            ".react-datepicker__header",
-          ) ?? [];
+        instance!.calendar?.containerRef.current?.querySelectorAll(
+          ".react-datepicker__header",
+        ) ?? [];
       expect(headersMore).toHaveLength(4);
       expect(headersMore[0]!.textContent).toBe("2023");
       expect(headersMore[1]!.textContent).toBe("2024");
@@ -3351,11 +3379,9 @@ describe("DatePicker", () => {
       expect(instance!.input).toBeTruthy();
       fireEvent.click(instance!.input!);
       const headers =
-        instance!.calendar
-          ?.getInstance()
-          .containerRef.current?.querySelectorAll(
-            ".react-datepicker__header",
-          ) ?? [];
+        instance!.calendar?.containerRef.current?.querySelectorAll(
+          ".react-datepicker__header",
+        ) ?? [];
       expect(headers).toHaveLength(2);
       expect(headers[0]!.textContent).toBe("2023");
       expect(headers[1]!.textContent).toBe("2024");
@@ -3374,11 +3400,9 @@ describe("DatePicker", () => {
       expect(instance!.input).toBeTruthy();
       fireEvent.click(instance!.input!);
       const headersMore =
-        instance!.calendar
-          ?.getInstance()
-          .containerRef.current?.querySelectorAll(
-            ".react-datepicker__header",
-          ) ?? [];
+        instance!.calendar?.containerRef.current?.querySelectorAll(
+          ".react-datepicker__header",
+        ) ?? [];
       expect(headersMore).toHaveLength(4);
       expect(headersMore[0]!.textContent).toBe("2023");
       expect(headersMore[1]!.textContent).toBe("2024");
