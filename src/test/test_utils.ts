@@ -1,3 +1,5 @@
+import { fireEvent } from "@testing-library/react";
+
 import { KeyType } from "../date_utils";
 
 interface KeyEvent {
@@ -64,4 +66,17 @@ export const range = (from: number, to: number): number[] => {
     list.push(i);
   }
   return list;
+};
+
+export const openDateInput = (container: Element) => {
+  const dateInput = container.querySelector("input")!;
+  fireEvent.focus(dateInput);
+};
+
+export const gotoNextView = (container: Element) => {
+  const calendar = container.querySelector(".react-datepicker")!;
+  const nextButton = calendar.querySelector(
+    ".react-datepicker__navigation--next",
+  )!;
+  fireEvent.click(nextButton);
 };

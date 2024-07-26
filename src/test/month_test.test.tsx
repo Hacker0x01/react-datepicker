@@ -28,7 +28,7 @@ import {
 import Month from "../month";
 
 import { runAxe } from "./run_axe";
-import { getKey, range } from "./test_utils";
+import { getKey, range, openDateInput, gotoNextView } from "./test_utils";
 
 import type { RenderResult } from "@testing-library/react";
 
@@ -2523,6 +2523,87 @@ describe("Month", () => {
           ".react-datepicker__quarter-text--keyboard-selected",
         ),
       ).toBeNull();
+    });
+  });
+
+  describe("Auto-Focus", () => {
+    it("should auto-focus on the same selected month when navigating to the next/previous year", () => {
+      const date = newDate("2024-06-01");
+      const selectedMonth = date.getMonth();
+
+      const { container } = render(
+        <DatePicker selected={date} showMonthYearPicker />,
+      );
+
+      openDateInput(container);
+      gotoNextView(container);
+
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__month-text.react-datepicker__month-${selectedMonth}`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("0");
+    });
+
+    it("shouldn't auto-focus on the same selected month when navigating to the next/previous year if the corresponding month is disabled", () => {
+      const date = newDate("2024-06-01");
+      const selectedMonth = date.getMonth();
+      const excludeDate = newDate(`2025-0${selectedMonth + 1}-01`);
+
+      const { container } = render(
+        <DatePicker
+          selected={date}
+          showMonthYearPicker
+          excludeDates={[excludeDate]}
+        />,
+      );
+
+      openDateInput(container);
+      gotoNextView(container);
+
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__month-text.react-datepicker__month-${selectedMonth}`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("-1");
+    });
+
+    it("should auto-focus on the same selected quarter when navigating to the next/previous year", () => {
+      const date = newDate("2024-06-01");
+
+      const { container } = render(
+        <DatePicker selected={date} showQuarterYearPicker />,
+      );
+
+      openDateInput(container);
+      const selectedQuarterValue = getQuarter(date);
+      gotoNextView(container);
+
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__quarter-text.react-datepicker__quarter-${selectedQuarterValue}`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("0");
+    });
+
+    it("shouldn't auto-focus on the same selected quarter when navigating to the next/previous year if the corresponding quarter date is disabled", () => {
+      const date = newDate("2024-06-01");
+      const selectedMonth = date.getMonth();
+      const excludeDate = newDate(`2025-0${selectedMonth + 1}-01`);
+
+      const { container } = render(
+        <DatePicker
+          selected={date}
+          showQuarterYearPicker
+          excludeDates={[excludeDate]}
+        />,
+      );
+
+      openDateInput(container);
+      const selectedQuarterValue = getQuarter(date);
+      gotoNextView(container);
+
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__quarter-text.react-datepicker__quarter-${selectedQuarterValue}`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("-1");
     });
   });
 });
