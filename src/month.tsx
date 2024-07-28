@@ -847,9 +847,8 @@ export default class Month extends Component<MonthProps> {
       this.isMonthDisabledForLabelDate(preSelectedMonth);
 
     const tabIndex =
-      !this.props.disabledKeyboardNavigation &&
       m === preSelectedMonth &&
-      !isPreSelectedMonthDisabled
+      !(isPreSelectedMonthDisabled || this.props.disabledKeyboardNavigation)
         ? "0"
         : "-1";
 
@@ -867,9 +866,8 @@ export default class Month extends Component<MonthProps> {
     );
 
     const tabIndex =
-      !this.props.disabledKeyboardNavigation &&
       q === preSelectedQuarter &&
-      !isCurrentQuarterDisabled
+      !(isCurrentQuarterDisabled || this.props.disabledKeyboardNavigation)
         ? "0"
         : "-1";
 
