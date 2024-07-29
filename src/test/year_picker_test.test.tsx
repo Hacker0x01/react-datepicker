@@ -14,7 +14,15 @@ import {
 import DatePicker from "../index";
 import Year from "../year";
 
-import { getKey } from "./test_utils";
+import { getKey, gotoNextView, openDateInput } from "./test_utils";
+
+const getYearOffset = (calendar: Element, date: Date): number => {
+  const dateNode = calendar.querySelector(
+    `.react-datepicker__year-text.react-datepicker__year-${date.getFullYear()}`,
+  )!;
+  const yearPicker = calendar.querySelector(".react-datepicker__year-wrapper")!;
+  return Array.from(yearPicker.children).indexOf(dateNode);
+};
 
 describe("YearPicker", () => {
   it("should show year picker component when showYearPicker prop is present", () => {
@@ -871,5 +879,42 @@ describe("YearPicker", () => {
     expect(
       container.querySelector(`.react-datepicker__year-${date.getFullYear()}`),
     ).not.toBeNull();
+  });
+
+  describe("Auto-Focus", () => {
+    it("should auto-focus on the same year offset in the next/previous view when navigating", () => {
+      const date = newDate("2024-06-01");
+      const { container } = render(
+        <DatePicker selected={date} showYearPicker dateFormat="yyyy" />,
+      );
+      openDateInput(container);
+      const calendar = container.querySelector(".react-datepicker")!;
+      const selectedElementOffset = getYearOffset(calendar, date);
+      gotoNextView(container);
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__year-wrapper :nth-child(${selectedElementOffset + 1}).react-datepicker__year-text`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("0");
+    });
+    it("shouldn't auto-focus on the same year offset in the next/previous view when navigating if the year in the corresponding offset is disabled", () => {
+      const date = newDate("2024-06-01");
+      const excludeDate = newDate("2036-05-01"); // 2036 is in the same 8th offset like 2024
+      const { container } = render(
+        <DatePicker
+          selected={date}
+          excludeDates={[excludeDate]}
+          showYearPicker
+          dateFormat="yyyy"
+        />,
+      );
+      openDateInput(container);
+      const calendar = container.querySelector(".react-datepicker")!;
+      const selectedElementOffset = getYearOffset(calendar, date);
+      gotoNextView(container);
+      const preSelectedDateElement = container.querySelector(
+        `.react-datepicker__year-wrapper :nth-child(${selectedElementOffset + 1}).react-datepicker__year-${excludeDate.getFullYear()}`,
+      )!;
+      expect(preSelectedDateElement.getAttribute("tabindex")).toBe("-1");
+    });
   });
 });

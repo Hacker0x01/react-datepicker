@@ -402,8 +402,9 @@ export default class Year extends Component<YearProps> {
       return "-1";
     }
     const preSelected = getYear(this.props.preSelection);
+    const isPreSelectedYearDisabled = isYearDisabled(y, this.props);
 
-    return y === preSelected ? "0" : "-1";
+    return y === preSelected && !isPreSelectedYearDisabled ? "0" : "-1";
   };
 
   getYearContainerClassNames = () => {
