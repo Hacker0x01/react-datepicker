@@ -1251,7 +1251,8 @@ describe("DatePicker", () => {
     expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
       formatDate(data.copyM, data.testFormat),
     );
-    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
+    (selectedDayNode as HTMLElement).focus();
+    fireEvent.keyDown(document.activeElement || document.body, getKey(KeyType.ArrowRight));
     data.copyM = addDays(data.copyM, 1);
     expect(data.instance.state.preSelection).toBeTruthy();
     expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
@@ -1751,7 +1752,8 @@ describe("DatePicker", () => {
       expect(selectedDayNode).toBeTruthy();
       fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
       expect(selectedDayNode).toBeTruthy();
-      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Enter));
+      (selectedDayNode as HTMLElement).focus();
+      fireEvent.keyDown(document.activeElement || document.body, getKey(KeyType.Enter));
 
       data.copyM = subDays(data.copyM, 1);
       expect(data.callback).toHaveBeenCalled();
@@ -1767,7 +1769,8 @@ describe("DatePicker", () => {
       expect(selectedDayNode).toBeTruthy();
       fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowLeft));
       expect(selectedDayNode).toBeTruthy();
-      fireEvent.keyDown(selectedDayNode!, getKey(KeyType.Space));
+      (selectedDayNode as HTMLElement).focus();
+      fireEvent.keyDown(document.activeElement || document.body, getKey(KeyType.Space));
 
       data.copyM = subDays(data.copyM, 1);
       expect(data.callback).toHaveBeenCalled();
