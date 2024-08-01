@@ -36,7 +36,7 @@
     "url": "https://github.com/Hacker0x01/react-datepicker/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@babel/helpers": "^7.25.0",
     "@babel/plugin-external-helpers": "^7.24.7",
