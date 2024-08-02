@@ -39,7 +39,7 @@
     "@testing-library/react": "^15.0.0",
     "@types/eslint": "^8.56.10",
     "@types/jest": "^29.5.12",
-    "@types/node": "20",
+    "@types/node": "22",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "axe-core": "^4.4.1",
