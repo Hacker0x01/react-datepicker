@@ -126,7 +126,7 @@ export function parseDate(
   dateFormat: string | string[],
   locale: Locale | undefined,
   strictParsing: boolean,
-  refDate?: Date,
+  refDate: Date = newDate(),
 ): Date | null {
   const localeObject =
     getLocaleObject(locale) || getLocaleObject(getDefaultLocale());
@@ -134,7 +134,7 @@ export function parseDate(
   const formats = Array.isArray(dateFormat) ? dateFormat : [dateFormat];
 
   for (const format of formats) {
-    const parsedDate = parse(value, format, refDate || newDate(), {
+    const parsedDate = parse(value, format, refDate, {
       locale: localeObject,
       useAdditionalWeekYearTokens: true,
       useAdditionalDayOfYearTokens: true,
