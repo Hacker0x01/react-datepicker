@@ -4,6 +4,7 @@ import React from "react";
 import CalendarIcon from "../calendar_icon";
 
 import { IconParkSolidApplication } from "./helper_components/calendar_icon";
+import { safeQuerySelector } from "./test_utils";
 
 describe("CalendarIcon", () => {
   let onClickMock: jest.Mock;
@@ -38,9 +39,12 @@ describe("CalendarIcon", () => {
   it("should fire onClick event when the icon is clicked", () => {
     const { container } = render(<CalendarIcon onClick={onClickMock} />);
 
-    const icon = container.querySelector("svg.react-datepicker__calendar-icon");
+    const icon = safeQuerySelector(
+      container,
+      "svg.react-datepicker__calendar-icon",
+    );
     expect(icon).not.toBeNull();
-    fireEvent.click(icon ?? new Element());
+    fireEvent.click(icon);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
@@ -50,9 +54,9 @@ describe("CalendarIcon", () => {
       <CalendarIcon icon="fa-example-icon" onClick={onClickMock} />,
     );
 
-    const icon = container.querySelector("i.fa-example-icon");
+    const icon = safeQuerySelector(container, "i.fa-example-icon");
     expect(icon).not.toBeNull();
-    fireEvent.click(icon ?? new Element());
+    fireEvent.click(icon);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
@@ -75,8 +79,11 @@ describe("CalendarIcon", () => {
       />,
     );
 
-    const icon = container.querySelector("svg.react-datepicker__calendar-icon");
-    fireEvent.click(icon ?? new Element());
+    const icon = safeQuerySelector(
+      container,
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(icon);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
     expect(onClickCustomIcon).toHaveBeenCalledTimes(1);
