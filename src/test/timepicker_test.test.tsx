@@ -4,11 +4,11 @@ import React from "react";
 import { formatDate, KeyType } from "../date_utils";
 import DatePicker from "../index";
 
-import { getKey } from "./test_utils";
+import { getKey, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
 
 describe("TimePicker", () => {
-  let datePicker: HTMLDivElement | undefined;
-  let div: HTMLDivElement | undefined;
+  let datePicker: HTMLDivElement;
+  let div: HTMLDivElement;
   let onChangeMoment: Date | undefined;
   let instance: DatePicker | null = null;
 
@@ -29,39 +29,58 @@ describe("TimePicker", () => {
   it("should allow time changes after input change", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    fireEvent.focus(instance?.input ?? new HTMLElement());
 
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time?.querySelectorAll("li");
-    fireEvent.click(lis[1] ?? new HTMLElement());
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+
+    fireEvent.focus(instance.input);
+
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.click(lis[1]!);
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
   it("should allow for injected date if input does not have focus", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
     setManually("February 28, 2018 4:45 PM");
-    fireEvent.blur(instance?.input ?? new HTMLElement());
+
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+
+    fireEvent.blur(instance.input);
     renderDatePicker("February 28, 2018 4:43 PM");
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
 
   it("should not close datepicker after time clicked when shouldCloseOnSelect is false", () => {
-    let instance: DatePicker | null;
+    let instance: DatePicker;
     const { container } = render(
       <DatePicker
         ref={(node) => {
-          instance = node;
+          if (node) {
+            instance = node;
+          }
         }}
         shouldCloseOnSelect={false}
         showTimeSelect
       />,
     );
     fireEvent.focus(instance!.input!);
-    const time = container.querySelector(".react-datepicker__time-container");
-    const lis = time?.querySelectorAll("li") ?? [];
-    fireEvent.click(lis?.[0] ?? new HTMLElement());
+    const time = safeQuerySelector(
+      container,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    fireEvent.click(lis[0]!);
     expect(instance!.state.open).toBe(true);
   });
 
@@ -95,7 +114,10 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    fireEvent.focus(instance?.input ?? new HTMLElement());
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
 
     setManually("February 28, 2018 9:20 AM");
     expect(getInputString()).toBe("February 28, 2018 9:20 AM");
@@ -108,7 +130,10 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("February 28, 2018 9:00 AM");
 
-    fireEvent.focus(instance?.input ?? new HTMLElement());
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
 
     setManually("February 28, 2018 9:53 AM");
     expect(getInputString()).toBe("February 28, 2018 9:53 AM");
@@ -121,7 +146,10 @@ describe("TimePicker", () => {
     });
     expect(getInputString()).toBe("July 13, 2020 2:59 PM");
 
-    fireEvent.focus(instance?.input ?? new HTMLElement());
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
 
     setManually("July 13, 2020 3:00 PM");
     expect(getInputString()).toBe("July 13, 2020 3:00 PM");
@@ -147,36 +175,59 @@ describe("TimePicker", () => {
 
   it("should select time when Enter is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
   it("should select time when Space is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Space));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
   it("should return focus to input once time is selected", async () => {
-    document.body.appendChild(div ?? new HTMLElement()); // So we can check the dom later for activeElement
+    document.body.appendChild(div); // So we can check the dom later for activeElement
     renderDatePicker("February 28, 2018 4:43 PM");
-    const input = datePicker?.querySelector("input") ?? new HTMLElement();
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+
+    const input = safeQuerySelector(datePicker, "input");
+
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
 
     await waitFor(() => {
       expect(document.activeElement).toBe(input);
@@ -185,12 +236,19 @@ describe("TimePicker", () => {
 
   it("should not select time when Escape is pressed", () => {
     renderDatePicker("February 28, 2018 4:43 PM");
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Escape));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
 
@@ -199,12 +257,19 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Escape));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -213,12 +278,19 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Enter));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -227,12 +299,19 @@ describe("TimePicker", () => {
     renderDatePicker("February 28, 2018 4:43 PM", {
       onKeyDown: onKeyDownSpy,
     });
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    const time =
-      datePicker?.querySelector(".react-datepicker__time-container") ??
-      new HTMLElement();
-    const lis = time.querySelectorAll("li");
-    fireEvent.keyDown(lis[1] ?? new HTMLElement(), getKey(KeyType.Space));
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    const time = safeQuerySelector(
+      datePicker,
+      ".react-datepicker__time-container",
+    );
+    const lis = safeQuerySelectorAll(time, "li");
+    if (lis.length < 2) {
+      throw new Error("Time list items must be at least 2");
+    }
+    fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -242,17 +321,22 @@ describe("TimePicker", () => {
       onKeyDown: onKeyDownSpy,
       showTimeSelectOnly: true,
     });
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    fireEvent.keyDown(
-      instance?.input ?? new HTMLElement(),
-      getKey(KeyType.ArrowDown),
-    );
+
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+
+    fireEvent.focus(instance.input);
+    fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
   function setManually(string: string) {
-    fireEvent.focus(instance?.input ?? new HTMLElement());
-    fireEvent.change(instance?.input ?? new HTMLElement(), {
+    if (!instance?.input) {
+      throw new Error("input is null/undefined");
+    }
+    fireEvent.focus(instance.input);
+    fireEvent.change(instance.input, {
       target: { value: string },
     });
   }
