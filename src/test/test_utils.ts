@@ -80,3 +80,27 @@ export const gotoNextView = (container: Element) => {
   )!;
   fireEvent.click(nextButton);
 };
+
+export const safeQuerySelector = <T extends HTMLElement = HTMLElement>(
+  container: HTMLElement,
+  selector: string,
+): T => {
+  const element = container.querySelector(selector);
+  if (element) {
+    return element as T;
+  }
+
+  throw new Error(`Element with selector '${selector}' not found`);
+};
+
+export const safeQuerySelectorAll = <T extends HTMLElement = HTMLElement>(
+  container: HTMLElement,
+  selector: string,
+): T[] => {
+  const elements = Array.from(container.querySelectorAll(selector)) as T[];
+  if (elements.length) {
+    return elements;
+  }
+
+  throw new Error(`Element with selector '${selector}' not found`);
+};
