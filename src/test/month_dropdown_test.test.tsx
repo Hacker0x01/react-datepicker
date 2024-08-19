@@ -8,12 +8,12 @@ import { getMonthInLocale, registerLocale } from "../date_utils";
 import MonthDropdown from "../month_dropdown";
 import MonthDropdownOptions from "../month_dropdown_options";
 
-import { range } from "./test_utils";
+import { range, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
 
 type MonthDropdownProps = React.ComponentProps<typeof MonthDropdown>;
 
 describe("MonthDropdown", () => {
-  let monthDropdown: HTMLElement | null = null;
+  let monthDropdown: HTMLElement;
   let handleChangeResult: number | null;
   const mockHandleChange = function (changeInput: number) {
     handleChangeResult = changeInput;
@@ -49,10 +49,11 @@ describe("MonthDropdown", () => {
     });
 
     it("opens a list when read view is clicked", () => {
-      fireEvent.click(
-        monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
-          new HTMLElement(),
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
       );
+      fireEvent.click(monthReadView);
       const optionsView = monthDropdown?.querySelector(
         ".react-datepicker__month-dropdown",
       );
@@ -63,10 +64,11 @@ describe("MonthDropdown", () => {
       let selectedMonth: HTMLSelectElement | null | undefined;
 
       beforeEach(() => {
-        fireEvent.click(
-          monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
-            new HTMLElement(),
+        const monthReadView = safeQuerySelector(
+          monthDropdown,
+          ".react-datepicker__month-read-view",
         );
+        fireEvent.click(monthReadView);
         selectedMonth = monthDropdown?.querySelector<HTMLSelectElement>(
           ".react-datepicker__month-option--selected_month",
         );
@@ -90,7 +92,8 @@ describe("MonthDropdown", () => {
           monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
             new HTMLSelectElement(),
         );
-        notSelectedMonth = monthDropdown?.querySelector(
+        notSelectedMonth = safeQuerySelector(
+          monthDropdown,
           ".react-datepicker__month-option",
         );
       });
@@ -106,14 +109,21 @@ describe("MonthDropdown", () => {
     });
 
     it("closes the dropdown when a month is clicked", () => {
-      fireEvent.click(
-        monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
-          new HTMLElement(),
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
       );
-      fireEvent.click(
-        (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[1] ?? new HTMLElement(),
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
       );
+      if (monthOptions.length < 2) {
+        throw new Error("monthOptions must have at least 2 elements");
+      }
+
+      fireEvent.click(monthOptions[1]!);
       expect(
         monthDropdown?.querySelectorAll(".react-datepicker__month-dropdown"),
       ).toHaveLength(0);
@@ -137,26 +147,37 @@ describe("MonthDropdown", () => {
     });
 
     it("does not call the supplied onChange function when the same month is clicked", () => {
-      fireEvent.click(
-        monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
-          new HTMLElement(),
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
       );
-      fireEvent.click(
-        (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[11] ?? new HTMLElement(),
+      fireEvent.click(monthReadView);
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
       );
+      if (monthOptions.length < 12) {
+        throw new Error("monthOptions must have at least 12 elements");
+      }
+      fireEvent.click(monthOptions[11]!);
       expect(handleChangeResult).toBeNull();
     });
 
     it("calls the supplied onChange function when a different month is clicked", () => {
-      fireEvent.click(
-        monthDropdown?.querySelector(".react-datepicker__month-read-view") ??
-          new HTMLElement(),
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
       );
-      fireEvent.click(
-        (monthDropdown?.querySelectorAll(".react-datepicker__month-option") ??
-          [])[2] ?? new HTMLElement(),
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
       );
+      if (monthOptions.length < 3) {
+        throw new Error("monthOptions must have at least 3 elements");
+      }
+      fireEvent.click(monthOptions[2]!);
       expect(handleChangeResult).toEqual(2);
     });
 
