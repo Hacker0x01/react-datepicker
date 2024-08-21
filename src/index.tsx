@@ -263,17 +263,7 @@ export default class DatePicker extends Component<
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll" as const,
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onInputClick() {},
-      onClickOutside() {},
-      onMonthChange() {},
-      onCalendarOpen() {},
-      onCalendarClose() {},
       preventOpenOnFocus: false,
-      onYearChange() {},
-      onInputError() {},
       monthsShown: 1,
       readOnly: false,
       withPortal: false,
@@ -889,7 +879,7 @@ export default class DatePicker extends Component<
         eventKey === KeyType.ArrowUp ||
         eventKey === KeyType.Enter
       ) {
-        this.onInputClick();
+        this.onInputClick?.();
       }
       return;
     }
@@ -1102,9 +1092,7 @@ export default class DatePicker extends Component<
         break;
     }
     if (!newSelection) {
-      if (this.props.onInputError) {
-        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
-      }
+      this.props.onInputError?.({ code: 1, msg: INPUT_ERR_1 });
       return;
     }
     event.preventDefault();

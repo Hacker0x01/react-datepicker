@@ -283,7 +283,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   assignMonthContainer: void | undefined;
 
   handleClickOutside = (event: MouseEvent): void => {
-    this.props.onClickOutside(event);
+    this.props.onClickOutside?.(event);
   };
 
   setClickOutsideRef = (): HTMLDivElement | null => {
@@ -369,10 +369,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   handleYearChange = (date: Date): void => {
-    if (this.props.onYearChange) {
-      this.props.onYearChange(date);
-      this.setState({ isRenderAriaLiveMessage: true });
-    }
+    this.props.onYearChange?.(date);
+    this.setState({ isRenderAriaLiveMessage: true });
     if (this.props.adjustDateOnChange) {
       this.props.onSelect?.(date);
       if (this.props.setOpen) {
