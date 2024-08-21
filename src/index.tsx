@@ -267,7 +267,6 @@ export default class DatePicker extends Component<
       onBlur() {},
       onKeyDown() {},
       onInputClick() {},
-      onSelect() {},
       onClickOutside() {},
       onMonthChange() {},
       onCalendarOpen() {},
@@ -793,8 +792,7 @@ export default class DatePicker extends Component<
     }
 
     if (!keepInput) {
-      const onSelect = this.props.onSelect ?? DatePicker.defaultProps.onSelect;
-      onSelect(changedDate, event);
+      this.props.onSelect?.(changedDate, event);
       this.setState({ inputValue: null });
     }
   };

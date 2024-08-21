@@ -339,7 +339,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       | React.KeyboardEvent<HTMLDivElement>,
     monthSelectedIn?: number,
   ): void => {
-    this.props.onSelect(day, event, monthSelectedIn);
+    this.props.onSelect?.(day, event, monthSelectedIn);
     this.props.setPreSelection && this.props.setPreSelection(day);
   };
 
@@ -374,9 +374,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.setState({ isRenderAriaLiveMessage: true });
     }
     if (this.props.adjustDateOnChange) {
-      if (this.props.onSelect) {
-        this.props.onSelect(date);
-      }
+      this.props.onSelect?.(date);
       if (this.props.setOpen) {
         this.props.setOpen(true);
       }
@@ -388,9 +386,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   handleMonthChange = (date: Date): void => {
     this.handleCustomMonthChange(date);
     if (this.props.adjustDateOnChange) {
-      if (this.props.onSelect) {
-        this.props.onSelect(date);
-      }
+      this.props.onSelect?.(date);
       if (this.props.setOpen) {
         this.props.setOpen(true);
       }
@@ -780,7 +776,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   handleTodayButtonClick = (event: React.MouseEvent<HTMLDivElement>): void => {
-    this.props.onSelect(getStartOfToday(), event);
+    this.props.onSelect?.(getStartOfToday(), event);
     this.props.setPreSelection && this.props.setPreSelection(getStartOfToday());
   };
 
