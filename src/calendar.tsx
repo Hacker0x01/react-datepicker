@@ -373,9 +373,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.setState({ isRenderAriaLiveMessage: true });
     if (this.props.adjustDateOnChange) {
       this.props.onSelect?.(date);
-      if (this.props.setOpen) {
-        this.props.setOpen(true);
-      }
+      this.props.setOpen?.(true);
     }
 
     this.props.setPreSelection && this.props.setPreSelection(date);
@@ -385,9 +383,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.handleCustomMonthChange(date);
     if (this.props.adjustDateOnChange) {
       this.props.onSelect?.(date);
-      if (this.props.setOpen) {
-        this.props.setOpen(true);
-      }
+      this.props.setOpen?.(true);
     }
 
     this.props.setPreSelection && this.props.setPreSelection(date);

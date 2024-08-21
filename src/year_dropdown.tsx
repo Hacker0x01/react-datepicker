@@ -127,9 +127,7 @@ export default class YearDropdown extends Component<
   };
 
   setOpen = (): void => {
-    if (this.props.setOpen) {
-      this.props.setOpen(true);
-    }
+    this.props.setOpen?.(true);
   };
 
   render(): JSX.Element {
