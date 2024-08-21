@@ -396,10 +396,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   handleCustomMonthChange = (date: Date): void => {
-    if (this.props.onMonthChange) {
-      this.props.onMonthChange(date);
-      this.setState({ isRenderAriaLiveMessage: true });
-    }
+    this.props.onMonthChange?.(date);
+    this.setState({ isRenderAriaLiveMessage: true });
   };
 
   handleMonthYearChange = (date: Date): void => {
