@@ -6,6 +6,8 @@ import DatePicker from "../index";
 
 import { getKey, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
 
+const MIN_TIME_LI_LEN = 2;
+
 describe("TimePicker", () => {
   let datePicker: HTMLDivElement;
   let div: HTMLDivElement;
@@ -40,10 +42,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.click(lis[1]!);
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
@@ -183,10 +182,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
@@ -201,10 +197,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
@@ -223,10 +216,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
 
     await waitFor(() => {
@@ -244,10 +234,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
@@ -265,10 +252,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
@@ -286,10 +270,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
@@ -307,10 +288,7 @@ describe("TimePicker", () => {
       datePicker,
       ".react-datepicker__time-container",
     );
-    const lis = safeQuerySelectorAll(time, "li");
-    if (lis.length < 2) {
-      throw new Error("Time list items must be at least 2");
-    }
+    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
     fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });

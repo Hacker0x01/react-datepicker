@@ -188,14 +188,12 @@ describe("MonthYearDropdown", () => {
       );
       fireEvent.click(monthYearReadView);
 
+      const minRequiredMonthYearOptionsLen = 6;
       const monthYearOptions = safeQuerySelectorAll(
         monthYearDropdown,
         ".react-datepicker__month-year-option",
+        minRequiredMonthYearOptionsLen,
       );
-
-      if (monthYearOptions.length < 6) {
-        throw new Error("Specified monthYearOptions offset is not available");
-      }
 
       const monthYearOption = monthYearOptions[5]!;
       fireEvent.click(monthYearOption);

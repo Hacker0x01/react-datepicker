@@ -86,14 +86,12 @@ describe("YearDropdown", () => {
       );
       fireEvent.click(yearReadView);
 
+      const minYearOptionsLen = 7;
       const yearOptions = safeQuerySelectorAll(
         yearDropdown,
         ".react-datepicker__year-option",
+        minYearOptionsLen,
       );
-
-      if (yearOptions.length < 7) {
-        throw new Error("Corresponding year option to click is not available!");
-      }
 
       const yearOption = yearOptions[6]!;
       fireEvent.click(yearOption);
@@ -107,14 +105,12 @@ describe("YearDropdown", () => {
       );
       fireEvent.click(yearReadView);
 
+      const minYearOptionsLen = 7;
       const yearOptions = safeQuerySelectorAll(
         yearDropdown,
         ".react-datepicker__year-option",
+        minYearOptionsLen,
       );
-
-      if (yearOptions.length < 8) {
-        throw new Error("Corresponding year option to click is not available!");
-      }
 
       const yearOption = yearOptions[7]!;
       fireEvent.click(yearOption);

@@ -1368,12 +1368,14 @@ describe("Calendar", () => {
         calendar,
         ".react-datepicker__month-year-dropdown-container",
       );
-      const select = safeQuerySelector(monthYearDropdownContainer, "select");
-      const options = safeQuerySelectorAll<HTMLOptionElement>(select, "option");
 
-      if (options.length < 4) {
-        throw new Error("Options with the 3rd index not found");
-      }
+      const select = safeQuerySelector(monthYearDropdownContainer, "select");
+      const minMonthYearOptionsLen = 4;
+      const options = safeQuerySelectorAll<HTMLOptionElement>(
+        select,
+        "option",
+        minMonthYearOptionsLen,
+      );
 
       const option = options[3]!;
       fireEvent.change(select, {

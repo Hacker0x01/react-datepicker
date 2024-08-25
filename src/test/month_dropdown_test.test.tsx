@@ -115,13 +115,12 @@ describe("MonthDropdown", () => {
       );
       fireEvent.click(monthReadView);
 
+      const minMonthOptionsLen = 2;
       const monthOptions = safeQuerySelectorAll(
         monthDropdown,
         ".react-datepicker__month-option",
+        minMonthOptionsLen,
       );
-      if (monthOptions.length < 2) {
-        throw new Error("monthOptions must have at least 2 elements");
-      }
 
       fireEvent.click(monthOptions[1]!);
       expect(
@@ -152,13 +151,13 @@ describe("MonthDropdown", () => {
         ".react-datepicker__month-read-view",
       );
       fireEvent.click(monthReadView);
+
+      const monthOptionsLen = 12;
       const monthOptions = safeQuerySelectorAll(
         monthDropdown,
         ".react-datepicker__month-option",
+        monthOptionsLen,
       );
-      if (monthOptions.length < 12) {
-        throw new Error("monthOptions must have at least 12 elements");
-      }
       fireEvent.click(monthOptions[11]!);
       expect(handleChangeResult).toBeNull();
     });
@@ -170,13 +169,12 @@ describe("MonthDropdown", () => {
       );
       fireEvent.click(monthReadView);
 
+      const minRequiredMonthsLen = 3;
       const monthOptions = safeQuerySelectorAll(
         monthDropdown,
         ".react-datepicker__month-option",
+        minRequiredMonthsLen,
       );
-      if (monthOptions.length < 3) {
-        throw new Error("monthOptions must have at least 3 elements");
-      }
       fireEvent.click(monthOptions[2]!);
       expect(handleChangeResult).toEqual(2);
     });

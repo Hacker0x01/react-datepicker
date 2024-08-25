@@ -78,13 +78,12 @@ describe("YearPicker", () => {
       />,
     );
 
+    const minRequiredYearLen = 2;
     const yearDivs = safeQuerySelectorAll(
       container,
       ".react-datepicker__year-text",
+      minRequiredYearLen,
     );
-    if (yearDivs.length < 2) {
-      throw new Error("yearDivs doesn't have enough length");
-    }
 
     const firstYearDiv = yearDivs[1]!;
     fireEvent.click(firstYearDiv);
