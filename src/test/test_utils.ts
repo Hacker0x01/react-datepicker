@@ -96,11 +96,18 @@ export const safeQuerySelector = <T extends HTMLElement = HTMLElement>(
 export const safeQuerySelectorAll = <T extends HTMLElement = HTMLElement>(
   container: HTMLElement,
   selector: string,
+  minExpected: number = 1,
 ): T[] => {
   const elements = Array.from(container.querySelectorAll(selector)) as T[];
-  if (elements.length) {
-    return elements;
+
+  if (!elements.length) {
+    throw new Error(`Element with selector '${selector}' not found`);
+  }
+  if (elements.length < minExpected) {
+    throw new Error(
+      `Expected at least ${minExpected} element(s) for selector '${selector}'.  Only ${elements.length} found`,
+    );
   }
 
-  throw new Error(`Element with selector '${selector}' not found`);
+  return elements;
 };
