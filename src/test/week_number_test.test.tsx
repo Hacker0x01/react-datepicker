@@ -43,7 +43,6 @@ describe("WeekNumber", () => {
         container,
         ".react-datepicker__week-number",
       );
-      expect(weekNumber).not.toBeNull();
       fireEvent.click(weekNumber);
       expect(onClickMock).toHaveBeenCalledTimes(1);
     });
@@ -111,7 +110,6 @@ describe("WeekNumber", () => {
         container,
         ".react-datepicker__week-number",
       );
-      expect(weekNumber).not.toBeNull();
       fireEvent.click(weekNumber);
       expect(onClickMock).toHaveBeenCalled();
     });

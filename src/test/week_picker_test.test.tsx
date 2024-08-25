@@ -28,13 +28,11 @@ describe("WeekPicker", () => {
     );
     expect(onChangeSpy).not.toHaveBeenCalled();
     const input = safeQuerySelector(container, "input");
-    expect(input).not.toBeNull();
     fireEvent.focus(input);
     const weekNumber = safeQuerySelector(
       container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumber).not.toBeNull();
     fireEvent.click(weekNumber);
     expect(onChangeSpy).toHaveBeenCalled();
   });

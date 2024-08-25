@@ -43,7 +43,6 @@ describe("CalendarIcon", () => {
       container,
       "svg.react-datepicker__calendar-icon",
     );
-    expect(icon).not.toBeNull();
     fireEvent.click(icon);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -55,7 +54,6 @@ describe("CalendarIcon", () => {
     );
 
     const icon = safeQuerySelector(container, "i.fa-example-icon");
-    expect(icon).not.toBeNull();
     fireEvent.click(icon);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);

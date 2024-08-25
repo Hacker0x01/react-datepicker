@@ -116,7 +116,6 @@ describe("Week", () => {
       container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
     fireEvent.click(weekNumberElement);
     expect(isEqual(firstDayReceived, weekStart)).toBe(true);
   });
@@ -139,7 +138,6 @@ describe("Week", () => {
       container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
     fireEvent.click(weekNumberElement);
     expect(setOpenSpy).toHaveBeenCalledTimes(1);
   });
@@ -164,9 +162,8 @@ describe("Week", () => {
       container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
-
     fireEvent.click(weekNumberElement);
+
     expect(setOnWeekSelect).toHaveBeenCalledTimes(1);
     expect(setOpenSpy).toHaveBeenCalledTimes(0);
   });
@@ -194,7 +191,6 @@ describe("Week", () => {
       container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
     fireEvent.click(weekNumberElement);
     expect(weekNumberReceived).toBe(realWeekNumber);
   });
@@ -236,7 +232,6 @@ describe("Week", () => {
     );
 
     const day = safeQuerySelector(container, ".react-datepicker__day");
-    expect(day).not.toBeNull();
     fireEvent.mouseEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
