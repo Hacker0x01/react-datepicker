@@ -31,7 +31,12 @@ import {
 } from "../date_utils";
 import DatePicker from "../index";
 
-import { getKey, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
+import {
+  getKey,
+  SafeElementWrapper,
+  safeQuerySelector,
+  safeQuerySelectorAll,
+} from "./test_utils";
 
 import type { ReactDatePickerCustomHeaderProps } from "../calendar";
 import type { Locale } from "../date_utils";
@@ -1274,11 +1279,10 @@ describe("Calendar", () => {
     });
 
     it("calls onMonthChange prop when month changed from month dropdown", () => {
-      const monthDropdownContainer = safeQuerySelector(
-        calendar,
-        ".react-datepicker__month-dropdown-container",
-      );
-      const select = safeQuerySelector(monthDropdownContainer, "select");
+      const select = new SafeElementWrapper(calendar)
+        .safeQuerySelector(".react-datepicker__month-dropdown-container")
+        .safeQuerySelector("select")
+        .getElement();
 
       fireEvent.change(select, {
         target: {
