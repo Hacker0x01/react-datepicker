@@ -260,22 +260,10 @@ export default class DatePicker extends Component<
       allowSameDay: false,
       dateFormat: "MM/dd/yyyy",
       dateFormatCalendar: "LLLL yyyy",
-      onChange() {},
       disabled: false,
       disabledKeyboardNavigation: false,
       dropdownMode: "scroll" as const,
-      onFocus() {},
-      onBlur() {},
-      onKeyDown() {},
-      onInputClick() {},
-      onSelect() {},
-      onClickOutside() {},
-      onMonthChange() {},
-      onCalendarOpen() {},
-      onCalendarClose() {},
       preventOpenOnFocus: false,
-      onYearChange() {},
-      onInputError() {},
       monthsShown: 1,
       readOnly: false,
       withPortal: false,
@@ -751,41 +739,27 @@ export default class DatePicker extends Component<
         const hasStartRange = startDate && !endDate;
         const isRangeFilled = startDate && endDate;
         if (noRanges) {
-          onChange
-            ? onChange([changedDate, null], event)
-            : DatePicker.defaultProps.onChange;
+          onChange?.([changedDate, null], event);
         } else if (hasStartRange) {
           if (changedDate === null) {
-            onChange
-              ? onChange([null, null], event)
-              : DatePicker.defaultProps.onChange;
+            onChange?.([null, null], event);
           } else if (isDateBefore(changedDate, startDate)) {
             if (swapRange) {
-              onChange
-                ? onChange([changedDate, startDate], event)
-                : DatePicker.defaultProps.onChange;
+              onChange?.([changedDate, startDate], event);
             } else {
-              onChange
-                ? onChange([changedDate, null], event)
-                : DatePicker.defaultProps.onChange;
+              onChange?.([changedDate, null], event);
             }
           } else {
-            onChange
-              ? onChange([startDate, changedDate], event)
-              : DatePicker.defaultProps.onChange;
+            onChange?.([startDate, changedDate], event);
           }
         }
         if (isRangeFilled) {
-          onChange
-            ? onChange([changedDate, null], event)
-            : DatePicker.defaultProps.onChange;
+          onChange?.([changedDate, null], event);
         }
       } else if (selectsMultiple) {
         if (changedDate !== null) {
           if (!selectedDates?.length) {
-            onChange
-              ? onChange([changedDate], event)
-              : DatePicker.defaultProps.onChange;
+            onChange?.([changedDate], event);
           } else {
             const isChangedDateAlreadySelected = selectedDates.some(
               (selectedDate) => isSameDay(selectedDate, changedDate),
@@ -796,26 +770,19 @@ export default class DatePicker extends Component<
                 (selectedDate) => !isSameDay(selectedDate, changedDate),
               );
 
-              onChange
-                ? onChange(nextDates, event)
-                : DatePicker.defaultProps.onChange;
+              onChange?.(nextDates, event);
             } else {
-              onChange
-                ? onChange([...selectedDates, changedDate], event)
-                : DatePicker.defaultProps.onChange;
+              onChange?.([...selectedDates, changedDate], event);
             }
           }
         }
       } else {
-        onChange
-          ? onChange(changedDate, event)
-          : DatePicker.defaultProps.onChange;
+        onChange?.(changedDate, event);
       }
     }
 
     if (!keepInput) {
-      const onSelect = this.props.onSelect ?? DatePicker.defaultProps.onSelect;
-      onSelect(changedDate, event);
+      this.props.onSelect?.(changedDate, event);
       this.setState({ inputValue: null });
     }
   };
@@ -876,8 +843,7 @@ export default class DatePicker extends Component<
       preSelection: changedDate,
     });
 
-    const onChange = this.props.onChange ?? DatePicker.defaultProps.onChange;
-    onChange(changedDate);
+    this.props.onChange?.(changedDate);
     if (this.props.shouldCloseOnSelect && !this.props.showTimeInput) {
       this.sendFocusBackToInput();
       this.setOpen(false);
@@ -913,7 +879,7 @@ export default class DatePicker extends Component<
         eventKey === KeyType.ArrowUp ||
         eventKey === KeyType.Enter
       ) {
-        this.onInputClick();
+        this.onInputClick?.();
       }
       return;
     }
@@ -1126,9 +1092,7 @@ export default class DatePicker extends Component<
         break;
     }
     if (!newSelection) {
-      if (this.props.onInputError) {
-        this.props.onInputError({ code: 1, msg: INPUT_ERR_1 });
-      }
+      this.props.onInputError?.({ code: 1, msg: INPUT_ERR_1 });
       return;
     }
     event.preventDefault();
@@ -1175,11 +1139,9 @@ export default class DatePicker extends Component<
 
     const { selectsRange, onChange } = this.props;
     if (selectsRange) {
-      onChange
-        ? onChange([null, null], event)
-        : DatePicker.defaultProps.onChange();
+      onChange?.([null, null], event);
     } else {
-      onChange ? onChange(null, event) : DatePicker.defaultProps.onChange();
+      onChange?.(null, event);
     }
 
     this.setState({ inputValue: null });

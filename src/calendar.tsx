@@ -369,17 +369,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   handleYearChange = (date: Date): void => {
-    if (this.props.onYearChange) {
-      this.props.onYearChange(date);
-      this.setState({ isRenderAriaLiveMessage: true });
-    }
+    this.props.onYearChange?.(date);
+    this.setState({ isRenderAriaLiveMessage: true });
     if (this.props.adjustDateOnChange) {
-      if (this.props.onSelect) {
-        this.props.onSelect(date);
-      }
-      if (this.props.setOpen) {
-        this.props.setOpen(true);
-      }
+      this.props.onSelect(date);
+      this.props.setOpen?.(true);
     }
 
     this.props.setPreSelection && this.props.setPreSelection(date);
@@ -388,22 +382,16 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   handleMonthChange = (date: Date): void => {
     this.handleCustomMonthChange(date);
     if (this.props.adjustDateOnChange) {
-      if (this.props.onSelect) {
-        this.props.onSelect(date);
-      }
-      if (this.props.setOpen) {
-        this.props.setOpen(true);
-      }
+      this.props.onSelect(date);
+      this.props.setOpen?.(true);
     }
 
     this.props.setPreSelection && this.props.setPreSelection(date);
   };
 
   handleCustomMonthChange = (date: Date): void => {
-    if (this.props.onMonthChange) {
-      this.props.onMonthChange(date);
-      this.setState({ isRenderAriaLiveMessage: true });
-    }
+    this.props.onMonthChange?.(date);
+    this.setState({ isRenderAriaLiveMessage: true });
   };
 
   handleMonthYearChange = (date: Date): void => {
