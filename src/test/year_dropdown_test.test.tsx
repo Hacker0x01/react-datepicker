@@ -4,10 +4,10 @@ import React from "react";
 import { newDate } from "../date_utils";
 import YearDropdown from "../year_dropdown";
 
-import { range } from "./test_utils";
+import { range, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
 
 describe("YearDropdown", () => {
-  let yearDropdown: HTMLElement | null = null;
+  let yearDropdown: HTMLElement;
   let lastOnChangeValue: number | null;
 
   function onChangeMock(value: number) {
@@ -50,10 +50,11 @@ describe("YearDropdown", () => {
     });
 
     it("opens a list when read view is clicked", () => {
-      fireEvent.click(
-        yearDropdown?.querySelector(".react-datepicker__year-read-view") ??
-          new HTMLElement(),
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
       );
+      fireEvent.click(yearReadView);
       const optionsView = yearDropdown?.querySelectorAll(
         "react-datepicker__year-dropdown",
       );
@@ -61,40 +62,58 @@ describe("YearDropdown", () => {
     });
 
     it("closes the dropdown when a year is clicked", () => {
-      fireEvent.click(
-        yearDropdown?.querySelector(".react-datepicker__year-read-view") ??
-          new HTMLElement(),
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
       );
-      fireEvent.click(
-        (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[0] ?? new HTMLElement(),
+      fireEvent.click(yearReadView);
+
+      const yearOptions = safeQuerySelectorAll(
+        yearDropdown,
+        ".react-datepicker__year-option",
       );
+      const yearOption = yearOptions[0]!;
+      fireEvent.click(yearOption);
       expect(
         yearDropdown?.querySelectorAll("react-datepicker__year-dropdown"),
       ).toHaveLength(0);
     });
 
     it("does not call the supplied onChange function when the same year is clicked", () => {
-      fireEvent.click(
-        yearDropdown?.querySelector(".react-datepicker__year-read-view") ??
-          new HTMLElement(),
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
       );
-      fireEvent.click(
-        (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[6] ?? new HTMLElement(),
+      fireEvent.click(yearReadView);
+
+      const minYearOptionsLen = 7;
+      const yearOptions = safeQuerySelectorAll(
+        yearDropdown,
+        ".react-datepicker__year-option",
+        minYearOptionsLen,
       );
+
+      const yearOption = yearOptions[6]!;
+      fireEvent.click(yearOption);
       expect(lastOnChangeValue).toBeNull();
     });
 
     it("calls the supplied onChange function when a different year is clicked", () => {
-      fireEvent.click(
-        yearDropdown?.querySelector(".react-datepicker__year-read-view") ??
-          new HTMLElement(),
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
       );
-      fireEvent.click(
-        (yearDropdown?.querySelectorAll(".react-datepicker__year-option") ??
-          [])[7] ?? new HTMLElement(),
+      fireEvent.click(yearReadView);
+
+      const minYearOptionsLen = 7;
+      const yearOptions = safeQuerySelectorAll(
+        yearDropdown,
+        ".react-datepicker__year-option",
+        minYearOptionsLen,
       );
+
+      const yearOption = yearOptions[7]!;
+      fireEvent.click(yearOption);
       expect(lastOnChangeValue).toEqual(2014);
     });
   });

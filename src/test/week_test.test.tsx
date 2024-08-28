@@ -13,6 +13,8 @@ import {
 } from "../date_utils";
 import Week from "../week";
 
+import { safeQuerySelector } from "./test_utils";
+
 describe("Week", () => {
   it("should have the week CSS class", () => {
     const { container } = render(
@@ -109,11 +111,12 @@ describe("Week", () => {
         month={getMonth(weekStart)}
       />,
     );
-    const weekNumberElement = container.querySelector(
+
+    const weekNumberElement = safeQuerySelector(
+      container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
-    fireEvent.click(weekNumberElement ?? new HTMLElement());
+    fireEvent.click(weekNumberElement);
     expect(isEqual(firstDayReceived, weekStart)).toBe(true);
   });
 
@@ -131,11 +134,11 @@ describe("Week", () => {
         month={getMonth(weekStart)}
       />,
     );
-    const weekNumberElement = container.querySelector(
+    const weekNumberElement = safeQuerySelector(
+      container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
-    fireEvent.click(weekNumberElement ?? new HTMLElement());
+    fireEvent.click(weekNumberElement);
     expect(setOpenSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -155,12 +158,12 @@ describe("Week", () => {
       />,
     );
 
-    const weekNumberElement = container.querySelector(
+    const weekNumberElement = safeQuerySelector(
+      container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
+    fireEvent.click(weekNumberElement);
 
-    fireEvent.click(weekNumberElement ?? new HTMLElement());
     expect(setOnWeekSelect).toHaveBeenCalledTimes(1);
     expect(setOpenSpy).toHaveBeenCalledTimes(0);
   });
@@ -183,11 +186,12 @@ describe("Week", () => {
         month={getMonth(weekStart)}
       />,
     );
-    const weekNumberElement = container.querySelector(
+
+    const weekNumberElement = safeQuerySelector(
+      container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumberElement).not.toBeNull();
-    fireEvent.click(weekNumberElement ?? new HTMLElement());
+    fireEvent.click(weekNumberElement);
     expect(weekNumberReceived).toBe(realWeekNumber);
   });
 
@@ -227,9 +231,8 @@ describe("Week", () => {
       />,
     );
 
-    const day = container.querySelector(".react-datepicker__day");
-    expect(day).not.toBeNull();
-    fireEvent.mouseEnter(day ?? new HTMLElement());
+    const day = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.mouseEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
       getStartOfWeek(weekStart),

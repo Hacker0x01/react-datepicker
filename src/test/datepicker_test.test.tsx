@@ -27,7 +27,7 @@ import DatePicker, { registerLocale } from "../index";
 
 import CustomInput from "./helper_components/custom_input";
 import TestWrapper from "./helper_components/test_wrapper";
-import { getKey } from "./test_utils";
+import { getKey, safeQuerySelector } from "./test_utils";
 
 function getSelectedDayNode(container: HTMLElement) {
   return (
@@ -87,7 +87,7 @@ describe("DatePicker", () => {
 
   it("should retain the calendar open status when the document visibility change", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input");
+    const input = safeQuerySelector(container, "input");
 
     if (!input) {
       throw new Error("Input element not found");
@@ -104,12 +104,7 @@ describe("DatePicker", () => {
 
   it("should retain the calendar close status when the document visibility change", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input");
-
-    if (!input) {
-      throw new Error("Input element not found");
-    }
-
+    const input = safeQuerySelector(container, "input");
     fireEvent.click(input);
     expect(container.querySelector(".react-datepicker")).toBeTruthy();
 
@@ -124,14 +119,17 @@ describe("DatePicker", () => {
 
   it("should show the calendar when focusing on the date input", () => {
     const { container } = render(<DatePicker />);
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
   });
 
   it("should allow the user to supply a wrapper component for the popper", () => {
     const { container } = render(<DatePicker popperContainer={TestWrapper} />);
 
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
 
     expect(container.querySelectorAll(".test-wrapper").length).toBe(1);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
@@ -142,7 +140,8 @@ describe("DatePicker", () => {
       <DatePicker calendarContainer={TestWrapper} />,
     );
 
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
 
     expect(container.querySelectorAll(".test-wrapper").length).toBe(1);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
@@ -153,7 +152,8 @@ describe("DatePicker", () => {
       <DatePicker popperClassName="some-class-name" />,
     );
 
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
 
     const popper = container.querySelectorAll(".react-datepicker-popper");
     expect(popper.length).toBe(1);
@@ -163,7 +163,8 @@ describe("DatePicker", () => {
   it("should show the calendar when clicking on the date input", () => {
     const { container } = render(<DatePicker />);
 
-    fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.click(input);
 
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
   });
@@ -198,7 +199,8 @@ describe("DatePicker", () => {
   it("should not set open state when it is disabled and gets clicked", () => {
     const { container } = render(<DatePicker disabled />);
 
-    fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.click(input);
 
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
@@ -226,15 +228,13 @@ describe("DatePicker", () => {
     fireEvent.click(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
-    const today = div.querySelector<HTMLElement>(
-      ".react-datepicker__day--today",
-    );
+    const today = safeQuerySelector(div, ".react-datepicker__day--today");
     act(() => {
       today?.focus();
     });
 
     // user hits Escape
-    fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Escape));
+    fireEvent.keyDown(today, getKey(KeyType.Escape));
 
     expect(instance!.calendar).toBeFalsy();
 
@@ -267,15 +267,13 @@ describe("DatePicker", () => {
     fireEvent.focus(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
-    const today = div.querySelector<HTMLElement>(
-      ".react-datepicker__day--today",
-    );
+    const today = safeQuerySelector(div, ".react-datepicker__day--today");
     act(() => {
       today?.focus();
     });
 
     // user hits Enter
-    fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Enter));
+    fireEvent.keyDown(today, getKey(KeyType.Enter));
 
     expect(instance!.calendar).toBeFalsy();
 
@@ -307,15 +305,13 @@ describe("DatePicker", () => {
     fireEvent.focus(instance!.input!);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
-    const today = div.querySelector<HTMLElement>(
-      ".react-datepicker__day--today",
-    );
+    const today = safeQuerySelector(div, ".react-datepicker__day--today");
     act(() => {
-      today?.focus();
+      today.focus();
     });
 
     // user hits Enter
-    fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Enter));
+    fireEvent.keyDown(today, getKey(KeyType.Enter));
 
     expect(instance!.calendar).toBeTruthy();
 
@@ -334,14 +330,15 @@ describe("DatePicker", () => {
         onBlur={onBlurSpy}
       />,
     );
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     const focusSpy = jest.spyOn(input, "focus");
 
     fireEvent.focus(input);
 
-    const yearSelect =
-      container.querySelector(".react-datepicker__year-select") ??
-      new HTMLElement();
+    const yearSelect = safeQuerySelector(
+      container,
+      ".react-datepicker__year-select",
+    );
     fireEvent.blur(input);
     fireEvent.focus(yearSelect);
 
@@ -358,12 +355,13 @@ describe("DatePicker", () => {
         onYearChange={onYearChangeSpy}
       />,
     );
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.click(input);
 
-    const yearSelect =
-      container.querySelector(".react-datepicker__year-select") ??
-      new HTMLElement();
+    const yearSelect = safeQuerySelector(
+      container,
+      ".react-datepicker__year-select",
+    );
     fireEvent.change(yearSelect, {
       target: {
         value: Array.from(yearSelect.querySelectorAll("option")).at(-2)?.value,
@@ -374,7 +372,7 @@ describe("DatePicker", () => {
 
   it("should keep the calendar shown when clicking the calendar", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.focus(input);
     fireEvent.click(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
@@ -382,31 +380,33 @@ describe("DatePicker", () => {
 
   it("should not set open state when it is disabled and gets clicked.", () => {
     const { container } = render(<DatePicker disabled />);
-    fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.click(input);
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
 
   it("should not set open state when it is readOnly and gets clicked", () => {
     const { container } = render(<DatePicker readOnly />);
-    fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.click(input);
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
 
   it("should hide the calendar when clicking a day on the calendar", () => {
     const { container } = render(<DatePicker />);
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    fireEvent.click(
-      container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    const day = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.click(day);
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
 
   it("should not hide the calendar when clicking a day on the calendar and shouldCloseOnSelect prop is false", () => {
     const { container } = render(<DatePicker shouldCloseOnSelect={false} />);
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    fireEvent.click(
-      container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    const day = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.click(day);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
   });
 
@@ -418,19 +418,18 @@ describe("DatePicker", () => {
     });
 
     // user focuses the input field, the calendar opens
-    const dateInput = div.querySelector("input") ?? new HTMLElement();
+    const dateInput = safeQuerySelector(div, "input");
     fireEvent.focus(dateInput);
 
     // user may tab or arrow down to the current day (or some other element in the popper)
-    const today = div.querySelector<HTMLElement>(
-      ".react-datepicker__day--today",
-    );
+
+    const today = safeQuerySelector(div, ".react-datepicker__day--today");
     act(() => {
       today?.focus();
     });
 
     // user hits Enter
-    fireEvent.keyDown(today ?? new HTMLElement(), getKey(KeyType.Enter));
+    fireEvent.keyDown(today, getKey(KeyType.Enter));
     expect(document.activeElement).toBe(today);
   });
 
@@ -538,7 +537,7 @@ describe("DatePicker", () => {
 
   it("should hide the calendar when pressing enter in the date input", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.focus(input);
     fireEvent.keyDown(input, getKey(KeyType.Enter));
     expect(container.querySelector(".react-datepicker")).toBeNull();
@@ -546,7 +545,7 @@ describe("DatePicker", () => {
 
   it("should hide the calendar when the pressing escape in the date input", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.focus(input);
     fireEvent.keyDown(input, getKey(KeyType.Escape));
     expect(container.querySelector(".react-datepicker")).toBeNull();
@@ -590,7 +589,7 @@ describe("DatePicker", () => {
       onBlurSpy(event);
     };
     const { container } = render(<DatePicker onBlur={onBlur} />);
-    const input = container.querySelector("input") ?? new HTMLInputElement();
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
     onBlurSpy = jest.spyOn(input, "blur");
     fireEvent.focus(input);
     fireEvent.keyDown(input, getKey(KeyType.Tab, true));
@@ -600,7 +599,7 @@ describe("DatePicker", () => {
 
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input");
+    const input = safeQuerySelector(container, "input");
     expect(
       input?.classList.contains("react-datepicker-ignore-onclickoutside"),
     ).toBeFalsy();
@@ -608,8 +607,8 @@ describe("DatePicker", () => {
 
   it("should apply the react-datepicker-ignore-onclickoutside class to date input when open", () => {
     const { container } = render(<DatePicker />);
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
     expect(
       input?.classList.contains("react-datepicker-ignore-onclickoutside"),
     ).toBeTruthy();
@@ -624,10 +623,11 @@ describe("DatePicker", () => {
       />,
     );
 
-    const calendarIcon = container.querySelector(
+    const calendarIcon = safeQuerySelector(
+      container,
       "svg.react-datepicker__calendar-icon",
     );
-    fireEvent.click(calendarIcon ?? new HTMLElement());
+    fireEvent.click(calendarIcon);
 
     const reactCalendar = container.querySelector(
       "div.react-datepicker-popper .react-datepicker",
@@ -645,10 +645,11 @@ describe("DatePicker", () => {
       />,
     );
 
-    const calendarIcon = container.querySelector(
+    const calendarIcon = safeQuerySelector(
+      container,
       "svg.react-datepicker__calendar-icon",
     );
-    fireEvent.click(calendarIcon ?? new HTMLElement());
+    fireEvent.click(calendarIcon);
 
     const reactCalendar = container.querySelector(
       "div.react-datepicker-popper .react-datepicker",
@@ -681,12 +682,14 @@ describe("DatePicker", () => {
       />,
     );
 
-    let calendarIcon = container.querySelector(
+    let calendarIcon = safeQuerySelector(
+      container,
       "svg.react-datepicker__calendar-icon",
     );
-    fireEvent.click(calendarIcon ?? new HTMLElement());
+    fireEvent.click(calendarIcon);
 
-    calendarIcon = container.querySelector(
+    calendarIcon = safeQuerySelector(
+      container,
       "svg.react-datepicker__calendar-icon",
     );
 
@@ -782,10 +785,12 @@ describe("DatePicker", () => {
         onChange={handleChange}
       />,
     );
-    const clearButton = container.querySelector(
+
+    const clearButton = safeQuerySelector(
+      container,
       ".react-datepicker__close-icon",
     );
-    fireEvent.click(clearButton ?? new HTMLElement());
+    fireEvent.click(clearButton);
     expect(cleared).toBe(true);
   });
 
@@ -801,10 +806,12 @@ describe("DatePicker", () => {
       />,
     );
     expect(instance).toBeTruthy();
-    const clearButton = container.querySelector(
+
+    const clearButton = safeQuerySelector(
+      container,
       ".react-datepicker__close-icon",
     );
-    fireEvent.click(clearButton ?? new HTMLElement());
+    fireEvent.click(clearButton);
     expect(instance!.state.inputValue).toBeNull();
   });
 
@@ -835,10 +842,11 @@ describe("DatePicker", () => {
       },
     );
 
-    const clearButton = container.querySelector(
+    const clearButton = safeQuerySelector(
+      container,
       ".react-datepicker__close-icon",
     );
-    fireEvent.click(clearButton ?? new HTMLElement());
+    fireEvent.click(clearButton);
 
     await waitFor(() => {
       expect(document.activeElement).toBe(div.querySelector("input"));
@@ -888,8 +896,9 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    const dayButton = container.querySelector(".react-datepicker__day");
-    fireEvent.click(dayButton ?? new HTMLElement());
+
+    const dayButton = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.click(dayButton);
 
     expect(date).toBeTruthy();
     expect(getHours(date!)).toBe(10);
@@ -909,8 +918,8 @@ describe("DatePicker", () => {
         }}
       />,
     );
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLInputElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: {
         value: newDate("2014-01-02"),
       },
@@ -986,7 +995,8 @@ describe("DatePicker", () => {
   it("should render Calendar in portal when withPortal is set and input has focus", () => {
     const { container } = render(<DatePicker withPortal />);
 
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
 
     expect(
       document.body.querySelector(".react-datepicker__portal"),
@@ -1037,7 +1047,8 @@ describe("DatePicker", () => {
       <DatePicker withPortal portalId="portal-id-dom-test" />,
     );
 
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
 
     expect(document.body.querySelector("#portal-id-dom-test")).not.toBeNull();
   });
@@ -1688,9 +1699,8 @@ describe("DatePicker", () => {
 
     it("should auto update calendar when the updated date text is after props.minDate", () => {
       const { container } = getCalendar();
-      const input = container.querySelector("input");
-
-      fireEvent.change(input ?? new HTMLElement(), {
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
         target: {
           value: "1801/01/01",
         },
@@ -1704,9 +1714,9 @@ describe("DatePicker", () => {
 
     it("should not auto update calendar when the updated date text is before props.minDate", () => {
       const { container } = getCalendar();
-      const input = container.querySelector("input");
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
 
-      fireEvent.change(input ?? new HTMLElement(), {
+      fireEvent.change(input, {
         target: {
           value: "1799/01/01",
         },
@@ -1898,7 +1908,7 @@ describe("DatePicker", () => {
     });
 
     // user focuses the input field, the calendar opens
-    const dateInput = div.querySelector("input") ?? new HTMLElement();
+    const dateInput = safeQuerySelector(div, "input");
     fireEvent.focus(dateInput);
     fireEvent.keyDown(dateInput, getKey(KeyType.ArrowDown));
 
@@ -2061,8 +2071,8 @@ describe("DatePicker", () => {
     const { container } = render(
       <DatePicker selected={newDate("2016-11-22")} onChange={handleChange} />,
     );
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector(container, "input");
+    fireEvent.change(input, {
       target: {
         value: "",
       },
@@ -2177,8 +2187,8 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
     expect(onSelectSpy).not.toHaveBeenCalled();
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector(container, "input");
+    fireEvent.change(input, {
       target: {
         value: inputValue,
       },
@@ -2200,10 +2210,10 @@ describe("DatePicker", () => {
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
     expect(onSelectSpy).not.toHaveBeenCalled();
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
-    const day = container.querySelector(".react-datepicker__day");
-    fireEvent.click(day ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const day = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.click(day);
     expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
     expect(onSelectSpy).toHaveBeenCalledTimes(1);
   });
@@ -2215,7 +2225,7 @@ describe("DatePicker", () => {
       (event.target as unknown as HTMLInputElement).value > "2" &&
       event.preventDefault();
     const { container } = render(<DatePicker onChangeRaw={onChangeRaw} />);
-    const input = container.querySelector("input") ?? new HTMLInputElement();
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
     expect(input.value).toBe("");
     fireEvent.change(input, {
       target: {
@@ -2242,8 +2252,8 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector(container, "input");
+    fireEvent.change(input, {
       target: {
         value: inputValue,
       },
@@ -2267,8 +2277,8 @@ describe("DatePicker", () => {
       />,
     );
     expect(onChangeRawSpy).not.toHaveBeenCalled();
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector(container, "input");
+    fireEvent.change(input, {
       target: {
         value: inputValue,
       },
@@ -2306,11 +2316,15 @@ describe("DatePicker", () => {
       </div>,
     );
     expect(container.querySelector(".react-datepicker")).toBeNull();
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
-    fireEvent.mouseDown(
-      container.querySelector(".testText") ?? new HTMLElement(),
-    );
+
+    const testText = safeQuerySelector(container, ".testText");
+    fireEvent.mouseDown(testText);
+
     expect(container.querySelector(".react-datepicker")).toBeNull();
     expect(onClickOutsideSpy).toHaveBeenCalledTimes(1);
   });
@@ -2321,9 +2335,11 @@ describe("DatePicker", () => {
       <DatePicker onClickOutside={onClickOutsideSpy} />,
     );
     expect(container.querySelector(".react-datepicker")).toBeNull();
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
-    fireEvent.mouseDown(container.querySelector("input") ?? new HTMLElement());
+
+    fireEvent.mouseDown(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
     expect(onClickOutsideSpy).not.toHaveBeenCalled();
   });
@@ -2516,15 +2532,16 @@ describe("DatePicker", () => {
   });
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const { container } = render(<DatePicker preventOpenOnFocus />);
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
   it("should not set open state onInputKeyDown when preventOpenOnFocus prop is set", () => {
     const { container } = render(<DatePicker preventOpenOnFocus />);
-    fireEvent.keyDown(
-      container.querySelector("input") ?? new HTMLElement(),
-      getKey(KeyType.ArrowLeft),
-    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.keyDown(input, getKey(KeyType.ArrowLeft));
+
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
   it("should clear the input when clear() member function is called", () => {
@@ -2546,7 +2563,8 @@ describe("DatePicker", () => {
   });
   it("should not open when open is false and input is focused", () => {
     const { container } = render(<DatePicker open={false} />);
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
   it("should open when open is true", () => {
@@ -2556,7 +2574,8 @@ describe("DatePicker", () => {
   it("should fire onInputClick when input is clicked", () => {
     const onInputClickSpy = jest.fn();
     const { container } = render(<DatePicker onInputClick={onInputClickSpy} />);
-    fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.click(input);
     expect(onInputClickSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -2615,8 +2634,8 @@ describe("DatePicker", () => {
 
   it("should show the popper arrow when showPopperArrow is true", () => {
     const { container } = render(<DatePicker showPopperArrow />);
-    const input = container.querySelector("input");
-    fireEvent.click(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.click(input);
 
     const arrow = container.querySelector(".react-datepicker__triangle");
 
@@ -2625,8 +2644,8 @@ describe("DatePicker", () => {
 
   it("should not show the popper arrow when showPopperArrow is false", () => {
     const { container } = render(<DatePicker showPopperArrow={false} />);
-    const input = container.querySelector("input");
-    fireEvent.click(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.click(input);
 
     const arrows = container.querySelectorAll(".react-datepicker__triangle");
 
@@ -2697,8 +2716,8 @@ describe("DatePicker", () => {
 
   it("should close the calendar after scrolling", () => {
     const { container } = render(<DatePicker closeOnScroll />);
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
     fireEvent.scroll(document);
     expect(container.querySelector(".react-datepicker")).toBeNull();
@@ -2710,8 +2729,8 @@ describe("DatePicker", () => {
     const { container } = render(<DatePicker closeOnScroll />, {
       container: div,
     });
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     fireEvent.scroll(div);
 
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
@@ -2719,8 +2738,8 @@ describe("DatePicker", () => {
 
   it("should close the calendar after scrolling.", () => {
     const { container } = render(<DatePicker closeOnScroll={() => true} />);
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
     fireEvent.scroll(document);
     expect(container.querySelector(".react-datepicker")).toBeNull();
@@ -2728,8 +2747,8 @@ describe("DatePicker", () => {
 
   it("should not close the calendar after scrolling.", () => {
     const { container } = render(<DatePicker closeOnScroll={() => false} />);
-    const input = container.querySelector("input");
-    fireEvent.focus(input ?? new HTMLElement());
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
     fireEvent.scroll(document);
     expect(container.querySelector(".react-datepicker")).not.toBeNull();
   });
@@ -2756,7 +2775,8 @@ describe("DatePicker", () => {
           onChange={onChange}
         />,
       );
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
 
       const days = container.querySelectorAll(".react-datepicker__day");
 
@@ -2778,7 +2798,10 @@ describe("DatePicker", () => {
           onChange={onChange}
         />,
       );
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
       const days = container.querySelectorAll(".react-datepicker__day");
 
       expect(days[5]).toBeTruthy();
@@ -2800,7 +2823,10 @@ describe("DatePicker", () => {
           onChange={onChange}
         />,
       );
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
       const days = container.querySelectorAll(".react-datepicker__day");
 
       expect(days[5]).toBeTruthy();
@@ -2833,8 +2859,11 @@ describe("DatePicker", () => {
         />,
       );
 
-      const day = container.querySelector(".react-datepicker__day--selected");
-      fireEvent.click(day ?? new HTMLElement());
+      const selectedDay = safeQuerySelector(
+        container,
+        ".react-datepicker__day--selected",
+      );
+      fireEvent.click(selectedDay);
       expect(startDate).toBeTruthy();
       expect(formatDate(startDate!, "yyyy-MM-dd")).toBe(
         formatDate(selected, "yyyy-MM-dd"),
@@ -2861,10 +2890,11 @@ describe("DatePicker", () => {
         />,
       );
 
-      const day = container.querySelector(
+      const day = safeQuerySelector(
+        container,
         ".react-datepicker__day--selected + .react-datepicker__day",
       );
-      fireEvent.click(day ?? new HTMLElement());
+      fireEvent.click(day);
       expect(formatDate(startDate, "yyyy-MM-dd")).toBe(
         formatDate(startDate, "yyyy-MM-dd"),
       );
@@ -2895,8 +2925,11 @@ describe("DatePicker", () => {
         />,
       );
 
-      const day = container.querySelector(".react-datepicker__day--selected");
-      fireEvent.click(day ?? new HTMLElement());
+      const day = safeQuerySelector(
+        container,
+        ".react-datepicker__day--selected",
+      );
+      fireEvent.click(day);
       expect(formatDate(startDate, "yyyy-MM-dd")).toBe(
         formatDate(selected, "yyyy-MM-dd"),
       );
@@ -3011,10 +3044,15 @@ describe("DatePicker", () => {
       const { container } = render(
         <DatePicker selectsRange startDate={startDate} endDate={endDate} />,
       );
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
-      fireEvent.click(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
+
+      const datePickerDay = safeQuerySelector(
+        container,
+        ".react-datepicker__day",
       );
+      fireEvent.click(datePickerDay);
 
       expect(container.querySelector(".react-datepicker")).not.toBeNull();
     });
@@ -3025,7 +3063,9 @@ describe("DatePicker", () => {
       const { container } = render(
         <DatePicker selectsRange startDate={startDate} endDate={endDate} />,
       );
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
 
       const days = container.querySelectorAll(".react-datepicker__day");
       const day = days[Math.floor(days.length / 2)];
@@ -3045,7 +3085,9 @@ describe("DatePicker", () => {
           endDate={endDate}
         />,
       );
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
 
       const days = container.querySelectorAll(".react-datepicker__day");
       const day = days[Math.floor(days.length / 2)];
@@ -3116,9 +3158,9 @@ describe("DatePicker", () => {
         />,
       );
 
-      const input = container.querySelector("input");
+      const input = safeQuerySelector(container, "input");
       expect(input).toBeTruthy();
-      fireEvent.click(input ?? new HTMLElement());
+      fireEvent.click(input);
 
       const calendar = container.querySelector(".react-datepicker");
       expect(calendar).toBeTruthy();
@@ -3127,10 +3169,11 @@ describe("DatePicker", () => {
       const startDatePrefixedWithZeros = formatDayWithZeros(
         startDate.getDate(),
       );
-      const endDateElement = container.querySelector(
+      const endDateElement = safeQuerySelector(
+        container,
         `.react-datepicker__day--${startDatePrefixedWithZeros}`,
       );
-      fireEvent.click(endDateElement ?? new HTMLElement());
+      fireEvent.click(endDateElement);
 
       expect(onChangeSpy).toHaveBeenCalled();
     });
@@ -3158,7 +3201,7 @@ describe("DatePicker", () => {
         />,
       );
 
-      const input = container.querySelector("input");
+      const input = safeQuerySelector(container, "input");
       expect(input).toBeTruthy();
       fireEvent.click(input!);
 
@@ -3169,10 +3212,12 @@ describe("DatePicker", () => {
       const startDatePrefixedWithZeros = formatDayWithZeros(
         startDate.getDate(),
       );
-      const endDateElement = container.querySelector(
+
+      const endDateElement = safeQuerySelector(
+        container,
         `.react-datepicker__day--${startDatePrefixedWithZeros}`,
       );
-      fireEvent.click(endDateElement ?? new HTMLElement());
+      fireEvent.click(endDateElement);
 
       calendar = container.querySelector(".react-datepicker");
       expect(calendar).toBeFalsy();
@@ -3189,7 +3234,8 @@ describe("DatePicker", () => {
       const { container, rerender } = render(
         <DatePicker monthsShown={2} selected={selected} />,
       );
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
       const months = container.querySelectorAll(".react-datepicker__month");
       expect(months).toHaveLength(2);
       // 2023-05 monthShowsDuplicateDaysEnd:true
@@ -3209,7 +3255,7 @@ describe("DatePicker", () => {
 
       // moreThanTwoMonths
       rerender(<DatePicker monthsShown={4} selected={selected} />);
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+      fireEvent.click(input);
       const monthsMore = container.querySelectorAll(".react-datepicker__month");
       expect(monthsMore).toHaveLength(4);
       // 2023-05 monthShowsDuplicateDaysEnd:true
@@ -3247,7 +3293,8 @@ describe("DatePicker", () => {
       const { container, rerender } = render(
         <DatePicker monthsShown={2} selected={selected} />,
       );
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
       const months = container.querySelectorAll(".react-datepicker__month");
       expect(months).toHaveLength(2);
 
@@ -3264,7 +3311,7 @@ describe("DatePicker", () => {
 
       // moreThanTwoMonths
       rerender(<DatePicker monthsShown={4} selected={selected} />);
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+      fireEvent.click(input);
       const monthsMore = container.querySelectorAll(".react-datepicker__month");
       expect(monthsMore).toHaveLength(4);
       // 2023-05 monthShowsDuplicateDaysStart:false
@@ -3291,7 +3338,8 @@ describe("DatePicker", () => {
 
     it("should not find duplicates when single month displayed", () => {
       const { container } = render(<DatePicker selected={selected} />);
-      fireEvent.click(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
       const months = container.querySelectorAll(".react-datepicker__month");
       expect(months).toHaveLength(1);
 
@@ -3479,7 +3527,7 @@ describe("DatePicker", () => {
     registerLocale("en-GB", enGB);
 
     const { container } = render(<DatePicker locale="en-GB" />);
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
@@ -3492,7 +3540,7 @@ describe("DatePicker", () => {
     registerLocale("en-US", enUS);
 
     const { container } = render(<DatePicker locale="en-US" />);
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
@@ -3521,7 +3569,7 @@ describe("DatePicker", () => {
         />,
       );
 
-      const input = container.querySelector("input") ?? new HTMLElement();
+      const input = safeQuerySelector(container, "input");
       fireEvent.change(input, {
         target: {
           value: "8:22 AM",
@@ -3550,9 +3598,10 @@ describe("DatePicker", () => {
       />,
     );
 
-    const input =
-      datepicker.querySelector(".react-datepicker__input-container > input") ??
-      new HTMLElement();
+    const input = safeQuerySelector(
+      datepicker,
+      ".react-datepicker__input-container > input",
+    );
     fireEvent.change(input, { target: { value: "" } });
 
     expect(date).toBe(null);
@@ -3576,9 +3625,10 @@ describe("DatePicker", () => {
       />,
     );
 
-    const input =
-      datepicker.querySelector(".react-datepicker__input-container > input") ??
-      new HTMLElement();
+    const input = safeQuerySelector(
+      datepicker,
+      ".react-datepicker__input-container > input",
+    );
     fireEvent.change(input, { target: { value: "" } });
 
     expect(date).toBe(null);
@@ -3597,7 +3647,7 @@ describe("DatePicker", () => {
       />,
     );
 
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.change(input, {
       target: {
         value: "11/2022",
@@ -3626,7 +3676,7 @@ describe("DatePicker", () => {
       />,
     );
 
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
     fireEvent.change(input, {
       target: {
         value: "2021",
@@ -3744,11 +3794,12 @@ describe("DatePicker", () => {
         />,
       );
 
-      const dateInput = container.querySelector("input");
-      fireEvent.focus(dateInput ?? new HTMLElement());
-      const selectedYear =
-        container.querySelector(".react-datepicker__year-text--selected") ??
-        new HTMLElement();
+      const dateInput = safeQuerySelector(container, "input");
+      fireEvent.focus(dateInput);
+      const selectedYear = safeQuerySelector(
+        container,
+        ".react-datepicker__year-text--selected",
+      );
 
       fireEvent.mouseEnter(selectedYear);
       fireEvent.mouseLeave(selectedYear);
@@ -3770,11 +3821,12 @@ describe("DatePicker", () => {
         />,
       );
 
-      const dateInput = container.querySelector("input");
-      fireEvent.focus(dateInput ?? new HTMLElement());
-      const selectedYear =
-        container.querySelector(".react-datepicker__year-text--selected") ??
-        new HTMLElement();
+      const dateInput = safeQuerySelector(container, "input");
+      fireEvent.focus(dateInput);
+      const selectedYear = safeQuerySelector(
+        container,
+        ".react-datepicker__year-text--selected",
+      );
 
       fireEvent.pointerEnter(selectedYear);
       fireEvent.pointerLeave(selectedYear);

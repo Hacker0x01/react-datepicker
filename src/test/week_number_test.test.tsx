@@ -4,6 +4,8 @@ import React from "react";
 import { KeyType, addWeeks, newDate } from "../date_utils";
 import WeekNumber from "../week_number";
 
+import { safeQuerySelector } from "./test_utils";
+
 type WeekNumberProps = React.ComponentProps<typeof WeekNumber>;
 
 function renderWeekNumber(
@@ -37,11 +39,11 @@ describe("WeekNumber", () => {
       const { container } = render(
         <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
       );
-      const weekNumber = container.querySelector(
+      const weekNumber = safeQuerySelector<HTMLDivElement>(
+        container,
         ".react-datepicker__week-number",
       );
-      expect(weekNumber).not.toBeNull();
-      fireEvent.click(weekNumber ?? new HTMLDivElement());
+      fireEvent.click(weekNumber);
       expect(onClickMock).toHaveBeenCalledTimes(1);
     });
 
@@ -104,11 +106,11 @@ describe("WeekNumber", () => {
       const { container } = render(
         <WeekNumber weekNumber={1} date={new Date()} onClick={onClickMock} />,
       );
-      const weekNumber = container.querySelector(
+      const weekNumber = safeQuerySelector<HTMLDivElement>(
+        container,
         ".react-datepicker__week-number",
       );
-      expect(weekNumber).not.toBeNull();
-      fireEvent.click(weekNumber ?? new HTMLDivElement());
+      fireEvent.click(weekNumber);
       expect(onClickMock).toHaveBeenCalled();
     });
 
