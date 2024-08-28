@@ -204,7 +204,7 @@ export type DatePickerProps = OmitUnion<
     ) => void;
   } & (
     | {
-        selectsRange?: never;
+        selectsRange?: boolean;
         selectsMultiple?: never;
         onChange?: (
           date: Date | null,
@@ -214,7 +214,7 @@ export type DatePickerProps = OmitUnion<
         ) => void;
       }
     | {
-        selectsRange: true;
+        selectsRange: boolean;
         selectsMultiple?: never;
         onChange?: (
           date: [Date | null, Date | null],
@@ -224,7 +224,7 @@ export type DatePickerProps = OmitUnion<
         ) => void;
       }
     | {
-        selectsRange?: never;
+        selectsRange?: boolean;
         selectsMultiple: true;
         onChange?: (
           date: Date[] | null,
