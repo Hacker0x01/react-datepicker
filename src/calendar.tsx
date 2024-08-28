@@ -50,7 +50,7 @@ import Year from "./year";
 import YearDropdown from "./year_dropdown";
 
 import type { ClickOutsideHandler } from "./click_outside_wrapper";
-import type { Day } from "date-fns/types";
+import type { Day } from "date-fns";
 
 interface YearDropdownProps
   extends React.ComponentPropsWithoutRef<typeof YearDropdown> {}
