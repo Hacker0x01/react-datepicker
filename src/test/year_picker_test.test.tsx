@@ -14,7 +14,13 @@ import {
 import DatePicker from "../index";
 import Year from "../year";
 
-import { getKey, gotoNextView, openDateInput } from "./test_utils";
+import {
+  getKey,
+  gotoNextView,
+  openDateInput,
+  safeQuerySelector,
+  safeQuerySelectorAll,
+} from "./test_utils";
 
 const getYearOffset = (calendar: Element, date: Date): number => {
   const dateNode = calendar.querySelector(
@@ -71,10 +77,16 @@ describe("YearPicker", () => {
         onYearMouseLeave={() => {}}
       />,
     );
-    const firstYearDiv = container.querySelectorAll(
+
+    const minRequiredYearLen = 2;
+    const yearDivs = safeQuerySelectorAll(
+      container,
       ".react-datepicker__year-text",
-    )[1];
-    fireEvent.click(firstYearDiv ?? new HTMLElement());
+      minRequiredYearLen,
+    );
+
+    const firstYearDiv = yearDivs[1]!;
+    fireEvent.click(firstYearDiv);
     expect(onYearChangeSpy).toHaveBeenCalled();
   });
 
@@ -563,13 +575,15 @@ describe("YearPicker", () => {
         />,
       );
 
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
 
-      const calendar = container.querySelector(".react-datepicker");
-      const previousButton = calendar?.querySelector(
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+      const previousButton = safeQuerySelector(
+        calendar,
         ".react-datepicker__navigation--previous",
       );
-      fireEvent.click(previousButton ?? new HTMLElement());
+      fireEvent.click(previousButton);
 
       const year = container.querySelector(".react-datepicker__year");
       const allPreselectedYears = year?.querySelectorAll(`.${className}`) ?? [];
@@ -594,14 +608,16 @@ describe("YearPicker", () => {
         />,
       );
 
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
 
-      const calendar = container.querySelector(".react-datepicker");
-      const nextButton = calendar?.querySelector(
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+      const nextButton = safeQuerySelector(
+        calendar,
         ".react-datepicker__navigation--next",
       );
 
-      fireEvent.click(nextButton ?? new HTMLElement());
+      fireEvent.click(nextButton);
 
       const year = container.querySelector(".react-datepicker__year");
       const allPreselectedYears = year?.querySelectorAll(`.${className}`) ?? [];
@@ -683,131 +699,144 @@ describe("YearPicker", () => {
     it("should preSelect and set 2020 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateLeft(target ?? new HTMLElement());
+      simulateLeft(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2020);
     });
     it("should preSelect and set 2022 on left arrow press", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateRight(target ?? new HTMLElement());
+      simulateRight(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2022);
     });
     it("should preSelect and set 2021 on up arrow press", () => {
       const yearPicker = getPicker("2024-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateUp(target ?? new HTMLElement());
+      simulateUp(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2021);
     });
     it("should preSelect and set 2027 on down arrow press", () => {
       const yearPicker = getPicker("2024-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateDown(target ?? new HTMLElement());
+      simulateDown(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2027);
     });
     it("should paginate from 2018 to 2015", () => {
       const yearPicker = getPicker("2018-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateUp(target ?? new HTMLElement());
+      simulateUp(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2015);
     });
     it("should paginate from 2018 to 2016 with custom yearItemNumber", () => {
       const yearPicker = getPicker("2018-01-01", { yearItemNumber: 8 });
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateUp(target ?? new HTMLElement());
+      simulateUp(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2016);
     });
     it("should paginate from 2019 to 2014 with custom yearItemNumber", () => {
       const yearPicker = getPicker("2019-01-01", { yearItemNumber: 8 });
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateUp(target ?? new HTMLElement());
+      simulateUp(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2014);
     });
     it("should paginate from 2028 to 2031", () => {
       const yearPicker = getPicker("2028-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateDown(target ?? new HTMLElement());
+      simulateDown(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2031);
     });
     it("should paginate from 2024 to 2026 with custom yearItemNumber", () => {
       const yearPicker = getPicker("2024-01-01", { yearItemNumber: 8 });
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateDown(target ?? new HTMLElement());
+      simulateDown(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2026);
     });
     it("should paginate from 2022 to 2027 with custom yearItemNumber", () => {
       const yearPicker = getPicker("2022-01-01", { yearItemNumber: 8 });
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateDown(target ?? new HTMLElement());
+      simulateDown(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2027);
     });
     it("should paginate from 2017 to 2016", () => {
       const yearPicker = getPicker("2017-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateLeft(target ?? new HTMLElement());
+      simulateLeft(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2016);
     });
     it("should paginate from 2028 to 2029", () => {
       const yearPicker = getPicker("2028-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateRight(target ?? new HTMLElement());
+      simulateRight(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2029);
     });
     it("should select 2021 when Enter key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
 
-      fireEvent.keyDown(target ?? new HTMLElement(), getKey(KeyType.Enter));
+      fireEvent.keyDown(target, getKey(KeyType.Enter));
       expect(selectedDay ? getYear(selectedDay) : selectedDay).toBe(2021);
     });
 
@@ -823,12 +852,12 @@ describe("YearPicker", () => {
         />,
       );
 
-      const dateInput = container.querySelector("input");
-      fireEvent.focus(dateInput ?? new HTMLElement());
+      const dateInput = safeQuerySelector(container, "input");
+      fireEvent.focus(dateInput);
 
-      const year = container.querySelector(".react-datepicker__year-text");
+      const year = safeQuerySelector(container, ".react-datepicker__year-text");
 
-      fireEvent.keyDown(year ?? new HTMLElement(), getKey(KeyType.ArrowDown));
+      fireEvent.keyDown(year, getKey(KeyType.ArrowDown));
 
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
@@ -836,11 +865,12 @@ describe("YearPicker", () => {
     it("should select 2021 when Space key is pressed", () => {
       const yearPicker = getPicker("2021-01-01");
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
 
-      fireEvent.keyDown(target ?? new HTMLElement(), getKey(KeyType.Space));
+      fireEvent.keyDown(target, getKey(KeyType.Space));
       expect(selectedDay ? getYear(selectedDay) : selectedDay).toBe(2021);
     });
 
@@ -849,10 +879,11 @@ describe("YearPicker", () => {
         disabledKeyboardNavigation: true,
       });
 
-      const target = yearPicker.querySelector<HTMLElement>(
+      const target = safeQuerySelector(
+        yearPicker,
         ".react-datepicker__year-text--selected",
       );
-      simulateRight(target ?? new HTMLElement());
+      simulateRight(target);
 
       expect(preSelected ? getYear(preSelected) : preSelected).toBe(2021);
     });

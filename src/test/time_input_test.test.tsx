@@ -5,6 +5,7 @@ import DatePicker from "../index";
 import InputTimeComponent from "../input_time";
 
 import CustomTimeInput from "./helper_components/custom_time_input";
+import { safeQuerySelector } from "./test_utils";
 
 describe("timeInput", () => {
   afterEach(() => {
@@ -30,11 +31,11 @@ describe("timeInput", () => {
   it("should trigger onChange event", () => {
     const onChangeSpy = jest.fn();
     const { container } = render(<InputTimeComponent onChange={onChangeSpy} />);
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: { value: "13:00" },
     });
-    expect(input?.value).toEqual("13:00");
+    expect(input.value).toEqual("13:00");
   });
 
   it("should retain the focus on onChange event", () => {
@@ -42,18 +43,18 @@ describe("timeInput", () => {
     const { container } = render(
       <DatePicker showTimeInput onChange={onChangeSpy} />,
     );
-    const input = container.querySelector("input");
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
 
     act(() => {
       input?.focus();
     });
     expect(document.activeElement).toBe(input);
 
-    fireEvent.change(input ?? new HTMLElement(), {
+    fireEvent.change(input, {
       target: { value: "13:00" },
     });
 
-    expect(input?.value).toEqual("13:00");
+    expect(input.value).toEqual("13:00");
     expect(document.activeElement).toBe(input);
   });
 
@@ -61,9 +62,9 @@ describe("timeInput", () => {
     const { container } = render(
       <InputTimeComponent timeString="13:00" onChange={() => {}} />,
     );
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), { target: { value: "" } });
-    expect(input?.value).toEqual("13:00");
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, { target: { value: "" } });
+    expect(input.value).toEqual("13:00");
   });
 
   it("should trigger onChange event on a custom time input without using the last valid timeString", () => {
@@ -79,8 +80,8 @@ describe("timeInput", () => {
     );
 
     const newTime = "14:00";
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: { value: newTime },
     });
 
@@ -104,8 +105,8 @@ describe("timeInput", () => {
     );
 
     const newTime = "14:00";
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: { value: newTime },
     });
 
@@ -121,8 +122,8 @@ describe("timeInput", () => {
     );
 
     const newTime = "13:00";
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: { value: newTime },
     });
 
@@ -146,8 +147,8 @@ describe("timeInput", () => {
     );
 
     const newTime = "13:00";
-    const input = container.querySelector("input");
-    fireEvent.change(input ?? new HTMLElement(), {
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.change(input, {
       target: { value: newTime },
     });
 

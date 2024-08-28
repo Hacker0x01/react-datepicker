@@ -3,6 +3,8 @@ import React, { useState } from "react";
 
 import DatePicker from "../index";
 
+import { safeQuerySelector } from "./test_utils";
+
 import type { DatePickerProps } from "../index";
 
 // see https://github.com/microsoft/TypeScript/issues/31501
@@ -78,7 +80,7 @@ describe("Datepicker minTime", () => {
     const { container } = render(
       <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
     );
-    const input = container.querySelector("input") ?? new HTMLInputElement();
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
     fireEvent.change(input, { target: { value: "2023-03-10 16:00" } });
     fireEvent.focusOut(input);
 
