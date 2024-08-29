@@ -113,3 +113,11 @@ docs/year_dropdown.md
 package-lock.json
 scripts/.DS_Store
 .DS_Store
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
