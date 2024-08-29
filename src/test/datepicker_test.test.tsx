@@ -3221,6 +3221,41 @@ describe("DatePicker", () => {
 
       expect(onCalendarCloseSpy).toHaveBeenCalled();
     });
+
+    it("should select start date and end date if user inputs the range manually in the input box", () => {
+      const onChangeSpy = jest.fn();
+      let instance: DatePicker | null = null;
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={undefined}
+          endDate={undefined}
+          onChange={onChangeSpy}
+          ref={(node) => {
+            instance = node;
+          }}
+        />,
+      );
+
+      expect(instance).toBeTruthy();
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
+        target: {
+          value: "03/04/2024 - 05/06/2024",
+        },
+      });
+
+      expect(onChangeSpy).toHaveBeenCalled();
+      expect(Array.isArray(onChangeSpy.mock.calls[0][0])).toBe(true);
+      expect(onChangeSpy.mock.calls[0][0][0]).toBeTruthy();
+      expect(onChangeSpy.mock.calls[0][0][1]).toBeTruthy();
+      expect(formatDate(onChangeSpy.mock.calls[0][0][0], "MM/dd/yyyy")).toBe(
+        "03/04/2024",
+      );
+      expect(formatDate(onChangeSpy.mock.calls[0][0][1], "MM/dd/yyyy")).toBe(
+        "05/06/2024",
+      );
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
