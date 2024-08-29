@@ -9232,7 +9232,6 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     lint-staged: "npm:^15.2.9"
     lodash: "npm:^4.17.21"
-    postcss: "npm:^8.4.41"
     prettier: "npm:^3.3.3"
     prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
