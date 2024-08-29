@@ -3221,6 +3221,84 @@ describe("DatePicker", () => {
 
       expect(onCalendarCloseSpy).toHaveBeenCalled();
     });
+
+    it("should select start date and end date if user inputs the range manually in the input box", () => {
+      const onChangeSpy = jest.fn();
+      let instance: DatePicker | null = null;
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={undefined}
+          endDate={undefined}
+          onChange={onChangeSpy}
+          excludeDates={[newDate("2024-01-01")]}
+          ref={(node) => {
+            instance = node;
+          }}
+        />,
+      );
+
+      expect(instance).toBeTruthy();
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
+        target: {
+          value: "03/04/2024 - 05/06/2024",
+        },
+      });
+
+      // cover `if (startDateNew && isDayDisabled(startDateNew, this.props))` block
+      fireEvent.change(input, {
+        target: {
+          value: "01/01/2024-05/06/2024",
+        },
+      });
+
+      // cover `if (endDateNew && isDayDisabled(endDateNew, this.props))` block
+      fireEvent.change(input, {
+        target: {
+          value: "03/04/2023-01/01/2024",
+        },
+      });
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(Array.isArray(onChangeSpy.mock.calls[0][0])).toBe(true);
+      expect(onChangeSpy.mock.calls[0][0][0]).toBeTruthy();
+      expect(onChangeSpy.mock.calls[0][0][1]).toBeTruthy();
+      expect(formatDate(onChangeSpy.mock.calls[0][0][0], "MM/dd/yyyy")).toBe(
+        "03/04/2024",
+      );
+      expect(formatDate(onChangeSpy.mock.calls[0][0][1], "MM/dd/yyyy")).toBe(
+        "05/06/2024",
+      );
+    });
+
+    it("should not fire onChange a second time if user edits text box without the parsing result changing", () => {
+      const onChangeSpy = jest.fn();
+      let instance: DatePicker | null = null;
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={newDate("2024-03-04")}
+          endDate={newDate("2024-05-06")}
+          onChange={onChangeSpy}
+          ref={(node) => {
+            instance = node;
+          }}
+        />,
+      );
+
+      expect(instance).toBeTruthy();
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+      // cover `if (!startChanged && !endChanged)` block
+      fireEvent.change(input, {
+        target: {
+          value: "03/04/2024-05/06/2024",
+        },
+      });
+
+      expect(onChangeSpy).not.toHaveBeenCalled();
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
