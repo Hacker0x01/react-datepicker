@@ -3,6 +3,8 @@ import React from "react";
 
 import DatePicker from "../index";
 
+import { safeQuerySelector } from "./test_utils";
+
 describe("WeekPicker", () => {
   it("should change the week when clicked on any option in the picker", () => {
     const onChangeSpy = jest.fn();
@@ -10,10 +12,12 @@ describe("WeekPicker", () => {
       <DatePicker onChange={onChangeSpy} showWeekPicker />,
     );
     expect(onChangeSpy).not.toHaveBeenCalled();
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    fireEvent.click(
-      container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.click(dayElement);
     expect(onChangeSpy).toHaveBeenCalled();
   });
 
@@ -23,14 +27,13 @@ describe("WeekPicker", () => {
       <DatePicker onChange={onChangeSpy} showWeekPicker showWeekNumbers />,
     );
     expect(onChangeSpy).not.toHaveBeenCalled();
-    const input = container.querySelector("input");
-    expect(input).not.toBeNull();
-    fireEvent.focus(input ?? new HTMLElement());
-    const weekNumber = container.querySelector(
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const weekNumber = safeQuerySelector(
+      container,
       ".react-datepicker__week-number",
     );
-    expect(weekNumber).not.toBeNull();
-    fireEvent.click(weekNumber ?? new HTMLElement());
+    fireEvent.click(weekNumber);
     expect(onChangeSpy).toHaveBeenCalled();
   });
 

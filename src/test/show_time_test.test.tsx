@@ -4,6 +4,8 @@ import React from "react";
 import DatePicker from "../index";
 import TimeComponent from "../time";
 
+import { safeQuerySelector } from "./test_utils";
+
 describe("DatePicker", () => {
   it("should show time component when showTimeSelect prop is present", () => {
     const { container } = render(<DatePicker showTimeSelect open />);
@@ -26,7 +28,9 @@ describe("DatePicker", () => {
       datePicker = render(
         <DatePicker showTimeSelect showTimeSelectOnly todayButton="Today" />,
       ).container;
-      fireEvent.click(datePicker.querySelector("input") ?? new HTMLElement());
+
+      const input = safeQuerySelector(datePicker, "input");
+      fireEvent.click(input);
     });
 
     it("should not show month container when showTimeSelectOnly prop is present", () => {
