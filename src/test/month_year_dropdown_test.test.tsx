@@ -13,10 +13,12 @@ import {
 import MonthYearDropdown from "../month_year_dropdown";
 import MonthYearDropdownOptions from "../month_year_dropdown_options";
 
+import { safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
+
 type MonthYearDropdownProps = React.ComponentProps<typeof MonthYearDropdown>;
 
 describe("MonthYearDropdown", () => {
-  let monthYearDropdown: HTMLElement | null = null;
+  let monthYearDropdown: HTMLElement;
   let handleChangeResult: Date | null = null;
   const mockHandleChange = function (changeInput: Date) {
     handleChangeResult = changeInput;
@@ -81,11 +83,11 @@ describe("MonthYearDropdown", () => {
     });
 
     it("opens a list when read view is clicked", () => {
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
       );
+      fireEvent.click(monthYearReadView);
       const optionsView = monthYearDropdown?.querySelector(
         ".react-datepicker__month-year-dropdown",
       );
@@ -93,16 +95,18 @@ describe("MonthYearDropdown", () => {
     });
 
     it("closes the dropdown when a month year is clicked", () => {
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
       );
-      fireEvent.click(
-        (monthYearDropdown?.querySelectorAll(
-          ".react-datepicker__month-year-option",
-        ) ?? [])[1] ?? new HTMLElement(),
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        ".react-datepicker__month-year-option",
       );
+      const monthYearOption = monthYearOptions[0]!;
+      fireEvent.click(monthYearOption);
       expect(
         monthYearDropdown?.querySelectorAll(
           ".react-datepicker__month-year-dropdown",
@@ -131,25 +135,27 @@ describe("MonthYearDropdown", () => {
     });
 
     it("does not call the supplied onChange function when the same month year is clicked", () => {
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
       );
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-option--selected_month-year",
-        ) ?? new HTMLElement(),
+      fireEvent.click(monthYearReadView);
+
+      const selectedMonthYear = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-option--selected_month-year",
       );
+      fireEvent.click(selectedMonthYear);
+
       expect(handleChangeResult).toBeNull();
     });
 
     it("adds aria-selected to selected option", () => {
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
       );
+      fireEvent.click(monthYearReadView);
 
       const ariaSelected = monthYearDropdown
         ?.querySelector(
@@ -161,12 +167,11 @@ describe("MonthYearDropdown", () => {
     });
 
     it("does not add aria-selected to non-selected option", () => {
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
       );
-
+      fireEvent.click(monthYearReadView);
       const ariaSelected = monthYearDropdown
         ?.querySelector(".react-datepicker__month-year-option")
         ?.getAttribute("aria-selected");
@@ -177,17 +182,21 @@ describe("MonthYearDropdown", () => {
     it("calls the supplied onChange function when a different month year is clicked", () => {
       const expected_date = newDate("2017-12");
 
-      fireEvent.click(
-        monthYearDropdown?.querySelector(
-          ".react-datepicker__month-year-read-view",
-        ) ?? new HTMLElement(),
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const minRequiredMonthYearOptionsLen = 6;
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        ".react-datepicker__month-year-option",
+        minRequiredMonthYearOptionsLen,
       );
 
-      fireEvent.click(
-        (monthYearDropdown?.querySelectorAll(
-          ".react-datepicker__month-year-option",
-        ) ?? [])[5] ?? new HTMLElement(),
-      );
+      const monthYearOption = monthYearOptions[5]!;
+      fireEvent.click(monthYearOption);
 
       expect(handleChangeResult?.toString()).toBe(expected_date.toString());
     });
@@ -297,10 +306,11 @@ describe("MonthYearDropdown", () => {
         dropdownMode: "select",
         date: selectedMonth,
       });
-      const select = monthYearDropdown.querySelector(
+      const select = safeQuerySelector(
+        monthYearDropdown,
         ".react-datepicker__month-year-select",
       );
-      fireEvent.change(select ?? new HTMLElement(), {
+      fireEvent.change(select, {
         target: { value: selectedMonth.valueOf() },
       });
       expect(handleChangeResult).toBeFalsy();
@@ -313,10 +323,11 @@ describe("MonthYearDropdown", () => {
         dropdownMode: "select",
         date: selectedMonth,
       });
-      const select = monthYearDropdown.querySelector(
+      const select = safeQuerySelector(
+        monthYearDropdown,
         ".react-datepicker__month-year-select",
       );
-      fireEvent.change(select ?? new HTMLElement(), {
+      fireEvent.change(select, {
         target: { value: monthToClick.valueOf() },
       });
       expect(handleChangeResult?.valueOf()).toBe(monthToClick.valueOf());

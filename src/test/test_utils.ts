@@ -80,3 +80,71 @@ export const gotoNextView = (container: Element) => {
   )!;
   fireEvent.click(nextButton);
 };
+
+export const safeQuerySelector = <T extends HTMLElement = HTMLElement>(
+  container: HTMLElement,
+  selector: string,
+): T => {
+  const element = container.querySelector(selector);
+  if (element) {
+    return element as T;
+  }
+
+  throw new Error(`Element with selector '${selector}' not found`);
+};
+
+export const safeQuerySelectorAll = <T extends HTMLElement = HTMLElement>(
+  container: HTMLElement,
+  selector: string,
+  minExpected: number = 1,
+): T[] => {
+  const elements = Array.from(container.querySelectorAll(selector)) as T[];
+
+  if (!elements.length) {
+    throw new Error(`Element with selector '${selector}' not found`);
+  }
+  if (elements.length < minExpected) {
+    throw new Error(
+      `Expected at least ${minExpected} element(s) for selector '${selector}'.  Only ${elements.length} found`,
+    );
+  }
+
+  return elements;
+};
+
+export class SafeElementWrapper<T extends HTMLElement> {
+  constructor(private element: T) {}
+
+  getElement(): T {
+    return this.element;
+  }
+
+  safeQuerySelector<E extends HTMLElement = HTMLElement>(
+    selector: string,
+  ): SafeElementWrapper<E> {
+    const element = this.element.querySelector(selector) as E;
+    if (element) {
+      return new SafeElementWrapper<E>(element);
+    }
+
+    throw new Error(`Element with selector '${selector}' not found`);
+  }
+
+  safeQuerySelectorAll<E extends HTMLElement = HTMLElement>(
+    selector: string,
+    minExpected = 1,
+  ): SafeElementWrapper<E>[] {
+    const elements = Array.from(this.element.querySelectorAll(selector)) as E[];
+
+    if (!elements.length) {
+      throw new Error(`Element with selector '${selector}' not found`);
+    }
+    if (elements.length < minExpected) {
+      throw new Error(
+        `Expected at least ${minExpected} element(s) for selector '${selector}'.  Only ${elements.length} found`,
+      );
+    }
+
+    return elements.map((element) => new SafeElementWrapper<E>(element));
+  }
+}

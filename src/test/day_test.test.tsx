@@ -15,6 +15,8 @@ import {
 } from "../date_utils";
 import Day from "../day";
 
+import { safeQuerySelector } from "./test_utils";
+
 function renderDay(day: Date, props = {}) {
   return render(
     <Day day={day} month={0} handleOnKeyDown={() => {}} {...props} />,
@@ -1226,9 +1228,9 @@ describe("Day", () => {
           onClick={onClick}
         />,
       );
-      fireEvent.click(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-      );
+
+      const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.click(dayElement);
       expect(onClickCalled).toBe(true);
     });
 
@@ -1243,9 +1245,9 @@ describe("Day", () => {
           onClick={onClick}
         />,
       );
-      fireEvent.click(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-      );
+
+      const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.click(dayElement);
       expect(onClickCalled).toBe(false);
     });
 
@@ -1262,9 +1264,9 @@ describe("Day", () => {
           onClick={onClick}
         />,
       );
-      fireEvent.click(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-      );
+
+      const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.click(dayElement);
       expect(onClickCalled).toBe(false);
     });
   });
@@ -1284,9 +1286,8 @@ describe("Day", () => {
         />,
       );
 
-      fireEvent.mouseEnter(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-      );
+      const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.mouseEnter(dayElement);
       expect(onMouseEnterSpy).toHaveBeenCalled();
     });
 
@@ -1305,9 +1306,8 @@ describe("Day", () => {
         />,
       );
 
-      fireEvent.pointerEnter(
-        container.querySelector(".react-datepicker__day") ?? new HTMLElement(),
-      );
+      const dayElement = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.pointerEnter(dayElement);
       expect(onMouseEnterSpy).toHaveBeenCalled();
     });
   });

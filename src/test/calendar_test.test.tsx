@@ -31,7 +31,12 @@ import {
 } from "../date_utils";
 import DatePicker from "../index";
 
-import { getKey } from "./test_utils";
+import {
+  getKey,
+  SafeElementWrapper,
+  safeQuerySelector,
+  safeQuerySelectorAll,
+} from "./test_utils";
 
 import type { ReactDatePickerCustomHeaderProps } from "../calendar";
 import type { Locale } from "../date_utils";
@@ -229,8 +234,9 @@ describe("Calendar", () => {
 
   it("should render month and year as a header of datepicker by default", () => {
     const { calendar } = getCalendar();
-    const header = calendar.querySelector("h2.react-datepicker__current-month");
-    expect(header).not.toBeNull();
+    expect(() =>
+      calendar.querySelector("h2.react-datepicker__current-month"),
+    ).not.toThrow();
   });
 
   it("should not show the year dropdown menu by default", () => {
@@ -652,8 +658,7 @@ describe("Calendar", () => {
       });
 
       const selected = newDate(instance?.state.date);
-      const prevMonth =
-        calendar.querySelector(".prevMonth") ?? new HTMLElement();
+      const prevMonth = safeQuerySelector(calendar, ".prevMonth");
 
       fireEvent.click(prevMonth);
 
@@ -668,8 +673,7 @@ describe("Calendar", () => {
       });
 
       const selected = newDate(instance?.state.date);
-      const nextMonth =
-        calendar.querySelector(".nextMonth") ?? new HTMLElement();
+      const nextMonth = safeQuerySelector(calendar, ".nextMonth");
 
       fireEvent.click(nextMonth);
 
@@ -717,8 +721,7 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      const monthSelect =
-        calendar.querySelector(".month-select") ?? new HTMLElement();
+      const monthSelect = safeQuerySelector(calendar, ".month-select");
       fireEvent.change(monthSelect, { target: { value: 4 } });
 
       const selected = newDate(instance?.state.date);
@@ -731,8 +734,7 @@ describe("Calendar", () => {
         renderCustomHeader,
       });
 
-      const yearSelect =
-        calendar.querySelector(".year-select") ?? new HTMLElement();
+      const yearSelect = safeQuerySelector(calendar, ".year-select");
 
       fireEvent.change(yearSelect, { target: { value: 2017 } });
 
@@ -877,13 +879,15 @@ describe("Calendar", () => {
         showDisabledMonthNavigation: true,
         onMonthChange: onMonthChangeSpy,
       });
-      const prevNavigationButton =
-        calendar.querySelector(".react-datepicker__navigation--previous") ??
-        new HTMLElement();
+      const prevNavigationButton = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--previous",
+      );
 
-      const nextNavigationButton =
-        calendar.querySelector(".react-datepicker__navigation--next") ??
-        new HTMLElement();
+      const nextNavigationButton = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--next",
+      );
 
       fireEvent.click(prevNavigationButton);
 
@@ -902,13 +906,15 @@ describe("Calendar", () => {
         showDisabledMonthNavigation: true,
         onMonthChange: onMonthChangeSpy,
       });
-      const prevNavigationButton =
-        calendar.querySelector(".react-datepicker__navigation--previous") ??
-        new HTMLElement();
+      const prevNavigationButton = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--previous",
+      );
 
-      const nextNavigationButton =
-        calendar.querySelector(".react-datepicker__navigation--next") ??
-        new HTMLElement();
+      const nextNavigationButton = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--next",
+      );
 
       fireEvent.click(prevNavigationButton);
       fireEvent.click(nextNavigationButton);
@@ -996,9 +1002,10 @@ describe("Calendar", () => {
 
   it("should set the date when pressing todayButton", () => {
     const { calendar, instance } = getCalendar({ todayButton: "Vandaag" });
-    const todayButton =
-      calendar.querySelector(".react-datepicker__today-button") ??
-      new HTMLElement();
+    const todayButton = safeQuerySelector(
+      calendar,
+      ".react-datepicker__today-button",
+    );
     fireEvent.click(todayButton);
     expect(isSameDay(instance?.state.date, newDate())).toBeTruthy();
   });
@@ -1031,8 +1038,7 @@ describe("Calendar", () => {
       />,
     );
 
-    const day =
-      container.querySelector(".react-datepicker__day") ?? new HTMLElement();
+    const day = safeQuerySelector(container, ".react-datepicker__day");
     fireEvent.mouseEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -1054,8 +1060,7 @@ describe("Calendar", () => {
       />,
     );
 
-    const day =
-      container.querySelector(".react-datepicker__day") ?? new HTMLElement();
+    const day = safeQuerySelector(container, ".react-datepicker__day");
     fireEvent.pointerEnter(day);
 
     expect(onDayMouseEnterSpy).toHaveBeenLastCalledWith(
@@ -1094,11 +1099,11 @@ describe("Calendar", () => {
         onSelect={() => {}}
       />,
     );
-    const month = container.querySelector(".react-datepicker__month");
+    const month = safeQuerySelector(container, ".react-datepicker__month");
     expect(
       month?.classList.contains("react-datepicker__month--selecting-range"),
     ).toBeTruthy();
-    fireEvent.mouseLeave(month ?? new HTMLElement());
+    fireEvent.mouseLeave(month);
 
     expect(
       container
@@ -1153,10 +1158,12 @@ describe("Calendar", () => {
         }}
       />,
     );
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    const previousButton =
-      container.querySelector(".react-datepicker__navigation--previous") ??
-      new HTMLElement();
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const previousButton = safeQuerySelector(
+      container,
+      ".react-datepicker__navigation--previous",
+    );
     fireEvent.click(previousButton);
 
     expect(date).not.toBeNull();
@@ -1175,11 +1182,14 @@ describe("Calendar", () => {
         }}
       />,
     );
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    const nextButton = container.querySelector(
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const nextButton = safeQuerySelector(
+      container,
       ".react-datepicker__navigation--next",
     );
-    fireEvent.click(nextButton ?? new HTMLElement());
+    fireEvent.click(nextButton);
     expect(date).not.toBeNull();
     expect(formatDate(date!, "dd.MM.yyyy")).toBe(expectedDate);
   });
@@ -1196,11 +1206,14 @@ describe("Calendar", () => {
         }}
       />,
     );
-    fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-    const previousButton = container.querySelector(
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const previousButton = safeQuerySelector(
+      container,
       ".react-datepicker__navigation--previous",
     );
-    fireEvent.click(previousButton ?? new HTMLElement());
+    fireEvent.click(previousButton);
     expect(date).not.toBeNull();
     expect(formatDate(date!, "dd.MM.yyyy")).toBe(expectedDate);
   });
@@ -1216,7 +1229,7 @@ describe("Calendar", () => {
       />,
     );
 
-    const input = container.querySelector("input") ?? new HTMLElement();
+    const input = safeQuerySelector(container, "input");
 
     fireEvent.focus(input);
     expect(onCalendarOpen).toHaveBeenCalled();
@@ -1246,28 +1259,31 @@ describe("Calendar", () => {
     });
 
     it("calls onMonthChange prop when previous month button clicked", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__navigation--previous") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--previous",
+      );
       fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when next month button clicked", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__navigation--next") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__navigation--next",
+      );
       fireEvent.click(select);
 
       expect(onMonthChangeSpy).toHaveBeenCalled();
     });
 
     it("calls onMonthChange prop when month changed from month dropdown", () => {
-      const select =
-        calendar
-          .querySelector(".react-datepicker__month-dropdown-container")
-          ?.querySelector("select") ?? new HTMLElement();
+      const select = new SafeElementWrapper(calendar)
+        .safeQuerySelector(".react-datepicker__month-dropdown-container")
+        .safeQuerySelector("select")
+        .getElement();
+
       fireEvent.change(select, {
         target: {
           value: Array.from<HTMLOptionElement>(
@@ -1299,10 +1315,11 @@ describe("Calendar", () => {
     });
 
     it("calls onYearChange prop when year changed from year dropdown", () => {
-      const select =
-        calendar
-          .querySelector(".react-datepicker__year-dropdown-container")
-          ?.querySelector("select") ?? new HTMLElement();
+      const yearDropdownContainer = safeQuerySelector(
+        calendar,
+        ".react-datepicker__year-dropdown-container",
+      );
+      const select = safeQuerySelector(yearDropdownContainer, "select");
       fireEvent.change(select, {
         target: {
           value: Array.from<HTMLOptionElement>(
@@ -1351,12 +1368,20 @@ describe("Calendar", () => {
 
     it("calls onYearChange prop when selection is changed from month-year dropdown", () => {
       const { calendar } = renderCalendar();
-      const select =
-        calendar
-          .querySelector(".react-datepicker__month-year-dropdown-container")
-          ?.querySelector("select") ?? new HTMLElement();
-      const option =
-        select?.querySelectorAll("option")[3] ?? new HTMLOptionElement();
+      const monthYearDropdownContainer = safeQuerySelector(
+        calendar,
+        ".react-datepicker__month-year-dropdown-container",
+      );
+
+      const select = safeQuerySelector(monthYearDropdownContainer, "select");
+      const minMonthYearOptionsLen = 4;
+      const options = safeQuerySelectorAll<HTMLOptionElement>(
+        select,
+        "option",
+        minMonthYearOptionsLen,
+      );
+
+      const option = options[3]!;
       fireEvent.change(select, {
         target: {
           value: option.value,
@@ -1368,12 +1393,18 @@ describe("Calendar", () => {
 
     it("calls onMonthChange prop when selection is changed from month-year dropdown", () => {
       const { calendar } = renderCalendar();
-      const select =
-        calendar
-          .querySelector(".react-datepicker__month-year-dropdown-container")
-          ?.querySelector("select") ?? new HTMLElement();
-      const option =
-        select.querySelectorAll("option")[3] ?? new HTMLOptionElement();
+
+      const monthYearDropdownContainer = safeQuerySelector(
+        calendar,
+        ".react-datepicker__month-year-dropdown-container",
+      );
+      const select = safeQuerySelector(monthYearDropdownContainer, "select");
+      const options = safeQuerySelectorAll<HTMLOptionElement>(select, "option");
+      const option = options[3];
+      if (!option) {
+        throw new Error("option is undefined");
+      }
+
       fireEvent.change(select, {
         target: {
           value: option.value,
@@ -1407,36 +1438,40 @@ describe("Calendar", () => {
     });
 
     it("calls onDropdownFocus prop when year select is focused", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__year-select") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__year-select",
+      );
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when month select is focused", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__month-select") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__month-select",
+      );
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("calls onDropdownFocus prop when year-month select is focused", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__month-year-select") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__month-year-select",
+      );
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalled();
     });
 
     it("does not call onDropdownFocus prop when the dropdown container div is focused", () => {
-      const select =
-        calendar.querySelector(".react-datepicker__header__dropdown") ??
-        new HTMLElement();
+      const select = safeQuerySelector(
+        calendar,
+        ".react-datepicker__header__dropdown",
+      );
       fireEvent.focus(select);
 
       expect(onDropdownFocusSpy).toHaveBeenCalledTimes(0);
@@ -2272,10 +2307,12 @@ describe("Calendar", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-      const prevMonthButton =
-        container.querySelector(".react-datepicker__navigation--previous") ??
-        new HTMLElement();
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+      const prevMonthButton = safeQuerySelector(
+        container,
+        ".react-datepicker__navigation--previous",
+      );
       fireEvent.keyDown(prevMonthButton, getKey(KeyType.Tab));
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
@@ -2288,10 +2325,12 @@ describe("Calendar", () => {
           onKeyDown={onKeyDownSpy}
         />,
       );
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
-      const nextMonthButton =
-        container.querySelector(".react-datepicker__navigation--next") ??
-        new HTMLElement();
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+      const nextMonthButton = safeQuerySelector(
+        container,
+        ".react-datepicker__navigation--next",
+      );
       fireEvent.keyDown(nextMonthButton, getKey(KeyType.Tab));
       expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
     });
@@ -2347,11 +2386,13 @@ describe("Calendar", () => {
   describe("should render aria live region after month/year change", () => {
     it("should render aria live region after month change", () => {
       const { container } = render(<DatePicker selected={newDate()} />);
-      fireEvent.focus(container.querySelector("input") ?? new HTMLElement());
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
 
-      const nextNavigationButton =
-        container.querySelector(".react-datepicker__navigation--next") ??
-        new HTMLElement();
+      const nextNavigationButton = safeQuerySelector(
+        container,
+        ".react-datepicker__navigation--next",
+      );
       fireEvent.click(nextNavigationButton);
 
       const currentMonthText = container.querySelector(
