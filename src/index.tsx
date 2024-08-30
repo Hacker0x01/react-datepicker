@@ -565,6 +565,7 @@ export default class DatePicker extends Component<
     }
   };
 
+  // handleChange is called when user types in the textbox
   handleChange = (
     ...allArgs: Parameters<Required<DatePickerProps>["onChangeRaw"]>
   ) => {
@@ -585,36 +586,77 @@ export default class DatePicker extends Component<
         event?.target instanceof HTMLInputElement ? event.target.value : null,
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT,
     });
+
     const {
       dateFormat = DatePicker.defaultProps.dateFormat,
       strictParsing = DatePicker.defaultProps.strictParsing,
+      selectsRange,
+      startDate,
+      endDate,
     } = this.props;
-    let date = parseDate(
-      event?.target instanceof HTMLInputElement ? event.target.value : "",
-      dateFormat,
-      this.props.locale,
-      strictParsing,
-      this.props.selected ?? undefined,
-    );
-    // Use date from `selected` prop when manipulating only time for input value
-    if (
-      this.props.showTimeSelectOnly &&
-      this.props.selected &&
-      date &&
-      !isSameDay(date, this.props.selected)
-    ) {
-      date = set(this.props.selected, {
-        hours: getHours(date),
-        minutes: getMinutes(date),
-        seconds: getSeconds(date),
-      });
-    }
-    if (
-      date ||
-      !(event?.target instanceof HTMLInputElement) ||
-      !event?.target.value
-    ) {
-      this.setSelected(date, event, true);
+
+    const value =
+      event?.target instanceof HTMLInputElement ? event.target.value : "";
+
+    if (selectsRange) {
+      const [valueStart, valueEnd] = value
+        .split("-", 2)
+        .map((val) => val.trim());
+      const startDateNew = parseDate(
+        valueStart ?? "",
+        dateFormat,
+        this.props.locale,
+        strictParsing,
+      );
+      const endDateNew = parseDate(
+        valueEnd ?? "",
+        dateFormat,
+        this.props.locale,
+        strictParsing,
+      );
+      const startChanged = startDate?.getTime() !== startDateNew?.getTime();
+      const endChanged = endDate?.getTime() !== endDateNew?.getTime();
+
+      if (!startChanged && !endChanged) {
+        return;
+      }
+
+      if (startDateNew && isDayDisabled(startDateNew, this.props)) {
+        return;
+      }
+      if (endDateNew && isDayDisabled(endDateNew, this.props)) {
+        return;
+      }
+
+      this.props.onChange?.([startDateNew, endDateNew], event);
+    } else {
+      // not selectsRange
+      let date = parseDate(
+        value,
+        dateFormat,
+        this.props.locale,
+        strictParsing,
+        this.props.selected ?? undefined,
+      );
+
+      // Use date from `selected` prop when manipulating only time for input value
+      if (
+        this.props.showTimeSelectOnly &&
+        this.props.selected &&
+        date &&
+        !isSameDay(date, this.props.selected)
+      ) {
+        date = set(this.props.selected, {
+          hours: getHours(date),
+          minutes: getMinutes(date),
+          seconds: getSeconds(date),
+        });
+      }
+
+      // Update selection if either (1) date was successfully parsed, or (2) input field is empty
+      if (date || !value) {
+        this.setSelected(date, event, true);
+      }
     }
   };
 
@@ -654,6 +696,7 @@ export default class DatePicker extends Component<
     }
   };
 
+  // setSelected is called either from handleChange (user typed date into textbox and it was parsed) or handleSelect (user selected date from calendar using mouse or keyboard)
   setSelected = (
     date: Date | null,
     event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
@@ -662,6 +705,7 @@ export default class DatePicker extends Component<
   ) => {
     let changedDate = date;
 
+    // Early return if selected year/month/day is disabled
     if (this.props.showYearPicker) {
       if (
         changedDate !== null &&
@@ -697,6 +741,7 @@ export default class DatePicker extends Component<
       selectsMultiple
     ) {
       if (changedDate !== null) {
+        // Preserve previously selected time if only date is currently being changed
         if (
           this.props.selected &&
           (!keepInput ||
@@ -734,6 +779,7 @@ export default class DatePicker extends Component<
           this.setState({ monthSelectedIn: monthSelectedIn });
         }
       }
+
       if (selectsRange) {
         const noRanges = !startDate && !endDate;
         const hasStartRange = startDate && !endDate;

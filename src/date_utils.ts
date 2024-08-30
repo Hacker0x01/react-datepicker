@@ -742,7 +742,7 @@ export function isDayDisabled(
         if (excludeDate instanceof Date) {
           return isSameDay(day, excludeDate);
         } else {
-          return isSameDay(day, excludeDate.date ?? new Date());
+          return isSameDay(day, excludeDate.date);
         }
       })) ||
     (excludeDateIntervals &&
