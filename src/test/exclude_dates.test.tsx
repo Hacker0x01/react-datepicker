@@ -1,14 +1,18 @@
 import { render } from "@testing-library/react";
-import { subDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 import React from "react";
 
 import DatePicker from "../index";
 
 describe("DatePicker", () => {
-  const excludeDates = [new Date(), subDays(new Date(), 1)];
+  const today = new Date();
+  // otherDate must be in same month, otherwise it will not be shown on the calendar
+  const otherDate =
+    today.getDate() === 1 ? addDays(today, 1) : subDays(today, 1);
+  const excludeDates = [today, otherDate];
   const excludeDatesWithMessages = [
-    { date: subDays(new Date(), 1), message: "This day is excluded" },
-    { date: new Date(), message: "Today is excluded" },
+    { date: otherDate, message: "This day is excluded" },
+    { date: today, message: "Today is excluded" },
   ];
 
   it("should disable dates specified in excludeDates props", () => {
@@ -40,11 +44,11 @@ describe("DatePicker", () => {
     );
 
     expect(disabledTimeItems.length).toBe(excludeDatesWithMessages.length);
-    expect(disabledTimeItems[0]?.getAttribute("title")).toBe(
-      "This day is excluded",
-    );
-    expect(disabledTimeItems[1]?.getAttribute("title")).toBe(
-      "Today is excluded",
-    );
+    expect(
+      disabledTimeItems[today < otherDate ? 1 : 0]?.getAttribute("title"),
+    ).toBe("This day is excluded");
+    expect(
+      disabledTimeItems[today < otherDate ? 0 : 1]?.getAttribute("title"),
+    ).toBe("Today is excluded");
   });
 });
