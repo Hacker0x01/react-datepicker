@@ -4,7 +4,12 @@ import React from "react";
 import { formatDate, KeyType } from "../date_utils";
 import DatePicker from "../index";
 
-import { getKey, safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
+import {
+  getKey,
+  SafeElementWrapper,
+  safeQuerySelector,
+  safeQuerySelectorAll,
+} from "./test_utils";
 
 const MIN_TIME_LI_LEN = 2;
 
@@ -38,12 +43,11 @@ describe("TimePicker", () => {
 
     fireEvent.focus(instance.input);
 
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.click(lis[1]!);
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.click(timeOption);
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -178,12 +182,13 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Enter));
+
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -193,12 +198,11 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Space));
     expect(getInputString()).toBe("February 28, 2018 12:30 AM");
   });
 
@@ -210,14 +214,13 @@ describe("TimePicker", () => {
     }
 
     const input = safeQuerySelector(datePicker, "input");
-
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Enter));
 
     await waitFor(() => {
       expect(document.activeElement).toBe(input);
@@ -230,12 +233,13 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Escape));
+
     expect(getInputString()).toBe("February 28, 2018 4:43 PM");
   });
 
@@ -248,12 +252,13 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Escape));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Escape));
+
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -266,12 +271,13 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Enter));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Enter));
+
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -284,12 +290,13 @@ describe("TimePicker", () => {
       throw new Error("input is null/undefined");
     }
     fireEvent.focus(instance.input);
-    const time = safeQuerySelector(
-      datePicker,
-      ".react-datepicker__time-container",
-    );
-    const lis = safeQuerySelectorAll(time, "li", MIN_TIME_LI_LEN);
-    fireEvent.keyDown(lis[1]!, getKey(KeyType.Space));
+
+    const timeOption = new SafeElementWrapper(datePicker)
+      .safeQuerySelector(".react-datepicker__time-container")
+      .safeQuerySelectorAll("li", MIN_TIME_LI_LEN)[1]!
+      .getElement();
+    fireEvent.keyDown(timeOption, getKey(KeyType.Space));
+
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 

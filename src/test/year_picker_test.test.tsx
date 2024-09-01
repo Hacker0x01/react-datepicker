@@ -18,6 +18,7 @@ import {
   getKey,
   gotoNextView,
   openDateInput,
+  SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
 } from "./test_utils";
@@ -578,11 +579,10 @@ describe("YearPicker", () => {
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
 
-      const calendar = safeQuerySelector(container, ".react-datepicker");
-      const previousButton = safeQuerySelector(
-        calendar,
-        ".react-datepicker__navigation--previous",
-      );
+      const previousButton = new SafeElementWrapper(container)
+        .safeQuerySelector(".react-datepicker")
+        .safeQuerySelector(".react-datepicker__navigation--previous")
+        .getElement();
       fireEvent.click(previousButton);
 
       const year = container.querySelector(".react-datepicker__year");
@@ -611,12 +611,10 @@ describe("YearPicker", () => {
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
 
-      const calendar = safeQuerySelector(container, ".react-datepicker");
-      const nextButton = safeQuerySelector(
-        calendar,
-        ".react-datepicker__navigation--next",
-      );
-
+      const nextButton = new SafeElementWrapper(container)
+        .safeQuerySelector(".react-datepicker")
+        .safeQuerySelector(".react-datepicker__navigation--next")
+        .getElement();
       fireEvent.click(nextButton);
 
       const year = container.querySelector(".react-datepicker__year");
