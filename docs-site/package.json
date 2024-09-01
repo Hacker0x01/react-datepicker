@@ -18,11 +18,7 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -37,5 +33,6 @@
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
