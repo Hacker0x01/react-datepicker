@@ -3152,21 +3152,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 20.14.12
-  resolution: "@types/node@npm:20.14.12"
-  dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10c0/59bc5fa11fdd23fd517f859063118f54a1ab53d3399ef63c926f8902429d7453abc0db22ef4b0a6110026b6ab81b6472fee894e1d235c24b01a0b3e10cfae0bb
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:22":
-  version: 22.5.1
-  resolution: "@types/node@npm:22.5.1"
+"@types/node@npm:*, @types/node@npm:22":
+  version: 22.5.2
+  resolution: "@types/node@npm:22.5.2"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/35373176d8a1d4e16004a1ed303e68d39e4c6341024dc056f2577982df98c1a045a6b677f12ed557796f09bbf7d621f428f6874cc37ed28f7b336fa604b5f6a6
+  checksum: 10c0/624a7fd76229eacc6c158eb3b9afd55b811d7f01976c5f92c630d5b9d47047cc218928c343988484a165ac400e5eb6fe70ea300fc7242deeb0e920c7724290f6
   languageName: node
   linkType: hard
 
@@ -10981,13 +10972,6 @@ __metadata:
     has-symbols: "npm:^1.0.3"
     which-boxed-primitive: "npm:^1.0.2"
   checksum: 10c0/81ca2e81134167cc8f75fa79fbcc8a94379d6c61de67090986a2273850989dd3bae8440c163121b77434b68263e34787a675cbdcb34bb2f764c6b9c843a11b66
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 10c0/bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
   languageName: node
   linkType: hard
 
