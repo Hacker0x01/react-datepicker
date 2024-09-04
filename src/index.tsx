@@ -586,8 +586,12 @@ export default class DatePicker extends Component<
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT,
     });
 
-    const { dateFormat, strictParsing, selectsRange, startDate, endDate } =
-      this.props;
+    const { selectsRange, startDate, endDate } = this.props;
+
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+    const strictParsing =
+      this.props.strictParsing ?? DatePicker.defaultProps.strictParsing;
 
     const value =
       event?.target instanceof HTMLInputElement ? event.target.value : "";
@@ -598,15 +602,15 @@ export default class DatePicker extends Component<
         .map((val) => val.trim());
       const startDateNew = parseDate(
         valueStart ?? "",
-        dateFormat!,
+        dateFormat,
         this.props.locale,
-        strictParsing!,
+        strictParsing,
       );
       const endDateNew = parseDate(
         valueEnd ?? "",
-        dateFormat!,
+        dateFormat,
         this.props.locale,
-        strictParsing!,
+        strictParsing,
       );
       const startChanged = startDate?.getTime() !== startDateNew?.getTime();
       const endChanged = endDate?.getTime() !== endDateNew?.getTime();
@@ -627,9 +631,9 @@ export default class DatePicker extends Component<
       // not selectsRange
       const date = parseDate(
         value,
-        dateFormat!,
+        dateFormat,
         this.props.locale,
-        strictParsing!,
+        strictParsing,
         this.props.selected ?? undefined,
       );
 
