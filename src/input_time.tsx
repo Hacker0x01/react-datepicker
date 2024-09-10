@@ -32,6 +32,8 @@ export default class InputTime extends Component<
   InputTimeProps,
   InputTimeState
 > {
+  inputRef: React.RefObject<HTMLInputElement> = React.createRef();
+
   constructor(props: InputTimeProps) {
     super(props);
 
@@ -86,8 +88,12 @@ export default class InputTime extends Component<
       <input
         type="time"
         className="react-datepicker-time__input"
-        placeholder="Time"
+        placeholder="Time1"
         name="time-input"
+        ref={this.inputRef}
+        onClick={() => {
+          this.inputRef.current?.focus();
+        }}
         required
         value={time}
         onChange={(event) => {
