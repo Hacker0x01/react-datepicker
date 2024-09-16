@@ -88,7 +88,7 @@ export default class InputTime extends Component<
       <input
         type="time"
         className="react-datepicker-time__input"
-        placeholder="Time1"
+        placeholder="Time"
         name="time-input"
         ref={this.inputRef}
         onClick={() => {
