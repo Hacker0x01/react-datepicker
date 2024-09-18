@@ -4546,7 +4546,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
+"chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -4562,6 +4562,15 @@ __metadata:
     fsevents:
       optional: true
   checksum: 10c0/1076953093e0707c882a92c66c0f56ba6187831aa51bb4de878c1fec59ae611a3bf02898f190efec8e77a086b8df61c2b2a3ea324642a0558bdf8ee6c5dc9ca1
+  languageName: node
+  linkType: hard
+
+"chokidar@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "chokidar@npm:4.0.0"
+  dependencies:
+    readdirp: "npm:^4.0.1"
+  checksum: 10c0/42d03c53b0ad200689e4fae7763133561480561cab8ba5304e8f2298ff45ff84bf0f6065c3f02b9e557b74b156813734439a1a2ff19a1ea6b35692395cd92738
   languageName: node
   linkType: hard
 
@@ -10833,7 +10842,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-live: "npm:^4.1.7"
     react-scripts: "npm:5.0.1"
-    sass: "npm:^1.78.0"
+    sass: "npm:^1.79.1"
   languageName: unknown
   linkType: soft
 
@@ -11038,6 +11047,13 @@ __metadata:
     string_decoder: "npm:^1.1.1"
     util-deprecate: "npm:^1.0.1"
   checksum: 10c0/e37be5c79c376fdd088a45fa31ea2e423e5d48854be7a22a58869b4e84d25047b193f6acb54f1012331e1bcd667ffb569c01b99d36b0bd59658fb33f513511b7
+  languageName: node
+  linkType: hard
+
+"readdirp@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "readdirp@npm:4.0.1"
+  checksum: 10c0/e5a0b547015f68ecc918f115b62b75b2b840611480a9240cb3317090a0ddac01bb9b40315a8fa08acdf52a43eea17b808c89b645263cba3ab64dc557d7f801f1
   languageName: node
   linkType: hard
 
@@ -11423,16 +11439,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.78.0":
-  version: 1.78.0
-  resolution: "sass@npm:1.78.0"
+"sass@npm:^1.79.1":
+  version: 1.79.1
+  resolution: "sass@npm:1.79.1"
   dependencies:
-    chokidar: "npm:>=3.0.0 <4.0.0"
+    chokidar: "npm:^4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 10c0/6577a87c00b03a5a50f3a11b4b6592f28abce34e61812e381535a3b712151bd94db3ca06467d20395431e0f38a23f99e616d6859d771fb6d4617c359f590c48c
+  checksum: 10c0/187bc885bad2e81e5414a146c9e14a28f622b5aba5c1425f4dd6d8ef2045b66c69de93689503886a8d2cc55d6bcce97b05ee87b074628fefd03e762789f931d0
   languageName: node
   linkType: hard
 
