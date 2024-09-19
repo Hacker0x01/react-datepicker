@@ -36,6 +36,7 @@ interface TimeProps
   handleOnKeyDown?: React.KeyboardEventHandler<HTMLLIElement>;
   locale?: Locale;
   showTimeSelectOnly?: boolean;
+  showTimeCaption?: boolean;
 }
 
 interface TimeState {
@@ -48,6 +49,7 @@ export default class Time extends Component<TimeProps, TimeState> {
       intervals: 30,
       todayButton: null,
       timeCaption: "Time",
+      showTimeCaption: true,
     };
   }
 
@@ -250,6 +252,29 @@ export default class Time extends Component<TimeProps, TimeState> {
     });
   };
 
+  renderTimeCaption = (): JSX.Element => {
+    if (this.props.showTimeCaption === false) {
+      return <></>;
+    }
+
+    return (
+      <div
+        className={`react-datepicker__header react-datepicker__header--time ${
+          this.props.showTimeSelectOnly
+            ? "react-datepicker__header--time--only"
+            : ""
+        }`}
+        ref={(header: HTMLDivElement) => {
+          this.header = header;
+        }}
+      >
+        <div className="react-datepicker-time__header">
+          {this.props.timeCaption}
+        </div>
+      </div>
+    );
+  };
+
   render() {
     const { height } = this.state;
 
@@ -261,20 +286,7 @@ export default class Time extends Component<TimeProps, TimeState> {
             : ""
         }`}
       >
-        <div
-          className={`react-datepicker__header react-datepicker__header--time ${
-            this.props.showTimeSelectOnly
-              ? "react-datepicker__header--time--only"
-              : ""
-          }`}
-          ref={(header: HTMLDivElement) => {
-            this.header = header;
-          }}
-        >
-          <div className="react-datepicker-time__header">
-            {this.props.timeCaption}
-          </div>
-        </div>
+        {this.renderTimeCaption()}
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">
             <ul
