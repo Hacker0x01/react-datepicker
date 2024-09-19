@@ -316,6 +316,23 @@ describe("TimePicker", () => {
     expect(onKeyDownSpy).toHaveBeenCalledTimes(1);
   });
 
+  it("hides time caption", () => {
+    const { container } = render(
+      <DatePicker
+        open
+        showTimeSelect
+        showTimeSelectOnly
+        showTimeCaption={false}
+      />,
+    );
+
+    const header = container.querySelector(
+      ".react-datepicker__header--time--only",
+    );
+
+    expect(header).toBeNull();
+  });
+
   function setManually(string: string) {
     if (!instance?.input) {
       throw new Error("input is null/undefined");
