@@ -253,7 +253,11 @@ export default class Time extends Component<TimeProps, TimeState> {
   };
 
   renderTimeCaption = (): JSX.Element => {
-    return (this.props.showTimeCaption ?? Time.defaultProps.showTimeCaption) ? (
+    if (this.props.showTimeCaption === false) {
+      return <></>;
+    }
+
+    return (
       <div
         className={`react-datepicker__header react-datepicker__header--time ${
           this.props.showTimeSelectOnly
@@ -268,8 +272,6 @@ export default class Time extends Component<TimeProps, TimeState> {
           {this.props.timeCaption}
         </div>
       </div>
-    ) : (
-      <></>
     );
   };
 
