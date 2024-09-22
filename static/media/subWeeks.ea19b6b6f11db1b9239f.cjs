@@ -1,0 +1,1 @@
+"use strict";exports.subWeeks=subWeeks;var _index=require("./addWeeks.cjs");function subWeeks(e,s,r){return(0,_index.addWeeks)(e,-s,r)}

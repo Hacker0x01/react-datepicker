@@ -1,0 +1,1 @@
+"use strict";exports.addHours=addHours;var _index=require("./addMilliseconds.cjs"),_index2=require("./constants.cjs");function addHours(d,s,e){return(0,_index.addMilliseconds)(d,s*_index2.millisecondsInHour,e)}

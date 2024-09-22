@@ -1,0 +1,1 @@
+"use strict";exports.addQuarters=addQuarters;var _index=require("./addMonths.cjs");function addQuarters(r,d,e){return(0,_index.addMonths)(r,3*d,e)}

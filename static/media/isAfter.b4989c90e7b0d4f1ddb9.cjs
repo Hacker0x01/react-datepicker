@@ -1,0 +1,1 @@
+"use strict";exports.isAfter=isAfter;var _index=require("./toDate.cjs");function isAfter(e,t){return+(0,_index.toDate)(e)>+(0,_index.toDate)(t)}

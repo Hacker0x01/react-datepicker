@@ -1,0 +1,1 @@
+"use strict";exports.isSameYear=isSameYear;var _index=require("./_lib/normalizeDates.cjs");function isSameYear(e,r,a){const[i,s]=(0,_index.normalizeDates)(a?.in,e,r);return i.getFullYear()===s.getFullYear()}

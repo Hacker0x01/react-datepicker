@@ -1,0 +1,1 @@
+"use strict";exports.addMinutes=addMinutes;var _index=require("./constants.cjs"),_index2=require("./toDate.cjs");function addMinutes(e,t,i){const n=(0,_index2.toDate)(e,i?.in);return n.setTime(n.getTime()+t*_index.millisecondsInMinute),n}

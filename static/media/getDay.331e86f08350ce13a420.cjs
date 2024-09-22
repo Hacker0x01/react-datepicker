@@ -1,0 +1,1 @@
+"use strict";exports.getDay=getDay;var _index=require("./toDate.cjs");function getDay(e,t){return(0,_index.toDate)(e,t?.in).getDay()}

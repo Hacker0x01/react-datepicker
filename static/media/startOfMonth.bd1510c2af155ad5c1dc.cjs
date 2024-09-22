@@ -1,0 +1,1 @@
+"use strict";exports.startOfMonth=startOfMonth;var _index=require("./toDate.cjs");function startOfMonth(t,e){const r=(0,_index.toDate)(t,e?.in);return r.setDate(1),r.setHours(0,0,0,0),r}

@@ -1,0 +1,1 @@
+"use strict";exports.isSameMonth=isSameMonth;var _index=require("./_lib/normalizeDates.cjs");function isSameMonth(e,t,n){const[i,r]=(0,_index.normalizeDates)(n?.in,e,t);return i.getFullYear()===r.getFullYear()&&i.getMonth()===r.getMonth()}

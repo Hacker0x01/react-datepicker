@@ -1,0 +1,1 @@
+"use strict";exports.getTime=getTime;var _index=require("./toDate.cjs");function getTime(e){return+(0,_index.toDate)(e)}

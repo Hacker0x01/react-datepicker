@@ -1,0 +1,1 @@
+"use strict";exports.differenceInCalendarQuarters=differenceInCalendarQuarters;var _index=require("./_lib/normalizeDates.cjs"),_index2=require("./getQuarter.cjs");function differenceInCalendarQuarters(e,r,n){const[a,t]=(0,_index.normalizeDates)(n?.in,e,r);return 4*(a.getFullYear()-t.getFullYear())+((0,_index2.getQuarter)(a)-(0,_index2.getQuarter)(t))}

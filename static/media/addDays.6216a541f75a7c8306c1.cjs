@@ -1,0 +1,1 @@
+"use strict";exports.addDays=addDays;var _index=require("./constructFrom.cjs"),_index2=require("./toDate.cjs");function addDays(t,e,a){const r=(0,_index2.toDate)(t,a?.in);return isNaN(e)?(0,_index.constructFrom)(a?.in||t,NaN):e?(r.setDate(r.getDate()+e),r):r}

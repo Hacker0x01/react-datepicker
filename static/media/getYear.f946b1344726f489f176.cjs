@@ -1,0 +1,1 @@
+"use strict";exports.getYear=getYear;var _index=require("./toDate.cjs");function getYear(e,t){return(0,_index.toDate)(e,t?.in).getFullYear()}

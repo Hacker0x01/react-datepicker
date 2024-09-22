@@ -1,0 +1,1 @@
+"use strict";exports.setSeconds=setSeconds;var _index=require("./toDate.cjs");function setSeconds(e,t,s){const n=(0,_index.toDate)(e,s?.in);return n.setSeconds(t),n}

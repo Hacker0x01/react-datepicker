@@ -1,0 +1,1 @@
+"use strict";exports.isSameDay=isSameDay;var _index=require("./_lib/normalizeDates.cjs"),_index2=require("./startOfDay.cjs");function isSameDay(e,a,i){const[r,s]=(0,_index.normalizeDates)(i?.in,e,a);return+(0,_index2.startOfDay)(r)===+(0,_index2.startOfDay)(s)}

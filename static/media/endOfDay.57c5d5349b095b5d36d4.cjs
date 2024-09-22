@@ -1,0 +1,1 @@
+"use strict";exports.endOfDay=endOfDay;var _index=require("./toDate.cjs");function endOfDay(e,t){const n=(0,_index.toDate)(e,t?.in);return n.setHours(23,59,59,999),n}

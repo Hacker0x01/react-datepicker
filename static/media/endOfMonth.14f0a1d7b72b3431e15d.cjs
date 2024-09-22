@@ -1,0 +1,1 @@
+"use strict";exports.endOfMonth=endOfMonth;var _index=require("./toDate.cjs");function endOfMonth(e,t){const n=(0,_index.toDate)(e,t?.in),o=n.getMonth();return n.setFullYear(n.getFullYear(),o+1,0),n.setHours(23,59,59,999),n}

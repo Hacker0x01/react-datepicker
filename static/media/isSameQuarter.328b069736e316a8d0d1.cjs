@@ -1,0 +1,1 @@
+"use strict";exports.isSameQuarter=isSameQuarter;var _index=require("./_lib/normalizeDates.cjs"),_index2=require("./startOfQuarter.cjs");function isSameQuarter(r,e,t){const[a,i]=(0,_index.normalizeDates)(t?.in,r,e);return+(0,_index2.startOfQuarter)(a)===+(0,_index2.startOfQuarter)(i)}

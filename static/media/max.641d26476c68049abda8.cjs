@@ -1,0 +1,1 @@
+"use strict";exports.max=max;var _index=require("./constructFrom.cjs"),_index2=require("./toDate.cjs");function max(t,e){let r,n=e?.in;return t.forEach((t=>{n||"object"!==typeof t||(n=_index.constructFrom.bind(null,t));const e=(0,_index2.toDate)(t,n);(!r||r<e||isNaN(+e))&&(r=e)})),(0,_index.constructFrom)(n,r||NaN)}

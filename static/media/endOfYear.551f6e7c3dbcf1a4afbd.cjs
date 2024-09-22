@@ -1,0 +1,1 @@
+"use strict";exports.endOfYear=endOfYear;var _index=require("./toDate.cjs");function endOfYear(e,r){const t=(0,_index.toDate)(e,r?.in),n=t.getFullYear();return t.setFullYear(n+1,0,0),t.setHours(23,59,59,999),t}
