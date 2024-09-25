@@ -1,1 +1,0 @@
-"use strict";exports.startOfQuarter=startOfQuarter;var _index=require("./toDate.cjs");function startOfQuarter(t,r){const e=(0,_index.toDate)(t,r?.in),s=e.getMonth(),a=s-s%3;return e.setMonth(a,1),e.setHours(0,0,0,0),e}

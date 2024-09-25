@@ -1,1 +1,0 @@
-"use strict";exports.subDays=subDays;var _index=require("./addDays.cjs");function subDays(s,a,e){return(0,_index.addDays)(s,-a,e)}

@@ -1,1 +1,0 @@
-"use strict";exports.setYear=setYear;var _index=require("./constructFrom.cjs"),_index2=require("./toDate.cjs");function setYear(e,t,r){const s=(0,_index2.toDate)(e,r?.in);return isNaN(+s)?(0,_index.constructFrom)(r?.in||e,NaN):(s.setFullYear(t),s)}

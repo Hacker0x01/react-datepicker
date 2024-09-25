@@ -1,1 +1,0 @@
-"use strict";exports.subMonths=subMonths;var _index=require("./addMonths.cjs");function subMonths(s,n,t){return(0,_index.addMonths)(s,-n,t)}

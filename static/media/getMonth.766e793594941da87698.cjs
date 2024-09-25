@@ -1,1 +1,0 @@
-"use strict";exports.getMonth=getMonth;var _index=require("./toDate.cjs");function getMonth(t,e){return(0,_index.toDate)(t,e?.in).getMonth()}

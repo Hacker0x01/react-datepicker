@@ -1,1 +1,0 @@
-"use strict";exports.getQuarter=getQuarter;var _index=require("./toDate.cjs");function getQuarter(t,e){const r=(0,_index.toDate)(t,e?.in);return Math.trunc(r.getMonth()/3)+1}

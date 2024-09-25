@@ -1,1 +1,0 @@
-"use strict";exports.min=min;var _index=require("./constructFrom.cjs"),_index2=require("./toDate.cjs");function min(t,n){let e,r=n?.in;return t.forEach((t=>{r||"object"!==typeof t||(r=_index.constructFrom.bind(null,t));const n=(0,_index2.toDate)(t,r);(!e||e>n||isNaN(+n))&&(e=n)})),(0,_index.constructFrom)(r,e||NaN)}

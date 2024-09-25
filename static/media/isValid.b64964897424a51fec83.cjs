@@ -1,1 +1,0 @@
-"use strict";exports.isValid=isValid;var _index=require("./isDate.cjs"),_index2=require("./toDate.cjs");function isValid(e){return!(!(0,_index.isDate)(e)&&"number"!==typeof e||isNaN(+(0,_index2.toDate)(e)))}

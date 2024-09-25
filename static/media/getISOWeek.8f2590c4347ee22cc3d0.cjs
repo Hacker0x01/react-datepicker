@@ -1,1 +1,0 @@
-"use strict";exports.getISOWeek=getISOWeek;var _index=require("./constants.cjs"),_index2=require("./startOfISOWeek.cjs"),_index3=require("./startOfISOWeekYear.cjs"),_index4=require("./toDate.cjs");function getISOWeek(e,t){const r=(0,_index4.toDate)(e,t?.in),n=+(0,_index2.startOfISOWeek)(r)-+(0,_index3.startOfISOWeekYear)(r);return Math.round(n/_index.millisecondsInWeek)+1}

@@ -1,1 +1,0 @@
-"use strict";exports.addSeconds=addSeconds;var _index=require("./addMilliseconds.cjs");function addSeconds(d,e,s){return(0,_index.addMilliseconds)(d,1e3*e,s)}

@@ -1,1 +1,0 @@
-"use strict";exports.isEqual=isEqual;var _index=require("./toDate.cjs");function isEqual(e,t){return+(0,_index.toDate)(e)===+(0,_index.toDate)(t)}

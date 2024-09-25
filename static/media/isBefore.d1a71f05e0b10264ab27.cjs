@@ -1,1 +1,0 @@
-"use strict";exports.isBefore=isBefore;var _index=require("./toDate.cjs");function isBefore(e,t){return+(0,_index.toDate)(e)<+(0,_index.toDate)(t)}

@@ -1,1 +1,0 @@
-"use strict";exports.isWithinInterval=isWithinInterval;var _index=require("./toDate.cjs");function isWithinInterval(t,i,n){const e=+(0,_index.toDate)(t,n?.in),[r,s]=[+(0,_index.toDate)(i.start,n?.in),+(0,_index.toDate)(i.end,n?.in)].sort(((t,i)=>t-i));return e>=r&&e<=s}

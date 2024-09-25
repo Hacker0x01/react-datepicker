@@ -1,1 +1,0 @@
-"use strict";exports.subYears=subYears;var _index=require("./addYears.cjs");function subYears(e,r,s){return(0,_index.addYears)(e,-r,s)}
