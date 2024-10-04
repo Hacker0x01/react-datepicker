@@ -4,6 +4,7 @@
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      onClick={(e) => e.target?.focus()}
       style={{ border: "solid 1px pink" }}
     />
   );

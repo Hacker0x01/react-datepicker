@@ -11,6 +11,7 @@
 | `onChange`           |      |               |             |
 | `openToDate`         |      |               |             |
 | `selected`           |      |               |             |
+| `showTimeCaption`    |      | `true`        |             |
 | `showTimeSelectOnly` |      |               |             |
 | `timeCaption`        |      | `"Time"`      |             |
 | `timeClassName`      |      |               |             |

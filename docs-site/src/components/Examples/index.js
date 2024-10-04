@@ -8,6 +8,7 @@ import Default from "../../examples/default";
 import NoAnchorArrow from "../../examples/noAnchorArrow";
 import ShowTime from "../../examples/showTime";
 import ShowTimeOnly from "../../examples/showTimeOnly";
+import HideTimeCaption from "../../examples/hideTimeCaption";
 import ExcludeTimes from "../../examples/excludeTimes";
 import IncludeTimes from "../../examples/includeTimes";
 import InjectTimes from "../../examples/injectTimes";
@@ -486,6 +487,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Select Time Only",
       component: ShowTimeOnly,
+    },
+    {
+      title: "Hide Time Caption",
+      component: HideTimeCaption,
     },
     {
       title: "Show previous months",

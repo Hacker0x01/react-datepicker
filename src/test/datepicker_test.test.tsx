@@ -1615,8 +1615,12 @@ describe("DatePicker", () => {
   });
 
   it("should be possible to preSelect minDate (no maxDate set)", () => {
+    const minDate = new Date("2024-10-02");
+    const selected = minDate;
+
     const data = getOnInputKeyDownStuff({
-      minDate: newDate(),
+      selected,
+      minDate,
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
     const selectedDayNode = getSelectedDayNode(data.container);
@@ -1632,9 +1636,14 @@ describe("DatePicker", () => {
   });
 
   it("should be possible to preSelect minDate (maxDate set)", () => {
+    const minDate = new Date("2024-10-02");
+    const maxDate = addDays(minDate, 20);
+    const selected = minDate;
+
     const data = getOnInputKeyDownStuff({
-      minDate: newDate(),
-      maxDate: addDays(newDate(), 20),
+      selected,
+      minDate,
+      maxDate,
     });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
     const selectedDayNode = getSelectedDayNode(data.container);

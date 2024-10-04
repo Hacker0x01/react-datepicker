@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "variables.scss";
 @import "mixins.scss";
 
@@ -158,7 +159,7 @@ h2.react-datepicker__current-month {
 
   &:hover {
     *::before {
-      border-color: darken($datepicker__muted-color, 15%);
+      border-color: color.adjust($datepicker__muted-color, $lightness: -15%);
     }
   }
 }
@@ -361,17 +362,17 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:hover {
-      background-color: darken($datepicker__selected-color, 5%);
+      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
     }
   }
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: lighten($datepicker__selected-color, 10%);
+    background-color: color.adjust($datepicker__selected-color, $lightness: 10%);
     color: #fff;
 
     &:hover {
-      background-color: darken($datepicker__selected-color, 5%);
+      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
     }
   }
 }
@@ -417,7 +418,7 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:not([aria-disabled="true"]):hover {
-      background-color: darken($datepicker__highlighted-color, 5%);
+      background-color: color.adjust($datepicker__highlighted-color, $lightness: -5%);
     }
 
     &-custom-1 {
@@ -453,7 +454,7 @@ h2.react-datepicker__current-month {
     }
 
     &:not([aria-disabled="true"]):hover {
-      background-color: darken($datepicker__holidays-color, 10%);
+      background-color: color.adjust($datepicker__holidays-color, $lightness: -10%);
     }
 
     &:hover .overlay {
@@ -470,17 +471,17 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:not([aria-disabled="true"]):hover {
-      background-color: darken($datepicker__selected-color, 5%);
+      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
     }
   }
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: lighten($datepicker__selected-color, 45%);
+    background-color: color.adjust($datepicker__selected-color, $lightness: 45%);
     color: rgb(0, 0, 0);
 
     &:not([aria-disabled="true"]):hover {
-      background-color: darken($datepicker__selected-color, 5%);
+      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
     }
   }
 
@@ -549,7 +550,7 @@ h2.react-datepicker__current-month {
 
     .react-datepicker__year-read-view--down-arrow,
     .react-datepicker__month-read-view--down-arrow {
-      border-top-color: darken($datepicker__muted-color, 10%);
+      border-top-color: color.adjust($datepicker__muted-color, $lightness: -10%);
     }
   }
 
@@ -612,11 +613,11 @@ h2.react-datepicker__current-month {
     background-color: $datepicker__muted-color;
 
     .react-datepicker__navigation--years-upcoming {
-      border-bottom-color: darken($datepicker__muted-color, 10%);
+      border-bottom-color: color.adjust($datepicker__muted-color, $lightness: -10%);
     }
 
     .react-datepicker__navigation--years-previous {
-      border-top-color: darken($datepicker__muted-color, 10%);
+      border-top-color: color.adjust($datepicker__muted-color, $lightness: -10%);
     }
   }
 

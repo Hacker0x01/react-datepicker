@@ -161,4 +161,19 @@ describe("timeInput", () => {
 
     dateSpy.mockRestore();
   });
+
+  it("should focus on the time input when the time input gets the click event", () => {
+    const { container } = render(
+      <DatePicker shouldCloseOnSelect={false} showTimeInput />,
+    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    const timeInput = safeQuerySelector<HTMLInputElement>(
+      container,
+      'input[type="time"].react-datepicker-time__input',
+    );
+    fireEvent.click(timeInput);
+    expect(document.activeElement).toBe(timeInput);
+  });
 });
