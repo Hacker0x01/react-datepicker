@@ -510,7 +510,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         date: subYears(
           date,
           this.props.showYearPicker
-            ? this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber
+            ? (this.props.yearItemNumber ??
+                Calendar.defaultProps.yearItemNumber)
             : 1,
         ),
       }),
@@ -624,7 +625,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         date: addYears(
           date,
           this.props.showYearPicker
-            ? this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber
+            ? (this.props.yearItemNumber ??
+                Calendar.defaultProps.yearItemNumber)
             : 1,
         ),
       }),
