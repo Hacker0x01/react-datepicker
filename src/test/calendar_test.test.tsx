@@ -1504,14 +1504,12 @@ describe("Calendar", () => {
       expect(firstHeader?.textContent).toBe(firstWeekDayMin);
     }
 
-    // eslint-disable-next-line jest/expect-expect
     it("should use the 'en' locale by default", () => {
       const selected = newDate();
       const { calendar } = getCalendar({ selected });
       testLocale(calendar, selected);
     });
 
-    // eslint-disable-next-line jest/expect-expect
     it("should use the default locale when set", () => {
       const selected = newDate();
       setDefaultLocale("fi");
@@ -1521,7 +1519,6 @@ describe("Calendar", () => {
       setDefaultLocale("");
     });
 
-    // eslint-disable-next-line jest/expect-expect
     it("should use the locale specified as a prop", () => {
       registerLocale("fi", fi);
       const locale = "fi";
@@ -1530,7 +1527,6 @@ describe("Calendar", () => {
       testLocale(calendar, selected, locale);
     });
 
-    // eslint-disable-next-line jest/expect-expect
     it("should override the default locale with the locale prop", () => {
       const locale = "en";
       const selected = newDate();
