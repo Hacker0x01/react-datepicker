@@ -47,17 +47,7 @@ module.exports = [
     plugins: {
       react,
     },
-    rules: {
-      "no-unused-expressions": "off",
-      "react/react-in-jsx-scope": "off",
-      "react/jsx-no-undef": [
-        "error",
-        {
-          allowGlobals: true,
-        },
-      ],
-      "@typescript-eslint/no-empty-object-type": "off",
-    },
+
     languageOptions: {
       globals: {
         useState: "readonly",
