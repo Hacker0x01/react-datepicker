@@ -770,13 +770,13 @@ __metadata:
   linkType: hard
 
 "@babel/plugin-external-helpers@npm:^7.24.7":
-  version: 7.24.7
-  resolution: "@babel/plugin-external-helpers@npm:7.24.7"
+  version: 7.25.7
+  resolution: "@babel/plugin-external-helpers@npm:7.25.7"
   dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.24.7"
+    "@babel/helper-plugin-utils": "npm:^7.25.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/25710e7a09761f15c0a037bfeb06dddd1fba51034ab5181c3f1363427da6b189d9e2b7899e2d6c0b7328ddb30514582863961532adb9b4fa47ddc0d5c2eecc11
+  checksum: 10c0/1ffcba20a6e614869954b393627302ba4a50a8574ce4cb0188828804fe40efb5306d5b9d5aac9866f183aac0d56790deeb7ec4f55df64f71a6ec1300fc9f823a
   languageName: node
   linkType: hard
 
