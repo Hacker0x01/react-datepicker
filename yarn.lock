@@ -637,12 +637,12 @@ __metadata:
   linkType: hard
 
 "@babel/helpers@npm:^7.24.8, @babel/helpers@npm:^7.25.0":
-  version: 7.25.6
-  resolution: "@babel/helpers@npm:7.25.6"
+  version: 7.25.7
+  resolution: "@babel/helpers@npm:7.25.7"
   dependencies:
-    "@babel/template": "npm:^7.25.0"
-    "@babel/types": "npm:^7.25.6"
-  checksum: 10c0/448c1cdabccca42fd97a252f73f1e4bcd93776dbf24044f3b4f49b756bf2ece73ee6df05177473bb74ea7456dddd18d6f481e4d96d2cc7839d078900d48c696c
+    "@babel/template": "npm:^7.25.7"
+    "@babel/types": "npm:^7.25.7"
+  checksum: 10c0/3b3ae9e373bd785414195ef8f59976a69d5a6ebe0ef2165fdcc5165e5c3ee09e0fcee94bb457df2ddb8c0532e4146d0a9b7a96b3497399a4bff4ffe196b30228
   languageName: node
   linkType: hard
 
@@ -1901,17 +1901,6 @@ __metadata:
     "@babel/helper-validator-identifier": "npm:^7.24.7"
     to-fast-properties: "npm:^2.0.0"
   checksum: 10c0/e489435856be239f8cc1120c90a197e4c2865385121908e5edb7223cfdff3768cba18f489adfe0c26955d9e7bbb1fb10625bc2517505908ceb0af848989bd864
-  languageName: node
-  linkType: hard
-
-"@babel/types@npm:^7.25.6":
-  version: 7.25.6
-  resolution: "@babel/types@npm:7.25.6"
-  dependencies:
-    "@babel/helper-string-parser": "npm:^7.24.8"
-    "@babel/helper-validator-identifier": "npm:^7.24.7"
-    to-fast-properties: "npm:^2.0.0"
-  checksum: 10c0/89d45fbee24e27a05dca2d08300a26b905bd384a480448823f6723c72d3a30327c517476389b7280ce8cb9a2c48ef8f47da7f9f6d326faf6f53fd6b68237bdc4
   languageName: node
   linkType: hard
 
