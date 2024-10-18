@@ -449,7 +449,6 @@ export default class Month extends Component<MonthProps> {
       ? isPreSelected(this.props.preSelection)
       : undefined;
 
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       weeks.push(
         <Week
