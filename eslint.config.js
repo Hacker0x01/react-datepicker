@@ -43,11 +43,20 @@ module.exports = [
     },
   },
   {
-    files: ["src/examples/**/*.{js,jsx,ts,tsx}"],
+    files: ["src/examples/*.js"],
     plugins: {
       react,
     },
-
+    rules: {
+      "no-unused-expressions": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-no-undef": [
+        "error",
+        {
+          allowGlobals: true,
+        },
+      ],
+    },
     languageOptions: {
       globals: {
         useState: "readonly",
