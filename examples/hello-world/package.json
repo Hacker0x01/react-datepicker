@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^18.3.1",
-    "react-datepicker": "^7.4.0",
+    "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1"
   },
@@ -18,11 +18,7 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
