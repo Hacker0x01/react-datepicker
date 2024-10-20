@@ -580,7 +580,24 @@ describe("DatePicker", () => {
     });
   });
 
-  it("should hide the calendar when the pressing Shift + Tab in the date input", () => {
+  it("should auto-close the datepicker and lose focus when Tab key is pressed when the date input is focused", async () => {
+    const { container } = render(<DatePicker />);
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    let reactCalendar = container.querySelector("div.react-datepicker");
+    expect(reactCalendar).not.toBeNull();
+
+    fireEvent.keyDown(input, getKey(KeyType.Tab));
+
+    reactCalendar = container.querySelector("div.react-datepicker");
+    expect(reactCalendar).toBeNull();
+    await waitFor(() => {
+      expect(document.activeElement).not.toBe(input);
+    });
+  });
+
+  it("should hide the calendar when the pressing Shift + Tab in the date input", async () => {
     // eslint-disable-next-line prefer-const
     let onBlurSpy: ReturnType<typeof jest.spyOn>;
     const onBlur: React.FocusEventHandler<HTMLElement> = (
@@ -594,7 +611,9 @@ describe("DatePicker", () => {
     fireEvent.focus(input);
     fireEvent.keyDown(input, getKey(KeyType.Tab, true));
     expect(container.querySelector(".react-datepicker")).toBeNull();
-    expect(onBlurSpy).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(onBlurSpy).toHaveBeenCalled();
+    });
   });
 
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
