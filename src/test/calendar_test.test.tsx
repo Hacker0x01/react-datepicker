@@ -3,6 +3,7 @@
  */
 
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import { setDate, startOfMonth, eachDayOfInterval, endOfMonth } from "date-fns";
 import { endOfYear } from "date-fns/endOfYear";
 import { isSunday } from "date-fns/isSunday";
 import { eo } from "date-fns/locale/eo";
@@ -28,6 +29,8 @@ import {
   isSameDay,
   subMonths,
   subYears,
+  addDays,
+  getDate,
 } from "../date_utils";
 import DatePicker from "../index";
 
@@ -2256,6 +2259,112 @@ describe("Calendar", () => {
       expect(instance!.state.preSelection?.getMonth()).toBe(
         currentMonth === 0 ? 11 : currentMonth - 1,
       );
+    });
+
+    describe("pre-selection & disabled dates", () => {
+      it("should update the pre-selected dates to the first enabled day in a month when the next month is selected", () => {
+        const selected = new Date("2024-06-01");
+        const excludeDate = addMonths(selected, 1);
+
+        const { container } = render(
+          <DatePicker selected={selected} excludeDates={[excludeDate]} />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        const nextButton = safeQuerySelector<HTMLButtonElement>(
+          container,
+          ".react-datepicker__navigation--next",
+        );
+        fireEvent.click(nextButton);
+
+        const preSelectedNewDate = safeQuerySelector(
+          container,
+          ".react-datepicker__day--keyboard-selected",
+        ).textContent;
+        const expectedPreSelectedNewDate = addDays(excludeDate, 1);
+
+        expect(Number(preSelectedNewDate)).toBe(
+          getDate(expectedPreSelectedNewDate),
+        );
+      });
+
+      it("should update the pre-selected dates to the first enabled day in a month when the previous month is selected", () => {
+        const selected = new Date("2024-06-08");
+        const excludeDate = addMonths(selected, 1);
+
+        const { container } = render(
+          <DatePicker selected={selected} excludeDates={[excludeDate]} />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        const nextButton = safeQuerySelector<HTMLButtonElement>(
+          container,
+          ".react-datepicker__navigation--next",
+        );
+        fireEvent.click(nextButton);
+
+        const preSelectedNewDate = safeQuerySelector(
+          container,
+          ".react-datepicker__day--keyboard-selected",
+        ).textContent;
+        const expectedPreSelectedNewDate = setDate(excludeDate, 1);
+
+        expect(Number(preSelectedNewDate)).toBe(
+          getDate(expectedPreSelectedNewDate),
+        );
+      });
+
+      it("shouldn't set pre-select any date if all dates of a next month is disabled", () => {
+        const selected = new Date("2024-06-08");
+        const nextMonth = addMonths(selected, 1);
+        const excludeDates = eachDayOfInterval({
+          start: startOfMonth(nextMonth),
+          end: endOfMonth(nextMonth),
+        });
+
+        const { container } = render(
+          <DatePicker selected={selected} excludeDates={excludeDates} />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        const nextButton = safeQuerySelector<HTMLButtonElement>(
+          container,
+          ".react-datepicker__navigation--next",
+        );
+        fireEvent.click(nextButton);
+
+        expect(
+          container.querySelector(".react-datepicker__day--keyboard-selected"),
+        ).toBeNull();
+      });
+
+      it("shouldn't set pre-select any date if all dates of a last month is disabled", () => {
+        const selected = new Date("2024-06-08");
+        const lastMonth = subMonths(selected, 1);
+        const excludeDates = eachDayOfInterval({
+          start: startOfMonth(lastMonth),
+          end: endOfMonth(lastMonth),
+        });
+
+        const { container } = render(
+          <DatePicker selected={selected} excludeDates={excludeDates} />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        const nextButton = safeQuerySelector<HTMLButtonElement>(
+          container,
+          ".react-datepicker__navigation--previous",
+        );
+        fireEvent.click(nextButton);
+
+        expect(
+          container.querySelector(".react-datepicker__day--keyboard-selected"),
+        ).toBeNull();
+      });
     });
   });
 

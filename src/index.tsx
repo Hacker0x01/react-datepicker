@@ -451,17 +451,24 @@ export default class DatePicker extends Component<
     }
   };
 
+  safeFocus = () => {
+    setTimeout(() => {
+      this.input?.focus?.({ preventScroll: true });
+    }, 0);
+  };
+
+  safeBlur = () => {
+    setTimeout(() => {
+      this.input?.blur?.();
+    }, 0);
+  };
+
   setFocus = () => {
-    if (this.input && this.input.focus) {
-      this.input.focus({ preventScroll: true });
-    }
+    this.safeFocus();
   };
 
   setBlur = () => {
-    if (this.input && this.input.blur) {
-      this.input.blur();
-    }
-
+    this.safeBlur();
     this.cancelFocusInput();
   };
 

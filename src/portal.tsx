@@ -46,7 +46,7 @@ class Portal extends Component<PortalProps> {
   private el: HTMLDivElement;
   private portalRoot: HTMLElement | null = null;
 
-  render() {
+  render(): React.ReactPortal {
     return ReactDOM.createPortal(this.props.children, this.el);
   }
 }
