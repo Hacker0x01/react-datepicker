@@ -68,6 +68,17 @@ export const range = (from: number, to: number): number[] => {
   return list;
 };
 
+export const getRandomMonthExcludingCurrent = (): number => {
+  const currentMonth = new Date().getMonth();
+
+  let randomMonth;
+  do {
+    randomMonth = Math.floor(Math.random() * 12);
+  } while (randomMonth === currentMonth);
+
+  return randomMonth;
+};
+
 export const openDateInput = (container: Element) => {
   const dateInput = container.querySelector("input")!;
   fireEvent.focus(dateInput);
