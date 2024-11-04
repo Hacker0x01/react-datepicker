@@ -36,6 +36,7 @@ import DatePicker from "../index";
 
 import {
   getKey,
+  getRandomMonthExcludingCurrent,
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
@@ -1287,11 +1288,10 @@ describe("Calendar", () => {
         .safeQuerySelector("select")
         .getElement();
 
+      const month = getRandomMonthExcludingCurrent();
       fireEvent.change(select, {
         target: {
-          value: Array.from<HTMLOptionElement>(
-            select.querySelectorAll("option"),
-          ).at(-2)?.value,
+          value: month,
         },
       });
 
