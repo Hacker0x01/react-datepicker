@@ -448,6 +448,27 @@ describe("Calendar", () => {
     expect(nextButtonAriaLabel).toBe(nextYearAriaLabel);
   });
 
+  it("should not have previous month button when selecting a date in the second month, when min date is specified", () => {
+    const { container } = render(
+      <DatePicker
+        inline
+        monthsShown={2}
+        minDate={new Date("2024-11-06")}
+        maxDate={new Date("2025-01-01")}
+      />,
+    );
+
+    const secondMonthDate = safeQuerySelectorAll(
+      container,
+      ".react-datepicker__day--009",
+    )[1];
+    fireEvent.click(secondMonthDate!);
+
+    expect(
+      container.querySelector(".react-datepicker__navigation--previous"),
+    ).toBe(null);
+  });
+
   describe("custom header", () => {
     const months = [
       "January",
