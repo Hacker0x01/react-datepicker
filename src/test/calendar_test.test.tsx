@@ -458,11 +458,19 @@ describe("Calendar", () => {
       />,
     );
 
+    expect(
+      container.querySelector(".react-datepicker__navigation--previous"),
+    ).toBe(null);
+
     const secondMonthDate = safeQuerySelectorAll(
       container,
       ".react-datepicker__day--009",
     )[1];
-    fireEvent.click(secondMonthDate!);
+    if (!secondMonthDate) {
+      throw new Error("second month date is not found");
+    }
+
+    fireEvent.click(secondMonthDate);
 
     expect(
       container.querySelector(".react-datepicker__navigation--previous"),
