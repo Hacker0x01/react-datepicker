@@ -528,6 +528,14 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       return;
     }
 
+    const monthsShown =
+      this.props.monthsShown ?? Calendar.defaultProps.monthsShown;
+    const monthsToSubtract = this.props.showPreviousMonths
+      ? monthsShown - 1
+      : 0;
+    const monthSelectedIn = this.props.monthSelectedIn ?? monthsToSubtract;
+    const fromMonthDate = subMonths(this.state.date, monthSelectedIn);
+
     let allPrevDaysDisabled;
     switch (true) {
       case this.props.showMonthYearPicker:
@@ -543,7 +551,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         );
         break;
       default:
-        allPrevDaysDisabled = monthDisabledBefore(this.state.date, this.props);
+        allPrevDaysDisabled = monthDisabledBefore(fromMonthDate, this.props);
         break;
     }
 
