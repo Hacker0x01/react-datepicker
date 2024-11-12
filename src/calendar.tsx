@@ -103,7 +103,7 @@ export interface ReactDatePickerCustomHeaderProps {
   nextYearButtonDisabled: boolean;
 }
 
-type CalendarProps = React.PropsWithChildren &
+type CalendarProps = React.PropsWithChildren<
   Omit<
     YearDropdownProps,
     "date" | "onChange" | "year" | "minDate" | "maxDate"
@@ -205,7 +205,8 @@ type CalendarProps = React.PropsWithChildren &
       } & Pick<YearDropdownProps, "maxDate" | "minDate"> &
         Pick<YearProps, "maxDate" | "minDate"> &
         Pick<MonthProps, "maxDate" | "minDate">)
-  );
+  )
+>
 
 interface CalendarState
   extends Pick<YearProps, "selectingDate">,
