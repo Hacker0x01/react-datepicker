@@ -308,14 +308,14 @@ export function safeMultipleDatesFormat(
   props: {
     dateFormat: string | string[];
     locale?: Locale;
-    showCount?: boolean;
+    showSelectedCount?: boolean;
   },
 ): string {
   if (!dates?.length) {
     return "";
   }
 
-  if (props?.showCount === false) {
+  if (props?.showSelectedCount === false) {
     const formattedAllDates = dates.map((date) => safeDateFormat(date, props));
     return formattedAllDates.join(", ");
   }
