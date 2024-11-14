@@ -103,109 +103,110 @@ export interface ReactDatePickerCustomHeaderProps {
   nextYearButtonDisabled: boolean;
 }
 
-type CalendarProps = React.PropsWithChildren &
+type CalendarProps = React.PropsWithChildren<
   Omit<
     YearDropdownProps,
     "date" | "onChange" | "year" | "minDate" | "maxDate"
   > &
-  Omit<MonthDropdownProps, "month" | "onChange"> &
-  Omit<MonthYearDropdownProps, "date" | "onChange" | "minDate" | "maxDate"> &
-  Omit<
-    YearProps,
-    | "onDayClick"
-    | "selectingDate"
-    | "clearSelectingDate"
-    | "onYearMouseEnter"
-    | "onYearMouseLeave"
-    | "minDate"
-    | "maxDate"
-  > &
-  Omit<
-    MonthProps,
-    | "ariaLabelPrefix"
-    | "onChange"
-    | "day"
-    | "onDayClick"
-    | "handleOnKeyDown"
-    | "handleOnMonthKeyDown"
-    | "onDayMouseEnter"
-    | "onMouseLeave"
-    | "orderInDisplay"
-    | "monthShowsDuplicateDaysEnd"
-    | "monthShowsDuplicateDaysStart"
-    | "minDate"
-    | "maxDate"
-  > &
-  Omit<TimeProps, "onChange" | "format" | "intervals" | "monthRef"> &
-  Omit<InputTimeProps, "date" | "timeString" | "onChange"> & {
-    className?: string;
-    container?: React.ElementType;
-    showYearPicker?: boolean;
-    showMonthYearPicker?: boolean;
-    showQuarterYearPicker?: boolean;
-    showTimeSelect?: boolean;
-    showTimeInput?: boolean;
-    showYearDropdown?: boolean;
-    showMonthDropdown?: boolean;
-    yearItemNumber?: number;
-    useWeekdaysShort?: boolean;
-    forceShowMonthNavigation?: boolean;
-    showDisabledMonthNavigation?: boolean;
-    formatWeekDay?: (date: string) => string;
-    onDropdownFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
-    calendarStartDay?: Day;
-    weekDayClassName?: (date: Date) => string;
-    onMonthChange?: (date: Date) => void;
-    onYearChange?: (date: Date) => void;
-    onDayMouseEnter?: (date: Date) => void;
-    onMonthMouseLeave?: VoidFunction;
-    weekLabel?: string;
-    onClickOutside: ClickOutsideHandler;
-    outsideClickIgnoreClass?: string;
-    previousMonthButtonLabel?: React.ReactNode;
-    previousYearButtonLabel?: string;
-    previousMonthAriaLabel?: string;
-    previousYearAriaLabel?: string;
-    nextMonthButtonLabel?: React.ReactNode;
-    nextYearButtonLabel?: string;
-    nextMonthAriaLabel?: string;
-    nextYearAriaLabel?: string;
-    showPreviousMonths?: boolean;
-    monthsShown?: number;
-    monthSelectedIn?: number;
-    onSelect: (
-      day: Date,
-      event?:
-        | React.MouseEvent<HTMLDivElement>
-        | React.KeyboardEvent<HTMLDivElement>,
-      monthSelectedIn?: number,
-    ) => void;
-    renderCustomHeader?: (
-      props: ReactDatePickerCustomHeaderProps,
-    ) => JSX.Element;
-    onYearMouseEnter?: YearProps["onYearMouseEnter"];
-    onYearMouseLeave?: YearProps["onYearMouseLeave"];
-    monthAriaLabelPrefix?: MonthProps["ariaLabelPrefix"];
-    handleOnDayKeyDown?: MonthProps["handleOnKeyDown"];
-    handleOnKeyDown?: (
-      event:
-        | React.KeyboardEvent<HTMLDivElement>
-        | React.KeyboardEvent<HTMLLIElement>
-        | React.KeyboardEvent<HTMLButtonElement>,
-    ) => void;
-    onTimeChange?: TimeProps["onChange"] | InputTimeProps["onChange"];
-    timeFormat?: TimeProps["format"];
-    timeIntervals?: TimeProps["intervals"];
-  } & (
-    | ({
-        showMonthYearDropdown: true;
-      } & Pick<MonthYearDropdownProps, "maxDate" | "minDate">)
-    | ({
-        showMonthYearDropdown?: never;
-      } & Pick<YearDropdownProps, "maxDate" | "minDate"> &
-        Pick<YearProps, "maxDate" | "minDate"> &
-        Pick<MonthProps, "maxDate" | "minDate">)
-  );
+    Omit<MonthDropdownProps, "month" | "onChange"> &
+    Omit<MonthYearDropdownProps, "date" | "onChange" | "minDate" | "maxDate"> &
+    Omit<
+      YearProps,
+      | "onDayClick"
+      | "selectingDate"
+      | "clearSelectingDate"
+      | "onYearMouseEnter"
+      | "onYearMouseLeave"
+      | "minDate"
+      | "maxDate"
+    > &
+    Omit<
+      MonthProps,
+      | "ariaLabelPrefix"
+      | "onChange"
+      | "day"
+      | "onDayClick"
+      | "handleOnKeyDown"
+      | "handleOnMonthKeyDown"
+      | "onDayMouseEnter"
+      | "onMouseLeave"
+      | "orderInDisplay"
+      | "monthShowsDuplicateDaysEnd"
+      | "monthShowsDuplicateDaysStart"
+      | "minDate"
+      | "maxDate"
+    > &
+    Omit<TimeProps, "onChange" | "format" | "intervals" | "monthRef"> &
+    Omit<InputTimeProps, "date" | "timeString" | "onChange"> & {
+      className?: string;
+      container?: React.ElementType;
+      showYearPicker?: boolean;
+      showMonthYearPicker?: boolean;
+      showQuarterYearPicker?: boolean;
+      showTimeSelect?: boolean;
+      showTimeInput?: boolean;
+      showYearDropdown?: boolean;
+      showMonthDropdown?: boolean;
+      yearItemNumber?: number;
+      useWeekdaysShort?: boolean;
+      forceShowMonthNavigation?: boolean;
+      showDisabledMonthNavigation?: boolean;
+      formatWeekDay?: (date: string) => string;
+      onDropdownFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
+      calendarStartDay?: Day;
+      weekDayClassName?: (date: Date) => string;
+      onMonthChange?: (date: Date) => void;
+      onYearChange?: (date: Date) => void;
+      onDayMouseEnter?: (date: Date) => void;
+      onMonthMouseLeave?: VoidFunction;
+      weekLabel?: string;
+      onClickOutside: ClickOutsideHandler;
+      outsideClickIgnoreClass?: string;
+      previousMonthButtonLabel?: React.ReactNode;
+      previousYearButtonLabel?: string;
+      previousMonthAriaLabel?: string;
+      previousYearAriaLabel?: string;
+      nextMonthButtonLabel?: React.ReactNode;
+      nextYearButtonLabel?: string;
+      nextMonthAriaLabel?: string;
+      nextYearAriaLabel?: string;
+      showPreviousMonths?: boolean;
+      monthsShown?: number;
+      monthSelectedIn?: number;
+      onSelect: (
+        day: Date,
+        event?:
+          | React.MouseEvent<HTMLDivElement>
+          | React.KeyboardEvent<HTMLDivElement>,
+        monthSelectedIn?: number,
+      ) => void;
+      renderCustomHeader?: (
+        props: ReactDatePickerCustomHeaderProps,
+      ) => JSX.Element;
+      onYearMouseEnter?: YearProps["onYearMouseEnter"];
+      onYearMouseLeave?: YearProps["onYearMouseLeave"];
+      monthAriaLabelPrefix?: MonthProps["ariaLabelPrefix"];
+      handleOnDayKeyDown?: MonthProps["handleOnKeyDown"];
+      handleOnKeyDown?: (
+        event:
+          | React.KeyboardEvent<HTMLDivElement>
+          | React.KeyboardEvent<HTMLLIElement>
+          | React.KeyboardEvent<HTMLButtonElement>,
+      ) => void;
+      onTimeChange?: TimeProps["onChange"] | InputTimeProps["onChange"];
+      timeFormat?: TimeProps["format"];
+      timeIntervals?: TimeProps["intervals"];
+    } & (
+      | ({
+          showMonthYearDropdown: true;
+        } & Pick<MonthYearDropdownProps, "maxDate" | "minDate">)
+      | ({
+          showMonthYearDropdown?: never;
+        } & Pick<YearDropdownProps, "maxDate" | "minDate"> &
+          Pick<YearProps, "maxDate" | "minDate"> &
+          Pick<MonthProps, "maxDate" | "minDate">)
+    )
+>;
 
 interface CalendarState
   extends Pick<YearProps, "selectingDate">,
