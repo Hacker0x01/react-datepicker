@@ -206,6 +206,7 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange?: never;
         selectsMultiple?: never;
+        showCount?: never;
         onChange?: (
           date: Date | null,
           event?:
@@ -216,6 +217,7 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange: true;
         selectsMultiple?: never;
+        showCount?: never;
         onChange?: (
           date: [Date | null, Date | null],
           event?:
@@ -226,6 +228,7 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange?: never;
         selectsMultiple: true;
+        showCount?: boolean;
         onChange?: (
           date: Date[] | null,
           event?:
@@ -301,6 +304,7 @@ export default class DatePicker extends Component<
       calendarStartDay: undefined,
       toggleCalendarOnIconClick: false,
       usePointerEvent: false,
+      showCount: true,
     };
   }
 
@@ -1337,8 +1341,11 @@ export default class DatePicker extends Component<
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
+    const {
+      dateFormat = DatePicker.defaultProps.dateFormat,
+      locale,
+      showCount = DatePicker.defaultProps.showCount,
+    } = this.props;
     const inputValue =
       typeof this.props.value === "string"
         ? this.props.value
@@ -1353,6 +1360,7 @@ export default class DatePicker extends Component<
               ? safeMultipleDatesFormat(this.props.selectedDates ?? [], {
                   dateFormat,
                   locale,
+                  showCount,
                 })
               : safeDateFormat(this.props.selected, {
                   dateFormat,
