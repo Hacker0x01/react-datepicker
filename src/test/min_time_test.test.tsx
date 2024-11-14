@@ -24,6 +24,7 @@ const DatePickerWithState = (
       | "dateFormat"
       | "selectsRange"
       | "selectsMultiple"
+      | "showSelectedCount"
       | "onSelect"
     >,
 ) => {
