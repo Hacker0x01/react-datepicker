@@ -1,7 +1,10 @@
 import React, { Component, createRef } from "react";
 
-interface TabLoopProps extends React.PropsWithChildren {
+import type { ReactNode } from "react";
+
+interface TabLoopProps {
   enableTabLoop?: boolean;
+  children?: ReactNode | undefined;
 }
 
 const focusableElementsSelector =
