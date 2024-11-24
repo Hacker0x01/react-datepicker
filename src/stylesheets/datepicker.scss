@@ -1,6 +1,6 @@
 @use "sass:color";
-@import "variables.scss";
-@import "mixins.scss";
+@use "variables" as *;
+@use "mixins" as *;
 
 .react-datepicker-wrapper {
   display: inline-block;
@@ -362,17 +362,26 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:hover {
-      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
+      background-color: color.adjust(
+        $datepicker__selected-color,
+        $lightness: -5%
+      );
     }
   }
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: color.adjust($datepicker__selected-color, $lightness: 10%);
+    background-color: color.adjust(
+      $datepicker__selected-color,
+      $lightness: 10%
+    );
     color: #fff;
 
     &:hover {
-      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
+      background-color: color.adjust(
+        $datepicker__selected-color,
+        $lightness: -5%
+      );
     }
   }
 }
@@ -418,7 +427,10 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:not([aria-disabled="true"]):hover {
-      background-color: color.adjust($datepicker__highlighted-color, $lightness: -5%);
+      background-color: color.adjust(
+        $datepicker__highlighted-color,
+        $lightness: -5%
+      );
     }
 
     &-custom-1 {
@@ -454,7 +466,10 @@ h2.react-datepicker__current-month {
     }
 
     &:not([aria-disabled="true"]):hover {
-      background-color: color.adjust($datepicker__holidays-color, $lightness: -10%);
+      background-color: color.adjust(
+        $datepicker__holidays-color,
+        $lightness: -10%
+      );
     }
 
     &:hover .overlay {
@@ -471,17 +486,26 @@ h2.react-datepicker__current-month {
     color: #fff;
 
     &:not([aria-disabled="true"]):hover {
-      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
+      background-color: color.adjust(
+        $datepicker__selected-color,
+        $lightness: -5%
+      );
     }
   }
 
   &--keyboard-selected {
     border-radius: $datepicker__border-radius;
-    background-color: color.adjust($datepicker__selected-color, $lightness: 45%);
+    background-color: color.adjust(
+      $datepicker__selected-color,
+      $lightness: 45%
+    );
     color: rgb(0, 0, 0);
 
     &:not([aria-disabled="true"]):hover {
-      background-color: color.adjust($datepicker__selected-color, $lightness: -5%);
+      background-color: color.adjust(
+        $datepicker__selected-color,
+        $lightness: -5%
+      );
     }
   }
 
@@ -550,7 +574,10 @@ h2.react-datepicker__current-month {
 
     .react-datepicker__year-read-view--down-arrow,
     .react-datepicker__month-read-view--down-arrow {
-      border-top-color: color.adjust($datepicker__muted-color, $lightness: -10%);
+      border-top-color: color.adjust(
+        $datepicker__muted-color,
+        $lightness: -10%
+      );
     }
   }
 
@@ -613,11 +640,17 @@ h2.react-datepicker__current-month {
     background-color: $datepicker__muted-color;
 
     .react-datepicker__navigation--years-upcoming {
-      border-bottom-color: color.adjust($datepicker__muted-color, $lightness: -10%);
+      border-bottom-color: color.adjust(
+        $datepicker__muted-color,
+        $lightness: -10%
+      );
     }
 
     .react-datepicker__navigation--years-previous {
-      border-top-color: color.adjust($datepicker__muted-color, $lightness: -10%);
+      border-top-color: color.adjust(
+        $datepicker__muted-color,
+        $lightness: -10%
+      );
     }
   }
 
