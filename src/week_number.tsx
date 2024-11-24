@@ -120,8 +120,6 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       "react-datepicker__week-number--clickable": !!onClick,
       "react-datepicker__week-number--selected":
         !!onClick && isSameDay(this.props.date, this.props.selected),
-      "react-datepicker__week-number--keyboard-selected":
-        this.isKeyboardSelected(),
     };
     return (
       <div
