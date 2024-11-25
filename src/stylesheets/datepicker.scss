@@ -1,6 +1,6 @@
 @use "sass:color";
-@import "variables.scss";
-@import "mixins.scss";
+@use "variables" as *;
+@use "mixins" as *;
 
 .react-datepicker-wrapper {
   display: inline-block;

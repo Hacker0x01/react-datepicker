@@ -5,6 +5,7 @@
 
   "rules": {
     "at-rule-no-unknown": null,
+    "at-rule-disallowed-list": ["import"],
     "scss/at-rule-no-unknown": true,
     "scss/dollar-variable-pattern": null,
     "scss/at-import-partial-extension": null,
