@@ -407,15 +407,6 @@ export default class Year extends Component<YearProps> {
     return y === preSelected && !isPreSelectedYearDisabled ? "0" : "-1";
   };
 
-  getYearContainerClassNames = () => {
-    const { selectingDate, selectsStart, selectsEnd, selectsRange } =
-      this.props;
-    return clsx("react-datepicker__year", {
-      "react-datepicker__year--selecting-range":
-        selectingDate && (selectsStart || selectsEnd || selectsRange),
-    });
-  };
-
   getYearContent = (y: number) => {
     return this.props.renderYearContent ? this.props.renderYearContent(y) : y;
   };
@@ -475,7 +466,7 @@ export default class Year extends Component<YearProps> {
     }
 
     return (
-      <div className={this.getYearContainerClassNames()}>
+      <div className="react-datepicker__year">
         <div
           className="react-datepicker__year-wrapper"
           onMouseLeave={
