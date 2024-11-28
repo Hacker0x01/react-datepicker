@@ -9318,7 +9318,6 @@ __metadata:
     lint-staged: "npm:^15.2.9"
     lodash: "npm:^4.17.21"
     prettier: "npm:^3.3.3"
-    prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     rollup: "npm:^4.21.1"
