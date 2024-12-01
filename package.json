@@ -92,8 +92,8 @@
     "typescript": "^5.5.4"
   },
   "peerDependencies": {
-    "react": "^16.9.0 || ^17 || ^18",
-    "react-dom": "^16.9.0 || ^17 || ^18"
+    "react": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc",
+    "react-dom": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc"
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.23",
