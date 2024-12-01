@@ -449,12 +449,17 @@ describe("Calendar", () => {
   });
 
   it("should not have previous month button when selecting a date in the second month, when min date is specified", () => {
+    const minDate = new Date("2024-11-06");
+    const maxDate = new Date("2025-01-01");
+    const selectedDate = minDate;
+
     const { container } = render(
       <DatePicker
         inline
         monthsShown={2}
-        minDate={new Date("2024-11-06")}
-        maxDate={new Date("2025-01-01")}
+        selected={selectedDate}
+        minDate={minDate}
+        maxDate={maxDate}
       />,
     );
 
