@@ -176,7 +176,8 @@ export type DatePickerProps = OmitUnion<
     calendarIconClassName?: string;
     toggleCalendarOnIconClick?: boolean;
     holidays?: Holiday[];
-    startDate?: Date;
+    startDate?: Date | null;
+    endDate?: Date | null;
     selected?: Date | null;
     value?: string;
     customInputRef?: string;
