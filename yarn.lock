@@ -2024,17 +2024,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.23":
-  version: 0.26.27
-  resolution: "@floating-ui/react@npm:0.26.27"
+"@floating-ui/react@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@floating-ui/react@npm:0.27.0"
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.2"
     "@floating-ui/utils": "npm:^0.2.8"
     tabbable: "npm:^6.0.0"
   peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10c0/6a27fadeb04862ecdb192f8e5428185ab0217b0c084e5464b2c218697f317a437dbfa47a7fb44332d505f047c17721e00f3705cb20e61b406117fea1ba2995b2
+    react: ">=17.0.0"
+    react-dom: ">=17.0.0"
+  checksum: 10c0/a0d4bcd0c81694e86e176d4f8680c6e672b9e131d6c0b2a6d1fb8024087001000d856e90d415846e3a685e946b3d0cf1c3a8b39024f22364557c2091d3fcd44b
   languageName: node
   linkType: hard
 
@@ -9289,7 +9289,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.4"
     "@babel/preset-react": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
-    "@floating-ui/react": "npm:^0.26.23"
+    "@floating-ui/react": "npm:^0.27.0"
     "@react-docgen/cli": "npm:^2.0.3"
     "@rollup/plugin-babel": "npm:^6.0.4"
     "@rollup/plugin-commonjs": "npm:^28.0.0"
