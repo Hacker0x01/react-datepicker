@@ -30,7 +30,6 @@ interface YearProps
   clearSelectingDate?: VoidFunction;
   date?: Date;
   disabledKeyboardNavigation?: boolean;
-  endDate?: Date;
   onDayClick?: (
     date: Date,
     event:
@@ -55,7 +54,8 @@ interface YearProps
   selectsEnd?: boolean;
   selectsStart?: boolean;
   selectsRange?: boolean;
-  startDate?: Date;
+  startDate?: Date | null;
+  endDate?: Date | null;
   yearItemNumber?: number;
   handleOnKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   yearClassName?: (date: Date) => string;
