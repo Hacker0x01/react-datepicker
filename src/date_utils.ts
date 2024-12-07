@@ -305,10 +305,19 @@ export function safeDateRangeFormat(
  */
 export function safeMultipleDatesFormat(
   dates: Date[],
-  props: { dateFormat: string | string[]; locale?: Locale },
+  props: {
+    dateFormat: string | string[];
+    locale?: Locale;
+    showSelectedCount?: boolean;
+  },
 ): string {
   if (!dates?.length) {
     return "";
+  }
+
+  if (props?.showSelectedCount === false) {
+    const formattedAllDates = dates.map((date) => safeDateFormat(date, props));
+    return formattedAllDates.join(", ");
   }
 
   const formattedFirstDate = dates[0] ? safeDateFormat(dates[0], props) : "";

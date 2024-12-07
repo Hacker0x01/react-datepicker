@@ -51,6 +51,7 @@ import {
   getMidnightDate,
   registerLocale,
   isMonthYearDisabled,
+  safeMultipleDatesFormat,
 } from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1227,6 +1228,33 @@ describe("date_utils", () => {
       expect(safeDateRangeFormat(startDate, endDate, props)).toBe(
         "04/20/2021 - 04/28/2021",
       );
+    });
+  });
+
+  describe("safeMultipleDatesFormat", () => {
+    const props = {
+      dateFormat: "MM/dd/yyyy",
+      locale: "en",
+    };
+
+    const dates = [
+      new Date("2024-11-14 00:00:00"),
+      new Date("2024-11-15 00:00:00"),
+      new Date("2024-11-16 00:00:00"),
+    ];
+
+    it("should return a blank string when the dates array is null", () => {
+      expect(safeMultipleDatesFormat([], props)).toBe("");
+    });
+
+    it("should return the correct count when multiple dates are selected", () => {
+      expect(safeMultipleDatesFormat(dates, props)).toBe("11/14/2024 (+2)");
+    });
+
+    it("should return each selected date when showSelectedCount is false", () => {
+      expect(
+        safeMultipleDatesFormat(dates, { ...props, showSelectedCount: false }),
+      ).toBe("11/14/2024, 11/15/2024, 11/16/2024");
     });
   });
 
