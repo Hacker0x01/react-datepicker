@@ -81,7 +81,7 @@ describe("Datepicker minTime", () => {
       <DatePickerWithState minTime={minTime} maxTime={maxTime} />,
     );
     const input = safeQuerySelector<HTMLInputElement>(container, "input");
-    fireEvent.change(input, { target: { value: "2023-03-10 16:00" } });
+    fireEvent.change(input, { target: { value: "03/10/2023 16:00" } });
     fireEvent.focusOut(input);
 
     expect(input.value).toEqual("03/10/2023 16:00");
