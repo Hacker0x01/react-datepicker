@@ -7157,10 +7157,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^11.10.0":
-  version: 11.10.0
-  resolution: "highlight.js@npm:11.10.0"
-  checksum: 10c0/cd8bf7ef06cbd72ddb83580ecabe769f08f062be8bb82d2eb492d31c17f7480d1f8d14a66fc81deee0601645435f19f04c470510563f847242a41ccff0ab873e
+"highlight.js@npm:^11.11.0":
+  version: 11.11.0
+  resolution: "highlight.js@npm:11.11.0"
+  checksum: 10c0/32288dd342ed182c0170459beaedd5b02b7c2ffb3a6b1ce6e078124b1debfa0d92aa905f0d2e7a855d2ec7cd38ded473e4a6242bf111bc39625dca61ae0c1be1
   languageName: node
   linkType: hard
 
@@ -10987,7 +10987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-datepicker-docs@workspace:."
   dependencies:
-    highlight.js: "npm:^11.10.0"
+    highlight.js: "npm:^11.11.0"
     raw-loader: "npm:^4.0.2"
     react: "npm:^18.3.1"
     react-app-rewired: "npm:^2.2.1"
