@@ -180,6 +180,7 @@ export default class Day extends Component<DayProps> {
     isSameDay(this.props.day, other);
 
   isKeyboardSelected = () => {
+    // TODO: Fix this
     if (this.props.disabledKeyboardNavigation) {
       return false;
     }
@@ -290,6 +291,7 @@ export default class Day extends Component<DayProps> {
       startDate,
       endDate,
     } = this.props;
+    // TODO: Fix this
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
@@ -345,6 +347,7 @@ export default class Day extends Component<DayProps> {
   };
 
   isSelectingRangeEnd = () => {
+    // TODO: Fix this
     if (!this.isInSelectingRange()) {
       return false;
     }
@@ -397,6 +400,7 @@ export default class Day extends Component<DayProps> {
   isCurrentDay = () => this.isSameDay(newDate());
 
   isSelected = () => {
+    // TODO: Fix this
     if (this.props.selectsMultiple) {
       return this.props.selectedDates?.some((date) =>
         this.isSameDayOrWeek(date),
