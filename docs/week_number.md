@@ -16,3 +16,4 @@
 | `showWeekNumber`             |      |               |             |
 | `showWeekPicker`             |      |               |             |
 | `weekNumber` (required)      |      |               |             |
+| `isWeekDisabled`             |      |               |             |
