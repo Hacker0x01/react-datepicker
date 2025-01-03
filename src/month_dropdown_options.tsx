@@ -12,9 +12,9 @@ interface MonthDropdownOptionsProps {
 export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
   isSelectedMonth = (i: number): boolean => this.props.month === i;
 
-  renderOptions = (): JSX.Element[] => {
-    return this.props.monthNames.map<JSX.Element>(
-      (month: string, i: number): JSX.Element => (
+  renderOptions = (): React.ReactElement[] => {
+    return this.props.monthNames.map<React.ReactElement>(
+      (month: string, i: number): React.ReactElement => (
         <div
           className={
             this.isSelectedMonth(i)
@@ -40,7 +40,7 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
 
   handleClickOutside = (): void => this.props.onCancel();
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     return (
       <ClickOutsideWrapper
         className="react-datepicker__month-dropdown"

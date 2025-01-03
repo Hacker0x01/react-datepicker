@@ -36,7 +36,7 @@ export class PopperComponent extends Component<PopperComponentProps> {
     };
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const {
       className,
       wrapperClassName,
@@ -51,7 +51,7 @@ export class PopperComponent extends Component<PopperComponentProps> {
       showArrow,
     } = this.props;
 
-    let popper: JSX.Element | undefined = undefined;
+    let popper: React.ReactElement | undefined = undefined;
 
     if (!hidePopper) {
       const classes = clsx("react-datepicker-popper", className);

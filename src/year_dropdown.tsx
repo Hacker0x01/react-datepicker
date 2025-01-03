@@ -28,7 +28,7 @@ export default class YearDropdown extends Component<
     dropdownVisible: false,
   };
 
-  renderSelectOptions = (): JSX.Element[] => {
+  renderSelectOptions = (): React.ReactElement[] => {
     const minYear: number = this.props.minDate
       ? getYear(this.props.minDate)
       : 1900;
@@ -36,7 +36,7 @@ export default class YearDropdown extends Component<
       ? getYear(this.props.maxDate)
       : 2100;
 
-    const options: JSX.Element[] = [];
+    const options: React.ReactElement[] = [];
     for (let i = minYear; i <= maxYear; i++) {
       options.push(
         <option key={i} value={i}>
@@ -51,7 +51,7 @@ export default class YearDropdown extends Component<
     this.onChange(parseInt(event.target.value));
   };
 
-  renderSelectMode = (): JSX.Element => (
+  renderSelectMode = (): React.ReactElement => (
     <select
       value={this.props.year}
       className="react-datepicker__year-select"
@@ -61,7 +61,7 @@ export default class YearDropdown extends Component<
     </select>
   );
 
-  renderReadView = (visible: boolean): JSX.Element => (
+  renderReadView = (visible: boolean): React.ReactElement => (
     <div
       key="read"
       style={{ visibility: visible ? "visible" : "hidden" }}
@@ -77,7 +77,7 @@ export default class YearDropdown extends Component<
     </div>
   );
 
-  renderDropdown = (): JSX.Element => (
+  renderDropdown = (): React.ReactElement => (
     <YearDropdownOptions
       key="dropdown"
       {...this.props}
@@ -86,7 +86,7 @@ export default class YearDropdown extends Component<
     />
   );
 
-  renderScrollMode = (): JSX.Element[] => {
+  renderScrollMode = (): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
     const result = [this.renderReadView(!dropdownVisible)];
     if (dropdownVisible) {
@@ -130,7 +130,7 @@ export default class YearDropdown extends Component<
     this.props.setOpen?.(true);
   };
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     let renderedDropdown;
     switch (this.props.dropdownMode) {
       case "scroll":
