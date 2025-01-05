@@ -174,4 +174,4 @@ The examples are hosted within the docs folder and are ran in the simple app tha
 
 ## License
 
-Copyright (c) 2014-2024 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
+Copyright (c) 2014-2025 HackerOne Inc. and individual contributors. Licensed under MIT license, see [LICENSE](LICENSE) for the full license.
