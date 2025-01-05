@@ -1,8 +1,10 @@
-# `month_dropdown` (component)
+`month_dropdown` (component)
+============================
 
-| name                      | type | default value | description |
-| ------------------------- | ---- | ------------- | ----------- |
-| `dropdownMode` (required) |      |               |             |
-| `locale`                  |      |               |             |
-| `onChange` (required)     |      |               |             |
-| `useShortMonthInDropdown` |      |               |             |
+
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`dropdownMode` (required)||||
+|`locale`||||
+|`onChange` (required)||||
+|`useShortMonthInDropdown`||||

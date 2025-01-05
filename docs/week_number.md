@@ -1,19 +1,21 @@
-# `week_number` (component)
+`week_number` (component)
+=========================
 
-| name                         | type | default value | description |
-| ---------------------------- | ---- | ------------- | ----------- |
-| `ariaLabelPrefix`            |      | `"week "`     |             |
-| `containerRef`               |      |               |             |
-| `date` (required)            |      |               |             |
-| `disabledKeyboardNavigation` |      |               |             |
-| `handleOnKeyDown`            |      |               |             |
-| `inline`                     |      |               |             |
-| `isInputFocused`             |      |               |             |
-| `onClick`                    |      |               |             |
-| `preSelection`               |      |               |             |
-| `selected`                   |      |               |             |
-| `shouldFocusDayInline`       |      |               |             |
-| `showWeekNumber`             |      |               |             |
-| `showWeekPicker`             |      |               |             |
-| `weekNumber` (required)      |      |               |             |
-| `isWeekDisabled`             |      |               |             |
+
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`ariaLabelPrefix`||`"week "`||
+|`containerRef`||||
+|`date` (required)||||
+|`disabledKeyboardNavigation`||||
+|`handleOnKeyDown`||||
+|`inline`||||
+|`isInputFocused`||||
+|`isWeekDisabled`||||
+|`onClick`||||
+|`preSelection`||||
+|`selected`||||
+|`shouldFocusDayInline`||||
+|`showWeekNumber`||||
+|`showWeekPicker`||||
+|`weekNumber` (required)||||
