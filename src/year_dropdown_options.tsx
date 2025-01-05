@@ -89,7 +89,7 @@ export default class YearDropdownOptions extends Component<
 
   dropdownRef: React.RefObject<HTMLDivElement>;
 
-  renderOptions = (): JSX.Element[] => {
+  renderOptions = (): React.ReactElement[] => {
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
       <div

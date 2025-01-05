@@ -1389,7 +1389,7 @@ export default class DatePicker extends Component<
     });
   };
 
-  renderClearButton = (): JSX.Element | null => {
+  renderClearButton = (): React.ReactElement | null => {
     const {
       isClearable,
       disabled,
@@ -1428,7 +1428,7 @@ export default class DatePicker extends Component<
     }
   };
 
-  renderInputContainer(): JSX.Element {
+  renderInputContainer(): React.ReactElement {
     const {
       showIcon,
       icon,
@@ -1472,7 +1472,7 @@ export default class DatePicker extends Component<
     );
   }
 
-  render(): JSX.Element | null {
+  render(): React.ReactElement | null {
     const calendar = this.renderCalendar();
 
     if (this.props.inline) return calendar;

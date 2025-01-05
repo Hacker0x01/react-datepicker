@@ -108,7 +108,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       this.weekNumberEl.current.focus({ preventScroll: true });
   };
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const {
       weekNumber,
       ariaLabelPrefix = WeekNumber.defaultProps.ariaLabelPrefix,

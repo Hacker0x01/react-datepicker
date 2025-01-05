@@ -5,7 +5,7 @@ interface InputTimeProps {
   date?: Date;
   timeString?: string;
   timeInputLabel?: string;
-  customTimeInput?: JSX.Element;
+  customTimeInput?: React.ReactElement;
 }
 
 interface InputTimeState {

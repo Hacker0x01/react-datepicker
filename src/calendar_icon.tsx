@@ -29,7 +29,7 @@ const CalendarIcon: React.FC<CalendarIconProps> = ({
   icon,
   className = "",
   onClick,
-}: CalendarIconProps): JSX.Element => {
+}: CalendarIconProps): React.ReactElement => {
   const defaultClass = "react-datepicker__calendar-icon";
 
   if (typeof icon === "string") {

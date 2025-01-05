@@ -35,7 +35,7 @@ export default class MonthYearDropdown extends Component<
     dropdownVisible: false,
   };
 
-  renderSelectOptions = (): JSX.Element[] => {
+  renderSelectOptions = (): React.ReactElement[] => {
     let currDate = getStartOfMonth(this.props.minDate);
     const lastDate = getStartOfMonth(this.props.maxDate);
     const options = [];
@@ -58,7 +58,7 @@ export default class MonthYearDropdown extends Component<
     this.onChange(parseInt(event.target.value));
   };
 
-  renderSelectMode = (): JSX.Element => (
+  renderSelectMode = (): React.ReactElement => (
     <select
       value={getTime(getStartOfMonth(this.props.date))}
       className="react-datepicker__month-year-select"
@@ -68,7 +68,7 @@ export default class MonthYearDropdown extends Component<
     </select>
   );
 
-  renderReadView = (visible: boolean): JSX.Element => {
+  renderReadView = (visible: boolean): React.ReactElement => {
     const yearMonth = formatDate(
       this.props.date,
       this.props.dateFormat,
@@ -90,7 +90,7 @@ export default class MonthYearDropdown extends Component<
     );
   };
 
-  renderDropdown = (): JSX.Element => (
+  renderDropdown = (): React.ReactElement => (
     <MonthYearDropdownOptions
       key="dropdown"
       {...this.props}
@@ -99,7 +99,7 @@ export default class MonthYearDropdown extends Component<
     />
   );
 
-  renderScrollMode = (): JSX.Element[] => {
+  renderScrollMode = (): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
     const result = [this.renderReadView(!dropdownVisible)];
     if (dropdownVisible) {
@@ -128,7 +128,7 @@ export default class MonthYearDropdown extends Component<
       dropdownVisible: !this.state.dropdownVisible,
     });
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     let renderedDropdown;
     switch (this.props.dropdownMode) {
       case "scroll":

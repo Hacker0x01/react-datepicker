@@ -58,9 +58,9 @@ export default class MonthYearDropdownOptions extends Component<
     };
   }
 
-  renderOptions = (): JSX.Element[] => {
-    return this.state.monthYearsList.map<JSX.Element>(
-      (monthYear: Date): JSX.Element => {
+  renderOptions = (): React.ReactElement[] => {
+    return this.state.monthYearsList.map<React.ReactElement>(
+      (monthYear: Date): React.ReactElement => {
         const monthYearPoint = getTime(monthYear);
         const isSameMonthYear =
           isSameYear(this.props.date, monthYear) &&
@@ -97,7 +97,7 @@ export default class MonthYearDropdownOptions extends Component<
     this.props.onCancel();
   };
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const dropdownClass = clsx({
       "react-datepicker__month-year-dropdown": true,
       "react-datepicker__month-year-dropdown--scrollable":
