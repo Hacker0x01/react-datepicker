@@ -962,6 +962,7 @@ export default class DatePicker extends Component<
       const copy = newDate(this.state.preSelection);
       if (eventKey === KeyType.Enter) {
         event.preventDefault();
+        (event.target as HTMLInputElement).blur();
         if (
           this.inputOk() &&
           this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
@@ -973,6 +974,7 @@ export default class DatePicker extends Component<
         }
       } else if (eventKey === KeyType.Escape) {
         event.preventDefault();
+        (event.target as HTMLInputElement).blur();
         this.sendFocusBackToInput();
         this.setOpen(false);
       } else if (eventKey === KeyType.Tab) {
