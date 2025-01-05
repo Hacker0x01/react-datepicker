@@ -113,6 +113,20 @@ export default class Week extends Component<WeekProps> {
     return getWeek(date);
   };
 
+  isWeekDisabled = (): boolean => {
+    const startOfWeek = this.startOfWeek();
+    const endOfWeek = addDays(startOfWeek, 6);
+
+    let processingDate = new Date(startOfWeek);
+    while (processingDate <= endOfWeek) {
+      if (!this.isDisabled(processingDate)) return false;
+
+      processingDate = addDays(processingDate, 1);
+    }
+
+    return true;
+  };
+
   renderDays = () => {
     const startOfWeek = this.startOfWeek();
     const days = [];
@@ -128,6 +142,7 @@ export default class Week extends Component<WeekProps> {
           {...Week.defaultProps}
           {...this.props}
           weekNumber={weekNumber}
+          isWeekDisabled={this.isWeekDisabled()}
           date={startOfWeek}
           onClick={onClickAction}
         />,

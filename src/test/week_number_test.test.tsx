@@ -285,6 +285,44 @@ describe("WeekNumber", () => {
         ).toBe(true);
       });
 
+      it("shouldn't have the class 'react-datepicker__week-number--clickable' if isWeekDisabled is true", () => {
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            onClick={() => {}}
+            isWeekDisabled
+          />,
+        );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
+        expect(
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--clickable",
+          ),
+        ).toBe(false);
+      });
+
+      it("should have the class 'react-datepicker__week-number--clickable' if isWeekDisabled is false and onClick is defined", () => {
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            onClick={() => {}}
+            isWeekDisabled={false}
+          />,
+        );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
+        expect(
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--clickable",
+          ),
+        ).toBe(true);
+      });
+
       it("should have the class 'react-datepicker__week-number--selected' if selected is current week and preselected is also current week and has the onClick Props", () => {
         const currentWeekNumber = newDate("2023-10-22T13:09:53+02:00");
         const { container } = render(
