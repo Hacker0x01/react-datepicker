@@ -281,7 +281,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
   }
 
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
 
   monthContainer: CalendarState["monthContainer"] = undefined;
 
