@@ -11,23 +11,9 @@
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
-  "files": [
-    "*.md",
-    "dist",
-    "lib",
-    "es",
-    "src/stylesheets"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "keywords": [
-    "react",
-    "datepicker",
-    "calendar",
-    "date",
-    "react-component"
-  ],
+  "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
+  "sideEffects": ["**/*.css"],
+  "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
@@ -55,8 +41,8 @@
     "@types/eslint": "^8.56.10",
     "@types/jest": "^29.5.12",
     "@types/node": "22",
-    "@types/react": "^18.3.4",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^8.6.0",
     "axe-core": "^4.10.0",
@@ -77,8 +63,8 @@
     "lint-staged": "^15.2.9",
     "lodash": "^4.17.21",
     "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "rollup": "^4.21.1",
     "rollup-plugin-filesize": "^10.0.0",
     "sass": "1.80.7",
@@ -124,10 +110,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
   },
   "packageManager": "yarn@4.6.0"
 }
