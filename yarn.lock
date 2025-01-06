@@ -9325,7 +9325,7 @@ __metadata:
     slugify: "npm:^1.6.6"
     stylelint: "npm:^16.9.0"
     stylelint-config-standard: "npm:^36.0.1"
-    stylelint-config-standard-scss: "npm:^13.1.0"
+    stylelint-config-standard-scss: "npm:^14.0.0"
     stylelint-scss: "npm:^6.5.1"
     ts-jest: "npm:^29.2.5"
     tslib: "npm:^2.7.0"
@@ -10537,24 +10537,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-recommended-scss@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "stylelint-config-recommended-scss@npm:14.0.0"
+"stylelint-config-recommended-scss@npm:^14.1.0":
+  version: 14.1.0
+  resolution: "stylelint-config-recommended-scss@npm:14.1.0"
   dependencies:
     postcss-scss: "npm:^4.0.9"
-    stylelint-config-recommended: "npm:^14.0.0"
-    stylelint-scss: "npm:^6.0.0"
+    stylelint-config-recommended: "npm:^14.0.1"
+    stylelint-scss: "npm:^6.4.0"
   peerDependencies:
     postcss: ^8.3.3
-    stylelint: ^16.0.2
+    stylelint: ^16.6.1
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: 10c0/9ddc92e7a5fa131b41cee1ab1f69251934ca35c0e2803dc613329cdead7b8b27d8457048a63db29f61a1442e7cdef14207f88a3abce00ec53fdefe0d604f7de3
+  checksum: 10c0/0a1c1bb6d9f7a21acea82e12fee1b36a195181ae1dd0d8b59145a56f76232a80d5b706269bc4ca4929680d36f10371bd8a7d0aeeee468fa9119a3b56410b052f
   languageName: node
   linkType: hard
 
-"stylelint-config-recommended@npm:^14.0.0, stylelint-config-recommended@npm:^14.0.1":
+"stylelint-config-recommended@npm:^14.0.1":
   version: 14.0.1
   resolution: "stylelint-config-recommended@npm:14.0.1"
   peerDependencies:
@@ -10563,23 +10563,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard-scss@npm:^13.1.0":
-  version: 13.1.0
-  resolution: "stylelint-config-standard-scss@npm:13.1.0"
+"stylelint-config-standard-scss@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "stylelint-config-standard-scss@npm:14.0.0"
   dependencies:
-    stylelint-config-recommended-scss: "npm:^14.0.0"
-    stylelint-config-standard: "npm:^36.0.0"
+    stylelint-config-recommended-scss: "npm:^14.1.0"
+    stylelint-config-standard: "npm:^36.0.1"
   peerDependencies:
     postcss: ^8.3.3
-    stylelint: ^16.3.1
+    stylelint: ^16.11.0
   peerDependenciesMeta:
     postcss:
       optional: true
-  checksum: 10c0/d07cae806ee8b3e77684f019a8b22cc32642373da8053e6ae7ed716f8ddbe6ea1f7323633a6a1bbc9aa08c6a3dceb1dcf053d83fdd10d076b5a01da6e86801ae
+  checksum: 10c0/b885f02d955060a8e0214fd8dc30bfc6d84cbdeb870d34ce0761b258914857bd22d537ac1c8ee9755bf4cd5b1f3b94f4ad0270c2ff4362df7d5eb8d95b35db5e
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^36.0.0, stylelint-config-standard@npm:^36.0.1":
+"stylelint-config-standard@npm:^36.0.1":
   version: 36.0.1
   resolution: "stylelint-config-standard@npm:36.0.1"
   dependencies:
@@ -10590,7 +10590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-scss@npm:^6.0.0, stylelint-scss@npm:^6.5.1":
+"stylelint-scss@npm:^6.4.0, stylelint-scss@npm:^6.5.1":
   version: 6.10.0
   resolution: "stylelint-scss@npm:6.10.0"
   dependencies:
