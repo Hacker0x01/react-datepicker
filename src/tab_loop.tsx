@@ -54,7 +54,7 @@ export default class TabLoop extends Component<TabLoopProps> {
     this.tabLoopRef = createRef();
   }
 
-  private tabLoopRef: React.RefObject<HTMLDivElement>;
+  private tabLoopRef: React.RefObject<HTMLDivElement | null>;
 
   /**
    * `getTabChildren` is a method of the `TabLoop` class that retrieves all tabbable children of the component.
