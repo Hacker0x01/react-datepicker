@@ -210,8 +210,13 @@ describe("DatePicker", () => {
       </ShadowRoot>,
     );
 
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+
     await userEvent.click(instance!.input!);
     expect(instance!.isCalendarOpen()).toBe(true);
+    expect(instance!.calendar).toBeTruthy();
+    expect(instance!.calendar!.containerRef.current).toBeTruthy();
 
     await userEvent.click(instance!.calendar!.containerRef.current!);
     expect(instance!.isCalendarOpen()).toBe(true);
