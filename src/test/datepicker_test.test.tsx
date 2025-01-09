@@ -1,4 +1,5 @@
 import { render, act, waitFor, fireEvent } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
 import React from "react";
 
@@ -26,6 +27,7 @@ import {
 import DatePicker, { registerLocale } from "../index";
 
 import CustomInput from "./helper_components/custom_input";
+import ShadowRoot from "./helper_components/shadow_root";
 import TestWrapper from "./helper_components/test_wrapper";
 import { getKey, safeQuerySelector } from "./test_utils";
 
@@ -194,6 +196,28 @@ describe("DatePicker", () => {
     fireEvent.click(instance!.input!);
     expect(instance!.calendar).toBeDefined();
     expect(shadow.getElementById("test-portal")).toBeDefined();
+  });
+
+  it("calendar should stay open when clicked within shadow dom and closed when clicked outside", async () => {
+    let instance: DatePicker | null = null;
+    render(
+      <ShadowRoot>
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+        />
+      </ShadowRoot>,
+    );
+
+    await userEvent.click(instance!.input!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+
+    await userEvent.click(instance!.calendar!.containerRef.current!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+
+    await userEvent.click(document.body);
+    expect(instance!.isCalendarOpen()).toBe(false);
   });
 
   it("should not set open state when it is disabled and gets clicked", () => {

@@ -20,12 +20,19 @@ const useDetectClickOutside = (
   onClickOutsideRef.current = onClickOutside;
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      const target =
+        (event.composed &&
+          event.composedPath &&
+          event
+            .composedPath()
+            .find((eventTarget) => eventTarget instanceof Node)) ||
+        event.target;
+      if (ref.current && !ref.current.contains(target as Node)) {
         if (
           !(
             ignoreClass &&
-            event.target instanceof HTMLElement &&
-            event.target.classList.contains(ignoreClass)
+            target instanceof HTMLElement &&
+            target.classList.contains(ignoreClass)
           )
         ) {
           onClickOutsideRef.current?.(event);
