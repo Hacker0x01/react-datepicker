@@ -1,4 +1,5 @@
-# `portal` (component)
+`portal` (component)
+====================
 
 `Portal` is a React component that allows you to render children into a DOM node
 that exists outside the DOM hierarchy of the parent component.
@@ -9,8 +10,8 @@ that exists outside the DOM hierarchy of the parent component.
 @property {string} props.portalId - The id of the DOM node into which the `Portal` will render.
 @property {ShadowRoot} [props.portalHost] - The DOM node to host the `Portal`.
 
-| name                  | type | default value | description |
-| --------------------- | ---- | ------------- | ----------- |
-| `children` (required) |      |               |             |
-| `portalHost`          |      |               |             |
-| `portalId` (required) |      |               |             |
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`children` (required)||||
+|`portalHost`||||
+|`portalId` (required)||||

@@ -1,4 +1,5 @@
-# `tab_loop` (component)
+`tab_loop` (component)
+======================
 
 `TabLoop` is a React component that manages tabbing behavior for its children.
 
@@ -9,7 +10,7 @@ and "Shift Tab" on the first element will focus the last element
 @component
 @example
 <TabLoop enableTabLoop={true}>
-<ChildComponent />
+  <ChildComponent />
 </TabLoop>
 
 @param props - The properties that define the `TabLoop` component.
@@ -18,6 +19,7 @@ and "Shift Tab" on the first element will focus the last element
 
 @returns The `TabLoop` component.
 
-| name            | type | default value | description |
-| --------------- | ---- | ------------- | ----------- |
-| `enableTabLoop` |      | `true`        |             |
+| name  | type  | default value  | description  |
+|---|---|---|---|
+|`children`||||
+|`enableTabLoop`||`true`||

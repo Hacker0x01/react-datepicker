@@ -1,5 +1,7 @@
+@use "variables";
+
 %navigation-chevron {
-  border-color: $datepicker__muted-color;
+  border-color: variables.$datepicker__muted-color;
   border-style: solid;
   border-width: 3px 3px 0 0;
   content: "";
@@ -11,7 +13,7 @@
 
   &--disabled,
   &--disabled:hover {
-    border-color: $datepicker__navigation-disabled-color;
+    border-color: variables.$datepicker__navigation-disabled-color;
     cursor: default;
   }
 }

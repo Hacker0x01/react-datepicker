@@ -36,6 +36,7 @@ import DatePicker from "../index";
 
 import {
   getKey,
+  getRandomMonthExcludingCurrent,
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
@@ -445,6 +446,40 @@ describe("Calendar", () => {
 
     expect(previousButtonAriaLabel).toBe(previousYearAriaLabel);
     expect(nextButtonAriaLabel).toBe(nextYearAriaLabel);
+  });
+
+  it("should not have previous month button when selecting a date in the second month, when min date is specified", () => {
+    const minDate = new Date("2024-11-06");
+    const maxDate = new Date("2025-01-01");
+    const selectedDate = minDate;
+
+    const { container } = render(
+      <DatePicker
+        inline
+        monthsShown={2}
+        selected={selectedDate}
+        minDate={minDate}
+        maxDate={maxDate}
+      />,
+    );
+
+    expect(
+      container.querySelector(".react-datepicker__navigation--previous"),
+    ).toBe(null);
+
+    const secondMonthDate = safeQuerySelectorAll(
+      container,
+      ".react-datepicker__day--009",
+    )[1];
+    if (!secondMonthDate) {
+      throw new Error("second month date is not found");
+    }
+
+    fireEvent.click(secondMonthDate);
+
+    expect(
+      container.querySelector(".react-datepicker__navigation--previous"),
+    ).toBe(null);
   });
 
   describe("custom header", () => {
@@ -1287,11 +1322,10 @@ describe("Calendar", () => {
         .safeQuerySelector("select")
         .getElement();
 
+      const month = getRandomMonthExcludingCurrent();
       fireEvent.change(select, {
         target: {
-          value: Array.from<HTMLOptionElement>(
-            select.querySelectorAll("option"),
-          ).at(-2)?.value,
+          value: month,
         },
       });
 

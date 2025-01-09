@@ -175,7 +175,8 @@ export type DatePickerProps = OmitUnion<
     calendarIconClassName?: string;
     toggleCalendarOnIconClick?: boolean;
     holidays?: Holiday[];
-    startDate?: Date;
+    startDate?: Date | null;
+    endDate?: Date | null;
     selected?: Date | null;
     value?: string;
     customInputRef?: string;
@@ -945,6 +946,7 @@ export default class DatePicker extends Component<
       const copy = newDate(this.state.preSelection);
       if (eventKey === KeyType.Enter) {
         event.preventDefault();
+        (event.target as HTMLInputElement).blur();
         if (
           this.inputOk() &&
           this.state.lastPreSelectChange === PRESELECT_CHANGE_VIA_NAVIGATE
@@ -956,6 +958,7 @@ export default class DatePicker extends Component<
         }
       } else if (eventKey === KeyType.Escape) {
         event.preventDefault();
+        (event.target as HTMLInputElement).blur();
         this.sendFocusBackToInput();
         this.setOpen(false);
       } else if (eventKey === KeyType.Tab) {
@@ -1372,7 +1375,7 @@ export default class DatePicker extends Component<
     });
   };
 
-  renderClearButton = (): JSX.Element | null => {
+  renderClearButton = (): React.ReactElement | null => {
     const {
       isClearable,
       disabled,
@@ -1411,7 +1414,7 @@ export default class DatePicker extends Component<
     }
   };
 
-  renderInputContainer(): JSX.Element {
+  renderInputContainer(): React.ReactElement {
     const {
       showIcon,
       icon,
@@ -1455,7 +1458,7 @@ export default class DatePicker extends Component<
     );
   }
 
-  render(): JSX.Element | null {
+  render(): React.ReactElement | null {
     const calendar = this.renderCalendar();
 
     if (this.props.inline) return calendar;
