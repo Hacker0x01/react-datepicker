@@ -119,6 +119,32 @@ describe("DatePicker", () => {
     expect(container.querySelector(".react-datepicker")).toBeFalsy();
   });
 
+  it("should be executed props.onFocus on input focus when the document visibility changes", () => {
+    const onFocusSpy = jest.fn();
+
+    const { container } = render(<DatePicker onFocus={onFocusSpy} />);
+
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+    fireEvent.focus(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+    fireEvent.keyDown(input, getKey(KeyType.Escape));
+    fireEvent.blur(input);
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    hideDocument(input);
+    showDocument(input);
+
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    fireEvent.click(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+  });
+
   it("should show the calendar when focusing on the date input", () => {
     const { container } = render(<DatePicker />);
 

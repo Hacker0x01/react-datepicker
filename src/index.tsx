@@ -515,9 +515,13 @@ export default class DatePicker extends Component<
       this.resetHiddenStatus();
     }
 
-    if (!this.state.preventFocus && isOpenAllowed) {
+    if (!this.state.preventFocus) {
       this.props.onFocus?.(event);
-      if (!this.props.preventOpenOnFocus && !this.props.readOnly) {
+      if (
+        isOpenAllowed &&
+        !this.props.preventOpenOnFocus &&
+        !this.props.readOnly
+      ) {
         this.setOpen(true);
       }
     }
