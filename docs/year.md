@@ -1,5 +1,4 @@
-`year` (component)
-==================
+# `year` (component)
 
 `Year` is a component that represents a year in a date picker.
 
@@ -20,26 +19,26 @@
 @property {(date: Date) => void} props.onYearMouseEnter - Function to handle mouse enter events on a year.
 @property {(date: Date) => void} props.onYearMouseLeave - Function to handle mouse leave events on a year.
 
-| name  | type  | default value  | description  |
-|---|---|---|---|
-|`clearSelectingDate`||||
-|`date`||||
-|`disabledKeyboardNavigation`||||
-|`endDate`||||
-|`handleOnKeyDown`||||
-|`inline`||||
-|`onDayClick`||||
-|`onYearMouseEnter` (required)||||
-|`onYearMouseLeave` (required)||||
-|`preSelection`||||
-|`renderYearContent`||||
-|`selected`||||
-|`selectingDate`||||
-|`selectsEnd`||||
-|`selectsRange`||||
-|`selectsStart`||||
-|`setPreSelection`||||
-|`startDate`||||
-|`usePointerEvent`||||
-|`yearClassName`||||
-|`yearItemNumber`||||
+| name                          | type | default value | description |
+| ----------------------------- | ---- | ------------- | ----------- |
+| `clearSelectingDate`          |      |               |             |
+| `date`                        |      |               |             |
+| `disabledKeyboardNavigation`  |      |               |             |
+| `endDate`                     |      |               |             |
+| `handleOnKeyDown`             |      |               |             |
+| `inline`                      |      |               |             |
+| `onDayClick`                  |      |               |             |
+| `onYearMouseEnter` (required) |      |               |             |
+| `onYearMouseLeave` (required) |      |               |             |
+| `preSelection`                |      |               |             |
+| `renderYearContent`           |      |               |             |
+| `selected`                    |      |               |             |
+| `selectingDate`               |      |               |             |
+| `selectsEnd`                  |      |               |             |
+| `selectsRange`                |      |               |             |
+| `selectsStart`                |      |               |             |
+| `setPreSelection`             |      |               |             |
+| `startDate`                   |      |               |             |
+| `usePointerEvent`             |      |               |             |
+| `yearClassName`               |      |               |             |
+| `yearItemNumber`              |      |               |             |

@@ -1,9 +1,7 @@
-`month_year_dropdown` (component)
-=================================
+# `month_year_dropdown` (component)
 
-
-| name  | type  | default value  | description  |
-|---|---|---|---|
-|`dropdownMode` (required)||||
-|`locale`||||
-|`onChange` (required)||||
+| name                      | type | default value | description |
+| ------------------------- | ---- | ------------- | ----------- |
+| `dropdownMode` (required) |      |               |             |
+| `locale`                  |      |               |             |
+| `onChange` (required)     |      |               |             |
