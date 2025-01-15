@@ -29,7 +29,7 @@
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.83.1"
+    "sass": "^1.83.4"
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
