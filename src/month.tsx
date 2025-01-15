@@ -124,6 +124,8 @@ interface MonthProps
   handleOnMonthKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   ariaLabelPrefix?: string;
   day: Date;
+  startDate?: Date | null;
+  endDate?: Date | null;
   orderInDisplay?: number;
   fixedHeight?: boolean;
   peekNextMonth?: boolean;

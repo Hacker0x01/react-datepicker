@@ -5,7 +5,11 @@ interface InputTimeProps {
   date?: Date;
   timeString?: string;
   timeInputLabel?: string;
-  customTimeInput?: JSX.Element;
+  customTimeInput?: React.ReactElement<{
+    date?: Date;
+    value: string;
+    onChange: (time: string) => void;
+  }>;
 }
 
 interface InputTimeState {
@@ -32,7 +36,7 @@ export default class InputTime extends Component<
   InputTimeProps,
   InputTimeState
 > {
-  inputRef: React.RefObject<HTMLInputElement> = React.createRef();
+  inputRef: React.RefObject<HTMLInputElement | null> = React.createRef();
 
   constructor(props: InputTimeProps) {
     super(props);

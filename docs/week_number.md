@@ -9,6 +9,7 @@
 | `handleOnKeyDown`            |      |               |             |
 | `inline`                     |      |               |             |
 | `isInputFocused`             |      |               |             |
+| `isWeekDisabled`             |      |               |             |
 | `onClick`                    |      |               |             |
 | `preSelection`               |      |               |             |
 | `selected`                   |      |               |             |

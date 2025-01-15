@@ -2,6 +2,5 @@
 
 | name                 | type | default value | description |
 | -------------------- | ---- | ------------- | ----------- |
-| `className`          |      |               |             |
 | `showTime`           |      | `false`       |             |
 | `showTimeSelectOnly` |      | `false`       |             |

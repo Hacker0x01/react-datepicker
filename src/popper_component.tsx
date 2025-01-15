@@ -7,6 +7,7 @@ import TabLoop from "./tab_loop";
 import withFloating from "./with_floating";
 
 import type { FloatingProps } from "./with_floating";
+import type { ReactNode } from "react";
 
 interface PortalProps
   extends Omit<React.ComponentPropsWithoutRef<typeof Portal>, "children"> {}
@@ -20,7 +21,7 @@ interface PopperComponentProps
   className?: string;
   wrapperClassName?: string;
   popperComponent: React.ReactNode;
-  popperContainer?: React.FC<React.PropsWithChildren>;
+  popperContainer?: React.FC<{ children?: ReactNode | undefined }>;
   targetComponent: React.ReactNode;
   popperOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   showArrow?: boolean;
@@ -35,7 +36,7 @@ export class PopperComponent extends Component<PopperComponentProps> {
     };
   }
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const {
       className,
       wrapperClassName,
@@ -50,7 +51,7 @@ export class PopperComponent extends Component<PopperComponentProps> {
       showArrow,
     } = this.props;
 
-    let popper: JSX.Element | undefined = undefined;
+    let popper: React.ReactElement | undefined = undefined;
 
     if (!hidePopper) {
       const classes = clsx("react-datepicker-popper", className);

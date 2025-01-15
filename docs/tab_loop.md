@@ -20,4 +20,5 @@ and "Shift Tab" on the first element will focus the last element
 
 | name            | type | default value | description |
 | --------------- | ---- | ------------- | ----------- |
+| `children`      |      |               |             |
 | `enableTabLoop` |      | `true`        |             |

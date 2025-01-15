@@ -113,6 +113,20 @@ export default class Week extends Component<WeekProps> {
     return getWeek(date);
   };
 
+  isWeekDisabled = (): boolean => {
+    const startOfWeek = this.startOfWeek();
+    const endOfWeek = addDays(startOfWeek, 6);
+
+    let processingDate = new Date(startOfWeek);
+    while (processingDate <= endOfWeek) {
+      if (!this.isDisabled(processingDate)) return false;
+
+      processingDate = addDays(processingDate, 1);
+    }
+
+    return true;
+  };
+
   renderDays = () => {
     const startOfWeek = this.startOfWeek();
     const days = [];
@@ -128,27 +142,32 @@ export default class Week extends Component<WeekProps> {
           {...Week.defaultProps}
           {...this.props}
           weekNumber={weekNumber}
+          isWeekDisabled={this.isWeekDisabled()}
           date={startOfWeek}
           onClick={onClickAction}
         />,
       );
     }
     return days.concat(
-      [0, 1, 2, 3, 4, 5, 6].map<JSX.Element>((offset: number): JSX.Element => {
-        const day = addDays(startOfWeek, offset);
-        return (
-          <Day
-            {...Week.defaultProps}
-            {...this.props}
-            ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
-            ariaLabelPrefixWhenDisabled={this.props.disabledDayAriaLabelPrefix}
-            key={day.valueOf()}
-            day={day}
-            onClick={this.handleDayClick.bind(this, day)}
-            onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
-          />
-        );
-      }),
+      [0, 1, 2, 3, 4, 5, 6].map<React.ReactElement>(
+        (offset: number): React.ReactElement => {
+          const day = addDays(startOfWeek, offset);
+          return (
+            <Day
+              {...Week.defaultProps}
+              {...this.props}
+              ariaLabelPrefixWhenEnabled={this.props.chooseDayAriaLabelPrefix}
+              ariaLabelPrefixWhenDisabled={
+                this.props.disabledDayAriaLabelPrefix
+              }
+              key={day.valueOf()}
+              day={day}
+              onClick={this.handleDayClick.bind(this, day)}
+              onMouseEnter={this.handleDayMouseEnter.bind(this, day)}
+            />
+          );
+        },
+      ),
     );
   };
 
@@ -164,7 +183,7 @@ export default class Week extends Component<WeekProps> {
     !isSameDay(this.startOfWeek(), this.props.selected) &&
     isSameDay(this.startOfWeek(), this.props.preSelection);
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const weekNumberClasses = {
       "react-datepicker__week": true,
       "react-datepicker__week--selected": isSameDay(

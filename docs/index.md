@@ -28,6 +28,7 @@
 | `disabledKeyboardNavigation`    |      | `false`            |             |
 | `dropdownMode`                  |      | `"scroll"`         |             |
 | `enableTabLoop`                 |      | `true`             |             |
+| `endDate`                       |      |                    |             |
 | `excludeScrollbar`              |      | `true`             |             |
 | `focusSelectedMonth`            |      | `false`            |             |
 | `form`                          |      |                    |             |
