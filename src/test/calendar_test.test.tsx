@@ -3,9 +3,14 @@
  */
 
 import { render, fireEvent, act, waitFor } from "@testing-library/react";
-import { setDate, startOfMonth, eachDayOfInterval, endOfMonth } from "date-fns";
-import { endOfYear } from "date-fns/endOfYear";
-import { isSunday } from "date-fns/isSunday";
+import {
+  setDate,
+  startOfMonth,
+  eachDayOfInterval,
+  endOfMonth,
+  endOfYear,
+  isSunday,
+} from "date-fns";
 import { eo } from "date-fns/locale/eo";
 import { fi } from "date-fns/locale/fi";
 import React from "react";
