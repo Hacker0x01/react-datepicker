@@ -1,6 +1,6 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "assertDateRangeInclusive", "runAxe"] }] */
 import { render, fireEvent } from "@testing-library/react";
-import { es } from "date-fns/locale/es";
+import { es } from "date-fns/locale";
 import React from "react";
 
 import DatePicker from "../";

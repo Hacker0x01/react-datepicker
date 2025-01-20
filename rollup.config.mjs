@@ -24,6 +24,25 @@ const banner = `/*!
   Released under the ${pkg.license} License.
 */`;
 
+// it's important to mark all subpackages of data-fns as externals
+// see https://github.com/Hacker0x01/react-datepicker/issues/1606
+// We're relying on date-fn's package.json `exports` field to
+// determine the list of directories to include.
+const dateFnsPackageJson = JSON.parse(
+  fs
+    .readFileSync(
+      path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        "node_modules/date-fns/package.json",
+      ),
+    )
+    .toString(),
+);
+const dateFnsSubpackages = Object.keys(dateFnsPackageJson.exports)
+  .map((key) => key.replace("./", ""))
+  .filter((key) => key !== "." && key !== "package.json")
+  .map((key) => `date-fns/${key}`);
+
 const globals = {
   react: "React",
   "prop-types": "PropTypes",
@@ -90,6 +109,7 @@ const config = {
   external: [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
+    ...dateFnsSubpackages,
   ],
 };
 
