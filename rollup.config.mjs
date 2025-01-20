@@ -26,7 +26,10 @@ const banner = `/*!
 
 const globals = {
   react: "React",
-  "prop-types": "PropTypes",
+  "react-dom": "ReactDOM",
+  clsx: "clsx",
+  "date-fns": "dateFns",
+  "@floating-ui/react": "FloatingUIReact",
 };
 
 // NOTE:https://rollupjs.org/migration/#changed-defaults
@@ -40,7 +43,7 @@ const config = {
   input: "src/index.tsx",
   output: [
     {
-      file: pkg.browser,
+      file: pkg.unpkg,
       format: "umd",
       name: "DatePicker",
       globals,
@@ -49,7 +52,7 @@ const config = {
       plugins: [terser()],
     },
     {
-      file: pkg.browser.replace(".min.js", ".js"),
+      file: pkg.unpkg.replace(".min.js", ".js"),
       format: "umd",
       sourcemap: "inline",
       name: "DatePicker",
