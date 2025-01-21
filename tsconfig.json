@@ -23,6 +23,8 @@
     "typeRoots": ["./src/@types", "./node_modules/@types"],
     "types": ["node", "jest"],
     "skipLibCheck": true,
+    "outDir": "./dist",
+    "declarationDir": "./dist"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

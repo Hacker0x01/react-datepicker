@@ -85,8 +85,6 @@ const config = {
     commonjs(),
     typescript({
       tsconfig: "./tsconfig.build.json",
-      declaration: true,
-      declarationDir: "./dist",
     }),
     filesize(),
   ],
