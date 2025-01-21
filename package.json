@@ -12,11 +12,16 @@
   "style": "dist/react-datepicker.min.css",
   "exports": {
     ".": {
-      "import": "./dist/es/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/es/index.js"
-    }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./dist/*.css": "./dist/*.css"
   },
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "sideEffects": ["**/*.css"],
