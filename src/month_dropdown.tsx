@@ -33,16 +33,16 @@ export default class MonthDropdown extends Component<
     dropdownVisible: false,
   };
 
-  renderSelectOptions = (monthNames: string[]): JSX.Element[] =>
-    monthNames.map<JSX.Element>(
-      (m: string, i: number): JSX.Element => (
+  renderSelectOptions = (monthNames: string[]): React.ReactElement[] =>
+    monthNames.map<React.ReactElement>(
+      (m: string, i: number): React.ReactElement => (
         <option key={m} value={i}>
           {m}
         </option>
       ),
     );
 
-  renderSelectMode = (monthNames: string[]): JSX.Element => (
+  renderSelectMode = (monthNames: string[]): React.ReactElement => (
     <select
       value={this.props.month}
       className="react-datepicker__month-select"
@@ -52,7 +52,10 @@ export default class MonthDropdown extends Component<
     </select>
   );
 
-  renderReadView = (visible: boolean, monthNames: string[]): JSX.Element => (
+  renderReadView = (
+    visible: boolean,
+    monthNames: string[],
+  ): React.ReactElement => (
     <div
       key="read"
       style={{ visibility: visible ? "visible" : "hidden" }}
@@ -66,7 +69,7 @@ export default class MonthDropdown extends Component<
     </div>
   );
 
-  renderDropdown = (monthNames: string[]): JSX.Element => (
+  renderDropdown = (monthNames: string[]): React.ReactElement => (
     <MonthDropdownOptions
       key="dropdown"
       {...this.props}
@@ -76,7 +79,7 @@ export default class MonthDropdown extends Component<
     />
   );
 
-  renderScrollMode = (monthNames: string[]): JSX.Element[] => {
+  renderScrollMode = (monthNames: string[]): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
     const result = [this.renderReadView(!dropdownVisible, monthNames)];
     if (dropdownVisible) {
@@ -97,14 +100,14 @@ export default class MonthDropdown extends Component<
       dropdownVisible: !this.state.dropdownVisible,
     });
 
-  render(): JSX.Element {
+  render(): React.ReactElement {
     const monthNames: string[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
       this.props.useShortMonthInDropdown
         ? (m: number): string => getMonthShortInLocale(m, this.props.locale)
         : (m: number): string => getMonthInLocale(m, this.props.locale),
     );
 
-    let renderedDropdown: JSX.Element | JSX.Element[];
+    let renderedDropdown: React.ReactElement | React.ReactElement[];
     switch (this.props.dropdownMode) {
       case "scroll":
         renderedDropdown = this.renderScrollMode(monthNames);

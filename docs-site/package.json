@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "highlight.js": "^11.10.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-live": "^4.1.7"
+    "highlight.js": "^11.11.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-live": "^4.1.8"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -29,10 +29,10 @@
     "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.80.2"
+    "sass": "^1.83.4"
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
   },
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "yarn@4.6.0"
 }

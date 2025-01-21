@@ -45,10 +45,10 @@ export default function withFloating<T extends FloatingProps>(
   Component: React.ComponentType<T>,
 ) {
   type R = Omit<T, "popperProps"> & WithFloatingProps;
-  const WithFloating: React.FC<R> = (props): JSX.Element => {
+  const WithFloating: React.FC<R> = (props): React.ReactElement => {
     const hidePopper: boolean =
       typeof props.hidePopper === "boolean" ? props.hidePopper : true;
-    const arrowRef: React.RefObject<HTMLElement> = useRef(null);
+    const arrowRef: React.RefObject<HTMLElement | null> = useRef(null);
     const floatingProps = useFloating({
       open: !hidePopper,
       whileElementsMounted: autoUpdate,

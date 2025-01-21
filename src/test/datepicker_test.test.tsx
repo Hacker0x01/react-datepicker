@@ -1,4 +1,5 @@
 import { render, act, waitFor, fireEvent } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
 import React from "react";
 
@@ -26,6 +27,7 @@ import {
 import DatePicker, { registerLocale } from "../index";
 
 import CustomInput from "./helper_components/custom_input";
+import ShadowRoot from "./helper_components/shadow_root";
 import TestWrapper from "./helper_components/test_wrapper";
 import { getKey, safeQuerySelector } from "./test_utils";
 
@@ -117,6 +119,32 @@ describe("DatePicker", () => {
     expect(container.querySelector(".react-datepicker")).toBeFalsy();
   });
 
+  it("should be executed props.onFocus on input focus when the document visibility changes", () => {
+    const onFocusSpy = jest.fn();
+
+    const { container } = render(<DatePicker onFocus={onFocusSpy} />);
+
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+    fireEvent.focus(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+    fireEvent.keyDown(input, getKey(KeyType.Escape));
+    fireEvent.blur(input);
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    hideDocument(input);
+    showDocument(input);
+
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    fireEvent.click(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+  });
+
   it("should show the calendar when focusing on the date input", () => {
     const { container } = render(<DatePicker />);
 
@@ -194,6 +222,33 @@ describe("DatePicker", () => {
     fireEvent.click(instance!.input!);
     expect(instance!.calendar).toBeDefined();
     expect(shadow.getElementById("test-portal")).toBeDefined();
+  });
+
+  it("calendar should stay open when clicked within shadow dom and closed when clicked outside", async () => {
+    let instance: DatePicker | null = null;
+    render(
+      <ShadowRoot>
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+        />
+      </ShadowRoot>,
+    );
+
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+
+    await userEvent.click(instance!.input!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+    expect(instance!.calendar).toBeTruthy();
+    expect(instance!.calendar!.containerRef.current).toBeTruthy();
+
+    await userEvent.click(instance!.calendar!.containerRef.current!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+
+    await userEvent.click(document.body);
+    expect(instance!.isCalendarOpen()).toBe(false);
   });
 
   it("should not set open state when it is disabled and gets clicked", () => {
@@ -580,7 +635,24 @@ describe("DatePicker", () => {
     });
   });
 
-  it("should hide the calendar when the pressing Shift + Tab in the date input", () => {
+  it("should auto-close the datepicker and lose focus when Tab key is pressed when the date input is focused", async () => {
+    const { container } = render(<DatePicker />);
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    let reactCalendar = container.querySelector("div.react-datepicker");
+    expect(reactCalendar).not.toBeNull();
+
+    fireEvent.keyDown(input, getKey(KeyType.Tab));
+
+    reactCalendar = container.querySelector("div.react-datepicker");
+    expect(reactCalendar).toBeNull();
+    await waitFor(() => {
+      expect(document.activeElement).not.toBe(input);
+    });
+  });
+
+  it("should hide the calendar when the pressing Shift + Tab in the date input", async () => {
     // eslint-disable-next-line prefer-const
     let onBlurSpy: ReturnType<typeof jest.spyOn>;
     const onBlur: React.FocusEventHandler<HTMLElement> = (
@@ -594,7 +666,9 @@ describe("DatePicker", () => {
     fireEvent.focus(input);
     fireEvent.keyDown(input, getKey(KeyType.Tab, true));
     expect(container.querySelector(".react-datepicker")).toBeNull();
-    expect(onBlurSpy).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(onBlurSpy).toHaveBeenCalled();
+    });
   });
 
   it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
@@ -1963,7 +2037,7 @@ describe("DatePicker", () => {
     });
     expect(div.querySelector("input")).toBe(document.activeElement);
   });
-  it("should autoFocus the input when calling the setFocus method", () => {
+  it("should autoFocus the input when calling the setFocus method", async () => {
     const div = document.createElement("div");
     document.body.appendChild(div);
     let instance: DatePicker | null = null;
@@ -1981,7 +2055,9 @@ describe("DatePicker", () => {
     act(() => {
       instance!.setFocus();
     });
-    expect(div.querySelector("input")).toBe(document.activeElement);
+    await waitFor(() => {
+      expect(div.querySelector("input")).toBe(document.activeElement);
+    });
   });
   it("should clear preventFocus timeout id when component is unmounted", () => {
     const div = document.createElement("div");

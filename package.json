@@ -2,15 +2,27 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "7.5.0",
+  "version": "7.6.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "browser": "dist/react-datepicker.min.js",
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./dist/*.css": "./dist/*.css"
+  },
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "sideEffects": ["**/*.css"],
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
@@ -39,11 +51,12 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "14.5.2",
     "@types/eslint": "^9.6.1",
     "@types/jest": "^29.5.12",
     "@types/node": "22",
-    "@types/react": "^18.3.4",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^8.6.0",
     "axe-core": "^4.10.0",
@@ -64,15 +77,15 @@
     "lint-staged": "^15.2.9",
     "lodash": "^4.17.21",
     "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "rollup": "^4.21.1",
     "rollup-plugin-filesize": "^10.0.0",
-    "sass": "1.79.5",
+    "sass": "1.83.1",
     "slugify": "^1.6.6",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
-    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-scss": "^6.5.1",
     "ts-jest": "^29.2.5",
     "tslib": "^2.7.0",
@@ -80,14 +93,13 @@
     "typescript-eslint": "^8.9.0"
   },
   "peerDependencies": {
-    "react": "^16.9.0 || ^17 || ^18",
-    "react-dom": "^16.9.0 || ^17 || ^18"
+    "react": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc",
+    "react-dom": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.23",
+    "@floating-ui/react": "^0.27.0",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0",
-    "prop-types": "^15.8.1"
+    "date-fns": "^4.1.0"
   },
   "scripts": {
     "eslint": "eslint ./src",
@@ -115,5 +127,5 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
   },
-  "packageManager": "yarn@4.4.0"
+  "packageManager": "yarn@4.6.0"
 }

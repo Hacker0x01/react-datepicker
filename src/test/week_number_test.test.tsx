@@ -186,11 +186,6 @@ describe("WeekNumber", () => {
         ) as HTMLDivElement;
         expect(weekNumber).not.toBeNull();
 
-        expect(
-          weekNumber?.classList.contains(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
-        ).toBe(false);
         expect(weekNumber?.tabIndex).toBe(0);
       });
 
@@ -212,11 +207,6 @@ describe("WeekNumber", () => {
           ".react-datepicker__week-number",
         ) as HTMLDivElement;
         expect(weekNumber).not.toBeNull();
-        expect(
-          weekNumber?.classList.contains(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
-        ).toBe(true);
         expect(weekNumber.tabIndex).toBe(0);
       });
 
@@ -267,11 +257,6 @@ describe("WeekNumber", () => {
         const weekNumber = container.querySelector(
           ".react-datepicker__week-number",
         ) as HTMLDivElement;
-        expect(
-          weekNumber?.classList.contains(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
-        ).toBe(false);
         expect(weekNumber.tabIndex).toBe(-1);
       });
     });
@@ -289,6 +274,44 @@ describe("WeekNumber", () => {
       it("should have the class 'react-datepicker__week-number--clickable' if onClick is defined", () => {
         const { container } = render(
           <WeekNumber weekNumber={1} date={new Date()} onClick={() => {}} />,
+        );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
+        expect(
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--clickable",
+          ),
+        ).toBe(true);
+      });
+
+      it("shouldn't have the class 'react-datepicker__week-number--clickable' if isWeekDisabled is true", () => {
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            onClick={() => {}}
+            isWeekDisabled
+          />,
+        );
+        const weekNumber = container.querySelector(
+          ".react-datepicker__week-number",
+        );
+        expect(
+          weekNumber?.classList.contains(
+            "react-datepicker__week-number--clickable",
+          ),
+        ).toBe(false);
+      });
+
+      it("should have the class 'react-datepicker__week-number--clickable' if isWeekDisabled is false and onClick is defined", () => {
+        const { container } = render(
+          <WeekNumber
+            weekNumber={1}
+            date={new Date()}
+            onClick={() => {}}
+            isWeekDisabled={false}
+          />,
         );
         const weekNumber = container.querySelector(
           ".react-datepicker__week-number",
@@ -403,11 +426,6 @@ describe("WeekNumber", () => {
             "react-datepicker__week-number--selected",
           ),
         ).toBe(false);
-        expect(
-          weekNumber?.classList.contains(
-            "react-datepicker__week-number--keyboard-selected",
-          ),
-        ).toBe(true);
       });
 
       it("should have the class 'react-datepicker__week-number--selected' if selected is not current week and preselected is not current week", () => {
@@ -428,11 +446,6 @@ describe("WeekNumber", () => {
         expect(
           weekNumber?.classList.contains(
             "react-datepicker__week-number--selected",
-          ),
-        ).toBe(false);
-        expect(
-          weekNumber?.classList.contains(
-            "react-datepicker__week-number--keyboard-selected",
           ),
         ).toBe(false);
       });

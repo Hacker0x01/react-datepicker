@@ -29,7 +29,7 @@ const CalendarIcon: React.FC<CalendarIconProps> = ({
   icon,
   className = "",
   onClick,
-}: CalendarIconProps): JSX.Element => {
+}: CalendarIconProps): React.ReactElement => {
   const defaultClass = "react-datepicker__calendar-icon";
 
   if (typeof icon === "string") {
@@ -44,11 +44,16 @@ const CalendarIcon: React.FC<CalendarIconProps> = ({
 
   if (React.isValidElement(icon)) {
     // Because we are checking that typeof icon is string first, we can safely cast icon as React.ReactElement on types level and code level
-    return React.cloneElement(icon as React.ReactElement, {
-      className: `${icon.props.className || ""} ${defaultClass} ${className}`,
+    const iconElement = icon as React.ReactElement<{
+      className: string;
+      onClick: (event: React.MouseEvent) => void;
+    }>;
+
+    return React.cloneElement(iconElement, {
+      className: `${iconElement.props.className || ""} ${defaultClass} ${className}`,
       onClick: (event: React.MouseEvent) => {
-        if (typeof icon.props.onClick === "function") {
-          icon.props.onClick(event);
+        if (typeof iconElement.props.onClick === "function") {
+          iconElement.props.onClick(event);
         }
 
         if (typeof onClick === "function") {

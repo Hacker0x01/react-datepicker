@@ -121,3 +121,4 @@ scripts/.DS_Store
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+/.yarn/cache

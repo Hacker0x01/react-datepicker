@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^18.3.1",
-    "react-datepicker": "^7.5.0",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-datepicker": "^7.6.0",
+    "react-dom": "^19.0.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {
@@ -25,5 +25,5 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "yarn@4.6.0"
 }

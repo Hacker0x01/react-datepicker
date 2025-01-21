@@ -1,9 +1,9 @@
 import React from "react";
 
-export interface CalendarContainerProps extends React.PropsWithChildren {
+export interface CalendarContainerProps
+  extends React.PropsWithChildren<HTMLDivElement> {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
-  className?: string;
 }
 
 const CalendarContainer: React.FC<CalendarContainerProps> = function ({

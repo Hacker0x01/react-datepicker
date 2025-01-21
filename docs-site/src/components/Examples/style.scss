@@ -1,13 +1,8 @@
-@import "reset";
-@import "higlight";
-@import "breakpoint";
-@import "hero";
-@import "examples";
-
-%container-styling {
-  max-width: 1100px;
-  margin: 0 auto;
-}
+@use "reset";
+@use "highlight";
+@use "helpers";
+@use "examples";
+@use "hero";
 
 html,
 body {
@@ -88,7 +83,7 @@ strong {
 }
 
 .row {
-  @include breakpoint(768px) {
+  @include helpers.breakpoint(768px) {
     display: flex;
   }
 }
