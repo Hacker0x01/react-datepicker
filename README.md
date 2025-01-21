@@ -36,9 +36,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Example = () => {
   const [startDate, setStartDate] = useState(new Date());
-  return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-  );
+  return <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />;
 };
 ```
 
@@ -69,12 +67,7 @@ See [here](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/datepic
 You can also include a time picker by adding the showTimeSelect prop
 
 ```js
-<DatePicker
-  selected={date}
-  onChange={handleDateChange}
-  showTimeSelect
-  dateFormat="Pp"
-/>
+<DatePicker selected={date} onChange={handleDateChange} showTimeSelect dateFormat="Pp" />
 ```
 
 Times will be displayed at 30-minute intervals by default (default configurable via timeIntervals prop)

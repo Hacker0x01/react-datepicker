@@ -1,5 +1,4 @@
-`input_time` (component)
-========================
+# `input_time` (component)
 
 `InputTime` is a React component that manages time input.
 
@@ -16,10 +15,10 @@
 
 @returns The `InputTime` component.
 
-| name  | type  | default value  | description  |
-|---|---|---|---|
-|`customTimeInput`||||
-|`date`||||
-|`onChange`||||
-|`timeInputLabel`||||
-|`timeString`||||
+| name              | type | default value | description |
+| ----------------- | ---- | ------------- | ----------- |
+| `customTimeInput` |      |               |             |
+| `date`            |      |               |             |
+| `onChange`        |      |               |             |
+| `timeInputLabel`  |      |               |             |
+| `timeString`      |      |               |             |

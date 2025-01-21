@@ -1005,7 +1005,6 @@ describe("DatePicker", () => {
     expect(getSeconds(date!)).toBe(12);
   });
 
-  // eslint-disable-next-line jest/expect-expect
   it("should mount and unmount properly", () => {
     type State = {
       mounted: boolean;
