@@ -86,7 +86,7 @@ const config = {
     typescript({
       tsconfig: "./tsconfig.build.json",
       declaration: true,
-      declarationDir: "dist",
+      declarationDir: "./dist",
     }),
     filesize(),
   ],
