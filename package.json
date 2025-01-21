@@ -7,10 +7,22 @@
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "browser": "dist/react-datepicker.min.js",
   "module": "dist/es/index.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./dist/*.css": "./dist/*.css"
+  },
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "sideEffects": ["**/*.css"],
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
@@ -85,7 +97,7 @@
   "dependencies": {
     "@floating-ui/react": "^0.27.0",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0"
+    "date-fns": "^4.1.0"
   },
   "scripts": {
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
