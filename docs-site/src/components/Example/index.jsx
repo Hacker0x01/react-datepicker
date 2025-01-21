@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from "react";
-import PropTypes from "prop-types";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import DatePicker, {
   registerLocale,
@@ -15,9 +14,6 @@ import { themes } from "prism-react-renderer";
 import editIcon from "./edit-regular.svg";
 
 export default class CodeExampleComponent extends React.Component {
-  static propTypes = {
-    example: PropTypes.object.isRequired,
-  };
   componentDidMount() {
     registerLocale("fi", fi);
     registerLocale("pt-BR", ptBR);
@@ -38,7 +34,6 @@ export default class CodeExampleComponent extends React.Component {
             code={component.trim()}
             scope={{
               // NB any globals added here should also be referenced in ../../examples/.eslintrc
-              PropTypes,
               useState,
               DatePicker,
               CalendarContainer,
