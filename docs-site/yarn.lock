@@ -4038,7 +4038,7 @@ __metadata:
     react-live: "npm:^4.1.8"
     sass: "npm:^1.83.4"
     slugify: "npm:^1.6.6"
-    vite: "npm:^6.0.10"
+    vite: "npm:^6.0.11"
   languageName: unknown
   linkType: soft
 
@@ -4933,9 +4933,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.10":
-  version: 6.0.10
-  resolution: "vite@npm:6.0.10"
+"vite@npm:^6.0.11":
+  version: 6.0.11
+  resolution: "vite@npm:6.0.11"
   dependencies:
     esbuild: "npm:^0.24.2"
     fsevents: "npm:~2.3.3"
@@ -4981,7 +4981,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/fa929a2778f8a701b9a7012ea0d956fda32665bbfe63d401336a2a46d2eae252776b63599602179404283ecab4c47b82781ea91e307381bcc5002a766977c7fe
+  checksum: 10c0/a0537f9bf8d6ded740646a4aa44b8dbf442d3005e75f7b27e981ef6011f22d4759f5eb643a393c0ffb8d21e2f50fb5f774d3a53108fb96a10b0f83697e8efe84
   languageName: node
   linkType: hard
 
