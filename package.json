@@ -7,14 +7,14 @@
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "module": "dist/es/index.js",
+  "module": "dist/index.es.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/es/index.js"
+        "default": "./dist/index.es.js"
       },
       "require": {
         "types": "./dist/index.d.ts",
@@ -48,7 +48,7 @@
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "14.5.2",
