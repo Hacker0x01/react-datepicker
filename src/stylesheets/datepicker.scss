@@ -13,7 +13,7 @@
   font-size: $datepicker__font-size;
   background-color: #fff;
   color: $datepicker__text-color;
-  border: 1px solid $datepicker__border-color;
+  border: $datepicker__border;
   border-radius: $datepicker__border-radius;
   display: inline-block;
   position: relative;
@@ -62,7 +62,7 @@
 .react-datepicker__header {
   text-align: center;
   background-color: $datepicker__background-color;
-  border-bottom: 1px solid $datepicker__border-color;
+  border-bottom: $datepicker__border;
   border-top-left-radius: $datepicker__border-radius;
   padding: 8px 0;
   position: relative;
@@ -268,7 +268,7 @@ h2.react-datepicker__current-month {
 
 .react-datepicker__time-container {
   float: right;
-  border-left: 1px solid $datepicker__border-color;
+  border-left: $datepicker__border;
   width: 85px;
 
   &--with-today-button {
@@ -491,7 +491,7 @@ h2.react-datepicker__current-month {
   }
 
   &--in-selecting-range:not(&--in-range) {
-    background-color: rgba($datepicker__selected-color, 0.5);
+    background-color: $datepicker__selected-color--disabled;
   }
 
   &--in-range:not(&--in-selecting-range) {
@@ -582,7 +582,7 @@ h2.react-datepicker__current-month {
   z-index: 1;
   text-align: center;
   border-radius: $datepicker__border-radius;
-  border: 1px solid $datepicker__border-color;
+  border: $datepicker__border;
 
   &:hover {
     cursor: pointer;
@@ -682,7 +682,7 @@ h2.react-datepicker__current-month {
 
 .react-datepicker__today-button {
   background: $datepicker__background-color;
-  border-top: 1px solid $datepicker__border-color;
+  border-top: $datepicker__border;
   cursor: pointer;
   text-align: center;
   font-weight: bold;
