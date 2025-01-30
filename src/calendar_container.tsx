@@ -1,7 +1,7 @@
-import React from "react";
+import React, { type HTMLAttributes } from "react";
 
 export interface CalendarContainerProps
-  extends React.PropsWithChildren<HTMLDivElement> {
+  extends React.PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
 }
