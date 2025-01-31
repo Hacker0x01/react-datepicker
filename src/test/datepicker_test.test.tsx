@@ -1,4 +1,5 @@
 import { render, act, waitFor, fireEvent } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
 import React from "react";
 
@@ -26,6 +27,7 @@ import {
 import DatePicker, { registerLocale } from "../index";
 
 import CustomInput from "./helper_components/custom_input";
+import ShadowRoot from "./helper_components/shadow_root";
 import TestWrapper from "./helper_components/test_wrapper";
 import { getKey, safeQuerySelector } from "./test_utils";
 
@@ -117,6 +119,32 @@ describe("DatePicker", () => {
     expect(container.querySelector(".react-datepicker")).toBeFalsy();
   });
 
+  it("should be executed props.onFocus on input focus when the document visibility changes", () => {
+    const onFocusSpy = jest.fn();
+
+    const { container } = render(<DatePicker onFocus={onFocusSpy} />);
+
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+    fireEvent.focus(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+    fireEvent.keyDown(input, getKey(KeyType.Escape));
+    fireEvent.blur(input);
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    hideDocument(input);
+    showDocument(input);
+
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+    fireEvent.click(input);
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(container.querySelector(".react-datepicker")).toBeTruthy();
+  });
+
   it("should show the calendar when focusing on the date input", () => {
     const { container } = render(<DatePicker />);
 
@@ -194,6 +222,33 @@ describe("DatePicker", () => {
     fireEvent.click(instance!.input!);
     expect(instance!.calendar).toBeDefined();
     expect(shadow.getElementById("test-portal")).toBeDefined();
+  });
+
+  it("calendar should stay open when clicked within shadow dom and closed when clicked outside", async () => {
+    let instance: DatePicker | null = null;
+    render(
+      <ShadowRoot>
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+        />
+      </ShadowRoot>,
+    );
+
+    expect(instance).toBeTruthy();
+    expect(instance!.input).toBeTruthy();
+
+    await userEvent.click(instance!.input!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+    expect(instance!.calendar).toBeTruthy();
+    expect(instance!.calendar!.containerRef.current).toBeTruthy();
+
+    await userEvent.click(instance!.calendar!.containerRef.current!);
+    expect(instance!.isCalendarOpen()).toBe(true);
+
+    await userEvent.click(document.body);
+    expect(instance!.isCalendarOpen()).toBe(false);
   });
 
   it("should not set open state when it is disabled and gets clicked", () => {
@@ -950,7 +1005,6 @@ describe("DatePicker", () => {
     expect(getSeconds(date!)).toBe(12);
   });
 
-  // eslint-disable-next-line jest/expect-expect
   it("should mount and unmount properly", () => {
     type State = {
       mounted: boolean;

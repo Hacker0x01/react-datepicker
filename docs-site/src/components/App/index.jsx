@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import ExampleComponents from "../Examples";
-import ribbon from "./ribbon.png";
-import logo from "./logo.png";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import ExampleComponents from "../Examples";
+import logo from "./logo.png";
+import ribbon from "./ribbon.png";
 
 const Example = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -10,17 +10,13 @@ const Example = () => {
   const [isScrolled, setIsScrolled] = useState(true);
 
   useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY < 400);
     document.addEventListener("scroll", handleScroll);
-  }, []);
 
-  const handleScroll = () => {
-    const Show = window.scrollY < 400;
-    if (Show) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <DatePicker

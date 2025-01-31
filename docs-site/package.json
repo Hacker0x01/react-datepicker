@@ -2,37 +2,36 @@
   "name": "react-datepicker-docs",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
+    "date-fns": "^4.1.0",
     "highlight.js": "^11.11.1",
+    "lodash": "^4.17.21",
+    "prism-react-renderer": "^2.4.1",
     "react": "^19.0.0",
+    "react-datepicker": "portal:../",
     "react-dom": "^19.0.0",
-    "react-live": "^4.1.8"
+    "react-live": "^4.1.8",
+    "slugify": "^1.6.6"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "start": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "raw-loader": "^4.0.2",
-    "react-app-rewired": "^2.2.1",
-    "react-scripts": "5.0.1",
-    "sass": "^1.83.1"
-  },
-  "resolutions": {
-    "strip-ansi": "6.0.1"
+    "@eslint/js": "^9.17.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.14.0",
+    "sass": "^1.83.4",
+    "vite": "^6.0.11"
   },
   "packageManager": "yarn@4.6.0"
 }

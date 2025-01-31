@@ -36,13 +36,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      
-
       - name: Install dependencies
         run: yarn install
 
       - name: Install docs dependencies
         run: yarn --cwd docs-site install
+
+      - name: Lint docs
+        run: yarn --cwd docs-site lint
 
       - name: Build datepicker
         run: yarn build

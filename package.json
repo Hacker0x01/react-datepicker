@@ -7,10 +7,22 @@
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "browser": "dist/react-datepicker.min.js",
-  "module": "dist/es/index.js",
+  "module": "dist/index.es.js",
   "unpkg": "dist/react-datepicker.min.js",
   "style": "dist/react-datepicker.min.css",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./dist/*.css": "./dist/*.css"
+  },
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "sideEffects": ["**/*.css"],
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
@@ -30,30 +42,32 @@
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@eslint/js": "^9.12.0",
     "@react-docgen/cli": "^2.0.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
-    "@types/eslint": "^8.56.10",
+    "@testing-library/user-event": "14.6.1",
+    "@types/eslint": "^9.6.1",
     "@types/jest": "^29.5.12",
     "@types/node": "22",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@typescript-eslint/parser": "^8.6.0",
     "axe-core": "^4.10.0",
     "babel-jest": "^29.7.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "core-js": "^3.38.1",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jest": "^28.8.0",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-unused-imports": "^4.1.3",
     "husky": "9",
@@ -67,15 +81,16 @@
     "react-dom": "^19.0.0",
     "rollup": "^4.21.1",
     "rollup-plugin-filesize": "^10.0.0",
-    "sass": "1.80.7",
+    "sass": "1.83.4",
     "slugify": "^1.6.6",
     "stylelint": "^16.9.0",
-    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard": "^37.0.0",
     "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-scss": "^6.5.1",
     "ts-jest": "^29.2.5",
     "tslib": "^2.7.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.9.0"
   },
   "peerDependencies": {
     "react": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc",
@@ -84,10 +99,10 @@
   "dependencies": {
     "@floating-ui/react": "^0.27.0",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0"
+    "date-fns": "^4.1.0"
   },
   "scripts": {
-    "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "eslint": "eslint ./src",
     "precommit": "lint-staged --allow-empty",
     "sass-lint": "stylelint 'src/stylesheets/*.scss'",
     "lint": "yarn run eslint && yarn run sass-lint",

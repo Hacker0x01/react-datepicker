@@ -1,8 +1,11 @@
-import { addYears, setSeconds } from "date-fns";
-import { addQuarters } from "date-fns/addQuarters";
+import {
+  addYears,
+  setSeconds,
+  addQuarters,
+  setHours,
+  setMinutes,
+} from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { setHours } from "date-fns/setHours";
-import { setMinutes } from "date-fns/setMinutes";
 
 import {
   newDate,
