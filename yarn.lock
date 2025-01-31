@@ -2280,18 +2280,18 @@ __metadata:
   linkType: hard
 
 "@react-docgen/cli@npm:^2.0.3":
-  version: 2.0.5
-  resolution: "@react-docgen/cli@npm:2.0.5"
+  version: 2.0.6
+  resolution: "@react-docgen/cli@npm:2.0.6"
   dependencies:
     chalk: "npm:5.4.1"
     commander: "npm:11.1.0"
     debug: "npm:4.4.0"
     fast-glob: "npm:3.3.3"
-    react-docgen: "npm:7.1.0"
+    react-docgen: "npm:7.1.1"
     slash: "npm:5.1.0"
   bin:
     react-docgen: dist/cli.js
-  checksum: 10c0/9bd676bd73b65ea41426c185892f0e11cef36d033d6ac51083302ca8820529fd596393fb18924be7d6b32f9663405f0b1876e72c462d7efd45d9ece3c5fa8c75
+  checksum: 10c0/9e9907e0a4ed3da3d44d02b408a801976f2566c8bd08bc4f9ba5dad9b474b4b59a4ecb4c3f306580b455ad938053e4fec0e5fbf41b8e233d57e51665b6f2917c
   languageName: node
   linkType: hard
 
@@ -8602,9 +8602,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-docgen@npm:7.1.0":
-  version: 7.1.0
-  resolution: "react-docgen@npm:7.1.0"
+"react-docgen@npm:7.1.1":
+  version: 7.1.1
+  resolution: "react-docgen@npm:7.1.1"
   dependencies:
     "@babel/core": "npm:^7.18.9"
     "@babel/traverse": "npm:^7.18.9"
@@ -8616,7 +8616,7 @@ __metadata:
     doctrine: "npm:^3.0.0"
     resolve: "npm:^1.22.1"
     strip-indent: "npm:^4.0.0"
-  checksum: 10c0/59f8b26b292df0d54cf5b1fff33d9a46bf318caadb97b2dde55cbc8fb6210e03ab5b295bd97a54a6b5afa1c0fca814c9a852cca673f8f260740103c708c683da
+  checksum: 10c0/961e69487f6acbd9110afbda31f5a0c7fa7ab8b1ebe09fc0138c17efd297fa0b69518df873e937cac108732cd8125433bf939115d23ff99c1c171844140705a7
   languageName: node
   linkType: hard
 
