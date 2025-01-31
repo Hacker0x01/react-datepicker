@@ -4,7 +4,6 @@ import React, { Component, cloneElement } from "react";
 import Calendar from "./calendar";
 import CalendarIcon from "./calendar_icon";
 import {
-  set,
   newDate,
   isDate,
   isBefore,
@@ -599,13 +598,12 @@ export default class DatePicker extends Component<
       lastPreSelectChange: PRESELECT_CHANGE_VIA_INPUT,
     });
 
-    const {
-      dateFormat = DatePicker.defaultProps.dateFormat,
-      strictParsing = DatePicker.defaultProps.strictParsing,
-      selectsRange,
-      startDate,
-      endDate,
-    } = this.props;
+    const { selectsRange, startDate, endDate } = this.props;
+
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+    const strictParsing =
+      this.props.strictParsing ?? DatePicker.defaultProps.strictParsing;
 
     const value =
       event?.target instanceof HTMLInputElement ? event.target.value : "";
@@ -643,27 +641,13 @@ export default class DatePicker extends Component<
       this.props.onChange?.([startDateNew, endDateNew], event);
     } else {
       // not selectsRange
-      let date = parseDate(
+      const date = parseDate(
         value,
         dateFormat,
         this.props.locale,
         strictParsing,
-        this.props.minDate,
+        this.props.selected ?? undefined,
       );
-
-      // Use date from `selected` prop when manipulating only time for input value
-      if (
-        this.props.showTimeSelectOnly &&
-        this.props.selected &&
-        date &&
-        !isSameDay(date, this.props.selected)
-      ) {
-        date = set(this.props.selected, {
-          hours: getHours(date),
-          minutes: getMinutes(date),
-          seconds: getSeconds(date),
-        });
-      }
 
       // Update selection if either (1) date was successfully parsed, or (2) input field is empty
       if (date || !value) {

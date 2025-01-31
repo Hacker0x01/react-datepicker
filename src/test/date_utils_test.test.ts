@@ -981,9 +981,33 @@ describe("date_utils", () => {
 
     it("should parse date that matches one of the formats", () => {
       const value = "01/15/2019";
-      const dateFormat = ["MM/dd/yyyy", "yyyy-MM-dd"];
+      const dateFormat = ["yyyy-MM-dd", "MM/dd/yyyy"];
 
       expect(parseDate(value, dateFormat, undefined, true)).not.toBeNull();
+    });
+
+    it("should prefer the first matching format in array (strict)", () => {
+      const value = "01/06/2019";
+      const valueLax = "1/6/2019";
+      const dateFormat = ["MM/dd/yyyy", "dd/MM/yyyy"];
+
+      const expected = new Date(2019, 0, 6);
+
+      expect(parseDate(value, dateFormat, undefined, true)).toEqual(expected);
+      expect(parseDate(valueLax, dateFormat, undefined, true)).toBeNull();
+    });
+
+    it("should prefer the first matching format in array", () => {
+      const value = "01/06/2019";
+      const valueLax = "1/6/2019";
+      const dateFormat = ["MM/dd/yyyy", "dd/MM/yyyy"];
+
+      const expected = new Date(2019, 0, 6);
+
+      expect(parseDate(value, dateFormat, undefined, false)).toEqual(expected);
+      expect(parseDate(valueLax, dateFormat, undefined, false)).toEqual(
+        expected,
+      );
     });
 
     it("should not parse date that does not match the format", () => {
@@ -1001,7 +1025,7 @@ describe("date_utils", () => {
     });
 
     it("should parse date without strict parsing", () => {
-      const value = "01/15/20";
+      const value = "1/2/2020";
       const dateFormat = "MM/dd/yyyy";
 
       expect(parseDate(value, dateFormat, undefined, false)).not.toBeNull();
@@ -1015,6 +1039,22 @@ describe("date_utils", () => {
       const actual = parseDate(value, dateFormat, "pt-BR", false);
 
       expect(actual).toEqual(expected);
+    });
+
+    it("should parse date based on locale w/o strict", () => {
+      const valuePt = "26. fev 1995";
+      const valueEn = "26. feb 1995";
+
+      const locale = "pt-BR";
+      const dateFormat = "d. MMM yyyy";
+
+      const expected = new Date(1995, 1, 26);
+
+      expect(parseDate(valuePt, dateFormat, locale, false)).toEqual(expected);
+      expect(parseDate(valueEn, dateFormat, undefined, false)).toEqual(
+        expected,
+      );
+      expect(parseDate(valueEn, dateFormat, locale, false)).toBeNull();
     });
 
     it("should not parse date based on locale without a given locale", () => {

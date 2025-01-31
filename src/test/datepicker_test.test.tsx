@@ -995,7 +995,7 @@ describe("DatePicker", () => {
     const input = safeQuerySelector<HTMLInputElement>(container, "input");
     fireEvent.change(input, {
       target: {
-        value: newDate("2014-01-02"),
+        value: "01/02/2014",
       },
     });
 
@@ -1776,7 +1776,7 @@ describe("DatePicker", () => {
       return render(
         <DatePicker
           selected={new Date("1993-07-02")}
-          minDate={new Date("1800/01/01")}
+          minDate={new Date("1800-01-01")}
           open
         />,
       );
@@ -1787,11 +1787,11 @@ describe("DatePicker", () => {
       const input = safeQuerySelector<HTMLInputElement>(container, "input");
       fireEvent.change(input, {
         target: {
-          value: "1801/01/01",
+          value: "01/01/1801",
         },
       });
 
-      expect(container.querySelector("input")?.value).toBe("1801/01/01");
+      expect(container.querySelector("input")?.value).toBe("01/01/1801");
       expect(
         container.querySelector(".react-datepicker__current-month")?.innerHTML,
       ).toBe("January 1801");
@@ -1883,7 +1883,7 @@ describe("DatePicker", () => {
     it("should update the selected date on manual input", () => {
       const data = getOnInputKeyDownStuff();
       fireEvent.change(data.dateInput, {
-        target: { value: "02/02/2017" },
+        target: { value: "2017-02-02" },
       });
       fireEvent.keyDown(data.dateInput, getKey(KeyType.Enter));
       data.copyM = newDate("2017-02-02");
