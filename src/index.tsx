@@ -564,6 +564,10 @@ export default class DatePicker extends Component<
       this.props.onBlur?.(event);
     }
 
+    if (this.state.open && this.props.open === false) {
+      this.setOpen(false);
+    }
+
     this.setState({ focused: false });
   };
 
