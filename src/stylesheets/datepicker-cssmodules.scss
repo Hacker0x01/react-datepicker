@@ -1,5 +1,4 @@
-/* stylelint-disable */
+@use "sass:meta";
 :global {
-  @import "datepicker.scss";
+  @include meta.load-css("datepicker.scss");
 }
-/* stylelint-enable */
