@@ -125,7 +125,7 @@ export type DatePickerProps = OmitUnion<
   | "selectsMultiple"
   | "dropdownMode"
 > &
-  Pick<CalendarIconProps, "icon"> &
+  Partial<Pick<CalendarIconProps, "icon">> &
   OmitUnion<PortalProps, "children" | "portalId"> &
   OmitUnion<
     PopperComponentProps,
