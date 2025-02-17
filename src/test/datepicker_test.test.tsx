@@ -1,7 +1,7 @@
 import { render, act, waitFor, fireEvent } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   KeyType,
@@ -4241,6 +4241,46 @@ describe("DatePicker", () => {
           formatDate(data.instance.state.preSelection!, data.testFormat),
         ).toBe(formatDate(new Date("2021-03-01"), data.testFormat));
       });
+    });
+  });
+
+  describe("input reset", () => {
+    const renderDatePickerInput = () => {
+      const WrapperComponent = () => {
+        const [date, setDate] = useState<Date | null>(new Date());
+        return <DatePicker open={false} selected={date} onChange={setDate} />;
+      };
+
+      return render(<WrapperComponent />);
+    };
+
+    it("should reset the date input element with the previously entered value element on blur even when the calendar open is false", () => {
+      const { container } = renderDatePickerInput();
+      const input = safeQuerySelector(container, "input") as HTMLInputElement;
+
+      if (!input) {
+        throw new Error("Input element not found");
+      }
+
+      fireEvent.click(input);
+      const DATE_VALUE = "02/22/2025";
+      fireEvent.change(input, {
+        target: {
+          value: DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(DATE_VALUE);
+
+      fireEvent.click(input);
+      const INVALID_DATE_VALUE = "2025-02-45";
+      fireEvent.change(input, {
+        target: {
+          value: INVALID_DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(DATE_VALUE);
     });
   });
 });
