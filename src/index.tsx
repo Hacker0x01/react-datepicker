@@ -452,25 +452,20 @@ export default class DatePicker extends Component<
     }
   };
 
-  safeFocus = () => {
-    setTimeout(() => {
-      this.input?.focus?.({ preventScroll: true });
-    }, 0);
-  };
-
-  safeBlur = () => {
-    setTimeout(() => {
-      this.input?.blur?.();
-    }, 0);
-  };
-
   setFocus = () => {
-    this.safeFocus();
+    this.input?.focus?.({ preventScroll: true });
   };
 
   setBlur = () => {
-    this.safeBlur();
+    this.input?.blur?.();
     this.cancelFocusInput();
+  };
+
+  deferBlur = () => {
+    requestAnimationFrame(() => {
+      console.log("reached");
+      this.setBlur();
+    });
   };
 
   setOpen = (open: boolean, skipSetBlur: boolean = false): void => {
@@ -490,7 +485,7 @@ export default class DatePicker extends Component<
               focused: skipSetBlur ? prev.focused : false,
             }),
             () => {
-              !skipSetBlur && this.setBlur();
+              !skipSetBlur && this.deferBlur();
 
               this.setState({ inputValue: null });
             },
