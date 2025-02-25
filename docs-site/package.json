@@ -30,7 +30,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
-    "sass": "^1.85.0",
+    "sass": "^1.85.1",
     "vite": "^6.2.0"
   },
   "packageManager": "yarn@4.6.0"
