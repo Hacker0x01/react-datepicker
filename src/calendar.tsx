@@ -991,6 +991,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           <Month
             {...Calendar.defaultProps}
             {...this.props}
+            containerRef={this.containerRef}
             ariaLabelPrefix={this.props.monthAriaLabelPrefix}
             day={monthDate}
             onDayClick={this.handleDayClick}
@@ -1123,26 +1124,27 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       <ClickOutsideWrapper
         onClickOutside={this.handleClickOutside}
         style={{ display: "contents" }}
-        containerRef={this.containerRef}
         ignoreClass={this.props.outsideClickIgnoreClass}
       >
-        <Container
-          className={clsx("react-datepicker", this.props.className, {
-            "react-datepicker--time-only": this.props.showTimeSelectOnly,
-          })}
-          showTime={this.props.showTimeSelect || this.props.showTimeInput}
-          showTimeSelectOnly={this.props.showTimeSelectOnly}
-        >
-          {this.renderAriaLiveRegion()}
-          {this.renderPreviousButton()}
-          {this.renderNextButton()}
-          {this.renderMonths()}
-          {this.renderYears()}
-          {this.renderTodayButton()}
-          {this.renderTimeSection()}
-          {this.renderInputTimeSection()}
-          {this.renderChildren()}
-        </Container>
+        <div style={{ display: "contents" }} ref={this.containerRef}>
+          <Container
+            className={clsx("react-datepicker", this.props.className, {
+              "react-datepicker--time-only": this.props.showTimeSelectOnly,
+            })}
+            showTime={this.props.showTimeSelect || this.props.showTimeInput}
+            showTimeSelectOnly={this.props.showTimeSelectOnly}
+          >
+            {this.renderAriaLiveRegion()}
+            {this.renderPreviousButton()}
+            {this.renderNextButton()}
+            {this.renderMonths()}
+            {this.renderYears()}
+            {this.renderTodayButton()}
+            {this.renderTimeSection()}
+            {this.renderInputTimeSection()}
+            {this.renderChildren()}
+          </Container>
+        </div>
       </ClickOutsideWrapper>
     );
   }

@@ -16,7 +16,7 @@ interface WeekNumberProps {
   inline?: boolean;
   shouldFocusDayInline?: boolean;
   handleOnKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
   isInputFocused?: boolean;
   isWeekDisabled?: boolean;
 }

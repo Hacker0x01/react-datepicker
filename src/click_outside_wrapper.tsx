@@ -6,7 +6,7 @@ interface ClickOutsideWrapperProps {
   onClickOutside: ClickOutsideHandler;
   className?: string;
   children: React.ReactNode;
-  containerRef?: React.MutableRefObject<HTMLDivElement | null>;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
   style?: React.CSSProperties;
   ignoreClass?: string;
 }
