@@ -62,7 +62,7 @@ interface DayProps
   startDate?: Date | null;
   endDate?: Date | null;
   renderDayContents?: (day: number, date: Date) => React.ReactNode;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
   calendarStartDay?: DateNumberType;
   locale?: Locale;
   monthShowsDuplicateDaysEnd?: boolean;
