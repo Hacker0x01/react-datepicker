@@ -932,6 +932,7 @@ export default class Month extends Component<MonthProps> {
         "react-datepicker__quarter-text--range-start":
           this.isRangeStartQuarter(q),
         "react-datepicker__quarter-text--range-end": this.isRangeEndQuarter(q),
+        "react-datepicker__quarter-text--today": this.isCurrentQuarter(day, q),
       },
     );
   };
