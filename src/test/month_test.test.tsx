@@ -16,6 +16,7 @@ import {
   getMonth,
   getMonthShortInLocale,
   getQuarter,
+  getQuarterShortInLocale,
   getStartOfMonth,
   getStartOfQuarter,
   getStartOfWeek,
@@ -1245,6 +1246,60 @@ describe("Month", () => {
     expect(
       quarter.classList.contains("react-datepicker__quarter-text--in-range"),
     ).toBe(true);
+  });
+
+  it("should return quarter-text--today class if quarter is current year's quarter", () => {
+    const date = new Date();
+    const { container } = render(
+      <Month day={date} selected={date} showQuarterYearPicker />,
+    );
+    const quarter = container.querySelectorAll(
+      ".react-datepicker__quarter-text--today",
+    )[0]?.textContent;
+    expect(quarter).toBe(getQuarterShortInLocale(getQuarter(date)));
+  });
+
+  it("should not return quarter-text--today class if quarter is not current year's quarter", () => {
+    const lastYearDate = new Date();
+    lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+    const { container } = render(
+      <Month
+        day={lastYearDate}
+        selected={lastYearDate}
+        showQuarterYearPicker
+      />,
+    );
+    const quarters = container.querySelectorAll(
+      ".react-datepicker__quarter-text--today",
+    );
+    expect(quarters).toHaveLength(0);
+  });
+
+  it("should include aria-current property if quarter is current year's quarter", () => {
+    const date = new Date();
+    const { container } = render(
+      <Month day={date} selected={date} showQuarterYearPicker />,
+    );
+    const ariaCurrent = container
+      .querySelector(".react-datepicker__quarter-text--today")
+      ?.getAttribute("aria-current");
+    expect(ariaCurrent).toBe("date");
+  });
+
+  it("should not include aria-current property if quarter is not current year's quarter", () => {
+    const lastYearDate = new Date();
+    lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+    const { container } = render(
+      <Month
+        day={lastYearDate}
+        selected={lastYearDate}
+        showQuarterYearPicker
+      />,
+    );
+    const ariaCurrent = container
+      .querySelector(".react-datepicker__quarter-text")
+      ?.getAttribute("aria-current");
+    expect(ariaCurrent).toBeNull();
   });
 
   it("should enable keyboard focus on the preselected component", () => {
