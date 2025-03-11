@@ -463,7 +463,6 @@ export default class DatePicker extends Component<
 
   deferBlur = () => {
     requestAnimationFrame(() => {
-      console.log("reached");
       this.setBlur();
     });
   };
