@@ -1,10 +1,10 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       icon={
         <svg
           xmlns="http://www.w3.org/2000/svg"

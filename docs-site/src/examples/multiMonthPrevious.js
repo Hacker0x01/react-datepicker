@@ -1,10 +1,10 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
+      selected={selectedDate}
       showPreviousMonths
-      onChange={(date) => setStartDate(date)}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
     />
   );

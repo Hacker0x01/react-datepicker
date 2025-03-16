@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       placeholderText="This is readOnly"
       readOnly
     />
