@@ -2999,12 +2999,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.13.5":
-  version: 22.13.5
-  resolution: "@types/node@npm:22.13.5"
+"@types/node@npm:22.13.11":
+  version: 22.13.11
+  resolution: "@types/node@npm:22.13.11"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10c0/a2e7ed7bb0690e439004779baedeb05159c5cc41ef6d81c7a6ebea5303fde4033669e1c0e41ff7453b45fd2fea8dbd55fddfcd052950c7fcae3167c970bca725
+  checksum: 10c0/f6ee33d36372242535c38640fe7550a6640d8a775ec19b55bfc11775b521cba072d892ca92a912332ce01b317293d645c1bf767f3f882ec719f2404a3d2a5b96
   languageName: node
   linkType: hard
 
@@ -8691,7 +8691,7 @@ __metadata:
     "@testing-library/user-event": "npm:14.6.1"
     "@types/eslint": "npm:^9.6.1"
     "@types/jest": "npm:^29.5.14"
-    "@types/node": "npm:22.13.5"
+    "@types/node": "npm:22.13.11"
     "@types/react": "npm:^19.0.8"
     "@types/react-dom": "npm:^19.0.3"
     "@typescript-eslint/eslint-plugin": "npm:^8.22.0"
