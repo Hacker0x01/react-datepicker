@@ -325,7 +325,7 @@ export function getWeek(date: Date): number {
  * @returns - The day of the week code.
  */
 export function getDayOfWeekCode(day: Date, locale?: Locale): string {
-  return formatDate(day, "ddd", locale);
+  return formatDate(day, "E", locale);
 }
 
 // *** Start of ***
