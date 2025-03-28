@@ -7130,7 +7130,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hello-world@workspace:."
   dependencies:
-    react: "npm:^19.0.0"
+    react: "npm:^19.1.0"
     react-datepicker: "npm:^8.2.0"
     react-dom: "npm:^19.0.0"
     react-scripts: "npm:5.0.1"
@@ -11016,10 +11016,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "react@npm:19.0.0"
-  checksum: 10c0/9cad8f103e8e3a16d15cb18a0d8115d8bd9f9e1ce3420310aea381eb42aa0a4f812cf047bb5441349257a05fba8a291515691e3cb51267279b2d2c3253f38471
+"react@npm:^19.1.0":
+  version: 19.1.0
+  resolution: "react@npm:19.1.0"
+  checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
   languageName: node
   linkType: hard
 
