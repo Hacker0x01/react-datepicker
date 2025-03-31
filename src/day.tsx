@@ -312,6 +312,7 @@ export default class Day extends Component<DayProps> {
     if (
       selectsEnd &&
       startDate &&
+      !endDate &&
       (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
     ) {
       return isDayInRange(day, startDate, selectingDate);

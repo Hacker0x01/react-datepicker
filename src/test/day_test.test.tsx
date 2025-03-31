@@ -688,15 +688,13 @@ describe("Day", () => {
     });
 
     describe("for an end date picker", () => {
-      it("should highlight for dates after the start date", () => {
-        const { startDate, endDate } = createDateRange(-1, 1);
+      it("should highlight all dates after the start date (if the endDate is not selected yet)", () => {
+        const { startDate } = createDateRange(-1, 1);
 
-        // All these should highlight: today, tomorrow (endDate), the day after
         for (let daysFromStart = 1; daysFromStart <= 3; daysFromStart++) {
           const day = addDays(startDate, daysFromStart);
           const container = renderDay(day, {
             startDate,
-            endDate,
             selectingDate: day,
             selectsEnd: true,
           });

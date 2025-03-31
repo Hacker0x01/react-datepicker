@@ -56,6 +56,14 @@ function goToLastMonth(container: HTMLElement) {
   fireEvent.click(lastMonthButton!);
 }
 
+function goToNextMonth(container: HTMLElement) {
+  const nextMonthButton = safeQuerySelector(
+    container,
+    ".react-datepicker__navigation-icon--next",
+  );
+  fireEvent.click(nextMonthButton!);
+}
+
 function formatDayWithZeros(day: number) {
   const dayString = day.toString();
 
@@ -3106,6 +3114,65 @@ describe("DatePicker", () => {
       expect(formatDate(endDate as unknown as Date, "yyyy-MM-dd")).toBe(
         formatDate(selected, "yyyy-MM-dd"),
       );
+    });
+  });
+
+  describe("is-selecting-range", () => {
+    const IN_RANGE_DAY_CLASS_NAME = "react-datepicker__day--in-selecting-range";
+
+    it("should apply '--in-selecting-range' class to the days till the preselected keyboard date on navigating to the next month without selecting endDate in the endDatePicker", () => {
+      const preselectedDay = 5;
+      const startDate = new Date(`2025/02/${preselectedDay}`);
+
+      const { container } = render(
+        <DatePicker
+          inline
+          selectsEnd
+          startDate={startDate}
+          minDate={startDate}
+        />,
+      );
+
+      goToNextMonth(container);
+
+      for (let i = 1; i <= preselectedDay; i++) {
+        const inSelectionRangeDay = safeQuerySelector(
+          container,
+          `.react-datepicker__day--00${i}`,
+        );
+        expect(
+          inSelectionRangeDay.classList.contains(IN_RANGE_DAY_CLASS_NAME),
+        ).toBe(true);
+      }
+    });
+
+    it("should not apply '--in-selecting-range' class to the days till the date that matched selectedDate in the next months (endDatePicker)", () => {
+      const startDay = 3;
+      const endDay = 8;
+      const startDate = new Date(`2025/02/${startDay}`);
+      const endDate = new Date(`2025/02/${endDay}`);
+
+      const { container } = render(
+        <DatePicker
+          inline
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+        />,
+      );
+
+      goToNextMonth(container);
+
+      for (let i = 1; i <= endDay; i++) {
+        const inSelectionRangeDay = safeQuerySelector(
+          container,
+          `.react-datepicker__day--00${i}`,
+        );
+        expect(
+          inSelectionRangeDay.classList.contains(IN_RANGE_DAY_CLASS_NAME),
+        ).toBe(false);
+      }
     });
   });
 
