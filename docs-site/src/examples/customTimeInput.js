@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const ExampleCustomTimeInput = ({ value, onChange }) => (
     <input
       value={value}
@@ -10,8 +10,8 @@
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showTimeInput
       customTimeInput={<ExampleCustomTimeInput />}
     />
