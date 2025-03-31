@@ -56,7 +56,7 @@ import TabLoop from "./tab_loop";
 
 import type { ClickOutsideHandler } from "./click_outside_wrapper";
 
-export { default as CalendarContainer } from "./calendar_container";
+export { default as CalendarContainer, CalendarContainerProps } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
 
