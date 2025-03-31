@@ -107,6 +107,47 @@ describe("YearPicker", () => {
     expect(year).toBe(getYear(date).toString());
   });
 
+  it("should has selected class applied for all the selectedDates when selectsMultiple is set", () => {
+    const selectedDates = [new Date("2025-01-01"), new Date("2026-01-01")];
+    const { container } = render(
+      <Year
+        selectsMultiple
+        selectedDates={selectedDates}
+        date={selectedDates[0]}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const yearElements = Array.from(
+      container.querySelectorAll(".react-datepicker__year-text--selected"),
+    );
+
+    expect(yearElements.length).toBe(selectedDates.length);
+
+    const isSelectedDatesHighlighted = yearElements.every((yearElement) => {
+      const yearValue = yearElement?.textContent;
+      return selectedDates.some(
+        (selectedDate) => getYear(selectedDate).toString() === yearValue,
+      );
+    });
+    expect(isSelectedDatesHighlighted).toBe(true);
+  });
+
+  it("should not has selected class where there is no selectedDates when selectsMultiple is set", () => {
+    const { container } = render(
+      <Year
+        selectsMultiple
+        date={new Date()}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const yearElements = Array.from(
+      container.querySelectorAll(".react-datepicker__year-text--selected"),
+    );
+    expect(yearElements.length).toBe(0);
+  });
+
   it("should have current year class when element of array equal of current year", () => {
     const date = new Date();
     const { container } = render(

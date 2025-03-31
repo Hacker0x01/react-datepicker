@@ -38,6 +38,8 @@ interface YearProps
   ) => void;
   preSelection?: Date | null;
   setPreSelection?: (date?: Date | null) => void;
+  selectsMultiple?: boolean;
+  selectedDates?: Date[];
   selected?: Date | null;
   inline?: boolean;
   usePointerEvent?: boolean;
@@ -240,6 +242,15 @@ export default class Year extends Component<YearProps> {
     );
   };
 
+  isSelectedYear = (year: number) => {
+    const { selectsMultiple, selected, selectedDates } = this.props;
+
+    if (selectsMultiple) {
+      return selectedDates?.some((date) => year === getYear(date));
+    }
+    return !selected || year === getYear(selected);
+  };
+
   onYearClick = (
     event:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -360,7 +371,6 @@ export default class Year extends Component<YearProps> {
       date,
       minDate,
       maxDate,
-      selected,
       excludeDates,
       includeDates,
       filterDate,
@@ -372,9 +382,7 @@ export default class Year extends Component<YearProps> {
       `react-datepicker__year-${y}`,
       date ? yearClassName?.(setYear(date, y)) : undefined,
       {
-        "react-datepicker__year-text--selected": selected
-          ? y === getYear(selected)
-          : undefined,
+        "react-datepicker__year-text--selected": this.isSelectedYear(y),
         "react-datepicker__year-text--disabled":
           (minDate || maxDate || excludeDates || includeDates || filterDate) &&
           isYearDisabled(y, this.props),
