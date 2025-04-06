@@ -123,6 +123,26 @@ export const safeQuerySelectorAll = <T extends HTMLElement = HTMLElement>(
   return elements;
 };
 
+export const setupMockResizeObserver = () => {
+  const mockObserve = jest.fn();
+  const mockDisconnect = jest.fn();
+  const mockUnobserve = jest.fn();
+
+  const ResizeObserverMock = jest.fn(() => ({
+    observe: mockObserve,
+    disconnect: mockDisconnect,
+    unobserve: jest.fn(),
+  }));
+
+  global.ResizeObserver = ResizeObserverMock;
+
+  return {
+    observe: mockObserve,
+    disconnect: mockDisconnect,
+    unobserve: mockUnobserve,
+  };
+};
+
 export class SafeElementWrapper<T extends HTMLElement> {
   constructor(private element: T) {}
 

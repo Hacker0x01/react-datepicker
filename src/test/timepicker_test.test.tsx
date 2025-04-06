@@ -9,6 +9,7 @@ import {
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
+  setupMockResizeObserver,
 } from "./test_utils";
 
 const MIN_TIME_LI_LEN = 2;
@@ -19,8 +20,53 @@ describe("TimePicker", () => {
   let onChangeMoment: Date | undefined;
   let instance: DatePicker | null = null;
 
+  let mockObserve: jest.Mock, mockDisconnect: jest.Mock;
+
+  beforeAll(() => {
+    const { observe, disconnect } = setupMockResizeObserver();
+    mockObserve = observe;
+    mockDisconnect = disconnect;
+  });
+
   beforeEach(() => {
     div = document.createElement("div");
+  });
+
+  describe("Re-adjust height on Calendar Height Change", () => {
+    beforeEach(() => {
+      mockObserve.mockReset();
+      mockDisconnect.mockReset();
+    });
+
+    it("calls observe on mount", async () => {
+      render(
+        <DatePicker
+          inline
+          selected={new Date()}
+          showTimeSelect
+          timeIntervals={15}
+        />,
+      );
+      await waitFor(() => {
+        expect(mockObserve).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it("calls disconnect on unmount", async () => {
+      const component = render(
+        <DatePicker
+          inline
+          selected={new Date()}
+          showTimeSelect
+          timeIntervals={15}
+        />,
+      );
+
+      component.unmount();
+      await waitFor(() => {
+        expect(mockDisconnect).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 
   it("should update on input time change", () => {

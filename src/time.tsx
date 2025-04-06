@@ -62,6 +62,7 @@ export default class Time extends Component<TimeProps, TimeState> {
     );
   };
 
+  private resizeObserver?: ResizeObserver;
   state: TimeState = {
     height: null,
   };
@@ -69,11 +70,11 @@ export default class Time extends Component<TimeProps, TimeState> {
   componentDidMount(): void {
     // code to ensure selected time will always be in focus within time window when it first appears
     this.scrollToTheSelectedTime();
-    if (this.props.monthRef && this.header) {
-      this.setState({
-        height: this.props.monthRef.clientHeight - this.header.clientHeight,
-      });
-    }
+    this.observeDatePickerHeightChanges();
+  }
+
+  componentWillUnmount(): void {
+    this.resizeObserver?.disconnect();
   }
 
   private header?: HTMLDivElement;
@@ -81,6 +82,27 @@ export default class Time extends Component<TimeProps, TimeState> {
   private list?: HTMLUListElement;
 
   private centerLi?: HTMLLIElement;
+
+  private observeDatePickerHeightChanges(): void {
+    const { monthRef } = this.props;
+    this.updateContainerHeight();
+
+    if (monthRef) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updateContainerHeight();
+      });
+
+      this.resizeObserver.observe(monthRef);
+    }
+  }
+
+  private updateContainerHeight(): void {
+    if (this.props.monthRef && this.header) {
+      this.setState({
+        height: this.props.monthRef.clientHeight - this.header.clientHeight,
+      });
+    }
+  }
 
   scrollToTheSelectedTime = (): void => {
     requestAnimationFrame((): void => {
