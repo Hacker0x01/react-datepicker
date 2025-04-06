@@ -45,6 +45,7 @@ import {
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
+  setupMockResizeObserver,
 } from "./test_utils";
 
 import type { ReactDatePickerCustomHeaderProps } from "../calendar";
@@ -135,6 +136,10 @@ describe("Calendar", () => {
       rerender: rerenderFunc,
     };
   }
+
+  beforeAll(() => {
+    setupMockResizeObserver();
+  });
 
   it("should start with the current date in view if no date range", () => {
     const now = newDate();

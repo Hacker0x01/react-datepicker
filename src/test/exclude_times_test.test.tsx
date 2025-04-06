@@ -2,10 +2,15 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import { setTime, newDate } from "../date_utils";
+import { setupMockResizeObserver } from "./test_utils";
 import DatePicker from "../index";
 
 describe("DatePicker", () => {
   let now: Date, excludeTimes: Date[];
+
+  beforeAll(() => {
+    setupMockResizeObserver();
+  });
 
   beforeEach(() => {
     now = newDate();

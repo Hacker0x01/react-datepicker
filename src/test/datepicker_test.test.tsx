@@ -29,7 +29,11 @@ import DatePicker, { registerLocale } from "../index";
 import CustomInput from "./helper_components/custom_input";
 import ShadowRoot from "./helper_components/shadow_root";
 import TestWrapper from "./helper_components/test_wrapper";
-import { getKey, safeQuerySelector } from "./test_utils";
+import {
+  getKey,
+  safeQuerySelector,
+  setupMockResizeObserver,
+} from "./test_utils";
 
 function getSelectedDayNode(container: HTMLElement) {
   return (
@@ -83,6 +87,10 @@ const showDocument = (calendarInput: HTMLElement) => {
 };
 
 describe("DatePicker", () => {
+  beforeEach(() => {
+    setupMockResizeObserver();
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });

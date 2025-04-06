@@ -5,9 +5,13 @@ import DatePicker from "../index";
 import InputTimeComponent from "../input_time";
 
 import CustomTimeInput from "./helper_components/custom_time_input";
-import { safeQuerySelector } from "./test_utils";
+import { safeQuerySelector, setupMockResizeObserver } from "./test_utils";
 
 describe("timeInput", () => {
+  beforeEach(() => {
+    setupMockResizeObserver();
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
