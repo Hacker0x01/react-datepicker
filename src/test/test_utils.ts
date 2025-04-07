@@ -123,6 +123,37 @@ export const safeQuerySelectorAll = <T extends HTMLElement = HTMLElement>(
   return elements;
 };
 
+let _resizeObserverCallbackFn: ResizeObserverCallback | null;
+
+export const getResizeObserverCallback = () => _resizeObserverCallbackFn;
+
+export const setupMockResizeObserver = () => {
+  const mockObserve = jest.fn();
+  const mockDisconnect = jest.fn();
+  const mockUnobserve = jest.fn();
+
+  const ResizeObserverMock = jest.fn((fn) => {
+    _resizeObserverCallbackFn = fn;
+
+    return {
+      observe: mockObserve,
+      disconnect: () => {
+        _resizeObserverCallbackFn = null;
+        mockDisconnect();
+      },
+      unobserve: jest.fn(),
+    };
+  });
+
+  global.ResizeObserver = ResizeObserverMock;
+
+  return {
+    observe: mockObserve,
+    disconnect: mockDisconnect,
+    unobserve: mockUnobserve,
+  };
+};
+
 export class SafeElementWrapper<T extends HTMLElement> {
   constructor(private element: T) {}
 

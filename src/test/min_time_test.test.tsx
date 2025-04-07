@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import DatePicker from "../index";
 
-import { safeQuerySelector } from "./test_utils";
+import { safeQuerySelector, setupMockResizeObserver } from "./test_utils";
 
 import type { DatePickerProps } from "../index";
 
@@ -44,6 +44,10 @@ const DatePickerWithState = (
 };
 
 describe("Datepicker minTime", () => {
+  beforeAll(() => {
+    setupMockResizeObserver();
+  });
+
   it("should select time 12:00 AM when no minTime constraint is set.", () => {
     const { getByText, container } = render(<DatePickerWithState />);
 

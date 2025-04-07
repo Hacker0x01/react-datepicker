@@ -4,9 +4,13 @@ import React from "react";
 import DatePicker from "../index";
 import TimeComponent from "../time";
 
-import { safeQuerySelector } from "./test_utils";
+import { safeQuerySelector, setupMockResizeObserver } from "./test_utils";
 
 describe("DatePicker", () => {
+  beforeAll(() => {
+    setupMockResizeObserver();
+  });
+
   it("should show time component when showTimeSelect prop is present", () => {
     const { container } = render(<DatePicker showTimeSelect open />);
     const timeComponent = container.querySelector(
