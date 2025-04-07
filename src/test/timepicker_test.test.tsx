@@ -6,6 +6,7 @@ import DatePicker from "../index";
 
 import {
   getKey,
+  getResizeObserverCallback,
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
@@ -49,6 +50,14 @@ describe("TimePicker", () => {
       );
       await waitFor(() => {
         expect(mockObserve).toHaveBeenCalledTimes(1);
+
+        const resizeObserverCallback = getResizeObserverCallback();
+        const mockObserveElement = mockObserve.mock.calls[0][0];
+        expect(typeof resizeObserverCallback).toBe("function");
+
+        if (resizeObserverCallback) {
+          resizeObserverCallback([], mockObserveElement);
+        }
       });
     });
 
@@ -65,6 +74,8 @@ describe("TimePicker", () => {
       component.unmount();
       await waitFor(() => {
         expect(mockDisconnect).toHaveBeenCalledTimes(1);
+        const resizeObserverCallback = getResizeObserverCallback();
+        expect(resizeObserverCallback).toBe(null);
       });
     });
   });
