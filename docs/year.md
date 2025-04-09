@@ -33,8 +33,10 @@
 | `preSelection`                |      |               |             |
 | `renderYearContent`           |      |               |             |
 | `selected`                    |      |               |             |
+| `selectedDates`               |      |               |             |
 | `selectingDate`               |      |               |             |
 | `selectsEnd`                  |      |               |             |
+| `selectsMultiple`             |      |               |             |
 | `selectsRange`                |      |               |             |
 | `selectsStart`                |      |               |             |
 | `setPreSelection`             |      |               |             |
