@@ -659,6 +659,7 @@ export default class DatePicker extends Component<
     event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
     monthSelectedIn?: number,
   ) => {
+    if (this.props.readOnly) return;
     if (this.props.shouldCloseOnSelect && !this.props.showTimeSelect) {
       // Preventing onFocus event to fix issue
       // https://github.com/Hacker0x01/react-datepicker/issues/628
@@ -829,6 +830,7 @@ export default class DatePicker extends Component<
 
   // When checking preSelection via min/maxDate, times need to be manipulated via getStartOfDay/getEndOfDay
   setPreSelection = (date?: Date | null): void => {
+    if (this.props.readOnly) return;
     const hasMinDate = isDate(this.props.minDate);
     const hasMaxDate = isDate(this.props.maxDate);
     let isValidDateSelection = true;
