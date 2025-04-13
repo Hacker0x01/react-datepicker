@@ -1388,9 +1388,11 @@ export default class DatePicker extends Component<
       clearButtonClassName = "",
       ariaLabelClose = "Close",
       selectedDates,
+      readOnly,
     } = this.props;
     if (
       isClearable &&
+      !readOnly &&
       (selected != null ||
         startDate != null ||
         endDate != null ||
