@@ -1,14 +1,14 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const handleChangeRaw = (value) => {
     if (value === "tomorrow") {
-      setStartDate(addDays(new Date(), 1));
+      setSelectedDate(addDays(new Date(), 1));
     }
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       placeholderText='Enter "tomorrow"'
       onChangeRaw={(event) => handleChangeRaw(event.target.value)}
     />
