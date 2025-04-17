@@ -226,7 +226,7 @@ export function safeDateFormat(
 /**
  * Used as a delimiter to separate two dates when formatting a date range
  */
-export const DATE_RANGE_SEPARATOR = ' - '
+export const DATE_RANGE_SEPARATOR = " - ";
 
 /**
  * Safely formats a date range.
