@@ -224,6 +224,11 @@ export function safeDateFormat(
 }
 
 /**
+ * Used as a delimiter to separate two dates when formatting a date range
+ */
+export const DATE_RANGE_SEPARATOR = ' - '
+
+/**
  * Safely formats a date range.
  *
  * @param startDate - The start date.
@@ -243,7 +248,7 @@ export function safeDateRangeFormat(
   const formattedStartDate = safeDateFormat(startDate, props);
   const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
 
-  return `${formattedStartDate} - ${formattedEndDate}`;
+  return `${formattedStartDate}${DATE_RANGE_SEPARATOR}${formattedEndDate}`;
 }
 
 /**

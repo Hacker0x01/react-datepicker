@@ -49,6 +49,7 @@ import {
   type HighlightDate,
   type HolidayItem,
   KeyType,
+  DATE_RANGE_SEPARATOR,
 } from "./date_utils";
 import PopperComponent from "./popper_component";
 import Portal from "./portal";
@@ -608,7 +609,7 @@ export default class DatePicker extends Component<
 
     if (selectsRange) {
       const [valueStart, valueEnd] = value
-        .split("-", 2)
+        .split(dateFormat.includes("-") ? DATE_RANGE_SEPARATOR : "-", 2)
         .map((val) => val.trim());
       const startDateNew = parseDate(
         valueStart ?? "",
