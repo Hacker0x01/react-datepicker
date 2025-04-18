@@ -515,10 +515,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.24.0, @eslint/js@npm:^9.24.0":
+"@eslint/js@npm:9.24.0":
   version: 9.24.0
   resolution: "@eslint/js@npm:9.24.0"
   checksum: 10c0/efe22e29469e4140ac3e2916be8143b1bcfd1084a6edf692b7a58a3e54949d53c67f7f979bc0a811db134d9cc1e7bff8aa71ef1376b47eecd7e226b71206bb36
+  languageName: node
+  linkType: hard
+
+"@eslint/js@npm:^9.25.0":
+  version: 9.25.0
+  resolution: "@eslint/js@npm:9.25.0"
+  checksum: 10c0/4a03e2b218e086af89465563151610f30c1ff38e53a4b09fa71d2e7d1f1b37d72e3aacaf2ccb949544b6fcbc12b118162f5edb6e7deee9b3bfd816745fe74dfa
   languageName: node
   linkType: hard
 
@@ -4058,7 +4065,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-datepicker-docs@workspace:."
   dependencies:
-    "@eslint/js": "npm:^9.24.0"
+    "@eslint/js": "npm:^9.25.0"
     "@types/react": "npm:^19.1.1"
     "@types/react-dom": "npm:^19.1.2"
     "@vitejs/plugin-react": "npm:^4.3.4"
