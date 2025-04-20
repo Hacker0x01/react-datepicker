@@ -248,7 +248,7 @@ export default class Year extends Component<YearProps> {
     if (selectsMultiple) {
       return selectedDates?.some((date) => year === getYear(date));
     }
-    return !selected || year === getYear(selected);
+    return !!selected && year === getYear(selected);
   };
 
   onYearClick = (

@@ -148,6 +148,20 @@ describe("YearPicker", () => {
     expect(yearElements.length).toBe(0);
   });
 
+  it("should not has selected class where there is no selectedDates", () => {
+    const { container } = render(
+      <Year
+        date={new Date()}
+        onYearMouseEnter={() => {}}
+        onYearMouseLeave={() => {}}
+      />,
+    );
+    const yearElements = Array.from(
+      container.querySelectorAll(".react-datepicker__year-text--selected"),
+    );
+    expect(yearElements.length).toBe(0);
+  });
+
   it("should have current year class when element of array equal of current year", () => {
     const date = new Date();
     const { container } = render(
