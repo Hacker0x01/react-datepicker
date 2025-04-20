@@ -3443,6 +3443,35 @@ describe("DatePicker", () => {
       );
     });
 
+    it("should parses date range with dashes correctly", () => {
+      const onChangeSpy = jest.fn();
+      const dateFormat = "yyyy-MM-dd";
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={undefined}
+          endDate={undefined}
+          onChange={onChangeSpy}
+          dateFormat={dateFormat}
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
+        target: {
+          value: "2024-03-04 - 2024-05-06",
+        },
+      });
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(Array.isArray(onChangeSpy.mock.calls[0][0])).toBe(true);
+      const [startDate, endDate] = onChangeSpy.mock.calls[0][0];
+      expect(startDate).toBeTruthy();
+      expect(endDate).toBeTruthy();
+      expect(formatDate(startDate, dateFormat)).toBe("2024-03-04");
+      expect(formatDate(endDate, dateFormat)).toBe("2024-05-06");
+    });
+
     it("should not fire onChange a second time if user edits text box without the parsing result changing", () => {
       const onChangeSpy = jest.fn();
       let instance: DatePicker | null = null;
