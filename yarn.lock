@@ -1840,8 +1840,8 @@ __metadata:
   linkType: hard
 
 "@floating-ui/react@npm:^0.27.3":
-  version: 0.27.6
-  resolution: "@floating-ui/react@npm:0.27.6"
+  version: 0.27.7
+  resolution: "@floating-ui/react@npm:0.27.7"
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.2"
     "@floating-ui/utils": "npm:^0.2.9"
@@ -1849,7 +1849,7 @@ __metadata:
   peerDependencies:
     react: ">=17.0.0"
     react-dom: ">=17.0.0"
-  checksum: 10c0/ddb49329e2ac6d58ca1eb18ab5fac594952c9492aa6a689d9dcb4440d1baaac8bbf4890a848369d495ed424c50ea1045d1290b170260ad493e29e35b188abbb2
+  checksum: 10c0/bb79c89a63dfb44917f1583548905437adb7ba3fc9ece27c45b12532a60423425f8ae9fde8a54b10711e6449585ffde0951aa70a4f13f99eaeacd5006d7d69e5
   languageName: node
   linkType: hard
 
