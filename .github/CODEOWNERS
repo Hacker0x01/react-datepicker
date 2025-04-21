@@ -1,0 +1,14 @@
+.github/CODEOWNERS @emmadev/systems
+
+*.tf @emmadev/systems
+config/*.json @emmadev/systems
+.github/workflows/ @emmadev/systems
+packer/ @emmadev/systems
+Gruntfile.js @emmadev/systems
+fabfile.py @emmadev/systems
+resources/ @emmadev/systems
+samconfig.toml @emmadev/systems
+template.yaml @emmadev/systems
+cloudformation/ @emmadev/systems
+cdk.json @emmadev/systems
+project.yml @emmadev/systems
