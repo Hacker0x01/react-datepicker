@@ -82,7 +82,7 @@
     "react-dom": "^19.1.0",
     "rollup": "^4.32.1",
     "rollup-plugin-filesize": "^10.0.0",
-    "sass": "1.85.1",
+    "sass": "1.87.0",
     "slugify": "^1.6.6",
     "stylelint": "^16.14.1",
     "stylelint-config-standard": "^37.0.0",
