@@ -68,6 +68,30 @@
     margin-bottom: 20px;
   }
 
+  &__tabs {
+    display: flex;
+  }
+
+  &__tab {
+    font-family: "Open Sans", sans-serif;
+    box-sizing: border-box;
+    padding: 8px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  &__tab:hover {
+    border-bottom: 2px solid #216ba5;
+  }
+
+  &__tab.active {
+    border-bottom: 2px solid #216ba5;
+  }
+
   &__code {
     position: relative;
     background-color: #f5f8fb;
@@ -75,8 +99,7 @@
     margin-left: -20px;
     border-top: 1px solid #d8e4ef;
     border-bottom: 1px solid #d8e4ef;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
 
     @include helpers.breakpoint(768px) {
       width: 70%;
@@ -98,15 +121,19 @@
       z-index: 10;
     }
   }
+
   &__preview {
     padding: 20px;
+
     @include helpers.breakpoint(768px) {
       width: 30%;
     }
+
     @media (max-width: 768px) {
       padding-left: 0;
     }
   }
+
   &#example-portal-by-id {
     position: relative;
     overflow: hidden;
@@ -121,9 +148,11 @@
   .react-datepicker__week:nth-child(3n + 1) {
     background-color: #215005;
   }
+
   .react-datepicker__week:nth-child(3n + 2) {
     background-color: #eea429;
   }
+
   .react-datepicker__week:nth-child(3n + 3) {
     background-color: #a82a15;
   }
