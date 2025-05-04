@@ -6,7 +6,7 @@ import CodeExampleComponent from "../Example/index.jsx";
 
 import "./style.scss";
 import "react-datepicker/dist/react-datepicker.css";
-import { EXAMPLE_CONFIG } from './config.js';
+import { EXAMPLE_CONFIG } from "./config.js";
 
 export default class exampleComponents extends React.Component {
   componentDidMount() {
@@ -17,7 +17,9 @@ export default class exampleComponents extends React.Component {
   handleAnchorClick = (e: React.MouseEvent, id: string): void => {
     e.preventDefault();
     window.history.replaceState(null, document.title, `#${id}`);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   render() {

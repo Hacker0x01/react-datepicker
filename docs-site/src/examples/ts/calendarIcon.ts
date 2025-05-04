@@ -1,4 +1,4 @@
-const calendarIconTS  = `
+const calendarIconTS = `
 const Example = () => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
