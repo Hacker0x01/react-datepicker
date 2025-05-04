@@ -49,6 +49,7 @@ import {
   type HighlightDate,
   type HolidayItem,
   KeyType,
+  DATE_RANGE_SEPARATOR,
 } from "./date_utils";
 import PopperComponent from "./popper_component";
 import Portal from "./portal";
@@ -608,7 +609,7 @@ export default class DatePicker extends Component<
 
     if (selectsRange) {
       const [valueStart, valueEnd] = value
-        .split("-", 2)
+        .split(dateFormat.includes("-") ? DATE_RANGE_SEPARATOR : "-", 2)
         .map((val) => val.trim());
       const startDateNew = parseDate(
         valueStart ?? "",
@@ -659,6 +660,7 @@ export default class DatePicker extends Component<
     event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
     monthSelectedIn?: number,
   ) => {
+    if (this.props.readOnly) return;
     if (this.props.shouldCloseOnSelect && !this.props.showTimeSelect) {
       // Preventing onFocus event to fix issue
       // https://github.com/Hacker0x01/react-datepicker/issues/628
@@ -829,6 +831,7 @@ export default class DatePicker extends Component<
 
   // When checking preSelection via min/maxDate, times need to be manipulated via getStartOfDay/getEndOfDay
   setPreSelection = (date?: Date | null): void => {
+    if (this.props.readOnly) return;
     const hasMinDate = isDate(this.props.minDate);
     const hasMaxDate = isDate(this.props.maxDate);
     let isValidDateSelection = true;
@@ -1388,9 +1391,11 @@ export default class DatePicker extends Component<
       clearButtonClassName = "",
       ariaLabelClose = "Close",
       selectedDates,
+      readOnly,
     } = this.props;
     if (
       isClearable &&
+      !readOnly &&
       (selected != null ||
         startDate != null ||
         endDate != null ||

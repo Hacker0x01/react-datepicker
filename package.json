@@ -21,7 +21,8 @@
         "default": "./dist/index.js"
       }
     },
-    "./dist/*.css": "./dist/*.css"
+    "./dist/*.css": "./dist/*.css",
+    "./src/stylesheets/*.scss": "./src/stylesheets/*.scss"
   },
   "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
   "sideEffects": ["**/*.css"],
@@ -54,7 +55,7 @@
     "@testing-library/user-event": "14.6.1",
     "@types/eslint": "^9.6.1",
     "@types/jest": "^29.5.14",
-    "@types/node": "22.13.14",
+    "@types/node": "22.14.1",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
