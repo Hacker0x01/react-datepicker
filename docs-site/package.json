@@ -31,7 +31,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.0.0",
     "sass": "^1.87.0",
-    "vite": "^6.3.4"
+    "vite": "^6.3.5"
   },
   "packageManager": "yarn@4.6.0"
 }
