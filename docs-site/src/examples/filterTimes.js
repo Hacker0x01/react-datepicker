@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 0), 9),
   );
   const filterPassedTime = (time) => {
@@ -10,8 +10,8 @@
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       filterTime={filterPassedTime}
       dateFormat="MMMM d, yyyy h:mm aa"

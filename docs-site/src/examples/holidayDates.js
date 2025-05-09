@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       holidays={[
         { date: "2023-08-15", holidayName: "India's Independence Day" },
         { date: "2023-12-31", holidayName: "New Year's Eve" },
