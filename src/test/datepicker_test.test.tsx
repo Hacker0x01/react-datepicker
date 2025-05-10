@@ -4387,4 +4387,39 @@ describe("DatePicker", () => {
       expect(input.value).toBe(DATE_VALUE);
     });
   });
+
+  describe("Close on ESC Key", () => {
+    it("should close DatePicker on ESC key press", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+
+      fireEvent.keyDown(calendar, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
+    });
+
+    it("should close DatePicker on ESC key press - even when the focus is at Calendar header buttons", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+      const nextMontButton = safeQuerySelector(
+        calendar,
+        "button.react-datepicker__navigation--next",
+      );
+
+      fireEvent.click(nextMontButton);
+      fireEvent.click(nextMontButton);
+
+      fireEvent.keyDown(nextMontButton, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
+    });
+  });
 });

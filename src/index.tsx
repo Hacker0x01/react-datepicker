@@ -1170,6 +1170,7 @@ export default class DatePicker extends Component<
     if (eventKey === KeyType.Escape) {
       event.preventDefault();
       this.sendFocusBackToInput();
+      this.setOpen(false);
     }
   };
 
