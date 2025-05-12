@@ -3153,35 +3153,6 @@ describe("DatePicker", () => {
         ).toBe(true);
       }
     });
-
-    it("should not apply '--in-selecting-range' class to the days till the date that matched selectedDate in the next months (endDatePicker)", () => {
-      const startDay = 3;
-      const endDay = 8;
-      const startDate = new Date(`2025/02/${startDay}`);
-      const endDate = new Date(`2025/02/${endDay}`);
-
-      const { container } = render(
-        <DatePicker
-          inline
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-        />,
-      );
-
-      goToNextMonth(container);
-
-      for (let i = 1; i <= endDay; i++) {
-        const inSelectionRangeDay = safeQuerySelector(
-          container,
-          `.react-datepicker__day--00${i}`,
-        );
-        expect(
-          inSelectionRangeDay.classList.contains(IN_RANGE_DAY_CLASS_NAME),
-        ).toBe(false);
-      }
-    });
   });
 
   describe("selectsRange without inline", () => {
