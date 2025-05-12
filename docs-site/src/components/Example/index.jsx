@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useMemo, useState } from "react";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import DatePicker, {
   registerLocale,
@@ -35,6 +35,7 @@ export default class CodeExampleComponent extends React.Component {
             scope={{
               // NB any globals added here should also be referenced in ../../examples/.eslintrc
               useState,
+              useMemo,
               DatePicker,
               CalendarContainer,
               ...DateFNS,
