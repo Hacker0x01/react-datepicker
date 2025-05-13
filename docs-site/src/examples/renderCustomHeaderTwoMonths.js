@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       renderCustomHeader={({
@@ -49,8 +49,8 @@
           </button>
         </div>
       )}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
     />
   );
