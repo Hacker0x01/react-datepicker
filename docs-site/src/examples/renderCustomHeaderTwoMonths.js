@@ -1,5 +1,7 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
+  const monthsShown = useMemo(() => 2, []);
+
   return (
     <DatePicker
       renderCustomHeader={({
@@ -14,8 +16,10 @@
             className={
               "react-datepicker__navigation react-datepicker__navigation--previous"
             }
-            style={customHeaderCount === 1 ? { visibility: "hidden" } : null}
             onClick={decreaseMonth}
+            style={{
+              visibility: customHeaderCount === 0 ? "visible" : "hidden",
+            }}
           >
             <span
               className={
@@ -36,8 +40,11 @@
             className={
               "react-datepicker__navigation react-datepicker__navigation--next"
             }
-            style={customHeaderCount === 0 ? { visibility: "hidden" } : null}
             onClick={increaseMonth}
+            style={{
+              visibility:
+                customHeaderCount === monthsShown - 1 ? "visible" : "hidden",
+            }}
           >
             <span
               className={
@@ -51,7 +58,7 @@
       )}
       selected={startDate}
       onChange={(date) => setStartDate(date)}
-      monthsShown={2}
+      monthsShown={monthsShown}
     />
   );
 };
