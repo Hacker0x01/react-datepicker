@@ -1273,12 +1273,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.1.4":
-  version: 19.1.4
-  resolution: "@types/react@npm:19.1.4"
+"@types/react@npm:^19.1.5":
+  version: 19.1.5
+  resolution: "@types/react@npm:19.1.5"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10c0/501350d4f9cef13c5dd1b1496fa70ebaff52f6fa359b623b51c9d817e5bc4333fa3c8b7a6a4cbc88c643385052d66a243c3ceccfd6926062f917a2dd0535f6b3
+  checksum: 10c0/e0811aadc65cf4030e2418c7975b524f126db806bacb85cffdbe5e50c3606e9a5ffe89ffe6bf9c945e03f5e8d5ed992686bc6bb478db1f3127cc50933f648e1e
   languageName: node
   linkType: hard
 
@@ -4639,7 +4639,7 @@ __metadata:
   resolution: "react-datepicker-docs@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.26.0"
-    "@types/react": "npm:^19.1.4"
+    "@types/react": "npm:^19.1.5"
     "@types/react-dom": "npm:^19.1.4"
     "@vitejs/plugin-react": "npm:^4.4.1"
     date-fns: "npm:^4.1.0"
