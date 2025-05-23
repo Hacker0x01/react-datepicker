@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       includeDateIntervals={[
         { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
       ]}

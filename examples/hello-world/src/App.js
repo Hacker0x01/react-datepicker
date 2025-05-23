@@ -5,17 +5,17 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class App extends Component {
   state = {
-    startDate: new Date(),
+    selectedDate: new Date(),
   };
 
   render() {
-    const { startDate } = this.state;
-    return <DatePicker selected={startDate} onChange={this.handleChange} />;
+    const { selectedDate } = this.state;
+    return <DatePicker selected={selectedDate} onChange={this.handleChange} />;
   }
 
-  handleChange = (startDate) => {
+  handleChange = (selectedDate) => {
     this.setState({
-      startDate,
+      selectedDate,
     });
   };
 }

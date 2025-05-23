@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = (e) => {
     setIsOpen(!isOpen);
-    setStartDate(e);
+    setSelectedDate(e);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -12,10 +12,10 @@
   return (
     <>
       <button className="example-custom-input" onClick={handleClick}>
-        {format(startDate, "dd-MM-yyyy")}
+        {format(selectedDate, "dd-MM-yyyy")}
       </button>
       {isOpen && (
-        <DatePicker selected={startDate} onChange={handleChange} inline />
+        <DatePicker selected={selectedDate} onChange={handleChange} inline />
       )}
     </>
   );
