@@ -17,7 +17,6 @@
     "property-no-vendor-prefix": null,
     "alpha-value-notation": null,
     "color-function-notation": null,
-    "color-function-alias-notation": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
