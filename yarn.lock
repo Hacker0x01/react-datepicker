@@ -2661,19 +2661,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-docgen/cli@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "@react-docgen/cli@npm:2.0.6"
+"@react-docgen/cli@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@react-docgen/cli@npm:3.0.0"
   dependencies:
     chalk: "npm:5.4.1"
-    commander: "npm:11.1.0"
+    commander: "npm:13.1.0"
     debug: "npm:4.4.0"
     fast-glob: "npm:3.3.3"
-    react-docgen: "npm:7.1.1"
+    react-docgen: "npm:8.0.0"
     slash: "npm:5.1.0"
   bin:
     react-docgen: dist/cli.js
-  checksum: 10c0/9e9907e0a4ed3da3d44d02b408a801976f2566c8bd08bc4f9ba5dad9b474b4b59a4ecb4c3f306580b455ad938053e4fec0e5fbf41b8e233d57e51665b6f2917c
+  checksum: 10c0/576d87c67882d96462c011f493c79af13f263f82306a1ffb30ed64bcd08060ca8ad979d3646693b4881be0c45245d4bc79640ff000bc5c2c8ea22f3a81e5b62d
   languageName: node
   linkType: hard
 
@@ -4572,14 +4572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:11.1.0":
-  version: 11.1.0
-  resolution: "commander@npm:11.1.0"
-  checksum: 10c0/13cc6ac875e48780250f723fb81c1c1178d35c5decb1abb1b628b3177af08a8554e76b2c0f29de72d69eef7c864d12613272a71fabef8047922bc622ab75a179
-  languageName: node
-  linkType: hard
-
-"commander@npm:^13.1.0":
+"commander@npm:13.1.0, commander@npm:^13.1.0":
   version: 13.1.0
   resolution: "commander@npm:13.1.0"
   checksum: 10c0/7b8c5544bba704fbe84b7cab2e043df8586d5c114a4c5b607f83ae5060708940ed0b5bd5838cf8ce27539cde265c1cbd59ce3c8c6b017ed3eec8943e3a415164
@@ -9345,7 +9338,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.26.0"
     "@eslint/js": "npm:^9.19.0"
     "@floating-ui/react": "npm:^0.27.3"
-    "@react-docgen/cli": "npm:^2.0.6"
+    "@react-docgen/cli": "npm:^3.0.0"
     "@rollup/plugin-babel": "npm:^6.0.4"
     "@rollup/plugin-commonjs": "npm:^28.0.2"
     "@rollup/plugin-node-resolve": "npm:^16.0.0"
@@ -9401,9 +9394,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-docgen@npm:7.1.1":
-  version: 7.1.1
-  resolution: "react-docgen@npm:7.1.1"
+"react-docgen@npm:8.0.0":
+  version: 8.0.0
+  resolution: "react-docgen@npm:8.0.0"
   dependencies:
     "@babel/core": "npm:^7.18.9"
     "@babel/traverse": "npm:^7.18.9"
@@ -9415,7 +9408,7 @@ __metadata:
     doctrine: "npm:^3.0.0"
     resolve: "npm:^1.22.1"
     strip-indent: "npm:^4.0.0"
-  checksum: 10c0/961e69487f6acbd9110afbda31f5a0c7fa7ab8b1ebe09fc0138c17efd297fa0b69518df873e937cac108732cd8125433bf939115d23ff99c1c171844140705a7
+  checksum: 10c0/2e3c187bed074895ac3420910129f23b30fe8f7faf984cbf6e210dd3914fa03a910583c5a4c4564edbef7461c37dfd6cd967c3bfc5d83c6f8c02cacedda38014
   languageName: node
   linkType: hard
 
