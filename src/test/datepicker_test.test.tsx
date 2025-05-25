@@ -720,6 +720,15 @@ describe("DatePicker", () => {
     expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
   });
 
+  it("should apply the default outsideClickIgnoreClass when prop is falsy", () => {
+    const { container } = render(
+      <DatePicker outsideClickIgnoreClass={null as any} />,
+    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
+  });
+
   it("should toggle the open status of calendar on click of the icon when toggleCalendarOnIconClick is set to true", () => {
     const { container } = render(
       <DatePicker
