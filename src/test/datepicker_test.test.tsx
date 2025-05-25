@@ -721,7 +721,9 @@ describe("DatePicker", () => {
   });
 
   it("should apply the default outsideClickIgnoreClass when prop is falsy", () => {
-    const { container } = render(<DatePicker outsideClickIgnoreClass={null} />);
+    const { container } = render(
+      <DatePicker outsideClickIgnoreClass={undefined} />,
+    );
     const input = safeQuerySelector<HTMLInputElement>(container, "input");
     fireEvent.focus(input);
     expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
