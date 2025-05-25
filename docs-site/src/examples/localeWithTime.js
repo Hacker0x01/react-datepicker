@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       locale="pt-BR"
       showTimeSelect
       timeFormat="p"

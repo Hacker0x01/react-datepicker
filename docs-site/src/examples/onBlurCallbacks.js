@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const handleOnBlur = ({ target: { value } }) => {
     const date = new Date(value);
     if (isValid(date)) {
@@ -11,8 +11,8 @@
   return (
     <DatePicker
       key="example9"
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       onBlur={handleOnBlur}
       placeholderText="View blur callbacks in console"
     />

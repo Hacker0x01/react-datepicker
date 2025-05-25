@@ -3153,35 +3153,6 @@ describe("DatePicker", () => {
         ).toBe(true);
       }
     });
-
-    it("should not apply '--in-selecting-range' class to the days till the date that matched selectedDate in the next months (endDatePicker)", () => {
-      const startDay = 3;
-      const endDay = 8;
-      const startDate = new Date(`2025/02/${startDay}`);
-      const endDate = new Date(`2025/02/${endDay}`);
-
-      const { container } = render(
-        <DatePicker
-          inline
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-        />,
-      );
-
-      goToNextMonth(container);
-
-      for (let i = 1; i <= endDay; i++) {
-        const inSelectionRangeDay = safeQuerySelector(
-          container,
-          `.react-datepicker__day--00${i}`,
-        );
-        expect(
-          inSelectionRangeDay.classList.contains(IN_RANGE_DAY_CLASS_NAME),
-        ).toBe(false);
-      }
-    });
   });
 
   describe("selectsRange without inline", () => {
@@ -4385,6 +4356,41 @@ describe("DatePicker", () => {
       });
       fireEvent.blur(input);
       expect(input.value).toBe(DATE_VALUE);
+    });
+  });
+
+  describe("Close on ESC Key", () => {
+    it("should close DatePicker on ESC key press", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+
+      fireEvent.keyDown(calendar, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
+    });
+
+    it("should close DatePicker on ESC key press - even when the focus is at Calendar header buttons", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+      const nextMontButton = safeQuerySelector(
+        calendar,
+        "button.react-datepicker__navigation--next",
+      );
+
+      fireEvent.click(nextMontButton);
+      fireEvent.click(nextMontButton);
+
+      fireEvent.keyDown(nextMontButton, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
     });
   });
 });

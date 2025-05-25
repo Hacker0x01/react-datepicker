@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const MyContainer = ({ className, children }) => {
     return (
       <div style={{ padding: "16px", background: "#216ba5", color: "#fff" }}>
@@ -14,8 +14,8 @@
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       calendarContainer={MyContainer}
     />
   );

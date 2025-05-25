@@ -1,7 +1,6 @@
 () => {
   const [startDate, setStartDate] = useState(new Date());
   const monthsShown = useMemo(() => 2, []);
-
   return (
     <DatePicker
       renderCustomHeader={({
