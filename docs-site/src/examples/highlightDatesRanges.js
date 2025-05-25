@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const highlightWithRanges = [
     {
       "react-datepicker__day--highlighted-custom-1": [
@@ -20,8 +20,8 @@
   ];
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       highlightDates={highlightWithRanges}
       placeholderText="This highlight two ranges with custom classes"
     />

@@ -1,5 +1,5 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const years = range(1990, getYear(new Date()) + 1, 1);
   const months = [
     "January",
@@ -65,8 +65,8 @@
           </button>
         </div>
       )}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };

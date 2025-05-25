@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       excludeDates={[
         { date: new Date(), message: "Today is excluded" },
         { date: subDays(new Date(), 1), message: "This day is excluded" },

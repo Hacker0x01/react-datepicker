@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       minDate={subDays(new Date(), 5)}
       placeholderText="Select a date after 5 days ago"
     />

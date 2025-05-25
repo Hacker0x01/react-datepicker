@@ -1,11 +1,11 @@
 () => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 30), 16),
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       timeFormat="HH:mm:ss"
       injectTimes={[

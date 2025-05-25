@@ -1,9 +1,9 @@
 () => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       openToDate={new Date("1993/09/28")}
     />
   );
