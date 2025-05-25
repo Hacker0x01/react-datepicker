@@ -2552,6 +2552,56 @@ describe("Month", () => {
       ).toBeNull();
     });
 
+    it("should not apply the keyboard-selected class when the month is a part of selected date", () => {
+      const selectedDate = newDate("2024-06-03");
+      const keyboardSelectedDate = selectedDate;
+
+      const { container } = render(
+        <Month
+          day={selectedDate}
+          selected={selectedDate}
+          preSelection={keyboardSelectedDate}
+          showMonthYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__month-text--selected",
+      );
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__month-text--keyboard-selected",
+      );
+
+      expect(selected).not.toBeNull();
+      expect(keyboardSelected).toBeNull();
+    });
+
+    it("should not apply the keyboard-selected class when the month is a part of selected dates", () => {
+      const selectedDates = [newDate("2024-06-03")];
+      const keyboardSelectedDate = selectedDates[0];
+      const day = selectedDates[0] as Date;
+
+      const { container } = render(
+        <Month
+          day={day}
+          selectedDates={selectedDates}
+          preSelection={keyboardSelectedDate}
+          selectsMultiple
+          showMonthYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__month-text--selected",
+      );
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__month-text--keyboard-selected",
+      );
+
+      expect(selected).not.toBeNull();
+      expect(keyboardSelected).toBeNull();
+    });
+
     it("should not apply the keyboard-selected class when the quarter is a part of disabled dates", () => {
       const currentSelectedDate = newDate("2023-08-08");
       const maxDate = newDate("2024-08-03");
