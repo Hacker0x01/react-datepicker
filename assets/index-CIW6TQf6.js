@@ -219,27 +219,30 @@ prismjs/prism.js:
    * @public
    *)
 */const G9="data:image/svg+xml,%3csvg%20aria-hidden='true'%20focusable='false'%20data-prefix='far'%20data-icon='edit'%20class='svg-inline--fa%20fa-edit%20fa-w-18'%20role='img'%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20576%20512'%3e%3cpath%20fill='currentColor'%20d='M402.3%20344.9l32-32c5-5%2013.7-1.5%2013.7%205.7V464c0%2026.5-21.5%2048-48%2048H48c-26.5%200-48-21.5-48-48V112c0-26.5%2021.5-48%2048-48h273.5c7.1%200%2010.7%208.6%205.7%2013.7l-32%2032c-1.5%201.5-3.5%202.3-5.7%202.3H48v352h352V350.5c0-2.1.8-4.1%202.3-5.6zm156.6-201.8L296.3%20405.7l-90.4%2010c-26.2%202.9-48.5-19.2-45.6-45.6l10-90.4L432.9%2017.1c22.9-22.9%2059.9-22.9%2082.7%200l43.2%2043.2c22.9%2022.9%2022.9%2060%20.1%2082.8zM460.1%20174L402%20115.9%20216.2%20301.8l-7.3%2065.3%2065.3-7.3L460.1%20174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8%200L436%2082l58.1%2058.1%2030.9-30.9c4-4.2%204-10.8-.1-14.9z'%3e%3c/path%3e%3c/svg%3e";class W9 extends ce.Component{componentDidMount(){Gh("fi",_k),Gh("pt-BR",S8),Gh("en-GB",A8)}render(){const{title:n,description:e,component:a}=this.props.example;return Be.jsxs("div",{id:`example-${Np(n,{lower:!0})}`,className:"example",children:[Be.jsx("h2",{className:"example__heading",children:n}),e&&Be.jsx("p",{children:e}),Be.jsx("div",{className:"row",children:Be.jsxs(_P,{code:a.trim(),scope:{useState:ke.useState,DatePicker:Nw,CalendarContainer:_w,...v5,range:X8,fi:_k,forwardRef:ke.forwardRef},theme:gS.github,children:[Be.jsxs("pre",{className:"example__code",children:[Be.jsx("img",{src:G9,className:"example__code__edit_icon",alt:"edit icon",title:"Edit the code directly on the left side and and see the output on the right"}),Be.jsx(SP,{})]}),Be.jsxs("div",{className:"example__preview",children:[Be.jsx(xP,{}),Be.jsx(MP,{})]})]})})]})}}const Q9=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+    <DatePicker
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
+    />
   );
 };
 `,V9=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       showPopperArrow={false}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
 `,X9=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       timeFormat="HH:mm"
       timeIntervals={15}
@@ -249,11 +252,11 @@ prismjs/prism.js:
   );
 };
 `,Z9=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       showTimeSelectOnly
       timeIntervals={15}
@@ -263,11 +266,11 @@ prismjs/prism.js:
   );
 };
 `,K9=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       showTimeSelectOnly
       timeIntervals={15}
@@ -277,13 +280,13 @@ prismjs/prism.js:
   );
 };
 `,J9=`() => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 30), 16),
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       excludeTimes={[
         setHours(setMinutes(new Date(), 0), 17),
@@ -296,13 +299,13 @@ prismjs/prism.js:
   );
 };
 `,eB=`() => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 30), 16),
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       includeTimes={[
         setHours(setMinutes(new Date(), 0), 17),
@@ -315,13 +318,13 @@ prismjs/prism.js:
   );
 };
 `,tB=`() => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 30), 16),
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       timeFormat="HH:mm:ss"
       injectTimes={[
@@ -334,7 +337,7 @@ prismjs/prism.js:
   );
 };
 `,nB=`() => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 0), 9),
   );
   const filterPassedTime = (time) => {
@@ -345,8 +348,8 @@ prismjs/prism.js:
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       filterTime={filterPassedTime}
       dateFormat="MMMM d, yyyy h:mm aa"
@@ -354,13 +357,13 @@ prismjs/prism.js:
   );
 };
 `,aB=`() => {
-  const [startDate, setStartDate] = useState(
+  const [selectedDateTime, setSelectedDateTime] = useState(
     setHours(setMinutes(new Date(), 30), 17),
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       showTimeSelect
       minTime={setHours(setMinutes(new Date(), 0), 17)}
       maxTime={setHours(setMinutes(new Date(), 30), 20)}
@@ -369,41 +372,41 @@ prismjs/prism.js:
   );
 };
 `,rB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       dateFormat="yyyy/MM/dd"
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
 `,sB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       className="red-border"
     />
   );
 };
 `,iB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       calendarClassName="rasta-stripes"
     />
   );
 };
 `,oB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dayClassName={(date) =>
         getDate(date) < Math.random() * 31 ? "random" : undefined
       }
@@ -411,7 +414,7 @@ prismjs/prism.js:
   );
 };
 `,lB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
 
   let handleColor = (time) => {
     return time.getHours() > 12 ? "text-success" : "text-error";
@@ -420,29 +423,29 @@ prismjs/prism.js:
   return (
     <DatePicker
       showTimeSelect
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       timeClassName={handleColor}
     />
   );
 };
 `,cB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       todayButton="Vandaag"
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
 `,uB=`<DatePicker placeholderText="Click to select a date" />;
 `,fB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       minDate={new Date()}
       maxDate={addDays(new Date(), 5)}
       placeholderText="Select a date between today and 5 days in the future"
@@ -450,22 +453,22 @@ prismjs/prism.js:
   );
 };
 `,dB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       minDate={subDays(new Date(), 5)}
       placeholderText="Select a date after 5 days ago"
     />
   );
 };
 `,hB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       maxDate={addDays(new Date(), 5)}
       placeholderText="Select a date before 5 days in the future"
     />
@@ -494,22 +497,22 @@ prismjs/prism.js:
   );
 };
 `,mB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       locale="en-GB"
       placeholderText="Weeks start on Monday"
     />
   );
 };
 `,gB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date) => setSelectedDateTime(date)}
       locale="pt-BR"
       showTimeSelect
       timeFormat="p"
@@ -519,32 +522,32 @@ prismjs/prism.js:
   );
 };
 `,yB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       locale={fi}
     />
   );
 };
 `,bB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       excludeDates={[new Date(), subDays(new Date(), 1)]}
       placeholderText="Select a date other than today or yesterday"
     />
   );
 };
 `,vB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       excludeDates={[
         { date: new Date(), message: "Today is excluded" },
         { date: subDays(new Date(), 1), message: "This day is excluded" },
@@ -554,11 +557,11 @@ prismjs/prism.js:
   );
 };
 `,kB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       excludeDateIntervals={[
         { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
       ]}
@@ -567,11 +570,11 @@ prismjs/prism.js:
   );
 };
 `,wB=`() => {
-  const [startDate, setStartDate] = useState(new Date("2024-08-01"));
+  const [selectedDate, setSelectedDate] = useState(new Date("2024-08-01"));
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       excludeDates={[new Date("2024-05-01"), new Date("2024-06-01")]}
       showMonthYearPicker
@@ -609,22 +612,22 @@ prismjs/prism.js:
   );
 };
 `,_B=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       highlightDates={[subDays(new Date(), 7), addDays(new Date(), 7)]}
       placeholderText="This highlights a week ago and a week from today"
     />
   );
 };
 `,SB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       holidays={[
         { date: "2023-08-15", holidayName: "India's Independence Day" },
         { date: "2023-12-31", holidayName: "New Year's Eve" },
@@ -638,7 +641,7 @@ prismjs/prism.js:
   );
 };
 `,xB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const highlightWithRanges = [
     {
       "react-datepicker__day--highlighted-custom-1": [
@@ -659,30 +662,30 @@ prismjs/prism.js:
   ];
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       highlightDates={highlightWithRanges}
       placeholderText="This highlight two ranges with custom classes"
     />
   );
 };
 `,EB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       includeDates={[new Date(), addDays(new Date(), 1)]}
       placeholderText="This only includes today and tomorrow"
     />
   );
 };
 `,TB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       includeDateIntervals={[
         { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
       ]}
@@ -691,11 +694,11 @@ prismjs/prism.js:
   );
 };
 `,MB=`() => {
-  const [startDate, setStartDate] = useState(1661990400000);
+  const [selectedDate, setSelectedDate] = useState(1661990400000);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       includeDates={[
         1661990400000, 1664582400000, 1667260800000, 1672531200000,
@@ -705,15 +708,15 @@ prismjs/prism.js:
   );
 };
 `,AB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const isWeekday = (date) => {
     const day = getDay(date);
     return day !== 0 && day !== 6;
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       filterDate={isWeekday}
       placeholderText="Select a weekday"
     />
@@ -773,51 +776,51 @@ prismjs/prism.js:
   );
 };
 `,RB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       disabled
       placeholderText="This is disabled"
     />
   );
 };
 `,IB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       disabledKeyboardNavigation
       placeholderText="This has disabled keyboard navigation"
     />
   );
 };
 `,PB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       placeholderText="This is readOnly"
       readOnly
     />
   );
 };
 `,LB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       isClearable
       placeholderText="I have been cleared!"
     />
   );
 };
 `,FB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const handleOnBlur = ({ target: { value } }) => {
     const date = new Date(value);
     if (isValid(date)) {
@@ -829,19 +832,19 @@ prismjs/prism.js:
   return (
     <DatePicker
       key="example9"
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       onBlur={handleOnBlur}
       placeholderText="View blur callbacks in console"
     />
   );
 };
 `,BB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       popperClassName="some-custom-class"
       popperPlacement="top-end"
       popperModifiers={[
@@ -857,52 +860,52 @@ prismjs/prism.js:
   );
 };
 `,YB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       withPortal
     />
   );
 };
 `,jB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       portalId="root-portal"
     />
   );
 };
 `,$B=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       withPortal
       portalId="root-portal"
     />
   );
 };
 `,HB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       tabIndex={1}
     />
   );
 };
 `,qB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showYearDropdown
       dateFormatCalendar="MMMM"
       yearDropdownItemNumber={15}
@@ -911,11 +914,11 @@ prismjs/prism.js:
   );
 };
 `,UB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showYearPicker
       dateFormat="yyyy"
       yearItemNumber={9}
@@ -923,32 +926,32 @@ prismjs/prism.js:
   );
 };
 `,zB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showMonthDropdown
     />
   );
 };
 `,GB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showMonthDropdown
       useShortMonthInDropdown
     />
   );
 };
 `,WB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormatCalendar={"MMM yyyy"}
       minDate={subMonths(new Date(), 6)}
       maxDate={addMonths(new Date(), 6)}
@@ -957,11 +960,11 @@ prismjs/prism.js:
   );
 };
 `,QB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       peekNextMonth
       showMonthDropdown
       showYearDropdown
@@ -970,21 +973,21 @@ prismjs/prism.js:
   );
 };
 `,VB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       inline
     />
   );
 };
 `,XB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = (e) => {
     setIsOpen(!isOpen);
-    setStartDate(e);
+    setSelectedDate(e);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -993,47 +996,47 @@ prismjs/prism.js:
   return (
     <>
       <button className="example-custom-input" onClick={handleClick}>
-        {format(startDate, "dd-MM-yyyy")}
+        {format(selectedDate, "dd-MM-yyyy")}
       </button>
       {isOpen && (
-        <DatePicker selected={startDate} onChange={handleChange} inline />
+        <DatePicker selected={selectedDate} onChange={handleChange} inline />
       )}
     </>
   );
 };
 `,ZB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       openToDate={new Date("1993/09/28")}
     />
   );
 };
 `,KB=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       fixedHeight
     />
   );
 };
 `,JB=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       locale="en-GB"
       showWeekNumbers
     />
   );
 };
 `,eY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }, ref) => (
       <button className={className} onClick={onClick} ref={ref}>
@@ -1043,65 +1046,68 @@ prismjs/prism.js:
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       customInput={<ExampleCustomInput className="example-custom-input" />}
     />
   );
 };
 `,tY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
     />
   );
 };
 `,nY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
+      selected={selectedDate}
       showPreviousMonths
-      onChange={(date) => setStartDate(date)}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
     />
   );
 };
 `,aY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
       showYearDropdown
     />
   );
 };
 `,rY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
       inline
     />
   );
 };
 `,sY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
-    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}>
+    <DatePicker
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
+    >
       <div style={{ color: "red" }}>Don't forget to check the weather!</div>
     </DatePicker>
   );
 };
 `,iY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const MyContainer = ({ className, children }) => {
     return (
       <div style={{ padding: "16px", background: "#216ba5", color: "#fff" }}>
@@ -1116,40 +1122,40 @@ prismjs/prism.js:
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       calendarContainer={MyContainer}
     />
   );
 };
 `,oY=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const handleChangeRaw = (value) => {
     if (value === "tomorrow") {
-      setStartDate(addDays(new Date(), 1));
+      setSelectedDate(addDays(new Date(), 1));
     }
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       placeholderText='Enter "tomorrow"'
       onChangeRaw={(event) => handleChangeRaw(event.target.value)}
     />
   );
 };
 `,lY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       shouldCloseOnSelect={false}
     />
   );
 };
 `,cY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const years = range(1990, getYear(new Date()) + 1, 1);
   const months = [
     "January",
@@ -1215,13 +1221,13 @@ prismjs/prism.js:
           </button>
         </div>
       )}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
 `,uY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       renderCustomHeader={({
@@ -1271,22 +1277,22 @@ prismjs/prism.js:
           </button>
         </div>
       )}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       monthsShown={2}
     />
   );
 };
 `,fY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const renderDayContents = (day, date) => {
     const tooltipText = \`Tooltip for date: \${date}\`;
     return <span title={tooltipText}>{getDate(date)}</span>;
   };
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       renderDayContents={renderDayContents}
     />
   );
@@ -1336,11 +1342,11 @@ prismjs/prism.js:
   );
 };
 `,mY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       timeInputLabel="Time:"
       dateFormat="MM/dd/yyyy h:mm aa"
       showTimeInput
@@ -1348,32 +1354,32 @@ prismjs/prism.js:
   );
 };
 `,gY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       strictParsing
     />
   );
 };
 `,yY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       showMonthYearPicker
     />
   );
 };
 `,bY=`() => {
-  const [startDate, setStartDate] = useState(new Date("2021/02/22"));
+  const [selectedDate, setSelectedDate] = useState(new Date("2021/02/22"));
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="I/R"
       locale="en-GB"
       showWeekNumbers
@@ -1382,11 +1388,11 @@ prismjs/prism.js:
   );
 };
 `,vY=`() => {
-  const [startDate, setStartDate] = useState(new Date("2021/02/22"));
+  const [selectedDate, setSelectedDate] = useState(new Date("2021/02/22"));
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="I/R"
       locale="en-GB"
       excludeDateIntervals={[
@@ -1399,11 +1405,11 @@ prismjs/prism.js:
   );
 };
 `,kY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       showMonthYearPicker
       showFullMonthYearPicker
@@ -1411,11 +1417,11 @@ prismjs/prism.js:
   );
 };
 `,wY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       showMonthYearPicker
       showFullMonthYearPicker
@@ -1424,11 +1430,11 @@ prismjs/prism.js:
   );
 };
 `,DY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       showMonthYearPicker
       showFullMonthYearPicker
@@ -1484,11 +1490,11 @@ prismjs/prism.js:
   );
 };
 `,xY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       dateFormat="yyyy, QQQ"
       showQuarterYearPicker
     />
@@ -1542,11 +1548,11 @@ prismjs/prism.js:
   );
 };
 `,MY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showYearPicker
       dateFormat="yyyy"
     />
@@ -1600,22 +1606,22 @@ prismjs/prism.js:
   );
 };
 `,OY=`() => {
-  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleCalendarClose = () => console.log("Calendar closed");
   const handleCalendarOpen = () => console.log("Calendar opened");
 
   return (
     <DatePicker
-      selected={date}
-      onChange={(date) => setDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       onCalendarClose={handleCalendarClose}
       onCalendarOpen={handleCalendarOpen}
     />
   );
 };
 `,NY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const ExampleCustomTimeInput = ({ value, onChange }) => (
     <input
       value={value}
@@ -1626,30 +1632,30 @@ prismjs/prism.js:
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       showTimeInput
       customTimeInput={<ExampleCustomTimeInput />}
     />
   );
 };
 `,RY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       closeOnScroll={true}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
 `,IY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       closeOnScroll={(e) => e.target === document}
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
@@ -1694,23 +1700,23 @@ prismjs/prism.js:
   );
 };
 `,FY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       calendarStartDay={3}
     />
   );
 };
 `,BY=`() => {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   return (
     <>
       <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
         required
         form="external-form"
       />
@@ -1721,12 +1727,12 @@ prismjs/prism.js:
   );
 };
 `,YY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
     />
   );
 };
@@ -1763,23 +1769,23 @@ prismjs/prism.js:
   );
 };
 `,HY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       icon="fa fa-calendar"
     />
   );
 };
 `,qY=`() => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <DatePicker
       showIcon
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date) => setSelectedDate(date)}
       icon={
         <svg
           xmlns="http://www.w3.org/2000/svg"
