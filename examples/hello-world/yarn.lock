@@ -7131,7 +7131,7 @@ __metadata:
   resolution: "hello-world@workspace:."
   dependencies:
     react: "npm:^19.1.0"
-    react-datepicker: "npm:^8.3.0"
+    react-datepicker: "npm:^8.4.0"
     react-dom: "npm:^19.1.0"
     react-scripts: "npm:5.0.1"
   languageName: unknown
@@ -10857,9 +10857,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datepicker@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "react-datepicker@npm:8.3.0"
+"react-datepicker@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "react-datepicker@npm:8.4.0"
   dependencies:
     "@floating-ui/react": "npm:^0.27.3"
     clsx: "npm:^2.1.1"
@@ -10867,7 +10867,7 @@ __metadata:
   peerDependencies:
     react: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
     react-dom: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
-  checksum: 10c0/34a9dcc298c6a2b0ba9482e0e4d5e5834c261ed362c595063e544a7a33c4291d2a1fc59d7b84cf2e839530956744497703c250fc8319f196368c9427847c145b
+  checksum: 10c0/e96ba4f2b54476f66bfa33aa0c21729095c83d293671b07a9ddd96ab48dad85b6530acc5ca016e83ef8907feeebfefb7133bf7a02dc550175c48c5d9f66d70ac
   languageName: node
   linkType: hard
 
