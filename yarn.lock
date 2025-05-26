@@ -585,13 +585,13 @@ __metadata:
   linkType: hard
 
 "@babel/plugin-external-helpers@npm:^7.25.9":
-  version: 7.25.9
-  resolution: "@babel/plugin-external-helpers@npm:7.25.9"
+  version: 7.27.1
+  resolution: "@babel/plugin-external-helpers@npm:7.27.1"
   dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.25.9"
+    "@babel/helper-plugin-utils": "npm:^7.27.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/014056bde9242e8152fab567005dd9d9d184176dab2577db6a4210a82e33274761e2e16f3f84fb8ed1bd5b362069e2e78700521dfe81098ae14aeda31c7439ba
+  checksum: 10c0/e4373b71acadc227b4fbcfad43b499cd0ca26d92995a3131acf8d714a3c0b54919ee4027c0ca2ff4557e74dc6771d9e0f11df5814e9397a81739096e0d02630b
   languageName: node
   linkType: hard
 
