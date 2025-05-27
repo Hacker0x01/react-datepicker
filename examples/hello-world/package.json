@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^19.1.0",
-    "react-datepicker": "^8.3.0",
+    "react-datepicker": "^8.4.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1"
   },
