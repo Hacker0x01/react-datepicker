@@ -403,6 +403,25 @@ describe("Calendar", () => {
     expect(nextButtonAriaLabel).toBe(nextButtonAriaLabel);
   });
 
+  it("should render by default aria labels for next and prev months buttons when providing a react node", () => {
+    const previousMonthButtonLabel = <span>Custom react previous month</span>;
+    const nextMonthButtonLabel = <span>Custom react next month</span>;
+    const { calendar } = getCalendar({
+      previousMonthButtonLabel,
+      nextMonthButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--previous")
+      ?.getAttribute("aria-label");
+    const nextButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--next")
+      ?.getAttribute("aria-label");
+
+    expect(previousButtonAriaLabel).toBe("Previous Month");
+    expect(nextButtonAriaLabel).toBe("Next Month");
+  });
+
   it("should render the correct default aria labels for next and prev year buttons", () => {
     const { calendar } = getCalendar({ showYearPicker: true });
     const previousButtonAriaLabel = calendar
@@ -456,6 +475,26 @@ describe("Calendar", () => {
 
     expect(previousButtonAriaLabel).toBe(previousYearAriaLabel);
     expect(nextButtonAriaLabel).toBe(nextYearAriaLabel);
+  });
+
+  it("should render by default aria labels for next and prev year buttons when providing a react node", () => {
+    const previousYearButtonLabel = <span>Custom react previous year</span>;
+    const nextYearButtonLabel = <span>Custom react next year</span>;
+    const { calendar } = getCalendar({
+      showYearPicker: true,
+      previousYearButtonLabel,
+      nextYearButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--previous")
+      ?.getAttribute("aria-label");
+    const nextButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--next")
+      ?.getAttribute("aria-label");
+
+    expect(previousButtonAriaLabel).toBe("Previous Year");
+    expect(nextButtonAriaLabel).toBe("Next Year");
   });
 
   it("should not have previous month button when selecting a date in the second month, when min date is specified", () => {

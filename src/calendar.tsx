@@ -163,11 +163,11 @@ type CalendarProps = React.PropsWithChildren<
       onClickOutside: ClickOutsideHandler;
       outsideClickIgnoreClass?: string;
       previousMonthButtonLabel?: React.ReactNode;
-      previousYearButtonLabel?: string;
+      previousYearButtonLabel?: React.ReactNode;
       previousMonthAriaLabel?: string;
       previousYearAriaLabel?: string;
       nextMonthButtonLabel?: React.ReactNode;
-      nextYearButtonLabel?: string;
+      nextYearButtonLabel?: React.ReactNode;
       nextMonthAriaLabel?: string;
       nextYearAriaLabel?: string;
       showPreviousMonths?: boolean;
