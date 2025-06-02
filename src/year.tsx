@@ -218,26 +218,38 @@ export default class Year extends Component<YearProps> {
 
   isKeyboardSelected = (y: number) => {
     if (
+      this.props.disabledKeyboardNavigation ||
       this.props.date === undefined ||
-      this.props.selected == null ||
       this.props.preSelection == null
     ) {
       return;
     }
 
-    const { minDate, maxDate, excludeDates, includeDates, filterDate } =
-      this.props;
+    const {
+      minDate,
+      maxDate,
+      excludeDates,
+      includeDates,
+      filterDate,
+      selected,
+    } = this.props;
 
     const date = getStartOfYear(setYear(this.props.date, y));
     const isDisabled =
       (minDate || maxDate || excludeDates || includeDates || filterDate) &&
       isYearDisabled(y, this.props);
 
+    const isSelectedDay =
+      !!selected && isSameDay(date, getStartOfYear(selected));
+    const isKeyboardSelectedDay = isSameDay(
+      date,
+      getStartOfYear(this.props.preSelection),
+    );
+
     return (
-      !this.props.disabledKeyboardNavigation &&
       !this.props.inline &&
-      !isSameDay(date, getStartOfYear(this.props.selected)) &&
-      isSameDay(date, getStartOfYear(this.props.preSelection)) &&
+      !isSelectedDay &&
+      isKeyboardSelectedDay &&
       !isDisabled
     );
   };

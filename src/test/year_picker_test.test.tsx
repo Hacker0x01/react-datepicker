@@ -617,6 +617,23 @@ describe("YearPicker", () => {
   describe("keyboard-selected", () => {
     const className = "react-datepicker__year-text--keyboard-selected";
 
+    it("should set the key-selected class automatically to the current year when there is no selected date passed", () => {
+      const { container } = render(
+        <DatePicker showYearPicker dateFormat="yyyy" />,
+      );
+
+      const dateInput = safeQuerySelector(container, "input");
+      fireEvent.focus(dateInput);
+
+      const selectedYear = container.querySelector(
+        ".react-datepicker__year-text--keyboard-selected",
+      );
+      expect(selectedYear).toBeDefined();
+
+      const currentYear = new Date().getFullYear();
+      expect(selectedYear?.textContent).toBe(`${currentYear}`);
+    });
+
     it("should set the date to the selected year of the previous period when previous button clicked", () => {
       let date: Date | null;
       const expectedDate = getStartOfYear(setYear(newDate(), 2008));
