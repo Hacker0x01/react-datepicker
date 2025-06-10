@@ -22,15 +22,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
-    "@types/react": "^19.1.5",
-    "@types/react-dom": "^19.1.5",
-    "@vitejs/plugin-react": "^4.5.0",
-    "eslint": "^9.27.0",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "eslint": "^9.28.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
-    "sass": "^1.89.0",
+    "sass": "^1.89.2",
     "vite": "^6.3.5"
   },
   "packageManager": "yarn@4.6.0"
