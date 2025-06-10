@@ -550,6 +550,7 @@ describe("Calendar", () => {
     const renderCustomHeader = (params: ReactDatePickerCustomHeaderProps) => {
       const {
         date,
+        visibleYearsRange,
         changeYear,
         changeMonth,
         decreaseMonth,
@@ -560,6 +561,11 @@ describe("Calendar", () => {
 
       return (
         <div className="custom-header">
+          {visibleYearsRange && (
+            <h6 className="visible-years-range">
+              {visibleYearsRange.startYear} to {visibleYearsRange.endYear}
+            </h6>
+          )}
           <button
             className="prevMonth"
             onClick={decreaseMonth}
@@ -692,6 +698,31 @@ describe("Calendar", () => {
       expect(
         calendar.querySelectorAll(".react-datepicker__day-names"),
       ).toHaveLength(1);
+    });
+
+    it("should render custom header with visible year range for YearPicker", () => {
+      const { calendar } = getCalendar({
+        renderCustomHeader,
+        showYearPicker: true,
+      });
+
+      expect(
+        calendar.querySelector(
+          ".react-datepicker__header--custom .visible-years-range",
+        ),
+      ).not.toBeNull();
+    });
+
+    it("should not render visible year range for non-YearPicker views", () => {
+      const { calendar } = getCalendar({
+        renderCustomHeader,
+      });
+
+      expect(
+        calendar.querySelector(
+          ".react-datepicker__header--custom .visible-years-range",
+        ),
+      ).toBeNull();
     });
 
     it("should not render day names with renderCustomHeader & showMonthYearPicker", () => {
