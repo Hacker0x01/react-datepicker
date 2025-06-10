@@ -101,6 +101,10 @@ export interface ReactDatePickerCustomHeaderProps {
   nextMonthButtonDisabled: boolean;
   prevYearButtonDisabled: boolean;
   nextYearButtonDisabled: boolean;
+  visibleYearsRange?: {
+    startYear: number;
+    endYear: number;
+  };
 }
 
 type CalendarProps = React.PropsWithChildren<
@@ -860,6 +864,20 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       return null;
     }
 
+    const { showYearPicker, yearItemNumber } = this.props;
+
+    let visibleYearsRange;
+    if (showYearPicker) {
+      const { startPeriod: startYear, endPeriod: endYear } = getYearsPeriod(
+        monthDate,
+        yearItemNumber,
+      );
+      visibleYearsRange = {
+        startYear,
+        endYear,
+      };
+    }
+
     const prevMonthButtonDisabled = monthDisabledBefore(
       this.state.date,
       this.props,
@@ -892,6 +910,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       >
         {this.props.renderCustomHeader?.({
           ...this.state,
+          ...(showYearPicker && { visibleYearsRange }),
           customHeaderCount: i,
           monthDate,
           changeMonth: this.changeMonth,
