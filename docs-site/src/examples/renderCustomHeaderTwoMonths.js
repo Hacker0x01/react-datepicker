@@ -1,5 +1,3 @@
-import { useState, useMemo } from "react";
-
 () => {
   const [startDate, setStartDate] = useState(new Date());
   const monthsShown = useMemo(() => 2, []);
