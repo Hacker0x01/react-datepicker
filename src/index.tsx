@@ -553,10 +553,19 @@ export default class DatePicker extends Component<
     this.cancelFocusInput();
   };
 
+  resetInputValue = () => {
+    this.setState({
+      ...this.state,
+      inputValue: null,
+    });
+  };
+
   handleBlur = (event: React.FocusEvent<HTMLElement>) => {
     if (!this.state.open || this.props.withPortal || this.props.showTimeInput) {
       this.props.onBlur?.(event);
     }
+
+    this.resetInputValue();
 
     if (this.state.open && this.props.open === false) {
       this.setOpen(false);
