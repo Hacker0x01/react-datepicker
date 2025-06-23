@@ -4320,17 +4320,23 @@ describe("DatePicker", () => {
   });
 
   describe("input reset", () => {
-    const renderDatePickerInput = () => {
-      const WrapperComponent = () => {
+    const renderDatePickerInput = (open: boolean | null = null) => {
+      const WrapperComponent = ({ open }: { open: boolean | null }) => {
         const [date, setDate] = useState<Date | null>(new Date());
-        return <DatePicker open={false} selected={date} onChange={setDate} />;
+        return (
+          <DatePicker
+            {...(open !== null && { open })}
+            selected={date}
+            onChange={setDate}
+          />
+        );
       };
 
-      return render(<WrapperComponent />);
+      return render(<WrapperComponent open={open} />);
     };
 
     it("should reset the date input element with the previously entered value element on blur even when the calendar open is false", () => {
-      const { container } = renderDatePickerInput();
+      const { container } = renderDatePickerInput(false);
       const input = safeQuerySelector(container, "input") as HTMLInputElement;
 
       if (!input) {
@@ -4356,6 +4362,36 @@ describe("DatePicker", () => {
       });
       fireEvent.blur(input);
       expect(input.value).toBe(DATE_VALUE);
+    });
+
+    it("should reset the date input element with the previously entered value on blur even when the calendar is not open", () => {
+      const { container } = renderDatePickerInput();
+      const input = safeQuerySelector(container, "input") as HTMLInputElement;
+
+      fireEvent.click(input);
+
+      const VALID_DATE_VALUE = "06/23/2025";
+      fireEvent.change(input, {
+        target: {
+          value: VALID_DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(VALID_DATE_VALUE);
+
+      fireEvent.click(input);
+      fireEvent.keyDown(input, getKey(KeyType.Escape));
+      // Make sure the calendar is hidden
+      expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+      const INVALID_DATE_VALUE = "2025-02-45";
+      fireEvent.change(input, {
+        target: {
+          value: INVALID_DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(VALID_DATE_VALUE);
     });
   });
 
