@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import React, { Component, cloneElement } from "react";
 
-import Calendar from "./calendar";
+import Calendar, { OUTSIDE_CLICK_IGNORE_CLASS } from "./calendar";
 import CalendarIcon from "./calendar_icon";
 import {
   newDate,
@@ -61,8 +61,6 @@ export { default as CalendarContainer } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
 
-const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
-
 export { ReactDatePickerCustomHeaderProps } from "./calendar";
 
 // Compares dates year+month combinations
@@ -112,7 +110,6 @@ export type DatePickerProps = OmitUnion<
   | "highlightDates"
   | "holidays"
   | "shouldFocusDayInline"
-  | "outsideClickIgnoreClass"
   | "monthSelectedIn"
   | "onDropdownFocus"
   | "onTimeChange"
@@ -266,6 +263,7 @@ export default class DatePicker extends Component<
       dropdownMode: "scroll" as const,
       preventOpenOnFocus: false,
       monthsShown: 1,
+      outsideClickIgnoreClass: OUTSIDE_CLICK_IGNORE_CLASS,
       readOnly: false,
       withPortal: false,
       selectsDisabledDaysInRange: false,
@@ -1245,7 +1243,7 @@ export default class DatePicker extends Component<
         onSelect={this.handleSelect}
         onClickOutside={this.handleCalendarClickOutside}
         holidays={getHolidaysMap(this.modifyHolidays())}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
+        outsideClickIgnoreClass={this.props.outsideClickIgnoreClass}
         onDropdownFocus={this.handleDropdownFocus}
         onTimeChange={this.handleTimeChange}
         className={this.props.calendarClassName}
@@ -1334,7 +1332,8 @@ export default class DatePicker extends Component<
 
   renderDateInput = () => {
     const className = clsx(this.props.className, {
-      [outsideClickIgnoreClass]: this.state.open,
+      [this.props.outsideClickIgnoreClass ||
+      DatePicker.defaultProps.outsideClickIgnoreClass]: this.state.open,
     });
 
     const customInput = this.props.customInput || <input type="text" />;

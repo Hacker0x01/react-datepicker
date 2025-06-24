@@ -80,6 +80,9 @@ const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__month-year-select",
 ];
 
+export const OUTSIDE_CLICK_IGNORE_CLASS =
+  "react-datepicker-ignore-onclickoutside";
+
 const isDropdownSelect = (element: HTMLDivElement) => {
   const classNames = (element.className || "").split(/\s+/);
   return DROPDOWN_FOCUS_CLASSNAMES.some(
@@ -225,6 +228,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     return {
       monthsShown: 1,
       forceShowMonthNavigation: false,
+      outsideClickIgnoreClass: OUTSIDE_CLICK_IGNORE_CLASS,
       timeCaption: "Time",
       previousYearButtonLabel: "Previous Year",
       nextYearButtonLabel: "Next Year",
