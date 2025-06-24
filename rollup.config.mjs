@@ -41,6 +41,7 @@ const migrateRollup2to3OutputOptions = {
 /** @type {import('rollup').RollupOptions} */
 const config = {
   input: "src/index.tsx",
+  sourcemap: true,
   output: [
     {
       file: pkg.unpkg,
@@ -50,11 +51,12 @@ const config = {
       banner,
       ...migrateRollup2to3OutputOptions,
       plugins: [terser()],
+      sourcemap: true,
     },
     {
       file: pkg.unpkg.replace(".min.js", ".js"),
       format: "umd",
-      sourcemap: "inline",
+      sourcemap: true,
       name: "DatePicker",
       globals,
       banner,
@@ -63,7 +65,7 @@ const config = {
     {
       file: pkg.main,
       format: "cjs",
-      sourcemap: "inline",
+      sourcemap: true,
       name: "DatePicker",
       banner,
       ...migrateRollup2to3OutputOptions,
@@ -71,7 +73,7 @@ const config = {
     {
       file: pkg.module,
       format: "es",
-      sourcemap: "inline",
+      sourcemap: true,
       banner,
       ...migrateRollup2to3OutputOptions,
     },
