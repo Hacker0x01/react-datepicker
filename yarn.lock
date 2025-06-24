@@ -112,8 +112,8 @@ __metadata:
   linkType: hard
 
 "@babel/eslint-parser@npm:^7.26.5":
-  version: 7.27.1
-  resolution: "@babel/eslint-parser@npm:7.27.1"
+  version: 7.27.5
+  resolution: "@babel/eslint-parser@npm:7.27.5"
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals": "npm:5.1.1-v1"
     eslint-visitor-keys: "npm:^2.1.0"
@@ -121,7 +121,7 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.11.0
     eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/dedb2bc7ef00307eaf8e40d5ec7f1e8ae4649838fa2e7ec5e1b47eaf9bd8708949503b05175de922e2431ce69a5f3b5fab1c1202003b1d9457d3c0b2c3bdc4ec
+  checksum: 10c0/c1159946c0b41687945adbc7457f9c0895e0a439d59eb7020f03f08fb471ebf67ca9c6a799f667f869c93a846c627d709ec9da4b51afccd52be51f97ec26ddf0
   languageName: node
   linkType: hard
 
