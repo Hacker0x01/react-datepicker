@@ -29,7 +29,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.2.0",
+    "globals": "^16.3.0",
     "sass": "^1.89.2",
     "vite": "^6.3.5"
   },
