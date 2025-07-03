@@ -192,6 +192,28 @@ describe("MonthDropdown", () => {
       dropdownDateFormat = getMonthDropdown({ locale: "ru" });
       expect(dropdownDateFormat.textContent).toContain("декабрь");
     });
+
+    it("calls the supplied onChange function when a month is selected using arrows and enter key", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+      
+      const monthOption = monthOptions[3]!;
+      fireEvent.keyDown(monthOption, { key: "ArrowDown" });
+
+      const nextMonthOption = monthOptions[4];
+      expect(document.activeElement).toEqual(nextMonthOption);
+
+      fireEvent.keyDown(document.activeElement!, { key: "Enter" });
+      expect(handleChangeResult).toEqual(4);
+    })
   });
 
   describe("select mode", () => {

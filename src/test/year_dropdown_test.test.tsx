@@ -116,6 +116,28 @@ describe("YearDropdown", () => {
       fireEvent.click(yearOption);
       expect(lastOnChangeValue).toEqual(2014);
     });
+
+    it("calls the supplied onChange function when a year is selected using arrows and enter key", () => {
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
+      );
+      fireEvent.click(yearReadView);
+      const minYearOptionsLen = 7;
+      const yearOptions = safeQuerySelectorAll(
+        yearDropdown,
+        ".react-datepicker__year-option",
+        minYearOptionsLen,
+      );
+      const yearOption = yearOptions[6]!;
+      fireEvent.keyDown(yearOption, { key: "ArrowUp" });
+            
+      const previousYearOption = yearOptions[5]!;
+      expect(document.activeElement).toBe(previousYearOption);
+      
+      fireEvent.keyDown(document.activeElement!, { key: "Enter" });
+      expect(lastOnChangeValue).toEqual(2016);
+    });
   });
 
   describe("select mode", () => {
