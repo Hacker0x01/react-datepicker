@@ -12,7 +12,7 @@ interface YearDropdownProps
   dropdownMode: "scroll" | "select";
   onChange: (year: number) => void;
   date: Date;
-  onSelect?: (date: Date, event?: React.MouseEvent<HTMLDivElement>) => void;
+  onSelect?: (date: Date, event?: React.MouseEvent<HTMLButtonElement>) => void;
   setOpen?: (open: boolean) => void;
 }
 
@@ -62,19 +62,18 @@ export default class YearDropdown extends Component<
   );
 
   renderReadView = (visible: boolean): React.ReactElement => (
-    <div
+    <button
       key="read"
+      type="button"
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
-      onClick={(event: React.MouseEvent<HTMLDivElement>): void =>
-        this.toggleDropdown(event)
-      }
+      onClick={this.toggleDropdown}
     >
       <span className="react-datepicker__year-read-view--down-arrow" />
       <span className="react-datepicker__year-read-view--selected-year">
         {this.props.year}
       </span>
-    </div>
+    </button>
   );
 
   renderDropdown = (): React.ReactElement => (
@@ -101,7 +100,7 @@ export default class YearDropdown extends Component<
     this.props.onChange(year);
   };
 
-  toggleDropdown = (event?: React.MouseEvent<HTMLDivElement>): void => {
+  toggleDropdown = (event?: React.MouseEvent<HTMLButtonElement>): void => {
     this.setState(
       {
         dropdownVisible: !this.state.dropdownVisible,
@@ -116,13 +115,13 @@ export default class YearDropdown extends Component<
 
   handleYearChange = (
     date: Date,
-    event?: React.MouseEvent<HTMLDivElement>,
+    event?: React.MouseEvent<HTMLButtonElement>,
   ): void => {
     this.onSelect?.(date, event);
     this.setOpen();
   };
 
-  onSelect = (date: Date, event?: React.MouseEvent<HTMLDivElement>): void => {
+  onSelect = (date: Date, event?: React.MouseEvent<HTMLButtonElement>): void => {
     this.props.onSelect?.(date, event);
   };
 

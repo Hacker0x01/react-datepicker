@@ -56,8 +56,9 @@ export default class MonthDropdown extends Component<
     visible: boolean,
     monthNames: string[],
   ): React.ReactElement => (
-    <div
+    <button
       key="read"
+      type="button"      
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__month-read-view"
       onClick={this.toggleDropdown}
@@ -66,7 +67,7 @@ export default class MonthDropdown extends Component<
       <span className="react-datepicker__month-read-view--selected-month">
         {monthNames[this.props.month]}
       </span>
-    </div>
+    </button>
   );
 
   renderDropdown = (monthNames: string[]): React.ReactElement => (

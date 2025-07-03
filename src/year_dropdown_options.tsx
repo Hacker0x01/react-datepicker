@@ -88,11 +88,40 @@ export default class YearDropdownOptions extends Component<
   }
 
   dropdownRef: React.RefObject<HTMLDivElement | null>;
+  yearOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
+
+  handleOptionKeyDown = (year: number, e: React.KeyboardEvent): void => {
+    switch (e.key) {
+      case "Enter":
+        e.preventDefault();
+        this.onChange(year);
+        break;
+      case "Escape":
+        e.preventDefault();
+        this.props.onCancel();
+        break;
+      case "ArrowUp":
+      case "ArrowDown": {
+        e.preventDefault();
+        const newYear = year + (e.key === "ArrowUp" ? 1 : -1);
+        this.yearOptionButtonsRef[newYear]?.focus();
+        break;
+      }
+    }
+  };
 
   renderOptions = (): React.ReactElement[] => {
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
       <div
+        ref={(el) => {
+          this.yearOptionButtonsRef[year] = el;
+          if (year === selectedYear) {
+            el?.focus();
+          }
+        }}
+        role="button"
+        tabIndex={0}
         className={
           selectedYear === year
             ? "react-datepicker__year-option react-datepicker__year-option--selected_year"
@@ -100,6 +129,7 @@ export default class YearDropdownOptions extends Component<
         }
         key={year}
         onClick={this.onChange.bind(this, year)}
+        onKeyDown={this.handleOptionKeyDown.bind(this, year)}
         aria-selected={selectedYear === year ? "true" : undefined}
       >
         {selectedYear === year ? (

@@ -10,12 +10,44 @@ interface MonthDropdownOptionsProps {
 }
 
 export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
+  monthOptionButtonsRef: (HTMLDivElement | null)[] = [];
+
   isSelectedMonth = (i: number): boolean => this.props.month === i;
+
+  handleOptionKeyDown = (i: number, e: React.KeyboardEvent): void => {
+    switch (e.key) {
+      case "Enter":
+        e.preventDefault();
+        this.onChange(i);
+        break;
+      case "Escape":
+        e.preventDefault();
+        this.props.onCancel();
+        break;
+      case "ArrowUp":
+      case "ArrowDown": {
+        e.preventDefault();
+        const newMonth =
+          (i + (e.key === "ArrowUp" ? -1 : 1) + this.props.monthNames.length) %
+          this.props.monthNames.length;
+        this.monthOptionButtonsRef[newMonth]?.focus();
+        break;
+      }
+    }
+  };
 
   renderOptions = (): React.ReactElement[] => {
     return this.props.monthNames.map<React.ReactElement>(
       (month: string, i: number): React.ReactElement => (
         <div
+          ref={(el) => {
+            this.monthOptionButtonsRef?.push(el);
+            if (this.isSelectedMonth(i)) {
+              el?.focus();
+            }
+          }}
+          role="button"
+          tabIndex={0}
           className={
             this.isSelectedMonth(i)
               ? "react-datepicker__month-option react-datepicker__month-option--selected_month"
@@ -23,6 +55,7 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
           }
           key={month}
           onClick={this.onChange.bind(this, i)}
+          onKeyDown={this.handleOptionKeyDown.bind(this, i)}
           aria-selected={this.isSelectedMonth(i) ? "true" : undefined}
         >
           {this.isSelectedMonth(i) ? (
