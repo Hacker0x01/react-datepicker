@@ -3850,9 +3850,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Mo");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Mo");
   });
 
   it("should show the correct start of week for US locale", () => {
@@ -3863,9 +3864,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Su");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Su");
   });
 
   describe("when update the datepicker input text while props.showTimeSelectOnly is set and dateFormat has only time related format", () => {
