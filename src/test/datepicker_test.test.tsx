@@ -3794,6 +3794,54 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("Calendar Header Accessibility", () => {
+    it("renders day names with sr-only full weekday and visible short name", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      const headers = container.querySelectorAll(
+        '.react-datepicker__day-names > [role="columnheader"]',
+      );
+      expect(headers.length).toBe(7);
+
+      headers.forEach((header) => {
+        // Should have a visually hidden span with the full weekday name
+        const srOnly = header.querySelector(".sr-only");
+        expect(srOnly).toBeTruthy();
+        expect(srOnly?.textContent?.length).toBeGreaterThan(2);
+
+        // Should have a visible short name
+        const visible = header.querySelector('span[aria-hidden="true"]');
+        expect(visible).toBeTruthy();
+        expect(visible?.textContent?.length).toBeLessThanOrEqual(3);
+      });
+    });
+
+    it("renders week number column header with sr-only label and visible #", () => {
+      const { container } = render(<DatePicker showWeekNumbers />);
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      const headers = container.querySelectorAll(
+        '.react-datepicker__day-names > [role="columnheader"]',
+      );
+      expect(headers.length).toBe(8);
+
+      const weekNumberHeader = headers[0] as Element;
+      const srOnly = weekNumberHeader.querySelector(".sr-only");
+      expect(srOnly).toBeTruthy();
+      expect(srOnly?.textContent?.trim()?.toLowerCase()).toEqual("week number");
+
+      // Should have a visible short name
+      const visible = weekNumberHeader.querySelector(
+        'span[aria-hidden="true"]',
+      );
+      expect(visible).toBeTruthy();
+      expect(visible?.textContent?.trim()?.toLowerCase()).toEqual("#");
+    });
+  });
+
   it("should show the correct start of week for GB locale", () => {
     registerLocale("en-GB", enGB);
 
@@ -3802,9 +3850,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Mo");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Mo");
   });
 
   it("should show the correct start of week for US locale", () => {
@@ -3815,9 +3864,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Su");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Su");
   });
 
   describe("when update the datepicker input text while props.showTimeSelectOnly is set and dateFormat has only time related format", () => {

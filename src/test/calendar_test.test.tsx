@@ -294,7 +294,9 @@ describe("Calendar", () => {
   it("should correctly format weekday using formatWeekDay prop", () => {
     const { calendar } = getCalendar({ formatWeekDay: (day) => day.charAt(0) });
     calendar
-      .querySelectorAll(".react-datepicker__day-name")
+      .querySelectorAll(
+        ".react-datepicker__day-name > span[aria-hidden='true']",
+      )
       .forEach((dayName) => expect(dayName.textContent).toHaveLength(1));
   });
 
@@ -1130,7 +1132,9 @@ describe("Calendar", () => {
 
   it("should use a hash for week label if weekLabel is NOT provided", () => {
     const { calendar } = getCalendar({ showWeekNumbers: true });
-    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    const weekLabel = calendar.querySelectorAll(
+      ".react-datepicker__day-name > span[aria-hidden='true']",
+    );
     expect(weekLabel[0]?.textContent).toBe("#");
   });
 
@@ -1139,7 +1143,9 @@ describe("Calendar", () => {
       showWeekNumbers: true,
       weekLabel: "Foo",
     });
-    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    const weekLabel = calendar.querySelectorAll(
+      ".react-datepicker__day-name > span[aria-hidden='true']",
+    );
     expect(weekLabel[0]?.textContent).toBe("Foo");
   });
 
@@ -1252,13 +1258,13 @@ describe("Calendar", () => {
     ).container;
 
     const daysNamesShort = calendarShort.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span[aria-hidden='true']",
     );
     expect(daysNamesShort[0]?.textContent).toBe("Sun");
     expect(daysNamesShort[6]?.textContent).toBe("Sat");
 
     const daysNamesMin = calendarMin.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span[aria-hidden='true']",
     );
     expect(daysNamesMin[0]?.textContent).toBe("Su");
     expect(daysNamesMin[6]?.textContent).toBe("Sa");
@@ -1614,7 +1620,9 @@ describe("Calendar", () => {
         calendarStartDay,
       );
       const firstWeekDayMin = getWeekdayMinInLocale(firstDateOfWeek, locale);
-      const firstHeader = calendar.querySelector(".react-datepicker__day-name");
+      const firstHeader = calendar.querySelector(
+        ".react-datepicker__day-name > span[aria-hidden='true']",
+      );
       expect(firstHeader?.textContent).toBe(firstWeekDayMin);
     }
 
@@ -2236,13 +2244,11 @@ describe("Calendar", () => {
 
     const header = container.querySelector(".react-datepicker__header");
     const dayNameElements = header?.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span.sr-only",
     );
 
     dayNameElements?.forEach((element, index) => {
-      expect(element.getAttribute("aria-label")).toBe(
-        expectedAriaLabels[index],
-      );
+      expect(element.textContent).toBe(expectedAriaLabels[index]);
     });
   });
 
@@ -2500,7 +2506,7 @@ describe("Calendar", () => {
     it("should have default sunday as start day if No prop passed", () => {
       const { calendar } = getCalendar();
       const calendarDays = calendar.querySelectorAll(
-        ".react-datepicker__day-name",
+        ".react-datepicker__day-name > span[aria-hidden='true']",
       );
       expect(calendarDays[0]?.textContent).toBe("Su");
       expect(calendarDays[6]?.textContent).toBe("Sa");
@@ -2509,7 +2515,7 @@ describe("Calendar", () => {
     it("should have default wednesday as start day if No prop passed", () => {
       const { calendar } = getCalendar({ calendarStartDay: 3 });
       const calendarDays = calendar.querySelectorAll(
-        ".react-datepicker__day-name",
+        ".react-datepicker__day-name > span[aria-hidden='true']",
       );
       expect(calendarDays[0]?.textContent).toBe("We");
       expect(calendarDays[6]?.textContent).toBe("Tu");

@@ -477,8 +477,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     const dayNames: React.ReactElement[] = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
-        <div key="W" className="react-datepicker__day-name">
-          {this.props.weekLabel || "#"}
+        <div key="W" className="react-datepicker__day-name" role="columnheader">
+          <span className="sr-only">Week number</span>
+          <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
       );
     }
@@ -494,10 +495,13 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         return (
           <div
             key={offset}
-            aria-label={formatDate(day, "EEEE", this.props.locale)}
+            role="columnheader"
             className={clsx("react-datepicker__day-name", weekDayClassName)}
           >
-            {weekDayName}
+            <span className="sr-only">
+              {formatDate(day, "EEEE", this.props.locale)}
+            </span>
+            <span aria-hidden="true">{weekDayName}</span>
           </div>
         );
       }),
@@ -852,7 +856,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         {this.renderMonthYearDropdown(i !== 0)}
         {this.renderYearDropdown(i !== 0)}
       </div>
-      <div className="react-datepicker__day-names">
+      <div className="react-datepicker__day-names" role="row">
         {this.header(monthDate)}
       </div>
     </div>
