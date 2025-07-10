@@ -18,6 +18,6 @@ $datepicker__border-radius: 0.3rem !default;
 $datepicker__day-margin: 0.166rem !default;
 $datepicker__font-size: 0.8rem !default;
 $datepicker__font-family: "Gotham SSm A", "Gotham SSm B", sans-serif !default;
-$datepicker__item-size: 1.7rem !default;
+$datepicker__item-size: clamp(1.5rem, 12vw, 2.5rem) !default;
 $datepicker__margin: 0.4rem !default;
 $datepicker__navigation-button-size: 32px !default;
