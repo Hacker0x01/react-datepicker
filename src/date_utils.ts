@@ -239,7 +239,11 @@ export const DATE_RANGE_SEPARATOR = " - ";
 export function safeDateRangeFormat(
   startDate: Date | null | undefined,
   endDate: Date | null | undefined,
-  props: { dateFormat: string | string[]; locale?: Locale },
+  props: {
+    dateFormat: string | string[];
+    locale?: Locale;
+    rangeSeparator?: string;
+  },
 ): string {
   if (!startDate) {
     return "";
@@ -247,8 +251,9 @@ export function safeDateRangeFormat(
 
   const formattedStartDate = safeDateFormat(startDate, props);
   const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
+  const dateRangeSeparator = props.rangeSeparator || DATE_RANGE_SEPARATOR;
 
-  return `${formattedStartDate}${DATE_RANGE_SEPARATOR}${formattedEndDate}`;
+  return `${formattedStartDate}${dateRangeSeparator}${formattedEndDate}`;
 }
 
 /**

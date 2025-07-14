@@ -100,6 +100,7 @@ import CustomTimeInput from "../../examples/customTimeInput?raw";
 import CloseOnScroll from "../../examples/closeOnScroll?raw";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback?raw";
 import SelectsRange from "../../examples/selectsRange?raw";
+import SelectsRangeWithCustomSeparator from "../../examples/customRangeSeparator?raw";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates?raw";
 import CalendarStartDay from "../../examples/calendarStartDay?raw";
 import ExternalForm from "../../examples/externalForm?raw";
@@ -241,6 +242,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date range for one datepicker",
       component: SelectsRange,
+    },
+    {
+      title: "Date range for one datepicker with custom range separator",
+      component: SelectsRangeWithCustomSeparator,
     },
     {
       title: "Date range for one datepicker with disabled dates highlighted",
