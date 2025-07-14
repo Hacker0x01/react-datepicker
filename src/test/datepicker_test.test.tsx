@@ -3495,6 +3495,23 @@ describe("DatePicker", () => {
 
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
+
+    it("should render custom separator when `rangeSeparator` is provided", () => {
+      const onChangeSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          rangeSeparator=" to "
+          startDate={newDate("2025-01-01")}
+          endDate={newDate("2025-01-03")}
+          onChange={onChangeSpy}
+          dateFormat="yyyy/MM/dd"
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      expect(input.value).toBe("2025/01/01 to 2025/01/03");
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
