@@ -423,6 +423,41 @@ export default class DatePicker extends Component<
     };
   };
 
+  getInputValue = (): string => {
+    const {
+      dateFormat = DatePicker.defaultProps.dateFormat,
+      locale,
+      startDate,
+      endDate,
+      selected,
+      selectedDates,
+      selectsMultiple,
+      selectsRange,
+      value,
+    } = this.props;
+    const { inputValue } = this.state;
+
+    if (typeof value === "string") {
+      return value;
+    } else if (typeof inputValue === "string") {
+      return inputValue;
+    } else if (selectsRange) {
+      return safeDateRangeFormat(startDate, endDate, {
+        dateFormat,
+        locale,
+      });
+    } else if (selectsMultiple) {
+      return safeMultipleDatesFormat(selectedDates ?? [], {
+        dateFormat,
+        locale,
+      });
+    }
+    return safeDateFormat(selected, {
+      dateFormat,
+      locale,
+    });
+  };
+
   resetHiddenStatus = (): void => {
     this.setState({
       ...this.state,
@@ -1338,33 +1373,12 @@ export default class DatePicker extends Component<
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
-    const inputValue =
-      typeof this.props.value === "string"
-        ? this.props.value
-        : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(this.props.startDate, this.props.endDate, {
-                dateFormat,
-                locale,
-              })
-            : this.props.selectsMultiple
-              ? safeMultipleDatesFormat(this.props.selectedDates ?? [], {
-                  dateFormat,
-                  locale,
-                })
-              : safeDateFormat(this.props.selected, {
-                  dateFormat,
-                  locale,
-                });
 
     return cloneElement(customInput, {
       [customInputRef]: (input: HTMLElement | null) => {
         this.input = input;
       },
-      value: inputValue,
+      value: this.getInputValue(),
       onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
