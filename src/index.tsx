@@ -425,7 +425,6 @@ export default class DatePicker extends Component<
 
   getInputValue = (): string => {
     const {
-      dateFormat = DatePicker.defaultProps.dateFormat,
       locale,
       startDate,
       endDate,
@@ -435,6 +434,9 @@ export default class DatePicker extends Component<
       selectsRange,
       value,
     } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+
     const { inputValue } = this.state;
 
     if (typeof value === "string") {
@@ -1296,8 +1298,9 @@ export default class DatePicker extends Component<
   };
 
   renderAriaLiveRegion = () => {
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
+    const { locale } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
     const isContainsTime =
       this.props.showTimeInput || this.props.showTimeSelect;
     const longDateFormat = isContainsTime ? "PPPPp" : "PPPP";
