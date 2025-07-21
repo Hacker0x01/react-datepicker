@@ -133,6 +133,11 @@
   color: #f00;
 }
 
+.react-datepicker__week.highlighted {
+  background-color: #ddffdd;
+  border-radius: 5px;
+}
+
 .example-custom-input {
   cursor: pointer;
   padding: 5px 15px;

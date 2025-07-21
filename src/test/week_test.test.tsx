@@ -23,6 +23,23 @@ describe("Week", () => {
     expect(container.querySelector(".react-datepicker__week")).not.toBeNull();
   });
 
+  it("should apply className returned from passed weekClassName prop function", () => {
+    const className = "customClassNameWeek";
+    const monthClassNameFunc = () => className;
+    const { container } = render(
+      <Week
+        day={newDate()}
+        month={getMonth(newDate())}
+        weekClassName={monthClassNameFunc}
+      />,
+    );
+    expect(
+      container
+        .querySelector(".react-datepicker__week")
+        ?.classList.contains(className),
+    ).toBe(true);
+  });
+
   it("should render the days of the week", () => {
     const weekStart = getStartOfWeek(newDate("2015-12-20"));
     const { container } = render(

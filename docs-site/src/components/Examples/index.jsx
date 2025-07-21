@@ -18,6 +18,7 @@ import CustomDateFormat from "../../examples/customDateFormat?raw";
 import CustomClassName from "../../examples/customClassName?raw";
 import CustomCalendarClassName from "../../examples/customCalendarClassName?raw";
 import CustomDayClassName from "../../examples/customDayClassName?raw";
+import CustomWeekClassName from "../../examples/customWeekClassName?raw";
 import CustomTimeClassName from "../../examples/customTimeClassName?raw";
 import Today from "../../examples/today?raw";
 import PlaceholderText from "../../examples/placeholderText?raw";
@@ -221,6 +222,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Custom day class name",
       component: CustomDayClassName,
+    },
+    {
+      title: "Custom week class name",
+      component: CustomWeekClassName,
     },
     {
       title: "Custom date format",
