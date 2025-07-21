@@ -4504,4 +4504,14 @@ describe("DatePicker", () => {
       expect(calendarAfterEsc).toBeFalsy();
     });
   });
+
+  describe("dateFormat", () => {
+    it("should use the default dateFormat if dateFormat prop is not provided", () => {
+      const { container } = render(
+        <DatePicker selected={new Date("2025-07-17")} showDateSelect />,
+      );
+      const input = safeQuerySelector(container, "input") as HTMLInputElement;
+      expect(input?.value).toBe("07/17/2025");
+    });
+  });
 });
