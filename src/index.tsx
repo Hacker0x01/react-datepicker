@@ -250,10 +250,7 @@ interface DatePickerState {
   isRenderAriaLiveMessage?: boolean;
 }
 
-export default class DatePicker extends Component<
-  DatePickerProps,
-  DatePickerState
-> {
+export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   static get defaultProps() {
     return {
       allowSameDay: false,
@@ -1536,3 +1533,4 @@ export default class DatePicker extends Component<
 
 const PRESELECT_CHANGE_VIA_INPUT = "input";
 const PRESELECT_CHANGE_VIA_NAVIGATE = "navigate";
+export default DatePicker;
