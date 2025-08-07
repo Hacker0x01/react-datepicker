@@ -2867,8 +2867,8 @@ __metadata:
   linkType: hard
 
 "@rollup/plugin-typescript@npm:^12.1.2":
-  version: 12.1.2
-  resolution: "@rollup/plugin-typescript@npm:12.1.2"
+  version: 12.1.4
+  resolution: "@rollup/plugin-typescript@npm:12.1.4"
   dependencies:
     "@rollup/pluginutils": "npm:^5.1.0"
     resolve: "npm:^1.22.1"
@@ -2881,7 +2881,7 @@ __metadata:
       optional: true
     tslib:
       optional: true
-  checksum: 10c0/f447e23371bb1815030446ada3f57608bc6665f8aa2cd7343c4aa18021790fa3ba4783146ea576fb650d6ec68876182d0bc789a05b1a9163c09b16c17efdf868
+  checksum: 10c0/b5bf7f54794d0b33ae5441c5aa202a95beb7068c206f40102f94997e888756c06c2bfe00517eb74a58771078432f94e8a34e99f5c6dbf89a22b49431b83c4798
   languageName: node
   linkType: hard
 
