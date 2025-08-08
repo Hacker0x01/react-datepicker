@@ -10,7 +10,7 @@
     "prism-react-renderer": "^2.4.1",
     "react": "^19.1.0",
     "react-datepicker": "portal:../",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.1.1",
     "react-live": "^4.1.8",
     "slugify": "^1.6.6"
   },
@@ -23,7 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^9.32.0",
     "eslint-plugin-react": "^7.37.5",
