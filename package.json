@@ -24,7 +24,7 @@
     "./dist/*.css": "./dist/*.css",
     "./src/stylesheets/*.scss": "./src/stylesheets/*.scss"
   },
-  "files": ["*.md", "dist", "lib", "es", "src/stylesheets"],
+  "files": ["*.md", "dist", "lib", "es", "src"],
   "sideEffects": ["**/*.css"],
   "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {

@@ -191,6 +191,7 @@ export type DatePickerProps = OmitUnion<
     ariaInvalid?: string;
     ariaLabelledBy?: string;
     ariaRequired?: string;
+    rangeSeparator?: string;
     onChangeRaw?: (
       event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
     ) => void;
@@ -249,10 +250,7 @@ interface DatePickerState {
   isRenderAriaLiveMessage?: boolean;
 }
 
-export default class DatePicker extends Component<
-  DatePickerProps,
-  DatePickerState
-> {
+export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   static get defaultProps() {
     return {
       allowSameDay: false,
@@ -265,6 +263,7 @@ export default class DatePicker extends Component<
       monthsShown: 1,
       outsideClickIgnoreClass: OUTSIDE_CLICK_IGNORE_CLASS,
       readOnly: false,
+      rangeSeparator: DATE_RANGE_SEPARATOR,
       withPortal: false,
       selectsDisabledDaysInRange: false,
       shouldCloseOnSelect: true,
@@ -428,6 +427,7 @@ export default class DatePicker extends Component<
       locale,
       startDate,
       endDate,
+      rangeSeparator,
       selected,
       selectedDates,
       selectsMultiple,
@@ -447,6 +447,7 @@ export default class DatePicker extends Component<
       return safeDateRangeFormat(startDate, endDate, {
         dateFormat,
         locale,
+        rangeSeparator,
       });
     } else if (selectsMultiple) {
       return safeMultipleDatesFormat(selectedDates ?? [], {
@@ -652,8 +653,16 @@ export default class DatePicker extends Component<
       event?.target instanceof HTMLInputElement ? event.target.value : "";
 
     if (selectsRange) {
+      const rangeSeparator = this.props.rangeSeparator as string;
+      const trimmedRangeSeparator = rangeSeparator.trim();
+
       const [valueStart, valueEnd] = value
-        .split(dateFormat.includes("-") ? DATE_RANGE_SEPARATOR : "-", 2)
+        .split(
+          dateFormat.includes(trimmedRangeSeparator)
+            ? rangeSeparator
+            : trimmedRangeSeparator,
+          2,
+        )
         .map((val) => val.trim());
       const startDateNew = parseDate(
         valueStart ?? "",
@@ -1541,3 +1550,4 @@ export default class DatePicker extends Component<
 
 const PRESELECT_CHANGE_VIA_INPUT = "input";
 const PRESELECT_CHANGE_VIA_NAVIGATE = "navigate";
+export default DatePicker;
