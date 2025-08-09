@@ -422,6 +422,45 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     };
   };
 
+  getInputValue = (): string => {
+    const {
+      locale,
+      startDate,
+      endDate,
+      rangeSeparator,
+      selected,
+      selectedDates,
+      selectsMultiple,
+      selectsRange,
+      value,
+    } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+
+    const { inputValue } = this.state;
+
+    if (typeof value === "string") {
+      return value;
+    } else if (typeof inputValue === "string") {
+      return inputValue;
+    } else if (selectsRange) {
+      return safeDateRangeFormat(startDate, endDate, {
+        dateFormat,
+        locale,
+        rangeSeparator,
+      });
+    } else if (selectsMultiple) {
+      return safeMultipleDatesFormat(selectedDates ?? [], {
+        dateFormat,
+        locale,
+      });
+    }
+    return safeDateFormat(selected, {
+      dateFormat,
+      locale,
+    });
+  };
+
   resetHiddenStatus = (): void => {
     this.setState({
       ...this.state,
@@ -1268,8 +1307,9 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
 
   renderAriaLiveRegion = () => {
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
+    const { locale } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
     const isContainsTime =
       this.props.showTimeInput || this.props.showTimeSelect;
     const longDateFormat = isContainsTime ? "PPPPp" : "PPPP";
@@ -1345,35 +1385,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
-
-    const inputValue =
-      typeof this.props.value === "string"
-        ? this.props.value
-        : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(this.props.startDate, this.props.endDate, {
-                dateFormat,
-                locale,
-                rangeSeparator: this.props.rangeSeparator,
-              })
-            : this.props.selectsMultiple
-              ? safeMultipleDatesFormat(this.props.selectedDates ?? [], {
-                  dateFormat,
-                  locale,
-                })
-              : safeDateFormat(this.props.selected, {
-                  dateFormat,
-                  locale,
-                });
 
     return cloneElement(customInput, {
       [customInputRef]: (input: HTMLElement | null) => {
         this.input = input;
       },
-      value: inputValue,
+      value: this.getInputValue(),
       onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
