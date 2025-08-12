@@ -1264,6 +1264,14 @@ describe("date_utils", () => {
       );
     });
 
+    it("should return a formatted endDate prefixed by a dash when startDate is null", () => {
+      const startDate = null;
+      const endDate = new Date("2021-04-20 00:00:00");
+      expect(safeDateRangeFormat(startDate, endDate, props)).toBe(
+        " - 04/20/2021",
+      );
+    });
+
     it("should return a formatted startDate followed by a dash followed by a formatted endDate when startDate and endDate both have values", () => {
       const startDate = new Date("2021-04-20 00:00:00");
       const endDate = new Date("2021-04-28 00:00:00");

@@ -245,11 +245,11 @@ export function safeDateRangeFormat(
     rangeSeparator?: string;
   },
 ): string {
-  if (!startDate) {
+  if (!startDate && !endDate) {
     return "";
   }
 
-  const formattedStartDate = safeDateFormat(startDate, props);
+  const formattedStartDate = startDate ? safeDateFormat(startDate, props) : "";
   const formattedEndDate = endDate ? safeDateFormat(endDate, props) : "";
   const dateRangeSeparator = props.rangeSeparator || DATE_RANGE_SEPARATOR;
 

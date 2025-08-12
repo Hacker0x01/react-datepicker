@@ -670,12 +670,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         this.props.locale,
         strictParsing,
       );
-      const endDateNew = parseDate(
-        valueEnd ?? "",
-        dateFormat,
-        this.props.locale,
-        strictParsing,
-      );
+      const endDateNew = startDateNew
+        ? parseDate(
+            valueEnd ?? "",
+            dateFormat,
+            this.props.locale,
+            strictParsing,
+          )
+        : null;
       const startChanged = startDate?.getTime() !== startDateNew?.getTime();
       const endChanged = endDate?.getTime() !== endDateNew?.getTime();
 
@@ -832,6 +834,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       if (selectsRange) {
         const noRanges = !startDate && !endDate;
         const hasStartRange = startDate && !endDate;
+        const hasOnlyEndRange = !startDate && !!endDate;
         const isRangeFilled = startDate && endDate;
         if (noRanges) {
           onChange?.([changedDate, null], event);
@@ -846,6 +849,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
             }
           } else {
             onChange?.([startDate, changedDate], event);
+          }
+        } else if (hasOnlyEndRange) {
+          if (changedDate && isDateBefore(changedDate, endDate)) {
+            onChange?.([changedDate, endDate], event);
+          } else {
+            onChange?.([changedDate, null], event);
           }
         }
         if (isRangeFilled) {
