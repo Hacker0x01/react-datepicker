@@ -2778,18 +2778,18 @@ __metadata:
   linkType: hard
 
 "@react-docgen/cli@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@react-docgen/cli@npm:3.0.0"
+  version: 3.0.1
+  resolution: "@react-docgen/cli@npm:3.0.1"
   dependencies:
     chalk: "npm:5.4.1"
-    commander: "npm:13.1.0"
-    debug: "npm:4.4.0"
+    commander: "npm:14.0.0"
+    debug: "npm:4.4.1"
     fast-glob: "npm:3.3.3"
     react-docgen: "npm:8.0.0"
     slash: "npm:5.1.0"
   bin:
     react-docgen: dist/cli.js
-  checksum: 10c0/576d87c67882d96462c011f493c79af13f263f82306a1ffb30ed64bcd08060ca8ad979d3646693b4881be0c45245d4bc79640ff000bc5c2c8ea22f3a81e5b62d
+  checksum: 10c0/50622fda17bb262b4a845b8327a5cfaac4ff3c2be0b001aa7b40267f418ae108d8f0481a8e68429f99258223bdfaf4ed675d08cc96b304ae7c21d9619d020ec8
   languageName: node
   linkType: hard
 
@@ -4853,14 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:13.1.0":
-  version: 13.1.0
-  resolution: "commander@npm:13.1.0"
-  checksum: 10c0/7b8c5544bba704fbe84b7cab2e043df8586d5c114a4c5b607f83ae5060708940ed0b5bd5838cf8ce27539cde265c1cbd59ce3c8c6b017ed3eec8943e3a415164
-  languageName: node
-  linkType: hard
-
-"commander@npm:^14.0.0":
+"commander@npm:14.0.0, commander@npm:^14.0.0":
   version: 14.0.0
   resolution: "commander@npm:14.0.0"
   checksum: 10c0/73c4babfa558077868d84522b11ef56834165d472b9e86a634cd4c3ae7fc72d59af6377d8878e06bd570fe8f3161eced3cbe383c38f7093272bb65bd242b595b
@@ -5077,7 +5070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.4.0, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
   dependencies:
@@ -5089,16 +5082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "debug@npm:3.2.7"
-  dependencies:
-    ms: "npm:^2.1.1"
-  checksum: 10c0/37d96ae42cbc71c14844d2ae3ba55adf462ec89fd3a999459dec3833944cd999af6007ff29c780f1c61153bcaaf2c842d1e4ce1ec621e4fc4923244942e4a02a
-  languageName: node
-  linkType: hard
-
-"debug@npm:^4.4.1":
+"debug@npm:4.4.1, debug@npm:^4.4.1":
   version: 4.4.1
   resolution: "debug@npm:4.4.1"
   dependencies:
@@ -5107,6 +5091,15 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10c0/d2b44bc1afd912b49bb7ebb0d50a860dc93a4dd7d946e8de94abc957bb63726b7dd5aa48c18c2386c379ec024c46692e15ed3ed97d481729f929201e671fcd55
+  languageName: node
+  linkType: hard
+
+"debug@npm:^3.2.7":
+  version: 3.2.7
+  resolution: "debug@npm:3.2.7"
+  dependencies:
+    ms: "npm:^2.1.1"
+  checksum: 10c0/37d96ae42cbc71c14844d2ae3ba55adf462ec89fd3a999459dec3833944cd999af6007ff29c780f1c61153bcaaf2c842d1e4ce1ec621e4fc4923244942e4a02a
   languageName: node
   linkType: hard
 
