@@ -50,3 +50,66 @@ jobs:
 
       - name: Build docs
         run: yarn --cwd docs-site build
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Start docs preview server
+        run: yarn --cwd docs-site preview --host 0.0.0.0 --port 4173 &
+        
+      - name: Wait for server to start
+        run: sleep 5
+
+      - name: Test docs site with Playwright
+        run: |
+          cat > test-docs.js << 'EOF'
+          const { chromium } = require('playwright');
+
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+            
+            try {
+              // Navigate to the docs site
+              await page.goto('http://localhost:4173', { waitUntil: 'networkidle' });
+              
+              // Wait for and check that "React Datepicker" text is visible
+              await page.waitForSelector('text=React Datepicker', { timeout: 10000 });
+              
+              // Additional checks
+              const title = await page.title();
+              console.log(`✅ Page title: ${title}`);
+              
+              const hasText = await page.getByText('React Datepicker').isVisible();
+              if (hasText) {
+                console.log('✅ Success: "React Datepicker" text is visible on the docs site');
+              } else {
+                throw new Error('❌ "React Datepicker" text not found');
+              }
+              
+            } catch (error) {
+              console.error('❌ Test failed:', error.message);
+              
+              // Take screenshot for debugging
+              await page.screenshot({ path: 'docs-test-failure.png', fullPage: true });
+              console.log('📸 Screenshot saved as docs-test-failure.png');
+              
+              // Log page content for debugging
+              const content = await page.content();
+              console.log('Page content preview:', content.substring(0, 500));
+              
+              process.exit(1);
+            } finally {
+              await browser.close();
+            }
+          })();
+          EOF
+          
+          npx playwright test test-docs.js || node test-docs.js
+
+      - name: Upload screenshot on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-test-screenshot
+          path: docs-test-failure.png
