@@ -18,6 +18,7 @@ import CustomDateFormat from "../../examples/customDateFormat?raw";
 import CustomClassName from "../../examples/customClassName?raw";
 import CustomCalendarClassName from "../../examples/customCalendarClassName?raw";
 import CustomDayClassName from "../../examples/customDayClassName?raw";
+import CustomWeekClassName from "../../examples/customWeekClassName?raw";
 import CustomTimeClassName from "../../examples/customTimeClassName?raw";
 import Today from "../../examples/today?raw";
 import PlaceholderText from "../../examples/placeholderText?raw";
@@ -100,6 +101,7 @@ import CustomTimeInput from "../../examples/customTimeInput?raw";
 import CloseOnScroll from "../../examples/closeOnScroll?raw";
 import CloseOnScrollCallback from "../../examples/closeOnScrollCallback?raw";
 import SelectsRange from "../../examples/selectsRange?raw";
+import SelectsRangeWithCustomSeparator from "../../examples/customRangeSeparator?raw";
 import selectsRangeWithDisabledDates from "../../examples/selectsRangeWithDisabledDates?raw";
 import CalendarStartDay from "../../examples/calendarStartDay?raw";
 import ExternalForm from "../../examples/externalForm?raw";
@@ -223,6 +225,10 @@ export default class exampleComponents extends React.Component {
       component: CustomDayClassName,
     },
     {
+      title: "Custom week class name",
+      component: CustomWeekClassName,
+    },
+    {
       title: "Custom date format",
       component: CustomDateFormat,
     },
@@ -241,6 +247,10 @@ export default class exampleComponents extends React.Component {
     {
       title: "Date range for one datepicker",
       component: SelectsRange,
+    },
+    {
+      title: "Date range for one datepicker with custom range separator",
+      component: SelectsRangeWithCustomSeparator,
     },
     {
       title: "Date range for one datepicker with disabled dates highlighted",

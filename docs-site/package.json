@@ -8,9 +8,9 @@
     "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.1.0",
+    "react": "^19.1.1",
     "react-datepicker": "portal:../",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.1.1",
     "react-live": "^4.1.8",
     "slugify": "^1.6.6"
   },
@@ -21,17 +21,17 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.6.0",
-    "eslint": "^9.29.0",
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.2.0",
-    "sass": "^1.89.2",
-    "vite": "^6.3.5"
+    "globals": "^16.3.0",
+    "sass": "^1.90.0",
+    "vite": "^7.1.2"
   },
   "packageManager": "yarn@4.6.0"
 }
