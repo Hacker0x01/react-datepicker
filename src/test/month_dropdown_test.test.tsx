@@ -204,7 +204,7 @@ describe("MonthDropdown", () => {
         monthDropdown,
         ".react-datepicker__month-option",
       );
-      
+
       const monthOption = monthOptions[3]!;
       fireEvent.keyDown(monthOption, { key: "ArrowDown" });
 
@@ -213,7 +213,7 @@ describe("MonthDropdown", () => {
 
       fireEvent.keyDown(document.activeElement!, { key: "Enter" });
       expect(handleChangeResult).toEqual(4);
-    })
+    });
   });
 
   describe("select mode", () => {

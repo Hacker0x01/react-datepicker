@@ -131,10 +131,10 @@ describe("YearDropdown", () => {
       );
       const yearOption = yearOptions[6]!;
       fireEvent.keyDown(yearOption, { key: "ArrowUp" });
-            
+
       const previousYearOption = yearOptions[5]!;
       expect(document.activeElement).toBe(previousYearOption);
-      
+
       fireEvent.keyDown(document.activeElement!, { key: "Enter" });
       expect(lastOnChangeValue).toEqual(2016);
     });

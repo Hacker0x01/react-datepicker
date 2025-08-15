@@ -121,7 +121,10 @@ export default class YearDropdown extends Component<
     this.setOpen();
   };
 
-  onSelect = (date: Date, event?: React.MouseEvent<HTMLButtonElement>): void => {
+  onSelect = (
+    date: Date,
+    event?: React.MouseEvent<HTMLButtonElement>,
+  ): void => {
     this.props.onSelect?.(date, event);
   };
 

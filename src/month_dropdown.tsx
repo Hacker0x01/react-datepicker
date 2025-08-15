@@ -58,7 +58,7 @@ export default class MonthDropdown extends Component<
   ): React.ReactElement => (
     <button
       key="read"
-      type="button"      
+      type="button"
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__month-read-view"
       onClick={this.toggleDropdown}
