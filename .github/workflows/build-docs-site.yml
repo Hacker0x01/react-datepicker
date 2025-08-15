@@ -52,13 +52,16 @@ jobs:
         run: yarn --cwd docs-site build
 
       - name: Install Playwright
-        run: npx playwright install --with-deps chromium
+        run: |
+          npm install playwright
+          npx playwright install --with-deps chromium
 
       - name: Start docs preview server
         run: yarn --cwd docs-site preview --host 0.0.0.0 --port 4173 &
         
-      - name: Wait for server to start
-        run: sleep 5
+      - name: Wait for server to be ready
+        run: |
+          timeout 30 bash -c 'until curl -s http://localhost:4173 > /dev/null; do sleep 1; done'
 
       - name: Test docs site with Playwright
         run: |
@@ -70,10 +73,10 @@ jobs:
             const page = await browser.newPage();
             
             try {
-              // Navigate to the docs site
+              console.log('🚀 Navigating to docs site...');
               await page.goto('http://localhost:4173', { waitUntil: 'networkidle' });
               
-              // Wait for and check that "React Datepicker" text is visible
+              console.log('🔍 Looking for "React Datepicker" text...');
               await page.waitForSelector('text=React Datepicker', { timeout: 10000 });
               
               // Additional checks
@@ -96,7 +99,8 @@ jobs:
               
               // Log page content for debugging
               const content = await page.content();
-              console.log('Page content preview:', content.substring(0, 500));
+              console.log('🔍 Page content preview:');
+              console.log(content.substring(0, 1000));
               
               process.exit(1);
             } finally {
@@ -105,7 +109,7 @@ jobs:
           })();
           EOF
           
-          npx playwright test test-docs.js || node test-docs.js
+          node test-docs.js
 
       - name: Upload screenshot on failure
         if: failure()
