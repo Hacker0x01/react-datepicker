@@ -104,13 +104,19 @@ export default class YearDropdownOptions extends Component<
       case "ArrowDown": {
         e.preventDefault();
         const newYear = year + (e.key === "ArrowUp" ? 1 : -1);
-        this.yearOptionButtonsRef[newYear]?.focus();
+        // Add bounds checking to ensure the year exists in our refs
+        if (this.yearOptionButtonsRef[newYear]) {
+          this.yearOptionButtonsRef[newYear]?.focus();
+        }
         break;
       }
     }
   };
 
   renderOptions = (): React.ReactElement[] => {
+    // Clear refs to prevent memory leaks on re-render
+    this.yearOptionButtonsRef = {};
+
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
       <div

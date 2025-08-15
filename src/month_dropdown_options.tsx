@@ -10,7 +10,7 @@ interface MonthDropdownOptionsProps {
 }
 
 export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
-  monthOptionButtonsRef: (HTMLDivElement | null)[] = [];
+  monthOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
 
   isSelectedMonth = (i: number): boolean => this.props.month === i;
 
@@ -37,11 +37,14 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
   };
 
   renderOptions = (): React.ReactElement[] => {
+    // Clear refs to prevent memory leaks on re-render
+    this.monthOptionButtonsRef = {};
+
     return this.props.monthNames.map<React.ReactElement>(
       (month: string, i: number): React.ReactElement => (
         <div
           ref={(el) => {
-            this.monthOptionButtonsRef?.push(el);
+            this.monthOptionButtonsRef[i] = el;
             if (this.isSelectedMonth(i)) {
               el?.focus();
             }
