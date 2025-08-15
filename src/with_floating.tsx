@@ -45,10 +45,10 @@ export default function withFloating<T extends FloatingProps>(
   Component: React.ComponentType<T>,
 ) {
   type R = Omit<T, "popperProps"> & WithFloatingProps;
-  const WithFloating: React.FC<R> = (props): React.ReactElement => {
+  function WithFloating(props: R): React.ReactElement {
     const hidePopper: boolean =
       typeof props.hidePopper === "boolean" ? props.hidePopper : true;
-    const arrowRef: React.RefObject<HTMLElement | null> = useRef(null);
+    const arrowRef = useRef<SVGSVGElement>(null);
     const floatingProps = useFloating({
       open: !hidePopper,
       whileElementsMounted: autoUpdate,
@@ -69,7 +69,9 @@ export default function withFloating<T extends FloatingProps>(
     } as unknown as T;
 
     return <Component {...componentProps} />;
-  };
+  }
+
+  WithFloating.displayName = `withFloating(${Component.displayName || Component.name || "Component"})`;
 
   return WithFloating;
 }
