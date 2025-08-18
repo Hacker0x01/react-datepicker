@@ -716,7 +716,17 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     monthSelectedIn?: number,
   ) => {
     if (this.props.readOnly) return;
-    if (this.props.shouldCloseOnSelect && !this.props.showTimeSelect) {
+
+    const { selectsRange, startDate, endDate, swapRange } = this.props;
+    const isDateSelectionComplete =
+      !selectsRange ||
+      (startDate && !endDate && (swapRange || !isDateBefore(date, startDate)));
+
+    if (
+      this.props.shouldCloseOnSelect &&
+      !this.props.showTimeSelect &&
+      isDateSelectionComplete
+    ) {
       // Preventing onFocus event to fix issue
       // https://github.com/Hacker0x01/react-datepicker/issues/628
       this.sendFocusBackToInput();
@@ -730,20 +740,8 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     }
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
-    } else if (!this.props.inline) {
-      if (!this.props.selectsRange) {
-        this.setOpen(false);
-      }
-
-      const { startDate, endDate } = this.props;
-
-      if (
-        startDate &&
-        !endDate &&
-        (this.props.swapRange || !isDateBefore(date, startDate))
-      ) {
-        this.setOpen(false);
-      }
+    } else if (isDateSelectionComplete) {
+      this.setOpen(false);
     }
   };
 
