@@ -1101,8 +1101,6 @@ export default class Month extends Component<MonthProps> {
       ? ariaLabelPrefix.trim() + " "
       : "";
 
-    console.log('Month render:', this.props.selectingDate);
-
     return (
       <div
         className={this.getClassNames()}

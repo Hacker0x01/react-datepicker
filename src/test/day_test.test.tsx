@@ -898,7 +898,7 @@ describe("Day", () => {
     });
 
     describe("for a date picker with selectsRange and swapRange prop", () => {
-      it("should select range from startDate to selectingDate if selectingDate mote then startDate", () => {
+      it("should select range from startDate to selectingDate if selectingDate more than startDate", () => {
         const startDate = newDate();
         const dayInRange = addDays(startDate, 1);
         const selectingDate = addDays(startDate, 2);
@@ -916,7 +916,7 @@ describe("Day", () => {
         ).toBe(true);
       })
 
-      it("should select range from selectingDate to startDate if selectingDate less then startDate", () => {
+      it("should select range from selectingDate to startDate if selectingDate less than startDate", () => {
         const startDate = newDate();
         const dayInRange = subDays(startDate, 1);
         const selectingDate = subDays(startDate, 2);
