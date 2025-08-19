@@ -67,6 +67,7 @@ interface DayProps
   locale?: Locale;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
+  swapRange?: boolean;
 }
 
 /**
@@ -288,6 +289,7 @@ export default class Day extends Component<DayProps> {
       selectsRange,
       selectsDisabledDaysInRange,
       startDate,
+      swapRange,
       endDate,
     } = this.props;
 
@@ -317,13 +319,18 @@ export default class Day extends Component<DayProps> {
       return isDayInRange(day, startDate, selectingDate);
     }
 
-    if (
-      selectsRange &&
-      startDate &&
-      !endDate &&
-      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
-    ) {
-      return isDayInRange(day, startDate, selectingDate);
+    if (selectsRange && startDate && !endDate) {
+      if (isEqual(selectingDate, startDate)) {
+        return isDayInRange(day, startDate, selectingDate);
+      }
+
+      if (isAfter(selectingDate, startDate)) {
+        return isDayInRange(day, startDate, selectingDate);
+      }
+
+      if (swapRange && isBefore(selectingDate, startDate)) {
+        return isDayInRange(day, selectingDate, startDate);
+      }
     }
 
     return false;

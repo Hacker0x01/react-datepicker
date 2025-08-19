@@ -896,6 +896,61 @@ describe("Day", () => {
         ).toBe(true);
       });
     });
+
+    describe("for a date picker with selectsRange and swapRange prop", () => {
+      it("should select range from startDate to selectingDate if selectingDate mote then startDate", () => {
+        const startDate = newDate();
+        const dayInRange = addDays(startDate, 1);
+        const selectingDate = addDays(startDate, 2);
+
+        const containerStartDay = renderDay(dayInRange, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(true);
+      })
+
+      it("should select range from selectingDate to startDate if selectingDate less then startDate", () => {
+        const startDate = newDate();
+        const dayInRange = subDays(startDate, 1);
+        const selectingDate = subDays(startDate, 2);
+
+        const containerStartDay = renderDay(dayInRange, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(true);
+      });
+
+      it("should select as range if selectingDate is equal to startDate", () => {
+        const startDate = newDate();
+        const selectingDate = startDate
+
+        const containerStartDay = renderDay(startDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(true);
+      });
+    })
   });
 
   describe("today", () => {
