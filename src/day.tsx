@@ -67,6 +67,7 @@ interface DayProps
   locale?: Locale;
   monthShowsDuplicateDaysEnd?: boolean;
   monthShowsDuplicateDaysStart?: boolean;
+  swapRange?: boolean;
 }
 
 /**
@@ -288,6 +289,7 @@ export default class Day extends Component<DayProps> {
       selectsRange,
       selectsDisabledDaysInRange,
       startDate,
+      swapRange,
       endDate,
     } = this.props;
 
@@ -317,13 +319,18 @@ export default class Day extends Component<DayProps> {
       return isDayInRange(day, startDate, selectingDate);
     }
 
-    if (
-      selectsRange &&
-      startDate &&
-      !endDate &&
-      (isAfter(selectingDate, startDate) || isEqual(selectingDate, startDate))
-    ) {
-      return isDayInRange(day, startDate, selectingDate);
+    if (selectsRange && startDate && !endDate) {
+      if (isEqual(selectingDate, startDate)) {
+        return isDayInRange(day, startDate, selectingDate);
+      }
+
+      if (isAfter(selectingDate, startDate)) {
+        return isDayInRange(day, startDate, selectingDate);
+      }
+
+      if (swapRange && isBefore(selectingDate, startDate)) {
+        return isDayInRange(day, selectingDate, startDate);
+      }
     }
 
     return false;
@@ -334,14 +341,22 @@ export default class Day extends Component<DayProps> {
       return false;
     }
 
-    const { day, startDate, selectsStart } = this.props;
+    const { day, startDate, selectsStart, swapRange, selectsRange } =
+      this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (selectsStart) {
       return isSameDay(day, selectingDate);
-    } else {
-      return isSameDay(day, startDate);
     }
+
+    if (selectsRange && swapRange && startDate && selectingDate) {
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? selectingDate : startDate,
+      );
+    }
+
+    return isSameDay(day, startDate);
   };
 
   isSelectingRangeEnd = () => {
@@ -349,14 +364,26 @@ export default class Day extends Component<DayProps> {
       return false;
     }
 
-    const { day, endDate, selectsEnd, selectsRange } = this.props;
+    const { day, endDate, selectsEnd, selectsRange, swapRange, startDate } =
+      this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
-    if (selectsEnd || selectsRange) {
+    if (selectsEnd) {
       return isSameDay(day, selectingDate);
-    } else {
-      return isSameDay(day, endDate);
     }
+
+    if (selectsRange && swapRange && startDate && selectingDate) {
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? startDate : selectingDate,
+      );
+    }
+
+    if (selectsRange) {
+      return isSameDay(day, selectingDate);
+    }
+
+    return isSameDay(day, endDate);
   };
 
   isRangeStart = () => {
