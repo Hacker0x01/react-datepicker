@@ -341,7 +341,8 @@ export default class Day extends Component<DayProps> {
       return false;
     }
 
-    const { day, startDate, selectsStart, swapRange, selectsRange } = this.props;
+    const { day, startDate, selectsStart, swapRange, selectsRange } =
+      this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (selectsStart) {
@@ -349,7 +350,10 @@ export default class Day extends Component<DayProps> {
     }
 
     if (selectsRange && swapRange && startDate && selectingDate) {
-      return isSameDay(day, isBefore(selectingDate, startDate) ? selectingDate : startDate);
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? selectingDate : startDate,
+      );
     }
 
     return isSameDay(day, startDate);
@@ -360,7 +364,8 @@ export default class Day extends Component<DayProps> {
       return false;
     }
 
-    const { day, endDate, selectsEnd, selectsRange, swapRange, startDate } = this.props;
+    const { day, endDate, selectsEnd, selectsRange, swapRange, startDate } =
+      this.props;
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
     if (selectsEnd) {
@@ -368,7 +373,10 @@ export default class Day extends Component<DayProps> {
     }
 
     if (selectsRange && swapRange && startDate && selectingDate) {
-      return isSameDay(day, isBefore(selectingDate, startDate) ? startDate : selectingDate);
+      return isSameDay(
+        day,
+        isBefore(selectingDate, startDate) ? startDate : selectingDate,
+      );
     }
 
     if (selectsRange) {

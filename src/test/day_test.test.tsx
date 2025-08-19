@@ -914,7 +914,7 @@ describe("Day", () => {
             .querySelector(".react-datepicker__day")
             ?.classList.contains(rangeDayClassName),
         ).toBe(true);
-      })
+      });
 
       it("should select range from selectingDate to startDate if selectingDate is before startDate", () => {
         const startDate = newDate();
@@ -936,7 +936,7 @@ describe("Day", () => {
 
       it("should select as range if selectingDate is equal to startDate", () => {
         const startDate = newDate();
-        const selectingDate = startDate
+        const selectingDate = startDate;
 
         const containerStartDay = renderDay(startDate, {
           startDate,
@@ -967,7 +967,6 @@ describe("Day", () => {
             ?.classList.contains(rangeDayStartClassName),
         ).toBe(true);
 
-
         const containerEndDay = renderDay(startDate, {
           startDate,
           selectingDate,
@@ -980,7 +979,7 @@ describe("Day", () => {
             .querySelector(".react-datepicker__day")
             ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
-      })
+      });
 
       it("should set selectingDate as the end of range and startDate as the start of range if selectingDate is after startDate", () => {
         const startDate = newDate();
@@ -1010,9 +1009,9 @@ describe("Day", () => {
             .querySelector(".react-datepicker__day")
             ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
-      })
+      });
 
-      it('should set startDate as the end and start range if selectionDate equal startDate', () => {
+      it("should set startDate as the end and start range if selectionDate equal startDate", () => {
         const startDate = newDate();
         const selectingDate = startDate;
 
@@ -1041,7 +1040,7 @@ describe("Day", () => {
             ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
       });
-    })
+    });
   });
 
   describe("today", () => {
