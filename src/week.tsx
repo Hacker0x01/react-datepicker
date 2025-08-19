@@ -198,7 +198,7 @@ export default class Week extends Component<WeekProps> {
       ? this.props.weekClassName(this.startOfWeek())
       : undefined;
     return (
-      <div className={clsx(weekNumberClasses, customWeekClassName)}>
+      <div className={clsx(weekNumberClasses, customWeekClassName)} role="row">
         {this.renderDays()}
       </div>
     );

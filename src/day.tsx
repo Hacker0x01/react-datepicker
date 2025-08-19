@@ -597,7 +597,7 @@ export default class Day extends Component<DayProps> {
       }
       tabIndex={this.getTabIndex()}
       aria-label={this.getAriaLabel()}
-      role="option"
+      role="gridcell"
       title={this.getTitle()}
       aria-disabled={this.isDisabled()}
       aria-current={this.isCurrentDay() ? "date" : undefined}
