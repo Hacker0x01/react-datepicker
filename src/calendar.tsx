@@ -909,11 +909,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.props,
     );
 
-    const showDayNames =
-      !this.props.showMonthYearPicker &&
-      !this.props.showQuarterYearPicker &&
-      !this.props.showYearPicker;
-
     return (
       <div
         className="react-datepicker__header react-datepicker__header--custom"
@@ -935,11 +930,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           prevYearButtonDisabled,
           nextYearButtonDisabled,
         })}
-        {showDayNames && (
-          <div className="react-datepicker__day-names">
-            {this.header(monthDate)}
-          </div>
-        )}
       </div>
     );
   };

@@ -1124,10 +1124,7 @@ export default class Month extends Component<MonthProps> {
 
     // For regular calendar view, use table structure
     return (
-      <div
-        role="table"
-        aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
-      >
+      <div role="table">
         {this.props.dayNamesHeader && (
           <div role="rowgroup">{this.props.dayNamesHeader}</div>
         )}
@@ -1139,6 +1136,7 @@ export default class Month extends Component<MonthProps> {
           onPointerLeave={
             this.props.usePointerEvent ? this.handleMouseLeave : undefined
           }
+          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
           role="rowgroup"
         >
           {this.renderWeeks()}
