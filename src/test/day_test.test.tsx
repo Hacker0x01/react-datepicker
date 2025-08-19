@@ -898,7 +898,7 @@ describe("Day", () => {
     });
 
     describe("for a date picker with selectsRange and swapRange prop", () => {
-      it("should select range from startDate to selectingDate if selectingDate more than startDate", () => {
+      it("should select range from startDate to selectingDate if selectingDate is after startDate", () => {
         const startDate = newDate();
         const dayInRange = addDays(startDate, 1);
         const selectingDate = addDays(startDate, 2);
@@ -916,7 +916,7 @@ describe("Day", () => {
         ).toBe(true);
       })
 
-      it("should select range from selectingDate to startDate if selectingDate less than startDate", () => {
+      it("should select range from selectingDate to startDate if selectingDate is before startDate", () => {
         const startDate = newDate();
         const dayInRange = subDays(startDate, 1);
         const selectingDate = subDays(startDate, 2);
@@ -948,6 +948,97 @@ describe("Day", () => {
           containerStartDay
             .querySelector(".react-datepicker__day")
             ?.classList.contains(rangeDayClassName),
+        ).toBe(true);
+      });
+
+      it("should set selectingDate as the start of range and startDate as the end of range if selectingDate is before startDate", () => {
+        const startDate = newDate();
+        const selectingDate = subDays(startDate, 1);
+
+        const containerStartDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayStartClassName),
+        ).toBe(true);
+
+
+        const containerEndDay = renderDay(startDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+
+        expect(
+          containerEndDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayEndClassName),
+        ).toBe(true);
+      })
+
+      it("should set selectingDate as the end of range and startDate as the start of range if selectingDate is after startDate", () => {
+        const startDate = newDate();
+        const selectingDate = addDays(startDate, 1);
+
+        const containerStartDay = renderDay(startDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayStartClassName),
+        ).toBe(true);
+
+        const containerEndDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+
+        expect(
+          containerEndDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayEndClassName),
+        ).toBe(true);
+      })
+
+      it('should set startDate as the end and start range if selectionDate equal startDate', () => {
+        const startDate = newDate();
+        const selectingDate = startDate;
+
+        const containerStartDay = renderDay(startDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+        expect(
+          containerStartDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayStartClassName),
+        ).toBe(true);
+
+        const containerEndDay = renderDay(selectingDate, {
+          startDate,
+          selectingDate,
+          selectsRange: true,
+          swapRange: true,
+        });
+
+        expect(
+          containerEndDay
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
       });
     })
