@@ -128,5 +128,5 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
   },
-  "packageManager": "yarn@4.7.0"
+  "packageManager": "yarn@4.9.2"
 }
