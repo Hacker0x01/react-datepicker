@@ -81,7 +81,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.28.0":
+"@babel/core@npm:^7.28.3":
   version: 7.28.3
   resolution: "@babel/core@npm:7.28.3"
   dependencies:
@@ -1295,10 +1295,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/pluginutils@npm:1.0.0-beta.30":
-  version: 1.0.0-beta.30
-  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.30"
-  checksum: 10c0/aff8b532cb9d82d94c9a4101fa12ecb10620ad47d52dbb9135a5c65bde1ad19895b41026b821f4d607083699239a5d0010198401b6a6a54ab6a10d0015302768
+"@rolldown/pluginutils@npm:1.0.0-beta.32":
+  version: 1.0.0-beta.32
+  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.32"
+  checksum: 10c0/ba3582fc3c35c8eb57b0df2d22d0733b1be83d37edcc258203364773f094f58fc0cb7a056d604603573a69dd0105a466506cad467f59074e1e53d0dc26191f06
   languageName: node
   linkType: hard
 
@@ -1529,19 +1529,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@vitejs/plugin-react@npm:5.0.0"
+"@vitejs/plugin-react@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@vitejs/plugin-react@npm:5.0.1"
   dependencies:
-    "@babel/core": "npm:^7.28.0"
+    "@babel/core": "npm:^7.28.3"
     "@babel/plugin-transform-react-jsx-self": "npm:^7.27.1"
     "@babel/plugin-transform-react-jsx-source": "npm:^7.27.1"
-    "@rolldown/pluginutils": "npm:1.0.0-beta.30"
+    "@rolldown/pluginutils": "npm:1.0.0-beta.32"
     "@types/babel__core": "npm:^7.20.5"
     react-refresh: "npm:^0.17.0"
   peerDependencies:
     vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: 10c0/e5813839d319ab5dc1b90cab40b6c08388f26e456166ba9df10ffc3c3f4ecc594cec06715b5c93390bba56140ca5f68a18f2233f7d275d77e5bbfeb979e4fd9b
+  checksum: 10c0/2641171beedfc38edc5671abb47706906f9af2a79a6dfff4e946106c9550de4f83ccae41c164f3ee26a3edf07127ecc0e415fe5cddbf7abc71fbb2540016c27d
   languageName: node
   linkType: hard
 
@@ -4569,7 +4569,7 @@ __metadata:
     "@eslint/js": "npm:^9.33.0"
     "@types/react": "npm:^19.1.10"
     "@types/react-dom": "npm:^19.1.7"
-    "@vitejs/plugin-react": "npm:^5.0.0"
+    "@vitejs/plugin-react": "npm:^5.0.1"
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9.33.0"
     eslint-plugin-react: "npm:^7.37.5"
