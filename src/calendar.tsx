@@ -839,6 +839,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     );
   };
 
+  renderDayNamesHeader = (monthDate: Date) => (
+    <div className="react-datepicker__day-names" role="row">
+      {this.header(monthDate)}
+    </div>
+  );
+
   renderDefaultHeader = ({ monthDate, i }: { monthDate: Date; i: number }) => (
     <div
       className={`react-datepicker__header ${
@@ -855,9 +861,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         {this.renderMonthDropdown(i !== 0)}
         {this.renderMonthYearDropdown(i !== 0)}
         {this.renderYearDropdown(i !== 0)}
-      </div>
-      <div className="react-datepicker__day-names" role="row">
-        {this.header(monthDate)}
       </div>
     </div>
   );
@@ -906,11 +909,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.props,
     );
 
-    const showDayNames =
-      !this.props.showMonthYearPicker &&
-      !this.props.showQuarterYearPicker &&
-      !this.props.showYearPicker;
-
     return (
       <div
         className="react-datepicker__header react-datepicker__header--custom"
@@ -932,11 +930,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           prevYearButtonDisabled,
           nextYearButtonDisabled,
         })}
-        {showDayNames && (
-          <div className="react-datepicker__day-names">
-            {this.header(monthDate)}
-          </div>
-        )}
       </div>
     );
   };
@@ -1030,6 +1023,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             selectingDate={this.state.selectingDate}
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
+            dayNamesHeader={this.renderDayNamesHeader(monthDate)}
           />
         </div>,
       );

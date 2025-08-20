@@ -140,6 +140,7 @@ interface MonthProps
   weekAriaLabelPrefix?: WeekProps["ariaLabelPrefix"];
   chooseDayAriaLabelPrefix?: WeekProps["chooseDayAriaLabelPrefix"];
   disabledDayAriaLabelPrefix?: WeekProps["disabledDayAriaLabelPrefix"];
+  dayNamesHeader?: React.ReactNode;
 }
 
 /**
@@ -1101,23 +1102,45 @@ export default class Month extends Component<MonthProps> {
       ? ariaLabelPrefix.trim() + " "
       : "";
 
+    const shouldUseListboxRole = showMonthYearPicker || showQuarterYearPicker;
+
+    if (shouldUseListboxRole) {
+      return (
+        <div
+          className={this.getClassNames()}
+          onMouseLeave={
+            !this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          role="listbox"
+        >
+          {showMonthYearPicker ? this.renderMonths() : this.renderQuarters()}
+        </div>
+      );
+    }
+
+    // For regular calendar view, use table structure
     return (
-      <div
-        className={this.getClassNames()}
-        onMouseLeave={
-          !this.props.usePointerEvent ? this.handleMouseLeave : undefined
-        }
-        onPointerLeave={
-          this.props.usePointerEvent ? this.handleMouseLeave : undefined
-        }
-        aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
-        role="listbox"
-      >
-        {showMonthYearPicker
-          ? this.renderMonths()
-          : showQuarterYearPicker
-            ? this.renderQuarters()
-            : this.renderWeeks()}
+      <div role="table">
+        {this.props.dayNamesHeader && (
+          <div role="rowgroup">{this.props.dayNamesHeader}</div>
+        )}
+        <div
+          className={this.getClassNames()}
+          onMouseLeave={
+            !this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          role="rowgroup"
+        >
+          {this.renderWeeks()}
+        </div>
       </div>
     );
   }
