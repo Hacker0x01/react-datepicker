@@ -478,7 +478,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (this.props.showWeekNumbers) {
       dayNames.push(
         <div key="W" className="react-datepicker__day-name" role="columnheader">
-          <span className="sr-only">Week number</span>
+          <span className="react-datepicker__sr-only">Week number</span>
           <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
       );
@@ -498,7 +498,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             role="columnheader"
             className={clsx("react-datepicker__day-name", weekDayClassName)}
           >
-            <span className="sr-only">
+            <span className="react-datepicker__sr-only">
               {formatDate(day, "EEEE", this.props.locale)}
             </span>
             <span aria-hidden="true">{weekDayName}</span>

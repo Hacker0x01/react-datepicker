@@ -3812,7 +3812,7 @@ describe("DatePicker", () => {
   });
 
   describe("Calendar Header Accessibility", () => {
-    it("renders day names with sr-only full weekday and visible short name", () => {
+    it("renders day names with react-datepicker__sr-only full weekday and visible short name", () => {
       const { container } = render(<DatePicker />);
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
@@ -3824,7 +3824,7 @@ describe("DatePicker", () => {
 
       headers.forEach((header) => {
         // Should have a visually hidden span with the full weekday name
-        const srOnly = header.querySelector(".sr-only");
+        const srOnly = header.querySelector(".react-datepicker__sr-only");
         expect(srOnly).toBeTruthy();
         expect(srOnly?.textContent?.length).toBeGreaterThan(2);
 
@@ -3835,7 +3835,7 @@ describe("DatePicker", () => {
       });
     });
 
-    it("renders week number column header with sr-only label and visible #", () => {
+    it("renders week number column header with react-datepicker__sr-only label and visible #", () => {
       const { container } = render(<DatePicker showWeekNumbers />);
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
@@ -3846,7 +3846,9 @@ describe("DatePicker", () => {
       expect(headers.length).toBe(8);
 
       const weekNumberHeader = headers[0] as Element;
-      const srOnly = weekNumberHeader.querySelector(".sr-only");
+      const srOnly = weekNumberHeader.querySelector(
+        ".react-datepicker__sr-only",
+      );
       expect(srOnly).toBeTruthy();
       expect(srOnly?.textContent?.trim()?.toLowerCase()).toEqual("week number");
 

@@ -3,7 +3,7 @@
 @use "mixins" as *;
 
 /* sr-only utility class for accessibility */
-.sr-only {
+.react-datepicker__sr-only {
   position: absolute;
   width: 1px;
   height: 1px;

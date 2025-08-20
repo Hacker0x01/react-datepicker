@@ -2244,7 +2244,7 @@ describe("Calendar", () => {
 
     const header = container.querySelector(".react-datepicker__header");
     const dayNameElements = header?.querySelectorAll(
-      ".react-datepicker__day-name > span.sr-only",
+      ".react-datepicker__day-name > span.react-datepicker__sr-only",
     );
 
     dayNameElements?.forEach((element, index) => {
