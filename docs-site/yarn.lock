@@ -1511,12 +1511,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19.1.7":
-  version: 19.1.7
-  resolution: "@types/react-dom@npm:19.1.7"
+"@types/react-dom@npm:^19.1.9":
+  version: 19.1.9
+  resolution: "@types/react-dom@npm:19.1.9"
   peerDependencies:
     "@types/react": ^19.0.0
-  checksum: 10c0/8db5751c1567552fe4e1ece9f5823b682f2994ec8d30ed34ba0ef984e3c8ace1435f8be93d02f55c350147e78ac8c4dbcd8ed2c3b6a60f575bc5374f588c51c9
+  checksum: 10c0/34c8dda86c1590b3ef0e7ecd38f9663a66ba2dd69113ba74fb0adc36b83bbfb8c94c1487a2505282a5f7e5e000d2ebf36f4c0fd41b3b672f5178fd1d4f1f8f58
   languageName: node
   linkType: hard
 
@@ -4568,7 +4568,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.33.0"
     "@types/react": "npm:^19.1.10"
-    "@types/react-dom": "npm:^19.1.7"
+    "@types/react-dom": "npm:^19.1.9"
     "@vitejs/plugin-react": "npm:^5.0.1"
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9.33.0"
