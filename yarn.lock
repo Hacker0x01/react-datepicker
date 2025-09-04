@@ -9564,7 +9564,7 @@ __metadata:
     sass: "npm:1.90.0"
     slugify: "npm:^1.6.6"
     stylelint: "npm:^16.14.1"
-    stylelint-config-standard: "npm:^38.0.0"
+    stylelint-config-standard: "npm:^39.0.0"
     stylelint-config-standard-scss: "npm:^15.0.1"
     stylelint-scss: "npm:^6.11.0"
     ts-jest: "npm:^29.2.5"
@@ -10697,6 +10697,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stylelint-config-recommended@npm:^17.0.0":
+  version: 17.0.0
+  resolution: "stylelint-config-recommended@npm:17.0.0"
+  peerDependencies:
+    stylelint: ^16.23.0
+  checksum: 10c0/49e5d1c0f58197b2c5585b85fad814fed9bdec44c9870368c46a762664c5ff158c1145b6337456ae194409d692992b5b87421d62880422f71d8a3360417f5ad1
+  languageName: node
+  linkType: hard
+
 "stylelint-config-standard-scss@npm:^15.0.1":
   version: 15.0.1
   resolution: "stylelint-config-standard-scss@npm:15.0.1"
@@ -10721,6 +10730,17 @@ __metadata:
   peerDependencies:
     stylelint: ^16.18.0
   checksum: 10c0/8b52c7b7d6287c7495a8fe3a681e07ea9478374e7e66b28d61779072d46cd5b845530b2410df7496a008a8efafe834fb46cf07792f4cf57f996e39f24a801b90
+  languageName: node
+  linkType: hard
+
+"stylelint-config-standard@npm:^39.0.0":
+  version: 39.0.0
+  resolution: "stylelint-config-standard@npm:39.0.0"
+  dependencies:
+    stylelint-config-recommended: "npm:^17.0.0"
+  peerDependencies:
+    stylelint: ^16.23.0
+  checksum: 10c0/b965f2708b0a506beebbe75ce6533ea56c58988e6b473c4789fb5a33f9911a4e163c0d27553d080fda6905cffefc7b7c34794a6d396207606478551ffa662efa
   languageName: node
   linkType: hard
 
