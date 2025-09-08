@@ -4819,4 +4819,68 @@ describe("DatePicker", () => {
       });
     });
   });
+
+  describe("onChangeRaw - selectionMeta", () => {
+    it("should include selectionMeta as a second param to the onChangeRaw when user selected a date to provide extra meta about the selected date element", () => {
+      const selectedDate = newDate("2025-11-05");
+      const onChangeRawSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          dateFormat="MM/dd/yyyy"
+          selected={selectedDate}
+          onChangeRaw={onChangeRawSpy}
+        />,
+      );
+      expect(onChangeRawSpy).not.toHaveBeenCalled();
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      const day = safeQuerySelector(container, ".react-datepicker__day--002");
+      fireEvent.click(day);
+
+      expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
+      const params = onChangeRawSpy.mock.calls[0];
+      expect(params.length).toBe(2);
+
+      const eventObject = params[0];
+      expect(typeof eventObject).toBe("object");
+
+      const selectionMeta = params[1];
+      expect(typeof selectionMeta).toBe("object");
+      expect(selectionMeta).toHaveProperty("date");
+      expect(selectionMeta).toHaveProperty("formattedDate");
+      expect(selectionMeta.formattedDate).toBe("11/02/2025");
+      expect(selectionMeta.date).toBeInstanceOf(Date);
+    });
+
+    it("should not include selectionMeta as a second param to the onChangeRaw when user updated date using date input", () => {
+      const selectedDate = newDate("2025-11-05");
+      const onChangeRawSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          dateFormat="MM/dd/yyyy"
+          selected={selectedDate}
+          onChangeRaw={onChangeRawSpy}
+        />,
+      );
+      expect(onChangeRawSpy).not.toHaveBeenCalled();
+
+      const input = safeQuerySelector(container, "input");
+      const inputValue = "11/02/2025";
+      fireEvent.change(input, {
+        target: {
+          value: inputValue,
+        },
+      });
+      expect(onChangeRawSpy).toHaveBeenCalledTimes(1);
+
+      const params = onChangeRawSpy.mock.calls[0];
+      expect(params.length).toBe(1);
+
+      const eventObject = params[0];
+      expect(typeof eventObject).toBe("object");
+      expect(eventObject.target?.value).toBe(inputValue);
+    });
+  });
 });

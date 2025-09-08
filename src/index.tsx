@@ -194,6 +194,10 @@ export type DatePickerProps = OmitUnion<
     rangeSeparator?: string;
     onChangeRaw?: (
       event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+      selectionMeta?: {
+        date: Date;
+        formattedDate: string;
+      },
     ) => void;
     onSelect?: (
       date: Date | null,
@@ -717,7 +721,9 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   ) => {
     if (this.props.readOnly) return;
 
-    const { selectsRange, startDate, endDate, swapRange } = this.props;
+    const { selectsRange, startDate, endDate, locale, swapRange } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
     const isDateSelectionComplete =
       !selectsRange ||
       (startDate && !endDate && (swapRange || !isDateBefore(date, startDate)));
@@ -732,7 +738,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       this.sendFocusBackToInput();
     }
     if (this.props.onChangeRaw) {
-      this.props.onChangeRaw(event);
+      const formattedDate = safeDateFormat(date, {
+        dateFormat,
+        locale,
+      });
+      this.props.onChangeRaw(event, { date, formattedDate });
     }
     this.setSelected(date, event, false, monthSelectedIn);
     if (this.props.showDateSelect) {

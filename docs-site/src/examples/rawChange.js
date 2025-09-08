@@ -1,6 +1,12 @@
 () => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const handleChangeRaw = (value) => {
+  const handleChangeRaw = (value, selectedDateMeta) => {
+    console.log(
+      selectedDateMeta
+        ? `Selected Date Meta: ${JSON.stringify(selectedDateMeta)}`
+        : "No Selection Meta is available",
+    );
+
     if (value === "tomorrow") {
       setSelectedDate(addDays(new Date(), 1));
     }
@@ -10,7 +16,9 @@
       selected={selectedDate}
       onChange={(date) => setSelectedDate(date)}
       placeholderText='Enter "tomorrow"'
-      onChangeRaw={(event) => handleChangeRaw(event.target.value)}
+      onChangeRaw={(event, selectedDateMeta) =>
+        handleChangeRaw(event.target.value, selectedDateMeta)
+      }
     />
   );
 };
