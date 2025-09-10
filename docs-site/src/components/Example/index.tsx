@@ -27,7 +27,7 @@ export default class CodeExampleComponent extends React.Component<
   TState
 > {
   state: TState = {
-    activeTab: "js",
+    activeTab: "ts",
   };
 
   componentDidMount() {
@@ -58,12 +58,6 @@ export default class CodeExampleComponent extends React.Component<
         <h2 className="example__heading">{title}</h2>
         {description && <p>{description}</p>}
         <div className="example__tabs">
-          <button
-            className={`example__tab ${activeTab === "js" ? "active" : ""}`}
-            onClick={() => this.handleTabChange("js")}
-          >
-            JavaScript
-          </button>
           {tsCode && (
             <button
               className={`example__tab ${activeTab === "ts" ? "active" : ""}`}
@@ -72,6 +66,12 @@ export default class CodeExampleComponent extends React.Component<
               TypeScript
             </button>
           )}
+          <button
+            className={`example__tab ${activeTab === "js" ? "active" : ""}`}
+            onClick={() => this.handleTabChange("js")}
+          >
+            JavaScript
+          </button>
         </div>
         <div className="row">
           <LiveProvider

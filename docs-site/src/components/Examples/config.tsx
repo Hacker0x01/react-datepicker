@@ -80,9 +80,9 @@ import StrictParsing from "../../examples/js/strictParsing?raw";
 import MonthPicker from "../../examples/js/monthPicker?raw";
 import WeekPicker from "../../examples/js/weekPicker?raw";
 import ExcludeWeeks from "../../examples/js/excludeWeeks?raw";
-import monthPickerFullName from "../../examples/js/monthPickerFullName?raw";
-import monthPickerTwoColumns from "../../examples/js/monthPickerTwoColumns?raw";
-import monthPickerFourColumns from "../../examples/js/monthPickerFourColumns?raw";
+import MonthPickerFullName from "../../examples/js/monthPickerFullName?raw";
+import MonthPickerTwoColumns from "../../examples/js/monthPickerTwoColumns?raw";
+import MonthPickerFourColumns from "../../examples/js/monthPickerFourColumns?raw";
 import RangeMonthPicker from "../../examples/js/rangeMonthPicker?raw";
 import RangeMonthPickerSelectsRange from "../../examples/js/rangeMonthPickerSelectsRange?raw";
 import QuarterPicker from "../../examples/js/quarterPicker?raw";
@@ -96,7 +96,7 @@ import CustomTimeInput from "../../examples/js/customTimeInput?raw";
 import CloseOnScroll from "../../examples/js/closeOnScroll?raw";
 import CloseOnScrollCallback from "../../examples/js/closeOnScrollCallback?raw";
 import SelectsRange from "../../examples/js/selectsRange?raw";
-import selectsRangeWithDisabledDates from "../../examples/js/selectsRangeWithDisabledDates?raw";
+import SelectsRangeWithDisabledDates from "../../examples/js/selectsRangeWithDisabledDates?raw";
 import CalendarStartDay from "../../examples/js/calendarStartDay?raw";
 import ExternalForm from "../../examples/js/externalForm?raw";
 import CalendarIcon from "../../examples/js/calendarIcon?raw";
@@ -108,170 +108,168 @@ import ToggleCalendarOnIconClick from "../../examples/js/toggleCalendarOnIconCli
 import RangeSwapRange from "../../examples/js/rangeSwapRange?raw";
 
 // TS Examples
-import {
-  defaultTS,
-  calendarContainerTS,
-  calendarIconTS,
-  calendarIconSvgIconTS,
-  calendarIconExternalTS,
-  calendarStartDayTS,
-  onCalendarOpenStateCallbacksTS,
-  toggleCalendarOnIconClickTS,
-  childrenTS,
-  clearInputTS,
-  closeOnScrollTS,
-  closeOnScrollCallbackTS,
-  configureFloatingUIS,
-  customInputTS,
-  renderCustomHeaderTS,
-  renderCustomHeaderTwoMonthsTS,
-  renderCustomDayTS,
-  renderCustomMonthTS,
-  renderCustomQuarterTS,
-  renderCustomYearTS,
-  customCalendarClassNameTS,
-  customClassNameTS,
-  customDayClassNameTS,
-  customDateFormatTS,
-  customTimeClassNameTS,
-  customTimeInputTS,
-  dateRangeTS,
-  selectsRangeTS,
-  selectsRangeWithDisabledDatesTS,
-  dateRangeWithShowDisabledNavigationTS,
-  dateRangeInputWithClearButtonTS,
-  dateRangeWithPortalTS,
-  disabledTS,
-  disabledKeyboardNavigationTS,
-  weekNumbersTS,
-  dontCloseOnSelectTS,
-  excludeDatesTS,
-  excludeDatesWithMessageTS,
-  excludeDateIntervalsTS,
-  excludeDatesMonthPickerTS,
-  excludeDatesRangeMonthPickerTS,
-  excludeTimesTS,
-  filterDatesTS,
-  filterTimesTS,
-  fixedCalendarTS,
-  rawChangeTS,
-  highlightDatesTS,
-  highlightDatesRangesTS,
-  holidayDatesTS,
-  includeDatesTS,
-  includeDateIntervalsTS,
-  includeDatesMonthPickerTS,
-  includeTimesTS,
-  injectTimesTS,
-  inlineTS,
-  inlineVisibleTS,
-  timeInputTS,
-  localeTS,
-  localeWithTimeTS,
-  localeWithoutGlobalVariableTS,
-  maxDateTS,
-  minDateTS,
-  monthPickerTS,
-  monthPickerFullNameTS,
-  monthPickerTwoColumnsTS,
-  monthPickerFourColumnsTS,
-  monthDropdownTS,
-  monthDropdownShortTS,
-  monthYearDropdownTS,
-  multiMonthTS,
-  multiMonthDropdownTS,
-  multiMonthInlineTS,
-  noAnchorArrowTS,
-  onBlurCallbacksTS,
-  openToDateTS,
-  placeholderTextTS,
-  portalTS,
-  portalByIdTS,
-  withPortalByIdTS,
-  quarterPickerTS,
-  rangeMonthPickerTS,
-  rangeMonthPickerSelectsRangeTS,
-  rangeQuarterPickerTS,
-  rangeQuarterPickerSelectsRangeTS,
-  rangeSwapRangeTS,
-  readOnlyTS,
-  showTimeTS,
-  showTimeOnlyTS,
-  hideTimeCaptionTS,
-  multiMonthPreviousTS,
-  specificDateRangeTS,
-  excludeTimePeriodTS,
-  selectsMultipleTS,
-  selectsMultipleMonthsTS,
-  strictParsingTS,
-  tabIndexTS,
-  todayTS,
-  yearPickerTS,
-  rangeYearPickerTS,
-  rangeYearPickerSelectsRangeTS,
-  yearDropdownTS,
-  yearSelectDropdownTS,
-  yearItemNumberTS,
-  weekPickerTS,
-  excludeWeeksTS,
-  externalFormTS,
-} from "../../examples/ts";
+import DefaultTS from "../../examples/ts/default?raw";
+import CalendarContainerTS from "../../examples/ts/calendarContainer?raw";
+import CalendarIconTS from "../../examples/ts/calendarIcon?raw";
+import CalendarIconSvgIconTS from "../../examples/ts/calendarIconSvgIcon?raw";
+import CalendarIconExternalTS from "../../examples/ts/calendarIconExternal?raw";
+import CalendarStartDayTS from "../../examples/ts/calendarStartDay?raw";
+import OnCalendarOpenStateCallbacksTS from "../../examples/ts/onCalendarOpenStateCallbacks?raw";
+import ToggleCalendarOnIconClickTS from "../../examples/ts/toggleCalendarOnIconClick?raw";
+import ChildrenTS from "../../examples/ts/children?raw";
+import ClearInputTS from "../../examples/ts/clearInput?raw";
+import CloseOnScrollTS from "../../examples/ts/closeOnScroll?raw";
+import CloseOnScrollCallbackTS from "../../examples/ts/closeOnScrollCallback?raw";
+import ConfigureFloatingUITS from "../../examples/ts/configureFloatingUI?raw";
+import CustomInputTS from "../../examples/ts/customInput?raw";
+import RenderCustomHeaderTS from "../../examples/ts/renderCustomHeader?raw";
+import RenderCustomHeaderTwoMonthsTS from "../../examples/ts/renderCustomHeaderTwoMonths?raw";
+import RenderCustomDayTS from "../../examples/ts/renderCustomDay?raw";
+import RenderCustomMonthTS from "../../examples/ts/renderCustomMonth?raw";
+import RenderCustomQuarterTS from "../../examples/ts/renderCustomQuarter?raw";
+import RenderCustomYearTS from "../../examples/ts/renderCustomYear?raw";
+import CustomCalendarClassNameTS from "../../examples/ts/customCalendarClassName?raw";
+import CustomClassNameTS from "../../examples/ts/customClassName?raw";
+import CustomDayClassNameTS from "../../examples/ts/customDayClassName?raw";
+import CustomDateFormatTS from "../../examples/ts/customDateFormat?raw";
+import CustomTimeClassNameTS from "../../examples/ts/customTimeClassName?raw";
+import CustomTimeInputTS from "../../examples/ts/customTimeInput?raw";
+import DateRangeTS from "../../examples/ts/dateRange?raw";
+import SelectsRangeTS from "../../examples/ts/selectsRange?raw";
+import SelectsRangeWithDisabledDatesTS from "../../examples/ts/selectsRangeWithDisabledDates?raw";
+import DateRangeWithShowDisabledNavigationTS from "../../examples/ts/dateRangeWithShowDisabledNavigation?raw";
+import DateRangeInputWithClearButtonTS from "../../examples/ts/dateRangeInputWithClearButton?raw";
+import DateRangeWithPortalTS from "../../examples/ts/dateRangeWithPortal?raw";
+import DisabledTS from "../../examples/ts/disabled?raw";
+import DisabledKeyboardNavigationTS from "../../examples/ts/disabledKeyboardNavigation?raw";
+import WeekNumbersTS from "../../examples/ts/weekNumbers?raw";
+import DontCloseOnSelectTS from "../../examples/ts/dontCloseOnSelect?raw";
+import ExcludeDatesTS from "../../examples/ts/excludeDates?raw";
+import ExcludeDatesWithMessageTS from "../../examples/ts/excludeDatesWithMessage?raw";
+import ExcludeDateIntervalsTS from "../../examples/ts/excludeDateIntervals?raw";
+import ExcludeDatesMonthPickerTS from "../../examples/ts/excludeDatesMonthPicker?raw";
+import ExcludeDatesRangeMonthPickerTS from "../../examples/ts/excludeDatesRangeMonthPicker?raw";
+import ExcludeTimesTS from "../../examples/ts/excludeTimes?raw";
+import FilterDatesTS from "../../examples/ts/filterDates?raw";
+import FilterTimesTS from "../../examples/ts/filterTimes?raw";
+import FixedCalendarTS from "../../examples/ts/fixedCalendar?raw";
+import RawChangeTS from "../../examples/ts/rawChange?raw";
+import HighlightDatesTS from "../../examples/ts/highlightDates?raw";
+import HighlightDatesRangesTS from "../../examples/ts/highlightDatesRanges?raw";
+import HolidayDatesTS from "../../examples/ts/holidayDates?raw";
+import IncludeDatesTS from "../../examples/ts/includeDates?raw";
+import IncludeDateIntervalsTS from "../../examples/ts/includeDateIntervals?raw";
+import IncludeDatesMonthPickerTS from "../../examples/ts/includeDatesMonthPicker?raw";
+import IncludeTimesTS from "../../examples/ts/includeTimes?raw";
+import InjectTimesTS from "../../examples/ts/injectTimes?raw";
+import InlineTS from "../../examples/ts/inline?raw";
+import InlineVisibleTS from "../../examples/ts/inlineVisible?raw";
+import TimeInputTS from "../../examples/ts/timeInput?raw";
+import LocaleTS from "../../examples/ts/locale?raw";
+import LocaleWithTimeTS from "../../examples/ts/localeWithTime?raw";
+import LocaleWithoutGlobalVariableTS from "../../examples/ts/localeWithoutGlobalVariable?raw";
+import MinDateTS from "../../examples/ts/minDate?raw";
+import MaxDateTS from "../../examples/ts/maxDate?raw";
+import MonthPickerTS from "../../examples/ts/monthPicker?raw";
+import MonthPickerFullNameTS from "../../examples/ts/monthPickerFullName?raw";
+import MonthPickerTwoColumnsTS from "../../examples/ts/monthPickerTwoColumns?raw";
+import MonthPickerFourColumnsTS from "../../examples/ts/monthPickerFourColumns?raw";
+import MonthDropdownTS from "../../examples/ts/monthDropdown?raw";
+import MonthDropdownShortTS from "../../examples/ts/monthDropdownShort?raw";
+import MonthYearDropdownTS from "../../examples/ts/monthYearDropdown?raw";
+import MultiMonthTS from "../../examples/ts/multiMonth?raw";
+import MultiMonthDropdownTS from "../../examples/ts/multiMonthDropdown?raw";
+import MultiMonthInlineTS from "../../examples/ts/multiMonthInline?raw";
+import NoAnchorArrowTS from "../../examples/ts/noAnchorArrow?raw";
+import OnBlurCallbacksTS from "../../examples/ts/onBlurCallbacks?raw";
+import OpenToDateTS from "../../examples/ts/openToDate?raw";
+import PlaceholderTextTS from "../../examples/ts/placeholderText?raw";
+import PortalTS from "../../examples/ts/portal?raw";
+import PortalByIdTS from "../../examples/ts/portalById?raw";
+import WithPortalByIdTS from "../../examples/ts/withPortalById?raw";
+import QuarterPickerTS from "../../examples/ts/quarterPicker?raw";
+import RangeMonthPickerTS from "../../examples/ts/rangeMonthPicker?raw";
+import RangeMonthPickerSelectsRangeTS from "../../examples/ts/rangeMonthPickerSelectsRange?raw";
+import RangeQuarterPickerTS from "../../examples/ts/rangeQuarterPicker?raw";
+import RangeQuarterPickerSelectsRangeTS from "../../examples/ts/rangeQuarterPickerSelectsRange?raw";
+import RangeSwapRangeTS from "../../examples/ts/rangeSwapRange?raw";
+import ReadOnlyTS from "../../examples/ts/readOnly?raw";
+import ShowTimeTS from "../../examples/ts/showTime?raw";
+import ShowTimeOnlyTS from "../../examples/ts/showTimeOnly?raw";
+import HideTimeCaptionTS from "../../examples/ts/hideTimeCaption?raw";
+import MultiMonthPreviousTS from "../../examples/ts/multiMonthPrevious?raw";
+import SpecificDateRangeTS from "../../examples/ts/specificDateRange?raw";
+import ExcludeTimePeriodTS from "../../examples/ts/excludeTimePeriod?raw";
+import SelectsMultipleTS from "../../examples/ts/selectsMultiple?raw";
+import SelectsMultipleMonthsTS from "../../examples/ts/selectsMultipleMonths?raw";
+import StrictParsingTS from "../../examples/ts/strictParsing?raw";
+import TabIndexTS from "../../examples/ts/tabIndex?raw";
+import TodayTS from "../../examples/ts/today?raw";
+import YearPickerTS from "../../examples/ts/yearPicker?raw";
+import RangeYearPickerTS from "../../examples/ts/rangeYearPicker?raw";
+import RangeYearPickerSelectsRangeTS from "../../examples/ts/rangeYearPickerSelectsRange?raw";
+import YearDropdownTS from "../../examples/ts/yearDropdown?raw";
+import YearSelectDropdownTS from "../../examples/ts/yearSelectDropdown?raw";
+import YearItemNumberTS from "../../examples/ts/yearItemNumber?raw";
+import WeekPickerTS from "../../examples/ts/weekPicker?raw";
+import ExcludeWeeksTS from "../../examples/ts/excludeWeeks?raw";
+import ExternalFormTS from "../../examples/ts/externalForm?raw";
 
 export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Default",
     component: Default,
-    componentTS: defaultTS,
+    componentTS: DefaultTS,
   },
   {
     title: "Calendar Icon",
     component: CalendarIcon,
-    componentTS: calendarIconTS,
+    componentTS: CalendarIconTS,
   },
   {
     title: "Calendar Icon using React Svg Component",
     component: CalendarIconSvgIcon,
-    componentTS: calendarIconSvgIconTS,
+    componentTS: CalendarIconSvgIconTS,
   },
   {
     title: "Calendar Icon using External Lib",
     component: CalendarIconExternal,
-    componentTS: calendarIconExternalTS,
+    componentTS: CalendarIconExternalTS,
   },
   {
     title: "Toggle Calendar open status on click of the calendar icon",
     component: ToggleCalendarOnIconClick,
-    componentTS: toggleCalendarOnIconClickTS,
+    componentTS: ToggleCalendarOnIconClickTS,
   },
   {
     title: "Calendar container",
     component: CalendarContainer,
-    componentTS: calendarContainerTS,
+    componentTS: CalendarContainerTS,
   },
   {
     title: "Calendar open state callbacks",
     component: OnCalendarChangeStateCallbacks,
-    componentTS: onCalendarOpenStateCallbacksTS,
+    componentTS: OnCalendarOpenStateCallbacksTS,
   },
   {
     title: "Children",
     component: Children,
-    componentTS: childrenTS,
+    componentTS: ChildrenTS,
   },
   {
     title: "Clear datepicker input",
     component: ClearInput,
-    componentTS: clearInputTS,
+    componentTS: ClearInputTS,
   },
   {
     title: "Close on scroll",
     component: CloseOnScroll,
-    componentTS: closeOnScrollTS,
+    componentTS: CloseOnScrollTS,
   },
   {
     title: "Close on scroll callback",
     component: CloseOnScrollCallback,
-    componentTS: closeOnScrollCallbackTS,
+    componentTS: CloseOnScrollCallbackTS,
   },
   {
     title: "Configure Floating UI Properties",
@@ -289,484 +287,484 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
         </a>
       </div>
     ),
-    componentTS: configureFloatingUIS,
+    componentTS: ConfigureFloatingUITS,
   },
   {
     title: "Custom input",
     component: CustomInput,
-    componentTS: customInputTS,
+    componentTS: CustomInputTS,
   },
   {
     title: "Custom header",
     component: RenderCustomHeader,
-    componentTS: renderCustomHeaderTS,
+    componentTS: RenderCustomHeaderTS,
   },
   {
     title: "Custom header with two months displayed",
     component: RenderCustomHeaderTwoMonths,
-    componentTS: renderCustomHeaderTwoMonthsTS,
+    componentTS: RenderCustomHeaderTwoMonthsTS,
   },
   {
     title: "Custom Day",
     component: RenderCustomDay,
-    componentTS: renderCustomDayTS,
+    componentTS: RenderCustomDayTS,
   },
   {
     title: "Custom Month",
     component: RenderCustomMonth,
-    componentTS: renderCustomMonthTS,
+    componentTS: RenderCustomMonthTS,
   },
   {
     title: "Custom Quarter",
     component: RenderCustomQuarter,
-    componentTS: renderCustomQuarterTS,
+    componentTS: RenderCustomQuarterTS,
   },
   {
     title: "Custom Year",
     component: RenderCustomYear,
-    componentTS: renderCustomYearTS,
+    componentTS: RenderCustomYearTS,
   },
   {
     title: "Custom calendar class name",
     component: CustomCalendarClassName,
-    componentTS: customCalendarClassNameTS,
+    componentTS: CustomCalendarClassNameTS,
   },
   {
     title: "Custom class name",
     component: CustomClassName,
-    componentTS: customClassNameTS,
+    componentTS: CustomClassNameTS,
   },
   {
     title: "Custom day class name",
     component: CustomDayClassName,
-    componentTS: customDayClassNameTS,
+    componentTS: CustomDayClassNameTS,
   },
   {
     title: "Custom date format",
     component: CustomDateFormat,
-    componentTS: customDateFormatTS,
+    componentTS: CustomDateFormatTS,
   },
   {
     title: "Custom time class name",
     component: CustomTimeClassName,
-    componentTS: customTimeClassNameTS,
+    componentTS: CustomTimeClassNameTS,
   },
   {
     title: "Custom time input",
     component: CustomTimeInput,
-    componentTS: customTimeInputTS,
+    componentTS: CustomTimeInputTS,
   },
   {
     title: "Date Range",
     component: DateRange,
-    componentTS: dateRangeTS,
+    componentTS: DateRangeTS,
   },
   {
     title: "Date range for one datepicker",
     component: SelectsRange,
-    componentTS: selectsRangeTS,
+    componentTS: SelectsRangeTS,
   },
   {
     title: "Date range for one datepicker with disabled dates highlighted",
-    component: selectsRangeWithDisabledDates,
-    componentTS: selectsRangeWithDisabledDatesTS,
+    component: SelectsRangeWithDisabledDates,
+    componentTS: SelectsRangeWithDisabledDatesTS,
   },
   {
     title: "Date Range with disabled navigation shown",
     component: DateRangeWithShowDisabledNavigation,
-    componentTS: dateRangeWithShowDisabledNavigationTS,
+    componentTS: DateRangeWithShowDisabledNavigationTS,
   },
   {
     title: "Date Range using input with clear button",
     component: DateRangeInputWithClearButton,
-    componentTS: dateRangeInputWithClearButtonTS,
+    componentTS: DateRangeInputWithClearButtonTS,
   },
   {
     title: "Date Range with Portal",
     component: DateRangeWithPortal,
-    componentTS: dateRangeWithPortalTS,
+    componentTS: DateRangeWithPortalTS,
   },
   {
     title: "Disable datepicker",
     component: Disabled,
-    componentTS: disabledTS,
+    componentTS: DisabledTS,
   },
   {
     title: "Disable keyboard navigation",
     component: DisabledKeyboardNavigation,
-    componentTS: disabledKeyboardNavigationTS,
+    componentTS: DisabledKeyboardNavigationTS,
   },
   {
     title: "Display Week Numbers",
     component: WeekNumbers,
-    componentTS: weekNumbersTS,
+    componentTS: WeekNumbersTS,
   },
   {
     title: "Don't hide calendar on date selection",
     component: DontCloseOnSelect,
-    componentTS: dontCloseOnSelectTS,
+    componentTS: DontCloseOnSelectTS,
   },
   {
     title: "Exclude dates",
     component: ExcludeDates,
-    componentTS: excludeDatesTS,
+    componentTS: ExcludeDatesTS,
   },
   {
     title: "Exclude dates with message",
     component: ExcludedWithMessage,
-    componentTS: excludeDatesWithMessageTS,
+    componentTS: ExcludeDatesWithMessageTS,
   },
   {
     title: "Exclude date intervals",
     component: ExcludeDateIntervals,
-    componentTS: excludeDateIntervalsTS,
+    componentTS: ExcludeDateIntervalsTS,
   },
   {
     title: "Exclude Months in Month Picker",
     component: ExcludeDatesMonthPicker,
-    componentTS: excludeDatesMonthPickerTS,
+    componentTS: ExcludeDatesMonthPickerTS,
   },
   {
     title: "Exclude Months in Range Month Picker",
     component: ExcludeDatesRangeMonthPicker,
-    componentTS: excludeDatesRangeMonthPickerTS,
+    componentTS: ExcludeDatesRangeMonthPickerTS,
   },
   {
     title: "Exclude Times",
     component: ExcludeTimes,
-    componentTS: excludeTimesTS,
+    componentTS: ExcludeTimesTS,
   },
   {
     title: "Filter dates",
     component: FilterDates,
-    componentTS: filterDatesTS,
+    componentTS: FilterDatesTS,
   },
   {
     title: "Filter times",
     component: FilterTimes,
-    componentTS: filterTimesTS,
+    componentTS: FilterTimesTS,
   },
   {
     title: "Fixed height of Calendar",
     component: FixedCalendar,
-    componentTS: fixedCalendarTS,
+    componentTS: FixedCalendarTS,
   },
   {
     title: "Get raw input value on change",
     component: RawChange,
-    componentTS: rawChangeTS,
+    componentTS: RawChangeTS,
   },
   {
     title: "Highlight dates",
     component: HighlightDates,
-    componentTS: highlightDatesTS,
+    componentTS: HighlightDatesTS,
   },
   {
     title: "Highlight dates with custom class names and ranges",
     component: HighlightDatesRanges,
-    componentTS: highlightDatesRangesTS,
+    componentTS: HighlightDatesRangesTS,
   },
   {
     title: "Holiday dates",
     component: HolidayDates,
-    componentTS: holidayDatesTS,
+    componentTS: HolidayDatesTS,
   },
   {
     title: "Include dates",
     component: IncludeDates,
-    componentTS: includeDatesTS,
+    componentTS: IncludeDatesTS,
   },
   {
     title: "Include date intervals",
     component: IncludeDateIntervals,
-    componentTS: includeDateIntervalsTS,
+    componentTS: IncludeDateIntervalsTS,
   },
   {
     title: "Include Months in Month Picker",
     component: IncludeDatesMonthPicker,
-    componentTS: includeDatesMonthPickerTS,
+    componentTS: IncludeDatesMonthPickerTS,
   },
   {
     title: "Include Times",
     component: IncludeTimes,
-    componentTS: includeTimesTS,
+    componentTS: IncludeTimesTS,
   },
   {
     title: "Inject Specific Times",
     component: InjectTimes,
-    componentTS: injectTimesTS,
+    componentTS: InjectTimesTS,
   },
   {
     title: "Inline version",
     component: Inline,
-    componentTS: inlineTS,
+    componentTS: InlineTS,
   },
   {
     title: "Button to show Inline version",
     component: InlineVisible,
-    componentTS: inlineVisibleTS,
+    componentTS: InlineVisibleTS,
   },
   {
     title: "Input time",
     component: TimeInput,
-    componentTS: timeInputTS,
+    componentTS: TimeInputTS,
   },
   {
     title: "Locale",
     component: Locale,
-    componentTS: localeTS,
+    componentTS: LocaleTS,
   },
   {
     title: "Locale with time",
     component: LocaleWithTime,
-    componentTS: localeWithTimeTS,
+    componentTS: LocaleWithTimeTS,
   },
   {
     title: "Locale without global variables",
     component: LocaleWithoutGlobalVariable,
-    componentTS: localeWithoutGlobalVariableTS,
+    componentTS: LocaleWithoutGlobalVariableTS,
   },
   {
     title: "Min date",
     component: MinDate,
-    componentTS: minDateTS,
+    componentTS: MinDateTS,
   },
   {
     title: "Max date",
     component: MaxDate,
-    componentTS: maxDateTS,
+    componentTS: MaxDateTS,
   },
   {
     title: "Month Picker",
     component: MonthPicker,
-    componentTS: monthPickerTS,
+    componentTS: MonthPickerTS,
   },
   {
     title: "Month Picker with Full Name",
-    component: monthPickerFullName,
-    componentTS: monthPickerFullNameTS,
+    component: MonthPickerFullName,
+    componentTS: MonthPickerFullNameTS,
   },
   {
     title: "Month Picker Two Columns Layout",
-    component: monthPickerTwoColumns,
-    componentTS: monthPickerTwoColumnsTS,
+    component: MonthPickerTwoColumns,
+    componentTS: MonthPickerTwoColumnsTS,
   },
   {
     title: "Month Picker Four Columns Layout",
-    component: monthPickerFourColumns,
-    componentTS: monthPickerFourColumnsTS,
+    component: MonthPickerFourColumns,
+    componentTS: MonthPickerFourColumnsTS,
   },
   {
     title: "Month dropdown",
     component: MonthDropdown,
-    componentTS: monthDropdownTS,
+    componentTS: MonthDropdownTS,
   },
   {
     title: "Month dropdown short month",
     component: MonthDropdownShort,
-    componentTS: monthDropdownShortTS,
+    componentTS: MonthDropdownShortTS,
   },
   {
     title: "MonthYear dropdown",
     component: MonthYearDropdown,
-    componentTS: monthYearDropdownTS,
+    componentTS: MonthYearDropdownTS,
   },
   {
     title: "Multiple months",
     component: MultiMonth,
-    componentTS: multiMonthTS,
+    componentTS: MultiMonthTS,
   },
   {
     title: "Multiple months with year dropdown",
     component: MultiMonthDropdown,
-    componentTS: multiMonthDropdownTS,
+    componentTS: MultiMonthDropdownTS,
   },
   {
     title: "Multiple months inline",
     component: MultiMonthInline,
-    componentTS: multiMonthInlineTS,
+    componentTS: MultiMonthInlineTS,
   },
   {
     title: "No Anchor Arrow",
     component: NoAnchorArrow,
-    componentTS: noAnchorArrowTS,
+    componentTS: NoAnchorArrowTS,
   },
   {
     title: "onBlur callbacks in console",
     component: OnBlurCallbacks,
-    componentTS: onBlurCallbacksTS,
+    componentTS: OnBlurCallbacksTS,
   },
   {
     title: "Open to date",
     component: OpenToDate,
-    componentTS: openToDateTS,
+    componentTS: OpenToDateTS,
   },
   {
     title: "Placeholder text",
     component: PlaceholderText,
-    componentTS: placeholderTextTS,
+    componentTS: PlaceholderTextTS,
   },
   {
     title: "Portal version",
     component: Portal,
-    componentTS: portalTS,
+    componentTS: PortalTS,
   },
   {
     title: "Portal by id",
     description:
       "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
     component: PortalById,
-    componentTS: portalByIdTS,
+    componentTS: PortalByIdTS,
   },
   {
     title: "Portal version with portal by id",
     description:
       "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
     component: WithPortalById,
-    componentTS: withPortalByIdTS,
+    componentTS: WithPortalByIdTS,
   },
   {
     title: "Quarter Picker",
     component: QuarterPicker,
-    componentTS: quarterPickerTS,
+    componentTS: QuarterPickerTS,
   },
   {
     title: "Range Month Picker",
     component: RangeMonthPicker,
-    componentTS: rangeMonthPickerTS,
+    componentTS: RangeMonthPickerTS,
   },
   {
     title: "Range Month Picker for one month picker",
     component: RangeMonthPickerSelectsRange,
-    componentTS: rangeMonthPickerSelectsRangeTS,
+    componentTS: RangeMonthPickerSelectsRangeTS,
   },
   {
     title: "Range Quarter Picker",
     component: RangeQuarterPicker,
-    componentTS: rangeQuarterPickerTS,
+    componentTS: RangeQuarterPickerTS,
   },
   {
     title: "Range Quarter Picker for one quarter picker",
     component: RangeQuarterPickerSelectsRange,
-    componentTS: rangeQuarterPickerSelectsRangeTS,
+    componentTS: RangeQuarterPickerSelectsRangeTS,
   },
   {
     title: "Range Swap Range",
     description:
       "Swap the start and end date if the end date is before the start date in a pick sequence.",
     component: RangeSwapRange,
-    componentTS: rangeSwapRangeTS,
+    componentTS: RangeSwapRangeTS,
   },
   {
     title: "Read only datepicker",
     component: ReadOnly,
-    componentTS: readOnlyTS,
+    componentTS: ReadOnlyTS,
   },
   {
     title: "Select Time",
     component: ShowTime,
-    componentTS: showTimeTS,
+    componentTS: ShowTimeTS,
   },
   {
     title: "Select Time Only",
     component: ShowTimeOnly,
-    componentTS: showTimeOnlyTS,
+    componentTS: ShowTimeOnlyTS,
   },
   {
     title: "Hide Time Caption",
     component: HideTimeCaption,
-    componentTS: hideTimeCaptionTS,
+    componentTS: HideTimeCaptionTS,
   },
   {
     title: "Show previous months",
     component: MultiMonthPrevious,
-    componentTS: multiMonthPreviousTS,
+    componentTS: MultiMonthPreviousTS,
   },
   {
     title: "Specific date range",
     component: SpecificDateRange,
-    componentTS: specificDateRangeTS,
+    componentTS: SpecificDateRangeTS,
   },
   {
     title: "Specific Time Range",
     component: ExcludeTimePeriod,
-    componentTS: excludeTimePeriodTS,
+    componentTS: ExcludeTimePeriodTS,
   },
   {
     title: "Select multiple dates",
     component: SelectsMultiple,
-    componentTS: selectsMultipleTS,
+    componentTS: SelectsMultipleTS,
   },
   {
     title: "Select multiple months",
     component: SelectsMultipleMonths,
-    componentTS: selectsMultipleMonthsTS,
+    componentTS: SelectsMultipleMonthsTS,
   },
   {
     title: "Strict parsing",
     description:
       "Enables strict format validation for manual date input. When this flag is activated, the component will only accept values that exactly match the specified date format (`dateFormat`).",
     component: StrictParsing,
-    componentTS: strictParsingTS,
+    componentTS: StrictParsingTS,
   },
   {
     title: "TabIndex",
     component: TabIndex,
-    componentTS: tabIndexTS,
+    componentTS: TabIndexTS,
   },
   {
     title: "Today button",
     component: Today,
-    componentTS: todayTS,
+    componentTS: TodayTS,
   },
   {
     title: "Year Picker",
     component: YearPicker,
-    componentTS: yearPickerTS,
+    componentTS: YearPickerTS,
   },
   {
     title: "Range Year Picker",
     component: RangeYearPicker,
-    componentTS: rangeYearPickerTS,
+    componentTS: RangeYearPickerTS,
   },
   {
     title: "Range Year Picker for one datepicker",
     component: RangeYearPickerSelectsRange,
-    componentTS: rangeYearPickerSelectsRangeTS,
+    componentTS: RangeYearPickerSelectsRangeTS,
   },
   {
     title: "Year dropdown",
     component: YearDropdown,
-    componentTS: yearDropdownTS,
+    componentTS: YearDropdownTS,
   },
   {
     title: "Year select dropdown",
     component: YearSelectDropdown,
-    componentTS: yearSelectDropdownTS,
+    componentTS: YearSelectDropdownTS,
   },
   {
     title: "Year item number",
     component: YearItemNumber,
-    componentTS: yearItemNumberTS,
+    componentTS: YearItemNumberTS,
   },
   {
     title: "Calendar Start day",
     component: CalendarStartDay,
-    componentTS: calendarStartDayTS,
+    componentTS: CalendarStartDayTS,
   },
   {
     title: "Week Picker",
     component: WeekPicker,
-    componentTS: weekPickerTS,
+    componentTS: WeekPickerTS,
   },
   {
     title: "Exclude Weeks",
     component: ExcludeWeeks,
-    componentTS: excludeWeeksTS,
+    componentTS: ExcludeWeeksTS,
   },
   {
     title: "External Form",
     component: ExternalForm,
-    componentTS: externalFormTS,
+    componentTS: ExternalFormTS,
   },
 ];
