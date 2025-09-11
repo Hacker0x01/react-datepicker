@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "date-fns": "^4.1.0",
+    "esbuild-wasm": "^0.25.9",
     "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
     "prism-react-renderer": "^2.4.1",

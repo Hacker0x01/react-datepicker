@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ExampleComponents from "../Examples";
+import { initializeTsxTransformer } from "../tsxTransformer";
 import logo from "./logo.png";
 import ribbon from "./ribbon.png";
 
@@ -12,6 +13,8 @@ const Example = () => {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY < 400);
     document.addEventListener("scroll", handleScroll);
+
+    initializeTsxTransformer();
 
     return () => {
       document.removeEventListener("scroll", handleScroll);

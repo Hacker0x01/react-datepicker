@@ -2281,6 +2281,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esbuild-wasm@npm:^0.25.9":
+  version: 0.25.9
+  resolution: "esbuild-wasm@npm:0.25.9"
+  bin:
+    esbuild: bin/esbuild
+  checksum: 10c0/8c4865d061c94303939549ba67930dfdd51ced9a46ef1b09f63b15696de5075690c4680f616a1932cb0296eed615eb1fa0670337104c4c83d95fac1c2217cf00
+  languageName: node
+  linkType: hard
+
 "esbuild@npm:^0.25.0":
   version: 0.25.0
   resolution: "esbuild@npm:0.25.0"
@@ -4435,6 +4444,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.0.0"
     "@vitejs/plugin-react": "npm:^4.4.1"
     date-fns: "npm:^4.1.0"
+    esbuild-wasm: "npm:^0.25.9"
     eslint: "npm:^9.25.0"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^5.2.0"

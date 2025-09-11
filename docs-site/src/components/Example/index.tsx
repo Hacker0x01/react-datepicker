@@ -4,10 +4,12 @@ import DatePicker, {
   registerLocale,
   CalendarContainer,
 } from "react-datepicker";
+import { transformTsx } from "../tsxTransformer";
 import * as DateFNS from "date-fns";
 import { fi } from "date-fns/locale/fi";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { enGB } from "date-fns/locale/en-GB";
+import { debounce } from "lodash";
 import slugify from "slugify";
 import range from "lodash/range";
 import { themes } from "prism-react-renderer";
@@ -16,6 +18,9 @@ import { IExampleConfig } from "../../types";
 
 type TState = {
   activeTab: "js" | "ts";
+  isTranspiling: boolean;
+  tsxCode: string;
+  jsxCode: string;
 };
 
 type TProps = {
@@ -28,7 +33,25 @@ export default class CodeExampleComponent extends React.Component<
 > {
   state: TState = {
     activeTab: "ts",
+    isTranspiling: false,
+    tsxCode: "",
+    jsxCode: "",
   };
+
+  tsCodeRef = React.createRef<string>();
+  lastTranspiledTsCodeRef = React.createRef<string>();
+
+  constructor(props: TProps) {
+    super(props);
+
+    const { component } = props.example;
+    this.state = {
+      activeTab: "ts",
+      isTranspiling: false,
+      tsxCode: component.trim(),
+      jsxCode: "",
+    };
+  }
 
   componentDidMount() {
     registerLocale("fi", fi);
@@ -36,18 +59,62 @@ export default class CodeExampleComponent extends React.Component<
     registerLocale("en-GB", enGB);
   }
 
-  handleTabChange = (tab: TState["activeTab"]) => {
-    this.setState({ activeTab: tab });
+  transpileTsCode = async () => {
+    const tsCode = this.state.tsxCode;
+
+    let stateUpdates = {
+      jsxCode: "",
+      isTranspiling: true,
+    };
+
+    try {
+      const transpiledCode = await transformTsx(tsCode);
+
+      this.lastTranspiledTsCodeRef.current = tsCode;
+      stateUpdates = {
+        jsxCode: transpiledCode,
+        isTranspiling: false,
+      };
+    } catch (err) {
+      stateUpdates = {
+        jsxCode: "// Transpilation failed! Error: " + (err as Error).message,
+        isTranspiling: false,
+      };
+    }
+
+    this.setState((state) => ({
+      ...state,
+      ...stateUpdates,
+    }));
+  };
+
+  handleCodeChange = debounce((code: string) => {
+    const { activeTab } = this.state;
+    const codeProp = activeTab === "ts" ? "tsxCode" : "jsxCode";
+
+    this.setState((state) => ({
+      ...state,
+      [codeProp]: code,
+    }));
+  }, 500);
+
+  handleTabChange = async (tab: TState["activeTab"]) => {
+    const { tsxCode } = this.state;
+    this.setState((state) => ({
+      ...state,
+      activeTab: tab,
+    }));
+
+    if (tab === "js" && tsxCode !== this.lastTranspiledTsCodeRef.current) {
+      await this.transpileTsCode();
+    }
   };
 
   render() {
-    const { title, description, component, componentTS } = this.props.example;
-    const { activeTab } = this.state;
+    const { title, description } = this.props.example;
+    const { activeTab, isTranspiling, jsxCode, tsxCode } = this.state;
 
-    const jsCode = component.trim();
-    const tsCode = componentTS?.trim();
-
-    const code = activeTab === "js" ? jsCode : tsCode;
+    const code = activeTab === "js" ? jsxCode : tsxCode;
     const isTS = activeTab === "ts";
 
     return (
@@ -58,14 +125,12 @@ export default class CodeExampleComponent extends React.Component<
         <h2 className="example__heading">{title}</h2>
         {description && <p>{description}</p>}
         <div className="example__tabs">
-          {tsCode && (
-            <button
-              className={`example__tab ${activeTab === "ts" ? "active" : ""}`}
-              onClick={() => this.handleTabChange("ts")}
-            >
-              TypeScript
-            </button>
-          )}
+          <button
+            className={`example__tab ${activeTab === "ts" ? "active" : ""}`}
+            onClick={() => this.handleTabChange("ts")}
+          >
+            TypeScript
+          </button>
           <button
             className={`example__tab ${activeTab === "js" ? "active" : ""}`}
             onClick={() => this.handleTabChange("js")}
@@ -74,36 +139,42 @@ export default class CodeExampleComponent extends React.Component<
           </button>
         </div>
         <div className="row">
-          <LiveProvider
-            code={code}
-            scope={{
-              // NB any globals added here should also be referenced in ../../examples/.eslintrc
-              useState,
-              DatePicker,
-              CalendarContainer,
-              ...DateFNS,
-              range,
-              fi,
-              forwardRef,
-            }}
-            theme={themes.github}
-            noInline={isTS}
-            language={isTS ? "tsx" : "jsx"}
-          >
-            <pre className="example__code">
-              <img
-                src={editIcon}
-                className="example__code__edit_icon"
-                alt="edit icon"
-                title="Edit the code directly on the left side and and see the output on the right"
-              />
-              <LiveEditor />
+          {activeTab === "js" && isTranspiling ? (
+            <pre className="example__code example__transpiling">
+              Transpiling...
             </pre>
-            <div className="example__preview">
-              <LiveError />
-              <LivePreview />
-            </div>
-          </LiveProvider>
+          ) : (
+            <LiveProvider
+              code={code}
+              scope={{
+                // NB any globals added here should also be referenced in ../../examples/.eslintrc
+                useState,
+                DatePicker,
+                CalendarContainer,
+                ...DateFNS,
+                range,
+                fi,
+                forwardRef,
+              }}
+              theme={themes.github}
+              noInline
+              language={isTS ? "tsx" : "jsx"}
+            >
+              <pre className="example__code">
+                <img
+                  src={editIcon}
+                  className="example__code__edit_icon"
+                  alt="edit icon"
+                  title="Edit the code directly on the left side and and see the output on the right"
+                />
+                <LiveEditor onChange={this.handleCodeChange} />
+              </pre>
+              <div className="example__preview">
+                <LiveError />
+                <LivePreview />
+              </div>
+            </LiveProvider>
+          )}
         </div>
       </div>
     );
