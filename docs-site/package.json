@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "copy-to-clipboard": "^3.3.3",
     "date-fns": "^4.1.0",
     "esbuild-wasm": "^0.25.9",
     "highlight.js": "^11.11.1",

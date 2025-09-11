@@ -9,10 +9,12 @@ import * as DateFNS from "date-fns";
 import { fi } from "date-fns/locale/fi";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { enGB } from "date-fns/locale/en-GB";
+import copy from "copy-to-clipboard";
 import { debounce } from "lodash";
 import slugify from "slugify";
 import range from "lodash/range";
 import { themes } from "prism-react-renderer";
+import copyIcon from "./copy.svg";
 import editIcon from "./edit-regular.svg";
 import { IExampleConfig } from "../../types";
 
@@ -161,12 +163,25 @@ export default class CodeExampleComponent extends React.Component<
               language={isTS ? "tsx" : "jsx"}
             >
               <pre className="example__code">
-                <img
-                  src={editIcon}
-                  className="example__code__edit_icon"
-                  alt="edit icon"
-                  title="Edit the code directly on the left side and and see the output on the right"
-                />
+                <div className="example__actions">
+                  <button
+                    className="example__actions__button"
+                    onClick={() => copy(code)}
+                  >
+                    <img
+                      src={copyIcon}
+                      className="example__actions__copy_icon"
+                      alt="copy icon"
+                      title="Copy snippet"
+                    />
+                  </button>
+                  <img
+                    src={editIcon}
+                    className="example__actions__edit_icon"
+                    alt="edit icon"
+                    title="Edit the code directly on the left side and and see the output on the right"
+                  />
+                </div>
                 <LiveEditor onChange={this.handleCodeChange} />
               </pre>
               <div className="example__preview">

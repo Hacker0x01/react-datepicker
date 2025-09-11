@@ -112,13 +112,41 @@
     textarea:focus {
       outline: 0;
     }
+  }
 
-    &__edit_icon {
-      position: absolute;
-      top: 0;
-      right: 0;
+  &__actions {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 10;
+
+    & > * {
       width: 20px;
-      z-index: 10;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    &__button {
+      width: 38px;
+      border-radius: 50%;
+      height: 38px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(172, 172, 172, 0.2);
+      }
+
+      &:focus {
+        background: rgba(172, 172, 172, 0.4);
+      }
+
+      & > img {
+        width: 18px;
+      }
     }
   }
 
