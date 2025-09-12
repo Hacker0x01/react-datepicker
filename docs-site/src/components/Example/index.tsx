@@ -4,6 +4,7 @@ import DatePicker, {
   registerLocale,
   CalendarContainer,
 } from "react-datepicker";
+import { toast } from "../App/Toast";
 import { transformTsx } from "../tsxTransformer";
 import * as DateFNS from "date-fns";
 import { fi } from "date-fns/locale/fi";
@@ -82,6 +83,8 @@ export default class CodeExampleComponent extends React.Component<
         jsxCode: "// Transpilation failed! Error: " + (err as Error).message,
         isTranspiling: false,
       };
+
+      toast.show("Transpilation failed!", "error");
     }
 
     this.setState((state) => ({
@@ -109,6 +112,15 @@ export default class CodeExampleComponent extends React.Component<
 
     if (tab === "js" && tsxCode !== this.lastTranspiledTsCodeRef.current) {
       await this.transpileTsCode();
+    }
+  };
+
+  handleCopy = (code: string) => {
+    if (code.trim().length) {
+      copy(code);
+      toast.show("Copied to clipboard", "success");
+    } else {
+      toast.show("No code to copy", "error");
     }
   };
 
@@ -166,7 +178,7 @@ export default class CodeExampleComponent extends React.Component<
                 <div className="example__actions">
                   <button
                     className="example__actions__button"
-                    onClick={() => copy(code)}
+                    onClick={() => this.handleCopy(code)}
                   >
                     <img
                       src={copyIcon}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ExampleComponents from "../Examples";
+import Toast from "./Toast";
 import { initializeTsxTransformer } from "../tsxTransformer";
 import logo from "./logo.png";
 import ribbon from "./ribbon.png";
@@ -110,6 +111,8 @@ const Root = () => (
     <a href="https://github.com/Hacker0x01/react-datepicker/">
       <img className="github-ribbon" src={ribbon} alt="Fork me on GitHub" />
     </a>
+
+    <Toast />
   </div>
 );
 
