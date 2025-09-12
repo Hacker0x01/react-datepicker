@@ -6,13 +6,13 @@ import { initializeTsxTransformer } from "../tsxTransformer";
 import logo from "./logo.png";
 import ribbon from "./ribbon.png";
 
-const Example = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  const [isScrolled, setIsScrolled] = useState(true);
+const Example: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [isScrolled, setIsScrolled] = useState<boolean>(true);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY < 400);
+    const handleScroll = (): void => setIsScrolled(window.scrollY < 400);
     document.addEventListener("scroll", handleScroll);
 
     initializeTsxTransformer();
@@ -26,7 +26,7 @@ const Example = () => {
     <DatePicker
       open={isOpen && isScrolled}
       selected={startDate}
-      onChange={(date) => {
+      onChange={(date: Date | null) => {
         setStartDate(date);
         setIsOpen(false);
       }}
@@ -35,7 +35,7 @@ const Example = () => {
   );
 };
 
-const Root = () => (
+const Root: React.FC = () => (
   <div>
     <div className="hero">
       <div className="hero__content">
