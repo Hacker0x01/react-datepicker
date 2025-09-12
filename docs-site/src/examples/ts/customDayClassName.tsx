@@ -6,7 +6,7 @@ const CustomDayClassName = () => {
       selected={startDate}
       onChange={(date: Date | null) => setStartDate(date)}
       dayClassName={(date: Date) =>
-        getDate(date) < Math.random() * 31 ? "random" : undefined
+        DateFNS.getDate(date) < Math.random() * 31 ? "random" : undefined
       }
     />
   );

@@ -4,7 +4,7 @@ const FilterDates = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
 
   const isWeekday: TFilterDate = (date) => {
-    const day = getDay(date);
+    const day = DateFNS.getDay(date);
     return day !== 0 && day !== 6;
   };
 

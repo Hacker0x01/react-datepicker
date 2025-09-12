@@ -1,3 +1,4 @@
+const { setHours, setMinutes } = DateFNS;
 type TFilterTime = (time: Date) => boolean;
 
 const FilterTimes = () => {

@@ -1,6 +1,6 @@
 type TExcludeDateIntervals = {
-  start: Date;
-  end: Date;
+  start: Date | string;
+  end: Date | string;
 }[];
 
 const ExcludeWeeks = () => {

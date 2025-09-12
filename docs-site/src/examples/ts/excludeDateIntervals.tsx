@@ -8,8 +8,8 @@ const ExcludeDateIntervals = () => {
 
   const excludeDateIntervals: TExcludeDateIntervals = [
     {
-      start: subDays(new Date(), 5),
-      end: addDays(new Date(), 5),
+      start: DateFNS.subDays(new Date(), 5),
+      end: DateFNS.addDays(new Date(), 5),
     },
   ];
 

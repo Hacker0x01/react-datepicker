@@ -1,9 +1,11 @@
+const { isValid, format } = DateFNS;
+
 const OnBlurCallbacks = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
 
   const handleOnBlur = ({
     target: { value },
-  }: React.FocusEvent<HTMLElement>) => {
+  }: React.FocusEvent<HTMLInputElement>) => {
     const date = new Date(value);
     if (isValid(date)) {
       console.log("date: %s", format(date, "dd/MM/yyyy"));

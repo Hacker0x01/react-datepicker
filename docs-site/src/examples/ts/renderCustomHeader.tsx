@@ -1,3 +1,4 @@
+const { getYear, getMonth, range } = DateFNS;
 const MONTHS = [
   "January",
   "February",
@@ -13,7 +14,7 @@ const MONTHS = [
   "December",
 ] as const;
 
-const years = range(1990, getYear(new Date()) + 1, 1);
+const years = range(1990, getYear(new Date()) + 1, 1) as number[];
 
 const CustomHeader = ({
   date,
@@ -36,7 +37,7 @@ const CustomHeader = ({
     </button>
     <select
       value={getYear(date)}
-      onChange={({ target: { value } }) => changeYear(value)}
+      onChange={({ target: { value } }) => changeYear(+value)}
     >
       {years.map((option) => (
         <option key={option} value={option}>
@@ -47,7 +48,9 @@ const CustomHeader = ({
 
     <select
       value={MONTHS[getMonth(date)]}
-      onChange={({ target: { value } }) => changeMonth(MONTHS.indexOf(value))}
+      onChange={({ target: { value } }) =>
+        changeMonth(MONTHS.indexOf(value as (typeof MONTHS)[number]))
+      }
     >
       {MONTHS.map((option) => (
         <option key={option} value={option}>

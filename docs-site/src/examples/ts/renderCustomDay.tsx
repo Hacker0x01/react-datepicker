@@ -4,7 +4,7 @@ const RenderCustomDay = () => {
   const renderDayContents = (day: number, date: Date): React.ReactNode => {
     const tooltipText = `Tooltip for date: ${date}`;
 
-    return <span title={tooltipText}>{getDate(date)}</span>;
+    return <span title={tooltipText}>{DateFNS.getDate(date)}</span>;
   };
 
   return (

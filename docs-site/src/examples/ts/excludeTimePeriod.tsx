@@ -1,3 +1,5 @@
+const { setHours, setMinutes } = DateFNS;
+
 const ExcludeTimePeriod = () => {
   const [startDate, setStartDate] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 17),

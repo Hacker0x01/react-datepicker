@@ -8,7 +8,10 @@ type TExcludeDates =
 const ExcludeDates = () => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
-  const excludeDates: TExcludeDates = [new Date(), subDays(new Date(), 1)];
+  const excludeDates: TExcludeDates = [
+    new Date(),
+    DateFNS.subDays(new Date(), 1),
+  ];
 
   return (
     <DatePicker

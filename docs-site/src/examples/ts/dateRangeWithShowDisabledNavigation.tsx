@@ -13,7 +13,7 @@ const DateRangeWithShowDisabledNavigation = () => {
       selected={startDate}
       onChange={onChange}
       minDate={new Date()}
-      maxDate={addMonths(new Date(), 5)}
+      maxDate={DateFNS.addMonths(new Date(), 5)}
       startDate={startDate}
       endDate={endDate}
       selectsRange

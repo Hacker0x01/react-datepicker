@@ -6,7 +6,7 @@ const SpecificDateRange = () => {
       selected={startDate}
       onChange={(date: Date | null) => setStartDate(date)}
       minDate={new Date()}
-      maxDate={addDays(new Date(), 5)}
+      maxDate={DateFNS.addDays(new Date(), 5)}
       placeholderText="Select a date between today and 5 days in the future"
     />
   );

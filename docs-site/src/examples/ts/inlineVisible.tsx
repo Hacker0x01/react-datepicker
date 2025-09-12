@@ -15,7 +15,7 @@ const InlineVisible = () => {
   return (
     <>
       <button className="example-custom-input" onClick={handleClick}>
-        {format(startDate, "dd-MM-yyyy")}
+        {DateFNS.format(startDate, "dd-MM-yyyy")}
       </button>
       {isOpen && (
         <DatePicker selected={startDate} onChange={handleChange} inline />

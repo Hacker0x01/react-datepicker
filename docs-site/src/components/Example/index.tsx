@@ -165,7 +165,7 @@ export default class CodeExampleComponent extends React.Component<
                 useState,
                 DatePicker,
                 CalendarContainer,
-                ...DateFNS,
+                DateFNS,
                 range,
                 fi,
                 forwardRef,

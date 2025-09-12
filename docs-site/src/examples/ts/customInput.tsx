@@ -5,7 +5,7 @@ type ExampleCustomInputProps = {
 };
 
 const CustomInput = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   const ExampleCustomInput = forwardRef<
     HTMLButtonElement,
@@ -19,7 +19,7 @@ const CustomInput = () => {
   return (
     <DatePicker
       selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      onChange={(date: Date | null) => setStartDate(date)}
       customInput={<ExampleCustomInput className="example-custom-input" />}
     />
   );

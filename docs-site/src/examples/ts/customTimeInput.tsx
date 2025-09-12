@@ -1,7 +1,7 @@
 interface ExampleCustomTimeInputProps {
   date?: Date;
-  value: string;
-  onChange: (time: string) => void;
+  value?: string;
+  onChange?: (time: string) => void;
 }
 
 const CustomTimeInput = () => {
@@ -13,8 +13,10 @@ const CustomTimeInput = () => {
   }: ExampleCustomTimeInputProps) => (
     <input
       value={value}
-      onChange={(e) => onChange(e.target.value)}
-      onClick={(e) => e.target?.focus()}
+      onChange={(e) => onChange?.(e.target.value)}
+      onClick={(e: React.MouseEvent<HTMLInputElement>) =>
+        (e.target as HTMLInputElement).focus()
+      }
       style={{ border: "solid 1px pink" }}
     />
   );

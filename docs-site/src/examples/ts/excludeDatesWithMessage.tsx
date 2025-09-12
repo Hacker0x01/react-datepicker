@@ -10,7 +10,7 @@ const ExcludeDatesWithMessage = () => {
 
   const excludeDates: TExcludeDates = [
     { date: new Date(), message: "Today is excluded" },
-    { date: subDays(new Date(), 1), message: "This day is excluded" },
+    { date: DateFNS.subDays(new Date(), 1), message: "This day is excluded" },
   ];
 
   return (

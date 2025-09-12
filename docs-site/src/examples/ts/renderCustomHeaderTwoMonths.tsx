@@ -10,7 +10,7 @@ const CustomHeader = ({
       className={
         "react-datepicker__navigation react-datepicker__navigation--previous"
       }
-      style={customHeaderCount === 1 ? { visibility: "hidden" } : null}
+      style={customHeaderCount === 1 ? { visibility: "hidden" } : undefined}
       onClick={decreaseMonth}
     >
       <span
@@ -32,7 +32,7 @@ const CustomHeader = ({
       className={
         "react-datepicker__navigation react-datepicker__navigation--next"
       }
-      style={customHeaderCount === 0 ? { visibility: "hidden" } : null}
+      style={customHeaderCount === 0 ? { visibility: "hidden" } : undefined}
       onClick={increaseMonth}
     >
       <span

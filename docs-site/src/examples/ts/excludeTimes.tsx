@@ -1,3 +1,4 @@
+const { setHours, setMinutes } = DateFNS;
 type TExcludeTimes = Date[];
 
 const ExcludeTimes = () => {
