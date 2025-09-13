@@ -91,7 +91,7 @@ describe("YearPicker", () => {
     expect(onYearChangeSpy).toHaveBeenCalled();
   });
 
-  it("should has selected class when element of array equal of choosen year", () => {
+  it("should has selected class when element of array equal of chosen year", () => {
     const date = new Date("2015-01-01");
     const { container } = render(
       <Year
