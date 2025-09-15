@@ -5,7 +5,7 @@ type HighlightDate = {
 type THighlightDates = (Date | HighlightDate)[];
 
 const HighlightDates = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const highlightDates: THighlightDates = [
     DateFNS.subDays(new Date(), 7),
@@ -14,8 +14,8 @@ const HighlightDates = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       highlightDates={highlightDates}
       placeholderText="This highlights a week ago and a week from today"
     />

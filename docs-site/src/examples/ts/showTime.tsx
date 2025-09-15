@@ -1,10 +1,12 @@
 const ShowTime = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
+    new Date(),
+  );
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       timeFormat="HH:mm"
       timeIntervals={15}

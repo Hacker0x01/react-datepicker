@@ -1,10 +1,10 @@
 const HideTimeCaption = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDateTime] = useState<Date | null>(new Date());
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       showTimeSelectOnly
       timeIntervals={15}

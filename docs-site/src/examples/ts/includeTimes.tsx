@@ -1,7 +1,7 @@
 const { setHours, setMinutes } = DateFNS;
 
 const IncludeTimes = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDateTime] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 16),
   );
 
@@ -14,8 +14,8 @@ const IncludeTimes = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       includeTimes={includeTimes}
       dateFormat="MMMM d, yyyy h:mm aa"

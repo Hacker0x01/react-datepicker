@@ -1,16 +1,16 @@
 const RawChange = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleChangeRaw = (value: string) => {
     if (value === "tomorrow") {
-      setStartDate(DateFNS.addDays(new Date(), 1));
+      setSelectedDate(DateFNS.addDays(new Date(), 1));
     }
   };
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       placeholderText='Enter "tomorrow"'
       onChangeRaw={(
         event:

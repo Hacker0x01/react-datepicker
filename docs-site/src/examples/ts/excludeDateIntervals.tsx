@@ -4,7 +4,7 @@ type TExcludeDateIntervals = {
 }[];
 
 const ExcludeDateIntervals = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const excludeDateIntervals: TExcludeDateIntervals = [
     {
@@ -15,8 +15,8 @@ const ExcludeDateIntervals = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       excludeDateIntervals={excludeDateIntervals}
       placeholderText="Select a date other than the interval from 5 days ago to 5 days in the future"
     />

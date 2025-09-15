@@ -6,7 +6,7 @@ type TExcludeDates =
   | Date[];
 
 const ExcludeDatesMonthPicker = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date("2024-08-01"),
   );
 
@@ -17,8 +17,8 @@ const ExcludeDatesMonthPicker = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       dateFormat="MM/yyyy"
       excludeDates={excludeDates}
       showMonthYearPicker

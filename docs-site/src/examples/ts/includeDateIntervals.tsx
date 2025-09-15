@@ -5,7 +5,7 @@ type TIncludeDateIntervals = {
 }[];
 
 const IncludeDateIntervals = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const includeDateIntervals: TIncludeDateIntervals = [
     { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
@@ -13,8 +13,8 @@ const IncludeDateIntervals = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       includeDateIntervals={includeDateIntervals}
       placeholderText="This only includes dates from 5 days ago to 5 days in the future"
     />

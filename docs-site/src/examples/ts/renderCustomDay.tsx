@@ -1,5 +1,5 @@
 const RenderCustomDay = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const renderDayContents = (day: number, date: Date): React.ReactNode => {
     const tooltipText = `Tooltip for date: ${date}`;
@@ -9,8 +9,8 @@ const RenderCustomDay = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       renderDayContents={renderDayContents}
     />
   );

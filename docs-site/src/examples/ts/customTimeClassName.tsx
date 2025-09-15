@@ -1,5 +1,7 @@
 const CustomTimeClassName = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
+    new Date(),
+  );
 
   const handleColor = (time: Date): string => {
     return time.getHours() > 12 ? "text-success" : "text-error";
@@ -8,8 +10,8 @@ const CustomTimeClassName = () => {
   return (
     <DatePicker
       showTimeSelect
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDateTime}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       timeClassName={handleColor}
     />
   );

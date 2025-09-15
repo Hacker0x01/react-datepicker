@@ -1,12 +1,12 @@
 const { subMonths, addMonths } = DateFNS;
 
 const MonthYearDropdown = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       dateFormatCalendar={"MMM yyyy"}
       minDate={subMonths(new Date(), 6)}
       maxDate={addMonths(new Date(), 6)}

@@ -1,5 +1,5 @@
 const DateRange = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [selectedDate, setStartDate] = useState<Date | null>(
     new Date("2014/02/08"),
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date("2014/02/10"));
@@ -7,19 +7,19 @@ const DateRange = () => {
   return (
     <>
       <DatePicker
-        selected={startDate}
+        selected={selectedDate}
         onChange={(date: Date | null) => setStartDate(date)}
         selectsStart
-        startDate={startDate}
+        startDate={selectedDate}
         endDate={endDate}
       />
       <DatePicker
         selected={endDate}
         onChange={(date: Date | null) => setEndDate(date)}
         selectsEnd
-        startDate={startDate}
+        startDate={selectedDate}
         endDate={endDate}
-        minDate={startDate}
+        minDate={selectedDate}
       />
     </>
   );

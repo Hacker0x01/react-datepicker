@@ -1,7 +1,7 @@
 type TFilterDate = (date: Date) => boolean;
 
 const FilterDates = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const isWeekday: TFilterDate = (date) => {
     const day = DateFNS.getDay(date);
@@ -10,8 +10,8 @@ const FilterDates = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       filterDate={isWeekday}
       placeholderText="Select a weekday"
     />

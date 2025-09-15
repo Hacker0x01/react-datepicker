@@ -1,14 +1,14 @@
 const { setHours, setMinutes } = DateFNS;
 
 const ExcludeTimePeriod = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDateTime] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 17),
   );
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       minTime={setHours(setMinutes(new Date(), 0), 17)}
       maxTime={setHours(setMinutes(new Date(), 30), 20)}

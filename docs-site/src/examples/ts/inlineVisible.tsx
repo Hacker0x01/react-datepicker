@@ -1,10 +1,10 @@
 const InlineVisible = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (e: Date | null) => {
     setIsOpen(!isOpen);
-    setStartDate(e);
+    setSelectedDate(e);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -15,10 +15,10 @@ const InlineVisible = () => {
   return (
     <>
       <button className="example-custom-input" onClick={handleClick}>
-        {DateFNS.format(startDate, "dd-MM-yyyy")}
+        {DateFNS.format(selectedDate, "dd-MM-yyyy")}
       </button>
       {isOpen && (
-        <DatePicker selected={startDate} onChange={handleChange} inline />
+        <DatePicker selected={selectedDate} onChange={handleChange} inline />
       )}
     </>
   );

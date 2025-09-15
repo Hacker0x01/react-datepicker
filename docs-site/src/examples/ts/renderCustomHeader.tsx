@@ -66,13 +66,13 @@ const CustomHeader = ({
 );
 
 const RenderCustomHeader = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   return (
     <DatePicker
       renderCustomHeader={CustomHeader}
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
     />
   );
 };

@@ -6,7 +6,7 @@ type TExcludeDates =
   | Date[];
 
 const ExcludeDatesWithMessage = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const excludeDates: TExcludeDates = [
     { date: new Date(), message: "Today is excluded" },
@@ -15,8 +15,8 @@ const ExcludeDatesWithMessage = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       excludeDates={excludeDates}
       placeholderText="Select a date other than today or yesterday"
     />

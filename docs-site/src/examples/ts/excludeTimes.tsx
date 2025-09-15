@@ -2,7 +2,7 @@ const { setHours, setMinutes } = DateFNS;
 type TExcludeTimes = Date[];
 
 const ExcludeTimes = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [selectedDate, setSelectedDateTime] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 16),
   );
 
@@ -15,8 +15,8 @@ const ExcludeTimes = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       excludeTimes={excludeTimes}
       dateFormat="MMMM d, yyyy h:mm aa"

@@ -1,7 +1,7 @@
 const { isValid, format } = DateFNS;
 
 const OnBlurCallbacks = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleOnBlur = ({
     target: { value },
@@ -17,8 +17,8 @@ const OnBlurCallbacks = () => {
   return (
     <DatePicker
       key="example9"
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       onBlur={handleOnBlur}
       placeholderText="View blur callbacks in console"
     />

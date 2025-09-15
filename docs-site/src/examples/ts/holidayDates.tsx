@@ -4,7 +4,7 @@ type Holiday = {
 };
 
 const HolidayDates = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const holidays: Holiday[] = [
     { date: "2023-08-15", holidayName: "India's Independence Day" },
@@ -16,8 +16,8 @@ const HolidayDates = () => {
 
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date | null) => setStartDate(date)}
+      selected={selectedDate}
+      onChange={(date: Date | null) => setSelectedDate(date)}
       holidays={holidays}
       placeholderText="This display holidays"
     />
