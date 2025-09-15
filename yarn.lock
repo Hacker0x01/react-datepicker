@@ -3435,12 +3435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.30":
-  version: 22.15.30
-  resolution: "@types/node@npm:22.15.30"
+"@types/node@npm:24.4.0":
+  version: 24.4.0
+  resolution: "@types/node@npm:24.4.0"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10c0/ca330ac0e7fd502686d6df115fcc606aba46fd334220f749bbba2f639accdadcb23f7900603ceccdc8240be736739cad5c0b87c0fa92c9255a4dff245f07d664
+    undici-types: "npm:~7.11.0"
+  checksum: 10c0/3aefa4c6b006b3478f2d28a48d830ab7350ce24efdaf352011418e3ee17ed7683ca9c0a1840e770685ce78f413344badafa91e034be02488efe2eb6b612bd542
   languageName: node
   linkType: hard
 
@@ -9473,7 +9473,7 @@ __metadata:
     "@types/eslint": "npm:^9.6.1"
     "@types/jest": "npm:^30.0.0"
     "@types/jest-axe": "npm:^3.5.9"
-    "@types/node": "npm:22.15.30"
+    "@types/node": "npm:24.4.0"
     "@types/react": "npm:^19.1.10"
     "@types/react-dom": "npm:^19.1.7"
     "@typescript-eslint/eslint-plugin": "npm:^8.22.0"
@@ -11150,10 +11150,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+"undici-types@npm:~7.11.0":
+  version: 7.11.0
+  resolution: "undici-types@npm:7.11.0"
+  checksum: 10c0/24ff69baeaebc7d09f4dae68564df850b4ff561810148ff6c37d3fc64dd1460c55e59e604420495e73b1fb48594a1c98e69f6732086a24e01b88f2d926378af1
   languageName: node
   linkType: hard
 
