@@ -16,9 +16,6 @@ const RenderCustomHeaderTwoMonths = () => {
             className={
               "react-datepicker__navigation react-datepicker__navigation--previous"
             }
-            style={
-              customHeaderCount === 1 ? { visibility: "hidden" } : undefined
-            }
             onClick={decreaseMonth}
             style={{
               visibility: customHeaderCount === 0 ? "visible" : "hidden",
