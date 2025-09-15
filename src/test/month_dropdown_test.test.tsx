@@ -192,6 +192,105 @@ describe("MonthDropdown", () => {
       dropdownDateFormat = getMonthDropdown({ locale: "ru" });
       expect(dropdownDateFormat.textContent).toContain("декабрь");
     });
+
+    it("calls the supplied onChange function when a month is selected using arrows and enter key", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const monthOption = monthOptions[3]!;
+      fireEvent.keyDown(monthOption, { key: "ArrowDown" });
+
+      const nextMonthOption = monthOptions[4];
+      expect(document.activeElement).toEqual(nextMonthOption);
+
+      fireEvent.keyDown(document.activeElement!, { key: "Enter" });
+      expect(handleChangeResult).toEqual(4);
+    });
+
+    it("handles ArrowUp key navigation correctly", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const monthOption = monthOptions[5]!;
+      fireEvent.keyDown(monthOption, { key: "ArrowUp" });
+
+      const prevMonthOption = monthOptions[4];
+      expect(document.activeElement).toEqual(prevMonthOption);
+    });
+
+    it("handles Escape key to cancel dropdown", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const monthOption = monthOptions[5]!;
+      fireEvent.keyDown(monthOption, { key: "Escape" });
+
+      expect(
+        monthDropdown?.querySelectorAll(".react-datepicker__month-dropdown"),
+      ).toHaveLength(0);
+    });
+
+    it("wraps around when using ArrowUp on first month", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const firstMonthOption = monthOptions[0]!;
+      fireEvent.keyDown(firstMonthOption, { key: "ArrowUp" });
+
+      const lastMonthOption = monthOptions[11];
+      expect(document.activeElement).toEqual(lastMonthOption);
+    });
+
+    it("wraps around when using ArrowDown on last month", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const lastMonthOption = monthOptions[11]!;
+      fireEvent.keyDown(lastMonthOption, { key: "ArrowDown" });
+
+      const firstMonthOption = monthOptions[0];
+      expect(document.activeElement).toEqual(firstMonthOption);
+    });
   });
 
   describe("select mode", () => {

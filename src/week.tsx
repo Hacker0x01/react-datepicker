@@ -12,6 +12,7 @@ import Day from "./day";
 import WeekNumber from "./week_number";
 
 interface DayProps extends React.ComponentPropsWithoutRef<typeof Day> {}
+
 interface WeekNumberProps
   extends React.ComponentPropsWithoutRef<typeof WeekNumber> {}
 
@@ -38,6 +39,7 @@ interface WeekProps
     weekNumber: number,
     event: React.MouseEvent<HTMLDivElement>,
   ) => void;
+  weekClassName?: (date: Date) => string;
 }
 
 export default class Week extends Component<WeekProps> {
@@ -192,6 +194,13 @@ export default class Week extends Component<WeekProps> {
       ),
       "react-datepicker__week--keyboard-selected": this.isKeyboardSelected(),
     };
-    return <div className={clsx(weekNumberClasses)}>{this.renderDays()}</div>;
+    const customWeekClassName = this.props.weekClassName
+      ? this.props.weekClassName(this.startOfWeek())
+      : undefined;
+    return (
+      <div className={clsx(weekNumberClasses, customWeekClassName)} role="row">
+        {this.renderDays()}
+      </div>
+    );
   }
 }

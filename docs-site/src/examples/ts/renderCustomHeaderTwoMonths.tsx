@@ -20,6 +20,9 @@ const RenderCustomHeaderTwoMonths = () => {
               customHeaderCount === 1 ? { visibility: "hidden" } : undefined
             }
             onClick={decreaseMonth}
+            style={{
+              visibility: customHeaderCount === 0 ? "visible" : "hidden",
+            }}
           >
             <span
               className={

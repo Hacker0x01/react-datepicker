@@ -140,6 +140,7 @@ interface MonthProps
   weekAriaLabelPrefix?: WeekProps["ariaLabelPrefix"];
   chooseDayAriaLabelPrefix?: WeekProps["chooseDayAriaLabelPrefix"];
   disabledDayAriaLabelPrefix?: WeekProps["disabledDayAriaLabelPrefix"];
+  dayNamesHeader?: React.ReactNode;
 }
 
 /**
@@ -412,6 +413,19 @@ export default class Month extends Component<MonthProps> {
 
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
     getQuarter(day) === q && getYear(day) === getYear(selected);
+
+  isMonthSelected = () => {
+    const { day, selected, selectedDates, selectsMultiple } = this.props;
+    const monthIdx = getMonth(day);
+
+    if (selectsMultiple) {
+      return selectedDates?.some((date) =>
+        this.isSelectedMonth(day, monthIdx, date),
+      );
+    }
+
+    return !!selected && this.isSelectedMonth(day, monthIdx, selected);
+  };
 
   renderWeeks = () => {
     const weeks = [];
@@ -821,6 +835,7 @@ export default class Month extends Component<MonthProps> {
           !this.props.disabledKeyboardNavigation &&
           preSelection &&
           this.isSelectedMonth(day, m, preSelection) &&
+          !this.isMonthSelected() &&
           !this.isMonthDisabled(m),
         "react-datepicker__month-text--in-selecting-range":
           this.isInSelectingRangeMonth(m),
@@ -1087,23 +1102,45 @@ export default class Month extends Component<MonthProps> {
       ? ariaLabelPrefix.trim() + " "
       : "";
 
+    const shouldUseListboxRole = showMonthYearPicker || showQuarterYearPicker;
+
+    if (shouldUseListboxRole) {
+      return (
+        <div
+          className={this.getClassNames()}
+          onMouseLeave={
+            !this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          role="listbox"
+        >
+          {showMonthYearPicker ? this.renderMonths() : this.renderQuarters()}
+        </div>
+      );
+    }
+
+    // For regular calendar view, use table structure
     return (
-      <div
-        className={this.getClassNames()}
-        onMouseLeave={
-          !this.props.usePointerEvent ? this.handleMouseLeave : undefined
-        }
-        onPointerLeave={
-          this.props.usePointerEvent ? this.handleMouseLeave : undefined
-        }
-        aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
-        role="listbox"
-      >
-        {showMonthYearPicker
-          ? this.renderMonths()
-          : showQuarterYearPicker
-            ? this.renderQuarters()
-            : this.renderWeeks()}
+      <div role="table">
+        {this.props.dayNamesHeader && (
+          <div role="rowgroup">{this.props.dayNamesHeader}</div>
+        )}
+        <div
+          className={this.getClassNames()}
+          onMouseLeave={
+            !this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          onPointerLeave={
+            this.props.usePointerEvent ? this.handleMouseLeave : undefined
+          }
+          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          role="rowgroup"
+        >
+          {this.renderWeeks()}
+        </div>
       </div>
     );
   }

@@ -146,6 +146,76 @@ describe("YearDropdownOptions", () => {
     expect(onCancelSpy).toHaveBeenCalledTimes(2);
   });
 
+  it("handles Enter key to select year", () => {
+    const yearOptions = safeQuerySelectorAll(
+      yearDropdown,
+      ".react-datepicker__year-option",
+    );
+    const year2014Option = yearOptions.find((node) =>
+      node.textContent?.includes("2014"),
+    );
+
+    if (!year2014Option) {
+      throw new Error("Year 2014 not found!");
+    }
+
+    fireEvent.keyDown(year2014Option, { key: "Enter" });
+    expect(handleChangeResult).toBe(2014);
+  });
+
+  it("handles Escape key to cancel dropdown", () => {
+    const yearOptions = safeQuerySelectorAll(
+      yearDropdown,
+      ".react-datepicker__year-option",
+    );
+    const year2014Option = yearOptions.find((node) =>
+      node.textContent?.includes("2014"),
+    );
+
+    if (!year2014Option) {
+      throw new Error("Year 2014 not found!");
+    }
+
+    fireEvent.keyDown(year2014Option, { key: "Escape" });
+    expect(onCancelSpy).toHaveBeenCalled();
+  });
+
+  it("handles ArrowUp key navigation", () => {
+    const yearOptions = safeQuerySelectorAll(
+      yearDropdown,
+      ".react-datepicker__year-option",
+    );
+    const year2015Option = yearOptions.find((node) =>
+      node.textContent?.includes("✓2015"),
+    );
+
+    if (!year2015Option) {
+      throw new Error("Year 2015 not found!");
+    }
+
+    fireEvent.keyDown(year2015Option, { key: "ArrowUp" });
+    // ArrowUp should focus year 2016 (year + 1 in the code)
+    expect(document.activeElement?.textContent).toContain("2016");
+  });
+
+  it("handles ArrowDown key navigation", () => {
+    const yearOptions = safeQuerySelectorAll(
+      yearDropdown,
+      ".react-datepicker__year-option",
+    );
+    const year2015Option = yearOptions.find((node) =>
+      node.textContent?.includes("✓2015"),
+    );
+
+    if (!year2015Option) {
+      throw new Error("Year 2015 not found!");
+    }
+
+    fireEvent.keyDown(year2015Option, { key: "ArrowDown" });
+    // ArrowDown should focus year 2014 (year - 1 in the code)
+    expect(document.activeElement?.textContent).toContain("2014");
+  });
+
   describe("selected", () => {
     const className = "react-datepicker__year-option--selected_year";
     let yearOptions: HTMLElement[];

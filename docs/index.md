@@ -92,3 +92,4 @@
 | `value`                         |      |                    |             |
 | `withPortal`                    |      | `false`            |             |
 | `yearItemNumber`                |      | `12`               |             |
+| `rangeSeparator`                |      | `" - "`            |             |

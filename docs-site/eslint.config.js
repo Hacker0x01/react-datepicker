@@ -42,6 +42,7 @@ export default [
     languageOptions: {
       globals: {
         useState: false,
+        useMemo: false,
         render: false,
         DatePicker: false,
         getHours: false,

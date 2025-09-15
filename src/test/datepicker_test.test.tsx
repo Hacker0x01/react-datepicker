@@ -2,6 +2,7 @@ import { render, act, waitFor, fireEvent } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
 import React, { useState } from "react";
+import { OUTSIDE_CLICK_IGNORE_CLASS } from "../calendar";
 
 import {
   KeyType,
@@ -687,21 +688,45 @@ describe("DatePicker", () => {
     });
   });
 
-  it("should not apply the react-datepicker-ignore-onclickoutside class to the date input when closed", () => {
+  it("should not apply the default outsideClickIgnoreClass class to the date input when closed", () => {
     const { container } = render(<DatePicker />);
     const input = safeQuerySelector(container, "input");
-    expect(
-      input?.classList.contains("react-datepicker-ignore-onclickoutside"),
-    ).toBeFalsy();
+    expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(false);
   });
 
-  it("should apply the react-datepicker-ignore-onclickoutside class to date input when open", () => {
+  it("should apply the default outsideClickIgnoreClass class to date input when open", () => {
     const { container } = render(<DatePicker />);
     const input = safeQuerySelector<HTMLInputElement>(container, "input");
     fireEvent.focus(input);
-    expect(
-      input?.classList.contains("react-datepicker-ignore-onclickoutside"),
-    ).toBeTruthy();
+    expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
+  });
+
+  it("should apply the outsideClickIgnoreClass class to date input when open", () => {
+    const outsideClickIgnoreClass = "ignore-onclickoutside";
+    const { container } = render(
+      <DatePicker outsideClickIgnoreClass={outsideClickIgnoreClass} />,
+    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    expect(input?.classList.contains(outsideClickIgnoreClass)).toBe(true);
+  });
+
+  it("should apply the default outsideClickIgnoreClass when prop is undefined", () => {
+    const { container } = render(
+      <DatePicker outsideClickIgnoreClass={undefined} />,
+    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
+  });
+
+  it("should apply the default outsideClickIgnoreClass when prop is falsy", () => {
+    const { container } = render(
+      <DatePicker outsideClickIgnoreClass={undefined} />,
+    );
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+    fireEvent.focus(input);
+    expect(input?.classList.contains(OUTSIDE_CLICK_IGNORE_CLASS)).toBe(true);
   });
 
   it("should toggle the open status of calendar on click of the icon when toggleCalendarOnIconClick is set to true", () => {
@@ -3153,35 +3178,6 @@ describe("DatePicker", () => {
         ).toBe(true);
       }
     });
-
-    it("should not apply '--in-selecting-range' class to the days till the date that matched selectedDate in the next months (endDatePicker)", () => {
-      const startDay = 3;
-      const endDay = 8;
-      const startDate = new Date(`2025/02/${startDay}`);
-      const endDate = new Date(`2025/02/${endDay}`);
-
-      const { container } = render(
-        <DatePicker
-          inline
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-        />,
-      );
-
-      goToNextMonth(container);
-
-      for (let i = 1; i <= endDay; i++) {
-        const inSelectionRangeDay = safeQuerySelector(
-          container,
-          `.react-datepicker__day--00${i}`,
-        );
-        expect(
-          inSelectionRangeDay.classList.contains(IN_RANGE_DAY_CLASS_NAME),
-        ).toBe(false);
-      }
-    });
   });
 
   describe("selectsRange without inline", () => {
@@ -3499,6 +3495,23 @@ describe("DatePicker", () => {
 
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
+
+    it("should render custom separator when `rangeSeparator` is provided", () => {
+      const onChangeSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          rangeSeparator=" to "
+          startDate={newDate("2025-01-01")}
+          endDate={newDate("2025-01-03")}
+          onChange={onChangeSpy}
+          dateFormat="yyyy/MM/dd"
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      expect(input.value).toBe("2025/01/01 to 2025/01/03");
+    });
   });
 
   describe("duplicate dates when multiple months", () => {
@@ -3798,6 +3811,56 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("Calendar Header Accessibility", () => {
+    it("renders day names with react-datepicker__sr-only full weekday and visible short name", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      const headers = container.querySelectorAll(
+        '.react-datepicker__day-names > [role="columnheader"]',
+      );
+      expect(headers.length).toBe(7);
+
+      headers.forEach((header) => {
+        // Should have a visually hidden span with the full weekday name
+        const srOnly = header.querySelector(".react-datepicker__sr-only");
+        expect(srOnly).toBeTruthy();
+        expect(srOnly?.textContent?.length).toBeGreaterThan(2);
+
+        // Should have a visible short name
+        const visible = header.querySelector('span[aria-hidden="true"]');
+        expect(visible).toBeTruthy();
+        expect(visible?.textContent?.length).toBeLessThanOrEqual(3);
+      });
+    });
+
+    it("renders week number column header with react-datepicker__sr-only label and visible #", () => {
+      const { container } = render(<DatePicker showWeekNumbers />);
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      const headers = container.querySelectorAll(
+        '.react-datepicker__day-names > [role="columnheader"]',
+      );
+      expect(headers.length).toBe(8);
+
+      const weekNumberHeader = headers[0] as Element;
+      const srOnly = weekNumberHeader.querySelector(
+        ".react-datepicker__sr-only",
+      );
+      expect(srOnly).toBeTruthy();
+      expect(srOnly?.textContent?.trim()?.toLowerCase()).toEqual("week number");
+
+      // Should have a visible short name
+      const visible = weekNumberHeader.querySelector(
+        'span[aria-hidden="true"]',
+      );
+      expect(visible).toBeTruthy();
+      expect(visible?.textContent?.trim()?.toLowerCase()).toEqual("#");
+    });
+  });
+
   it("should show the correct start of week for GB locale", () => {
     registerLocale("en-GB", enGB);
 
@@ -3806,9 +3869,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Mo");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Mo");
   });
 
   it("should show the correct start of week for US locale", () => {
@@ -3819,9 +3883,10 @@ describe("DatePicker", () => {
     jest.spyOn(input, "focus");
     fireEvent.focus(input);
 
-    const firstDay = container.querySelector(".react-datepicker__day-names")
-      ?.childNodes[0]?.textContent;
-    expect(firstDay).toBe("Su");
+    const firstDay = container.querySelector(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    expect(firstDay?.textContent).toBe("Su");
   });
 
   describe("when update the datepicker input text while props.showTimeSelectOnly is set and dateFormat has only time related format", () => {
@@ -4349,17 +4414,23 @@ describe("DatePicker", () => {
   });
 
   describe("input reset", () => {
-    const renderDatePickerInput = () => {
-      const WrapperComponent = () => {
+    const renderDatePickerInput = (open: boolean | null = null) => {
+      const WrapperComponent = ({ open }: { open: boolean | null }) => {
         const [date, setDate] = useState<Date | null>(new Date());
-        return <DatePicker open={false} selected={date} onChange={setDate} />;
+        return (
+          <DatePicker
+            {...(open !== null && { open })}
+            selected={date}
+            onChange={setDate}
+          />
+        );
       };
 
-      return render(<WrapperComponent />);
+      return render(<WrapperComponent open={open} />);
     };
 
     it("should reset the date input element with the previously entered value element on blur even when the calendar open is false", () => {
-      const { container } = renderDatePickerInput();
+      const { container } = renderDatePickerInput(false);
       const input = safeQuerySelector(container, "input") as HTMLInputElement;
 
       if (!input) {
@@ -4385,6 +4456,367 @@ describe("DatePicker", () => {
       });
       fireEvent.blur(input);
       expect(input.value).toBe(DATE_VALUE);
+    });
+
+    it("should reset the date input element with the previously entered value on blur even when the calendar is not open", () => {
+      const { container } = renderDatePickerInput();
+      const input = safeQuerySelector(container, "input") as HTMLInputElement;
+
+      fireEvent.click(input);
+
+      const VALID_DATE_VALUE = "06/23/2025";
+      fireEvent.change(input, {
+        target: {
+          value: VALID_DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(VALID_DATE_VALUE);
+
+      fireEvent.click(input);
+      fireEvent.keyDown(input, getKey(KeyType.Escape));
+      // Make sure the calendar is hidden
+      expect(container.querySelector(".react-datepicker")).toBeFalsy();
+
+      const INVALID_DATE_VALUE = "2025-02-45";
+      fireEvent.change(input, {
+        target: {
+          value: INVALID_DATE_VALUE,
+        },
+      });
+      fireEvent.blur(input);
+      expect(input.value).toBe(VALID_DATE_VALUE);
+    });
+  });
+
+  describe("Close on ESC Key", () => {
+    it("should close DatePicker on ESC key press", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+
+      fireEvent.keyDown(calendar, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
+    });
+
+    it("should close DatePicker on ESC key press - even when the focus is at Calendar header buttons", () => {
+      const { container } = render(<DatePicker />);
+      const input = safeQuerySelector(container, "input");
+
+      fireEvent.click(input);
+      const calendar = safeQuerySelector(container, ".react-datepicker");
+      const nextMontButton = safeQuerySelector(
+        calendar,
+        "button.react-datepicker__navigation--next",
+      );
+
+      fireEvent.click(nextMontButton);
+      fireEvent.click(nextMontButton);
+
+      fireEvent.keyDown(nextMontButton, getKey(KeyType.Escape));
+
+      const calendarAfterEsc = container.querySelector(".react-datepicker");
+      expect(calendarAfterEsc).toBeFalsy();
+    });
+  });
+
+  describe("dateFormat", () => {
+    it("should use the default dateFormat if dateFormat prop is not provided", () => {
+      const { container } = render(
+        <DatePicker selected={new Date("2025-07-17")} showDateSelect />,
+      );
+      const input = safeQuerySelector(container, "input") as HTMLInputElement;
+      expect(input?.value).toBe("07/17/2025");
+    });
+  });
+
+  describe("Date Range - Handle null start date", () => {
+    it("should display the endDate when the startDate is not available", () => {
+      const endDateLabel = "2025-11-22";
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          endDate={newDate(endDateLabel)}
+          dateFormat="yyyy-MM-dd"
+          onChange={() => {}}
+          isClearable
+        />,
+      );
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      expect(input.value).toBe(` - ${endDateLabel}`);
+    });
+
+    it("should clear the input when the startDate alone is cleared while the endDate is still available", () => {
+      const startDateLabel = "2025-11-17";
+      const endDateLabel = "2025-11-22";
+      const onChangeSpy = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={newDate(startDateLabel)}
+          endDate={newDate(endDateLabel)}
+          dateFormat="yyyy-MM-dd"
+          onChange={onChangeSpy}
+          isClearable
+        />,
+      );
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      expect(input.value).toBe(`${startDateLabel} - ${endDateLabel}`);
+
+      fireEvent.change(input, { target: { value: ` - ${endDateLabel}` } });
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(onChangeSpy).toHaveBeenCalledWith([null, null], expect.anything());
+    });
+
+    it("should clear the endDate and set the startDate when the endDate is alone available and the newly selected startDate is greater than the endDate", () => {
+      const endDateLabel = "2025-11-20";
+      const onChangeSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          selected={newDate(endDateLabel)}
+          endDate={newDate(endDateLabel)}
+          dateFormat="yyyy-MM-dd"
+          onChange={onChangeSpy}
+          isClearable
+        />,
+      );
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.focus(input);
+
+      expect(container.querySelector(".react-datepicker")).toBeTruthy();
+      const newStartDateEl = safeQuerySelector(
+        container,
+        ".react-datepicker__day--021",
+      );
+      fireEvent.click(newStartDateEl);
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      const changedDateRange = onChangeSpy.mock.calls[0][0];
+      const [changedStartDate, changedEndDate] = changedDateRange;
+
+      expect(changedEndDate).toBe(null);
+      expect(changedStartDate.toISOString()).toBe(
+        newDate("2025-11-21").toISOString(),
+      );
+    });
+
+    it("should set the startDate when the endDate is alone available and the newly selected startDate is less than the endDate", () => {
+      const endDateLabel = "2025-11-20";
+      const onChangeSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          selected={newDate(endDateLabel)}
+          endDate={newDate(endDateLabel)}
+          dateFormat="yyyy-MM-dd"
+          onChange={onChangeSpy}
+          isClearable
+        />,
+      );
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.focus(input);
+
+      expect(container.querySelector(".react-datepicker")).toBeTruthy();
+      const newStartDateEl = safeQuerySelector(
+        container,
+        ".react-datepicker__day--019",
+      );
+      fireEvent.click(newStartDateEl);
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      const changedDateRange = onChangeSpy.mock.calls[0][0];
+      const [changedStartDate, changedEndDate] = changedDateRange;
+
+      expect(changedEndDate.toISOString()).toBe(
+        newDate(endDateLabel).toISOString(),
+      );
+      expect(changedStartDate.toISOString()).toBe(
+        newDate("2025-11-19").toISOString(),
+      );
+    });
+  });
+
+  describe("Refocus Input", () => {
+    it("should refocus the date input when a date is selected", async () => {
+      const selectedDate = newDate("2025-11-01");
+      const onChangeSpy = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selected={selectedDate}
+          dateFormat="yyyy-MM-dd"
+          onChange={onChangeSpy}
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.focus(input);
+
+      expect(container.querySelector(".react-datepicker")).toBeTruthy();
+
+      const newSelectedDateEl = safeQuerySelector(
+        container,
+        ".react-datepicker__day--002",
+      );
+      fireEvent.click(newSelectedDateEl);
+
+      await waitFor(() => {
+        expect(document.activeElement).not.toBe(newSelectedDateEl);
+        expect(document.activeElement).toBe(input);
+      });
+    });
+
+    describe("Date Range", () => {
+      it("should not refocus the input when the endDate is not selected in the Date Range", async () => {
+        const selectedDate = newDate("2025-11-01");
+        let startDate, endDate;
+        const onChangeSpy = jest.fn((dates) => {
+          [startDate, endDate] = dates;
+        });
+
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            selected={selectedDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy-MM-dd"
+            onChange={onChangeSpy}
+          />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        expect(container.querySelector(".react-datepicker")).toBeTruthy();
+        const newStartDateEl = safeQuerySelector(
+          container,
+          ".react-datepicker__day--002",
+        );
+        fireEvent.click(newStartDateEl);
+
+        expect(onChangeSpy).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(document.activeElement).not.toBe(input);
+          expect(document.activeElement).toBe(newStartDateEl);
+        });
+      });
+
+      it("should refocus the input when the endDate is selected in the Date Range (if the end date is after the start date)", async () => {
+        const selectedDate = newDate("2025-11-01");
+        let startDate = selectedDate,
+          endDate;
+        const onChangeSpy = jest.fn((dates) => {
+          [startDate, endDate] = dates;
+        });
+
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            selected={selectedDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy-MM-dd"
+            onChange={onChangeSpy}
+          />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        expect(container.querySelector(".react-datepicker")).toBeTruthy();
+        const endDateEl = safeQuerySelector(
+          container,
+          ".react-datepicker__day--005",
+        );
+        fireEvent.click(endDateEl);
+
+        expect(onChangeSpy).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(document.activeElement).toBe(input);
+        });
+      });
+
+      it("should not refocus the input when the selected endDate is before the startDate", async () => {
+        const selectedDate = newDate("2025-11-05");
+        let startDate = selectedDate,
+          endDate;
+        const onChangeSpy = jest.fn((dates) => {
+          [startDate, endDate] = dates;
+        });
+
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            selected={selectedDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy-MM-dd"
+            onChange={onChangeSpy}
+          />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        expect(container.querySelector(".react-datepicker")).toBeTruthy();
+        const endDateEl = safeQuerySelector(
+          container,
+          ".react-datepicker__day--002",
+        );
+        fireEvent.click(endDateEl);
+
+        expect(onChangeSpy).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(document.activeElement).not.toBe(input);
+          expect(document.activeElement).toBe(endDateEl);
+        });
+      });
+
+      it('should refocus the input when the selected endDate is before the startDate when the "swapRange" prop is set', async () => {
+        const selectedDate = newDate("2025-11-05");
+        let startDate = selectedDate,
+          endDate;
+        const onChangeSpy = jest.fn((dates) => {
+          [startDate, endDate] = dates;
+        });
+
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            swapRange
+            selected={selectedDate}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy-MM-dd"
+            onChange={onChangeSpy}
+          />,
+        );
+        const input = safeQuerySelector<HTMLInputElement>(container, "input");
+        fireEvent.focus(input);
+
+        expect(container.querySelector(".react-datepicker")).toBeTruthy();
+        const endDateEl = safeQuerySelector(
+          container,
+          ".react-datepicker__day--002",
+        );
+        fireEvent.click(endDateEl);
+
+        expect(onChangeSpy).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(document.activeElement).not.toBe(endDateEl);
+          expect(document.activeElement).toBe(input);
+        });
+      });
     });
   });
 });

@@ -131,6 +131,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
         onClick={this.handleClick}
         onKeyDown={this.handleOnKeyDown}
         tabIndex={this.getTabIndex()}
+        role="gridcell"
       >
         {weekNumber}
       </div>

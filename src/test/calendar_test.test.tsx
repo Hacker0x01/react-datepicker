@@ -294,7 +294,9 @@ describe("Calendar", () => {
   it("should correctly format weekday using formatWeekDay prop", () => {
     const { calendar } = getCalendar({ formatWeekDay: (day) => day.charAt(0) });
     calendar
-      .querySelectorAll(".react-datepicker__day-name")
+      .querySelectorAll(
+        ".react-datepicker__day-name > span[aria-hidden='true']",
+      )
       .forEach((dayName) => expect(dayName.textContent).toHaveLength(1));
   });
 
@@ -403,6 +405,25 @@ describe("Calendar", () => {
     expect(nextButtonAriaLabel).toBe(nextButtonAriaLabel);
   });
 
+  it("should render by default aria labels for next and prev months buttons when providing a react node", () => {
+    const previousMonthButtonLabel = <span>Custom react previous month</span>;
+    const nextMonthButtonLabel = <span>Custom react next month</span>;
+    const { calendar } = getCalendar({
+      previousMonthButtonLabel,
+      nextMonthButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--previous")
+      ?.getAttribute("aria-label");
+    const nextButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--next")
+      ?.getAttribute("aria-label");
+
+    expect(previousButtonAriaLabel).toBe("Previous Month");
+    expect(nextButtonAriaLabel).toBe("Next Month");
+  });
+
   it("should render the correct default aria labels for next and prev year buttons", () => {
     const { calendar } = getCalendar({ showYearPicker: true });
     const previousButtonAriaLabel = calendar
@@ -458,6 +479,26 @@ describe("Calendar", () => {
     expect(nextButtonAriaLabel).toBe(nextYearAriaLabel);
   });
 
+  it("should render by default aria labels for next and prev year buttons when providing a react node", () => {
+    const previousYearButtonLabel = <span>Custom react previous year</span>;
+    const nextYearButtonLabel = <span>Custom react next year</span>;
+    const { calendar } = getCalendar({
+      showYearPicker: true,
+      previousYearButtonLabel,
+      nextYearButtonLabel,
+    });
+
+    const previousButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--previous")
+      ?.getAttribute("aria-label");
+    const nextButtonAriaLabel = calendar
+      .querySelector(".react-datepicker__navigation--next")
+      ?.getAttribute("aria-label");
+
+    expect(previousButtonAriaLabel).toBe("Previous Year");
+    expect(nextButtonAriaLabel).toBe("Next Year");
+  });
+
   it("should not have previous month button when selecting a date in the second month, when min date is specified", () => {
     const minDate = new Date("2024-11-06");
     const maxDate = new Date("2025-01-01");
@@ -511,6 +552,7 @@ describe("Calendar", () => {
     const renderCustomHeader = (params: ReactDatePickerCustomHeaderProps) => {
       const {
         date,
+        visibleYearsRange,
         changeYear,
         changeMonth,
         decreaseMonth,
@@ -521,6 +563,11 @@ describe("Calendar", () => {
 
       return (
         <div className="custom-header">
+          {visibleYearsRange && (
+            <h6 className="visible-years-range">
+              {visibleYearsRange.startYear} to {visibleYearsRange.endYear}
+            </h6>
+          )}
           <button
             className="prevMonth"
             onClick={decreaseMonth}
@@ -653,6 +700,31 @@ describe("Calendar", () => {
       expect(
         calendar.querySelectorAll(".react-datepicker__day-names"),
       ).toHaveLength(1);
+    });
+
+    it("should render custom header with visible year range for YearPicker", () => {
+      const { calendar } = getCalendar({
+        renderCustomHeader,
+        showYearPicker: true,
+      });
+
+      expect(
+        calendar.querySelector(
+          ".react-datepicker__header--custom .visible-years-range",
+        ),
+      ).not.toBeNull();
+    });
+
+    it("should not render visible year range for non-YearPicker views", () => {
+      const { calendar } = getCalendar({
+        renderCustomHeader,
+      });
+
+      expect(
+        calendar.querySelector(
+          ".react-datepicker__header--custom .visible-years-range",
+        ),
+      ).toBeNull();
     });
 
     it("should not render day names with renderCustomHeader & showMonthYearPicker", () => {
@@ -1060,7 +1132,9 @@ describe("Calendar", () => {
 
   it("should use a hash for week label if weekLabel is NOT provided", () => {
     const { calendar } = getCalendar({ showWeekNumbers: true });
-    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    const weekLabel = calendar.querySelectorAll(
+      ".react-datepicker__day-name > span[aria-hidden='true']",
+    );
     expect(weekLabel[0]?.textContent).toBe("#");
   });
 
@@ -1069,7 +1143,9 @@ describe("Calendar", () => {
       showWeekNumbers: true,
       weekLabel: "Foo",
     });
-    const weekLabel = calendar.querySelectorAll(".react-datepicker__day-name");
+    const weekLabel = calendar.querySelectorAll(
+      ".react-datepicker__day-name > span[aria-hidden='true']",
+    );
     expect(weekLabel[0]?.textContent).toBe("Foo");
   });
 
@@ -1182,13 +1258,13 @@ describe("Calendar", () => {
     ).container;
 
     const daysNamesShort = calendarShort.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span[aria-hidden='true']",
     );
     expect(daysNamesShort[0]?.textContent).toBe("Sun");
     expect(daysNamesShort[6]?.textContent).toBe("Sat");
 
     const daysNamesMin = calendarMin.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span[aria-hidden='true']",
     );
     expect(daysNamesMin[0]?.textContent).toBe("Su");
     expect(daysNamesMin[6]?.textContent).toBe("Sa");
@@ -1544,7 +1620,9 @@ describe("Calendar", () => {
         calendarStartDay,
       );
       const firstWeekDayMin = getWeekdayMinInLocale(firstDateOfWeek, locale);
-      const firstHeader = calendar.querySelector(".react-datepicker__day-name");
+      const firstHeader = calendar.querySelector(
+        ".react-datepicker__day-name > span[aria-hidden='true']",
+      );
       expect(firstHeader?.textContent).toBe(firstWeekDayMin);
     }
 
@@ -2166,13 +2244,11 @@ describe("Calendar", () => {
 
     const header = container.querySelector(".react-datepicker__header");
     const dayNameElements = header?.querySelectorAll(
-      ".react-datepicker__day-name",
+      ".react-datepicker__day-name > span.react-datepicker__sr-only",
     );
 
     dayNameElements?.forEach((element, index) => {
-      expect(element.getAttribute("aria-label")).toBe(
-        expectedAriaLabels[index],
-      );
+      expect(element.textContent).toBe(expectedAriaLabels[index]);
     });
   });
 
@@ -2430,7 +2506,7 @@ describe("Calendar", () => {
     it("should have default sunday as start day if No prop passed", () => {
       const { calendar } = getCalendar();
       const calendarDays = calendar.querySelectorAll(
-        ".react-datepicker__day-name",
+        ".react-datepicker__day-name > span[aria-hidden='true']",
       );
       expect(calendarDays[0]?.textContent).toBe("Su");
       expect(calendarDays[6]?.textContent).toBe("Sa");
@@ -2439,7 +2515,7 @@ describe("Calendar", () => {
     it("should have default wednesday as start day if No prop passed", () => {
       const { calendar } = getCalendar({ calendarStartDay: 3 });
       const calendarDays = calendar.querySelectorAll(
-        ".react-datepicker__day-name",
+        ".react-datepicker__day-name > span[aria-hidden='true']",
       );
       expect(calendarDays[0]?.textContent).toBe("We");
       expect(calendarDays[6]?.textContent).toBe("Tu");

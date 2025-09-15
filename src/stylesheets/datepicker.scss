@@ -2,6 +2,19 @@
 @use "variables" as *;
 @use "mixins" as *;
 
+/* sr-only utility class for accessibility */
+.react-datepicker__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .react-datepicker-wrapper {
   display: inline-block;
   padding: 0;
@@ -368,6 +381,7 @@ h2.react-datepicker__current-month {
 }
 
 .react-datepicker__day-names {
+  text-align: center;
   white-space: nowrap;
   margin-bottom: -8px;
 }
@@ -694,7 +708,7 @@ h2.react-datepicker__current-month {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgb(0, 0, 0, 0.8);
   left: 0;
   top: 0;
   justify-content: center;

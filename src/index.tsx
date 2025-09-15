@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import React, { Component, cloneElement } from "react";
 
-import Calendar from "./calendar";
+import Calendar, { OUTSIDE_CLICK_IGNORE_CLASS } from "./calendar";
 import CalendarIcon from "./calendar_icon";
 import {
   newDate,
@@ -61,8 +61,6 @@ export { default as CalendarContainer } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
 
-const outsideClickIgnoreClass = "react-datepicker-ignore-onclickoutside";
-
 export { ReactDatePickerCustomHeaderProps } from "./calendar";
 
 // Compares dates year+month combinations
@@ -112,7 +110,6 @@ export type DatePickerProps = OmitUnion<
   | "highlightDates"
   | "holidays"
   | "shouldFocusDayInline"
-  | "outsideClickIgnoreClass"
   | "monthSelectedIn"
   | "onDropdownFocus"
   | "onTimeChange"
@@ -194,6 +191,7 @@ export type DatePickerProps = OmitUnion<
     ariaInvalid?: string;
     ariaLabelledBy?: string;
     ariaRequired?: string;
+    rangeSeparator?: string;
     onChangeRaw?: (
       event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
     ) => void;
@@ -252,10 +250,7 @@ interface DatePickerState {
   isRenderAriaLiveMessage?: boolean;
 }
 
-export default class DatePicker extends Component<
-  DatePickerProps,
-  DatePickerState
-> {
+export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   static get defaultProps() {
     return {
       allowSameDay: false,
@@ -266,7 +261,9 @@ export default class DatePicker extends Component<
       dropdownMode: "scroll" as const,
       preventOpenOnFocus: false,
       monthsShown: 1,
+      outsideClickIgnoreClass: OUTSIDE_CLICK_IGNORE_CLASS,
       readOnly: false,
+      rangeSeparator: DATE_RANGE_SEPARATOR,
       withPortal: false,
       selectsDisabledDaysInRange: false,
       shouldCloseOnSelect: true,
@@ -425,6 +422,45 @@ export default class DatePicker extends Component<
     };
   };
 
+  getInputValue = (): string => {
+    const {
+      locale,
+      startDate,
+      endDate,
+      rangeSeparator,
+      selected,
+      selectedDates,
+      selectsMultiple,
+      selectsRange,
+      value,
+    } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+
+    const { inputValue } = this.state;
+
+    if (typeof value === "string") {
+      return value;
+    } else if (typeof inputValue === "string") {
+      return inputValue;
+    } else if (selectsRange) {
+      return safeDateRangeFormat(startDate, endDate, {
+        dateFormat,
+        locale,
+        rangeSeparator,
+      });
+    } else if (selectsMultiple) {
+      return safeMultipleDatesFormat(selectedDates ?? [], {
+        dateFormat,
+        locale,
+      });
+    }
+    return safeDateFormat(selected, {
+      dateFormat,
+      locale,
+    });
+  };
+
   resetHiddenStatus = (): void => {
     this.setState({
       ...this.state,
@@ -553,10 +589,19 @@ export default class DatePicker extends Component<
     this.cancelFocusInput();
   };
 
+  resetInputValue = () => {
+    this.setState({
+      ...this.state,
+      inputValue: null,
+    });
+  };
+
   handleBlur = (event: React.FocusEvent<HTMLElement>) => {
     if (!this.state.open || this.props.withPortal || this.props.showTimeInput) {
       this.props.onBlur?.(event);
     }
+
+    this.resetInputValue();
 
     if (this.state.open && this.props.open === false) {
       this.setOpen(false);
@@ -608,8 +653,16 @@ export default class DatePicker extends Component<
       event?.target instanceof HTMLInputElement ? event.target.value : "";
 
     if (selectsRange) {
+      const rangeSeparator = this.props.rangeSeparator as string;
+      const trimmedRangeSeparator = rangeSeparator.trim();
+
       const [valueStart, valueEnd] = value
-        .split(dateFormat.includes("-") ? DATE_RANGE_SEPARATOR : "-", 2)
+        .split(
+          dateFormat.includes(trimmedRangeSeparator)
+            ? rangeSeparator
+            : trimmedRangeSeparator,
+          2,
+        )
         .map((val) => val.trim());
       const startDateNew = parseDate(
         valueStart ?? "",
@@ -617,12 +670,14 @@ export default class DatePicker extends Component<
         this.props.locale,
         strictParsing,
       );
-      const endDateNew = parseDate(
-        valueEnd ?? "",
-        dateFormat,
-        this.props.locale,
-        strictParsing,
-      );
+      const endDateNew = startDateNew
+        ? parseDate(
+            valueEnd ?? "",
+            dateFormat,
+            this.props.locale,
+            strictParsing,
+          )
+        : null;
       const startChanged = startDate?.getTime() !== startDateNew?.getTime();
       const endChanged = endDate?.getTime() !== endDateNew?.getTime();
 
@@ -661,7 +716,17 @@ export default class DatePicker extends Component<
     monthSelectedIn?: number,
   ) => {
     if (this.props.readOnly) return;
-    if (this.props.shouldCloseOnSelect && !this.props.showTimeSelect) {
+
+    const { selectsRange, startDate, endDate, swapRange } = this.props;
+    const isDateSelectionComplete =
+      !selectsRange ||
+      (startDate && !endDate && (swapRange || !isDateBefore(date, startDate)));
+
+    if (
+      this.props.shouldCloseOnSelect &&
+      !this.props.showTimeSelect &&
+      isDateSelectionComplete
+    ) {
       // Preventing onFocus event to fix issue
       // https://github.com/Hacker0x01/react-datepicker/issues/628
       this.sendFocusBackToInput();
@@ -675,20 +740,8 @@ export default class DatePicker extends Component<
     }
     if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
       this.setPreSelection(date);
-    } else if (!this.props.inline) {
-      if (!this.props.selectsRange) {
-        this.setOpen(false);
-      }
-
-      const { startDate, endDate } = this.props;
-
-      if (
-        startDate &&
-        !endDate &&
-        (this.props.swapRange || !isDateBefore(date, startDate))
-      ) {
-        this.setOpen(false);
-      }
+    } else if (isDateSelectionComplete) {
+      this.setOpen(false);
     }
   };
 
@@ -779,6 +832,7 @@ export default class DatePicker extends Component<
       if (selectsRange) {
         const noRanges = !startDate && !endDate;
         const hasStartRange = startDate && !endDate;
+        const hasOnlyEndRange = !startDate && !!endDate;
         const isRangeFilled = startDate && endDate;
         if (noRanges) {
           onChange?.([changedDate, null], event);
@@ -793,6 +847,12 @@ export default class DatePicker extends Component<
             }
           } else {
             onChange?.([startDate, changedDate], event);
+          }
+        } else if (hasOnlyEndRange) {
+          if (changedDate && isDateBefore(changedDate, endDate)) {
+            onChange?.([changedDate, endDate], event);
+          } else {
+            onChange?.([changedDate, null], event);
           }
         }
         if (isRangeFilled) {
@@ -1170,6 +1230,7 @@ export default class DatePicker extends Component<
     if (eventKey === KeyType.Escape) {
       event.preventDefault();
       this.sendFocusBackToInput();
+      this.setOpen(false);
     }
   };
 
@@ -1235,7 +1296,7 @@ export default class DatePicker extends Component<
         onSelect={this.handleSelect}
         onClickOutside={this.handleCalendarClickOutside}
         holidays={getHolidaysMap(this.modifyHolidays())}
-        outsideClickIgnoreClass={outsideClickIgnoreClass}
+        outsideClickIgnoreClass={this.props.outsideClickIgnoreClass}
         onDropdownFocus={this.handleDropdownFocus}
         onTimeChange={this.handleTimeChange}
         className={this.props.calendarClassName}
@@ -1253,8 +1314,9 @@ export default class DatePicker extends Component<
   };
 
   renderAriaLiveRegion = () => {
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
+    const { locale } = this.props;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
     const isContainsTime =
       this.props.showTimeInput || this.props.showTimeSelect;
     const longDateFormat = isContainsTime ? "PPPPp" : "PPPP";
@@ -1324,38 +1386,18 @@ export default class DatePicker extends Component<
 
   renderDateInput = () => {
     const className = clsx(this.props.className, {
-      [outsideClickIgnoreClass]: this.state.open,
+      [this.props.outsideClickIgnoreClass ||
+      DatePicker.defaultProps.outsideClickIgnoreClass]: this.state.open,
     });
 
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
-    const { dateFormat = DatePicker.defaultProps.dateFormat, locale } =
-      this.props;
-    const inputValue =
-      typeof this.props.value === "string"
-        ? this.props.value
-        : typeof this.state.inputValue === "string"
-          ? this.state.inputValue
-          : this.props.selectsRange
-            ? safeDateRangeFormat(this.props.startDate, this.props.endDate, {
-                dateFormat,
-                locale,
-              })
-            : this.props.selectsMultiple
-              ? safeMultipleDatesFormat(this.props.selectedDates ?? [], {
-                  dateFormat,
-                  locale,
-                })
-              : safeDateFormat(this.props.selected, {
-                  dateFormat,
-                  locale,
-                });
 
     return cloneElement(customInput, {
       [customInputRef]: (input: HTMLElement | null) => {
         this.input = input;
       },
-      value: inputValue,
+      value: this.getInputValue(),
       onBlur: this.handleBlur,
       onChange: this.handleChange,
       onClick: this.onInputClick,
@@ -1515,3 +1557,4 @@ export default class DatePicker extends Component<
 
 const PRESELECT_CHANGE_VIA_INPUT = "input";
 const PRESELECT_CHANGE_VIA_NAVIGATE = "navigate";
+export default DatePicker;
