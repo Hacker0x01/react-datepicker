@@ -1,4 +1,4 @@
-const { getYear, getMonth, range } = DateFNS;
+const { getYear, getMonth } = DateFNS;
 const MONTHS = [
   "January",
   "February",
