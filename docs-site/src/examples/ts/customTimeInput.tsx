@@ -5,7 +5,9 @@ interface ExampleCustomTimeInputProps {
 }
 
 const CustomTimeInput = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
+    new Date(),
+  );
 
   const ExampleCustomTimeInput = ({
     value,
@@ -23,8 +25,8 @@ const CustomTimeInput = () => {
 
   return (
     <DatePicker
-      selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      selected={selectedDateTime}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeInput
       customTimeInput={<ExampleCustomTimeInput />}
     />

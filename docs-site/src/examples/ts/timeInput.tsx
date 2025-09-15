@@ -1,10 +1,12 @@
 const TimeInput = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
+    new Date(),
+  );
 
   return (
     <DatePicker
-      selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      selected={selectedDateTime}
+      onChange={(date: Date | null) => setSelectedDateTime(date)}
       timeInputLabel="Time:"
       dateFormat="MM/dd/yyyy h:mm aa"
       showTimeInput

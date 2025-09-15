@@ -1,7 +1,7 @@
 const { setHours, setMinutes, setSeconds } = DateFNS;
 
 const InjectTimes = () => {
-  const [selectedDate, setSelectedDateTime] = useState<Date | null>(
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 16),
   );
 
@@ -13,7 +13,7 @@ const InjectTimes = () => {
 
   return (
     <DatePicker
-      selected={selectedDate}
+      selected={selectedDateTime}
       onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       timeFormat="HH:mm:ss"

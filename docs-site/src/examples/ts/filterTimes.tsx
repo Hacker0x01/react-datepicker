@@ -2,7 +2,7 @@ const { setHours, setMinutes } = DateFNS;
 type TFilterTime = (time: Date) => boolean;
 
 const FilterTimes = () => {
-  const [selectedDate, setSelectedDateTime] = useState<Date | null>(
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(
     setHours(setMinutes(new Date(), 0), 9),
   );
 
@@ -15,7 +15,7 @@ const FilterTimes = () => {
 
   return (
     <DatePicker
-      selected={selectedDate}
+      selected={selectedDateTime}
       onChange={(date: Date | null) => setSelectedDateTime(date)}
       showTimeSelect
       filterTime={filterPassedTime}
