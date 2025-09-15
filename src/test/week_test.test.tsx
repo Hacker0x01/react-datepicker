@@ -421,7 +421,7 @@ describe("Week", () => {
     });
   });
   describe("selected and calendarStartDay", () => {
-    it("shoud starts the selected day on the Wednesday immediately preceding that day, When the calendarStartDay Props is 3.", () => {
+    it("should starts the selected day on the Wednesday immediately preceding that day, When the calendarStartDay Props is 3.", () => {
       const calendarStartDay = 3;
       const currentWeek = getStartOfWeek(
         newDate("2024-03-01"),
