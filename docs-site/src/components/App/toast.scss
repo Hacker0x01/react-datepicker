@@ -1,0 +1,27 @@
+$toast-success-color: #009688;
+$toast-error-color: #ef5350;
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: inline-block;
+  color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 1000;
+
+  &--success {
+    background-color: $toast-success-color;
+  }
+
+  &--error {
+    background-color: $toast-error-color;
+  }
+}
