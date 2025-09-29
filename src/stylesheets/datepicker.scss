@@ -399,6 +399,11 @@ h2.react-datepicker__current-month {
   line-height: $datepicker__item-size;
   text-align: center;
   margin: $datepicker__day-margin;
+
+  &--disabled {
+    cursor: default;
+    color: $datepicker__muted-color;
+  }
 }
 
 .react-datepicker__day,

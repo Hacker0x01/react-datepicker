@@ -16,7 +16,7 @@ import {
   getDayOfWeekCode,
   getStartOfWeek,
   formatDate,
-  type DateFilterOptions,
+  type DateFilterOptionsWithDisabled,
   type DateNumberType,
   type Locale,
   type HolidaysMap,
@@ -25,7 +25,7 @@ import {
 
 interface DayProps
   extends Pick<
-    DateFilterOptions,
+    DateFilterOptionsWithDisabled,
     | "minDate"
     | "maxDate"
     | "excludeDates"
@@ -33,6 +33,7 @@ interface DayProps
     | "includeDateIntervals"
     | "includeDates"
     | "filterDate"
+    | "disabled"
   > {
   ariaLabelPrefixWhenEnabled?: string;
   ariaLabelPrefixWhenDisabled?: string;
@@ -210,6 +211,7 @@ export default class Day extends Component<DayProps> {
       includeDateIntervals: this.props.includeDateIntervals,
       includeDates: this.props.includeDates,
       filterDate: this.props.filterDate,
+      disabled: this.props.disabled,
     });
 
   isExcluded = () =>

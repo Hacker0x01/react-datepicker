@@ -250,6 +250,7 @@ export default class Month extends Component<MonthProps> {
       includeDateIntervals: this.props.includeDateIntervals,
       includeDates: this.props.includeDates,
       filterDate: this.props.filterDate,
+      disabled: this.props.disabled,
     });
 
   isExcluded = (day: Date) =>
@@ -783,8 +784,17 @@ export default class Month extends Component<MonthProps> {
     isDisabled: boolean;
     labelDate: Date;
   } => {
-    const { day, minDate, maxDate, excludeDates, includeDates } = this.props;
+    const { day, disabled, minDate, maxDate, excludeDates, includeDates } =
+      this.props;
     const labelDate = setMonth(day, month);
+
+    if (disabled) {
+      return {
+        isDisabled: true,
+        labelDate: setMonth(day, month),
+      };
+    }
+
     return {
       isDisabled:
         ((minDate || maxDate || excludeDates || includeDates) &&
@@ -919,10 +929,16 @@ export default class Month extends Component<MonthProps> {
       filterDate,
       preSelection,
       disabledKeyboardNavigation,
+      disabled,
     } = this.props;
 
     const isDisabled =
-      (minDate || maxDate || excludeDates || includeDates || filterDate) &&
+      (minDate ||
+        maxDate ||
+        excludeDates ||
+        includeDates ||
+        filterDate ||
+        disabled) &&
       isQuarterDisabled(setQuarter(day, q), this.props);
 
     return clsx(
