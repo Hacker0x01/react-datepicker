@@ -56,6 +56,7 @@ import IncludeDatesMonthPicker from "../../examples/ts/includeDatesMonthPicker?r
 import IncludeTimes from "../../examples/ts/includeTimes?raw";
 import InjectTimes from "../../examples/ts/injectTimes?raw";
 import Inline from "../../examples/ts/inline?raw";
+import InlineDisabled from "../../examples/ts/disabledInline?raw";
 import InlineVisible from "../../examples/ts/inlineVisible?raw";
 import TimeInput from "../../examples/ts/timeInput?raw";
 import Locale from "../../examples/ts/locale?raw";
@@ -337,6 +338,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Inline version",
     component: Inline,
+  },
+  {
+    title: "Inline version disabled",
+    component: InlineDisabled,
   },
   {
     title: "Button to show Inline version",

@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
 import {
-  type DateFilterOptions,
+  type DateFilterOptionsWithDisabled,
   addYears,
   getStartOfYear,
   getYear,
@@ -24,8 +24,13 @@ const VERTICAL_NAVIGATION_OFFSET = 3;
 
 interface YearProps
   extends Pick<
-    DateFilterOptions,
-    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+    DateFilterOptionsWithDisabled,
+    | "minDate"
+    | "maxDate"
+    | "excludeDates"
+    | "includeDates"
+    | "filterDate"
+    | "disabled"
   > {
   clearSelectingDate?: VoidFunction;
   date?: Date;
@@ -381,6 +386,7 @@ export default class Year extends Component<YearProps> {
   getYearClassNames = (y: number) => {
     const {
       date,
+      disabled,
       minDate,
       maxDate,
       excludeDates,
@@ -396,7 +402,12 @@ export default class Year extends Component<YearProps> {
       {
         "react-datepicker__year-text--selected": this.isSelectedYear(y),
         "react-datepicker__year-text--disabled":
-          (minDate || maxDate || excludeDates || includeDates || filterDate) &&
+          (minDate ||
+            maxDate ||
+            excludeDates ||
+            includeDates ||
+            filterDate ||
+            disabled) &&
           isYearDisabled(y, this.props),
         "react-datepicker__year-text--keyboard-selected":
           this.isKeyboardSelected(y),

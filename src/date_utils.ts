@@ -728,6 +728,10 @@ export interface DateFilterOptions {
   yearItemNumber?: number;
 }
 
+export type DateFilterOptionsWithDisabled = DateFilterOptions & {
+  disabled?: boolean;
+};
+
 /**
  * Checks if a day is disabled.
  *
@@ -745,8 +749,13 @@ export function isDayDisabled(
     includeDates,
     includeDateIntervals,
     filterDate,
-  }: DateFilterOptions = {},
+    disabled,
+  }: DateFilterOptionsWithDisabled = {},
 ): boolean {
+  if (disabled) {
+    return true;
+  }
+
   return (
     isOutOfBounds(day, { minDate, maxDate }) ||
     (excludeDates &&
@@ -898,11 +907,21 @@ export function isQuarterDisabled(
     excludeDates,
     includeDates,
     filterDate,
+    disabled,
   }: Pick<
-    DateFilterOptions,
-    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+    DateFilterOptionsWithDisabled,
+    | "minDate"
+    | "maxDate"
+    | "excludeDates"
+    | "includeDates"
+    | "filterDate"
+    | "disabled"
   > = {},
 ): boolean {
+  if (disabled) {
+    return true;
+  }
+
   return (
     isOutOfBounds(quarter, { minDate, maxDate }) ||
     excludeDates?.some((excludeDate) =>
@@ -941,11 +960,21 @@ export function isYearDisabled(
     excludeDates,
     includeDates,
     filterDate,
+    disabled,
   }: Pick<
-    DateFilterOptions,
-    "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+    DateFilterOptionsWithDisabled,
+    | "minDate"
+    | "maxDate"
+    | "excludeDates"
+    | "includeDates"
+    | "filterDate"
+    | "disabled"
   > = {},
 ): boolean {
+  if (disabled) {
+    return true;
+  }
+
   const date = new Date(year, 0, 1);
   return (
     isOutOfBounds(date, {

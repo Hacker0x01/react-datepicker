@@ -468,6 +468,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   header = (date: Date = this.state.date): React.ReactElement[] => {
+    const disabled = this.props.disabled;
     const startOfWeek = getStartOfWeek(
       date,
       this.props.locale,
@@ -477,7 +478,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     const dayNames: React.ReactElement[] = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
-        <div key="W" className="react-datepicker__day-name" role="columnheader">
+        <div
+          key="W"
+          className={`react-datepicker__day-name ${disabled ? "react-datepicker__day-name--disabled" : ""}`}
+          role="columnheader"
+        >
           <span className="react-datepicker__sr-only">Week number</span>
           <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
@@ -496,7 +501,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           <div
             key={offset}
             role="columnheader"
-            className={clsx("react-datepicker__day-name", weekDayClassName)}
+            className={clsx(
+              "react-datepicker__day-name",
+              weekDayClassName,
+              disabled ? "react-datepicker__day-name--disabled" : "",
+            )}
           >
             <span className="react-datepicker__sr-only">
               {formatDate(day, "EEEE", this.props.locale)}
@@ -551,6 +560,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     let allPrevDaysDisabled;
     switch (true) {
+      case this.props.disabled:
+        allPrevDaysDisabled = true;
+        break;
       case this.props.showMonthYearPicker:
         allPrevDaysDisabled = yearDisabledBefore(this.state.date, this.props);
         break;
@@ -662,6 +674,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     let allNextDaysDisabled: boolean;
     switch (true) {
+      case this.props.disabled:
+        allNextDaysDisabled = true;
+        break;
       case this.props.showMonthYearPicker:
         allNextDaysDisabled = yearDisabledAfter(this.state.date, this.props);
         break;

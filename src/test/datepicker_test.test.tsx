@@ -4883,4 +4883,76 @@ describe("DatePicker", () => {
       expect(eventObject.target?.value).toBe(inputValue);
     });
   });
+
+  describe("disabled", () => {
+    const validateAllDisabled = (container: HTMLElement, className: string) => {
+      const allDays = Array.from(container.querySelectorAll(`.${className}`));
+      expect(allDays.length).toBeGreaterThan(0);
+      expect(
+        allDays.every((day) =>
+          day.classList.contains(`${className}--disabled`),
+        ),
+      ).toBe(true);
+    };
+
+    const validateNonExistence = (
+      container: HTMLElement,
+      querySelector: string,
+    ) => {
+      const element = container.querySelector(querySelector);
+      expect(element).toBeFalsy();
+    };
+
+    it("should disable all days and headers in DatePicker when disabled prop is true", () => {
+      const { container } = render(<DatePicker inline disabled />);
+
+      validateAllDisabled(container, "react-datepicker__day");
+      validateAllDisabled(container, "react-datepicker__day-name");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+
+    it("should disable all days and headers in DatePicker Range Selector when disabled prop is true", () => {
+      const { container } = render(<DatePicker selectsRange inline disabled />);
+
+      validateAllDisabled(container, "react-datepicker__day");
+      validateAllDisabled(container, "react-datepicker__day-name");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+
+    it("should disable all days and headers in MonthPicker when disabled prop is true", () => {
+      const { container } = render(
+        <DatePicker showMonthYearPicker inline disabled />,
+      );
+
+      validateAllDisabled(container, "react-datepicker__month-text");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+
+    it("should disable all days and headers in YearPicker when disabled prop is true", () => {
+      const { container } = render(
+        <DatePicker showYearPicker inline disabled />,
+      );
+
+      validateAllDisabled(container, "react-datepicker__year-text");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+
+    it("should disable all days and headers in WeekPicker when disabled prop is true", () => {
+      const { container } = render(
+        <DatePicker showWeekNumbers showWeekPicker inline disabled />,
+      );
+
+      validateAllDisabled(container, "react-datepicker__day");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+
+    it("should disable all days and headers in QuarterPicker when disabled prop is true", () => {
+      const { container } = render(
+        <DatePicker showQuarterYearPicker inline disabled />,
+      );
+
+      validateAllDisabled(container, "react-datepicker__quarter-text");
+      validateNonExistence(container, "react-datepicker__navigation");
+    });
+  });
 });
