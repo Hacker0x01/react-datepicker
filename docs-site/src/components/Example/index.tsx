@@ -62,35 +62,36 @@ export default class CodeExampleComponent extends React.Component<
     registerLocale("en-GB", enGB);
   }
 
-  transpileTsCode = async () => {
-    const tsCode = this.state.tsxCode;
-
-    let stateUpdates = {
-      jsxCode: "",
-      isTranspiling: true,
-    };
-
-    try {
-      const transpiledCode = await transformTsx(tsCode);
-
-      this.lastTranspiledTsCodeRef.current = tsCode;
-      stateUpdates = {
-        jsxCode: transpiledCode,
-        isTranspiling: false,
-      };
-    } catch (err) {
-      stateUpdates = {
-        jsxCode: "// Transpilation failed! Error: " + (err as Error).message,
-        isTranspiling: false,
-      };
-
-      toast.show("Transpilation failed!", "error");
-    }
-
+  applyStateUpdates = (stateUpdates: Partial<TState>) => {
     this.setState((state) => ({
       ...state,
       ...stateUpdates,
     }));
+  };
+
+  transpileTsCode = async () => {
+    this.applyStateUpdates({
+      jsxCode: "",
+      isTranspiling: true,
+    });
+
+    try {
+      const tsCode = this.state.tsxCode;
+      const transpiledCode = await transformTsx(tsCode);
+
+      this.lastTranspiledTsCodeRef.current = tsCode;
+      this.applyStateUpdates({
+        jsxCode: transpiledCode,
+        isTranspiling: false,
+      });
+    } catch (err) {
+      this.applyStateUpdates({
+        jsxCode: "// Transpilation failed! Error: " + (err as Error).message,
+        isTranspiling: false,
+      });
+
+      toast.show("Transpilation failed!", "error");
+    }
   };
 
   handleCodeChange = debounce((code: string) => {
