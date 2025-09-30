@@ -86,7 +86,7 @@
     "rollup-plugin-filesize": "^10.0.0",
     "sass": "1.90.0",
     "slugify": "^1.6.6",
-    "stylelint": "^16.14.1",
+    "stylelint": "^16.23.0",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-config-standard-scss": "^15.0.1",
     "stylelint-scss": "^6.11.0",
