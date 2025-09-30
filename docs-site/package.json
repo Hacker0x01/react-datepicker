@@ -34,7 +34,7 @@
     "eslint": "^9.35.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.0.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
     "sass": "^1.92.1",
     "typescript": "^5.7.2",
