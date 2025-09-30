@@ -7,16 +7,20 @@ expect.extend(toHaveNoViolations);
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {
-    // Check if any of the arguments contains the floating-ui act warning
-    const hasFloatingActWarning = args.some(
-      (arg) =>
-        typeof arg === "string" &&
-        arg.includes(
-          "An update to withFloating(PopperComponent) inside a test was not wrapped in act",
-        ),
-    );
+    // Check the first argument (the error message)
+    const firstArg = args[0];
+    const firstArgStr =
+      typeof firstArg === "string"
+        ? firstArg
+        : firstArg instanceof Error
+          ? firstArg.message
+          : String(firstArg);
 
-    if (hasFloatingActWarning) {
+    // Suppress floating-ui act warnings
+    if (
+      firstArgStr.includes("An update to withFloating(PopperComponent)") &&
+      firstArgStr.includes("inside a test was not wrapped in act")
+    ) {
       return;
     }
 
