@@ -9,7 +9,7 @@
     "noUncheckedIndexedAccess": true,
     "module": "esnext",
     "target": "ES2015",
-    "lib": ["ES2021", "dom"],
+    "lib": ["ES2022", "dom"],
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
