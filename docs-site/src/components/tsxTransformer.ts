@@ -1,4 +1,5 @@
 import { initialize, transform } from "esbuild-wasm";
+import { version } from "esbuild-wasm/package.json";
 
 let initializeEsBuild: Promise<void> | null = null;
 
@@ -16,7 +17,7 @@ export const initializeTsxTransformer = async () => {
   if (!initializeEsBuild) {
     try {
       initializeEsBuild = initialize({
-        wasmURL: "https://unpkg.com/esbuild-wasm/esbuild.wasm",
+        wasmURL: `https://unpkg.com/esbuild-wasm@${version}/esbuild.wasm`,
       });
     } catch (error) {
       console.error(`Initializing tsx transformer failed:`, error);
