@@ -27,7 +27,7 @@
     "@eslint/js": "^9.36.0",
     "@types/lodash": "^4.17.0",
     "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@types/react-dom": "^19.1.11",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^7.0.0",
     "@vitejs/plugin-react": "^5.0.3",
