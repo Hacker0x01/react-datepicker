@@ -1600,12 +1600,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.1.13":
-  version: 19.1.15
-  resolution: "@types/react@npm:19.1.15"
+"@types/react@npm:^19.1.17":
+  version: 19.1.17
+  resolution: "@types/react@npm:19.1.17"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10c0/f72cb36cb12a0c8aeba4df5a52d6b8a66509983c109201582c156676e8f1a6f5f2b74103f996ae756a04154d3722154350bd606cb87df211bbacda93139225b2
+  checksum: 10c0/8a8369ea00fc961f0884be4d1da4a039b2b6445de9c8b690ed0ebe15acfb0b1f27005278fef1fe39a1722a30f4415778b790d0089e2b30019371c61355ea316f
   languageName: node
   linkType: hard
 
@@ -4938,7 +4938,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.36.0"
     "@types/lodash": "npm:^4.17.0"
-    "@types/react": "npm:^19.1.13"
+    "@types/react": "npm:^19.1.17"
     "@types/react-dom": "npm:^19.1.9"
     "@typescript-eslint/eslint-plugin": "npm:^8.45.0"
     "@typescript-eslint/parser": "npm:^7.0.0"
