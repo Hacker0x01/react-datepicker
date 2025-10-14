@@ -12,7 +12,7 @@
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.0",
     "react-datepicker": "portal:../",
-    "react-dom": "^19.1.1",
+    "react-dom": "^19.2.0",
     "react-live": "^4.1.8",
     "slugify": "^1.6.6"
   },
@@ -27,7 +27,7 @@
     "@eslint/js": "^9.37.0",
     "@types/lodash": "^4.17.0",
     "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.1.9",
+    "@types/react-dom": "^19.2.2",
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
     "@vitejs/plugin-react": "^5.0.3",
