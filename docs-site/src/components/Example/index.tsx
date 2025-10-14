@@ -11,7 +11,6 @@ import { fi } from "date-fns/locale/fi";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { enGB } from "date-fns/locale/en-GB";
 import copy from "copy-to-clipboard";
-import { debounce } from "lodash";
 import slugify from "slugify";
 import range from "lodash/range";
 import { themes } from "prism-react-renderer";
@@ -94,7 +93,7 @@ export default class CodeExampleComponent extends React.Component<
     }
   };
 
-  handleCodeChange = debounce((code: string) => {
+  handleCodeChange = (code: string) => {
     const { activeTab } = this.state;
     const codeProp = activeTab === "ts" ? "tsxCode" : "jsxCode";
 
@@ -102,7 +101,7 @@ export default class CodeExampleComponent extends React.Component<
       ...state,
       [codeProp]: code,
     }));
-  }, 500);
+  };
 
   handleTabChange = async (tab: TState["activeTab"]) => {
     const { tsxCode } = this.state;
