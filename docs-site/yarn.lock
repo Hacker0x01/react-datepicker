@@ -2603,12 +2603,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-wasm@npm:^0.25.10":
-  version: 0.25.10
-  resolution: "esbuild-wasm@npm:0.25.10"
+"esbuild-wasm@npm:^0.25.11":
+  version: 0.25.11
+  resolution: "esbuild-wasm@npm:0.25.11"
   bin:
     esbuild: bin/esbuild
-  checksum: 10c0/2cc225d595be2a0d4c5d599d51fe87845cbd1750b40e84869c51d068c2067d33e307d8cb33d0eec2f638621415075fff01ac2a0ed71ea319c2e3070028d2d410
+  checksum: 10c0/a7e771b4a8642136e2c4549ca671901663b6371a4c2bf18958cdba84fced0e61a8167287efe856478cd24c700cdbd7d8e43e078a47bc2a9658d1ab17a91eea0f
   languageName: node
   linkType: hard
 
@@ -4779,7 +4779,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^5.0.3"
     copy-to-clipboard: "npm:^3.3.3"
     date-fns: "npm:^4.1.0"
-    esbuild-wasm: "npm:^0.25.10"
+    esbuild-wasm: "npm:^0.25.11"
     eslint: "npm:^9.36.0"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^7.0.0"
