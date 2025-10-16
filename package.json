@@ -70,7 +70,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^29.0.1",
     "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "9.1.7",
     "jest": "^30.0.5",
