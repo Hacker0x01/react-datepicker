@@ -1521,8 +1521,6 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   }
 
   render(): React.ReactElement | null {
-    console.log("Test");
-
     const calendar = this.renderCalendar();
 
     if (this.props.inline) return calendar;
