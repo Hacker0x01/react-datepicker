@@ -336,6 +336,9 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     ) {
       this.setState({ monthSelectedIn: 0 });
     }
+    if (this.props.selectsRange && this.state.monthSelectedIn !== 0) {
+      this.setState({ monthSelectedIn: 0 });
+    }
     if (prevProps.highlightDates !== this.props.highlightDates) {
       this.setState({
         highlightDates: getHighLightDaysMap(this.props.highlightDates),
@@ -1518,6 +1521,8 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   }
 
   render(): React.ReactElement | null {
+    console.log("Test");
+
     const calendar = this.renderCalendar();
 
     if (this.props.inline) return calendar;
