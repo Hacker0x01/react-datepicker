@@ -9603,7 +9603,7 @@ __metadata:
     react-dom: "npm:^19.2.0"
     rollup: "npm:^4.32.1"
     rollup-plugin-filesize: "npm:^10.0.0"
-    sass: "npm:1.92.0"
+    sass: "npm:1.93.2"
     slugify: "npm:^1.6.6"
     stylelint: "npm:^16.23.0"
     stylelint-config-standard: "npm:^39.0.0"
@@ -10104,9 +10104,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.92.0":
-  version: 1.92.0
-  resolution: "sass@npm:1.92.0"
+"sass@npm:1.93.2":
+  version: 1.93.2
+  resolution: "sass@npm:1.93.2"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -10117,7 +10117,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/bdff9fa6988620e2a81962efdd016e3894d19934cfadc105cf41db767f59dd47afd8ff32840e612ef700cb67e19d9e83c108f1724eb8f0bef56c4877dbe6f14d
+  checksum: 10c0/5a19f12dbe8c142e40c1e0473d1e624898242b1c21010301e169b528be8c580df6356329c798522b525eb11eda4b04b9b77422badc55c47889600f8477201d2b
   languageName: node
   linkType: hard
 
