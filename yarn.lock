@@ -10892,13 +10892,13 @@ __metadata:
   linkType: hard
 
 "stylelint-config-standard@npm:^39.0.0":
-  version: 39.0.0
-  resolution: "stylelint-config-standard@npm:39.0.0"
+  version: 39.0.1
+  resolution: "stylelint-config-standard@npm:39.0.1"
   dependencies:
     stylelint-config-recommended: "npm:^17.0.0"
   peerDependencies:
     stylelint: ^16.23.0
-  checksum: 10c0/b965f2708b0a506beebbe75ce6533ea56c58988e6b473c4789fb5a33f9911a4e163c0d27553d080fda6905cffefc7b7c34794a6d396207606478551ffa662efa
+  checksum: 10c0/70a9862a2cedcc2a1807bd92fc91c40877270cf8a39576b91ae056d6de51d3b68104b26f71056ff22461b4319e9ec988d009abf10ead513b2ec15569d82e865a
   languageName: node
   linkType: hard
 
