@@ -38,7 +38,7 @@
     "globals": "^16.4.0",
     "sass": "^1.93.2",
     "typescript": "^5.9.3",
-    "vite": "^7.1.11"
+    "vite": "^7.1.12"
   },
   "packageManager": "yarn@4.9.2"
 }
