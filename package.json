@@ -56,7 +56,7 @@
     "@types/eslint": "^9.6.1",
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
-    "@types/node": "24.7.2",
+    "@types/node": "24.9.1",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.1.7",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
