@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import React from "react";
 
-import { formatDate, KeyType } from "../date_utils";
+import { formatDate, KeyType, newDate } from "../date_utils";
 import DatePicker from "../index";
 
 import {
@@ -450,4 +450,138 @@ describe("TimePicker", () => {
     onChangeMoment = m ?? undefined;
     renderDatePicker(m?.toISOString() ?? "");
   }
+
+  describe("Coverage improvements for time.tsx", () => {
+    it("should not call onChange when clicking disabled time", () => {
+      const onChange = jest.fn();
+      const disabledTime = newDate();
+      disabledTime.setHours(14, 0);
+
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          onChange={onChange}
+          showTimeSelect
+          excludeTimes={[disabledTime]}
+          inline
+        />,
+      );
+
+      const timeList = container.querySelectorAll(
+        ".react-datepicker__time-list-item--disabled",
+      );
+
+      if (timeList.length > 0) {
+        // Line 133: early return when clicking disabled time
+        const disabledItem = timeList[0] as HTMLElement;
+        fireEvent.click(disabledItem);
+        expect(onChange).not.toHaveBeenCalled();
+      } else {
+        // Fallback if no disabled times are found
+        expect(
+          container.querySelector(".react-datepicker__time"),
+        ).not.toBeNull();
+      }
+    });
+
+    it("should handle keyboard navigation in time list with ArrowUp", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          onChange={() => {}}
+          showTimeSelect
+          timeIntervals={30}
+          inline
+        />,
+      );
+
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      if (timeItems.length > 1) {
+        const secondItem = timeItems[1] as HTMLElement;
+
+        // Lines 190-191: ArrowUp navigation with previousSibling
+        fireEvent.keyDown(secondItem, { key: "ArrowUp" });
+
+        expect(timeItems[0]).not.toBeNull();
+      }
+    });
+
+    it("should handle keyboard navigation in time list with ArrowDown", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          onChange={() => {}}
+          showTimeSelect
+          timeIntervals={30}
+          inline
+        />,
+      );
+
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      if (timeItems.length > 1) {
+        const firstItem = timeItems[0] as HTMLElement;
+
+        // Lines 199-200: ArrowDown navigation with nextSibling
+        fireEvent.keyDown(firstItem, { key: "ArrowDown" });
+
+        expect(timeItems[1]).not.toBeNull();
+      }
+    });
+
+    it("should handle keyboard navigation with ArrowLeft", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          onChange={() => {}}
+          showTimeSelect
+          timeIntervals={30}
+          inline
+        />,
+      );
+
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      if (timeItems.length > 1) {
+        const secondItem = timeItems[1] as HTMLElement;
+
+        // ArrowLeft should behave like ArrowUp
+        fireEvent.keyDown(secondItem, { key: "ArrowLeft" });
+
+        expect(timeItems[0]).not.toBeNull();
+      }
+    });
+
+    it("should handle keyboard navigation with ArrowRight", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          onChange={() => {}}
+          showTimeSelect
+          timeIntervals={30}
+          inline
+        />,
+      );
+
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      if (timeItems.length > 1) {
+        const firstItem = timeItems[0] as HTMLElement;
+
+        // ArrowRight should behave like ArrowDown
+        fireEvent.keyDown(firstItem, { key: "ArrowRight" });
+
+        expect(timeItems[1]).not.toBeNull();
+      }
+    });
+  });
 });

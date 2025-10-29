@@ -180,4 +180,81 @@ describe("timeInput", () => {
     fireEvent.click(timeInput);
     expect(document.activeElement).toBe(timeInput);
   });
+
+  it("should handle time change with invalid time format", () => {
+    const mockOnChange = jest.fn();
+    const { container } = render(
+      <DatePicker
+        selected={new Date("2024-01-15T10:00:00")}
+        onChange={mockOnChange}
+        showTimeInput
+      />,
+    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    const timeInput = safeQuerySelector<HTMLInputElement>(
+      container,
+      'input[type="time"].react-datepicker-time__input',
+    );
+
+    // Line 70: when time doesn't include ":"
+    fireEvent.change(timeInput, {
+      target: { value: "invalid" },
+    });
+
+    // onChange should still be called with the date
+    expect(mockOnChange).toHaveBeenCalled();
+  });
+
+  it("should handle time change when no date is selected", () => {
+    const mockOnChange = jest.fn();
+    const { container } = render(
+      <DatePicker selected={null} onChange={mockOnChange} showTimeInput />,
+    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    const timeInput = safeQuerySelector<HTMLInputElement>(
+      container,
+      'input[type="time"].react-datepicker-time__input',
+    );
+
+    // Lines 67-68: when propDate is null/invalid, use new Date()
+    fireEvent.change(timeInput, {
+      target: { value: "14:30" },
+    });
+
+    expect(mockOnChange).toHaveBeenCalled();
+  });
+
+  it("should call onChange with updated date when time has colon", () => {
+    const mockOnChange = jest.fn();
+    const testDate = new Date("2024-01-15T10:00:00");
+
+    const { container } = render(
+      <DatePicker selected={testDate} onChange={mockOnChange} showTimeInput />,
+    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    const timeInput = safeQuerySelector<HTMLInputElement>(
+      container,
+      'input[type="time"].react-datepicker-time__input',
+    );
+
+    // Lines 70-74: parse hours and minutes when time includes ":"
+    fireEvent.change(timeInput, {
+      target: { value: "15:45" },
+    });
+
+    const expectedDate = new Date(testDate);
+    expectedDate.setHours(15);
+    expectedDate.setMinutes(45);
+
+    expect(mockOnChange).toHaveBeenCalledWith(expectedDate);
+  });
 });
