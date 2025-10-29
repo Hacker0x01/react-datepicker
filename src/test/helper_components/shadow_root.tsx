@@ -5,29 +5,31 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 
 const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
+  const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const shadowRootRef = useRef<ShadowRoot>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitializedRef = useRef(false);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (isInitialized || !container) {
+    if (isInitializedRef.current || !container) {
       return;
     }
 
-    shadowRootRef.current =
+    const root =
       container.shadowRoot ?? container.attachShadow({ mode: "open" });
-    setIsInitialized(true);
-  }, [isInitialized]);
+    isInitializedRef.current = true;
+    // Use flushSync to synchronously update state within effect, avoiding cascading renders
+    // while ensuring the shadow root is available immediately for tests
+    flushSync(() => setShadowRoot(root));
+  }, []);
 
   return (
     <div ref={containerRef}>
-      {isInitialized &&
-        shadowRootRef.current &&
-        createPortal(children, shadowRootRef.current)}
+      {shadowRoot && createPortal(children, shadowRoot)}
     </div>
   );
 };

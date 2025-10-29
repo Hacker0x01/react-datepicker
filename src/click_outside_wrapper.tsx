@@ -17,7 +17,9 @@ const useDetectClickOutside = (
 ) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const onClickOutsideRef = useRef(onClickOutside);
-  onClickOutsideRef.current = onClickOutside;
+  useEffect(() => {
+    onClickOutsideRef.current = onClickOutside;
+  }, [onClickOutside]);
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
       const target =
