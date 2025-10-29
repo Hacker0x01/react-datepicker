@@ -413,7 +413,7 @@ export default class Month extends Component<MonthProps> {
     );
 
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
-    getQuarter(day) === q && getYear(day) === getYear(selected);
+    getQuarter(selected) === q && getYear(day) === getYear(selected);
 
   isMonthSelected = () => {
     const { day, selected, selectedDates, selectsMultiple } = this.props;
@@ -426,6 +426,19 @@ export default class Month extends Component<MonthProps> {
     }
 
     return !!selected && this.isSelectedMonth(day, monthIdx, selected);
+  };
+
+  isQuarterSelected = () => {
+    const { day, selected, selectedDates, selectsMultiple } = this.props;
+    const quarterIdx = getQuarter(day);
+
+    if (selectsMultiple) {
+      return selectedDates?.some((selectedDate) =>
+        this.isSelectedQuarter(day, quarterIdx, selectedDate),
+      );
+    }
+
+    return !!selected && this.isSelectedQuarter(day, quarterIdx, selected);
   };
 
   renderWeeks = () => {
@@ -953,6 +966,7 @@ export default class Month extends Component<MonthProps> {
           !disabledKeyboardNavigation &&
           preSelection &&
           this.isSelectedQuarter(day, q, preSelection) &&
+          !this.isQuarterSelected() &&
           !isDisabled,
         "react-datepicker__quarter-text--in-selecting-range":
           this.isInSelectingRangeQuarter(q),

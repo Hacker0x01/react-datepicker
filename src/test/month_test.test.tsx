@@ -2629,6 +2629,30 @@ describe("Month", () => {
         ),
       ).toBeNull();
     });
+
+    it("should not apply the keyboard-selected class when the quarter is a part of selected date", () => {
+      const selectedDate = newDate("2025-11-01");
+      const keyboardSelectedDate = selectedDate;
+
+      const { container } = render(
+        <Month
+          day={selectedDate}
+          selected={selectedDate}
+          preSelection={keyboardSelectedDate}
+          showQuarterYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__quarter-text--selected",
+      );
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__quarter-text--keyboard-selected",
+      );
+
+      expect(selected).not.toBeNull();
+      expect(keyboardSelected).toBeNull();
+    });
   });
 
   describe("Auto-Focus", () => {
