@@ -14,12 +14,8 @@ const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
   const isInitializedRef = useRef(false);
 
   useLayoutEffect(() => {
-    if (isInitializedRef.current) {
-      return;
-    }
-
     const container = containerRef.current;
-    if (!container) {
+    if (isInitializedRef.current || !container) {
       return;
     }
 
