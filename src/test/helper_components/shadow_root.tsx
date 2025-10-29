@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 
 const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
   const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null);
@@ -26,8 +26,9 @@ const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
     const root =
       container.shadowRoot ?? container.attachShadow({ mode: "open" });
     isInitializedRef.current = true;
-    // Use queueMicrotask to defer setState to avoid cascading renders
-    queueMicrotask(() => setShadowRoot(root));
+    // Use flushSync to synchronously update state within effect, avoiding cascading renders
+    // while ensuring the shadow root is available immediately for tests
+    flushSync(() => setShadowRoot(root));
   }, []);
 
   return (
