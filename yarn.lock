@@ -5225,7 +5225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.40.0":
+"core-js@npm:^3.46.0":
   version: 3.46.0
   resolution: "core-js@npm:3.46.0"
   checksum: 10c0/12d559d39a58227881bc6c86c36d24dcfbe2d56e52dac42e35e8643278172596ab67f57ede98baf40b153ca1b830f37420ea32c3f7417c0c5a1fed46438ae187
@@ -9820,7 +9820,7 @@ __metadata:
     babel-jest: "npm:^30.0.2"
     babel-plugin-transform-react-remove-prop-types: "npm:^0.4.24"
     clsx: "npm:^2.1.1"
-    core-js: "npm:^3.40.0"
+    core-js: "npm:^3.46.0"
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9.19.0"
     eslint-config-prettier: "npm:^10.0.1"
@@ -9849,7 +9849,7 @@ __metadata:
     stylelint-scss: "npm:^6.11.0"
     ts-jest: "npm:^29.2.5"
     tslib: "npm:^2.8.1"
-    typescript: "npm:^5.7.3"
+    typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.22.0"
   peerDependencies:
     react: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
@@ -11452,7 +11452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.7.3":
+"typescript@npm:^5.9.3":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -11462,7 +11462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
