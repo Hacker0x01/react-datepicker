@@ -1192,13 +1192,12 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--keyboard-selected",
       ) as HTMLElement;
 
-      if (currentYear) {
-        // Navigate with keyboard - this should trigger updateFocusOnPaginate
-        fireEvent.keyDown(currentYear, getKey(KeyType.ArrowDown));
+      expect(currentYear).not.toBeNull();
+      // Navigate with keyboard - this should trigger updateFocusOnPaginate
+      fireEvent.keyDown(currentYear, getKey(KeyType.ArrowDown));
 
-        // Line 118: updateFocusOnPaginate uses requestAnimationFrame
-        expect(rafSpy).toHaveBeenCalled();
-      }
+      // Line 118: updateFocusOnPaginate uses requestAnimationFrame
+      expect(rafSpy).toHaveBeenCalled();
 
       rafSpy.mockRestore();
     });
@@ -1245,13 +1244,12 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text",
       );
 
-      if (yearElements.length > 0) {
-        const firstYear = yearElements[0] as HTMLElement;
-        // Should not throw when navigating
-        expect(() =>
-          fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight)),
-        ).not.toThrow();
-      }
+      expect(yearElements.length).toBeGreaterThan(0);
+      const firstYear = yearElements[0] as HTMLElement;
+      // Should not throw when navigating
+      expect(() =>
+        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight)),
+      ).not.toThrow();
     });
 
     it("should handle all keyboard navigation edge cases with null preSelection", () => {
@@ -1273,18 +1271,17 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text",
       );
 
-      if (yearElements.length > 0) {
-        const firstYear = yearElements[0] as HTMLElement;
+      expect(yearElements.length).toBeGreaterThan(0);
+      const firstYear = yearElements[0] as HTMLElement;
 
-        // Lines 304, 313, 326, 356: keyboard navigation with null preSelection
-        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight));
-        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowLeft));
-        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowUp));
-        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowDown));
+      // Lines 304, 313, 326, 356: keyboard navigation with null preSelection
+      fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight));
+      fireEvent.keyDown(firstYear, getKey(KeyType.ArrowLeft));
+      fireEvent.keyDown(firstYear, getKey(KeyType.ArrowUp));
+      fireEvent.keyDown(firstYear, getKey(KeyType.ArrowDown));
 
-        // Should handle all cases without throwing
-        expect(firstYear).not.toBeNull();
-      }
+      // Should handle all cases without throwing
+      expect(firstYear).not.toBeNull();
     });
 
     it("should handle Enter key when selected is null (line 297)", () => {
@@ -1305,13 +1302,12 @@ describe("YearPicker", () => {
         ".react-datepicker__year-text--today",
       ) as HTMLElement;
 
-      if (currentYear) {
-        // Line 297: Enter key with null selected
-        fireEvent.keyDown(currentYear, getKey(KeyType.Enter));
+      expect(currentYear).not.toBeNull();
+      // Line 297: Enter key with null selected
+      fireEvent.keyDown(currentYear, getKey(KeyType.Enter));
 
-        // Should still work
-        expect(currentYear).not.toBeNull();
-      }
+      // Should still work
+      expect(currentYear).not.toBeNull();
     });
 
     it("should handle keyboard-selected year focus updates", () => {
@@ -1323,18 +1319,17 @@ describe("YearPicker", () => {
 
       const years = container.querySelectorAll(".react-datepicker__year-text");
 
-      if (years.length > 1) {
-        const firstYear = years[0] as HTMLElement;
+      expect(years.length).toBeGreaterThan(1);
+      const firstYear = years[0] as HTMLElement;
 
-        // Navigate with keyboard
-        fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight));
+      // Navigate with keyboard
+      fireEvent.keyDown(firstYear, getKey(KeyType.ArrowRight));
 
-        // Should update keyboard-selected class
-        const keyboardSelected = container.querySelector(
-          ".react-datepicker__year-text--keyboard-selected",
-        );
-        expect(keyboardSelected).not.toBeNull();
-      }
+      // Should update keyboard-selected class
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__year-text--keyboard-selected",
+      );
+      expect(keyboardSelected).not.toBeNull();
     });
   });
 });

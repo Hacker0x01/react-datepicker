@@ -471,17 +471,11 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item--disabled",
       );
 
-      if (timeList.length > 0) {
-        // Line 133: early return when clicking disabled time
-        const disabledItem = timeList[0] as HTMLElement;
-        fireEvent.click(disabledItem);
-        expect(onChange).not.toHaveBeenCalled();
-      } else {
-        // Fallback if no disabled times are found
-        expect(
-          container.querySelector(".react-datepicker__time"),
-        ).not.toBeNull();
-      }
+      expect(timeList.length).toBeGreaterThan(0);
+      // Line 133: early return when clicking disabled time
+      const disabledItem = timeList[0] as HTMLElement;
+      fireEvent.click(disabledItem);
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("should handle keyboard navigation in time list with ArrowUp", () => {
@@ -499,14 +493,13 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeItems.length > 1) {
-        const secondItem = timeItems[1] as HTMLElement;
+      expect(timeItems.length).toBeGreaterThan(1);
+      const secondItem = timeItems[1] as HTMLElement;
 
-        // Lines 190-191: ArrowUp navigation with previousSibling
-        fireEvent.keyDown(secondItem, { key: "ArrowUp" });
+      // Lines 190-191: ArrowUp navigation with previousSibling
+      fireEvent.keyDown(secondItem, { key: "ArrowUp" });
 
-        expect(timeItems[0]).not.toBeNull();
-      }
+      expect(timeItems[0]).not.toBeNull();
     });
 
     it("should handle keyboard navigation in time list with ArrowDown", () => {
@@ -524,14 +517,13 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeItems.length > 1) {
-        const firstItem = timeItems[0] as HTMLElement;
+      expect(timeItems.length).toBeGreaterThan(1);
+      const firstItem = timeItems[0] as HTMLElement;
 
-        // Lines 199-200: ArrowDown navigation with nextSibling
-        fireEvent.keyDown(firstItem, { key: "ArrowDown" });
+      // Lines 199-200: ArrowDown navigation with nextSibling
+      fireEvent.keyDown(firstItem, { key: "ArrowDown" });
 
-        expect(timeItems[1]).not.toBeNull();
-      }
+      expect(timeItems[1]).not.toBeNull();
     });
 
     it("should handle keyboard navigation with ArrowLeft", () => {
@@ -549,14 +541,13 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeItems.length > 1) {
-        const secondItem = timeItems[1] as HTMLElement;
+      expect(timeItems.length).toBeGreaterThan(1);
+      const secondItem = timeItems[1] as HTMLElement;
 
-        // ArrowLeft should behave like ArrowUp
-        fireEvent.keyDown(secondItem, { key: "ArrowLeft" });
+      // ArrowLeft should behave like ArrowUp
+      fireEvent.keyDown(secondItem, { key: "ArrowLeft" });
 
-        expect(timeItems[0]).not.toBeNull();
-      }
+      expect(timeItems[0]).not.toBeNull();
     });
 
     it("should handle keyboard navigation with ArrowRight", () => {
@@ -574,14 +565,13 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeItems.length > 1) {
-        const firstItem = timeItems[0] as HTMLElement;
+      expect(timeItems.length).toBeGreaterThan(1);
+      const firstItem = timeItems[0] as HTMLElement;
 
-        // ArrowRight should behave like ArrowDown
-        fireEvent.keyDown(firstItem, { key: "ArrowRight" });
+      // ArrowRight should behave like ArrowDown
+      fireEvent.keyDown(firstItem, { key: "ArrowRight" });
 
-        expect(timeItems[1]).not.toBeNull();
-      }
+      expect(timeItems[1]).not.toBeNull();
     });
   });
 });

@@ -70,9 +70,8 @@ describe("Portal", () => {
 
     // The portal root should still exist but the content should be removed
     const stillExists = document.getElementById("test-portal-4");
-    if (stillExists) {
-      expect(stillExists.querySelector(".cleanup-test")).toBeNull();
-    }
+    expect(stillExists).toBeTruthy();
+    expect(stillExists!.querySelector(".cleanup-test")).toBeNull();
   });
 
   it("should render to portalHost when provided", () => {

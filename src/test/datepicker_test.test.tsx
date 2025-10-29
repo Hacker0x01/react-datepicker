@@ -5250,13 +5250,12 @@ describe("DatePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeElements.length > 0) {
-        const firstTimeElement = timeElements[0] as HTMLElement;
-        // Line 942: handleTimeChange early return for selectsRange
-        fireEvent.click(firstTimeElement);
-        // Time change should not affect range selection directly
-        expect(container.querySelector(".react-datepicker")).not.toBeNull();
-      }
+      expect(timeElements.length).toBeGreaterThan(0);
+      const firstTimeElement = timeElements[0] as HTMLElement;
+      // Line 942: handleTimeChange early return for selectsRange
+      fireEvent.click(firstTimeElement);
+      // Time change should not affect range selection directly
+      expect(container.querySelector(".react-datepicker")).not.toBeNull();
     });
 
     it("should handle handleTimeChange with selectsMultiple (line 942)", () => {
@@ -5275,12 +5274,11 @@ describe("DatePicker", () => {
         ".react-datepicker__time-list-item",
       );
 
-      if (timeElements.length > 0) {
-        const firstTimeElement = timeElements[0] as HTMLElement;
-        // Line 942: handleTimeChange early return for selectsMultiple
-        fireEvent.click(firstTimeElement);
-        expect(container.querySelector(".react-datepicker")).not.toBeNull();
-      }
+      expect(timeElements.length).toBeGreaterThan(0);
+      const firstTimeElement = timeElements[0] as HTMLElement;
+      // Line 942: handleTimeChange early return for selectsMultiple
+      fireEvent.click(firstTimeElement);
+      expect(container.querySelector(".react-datepicker")).not.toBeNull();
     });
 
     it("should handle adjustDateOnChange in setSelected (line 1044)", () => {
@@ -5300,13 +5298,13 @@ describe("DatePicker", () => {
       const calendar = container.querySelector(".react-datepicker");
       const days = calendar?.querySelectorAll(".react-datepicker__day");
 
-      if (days && days.length > 0) {
-        const firstDay = days[0] as HTMLElement;
-        fireEvent.click(firstDay);
+      expect(days).toBeDefined();
+      expect(days!.length).toBeGreaterThan(0);
+      const firstDay = days![0] as HTMLElement;
+      fireEvent.click(firstDay);
 
-        // Line 1044: adjustDateOnChange should adjust the date to minDate
-        expect(onChange).toHaveBeenCalled();
-      }
+      // Line 1044: adjustDateOnChange should adjust the date to minDate
+      expect(onChange).toHaveBeenCalled();
     });
 
     it("should handle onDayMouseEnter with selectsRange and keyboard (lines 1210-1211)", () => {
@@ -5325,18 +5323,17 @@ describe("DatePicker", () => {
         ".react-datepicker__day:not(.react-datepicker__day--disabled)",
       );
 
-      if (days.length > 2) {
-        const firstDay = days[0] as HTMLElement;
-        const secondDay = days[1] as HTMLElement;
+      expect(days.length).toBeGreaterThan(2);
+      const firstDay = days[0] as HTMLElement;
+      const secondDay = days[1] as HTMLElement;
 
-        // Simulate keyboard selection start
-        fireEvent.keyDown(firstDay, { key: "Enter" });
+      // Simulate keyboard selection start
+      fireEvent.keyDown(firstDay, { key: "Enter" });
 
-        // Lines 1210-1211: onDayMouseEnter with keyboard selection
-        fireEvent.mouseEnter(secondDay);
+      // Lines 1210-1211: onDayMouseEnter with keyboard selection
+      fireEvent.mouseEnter(secondDay);
 
-        expect(secondDay).not.toBeNull();
-      }
+      expect(secondDay).not.toBeNull();
     });
 
     it("should handle onYearMouseEnter with selectsRange (line 1353)", () => {
@@ -5356,18 +5353,17 @@ describe("DatePicker", () => {
         ".react-datepicker__year-text",
       );
 
-      if (yearElements.length > 1) {
-        const firstYear = yearElements[0] as HTMLElement;
-        const secondYear = yearElements[1] as HTMLElement;
+      expect(yearElements.length).toBeGreaterThan(1);
+      const firstYear = yearElements[0] as HTMLElement;
+      const secondYear = yearElements[1] as HTMLElement;
 
-        // Start range selection
-        fireEvent.click(firstYear);
+      // Start range selection
+      fireEvent.click(firstYear);
 
-        // Line 1353: onYearMouseEnter with selectsRange
-        fireEvent.mouseEnter(secondYear);
+      // Line 1353: onYearMouseEnter with selectsRange
+      fireEvent.mouseEnter(secondYear);
 
-        expect(secondYear).not.toBeNull();
-      }
+      expect(secondYear).not.toBeNull();
     });
 
     it("should handle onMonthMouseLeave with selectsRange (line 1358)", () => {
@@ -5387,15 +5383,14 @@ describe("DatePicker", () => {
         ".react-datepicker__month-text",
       );
 
-      if (monthElements.length > 0) {
-        const firstMonth = monthElements[0] as HTMLElement;
+      expect(monthElements.length).toBeGreaterThan(0);
+      const firstMonth = monthElements[0] as HTMLElement;
 
-        // Line 1358: onMonthMouseLeave with selectsRange
-        fireEvent.mouseEnter(firstMonth);
-        fireEvent.mouseLeave(firstMonth);
+      // Line 1358: onMonthMouseLeave with selectsRange
+      fireEvent.mouseEnter(firstMonth);
+      fireEvent.mouseLeave(firstMonth);
 
-        expect(firstMonth).not.toBeNull();
-      }
+      expect(firstMonth).not.toBeNull();
     });
 
     it("should handle onQuarterMouseLeave with selectsRange (line 1363)", () => {
@@ -5415,15 +5410,14 @@ describe("DatePicker", () => {
         ".react-datepicker__quarter-text",
       );
 
-      if (quarterElements.length > 0) {
-        const firstQuarter = quarterElements[0] as HTMLElement;
+      expect(quarterElements.length).toBeGreaterThan(0);
+      const firstQuarter = quarterElements[0] as HTMLElement;
 
-        // Line 1363: onQuarterMouseLeave with selectsRange
-        fireEvent.mouseEnter(firstQuarter);
-        fireEvent.mouseLeave(firstQuarter);
+      // Line 1363: onQuarterMouseLeave with selectsRange
+      fireEvent.mouseEnter(firstQuarter);
+      fireEvent.mouseLeave(firstQuarter);
 
-        expect(firstQuarter).not.toBeNull();
-      }
+      expect(firstQuarter).not.toBeNull();
     });
 
     it("should handle onYearMouseLeave with selectsRange (line 1368)", () => {
@@ -5443,15 +5437,14 @@ describe("DatePicker", () => {
         ".react-datepicker__year-text",
       );
 
-      if (yearElements.length > 0) {
-        const firstYear = yearElements[0] as HTMLElement;
+      expect(yearElements.length).toBeGreaterThan(0);
+      const firstYear = yearElements[0] as HTMLElement;
 
-        // Line 1368: onYearMouseLeave with selectsRange
-        fireEvent.mouseEnter(firstYear);
-        fireEvent.mouseLeave(firstYear);
+      // Line 1368: onYearMouseLeave with selectsRange
+      fireEvent.mouseEnter(firstYear);
+      fireEvent.mouseLeave(firstYear);
 
-        expect(firstYear).not.toBeNull();
-      }
+      expect(firstYear).not.toBeNull();
     });
 
     it("should handle Tab key in date range mode (line 1191)", () => {

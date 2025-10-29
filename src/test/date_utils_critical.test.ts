@@ -106,7 +106,7 @@ describe("date_utils critical functions coverage", () => {
       const endDate = new Date("2024-01-20");
 
       // Should handle null gracefully
-      const result = isDayInRange(testDate, null as any, endDate);
+      const result = isDayInRange(testDate, null as unknown as Date, endDate);
 
       // Depending on implementation, this might throw or return false
       expect(typeof result).toBe("boolean");
@@ -117,7 +117,7 @@ describe("date_utils critical functions coverage", () => {
       const startDate = new Date("2024-01-10");
 
       // Should handle null gracefully
-      const result = isDayInRange(testDate, startDate, null as any);
+      const result = isDayInRange(testDate, startDate, null as unknown as Date);
 
       // Depending on implementation, this might throw or return false
       expect(typeof result).toBe("boolean");
