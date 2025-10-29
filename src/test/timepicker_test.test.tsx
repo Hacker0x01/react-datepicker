@@ -454,15 +454,24 @@ describe("TimePicker", () => {
   describe("Coverage improvements for time.tsx", () => {
     it("should not call onChange when clicking disabled time", () => {
       const onChange = jest.fn();
-      const disabledTime = newDate();
-      disabledTime.setHours(14, 0);
+      const selectedDate = newDate();
+      selectedDate.setHours(10, 0, 0, 0);
+
+      // Create multiple disabled times to ensure at least one is rendered
+      const disabledTimes = [];
+      for (let hour = 14; hour <= 18; hour++) {
+        const disabledTime = newDate();
+        disabledTime.setHours(hour, 0, 0, 0);
+        disabledTimes.push(disabledTime);
+      }
 
       const { container } = render(
         <DatePicker
-          selected={newDate()}
+          selected={selectedDate}
           onChange={onChange}
           showTimeSelect
-          excludeTimes={[disabledTime]}
+          excludeTimes={disabledTimes}
+          timeIntervals={60}
           inline
         />,
       );
@@ -471,6 +480,7 @@ describe("TimePicker", () => {
         ".react-datepicker__time-list-item--disabled",
       );
 
+      // Verify disabled times are rendered
       expect(timeList.length).toBeGreaterThan(0);
       // Line 133: early return when clicking disabled time
       const disabledItem = timeList[0] as HTMLElement;

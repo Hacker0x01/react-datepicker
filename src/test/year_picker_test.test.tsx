@@ -1183,20 +1183,30 @@ describe("YearPicker", () => {
       const rafSpy = jest.spyOn(window, "requestAnimationFrame");
 
       const { container } = render(
-        <DatePicker selected={newDate()} onChange={() => {}} showYearPicker />,
+        <DatePicker
+          selected={newDate()}
+          onChange={() => {}}
+          showYearPicker
+          yearItemNumber={12}
+        />,
       );
 
       openDateInput(container);
 
-      const currentYear = container.querySelector(
-        ".react-datepicker__year-text--keyboard-selected",
-      ) as HTMLElement;
+      const yearElements = container.querySelectorAll(
+        ".react-datepicker__year-text",
+      );
 
-      expect(currentYear).not.toBeNull();
-      // Navigate with keyboard - this should trigger updateFocusOnPaginate
-      fireEvent.keyDown(currentYear, getKey(KeyType.ArrowDown));
+      expect(yearElements.length).toBeGreaterThan(0);
+      // Get the last year element in the current view to trigger pagination
+      const lastYearElement = yearElements[
+        yearElements.length - 1
+      ] as HTMLElement;
 
-      // Line 118: updateFocusOnPaginate uses requestAnimationFrame
+      // Line 118: Navigate down from last year to trigger updateFocusOnPaginate
+      fireEvent.keyDown(lastYearElement, getKey(KeyType.ArrowDown));
+
+      // updateFocusOnPaginate uses requestAnimationFrame
       expect(rafSpy).toHaveBeenCalled();
 
       rafSpy.mockRestore();
