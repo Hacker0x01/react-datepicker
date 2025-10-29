@@ -50,6 +50,7 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     const classes = clsx("react-datepicker-popper", className);
     popper = (
       <TabLoop enableTabLoop={enableTabLoop}>
+        {/* eslint-disable react-hooks/refs -- Floating UI values are designed to be used during render */}
         <div
           ref={popperProps.refs.setFloating}
           style={popperProps.floatingStyles}
@@ -71,6 +72,7 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
             />
           )}
         </div>
+        {/* eslint-enable react-hooks/refs */}
       </TabLoop>
     );
   }
@@ -91,6 +93,7 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
 
   return (
     <>
+      {/* eslint-disable-next-line react-hooks/refs -- Floating UI refs are designed to be used during render */}
       <div ref={popperProps.refs.setReference} className={wrapperClasses}>
         {targetComponent}
       </div>

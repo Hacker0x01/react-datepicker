@@ -8,26 +8,31 @@ import React, {
 import { createPortal } from "react-dom";
 
 const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
+  const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const shadowRootRef = useRef<ShadowRoot>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const isInitializedRef = useRef(false);
 
   useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (isInitialized || !container) {
+    if (isInitializedRef.current) {
       return;
     }
 
-    shadowRootRef.current =
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
+    const root =
       container.shadowRoot ?? container.attachShadow({ mode: "open" });
-    setIsInitialized(true);
-  }, [isInitialized]);
+    isInitializedRef.current = true;
+    // Use queueMicrotask to defer setState to avoid cascading renders
+    queueMicrotask(() => setShadowRoot(root));
+  }, []);
 
   return (
     <div ref={containerRef}>
-      {isInitialized &&
-        shadowRootRef.current &&
-        createPortal(children, shadowRootRef.current)}
+      {shadowRoot && createPortal(children, shadowRoot)}
     </div>
   );
 };
