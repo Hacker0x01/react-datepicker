@@ -415,6 +415,11 @@ export default class Month extends Component<MonthProps> {
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
     getQuarter(selected) === q && getYear(day) === getYear(selected);
 
+  isSelectQuarterInList = (day: Date, q: number, selectedDates: Date[]) =>
+    selectedDates.some((selectedDate) =>
+      this.isSelectedQuarter(day, q, selectedDate),
+    );
+
   isMonthSelected = () => {
     const { day, selected, selectedDates, selectsMultiple } = this.props;
     const monthIdx = getMonth(day);
@@ -934,7 +939,6 @@ export default class Month extends Component<MonthProps> {
       day,
       startDate,
       endDate,
-      selected,
       minDate,
       maxDate,
       excludeDates,
@@ -954,13 +958,15 @@ export default class Month extends Component<MonthProps> {
         disabled) &&
       isQuarterDisabled(setQuarter(day, q), this.props);
 
+    const selection = this.getSelection();
+
     return clsx(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
       {
         "react-datepicker__quarter-text--disabled": isDisabled,
-        "react-datepicker__quarter-text--selected": selected
-          ? this.isSelectedQuarter(day, q, selected)
+        "react-datepicker__quarter-text--selected": selection
+          ? this.isSelectQuarterInList(day, q, selection)
           : undefined,
         "react-datepicker__quarter-text--keyboard-selected":
           !disabledKeyboardNavigation &&
