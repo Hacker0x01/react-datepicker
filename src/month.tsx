@@ -413,7 +413,12 @@ export default class Month extends Component<MonthProps> {
     );
 
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
-    getQuarter(day) === q && getYear(day) === getYear(selected);
+    getQuarter(selected) === q && getYear(day) === getYear(selected);
+
+  isSelectQuarterInList = (day: Date, q: number, selectedDates: Date[]) =>
+    selectedDates.some((selectedDate) =>
+      this.isSelectedQuarter(day, q, selectedDate),
+    );
 
   isMonthSelected = () => {
     const { day, selected, selectedDates, selectsMultiple } = this.props;
@@ -426,6 +431,19 @@ export default class Month extends Component<MonthProps> {
     }
 
     return !!selected && this.isSelectedMonth(day, monthIdx, selected);
+  };
+
+  isQuarterSelected = () => {
+    const { day, selected, selectedDates, selectsMultiple } = this.props;
+    const quarterIdx = getQuarter(day);
+
+    if (selectsMultiple) {
+      return selectedDates?.some((selectedDate) =>
+        this.isSelectedQuarter(day, quarterIdx, selectedDate),
+      );
+    }
+
+    return !!selected && this.isSelectedQuarter(day, quarterIdx, selected);
   };
 
   renderWeeks = () => {
@@ -921,7 +939,6 @@ export default class Month extends Component<MonthProps> {
       day,
       startDate,
       endDate,
-      selected,
       minDate,
       maxDate,
       excludeDates,
@@ -941,18 +958,21 @@ export default class Month extends Component<MonthProps> {
         disabled) &&
       isQuarterDisabled(setQuarter(day, q), this.props);
 
+    const selection = this.getSelection();
+
     return clsx(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
       {
         "react-datepicker__quarter-text--disabled": isDisabled,
-        "react-datepicker__quarter-text--selected": selected
-          ? this.isSelectedQuarter(day, q, selected)
+        "react-datepicker__quarter-text--selected": selection
+          ? this.isSelectQuarterInList(day, q, selection)
           : undefined,
         "react-datepicker__quarter-text--keyboard-selected":
           !disabledKeyboardNavigation &&
           preSelection &&
           this.isSelectedQuarter(day, q, preSelection) &&
+          !this.isQuarterSelected() &&
           !isDisabled,
         "react-datepicker__quarter-text--in-selecting-range":
           this.isInSelectingRangeQuarter(q),
