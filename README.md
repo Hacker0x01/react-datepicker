@@ -62,6 +62,31 @@ You can use `onSelect` event handler which fires each time some calendar date ha
 
 See [here](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/datepicker.md) for a full list of props that may be passed to the component. Examples are given on the [main website](https://hacker0x01.github.io/react-datepicker).
 
+### Working with Examples
+
+When using examples from the documentation site, note that they may reference utilities from external libraries. Common imports you might need:
+
+**Date manipulation** (from `date-fns`):
+
+```js
+import { getYear, getMonth, addDays, subDays, setHours, setMinutes } from "date-fns";
+```
+
+**Utility functions**:
+
+- For `range()` function used in custom headers: `import range from "lodash/range";`
+- Or implement your own: `const range = (start, end, step) => Array.from({ length: (end - start) / step }, (_, i) => start + i * step);`
+
+**TypeScript types**:
+
+```ts
+import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
+```
+
+All examples on the documentation site include commented import statements at the top showing exactly what you need to import for your own project.
+
+For a comprehensive guide on imports, see the [Common Imports Guide](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/imports-guide.md).
+
 ### Time picker
 
 You can also include a time picker by adding the showTimeSelect prop
