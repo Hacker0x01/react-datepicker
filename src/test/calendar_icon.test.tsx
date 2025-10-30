@@ -86,4 +86,107 @@ describe("CalendarIcon", () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
     expect(onClickCustomIcon).toHaveBeenCalledTimes(1);
   });
+
+  it("should fire only custom icon onClick when CalendarIcon onClick is not provided", () => {
+    const onClickCustomIcon = jest.fn();
+
+    const { container } = render(
+      <CalendarIcon
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 48 48"
+            onClick={onClickCustomIcon}
+          />
+        }
+      />,
+    );
+
+    const icon = safeQuerySelector(
+      container,
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(icon);
+
+    // Lines 55-57: custom icon onClick is called
+    expect(onClickCustomIcon).toHaveBeenCalledTimes(1);
+  });
+
+  it("should fire only CalendarIcon onClick when custom icon onClick is not provided", () => {
+    const { container } = render(
+      <CalendarIcon
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 48 48"
+          />
+        }
+        onClick={onClickMock}
+      />,
+    );
+
+    const icon = safeQuerySelector(
+      container,
+      "svg.react-datepicker__calendar-icon",
+    );
+    fireEvent.click(icon);
+
+    // Lines 59-61: CalendarIcon onClick is called
+    expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("should handle custom icon without onClick prop", () => {
+    const { container } = render(
+      <CalendarIcon
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 48 48"
+          />
+        }
+      />,
+    );
+
+    const icon = safeQuerySelector(
+      container,
+      "svg.react-datepicker__calendar-icon",
+    );
+
+    // Should not throw when clicking without any onClick handlers
+    expect(() => fireEvent.click(icon)).not.toThrow();
+  });
+
+  it("should apply className to custom icon", () => {
+    const { container } = render(
+      <CalendarIcon
+        icon={<IconParkSolidApplication />}
+        className="custom-class"
+      />,
+    );
+
+    const icon = container.querySelector(".custom-class");
+    expect(icon).not.toBeNull();
+  });
+
+  it("should apply className to string icon", () => {
+    const { container } = render(
+      <CalendarIcon icon="fa-calendar" className="custom-class" />,
+    );
+
+    const icon = container.querySelector("i.custom-class");
+    expect(icon).not.toBeNull();
+  });
+
+  it("should apply className to default SVG icon", () => {
+    const { container } = render(<CalendarIcon className="custom-class" />);
+
+    const icon = container.querySelector("svg.custom-class");
+    expect(icon).not.toBeNull();
+  });
 });
