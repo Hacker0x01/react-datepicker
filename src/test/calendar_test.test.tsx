@@ -2244,11 +2244,13 @@ describe("Calendar", () => {
 
     const header = container.querySelector(".react-datepicker__header");
     const dayNameElements = header?.querySelectorAll(
-      ".react-datepicker__day-name > span.react-datepicker__sr-only",
+      ".react-datepicker__day-name",
     );
 
     dayNameElements?.forEach((element, index) => {
-      expect(element.textContent).toBe(expectedAriaLabels[index]);
+      expect(element.getAttribute("aria-label")).toBe(
+        expectedAriaLabels[index],
+      );
     });
   });
 

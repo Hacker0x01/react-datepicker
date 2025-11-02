@@ -482,8 +482,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           key="W"
           className={`react-datepicker__day-name ${disabled ? "react-datepicker__day-name--disabled" : ""}`}
           role="columnheader"
+          aria-label="Week number"
         >
-          <span className="react-datepicker__sr-only">Week number</span>
           <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
       );
@@ -501,15 +501,13 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           <div
             key={offset}
             role="columnheader"
+            aria-label={formatDate(day, "EEEE", this.props.locale)}
             className={clsx(
               "react-datepicker__day-name",
               weekDayClassName,
               disabled ? "react-datepicker__day-name--disabled" : "",
             )}
           >
-            <span className="react-datepicker__sr-only">
-              {formatDate(day, "EEEE", this.props.locale)}
-            </span>
             <span aria-hidden="true">{weekDayName}</span>
           </div>
         );
