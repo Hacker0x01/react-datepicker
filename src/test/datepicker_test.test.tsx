@@ -3824,11 +3824,13 @@ describe("DatePicker", () => {
 
       headers.forEach((header) => {
         // Should have an aria-label with the full weekday name
-        const ariaLabel = header?.getAttribute('aria-label');
+        const ariaLabel = header?.getAttribute("aria-label");
         expect(ariaLabel?.length).toBeGreaterThan(2);
 
         // Should have a visible short name
-        const visible = header.querySelector('.react-datepicker__day-name > span[aria-hidden="true"]');
+        const visible = header.querySelector(
+          '.react-datepicker__day-name > span[aria-hidden="true"]',
+        );
         expect(visible).toBeTruthy();
         expect(visible?.textContent?.length).toBeLessThanOrEqual(3);
       });
@@ -3848,7 +3850,7 @@ describe("DatePicker", () => {
       expect(weekNumberHeader).toBeTruthy();
 
       // Should have aria-label = "Week number"
-      const ariaLabel = weekNumberHeader?.getAttribute('aria-label');
+      const ariaLabel = weekNumberHeader?.getAttribute("aria-label");
       expect(ariaLabel?.trim()?.toLowerCase()).toEqual("week number");
 
       // Should have a visible short name
