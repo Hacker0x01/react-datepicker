@@ -38,8 +38,10 @@ describe("PopperComponent", () => {
       floating: null,
       domReference: null,
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context: {} as any,
     arrowRef: { current: null },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 
   const defaultProps = {
