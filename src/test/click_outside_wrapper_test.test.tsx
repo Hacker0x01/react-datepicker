@@ -76,10 +76,7 @@ describe("ClickOutsideWrapper", () => {
    */
   it("should apply custom className", () => {
     const { container } = render(
-      <ClickOutsideWrapper
-        onClickOutside={jest.fn()}
-        className="custom-class"
-      >
+      <ClickOutsideWrapper onClickOutside={jest.fn()} className="custom-class">
         <div>Test Content</div>
       </ClickOutsideWrapper>,
     );
@@ -195,10 +192,7 @@ describe("ClickOutsideWrapper", () => {
    */
   it("should cleanup event listener on unmount", () => {
     const handleClickOutside = jest.fn();
-    const removeEventListenerSpy = jest.spyOn(
-      document,
-      "removeEventListener",
-    );
+    const removeEventListenerSpy = jest.spyOn(document, "removeEventListener");
 
     const { unmount } = render(
       <ClickOutsideWrapper onClickOutside={handleClickOutside}>

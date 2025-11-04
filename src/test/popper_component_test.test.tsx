@@ -17,7 +17,11 @@ jest.mock("../portal", () => {
     children: React.ReactNode;
     portalId: string;
   }) {
-    return <div data-testid="portal" data-portal-id={portalId}>{children}</div>;
+    return (
+      <div data-testid="portal" data-portal-id={portalId}>
+        {children}
+      </div>
+    );
   };
 });
 

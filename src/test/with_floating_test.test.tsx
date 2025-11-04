@@ -156,8 +156,7 @@ describe("withFloating", () => {
   });
 
   it("should include default middleware", () => {
-    const { useFloating, flip, offset, arrow } =
-      require("@floating-ui/react");
+    const { useFloating, flip, offset, arrow } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     render(<WrappedComponent />);

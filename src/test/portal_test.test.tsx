@@ -38,7 +38,9 @@ describe("Portal", () => {
     );
 
     // Content should not be in the main container (React's render root)
-    expect(container.querySelector('[data-testid="portal-content"]')).toBeNull();
+    expect(
+      container.querySelector('[data-testid="portal-content"]'),
+    ).toBeNull();
 
     // Content should be in the portal root (separate DOM location)
     const portalRoot = document.getElementById("test-portal-1");

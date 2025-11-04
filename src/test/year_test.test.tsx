@@ -503,9 +503,7 @@ describe("Year", () => {
       <Year {...defaultProps} date={newDate()} yearItemNumber={12} />,
     );
 
-    const currentYearElement = container.querySelector(
-      `[aria-current="date"]`,
-    );
+    const currentYearElement = container.querySelector(`[aria-current="date"]`);
     expect(currentYearElement?.textContent).toBe(String(currentYear));
   });
 
