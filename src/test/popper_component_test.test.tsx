@@ -52,6 +52,13 @@ const mockPopperProps = {
     left: 20,
   },
   placement: "bottom" as const,
+  strategy: "absolute" as const,
+  middlewareData: {},
+  x: 0,
+  y: 0,
+  isPositioned: true,
+  update: jest.fn(),
+  elements: {},
   context: {},
   arrowRef: { current: null },
 };
@@ -96,7 +103,7 @@ describe("PopperComponent", () => {
     );
 
     const popper = container.querySelector(".react-datepicker-popper");
-    expect(popper).toHaveClass("custom-popper-class");
+    expect(popper?.classList.contains("custom-popper-class")).toBe(true);
   });
 
   it("should apply wrapperClassName to wrapper", () => {
@@ -108,7 +115,7 @@ describe("PopperComponent", () => {
     );
 
     const wrapper = container.querySelector(".react-datepicker-wrapper");
-    expect(wrapper).toHaveClass("custom-wrapper-class");
+    expect(wrapper?.classList.contains("custom-wrapper-class")).toBe(true);
   });
 
   it("should render arrow when showArrow is true", () => {
@@ -137,7 +144,7 @@ describe("PopperComponent", () => {
     );
 
     const arrow = getByTestId("floating-arrow");
-    expect(arrow).toHaveClass("react-datepicker__triangle");
+    expect(arrow.classList.contains("react-datepicker__triangle")).toBe(true);
   });
 
   it("should wrap popper in TabLoop", () => {
@@ -273,9 +280,9 @@ describe("PopperComponent", () => {
     );
 
     const wrapper = container.querySelector(".react-datepicker-wrapper");
-    expect(wrapper).toHaveClass("react-datepicker-wrapper");
-    expect(wrapper).toHaveClass("custom-wrapper");
-    expect(wrapper).toHaveClass("extra-class");
+    expect(wrapper?.classList.contains("react-datepicker-wrapper")).toBe(true);
+    expect(wrapper?.classList.contains("custom-wrapper")).toBe(true);
+    expect(wrapper?.classList.contains("extra-class")).toBe(true);
   });
 
   it("should combine popper classes correctly", () => {
@@ -288,9 +295,9 @@ describe("PopperComponent", () => {
     );
 
     const popper = container.querySelector(".react-datepicker-popper");
-    expect(popper).toHaveClass("react-datepicker-popper");
-    expect(popper).toHaveClass("custom-class");
-    expect(popper).toHaveClass("extra-class");
+    expect(popper?.classList.contains("react-datepicker-popper")).toBe(true);
+    expect(popper?.classList.contains("custom-class")).toBe(true);
+    expect(popper?.classList.contains("extra-class")).toBe(true);
   });
 
   it("should not render popper content when hidePopper is undefined (defaults to true)", () => {

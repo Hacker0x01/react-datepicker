@@ -30,8 +30,8 @@ describe("Year", () => {
     const yearItems = container.querySelectorAll(
       ".react-datepicker__year-text",
     );
-    const firstYear = yearItems[0].textContent;
-    const lastYear = yearItems[11].textContent;
+    const firstYear = yearItems[0]?.textContent;
+    const lastYear = yearItems[11]?.textContent;
 
     expect(firstYear).toBe("2017");
     expect(lastYear).toBe("2028");
@@ -397,7 +397,7 @@ describe("Year", () => {
     );
 
     const year2020 = container.querySelector(".react-datepicker__year-2020");
-    expect(year2020).toHaveClass("react-datepicker__year-text--disabled");
+    expect(year2020?.classList.contains("react-datepicker__year-text--disabled")).toBe(true);
   });
 
   it("should handle included dates", () => {
@@ -421,7 +421,7 @@ describe("Year", () => {
     );
 
     const year2020 = container.querySelector(".react-datepicker__year-2020");
-    expect(year2020).toHaveClass("react-datepicker__year-text--disabled");
+    expect(year2020?.classList.contains("react-datepicker__year-text--disabled")).toBe(true);
   });
 
   it("should call handleOnKeyDown when provided", () => {

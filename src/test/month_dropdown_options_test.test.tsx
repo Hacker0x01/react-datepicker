@@ -119,7 +119,10 @@ describe("MonthDropdownOptions", () => {
     const monthOptions = container.querySelectorAll(
       ".react-datepicker__month-option",
     );
-    fireEvent.keyDown(monthOptions[5], { key: "Enter" });
+    const monthOption = monthOptions[5];
+    if (monthOption) {
+      fireEvent.keyDown(monthOption, { key: "Enter" });
+    }
 
     expect(handleChange).toHaveBeenCalledWith(5);
   });
