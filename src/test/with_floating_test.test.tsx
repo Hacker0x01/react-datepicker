@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import withFloating, { type FloatingProps } from "../with_floating";
+import * as FloatingUI from "@floating-ui/react";
 
 // Mock @floating-ui/react
 jest.mock("@floating-ui/react", () => ({
@@ -113,13 +114,12 @@ describe("withFloating", () => {
   });
 
   it("should handle popperModifiers prop", () => {
-    const { useFloating } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     const customModifier = { name: "customModifier" };
     render(<WrappedComponent popperModifiers={[customModifier]} />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         middleware: expect.arrayContaining([customModifier]),
       }),
@@ -127,12 +127,11 @@ describe("withFloating", () => {
   });
 
   it("should handle popperPlacement prop", () => {
-    const { useFloating } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     render(<WrappedComponent popperPlacement="top" />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         placement: "top",
       }),
@@ -140,7 +139,6 @@ describe("withFloating", () => {
   });
 
   it("should handle popperProps prop", () => {
-    const { useFloating } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     const customPopperProps = {
@@ -148,7 +146,7 @@ describe("withFloating", () => {
     };
     render(<WrappedComponent popperProps={customPopperProps} />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         strategy: "fixed",
       }),
@@ -156,15 +154,14 @@ describe("withFloating", () => {
   });
 
   it("should include default middleware", () => {
-    const { useFloating, flip, offset, arrow } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     render(<WrappedComponent />);
 
-    expect(flip).toHaveBeenCalledWith({ padding: 15 });
-    expect(offset).toHaveBeenCalledWith(10);
-    expect(arrow).toHaveBeenCalled();
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.flip).toHaveBeenCalledWith({ padding: 15 });
+    expect(FloatingUI.offset).toHaveBeenCalledWith(10);
+    expect(FloatingUI.arrow).toHaveBeenCalled();
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         middleware: expect.any(Array),
       }),
@@ -172,12 +169,11 @@ describe("withFloating", () => {
   });
 
   it("should set open based on hidePopper", () => {
-    const { useFloating } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     const { rerender } = render(<WrappedComponent hidePopper={true} />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         open: false,
       }),
@@ -185,7 +181,7 @@ describe("withFloating", () => {
 
     rerender(<WrappedComponent hidePopper={false} />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
         open: true,
       }),
@@ -193,14 +189,13 @@ describe("withFloating", () => {
   });
 
   it("should include autoUpdate in floating options", () => {
-    const { useFloating, autoUpdate } = require("@floating-ui/react");
     const WrappedComponent = withFloating(TestComponent);
 
     render(<WrappedComponent />);
 
-    expect(useFloating).toHaveBeenCalledWith(
+    expect(FloatingUI.useFloating).toHaveBeenCalledWith(
       expect.objectContaining({
-        whileElementsMounted: autoUpdate,
+        whileElementsMounted: FloatingUI.autoUpdate,
       }),
     );
   });
