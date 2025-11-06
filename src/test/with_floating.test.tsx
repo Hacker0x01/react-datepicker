@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
 import withFloating from "../with_floating";
@@ -6,41 +6,49 @@ import withFloating from "../with_floating";
 import type { FloatingProps } from "../with_floating";
 
 // Mock @floating-ui/react
-const mockUseFloating = jest.fn(() => ({
-  placement: "bottom",
-  strategy: "absolute",
-  middlewareData: {},
-  x: 0,
-  y: 0,
-  isPositioned: true,
-  update: jest.fn(),
-  floatingStyles: { position: "absolute" as const, top: 0, left: 0 },
-  refs: {
-    reference: { current: null },
-    floating: { current: null },
-    setFloating: jest.fn(),
-    setReference: jest.fn(),
-  },
-  elements: {
-    reference: null,
-    floating: null,
-    domReference: null,
-  },
-  context: {},
+jest.mock("@floating-ui/react", () => ({
+  useFloating: jest.fn(() => ({
+    placement: "bottom",
+    strategy: "absolute",
+    middlewareData: {},
+    x: 0,
+    y: 0,
+    isPositioned: true,
+    update: jest.fn(),
+    floatingStyles: { position: "absolute" as const, top: 0, left: 0 },
+    refs: {
+      reference: { current: null },
+      floating: { current: null },
+      setFloating: jest.fn(),
+      setReference: jest.fn(),
+    },
+    elements: {
+      reference: null,
+      floating: null,
+      domReference: null,
+    },
+    context: {},
+  })),
+  arrow: jest.fn(() => ({ name: "arrow", fn: jest.fn() })),
+  offset: jest.fn(() => ({ name: "offset", fn: jest.fn() })),
+  flip: jest.fn(() => ({ name: "flip", fn: jest.fn() })),
+  autoUpdate: jest.fn(),
 }));
 
-const mockArrow = jest.fn(() => ({ name: "arrow", fn: jest.fn() }));
-const mockOffset = jest.fn(() => ({ name: "offset", fn: jest.fn() }));
-const mockFlip = jest.fn(() => ({ name: "flip", fn: jest.fn() }));
-const mockAutoUpdate = jest.fn();
-
-jest.mock("@floating-ui/react", () => ({
+// Get the mocked functions
+const {
   useFloating: mockUseFloating,
   arrow: mockArrow,
   offset: mockOffset,
   flip: mockFlip,
   autoUpdate: mockAutoUpdate,
-}));
+} = jest.requireMock("@floating-ui/react") as {
+  useFloating: jest.Mock;
+  arrow: jest.Mock;
+  offset: jest.Mock;
+  flip: jest.Mock;
+  autoUpdate: jest.Mock;
+};
 
 interface TestComponentProps extends FloatingProps {
   testProp?: string;
@@ -59,9 +67,10 @@ const TestComponent: React.FC<TestComponentProps> = ({
 );
 
 describe("withFloating", () => {
-  it("wraps component and provides popperProps", () => {
+  it("wraps component and provides popperProps", async () => {
     const WrappedComponent = withFloating(TestComponent);
     const { container } = render(<WrappedComponent />);
+    await waitFor(() => expect(container).toBeTruthy());
 
     expect(
       container.querySelector('[data-testid="test-component"]'),
@@ -71,9 +80,10 @@ describe("withFloating", () => {
     ).toBe("bottom");
   });
 
-  it("passes through original props", () => {
+  it("passes through original props", async () => {
     const WrappedComponent = withFloating(TestComponent);
     const { container } = render(<WrappedComponent testProp="custom-value" />);
+    await waitFor(() => expect(container).toBeTruthy());
 
     const testComponent = container.querySelector(
       '[data-testid="test-component"]',
@@ -81,18 +91,20 @@ describe("withFloating", () => {
     expect(testComponent?.getAttribute("data-test-prop")).toBe("custom-value");
   });
 
-  it("provides arrowRef in popperProps", () => {
+  it("provides arrowRef in popperProps", async () => {
     const WrappedComponent = withFloating(TestComponent);
     const { container } = render(<WrappedComponent />);
+    await waitFor(() => expect(container).toBeTruthy());
 
     expect(
       container.querySelector('[data-testid="arrow-ref"]')?.textContent,
     ).toBe("no-ref");
   });
 
-  it("sets hidePopper to true by default", () => {
+  it("sets hidePopper to true by default", async () => {
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -101,9 +113,10 @@ describe("withFloating", () => {
     );
   });
 
-  it("respects hidePopper prop when set to false", () => {
+  it("respects hidePopper prop when set to false", async () => {
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent hidePopper={false} />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -112,9 +125,10 @@ describe("withFloating", () => {
     );
   });
 
-  it("passes popperPlacement to useFloating", () => {
+  it("passes popperPlacement to useFloating", async () => {
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent popperPlacement="top" />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -123,9 +137,10 @@ describe("withFloating", () => {
     );
   });
 
-  it("includes default middleware", () => {
+  it("includes default middleware", async () => {
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockFlip).toHaveBeenCalledWith({ padding: 15 });
     expect(mockOffset).toHaveBeenCalledWith(10);
@@ -141,10 +156,11 @@ describe("withFloating", () => {
     );
   });
 
-  it("includes custom popperModifiers", () => {
+  it("includes custom popperModifiers", async () => {
     const customModifier = { name: "custom", fn: jest.fn() };
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent popperModifiers={[customModifier]} />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -155,10 +171,11 @@ describe("withFloating", () => {
     );
   });
 
-  it("passes popperProps to useFloating", () => {
+  it("passes popperProps to useFloating", async () => {
     const customProps = { strategy: "fixed" as const };
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent popperProps={customProps} />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -167,9 +184,10 @@ describe("withFloating", () => {
     );
   });
 
-  it("sets whileElementsMounted to autoUpdate", () => {
+  it("sets whileElementsMounted to autoUpdate", async () => {
     const WrappedComponent = withFloating(TestComponent);
     render(<WrappedComponent />);
+    await waitFor(() => expect(mockUseFloating).toHaveBeenCalled());
 
     expect(mockUseFloating).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -204,17 +222,21 @@ describe("withFloating", () => {
     );
   });
 
-  it("handles hidePopper boolean correctly", () => {
+  it("handles hidePopper boolean correctly", async () => {
     const WrappedComponent = withFloating(TestComponent);
 
     const { rerender } = render(<WrappedComponent hidePopper={true} />);
-    expect(mockUseFloating).toHaveBeenCalledWith(
-      expect.objectContaining({ open: false }),
+    await waitFor(() =>
+      expect(mockUseFloating).toHaveBeenCalledWith(
+        expect.objectContaining({ open: false }),
+      ),
     );
 
     rerender(<WrappedComponent hidePopper={false} />);
-    expect(mockUseFloating).toHaveBeenCalledWith(
-      expect.objectContaining({ open: true }),
+    await waitFor(() =>
+      expect(mockUseFloating).toHaveBeenCalledWith(
+        expect.objectContaining({ open: true }),
+      ),
     );
   });
 });
