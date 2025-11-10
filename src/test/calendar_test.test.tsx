@@ -2703,13 +2703,14 @@ describe("Calendar", () => {
           onClickOutside={() => {}}
           onSelect={() => {}}
           dropdownMode="scroll"
+          inline
         />,
       );
 
       const dialog = container.querySelector(".react-datepicker");
       expect(dialog).not.toBeNull();
-      expect(dialog).not.toHaveProperty("role");
-      expect(dialog).not.toHaveProperty("aria-modal");
+      expect(dialog?.getAttribute("role")).toBeNull();
+      expect(dialog?.getAttribute("aria-modal")).toBeNull();
       expect(dialog?.getAttribute("aria-label")).toBe("Choose Date");
     });
 
