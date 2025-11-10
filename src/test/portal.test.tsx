@@ -1,13 +1,13 @@
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import React from "react";
 
 import Portal from "../portal";
 
 describe("Portal", () => {
   afterEach(() => {
-    // Clean up any portal elements created during tests
-    const portalElements = document.querySelectorAll('[id^="test-portal"]');
-    portalElements.forEach((el) => el.remove());
+    const portals = document.querySelectorAll('[id^="test-portal"]');
+    portals.forEach((portal) => portal.remove());
+    cleanup();
   });
 
   it("renders children into a portal", () => {
@@ -17,12 +17,10 @@ describe("Portal", () => {
       </Portal>,
     );
 
-    // Content should not be in the original container
-    expect(container.querySelector('[data-testid="portal-content"]')).toBe(
-      null,
-    );
+    expect(
+      container.querySelector('[data-testid="portal-content"]'),
+    ).toBeNull();
 
-    // Content should be in the portal
     const portalRoot = document.getElementById("test-portal-1");
     expect(portalRoot).toBeTruthy();
     expect(
@@ -31,7 +29,7 @@ describe("Portal", () => {
   });
 
   it("creates portal root if it doesn't exist", () => {
-    expect(document.getElementById("test-portal-2")).toBe(null);
+    expect(document.getElementById("test-portal-2")).toBeNull();
 
     render(
       <Portal portalId="test-portal-2">
@@ -40,32 +38,34 @@ describe("Portal", () => {
     );
 
     const portalRoot = document.getElementById("test-portal-2");
-    expect(portalRoot).toBeTruthy();
+    expect(portalRoot).not.toBeNull();
     expect(portalRoot?.parentElement).toBe(document.body);
   });
 
   it("uses existing portal root if it exists", () => {
-    const existingPortal = document.createElement("div");
-    existingPortal.id = "test-portal-3";
-    document.body.appendChild(existingPortal);
+    const existingRoot = document.createElement("div");
+    existingRoot.id = "test-portal-3";
+    document.body.appendChild(existingRoot);
 
     render(
       <Portal portalId="test-portal-3">
-        <div data-testid="content">Content</div>
+        <div data-testid="existing-content">Using Existing</div>
       </Portal>,
     );
 
     const portalRoot = document.getElementById("test-portal-3");
-    expect(portalRoot).toBe(existingPortal);
-    expect(portalRoot?.querySelector('[data-testid="content"]')).toBeTruthy();
+    expect(portalRoot).toBe(existingRoot);
+    expect(
+      portalRoot?.querySelector('[data-testid="existing-content"]'),
+    ).toBeTruthy();
 
-    existingPortal.remove();
+    existingRoot.remove();
   });
 
   it("removes portal content on unmount", () => {
     const { unmount } = render(
       <Portal portalId="test-portal-4">
-        <div data-testid="portal-content">Portal Content</div>
+        <div data-testid="portal-content">Cleanup Test</div>
       </Portal>,
     );
 
@@ -76,9 +76,11 @@ describe("Portal", () => {
 
     unmount();
 
-    expect(portalRoot?.querySelector('[data-testid="portal-content"]')).toBe(
-      null,
-    );
+    const stillExists = document.getElementById("test-portal-4");
+    expect(stillExists).toBeTruthy();
+    expect(
+      stillExists?.querySelector('[data-testid="portal-content"]'),
+    ).toBeNull();
   });
 
   it("renders multiple children correctly", () => {
@@ -94,6 +96,23 @@ describe("Portal", () => {
     expect(portalRoot?.querySelector('[data-testid="child-1"]')).toBeTruthy();
     expect(portalRoot?.querySelector('[data-testid="child-2"]')).toBeTruthy();
     expect(portalRoot?.querySelector('[data-testid="child-3"]')).toBeTruthy();
+  });
+
+  it("handles multiple portals", () => {
+    render(
+      <Portal portalId="test-portal-6a">
+        <div>Portal A</div>
+      </Portal>,
+    );
+
+    render(
+      <Portal portalId="test-portal-6b">
+        <div>Portal B</div>
+      </Portal>,
+    );
+
+    expect(document.getElementById("test-portal-6a")).not.toBeNull();
+    expect(document.getElementById("test-portal-6b")).not.toBeNull();
   });
 
   it("works with shadow DOM when portalHost is provided", () => {
@@ -118,7 +137,6 @@ describe("Portal", () => {
 
   it("appends to portalHost instead of document.body when provided", () => {
     const customHost = document.createElement("div");
-    customHost.id = "custom-host";
     document.body.appendChild(customHost);
     const shadowRoot = customHost.attachShadow({ mode: "open" });
 
@@ -135,23 +153,41 @@ describe("Portal", () => {
     customHost.remove();
   });
 
+  it("creates portal root in portalHost when it doesn't exist", () => {
+    const shadowHost = document.createElement("div");
+    document.body.appendChild(shadowHost);
+    const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+
+    render(
+      <Portal portalId="test-portal-7" portalHost={shadowRoot}>
+        <div>Shadow Portal</div>
+      </Portal>,
+    );
+
+    const portalRoot = shadowRoot.getElementById("test-portal-7");
+    expect(portalRoot).not.toBeNull();
+    expect(shadowRoot.contains(portalRoot!)).toBe(true);
+
+    shadowHost.remove();
+  });
+
   it("handles re-renders correctly", () => {
     const { rerender } = render(
-      <Portal portalId="test-portal-6">
+      <Portal portalId="test-portal-8">
         <div data-testid="content-1">Content 1</div>
       </Portal>,
     );
 
-    const portalRoot = document.getElementById("test-portal-6");
+    const portalRoot = document.getElementById("test-portal-8");
     expect(portalRoot?.querySelector('[data-testid="content-1"]')).toBeTruthy();
 
     rerender(
-      <Portal portalId="test-portal-6">
+      <Portal portalId="test-portal-8">
         <div data-testid="content-2">Content 2</div>
       </Portal>,
     );
 
-    expect(portalRoot?.querySelector('[data-testid="content-1"]')).toBe(null);
+    expect(portalRoot?.querySelector('[data-testid="content-1"]')).toBeNull();
     expect(portalRoot?.querySelector('[data-testid="content-2"]')).toBeTruthy();
   });
 });

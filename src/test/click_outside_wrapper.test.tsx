@@ -148,6 +148,34 @@ describe("ClickOutsideWrapper", () => {
     expect(containerRef.current?.tagName).toBe("DIV");
   });
 
+  it("handles composedPath events (e.g. shadow DOM)", () => {
+    render(
+      <div>
+        <ClickOutsideWrapper onClickOutside={onClickOutsideMock}>
+          <div data-testid="inside">Inside</div>
+        </ClickOutsideWrapper>
+      </div>,
+    );
+
+    const outsideNode = document.createElement("div");
+    document.body.appendChild(outsideNode);
+
+    const event = new MouseEvent("mousedown", {
+      bubbles: true,
+      composed: true,
+    });
+    Object.defineProperty(event, "composed", { value: true });
+    Object.defineProperty(event, "composedPath", {
+      value: () => [outsideNode, document.body],
+    });
+
+    outsideNode.dispatchEvent(event);
+
+    expect(onClickOutsideMock).toHaveBeenCalled();
+
+    document.body.removeChild(outsideNode);
+  });
+
   it("cleans up event listener on unmount", () => {
     const removeEventListenerSpy = jest.spyOn(document, "removeEventListener");
 

@@ -4,247 +4,358 @@ import React from "react";
 import TabLoop from "../tab_loop";
 
 describe("TabLoop", () => {
-  it("renders children when enableTabLoop is true", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <div data-testid="child">Test Content</div>
-      </TabLoop>,
-    );
+  describe("when enableTabLoop is true (default)", () => {
+    it("should render tab loop container with start and end sentinels", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+        </TabLoop>,
+      );
 
-    expect(container.querySelector('[data-testid="child"]')).toBeTruthy();
+      const tabLoopContainer = container.querySelector(
+        ".react-datepicker__tab-loop",
+      );
+      expect(tabLoopContainer).not.toBeNull();
+
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      );
+      expect(startSentinel).not.toBeNull();
+      expect(startSentinel?.getAttribute("tabIndex")).toBe("0");
+
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      );
+      expect(endSentinel).not.toBeNull();
+      expect(endSentinel?.getAttribute("tabIndex")).toBe("0");
+    });
+
+    it("should focus last tabbable child when start sentinel is focused", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <button>Button 2</button>
+          <button>Button 3</button>
+        </TabLoop>,
+      );
+
+      const buttons = container.querySelectorAll("button");
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
+
+      // Mock focus on the last button
+      const focusSpy = jest.spyOn(buttons[2] as HTMLElement, "focus");
+
+      fireEvent.focus(startSentinel);
+
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
+
+    it("should focus first tabbable child when end sentinel is focused", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <button>Button 2</button>
+          <button>Button 3</button>
+        </TabLoop>,
+      );
+
+      const buttons = container.querySelectorAll("button");
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      // Mock focus on the first button
+      const focusSpy = jest.spyOn(buttons[0] as HTMLElement, "focus");
+
+      fireEvent.focus(endSentinel);
+
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
+
+    it("should handle multiple focusable element types", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button</button>
+          <input type="text" placeholder="Input" />
+          <select>
+            <option>Option</option>
+          </select>
+          <textarea placeholder="Textarea" />
+          <a href="#">Link</a>
+        </TabLoop>,
+      );
+
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      const link = container.querySelector("a") as HTMLElement;
+      const button = container.querySelector("button") as HTMLElement;
+
+      const linkFocusSpy = jest.spyOn(link, "focus");
+      const buttonFocusSpy = jest.spyOn(button, "focus");
+
+      fireEvent.focus(startSentinel);
+      expect(linkFocusSpy).toHaveBeenCalled();
+
+      fireEvent.focus(endSentinel);
+      expect(buttonFocusSpy).toHaveBeenCalled();
+
+      linkFocusSpy.mockRestore();
+      buttonFocusSpy.mockRestore();
+    });
+
+    it("should filter out disabled elements", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <button disabled>Button 2 (disabled)</button>
+          <button>Button 3</button>
+        </TabLoop>,
+      );
+
+      const buttons = container.querySelectorAll("button");
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      // Should focus Button 1, skipping the disabled button
+      const focusSpy = jest.spyOn(buttons[0] as HTMLElement, "focus");
+
+      fireEvent.focus(endSentinel);
+
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
+
+    it("should filter out elements with tabIndex -1", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <button tabIndex={-1}>Button 2 (tabIndex -1)</button>
+          <button>Button 3</button>
+        </TabLoop>,
+      );
+
+      const buttons = container.querySelectorAll("button");
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      // Should focus Button 1, skipping button with tabIndex -1
+      const focusSpy = jest.spyOn(buttons[0] as HTMLElement, "focus");
+
+      fireEvent.focus(endSentinel);
+
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
+
+    it("should filter out anchor elements with tabIndex -1", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <a href="#" tabIndex={-1}>
+            Link (tabIndex -1)
+          </a>
+          <button>Button 2</button>
+        </TabLoop>,
+      );
+
+      const buttons = container.querySelectorAll("button");
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      // Should focus Button 1, skipping the anchor with tabIndex -1
+      const focusSpy = jest.spyOn(buttons[0] as HTMLElement, "focus");
+
+      fireEvent.focus(endSentinel);
+
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
+
+    it("should handle elements with custom tabindex", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Button 1</button>
+          <div tabIndex={0}>Div with tabindex</div>
+          <button>Button 2</button>
+        </TabLoop>,
+      );
+
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
+
+      const buttons = container.querySelectorAll("button");
+
+      // Test that custom tabindex elements are included in tab children
+      const firstButton = buttons[0] as HTMLElement;
+      const lastButton = buttons[1] as HTMLElement;
+
+      const firstFocusSpy = jest.spyOn(firstButton, "focus");
+      const lastFocusSpy = jest.spyOn(lastButton, "focus");
+
+      // Focus end sentinel should focus first tabbable element
+      fireEvent.focus(endSentinel);
+      expect(firstFocusSpy).toHaveBeenCalled();
+
+      // Focus start sentinel should focus last tabbable element
+      fireEvent.focus(startSentinel);
+      expect(lastFocusSpy).toHaveBeenCalled();
+
+      firstFocusSpy.mockRestore();
+      lastFocusSpy.mockRestore();
+    });
+
+    it("should not focus if there are no tabbable children", () => {
+      const { container } = render(
+        <TabLoop>
+          <div>Not focusable</div>
+        </TabLoop>,
+      );
+
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
+
+      // Should not throw an error
+      expect(() => fireEvent.focus(startSentinel)).not.toThrow();
+    });
+
+    it("should not focus if there is only one tabbable child", () => {
+      const { container } = render(
+        <TabLoop>
+          <button>Only Button</button>
+        </TabLoop>,
+      );
+
+      const button = container.querySelector("button") as HTMLElement;
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
+
+      const focusSpy = jest.spyOn(button, "focus");
+
+      fireEvent.focus(startSentinel);
+
+      // Should not focus because length is not > 1
+      expect(focusSpy).not.toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
   });
 
-  it("renders children when enableTabLoop is false", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={false}>
-        <div data-testid="child">Test Content</div>
-      </TabLoop>,
-    );
+  describe("when enableTabLoop is false", () => {
+    it("should render children without tab loop wrapper", () => {
+      const { container } = render(
+        <TabLoop enableTabLoop={false}>
+          <button>Button 1</button>
+        </TabLoop>,
+      );
 
-    expect(container.querySelector('[data-testid="child"]')).toBeTruthy();
+      const tabLoopContainer = container.querySelector(
+        ".react-datepicker__tab-loop",
+      );
+      expect(tabLoopContainer).toBeNull();
+
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      );
+      expect(startSentinel).toBeNull();
+
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      );
+      expect(endSentinel).toBeNull();
+
+      const button = container.querySelector("button");
+      expect(button).not.toBeNull();
+    });
+
+    it("should render nothing when no children are provided", () => {
+      const { container } = render(<TabLoop enableTabLoop={false} />);
+
+      expect(container.firstChild).toBeNull();
+    });
   });
 
-  it("renders tab loop wrapper when enableTabLoop is true", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <div>Content</div>
-      </TabLoop>,
-    );
+  describe("edge cases", () => {
+    it("should handle undefined children", () => {
+      const { container } = render(<TabLoop>{undefined}</TabLoop>);
 
-    expect(container.querySelector(".react-datepicker__tab-loop")).toBeTruthy();
-    expect(
-      container.querySelector(".react-datepicker__tab-loop__start"),
-    ).toBeTruthy();
-    expect(
-      container.querySelector(".react-datepicker__tab-loop__end"),
-    ).toBeTruthy();
-  });
+      const tabLoopContainer = container.querySelector(
+        ".react-datepicker__tab-loop",
+      );
+      expect(tabLoopContainer).not.toBeNull();
+    });
 
-  it("does not render tab loop wrapper when enableTabLoop is false", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={false}>
-        <div>Content</div>
-      </TabLoop>,
-    );
+    it("should handle null children", () => {
+      const { container } = render(<TabLoop>{null}</TabLoop>);
 
-    expect(container.querySelector(".react-datepicker__tab-loop")).toBe(null);
-    expect(container.querySelector(".react-datepicker__tab-loop__start")).toBe(
-      null,
-    );
-    expect(container.querySelector(".react-datepicker__tab-loop__end")).toBe(
-      null,
-    );
-  });
+      const tabLoopContainer = container.querySelector(
+        ".react-datepicker__tab-loop",
+      );
+      expect(tabLoopContainer).not.toBeNull();
+    });
 
-  it("uses default enableTabLoop value when not provided", () => {
-    const { container } = render(
-      <TabLoop>
-        <div>Content</div>
-      </TabLoop>,
-    );
+    it("should handle mixed enabled and disabled inputs", () => {
+      const { container } = render(
+        <TabLoop>
+          <input type="text" placeholder="Input 1" />
+          <input type="text" disabled placeholder="Input 2 (disabled)" />
+          <input type="text" placeholder="Input 3" />
+        </TabLoop>,
+      );
 
-    // Default is true
-    expect(container.querySelector(".react-datepicker__tab-loop")).toBeTruthy();
-  });
+      const inputs = container.querySelectorAll("input:not([disabled])");
+      const endSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__end",
+      ) as HTMLElement;
 
-  it("focuses last tabbable element when start sentinel is focused", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button data-testid="button-1">Button 1</button>
-        <button data-testid="button-2">Button 2</button>
-        <button data-testid="button-3">Button 3</button>
-      </TabLoop>,
-    );
+      const focusSpy = jest.spyOn(inputs[0] as HTMLElement, "focus");
 
-    const startSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__start",
-    ) as HTMLElement;
-    const lastButton = container.querySelector(
-      '[data-testid="button-3"]',
-    ) as HTMLButtonElement;
+      fireEvent.focus(endSentinel);
 
-    const focusSpy = jest.spyOn(lastButton, "focus");
-    fireEvent.focus(startSentinel);
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
 
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
-  });
+    it("should handle complex nested structure", () => {
+      const { container } = render(
+        <TabLoop>
+          <div>
+            <button>Button 1</button>
+            <div>
+              <input type="text" />
+            </div>
+          </div>
+          <button>Button 2</button>
+        </TabLoop>,
+      );
 
-  it("focuses first tabbable element when end sentinel is focused", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button data-testid="button-1">Button 1</button>
-        <button data-testid="button-2">Button 2</button>
-        <button data-testid="button-3">Button 3</button>
-      </TabLoop>,
-    );
+      const buttons = container.querySelectorAll("button");
+      const startSentinel = container.querySelector(
+        ".react-datepicker__tab-loop__start",
+      ) as HTMLElement;
 
-    const endSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__end",
-    ) as HTMLElement;
-    const firstButton = container.querySelector(
-      '[data-testid="button-1"]',
-    ) as HTMLButtonElement;
+      const focusSpy = jest.spyOn(buttons[1] as HTMLElement, "focus");
 
-    const focusSpy = jest.spyOn(firstButton, "focus");
-    fireEvent.focus(endSentinel);
+      fireEvent.focus(startSentinel);
 
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
-  });
-
-  it("handles multiple tabbable element types", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button data-testid="button">Button</button>
-        <input data-testid="input" type="text" />
-        <select data-testid="select">
-          <option>Option</option>
-        </select>
-        <textarea data-testid="textarea" />
-        <a href="#" data-testid="link">
-          Link
-        </a>
-      </TabLoop>,
-    );
-
-    const endSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__end",
-    ) as HTMLElement;
-    const firstButton = container.querySelector(
-      '[data-testid="button"]',
-    ) as HTMLButtonElement;
-
-    const focusSpy = jest.spyOn(firstButton, "focus");
-    fireEvent.focus(endSentinel);
-
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
-  });
-
-  it("ignores disabled elements", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button disabled data-testid="button-disabled">
-          Disabled
-        </button>
-        <button data-testid="button-enabled">Enabled</button>
-        <button data-testid="button-enabled-2">Enabled 2</button>
-      </TabLoop>,
-    );
-
-    const endSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__end",
-    ) as HTMLElement;
-    const enabledButton = container.querySelector(
-      '[data-testid="button-enabled"]',
-    ) as HTMLButtonElement;
-
-    const focusSpy = jest.spyOn(enabledButton, "focus");
-    fireEvent.focus(endSentinel);
-
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
-  });
-
-  it("ignores elements with tabIndex -1", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button tabIndex={-1} data-testid="button-negative">
-          Negative TabIndex
-        </button>
-        <button data-testid="button-normal">Normal</button>
-        <button data-testid="button-normal-2">Normal 2</button>
-      </TabLoop>,
-    );
-
-    const endSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__end",
-    ) as HTMLElement;
-    const normalButton = container.querySelector(
-      '[data-testid="button-normal"]',
-    ) as HTMLButtonElement;
-
-    const focusSpy = jest.spyOn(normalButton, "focus");
-    fireEvent.focus(endSentinel);
-
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
-  });
-
-  it("handles case with only one tabbable element", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <button data-testid="single-button">Single Button</button>
-      </TabLoop>,
-    );
-
-    const startSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__start",
-    ) as HTMLElement;
-
-    // Should not throw error with single element
-    expect(() => fireEvent.focus(startSentinel)).not.toThrow();
-  });
-
-  it("handles case with no tabbable elements", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <div>No tabbable elements</div>
-      </TabLoop>,
-    );
-
-    const startSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__start",
-    ) as HTMLElement;
-
-    // Should not throw error with no tabbable elements
-    expect(() => fireEvent.focus(startSentinel)).not.toThrow();
-  });
-
-  it("renders with custom tabIndex elements", () => {
-    const { container } = render(
-      <TabLoop enableTabLoop={true}>
-        <div tabIndex={0} data-testid="div-1">
-          Div 1
-        </div>
-        <div tabIndex={0} data-testid="div-2">
-          Div 2
-        </div>
-      </TabLoop>,
-    );
-
-    const endSentinel = container.querySelector(
-      ".react-datepicker__tab-loop__end",
-    ) as HTMLElement;
-    const firstDiv = container.querySelector(
-      '[data-testid="div-1"]',
-    ) as HTMLDivElement;
-
-    const focusSpy = jest.spyOn(firstDiv, "focus");
-    fireEvent.focus(endSentinel);
-
-    expect(focusSpy).toHaveBeenCalled();
-    focusSpy.mockRestore();
+      expect(focusSpy).toHaveBeenCalled();
+      focusSpy.mockRestore();
+    });
   });
 });

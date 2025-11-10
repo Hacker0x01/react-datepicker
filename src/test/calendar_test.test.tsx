@@ -221,6 +221,58 @@ describe("Calendar", () => {
     expect(isSameDay(instance?.state.date, openToDate)).toBeTruthy();
   });
 
+  it("should move pre-selection to first enabled day when month changes", () => {
+    const onSelect = jest.fn();
+    const setOpen = jest.fn();
+    const setPreSelection = jest.fn();
+    const filterDate = (date: Date) => date.getDate() >= 3;
+
+    const { instance } = getCalendar({
+      adjustDateOnChange: true,
+      onSelect,
+      setOpen,
+      setPreSelection,
+      filterDate,
+      selected: new Date("2024-01-15T00:00:00"),
+    });
+
+    const targetMonth = new Date("2024-02-01T00:00:00");
+    act(() => {
+      instance?.handleMonthChange(targetMonth);
+    });
+
+    const expectedDate = new Date("2024-02-03T00:00:00");
+    const [selectedDate] = onSelect.mock.calls[0];
+    expect(isSameDay(selectedDate, expectedDate)).toBe(true);
+    expect(setOpen).toHaveBeenCalledWith(true);
+    const [preSelectionDate] = setPreSelection.mock.calls[0];
+    expect(isSameDay(preSelectionDate, expectedDate)).toBe(true);
+    expect(instance?.state.isRenderAriaLiveMessage).toBe(true);
+  });
+
+  it("should fall back to provided month date when no enabled days exist", () => {
+    const onSelect = jest.fn();
+    const setPreSelection = jest.fn();
+    const filterDate = () => false;
+
+    const { instance } = getCalendar({
+      adjustDateOnChange: true,
+      onSelect,
+      setPreSelection,
+      filterDate,
+    });
+
+    const targetDate = new Date("2024-03-10T00:00:00");
+    act(() => {
+      instance?.handleMonthChange(targetDate);
+    });
+
+    const [fallbackSelected] = onSelect.mock.calls[0];
+    expect(isSameDay(fallbackSelected, targetDate)).toBe(true);
+    const [fallbackPreSelection] = setPreSelection.mock.calls[0];
+    expect(isSameDay(fallbackPreSelection, targetDate)).toBe(true);
+  });
+
   it("should open on openToDate date rather than selected date when both are specified", () => {
     const openToDate =
       parseDate("09/28/1993", DATE_FORMAT, undefined, false) ?? undefined;

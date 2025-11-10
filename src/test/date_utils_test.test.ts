@@ -47,6 +47,7 @@ import {
   quarterDisabledAfter,
   getWeek,
   safeDateRangeFormat,
+  safeDateFormat,
   getHolidaysMap,
   arraysAreEqual,
   startOfMinute,
@@ -54,6 +55,7 @@ import {
   getMidnightDate,
   registerLocale,
   isMonthYearDisabled,
+  getDefaultLocale,
 } from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1475,6 +1477,167 @@ describe("date_utils", () => {
     it("should return false by default", () => {
       const date = new Date(new Date(2023, 3, 1));
       expect(isMonthYearDisabled(date)).toBe(false);
+    });
+  });
+
+  describe("safeDateFormat critical coverage", () => {
+    it("warns when locale object is not found", () => {
+      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+      const testDate = new Date("2024-01-15T10:00:00");
+
+      safeDateFormat(testDate, {
+        dateFormat: "PP",
+        locale: "invalid-locale-xyz",
+      });
+
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'A locale object was not found for the provided string ["invalid-locale-xyz"]',
+        ),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it("does not warn when valid locale is provided", () => {
+      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+      const testDate = new Date("2024-01-15T10:00:00");
+
+      safeDateFormat(testDate, {
+        dateFormat: "PP",
+        locale: getDefaultLocale(),
+      });
+
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+      consoleWarnSpy.mockRestore();
+    });
+
+    it("falls back to default locale for invalid locale values", () => {
+      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+      const testDate = new Date("2024-01-15T10:00:00");
+
+      const result = safeDateFormat(testDate, {
+        dateFormat: "yyyy-MM-dd",
+        locale: "invalid-locale",
+      });
+
+      expect(result).toBeTruthy();
+      expect(typeof result).toBe("string");
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it("handles very old dates", () => {
+      const formatted = safeDateFormat(new Date("1900-01-01"), {
+        dateFormat: "yyyy-MM-dd",
+      });
+
+      expect(formatted).toContain("1900");
+    });
+
+    it("handles far future dates", () => {
+      const formatted = safeDateFormat(new Date("2099-12-31"), {
+        dateFormat: "yyyy-MM-dd",
+      });
+
+      expect(formatted).toContain("2099");
+    });
+
+    it("handles leap year dates", () => {
+      const formatted = safeDateFormat(new Date("2024-02-29"), {
+        dateFormat: "yyyy-MM-dd",
+      });
+
+      expect(formatted).toContain("2024-02-29");
+    });
+
+    it("handles daylight saving time transitions", () => {
+      const formatted = safeDateFormat(new Date("2024-03-10T02:30:00"), {
+        dateFormat: "yyyy-MM-dd HH:mm",
+      });
+
+      expect(formatted).toBeTruthy();
+      expect(typeof formatted).toBe("string");
+    });
+
+    it("supports time tokens in the format string", () => {
+      const formatted = safeDateFormat(new Date("2024-01-15T14:30:45"), {
+        dateFormat: "yyyy-MM-dd HH:mm:ss",
+      });
+
+      expect(formatted).toContain("2024-01-15");
+      expect(formatted).toContain("14:30:45");
+    });
+
+    it("supports localized patterns", () => {
+      const formatted = safeDateFormat(new Date("2024-01-15"), {
+        dateFormat: "PPP",
+      });
+
+      expect(formatted).toBeTruthy();
+      expect(typeof formatted).toBe("string");
+    });
+  });
+
+  describe("isDayInRange error handling", () => {
+    it("returns false when isWithinInterval throws", () => {
+      const testDate = new Date("2024-01-15");
+      const invalidStartDate = new Date("invalid");
+      const invalidEndDate = new Date("also-invalid");
+
+      const result = isDayInRange(testDate, invalidStartDate, invalidEndDate);
+
+      expect(result).toBe(false);
+    });
+
+    it("returns true for dates inside a valid range", () => {
+      const result = isDayInRange(
+        new Date("2024-01-15"),
+        new Date("2024-01-10"),
+        new Date("2024-01-20"),
+      );
+
+      expect(result).toBe(true);
+    });
+
+    it("returns false for dates outside a valid range", () => {
+      const result = isDayInRange(
+        new Date("2024-01-25"),
+        new Date("2024-01-10"),
+        new Date("2024-01-20"),
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("handles the edge case where start and end dates are equal", () => {
+      const testDate = new Date("2024-01-15");
+      const startDate = new Date("2024-01-15");
+      const endDate = new Date("2024-01-15");
+
+      const result = isDayInRange(testDate, startDate, endDate);
+
+      expect(result).toBe(true);
+    });
+
+    it("handles null start date inputs", () => {
+      const result = isDayInRange(
+        new Date("2024-01-15"),
+        null as unknown as Date,
+        new Date("2024-01-20"),
+      );
+
+      expect(typeof result).toBe("boolean");
+    });
+
+    it("handles null end date inputs", () => {
+      const result = isDayInRange(
+        new Date("2024-01-15"),
+        new Date("2024-01-10"),
+        null as unknown as Date,
+      );
+
+      expect(typeof result).toBe("boolean");
     });
   });
 });
