@@ -4,7 +4,7 @@ export interface CalendarContainerProps
   extends React.PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
-  inline: boolean | undefined;
+  inline?: boolean;
 }
 
 const CalendarContainer: React.FC<CalendarContainerProps> = function ({
