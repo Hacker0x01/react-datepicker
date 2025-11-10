@@ -209,14 +209,19 @@ describe("InputTime", () => {
       <InputTime
         date={date}
         timeString="10:00"
-        customTimeInput={<CustomTimeInput onTimeChange={onTimeChange} />}
+        customTimeInput={
+          <CustomTimeInput
+            data-testid="custom-time-input"
+            onTimeChange={onTimeChange}
+          />
+        }
       />,
     );
 
-    const timeInput = container.querySelector(
-      'input[type="time"]',
+    const customInput = container.querySelector(
+      '[data-testid="custom-time-input"]',
     ) as HTMLInputElement;
-    fireEvent.change(timeInput, { target: { value: "11:15" } });
+    fireEvent.change(customInput, { target: { value: "11:15" } });
 
     expect(onTimeChange).toHaveBeenCalledWith(date);
   });
