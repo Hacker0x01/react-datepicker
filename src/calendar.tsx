@@ -1169,6 +1169,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             })}
             showTime={this.props.showTimeSelect || this.props.showTimeInput}
             showTimeSelectOnly={this.props.showTimeSelectOnly}
+            inline={this.props.inline}
           >
             {this.renderAriaLiveRegion()}
             {this.renderPreviousButton()}
