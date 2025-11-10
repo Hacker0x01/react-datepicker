@@ -36,6 +36,22 @@ import {
   setupMockResizeObserver,
 } from "./test_utils";
 
+const renderDatePickerWithRef = (
+  props: React.ComponentProps<typeof DatePicker>,
+) => {
+  let instance: DatePicker | null = null;
+  const result = render(
+    <DatePicker
+      ref={(node) => {
+        instance = node;
+      }}
+      {...props}
+    />,
+  );
+
+  return { ...result, instance: instance as DatePicker | null };
+};
+
 function getSelectedDayNode(container: HTMLElement) {
   return (
     container.querySelector('.react-datepicker__day[tabindex="0"]') ?? undefined
@@ -5012,6 +5028,195 @@ describe("DatePicker", () => {
       expect(input).not.toBeNull();
 
       jest.useRealTimers();
+    });
+
+    it("deferFocusInput cancels pending timeouts before focusing input", () => {
+      jest.useFakeTimers();
+      const { instance } = renderDatePickerWithRef({
+        selected: newDate(),
+        onChange: () => {},
+      });
+
+      expect(instance).not.toBeNull();
+
+      const setFocusSpy = jest
+        .spyOn(instance as DatePicker, "setFocus")
+        .mockImplementation(() => undefined);
+
+      act(() => {
+        instance?.deferFocusInput();
+        instance?.deferFocusInput();
+      });
+
+      jest.advanceTimersByTime(1);
+
+      expect(setFocusSpy).toHaveBeenCalledTimes(2);
+
+      setFocusSpy.mockRestore();
+      jest.useRealTimers();
+    });
+
+    it("clears ranges when changed date is null and start date exists", () => {
+      const onChange = jest.fn();
+      const startDate = new Date("2024-01-15T00:00:00");
+      const { instance } = renderDatePickerWithRef({
+        inline: true,
+        selectsRange: true,
+        startDate,
+        endDate: null,
+        selected: null,
+        onChange,
+      });
+
+      act(() => {
+        instance?.setSelected(null);
+      });
+
+      expect(onChange).toHaveBeenCalledWith([null, null], undefined);
+    });
+
+    it("reports input errors when escaping with invalid preSelection", () => {
+      const onInputError = jest.fn();
+      const { container, instance } = renderDatePickerWithRef({
+        selected: null,
+        onChange: () => {},
+        onInputError,
+      });
+
+      act(() => {
+        instance?.setState({ preSelection: "invalid-date" as unknown as Date });
+      });
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.keyDown(input, { key: "Escape" });
+
+      expect(onInputError).toHaveBeenCalled();
+    });
+
+    it("reports input errors when input key down completes with invalid preSelection", () => {
+      const onInputError = jest.fn();
+      const { container, instance } = renderDatePickerWithRef({
+        selected: null,
+        onChange: () => {},
+        onInputError,
+      });
+
+      act(() => {
+        instance?.setState({ preSelection: "invalid-date" as unknown as Date });
+      });
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      act(() => {
+        fireEvent.keyDown(input, { key: "Tab" });
+      });
+
+      expect(onInputError).toHaveBeenCalled();
+    });
+
+    it("reports input errors when unsupported key is pressed in calendar grid", () => {
+      const onInputError = jest.fn();
+      const { instance } = renderDatePickerWithRef({
+        selected: newDate(),
+        onChange: () => {},
+        onInputError,
+        inline: true,
+      });
+
+      act(() => {
+        instance?.setState({ preSelection: newDate() });
+      });
+
+      act(() => {
+        instance?.onDayKeyDown({
+          key: "A",
+          shiftKey: false,
+          preventDefault: jest.fn(),
+          target: document.createElement("div"),
+        } as unknown as React.KeyboardEvent<HTMLDivElement>);
+      });
+
+      expect(onInputError).toHaveBeenCalled();
+    });
+
+    it("reports input errors when escape is pressed within the calendar grid", () => {
+      const onInputError = jest.fn();
+      const { instance } = renderDatePickerWithRef({
+        selected: null,
+        onChange: () => {},
+        onInputError,
+        inline: true,
+      });
+
+      act(() => {
+        instance?.setState({ preSelection: "invalid-date" as unknown as Date });
+      });
+
+      act(() => {
+        instance?.onDayKeyDown({
+          key: "Escape",
+          shiftKey: false,
+          preventDefault: jest.fn(),
+          target: document.createElement("div"),
+        } as unknown as React.KeyboardEvent<HTMLDivElement>);
+      });
+
+      expect(onInputError).toHaveBeenCalled();
+    });
+
+    describe("aria-live messaging", () => {
+      it("describes range selections", () => {
+        const startDate = new Date("2024-01-01T00:00:00");
+        const endDate = new Date("2024-01-02T00:00:00");
+        const { instance } = renderDatePickerWithRef({
+          selectsRange: true,
+          startDate,
+          endDate,
+          selected: endDate,
+        });
+
+        const message = instance?.renderAriaLiveRegion();
+        expect(message?.props.children).toContain("Selected start date");
+      });
+
+      it("describes time-only selections", () => {
+        const { instance } = renderDatePickerWithRef({
+          showTimeSelectOnly: true,
+          selected: new Date("2024-01-01T12:00:00"),
+        });
+
+        const message = instance?.renderAriaLiveRegion();
+        expect(message?.props.children).toContain("Selected time:");
+      });
+
+      it("describes year picker selections", () => {
+        const { instance } = renderDatePickerWithRef({
+          showYearPicker: true,
+          selected: new Date("2024-01-01T00:00:00"),
+        });
+
+        const message = instance?.renderAriaLiveRegion();
+        expect(message?.props.children).toContain("Selected year:");
+      });
+
+      it("describes month-year picker selections", () => {
+        const { instance } = renderDatePickerWithRef({
+          showMonthYearPicker: true,
+          selected: new Date("2024-03-01T00:00:00"),
+        });
+
+        const message = instance?.renderAriaLiveRegion();
+        expect(message?.props.children).toContain("Selected month:");
+      });
+
+      it("describes quarter picker selections", () => {
+        const { instance } = renderDatePickerWithRef({
+          showQuarterYearPicker: true,
+          selected: new Date("2024-06-01T00:00:00"),
+        });
+
+        const message = instance?.renderAriaLiveRegion();
+        expect(message?.props.children).toContain("Selected quarter:");
+      });
     });
 
     it("should handle focus on year dropdown", () => {

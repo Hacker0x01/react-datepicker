@@ -458,4 +458,47 @@ describe("Week", () => {
       expect(days[6]?.textContent).toBe("5");
     });
   });
+  it("should call onDayMouseEnter when hovering over a day", () => {
+    const onDayMouseEnter = jest.fn();
+    const weekStart = newDate("2024-01-07");
+    const { container } = render(
+      <Week
+        day={weekStart}
+        month={getMonth(weekStart)}
+        onDayMouseEnter={onDayMouseEnter}
+      />,
+    );
+
+    const firstDay = safeQuerySelector(container, ".react-datepicker__day");
+    fireEvent.mouseEnter(firstDay);
+
+    expect(onDayMouseEnter).toHaveBeenCalledWith(weekStart);
+  });
+
+  it("should pass the first enabled day when the week starts disabled", () => {
+    const weekStart = newDate("2024-02-04");
+    const onWeekSelect = jest.fn();
+    const setOpenSpy = jest.fn();
+    const { container } = render(
+      <Week
+        day={weekStart}
+        month={getMonth(weekStart)}
+        showWeekNumber
+        onWeekSelect={onWeekSelect}
+        setOpen={setOpenSpy}
+        excludeDates={[weekStart]}
+      />,
+    );
+
+    const weekNumberElement = safeQuerySelector(
+      container,
+      ".react-datepicker__week-number",
+    );
+    fireEvent.click(weekNumberElement);
+
+    expect(onWeekSelect).toHaveBeenCalled();
+    const firstEnabled = onWeekSelect.mock.calls[0][0] as Date;
+    expect(firstEnabled.getDate()).toBe(weekStart.getDate() + 1);
+    expect(setOpenSpy).toHaveBeenCalledWith(false);
+  });
 });

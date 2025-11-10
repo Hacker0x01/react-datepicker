@@ -88,4 +88,53 @@ describe("TimeComponent", () => {
 
     expect(onChange).toHaveBeenCalled();
   });
+
+  it("should prevent clicks outside the provided min/max time range", () => {
+    const onChange = jest.fn();
+    const minTime = new Date("2024-01-01T08:00:00");
+    const maxTime = new Date("2024-01-01T10:00:00");
+    const { container } = render(
+      <TimeComponent
+        onChange={onChange}
+        minTime={minTime}
+        maxTime={maxTime}
+        selected={new Date("2024-01-01T07:00:00")}
+      />,
+    );
+
+    const disabledSlot = Array.from(
+      container.querySelectorAll(".react-datepicker__time-list-item"),
+    ).find((node) =>
+      node.classList.contains("react-datepicker__time-list-item--disabled"),
+    ) as HTMLElement;
+
+    fireEvent.click(disabledSlot);
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("should allow clicks within the min/max time range", () => {
+    const onChange = jest.fn();
+    const minTime = new Date("2024-01-01T08:00:00");
+    const maxTime = new Date("2024-01-01T10:00:00");
+    const { container } = render(
+      <TimeComponent
+        onChange={onChange}
+        minTime={minTime}
+        maxTime={maxTime}
+        selected={new Date("2024-01-01T08:30:00")}
+      />,
+    );
+
+    const enabledSlot = Array.from(
+      container.querySelectorAll(".react-datepicker__time-list-item"),
+    ).find(
+      (node) =>
+        !node.classList.contains("react-datepicker__time-list-item--disabled"),
+    ) as HTMLElement;
+
+    fireEvent.click(enabledSlot);
+
+    expect(onChange).toHaveBeenCalled();
+  });
 });

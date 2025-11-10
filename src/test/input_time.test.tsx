@@ -226,6 +226,31 @@ describe("InputTime", () => {
     expect(onTimeChange).toHaveBeenCalledWith(date);
   });
 
+  it("preserves existing time when custom input emits value without colon", () => {
+    const onChange = jest.fn();
+    const date = new Date("2023-09-30T11:00:00");
+
+    const { container } = render(
+      <InputTime
+        date={date}
+        timeString="11:00"
+        onChange={onChange}
+        customTimeInput={<CustomTimeInput data-testid="partial-input" />}
+      />,
+    );
+
+    const customInput = container.querySelector(
+      '[data-testid="partial-input"]',
+    ) as HTMLInputElement;
+
+    fireEvent.change(customInput, { target: { value: "invalid" } });
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    const calledDate = onChange.mock.calls[0][0];
+    expect(calledDate.getHours()).toBe(11);
+    expect(calledDate.getMinutes()).toBe(0);
+  });
+
   it("renders container with correct class names", () => {
     const { container } = render(<InputTime />);
 

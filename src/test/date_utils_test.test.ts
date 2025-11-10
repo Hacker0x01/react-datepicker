@@ -1105,6 +1105,14 @@ describe("date_utils", () => {
 
       expect(isMonthInRange(startDate, endDate, 5, day)).toBe(true);
     });
+
+    it("should return false when the start date is after the end date", () => {
+      const day = newDate("2024-01-01");
+      const startDate = newDate("2024-02-01");
+      const endDate = newDate("2024-01-01");
+
+      expect(isMonthInRange(startDate, endDate, 1, day)).toBe(false);
+    });
   });
 
   describe("getStartOfYear", () => {
@@ -1138,6 +1146,50 @@ describe("date_utils", () => {
       const endDate = newDate("2020-02-01");
 
       expect(isQuarterInRange(startDate, endDate, 5, day)).toBe(true);
+    });
+
+    it("should return false when the start quarter is after the end quarter", () => {
+      const day = newDate("2024-01-01");
+      const startDate = newDate("2024-10-01");
+      const endDate = newDate("2024-04-01");
+
+      expect(isQuarterInRange(startDate, endDate, 1, day)).toBe(false);
+    });
+  });
+
+  describe("isTimeInDisabledRange", () => {
+    it("throws when either minTime or maxTime is missing", () => {
+      expect(() =>
+        isTimeInDisabledRange(newDate(), { minTime: newDate() }),
+      ).toThrow("Both minTime and maxTime props required");
+    });
+
+    it("returns false when isWithinInterval throws", () => {
+      jest.isolateModules(() => {
+        jest.doMock("date-fns", () => {
+          const actual = jest.requireActual("date-fns");
+          return {
+            ...actual,
+            isWithinInterval: () => {
+              throw new Error("boom");
+            },
+          };
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-var-requires -- isolated mock import
+        const {
+          isTimeInDisabledRange: mockedIsTimeInDisabledRange,
+        } = require("../date_utils");
+        expect(
+          mockedIsTimeInDisabledRange(new Date(), {
+            minTime: new Date(),
+            maxTime: new Date(),
+          }),
+        ).toBe(false);
+
+        jest.resetModules();
+        jest.dontMock("date-fns");
+      });
     });
   });
 
@@ -1581,13 +1633,30 @@ describe("date_utils", () => {
 
   describe("isDayInRange error handling", () => {
     it("returns false when isWithinInterval throws", () => {
-      const testDate = new Date("2024-01-15");
-      const invalidStartDate = new Date("invalid");
-      const invalidEndDate = new Date("also-invalid");
+      jest.isolateModules(() => {
+        jest.doMock("date-fns", () => {
+          const actual = jest.requireActual("date-fns");
+          return {
+            ...actual,
+            isWithinInterval: () => {
+              throw new Error("boom");
+            },
+          };
+        });
 
-      const result = isDayInRange(testDate, invalidStartDate, invalidEndDate);
+        // eslint-disable-next-line @typescript-eslint/no-var-requires -- isolated mock import
+        const { isDayInRange: mockedIsDayInRange } = require("../date_utils");
+        expect(
+          mockedIsDayInRange(
+            new Date("2024-01-15"),
+            new Date("2024-01-10"),
+            new Date("2024-01-20"),
+          ),
+        ).toBe(false);
 
-      expect(result).toBe(false);
+        jest.resetModules();
+        jest.dontMock("date-fns");
+      });
     });
 
     it("returns true for dates inside a valid range", () => {
