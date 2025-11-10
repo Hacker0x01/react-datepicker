@@ -3,6 +3,8 @@ import React from "react";
 
 import InputTime from "../input_time";
 
+import CustomTimeInput from "./helper_components/custom_time_input";
+
 describe("InputTime", () => {
   it("renders with default props", () => {
     const { container } = render(<InputTime />);
@@ -196,6 +198,27 @@ describe("InputTime", () => {
     fireEvent.change(timeInput, { target: { value: "" } });
 
     expect(onChangeMock).toHaveBeenCalledTimes(1);
+    expect(timeInput.value).toBe("10:00");
+  });
+
+  it("passes provided date through customTimeInput onTimeChange handler", () => {
+    const onTimeChange = jest.fn();
+    const date = new Date("2023-09-30T10:00:00");
+
+    const { container } = render(
+      <InputTime
+        date={date}
+        timeString="10:00"
+        customTimeInput={<CustomTimeInput onTimeChange={onTimeChange} />}
+      />,
+    );
+
+    const timeInput = container.querySelector(
+      'input[type="time"]',
+    ) as HTMLInputElement;
+    fireEvent.change(timeInput, { target: { value: "11:15" } });
+
+    expect(onTimeChange).toHaveBeenCalledWith(date);
   });
 
   it("renders container with correct class names", () => {
