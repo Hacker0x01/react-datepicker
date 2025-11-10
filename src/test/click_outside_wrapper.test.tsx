@@ -194,4 +194,35 @@ describe("ClickOutsideWrapper", () => {
 
     removeEventListenerSpy.mockRestore();
   });
+
+  it("invokes handler registered on document with composedPath target", () => {
+    const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    const removeEventListenerSpy = jest.spyOn(document, "removeEventListener");
+
+    const { unmount } = render(
+      <ClickOutsideWrapper onClickOutside={onClickOutsideMock}>
+        <div>Inside</div>
+      </ClickOutsideWrapper>,
+    );
+
+    const handlerEntry = addEventListenerSpy.mock.calls.find(
+      ([type]) => type === "mousedown",
+    );
+    const handler = handlerEntry?.[1] as EventListener;
+
+    const outsideNode = document.createElement("div");
+    const mockEvent = {
+      composed: true,
+      composedPath: () => [outsideNode],
+      target: outsideNode,
+    } as unknown as MouseEvent;
+
+    handler(mockEvent);
+
+    expect(onClickOutsideMock).toHaveBeenCalledTimes(1);
+
+    unmount();
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
+  });
 });

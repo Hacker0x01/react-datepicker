@@ -57,6 +57,54 @@ describe("Day", () => {
     });
   });
 
+  describe("interactions", () => {
+    it("should not trigger onMouseEnter when the day is disabled", () => {
+      const onMouseEnter = jest.fn();
+      const day = newDate();
+      const container = renderDay(day, {
+        disabled: true,
+        onMouseEnter,
+      });
+
+      const node = safeQuerySelector(container, ".react-datepicker__day");
+      fireEvent.mouseEnter(node);
+
+      expect(onMouseEnter).not.toHaveBeenCalled();
+    });
+
+    it("should convert space key presses to enter events", () => {
+      const onKeyDown = jest.fn();
+      const container = renderDay(newDate(), { handleOnKeyDown: onKeyDown });
+      const node = safeQuerySelector(container, ".react-datepicker__day");
+
+      fireEvent.keyDown(node, { key: " " });
+
+      expect(onKeyDown).toHaveBeenCalled();
+      expect(onKeyDown.mock.calls[0][0].key).toBe("Enter");
+    });
+  });
+
+  describe("holidays and titles", () => {
+    it("should append holiday class names when provided", () => {
+      const day = new Date("2024-01-01T00:00:00");
+      const holidays = getHolidaysMap([{ date: day, holidayName: "New Year" }]);
+      const container = renderDay(day, { holidays });
+
+      const node = safeQuerySelector(container, ".react-datepicker__day");
+      expect(node.className).toContain("react-datepicker__day--holidays");
+    });
+
+    it("should include exclude date messages in the title overlay", () => {
+      const day = new Date("2024-02-05T00:00:00");
+      const container = renderDay(day, {
+        excludeDates: [{ date: day, message: "Blocked day" }],
+      });
+
+      const node = safeQuerySelector(container, ".react-datepicker__day");
+      expect(node.getAttribute("title")).toContain("Blocked day");
+    });
+  });
+
   describe("selected", () => {
     const className = "react-datepicker__day--selected";
     let day: Date;

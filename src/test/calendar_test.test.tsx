@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import { act } from "react";
 import {
   setDate,
   startOfMonth,
