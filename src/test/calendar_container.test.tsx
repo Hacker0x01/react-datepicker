@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 
 import CalendarContainer from "../calendar_container";
+import { CalendarContainer as CalendarContainerFromIndex } from "../index";
 
 describe("CalendarContainer", () => {
   it("renders with default props", () => {
@@ -16,6 +17,16 @@ describe("CalendarContainer", () => {
     expect(dialog?.getAttribute("aria-label")).toBe("Choose Date");
     expect(dialog?.getAttribute("aria-modal")).toBe("true");
     expect(dialog?.textContent).toBe("Test Content");
+  });
+
+  it("exposes CalendarContainer via the package entry point", () => {
+    const { container } = render(
+      <CalendarContainerFromIndex>
+        <div>Entry Content</div>
+      </CalendarContainerFromIndex>,
+    );
+
+    expect(container.querySelector('[role="dialog"]')).toBeTruthy();
   });
 
   it("renders with showTimeSelectOnly prop", () => {

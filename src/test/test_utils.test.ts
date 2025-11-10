@@ -1,7 +1,9 @@
+import { KeyType } from "../date_utils";
 import {
   SafeElementWrapper,
   safeQuerySelector,
   safeQuerySelectorAll,
+  getKey,
 } from "./test_utils";
 
 describe("test_utils", () => {
@@ -34,6 +36,12 @@ describe("test_utils", () => {
       expect(() => safeQuerySelector(container, ".nonExistent")).toThrow(
         "Element with selector '.nonExistent' not found",
       );
+    });
+  });
+
+  describe("getKey", () => {
+    it("should throw when key is not supported", () => {
+      expect(() => getKey("?" as KeyType)).toThrow("Unknown key");
     });
   });
 
