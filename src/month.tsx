@@ -27,6 +27,7 @@ import {
   isSameMonth,
   isSameQuarter,
   isSpaceKeyDown,
+  isValid,
   newDate,
   setMonth,
   setQuarter,
@@ -447,6 +448,11 @@ export default class Month extends Component<MonthProps> {
   };
 
   renderWeeks = () => {
+    // Return empty array if day is invalid
+    if (!isValid(this.props.day)) {
+      return [];
+    }
+
     const weeks = [];
     const isFixedHeight = this.props.fixedHeight;
 
@@ -1138,6 +1144,11 @@ export default class Month extends Component<MonthProps> {
       ? ariaLabelPrefix.trim() + " "
       : "";
 
+    // Format aria-label, return empty string if date is invalid
+    const formattedAriaLabel = isValid(day)
+      ? `${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`
+      : "";
+
     const shouldUseListboxRole = showMonthYearPicker || showQuarterYearPicker;
 
     if (shouldUseListboxRole) {
@@ -1150,7 +1161,7 @@ export default class Month extends Component<MonthProps> {
           onPointerLeave={
             this.props.usePointerEvent ? this.handleMouseLeave : undefined
           }
-          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          aria-label={formattedAriaLabel}
           role="listbox"
         >
           {showMonthYearPicker ? this.renderMonths() : this.renderQuarters()}
@@ -1172,7 +1183,7 @@ export default class Month extends Component<MonthProps> {
           onPointerLeave={
             this.props.usePointerEvent ? this.handleMouseLeave : undefined
           }
-          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          aria-label={formattedAriaLabel}
           role="rowgroup"
         >
           {this.renderWeeks()}
