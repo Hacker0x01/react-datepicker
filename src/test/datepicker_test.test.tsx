@@ -26,7 +26,11 @@ import {
   subWeeks,
   subYears,
 } from "../date_utils";
-import DatePicker, { registerLocale } from "../index";
+import DatePicker, {
+  registerLocale,
+  setDefaultLocale,
+  getDefaultLocale,
+} from "../index";
 
 import CustomInput from "./helper_components/custom_input";
 import ShadowRoot from "./helper_components/shadow_root";
@@ -119,6 +123,73 @@ describe("DatePicker", () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+  });
+
+  it("exposes locale helpers via the main entry point", () => {
+    const originalLocale = getDefaultLocale();
+    try {
+      expect(getDefaultLocale()).toBe(originalLocale);
+      setDefaultLocale("en-GB");
+      expect(getDefaultLocale()).toBe("en-GB");
+    } finally {
+      setDefaultLocale(originalLocale);
+    }
+  });
+
+  it("does not trigger selection changes when readOnly", () => {
+    const onChange = jest.fn();
+    const { instance } = renderDatePickerWithRef({
+      readOnly: true,
+      onChange,
+    });
+
+    act(() => {
+      instance?.handleSelect(newDate("2024-05-01"));
+    });
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("skips updating preSelection when readOnly", () => {
+    const selected = newDate("2024-01-01");
+    const { instance } = renderDatePickerWithRef({
+      readOnly: true,
+      selected,
+    });
+
+    const originalPreSelection = instance?.state.preSelection;
+
+    act(() => {
+      instance?.setPreSelection(newDate("2024-02-01"));
+    });
+
+    expect(instance?.state.preSelection).toBe(originalPreSelection);
+  });
+
+  it("short-circuits day key navigation when keyboard navigation is disabled", () => {
+    const onKeyDown = jest.fn();
+    const preSelection = newDate("2024-06-15");
+    const { instance } = renderDatePickerWithRef({
+      disabledKeyboardNavigation: true,
+      onKeyDown,
+      inline: true,
+      selected: preSelection,
+    });
+
+    act(() => {
+      instance?.setState({ preSelection });
+    });
+
+    act(() => {
+      instance?.onDayKeyDown({
+        key: "ArrowRight",
+        shiftKey: false,
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent<HTMLDivElement>);
+    });
+
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(instance?.state.preSelection).toBe(preSelection);
   });
 
   it("should retain the calendar open status when the document visibility change", () => {

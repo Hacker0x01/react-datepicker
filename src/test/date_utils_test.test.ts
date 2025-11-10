@@ -1148,6 +1148,14 @@ describe("date_utils", () => {
 
       expect(isMonthInRange(startDate, endDate, 1, day)).toBe(false);
     });
+
+    it("should return false when the start year is after the end year", () => {
+      const day = newDate("2025-01-01");
+      const startDate = newDate("2026-01-01");
+      const endDate = newDate("2024-01-01");
+
+      expect(isMonthInRange(startDate, endDate, 1, day)).toBe(false);
+    });
   });
 
   describe("getStartOfYear", () => {
@@ -1190,6 +1198,14 @@ describe("date_utils", () => {
 
       expect(isQuarterInRange(startDate, endDate, 1, day)).toBe(false);
     });
+
+    it("should return false when the start year is after the end year", () => {
+      const day = newDate("2025-01-01");
+      const startDate = newDate("2026-01-01");
+      const endDate = newDate("2024-04-01");
+
+      expect(isQuarterInRange(startDate, endDate, 1, day)).toBe(false);
+    });
   });
 
   describe("isYearInRange", () => {
@@ -1213,6 +1229,12 @@ describe("date_utils", () => {
 
     it("should return false if range isn't passed", () => {
       expect(isYearInRange(2016)).toBe(false);
+    });
+
+    it("should return false if provided dates are invalid", () => {
+      expect(
+        isYearInRange(2016, new Date("invalid"), new Date("invalid")),
+      ).toBe(false);
     });
   });
 

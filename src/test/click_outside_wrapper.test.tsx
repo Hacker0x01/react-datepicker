@@ -225,4 +225,58 @@ describe("ClickOutsideWrapper", () => {
     addEventListenerSpy.mockRestore();
     removeEventListenerSpy.mockRestore();
   });
+
+  it("falls back to event.target when composedPath does not return nodes", () => {
+    const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    render(
+      <ClickOutsideWrapper onClickOutside={onClickOutsideMock}>
+        <div>Inside</div>
+      </ClickOutsideWrapper>,
+    );
+
+    const handlerEntry = addEventListenerSpy.mock.calls.find(
+      ([type]) => type === "mousedown",
+    );
+    const handler = handlerEntry?.[1] as EventListener;
+
+    const outsideNode = document.createElement("div");
+    const mockEvent = {
+      composed: true,
+      composedPath: () => [{}],
+      target: outsideNode,
+    } as unknown as MouseEvent;
+
+    handler(mockEvent);
+
+    expect(onClickOutsideMock).toHaveBeenCalledTimes(1);
+    addEventListenerSpy.mockRestore();
+  });
+
+  it("does not treat non-HTMLElement targets as ignored elements", () => {
+    const addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    render(
+      <ClickOutsideWrapper
+        onClickOutside={onClickOutsideMock}
+        ignoreClass="ignore-me"
+      >
+        <div>Inside</div>
+      </ClickOutsideWrapper>,
+    );
+
+    const handlerEntry = addEventListenerSpy.mock.calls.find(
+      ([type]) => type === "mousedown",
+    );
+    const handler = handlerEntry?.[1] as EventListener;
+
+    const textNode = document.createTextNode("outside");
+    const mockEvent = {
+      composed: false,
+      target: textNode,
+    } as unknown as MouseEvent;
+
+    handler(mockEvent);
+
+    expect(onClickOutsideMock).toHaveBeenCalledTimes(1);
+    addEventListenerSpy.mockRestore();
+  });
 });

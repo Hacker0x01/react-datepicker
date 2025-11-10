@@ -75,4 +75,16 @@ describe("ShadowRoot", () => {
 
     expect(container.querySelector("div")).not.toBeNull();
   });
+
+  it("should avoid re-initializing when effect runs multiple times", () => {
+    const { container } = render(
+      <React.StrictMode>
+        <ShadowRoot>
+          <div>Strict Content</div>
+        </ShadowRoot>
+      </React.StrictMode>,
+    );
+
+    expect(container.querySelector("div")).not.toBeNull();
+  });
 });
