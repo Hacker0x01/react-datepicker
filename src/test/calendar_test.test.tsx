@@ -2679,7 +2679,7 @@ describe("Calendar", () => {
   });
 
   describe("calendar container", () => {
-    it("should render Calendar with accessibility props", () => {
+    it("should render Calendar in popover mode with dialog accessibility props", () => {
       const { container } = render(
         <Calendar
           dateFormat={dateFormat}
@@ -2693,6 +2693,23 @@ describe("Calendar", () => {
       expect(dialog).not.toBeNull();
       expect(dialog?.getAttribute("role")).toBe("dialog");
       expect(dialog?.getAttribute("aria-modal")).toBe("true");
+      expect(dialog?.getAttribute("aria-label")).toBe("Choose Date");
+    });
+
+    it("should render Calendar in inline mode without dialog accessibility props", () => {
+      const { container } = render(
+        <Calendar
+          dateFormat={dateFormat}
+          onClickOutside={() => {}}
+          onSelect={() => {}}
+          dropdownMode="scroll"
+        />,
+      );
+
+      const dialog = container.querySelector(".react-datepicker");
+      expect(dialog).not.toBeNull();
+      expect(dialog).not.toHaveProperty("role");
+      expect(dialog).not.toHaveProperty("aria-modal");
       expect(dialog?.getAttribute("aria-label")).toBe("Choose Date");
     });
 
