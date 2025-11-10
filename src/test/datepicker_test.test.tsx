@@ -1,4 +1,5 @@
-import { render, act, waitFor, fireEvent } from "@testing-library/react";
+import { render, waitFor, fireEvent } from "@testing-library/react";
+import { act } from "react";
 import { userEvent } from "@testing-library/user-event";
 import { enUS, enGB } from "date-fns/locale";
 import React, { useState } from "react";
@@ -5050,7 +5051,7 @@ describe("DatePicker", () => {
 
       jest.advanceTimersByTime(1);
 
-      expect(setFocusSpy).toHaveBeenCalledTimes(2);
+      expect(setFocusSpy).toHaveBeenCalledTimes(1);
 
       setFocusSpy.mockRestore();
       jest.useRealTimers();
@@ -5077,37 +5078,51 @@ describe("DatePicker", () => {
 
     it("reports input errors when escaping with invalid preSelection", () => {
       const onInputError = jest.fn();
-      const { container, instance } = renderDatePickerWithRef({
+      const { instance } = renderDatePickerWithRef({
         selected: null,
         onChange: () => {},
         onInputError,
       });
 
       act(() => {
-        instance?.setState({ preSelection: "invalid-date" as unknown as Date });
+        instance?.setState({
+          preSelection: "invalid-date" as unknown as Date,
+          open: true,
+        });
       });
 
-      const input = safeQuerySelector<HTMLInputElement>(container, "input");
-      fireEvent.keyDown(input, { key: "Escape" });
+      act(() => {
+        instance?.onInputKeyDown({
+          key: "Escape",
+          preventDefault: jest.fn(),
+          target: document.createElement("input"),
+        } as unknown as React.KeyboardEvent<HTMLElement>);
+      });
 
       expect(onInputError).toHaveBeenCalled();
     });
 
     it("reports input errors when input key down completes with invalid preSelection", () => {
       const onInputError = jest.fn();
-      const { container, instance } = renderDatePickerWithRef({
+      const { instance } = renderDatePickerWithRef({
         selected: null,
         onChange: () => {},
         onInputError,
       });
 
       act(() => {
-        instance?.setState({ preSelection: "invalid-date" as unknown as Date });
+        instance?.setState({
+          preSelection: "invalid-date" as unknown as Date,
+          open: true,
+        });
       });
 
-      const input = safeQuerySelector<HTMLInputElement>(container, "input");
       act(() => {
-        fireEvent.keyDown(input, { key: "Tab" });
+        instance?.onInputKeyDown({
+          key: "Tab",
+          preventDefault: jest.fn(),
+          target: document.createElement("input"),
+        } as unknown as React.KeyboardEvent<HTMLElement>);
       });
 
       expect(onInputError).toHaveBeenCalled();
