@@ -266,6 +266,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   componentDidUpdate(prevProps: CalendarProps) {
     if (
       this.props.preSelection &&
+      isValid(this.props.preSelection) &&
       (!isSameDay(this.props.preSelection, prevProps.preSelection) ||
         this.props.monthSelectedIn !== prevProps.monthSelectedIn)
     ) {
@@ -468,6 +469,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   header = (date: Date = this.state.date): React.ReactElement[] => {
+    // Return empty array if date is invalid
+    if (!isValid(date)) {
+      return [];
+    }
+
     const disabled = this.props.disabled;
     const startOfWeek = getStartOfWeek(
       date,
@@ -779,7 +785,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
     return (
       <h2 className={classes.join(" ")}>
-        {formatDate(date, this.props.dateFormat, this.props.locale)}
+        {isValid(date)
+          ? formatDate(date, this.props.dateFormat, this.props.locale)
+          : ""}
       </h2>
     );
   };
@@ -1110,6 +1118,17 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   renderAriaLiveRegion = (): React.ReactElement => {
+    // Don't render aria-live message if date is invalid
+    if (!isValid(this.state.date)) {
+      return (
+        <span
+          role="alert"
+          aria-live="polite"
+          className="react-datepicker__aria-live"
+        />
+      );
+    }
+
     const { startPeriod, endPeriod } = getYearsPeriod(
       this.state.date,
       this.props.yearItemNumber ?? Calendar.defaultProps.yearItemNumber,
@@ -1167,6 +1186,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             })}
             showTime={this.props.showTimeSelect || this.props.showTimeInput}
             showTimeSelectOnly={this.props.showTimeSelectOnly}
+            inline={this.props.inline}
           >
             {this.renderAriaLiveRegion()}
             {this.renderPreviousButton()}

@@ -4,6 +4,7 @@ export interface CalendarContainerProps
   extends React.PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   showTimeSelectOnly?: boolean;
   showTime?: boolean;
+  inline?: boolean;
 }
 
 const CalendarContainer: React.FC<CalendarContainerProps> = function ({
@@ -11,6 +12,7 @@ const CalendarContainer: React.FC<CalendarContainerProps> = function ({
   showTime = false,
   className,
   children,
+  inline,
 }: CalendarContainerProps) {
   const ariaLabel = showTimeSelectOnly
     ? "Choose Time"
@@ -19,9 +21,9 @@ const CalendarContainer: React.FC<CalendarContainerProps> = function ({
   return (
     <div
       className={className}
-      role="dialog"
       aria-label={ariaLabel}
-      aria-modal="true"
+      role={inline ? undefined : "dialog"}
+      aria-modal={inline ? undefined : "true"}
     >
       {children}
     </div>
