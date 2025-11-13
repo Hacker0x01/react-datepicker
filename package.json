@@ -22,7 +22,7 @@
       }
     },
     "./dist/": "./dist/",
-    "./src/stylesheets/*.scss": "./src/stylesheets/*.scss"
+    "./src/stylesheets/": "./src/stylesheets/"
   },
   "files": ["*.md", "dist", "lib", "es", "src"],
   "sideEffects": ["**/*.css"],
