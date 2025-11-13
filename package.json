@@ -21,7 +21,7 @@
         "default": "./dist/index.js"
       }
     },
-    "./dist/*": "./dist/*",
+    "./dist/": "./dist/",
     "./src/stylesheets/*.scss": "./src/stylesheets/*.scss"
   },
   "files": ["*.md", "dist", "lib", "es", "src"],
