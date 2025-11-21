@@ -14,6 +14,7 @@ import {
 } from "./test_utils";
 
 const MIN_TIME_LI_LEN = 2;
+const TestDatePicker = DatePicker as unknown as React.ComponentType<any>;
 
 describe("TimePicker", () => {
   let datePicker: HTMLDivElement;
@@ -422,29 +423,42 @@ describe("TimePicker", () => {
     return (instance?.input as HTMLInputElement | null | undefined)?.value;
   }
 
-  function renderDatePicker(string: string, props = {}) {
+  function renderDatePicker(
+    string: string,
+    props: Partial<React.ComponentProps<typeof DatePicker>> = {},
+  ) {
     return renderDatePickerFor(new Date(string), props);
   }
 
   function renderDatePickerFor(
     selected: React.ComponentProps<typeof DatePicker>["selected"],
-    props: Partial<React.ComponentProps<typeof DatePicker>["selected"]>,
+    props: Partial<React.ComponentProps<typeof DatePicker>> = {},
   ) {
-    datePicker = render(
-      <DatePicker
+    const datePickerElement = (
+      <TestDatePicker
         selected={selected}
         dateFormat={"MMMM d, yyyy p"}
         allowSameDay
-        onChange={onChange}
+        onChange={handleDatePickerChange}
         showTimeSelect
-        {...props}
-        ref={(node) => {
+        {...(props as React.ComponentProps<typeof DatePicker>)}
+        ref={(node: DatePicker | null) => {
           instance = node;
         }}
-      />,
-      { container: div },
-    ).container;
+      />
+    ) as React.ReactElement;
+
+    datePicker = render(datePickerElement, { container: div }).container;
   }
+
+  const handleDatePickerChange: React.ComponentProps<
+    typeof DatePicker
+  >["onChange"] = (
+    date: Date | [Date | null, Date | null] | Date[] | null,
+  ): void => {
+    const normalizedDate = Array.isArray(date) ? date[0] : date;
+    onChange(normalizedDate as Date | null);
+  };
 
   function onChange(m: Date | null) {
     onChangeMoment = m ?? undefined;
@@ -582,6 +596,181 @@ describe("TimePicker", () => {
       fireEvent.keyDown(firstItem, { key: "ArrowRight" });
 
       expect(timeItems[1]).not.toBeNull();
+    });
+  });
+
+  describe("Keyboard accessibility for time-only pickers", () => {
+    beforeEach(() => {
+      onChangeMoment = undefined;
+    });
+
+    it("should decrement time with ArrowUp key", () => {
+      const initialTime = new Date("February 28, 2018 4:30 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowUp));
+
+      const expectedTime = new Date("February 28, 2018 4:00 PM");
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        formatDate(expectedTime, "MMMM d, yyyy p"),
+      );
+    });
+
+    it("should increment time with ArrowDown key", () => {
+      const initialTime = new Date("February 28, 2018 4:00 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
+
+      const expectedTime = new Date("February 28, 2018 4:30 PM");
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        formatDate(expectedTime, "MMMM d, yyyy p"),
+      );
+    });
+
+    it("should respect timeIntervals prop when navigating", () => {
+      const initialTime = new Date("February 28, 2018 4:15 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 15,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowUp));
+
+      const expectedTime = new Date("February 28, 2018 4:00 PM");
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        formatDate(expectedTime, "MMMM d, yyyy p"),
+      );
+    });
+
+    it("should not go below 00:00 when decrementing", () => {
+      const initialTime = new Date("February 28, 2018 12:00 AM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
+
+      const expectedTime = new Date("February 28, 2018 12:00 AM");
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        formatDate(expectedTime, "MMMM d, yyyy p"),
+      );
+    });
+
+    it("should update input value when using arrow keys", () => {
+      const initialTime = new Date("February 28, 2018 4:00 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
+
+      const inputValue = (instance.input as HTMLInputElement).value;
+      expect(inputValue).toContain("4:30");
+    });
+
+    it("should commit typed value with Enter key", () => {
+      const initialTime = new Date("February 28, 2018 4:00 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.change(instance.input, {
+        target: { value: "February 28, 2018 5:30 PM" },
+      });
+      fireEvent.keyDown(instance.input, getKey(KeyType.Enter));
+
+      expect(instance.state.open).toBe(false);
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        "February 28, 2018 5:30 PM",
+      );
+    });
+
+    it("should commit highlighted option with Enter when input is invalid", () => {
+      const initialTime = new Date("February 28, 2018 4:00 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      fireEvent.change(instance.input, {
+        target: { value: "invalid time" },
+      });
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
+      fireEvent.keyDown(instance.input, getKey(KeyType.Enter));
+
+      expect(instance.state.open).toBe(false);
+      expect(onChangeMoment).toBeDefined();
+    });
+
+    it("should scroll highlighted option into view", () => {
+      const initialTime = new Date("February 28, 2018 4:00 PM");
+      const { container } = render(
+        <DatePicker
+          selected={initialTime}
+          showTimeSelectOnly
+          timeIntervals={30}
+          open
+          dateFormat="MMMM d, yyyy p"
+        />,
+      );
+
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+      fireEvent.keyDown(input, getKey(KeyType.ArrowDown));
+
+      const highlightedItem = container.querySelector(
+        ".react-datepicker__time-list-item[tabindex='0']",
+      );
+      expect(highlightedItem).not.toBeNull();
     });
   });
 });
