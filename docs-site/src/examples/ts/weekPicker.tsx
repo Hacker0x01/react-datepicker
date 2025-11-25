@@ -6,7 +6,7 @@ const WeekPicker = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dateFormat="I/R"
       locale="en-GB"
       showWeekNumbers

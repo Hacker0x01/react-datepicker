@@ -57,7 +57,7 @@ const RenderCustomHeaderTwoMonths = () => {
         </div>
       )}
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       monthsShown={monthsShown}
     />
   );

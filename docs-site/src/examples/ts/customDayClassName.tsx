@@ -4,7 +4,7 @@ const CustomDayClassName = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dayClassName={(date: Date) =>
         DateFNS.getDate(date) < Math.random() * 31 ? "random" : undefined
       }

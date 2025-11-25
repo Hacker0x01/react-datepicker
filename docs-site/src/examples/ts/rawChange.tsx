@@ -24,7 +24,7 @@ const RawChange = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       placeholderText='Enter "tomorrow"'
       onChangeRaw={(
         event:

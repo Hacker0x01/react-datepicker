@@ -6,7 +6,7 @@ const TimeInput = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       timeInputLabel="Time:"
       dateFormat="MM/dd/yyyy h:mm aa"
       showTimeInput

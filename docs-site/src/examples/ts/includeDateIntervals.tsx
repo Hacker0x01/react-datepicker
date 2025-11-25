@@ -14,7 +14,7 @@ const IncludeDateIntervals = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       includeDateIntervals={includeDateIntervals}
       placeholderText="This only includes dates from 5 days ago to 5 days in the future"
     />

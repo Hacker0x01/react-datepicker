@@ -15,7 +15,7 @@ const HighlightDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       highlightDates={highlightDates}
       placeholderText="This highlights a week ago and a week from today"
     />

@@ -19,7 +19,7 @@ const CustomInput = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       customInput={<ExampleCustomInput className="example-custom-input" />}
     />
   );

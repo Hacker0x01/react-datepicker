@@ -4,7 +4,7 @@ const YearDropdown = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       showYearDropdown
       dateFormatCalendar="MMMM"
       yearDropdownItemNumber={15}

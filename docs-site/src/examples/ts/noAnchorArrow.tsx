@@ -5,7 +5,7 @@ const NoAnchorArrow = () => {
     <DatePicker
       showPopperArrow={false}
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
     />
   );
 };

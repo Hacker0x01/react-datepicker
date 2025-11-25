@@ -5,7 +5,7 @@ const CalendarIconExternal = () => {
     <DatePicker
       showIcon
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       icon="fa fa-calendar"
     />
   );

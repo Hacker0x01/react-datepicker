@@ -4,7 +4,7 @@ const ReadOnly = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       placeholderText="This is readOnly"
       readOnly
     />

@@ -72,7 +72,7 @@ const RenderCustomHeader = () => {
     <DatePicker
       renderCustomHeader={CustomHeader}
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
     />
   );
 };

@@ -5,7 +5,7 @@ const CalendarIconSvgIcon = () => {
     <DatePicker
       showIcon
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       icon={
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -16,7 +16,7 @@ const ExcludeDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       excludeDates={excludeDates}
       placeholderText="Select a date other than today or yesterday"
     />

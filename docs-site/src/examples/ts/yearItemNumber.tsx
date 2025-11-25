@@ -4,7 +4,7 @@ const YearItemNumber = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       showYearPicker
       dateFormat="yyyy"
       yearItemNumber={9}

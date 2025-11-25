@@ -4,7 +4,7 @@ const FixedCalendar = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       fixedHeight
     />
   );

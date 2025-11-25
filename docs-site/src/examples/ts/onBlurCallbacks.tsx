@@ -18,7 +18,7 @@ const OnBlurCallbacks = () => {
     <DatePicker
       key="example9"
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       onBlur={handleOnBlur}
       placeholderText="View blur callbacks in console"
     />

@@ -6,7 +6,7 @@ const ShowTime = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeSelect
       timeFormat="HH:mm"
       timeIntervals={15}

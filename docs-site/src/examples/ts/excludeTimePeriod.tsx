@@ -8,7 +8,7 @@ const ExcludeTimePeriod = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeSelect
       minTime={setHours(setMinutes(new Date(), 0), 17)}
       maxTime={setHours(setMinutes(new Date(), 30), 20)}
