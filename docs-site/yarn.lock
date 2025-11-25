@@ -4830,7 +4830,7 @@ __metadata:
     react-datepicker: "portal:../"
     react-dom: "npm:^19.2.0"
     react-live: "npm:^4.1.8"
-    sass: "npm:^1.93.3"
+    sass: "npm:^1.94.2"
     slugify: "npm:^1.6.6"
     typescript: "npm:^5.9.3"
     vite: "npm:^7.2.2"
@@ -5127,9 +5127,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.93.3":
-  version: 1.93.3
-  resolution: "sass@npm:1.93.3"
+"sass@npm:^1.94.2":
+  version: 1.94.2
+  resolution: "sass@npm:1.94.2"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -5140,7 +5140,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/b9facc64de10c9d1514272c1dcbb48ca99d5f591a1cd43fd27d641275d9d95948f1299107ab5b309e2abb552667cca84a38a1a3df5116eb72eba4144bf850b6a
+  checksum: 10c0/49a656dfab58299165ef94e71483a333972daee68c49fa542858d4912accdfb1707338226a165b1a2dfcdb2509fcda5a5b4f3780d14e49b6d38d93c8043475d3
   languageName: node
   linkType: hard
 
