@@ -21,8 +21,8 @@
         "default": "./dist/index.js"
       }
     },
-    "./dist/*.css": "./dist/*.css",
-    "./src/stylesheets/*.scss": "./src/stylesheets/*.scss"
+    "./dist/": "./dist/",
+    "./src/stylesheets/": "./src/stylesheets/"
   },
   "files": ["*.md", "dist", "lib", "es", "src"],
   "sideEffects": ["**/*.css"],
