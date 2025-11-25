@@ -1,7 +1,7 @@
-type TExcludeDateIntervals = {
+type TExcludeDateIntervals = Array<{
   start: Date | string;
   end: Date | string;
-}[];
+}>;
 
 const ExcludeWeeks = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -16,7 +16,7 @@ const ExcludeWeeks = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dateFormat="I/R"
       locale="en-GB"
       excludeDateIntervals={excludeWeeks}

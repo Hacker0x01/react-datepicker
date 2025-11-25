@@ -9,9 +9,7 @@ const DateRangeWithPortal = () => {
     <DatePicker
       startDate={startDate}
       endDate={endDate}
-      onChange={(update: [Date | null, Date | null]) => {
-        setDateRange(update);
-      }}
+      onChange={setDateRange}
       selectsRange
       withPortal
     />

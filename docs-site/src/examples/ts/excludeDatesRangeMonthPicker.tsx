@@ -1,9 +1,9 @@
 type TExcludeDates =
-  | {
+  | Array<{
       date: Date;
       message?: string;
-    }[]
-  | Date[];
+    }>
+  | Array<Date>;
 
 const ExcludeDatesRangeMonthPicker = () => {
   const defaultStartDate = new Date("2024-08-01");

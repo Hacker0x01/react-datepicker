@@ -1,9 +1,9 @@
 type TExcludeDates =
-  | {
+  | Array<{
       date: Date;
       message?: string;
-    }[]
-  | Date[];
+    }>
+  | Array<Date>;
 
 const ExcludeDatesMonthPicker = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -18,7 +18,7 @@ const ExcludeDatesMonthPicker = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dateFormat="MM/yyyy"
       excludeDates={excludeDates}
       showMonthYearPicker

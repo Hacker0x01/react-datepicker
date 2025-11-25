@@ -1,10 +1,10 @@
 const { addDays } = DateFNS;
 type TExcludeDate =
-  | {
+  | Array<{
       date: Date;
       message?: string;
-    }[]
-  | Date[];
+    }>
+  | Array<Date>;
 
 const SelectsRangeWithDisabledDates = () => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());

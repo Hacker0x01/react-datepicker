@@ -16,7 +16,7 @@ const FilterTimes = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeSelect
       filterTime={filterPassedTime}
       dateFormat="MMMM d, yyyy h:mm aa"

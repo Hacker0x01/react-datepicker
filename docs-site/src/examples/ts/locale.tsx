@@ -4,7 +4,7 @@ const Locale = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       locale="en-GB"
       placeholderText="Weeks start on Monday"
     />

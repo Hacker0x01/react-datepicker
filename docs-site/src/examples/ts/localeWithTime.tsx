@@ -6,7 +6,7 @@ const LocaleWithTime = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       locale="pt-BR"
       showTimeSelect
       timeFormat="p"

@@ -5,7 +5,7 @@ const CloseOnScroll = () => {
     <DatePicker
       closeOnScroll
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
     />
   );
 };

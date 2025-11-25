@@ -1,13 +1,15 @@
 const CustomDayClassName = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+  const getDayClassName = (date: Date): string => {
+    return date.getDate() === 1 ? "text-success" : "";
+  };
+
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
-      dayClassName={(date: Date) =>
-        DateFNS.getDate(date) < Math.random() * 31 ? "random" : undefined
-      }
+      onChange={setSelectedDate}
+      dayClassName={getDayClassName}
     />
   );
 };

@@ -6,7 +6,7 @@ const MonthYearDropdown = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dateFormatCalendar={"MMM yyyy"}
       minDate={subMonths(new Date(), 6)}
       maxDate={addMonths(new Date(), 6)}

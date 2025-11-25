@@ -4,7 +4,7 @@ const QuarterPicker = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       dateFormat="yyyy, QQQ"
       showQuarterYearPicker
     />

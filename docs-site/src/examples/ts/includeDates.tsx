@@ -9,7 +9,7 @@ const IncludeDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       includeDates={includeDates}
       placeholderText="This only includes today and tomorrow"
     />

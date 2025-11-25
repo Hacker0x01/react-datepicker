@@ -4,7 +4,7 @@ const DisabledKeyboardNavigation = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       disabledKeyboardNavigation
       placeholderText="This has disabled keyboard navigation"
     />

@@ -7,7 +7,7 @@ const OnCalendarOpenStateCallbacks = () => {
   return (
     <DatePicker
       selected={date}
-      onChange={(date: Date | null) => setDate(date)}
+      onChange={setDate}
       onCalendarClose={handleCalendarClose}
       onCalendarOpen={handleCalendarOpen}
     />

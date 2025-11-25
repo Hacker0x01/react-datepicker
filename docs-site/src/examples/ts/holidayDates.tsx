@@ -17,7 +17,7 @@ const HolidayDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       holidays={holidays}
       placeholderText="This display holidays"
     />

@@ -4,7 +4,7 @@ const MinDate = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       minDate={DateFNS.subDays(new Date(), 5)}
       placeholderText="Select a date after 5 days ago"
     />

@@ -15,7 +15,7 @@ const IncludeTimes = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeSelect
       includeTimes={includeTimes}
       dateFormat="MMMM d, yyyy h:mm aa"

@@ -3,7 +3,7 @@ type HighlightDate = {
   [className: string]: Date[];
 };
 
-type THighlightDates = (Date | HighlightDate)[];
+type THighlightDates = Array<Date | HighlightDate>;
 
 const HighlightDatesRanges = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -30,7 +30,7 @@ const HighlightDatesRanges = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       highlightDates={highlightWithRanges}
       placeholderText="This highlight two ranges with custom classes"
     />

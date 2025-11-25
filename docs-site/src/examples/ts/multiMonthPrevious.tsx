@@ -5,7 +5,7 @@ const MultiMonthPrevious = () => {
     <DatePicker
       selected={selectedDate}
       showPreviousMonths
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       monthsShown={2}
     />
   );

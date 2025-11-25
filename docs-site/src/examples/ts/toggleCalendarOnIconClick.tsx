@@ -6,7 +6,7 @@ const ToggleCalendarOnIconClick = () => {
       showIcon
       toggleCalendarOnIconClick
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
     />
   );
 };

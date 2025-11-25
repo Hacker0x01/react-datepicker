@@ -11,7 +11,7 @@ const CustomTimeClassName = () => {
     <DatePicker
       showTimeSelect
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       timeClassName={handleColor}
     />
   );

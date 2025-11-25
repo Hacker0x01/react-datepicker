@@ -4,7 +4,7 @@ const MultiMonthInline = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       monthsShown={2}
       inline
     />

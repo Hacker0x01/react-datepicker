@@ -4,7 +4,7 @@ const MaxDate = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       maxDate={DateFNS.addDays(new Date(), 5)}
       placeholderText="Select a date before 5 days in the future"
     />

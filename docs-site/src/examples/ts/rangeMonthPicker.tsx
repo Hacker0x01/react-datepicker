@@ -8,7 +8,7 @@ const RangeMonthPicker = () => {
     <>
       <DatePicker
         selected={startDate}
-        onChange={(date: Date | null) => setStartDate(date)}
+        onChange={setStartDate}
         selectsStart
         startDate={startDate}
         endDate={endDate}
@@ -17,7 +17,7 @@ const RangeMonthPicker = () => {
       />
       <DatePicker
         selected={endDate}
-        onChange={(date: Date | null) => setEndDate(date)}
+        onChange={setEndDate}
         selectsEnd
         startDate={startDate}
         endDate={endDate}
