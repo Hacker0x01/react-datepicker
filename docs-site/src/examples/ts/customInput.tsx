@@ -4,17 +4,18 @@ type ExampleCustomInputProps = {
   onClick?: () => void;
 };
 
+const ExampleCustomInput = forwardRef<
+  HTMLButtonElement,
+  ExampleCustomInputProps
+>(({ value, onClick, className }, ref) => (
+  <button type="button" className={className} onClick={onClick} ref={ref}>
+    {value}
+  </button>
+));
+ExampleCustomInput.displayName = "ExampleCustomInput";
+
 const CustomInput = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-
-  const ExampleCustomInput = forwardRef<
-    HTMLButtonElement,
-    ExampleCustomInputProps
-  >(({ value, onClick, className }, ref) => (
-    <button className={className} onClick={onClick} ref={ref}>
-      {value}
-    </button>
-  ));
 
   return (
     <DatePicker
