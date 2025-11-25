@@ -1090,6 +1090,7 @@ export function isTimeInDisabledRange(
   try {
     valid = !isWithinInterval(baseTime, { start: min, end: max });
   } catch (err) {
+    /* istanbul ignore next - date-fns historically threw on invalid intervals */
     valid = false;
   }
   return valid;
