@@ -3,7 +3,7 @@ type HighlightDate = {
   [className: string]: Date[];
 };
 
-type THighlightDates = (Date | HighlightDate)[];
+type THighlightDates = Array<Date | HighlightDate>;
 
 const HighlightDatesRanges = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());

@@ -1,9 +1,9 @@
 type TExcludeDates =
-  | {
+  | Array<{
       date: Date;
       message?: string;
-    }[]
-  | Date[];
+    }>
+  | Array<Date>;
 
 const ExcludeDatesMonthPicker = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(

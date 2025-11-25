@@ -7,6 +7,7 @@ const OnBlurCallbacks = () => {
     target: { value },
   }: React.FocusEvent<HTMLInputElement>) => {
     const date = new Date(value);
+
     if (isValid(date)) {
       console.log("date: %s", format(date, "dd/MM/yyyy"));
     } else {

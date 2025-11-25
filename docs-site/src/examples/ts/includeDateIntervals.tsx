@@ -1,8 +1,8 @@
 const { subDays, addDays } = DateFNS;
-type TIncludeDateIntervals = {
+type TIncludeDateIntervals = Array<{
   start: Date;
   end: Date;
-}[];
+}>;
 
 const IncludeDateIntervals = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

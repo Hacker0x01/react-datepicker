@@ -1,7 +1,7 @@
-type TExcludeDateIntervals = {
+type TExcludeDateIntervals = Array<{
   start: Date;
   end: Date;
-}[];
+}>;
 
 const ExcludeDateIntervals = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
