@@ -984,6 +984,47 @@ describe("Calendar", () => {
       expect(header).toHaveLength(1);
       expect(time).toHaveLength(1);
     });
+
+    it("should display the target month in the leftmost position when changeMonth is called with monthsShown >= 2", () => {
+      // This test verifies the fix for issue #3829
+      // When using changeMonth in a custom header with monthsShown >= 2,
+      // the target month should always appear in the leftmost position
+      // regardless of which calendar panel the user last selected a date in
+      const onMonthSelectedInChangeSpy = jest.fn();
+
+      const renderCustomHeaderWithMonthSelect = ({
+        changeMonth,
+      }: {
+        changeMonth: (month: number) => void;
+      }) => (
+        <div className="custom-header">
+          <select
+            className="month-select"
+            onChange={({ target: { value } }) => changeMonth(Number(value))}
+          >
+            {months.map((option, index) => (
+              <option key={option} value={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+
+      const { calendar } = getCalendar({
+        renderCustomHeader: renderCustomHeaderWithMonthSelect,
+        monthsShown: 2,
+        onMonthSelectedInChange: onMonthSelectedInChangeSpy,
+      });
+
+      // Select June (month index 5) from the month dropdown
+      const monthSelect = safeQuerySelector(calendar, ".month-select");
+      fireEvent.change(monthSelect, { target: { value: 5 } });
+
+      // Verify that onMonthSelectedInChange was called with 0
+      // This ensures the target month appears in the leftmost position
+      expect(onMonthSelectedInChangeSpy).toHaveBeenCalledWith(0);
+    });
   });
 
   describe("when showDisabledMonthNavigation is enabled", () => {

@@ -180,6 +180,7 @@ type CalendarProps = React.PropsWithChildren<
       showPreviousMonths?: boolean;
       monthsShown?: number;
       monthSelectedIn?: number;
+      onMonthSelectedInChange?: (monthSelectedIn: number) => void;
       onSelect: (
         day: Date,
         event?:
@@ -455,7 +456,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       ({ date }) => ({
         date: setMonth(date, Number(month)),
       }),
-      () => this.handleMonthChange(this.state.date),
+      () => {
+        this.handleMonthChange(this.state.date);
+        // Reset monthSelectedIn to 0 so the target month appears in the leftmost position
+        // This ensures consistent behavior when using changeMonth in custom headers
+        this.props.onMonthSelectedInChange?.(0);
+      },
     );
   };
 
