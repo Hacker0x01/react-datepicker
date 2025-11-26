@@ -4350,6 +4350,34 @@ describe("DatePicker", () => {
       expect(input.getAttribute("aria-required")).toBe("true");
     });
 
+    it("should pass aria-label to the input using standard HTML attribute name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} aria-label="Select a date" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-label")).toBe("Select a date");
+    });
+
+    it("should pass aria-label to the input using camelCase prop name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} ariaLabel="Select a date" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-label")).toBe("Select a date");
+    });
+
+    it("should prefer standard HTML attribute name over camelCase for aria-label", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          aria-label="standard-label"
+          ariaLabel="camelcase-label"
+        />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-label")).toBe("standard-label");
+    });
+
     it("should pass aria attributes to custom input using standard HTML attribute names", () => {
       const { container } = render(
         <DatePicker
@@ -4357,6 +4385,7 @@ describe("DatePicker", () => {
           customInput={<CustomInput />}
           aria-describedby="desc-id"
           aria-invalid="true"
+          aria-label="date-label"
           aria-labelledby="label-id"
           aria-required="true"
         />,
@@ -4364,6 +4393,7 @@ describe("DatePicker", () => {
       const input = safeQuerySelector(container, "input");
       expect(input.getAttribute("aria-describedby")).toBe("desc-id");
       expect(input.getAttribute("aria-invalid")).toBe("true");
+      expect(input.getAttribute("aria-label")).toBe("date-label");
       expect(input.getAttribute("aria-labelledby")).toBe("label-id");
       expect(input.getAttribute("aria-required")).toBe("true");
     });
