@@ -3829,7 +3829,7 @@ describe("DatePicker", () => {
   });
 
   describe("Calendar Header Accessibility", () => {
-    it("renders day names with aria-label full weekday and visible short name", () => {
+    it("renders day names with react-datepicker__sr-only full weekday and visible short name", () => {
       const { container } = render(<DatePicker />);
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
@@ -3840,20 +3840,19 @@ describe("DatePicker", () => {
       expect(headers.length).toBe(7);
 
       headers.forEach((header) => {
-        // Should have an aria-label with the full weekday name
-        const ariaLabel = header?.getAttribute("aria-label");
-        expect(ariaLabel?.length).toBeGreaterThan(2);
+        // Should have a visually hidden span with the full weekday name
+        const srOnly = header.querySelector(".react-datepicker__sr-only");
+        expect(srOnly).toBeTruthy();
+        expect(srOnly?.textContent?.length).toBeGreaterThan(2);
 
         // Should have a visible short name
-        const visible = header.querySelector(
-          '.react-datepicker__day-name > span[aria-hidden="true"]',
-        );
+        const visible = header.querySelector('span[aria-hidden="true"]');
         expect(visible).toBeTruthy();
         expect(visible?.textContent?.length).toBeLessThanOrEqual(3);
       });
     });
 
-    it("renders week number column header with aria-label and visible #", () => {
+    it("renders week number column header with react-datepicker__sr-only label and visible #", () => {
       const { container } = render(<DatePicker showWeekNumbers />);
       const input = safeQuerySelector(container, "input");
       fireEvent.focus(input);
@@ -3864,15 +3863,15 @@ describe("DatePicker", () => {
       expect(headers.length).toBe(8);
 
       const weekNumberHeader = headers[0] as Element;
-      expect(weekNumberHeader).toBeTruthy();
-
-      // Should have aria-label = "Week number"
-      const ariaLabel = weekNumberHeader?.getAttribute("aria-label");
-      expect(ariaLabel?.trim()?.toLowerCase()).toEqual("week number");
+      const srOnly = weekNumberHeader.querySelector(
+        ".react-datepicker__sr-only",
+      );
+      expect(srOnly).toBeTruthy();
+      expect(srOnly?.textContent?.trim()?.toLowerCase()).toEqual("week number");
 
       // Should have a visible short name
       const visible = weekNumberHeader.querySelector(
-        '.react-datepicker__day-name > span[aria-hidden="true"]',
+        'span[aria-hidden="true"]',
       );
       expect(visible).toBeTruthy();
       expect(visible?.textContent?.trim()?.toLowerCase()).toEqual("#");
