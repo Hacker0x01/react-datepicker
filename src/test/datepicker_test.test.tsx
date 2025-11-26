@@ -922,6 +922,9 @@ describe("DatePicker", () => {
   });
 
   it("should not apply the calendarIconClassname to calendar icon with calendarIconClassName", () => {
+    // Suppress expected deprecation warning
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
     const customClassName = "customClassName";
     const customClassname = "customClassname";
     const { container } = render(
@@ -942,9 +945,14 @@ describe("DatePicker", () => {
 
     expect(calendarIcon?.classList.contains(customClassName)).toBe(true);
     expect(calendarIcon?.classList.contains(customClassname)).toBe(false);
+
+    warnSpy.mockRestore();
   });
 
   it("should apply the calendarIconClassname to calendar icon without calendarIconClassName", () => {
+    // Suppress expected deprecation warning
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
     const customClassname = "customClassName";
     const { container } = render(
       <DatePicker
@@ -962,6 +970,8 @@ describe("DatePicker", () => {
     );
 
     expect(calendarIcon?.classList.contains(customClassname)).toBe(true);
+
+    warnSpy.mockRestore();
   });
 
   it("should set the type attribute on the clear button to button", () => {
