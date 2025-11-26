@@ -15,6 +15,7 @@ import {
   getMinutes,
   getHours,
   addDays,
+  addMinutes,
   addMonths,
   addWeeks,
   subDays,
@@ -27,6 +28,7 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   parseDate,
+  formatDate,
   safeDateFormat,
   safeDateRangeFormat,
   getHighLightDaysMap,
@@ -46,6 +48,7 @@ import {
   isDateBefore,
   getStartOfDay,
   getEndOfDay,
+  isSameMinute,
   type HighlightDate,
   type HolidayItem,
   KeyType,
@@ -978,6 +981,165 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     this.props.onInputClick?.();
   };
 
+  handleTimeOnlyArrowKey = (eventKey: string): void => {
+    const currentTime =
+      this.props.selected || this.state.preSelection || newDate();
+    const timeIntervals = this.props.timeIntervals ?? 30;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+    const formatStr = Array.isArray(dateFormat) ? dateFormat[0] : dateFormat;
+
+    const baseDate = getStartOfDay(currentTime);
+    const currentMinutes = getHours(currentTime) * 60 + getMinutes(currentTime);
+
+    const maxMinutes = 23 * 60 + 60 - timeIntervals; // Cap at last valid interval of the day
+    let newTime: Date;
+    if (eventKey === KeyType.ArrowUp) {
+      const newMinutes = Math.max(0, currentMinutes - timeIntervals);
+      newTime = addMinutes(baseDate, newMinutes);
+    } else {
+      const newMinutes = Math.min(maxMinutes, currentMinutes + timeIntervals);
+      newTime = addMinutes(baseDate, newMinutes);
+    }
+
+    const formattedTime = formatDate(
+      newTime,
+      formatStr || DatePicker.defaultProps.dateFormat,
+      this.props.locale,
+    );
+    this.setState({
+      preSelection: newTime,
+      inputValue: formattedTime,
+    });
+
+    if (this.props.selectsRange || this.props.selectsMultiple) {
+      return;
+    }
+
+    const selected = this.props.selected
+      ? this.props.selected
+      : this.getPreSelection();
+    const changedDate = this.props.selected
+      ? newTime
+      : setTime(selected, {
+          hour: getHours(newTime),
+          minute: getMinutes(newTime),
+        });
+
+    this.props.onChange?.(changedDate);
+
+    if (this.props.showTimeSelectOnly || this.props.showTimeSelect) {
+      this.setState({ isRenderAriaLiveMessage: true });
+    }
+
+    requestAnimationFrame(() => {
+      this.scrollToTimeOption(newTime);
+    });
+  };
+
+  handleTimeOnlyEnterKey = (event: React.KeyboardEvent<HTMLElement>): void => {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+    const dateFormat =
+      this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
+    const timeFormat = this.props.timeFormat || "p";
+
+    const defaultTime =
+      this.state.preSelection || this.props.selected || newDate();
+    const parsedDate = parseDate(
+      inputValue,
+      dateFormat,
+      this.props.locale,
+      this.props.strictParsing ?? false,
+      defaultTime,
+    );
+
+    let timeToCommit: Date = defaultTime;
+
+    if (parsedDate && isValid(parsedDate)) {
+      timeToCommit = parsedDate;
+    } else {
+      const highlightedItem =
+        this.calendar?.containerRef.current instanceof Element &&
+        this.calendar.containerRef.current.querySelector(
+          ".react-datepicker__time-list-item[tabindex='0']",
+        );
+
+      if (highlightedItem instanceof HTMLElement) {
+        const itemText = highlightedItem.textContent?.trim();
+        if (itemText) {
+          const itemTime = parseDate(
+            itemText,
+            timeFormat,
+            this.props.locale,
+            false,
+            defaultTime,
+          );
+          if (itemTime && isValid(itemTime)) {
+            timeToCommit = itemTime;
+          }
+        }
+      }
+    }
+
+    this.handleTimeChange(timeToCommit);
+    this.setOpen(false);
+    this.sendFocusBackToInput();
+  };
+
+  scrollToTimeOption = (time: Date): void => {
+    if (!this.calendar?.containerRef.current) {
+      return;
+    }
+
+    const container = this.calendar.containerRef.current;
+    const timeListItems = Array.from(
+      container.querySelectorAll<HTMLLIElement>(
+        ".react-datepicker__time-list-item",
+      ),
+    );
+
+    let targetItem: HTMLLIElement | null = null;
+    let closestTimeDiff = Infinity;
+    const timeFormat = this.props.timeFormat || "p";
+
+    for (const item of timeListItems) {
+      const itemText = item.textContent?.trim();
+      if (itemText) {
+        const itemTime = parseDate(
+          itemText,
+          timeFormat,
+          this.props.locale,
+          false,
+          time,
+        );
+        if (itemTime && isValid(itemTime)) {
+          if (isSameMinute(itemTime, time)) {
+            targetItem = item;
+            break;
+          }
+          const timeDiff = Math.abs(itemTime.getTime() - time.getTime());
+          if (timeDiff < closestTimeDiff) {
+            closestTimeDiff = timeDiff;
+            targetItem = item;
+          }
+        }
+      }
+    }
+
+    if (targetItem) {
+      timeListItems.forEach((item) => {
+        item.setAttribute("tabindex", "-1");
+      });
+      targetItem.setAttribute("tabindex", "0");
+
+      targetItem.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
   onInputKeyDown = (event: React.KeyboardEvent<HTMLElement>): void => {
     this.props.onKeyDown?.(event);
     const eventKey = event.key;
@@ -995,6 +1157,20 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         this.onInputClick?.();
       }
       return;
+    }
+
+    if (this.state.open && this.props.showTimeSelectOnly) {
+      if (eventKey === KeyType.ArrowDown || eventKey === KeyType.ArrowUp) {
+        event.preventDefault();
+        this.handleTimeOnlyArrowKey(eventKey);
+        return;
+      }
+
+      if (eventKey === KeyType.Enter) {
+        event.preventDefault();
+        this.handleTimeOnlyEnterKey(event);
+        return;
+      }
     }
 
     // if calendar is open, these keys will focus the selected item
