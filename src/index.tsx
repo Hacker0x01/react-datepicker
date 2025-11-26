@@ -192,10 +192,12 @@ export type DatePickerProps = OmitUnion<
     tabIndex?: number;
     ariaDescribedBy?: string;
     ariaInvalid?: string;
+    ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaRequired?: string;
     "aria-describedby"?: string;
     "aria-invalid"?: string;
+    "aria-label"?: string;
     "aria-labelledby"?: string;
     "aria-required"?: string;
     rangeSeparator?: string;
@@ -1584,6 +1586,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     const ariaDescribedBy =
       this.props["aria-describedby"] ?? this.props.ariaDescribedBy;
     const ariaInvalid = this.props["aria-invalid"] ?? this.props.ariaInvalid;
+    const ariaLabel = this.props["aria-label"] ?? this.props.ariaLabel;
     const ariaLabelledBy =
       this.props["aria-labelledby"] ?? this.props.ariaLabelledBy;
     const ariaRequired = this.props["aria-required"] ?? this.props.ariaRequired;
@@ -1591,6 +1594,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     if (ariaDescribedBy != null)
       ariaProps["aria-describedby"] = ariaDescribedBy;
     if (ariaInvalid != null) ariaProps["aria-invalid"] = ariaInvalid;
+    if (ariaLabel != null) ariaProps["aria-label"] = ariaLabel;
     if (ariaLabelledBy != null) ariaProps["aria-labelledby"] = ariaLabelledBy;
     if (ariaRequired != null) ariaProps["aria-required"] = ariaRequired;
 
