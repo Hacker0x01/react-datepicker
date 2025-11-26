@@ -1,34 +1,28 @@
 import React, {
   type FC,
   type PropsWithChildren,
-  useLayoutEffect,
-  useRef,
+  useCallback,
   useState,
 } from "react";
-import { createPortal, flushSync } from "react-dom";
+import { createPortal } from "react-dom";
 
 const ShadowRoot: FC<PropsWithChildren> = ({ children }) => {
   const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInitializedRef = useRef(false);
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (isInitializedRef.current || !container) {
-      return;
-    }
-
-    const root =
-      container.shadowRoot ?? container.attachShadow({ mode: "open" });
-    isInitializedRef.current = true;
-    // Use flushSync to synchronously update state within effect, avoiding cascading renders
-    // while ensuring the shadow root is available immediately for tests
-    flushSync(() => setShadowRoot(root));
-  }, []);
+  const containerRefCallback = useCallback(
+    (container: HTMLDivElement | null) => {
+      if (!container) {
+        return;
+      }
+      const root =
+        container.shadowRoot ?? container.attachShadow({ mode: "open" });
+      setShadowRoot(root);
+    },
+    [],
+  );
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRefCallback}>
       {shadowRoot && createPortal(children, shadowRoot)}
     </div>
   );
