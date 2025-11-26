@@ -691,6 +691,29 @@ describe("TimePicker", () => {
       );
     });
 
+    it("should not go above 23:30 when incrementing with 30-minute intervals", () => {
+      const initialTime = new Date("February 28, 2018 11:30 PM");
+      renderDatePickerFor(initialTime, {
+        showTimeSelectOnly: true,
+        timeIntervals: 30,
+      });
+
+      if (!instance?.input) {
+        throw new Error("input is null/undefined");
+      }
+
+      fireEvent.focus(instance.input);
+      // ArrowDown increments time
+      fireEvent.keyDown(instance.input, getKey(KeyType.ArrowDown));
+
+      // Time should stay at 23:30 since we can't go past the last interval of the day
+      const expectedTime = new Date("February 28, 2018 11:30 PM");
+      expect(onChangeMoment).toBeDefined();
+      expect(formatDate(onChangeMoment!, "MMMM d, yyyy p")).toBe(
+        formatDate(expectedTime, "MMMM d, yyyy p"),
+      );
+    });
+
     it("should update input value when using arrow keys", () => {
       const initialTime = new Date("February 28, 2018 4:00 PM");
       renderDatePickerFor(initialTime, {
