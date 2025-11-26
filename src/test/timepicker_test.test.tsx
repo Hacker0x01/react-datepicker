@@ -13,8 +13,10 @@ import {
   setupMockResizeObserver,
 } from "./test_utils";
 
+import type { DatePickerProps } from "../index";
+
 const MIN_TIME_LI_LEN = 2;
-const TestDatePicker = DatePicker as unknown as React.ComponentType<any>;
+const TestDatePicker = DatePicker as unknown as React.ComponentType<DatePickerProps>;
 
 describe("TimePicker", () => {
   let datePicker: HTMLDivElement;
