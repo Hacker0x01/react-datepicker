@@ -1395,20 +1395,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       this.setSelected(newSelection);
     }
     this.setPreSelection(newSelection);
-    // need to figure out whether month has changed to focus day in inline version
+    // In inline mode, always set shouldFocusDayInline to true when navigating via keyboard.
+    // This ensures focus is properly transferred to the new day element regardless of
+    // whether the month changed. The user initiated this navigation from a focused day,
+    // so we should always focus the destination day.
     if (inline) {
-      const prevMonth = getMonth(copy);
-      const newMonth = getMonth(newSelection);
-      const prevYear = getYear(copy);
-      const newYear = getYear(newSelection);
-
-      if (prevMonth !== newMonth || prevYear !== newYear) {
-        // month has changed
-        this.setState({ shouldFocusDayInline: true });
-      } else {
-        // month hasn't changed
-        this.setState({ shouldFocusDayInline: false });
-      }
+      this.setState({ shouldFocusDayInline: true });
     }
   };
 

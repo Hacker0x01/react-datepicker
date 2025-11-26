@@ -3884,7 +3884,7 @@ describe("DatePicker", () => {
   describe("shouldFocusDayInline state", () => {
     const dateFormat = "yyyy-MM-dd";
 
-    it("should not be updated when navigating with ArrowRight key without changing displayed month", () => {
+    it("should be set to true when navigating with ArrowRight key without changing displayed month", () => {
       let instance: DatePicker | null = null;
       const { container } = render(
         <DatePicker
@@ -3900,7 +3900,8 @@ describe("DatePicker", () => {
       expect(selectedDayNode).toBeTruthy();
       fireEvent.keyDown(selectedDayNode!, getKey(KeyType.ArrowRight));
       expect(instance).toBeTruthy();
-      expect(instance!.state.shouldFocusDayInline).toBe(false);
+      // Always set to true for keyboard navigation to ensure focus transfers correctly
+      expect(instance!.state.shouldFocusDayInline).toBe(true);
     });
 
     it("should be set to true when changing displayed month with ArrowRight key", () => {
@@ -3939,6 +3940,54 @@ describe("DatePicker", () => {
       fireEvent.keyDown(selectedDayNode!, getKey(KeyType.PageDown));
       expect(instance).toBeTruthy();
       expect(instance!.state.shouldFocusDayInline).toBe(true);
+    });
+
+    it("should maintain keyboard focus when navigating within same month in inline selectsRange mode with showPreviousMonths", () => {
+      // This test verifies the fix for GitHub issue #5750
+      // Focus was being lost when navigating within the same month in inline mode
+      // with selectsRange and showPreviousMonths enabled
+      const startDate = newDate("2025-06-01");
+      const endDate = newDate("2025-07-01");
+      const div = document.createElement("div");
+      document.body.appendChild(div);
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          inline
+          showPreviousMonths
+          monthsShown={2}
+          startDate={startDate}
+          endDate={endDate}
+          openToDate={endDate}
+        />,
+        { container: div },
+      );
+
+      // Find the start date (June 1) and focus it
+      const startDateNode = container.querySelector(
+        '.react-datepicker__day--range-start[tabindex="0"]',
+      );
+      expect(startDateNode).toBeTruthy();
+      act(() => {
+        (startDateNode as HTMLElement)?.focus();
+      });
+      expect(document.activeElement).toBe(startDateNode);
+
+      // Navigate right (to June 2, same month)
+      fireEvent.keyDown(startDateNode!, getKey(KeyType.ArrowRight));
+
+      // After navigation, focus should be on June 2, not lost to body
+      const newFocusedDay = container.querySelector(
+        '.react-datepicker__day[tabindex="0"]',
+      );
+      expect(newFocusedDay).toBeTruthy();
+      expect(document.activeElement).not.toBe(document.body);
+      expect(
+        document.activeElement?.classList.contains("react-datepicker__day"),
+      ).toBe(true);
+
+      document.body.removeChild(div);
     });
   });
 
