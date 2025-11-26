@@ -992,12 +992,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     const baseDate = getStartOfDay(currentTime);
     const currentMinutes = getHours(currentTime) * 60 + getMinutes(currentTime);
 
+    const maxMinutes = 23 * 60 + 60 - timeIntervals; // Cap at last valid interval of the day
     let newTime: Date;
     if (eventKey === KeyType.ArrowUp) {
       const newMinutes = Math.max(0, currentMinutes - timeIntervals);
       newTime = addMinutes(baseDate, newMinutes);
     } else {
-      newTime = addMinutes(baseDate, currentMinutes + timeIntervals);
+      const newMinutes = Math.min(maxMinutes, currentMinutes + timeIntervals);
+      newTime = addMinutes(baseDate, newMinutes);
     }
 
     const formattedTime = formatDate(
