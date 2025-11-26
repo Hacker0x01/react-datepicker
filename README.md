@@ -121,6 +121,14 @@ Locales can be changed in the following way:
 
 - **Globally** - `setDefaultLocale('es');`
 
+### Timezone handling
+
+React-datepicker uses native JavaScript Date objects which are timezone-aware. By default, dates are displayed in the user's local timezone. The library does not include built-in timezone conversion utilities.
+
+For detailed information about working with timezones, UTC dates, and common timezone-related scenarios, see the [Timezone Handling Guide](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/timezone.md).
+
+For applications requiring timezone conversion, we recommend using [date-fns-tz](https://github.com/marnusw/date-fns-tz) alongside react-datepicker.
+
 ## Compatibility
 
 ### React
