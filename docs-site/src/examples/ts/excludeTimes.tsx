@@ -16,7 +16,7 @@ const ExcludeTimes = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeSelect
       excludeTimes={excludeTimes}
       dateFormat="MMMM d, yyyy h:mm aa"

@@ -1,12 +1,11 @@
 const Default = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
-  return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
-    />
-  );
+  const handleChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+  return <DatePicker selected={selectedDate} onChange={handleChange} />;
 };
 
 render(Default);

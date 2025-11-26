@@ -4,7 +4,7 @@ const OpenToDate = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       openToDate={new Date("1993/09/28")}
     />
   );

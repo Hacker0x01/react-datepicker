@@ -1,11 +1,11 @@
 const { addDays } = DateFNS;
 
 type TExcludeDates =
-  | {
+  | Array<{
       date: Date;
       message?: string;
-    }[]
-  | Date[];
+    }>
+  | Array<Date>;
 
 const RangeSwapRange = () => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());

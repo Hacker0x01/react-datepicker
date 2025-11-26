@@ -6,7 +6,7 @@
   "dependencies": {
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^4.1.0",
-    "esbuild-wasm": "^0.25.11",
+    "esbuild-wasm": "^0.27.0",
     "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
     "prism-react-renderer": "^2.4.1",
@@ -24,21 +24,21 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@eslint/js": "^9.37.0",
-    "@types/lodash": "^4.17.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@typescript-eslint/eslint-plugin": "^8.46.1",
-    "@typescript-eslint/parser": "^8.46.1",
-    "@vitejs/plugin-react": "^5.0.3",
-    "eslint": "^9.37.0",
+    "@eslint/js": "^9.39.1",
+    "@types/lodash": "^4.17.21",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.4.0",
-    "sass": "^1.93.2",
+    "globals": "^16.5.0",
+    "sass": "^1.94.2",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "vite": "^7.2.4"
   },
   "packageManager": "yarn@4.9.2"
 }

@@ -1202,6 +1202,56 @@ describe("Month", () => {
     });
 
     it("should have no axe violations", () => runAxe(monthComponent));
+
+    it("should apply the selected class when the quarter is a part of selected date", () => {
+      const selectedDate = newDate("2025-11-01");
+      const keyboardSelectedDate = selectedDate;
+
+      const { container } = render(
+        <Month
+          day={selectedDate}
+          selected={selectedDate}
+          preSelection={keyboardSelectedDate}
+          showQuarterYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__quarter-text--selected",
+      );
+      expect(selected).not.toBeNull();
+      expect(selected?.textContent).toBe("Q4");
+    });
+
+    it("should apply the selected class when the quarter is a part of selected dates", () => {
+      const selectedDates = [newDate("2025-11-01"), newDate("2025-01-01")];
+      const keyboardSelectedDate = selectedDates[0];
+      const day = selectedDates[0] as Date;
+
+      const { container } = render(
+        <Month
+          day={day}
+          selectedDates={selectedDates}
+          preSelection={keyboardSelectedDate}
+          selectsMultiple
+          showQuarterYearPicker
+        />,
+      );
+
+      const selectedElements = Array.from(
+        container.querySelectorAll(".react-datepicker__quarter-text--selected"),
+      );
+      expect(selectedElements.length).toBe(selectedDates.length);
+
+      const expectedQuarterLabels = selectedDates.map(
+        (date) => `Q${getQuarter(date)}`,
+      );
+      expect(
+        expectedQuarterLabels.every((label) =>
+          selectedElements.some((element) => element?.textContent === label),
+        ),
+      ).toBe(true);
+    });
   });
 
   describe("if quarter is not selected", () => {
@@ -2628,6 +2678,56 @@ describe("Month", () => {
           ".react-datepicker__quarter-text--keyboard-selected",
         ),
       ).toBeNull();
+    });
+
+    it("should not apply the keyboard-selected class when the quarter is a part of selected date", () => {
+      const selectedDate = newDate("2025-11-01");
+      const keyboardSelectedDate = selectedDate;
+
+      const { container } = render(
+        <Month
+          day={selectedDate}
+          selected={selectedDate}
+          preSelection={keyboardSelectedDate}
+          showQuarterYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__quarter-text--selected",
+      );
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__quarter-text--keyboard-selected",
+      );
+
+      expect(selected).not.toBeNull();
+      expect(keyboardSelected).toBeNull();
+    });
+
+    it("should not apply the keyboard-selected class when the quarter is a part of selected dates", () => {
+      const selectedDates = [newDate("2025-11-01")];
+      const keyboardSelectedDate = selectedDates[0];
+      const day = selectedDates[0] as Date;
+
+      const { container } = render(
+        <Month
+          day={day}
+          selectedDates={selectedDates}
+          preSelection={keyboardSelectedDate}
+          selectsMultiple
+          showQuarterYearPicker
+        />,
+      );
+
+      const selected = container.querySelector(
+        ".react-datepicker__quarter-text--selected",
+      );
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__quarter-text--keyboard-selected",
+      );
+
+      expect(selected).not.toBeNull();
+      expect(keyboardSelected).toBeNull();
     });
   });
 

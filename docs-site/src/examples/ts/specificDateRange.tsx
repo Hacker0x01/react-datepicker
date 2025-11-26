@@ -4,7 +4,7 @@ const SpecificDateRange = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       minDate={new Date()}
       maxDate={DateFNS.addDays(new Date(), 5)}
       placeholderText="Select a date between today and 5 days in the future"

@@ -26,7 +26,7 @@ const CustomTimeInput = () => {
   return (
     <DatePicker
       selected={selectedDateTime}
-      onChange={(date: Date | null) => setSelectedDateTime(date)}
+      onChange={setSelectedDateTime}
       showTimeInput
       customTimeInput={<ExampleCustomTimeInput />}
     />

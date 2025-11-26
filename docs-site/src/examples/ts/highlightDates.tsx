@@ -2,7 +2,7 @@ type HighlightDate = {
   [className: string]: Date[];
 };
 
-type THighlightDates = (Date | HighlightDate)[];
+type THighlightDates = Array<Date | HighlightDate>;
 
 const HighlightDates = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -15,7 +15,7 @@ const HighlightDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       highlightDates={highlightDates}
       placeholderText="This highlights a week ago and a week from today"
     />

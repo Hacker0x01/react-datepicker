@@ -4,7 +4,7 @@ const WithPortalById = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       withPortal
       portalId="root-portal"
     />

@@ -11,7 +11,7 @@ const FilterDates = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       filterDate={isWeekday}
       placeholderText="Select a weekday"
     />

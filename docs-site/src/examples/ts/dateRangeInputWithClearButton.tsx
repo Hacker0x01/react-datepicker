@@ -9,9 +9,7 @@ const DateRangeInputWithClearButton = () => {
     <DatePicker
       startDate={startDate}
       endDate={endDate}
-      onChange={(update: [Date | null, Date | null]) => {
-        setDateRange(update);
-      }}
+      onChange={setDateRange}
       selectsRange
       isClearable
     />

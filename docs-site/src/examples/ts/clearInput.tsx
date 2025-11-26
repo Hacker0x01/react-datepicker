@@ -4,7 +4,7 @@ const ClearInput = () => {
   return (
     <DatePicker
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
       isClearable
       placeholderText="I have been cleared!"
     />

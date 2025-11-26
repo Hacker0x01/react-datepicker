@@ -2,5 +2,6 @@
 
 | name                 | type | default value | description |
 | -------------------- | ---- | ------------- | ----------- |
+| `inline`             |      |               |             |
 | `showTime`           |      | `false`       |             |
 | `showTimeSelectOnly` |      | `false`       |             |

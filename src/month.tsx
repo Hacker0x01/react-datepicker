@@ -27,6 +27,7 @@ import {
   isSameMonth,
   isSameQuarter,
   isSpaceKeyDown,
+  isValid,
   newDate,
   setMonth,
   setQuarter,
@@ -413,7 +414,12 @@ export default class Month extends Component<MonthProps> {
     );
 
   isSelectedQuarter = (day: Date, q: number, selected: Date): boolean =>
-    getQuarter(day) === q && getYear(day) === getYear(selected);
+    getQuarter(selected) === q && getYear(day) === getYear(selected);
+
+  isSelectQuarterInList = (day: Date, q: number, selectedDates: Date[]) =>
+    selectedDates.some((selectedDate) =>
+      this.isSelectedQuarter(day, q, selectedDate),
+    );
 
   isMonthSelected = () => {
     const { day, selected, selectedDates, selectsMultiple } = this.props;
@@ -428,7 +434,25 @@ export default class Month extends Component<MonthProps> {
     return !!selected && this.isSelectedMonth(day, monthIdx, selected);
   };
 
+  isQuarterSelected = () => {
+    const { day, selected, selectedDates, selectsMultiple } = this.props;
+    const quarterIdx = getQuarter(day);
+
+    if (selectsMultiple) {
+      return selectedDates?.some((selectedDate) =>
+        this.isSelectedQuarter(day, quarterIdx, selectedDate),
+      );
+    }
+
+    return !!selected && this.isSelectedQuarter(day, quarterIdx, selected);
+  };
+
   renderWeeks = () => {
+    // Return empty array if day is invalid
+    if (!isValid(this.props.day)) {
+      return [];
+    }
+
     const weeks = [];
     const isFixedHeight = this.props.fixedHeight;
 
@@ -921,7 +945,6 @@ export default class Month extends Component<MonthProps> {
       day,
       startDate,
       endDate,
-      selected,
       minDate,
       maxDate,
       excludeDates,
@@ -941,18 +964,21 @@ export default class Month extends Component<MonthProps> {
         disabled) &&
       isQuarterDisabled(setQuarter(day, q), this.props);
 
+    const selection = this.getSelection();
+
     return clsx(
       "react-datepicker__quarter-text",
       `react-datepicker__quarter-${q}`,
       {
         "react-datepicker__quarter-text--disabled": isDisabled,
-        "react-datepicker__quarter-text--selected": selected
-          ? this.isSelectedQuarter(day, q, selected)
+        "react-datepicker__quarter-text--selected": selection
+          ? this.isSelectQuarterInList(day, q, selection)
           : undefined,
         "react-datepicker__quarter-text--keyboard-selected":
           !disabledKeyboardNavigation &&
           preSelection &&
           this.isSelectedQuarter(day, q, preSelection) &&
+          !this.isQuarterSelected() &&
           !isDisabled,
         "react-datepicker__quarter-text--in-selecting-range":
           this.isInSelectingRangeQuarter(q),
@@ -1118,6 +1144,11 @@ export default class Month extends Component<MonthProps> {
       ? ariaLabelPrefix.trim() + " "
       : "";
 
+    // Format aria-label, return empty string if date is invalid
+    const formattedAriaLabel = isValid(day)
+      ? `${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`
+      : "";
+
     const shouldUseListboxRole = showMonthYearPicker || showQuarterYearPicker;
 
     if (shouldUseListboxRole) {
@@ -1130,7 +1161,7 @@ export default class Month extends Component<MonthProps> {
           onPointerLeave={
             this.props.usePointerEvent ? this.handleMouseLeave : undefined
           }
-          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          aria-label={formattedAriaLabel}
           role="listbox"
         >
           {showMonthYearPicker ? this.renderMonths() : this.renderQuarters()}
@@ -1152,7 +1183,7 @@ export default class Month extends Component<MonthProps> {
           onPointerLeave={
             this.props.usePointerEvent ? this.handleMouseLeave : undefined
           }
-          aria-label={`${formattedAriaLabelPrefix}${formatDate(day, "MMMM, yyyy", this.props.locale)}`}
+          aria-label={formattedAriaLabel}
           role="rowgroup"
         >
           {this.renderWeeks()}

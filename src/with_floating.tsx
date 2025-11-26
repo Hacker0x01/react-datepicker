@@ -56,6 +56,7 @@ export default function withFloating<T extends FloatingProps>(
       middleware: [
         flip({ padding: 15 }),
         offset(10),
+        // eslint-disable-next-line react-hooks/refs -- Floating UI requires refs to be passed during render
         arrow({ element: arrowRef }),
         ...(props.popperModifiers ?? []),
       ],

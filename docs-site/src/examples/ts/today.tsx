@@ -5,7 +5,7 @@ const Today = () => {
     <DatePicker
       todayButton="Vandaag"
       selected={selectedDate}
-      onChange={(date: Date | null) => setSelectedDate(date)}
+      onChange={setSelectedDate}
     />
   );
 };
