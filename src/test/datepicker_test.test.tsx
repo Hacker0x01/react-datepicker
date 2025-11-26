@@ -2843,6 +2843,39 @@ describe("DatePicker", () => {
     expect(instance!.state.monthSelectedIn).toEqual(0);
   });
 
+  it("should set monthSelectedIn to 0 when selectsRange is true", () => {
+    let instance: DatePicker | null = null;
+    const { rerender } = render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        monthsShown={2}
+        inline
+      />,
+    );
+    expect(instance).toBeTruthy();
+    act(() => {
+      (
+        instance!.state as unknown as { monthSelectedIn: number }
+      ).monthSelectedIn = 1;
+    });
+    expect(instance!.state.monthSelectedIn).toEqual(1);
+
+    rerender(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        monthsShown={2}
+        inline
+        selectsRange
+      />,
+    );
+
+    expect(instance!.state.monthSelectedIn).toEqual(0);
+  });
+
   it("should disable non-jumping if prop focusSelectedMonth is true", () => {
     let instance: DatePicker | null = null;
     const { container } = render(
