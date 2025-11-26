@@ -2897,6 +2897,59 @@ describe("DatePicker", () => {
     expect(instance!.state.monthSelectedIn).toEqual(undefined);
   });
 
+  it("should reset monthSelectedIn to 0 when changeMonth is called from custom header", () => {
+    let instance: DatePicker | null = null;
+    let changeMonthFn: ((month: number) => void) | null = null;
+
+    const { container } = render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        inline
+        monthsShown={2}
+        selected={newDate("2024-06-15")}
+        renderCustomHeader={({ changeMonth }) => {
+          changeMonthFn = changeMonth;
+          return (
+            <div>
+              <button
+                data-testid="change-month-btn"
+                onClick={() => changeMonth(0)}
+              >
+                Go to January
+              </button>
+            </div>
+          );
+        }}
+      />,
+    );
+
+    expect(instance).toBeTruthy();
+
+    // First, select a day in the second month panel to set monthSelectedIn to 1
+    const dayButtonsInSecondMonth = container
+      .querySelectorAll(".react-datepicker__month-container")[1]
+      ?.querySelectorAll(
+        ".react-datepicker__day:not(.react-datepicker__day--outside-month)",
+      );
+    expect(dayButtonsInSecondMonth).toBeTruthy();
+    expect(dayButtonsInSecondMonth!.length).toBeGreaterThan(0);
+
+    // Click a day in the second month to set monthSelectedIn to 1
+    fireEvent.click(dayButtonsInSecondMonth![10]!);
+    expect(instance!.state.monthSelectedIn).toEqual(1);
+
+    // Now call changeMonth from the custom header
+    expect(changeMonthFn).toBeTruthy();
+    act(() => {
+      changeMonthFn!(0); // Change to January
+    });
+
+    // monthSelectedIn should be reset to 0
+    expect(instance!.state.monthSelectedIn).toEqual(0);
+  });
+
   it("should show the popper arrow when showPopperArrow is true", () => {
     const { container } = render(<DatePicker showPopperArrow />);
     const input = safeQuerySelector(container, "input");

@@ -1463,6 +1463,10 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     }
   };
 
+  handleMonthSelectedInChange = (monthSelectedIn: number): void => {
+    this.setState({ monthSelectedIn });
+  };
+
   renderCalendar = () => {
     if (!this.props.inline && !this.isCalendarOpen()) {
       return null;
@@ -1494,6 +1498,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         dropdownMode={
           this.props.dropdownMode ?? DatePicker.defaultProps.dropdownMode
         }
+        onMonthSelectedInChange={this.handleMonthSelectedInChange}
       >
         {this.props.children}
       </Calendar>
