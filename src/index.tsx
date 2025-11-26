@@ -194,6 +194,10 @@ export type DatePickerProps = OmitUnion<
     ariaInvalid?: string;
     ariaLabelledBy?: string;
     ariaRequired?: string;
+    "aria-describedby"?: string;
+    "aria-invalid"?: string;
+    "aria-labelledby"?: string;
+    "aria-required"?: string;
     rangeSeparator?: string;
     onChangeRaw?: (
       event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
@@ -1574,6 +1578,22 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     const customInput = this.props.customInput || <input type="text" />;
     const customInputRef = this.props.customInputRef || "ref";
 
+    // Build aria props object, only including defined values to avoid
+    // overwriting aria attributes that may be set on the custom input
+    const ariaProps: Record<string, string> = {};
+    const ariaDescribedBy =
+      this.props["aria-describedby"] ?? this.props.ariaDescribedBy;
+    const ariaInvalid = this.props["aria-invalid"] ?? this.props.ariaInvalid;
+    const ariaLabelledBy =
+      this.props["aria-labelledby"] ?? this.props.ariaLabelledBy;
+    const ariaRequired = this.props["aria-required"] ?? this.props.ariaRequired;
+
+    if (ariaDescribedBy != null)
+      ariaProps["aria-describedby"] = ariaDescribedBy;
+    if (ariaInvalid != null) ariaProps["aria-invalid"] = ariaInvalid;
+    if (ariaLabelledBy != null) ariaProps["aria-labelledby"] = ariaLabelledBy;
+    if (ariaRequired != null) ariaProps["aria-required"] = ariaRequired;
+
     return cloneElement(customInput, {
       [customInputRef]: (input: HTMLElement | null) => {
         this.input = input;
@@ -1596,10 +1616,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       readOnly: this.props.readOnly,
       required: this.props.required,
       tabIndex: this.props.tabIndex,
-      "aria-describedby": this.props.ariaDescribedBy,
-      "aria-invalid": this.props.ariaInvalid,
-      "aria-labelledby": this.props.ariaLabelledBy,
-      "aria-required": this.props.ariaRequired,
+      ...ariaProps,
     });
   };
 

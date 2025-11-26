@@ -4273,6 +4273,129 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("aria attributes on input", () => {
+    it("should pass aria-describedby to the input using standard HTML attribute name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} aria-describedby="description-id" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-describedby")).toBe("description-id");
+    });
+
+    it("should pass aria-describedby to the input using camelCase prop name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} ariaDescribedBy="description-id" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-describedby")).toBe("description-id");
+    });
+
+    it("should prefer standard HTML attribute name over camelCase for aria-describedby", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          aria-describedby="standard-id"
+          ariaDescribedBy="camelcase-id"
+        />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-describedby")).toBe("standard-id");
+    });
+
+    it("should pass aria-invalid to the input using standard HTML attribute name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} aria-invalid="true" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-invalid")).toBe("true");
+    });
+
+    it("should pass aria-invalid to the input using camelCase prop name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} ariaInvalid="true" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-invalid")).toBe("true");
+    });
+
+    it("should pass aria-labelledby to the input using standard HTML attribute name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} aria-labelledby="label-id" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-labelledby")).toBe("label-id");
+    });
+
+    it("should pass aria-labelledby to the input using camelCase prop name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} ariaLabelledBy="label-id" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-labelledby")).toBe("label-id");
+    });
+
+    it("should pass aria-required to the input using standard HTML attribute name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} aria-required="true" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-required")).toBe("true");
+    });
+
+    it("should pass aria-required to the input using camelCase prop name", () => {
+      const { container } = render(
+        <DatePicker selected={newDate()} ariaRequired="true" />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-required")).toBe("true");
+    });
+
+    it("should pass aria attributes to custom input using standard HTML attribute names", () => {
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          customInput={<CustomInput />}
+          aria-describedby="desc-id"
+          aria-invalid="true"
+          aria-labelledby="label-id"
+          aria-required="true"
+        />,
+      );
+      const input = safeQuerySelector(container, "input");
+      expect(input.getAttribute("aria-describedby")).toBe("desc-id");
+      expect(input.getAttribute("aria-invalid")).toBe("true");
+      expect(input.getAttribute("aria-labelledby")).toBe("label-id");
+      expect(input.getAttribute("aria-required")).toBe("true");
+    });
+
+    it("should preserve custom input's own aria attributes when DatePicker does not specify them", () => {
+      // Custom input with its own aria attributes
+      const CustomInputWithAria = React.forwardRef<
+        HTMLInputElement,
+        React.InputHTMLAttributes<HTMLInputElement>
+      >((props, ref) => (
+        <input
+          ref={ref}
+          {...props}
+          aria-describedby="custom-desc"
+          aria-invalid="false"
+        />
+      ));
+      CustomInputWithAria.displayName = "CustomInputWithAria";
+
+      const { container } = render(
+        <DatePicker
+          selected={newDate()}
+          customInput={<CustomInputWithAria />}
+        />,
+      );
+      const input = safeQuerySelector(container, "input");
+      // Should preserve the custom input's aria attributes since DatePicker didn't specify any
+      expect(input.getAttribute("aria-describedby")).toBe("custom-desc");
+      expect(input.getAttribute("aria-invalid")).toBe("false");
+    });
+  });
+
   it("should not customize the className attribute if showIcon is set to false", () => {
     const { container } = render(
       <DatePicker selected={newDate("2021-04-15")} />,
