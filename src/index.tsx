@@ -1079,7 +1079,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
             changedStartDate = fromZonedTime(changedStartDate, timeZone);
           }
           onChange?.(
-            [changedStartDate, endDate ? (timeZone ? fromZonedTime(endDate, timeZone) : endDate) : null],
+            [
+              changedStartDate,
+              endDate
+                ? timeZone
+                  ? fromZonedTime(endDate, timeZone)
+                  : endDate
+                : null,
+            ],
             undefined,
           );
         }
@@ -1098,7 +1105,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
             changedEndDate = fromZonedTime(changedEndDate, timeZone);
           }
           onChange?.(
-            [startDate ? (timeZone ? fromZonedTime(startDate, timeZone) : startDate) : null, changedEndDate],
+            [
+              startDate
+                ? timeZone
+                  ? fromZonedTime(startDate, timeZone)
+                  : startDate
+                : null,
+              changedEndDate,
+            ],
             undefined,
           );
         }
@@ -1134,7 +1148,10 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
             changedEndDate = fromZonedTime(changedEndDate, timeZone);
           }
           onChange?.(
-            [timeZone ? fromZonedTime(startDate, timeZone) : startDate, changedEndDate],
+            [
+              timeZone ? fromZonedTime(startDate, timeZone) : startDate,
+              changedEndDate,
+            ],
             undefined,
           );
         } else {
@@ -1153,7 +1170,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       const selected = this.props.selected
         ? this.props.selected
         : this.getPreSelection();
-      const changedDate = this.props.selected
+      let changedDate = this.props.selected
         ? time
         : setTime(selected, {
             hour: getHours(time),
