@@ -115,7 +115,7 @@ function getDateFnsTz(): DateFnsTz | null {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     dateFnsTz = require("date-fns-tz") as DateFnsTz;
   } catch {
-    // date-fns-tz is not installed
+    /* istanbul ignore next - only executes when date-fns-tz is not installed */
     dateFnsTz = null;
   }
 
