@@ -18,11 +18,10 @@ import {
   KeyType,
 } from "./date_utils";
 
-interface TimeProps
-  extends Pick<
-    TimeFilterOptions,
-    "minTime" | "maxTime" | "excludeTimes" | "includeTimes" | "filterTime"
-  > {
+interface TimeProps extends Pick<
+  TimeFilterOptions,
+  "minTime" | "maxTime" | "excludeTimes" | "includeTimes" | "filterTime"
+> {
   format?: string;
   intervals?: number;
   selected?: Date | null;

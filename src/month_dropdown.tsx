@@ -7,14 +7,14 @@ import {
 } from "./date_utils";
 import MonthDropdownOptions from "./month_dropdown_options";
 
-interface MonthDropdownOptionsProps
-  extends React.ComponentPropsWithoutRef<typeof MonthDropdownOptions> {}
+interface MonthDropdownOptionsProps extends React.ComponentPropsWithoutRef<
+  typeof MonthDropdownOptions
+> {}
 
-interface MonthDropdownProps
-  extends Omit<
-    MonthDropdownOptionsProps,
-    "monthNames" | "onChange" | "onCancel"
-  > {
+interface MonthDropdownProps extends Omit<
+  MonthDropdownOptionsProps,
+  "monthNames" | "onChange" | "onCancel"
+> {
   dropdownMode: "scroll" | "select";
   locale?: Locale;
   onChange: (month: number) => void;

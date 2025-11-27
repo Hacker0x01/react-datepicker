@@ -1665,9 +1665,8 @@ describe("date_utils", () => {
       });
 
       try {
-        const { isDayInRange: mockedIsDayInRange } = await import(
-          "../date_utils"
-        );
+        const { isDayInRange: mockedIsDayInRange } =
+          await import("../date_utils");
 
         expect(
           mockedIsDayInRange(
