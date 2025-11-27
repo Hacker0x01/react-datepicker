@@ -93,4 +93,46 @@ describe("Multiple Dates Selected", function () {
     expect(input).not.toBeNull();
     expect(input?.value).toBe("01/01/2024 (+2)");
   });
+
+  it("should override default format when formatMultipleDates is provided", () => {
+    const { container: datePicker } = getDatePicker({
+      selectsMultiple: true,
+      selectedDates: [
+        new Date("2024/01/01"),
+        new Date("2024/01/15"),
+        new Date("2024/03/15"),
+      ],
+      formatMultipleDates: (dates, formatDate) =>
+        dates.map(formatDate).join(" | "),
+    });
+
+    const input = datePicker.querySelector("input");
+
+    expect(input).not.toBeNull();
+    expect(input?.value).toBe("01/01/2024 | 01/15/2024 | 03/15/2024");
+  });
+
+  it("should pass correct arguments to formatMultipleDates", () => {
+    const selectedDates = [new Date("2024/01/01"), new Date("2024/01/15")];
+    const mockFormatter = jest.fn(
+      (dates: Date[], formatDate: (d: Date) => string) =>
+        dates.map(formatDate).join(", "),
+    );
+
+    getDatePicker({
+      selectsMultiple: true,
+      selectedDates,
+      formatMultipleDates: mockFormatter,
+    });
+
+    expect(mockFormatter).toHaveBeenCalledTimes(1);
+
+    const [receivedDates, receivedFormatDate] = mockFormatter.mock.calls[0]!;
+    expect(receivedDates).toHaveLength(2);
+    expect(receivedDates[0]?.getTime()).toBe(selectedDates[0]?.getTime());
+    expect(receivedDates[1]?.getTime()).toBe(selectedDates[1]?.getTime());
+
+    expect(typeof receivedFormatDate).toBe("function");
+    expect(receivedFormatDate(new Date("2024/01/01"))).toBe("01/01/2024");
+  });
 });

@@ -96,6 +96,7 @@ import SpecificDateRange from "../../examples/ts/specificDateRange?raw";
 import ExcludeTimePeriod from "../../examples/ts/excludeTimePeriod?raw";
 import SelectsMultiple from "../../examples/ts/selectsMultiple?raw";
 import SelectsMultipleMonths from "../../examples/ts/selectsMultipleMonths?raw";
+import SelectsMultipleFormat from "../../examples/ts/selectsMultipleFormat?raw";
 import StrictParsing from "../../examples/ts/strictParsing?raw";
 import TabIndex from "../../examples/ts/tabIndex?raw";
 import Today from "../../examples/ts/today?raw";
@@ -500,6 +501,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Select multiple dates",
     component: SelectsMultiple,
+  },
+  {
+    title: "Select multiple dates with custom format",
+    component: SelectsMultipleFormat,
   },
   {
     title: "Select multiple months",
