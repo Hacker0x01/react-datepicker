@@ -62,6 +62,155 @@ import {
 
 import type { Locale as DateFnsLocale, Day } from "date-fns";
 
+// Timezone support types and utilities
+// These are dynamically imported when timeZone prop is used
+export type TimeZone = string;
+
+interface DateFnsTz {
+  toZonedTime: (date: Date | number | string, timeZone: string) => Date;
+  fromZonedTime: (date: Date | number | string, timeZone: string) => Date;
+  formatInTimeZone: (
+    date: Date | number | string,
+    timeZone: string,
+    formatStr: string,
+    options?: { locale?: DateFnsLocale },
+  ) => string;
+}
+
+// Cache for the date-fns-tz module
+let dateFnsTz: DateFnsTz | null = null;
+let dateFnsTzLoadAttempted = false;
+
+/**
+ * Attempts to load date-fns-tz module.
+ * Returns null if the module is not installed.
+ */
+function getDateFnsTz(): DateFnsTz | null {
+  if (dateFnsTzLoadAttempted) {
+    return dateFnsTz;
+  }
+
+  dateFnsTzLoadAttempted = true;
+
+  try {
+    // Dynamic require for date-fns-tz
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    dateFnsTz = require("date-fns-tz") as DateFnsTz;
+  } catch {
+    // date-fns-tz is not installed
+    dateFnsTz = null;
+  }
+
+  return dateFnsTz;
+}
+
+/**
+ * Converts a date to the specified timezone.
+ * If no timezone is specified or date-fns-tz is not installed, returns the original date.
+ *
+ * @param date - The date to convert
+ * @param timeZone - The IANA timezone identifier (e.g., "America/New_York", "UTC")
+ * @returns The date in the specified timezone
+ */
+export function toZonedTime(date: Date, timeZone?: TimeZone): Date {
+  if (!timeZone) {
+    return date;
+  }
+
+  const tz = getDateFnsTz();
+  if (!tz) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        'react-datepicker: timeZone prop requires "date-fns-tz" package. ' +
+          "Please install it: npm install date-fns-tz",
+      );
+    }
+    return date;
+  }
+
+  return tz.toZonedTime(date, timeZone);
+}
+
+/**
+ * Converts a date from the specified timezone to UTC.
+ * If no timezone is specified or date-fns-tz is not installed, returns the original date.
+ *
+ * @param date - The date in the specified timezone
+ * @param timeZone - The IANA timezone identifier (e.g., "America/New_York", "UTC")
+ * @returns The date in UTC
+ */
+export function fromZonedTime(date: Date, timeZone?: TimeZone): Date {
+  if (!timeZone) {
+    return date;
+  }
+
+  const tz = getDateFnsTz();
+  if (!tz) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        'react-datepicker: timeZone prop requires "date-fns-tz" package. ' +
+          "Please install it: npm install date-fns-tz",
+      );
+    }
+    return date;
+  }
+
+  return tz.fromZonedTime(date, timeZone);
+}
+
+/**
+ * Formats a date in the specified timezone.
+ * If no timezone is specified, uses the standard format function.
+ *
+ * @param date - The date to format
+ * @param formatStr - The format string
+ * @param timeZone - The IANA timezone identifier
+ * @param locale - The locale object
+ * @returns The formatted date string
+ */
+export function formatInTimeZone(
+  date: Date,
+  formatStr: string,
+  timeZone?: TimeZone,
+  locale?: DateFnsLocale,
+): string {
+  if (!timeZone) {
+    return format(date, formatStr, {
+      locale,
+      useAdditionalWeekYearTokens: true,
+      useAdditionalDayOfYearTokens: true,
+    });
+  }
+
+  const tz = getDateFnsTz();
+  if (!tz) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        'react-datepicker: timeZone prop requires "date-fns-tz" package. ' +
+          "Please install it: npm install date-fns-tz",
+      );
+    }
+    return format(date, formatStr, {
+      locale,
+      useAdditionalWeekYearTokens: true,
+      useAdditionalDayOfYearTokens: true,
+    });
+  }
+
+  return tz.formatInTimeZone(date, timeZone, formatStr, { locale });
+}
+
+/**
+ * Gets the current date/time in the specified timezone.
+ *
+ * @param timeZone - The IANA timezone identifier
+ * @returns The current date in the specified timezone
+ */
+export function nowInTimeZone(timeZone?: TimeZone): Date {
+  const now = new Date();
+  return toZonedTime(now, timeZone);
+}
+
 export type DateNumberType = Day;
 interface LocaleObj extends Pick<
   DateFnsLocale,

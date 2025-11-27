@@ -2,6 +2,111 @@
 
 This guide explains how react-datepicker handles timezones and provides solutions for common timezone-related scenarios.
 
+## Using the `timeZone` Prop (Issue #1787)
+
+React-datepicker now supports a `timeZone` prop that allows you to display and handle dates in a specific timezone, regardless of the user's local timezone. This feature requires the optional `date-fns-tz` peer dependency.
+
+### Installation
+
+To use the `timeZone` prop, you need to install `date-fns-tz`:
+
+```bash
+npm install date-fns-tz
+# or
+yarn add date-fns-tz
+```
+
+### Basic Usage
+
+```jsx
+import DatePicker from "react-datepicker";
+
+function MyComponent() {
+  const [startDate, setStartDate] = useState(new Date());
+
+  return <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} timeZone="America/New_York" />;
+}
+```
+
+### How It Works
+
+When you provide a `timeZone` prop:
+
+1. **Display**: Dates are displayed in the specified timezone. For example, if you select January 15th at noon UTC and the timezone is "America/New_York", the datepicker will display the date as it appears in New York time.
+
+2. **Selection**: When a user selects a date, the `onChange` callback receives a Date object that represents the selected moment in UTC. The internal conversion ensures that the date selected visually in the specified timezone is correctly converted.
+
+3. **Current Time**: The "today" indicator and default selections use the current time in the specified timezone.
+
+### Supported Timezone Formats
+
+The `timeZone` prop accepts IANA timezone identifiers:
+
+- `"UTC"` - Coordinated Universal Time
+- `"America/New_York"` - Eastern Time (US)
+- `"America/Los_Angeles"` - Pacific Time (US)
+- `"Europe/London"` - British Time
+- `"Europe/Paris"` - Central European Time
+- `"Asia/Tokyo"` - Japan Standard Time
+- `"Australia/Sydney"` - Australian Eastern Time
+
+For a complete list, see the [IANA Time Zone Database](https://www.iana.org/time-zones).
+
+### Examples
+
+#### Date and Time Picker in a Specific Timezone
+
+```jsx
+import DatePicker from "react-datepicker";
+
+function TimezoneDateTimePicker() {
+  const [date, setDate] = useState(new Date());
+
+  return <DatePicker selected={date} onChange={setDate} showTimeSelect timeZone="Europe/London" dateFormat="MMMM d, yyyy h:mm aa" />;
+}
+```
+
+#### Date Range in UTC
+
+```jsx
+import DatePicker from "react-datepicker";
+
+function UTCDateRange() {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  return <DatePicker selected={startDate} onChange={onChange} startDate={startDate} endDate={endDate} selectsRange timeZone="UTC" />;
+}
+```
+
+#### Inline Calendar with Timezone
+
+```jsx
+import DatePicker from "react-datepicker";
+
+function TokyoCalendar() {
+  const [date, setDate] = useState(new Date());
+
+  return <DatePicker selected={date} onChange={setDate} inline timeZone="Asia/Tokyo" />;
+}
+```
+
+### Important Notes
+
+- **Optional Dependency**: The `timeZone` prop requires `date-fns-tz` to be installed. If it's not installed and you use the `timeZone` prop, a warning will be logged in development mode and the datepicker will fall back to local timezone behavior.
+
+- **UTC Storage**: Even when using a timezone, the Date objects passed to `onChange` represent moments in time (internally stored as UTC). The timezone only affects how dates are displayed and interpreted during selection.
+
+- **Consistency**: When using the `timeZone` prop, ensure all date-related props (like `minDate`, `maxDate`, `excludeDates`, etc.) are provided in a consistent manner.
+
+---
+
 ## The "Date is One Day Off" Problem (Issue #1018)
 
 One of the most commonly reported issues is that the selected date appears to be "one day off" when converted to a string or sent to a server. This is **not a bug** in react-datepicker—it's the expected behavior of JavaScript Date objects.
