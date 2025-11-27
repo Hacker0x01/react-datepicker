@@ -125,6 +125,8 @@ Locales can be changed in the following way:
 
 React-datepicker uses native JavaScript Date objects which are timezone-aware. By default, dates are displayed in the user's local timezone. The library does not include built-in timezone conversion utilities.
 
+**Common issue: "Date is one day off" ([#1018](https://github.com/Hacker0x01/react-datepicker/issues/1018))** - If you're seeing dates shift by one day when converting to ISO strings or sending to a server, this is due to timezone conversion, not a bug. See the [Timezone Handling Guide](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/timezone.md#the-date-is-one-day-off-problem-issue-1018) for solutions.
+
 For detailed information about working with timezones, UTC dates, and common timezone-related scenarios, see the [Timezone Handling Guide](https://github.com/Hacker0x01/react-datepicker/blob/main/docs/timezone.md).
 
 For applications requiring timezone conversion, we recommend using [date-fns-tz](https://github.com/marnusw/date-fns-tz) alongside react-datepicker.

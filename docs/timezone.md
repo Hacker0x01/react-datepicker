@@ -2,6 +2,93 @@
 
 This guide explains how react-datepicker handles timezones and provides solutions for common timezone-related scenarios.
 
+## The "Date is One Day Off" Problem (Issue #1018)
+
+One of the most commonly reported issues is that the selected date appears to be "one day off" when converted to a string or sent to a server. This is **not a bug** in react-datepicker—it's the expected behavior of JavaScript Date objects.
+
+### Why This Happens
+
+When you select a date in the datepicker (e.g., September 10th), the component returns a JavaScript `Date` object representing **midnight local time** on that day:
+
+```js
+// User in UTC-3 timezone selects September 10th
+// The Date object represents: Sep 10, 2017 00:00:00 (local time)
+```
+
+However, when you call `toISOString()` on this Date object, JavaScript converts it to UTC:
+
+```js
+const selectedDate = /* Sep 10, 2017 00:00:00 local time (UTC-3) */;
+console.log(selectedDate.toISOString());
+// Output: "2017-09-09T21:00:00.000Z" ← Appears to be September 9th!
+```
+
+The date looks "wrong" because midnight in UTC-3 is 9:00 PM the previous day in UTC.
+
+### Solutions
+
+#### Solution 1: Use Local Date String (Recommended for date-only fields)
+
+If you only care about the date (not the time), extract just the date portion:
+
+```jsx
+const handleChange = (date) => {
+  // Get the date in YYYY-MM-DD format based on local time
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const dateString = `${year}-${month}-${day}`; // "2017-09-10"
+
+  sendToServer(dateString);
+};
+
+<DatePicker selected={date} onChange={handleChange} />;
+```
+
+#### Solution 2: Adjust for Timezone Offset
+
+If you need an ISO string that represents the local date at midnight UTC:
+
+```jsx
+const handleChange = (date) => {
+  // Adjust for timezone offset to get the "intended" UTC date
+  const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  const isoString = offsetDate.toISOString(); // "2017-09-10T00:00:00.000Z"
+
+  sendToServer(isoString);
+};
+```
+
+#### Solution 3: Use date-fns format function
+
+```jsx
+import { format } from "date-fns";
+
+const handleChange = (date) => {
+  // Format the date in local time
+  const dateString = format(date, "yyyy-MM-dd"); // "2017-09-10"
+  sendToServer(dateString);
+};
+```
+
+#### Solution 4: Use toLocaleDateString()
+
+```jsx
+const handleChange = (date) => {
+  // Get localized date string
+  const dateString = date.toLocaleDateString("en-CA"); // "2017-09-10" (YYYY-MM-DD format)
+  sendToServer(dateString);
+};
+```
+
+### Important Notes
+
+- **This is not a react-datepicker bug**: The datepicker correctly returns the date you selected in your local timezone
+- **The visual display is correct**: The datepicker shows the correct date; the "issue" only appears when converting to UTC
+- **Choose the right solution for your use case**: If you're storing dates without times (like birthdays), use Solution 1 or 3. If you need precise timestamps, be aware of timezone implications.
+
+---
+
 ## How react-datepicker Handles Dates
 
 React-datepicker uses native JavaScript `Date` objects and the [date-fns](https://date-fns.org/) library for date manipulation. This means:
