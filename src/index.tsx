@@ -827,8 +827,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   ) => {
     if (this.props.readOnly) return;
 
-    const { selectsRange, startDate, endDate, locale, swapRange, timeZone } =
-      this.props;
+    const { selectsRange, startDate, endDate, locale, swapRange } = this.props;
     const dateFormat =
       this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
     const isDateSelectionComplete =
