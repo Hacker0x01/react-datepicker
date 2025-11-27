@@ -212,11 +212,10 @@ export function nowInTimeZone(timeZone?: TimeZone): Date {
 }
 
 export type DateNumberType = Day;
-interface LocaleObj
-  extends Pick<
-    DateFnsLocale,
-    "options" | "formatLong" | "localize" | "match"
-  > {}
+interface LocaleObj extends Pick<
+  DateFnsLocale,
+  "options" | "formatLong" | "localize" | "match"
+> {}
 
 export type Locale = string | LocaleObj;
 
