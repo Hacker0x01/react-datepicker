@@ -2,7 +2,7 @@
 
 This guide explains how react-datepicker handles timezones and provides solutions for common timezone-related scenarios.
 
-## Using the `timeZone` Prop (Issue #1787)
+## Using the `timeZone` Prop
 
 React-datepicker now supports a `timeZone` prop that allows you to display and handle dates in a specific timezone, regardless of the user's local timezone. This feature requires the optional `date-fns-tz` peer dependency.
 
@@ -107,7 +107,7 @@ function TokyoCalendar() {
 
 ---
 
-## The "Date is One Day Off" Problem (Issue #1018)
+## The "Date is One Day Off" Problem
 
 One of the most commonly reported issues is that the selected date appears to be "one day off" when converted to a string or sent to a server. This is **not a bug** in react-datepicker—it's the expected behavior of JavaScript Date objects.
 
