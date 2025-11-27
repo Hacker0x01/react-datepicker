@@ -1,12 +1,16 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import DatePicker from "../index";
-import {
+import * as dateUtils from "../date_utils";
+
+const {
   toZonedTime,
   fromZonedTime,
   formatInTimeZone,
   nowInTimeZone,
-} from "../date_utils";
+  __resetDateFnsTzCache,
+  __setDateFnsTzNull,
+} = dateUtils;
 
 describe("Timezone utility functions", () => {
   // Use a fixed UTC date for consistent testing
@@ -465,5 +469,77 @@ describe("DatePicker with timeZone prop", () => {
 
     // onChange should have been called with timezone conversion
     expect(onChangeMock).toHaveBeenCalled();
+  });
+});
+
+describe("Timezone fallback behavior (when date-fns-tz is not installed)", () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+
+  beforeEach(() => {
+    // Set to development to trigger console.warn
+    process.env.NODE_ENV = "development";
+    // Simulate date-fns-tz not being installed
+    __setDateFnsTzNull();
+  });
+
+  afterEach(() => {
+    // Reset the cache after each test
+    __resetDateFnsTzCache();
+    process.env.NODE_ENV = originalNodeEnv;
+  });
+
+  it("toZonedTime should return original date and warn when date-fns-tz is not installed", () => {
+    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    const result = toZonedTime(testDate, "America/New_York");
+
+    expect(result).toBe(testDate);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.stringContaining("date-fns-tz"),
+    );
+
+    consoleSpy.mockRestore();
+  });
+
+  it("fromZonedTime should return original date and warn when date-fns-tz is not installed", () => {
+    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    const result = fromZonedTime(testDate, "America/New_York");
+
+    expect(result).toBe(testDate);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.stringContaining("date-fns-tz"),
+    );
+
+    consoleSpy.mockRestore();
+  });
+
+  it("formatInTimeZone should use standard format and warn when date-fns-tz is not installed", () => {
+    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    const result = formatInTimeZone(testDate, "yyyy-MM-dd", "America/New_York");
+
+    // Should return formatted date using standard format
+    expect(result).toBe("2024-06-15");
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.stringContaining("date-fns-tz"),
+    );
+
+    consoleSpy.mockRestore();
+  });
+
+  it("should not warn in production mode", () => {
+    process.env.NODE_ENV = "production";
+    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    toZonedTime(testDate, "America/New_York");
+
+    expect(consoleSpy).not.toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
   });
 });

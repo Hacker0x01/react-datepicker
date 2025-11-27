@@ -82,6 +82,24 @@ let dateFnsTz: DateFnsTz | null = null;
 let dateFnsTzLoadAttempted = false;
 
 /**
+ * Resets the date-fns-tz module cache. Used for testing.
+ * @internal
+ */
+export function __resetDateFnsTzCache(): void {
+  dateFnsTz = null;
+  dateFnsTzLoadAttempted = false;
+}
+
+/**
+ * Sets the date-fns-tz module to null to simulate it not being installed. Used for testing.
+ * @internal
+ */
+export function __setDateFnsTzNull(): void {
+  dateFnsTz = null;
+  dateFnsTzLoadAttempted = true;
+}
+
+/**
  * Attempts to load date-fns-tz module.
  * Returns null if the module is not installed.
  */
