@@ -1,3 +1,6 @@
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import DatePicker from "../index";
 import {
   toZonedTime,
   fromZonedTime,
@@ -259,5 +262,208 @@ describe("Timezone utility functions - integration", () => {
     expect(utcFormatted).toBe("2024-06-15 00:00");
     expect(nyFormatted).toBe("2024-06-14 20:00"); // Previous day in NY
     expect(tokyoFormatted).toBe("2024-06-15 09:00"); // Same day, later in Tokyo
+  });
+});
+
+describe("DatePicker with timeZone prop", () => {
+  it("should render DatePicker with timeZone prop", () => {
+    const { container } = render(
+      <DatePicker
+        selected={new Date("2024-06-15T12:00:00Z")}
+        onChange={() => {}}
+        timeZone="America/New_York"
+      />,
+    );
+    expect(container.querySelector("input")).not.toBeNull();
+  });
+
+  it("should convert initial date to timezone", () => {
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={() => {}}
+        timeZone="America/New_York"
+        dateFormat="yyyy-MM-dd"
+      />,
+    );
+    const input = container.querySelector("input");
+    // The date should be displayed (time formatting depends on local timezone)
+    expect(input?.value).toContain("2024-06-15");
+  });
+
+  it("should handle date selection with timezone", () => {
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    let selectedDate: Date | null = null;
+
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={(date) => {
+          selectedDate = date;
+        }}
+        timeZone="America/New_York"
+      />,
+    );
+
+    // Open the calendar
+    const input = container.querySelector("input");
+    if (input) {
+      fireEvent.focus(input);
+    }
+
+    // Find and click a day
+    const days = container.querySelectorAll(".react-datepicker__day");
+    const dayToClick = Array.from(days).find(
+      (day) =>
+        !day.classList.contains("react-datepicker__day--outside-month") &&
+        day.textContent === "20",
+    );
+
+    if (dayToClick) {
+      fireEvent.click(dayToClick);
+    }
+
+    // The selected date should be converted back to UTC
+    expect(selectedDate).not.toBeNull();
+  });
+
+  it("should handle preSelection with timezone", () => {
+    const { container } = render(
+      <DatePicker onChange={() => {}} timeZone="Europe/London" />,
+    );
+
+    // Open the calendar
+    const input = container.querySelector("input");
+    if (input) {
+      fireEvent.focus(input);
+    }
+
+    // Calendar should be open
+    expect(container.querySelector(".react-datepicker__month")).not.toBeNull();
+  });
+
+  it("should work with inline mode and timezone", () => {
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={() => {}}
+        timeZone="Asia/Tokyo"
+        inline
+      />,
+    );
+
+    // Calendar should be visible inline
+    expect(container.querySelector(".react-datepicker__month")).not.toBeNull();
+  });
+
+  it("should handle onChange with timezone conversion", () => {
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={onChangeMock}
+        timeZone="America/Los_Angeles"
+      />,
+    );
+
+    // Open the calendar
+    const input = container.querySelector("input");
+    if (input) {
+      fireEvent.focus(input);
+    }
+
+    // Find and click a day
+    const days = container.querySelectorAll(".react-datepicker__day");
+    const dayToClick = Array.from(days).find(
+      (day) =>
+        !day.classList.contains("react-datepicker__day--outside-month") &&
+        day.textContent === "15",
+    );
+
+    if (dayToClick) {
+      fireEvent.click(dayToClick);
+    }
+
+    // onChange should have been called
+    expect(onChangeMock).toHaveBeenCalled();
+  });
+
+  it("should handle onSelect with timezone", () => {
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    const onSelectMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={() => {}}
+        onSelect={onSelectMock}
+        timeZone="UTC"
+      />,
+    );
+
+    // Open the calendar
+    const input = container.querySelector("input");
+    if (input) {
+      fireEvent.focus(input);
+    }
+
+    // Find and click a day
+    const days = container.querySelectorAll(".react-datepicker__day");
+    const dayToClick = Array.from(days).find(
+      (day) =>
+        !day.classList.contains("react-datepicker__day--outside-month") &&
+        day.textContent === "15",
+    );
+
+    if (dayToClick) {
+      fireEvent.click(dayToClick);
+    }
+
+    // onSelect should have been called
+    expect(onSelectMock).toHaveBeenCalled();
+  });
+
+  it("should handle time change with timezone", () => {
+    // Mock ResizeObserver
+    const mockResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+    window.ResizeObserver = mockResizeObserver;
+
+    const utcDate = new Date("2024-06-15T12:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selected={utcDate}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeSelect
+        dateFormat="yyyy-MM-dd HH:mm"
+      />,
+    );
+
+    // Open the calendar
+    const input = container.querySelector("input");
+    if (input) {
+      fireEvent.focus(input);
+    }
+
+    // Find and click a time option
+    const timeOptions = container.querySelectorAll(
+      ".react-datepicker__time-list-item",
+    );
+    if (timeOptions.length > 0) {
+      fireEvent.click(timeOptions[0]!);
+    }
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
   });
 });
