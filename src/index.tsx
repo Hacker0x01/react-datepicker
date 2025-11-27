@@ -218,6 +218,7 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange?: never;
         selectsMultiple?: never;
+        formatMultipleDates?: never;
         onChange?: (
           date: Date | null,
           event?:
@@ -228,6 +229,7 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange: true;
         selectsMultiple?: never;
+        formatMultipleDates?: never;
         onChange?: (
           date: [Date | null, Date | null],
           event?:
@@ -238,8 +240,12 @@ export type DatePickerProps = OmitUnion<
     | {
         selectsRange?: never;
         selectsMultiple: true;
+        formatMultipleDates?: (
+          dates: Date[],
+          formatDate: (date: Date) => string,
+        ) => string;
         onChange?: (
-          date: Date[] | null,
+          dates: Date[] | null,
           event?:
             | React.MouseEvent<HTMLElement>
             | React.KeyboardEvent<HTMLElement>,
@@ -448,6 +454,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       selectedDates,
       selectsMultiple,
       selectsRange,
+      formatMultipleDates,
       value,
     } = this.props;
     const dateFormat =
@@ -466,6 +473,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         rangeSeparator,
       });
     } else if (selectsMultiple) {
+      if (formatMultipleDates) {
+        const formatDateFn = (date: Date) =>
+          safeDateFormat(date, { dateFormat, locale });
+        return formatMultipleDates(selectedDates ?? [], formatDateFn);
+      }
       return safeMultipleDatesFormat(selectedDates ?? [], {
         dateFormat,
         locale,
