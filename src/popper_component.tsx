@@ -47,7 +47,11 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
   let popper: React.ReactElement | undefined = undefined;
 
   if (!hidePopper) {
-    const classes = clsx("react-datepicker-popper", className);
+    const classes = clsx(
+      "react-datepicker-popper",
+      !showArrow && "react-datepicker-popper-offset",
+      className,
+    );
     popper = (
       <TabLoop enableTabLoop={enableTabLoop}>
         {/* eslint-disable react-hooks/refs -- Floating UI values are designed to be used during render */}
