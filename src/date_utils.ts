@@ -63,11 +63,10 @@ import {
 import type { Locale as DateFnsLocale, Day } from "date-fns";
 
 export type DateNumberType = Day;
-interface LocaleObj
-  extends Pick<
-    DateFnsLocale,
-    "options" | "formatLong" | "localize" | "match"
-  > {}
+interface LocaleObj extends Pick<
+  DateFnsLocale,
+  "options" | "formatLong" | "localize" | "match"
+> {}
 
 export type Locale = string | LocaleObj;
 

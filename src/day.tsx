@@ -23,18 +23,17 @@ import {
   KeyType,
 } from "./date_utils";
 
-interface DayProps
-  extends Pick<
-    DateFilterOptionsWithDisabled,
-    | "minDate"
-    | "maxDate"
-    | "excludeDates"
-    | "excludeDateIntervals"
-    | "includeDateIntervals"
-    | "includeDates"
-    | "filterDate"
-    | "disabled"
-  > {
+interface DayProps extends Pick<
+  DateFilterOptionsWithDisabled,
+  | "minDate"
+  | "maxDate"
+  | "excludeDates"
+  | "excludeDateIntervals"
+  | "includeDateIntervals"
+  | "includeDates"
+  | "filterDate"
+  | "disabled"
+> {
   ariaLabelPrefixWhenEnabled?: string;
   ariaLabelPrefixWhenDisabled?: string;
   disabledKeyboardNavigation?: boolean;

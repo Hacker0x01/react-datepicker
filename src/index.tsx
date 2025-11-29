@@ -92,13 +92,15 @@ interface Holiday {
 
 type CalendarProps = React.ComponentPropsWithoutRef<typeof Calendar>;
 
-interface CalendarIconProps
-  extends React.ComponentPropsWithoutRef<typeof CalendarIcon> {}
+interface CalendarIconProps extends React.ComponentPropsWithoutRef<
+  typeof CalendarIcon
+> {}
 
 interface PortalProps extends React.ComponentPropsWithoutRef<typeof Portal> {}
 
-interface PopperComponentProps
-  extends React.ComponentPropsWithoutRef<typeof PopperComponent> {}
+interface PopperComponentProps extends React.ComponentPropsWithoutRef<
+  typeof PopperComponent
+> {}
 
 // see https://github.com/microsoft/TypeScript/issues/31501
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

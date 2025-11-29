@@ -61,11 +61,13 @@ const DATE_FORMAT = "MM/dd/yyyy";
 
 type CalendarProps = React.ComponentProps<typeof Calendar>;
 
-interface YearDropdownProps
-  extends React.ComponentPropsWithoutRef<typeof YearDropdown> {}
+interface YearDropdownProps extends React.ComponentPropsWithoutRef<
+  typeof YearDropdown
+> {}
 
-interface MonthYearDropdownProps
-  extends React.ComponentPropsWithoutRef<typeof MonthYearDropdown> {}
+interface MonthYearDropdownProps extends React.ComponentPropsWithoutRef<
+  typeof MonthYearDropdown
+> {}
 
 interface YearProps extends React.ComponentPropsWithoutRef<typeof Year> {}
 

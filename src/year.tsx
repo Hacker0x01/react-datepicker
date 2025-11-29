@@ -22,16 +22,15 @@ import {
 
 const VERTICAL_NAVIGATION_OFFSET = 3;
 
-interface YearProps
-  extends Pick<
-    DateFilterOptionsWithDisabled,
-    | "minDate"
-    | "maxDate"
-    | "excludeDates"
-    | "includeDates"
-    | "filterDate"
-    | "disabled"
-  > {
+interface YearProps extends Pick<
+  DateFilterOptionsWithDisabled,
+  | "minDate"
+  | "maxDate"
+  | "excludeDates"
+  | "includeDates"
+  | "filterDate"
+  | "disabled"
+> {
   clearSelectingDate?: VoidFunction;
   date?: Date;
   disabledKeyboardNavigation?: boolean;

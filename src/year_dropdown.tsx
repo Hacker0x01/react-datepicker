@@ -3,11 +3,14 @@ import React, { Component } from "react";
 import { getYear } from "./date_utils";
 import YearDropdownOptions from "./year_dropdown_options";
 
-interface YearDropdownOptionsProps
-  extends React.ComponentPropsWithoutRef<typeof YearDropdownOptions> {}
+interface YearDropdownOptionsProps extends React.ComponentPropsWithoutRef<
+  typeof YearDropdownOptions
+> {}
 
-interface YearDropdownProps
-  extends Omit<YearDropdownOptionsProps, "onChange" | "onCancel"> {
+interface YearDropdownProps extends Omit<
+  YearDropdownOptionsProps,
+  "onChange" | "onCancel"
+> {
   adjustDateOnChange?: boolean;
   dropdownMode: "scroll" | "select";
   onChange: (year: number) => void;
