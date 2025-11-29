@@ -90,20 +90,19 @@ function getMonthColumnsLayout(
 
 interface WeekProps extends React.ComponentPropsWithoutRef<typeof Week> {}
 
-interface MonthProps
-  extends Omit<
-    WeekProps,
-    | "ariaLabelPrefix"
-    | "chooseDayAriaLabelPrefix"
-    | "day"
-    | "disabledDayAriaLabelPrefix"
-    | "month"
-    | "onDayClick"
-    | "onDayMouseEnter"
-    | "preSelection"
-    | "selected"
-    | "showWeekNumber"
-  > {
+interface MonthProps extends Omit<
+  WeekProps,
+  | "ariaLabelPrefix"
+  | "chooseDayAriaLabelPrefix"
+  | "day"
+  | "disabledDayAriaLabelPrefix"
+  | "month"
+  | "onDayClick"
+  | "onDayMouseEnter"
+  | "preSelection"
+  | "selected"
+  | "showWeekNumber"
+> {
   monthClassName?: (date: Date) => string;
   onDayClick?: (
     date: Date,

@@ -13,11 +13,13 @@ import WeekNumber from "./week_number";
 
 interface DayProps extends React.ComponentPropsWithoutRef<typeof Day> {}
 
-interface WeekNumberProps
-  extends React.ComponentPropsWithoutRef<typeof WeekNumber> {}
+interface WeekNumberProps extends React.ComponentPropsWithoutRef<
+  typeof WeekNumber
+> {}
 
 interface WeekProps
-  extends Omit<
+  extends
+    Omit<
       DayProps,
       | "ariaLabelPrefixWhenEnabled"
       | "ariaLabelPrefixWhenDisabled"

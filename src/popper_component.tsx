@@ -9,15 +9,17 @@ import withFloating from "./with_floating";
 import type { FloatingProps } from "./with_floating";
 import type { ReactNode } from "react";
 
-interface PortalProps
-  extends Omit<React.ComponentPropsWithoutRef<typeof Portal>, "children"> {}
-interface TabLoopProps
-  extends Omit<React.ComponentPropsWithoutRef<typeof TabLoop>, "children"> {}
+interface PortalProps extends Omit<
+  React.ComponentPropsWithoutRef<typeof Portal>,
+  "children"
+> {}
+interface TabLoopProps extends Omit<
+  React.ComponentPropsWithoutRef<typeof TabLoop>,
+  "children"
+> {}
 
 interface PopperComponentProps
-  extends Omit<PortalProps, "portalId">,
-    TabLoopProps,
-    FloatingProps {
+  extends Omit<PortalProps, "portalId">, TabLoopProps, FloatingProps {
   className?: string;
   wrapperClassName?: string;
   popperComponent: React.ReactNode;

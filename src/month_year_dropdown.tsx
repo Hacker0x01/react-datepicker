@@ -13,11 +13,14 @@ import {
 } from "./date_utils";
 import MonthYearDropdownOptions from "./month_year_dropdown_options";
 
-interface MonthYearDropdownOptionsProps
-  extends React.ComponentPropsWithoutRef<typeof MonthYearDropdownOptions> {}
+interface MonthYearDropdownOptionsProps extends React.ComponentPropsWithoutRef<
+  typeof MonthYearDropdownOptions
+> {}
 
-interface MonthYearDropdownProps
-  extends Omit<MonthYearDropdownOptionsProps, "onChange" | "onCancel"> {
+interface MonthYearDropdownProps extends Omit<
+  MonthYearDropdownOptionsProps,
+  "onChange" | "onCancel"
+> {
   dropdownMode: "scroll" | "select";
   onChange: (monthYear: Date) => void;
   locale?: Locale;

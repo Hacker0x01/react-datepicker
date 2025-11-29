@@ -65,6 +65,7 @@
     "babel-jest": "^30.0.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "core-js": "^3.46.0",
+    "date-fns-tz": "^3.2.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
@@ -96,8 +97,14 @@
     "typescript-eslint": "^8.22.0"
   },
   "peerDependencies": {
+    "date-fns-tz": "^3.0.0",
     "react": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc",
     "react-dom": "^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc"
+  },
+  "peerDependenciesMeta": {
+    "date-fns-tz": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.15",

@@ -56,14 +56,17 @@ import YearDropdown from "./year_dropdown";
 import type { ClickOutsideHandler } from "./click_outside_wrapper";
 import type { Day } from "date-fns";
 
-interface YearDropdownProps
-  extends React.ComponentPropsWithoutRef<typeof YearDropdown> {}
+interface YearDropdownProps extends React.ComponentPropsWithoutRef<
+  typeof YearDropdown
+> {}
 
-interface MonthDropdownProps
-  extends React.ComponentPropsWithoutRef<typeof MonthDropdown> {}
+interface MonthDropdownProps extends React.ComponentPropsWithoutRef<
+  typeof MonthDropdown
+> {}
 
-interface MonthYearDropdownProps
-  extends React.ComponentPropsWithoutRef<typeof MonthYearDropdown> {}
+interface MonthYearDropdownProps extends React.ComponentPropsWithoutRef<
+  typeof MonthYearDropdown
+> {}
 
 interface YearProps extends React.ComponentPropsWithoutRef<typeof Year> {}
 
@@ -71,8 +74,9 @@ interface MonthProps extends React.ComponentPropsWithoutRef<typeof Month> {}
 
 interface TimeProps extends React.ComponentPropsWithoutRef<typeof Time> {}
 
-interface InputTimeProps
-  extends React.ComponentPropsWithoutRef<typeof InputTime> {}
+interface InputTimeProps extends React.ComponentPropsWithoutRef<
+  typeof InputTime
+> {}
 
 const DROPDOWN_FOCUS_CLASSNAMES = [
   "react-datepicker__year-select",
@@ -217,8 +221,7 @@ type CalendarProps = React.PropsWithChildren<
 >;
 
 interface CalendarState
-  extends Pick<YearProps, "selectingDate">,
-    Pick<MonthProps, "selectingDate"> {
+  extends Pick<YearProps, "selectingDate">, Pick<MonthProps, "selectingDate"> {
   date: Required<YearProps>["date"];
   monthContainer: TimeProps["monthRef"];
   isRenderAriaLiveMessage: boolean;

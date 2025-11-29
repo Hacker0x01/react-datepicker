@@ -109,6 +109,7 @@ import YearItemNumber from "../../examples/ts/yearItemNumber?raw";
 import WeekPicker from "../../examples/ts/weekPicker?raw";
 import ExcludeWeeks from "../../examples/ts/excludeWeeks?raw";
 import ExternalForm from "../../examples/ts/externalForm?raw";
+import Timezone from "../../examples/ts/timezone?raw";
 
 export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
@@ -563,5 +564,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "External Form",
     component: ExternalForm,
+  },
+  {
+    title: "Timezone",
+    description:
+      "Display and handle dates in a specific timezone using the timeZone prop. Requires date-fns-tz as a peer dependency.",
+    component: Timezone,
   },
 ];
