@@ -14,10 +14,7 @@ describe("Multiple Dates Selected", function () {
     extraProps: Partial<
       Pick<
         DatePickerProps,
-        | "selectsMultiple"
-        | "shouldCloseOnSelect"
-        | "disabledKeyboardNavigation"
-        | "onSelect"
+        "shouldCloseOnSelect" | "disabledKeyboardNavigation" | "onSelect"
       >
     > &
       OmitUnion<
@@ -28,7 +25,9 @@ describe("Multiple Dates Selected", function () {
         | "disabledKeyboardNavigation"
         | "onSelect"
         | "selectsRange"
-      >,
+      > & {
+        selectsMultiple?: true;
+      },
   ) {
     return render(
       <DatePicker
