@@ -5822,16 +5822,228 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("showTimeSelect with selectsRange", () => {
+    it("should apply time to startDate when only startDate is selected", () => {
+      const startDate = newDate("2024-01-15 00:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={null}
+          onChange={onChange}
+          showTimeSelect
+          inline
+        />,
+      );
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      expect(timeElements.length).toBeGreaterThan(0);
+
+      // Find a time element (e.g., 10:00 AM)
+      const timeElement = Array.from(timeElements).find(
+        (el) => el.textContent === "10:00 AM",
+      );
+      expect(timeElement).toBeTruthy();
+
+      fireEvent.click(timeElement!);
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const [changedStartDate, changedEndDate] = onChange.mock.calls[0][0];
+
+      // startDate should have the new time applied
+      expect(changedStartDate).toBeTruthy();
+      expect(getHours(changedStartDate)).toBe(10);
+      expect(getMinutes(changedStartDate)).toBe(0);
+
+      // endDate should still be null
+      expect(changedEndDate).toBeNull();
+    });
+
+    it("should apply time to endDate when both startDate and endDate are selected", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const endDate = newDate("2024-01-20 00:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          showTimeSelect
+          inline
+        />,
+      );
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      expect(timeElements.length).toBeGreaterThan(0);
+
+      // Find a time element (e.g., 2:30 PM)
+      const timeElement = Array.from(timeElements).find(
+        (el) => el.textContent === "2:30 PM",
+      );
+      expect(timeElement).toBeTruthy();
+
+      fireEvent.click(timeElement!);
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const [changedStartDate, changedEndDate] = onChange.mock.calls[0][0];
+
+      // startDate should remain unchanged
+      expect(changedStartDate).toBeTruthy();
+      expect(getHours(changedStartDate)).toBe(9);
+      expect(getMinutes(changedStartDate)).toBe(0);
+
+      // endDate should have the new time applied
+      expect(changedEndDate).toBeTruthy();
+      expect(getHours(changedEndDate)).toBe(14);
+      expect(getMinutes(changedEndDate)).toBe(30);
+    });
+
+    it("should not call onChange when no dates are selected in range mode", () => {
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          endDate={null}
+          onChange={onChange}
+          showTimeSelect
+          inline
+        />,
+      );
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      expect(timeElements.length).toBeGreaterThan(0);
+
+      // Click a time when no dates are selected
+      fireEvent.click(timeElements[0]!);
+
+      // onChange should not be called when no dates are selected
+      // because we need a date to apply the time to
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it("should call onChange with tuple format [Date, Date] when time is selected in range mode", () => {
+      const startDate = newDate("2024-01-15 00:00:00");
+      const endDate = newDate("2024-01-20 00:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          showTimeSelect
+          inline
+        />,
+      );
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+      const timeElement = timeElements[0];
+      expect(timeElement).toBeTruthy();
+
+      fireEvent.click(timeElement!);
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+
+      // Verify the argument is an array (tuple)
+      const callArg = onChange.mock.calls[0][0];
+      expect(Array.isArray(callArg)).toBe(true);
+      expect(callArg.length).toBe(2);
+    });
+
+    it("should not throw TypeError when clicking time with selectsRange enabled", () => {
+      const startDate = newDate("2024-01-15 00:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={null}
+          onChange={onChange}
+          showTimeSelect
+          inline
+        />,
+      );
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+
+      expect(timeElements.length).toBeGreaterThan(0);
+
+      // This should not throw "Uncaught TypeError: Invalid attempt to destructure non-iterable instance"
+      expect(() => {
+        fireEvent.click(timeElements[0]!);
+      }).not.toThrow();
+
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    it("should close calendar after time selection when shouldCloseOnSelect is true", () => {
+      const startDate = newDate("2024-01-15 00:00:00");
+      const endDate = newDate("2024-01-20 00:00:00");
+      let instance: DatePicker | null = null;
+
+      const { container } = render(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={jest.fn()}
+          showTimeSelect
+          shouldCloseOnSelect
+        />,
+      );
+
+      expect(instance).toBeTruthy();
+
+      // Open the calendar
+      const input = safeQuerySelector(container, "input");
+      fireEvent.focus(input);
+
+      expect(instance!.state.open).toBe(true);
+
+      const timeElements = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+      expect(timeElements.length).toBeGreaterThan(0);
+
+      fireEvent.click(timeElements[0]!);
+
+      // Calendar should close after time selection
+      expect(instance!.state.open).toBe(false);
+    });
+  });
+
   describe("Critical functions coverage - best in class", () => {
-    it("should handle handleTimeChange with selectsRange (line 942)", () => {
+    it("should handle handleTimeChange with selectsMultiple (line 942)", () => {
       const onChange = jest.fn();
       const { container } = render(
         <DatePicker
-          selected={newDate()}
+          selected={null}
           onChange={onChange}
-          startDate={newDate()}
-          endDate={null}
-          selectsRange
+          selectsMultiple
           showTimeSelect
           inline
         />,
@@ -5843,13 +6055,12 @@ describe("DatePicker", () => {
 
       expect(timeElements.length).toBeGreaterThan(0);
       const firstTimeElement = timeElements[0] as HTMLElement;
-      // Line 942: handleTimeChange early return for selectsRange
+      // Line 942: handleTimeChange early return for selectsMultiple
       fireEvent.click(firstTimeElement);
-      // Time change should not affect range selection directly
       expect(container.querySelector(".react-datepicker")).not.toBeNull();
     });
 
-    it("should handle handleTimeChange with selectsMultiple (line 942)", () => {
+    it("should handle handleTimeChange with selectsMultiple - duplicate test (line 942)", () => {
       const onChange = jest.fn();
       const { container } = render(
         <DatePicker

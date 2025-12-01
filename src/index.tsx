@@ -964,25 +964,67 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
 
   handleTimeChange = (time: Date): void => {
-    if (this.props.selectsRange || this.props.selectsMultiple) {
+    if (this.props.selectsMultiple) {
       return;
     }
 
-    const selected = this.props.selected
-      ? this.props.selected
-      : this.getPreSelection();
-    const changedDate = this.props.selected
-      ? time
-      : setTime(selected, {
+    const { selectsRange, startDate, endDate, onChange } = this.props;
+
+    if (selectsRange) {
+      // In range mode, apply time to the appropriate date
+      // If we have a startDate but no endDate, apply time to startDate
+      // If we have both, apply time to endDate
+      const hasStartRange = startDate && !endDate;
+
+      if (hasStartRange) {
+        // Apply time to startDate
+        const changedStartDate = setTime(startDate, {
           hour: getHours(time),
           minute: getMinutes(time),
         });
+        this.setState({
+          preSelection: changedStartDate,
+        });
+        onChange?.([changedStartDate, null], undefined);
+      } else if (startDate && endDate) {
+        // Apply time to endDate
+        const changedEndDate = setTime(endDate, {
+          hour: getHours(time),
+          minute: getMinutes(time),
+        });
+        this.setState({
+          preSelection: changedEndDate,
+        });
+        onChange?.([startDate, changedEndDate], undefined);
+      } else {
+        // No dates selected yet, just update preSelection
+        const changedDate = setTime(this.getPreSelection(), {
+          hour: getHours(time),
+          minute: getMinutes(time),
+        });
+        this.setState({
+          preSelection: changedDate,
+        });
+      }
+    } else {
+      // Single date mode (original behavior)
+      const selected = this.props.selected
+        ? this.props.selected
+        : this.getPreSelection();
+      const changedDate = this.props.selected
+        ? time
+        : setTime(selected, {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
 
-    this.setState({
-      preSelection: changedDate,
-    });
+      this.setState({
+        preSelection: changedDate,
+      });
 
-    this.props.onChange?.(changedDate);
+      this.props.onChange?.(changedDate);
+    }
+
     if (this.props.shouldCloseOnSelect && !this.props.showTimeInput) {
       this.sendFocusBackToInput();
       this.setOpen(false);
