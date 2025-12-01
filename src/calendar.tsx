@@ -149,6 +149,9 @@ type CalendarProps = React.PropsWithChildren<
     > &
     Omit<TimeProps, "onChange" | "format" | "intervals" | "monthRef"> &
     Omit<InputTimeProps, "date" | "timeString" | "onChange"> & {
+      selectsRange?: boolean;
+      startDate?: Date | null;
+      endDate?: Date | null;
       className?: string;
       container?: React.ElementType;
       showYearPicker?: boolean;
@@ -205,7 +208,7 @@ type CalendarProps = React.PropsWithChildren<
           | React.KeyboardEvent<HTMLLIElement>
           | React.KeyboardEvent<HTMLButtonElement>,
       ) => void;
-      onTimeChange?: TimeProps["onChange"] | InputTimeProps["onChange"];
+      onTimeChange?: (time: Date, modifyDateType?: "start" | "end") => void;
       timeFormat?: TimeProps["format"];
       timeIntervals?: TimeProps["intervals"];
     } & (
@@ -1107,6 +1110,54 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   renderInputTimeSection = (): React.ReactElement | undefined => {
+    if (!this.props.showTimeInput) {
+      return;
+    }
+
+    // Handle selectsRange mode - render two time inputs
+    if (this.props.selectsRange) {
+      const { startDate, endDate } = this.props;
+
+      const startTime = startDate ? new Date(startDate) : undefined;
+      const startTimeValid =
+        startTime && isValid(startTime) && Boolean(startDate);
+      const startTimeString = startTimeValid
+        ? `${addZero(startTime.getHours())}:${addZero(startTime.getMinutes())}`
+        : "";
+
+      const endTime = endDate ? new Date(endDate) : undefined;
+      const endTimeValid = endTime && isValid(endTime) && Boolean(endDate);
+      const endTimeString = endTimeValid
+        ? `${addZero(endTime.getHours())}:${addZero(endTime.getMinutes())}`
+        : "";
+
+      return (
+        <>
+          <InputTime
+            {...Calendar.defaultProps}
+            {...this.props}
+            date={startTime}
+            timeString={startTimeString}
+            onChange={(time: Date) => {
+              this.props.onTimeChange?.(time, "start");
+            }}
+            timeInputLabel={(this.props.timeInputLabel ?? "Time") + " (Start)"}
+          />
+          <InputTime
+            {...Calendar.defaultProps}
+            {...this.props}
+            date={endTime}
+            timeString={endTimeString}
+            onChange={(time: Date) => {
+              this.props.onTimeChange?.(time, "end");
+            }}
+            timeInputLabel={(this.props.timeInputLabel ?? "Time") + " (End)"}
+          />
+        </>
+      );
+    }
+
+    // Single date mode (original behavior)
     const time = this.props.selected
       ? new Date(this.props.selected)
       : undefined;
@@ -1114,18 +1165,17 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     const timeString = timeValid
       ? `${addZero(time.getHours())}:${addZero(time.getMinutes())}`
       : "";
-    if (this.props.showTimeInput) {
-      return (
-        <InputTime
-          {...Calendar.defaultProps}
-          {...this.props}
-          date={time}
-          timeString={timeString}
-          onChange={this.props.onTimeChange}
-        />
-      );
-    }
-    return;
+    return (
+      <InputTime
+        {...Calendar.defaultProps}
+        {...this.props}
+        date={time}
+        timeString={timeString}
+        onChange={(time: Date) => {
+          this.props.onTimeChange?.(time);
+        }}
+      />
+    );
   };
 
   renderAriaLiveRegion = (): React.ReactElement => {

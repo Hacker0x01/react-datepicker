@@ -963,7 +963,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     this.setOpen(!this.state.open);
   };
 
-  handleTimeChange = (time: Date): void => {
+  handleTimeChange = (time: Date, modifyDateType?: "start" | "end"): void => {
     if (this.props.selectsMultiple) {
       return;
     }
@@ -972,39 +972,69 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
     if (selectsRange) {
       // In range mode, apply time to the appropriate date
-      // If we have a startDate but no endDate, apply time to startDate
-      // If we have both, apply time to endDate
-      const hasStartRange = startDate && !endDate;
+      // If modifyDateType is specified, use that to determine which date to modify
+      // Otherwise, use the legacy behavior:
+      // - If we have a startDate but no endDate, apply time to startDate
+      // - If we have both, apply time to endDate
 
-      if (hasStartRange) {
-        // Apply time to startDate
-        const changedStartDate = setTime(startDate, {
-          hour: getHours(time),
-          minute: getMinutes(time),
-        });
-        this.setState({
-          preSelection: changedStartDate,
-        });
-        onChange?.([changedStartDate, null], undefined);
-      } else if (startDate && endDate) {
-        // Apply time to endDate
-        const changedEndDate = setTime(endDate, {
-          hour: getHours(time),
-          minute: getMinutes(time),
-        });
-        this.setState({
-          preSelection: changedEndDate,
-        });
-        onChange?.([startDate, changedEndDate], undefined);
+      if (modifyDateType === "start") {
+        // Explicitly modify start date
+        if (startDate) {
+          const changedStartDate = setTime(startDate, {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
+          this.setState({
+            preSelection: changedStartDate,
+          });
+          onChange?.([changedStartDate, endDate ?? null], undefined);
+        }
+      } else if (modifyDateType === "end") {
+        // Explicitly modify end date
+        if (endDate) {
+          const changedEndDate = setTime(endDate, {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
+          this.setState({
+            preSelection: changedEndDate,
+          });
+          onChange?.([startDate ?? null, changedEndDate], undefined);
+        }
       } else {
-        // No dates selected yet, just update preSelection
-        const changedDate = setTime(this.getPreSelection(), {
-          hour: getHours(time),
-          minute: getMinutes(time),
-        });
-        this.setState({
-          preSelection: changedDate,
-        });
+        // Legacy behavior for showTimeSelect (single time picker)
+        const hasStartRange = startDate && !endDate;
+
+        if (hasStartRange) {
+          // Apply time to startDate
+          const changedStartDate = setTime(startDate, {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
+          this.setState({
+            preSelection: changedStartDate,
+          });
+          onChange?.([changedStartDate, null], undefined);
+        } else if (startDate && endDate) {
+          // Apply time to endDate
+          const changedEndDate = setTime(endDate, {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
+          this.setState({
+            preSelection: changedEndDate,
+          });
+          onChange?.([startDate, changedEndDate], undefined);
+        } else {
+          // No dates selected yet, just update preSelection
+          const changedDate = setTime(this.getPreSelection(), {
+            hour: getHours(time),
+            minute: getMinutes(time),
+          });
+          this.setState({
+            preSelection: changedDate,
+          });
+        }
       }
     } else {
       // Single date mode (original behavior)

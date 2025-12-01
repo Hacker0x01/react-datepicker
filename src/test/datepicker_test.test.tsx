@@ -6036,6 +6036,281 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("showTimeInput with selectsRange", () => {
+    it("should render two time inputs when selectsRange is true", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const endDate = newDate("2024-01-20 14:30:00");
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={jest.fn()}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker__input-time-container",
+      );
+
+      // Should render two time input containers (one for start, one for end)
+      expect(timeInputs.length).toBe(2);
+
+      // Check labels
+      const labels = container.querySelectorAll(
+        ".react-datepicker-time__caption",
+      );
+      expect(labels.length).toBe(2);
+      expect(labels[0]?.textContent).toContain("Start");
+      expect(labels[1]?.textContent).toContain("End");
+    });
+
+    it("should apply time to startDate when start time input is changed", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const endDate = newDate("2024-01-20 14:30:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker-time__input input",
+      );
+      expect(timeInputs.length).toBe(2);
+
+      // Change the start time input
+      fireEvent.change(timeInputs[0]!, { target: { value: "11:30" } });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const [changedStartDate, changedEndDate] = onChange.mock.calls[0][0];
+
+      // startDate should have the new time applied
+      expect(changedStartDate).toBeTruthy();
+      expect(getHours(changedStartDate)).toBe(11);
+      expect(getMinutes(changedStartDate)).toBe(30);
+
+      // endDate should remain unchanged
+      expect(changedEndDate).toBeTruthy();
+      expect(getHours(changedEndDate)).toBe(14);
+      expect(getMinutes(changedEndDate)).toBe(30);
+    });
+
+    it("should apply time to endDate when end time input is changed", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const endDate = newDate("2024-01-20 14:30:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker-time__input input",
+      );
+      expect(timeInputs.length).toBe(2);
+
+      // Change the end time input
+      fireEvent.change(timeInputs[1]!, { target: { value: "16:45" } });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const [changedStartDate, changedEndDate] = onChange.mock.calls[0][0];
+
+      // startDate should remain unchanged
+      expect(changedStartDate).toBeTruthy();
+      expect(getHours(changedStartDate)).toBe(9);
+      expect(getMinutes(changedStartDate)).toBe(0);
+
+      // endDate should have the new time applied
+      expect(changedEndDate).toBeTruthy();
+      expect(getHours(changedEndDate)).toBe(16);
+      expect(getMinutes(changedEndDate)).toBe(45);
+    });
+
+    it("should render only one time input when selectsRange is false", () => {
+      const selected = newDate("2024-01-15 09:00:00");
+
+      const { container } = render(
+        <DatePicker
+          selected={selected}
+          onChange={jest.fn()}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker__input-time-container",
+      );
+
+      // Should render only one time input container
+      expect(timeInputs.length).toBe(1);
+    });
+
+    it("should show correct initial time values in both inputs", () => {
+      const startDate = newDate("2024-01-15 09:30:00");
+      const endDate = newDate("2024-01-20 14:45:00");
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={jest.fn()}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll<HTMLInputElement>(
+        ".react-datepicker-time__input input",
+      );
+      expect(timeInputs.length).toBe(2);
+
+      // Check start time input value
+      expect(timeInputs[0]?.value).toBe("09:30");
+
+      // Check end time input value
+      expect(timeInputs[1]?.value).toBe("14:45");
+    });
+
+    it("should handle case when only startDate is selected", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={null}
+          onChange={onChange}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker-time__input input",
+      );
+      expect(timeInputs.length).toBe(2);
+
+      // Change the start time input
+      fireEvent.change(timeInputs[0]!, { target: { value: "11:30" } });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const [changedStartDate, changedEndDate] = onChange.mock.calls[0][0];
+
+      // startDate should have the new time applied
+      expect(changedStartDate).toBeTruthy();
+      expect(getHours(changedStartDate)).toBe(11);
+      expect(getMinutes(changedStartDate)).toBe(30);
+
+      // endDate should still be null
+      expect(changedEndDate).toBeNull();
+    });
+
+    it("should not throw TypeError when changing time with selectsRange enabled", () => {
+      const startDate = newDate("2024-01-15 09:00:00");
+      const endDate = newDate("2024-01-20 14:30:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onChange}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker-time__input input",
+      );
+
+      // This should not throw any errors
+      expect(() => {
+        fireEvent.change(timeInputs[0]!, { target: { value: "11:30" } });
+      }).not.toThrow();
+
+      expect(() => {
+        fireEvent.change(timeInputs[1]!, { target: { value: "16:45" } });
+      }).not.toThrow();
+    });
+
+    it("should apply time change in single date mode (non-range)", () => {
+      const selected = newDate("2024-01-15 09:00:00");
+      const onChange = jest.fn();
+
+      const { container } = render(
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll(
+        ".react-datepicker-time__input input",
+      );
+      expect(timeInputs.length).toBe(1);
+
+      // Change the time input
+      fireEvent.change(timeInputs[0]!, { target: { value: "14:30" } });
+
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const changedDate = onChange.mock.calls[0][0];
+
+      // Date should have the new time applied
+      expect(changedDate).toBeTruthy();
+      expect(getHours(changedDate)).toBe(14);
+      expect(getMinutes(changedDate)).toBe(30);
+    });
+
+    it("should render two time inputs with empty values when no dates are selected in range mode", () => {
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={null}
+          endDate={null}
+          onChange={jest.fn()}
+          showTimeInput
+          inline
+        />,
+      );
+
+      const timeInputs = container.querySelectorAll<HTMLInputElement>(
+        ".react-datepicker-time__input input",
+      );
+
+      // Should render two time input containers
+      expect(timeInputs.length).toBe(2);
+
+      // Both inputs should have empty values since no dates are selected
+      expect(timeInputs[0]?.value).toBe("");
+      expect(timeInputs[1]?.value).toBe("");
+    });
+  });
+
   describe("Critical functions coverage - best in class", () => {
     it("should handle handleTimeChange with selectsMultiple (line 942)", () => {
       const onChange = jest.fn();
