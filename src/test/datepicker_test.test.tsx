@@ -4969,6 +4969,7 @@ describe("DatePicker", () => {
           startDate={null}
           selected={newDate(endDateLabel)}
           endDate={newDate(endDateLabel)}
+          openToDate={newDate(endDateLabel)}
           dateFormat="yyyy-MM-dd"
           onChange={onChangeSpy}
           isClearable
@@ -5003,6 +5004,7 @@ describe("DatePicker", () => {
           startDate={null}
           selected={newDate(endDateLabel)}
           endDate={newDate(endDateLabel)}
+          openToDate={newDate(endDateLabel)}
           dateFormat="yyyy-MM-dd"
           onChange={onChangeSpy}
           isClearable
