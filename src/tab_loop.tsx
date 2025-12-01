@@ -85,7 +85,7 @@ export default class TabLoop extends Component<TabLoopProps> {
     tabChildren && tabChildren.length > 1 && tabChildren[0].focus();
   };
 
-  render() {
+  render(): React.ReactNode {
     if (!(this.props.enableTabLoop ?? TabLoop.defaultProps.enableTabLoop)) {
       return this.props.children;
     }
