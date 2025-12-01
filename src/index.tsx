@@ -218,8 +218,8 @@ export type DatePickerProps = OmitUnion<
     ) => void;
   } & (
     | {
-        selectsRange?: never;
-        selectsMultiple?: never;
+        selectsRange?: false | undefined;
+        selectsMultiple?: false | undefined;
         formatMultipleDates?: never;
         onChange?: (
           date: Date | null,
@@ -230,7 +230,7 @@ export type DatePickerProps = OmitUnion<
       }
     | {
         selectsRange: true;
-        selectsMultiple?: never;
+        selectsMultiple?: false | undefined;
         formatMultipleDates?: never;
         onChange?: (
           date: [Date | null, Date | null],
@@ -240,7 +240,7 @@ export type DatePickerProps = OmitUnion<
         ) => void;
       }
     | {
-        selectsRange?: never;
+        selectsRange?: false | undefined;
         selectsMultiple: true;
         formatMultipleDates?: (
           dates: Date[],
