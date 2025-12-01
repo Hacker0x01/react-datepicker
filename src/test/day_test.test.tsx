@@ -17,9 +17,15 @@ import Day from "../day";
 
 import { safeQuerySelector } from "./test_utils";
 
-function renderDay(day: Date, props = {}) {
+function renderDay(day: Date, props: Record<string, unknown> = {}) {
+  const month = props.month !== undefined ? props.month : getMonth(day);
   return render(
-    <Day day={day} month={0} handleOnKeyDown={() => {}} {...props} />,
+    <Day
+      day={day}
+      month={month as number}
+      handleOnKeyDown={() => {}}
+      {...props}
+    />,
   ).container;
 }
 
@@ -1087,6 +1093,93 @@ describe("Day", () => {
             .querySelector(".react-datepicker__day")
             ?.classList.contains(rangeDayEndClassName),
         ).toBe(true);
+      });
+    });
+
+    describe("for days outside the current month", () => {
+      it("should not apply the in-selecting-range class for days before the current month", () => {
+        // Day is in the previous month but displayed in the current month's calendar
+        const day = newDate("2023-08-29"); // August 29
+        const startDate = newDate("2023-08-29"); // August 29
+        const selectingDate = newDate("2023-10-05"); // October 5
+
+        // Render the day as if it's displayed in September's calendar (month = 8, 0-indexed)
+        const container = renderDay(day, {
+          month: 8, // September (0-indexed)
+          startDate,
+          selectingDate,
+          selectsEnd: true,
+        });
+
+        expect(
+          container
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(false);
+      });
+
+      it("should not apply the in-selecting-range class for days after the current month", () => {
+        // Day is in the next month but displayed in the current month's calendar
+        const day = newDate("2023-10-01"); // October 1
+        const startDate = newDate("2023-08-29"); // August 29
+        const selectingDate = newDate("2023-10-05"); // October 5
+
+        // Render the day as if it's displayed in September's calendar (month = 8, 0-indexed)
+        const container = renderDay(day, {
+          month: 8, // September (0-indexed)
+          startDate,
+          selectingDate,
+          selectsEnd: true,
+        });
+
+        expect(
+          container
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(false);
+      });
+
+      it("should apply the in-selecting-range class for days within the current month", () => {
+        // Day is in the current month
+        const day = newDate("2023-09-15"); // September 15
+        const startDate = newDate("2023-09-10"); // September 10
+        const selectingDate = newDate("2023-09-20"); // September 20
+
+        // Render the day as if it's displayed in September's calendar (month = 8, 0-indexed)
+        const container = renderDay(day, {
+          month: 8, // September (0-indexed)
+          startDate,
+          selectingDate,
+          selectsEnd: true,
+        });
+
+        expect(
+          container
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(true);
+      });
+
+      it("should not highlight days from previous month when navigating to next month with selectsRange", () => {
+        // This is the exact scenario from issue #4350
+        // User selects August 29 as start date, navigates to October
+        // Days 1-29 in October should NOT be highlighted
+        const day = newDate("2023-09-29"); // September 29 (shown in October's calendar)
+        const startDate = newDate("2023-08-29"); // August 29
+
+        // Render the day as if it's displayed in October's calendar (month = 9, 0-indexed)
+        const container = renderDay(day, {
+          month: 9, // October (0-indexed)
+          startDate,
+          selectingDate: newDate("2023-10-15"),
+          selectsRange: true,
+        });
+
+        expect(
+          container
+            .querySelector(".react-datepicker__day")
+            ?.classList.contains(rangeDayClassName),
+        ).toBe(false);
       });
     });
   });

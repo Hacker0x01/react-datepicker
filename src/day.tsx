@@ -296,6 +296,11 @@ export default class Day extends Component<DayProps> {
 
     const selectingDate = this.props.selectingDate ?? this.props.preSelection;
 
+    // Don't highlight days outside the current month
+    if (this.isAfterMonth() || this.isBeforeMonth()) {
+      return false;
+    }
+
     if (
       !(selectsStart || selectsEnd || selectsRange) ||
       !selectingDate ||
