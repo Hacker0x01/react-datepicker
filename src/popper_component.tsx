@@ -28,6 +28,7 @@ interface PopperComponentProps
   popperOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   showArrow?: boolean;
   portalId?: PortalProps["portalId"];
+  monthHeaderPosition?: "top" | "middle" | "bottom";
 }
 
 // Exported for testing purposes
@@ -44,6 +45,7 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     portalHost,
     popperProps,
     showArrow,
+    monthHeaderPosition,
   } = props;
 
   let popper: React.ReactElement | undefined = undefined;
@@ -52,6 +54,10 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     const classes = clsx(
       "react-datepicker-popper",
       !showArrow && "react-datepicker-popper-offset",
+      monthHeaderPosition === "middle" &&
+        "react-datepicker-popper--header-middle",
+      monthHeaderPosition === "bottom" &&
+        "react-datepicker-popper--header-bottom",
       className,
     );
     popper = (
