@@ -64,7 +64,10 @@ export { default as CalendarContainer } from "./calendar_container";
 
 export { registerLocale, setDefaultLocale, getDefaultLocale };
 
-export { ReactDatePickerCustomHeaderProps } from "./calendar";
+export {
+  ReactDatePickerCustomHeaderProps,
+  ReactDatePickerCustomDayNameProps,
+} from "./calendar";
 
 // Compares dates year+month combinations
 function hasPreSelectionChanged(

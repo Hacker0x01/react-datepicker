@@ -114,6 +114,14 @@ export interface ReactDatePickerCustomHeaderProps {
   };
 }
 
+export interface ReactDatePickerCustomDayNameProps {
+  day: Date;
+  shortName: string;
+  fullName: string;
+  locale?: Locale;
+  customDayNameCount: number;
+}
+
 type CalendarProps = React.PropsWithChildren<
   Omit<
     YearDropdownProps,
@@ -195,6 +203,9 @@ type CalendarProps = React.PropsWithChildren<
       renderCustomHeader?: (
         props: ReactDatePickerCustomHeaderProps,
       ) => React.ReactElement;
+      renderCustomDayName?: (
+        props: ReactDatePickerCustomDayNameProps,
+      ) => React.ReactNode;
       onYearMouseEnter?: YearProps["onYearMouseEnter"];
       onYearMouseLeave?: YearProps["onYearMouseLeave"];
       monthAriaLabelPrefix?: MonthProps["ariaLabelPrefix"];
@@ -477,7 +488,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     );
   };
 
-  header = (date: Date = this.state.date): React.ReactElement[] => {
+  header = (
+    date: Date = this.state.date,
+    customDayNameCount: number = 0,
+  ): React.ReactElement[] => {
     // Return empty array if date is invalid
     if (!isValid(date)) {
       return [];
@@ -507,11 +521,38 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       [0, 1, 2, 3, 4, 5, 6].map((offset) => {
         const day = addDays(startOfWeek, offset);
         const weekDayName = this.formatWeekday(day, this.props.locale);
+        const fullDayName = formatDate(day, "EEEE", this.props.locale);
 
         const weekDayClassName = this.props.weekDayClassName
           ? this.props.weekDayClassName(day)
           : undefined;
 
+        // Use custom render if provided
+        if (this.props.renderCustomDayName) {
+          const customContent = this.props.renderCustomDayName({
+            day,
+            shortName: weekDayName,
+            fullName: fullDayName,
+            locale: this.props.locale,
+            customDayNameCount,
+          });
+
+          return (
+            <div
+              key={offset}
+              role="columnheader"
+              className={clsx(
+                "react-datepicker__day-name",
+                weekDayClassName,
+                disabled ? "react-datepicker__day-name--disabled" : "",
+              )}
+            >
+              {customContent}
+            </div>
+          );
+        }
+
+        // Default render
         return (
           <div
             key={offset}
@@ -522,9 +563,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
               disabled ? "react-datepicker__day-name--disabled" : "",
             )}
           >
-            <span className="react-datepicker__sr-only">
-              {formatDate(day, "EEEE", this.props.locale)}
-            </span>
+            <span className="react-datepicker__sr-only">{fullDayName}</span>
             <span aria-hidden="true">{weekDayName}</span>
           </div>
         );
@@ -871,9 +910,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     );
   };
 
-  renderDayNamesHeader = (monthDate: Date) => (
+  renderDayNamesHeader = (monthDate: Date, customDayNameCount: number = 0) => (
     <div className="react-datepicker__day-names" role="row">
-      {this.header(monthDate)}
+      {this.header(monthDate, customDayNameCount)}
     </div>
   );
 
@@ -1055,7 +1094,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             selectingDate={this.state.selectingDate}
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
-            dayNamesHeader={this.renderDayNamesHeader(monthDate)}
+            dayNamesHeader={this.renderDayNamesHeader(monthDate, i)}
           />
         </div>,
       );
