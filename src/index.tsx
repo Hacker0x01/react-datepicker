@@ -410,10 +410,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           : newDate();
 
   // Convert the date from string format to standard Date format
+  // Uses parseDate with ISO format to parse as local time, preventing
+  // dates from shifting in timezones west of UTC. See issue #6105.
   modifyHolidays = () =>
     this.props.holidays?.reduce<HolidayItem[]>((accumulator, holiday) => {
-      const date = new Date(holiday.date);
-      if (!isValid(date)) {
+      const date = parseDate(holiday.date, "yyyy-MM-dd", undefined, false);
+      if (!date) {
         return accumulator;
       }
 

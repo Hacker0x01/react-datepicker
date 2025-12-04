@@ -5461,6 +5461,40 @@ describe("DatePicker", () => {
       expect(container.querySelector(".react-datepicker")).not.toBeNull();
     });
 
+    it("should apply holiday class to correct date regardless of timezone (issue #6105)", () => {
+      // This test verifies that holidays specified as ISO date strings (YYYY-MM-DD)
+      // are displayed on the correct date. The bug was that new Date("YYYY-MM-DD")
+      // parses as UTC midnight, causing dates to shift in western timezones.
+      const holidays = [{ date: "2024-01-15", holidayName: "Test Holiday" }];
+
+      const { container } = render(
+        <DatePicker
+          selected={new Date(2024, 0, 15)} // January 15, 2024 in local time
+          onChange={() => {}}
+          holidays={holidays}
+          inline
+        />,
+      );
+
+      // Find the day element for January 15th and verify it has the holiday class
+      const jan15 = container.querySelector(
+        ".react-datepicker__day--015:not(.react-datepicker__day--outside-month)",
+      );
+      expect(jan15).not.toBeNull();
+      expect(jan15?.classList.contains("react-datepicker__day--holidays")).toBe(
+        true,
+      );
+
+      // Verify January 14th does NOT have the holiday class (the bug would show it here)
+      const jan14 = container.querySelector(
+        ".react-datepicker__day--014:not(.react-datepicker__day--outside-month)",
+      );
+      expect(jan14).not.toBeNull();
+      expect(jan14?.classList.contains("react-datepicker__day--holidays")).toBe(
+        false,
+      );
+    });
+
     it("should handle deferFocusInput and cancelFocusInput", () => {
       jest.useFakeTimers();
 
