@@ -17,6 +17,7 @@ import ConfigureFloatingUI from "../../examples/ts/configureFloatingUI?raw";
 import CustomInput from "../../examples/ts/customInput?raw";
 import RenderCustomHeader from "../../examples/ts/renderCustomHeader?raw";
 import RenderCustomHeaderTwoMonths from "../../examples/ts/renderCustomHeaderTwoMonths?raw";
+import RenderCustomDayName from "../../examples/ts/renderCustomDayName?raw";
 import RenderCustomDay from "../../examples/ts/renderCustomDay?raw";
 import RenderCustomMonth from "../../examples/ts/renderCustomMonth?raw";
 import RenderCustomQuarter from "../../examples/ts/renderCustomQuarter?raw";
@@ -183,6 +184,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Custom header with two months displayed",
     component: RenderCustomHeaderTwoMonths,
+  },
+  {
+    title: "Custom Day Names",
+    component: RenderCustomDayName,
   },
   {
     title: "Custom Day",

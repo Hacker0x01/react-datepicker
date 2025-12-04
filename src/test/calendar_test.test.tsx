@@ -2864,4 +2864,53 @@ describe("Calendar", () => {
       );
     });
   });
+
+  describe("handleMonthChange with adjustDateOnChange but without setOpen", () => {
+    it("should call onSelect when adjustDateOnChange is true but setOpen is not provided", () => {
+      const onSelect = jest.fn();
+      const setPreSelection = jest.fn();
+
+      const { instance } = getCalendar({
+        adjustDateOnChange: true,
+        onSelect,
+        setPreSelection,
+        // setOpen is intentionally NOT provided to cover line 442
+        selected: new Date("2024-01-15T00:00:00"),
+      });
+
+      const targetMonth = new Date("2024-02-01T00:00:00");
+      act(() => {
+        instance?.handleMonthChange(targetMonth);
+      });
+
+      expect(onSelect).toHaveBeenCalled();
+      expect(setPreSelection).toHaveBeenCalled();
+    });
+  });
+
+  describe("header method with invalid date", () => {
+    it("should return empty array when date is invalid", () => {
+      const { instance } = getCalendar({
+        selected: new Date("2024-01-15T00:00:00"),
+      });
+
+      // Call header method with invalid date
+      const result = instance?.header(new Date("invalid"));
+
+      expect(result).toEqual([]);
+    });
+
+    it("should use default date parameter when not provided", () => {
+      const { instance } = getCalendar({
+        selected: new Date("2024-01-15T00:00:00"),
+      });
+
+      // Call header method without arguments to cover default parameter
+      const result = instance?.header();
+
+      expect(result).toBeDefined();
+      expect(Array.isArray(result)).toBe(true);
+      expect(result?.length).toBeGreaterThan(0);
+    });
+  });
 });
