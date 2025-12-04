@@ -29,6 +29,7 @@ interface PopperComponentProps
   showArrow?: boolean;
   portalId?: PortalProps["portalId"];
   popperTargetRef?: React.RefObject<HTMLElement | null>;
+  monthHeaderPosition?: "top" | "middle" | "bottom";
 }
 
 // Exported for testing purposes
@@ -46,6 +47,7 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     popperProps,
     showArrow,
     popperTargetRef,
+    monthHeaderPosition,
   } = props;
 
   // When a custom popperTargetRef is provided, use it as the position reference
@@ -63,6 +65,10 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     const classes = clsx(
       "react-datepicker-popper",
       !showArrow && "react-datepicker-popper-offset",
+      monthHeaderPosition === "middle" &&
+        "react-datepicker-popper--header-middle",
+      monthHeaderPosition === "bottom" &&
+        "react-datepicker-popper--header-bottom",
       className,
     );
     popper = (

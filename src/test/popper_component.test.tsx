@@ -291,4 +291,74 @@ describe("PopperComponent", () => {
 
     shadowHost.remove();
   });
+
+  describe("monthHeaderPosition", () => {
+    it("should not add header position classes by default", () => {
+      const { container } = render(
+        <PopperComponent {...defaultProps} hidePopper={false} />,
+      );
+
+      const popper = container.querySelector(".react-datepicker-popper");
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-middle"),
+      ).toBe(false);
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-bottom"),
+      ).toBe(false);
+    });
+
+    it("should add header-middle class when monthHeaderPosition is 'middle'", () => {
+      const { container } = render(
+        <PopperComponent
+          {...defaultProps}
+          hidePopper={false}
+          monthHeaderPosition="middle"
+        />,
+      );
+
+      const popper = container.querySelector(".react-datepicker-popper");
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-middle"),
+      ).toBe(true);
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-bottom"),
+      ).toBe(false);
+    });
+
+    it("should add header-bottom class when monthHeaderPosition is 'bottom'", () => {
+      const { container } = render(
+        <PopperComponent
+          {...defaultProps}
+          hidePopper={false}
+          monthHeaderPosition="bottom"
+        />,
+      );
+
+      const popper = container.querySelector(".react-datepicker-popper");
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-bottom"),
+      ).toBe(true);
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-middle"),
+      ).toBe(false);
+    });
+
+    it("should not add header position classes when monthHeaderPosition is 'top'", () => {
+      const { container } = render(
+        <PopperComponent
+          {...defaultProps}
+          hidePopper={false}
+          monthHeaderPosition="top"
+        />,
+      );
+
+      const popper = container.querySelector(".react-datepicker-popper");
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-middle"),
+      ).toBe(false);
+      expect(
+        popper?.classList.contains("react-datepicker-popper--header-bottom"),
+      ).toBe(false);
+    });
+  });
 });

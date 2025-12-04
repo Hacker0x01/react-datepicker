@@ -19,6 +19,7 @@ import PopperTargetRef from "../../examples/ts/popperTargetRef?raw";
 import RenderCustomHeader from "../../examples/ts/renderCustomHeader?raw";
 import RenderCustomHeaderTwoMonths from "../../examples/ts/renderCustomHeaderTwoMonths?raw";
 import RenderCustomDayName from "../../examples/ts/renderCustomDayName?raw";
+import MonthHeaderPosition from "../../examples/ts/monthHeaderPosition?raw";
 import RenderCustomDay from "../../examples/ts/renderCustomDay?raw";
 import RenderCustomMonth from "../../examples/ts/renderCustomMonth?raw";
 import RenderCustomQuarter from "../../examples/ts/renderCustomQuarter?raw";
@@ -195,6 +196,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Custom Day Names",
     component: RenderCustomDayName,
+  },
+  {
+    title: "Month header position",
+    component: MonthHeaderPosition,
   },
   {
     title: "Custom Day",

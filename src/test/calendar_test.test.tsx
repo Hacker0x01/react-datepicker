@@ -2002,6 +2002,104 @@ describe("Calendar", () => {
     });
   });
 
+  describe("monthHeaderPosition with default header", () => {
+    it("should render navigation buttons at top when monthHeaderPosition is 'top'", () => {
+      const { container } = render(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          dropdownMode="scroll"
+          monthHeaderPosition="top"
+        />,
+      );
+
+      // Navigation buttons should be direct children of calendar container
+      const prevButton = container.querySelector(
+        ".react-datepicker > .react-datepicker__navigation--previous",
+      );
+      const nextButton = container.querySelector(
+        ".react-datepicker > .react-datepicker__navigation--next",
+      );
+      expect(prevButton).not.toBeNull();
+      expect(nextButton).not.toBeNull();
+
+      // Should not have header-wrapper
+      const headerWrapper = container.querySelector(
+        ".react-datepicker__header-wrapper",
+      );
+      expect(headerWrapper).toBeNull();
+    });
+
+    it("should wrap header with navigation buttons when monthHeaderPosition is 'middle'", () => {
+      const { container } = render(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          dropdownMode="scroll"
+          monthHeaderPosition="middle"
+        />,
+      );
+
+      // Should have header-wrapper
+      const headerWrapper = container.querySelector(
+        ".react-datepicker__header-wrapper",
+      );
+      expect(headerWrapper).not.toBeNull();
+
+      // Navigation buttons should be inside header-wrapper
+      const prevButton = headerWrapper?.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const nextButton = headerWrapper?.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(prevButton).not.toBeNull();
+      expect(nextButton).not.toBeNull();
+
+      // Header should have middle class
+      const header = container.querySelector(
+        ".react-datepicker__header--middle",
+      );
+      expect(header).not.toBeNull();
+    });
+
+    it("should wrap header with navigation buttons when monthHeaderPosition is 'bottom'", () => {
+      const { container } = render(
+        <Calendar
+          dateFormat={DATE_FORMAT}
+          onSelect={() => {}}
+          onClickOutside={() => {}}
+          dropdownMode="scroll"
+          monthHeaderPosition="bottom"
+        />,
+      );
+
+      // Should have header-wrapper
+      const headerWrapper = container.querySelector(
+        ".react-datepicker__header-wrapper",
+      );
+      expect(headerWrapper).not.toBeNull();
+
+      // Navigation buttons should be inside header-wrapper
+      const prevButton = headerWrapper?.querySelector(
+        ".react-datepicker__navigation--previous",
+      );
+      const nextButton = headerWrapper?.querySelector(
+        ".react-datepicker__navigation--next",
+      );
+      expect(prevButton).not.toBeNull();
+      expect(nextButton).not.toBeNull();
+
+      // Header should have bottom class
+      const header = container.querySelector(
+        ".react-datepicker__header--bottom",
+      );
+      expect(header).not.toBeNull();
+    });
+  });
+
   describe("when showMonthYearPicker is enabled", () => {
     it("should change the next and previous labels", () => {
       const { container } = render(

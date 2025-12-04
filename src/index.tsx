@@ -726,6 +726,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         return;
       }
 
+      // Update preSelection to keep calendar viewport consistent when reopening
+      // Use startDate for preSelection to match calcInitialState behavior
+      if (startDateNew) {
+        this.setState({ preSelection: startDateNew });
+      }
+
       this.props.onChange?.([startDateNew, endDateNew], event);
     } else {
       // not selectsRange
@@ -1817,6 +1823,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         popperComponent={calendar}
         popperOnKeyDown={this.onPopperKeyDown}
         showArrow={this.props.showPopperArrow}
+        monthHeaderPosition={this.props.monthHeaderPosition}
       />
     );
   }

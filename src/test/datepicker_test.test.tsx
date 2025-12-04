@@ -2383,6 +2383,39 @@ describe("DatePicker", () => {
 
     expect(onChangeSpy.mock.calls.at(-1)[0]).toStrictEqual([null, null]);
   });
+  it("should update preSelection when input changes for selectsRange", () => {
+    let instance: DatePicker | null = null;
+    const onChangeSpy = jest.fn();
+
+    render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selectsRange
+        startDate={newDate("2024-01-15")}
+        endDate={newDate("2024-01-20")}
+        onChange={onChangeSpy}
+        dateFormat="MM/dd/yyyy"
+      />,
+    );
+    expect(instance).toBeTruthy();
+
+    // Get initial preSelection
+    const initialPreSelection = instance!.state.preSelection;
+
+    // Change the date via input
+    fireEvent.change(instance!.input!, {
+      target: {
+        value: "02/10/2024 - 02/15/2024",
+      },
+    });
+
+    // preSelection should be updated to the new start date
+    expect(instance!.state.preSelection).not.toEqual(initialPreSelection);
+    expect(instance!.state.preSelection?.getMonth()).toBe(1); // February (0-indexed)
+    expect(instance!.state.preSelection?.getDate()).toBe(10);
+  });
   it("should correctly update the input when the value prop changes", () => {
     let instance: DatePicker | null = null;
     const { rerender } = render(
