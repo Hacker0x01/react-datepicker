@@ -1822,6 +1822,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         popperComponent={calendar}
         popperOnKeyDown={this.onPopperKeyDown}
         showArrow={this.props.showPopperArrow}
+        monthHeaderPosition={this.props.monthHeaderPosition}
       />
     );
   }

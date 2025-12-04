@@ -141,6 +141,8 @@ interface MonthProps extends Omit<
   chooseDayAriaLabelPrefix?: WeekProps["chooseDayAriaLabelPrefix"];
   disabledDayAriaLabelPrefix?: WeekProps["disabledDayAriaLabelPrefix"];
   dayNamesHeader?: React.ReactNode;
+  monthHeader?: React.ReactNode;
+  monthFooter?: React.ReactNode;
 }
 
 /**
@@ -1174,6 +1176,9 @@ export default class Month extends Component<MonthProps> {
         {this.props.dayNamesHeader && (
           <div role="rowgroup">{this.props.dayNamesHeader}</div>
         )}
+        {this.props.monthHeader && (
+          <div role="rowgroup">{this.props.monthHeader}</div>
+        )}
         <div
           className={this.getClassNames()}
           onMouseLeave={
@@ -1187,6 +1192,9 @@ export default class Month extends Component<MonthProps> {
         >
           {this.renderWeeks()}
         </div>
+        {this.props.monthFooter && (
+          <div role="rowgroup">{this.props.monthFooter}</div>
+        )}
       </div>
     );
   }

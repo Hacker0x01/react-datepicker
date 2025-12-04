@@ -70,6 +70,25 @@
       color: #fff;
     }
   }
+
+  &--header-middle,
+  &--header-bottom {
+    &[data-placement^="bottom"] {
+      .react-datepicker__triangle {
+        fill: #fff;
+        color: #fff;
+      }
+    }
+  }
+
+  &--header-bottom {
+    &[data-placement^="top"] {
+      .react-datepicker__triangle {
+        fill: $datepicker__background-color;
+        color: $datepicker__background-color;
+      }
+    }
+  }
 }
 
 .react-datepicker__header {
@@ -90,8 +109,33 @@
     }
   }
 
-  &:not(&--has-time-select) {
+  &:not(&--has-time-select, &--middle, &--bottom) {
     border-top-right-radius: $datepicker__border-radius;
+  }
+
+  // Header in middle position (between day names and days)
+  &--middle {
+    border-top: $datepicker__border;
+    border-radius: 0;
+    margin-top: 4px;
+  }
+
+  // Header in bottom position (at calendar bottom)
+  &--bottom {
+    border-bottom: none;
+    border-top: $datepicker__border;
+    border-radius: 0 0 $datepicker__border-radius $datepicker__border-radius;
+  }
+}
+
+// Wrapper for header in middle/bottom positions
+.react-datepicker__header-wrapper {
+  position: relative;
+
+  .react-datepicker__navigation--next--with-time:not(
+    .react-datepicker__navigation--next--with-today-button
+  ) {
+    right: 2px;
   }
 }
 

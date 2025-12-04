@@ -206,6 +206,7 @@ type CalendarProps = React.PropsWithChildren<
       renderCustomDayName?: (
         props: ReactDatePickerCustomDayNameProps,
       ) => React.ReactNode;
+      monthHeaderPosition?: "top" | "middle" | "bottom";
       onYearMouseEnter?: YearProps["onYearMouseEnter"];
       onYearMouseLeave?: YearProps["onYearMouseLeave"];
       monthAriaLabelPrefix?: MonthProps["ariaLabelPrefix"];
@@ -250,6 +251,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       previousMonthButtonLabel: "Previous Month",
       nextMonthButtonLabel: "Next Month",
       yearItemNumber: DEFAULT_YEAR_ITEM_NUMBER,
+      monthHeaderPosition: "top",
     };
   }
 
@@ -916,25 +918,44 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     </div>
   );
 
-  renderDefaultHeader = ({ monthDate, i }: { monthDate: Date; i: number }) => (
-    <div
-      className={`react-datepicker__header ${
-        this.props.showTimeSelect
-          ? "react-datepicker__header--has-time-select"
-          : ""
-      }`}
-    >
-      {this.renderCurrentMonth(monthDate)}
+  renderDefaultHeader = ({ monthDate, i }: { monthDate: Date; i: number }) => {
+    const headerContent = (
       <div
-        className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
-        onFocus={this.handleDropdownFocus}
+        className={clsx("react-datepicker__header", {
+          "react-datepicker__header--has-time-select":
+            this.props.showTimeSelect,
+          "react-datepicker__header--middle":
+            this.props.monthHeaderPosition === "middle",
+          "react-datepicker__header--bottom":
+            this.props.monthHeaderPosition === "bottom",
+        })}
       >
-        {this.renderMonthDropdown(i !== 0)}
-        {this.renderMonthYearDropdown(i !== 0)}
-        {this.renderYearDropdown(i !== 0)}
+        {this.renderCurrentMonth(monthDate)}
+        <div
+          className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
+          onFocus={this.handleDropdownFocus}
+        >
+          {this.renderMonthDropdown(i !== 0)}
+          {this.renderMonthYearDropdown(i !== 0)}
+          {this.renderYearDropdown(i !== 0)}
+        </div>
       </div>
-    </div>
-  );
+    );
+
+    // Top position: render header directly in default location
+    if (this.props.monthHeaderPosition === "top") {
+      return headerContent;
+    }
+
+    // Middle/bottom positions: wrap with navigation buttons
+    return (
+      <div className="react-datepicker__header-wrapper">
+        {this.renderPreviousButton() || null}
+        {this.renderNextButton() || null}
+        {headerContent}
+      </div>
+    );
+  };
 
   renderCustomHeader = (headerArgs: { monthDate: Date; i: number }) => {
     const { monthDate, i } = headerArgs;
@@ -1078,7 +1099,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           }}
           className="react-datepicker__month-container"
         >
-          {this.renderHeader({ monthDate, i })}
+          {this.props.monthHeaderPosition === "top" &&
+            this.renderHeader({ monthDate, i })}
           <Month
             {...Calendar.defaultProps}
             {...this.props}
@@ -1095,6 +1117,16 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             monthShowsDuplicateDaysEnd={monthShowsDuplicateDaysEnd}
             monthShowsDuplicateDaysStart={monthShowsDuplicateDaysStart}
             dayNamesHeader={this.renderDayNamesHeader(monthDate, i)}
+            monthHeader={
+              this.props.monthHeaderPosition === "middle"
+                ? this.renderHeader({ monthDate, i })
+                : undefined
+            }
+            monthFooter={
+              this.props.monthHeaderPosition === "bottom"
+                ? this.renderHeader({ monthDate, i })
+                : undefined
+            }
           />
         </div>,
       );
@@ -1239,8 +1271,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             inline={this.props.inline}
           >
             {this.renderAriaLiveRegion()}
-            {this.renderPreviousButton()}
-            {this.renderNextButton()}
+            {this.props.monthHeaderPosition === "top" &&
+              this.renderPreviousButton()}
+            {this.props.monthHeaderPosition === "top" &&
+              this.renderNextButton()}
             {this.renderMonths()}
             {this.renderYears()}
             {this.renderTodayButton()}
