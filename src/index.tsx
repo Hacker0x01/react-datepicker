@@ -357,7 +357,16 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     ) {
       this.setState({ monthSelectedIn: 0 });
     }
-    if (this.props.selectsRange && this.state.monthSelectedIn !== 0) {
+    // Reset monthSelectedIn when calendar opens for range selection
+    // This ensures startDate is displayed as the first month when reopening
+    // (Fix for #5939), but we don't reset during active selection to avoid
+    // the view jumping when clicking dates in the second calendar (Fix for #5275)
+    if (
+      this.props.selectsRange &&
+      prevState.open === false &&
+      this.state.open === true &&
+      this.state.monthSelectedIn !== 0
+    ) {
       this.setState({ monthSelectedIn: 0 });
     }
     if (prevProps.highlightDates !== this.props.highlightDates) {
