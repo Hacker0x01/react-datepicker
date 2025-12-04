@@ -170,4 +170,50 @@ describe("monthHeaderPosition", () => {
     );
     expect(currentMonth).not.toBeNull();
   });
+
+  it("should render month header with middle position when navigation buttons might be hidden", () => {
+    const minDate = newDate();
+    const maxDate = newDate();
+
+    const { container } = render(
+      <Calendar
+        dateFormat={dateFormat}
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        dropdownMode="scroll"
+        monthHeaderPosition="middle"
+        minDate={minDate}
+        maxDate={maxDate}
+        showDisabledMonthNavigation={false}
+      />,
+    );
+
+    // Should still render the wrapper with header
+    const headerWrapper = container.querySelector(
+      ".react-datepicker__header-wrapper",
+    );
+    expect(headerWrapper).not.toBeNull();
+
+    const header = container.querySelector(".react-datepicker__header");
+    expect(header).not.toBeNull();
+  });
+
+  it("should render month header with bottom position when renderCustomHeader is provided", () => {
+    const { container } = render(
+      <Calendar
+        dateFormat={dateFormat}
+        onClickOutside={() => {}}
+        onSelect={() => {}}
+        dropdownMode="scroll"
+        monthHeaderPosition="bottom"
+        renderCustomHeader={() => <div>Custom Header</div>}
+      />,
+    );
+
+    // Should render custom header
+    const customHeader = container.querySelector(
+      ".react-datepicker__header--custom",
+    );
+    expect(customHeader).not.toBeNull();
+  });
 });
