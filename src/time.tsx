@@ -97,9 +97,14 @@ export default class Time extends Component<TimeProps, TimeState> {
 
   private updateContainerHeight(): void {
     if (this.props.monthRef && this.header) {
-      this.setState({
-        height: this.props.monthRef.clientHeight - this.header.clientHeight,
-      });
+      const newHeight =
+        this.props.monthRef.clientHeight - this.header.clientHeight;
+      // Only update state if height actually changed to prevent infinite resize loops
+      if (this.state.height !== newHeight) {
+        this.setState({
+          height: newHeight,
+        });
+      }
     }
   }
 

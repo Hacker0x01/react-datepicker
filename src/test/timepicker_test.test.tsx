@@ -80,6 +80,44 @@ describe("TimePicker", () => {
         expect(resizeObserverCallback).toBe(null);
       });
     });
+
+    it("should not cause infinite loop when resize callback is called multiple times", async () => {
+      const { container } = render(
+        <DatePicker
+          inline
+          selected={new Date()}
+          showTimeSelect
+          timeIntervals={15}
+        />,
+      );
+
+      await waitFor(() => {
+        expect(mockObserve).toHaveBeenCalledTimes(1);
+      });
+
+      const resizeObserverCallback = getResizeObserverCallback();
+      const mockObserveElement = mockObserve.mock.calls[0][0];
+      expect(typeof resizeObserverCallback).toBe("function");
+
+      const timeList = container.querySelector(
+        ".react-datepicker__time-list",
+      ) as HTMLElement;
+      expect(timeList).not.toBeNull();
+
+      // Get initial height
+      const initialHeight = timeList.style.height;
+
+      // Call resize callback multiple times (simulating what would happen in an infinite loop)
+      if (resizeObserverCallback) {
+        resizeObserverCallback([], mockObserveElement);
+        resizeObserverCallback([], mockObserveElement);
+        resizeObserverCallback([], mockObserveElement);
+      }
+
+      // Height should remain stable (not grow infinitely)
+      // The fix ensures setState is only called when height actually changes
+      expect(timeList.style.height).toBe(initialHeight);
+    });
   });
 
   it("should update on input time change", () => {
