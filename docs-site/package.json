@@ -10,7 +10,7 @@
     "highlight.js": "^11.11.1",
     "lodash": "^4.17.21",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.2.0",
+    "react": "^19.2.1",
     "react-datepicker": "portal:../",
     "react-dom": "^19.2.1",
     "react-live": "^4.1.8",
