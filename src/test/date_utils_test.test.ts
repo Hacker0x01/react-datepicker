@@ -621,13 +621,15 @@ describe("date_utils", () => {
   });
 
   describe("isValid", () => {
-    it("should return true if date is valid and equal or after minDate", () => {
-      expect(isValid(newDate("2021-11-15"), newDate("2021-11-15"))).toBe(true);
-      expect(isValid(newDate("2021-11-30"), newDate("2021-11-15"))).toBe(true);
+    it("should return true for valid dates", () => {
+      expect(isValid(newDate("2021-11-15"))).toBe(true);
+      expect(isValid(newDate("1350-03-20"))).toBe(true);
+      expect(isValid(newDate("1000-01-01"))).toBe(true);
     });
 
-    it("should return false if date is valid and before minDate", () => {
-      expect(isValid(newDate("2021-11-01"), newDate("2021-11-15"))).toBe(false);
+    it("should return false for invalid dates", () => {
+      expect(isValid(new Date("invalid"))).toBe(false);
+      expect(isValid(new Date(NaN))).toBe(false);
     });
   });
 

@@ -1998,6 +1998,56 @@ describe("DatePicker", () => {
     });
   });
 
+  describe("when minDate is before 1800", () => {
+    it("should allow manually typing dates before 1800 when minDate allows it", () => {
+      const onChange = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selected={new Date("1500-06-15")}
+          minDate={new Date("1000-01-01")}
+          dateFormat="yyyy-MM-dd"
+          onChange={onChange}
+          open
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
+        target: {
+          value: "1350-03-20",
+        },
+      });
+
+      expect(onChange).toHaveBeenCalled();
+      const calledWith = onChange.mock.calls[0][0];
+      expect(calledWith.getFullYear()).toBe(1350);
+      expect(calledWith.getMonth()).toBe(2); // March is 0-indexed as 2
+      expect(calledWith.getDate()).toBe(20);
+    });
+
+    it("should update calendar view when typing a date before 1800 with appropriate minDate", () => {
+      const { container } = render(
+        <DatePicker
+          selected={new Date("1500-06-15")}
+          minDate={new Date("1000-01-01")}
+          dateFormat="yyyy-MM-dd"
+          open
+        />,
+      );
+
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.change(input, {
+        target: {
+          value: "1350-03-20",
+        },
+      });
+
+      expect(
+        container.querySelector(".react-datepicker__current-month")?.innerHTML,
+      ).toBe("March 1350");
+    });
+  });
+
   it("should not manual select date if before minDate", () => {
     const minDate = subDays(newDate(), 1);
     const data = getOnInputKeyDownStuff({

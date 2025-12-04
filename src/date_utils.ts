@@ -155,17 +155,12 @@ export function parseDate(
 export { isDate, set };
 
 /**
- * Checks if a given date is valid and not before the minimum date.
+ * Checks if a given date is a valid Date object.
  * @param date - The date to be checked.
- * @param minDate - The minimum date allowed. If not provided, defaults to "1/1/1800".
- * @returns A boolean value indicating whether the date is valid and not before the minimum date.
+ * @returns A boolean value indicating whether the date is valid.
  */
-export function isValid(date: Date, minDate?: Date): boolean {
-  /* the fallback date is essential to not break test case
-   * `should auto update calendar when the updated date text is after props.minDate`
-   * and backward compatibility respectfully
-   */
-  return isValidDate(date) && !isBefore(date, minDate ?? new Date("1/1/1800"));
+export function isValid(date: Date): boolean {
+  return isValidDate(date);
 }
 
 // ** Date Formatting **
