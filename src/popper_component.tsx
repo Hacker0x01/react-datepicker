@@ -1,6 +1,6 @@
 import { FloatingArrow } from "@floating-ui/react";
 import { clsx } from "clsx";
-import React, { createElement } from "react";
+import React, { createElement, useEffect } from "react";
 
 import Portal from "./portal";
 import TabLoop from "./tab_loop";
@@ -28,6 +28,7 @@ interface PopperComponentProps
   popperOnKeyDown: React.KeyboardEventHandler<HTMLDivElement>;
   showArrow?: boolean;
   portalId?: PortalProps["portalId"];
+  popperTargetRef?: React.RefObject<HTMLElement | null>;
 }
 
 // Exported for testing purposes
@@ -44,7 +45,17 @@ export const PopperComponent: React.FC<PopperComponentProps> = (props) => {
     portalHost,
     popperProps,
     showArrow,
+    popperTargetRef,
   } = props;
+
+  // When a custom popperTargetRef is provided, use it as the position reference
+  // This allows the popper to be positioned relative to a specific element
+  // within the custom input, rather than the wrapper div
+  useEffect(() => {
+    if (popperTargetRef?.current) {
+      popperProps.refs.setPositionReference(popperTargetRef.current);
+    }
+  }, [popperTargetRef, popperProps.refs]);
 
   let popper: React.ReactElement | undefined = undefined;
 

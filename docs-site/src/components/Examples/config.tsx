@@ -15,6 +15,7 @@ import CloseOnScroll from "../../examples/ts/closeOnScroll?raw";
 import CloseOnScrollCallback from "../../examples/ts/closeOnScrollCallback?raw";
 import ConfigureFloatingUI from "../../examples/ts/configureFloatingUI?raw";
 import CustomInput from "../../examples/ts/customInput?raw";
+import PopperTargetRef from "../../examples/ts/popperTargetRef?raw";
 import RenderCustomHeader from "../../examples/ts/renderCustomHeader?raw";
 import RenderCustomHeaderTwoMonths from "../../examples/ts/renderCustomHeaderTwoMonths?raw";
 import RenderCustomDayName from "../../examples/ts/renderCustomDayName?raw";
@@ -176,6 +177,12 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Custom input",
     component: CustomInput,
+  },
+  {
+    title: "Custom input with popper positioning",
+    component: PopperTargetRef,
+    description:
+      "Use popperTargetRef to position the calendar relative to a specific element within your custom input, rather than the wrapper div.",
   },
   {
     title: "Custom header",
