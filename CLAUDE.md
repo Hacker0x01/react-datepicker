@@ -155,6 +155,18 @@ The repo uses Husky with lint-staged. On commit:
 - **Formatting**: Prettier 3.4.2
 - **CSS**: Sass 1.93.2
 
+## Bug Fix Workflow (TDD)
+
+When fixing bugs, always follow Test-Driven Development:
+
+1. **Write the test first** - Create a failing test that reproduces the bug
+2. **Confirm it fails** - Run the test to verify it captures the broken behavior
+3. **Implement the fix** - Make the minimal code change to fix the issue
+4. **Verify the test passes** - Run the test again to confirm the fix works
+5. **Run full test suite** - Ensure no regressions with `yarn test:ci`
+
+This ensures every bug fix has regression coverage and documents the expected behavior.
+
 ## Code Conventions
 
 - **Prettier handles all code formatting** - don't worry about tabs vs spaces
