@@ -293,6 +293,52 @@ describe("DatePicker", () => {
     expect(popper[0]?.classList.contains("some-class-name")).toBe(true);
   });
 
+  it("should use popperTargetRef for positioning when provided", () => {
+    const buttonRef = React.createRef<HTMLButtonElement>();
+
+    /* eslint-disable react-hooks/refs -- passing ref object and callbacks as props, not accessing .current */
+    // Custom input component that exposes a button ref separately from the main input ref
+    const CustomInputWithButton: React.FC<{
+      value?: string;
+      onClick?: () => void;
+      buttonRef?: React.RefObject<HTMLButtonElement | null>;
+    }> = (props) => {
+      return (
+        <div style={{ display: "flex", width: "300px" }}>
+          <input value={props.value || ""} readOnly onClick={props.onClick} />
+          <button
+            ref={props.buttonRef}
+            onClick={props.onClick}
+            data-testid="custom-button"
+          >
+            Open
+          </button>
+        </div>
+      );
+    };
+    /* eslint-enable react-hooks/refs */
+
+    const { container } = render(
+      <DatePicker
+        customInput={<CustomInputWithButton buttonRef={buttonRef} />}
+        popperTargetRef={buttonRef}
+      />,
+    );
+
+    const button = safeQuerySelector<HTMLButtonElement>(
+      container,
+      '[data-testid="custom-button"]',
+    );
+    fireEvent.click(button);
+
+    // Verify the popper is shown
+    const popper = container.querySelector(".react-datepicker-popper");
+    expect(popper).not.toBeNull();
+
+    // Verify the button ref was properly set
+    expect(buttonRef.current).toBe(button);
+  });
+
   it("should show the calendar when clicking on the date input", () => {
     const { container } = render(<DatePicker />);
 

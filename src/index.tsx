@@ -149,6 +149,7 @@ export type DatePickerProps = OmitUnion<
     onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
     popperClassName?: PopperComponentProps["className"];
     showPopperArrow?: PopperComponentProps["showArrow"];
+    popperTargetRef?: React.RefObject<HTMLElement | null>;
     open?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
