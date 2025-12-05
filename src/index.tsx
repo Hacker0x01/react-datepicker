@@ -345,8 +345,15 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     prevProps: DatePickerProps,
     prevState: DatePickerState,
   ): void {
+    // Update preSelection when selected/startDate prop changes to a different month/year.
+    // This ensures the calendar view updates when dates are programmatically set
+    // (e.g., via "Today" or "This Week" buttons). (Fix for #3367)
     if (
-      prevProps.inline &&
+      this.props.selectsRange &&
+      hasPreSelectionChanged(prevProps.startDate, this.props.startDate)
+    ) {
+      this.setPreSelection(this.props.startDate);
+    } else if (
       hasPreSelectionChanged(prevProps.selected, this.props.selected)
     ) {
       this.setPreSelection(this.props.selected);
