@@ -42,8 +42,8 @@
 
   .react-datepicker__time,
   .react-datepicker__time-box {
-    border-bottom-left-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
+    border-bottom-left-radius: 0.3em;
+    border-bottom-right-radius: 0.3em;
   }
 }
 
@@ -266,7 +266,7 @@ h2.react-datepicker__current-month {
 
   .react-datepicker__year-text {
     display: inline-block;
-    width: 4rem;
+    width: 4em;
     margin: 2px;
   }
 }
@@ -278,7 +278,7 @@ h2.react-datepicker__current-month {
   .react-datepicker__month-text,
   .react-datepicker__quarter-text {
     display: inline-block;
-    width: 4rem;
+    width: 4em;
     margin: 2px;
   }
 }
@@ -331,7 +331,7 @@ h2.react-datepicker__current-month {
   &--with-today-button {
     display: inline;
     border: 1px solid #aeaeae;
-    border-radius: 0.3rem;
+    border-radius: 0.3em;
     position: absolute;
     right: -87px;
     top: 0;
@@ -340,14 +340,14 @@ h2.react-datepicker__current-month {
   .react-datepicker__time {
     position: relative;
     background: white;
-    border-bottom-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3em;
 
     .react-datepicker__time-box {
       width: 85px;
       overflow-x: hidden;
       margin: 0 auto;
       text-align: center;
-      border-bottom-right-radius: 0.3rem;
+      border-bottom-right-radius: 0.3em;
 
       ul.react-datepicker__time-list {
         list-style: none;
@@ -596,7 +596,7 @@ h2.react-datepicker__current-month {
 
   .react-datepicker__calendar-icon {
     position: absolute;
-    padding: 0.5rem;
+    padding: 0.5em;
     box-sizing: content-box;
   }
 }
@@ -769,16 +769,16 @@ h2.react-datepicker__current-month {
   .react-datepicker__day-name,
   .react-datepicker__day,
   .react-datepicker__time-name {
-    width: 3rem;
-    line-height: 3rem;
+    width: 3em;
+    line-height: 3em;
   }
 
   @media (max-width: 400px), (max-height: 550px) {
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {
-      width: 2rem;
-      line-height: 2rem;
+      width: 2em;
+      line-height: 2em;
     }
   }
 
@@ -789,10 +789,10 @@ h2.react-datepicker__current-month {
 }
 
 .react-datepicker__children-container {
-  width: 13.8rem;
-  margin: 0.4rem;
-  padding-right: 0.2rem;
-  padding-left: 0.2rem;
+  width: 13.8em;
+  margin: 0.4em;
+  padding-right: 0.2em;
+  padding-left: 0.2em;
   height: auto;
 }
 
@@ -815,5 +815,5 @@ h2.react-datepicker__current-month {
 }
 
 .react-datepicker-popper-offset {
-  margin-top: -0.7rem;
+  margin-top: -0.7em;
 }
