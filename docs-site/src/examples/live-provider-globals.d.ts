@@ -5,6 +5,7 @@ import type { MiddlewareState as MiddlewareStateType } from "@floating-ui/react"
 declare global {
   const useMemo: typeof React.useMemo;
   const useState: typeof React.useState;
+  const useRef: typeof React.useRef;
   const DatePicker: any;
   const CalendarContainer: any;
   const range: any;
