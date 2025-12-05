@@ -2922,18 +2922,20 @@ describe("DatePicker", () => {
     expect(instance!.state.monthSelectedIn).toEqual(0);
   });
 
-  it("should set monthSelectedIn to 0 when selectsRange is true", () => {
+  it("should set monthSelectedIn to 0 when calendar opens with selectsRange", () => {
     let instance: DatePicker | null = null;
-    const { rerender } = render(
+    const { container } = render(
       <DatePicker
         ref={(node) => {
           instance = node;
         }}
         monthsShown={2}
-        inline
+        selectsRange
       />,
     );
     expect(instance).toBeTruthy();
+
+    // Manually set monthSelectedIn to 1 (simulating previous user interaction)
     act(() => {
       (
         instance!.state as unknown as { monthSelectedIn: number }
@@ -2941,18 +2943,46 @@ describe("DatePicker", () => {
     });
     expect(instance!.state.monthSelectedIn).toEqual(1);
 
-    rerender(
+    // Open the calendar by clicking the input
+    const input = container.querySelector("input");
+    expect(input).not.toBeNull();
+    fireEvent.click(input!);
+
+    // monthSelectedIn should be reset to 0 when the calendar opens
+    expect(instance!.state.monthSelectedIn).toEqual(0);
+  });
+
+  it("should NOT reset monthSelectedIn when selecting a date from second calendar with selectsRange", () => {
+    let instance: DatePicker | null = null;
+    const onChange = jest.fn();
+    const { container } = render(
       <DatePicker
         ref={(node) => {
           instance = node;
         }}
         monthsShown={2}
-        inline
         selectsRange
+        inline
+        onChange={onChange}
       />,
     );
+    expect(instance).toBeTruthy();
 
-    expect(instance!.state.monthSelectedIn).toEqual(0);
+    // Find a day in the second month container
+    const secondMonthContainer = container.querySelectorAll(
+      ".react-datepicker__month-container",
+    )[1];
+    expect(secondMonthContainer).toBeTruthy();
+    const secondMonthDays = secondMonthContainer?.querySelectorAll(
+      ".react-datepicker__day:not(.react-datepicker__day--outside-month)",
+    );
+    expect(secondMonthDays?.length).toBeGreaterThan(0);
+
+    // Click a day in the second month
+    fireEvent.click(secondMonthDays![10]!);
+
+    // monthSelectedIn should be 1 (second calendar), not reset to 0
+    expect(instance!.state.monthSelectedIn).toEqual(1);
   });
 
   it("should disable non-jumping if prop focusSelectedMonth is true", () => {
