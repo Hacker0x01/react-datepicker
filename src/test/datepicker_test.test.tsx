@@ -2891,6 +2891,56 @@ describe("DatePicker", () => {
       formatDate(future, "yyyy-MM-dd"),
     );
   });
+  it("should update calendar view when selected prop changes to a different month (issue #3367)", () => {
+    // This test verifies that when a user programmatically sets selected date
+    // (e.g., via a "Today" button), the calendar view updates to show
+    // the month containing the new date, even if user was viewing a different month.
+    const initialDate = new Date("2024-01-15");
+    let instance: DatePicker | null = null;
+
+    const { container, rerender } = render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selected={initialDate}
+        onChange={() => {}}
+      />,
+    );
+
+    expect(instance).toBeTruthy();
+
+    // Open the calendar
+    const input = safeQuerySelector(container, "input");
+    fireEvent.click(input);
+
+    // Verify initial preSelection is set to January 2024
+    expect(instance!.state.preSelection?.getMonth()).toBe(0); // January
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+
+    // Close calendar
+    fireEvent.click(input);
+
+    // Simulate programmatic update to a different month (e.g., user clicks "Jump to March" button)
+    const newDate = new Date("2024-03-10");
+
+    rerender(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selected={newDate}
+        onChange={() => {}}
+      />,
+    );
+
+    // Open the calendar again
+    fireEvent.click(input);
+
+    // The calendar should now show March 2024, not January 2024
+    expect(instance!.state.preSelection?.getMonth()).toBe(2); // March
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+  });
   it("should not set open state when focusing on the date input and the preventOpenOnFocus prop is set", () => {
     const { container } = render(<DatePicker preventOpenOnFocus />);
     const input = safeQuerySelector(container, "input");
@@ -3854,6 +3904,63 @@ describe("DatePicker", () => {
 
       const input = safeQuerySelector<HTMLInputElement>(container, "input");
       expect(input.value).toBe("2025/01/01 to 2025/01/03");
+    });
+
+    it("should update calendar view when startDate prop changes to a different month (issue #3367)", () => {
+      // This test verifies that when a user programmatically sets startDate
+      // (e.g., via a "This Week" button), the calendar view updates to show
+      // the month containing the new startDate, even if user was viewing a different month.
+      const initialStartDate = new Date("2024-01-15");
+      const initialEndDate = new Date("2024-01-20");
+      let instance: DatePicker | null = null;
+
+      const { container, rerender } = render(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          selectsRange
+          startDate={initialStartDate}
+          endDate={initialEndDate}
+          onChange={() => {}}
+        />,
+      );
+
+      expect(instance).toBeTruthy();
+
+      // Open the calendar
+      const input = safeQuerySelector(container, "input");
+      fireEvent.click(input);
+
+      // Verify initial preSelection is set to January 2024
+      expect(instance!.state.preSelection?.getMonth()).toBe(0); // January
+      expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+
+      // Close calendar
+      fireEvent.click(input);
+
+      // Simulate programmatic update to a different month (e.g., user clicks "This Week" button in March)
+      const newStartDate = new Date("2024-03-10");
+      const newEndDate = new Date("2024-03-15");
+
+      rerender(
+        <DatePicker
+          ref={(node) => {
+            instance = node;
+          }}
+          selectsRange
+          startDate={newStartDate}
+          endDate={newEndDate}
+          onChange={() => {}}
+        />,
+      );
+
+      // Open the calendar again
+      fireEvent.click(input);
+
+      // The calendar should now show March 2024, not January 2024
+      expect(instance!.state.preSelection?.getMonth()).toBe(2); // March
+      expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
     });
   });
 
