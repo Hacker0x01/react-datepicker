@@ -2522,6 +2522,37 @@ describe("DatePicker", () => {
     expect(instance!.state.preSelection?.getFullYear()).toBe(2014);
     expect(instance!.state.preSelection?.getMonth()).toBe(2); // March (0-indexed)
   });
+  it("should not update calendar view when typing text without a valid year", () => {
+    let instance: DatePicker | null = null;
+
+    render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selected={newDate("2024-06-15")}
+        onChange={jest.fn()}
+        dateFormat="MM/dd/yyyy"
+        open
+      />,
+    );
+    expect(instance).toBeTruthy();
+
+    // Verify initial calendar shows 2024
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+    expect(instance!.state.preSelection?.getMonth()).toBe(5); // June (0-indexed)
+
+    // Type text without a valid 4-digit year
+    fireEvent.change(instance!.input!, {
+      target: {
+        value: "03/",
+      },
+    });
+
+    // Calendar should remain on the original date since no valid year was found
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+    expect(instance!.state.preSelection?.getMonth()).toBe(5); // June (0-indexed)
+  });
   it("should correctly update the input when the value prop changes", () => {
     let instance: DatePicker | null = null;
     const { rerender } = render(
