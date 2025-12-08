@@ -38,10 +38,18 @@ const migrateRollup2to3OutputOptions = {
   interop: "compat",
 };
 
+// Common sourcemap options to embed source content directly in the map
+// This prevents Webpack source-map-loader warnings about missing source files
+// See: https://github.com/Hacker0x01/react-datepicker/issues/5549
+/** @type {Partial<import('rollup').OutputOptions>} */
+const sourcemapOptions = {
+  sourcemap: true,
+  sourcemapExcludeSources: false,
+};
+
 /** @type {import('rollup').RollupOptions} */
 const config = {
   input: "src/index.tsx",
-  sourcemap: true,
   output: [
     {
       file: pkg.unpkg,
@@ -50,32 +58,32 @@ const config = {
       globals,
       banner,
       ...migrateRollup2to3OutputOptions,
+      ...sourcemapOptions,
       plugins: [terser()],
-      sourcemap: true,
     },
     {
       file: pkg.unpkg.replace(".min.js", ".js"),
       format: "umd",
-      sourcemap: true,
       name: "DatePicker",
       globals,
       banner,
       ...migrateRollup2to3OutputOptions,
+      ...sourcemapOptions,
     },
     {
       file: pkg.main,
       format: "cjs",
-      sourcemap: true,
       name: "DatePicker",
       banner,
       ...migrateRollup2to3OutputOptions,
+      ...sourcemapOptions,
     },
     {
       file: pkg.module,
       format: "es",
-      sourcemap: true,
       banner,
       ...migrateRollup2to3OutputOptions,
+      ...sourcemapOptions,
     },
   ],
   plugins: [
@@ -89,6 +97,8 @@ const config = {
       tsconfig: "./tsconfig.build.json",
       declaration: true,
       declarationDir: "dist",
+      sourceMap: true,
+      inlineSources: true,
     }),
     filesize(),
   ],
