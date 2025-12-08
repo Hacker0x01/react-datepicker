@@ -2,7 +2,7 @@
   "author": "HackerOne",
   "name": "react-datepicker",
   "description": "A simple and reusable datepicker component for React",
-  "version": "8.10.0",
+  "version": "9.0.0",
   "license": "MIT",
   "homepage": "https://github.com/Hacker0x01/react-datepicker",
   "main": "dist/index.js",
@@ -24,23 +24,9 @@
     "./dist/": "./dist/",
     "./src/stylesheets/": "./src/stylesheets/"
   },
-  "files": [
-    "*.md",
-    "dist",
-    "lib",
-    "es",
-    "src"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "keywords": [
-    "react",
-    "datepicker",
-    "calendar",
-    "date",
-    "react-component"
-  ],
+  "files": ["*.md", "dist", "lib", "es", "src"],
+  "sideEffects": ["**/*.css"],
+  "keywords": ["react", "datepicker", "calendar", "date", "react-component"],
   "repository": {
     "type": "git",
     "url": "git://github.com/Hacker0x01/react-datepicker.git"
@@ -149,10 +135,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": ["prettier --write", "git add"]
   },
   "packageManager": "yarn@4.9.2"
 }
