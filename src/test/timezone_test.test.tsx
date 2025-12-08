@@ -470,6 +470,148 @@ describe("DatePicker with timeZone prop", () => {
     // onChange should have been called with timezone conversion
     expect(onChangeMock).toHaveBeenCalled();
   });
+
+  it("should handle time change with timezone and selectsRange using showTimeInput (start date)", () => {
+    const startDate = new Date("2024-06-15T12:00:00Z");
+    const endDate = new Date("2024-06-20T14:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={startDate}
+        endDate={endDate}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeInput
+        inline
+      />,
+    );
+
+    // Find the start time input and change it
+    const timeInputs = container.querySelectorAll(
+      ".react-datepicker-time__input input",
+    );
+    expect(timeInputs.length).toBe(2);
+
+    // Change the start time input
+    fireEvent.change(timeInputs[0]!, { target: { value: "10:30" } });
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+    const [changedStartDate, changedEndDate] = onChangeMock.mock.calls[0][0];
+
+    // Both dates should be Date objects
+    expect(changedStartDate).toBeInstanceOf(Date);
+    expect(changedEndDate).toBeInstanceOf(Date);
+  });
+
+  it("should handle time change with timezone and selectsRange using showTimeInput (end date)", () => {
+    const startDate = new Date("2024-06-15T12:00:00Z");
+    const endDate = new Date("2024-06-20T14:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={startDate}
+        endDate={endDate}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeInput
+        inline
+      />,
+    );
+
+    // Find the end time input and change it
+    const timeInputs = container.querySelectorAll(
+      ".react-datepicker-time__input input",
+    );
+    expect(timeInputs.length).toBe(2);
+
+    // Change the end time input
+    fireEvent.change(timeInputs[1]!, { target: { value: "16:45" } });
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+    const [changedStartDate, changedEndDate] = onChangeMock.mock.calls[0][0];
+
+    // Both dates should be Date objects
+    expect(changedStartDate).toBeInstanceOf(Date);
+    expect(changedEndDate).toBeInstanceOf(Date);
+  });
+
+  it("should handle time change with timezone and selectsRange with only start date", () => {
+    const startDate = new Date("2024-06-15T12:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={startDate}
+        endDate={null}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeInput
+        inline
+      />,
+    );
+
+    // Find the start time input and change it
+    const timeInputs = container.querySelectorAll(
+      ".react-datepicker-time__input input",
+    );
+    expect(timeInputs.length).toBe(2);
+
+    // Change the start time input
+    fireEvent.change(timeInputs[0]!, { target: { value: "10:30" } });
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+    const [changedStartDate, changedEndDate] = onChangeMock.mock.calls[0][0];
+
+    // Start date should be converted, end date should be null
+    expect(changedStartDate).toBeInstanceOf(Date);
+    expect(changedEndDate).toBeNull();
+  });
+
+  it("should handle time change with timezone and selectsRange using legacy showTimeSelect", () => {
+    // Mock ResizeObserver
+    const mockResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+    window.ResizeObserver = mockResizeObserver;
+
+    const startDate = new Date("2024-06-15T12:00:00Z");
+    const endDate = new Date("2024-06-20T14:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={startDate}
+        endDate={endDate}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeSelect
+        dateFormat="yyyy-MM-dd HH:mm"
+        inline
+      />,
+    );
+
+    // Find and click a time option (legacy single time picker behavior)
+    const timeOptions = container.querySelectorAll(
+      ".react-datepicker__time-list-item",
+    );
+    if (timeOptions.length > 0) {
+      fireEvent.click(timeOptions[0]!);
+    }
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+  });
 });
 
 describe("Timezone fallback behavior (when date-fns-tz is not installed)", () => {
