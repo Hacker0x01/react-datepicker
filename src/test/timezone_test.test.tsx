@@ -575,6 +575,40 @@ describe("DatePicker with timeZone prop", () => {
     expect(changedEndDate).toBeNull();
   });
 
+  it("should handle time change with timezone and selectsRange with only end date (edge case)", () => {
+    const endDate = new Date("2024-06-20T14:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={null}
+        endDate={endDate}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeInput
+        inline
+      />,
+    );
+
+    // Find the end time input and change it
+    const timeInputs = container.querySelectorAll(
+      ".react-datepicker-time__input input",
+    );
+    expect(timeInputs.length).toBe(2);
+
+    // Change the end time input
+    fireEvent.change(timeInputs[1]!, { target: { value: "16:45" } });
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+    const [changedStartDate, changedEndDate] = onChangeMock.mock.calls[0][0];
+
+    // Start date should be null, end date should be converted
+    expect(changedStartDate).toBeNull();
+    expect(changedEndDate).toBeInstanceOf(Date);
+  });
+
   it("should handle time change with timezone and selectsRange using legacy showTimeSelect (both dates)", () => {
     // Mock ResizeObserver
     const mockResizeObserver = jest.fn().mockImplementation(() => ({
