@@ -2466,6 +2466,62 @@ describe("DatePicker", () => {
     expect(instance!.state.preSelection?.getMonth()).toBe(1); // February (0-indexed)
     expect(instance!.state.preSelection?.getDate()).toBe(10);
   });
+  it("should update calendar view when typing a partial date (year only)", () => {
+    let instance: DatePicker | null = null;
+
+    render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selected={newDate("2024-06-15")}
+        onChange={jest.fn()}
+        dateFormat="MM/dd/yyyy"
+        open
+      />,
+    );
+    expect(instance).toBeTruthy();
+
+    // Verify initial calendar shows 2024
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+
+    // Type a partial date - just a year
+    fireEvent.change(instance!.input!, {
+      target: {
+        value: "2014",
+      },
+    });
+
+    // Calendar should navigate to 2014 even though it's not a complete date
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2014);
+  });
+  it("should update calendar view when typing a partial date (month and year)", () => {
+    let instance: DatePicker | null = null;
+
+    render(
+      <DatePicker
+        ref={(node) => {
+          instance = node;
+        }}
+        selected={newDate("2024-06-15")}
+        onChange={jest.fn()}
+        dateFormat="MM/dd/yyyy"
+        open
+      />,
+    );
+    expect(instance).toBeTruthy();
+
+    // Type a partial date - month and year
+    fireEvent.change(instance!.input!, {
+      target: {
+        value: "03/2014",
+      },
+    });
+
+    // Calendar should navigate to March 2014
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2014);
+    expect(instance!.state.preSelection?.getMonth()).toBe(2); // March (0-indexed)
+  });
   it("should correctly update the input when the value prop changes", () => {
     let instance: DatePicker | null = null;
     const { rerender } = render(

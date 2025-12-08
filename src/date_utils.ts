@@ -150,6 +150,40 @@ export function parseDate(
   return null;
 }
 
+/**
+ * Parses a partial date string for calendar navigation purposes.
+ * Unlike parseDate, this function attempts to extract whatever date
+ * information is available (year, month) from a partial input,
+ * returning a date suitable for navigating the calendar view.
+ *
+ * @param value - The date string to parse.
+ * @param refDate - The reference date to use for missing components.
+ * @returns - A date for navigation or null if no date info could be extracted.
+ */
+export function parseDateForNavigation(
+  value: string,
+  refDate: Date = newDate(),
+): Date | null {
+  if (!value) return null;
+
+  // Try to extract a 4-digit year from the input
+  const yearMatch = value.match(/\b(1\d{3}|2\d{3})\b/);
+  if (!yearMatch || !yearMatch[1]) return null;
+
+  const year = parseInt(yearMatch[1], 10);
+
+  // Try to extract a month (1-12) from the input
+  // Look for patterns like "03/", "/03", "03-", "-03" or standalone "03" at start
+  const monthMatch = value.match(/(?:^|[/\-\s])?(0?[1-9]|1[0-2])(?:[/\-\s]|$)/);
+  const month =
+    monthMatch && monthMatch[1]
+      ? parseInt(monthMatch[1], 10) - 1
+      : refDate.getMonth();
+
+  // Return a date with the extracted year and month, using day 1
+  return new Date(year, month, 1);
+}
+
 // ** Date "Reflection" **
 
 export { isDate, set };

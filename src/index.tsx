@@ -28,6 +28,7 @@ import {
   getEffectiveMinDate,
   getEffectiveMaxDate,
   parseDate,
+  parseDateForNavigation,
   formatDate,
   safeDateFormat,
   safeDateRangeFormat,
@@ -757,6 +758,21 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       // Update selection if either (1) date was successfully parsed, or (2) input field is empty
       if (date || !value) {
         this.setSelected(date, event, true);
+      } else if (!this.props.inline) {
+        // If full date parsing failed but we have partial input,
+        // try to extract date info for calendar navigation
+        const navDate = parseDateForNavigation(
+          value,
+          this.state.preSelection ?? undefined,
+        );
+        // Only update preSelection if navDate is valid and within min/max bounds
+        if (
+          navDate &&
+          (!this.props.minDate || !isBefore(navDate, this.props.minDate)) &&
+          (!this.props.maxDate || !isAfter(navDate, this.props.maxDate))
+        ) {
+          this.setState({ preSelection: navDate });
+        }
       }
     }
   };
