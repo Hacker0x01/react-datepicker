@@ -2482,18 +2482,20 @@ describe("DatePicker", () => {
     );
     expect(instance).toBeTruthy();
 
-    // Verify initial calendar shows 2024
+    // Verify initial calendar shows June 2024
     expect(instance!.state.preSelection?.getFullYear()).toBe(2024);
+    expect(instance!.state.preSelection?.getMonth()).toBe(5); // June
 
-    // Type a partial date - just a year
+    // Type a partial date - just a year (use 2000 which won't match as a month)
     fireEvent.change(instance!.input!, {
       target: {
-        value: "2014",
+        value: "2000",
       },
     });
 
-    // Calendar should navigate to 2014 even though it's not a complete date
-    expect(instance!.state.preSelection?.getFullYear()).toBe(2014);
+    // Calendar should navigate to 2000 with the same month (June) from the selected date
+    expect(instance!.state.preSelection?.getFullYear()).toBe(2000);
+    expect(instance!.state.preSelection?.getMonth()).toBe(5); // June preserved from refDate
   });
   it("should update calendar view when typing a partial date (month and year)", () => {
     let instance: DatePicker | null = null;
