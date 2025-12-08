@@ -575,7 +575,7 @@ describe("DatePicker with timeZone prop", () => {
     expect(changedEndDate).toBeNull();
   });
 
-  it("should handle time change with timezone and selectsRange using legacy showTimeSelect", () => {
+  it("should handle time change with timezone and selectsRange using legacy showTimeSelect (both dates)", () => {
     // Mock ResizeObserver
     const mockResizeObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),
@@ -611,6 +611,48 @@ describe("DatePicker with timeZone prop", () => {
 
     // onChange should have been called with timezone conversion
     expect(onChangeMock).toHaveBeenCalled();
+  });
+
+  it("should handle time change with timezone and selectsRange using legacy showTimeSelect (only start date)", () => {
+    // Mock ResizeObserver
+    const mockResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+    window.ResizeObserver = mockResizeObserver;
+
+    const startDate = new Date("2024-06-15T12:00:00Z");
+    const onChangeMock = jest.fn();
+
+    const { container } = render(
+      <DatePicker
+        selectsRange
+        startDate={startDate}
+        endDate={null}
+        onChange={onChangeMock}
+        timeZone="America/New_York"
+        showTimeSelect
+        dateFormat="yyyy-MM-dd HH:mm"
+        inline
+      />,
+    );
+
+    // Find and click a time option (legacy single time picker behavior - applies to start date when no end date)
+    const timeOptions = container.querySelectorAll(
+      ".react-datepicker__time-list-item",
+    );
+    if (timeOptions.length > 0) {
+      fireEvent.click(timeOptions[0]!);
+    }
+
+    // onChange should have been called with timezone conversion
+    expect(onChangeMock).toHaveBeenCalled();
+    const [changedStartDate, changedEndDate] = onChangeMock.mock.calls[0][0];
+
+    // Start date should be converted, end date should be null
+    expect(changedStartDate).toBeInstanceOf(Date);
+    expect(changedEndDate).toBeNull();
   });
 });
 
