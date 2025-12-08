@@ -50,8 +50,11 @@ import {
   getStartOfDay,
   getEndOfDay,
   isSameMinute,
+  toZonedTime,
+  fromZonedTime,
   type HighlightDate,
   type HolidayItem,
+  type TimeZone,
   KeyType,
   DATE_RANGE_SEPARATOR,
 } from "./date_utils";
@@ -186,6 +189,26 @@ export type DatePickerProps = OmitUnion<
     startDate?: Date | null;
     endDate?: Date | null;
     selected?: Date | null;
+    /**
+     * The IANA timezone identifier (e.g., "America/New_York", "UTC", "Europe/London").
+     * When set, the datepicker will display dates/times in this timezone and
+     * the onChange callback will return dates adjusted to this timezone.
+     *
+     * Requires the optional peer dependency `date-fns-tz` to be installed:
+     * ```
+     * npm install date-fns-tz
+     * ```
+     *
+     * @example
+     * ```tsx
+     * <DatePicker
+     *   timeZone="America/New_York"
+     *   selected={selectedDate}
+     *   onChange={(date) => setSelectedDate(date)}
+     * />
+     * ```
+     */
+    timeZone?: TimeZone;
     value?: string;
     customInputRef?: string;
     id?: string;
@@ -417,14 +440,19 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   input: HTMLElement | null = null;
 
-  getPreSelection = (): Date =>
-    this.props.openToDate
+  getPreSelection = (): Date => {
+    const { timeZone } = this.props;
+    const baseDate = this.props.openToDate
       ? this.props.openToDate
       : this.props.selectsEnd && this.props.startDate
         ? this.props.startDate
         : this.props.selectsStart && this.props.endDate
           ? this.props.endDate
           : newDate();
+
+    // Convert to the specified timezone for display
+    return timeZone ? toZonedTime(baseDate, timeZone) : baseDate;
+  };
 
   // Convert the date from string format to standard Date format
   // Uses parseDate with ISO format to parse as local time, preventing
@@ -440,6 +468,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     }, []);
 
   calcInitialState = (): DatePickerState => {
+    const { timeZone } = this.props;
     const defaultPreSelection = this.getPreSelection();
     const minDate = getEffectiveMinDate(this.props);
     const maxDate = getEffectiveMaxDate(this.props);
@@ -449,14 +478,21 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         : maxDate && isAfter(defaultPreSelection, getEndOfDay(maxDate))
           ? maxDate
           : defaultPreSelection;
+
+    // Convert selected/startDate to zoned time for display if timezone is specified
+    let initialPreSelection = this.props.selectsRange
+      ? this.props.startDate
+      : this.props.selected;
+
+    if (initialPreSelection && timeZone) {
+      initialPreSelection = toZonedTime(initialPreSelection, timeZone);
+    }
+
     return {
       open: this.props.startOpen || false,
       preventFocus: false,
       inputValue: null,
-      preSelection:
-        (this.props.selectsRange
-          ? this.props.startDate
-          : this.props.selected) ?? boundedPreSelection,
+      preSelection: initialPreSelection ?? boundedPreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHighLightDaysMap(this.props.highlightDates),
@@ -832,7 +868,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     keepInput?: boolean,
     monthSelectedIn?: number,
   ) => {
+    const { timeZone } = this.props;
+
+    // If timezone is specified, convert the selected date from zoned time to UTC
+    // This ensures the onChange callback receives a proper UTC Date object
     let changedDate = date;
+    if (changedDate && timeZone) {
+      changedDate = fromZonedTime(changedDate, timeZone);
+    }
 
     // Early return if selected year/month/day is disabled
     if (this.props.showYearPicker) {
@@ -1012,7 +1055,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       return;
     }
 
-    const { selectsRange, startDate, endDate, onChange } = this.props;
+    const { selectsRange, startDate, endDate, onChange, timeZone } = this.props;
 
     if (selectsRange) {
       // In range mode, apply time to the appropriate date
@@ -1024,26 +1067,54 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       if (modifyDateType === "start") {
         // Explicitly modify start date
         if (startDate) {
-          const changedStartDate = setTime(startDate, {
+          let changedStartDate = setTime(startDate, {
             hour: getHours(time),
             minute: getMinutes(time),
           });
           this.setState({
             preSelection: changedStartDate,
           });
-          onChange?.([changedStartDate, endDate ?? null], undefined);
+          // Convert from zoned time to UTC if timezone is specified
+          if (timeZone) {
+            changedStartDate = fromZonedTime(changedStartDate, timeZone);
+          }
+          onChange?.(
+            [
+              changedStartDate,
+              endDate
+                ? timeZone
+                  ? fromZonedTime(endDate, timeZone)
+                  : endDate
+                : null,
+            ],
+            undefined,
+          );
         }
       } else if (modifyDateType === "end") {
         // Explicitly modify end date
         if (endDate) {
-          const changedEndDate = setTime(endDate, {
+          let changedEndDate = setTime(endDate, {
             hour: getHours(time),
             minute: getMinutes(time),
           });
           this.setState({
             preSelection: changedEndDate,
           });
-          onChange?.([startDate ?? null, changedEndDate], undefined);
+          // Convert from zoned time to UTC if timezone is specified
+          if (timeZone) {
+            changedEndDate = fromZonedTime(changedEndDate, timeZone);
+          }
+          onChange?.(
+            [
+              startDate
+                ? timeZone
+                  ? fromZonedTime(startDate, timeZone)
+                  : startDate
+                : null,
+              changedEndDate,
+            ],
+            undefined,
+          );
         }
       } else {
         // Legacy behavior for showTimeSelect (single time picker)
@@ -1051,24 +1122,38 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
         if (hasStartRange) {
           // Apply time to startDate
-          const changedStartDate = setTime(startDate, {
+          let changedStartDate = setTime(startDate, {
             hour: getHours(time),
             minute: getMinutes(time),
           });
           this.setState({
             preSelection: changedStartDate,
           });
+          // Convert from zoned time to UTC if timezone is specified
+          if (timeZone) {
+            changedStartDate = fromZonedTime(changedStartDate, timeZone);
+          }
           onChange?.([changedStartDate, null], undefined);
         } else if (startDate && endDate) {
           // Apply time to endDate
-          const changedEndDate = setTime(endDate, {
+          let changedEndDate = setTime(endDate, {
             hour: getHours(time),
             minute: getMinutes(time),
           });
           this.setState({
             preSelection: changedEndDate,
           });
-          onChange?.([startDate, changedEndDate], undefined);
+          // Convert from zoned time to UTC if timezone is specified
+          if (timeZone) {
+            changedEndDate = fromZonedTime(changedEndDate, timeZone);
+          }
+          onChange?.(
+            [
+              timeZone ? fromZonedTime(startDate, timeZone) : startDate,
+              changedEndDate,
+            ],
+            undefined,
+          );
         } else {
           // No dates selected yet, just update preSelection
           const changedDate = setTime(this.getPreSelection(), {
@@ -1085,7 +1170,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       const selected = this.props.selected
         ? this.props.selected
         : this.getPreSelection();
-      const changedDate = this.props.selected
+      let changedDate = this.props.selected
         ? time
         : setTime(selected, {
             hour: getHours(time),
@@ -1095,6 +1180,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       this.setState({
         preSelection: changedDate,
       });
+
+      // Convert from zoned time to UTC if timezone is specified
+      if (changedDate && timeZone) {
+        changedDate = fromZonedTime(changedDate, timeZone);
+      }
 
       this.props.onChange?.(changedDate);
     }
