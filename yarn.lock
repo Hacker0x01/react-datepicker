@@ -8620,11 +8620,11 @@ __metadata:
   linkType: hard
 
 "prettier@npm:^3.4.2":
-  version: 3.7.0
-  resolution: "prettier@npm:3.7.0"
+  version: 3.7.4
+  resolution: "prettier@npm:3.7.4"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/ef2ca136ae69d07248b3cbbe199b0862bec3b1f84c94192dd4df572649df1ebb2281f8513269fc328a0f1265851dc564af5723c6bd7a8c0559451aa560bac4d5
+  checksum: 10c0/9675d2cd08eacb1faf1d1a2dbfe24bfab6a912b059fc9defdb380a408893d88213e794a40a2700bd29b140eb3172e0b07c852853f6e22f16f3374659a1a13389
   languageName: node
   linkType: hard
 
