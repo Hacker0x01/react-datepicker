@@ -4,7 +4,7 @@ Thanks for taking your time to read this. We're thrilled you're reading this bec
 
 ## Testing
 
-We have a handful of Cucumber features, but most of our testbed consists of RSpec examples. Please write RSpec examples for new code you create.
+We use Jest with React Testing Library for our test suite. Please write tests for new code you create.
 
 ## Submitting changes
 
@@ -29,13 +29,11 @@ Local development configuration is pretty snappy. Here's how to get set up:
 
 1. Install/use node >=16.0.0
 1. Install/use yarn >=4.6.x
-1. Run `yarn link` from project root
-1. Run `cd docs-site && yarn link react-datepicker`
 1. Run `yarn install` from project root
-1. Run `yarn build` from project root (at least the first time, this will get you the `dist` directory that holds the code that will be linked to)
-1. Run `yarn start` from project root. (This command launches a documentation app and runs it as a simple webserver at http://localhost:5173.)
-1. Open new terminal window
-1. Run `yarn build-dev` from project root. (This command sets up a development environment that keeps an eye on any file changes. When a file is updated, it auto-builds using the latest code.)
+1. Run `yarn build` from project root
+1. Run `yarn start` from project root (This command launches a documentation app and runs it as a simple webserver at http://localhost:5173.)
+1. Open a new terminal window
+1. Run `yarn build-dev` from project root (sets up watch mode that auto-rebuilds on file changes)
 
 You can run `yarn test` to execute the test suite and linters. To help you develop the component we’ve set up some tests that cover the basic functionality (can be found in `/tests`). Even though we’re big fans of testing, this only covers a small piece of the component. We highly recommend you add tests when you’re adding new functionality.
 
