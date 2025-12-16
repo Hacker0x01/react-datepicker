@@ -765,27 +765,6 @@ h2.react-datepicker__current-month {
   align-items: center;
   display: flex;
   z-index: 2147483647;
-
-  .react-datepicker__day-name,
-  .react-datepicker__day,
-  .react-datepicker__time-name {
-    width: 3.75em;
-    line-height: 3.75em;
-  }
-
-  @media (max-width: 400px), (max-height: 550px) {
-    .react-datepicker__day-name,
-    .react-datepicker__day,
-    .react-datepicker__time-name {
-      width: 2.5em;
-      line-height: 2.5em;
-    }
-  }
-
-  .react-datepicker__current-month,
-  .react-datepicker-time__header {
-    font-size: $datepicker__font-size * 1.8;
-  }
 }
 
 .react-datepicker__children-container {

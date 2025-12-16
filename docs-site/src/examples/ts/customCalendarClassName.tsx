@@ -5,7 +5,7 @@ const CustomCalendarClassName = () => {
     <DatePicker
       selected={selectedDate}
       onChange={setSelectedDate}
-      calendarClassName="rasta-stripes"
+      calendarClassName="rasta-stripes-big"
     />
   );
 };
