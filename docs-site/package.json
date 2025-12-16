@@ -24,7 +24,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@types/lodash": "^4.17.21",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
