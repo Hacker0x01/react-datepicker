@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import { ClickOutsideWrapper } from "./click_outside_wrapper";
 import {
   addMonths,
+  addYears,
+  subYears,
   formatDate,
   getStartOfMonth,
   newDate,
@@ -14,11 +16,22 @@ import {
   type Locale,
 } from "./date_utils";
 
-function generateMonthYears(minDate: Date, maxDate: Date): Date[] {
+// Default range: 5 years before and after current date
+const DEFAULT_YEAR_RANGE = 5;
+
+function generateMonthYears(
+  minDate: Date | undefined,
+  maxDate: Date | undefined,
+  currentDate: Date,
+): Date[] {
   const list = [];
 
-  let currDate = getStartOfMonth(minDate);
-  const lastDate = getStartOfMonth(maxDate);
+  // Use defaults if minDate/maxDate not provided
+  const effectiveMinDate = minDate ?? subYears(currentDate, DEFAULT_YEAR_RANGE);
+  const effectiveMaxDate = maxDate ?? addYears(currentDate, DEFAULT_YEAR_RANGE);
+
+  let currDate = getStartOfMonth(effectiveMinDate);
+  const lastDate = getStartOfMonth(effectiveMaxDate);
 
   while (!isAfter(currDate, lastDate)) {
     list.push(newDate(currDate));
@@ -29,8 +42,8 @@ function generateMonthYears(minDate: Date, maxDate: Date): Date[] {
 }
 
 interface MonthYearDropdownOptionsProps {
-  minDate: Date;
-  maxDate: Date;
+  minDate?: Date;
+  maxDate?: Date;
   onCancel: VoidFunction;
   onChange: (monthYear: number) => void;
   scrollableMonthYearDropdown?: boolean;
@@ -54,6 +67,7 @@ export default class MonthYearDropdownOptions extends Component<
       monthYearsList: generateMonthYears(
         this.props.minDate,
         this.props.maxDate,
+        this.props.date,
       ),
     };
   }

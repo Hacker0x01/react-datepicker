@@ -226,7 +226,7 @@ type CalendarProps = React.PropsWithChildren<
     } & (
       | ({
           showMonthYearDropdown: true;
-        } & Pick<MonthYearDropdownProps, "maxDate" | "minDate">)
+        } & Pick<YearDropdownProps, "maxDate" | "minDate">)
       | ({
           showMonthYearDropdown?: never;
         } & Pick<YearDropdownProps, "maxDate" | "minDate"> &
