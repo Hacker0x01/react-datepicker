@@ -164,6 +164,11 @@ When fixing bugs, always follow Test-Driven Development:
 3. **Implement the fix** - Make the minimal code change to fix the issue
 4. **Verify the test passes** - Run the test again to confirm the fix works
 5. **Run full test suite** - Ensure no regressions with `yarn test:ci`
+6. **Create a branch** - `git checkout -b fix/descriptive-branch-name`
+7. **Commit the fix** - Use a descriptive commit message referencing the issue (e.g., `fix: description of fix\n\nFixes #123`)
+8. **Push the branch** - `git push -u origin fix/descriptive-branch-name`
+9. **Create a PR** - Use `gh pr create` with a clear title and description that references the issue
+10. **Return to main** - `git checkout main` to prepare for the next task
 
 This ensures every bug fix has regression coverage and documents the expected behavior.
 
