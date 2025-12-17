@@ -112,8 +112,12 @@ function getDateFnsTz(): DateFnsTz | null {
 
   try {
     // Dynamic require for date-fns-tz
+    // Use a variable to prevent webpack from statically analyzing the require
+    // and showing warnings when the optional dependency is not installed
+    // See: https://github.com/Hacker0x01/react-datepicker/issues/6154
+    const dateFnsTzModuleName = "date-fns-tz";
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    dateFnsTz = require("date-fns-tz") as DateFnsTz;
+    dateFnsTz = require(dateFnsTzModuleName) as DateFnsTz;
   } catch {
     /* istanbul ignore next - only executes when date-fns-tz is not installed */
     dateFnsTz = null;
