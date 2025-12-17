@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import {
   addMonths,
+  addYears,
+  subYears,
   formatDate,
   getStartOfMonth,
   isAfter,
@@ -11,7 +13,11 @@ import {
   getTime,
   type Locale,
 } from "./date_utils";
+
 import MonthYearDropdownOptions from "./month_year_dropdown_options";
+
+// Default range: 5 years before and after current date
+const DEFAULT_YEAR_RANGE = 5;
 
 interface MonthYearDropdownOptionsProps extends React.ComponentPropsWithoutRef<
   typeof MonthYearDropdownOptions
@@ -39,8 +45,14 @@ export default class MonthYearDropdown extends Component<
   };
 
   renderSelectOptions = (): React.ReactElement[] => {
-    let currDate = getStartOfMonth(this.props.minDate);
-    const lastDate = getStartOfMonth(this.props.maxDate);
+    // Use defaults if minDate/maxDate not provided
+    const minDate =
+      this.props.minDate ?? subYears(this.props.date, DEFAULT_YEAR_RANGE);
+    const maxDate =
+      this.props.maxDate ?? addYears(this.props.date, DEFAULT_YEAR_RANGE);
+
+    let currDate = getStartOfMonth(minDate);
+    const lastDate = getStartOfMonth(maxDate);
     const options = [];
 
     while (!isAfter(currDate, lastDate)) {

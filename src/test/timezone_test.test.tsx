@@ -303,7 +303,7 @@ describe("DatePicker with timeZone prop", () => {
     const { container } = render(
       <DatePicker
         selected={utcDate}
-        onChange={(date) => {
+        onChange={(date: Date | null) => {
           selectedDate = date;
         }}
         timeZone="America/New_York"
