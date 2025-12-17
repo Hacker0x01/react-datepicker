@@ -1373,7 +1373,7 @@ describe("Calendar", () => {
       <DatePicker
         selected={newDate("2017-07-28")}
         adjustDateOnChange
-        onChange={(d) => {
+        onChange={(d: Date | null) => {
           date = d;
         }}
       />,
@@ -1397,7 +1397,7 @@ describe("Calendar", () => {
       <DatePicker
         selected={newDate("2017-07-28")}
         adjustDateOnChange
-        onChange={(d) => {
+        onChange={(d: Date | null) => {
           date = d;
         }}
       />,
@@ -1421,7 +1421,7 @@ describe("Calendar", () => {
       <DatePicker
         selected={newDate("2017-12-31")}
         adjustDateOnChange
-        onChange={(d) => {
+        onChange={(d: Date | null) => {
           date = d;
         }}
       />,

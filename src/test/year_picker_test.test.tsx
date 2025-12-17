@@ -642,7 +642,7 @@ describe("YearPicker", () => {
           selected={newDate("2020-01-01")}
           adjustDateOnChange
           showYearPicker
-          onChange={(d) => {
+          onChange={(d: Date | null) => {
             date = d;
           }}
         />,
@@ -674,7 +674,7 @@ describe("YearPicker", () => {
           selected={newDate("2020-01-01")}
           adjustDateOnChange
           showYearPicker
-          onChange={(d) => {
+          onChange={(d: Date | null) => {
             date = d;
           }}
         />,

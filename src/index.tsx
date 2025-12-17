@@ -257,7 +257,7 @@ export type DatePickerProps = OmitUnion<
         ) => void;
       }
     | {
-        selectsRange: true;
+        selectsRange?: true;
         selectsMultiple?: false | undefined;
         formatMultipleDates?: never;
         onChange?: (
@@ -269,7 +269,7 @@ export type DatePickerProps = OmitUnion<
       }
     | {
         selectsRange?: false | undefined;
-        selectsMultiple: true;
+        selectsMultiple?: true;
         formatMultipleDates?: (
           dates: Date[],
           formatDate: (date: Date) => string,
@@ -282,6 +282,22 @@ export type DatePickerProps = OmitUnion<
         ) => void;
       }
   );
+
+// Internal types for onChange handlers - used for type assertions within the component
+type OnChangeSingle = (
+  date: Date | null,
+  event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+) => void;
+
+type OnChangeRange = (
+  date: [Date | null, Date | null],
+  event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+) => void;
+
+type OnChangeMultiple = (
+  dates: Date[] | null,
+  event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+) => void;
 
 interface DatePickerState {
   open: boolean;
@@ -953,38 +969,40 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       }
 
       if (selectsRange) {
+        const onChangeRange = onChange as OnChangeRange | undefined;
         const noRanges = !startDate && !endDate;
         const hasStartRange = startDate && !endDate;
         const hasOnlyEndRange = !startDate && !!endDate;
         const isRangeFilled = startDate && endDate;
         if (noRanges) {
-          onChange?.([changedDate, null], event);
+          onChangeRange?.([changedDate, null], event);
         } else if (hasStartRange) {
           if (changedDate === null) {
-            onChange?.([null, null], event);
+            onChangeRange?.([null, null], event);
           } else if (isDateBefore(changedDate, startDate)) {
             if (swapRange) {
-              onChange?.([changedDate, startDate], event);
+              onChangeRange?.([changedDate, startDate], event);
             } else {
-              onChange?.([changedDate, null], event);
+              onChangeRange?.([changedDate, null], event);
             }
           } else {
-            onChange?.([startDate, changedDate], event);
+            onChangeRange?.([startDate, changedDate], event);
           }
         } else if (hasOnlyEndRange) {
           if (changedDate && isDateBefore(changedDate, endDate)) {
-            onChange?.([changedDate, endDate], event);
+            onChangeRange?.([changedDate, endDate], event);
           } else {
-            onChange?.([changedDate, null], event);
+            onChangeRange?.([changedDate, null], event);
           }
         }
         if (isRangeFilled) {
-          onChange?.([changedDate, null], event);
+          onChangeRange?.([changedDate, null], event);
         }
       } else if (selectsMultiple) {
+        const onChangeMultiple = onChange as OnChangeMultiple | undefined;
         if (changedDate !== null) {
           if (!selectedDates?.length) {
-            onChange?.([changedDate], event);
+            onChangeMultiple?.([changedDate], event);
           } else {
             const isChangedDateAlreadySelected = selectedDates.some(
               (selectedDate) => isSameDay(selectedDate, changedDate),
@@ -995,14 +1013,14 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
                 (selectedDate) => !isSameDay(selectedDate, changedDate),
               );
 
-              onChange?.(nextDates, event);
+              onChangeMultiple?.(nextDates, event);
             } else {
-              onChange?.([...selectedDates, changedDate], event);
+              onChangeMultiple?.([...selectedDates, changedDate], event);
             }
           }
         }
       } else {
-        onChange?.(changedDate, event);
+        (onChange as OnChangeSingle | undefined)?.(changedDate, event);
       }
     }
 
@@ -1058,6 +1076,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     const { selectsRange, startDate, endDate, onChange, timeZone } = this.props;
 
     if (selectsRange) {
+      const onChangeRange = onChange as OnChangeRange | undefined;
       // In range mode, apply time to the appropriate date
       // If modifyDateType is specified, use that to determine which date to modify
       // Otherwise, use the legacy behavior:
@@ -1078,7 +1097,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           if (timeZone) {
             changedStartDate = fromZonedTime(changedStartDate, timeZone);
           }
-          onChange?.(
+          onChangeRange?.(
             [
               changedStartDate,
               endDate
@@ -1104,7 +1123,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           if (timeZone) {
             changedEndDate = fromZonedTime(changedEndDate, timeZone);
           }
-          onChange?.(
+          onChangeRange?.(
             [
               startDate
                 ? timeZone
@@ -1133,7 +1152,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           if (timeZone) {
             changedStartDate = fromZonedTime(changedStartDate, timeZone);
           }
-          onChange?.([changedStartDate, null], undefined);
+          onChangeRange?.([changedStartDate, null], undefined);
         } else if (startDate && endDate) {
           // Apply time to endDate
           let changedEndDate = setTime(endDate, {
@@ -1147,7 +1166,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           if (timeZone) {
             changedEndDate = fromZonedTime(changedEndDate, timeZone);
           }
-          onChange?.(
+          onChangeRange?.(
             [
               timeZone ? fromZonedTime(startDate, timeZone) : startDate,
               changedEndDate,
@@ -1186,7 +1205,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         changedDate = fromZonedTime(changedDate, timeZone);
       }
 
-      this.props.onChange?.(changedDate);
+      (this.props.onChange as OnChangeSingle | undefined)?.(changedDate);
     }
 
     if (this.props.shouldCloseOnSelect && !this.props.showTimeInput) {
@@ -1255,7 +1274,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           minute: getMinutes(newTime),
         });
 
-    this.props.onChange?.(changedDate);
+    (this.props.onChange as OnChangeSingle | undefined)?.(changedDate);
 
     if (this.props.showTimeSelectOnly || this.props.showTimeSelect) {
       this.setState({ isRenderAriaLiveMessage: true });
@@ -1652,9 +1671,9 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
     const { selectsRange, onChange } = this.props;
     if (selectsRange) {
-      onChange?.([null, null], event);
+      (onChange as OnChangeRange | undefined)?.([null, null], event);
     } else {
-      onChange?.(null, event);
+      (onChange as OnChangeSingle | undefined)?.(null, event);
     }
 
     this.setState({ inputValue: null });
