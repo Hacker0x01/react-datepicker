@@ -149,6 +149,23 @@
   margin: 0 15px;
 }
 
+.react-datepicker__month-select,
+.react-datepicker__year-select,
+.react-datepicker__month-year-select {
+  background-color: transparent;
+  border: 1px solid $datepicker__border-color;
+  border-radius: $datepicker__border-radius;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 2px;
+
+  &:focus-visible {
+    outline: auto 1px;
+  }
+}
+
 .react-datepicker__current-month,
 .react-datepicker-time__header,
 .react-datepicker-year-header {
