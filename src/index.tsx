@@ -52,6 +52,7 @@ import {
   isSameMinute,
   toZonedTime,
   fromZonedTime,
+  safeToDate,
   type HighlightDate,
   type HolidayItem,
   type TimeZone,
@@ -783,8 +784,10 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
             strictParsing,
           )
         : null;
-      const startChanged = startDate?.getTime() !== startDateNew?.getTime();
-      const endChanged = endDate?.getTime() !== endDateNew?.getTime();
+      const startChanged =
+        safeToDate(startDate)?.getTime() !== startDateNew?.getTime();
+      const endChanged =
+        safeToDate(endDate)?.getTime() !== endDateNew?.getTime();
 
       if (!startChanged && !endChanged) {
         return;
@@ -1231,7 +1234,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   handleTimeOnlyArrowKey = (eventKey: string): void => {
     const currentTime =
-      this.props.selected || this.state.preSelection || newDate();
+      safeToDate(this.props.selected) || this.state.preSelection || newDate();
     const timeIntervals = this.props.timeIntervals ?? 30;
     const dateFormat =
       this.props.dateFormat ?? DatePicker.defaultProps.dateFormat;
@@ -1293,7 +1296,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     const timeFormat = this.props.timeFormat || "p";
 
     const defaultTime =
-      this.state.preSelection || this.props.selected || newDate();
+      this.state.preSelection || safeToDate(this.props.selected) || newDate();
     const parsedDate = parseDate(
       inputValue,
       dateFormat,

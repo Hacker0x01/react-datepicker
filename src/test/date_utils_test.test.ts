@@ -56,6 +56,7 @@ import {
   registerLocale,
   isMonthYearDisabled,
   getDefaultLocale,
+  safeToDate,
 } from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1731,6 +1732,69 @@ describe("date_utils", () => {
       );
 
       expect(typeof result).toBe("boolean");
+    });
+  });
+
+  describe("safeToDate", () => {
+    it("returns the date when given a valid Date object", () => {
+      const date = new Date("2024-01-15");
+      const result = safeToDate(date);
+      expect(result).toBe(date);
+    });
+
+    it("returns null when given null", () => {
+      const result = safeToDate(null);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given undefined", () => {
+      const result = safeToDate(undefined);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given a string", () => {
+      // TypeScript types this as Date, but at runtime it could be a string
+      const result = safeToDate("2024-01-15" as unknown as Date);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given an invalid date string", () => {
+      const result = safeToDate("not-a-date" as unknown as Date);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given an Invalid Date object", () => {
+      const invalidDate = new Date("invalid");
+      expect(isValid(invalidDate)).toBe(false);
+      const result = safeToDate(invalidDate);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given a number", () => {
+      const result = safeToDate(1705276800000 as unknown as Date);
+      expect(result).toBeNull();
+    });
+
+    it("returns null when given an object that is not a Date", () => {
+      const result = safeToDate({ year: 2024, month: 1 } as unknown as Date);
+      expect(result).toBeNull();
+    });
+
+    it("returns the date when given a Date created from newDate()", () => {
+      const date = newDate();
+      const result = safeToDate(date);
+      expect(result).toBe(date);
+    });
+
+    it("returns the date when given a Date at epoch", () => {
+      const date = new Date(0);
+      const result = safeToDate(date);
+      expect(result).toBe(date);
+    });
+
+    it("returns null when given an empty string", () => {
+      const result = safeToDate("" as unknown as Date);
+      expect(result).toBeNull();
     });
   });
 });

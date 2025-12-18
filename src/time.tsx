@@ -13,6 +13,7 @@ import {
   getHoursInDay,
   isSameMinute,
   getSeconds,
+  safeToDate,
   type Locale,
   type TimeFilterOptions,
   KeyType,
@@ -139,8 +140,10 @@ export default class Time extends Component<TimeProps, TimeState> {
     this.props.onChange?.(time);
   };
 
-  isSelectedTime = (time: Date) =>
-    this.props.selected && isSameMinute(this.props.selected, time);
+  isSelectedTime = (time: Date) => {
+    const selected = safeToDate(this.props.selected);
+    return selected && isSameMinute(selected, time);
+  };
 
   isDisabledTime = (time: Date): boolean | undefined =>
     ((this.props.minTime || this.props.maxTime) &&
@@ -218,7 +221,9 @@ export default class Time extends Component<TimeProps, TimeState> {
     const intervals = this.props.intervals ?? Time.defaultProps.intervals;
 
     const activeDate =
-      this.props.selected || this.props.openToDate || newDate();
+      safeToDate(this.props.selected) ||
+      safeToDate(this.props.openToDate) ||
+      newDate();
 
     const base = getStartOfDay(activeDate);
     const sortedInjectTimes =

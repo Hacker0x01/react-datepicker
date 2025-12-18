@@ -1206,4 +1206,95 @@ describe("TimePicker", () => {
       expect(instance.state.open).toBe(true);
     });
   });
+
+  describe("handling invalid date prop types", () => {
+    it("should not crash when selected prop is a string instead of Date", () => {
+      // This tests the fix for issue #5964
+      // Some users may pass a string to selected prop at runtime
+      expect(() => {
+        render(
+          <TestDatePicker
+            inline
+            selected={"2024-01-15"}
+            showTimeSelect
+            timeIntervals={15}
+          />,
+        );
+      }).not.toThrow();
+    });
+
+    it("should render time options when selected prop is a string", () => {
+      const { container } = render(
+        <TestDatePicker
+          inline
+          selected={"2024-01-15"}
+          showTimeSelect
+          timeIntervals={60}
+        />,
+      );
+
+      const timeList = container.querySelector(".react-datepicker__time-list");
+      expect(timeList).not.toBeNull();
+
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+      expect(timeItems.length).toBeGreaterThan(0);
+    });
+
+    it("should not crash when openToDate prop is a string instead of Date", () => {
+      expect(() => {
+        render(
+          <TestDatePicker
+            inline
+            openToDate={"2024-06-15"}
+            showTimeSelect
+            timeIntervals={15}
+          />,
+        );
+      }).not.toThrow();
+    });
+
+    it("should fall back to current date when selected is an invalid string", () => {
+      const { container } = render(
+        <TestDatePicker
+          inline
+          selected={"not-a-valid-date"}
+          showTimeSelect
+          timeIntervals={60}
+        />,
+      );
+
+      // Should still render time options (falling back to newDate())
+      const timeItems = container.querySelectorAll(
+        ".react-datepicker__time-list-item",
+      );
+      expect(timeItems.length).toBeGreaterThan(0);
+    });
+
+    it("should allow selecting a time when selected was initially a string", () => {
+      let selectedDate: Date | null = null;
+      const handleChange = (date: Date | null) => {
+        selectedDate = date;
+      };
+
+      const { container } = render(
+        <TestDatePicker
+          inline
+          selected={"2024-01-15"}
+          onChange={handleChange}
+          showTimeSelect
+          timeIntervals={60}
+        />,
+      );
+
+      const firstTimeItem = container.querySelector(
+        ".react-datepicker__time-list-item",
+      );
+      expect(firstTimeItem).not.toBeNull();
+
+      fireEvent.click(firstTimeItem!);
+      expect(selectedDate).toBeInstanceOf(Date);
+    });
+  });
 });
