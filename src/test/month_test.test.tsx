@@ -775,6 +775,50 @@ describe("Month", () => {
       expect(months.length).toBe(1);
       expect(months[0]?.textContent).toBe("Jun");
     });
+
+    it("should not add in-selecting-range class when viewing a different year than the range (#5637)", () => {
+      // Scenario: User selected January 2025 as start date, now viewing 2024
+      // January 2024 should NOT show as in-selecting-range
+      const { container } = render(
+        <Month
+          preSelection={newDate("2025-01-15")}
+          day={newDate("2024-01-01")} // Viewing 2024
+          startDate={newDate("2025-01-01")} // Range starts in 2025
+          selectingDate={newDate("2025-03-01")} // Selecting March 2025
+          selectsRange
+          showMonthYearPicker
+        />,
+      );
+      const months = container.querySelectorAll(
+        ".react-datepicker__month-text--in-selecting-range",
+      );
+
+      // No months in 2024 should be highlighted since the range is entirely in 2025
+      expect(months.length).toBe(0);
+    });
+
+    it("should add in-selecting-range class correctly when range spans multiple years", () => {
+      // Scenario: Range from Nov 2024 to Mar 2025, viewing 2024
+      // Nov and Dec 2024 should be in range
+      const { container } = render(
+        <Month
+          preSelection={newDate("2024-11-15")}
+          day={newDate("2024-01-01")} // Viewing 2024
+          startDate={newDate("2024-11-01")} // Range starts Nov 2024
+          selectingDate={newDate("2025-03-01")} // Selecting March 2025
+          selectsRange
+          showMonthYearPicker
+        />,
+      );
+      const months = container.querySelectorAll(
+        ".react-datepicker__month-text--in-selecting-range",
+      );
+
+      // Nov and Dec 2024 should be in range
+      expect(months.length).toBe(2);
+      expect(months[0]?.textContent).toBe("Nov");
+      expect(months[1]?.textContent).toBe("Dec");
+    });
   });
 
   describe("selecting quarter range", () => {
@@ -2728,6 +2772,52 @@ describe("Month", () => {
 
       expect(selected).not.toBeNull();
       expect(keyboardSelected).toBeNull();
+    });
+
+    it("should not apply the keyboard-selected class when preSelection is in a different year than the displayed month picker (#5637)", () => {
+      // When viewing 2024 but preSelection is January 2025,
+      // January 2024 should NOT have keyboard-selected class
+      const preSelectionDate = newDate("2025-01-15"); // January 2025
+      const displayedYear = newDate("2024-01-01"); // Viewing 2024
+
+      const { container } = render(
+        <Month
+          day={displayedYear}
+          preSelection={preSelectionDate}
+          showMonthYearPicker
+        />,
+      );
+
+      // January in the 2024 view should NOT be keyboard-selected
+      // because preSelection is January 2025 (different year)
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__month-text--keyboard-selected",
+      );
+
+      expect(keyboardSelected).toBeNull();
+    });
+
+    it("should apply the keyboard-selected class when preSelection is in the same year as the displayed month picker", () => {
+      // When viewing 2025 and preSelection is January 2025,
+      // January 2025 SHOULD have keyboard-selected class
+      const preSelectionDate = newDate("2025-01-15"); // January 2025
+      const displayedYear = newDate("2025-06-01"); // Viewing 2025
+
+      const { container } = render(
+        <Month
+          day={displayedYear}
+          preSelection={preSelectionDate}
+          showMonthYearPicker
+        />,
+      );
+
+      // January in the 2025 view SHOULD be keyboard-selected
+      const keyboardSelected = container.querySelector(
+        ".react-datepicker__month-text--keyboard-selected",
+      );
+
+      expect(keyboardSelected).not.toBeNull();
+      expect(keyboardSelected?.textContent).toBe("Jan");
     });
   });
 
