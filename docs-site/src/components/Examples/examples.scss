@@ -179,7 +179,8 @@
   border-color: #f00;
 }
 
-.rasta-stripes {
+.rasta-stripes-big {
+  font-size: 1rem !important;
   .react-datepicker__week:nth-child(3n + 1) {
     background-color: #215005;
   }
