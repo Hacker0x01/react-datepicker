@@ -509,6 +509,19 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       this.props.calendarStartDay,
     );
 
+    // Inline sr-only styles ensure weekday names work without CSS import
+    const srOnlyStyles: React.CSSProperties = {
+      position: "absolute",
+      width: "1px",
+      height: "1px",
+      padding: 0,
+      margin: "-1px",
+      overflow: "hidden",
+      clipPath: "inset(50%)",
+      whiteSpace: "nowrap",
+      border: 0,
+    };
+
     const dayNames: React.ReactElement[] = [];
     if (this.props.showWeekNumbers) {
       dayNames.push(
@@ -517,7 +530,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           className={`react-datepicker__day-name ${disabled ? "react-datepicker__day-name--disabled" : ""}`}
           role="columnheader"
         >
-          <span className="react-datepicker__sr-only">Week number</span>
+          <span className="react-datepicker__sr-only" style={srOnlyStyles}>
+            Week number
+          </span>
           <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
       );
@@ -568,7 +583,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
               disabled ? "react-datepicker__day-name--disabled" : "",
             )}
           >
-            <span className="react-datepicker__sr-only">{fullDayName}</span>
+            <span className="react-datepicker__sr-only" style={srOnlyStyles}>
+              {fullDayName}
+            </span>
             <span aria-hidden="true">{weekDayName}</span>
           </div>
         );
