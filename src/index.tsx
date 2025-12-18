@@ -707,6 +707,20 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       this.props.onBlur?.(event);
     }
 
+    // If user cleared the input via a mask library (inputValue has no date-like
+    // characters), clear the selection on blur (fixes issue #5814 with mask inputs)
+    const { inputValue } = this.state;
+    if (typeof inputValue === "string" && inputValue.length > 0) {
+      // Check if input looks like a cleared mask (no alphanumeric characters)
+      // This distinguishes between:
+      // - "__/__/____" (cleared mask) → should clear selection
+      // - "2025-02-45" (invalid date) → should keep previous selection
+      const hasDateCharacters = /[a-zA-Z0-9]/.test(inputValue);
+      if (!hasDateCharacters && this.props.selected) {
+        this.setSelected(null, undefined, true);
+      }
+    }
+
     this.resetInputValue();
 
     if (this.state.open && this.props.open === false) {

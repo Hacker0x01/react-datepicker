@@ -2447,6 +2447,78 @@ describe("DatePicker", () => {
 
     expect(onChangeSpy.mock.calls.at(-1)[0]).toStrictEqual([null, null]);
   });
+  it("should keep input cleared after blur when using controlled component (issue #5814)", () => {
+    function ControlledDatePicker() {
+      const [selected, setSelected] = useState<Date | null>(
+        newDate("2024-12-25"),
+      );
+
+      return (
+        <DatePicker
+          selected={selected}
+          onChange={(date: Date | null) => setSelected(date)}
+          dateFormat="MM/dd/yyyy"
+        />
+      );
+    }
+
+    const { container } = render(<ControlledDatePicker />);
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+    // Initial value should be the formatted date
+    expect(input.value).toBe("12/25/2024");
+
+    // Clear the input
+    fireEvent.change(input, { target: { value: "" } });
+
+    // Blur the input
+    fireEvent.blur(input);
+
+    // After blur, the input should still be empty (not revert to the date)
+    expect(input.value).toBe("");
+  });
+  it("should handle mask pattern clearing (issue #5814)", () => {
+    // Mask libraries often show "__/__/____" when cleared instead of empty string
+    const onChangeSpy = jest.fn();
+
+    function MaskedDatePicker() {
+      const [selected, setSelected] = useState<Date | null>(
+        newDate("2024-12-25"),
+      );
+
+      const handleChange = (date: Date | null) => {
+        onChangeSpy(date);
+        setSelected(date);
+      };
+
+      return (
+        <DatePicker
+          selected={selected}
+          onChange={handleChange}
+          dateFormat="MM/dd/yyyy"
+        />
+      );
+    }
+
+    const { container } = render(<MaskedDatePicker />);
+    const input = safeQuerySelector<HTMLInputElement>(container, "input");
+
+    // Initial value should be the formatted date
+    expect(input.value).toBe("12/25/2024");
+
+    // Simulate mask library clearing - value becomes mask pattern, not empty
+    fireEvent.change(input, { target: { value: "__/__/____" } });
+
+    // onChange should NOT be called with null because mask pattern isn't a valid date
+    // But it also shouldn't be called with the old date
+    // The key issue: what happens on blur?
+
+    fireEvent.blur(input);
+
+    // The input should show the mask pattern, not revert to the old date
+    // This is where the bug manifests - in React 18, it might revert
+    expect(input.value).not.toBe("12/25/2024");
+  });
   it("should update preSelection when input changes for selectsRange", () => {
     let instance: DatePicker | null = null;
     const onChangeSpy = jest.fn();
