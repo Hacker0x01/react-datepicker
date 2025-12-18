@@ -1094,7 +1094,10 @@ describe("date_utils", () => {
       expect(parseDate(valueEn, dateFormat, undefined, false)).toEqual(
         expected,
       );
-      expect(parseDate(valueEn, dateFormat, locale, false)).toBeNull();
+      // With native Date fallback (restored in v8.x), English month names
+      // are parsed even when a different locale is specified, because
+      // the native Date constructor is locale-agnostic
+      expect(parseDate(valueEn, dateFormat, locale, false)).toEqual(expected);
     });
 
     it("should not parse date based on locale without a given locale", () => {
@@ -1116,6 +1119,63 @@ describe("date_utils", () => {
       setDefaultLocale(undefined);
 
       expect(actual).toEqual(expected);
+    });
+
+    describe("native Date fallback when strictParsing is false (#6164)", () => {
+      it("should parse date in different format using native Date fallback", () => {
+        // User types MM/dd/yyyy but dateFormat is yyyy-MM-dd
+        const value = "12/05/2025";
+        const dateFormat = "yyyy-MM-dd";
+
+        const result = parseDate(value, dateFormat, undefined, false);
+        expect(result).not.toBeNull();
+        expect(result?.getFullYear()).toBe(2025);
+        expect(result?.getMonth()).toBe(11); // December (0-indexed)
+        expect(result?.getDate()).toBe(5);
+      });
+
+      it("should parse ISO date string using native Date fallback", () => {
+        const value = "2025-12-16";
+        const dateFormat = "MM/dd/yyyy";
+
+        const result = parseDate(value, dateFormat, undefined, false);
+        expect(result).not.toBeNull();
+        expect(result?.getFullYear()).toBe(2025);
+        expect(result?.getMonth()).toBe(11); // December
+        expect(result?.getDate()).toBe(16);
+      });
+
+      it("should parse date with time using native Date fallback", () => {
+        const value = "2025-12-16 3:31:01 PM";
+        const dateFormat = "yyyy-MM-dd hh:mm aa";
+
+        const result = parseDate(value, dateFormat, undefined, false);
+        expect(result).not.toBeNull();
+        expect(result?.getFullYear()).toBe(2025);
+        expect(result?.getMonth()).toBe(11); // December
+        expect(result?.getDate()).toBe(16);
+        expect(result?.getHours()).toBe(15); // 3 PM = 15:00
+        expect(result?.getMinutes()).toBe(31);
+      });
+
+      it("should NOT use native Date fallback when strictParsing is true", () => {
+        const value = "12/05/2025";
+        const dateFormat = "yyyy-MM-dd";
+
+        const result = parseDate(value, dateFormat, undefined, true);
+        expect(result).toBeNull();
+      });
+
+      it("should prefer exact format match over native Date fallback", () => {
+        const value = "2025-12-05";
+        const dateFormat = "yyyy-MM-dd";
+
+        const result = parseDate(value, dateFormat, undefined, false);
+        expect(result).not.toBeNull();
+        expect(result?.getFullYear()).toBe(2025);
+        expect(result?.getMonth()).toBe(11); // December
+        expect(result?.getDate()).toBe(5);
+      });
     });
   });
 
