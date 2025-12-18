@@ -717,10 +717,13 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
 
   handleCalendarClickOutside = (event: MouseEvent) => {
-    if (!this.props.inline) {
+    // Call user's onClickOutside first, allowing them to call preventDefault()
+    this.props.onClickOutside?.(event);
+
+    // Only close if not prevented and not inline
+    if (!this.props.inline && !event.defaultPrevented) {
       this.setOpen(false);
     }
-    this.props.onClickOutside?.(event);
     if (this.props.withPortal) {
       event.preventDefault();
     }

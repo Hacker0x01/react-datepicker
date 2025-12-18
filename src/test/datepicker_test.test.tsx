@@ -2793,6 +2793,28 @@ describe("DatePicker", () => {
     expect(onClickOutsideSpy).toHaveBeenCalledTimes(1);
   });
 
+  it("should not close date picker when onClickOutside calls preventDefault", () => {
+    const onClickOutside = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+    const { container } = render(
+      <div>
+        <span className="outsideElement">outside</span>
+        <DatePicker onClickOutside={onClickOutside} />
+      </div>,
+    );
+
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+
+    const outsideElement = safeQuerySelector(container, ".outsideElement");
+    fireEvent.mouseDown(outsideElement);
+
+    // Calendar should remain open because preventDefault was called
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+  });
+
   it("should not close date picker on input click", () => {
     const onClickOutsideSpy = jest.fn();
     const { container } = render(
