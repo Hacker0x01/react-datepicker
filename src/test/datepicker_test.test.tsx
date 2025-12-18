@@ -1300,6 +1300,20 @@ describe("DatePicker", () => {
     expect(container.querySelector(".react-datepicker")).toBeNull();
   });
 
+  it("should not render an extra wrapper div when withPortal is set", () => {
+    // Fixes #5499 - withPortal should use React Fragment instead of a wrapper div
+    const { container } = render(<DatePicker withPortal />);
+
+    // The container should directly contain the input container, not wrapped in an extra div
+    // Before the fix: <div><div class="react-datepicker__input-container">...</div></div>
+    // After the fix: <div class="react-datepicker__input-container">...</div> (no extra wrapper)
+    const inputContainer = container.querySelector(
+      ".react-datepicker__input-container",
+    );
+    expect(inputContainer).not.toBeNull();
+    expect(inputContainer?.parentElement).toBe(container);
+  });
+
   it("should render Calendar in a ReactDOM portal when withPortal is set and portalId is set", () => {
     const { container } = render(
       <DatePicker withPortal portalId="portal-id-dom-test" />,

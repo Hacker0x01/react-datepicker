@@ -1980,10 +1980,10 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       }
 
       return (
-        <div>
+        <>
           {this.renderInputContainer()}
           {portalContainer}
-        </div>
+        </>
       );
     }
 
