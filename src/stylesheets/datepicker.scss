@@ -2,8 +2,8 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-/* sr-only utility class for accessibility */
 .react-datepicker__sr-only {
+  // sr-only utility class for accessibility
   position: absolute;
   width: 1px;
   height: 1px;
