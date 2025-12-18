@@ -4491,6 +4491,21 @@ describe("DatePicker", () => {
     expect(firstDay?.textContent).toBe("Su");
   });
 
+  it("should correctly format weekday using formatWeekDay prop", () => {
+    const { container } = render(
+      <DatePicker formatWeekDay={(day) => day.charAt(0)} />,
+    );
+    const input = safeQuerySelector(container, "input");
+    fireEvent.focus(input);
+
+    const dayNames = container.querySelectorAll(
+      ".react-datepicker__day-names > div[role='columnheader'] > span[aria-hidden='true']",
+    );
+    dayNames.forEach((dayName) => {
+      expect(dayName.textContent).toHaveLength(1);
+    });
+  });
+
   describe("when update the datepicker input text while props.showTimeSelectOnly is set and dateFormat has only time related format", () => {
     const format = "h:mm aa";
 
