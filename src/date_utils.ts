@@ -368,6 +368,24 @@ export function isValid(date: Date): boolean {
   return isValidDate(date);
 }
 
+/**
+ * Safely returns a valid Date or null.
+ * This handles cases where a value might be passed as a string or other
+ * invalid type at runtime, even though TypeScript expects a Date.
+ * @param date - The value to check (typed as Date but could be anything at runtime)
+ * @returns The date if it's a valid Date object, otherwise null
+ */
+export function safeToDate(date: Date | null | undefined): Date | null {
+  if (date == null) {
+    return null;
+  }
+  // Check if it's actually a Date object AND is valid
+  if (isDate(date) && isValidDate(date)) {
+    return date;
+  }
+  return null;
+}
+
 // ** Date Formatting **
 
 /**
