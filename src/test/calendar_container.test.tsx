@@ -98,4 +98,16 @@ describe("CalendarContainer", () => {
     expect(dialog?.getAttribute("aria-modal")).toBe("true");
     expect(dialog?.getAttribute("aria-label")).toBe("Choose Date");
   });
+
+  it("has translate='no' to prevent browser auto-translation breaking the calendar", () => {
+    // Fixes #5824 - Safari auto-translate breaks calendar navigation
+    const { container } = render(
+      <CalendarContainer>
+        <div>Content</div>
+      </CalendarContainer>,
+    );
+
+    const dialog = container.querySelector('[role="dialog"]');
+    expect(dialog?.getAttribute("translate")).toBe("no");
+  });
 });
