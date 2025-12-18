@@ -25,6 +25,7 @@ const CalendarContainer: React.FC<CalendarContainerProps> = function ({
       aria-label={ariaLabel}
       role={inline ? undefined : "dialog"}
       aria-modal={inline ? undefined : "true"}
+      translate="no"
     >
       {children}
     </div>
