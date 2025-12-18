@@ -318,6 +318,20 @@ export function parseDate(
       return parsedDate;
     }
   }
+
+  // When strictParsing is false, try native Date parsing as a fallback
+  // This allows flexible input formats like "12/05/2025" or "2025-12-16"
+  // even when the dateFormat prop specifies a different format.
+  // Only attempt this for inputs that look like complete dates (minimum
+  // length of 8 characters, e.g., "1/1/2000") to avoid parsing partial
+  // inputs like "03/" or "2000" which should be handled by parseDateForNavigation.
+  if (!strictParsing && value && value.length >= 8) {
+    const nativeDate = new Date(value);
+    if (isValidDate(nativeDate)) {
+      return nativeDate;
+    }
+  }
+
   return null;
 }
 
