@@ -99,6 +99,10 @@ export function __setDateFnsTzNull(): void {
   dateFnsTzLoadAttempted = true;
 }
 
+// Declare webpack's special require function that bypasses bundling
+// This is used to avoid webpack warnings for optional dependencies
+declare const __non_webpack_require__: typeof require | undefined;
+
 /**
  * Attempts to load date-fns-tz module.
  * Returns null if the module is not installed.
@@ -111,13 +115,15 @@ function getDateFnsTz(): DateFnsTz | null {
   dateFnsTzLoadAttempted = true;
 
   try {
-    // Dynamic require for date-fns-tz
-    // Use a variable to prevent webpack from statically analyzing the require
-    // and showing warnings when the optional dependency is not installed
-    // See: https://github.com/Hacker0x01/react-datepicker/issues/6154
-    const dateFnsTzModuleName = "date-fns-tz";
+    // Use __non_webpack_require__ to tell webpack to use native require
+    // and avoid bundling warnings for this optional dependency
+    // See: https://github.com/Hacker0x01/react-datepicker/issues/6181
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    dateFnsTz = require(dateFnsTzModuleName) as DateFnsTz;
+    const requireFn =
+      typeof __non_webpack_require__ !== "undefined"
+        ? __non_webpack_require__
+        : require;
+    dateFnsTz = requireFn("date-fns-tz") as DateFnsTz;
   } catch {
     /* istanbul ignore next - only executes when date-fns-tz is not installed */
     dateFnsTz = null;
