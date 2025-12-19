@@ -5,8 +5,8 @@
 | `date` (required)             |      |               |             |
 | `dateFormat` (required)       |      |               |             |
 | `locale`                      |      |               |             |
-| `maxDate` (required)          |      |               |             |
-| `minDate` (required)          |      |               |             |
+| `maxDate`                     |      |               |             |
+| `minDate`                     |      |               |             |
 | `onCancel` (required)         |      |               |             |
 | `onChange` (required)         |      |               |             |
 | `scrollableMonthYearDropdown` |      |               |             |
