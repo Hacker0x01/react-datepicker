@@ -761,3 +761,31 @@ describe("Timezone fallback behavior (when date-fns-tz is not installed)", () =>
     consoleSpy.mockRestore();
   });
 });
+
+describe("Webpack __non_webpack_require__ support", () => {
+  beforeEach(() => {
+    __resetDateFnsTzCache();
+  });
+
+  afterEach(() => {
+    // Clean up the global
+    // @ts-expect-error - cleaning up test global
+    delete globalThis.__non_webpack_require__;
+    __resetDateFnsTzCache();
+  });
+
+  it("should use __non_webpack_require__ when available in webpack environment", () => {
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    // Simulate webpack environment by defining __non_webpack_require__
+    // @ts-expect-error - simulating webpack global
+    globalThis.__non_webpack_require__ = require;
+
+    // This should use __non_webpack_require__ and successfully load date-fns-tz
+    const result = toZonedTime(testDate, "America/New_York");
+
+    // Should convert the date (not return original), proving date-fns-tz loaded
+    expect(result).toBeInstanceOf(Date);
+    expect(result.getHours()).toBe(8); // 12:00 UTC = 08:00 EDT
+  });
+});
