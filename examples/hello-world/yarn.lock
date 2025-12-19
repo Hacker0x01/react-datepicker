@@ -7182,7 +7182,7 @@ __metadata:
   resolution: "hello-world@workspace:."
   dependencies:
     react: "npm:^19.2.3"
-    react-datepicker: "npm:^9.0.0"
+    react-datepicker: "npm:^9.1.0"
     react-dom: "npm:^19.2.3"
     react-scripts: "npm:5.0.1"
   languageName: unknown
@@ -10928,9 +10928,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datepicker@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "react-datepicker@npm:9.0.0"
+"react-datepicker@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "react-datepicker@npm:9.1.0"
   dependencies:
     "@floating-ui/react": "npm:^0.27.15"
     clsx: "npm:^2.1.1"
@@ -10942,7 +10942,7 @@ __metadata:
   peerDependenciesMeta:
     date-fns-tz:
       optional: true
-  checksum: 10c0/1d8ebde6f5673652cdcb018ff8cd606c02769f3ca89b96d7151e06338eeea64621fe316aef53406fee12e03d1e3b934bcfcef787e4d755a423ad92684e5ef79f
+  checksum: 10c0/43b58b08f9e4f289a31f2a2dbd0e246e396ad44ebfea4ed8d1393de2a6bded2dad9c2002cfcf70dfbe51aabf5f886b12b1aae8463c5bc35d67b1b22733a8a0f9
   languageName: node
   linkType: hard
 
