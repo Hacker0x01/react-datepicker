@@ -124,39 +124,39 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: CalendarIcon,
   },
   {
-    title: "Calendar Icon using React Svg Component",
+    title: "Calendar Icon Using React SVG Component",
     component: CalendarIconSvgIcon,
   },
   {
-    title: "Calendar Icon using External Lib",
+    title: "Calendar Icon Using External Library",
     component: CalendarIconExternal,
   },
   {
-    title: "Toggle Calendar open status on click of the calendar icon",
+    title: "Toggle Calendar on Icon Click",
     component: ToggleCalendarOnIconClick,
   },
   {
-    title: "Calendar container",
+    title: "Calendar Container",
     component: CalendarContainer,
   },
   {
-    title: "Calendar open state callbacks",
+    title: "Calendar Open/Close Callbacks",
     component: OnCalendarChangeStateCallbacks,
   },
   {
-    title: "Children",
+    title: "Render Children in Datepicker",
     component: Children,
   },
   {
-    title: "Clear datepicker input",
+    title: "Clearable Datepicker Input",
     component: ClearInput,
   },
   {
-    title: "Close on scroll",
+    title: "Close on Scroll",
     component: CloseOnScroll,
   },
   {
-    title: "Close on scroll callback",
+    title: "Close on Scroll Callback",
     component: CloseOnScrollCallback,
   },
   {
@@ -177,21 +177,21 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     ),
   },
   {
-    title: "Custom input",
+    title: "Custom Input",
     component: CustomInput,
   },
   {
-    title: "Custom input with popper positioning",
+    title: "Custom Input with Popper Positioning",
     component: PopperTargetRef,
     description:
       "Use popperTargetRef to position the calendar relative to a specific element within your custom input, rather than the wrapper div.",
   },
   {
-    title: "Custom header",
+    title: "Custom Header",
     component: RenderCustomHeader,
   },
   {
-    title: "Custom header with two months displayed",
+    title: "Custom Header with Two Months Displayed",
     component: RenderCustomHeaderTwoMonths,
   },
   {
@@ -199,7 +199,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RenderCustomDayName,
   },
   {
-    title: "Month header position",
+    title: "Month Header Position",
     component: MonthHeaderPosition,
   },
   {
@@ -219,27 +219,27 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RenderCustomYear,
   },
   {
-    title: "Custom calendar class name",
+    title: "Custom Calendar Class Name",
     component: CustomCalendarClassName,
   },
   {
-    title: "Custom class name",
+    title: "Custom Class Name",
     component: CustomClassName,
   },
   {
-    title: "Custom day class name",
+    title: "Custom Day Class Name",
     component: CustomDayClassName,
   },
   {
-    title: "Custom date format",
+    title: "Custom Date Format",
     component: CustomDateFormat,
   },
   {
-    title: "Custom time class name",
+    title: "Custom Time Class Name",
     component: CustomTimeClassName,
   },
   {
-    title: "Custom time input",
+    title: "Custom Time Input",
     component: CustomTimeInput,
   },
   {
@@ -247,19 +247,19 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: DateRange,
   },
   {
-    title: "Date range for one datepicker",
+    title: "Date Range in a Single Datepicker",
     component: SelectsRange,
   },
   {
-    title: "Date range for one datepicker with disabled dates highlighted",
+    title: "Date Range in a Single Datepicker with Disabled Dates",
     component: SelectsRangeWithDisabledDates,
   },
   {
-    title: "Date Range with disabled navigation shown",
+    title: "Date Range with Disabled Navigation Shown",
     component: DateRangeWithShowDisabledNavigation,
   },
   {
-    title: "Date Range using input with clear button",
+    title: "Clearable Range Input",
     component: DateRangeInputWithClearButton,
   },
   {
@@ -267,11 +267,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: DateRangeWithPortal,
   },
   {
-    title: "Disable datepicker",
+    title: "Disable Datepicker",
     component: Disabled,
   },
   {
-    title: "Disable keyboard navigation",
+    title: "Disable Keyboard Navigation",
     component: DisabledKeyboardNavigation,
   },
   {
@@ -279,19 +279,19 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: WeekNumbers,
   },
   {
-    title: "Don't hide calendar on date selection",
+    title: "Don't Hide Calendar on Date Selection",
     component: DontCloseOnSelect,
   },
   {
-    title: "Exclude dates",
+    title: "Exclude Dates",
     component: ExcludeDates,
   },
   {
-    title: "Exclude dates with message",
+    title: "Exclude Dates with Message",
     component: ExcludedWithMessage,
   },
   {
-    title: "Exclude date intervals",
+    title: "Exclude Date Intervals",
     component: ExcludeDateIntervals,
   },
   {
@@ -307,39 +307,39 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: ExcludeTimes,
   },
   {
-    title: "Filter dates",
+    title: "Filter Dates",
     component: FilterDates,
   },
   {
-    title: "Filter times",
+    title: "Filter Times",
     component: FilterTimes,
   },
   {
-    title: "Fixed height of Calendar",
+    title: "Fixed Height of Calendar",
     component: FixedCalendar,
   },
   {
-    title: "Get raw input value on change",
+    title: "Read Raw Input Value on Change",
     component: RawChange,
   },
   {
-    title: "Highlight dates",
+    title: "Highlight Dates",
     component: HighlightDates,
   },
   {
-    title: "Highlight dates with custom class names and ranges",
+    title: "Highlight Dates with Custom Class Names and Ranges",
     component: HighlightDatesRanges,
   },
   {
-    title: "Holiday dates",
+    title: "Holiday Dates",
     component: HolidayDates,
   },
   {
-    title: "Include dates",
+    title: "Include Dates",
     component: IncludeDates,
   },
   {
-    title: "Include date intervals",
+    title: "Include Date Intervals",
     component: IncludeDateIntervals,
   },
   {
@@ -355,19 +355,19 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: InjectTimes,
   },
   {
-    title: "Inline version",
+    title: "Inline Version",
     component: Inline,
   },
   {
-    title: "Inline version disabled",
+    title: "Inline Version Disabled",
     component: InlineDisabled,
   },
   {
-    title: "Button to show Inline version",
+    title: "Button to Toggle Inline Datepicker Visibility",
     component: InlineVisible,
   },
   {
-    title: "Input time",
+    title: "Input Time",
     component: TimeInput,
   },
   {
@@ -375,19 +375,19 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: Locale,
   },
   {
-    title: "Locale with time",
+    title: "Locale with Time",
     component: LocaleWithTime,
   },
   {
-    title: "Locale without global variables",
+    title: "Locale without Global Variables",
     component: LocaleWithoutGlobalVariable,
   },
   {
-    title: "Min date",
+    title: "Min Date",
     component: MinDate,
   },
   {
-    title: "Max date",
+    title: "Max Date",
     component: MaxDate,
   },
   {
@@ -407,27 +407,27 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: MonthPickerFourColumns,
   },
   {
-    title: "Month dropdown",
+    title: "Month Dropdown",
     component: MonthDropdown,
   },
   {
-    title: "Month dropdown short month",
+    title: "Month Dropdown (Short Names)",
     component: MonthDropdownShort,
   },
   {
-    title: "MonthYear dropdown",
+    title: "Month/Year Dropdown",
     component: MonthYearDropdown,
   },
   {
-    title: "Multiple months",
+    title: "Multiple Months",
     component: MultiMonth,
   },
   {
-    title: "Multiple months with year dropdown",
+    title: "Multiple Months with Year Dropdown",
     component: MultiMonthDropdown,
   },
   {
-    title: "Multiple months inline",
+    title: "Multiple Months Inline",
     component: MultiMonthInline,
   },
   {
@@ -435,29 +435,29 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: NoAnchorArrow,
   },
   {
-    title: "onBlur callbacks in console",
+    title: "onBlur Callbacks in Console",
     component: OnBlurCallbacks,
   },
   {
-    title: "Open to date",
+    title: "Open to Date",
     component: OpenToDate,
   },
   {
-    title: "Placeholder text",
+    title: "Placeholder Text",
     component: PlaceholderText,
   },
   {
-    title: "Portal version",
+    title: "Portal Version",
     component: Portal,
   },
   {
-    title: "Portal by id",
+    title: "Portal by ID",
     description:
       "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
     component: PortalById,
   },
   {
-    title: "Portal version with portal by id",
+    title: "Portal Version with Portal by ID",
     description:
       "If the provided portalId cannot be found in the dom, one will be created by default with that id.",
     component: WithPortalById,
@@ -471,7 +471,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeMonthPicker,
   },
   {
-    title: "Range Month Picker for one month picker",
+    title: "Range Month Picker in a Single Month Picker",
     component: RangeMonthPickerSelectsRange,
   },
   {
@@ -479,17 +479,17 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeQuarterPicker,
   },
   {
-    title: "Range Quarter Picker for one quarter picker",
+    title: "Range Quarter Picker in a Single Quarter Picker",
     component: RangeQuarterPickerSelectsRange,
   },
   {
-    title: "Range Swap Range",
+    title: "Auto-Swap Date Range",
     description:
-      "Swap the start and end date if the end date is before the start date in a pick sequence.",
+      "Automatically swap the start and end date if the end date is before the start date in a pick sequence.",
     component: RangeSwapRange,
   },
   {
-    title: "Read only datepicker",
+    title: "Read-Only Datepicker",
     component: ReadOnly,
   },
   {
@@ -505,11 +505,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: HideTimeCaption,
   },
   {
-    title: "Show previous months",
+    title: "Show Previous Months",
     component: MultiMonthPrevious,
   },
   {
-    title: "Specific date range",
+    title: "Specific Date Range",
     component: SpecificDateRange,
   },
   {
@@ -517,19 +517,19 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: ExcludeTimePeriod,
   },
   {
-    title: "Select multiple dates",
+    title: "Select Multiple Dates",
     component: SelectsMultiple,
   },
   {
-    title: "Select multiple dates with custom format",
+    title: "Select Multiple Dates with Custom Format",
     component: SelectsMultipleFormat,
   },
   {
-    title: "Select multiple months",
+    title: "Select Multiple Months",
     component: SelectsMultipleMonths,
   },
   {
-    title: "Strict parsing",
+    title: "Strict Parsing",
     description:
       "Enables strict format validation for manual date input. When this flag is activated, the component will only accept values that exactly match the specified date format (`dateFormat`).",
     component: StrictParsing,
@@ -539,7 +539,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: TabIndex,
   },
   {
-    title: "Today button",
+    title: "Today Button",
     component: Today,
   },
   {
@@ -551,23 +551,23 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeYearPicker,
   },
   {
-    title: "Range Year Picker for one datepicker",
+    title: "Range Year Picker in a Single Year Picker",
     component: RangeYearPickerSelectsRange,
   },
   {
-    title: "Year dropdown",
+    title: "Year Dropdown",
     component: YearDropdown,
   },
   {
-    title: "Year select dropdown",
+    title: "Year Select Dropdown",
     component: YearSelectDropdown,
   },
   {
-    title: "Year item number",
+    title: "Year List Item Count",
     component: YearItemNumber,
   },
   {
-    title: "Calendar Start day",
+    title: "Calendar Start Day",
     component: CalendarStartDay,
   },
   {
