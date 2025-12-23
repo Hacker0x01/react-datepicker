@@ -113,3 +113,16 @@ input {
 .text-success {
   color: green;
 }
+
+.react-datepicker__day {
+  &.highlighted-day {
+    background-color: #ccc;
+    color: #000;
+    border-radius: 0.3rem;
+
+    &:not([aria-disabled="true"]):hover {
+      background-color: #aaa;
+      color: #000;
+    }
+  }
+}
