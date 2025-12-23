@@ -128,11 +128,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: CalendarIconSvgIcon,
   },
   {
-    title: "Calendar Icon Using External Lib",
+    title: "Calendar Icon Using External Library",
     component: CalendarIconExternal,
   },
   {
-    title: "Toggle Calendar Open Status on Click of the Calendar Icon",
+    title: "Toggle Calendar on Icon Click",
     component: ToggleCalendarOnIconClick,
   },
   {
@@ -140,15 +140,15 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: CalendarContainer,
   },
   {
-    title: "Calendar Open State Callbacks",
+    title: "Calendar Open/Close Callbacks",
     component: OnCalendarChangeStateCallbacks,
   },
   {
-    title: "Children",
+    title: "Render Children in Datepicker",
     component: Children,
   },
   {
-    title: "Clear Datepicker Input",
+    title: "Clearable Datepicker Input",
     component: ClearInput,
   },
   {
@@ -247,11 +247,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: DateRange,
   },
   {
-    title: "Date Range for One Datepicker",
+    title: "Date Range in a Single Datepicker",
     component: SelectsRange,
   },
   {
-    title: "Date Range for One Datepicker with Disabled Dates Highlighted",
+    title: "Date Range in a Single Datepicker with Disabled Dates",
     component: SelectsRangeWithDisabledDates,
   },
   {
@@ -259,7 +259,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: DateRangeWithShowDisabledNavigation,
   },
   {
-    title: "Date Range Using Input with Clear Button",
+    title: "Clearable Range Input",
     component: DateRangeInputWithClearButton,
   },
   {
@@ -319,7 +319,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: FixedCalendar,
   },
   {
-    title: "Get Raw Input Value on Change",
+    title: "Read Raw Input Value on Change",
     component: RawChange,
   },
   {
@@ -363,7 +363,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: InlineDisabled,
   },
   {
-    title: "Button to Show Inline Version",
+    title: "Button to Toggle Inline Datepicker Visibility",
     component: InlineVisible,
   },
   {
@@ -411,11 +411,11 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: MonthDropdown,
   },
   {
-    title: "Month Dropdown Short Month",
+    title: "Month Dropdown (Short Names)",
     component: MonthDropdownShort,
   },
   {
-    title: "MonthYear Dropdown",
+    title: "Month/Year Dropdown",
     component: MonthYearDropdown,
   },
   {
@@ -471,7 +471,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeMonthPicker,
   },
   {
-    title: "Range Month Picker for One Month Picker",
+    title: "Range Month Picker in a Single Month Picker",
     component: RangeMonthPickerSelectsRange,
   },
   {
@@ -479,17 +479,17 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeQuarterPicker,
   },
   {
-    title: "Range Quarter Picker for One Quarter Picker",
+    title: "Range Quarter Picker in a Single Quarter Picker",
     component: RangeQuarterPickerSelectsRange,
   },
   {
-    title: "Range Swap Range",
+    title: "Auto-Swap Date Range",
     description:
-      "Swap the start and end date if the end date is before the start date in a pick sequence.",
+      "Automatically swap the start and end date if the end date is before the start date in a pick sequence.",
     component: RangeSwapRange,
   },
   {
-    title: "Read Only Datepicker",
+    title: "Read-Only Datepicker",
     component: ReadOnly,
   },
   {
@@ -539,7 +539,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: TabIndex,
   },
   {
-    title: "Today button",
+    title: "Today Button",
     component: Today,
   },
   {
@@ -551,7 +551,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: RangeYearPicker,
   },
   {
-    title: "Range Year Picker for One Datepicker",
+    title: "Range Year Picker in a Single Year Picker",
     component: RangeYearPickerSelectsRange,
   },
   {
@@ -563,7 +563,7 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     component: YearSelectDropdown,
   },
   {
-    title: "Year Item Number",
+    title: "Year List Item Count",
     component: YearItemNumber,
   },
   {
