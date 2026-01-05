@@ -1515,7 +1515,7 @@ render(CustomClassName);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const getDayClassName = (date: Date): string => {
-    return date.getDate() === 1 ? "text-success" : "";
+    return date.getDate() === 1 ? "highlighted-day" : "";
   };
 
   return (
