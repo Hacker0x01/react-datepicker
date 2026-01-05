@@ -789,3 +789,8 @@ describe("Webpack __non_webpack_require__ support", () => {
     expect(result.getHours()).toBe(8); // 12:00 UTC = 08:00 EDT
   });
 });
+
+// Note: The Vite ESM environment case (where require is not available) cannot be
+// tested in Jest because require is always available in Node.js module scope.
+// The code path is covered by an istanbul ignore comment and verified manually
+// in actual Vite environments. See: https://github.com/Hacker0x01/react-datepicker/issues/6204

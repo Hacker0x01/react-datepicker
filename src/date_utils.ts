@@ -118,12 +118,22 @@ function getDateFnsTz(): DateFnsTz | null {
     // Use __non_webpack_require__ to tell webpack to use native require
     // and avoid bundling warnings for this optional dependency
     // See: https://github.com/Hacker0x01/react-datepicker/issues/6181
+    //
+    // For Vite and other ESM-only bundlers, require is not available.
+    // In those environments, users need to configure their bundler to
+    // pre-bundle date-fns-tz or use the optimizeDeps option.
+    // See: https://github.com/Hacker0x01/react-datepicker/issues/6204
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const requireFn =
       typeof __non_webpack_require__ !== "undefined"
         ? __non_webpack_require__
-        : require;
-    dateFnsTz = requireFn("date-fns-tz") as DateFnsTz;
+        : typeof require !== "undefined"
+          ? require
+          : /* istanbul ignore next - only executes in ESM-only environments like Vite */ null;
+
+    if (requireFn) {
+      dateFnsTz = requireFn("date-fns-tz") as DateFnsTz;
+    }
   } catch {
     /* istanbul ignore next - only executes when date-fns-tz is not installed */
     dateFnsTz = null;
