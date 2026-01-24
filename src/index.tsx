@@ -52,6 +52,7 @@ import {
   isSameMinute,
   toZonedTime,
   fromZonedTime,
+  setDateFnsTzModule,
   safeToDate,
   type HighlightDate,
   type HolidayItem,
@@ -67,7 +68,12 @@ import type { ClickOutsideHandler } from "./click_outside_wrapper";
 
 export { default as CalendarContainer } from "./calendar_container";
 
-export { registerLocale, setDefaultLocale, getDefaultLocale };
+export {
+  registerLocale,
+  setDefaultLocale,
+  getDefaultLocale,
+  setDateFnsTzModule,
+};
 
 export {
   ReactDatePickerCustomHeaderProps,

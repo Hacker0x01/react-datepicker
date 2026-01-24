@@ -1,5 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
+import * as realDateFnsTz from "date-fns-tz";
 import DatePicker from "../index";
 import * as dateUtils from "../date_utils";
 
@@ -10,6 +11,7 @@ const {
   nowInTimeZone,
   __resetDateFnsTzCache,
   __setDateFnsTzNull,
+  setDateFnsTzModule,
 } = dateUtils;
 
 describe("Timezone utility functions", () => {
@@ -926,5 +928,100 @@ describe("Timezone fallback behavior (when date-fns-tz is not installed)", () =>
     expect(consoleSpy).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
+  });
+});
+
+describe("setDateFnsTzModule - for environments where dynamic require doesn't work (e.g., Vite)", () => {
+  beforeEach(() => {
+    __resetDateFnsTzCache();
+  });
+
+  afterEach(() => {
+    __resetDateFnsTzCache();
+  });
+
+  it("should use the externally provided module for toZonedTime", () => {
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    // Create a mock module that returns a predictable result
+    const mockModule = {
+      toZonedTime: jest.fn().mockReturnValue(new Date("2024-06-15T08:00:00")),
+      fromZonedTime: jest.fn(),
+      formatInTimeZone: jest.fn(),
+    };
+
+    setDateFnsTzModule(mockModule);
+
+    const result = toZonedTime(testDate, "America/New_York");
+
+    expect(mockModule.toZonedTime).toHaveBeenCalledWith(
+      testDate,
+      "America/New_York",
+    );
+    expect(result.getHours()).toBe(8);
+  });
+
+  it("should use the externally provided module for fromZonedTime", () => {
+    const testDate = new Date("2024-06-15T08:00:00");
+
+    const mockModule = {
+      toZonedTime: jest.fn(),
+      fromZonedTime: jest
+        .fn()
+        .mockReturnValue(new Date("2024-06-15T12:00:00Z")),
+      formatInTimeZone: jest.fn(),
+    };
+
+    setDateFnsTzModule(mockModule);
+
+    const result = fromZonedTime(testDate, "America/New_York");
+
+    expect(mockModule.fromZonedTime).toHaveBeenCalledWith(
+      testDate,
+      "America/New_York",
+    );
+    expect(result.getUTCHours()).toBe(12);
+  });
+
+  it("should use the externally provided module for formatInTimeZone", () => {
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    const mockModule = {
+      toZonedTime: jest.fn(),
+      fromZonedTime: jest.fn(),
+      formatInTimeZone: jest.fn().mockReturnValue("08:00"),
+    };
+
+    setDateFnsTzModule(mockModule);
+
+    const result = formatInTimeZone(testDate, "HH:mm", "America/New_York");
+
+    expect(mockModule.formatInTimeZone).toHaveBeenCalledWith(
+      testDate,
+      "America/New_York",
+      "HH:mm",
+      { locale: undefined },
+    );
+    expect(result).toBe("08:00");
+  });
+
+  it("should work with the real date-fns-tz module when provided", () => {
+    // Import the real module
+    setDateFnsTzModule(realDateFnsTz);
+
+    const testDate = new Date("2024-06-15T12:00:00Z");
+
+    // Test toZonedTime
+    const zonedResult = toZonedTime(testDate, "America/New_York");
+    expect(zonedResult.getHours()).toBe(8); // 12:00 UTC is 08:00 EDT
+
+    // Test fromZonedTime
+    const nyDate = new Date("2024-06-15T08:00:00");
+    const utcResult = fromZonedTime(nyDate, "America/New_York");
+    expect(utcResult.getUTCHours()).toBe(12);
+
+    // Test formatInTimeZone
+    const formatted = formatInTimeZone(testDate, "HH:mm", "America/New_York");
+    expect(formatted).toBe("08:00");
   });
 });

@@ -100,8 +100,31 @@ export function __setDateFnsTzNull(): void {
 }
 
 /**
+ * Sets the date-fns-tz module externally.
+ * This is useful for environments where dynamic require doesn't work (e.g., Vite).
+ *
+ * @example
+ * ```typescript
+ * import * as dateFnsTz from 'date-fns-tz';
+ * import { setDateFnsTzModule } from 'react-datepicker';
+ *
+ * // Call once at app initialization
+ * setDateFnsTzModule(dateFnsTz);
+ * ```
+ *
+ * @param module - The date-fns-tz module containing toZonedTime, fromZonedTime, and formatInTimeZone
+ */
+export function setDateFnsTzModule(module: DateFnsTz): void {
+  dateFnsTz = module;
+  dateFnsTzLoadAttempted = true;
+}
+
+/**
  * Attempts to load date-fns-tz module.
  * Returns null if the module is not installed.
+ *
+ * If the module was set externally via setDateFnsTzModule(), that will be used.
+ * Otherwise, attempts to load via dynamic require.
  */
 function getDateFnsTz(): DateFnsTz | null {
   if (dateFnsTzLoadAttempted) {

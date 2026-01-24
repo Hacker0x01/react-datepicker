@@ -105,6 +105,26 @@ function TokyoCalendar() {
 
 - **Consistency**: When using the `timeZone` prop, ensure all date-related props (like `minDate`, `maxDate`, `excludeDates`, etc.) are provided in a consistent manner.
 
+### Using with Vite (or other bundlers that don't support dynamic require)
+
+If you're using Vite or another bundler that doesn't support dynamic `require()`, you'll need to explicitly provide the `date-fns-tz` module using `setDateFnsTzModule`:
+
+```jsx
+import DatePicker, { setDateFnsTzModule } from "react-datepicker";
+import * as dateFnsTz from "date-fns-tz";
+
+// Call once at app initialization (e.g., in your main entry point)
+setDateFnsTzModule(dateFnsTz);
+
+function MyComponent() {
+  const [startDate, setStartDate] = useState(new Date());
+
+  return <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} timeZone="America/New_York" />;
+}
+```
+
+This workaround is necessary because react-datepicker normally loads `date-fns-tz` dynamically using `require()` to keep it as an optional dependency. Since Vite doesn't support `require()` in ES modules or dynamic `require()`, you need to import and provide the module explicitly.
+
 ---
 
 ## The "Date is One Day Off" Problem
