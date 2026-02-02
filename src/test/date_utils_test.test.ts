@@ -57,6 +57,7 @@ import {
   isMonthYearDisabled,
   getDefaultLocale,
   safeToDate,
+  parseDateForNavigation,
 } from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1855,6 +1856,51 @@ describe("date_utils", () => {
     it("returns null when given an empty string", () => {
       const result = safeToDate("" as unknown as Date);
       expect(result).toBeNull();
+    });
+  });
+
+  describe("parseDateForNavigation", () => {
+    describe("month pattern", () => {
+      it("does not match embedded month digits inside year (e.g., '2003')", () => {
+        const refDate = new Date(1999, 6, 1); // July
+        const result = parseDateForNavigation("2003", refDate)!;
+        expect(result).not.toBeNull();
+        expect(result.getFullYear()).toBe(2003);
+        // Month should fall back to refDate (July) since no valid month token found
+        expect(result.getMonth()).toBe(6);
+      });
+
+      it("extracts month when preceded by start-of-string", () => {
+        const result = parseDateForNavigation("03 2003")!;
+        expect(result.getFullYear()).toBe(2003);
+        expect(result.getMonth()).toBe(2); // March
+      });
+
+      it("extracts month when preceded by delimiters ('/', '-')", () => {
+        const cases = ["03/2003", "03-2003", "/03 2003", "-03 2003"];
+        for (const value of cases) {
+          const result = parseDateForNavigation(value)!;
+          expect(result.getFullYear()).toBe(2003);
+          expect(result.getMonth()).toBe(2); // March
+        }
+      });
+
+      it("does not extract month when not preceded by a boundary (e.g., 'x03y 2003')", () => {
+        const refDate = new Date(1999, 0, 1); // January
+        const result = parseDateForNavigation("x03y 2003", refDate)!;
+        expect(result.getFullYear()).toBe(2003);
+        // Should use refDate month because '03' lacks a valid left boundary
+        expect(result.getMonth()).toBe(0);
+      });
+
+      it("should fallback to the current month on the entered year if no reference date is provided (e.g., '2003')", () => {
+        const result = parseDateForNavigation("2005")!;
+        expect(result).not.toBeNull();
+        expect(result.getFullYear()).toBe(2005);
+
+        const currentMonth = new Date().getMonth();
+        expect(result.getMonth()).toBe(currentMonth);
+      });
     });
   });
 });

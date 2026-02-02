@@ -359,7 +359,7 @@ export function parseDateForNavigation(
 
   // Try to extract a month (1-12) from the input
   // Look for patterns like "03/", "/03", "03-", "-03" or standalone "03" at start
-  const monthMatch = value.match(/(?:^|[/\-\s])?(0?[1-9]|1[0-2])(?:[/\-\s]|$)/);
+  const monthMatch = value.match(/(?:^|[/\-\s])(0?[1-9]|1[0-2])(?:[/\-\s]|$)/);
   const month =
     monthMatch && monthMatch[1]
       ? parseInt(monthMatch[1], 10) - 1
