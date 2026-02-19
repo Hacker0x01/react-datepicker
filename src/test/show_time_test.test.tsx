@@ -20,6 +20,14 @@ describe("DatePicker", () => {
     expect(timeComponent).not.toBeNull();
   });
 
+  it("should have default time caption", () => {
+    const { container } = render(<DatePicker showTimeSelect open />);
+    const timeComponent = container.querySelector(
+      "h2.react-datepicker-time__header",
+    );
+    expect(timeComponent).not.toBeNull();
+  });
+
   it("should have custom time caption", () => {
     const { container } = render(<TimeComponent timeCaption="Custom time" />);
 

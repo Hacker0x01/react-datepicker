@@ -300,9 +300,9 @@ export default class Time extends Component<TimeProps, TimeState> {
           this.header = header;
         }}
       >
-        <div className="react-datepicker-time__header">
+        <h2 className="react-datepicker-time__header">
           {this.props.timeCaption}
-        </div>
+        </h2>
       </div>
     );
   };

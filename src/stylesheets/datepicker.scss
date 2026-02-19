@@ -176,7 +176,8 @@
   font-size: $datepicker__font-size * 1.18;
 }
 
-h2.react-datepicker__current-month {
+h2.react-datepicker__current-month,
+h2.react-datepicker-time__header {
   padding: 0;
   margin: 0;
 }
