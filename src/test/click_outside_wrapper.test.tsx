@@ -252,7 +252,7 @@ describe("ClickOutsideWrapper", () => {
     addEventListenerSpy.mockRestore();
   });
 
-  it("does not treat non-HTMLElement targets as ignored elements", () => {
+  it("does not treat non-Element targets as ignored elements", () => {
     const addEventListenerSpy = jest.spyOn(document, "addEventListener");
     render(
       <ClickOutsideWrapper

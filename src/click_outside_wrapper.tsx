@@ -33,8 +33,8 @@ const useDetectClickOutside = (
         if (
           !(
             ignoreClass &&
-            target instanceof HTMLElement &&
-            target.classList.contains(ignoreClass)
+            target instanceof Element &&
+            target.closest(`.${ignoreClass}`)
           )
         ) {
           onClickOutsideRef.current?.(event);
