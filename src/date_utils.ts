@@ -59,6 +59,7 @@ import {
   subYears,
   toDate,
 } from "date-fns";
+import { enUS } from "date-fns/locale";
 
 import type { Locale as DateFnsLocale, Day } from "date-fns";
 
@@ -590,7 +591,7 @@ export function getWeek(date: Date): number {
  * @returns - The day of the week code.
  */
 export function getDayOfWeekCode(day: Date, locale?: Locale): string {
-  return formatDate(day, "ddd", locale);
+  return formatDate(day, "eee", enUS).toLowerCase();
 }
 
 // *** Start of ***
