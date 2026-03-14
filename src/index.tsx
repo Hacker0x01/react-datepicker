@@ -1923,7 +1923,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       endDate,
       clearButtonTitle,
       clearButtonClassName = "",
-      ariaLabelClose = "Close",
+      ariaLabelClose = "Clear",
       selectedDates,
       readOnly,
     } = this.props;
