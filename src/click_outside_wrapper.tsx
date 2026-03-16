@@ -29,7 +29,11 @@ const useDetectClickOutside = (
             .composedPath()
             .find((eventTarget) => eventTarget instanceof Node)) ||
         event.target;
-      if (ref.current && !ref.current.contains(target as Node)) {
+      if (
+        ref.current &&
+        target instanceof Node &&
+        !ref.current.contains(target)
+      ) {
         if (
           !(
             ignoreClass &&
