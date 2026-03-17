@@ -4,14 +4,18 @@ type Holiday = {
 };
 
 const HolidayDates = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(today);
 
   const holidays: Holiday[] = [
-    { date: "2023-08-15", holidayName: "India's Independence Day" },
-    { date: "2023-12-31", holidayName: "New Year's Eve" },
-    { date: "2023-12-25", holidayName: "Christmas" },
-    { date: "2024-01-01", holidayName: "New Year's Day" },
-    { date: "2023-11-23", holidayName: "Thanksgiving Day" },
+    {
+      date: `${today.getFullYear()}-03-15`,
+      holidayName: "India's Independence Day",
+    },
+    { date: `${today.getFullYear()}-12-31`, holidayName: "New Year's Eve" },
+    { date: `${today.getFullYear()}-12-25`, holidayName: "Christmas" },
+    { date: `${today.getFullYear()}-01-01`, holidayName: "New Year's Day" },
+    { date: `${today.getFullYear()}-11-23`, holidayName: "Thanksgiving Day" },
   ];
 
   return (
