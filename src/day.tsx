@@ -484,33 +484,27 @@ export default class Day extends Component<DayProps> {
     return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
   };
 
+  getHolidayTitle = () => {
+    const { day, holidays } = this.props;
+    const compareDt = formatDate(day, "MM.dd.yyyy");
+    return holidays?.has(compareDt)
+      ? holidays.get(compareDt)?.holidayNames.join(", ")
+      : "";
+  };
+
   // A function to return the holiday's name as title's content
   getTitle = () => {
-    const { day, holidays = new Map(), excludeDates } = this.props;
-    const compareDt = formatDate(day, "MM.dd.yyyy");
-    const titles = [];
-    if (holidays.has(compareDt)) {
-      titles.push(...holidays.get(compareDt).holidayNames);
-    }
-    if (this.isExcluded()) {
-      titles.push(
-        excludeDates
-          ?.filter((excludeDate) => {
-            if (excludeDate instanceof Date) {
-              return isSameDay(excludeDate, day);
-            }
-            return isSameDay(excludeDate?.date, day);
-          })
-          .map((excludeDate) => {
-            if (excludeDate instanceof Date) {
-              return undefined;
-            }
-            return excludeDate?.message;
-          }),
-      );
-    }
-    // I'm not sure that this is a right output, but all tests are green
-    return titles.join(", ");
+    const { day, excludeDates } = this.props;
+
+    return this.isExcluded()
+      ? excludeDates
+          ?.flatMap((excludeDate) =>
+            !(excludeDate instanceof Date) && isSameDay(excludeDate?.date, day)
+              ? excludeDate?.message
+              : [],
+          )
+          .join(", ")
+      : "";
   };
 
   getTabIndex = () => {
@@ -588,31 +582,32 @@ export default class Day extends Component<DayProps> {
       : getDate(this.props.day);
   };
 
-  render = () => (
+  render = () => {
+    const holidayTitle = this.getHolidayTitle();
     // TODO: Use <option> instead of the "option" role to ensure accessibility across all devices.
-    <div
-      ref={this.dayEl}
-      className={this.getClassNames(this.props.day)}
-      onKeyDown={this.handleOnKeyDown}
-      onClick={this.handleClick}
-      onMouseEnter={
-        !this.props.usePointerEvent ? this.handleMouseEnter : undefined
-      }
-      onPointerEnter={
-        this.props.usePointerEvent ? this.handleMouseEnter : undefined
-      }
-      tabIndex={this.getTabIndex()}
-      aria-label={this.getAriaLabel()}
-      role="gridcell"
-      title={this.getTitle()}
-      aria-disabled={this.isDisabled()}
-      aria-current={this.isCurrentDay() ? "date" : undefined}
-      aria-selected={this.isSelected() || this.isInRange()}
-    >
-      {this.renderDayContents()}
-      {this.getTitle() !== "" && (
-        <span className="overlay">{this.getTitle()}</span>
-      )}
-    </div>
-  );
+    return (
+      <div
+        ref={this.dayEl}
+        className={this.getClassNames(this.props.day)}
+        onKeyDown={this.handleOnKeyDown}
+        onClick={this.handleClick}
+        onMouseEnter={
+          !this.props.usePointerEvent ? this.handleMouseEnter : undefined
+        }
+        onPointerEnter={
+          this.props.usePointerEvent ? this.handleMouseEnter : undefined
+        }
+        tabIndex={this.getTabIndex()}
+        aria-label={this.getAriaLabel()}
+        role="gridcell"
+        title={this.getTitle()}
+        aria-disabled={this.isDisabled()}
+        aria-current={this.isCurrentDay() ? "date" : undefined}
+        aria-selected={this.isSelected() || this.isInRange()}
+      >
+        {this.renderDayContents()}
+        {!!holidayTitle && <span className="overlay">{holidayTitle}</span>}
+      </div>
+    );
+  };
 }

@@ -1820,8 +1820,8 @@ describe("Day", () => {
     });
   });
 
-  describe("title", () => {
-    it("should have the correct title if date is from holiday list", () => {
+  describe("Holiday Tooltip", () => {
+    it("should have the correct tooltip text if date is from holiday list", () => {
       const day = new Date(2023, 11, 25);
       const holidays = new Map([
         [
@@ -1843,10 +1843,12 @@ describe("Day", () => {
       const container = renderDay(day, {
         holidays: holidays,
       });
-      expect(container.innerHTML.indexOf('title="Christmas"')).not.toBe(-1);
+
+      const tooltipText = container.querySelector(".overlay")?.textContent;
+      expect(tooltipText).toBe("Christmas");
     });
 
-    it("uses both the holiday names for a given date as the title", () => {
+    it("uses both the holiday names for a given date as the tooltip text", () => {
       const day = new Date(2023, 7, 15);
       const holidays = new Map([
         [
@@ -1868,12 +1870,11 @@ describe("Day", () => {
       const container = renderDay(day, {
         holidays: holidays,
       });
-      expect(
-        container.innerHTML.indexOf('title="Holiday 1, Holiday 2"'),
-      ).not.toBe(-1);
+      const tooltipText = container.querySelector(".overlay")?.textContent;
+      expect(tooltipText).toBe("Holiday 1, Holiday 2");
     });
 
-    it("should have the title as empty string if date is not from holiday list", () => {
+    it("should have the tooltip text as empty string if date is not from holiday list", () => {
       const day = new Date(2023, 7, 14);
       const holidays = new Map([
         [
@@ -1895,7 +1896,8 @@ describe("Day", () => {
       const container = renderDay(day, {
         holidays: holidays,
       });
-      expect(container.innerHTML.indexOf('title=""')).not.toBe(-1);
+      const tooltip = container.querySelector(".overlay");
+      expect(tooltip).toBeNull();
     });
   });
 });
