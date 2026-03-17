@@ -512,7 +512,7 @@ h2.react-datepicker__current-month {
 
     .overlay {
       position: absolute;
-      bottom: 100%;
+      bottom: calc(100% + 2px);
       left: 50%;
       transform: translateX(-50%);
       background-color: #333;
