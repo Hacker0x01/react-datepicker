@@ -113,6 +113,7 @@ import WeekPicker from "../../examples/ts/weekPicker?raw";
 import ExcludeWeeks from "../../examples/ts/excludeWeeks?raw";
 import ExternalForm from "../../examples/ts/externalForm?raw";
 import Timezone from "../../examples/ts/timezone?raw";
+import ApplyDarkTheme from "../../examples/ts/applyDarkTheme?raw"
 
 export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
@@ -587,5 +588,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
     description:
       "Display and handle dates in a specific timezone using the timeZone prop. Requires date-fns-tz as a peer dependency.",
     component: Timezone,
+  },
+  {
+    title: "Apply Dark Theme",
+    description: "Apply the dark theme without modifying existing styles by using the darkTheme prop. Set darkTheme={true} or simply darkTheme to enable it.",
+    component: ApplyDarkTheme,
   },
 ];

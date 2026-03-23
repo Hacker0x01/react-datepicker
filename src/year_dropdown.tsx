@@ -42,7 +42,7 @@ export default class YearDropdown extends Component<
     const options: React.ReactElement[] = [];
     for (let i = minYear; i <= maxYear; i++) {
       options.push(
-        <option key={i} value={i}>
+        <option key={i} value={i} className="react-datepicker__year-select--options">
           {i}
         </option>,
       );

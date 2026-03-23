@@ -1,6 +1,12 @@
 @use "sass:color";
 
 $datepicker__background-color: #f0f0f0 !default;
+$datepicker__header-background-color: #f0f0f0 !default;
+$datepicker__container-background-color: #fff !default;
+$datepicker__time-container-background-color: #f0f0f0 !default;
+$datepicker__today-button-background-color: #f0f0f0 !default;
+$datepicker-time-icon-filter: none !default;
+$datepicker__today-button-text-color: #000 !default;
 $datepicker__border-color: #aeaeae !default;
 $datepicker__highlighted-color: #3dcc4a !default;
 $datepicker__holidays-color: #ff6803 !default;
@@ -8,6 +14,7 @@ $datepicker__muted-color: #ccc !default;
 $datepicker__selected-color: #216ba5 !default;
 $datepicker__selected-color--disabled: rgba($datepicker__selected-color, 0.5);
 $datepicker__text-color: #000 !default;
+$datepicker__hover-text-color: #000 !default;
 $datepicker__header-color: #000 !default;
 $datepicker__navigation-disabled-color: color.adjust(
   $datepicker__muted-color,

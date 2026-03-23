@@ -36,7 +36,7 @@ export default class MonthDropdown extends Component<
   renderSelectOptions = (monthNames: string[]): React.ReactElement[] =>
     monthNames.map<React.ReactElement>(
       (m: string, i: number): React.ReactElement => (
-        <option key={m} value={i}>
+        <option className="react-datepicker__month-select--options" key={m} value={i}>
           {m}
         </option>
       ),

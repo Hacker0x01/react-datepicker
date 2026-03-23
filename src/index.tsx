@@ -64,6 +64,7 @@ import Portal from "./portal";
 import TabLoop from "./tab_loop";
 
 import type { ClickOutsideHandler } from "./click_outside_wrapper";
+import { applyDarkTheme } from "./apply_dark_theme";
 
 export { default as CalendarContainer } from "./calendar_container";
 
@@ -162,6 +163,7 @@ export type DatePickerProps = OmitUnion<
     onFocus?: React.FocusEventHandler<HTMLElement>;
     onBlur?: React.FocusEventHandler<HTMLElement>;
     onClickOutside?: ClickOutsideHandler;
+    darkTheme?: boolean;
     onInputClick?: VoidFunction;
     preventOpenOnFocus?: boolean;
     closeOnScroll?: boolean | ((event: Event) => boolean);
@@ -380,6 +382,8 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       "visibilitychange",
       this.setHiddenStateOnVisibilityHidden,
     );
+
+    applyDarkTheme(!!this.props.darkTheme);
   }
 
   componentDidUpdate(
@@ -438,6 +442,8 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
         this.props.onCalendarClose?.();
       }
     }
+
+    applyDarkTheme(!!this.props.darkTheme);
   }
 
   componentWillUnmount(): void {
