@@ -8,7 +8,7 @@
     "date-fns": "^4.1.0",
     "esbuild-wasm": "^0.27.2",
     "highlight.js": "^11.11.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.3",
     "react-datepicker": "portal:../",
