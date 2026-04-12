@@ -520,19 +520,24 @@ export function safeMultipleDatesFormat(
     dateFormat: string | string[];
     locale?: Locale;
     timeZone?: TimeZone;
+    formatDateDisplay?: (date: Date) => string;
   },
 ): string {
   if (!dates?.length) {
     return "";
   }
 
-  const formattedFirstDate = dates[0] ? safeDateFormat(dates[0], props) : "";
+  const formatDate = props.formatDateDisplay
+    ? (date: Date) => props.formatDateDisplay!(date)
+    : (date: Date) => safeDateFormat(date, props);
+
+  const formattedFirstDate = dates[0] ? formatDate(dates[0]) : "";
   if (dates.length === 1) {
     return formattedFirstDate;
   }
 
   if (dates.length === 2 && dates[1]) {
-    const formattedSecondDate = safeDateFormat(dates[1], props);
+    const formattedSecondDate = formatDate(dates[1]);
     return `${formattedFirstDate}, ${formattedSecondDate}`;
   }
 

@@ -7074,4 +7074,76 @@ describe("DatePicker", () => {
       expect(datepicker).not.toBeNull();
     });
   });
+
+  describe("formatDateDisplay", () => {
+    const intlFormatter = (date: Date) =>
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(date);
+
+    it("should render input value using formatDateDisplay", () => {
+      const { container } = render(
+        <DatePicker
+          selected={new Date("2024/01/15")}
+          onChange={() => {}}
+          formatDateDisplay={intlFormatter}
+        />,
+      );
+
+      const input = container.querySelector("input");
+      expect(input?.value).toBe("January 15, 2024");
+    });
+
+    it("should render date range using formatDateDisplay", () => {
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={new Date("2024/01/15")}
+          endDate={new Date("2024/01/20")}
+          onChange={() => {}}
+          formatDateDisplay={intlFormatter}
+        />,
+      );
+
+      const input = container.querySelector("input");
+      expect(input?.value).toBe("January 15, 2024 - January 20, 2024");
+    });
+
+    it("should render partial date range using formatDateDisplay", () => {
+      const { container } = render(
+        <DatePicker
+          selectsRange
+          startDate={new Date("2024/01/15")}
+          endDate={null}
+          onChange={() => {}}
+          formatDateDisplay={intlFormatter}
+        />,
+      );
+
+      const input = container.querySelector("input");
+      expect(input?.value).toBe("January 15, 2024 - ");
+    });
+
+    it("should still parse typed input using dateFormat", () => {
+      const onChange = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selected={new Date("2024/01/15")}
+          onChange={onChange}
+          dateFormat="MM/dd/yyyy"
+          formatDateDisplay={intlFormatter}
+        />,
+      );
+
+      const input = container.querySelector("input")!;
+      fireEvent.change(input, { target: { value: "02/20/2024" } });
+
+      expect(onChange).toHaveBeenCalled();
+      const receivedDate = onChange.mock.calls[0]?.[0] as Date;
+      expect(receivedDate.getMonth()).toBe(1);
+      expect(receivedDate.getDate()).toBe(20);
+    });
+  });
 });

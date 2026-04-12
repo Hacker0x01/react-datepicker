@@ -28,6 +28,7 @@ import CustomCalendarClassName from "../../examples/ts/customCalendarClassName?r
 import CustomClassName from "../../examples/ts/customClassName?raw";
 import CustomDayClassName from "../../examples/ts/customDayClassName?raw";
 import CustomDateFormat from "../../examples/ts/customDateFormat?raw";
+import IntlDateFormat from "../../examples/ts/intlDateFormat?raw";
 import CustomTimeClassName from "../../examples/ts/customTimeClassName?raw";
 import CustomTimeInput from "../../examples/ts/customTimeInput?raw";
 import DateRange from "../../examples/ts/dateRange?raw";
@@ -233,6 +234,12 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Custom Date Format",
     component: CustomDateFormat,
+  },
+  {
+    title: "Custom Date Format (Intl.DateTimeFormat)",
+    description:
+      "Use formatDateDisplay to format dates with Intl.DateTimeFormat or any custom logic. The dateFormat prop is still used for parsing typed input.",
+    component: IntlDateFormat,
   },
   {
     title: "Custom Time Class Name",

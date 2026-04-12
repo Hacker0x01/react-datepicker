@@ -31,7 +31,6 @@ import {
   parseDateForNavigation,
   formatDate,
   safeDateFormat,
-  safeDateRangeFormat,
   getHighLightDaysMap,
   getYear,
   getMonth,
@@ -172,6 +171,8 @@ export type DatePickerProps = OmitUnion<
     className?: string;
     customInput?: Parameters<typeof cloneElement>[0];
     dateFormat?: string | string[];
+    /** Custom function to format dates for input display. When provided, overrides dateFormat for display only — dateFormat is still used for parsing typed input. */
+    formatDateDisplay?: (date: Date) => string;
     showDateSelect?: boolean;
     highlightDates?: (Date | HighlightDate)[];
     onCalendarOpen?: VoidFunction;
@@ -524,6 +525,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   getInputValue = (): string => {
     const {
+      formatDateDisplay,
       locale,
       startDate,
       endDate,
@@ -545,30 +547,34 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       return value;
     } else if (typeof inputValue === "string") {
       return inputValue;
-    } else if (selectsRange) {
-      return safeDateRangeFormat(startDate, endDate, {
-        dateFormat,
-        locale,
-        rangeSeparator,
-        timeZone,
-      });
+    }
+
+    const formatSingleDate = formatDateDisplay
+      ? (date: Date | null | undefined) => (date ? formatDateDisplay(date) : "")
+      : (date: Date | null | undefined) =>
+          safeDateFormat(date, { dateFormat, locale, timeZone });
+
+    if (selectsRange) {
+      if (!startDate && !endDate) {
+        return "";
+      }
+      const separator = rangeSeparator || DATE_RANGE_SEPARATOR;
+      return `${formatSingleDate(startDate)}${separator}${formatSingleDate(endDate)}`;
     } else if (selectsMultiple) {
       if (formatMultipleDates) {
-        const formatDateFn = (date: Date) =>
-          safeDateFormat(date, { dateFormat, locale, timeZone });
-        return formatMultipleDates(selectedDates ?? [], formatDateFn);
+        return formatMultipleDates(
+          selectedDates ?? [],
+          (date: Date) => formatSingleDate(date) as string,
+        );
       }
       return safeMultipleDatesFormat(selectedDates ?? [], {
         dateFormat,
         locale,
         timeZone,
+        formatDateDisplay,
       });
     }
-    return safeDateFormat(selected, {
-      dateFormat,
-      locale,
-      timeZone,
-    });
+    return formatSingleDate(selected);
   };
 
   resetHiddenStatus = (): void => {

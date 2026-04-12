@@ -48,6 +48,7 @@ import {
   getWeek,
   safeDateRangeFormat,
   safeDateFormat,
+  safeMultipleDatesFormat,
   getHolidaysMap,
   arraysAreEqual,
   startOfMinute,
@@ -1712,6 +1713,57 @@ describe("date_utils", () => {
 
       expect(formatted).toBeTruthy();
       expect(typeof formatted).toBe("string");
+    });
+  });
+
+  describe("formatDateDisplay in safeMultipleDatesFormat", () => {
+    const formatDateDisplay = (date: Date) =>
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(date);
+
+    it("should format single date using formatDateDisplay", () => {
+      const dates = [new Date("2024-01-15T00:00:00")];
+      const result = safeMultipleDatesFormat(dates, {
+        dateFormat: "MM/dd/yyyy",
+        formatDateDisplay,
+      });
+      expect(result).toBe("January 15, 2024");
+    });
+
+    it("should format two dates using formatDateDisplay", () => {
+      const dates = [
+        new Date("2024-01-15T00:00:00"),
+        new Date("2024-03-20T00:00:00"),
+      ];
+      const result = safeMultipleDatesFormat(dates, {
+        dateFormat: "MM/dd/yyyy",
+        formatDateDisplay,
+      });
+      expect(result).toBe("January 15, 2024, March 20, 2024");
+    });
+
+    it("should format three+ dates with count badge using formatDateDisplay", () => {
+      const dates = [
+        new Date("2024-01-15T00:00:00"),
+        new Date("2024-03-20T00:00:00"),
+        new Date("2024-06-10T00:00:00"),
+      ];
+      const result = safeMultipleDatesFormat(dates, {
+        dateFormat: "MM/dd/yyyy",
+        formatDateDisplay,
+      });
+      expect(result).toBe("January 15, 2024 (+2)");
+    });
+
+    it("should fall back to dateFormat when formatDateDisplay is not provided", () => {
+      const dates = [new Date("2024-01-15T00:00:00")];
+      const result = safeMultipleDatesFormat(dates, {
+        dateFormat: "MM/dd/yyyy",
+      });
+      expect(result).toBe("01/15/2024");
     });
   });
 

@@ -134,4 +134,43 @@ describe("Multiple Dates Selected", function () {
     expect(typeof receivedFormatDate).toBe("function");
     expect(receivedFormatDate(new Date("2024/01/01"))).toBe("01/01/2024");
   });
+
+  const shortDateFormatter = (date: Date) =>
+    new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(date);
+
+  it("should display multiple dates using formatDateDisplay", () => {
+    const { container: datePicker } = getDatePicker({
+      selectsMultiple: true,
+      selectedDates: [
+        new Date("2024/01/01"),
+        new Date("2024/01/15"),
+        new Date("2024/03/15"),
+      ],
+      formatDateDisplay: shortDateFormatter,
+    });
+
+    const input = datePicker.querySelector("input");
+
+    expect(input).not.toBeNull();
+    expect(input?.value).toBe("Jan 1, 2024 (+2)");
+  });
+
+  it("should use formatDateDisplay with formatMultipleDates", () => {
+    const { container: datePicker } = getDatePicker({
+      selectsMultiple: true,
+      selectedDates: [new Date("2024/01/01"), new Date("2024/01/15")],
+      formatDateDisplay: shortDateFormatter,
+      formatMultipleDates: (dates, formatDate) =>
+        dates.map(formatDate).join(" | "),
+    });
+
+    const input = datePicker.querySelector("input");
+
+    expect(input).not.toBeNull();
+    expect(input?.value).toBe("Jan 1, 2024 | Jan 15, 2024");
+  });
 });
