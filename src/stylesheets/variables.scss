@@ -6,12 +6,41 @@ $datepicker__highlighted-color: #3dcc4a !default;
 $datepicker__holidays-color: #ff6803 !default;
 $datepicker__muted-color: #ccc !default;
 $datepicker__selected-color: #216ba5 !default;
-$datepicker__selected-color--disabled: rgba($datepicker__selected-color, 0.5);
 $datepicker__text-color: #000 !default;
 $datepicker__header-color: #000 !default;
+
+// Derived colors (see CONTRIBUTING.md — Sass / stylesheet theming)
+$datepicker__muted-color--chevron-dim: color.adjust(
+  $datepicker__muted-color,
+  $lightness: -10%
+) !default;
+$datepicker__muted-color--navigation-hover-border: color.adjust(
+  $datepicker__muted-color,
+  $lightness: -15%
+) !default;
 $datepicker__navigation-disabled-color: color.adjust(
   $datepicker__muted-color,
   $lightness: 10%
+) !default;
+$datepicker__selected-color--disabled: rgba(
+  $datepicker__selected-color,
+  0.5
+) !default;
+$datepicker__selected-color--hover: color.adjust(
+  $datepicker__selected-color,
+  $lightness: -5%
+) !default;
+$datepicker__selected-color--keyboard-selected-bg: color.adjust(
+  $datepicker__selected-color,
+  $lightness: 45%
+) !default;
+$datepicker__highlighted-color--hover: color.adjust(
+  $datepicker__highlighted-color,
+  $lightness: -5%
+) !default;
+$datepicker__holidays-color--hover: color.adjust(
+  $datepicker__holidays-color,
+  $lightness: -10%
 ) !default;
 $datepicker__border: 1px solid $datepicker__border-color;
 $datepicker__border-radius: 0.3rem !default;

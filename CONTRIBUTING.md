@@ -23,6 +23,23 @@ Start reading our code, and you'll get the hang of it. We optimize for readabili
 - We use ESlint for all other coding standards. We try to be consistent and helpful.
 - This is open source software. Consider the people who will read your code, and make it look nice for them. It's sort of like driving a car: Perhaps you love doing donuts when you're alone, but with passengers, the goal is to make the ride as smooth as possible.
 
+## Sass / stylesheet theming
+
+The package exposes [`src/stylesheets/`](https://github.com/Hacker0x01/react-datepicker/tree/main/src/stylesheets) so you can compile your own CSS. Palette tokens live in `variables.scss`: base colors (`$datepicker__background-color`, `$datepicker__selected-color`, …) and derived tokens (`$datepicker__selected-color--hover`, `$datepicker__muted-color--chevron-dim`, …) computed with `color.adjust` / `rgba`. Each token uses `!default`, so set your overrides **before** `@use`ing or importing the datepicker stylesheet (for example via a small “theme” partial loaded first, or your build’s `load-path` + `@use … with (...)` where applicable).
+
+**Compile-time colors:** Sass `color.adjust()` and `rgba()` only accept real colors at compile time. If you set a base variable to something like `var(--brand-primary)`, you must also override every derived variable that was computed from that base (for example `$datepicker__selected-color--hover`, `$datepicker__selected-color--disabled`), or keep bases as hex/rgb/hsl literals so the defaults still compile.
+
+Example when a base is not a compile-time color:
+
+```scss
+$datepicker__selected-color: var(--datepicker-accent);
+$datepicker__selected-color--hover: var(--datepicker-accent-hover);
+$datepicker__selected-color--disabled: var(--datepicker-accent-subtle);
+$datepicker__selected-color--keyboard-selected-bg: var(--datepicker-accent-surface);
+```
+
+Derived tokens include: `$datepicker__muted-color--chevron-dim`, `$datepicker__muted-color--navigation-hover-border`, `$datepicker__navigation-disabled-color`, `$datepicker__selected-color--disabled`, `$datepicker__selected-color--hover`, `$datepicker__selected-color--keyboard-selected-bg`, `$datepicker__highlighted-color--hover`, `$datepicker__holidays-color--hover`.
+
 ## Getting set up
 
 Local development configuration is pretty snappy. Here's how to get set up:
