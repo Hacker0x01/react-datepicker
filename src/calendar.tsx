@@ -37,6 +37,7 @@ import {
   getEffectiveMaxDate,
   addZero,
   isValid,
+  safeToDate,
   getYearsPeriod,
   DEFAULT_YEAR_ITEM_NUMBER,
   getMonthInLocale,
@@ -1189,14 +1190,14 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (this.props.selectsRange) {
       const { startDate, endDate } = this.props;
 
-      const startTime = startDate ? new Date(startDate) : undefined;
+      const startTime = safeToDate(startDate) ?? undefined;
       const startTimeValid =
         startTime && isValid(startTime) && Boolean(startDate);
       const startTimeString = startTimeValid
         ? `${addZero(startTime.getHours())}:${addZero(startTime.getMinutes())}`
         : "";
 
-      const endTime = endDate ? new Date(endDate) : undefined;
+      const endTime = safeToDate(endDate) ?? undefined;
       const endTimeValid = endTime && isValid(endTime) && Boolean(endDate);
       const endTimeString = endTimeValid
         ? `${addZero(endTime.getHours())}:${addZero(endTime.getMinutes())}`
@@ -1229,9 +1230,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
 
     // Single date mode (original behavior)
-    const time = this.props.selected
-      ? new Date(this.props.selected)
-      : undefined;
+    const time = safeToDate(this.props.selected) ?? undefined;
     const timeValid = time && isValid(time) && Boolean(this.props.selected);
     const timeString = timeValid
       ? `${addZero(time.getHours())}:${addZero(time.getMinutes())}`
