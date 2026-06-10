@@ -1,10 +1,17 @@
 import { render, fireEvent } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import React from "react";
 
 import { addYears, getYear, newDate, subYears } from "../date_utils";
 import YearDropdownOptions from "../year_dropdown_options";
 
 import { safeQuerySelector, safeQuerySelectorAll } from "./test_utils";
+
+function getYearOptionTextContents(container: HTMLElement): string[] {
+  return Array.from(
+    container.querySelectorAll(".react-datepicker__year-option"),
+  ).map((node) => node.textContent ?? "");
+}
 
 describe("YearDropdownOptions", () => {
   let yearDropdown: HTMLElement, handleChangeResult: number;
@@ -57,64 +64,136 @@ describe("YearDropdownOptions", () => {
     expect(yearsListLength).toBe(11);
   });
 
-  it("increments the available years when the 'upcoming years' button is clicked", () => {
-    const navigationYearsUpcoming = safeQuerySelector(
-      yearDropdown,
-      ".react-datepicker__navigation--years-upcoming",
-    );
-    fireEvent.click(navigationYearsUpcoming);
+  describe("year navigation buttons", () => {
+    it("renders upcoming and previous year controls as buttons with accessible labels", () => {
+      const upcomingButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-upcoming",
+      );
+      const previousButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-previous",
+      );
 
-    const textContents = Array.from(
-      yearDropdown?.querySelectorAll(".react-datepicker__year-option") ?? [],
-    ).map((node) => node.textContent);
+      expect(upcomingButton.tagName).toBe("BUTTON");
+      expect(upcomingButton.getAttribute("aria-label")).toBe(
+        "Show later years",
+      );
+      expect(previousButton.tagName).toBe("BUTTON");
+      expect(previousButton.getAttribute("aria-label")).toBe(
+        "Show earlier years",
+      );
+    });
 
-    expect(textContents).toEqual(
-      expect.arrayContaining([
-        "",
-        "2021",
-        "2020",
-        "2019",
-        "2018",
-        "2017",
-        "2016",
-        "✓2015",
-        "2014",
-        "2013",
-        "2012",
-        "2011",
-        "",
-      ]),
-    );
-  });
+    it("increments the available years when the upcoming years button is clicked", () => {
+      const upcomingButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-upcoming",
+      );
+      fireEvent.click(upcomingButton);
 
-  it("decrements the available years when the 'previous years' button is clicked", () => {
-    const navigationYearsPrevious = safeQuerySelector(
-      yearDropdown,
-      ".react-datepicker__navigation--years-previous",
-    );
-    fireEvent.click(navigationYearsPrevious);
+      expect(getYearOptionTextContents(yearDropdown)).toEqual(
+        expect.arrayContaining([
+          "",
+          "2021",
+          "2020",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "✓2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "",
+        ]),
+      );
+    });
 
-    const textContents = Array.from(
-      yearDropdown?.querySelectorAll(".react-datepicker__year-option") ?? [],
-    ).map((node) => node.textContent);
+    it("decrements the available years when the previous years button is clicked", () => {
+      const previousButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-previous",
+      );
+      fireEvent.click(previousButton);
 
-    expect(textContents).toEqual(
-      expect.arrayContaining([
-        "",
-        "2019",
-        "2018",
-        "2017",
-        "2016",
-        "✓2015",
-        "2014",
-        "2013",
-        "2012",
-        "2011",
-        "2010",
-        "2009",
-        "",
-      ]),
-    );
+      expect(getYearOptionTextContents(yearDropdown)).toEqual(
+        expect.arrayContaining([
+          "",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "✓2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "2010",
+          "2009",
+          "",
+        ]),
+      );
+    });
+
+    it("increments the available years when Enter is pressed on the upcoming years button", async () => {
+      const user = userEvent.setup();
+      const upcomingButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-upcoming",
+      );
+
+      upcomingButton.focus();
+      await user.keyboard("{Enter}");
+
+      expect(getYearOptionTextContents(yearDropdown)).toEqual(
+        expect.arrayContaining([
+          "",
+          "2021",
+          "2020",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "✓2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "",
+        ]),
+      );
+    });
+
+    it("decrements the available years when Enter is pressed on the previous years button", async () => {
+      const user = userEvent.setup();
+      const previousButton = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__navigation--years-previous",
+      );
+
+      previousButton.focus();
+      await user.keyboard("{Enter}");
+
+      expect(getYearOptionTextContents(yearDropdown)).toEqual(
+        expect.arrayContaining([
+          "",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "✓2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "2010",
+          "2009",
+          "",
+        ]),
+      );
+    });
   });
 
   it("calls the supplied onChange function when a year is clicked", () => {

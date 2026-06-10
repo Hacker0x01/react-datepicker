@@ -88,7 +88,7 @@ export default class YearDropdownOptions extends Component<
   }
 
   dropdownRef: React.RefObject<HTMLDivElement | null>;
-  yearOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
+  yearOptionButtonsRef: Record<number, HTMLLIElement | null> = {};
 
   handleOptionKeyDown = (year: number, e: React.KeyboardEvent): void => {
     switch (e.key) {
@@ -119,14 +119,14 @@ export default class YearDropdownOptions extends Component<
 
     const selectedYear = this.props.year;
     const options = this.state.yearsList.map((year) => (
-      <div
+      <li
         ref={(el) => {
           this.yearOptionButtonsRef[year] = el;
           if (year === selectedYear) {
             el?.focus();
           }
         }}
-        role="button"
+        role="option"
         tabIndex={0}
         className={
           selectedYear === year
@@ -136,15 +136,20 @@ export default class YearDropdownOptions extends Component<
         key={year}
         onClick={this.onChange.bind(this, year)}
         onKeyDown={this.handleOptionKeyDown.bind(this, year)}
-        aria-selected={selectedYear === year ? "true" : undefined}
+        aria-selected={selectedYear === year}
       >
         {selectedYear === year ? (
-          <span className="react-datepicker__year-option--selected">✓</span>
+          <span
+            className="react-datepicker__year-option--selected"
+            aria-hidden="true"
+          >
+            ✓
+          </span>
         ) : (
           ""
         )}
         {year}
-      </div>
+      </li>
     ));
 
     const minYear = this.props.minDate ? getYear(this.props.minDate) : null;
@@ -152,25 +157,29 @@ export default class YearDropdownOptions extends Component<
 
     if (!maxYear || !this.state.yearsList.find((year) => year === maxYear)) {
       options.unshift(
-        <div
-          className="react-datepicker__year-option"
-          key={"upcoming"}
-          onClick={this.incrementYears}
-        >
-          <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming" />
-        </div>,
+        <li className="react-datepicker__year-option" key={"upcoming"}>
+          <button
+            className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"
+            onClick={this.incrementYears}
+            role="button"
+            aria-label="Show later years"
+            tabIndex={0}
+          />
+        </li>,
       );
     }
 
     if (!minYear || !this.state.yearsList.find((year) => year === minYear)) {
       options.push(
-        <div
-          className="react-datepicker__year-option"
-          key={"previous"}
-          onClick={this.decrementYears}
-        >
-          <a className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous" />
-        </div>,
+        <li className="react-datepicker__year-option" key={"previous"}>
+          <button
+            className="react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"
+            onClick={this.decrementYears}
+            role="button"
+            aria-label="Show earlier years"
+            tabIndex={0}
+          />
+        </li>,
       );
     }
 
@@ -216,7 +225,9 @@ export default class YearDropdownOptions extends Component<
         containerRef={this.dropdownRef}
         onClickOutside={this.handleClickOutside}
       >
-        {this.renderOptions()}
+        <ul role="listbox" className="react-datepicker__year-options-list">
+          {this.renderOptions()}
+        </ul>
       </ClickOutsideWrapper>
     );
   }

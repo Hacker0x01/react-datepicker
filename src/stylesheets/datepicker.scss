@@ -222,6 +222,7 @@ h2.react-datepicker__current-month {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
 
     &-previous {
       top: 4px;
@@ -674,6 +675,12 @@ h2.react-datepicker__current-month {
     height: 150px;
     overflow-y: scroll;
   }
+}
+
+.react-datepicker__year-options-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .react-datepicker__year-option,

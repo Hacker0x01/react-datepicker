@@ -34,8 +34,24 @@ describe("YearDropdown", () => {
   });
 
   describe("scroll mode", () => {
+    const selectedYear = 2015;
+
     beforeEach(function () {
-      yearDropdown = getYearDropdown();
+      yearDropdown = getYearDropdown({
+        year: selectedYear,
+      });
+    });
+
+    it("read view has correct ARIA attributes and toggles aria-expanded", () => {
+      const yearReadView = safeQuerySelector<HTMLButtonElement>(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
+      );
+      expect(yearReadView.getAttribute("aria-haspopup")).toBe("listbox");
+      expect(yearReadView.getAttribute("aria-expanded")).toBe("false");
+
+      fireEvent.click(yearReadView);
+      expect(yearReadView.getAttribute("aria-expanded")).toBe("true");
     });
 
     it("shows the selected year in the initial view", () => {
@@ -47,6 +63,65 @@ describe("YearDropdown", () => {
         "react-datepicker__year-dropdown",
       );
       expect(optionsView).toHaveLength(0);
+    });
+
+    it("marks the down arrow as aria-hidden so it is excluded from the accessibility tree", () => {
+      const downArrow = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view--down-arrow",
+      );
+
+      expect(downArrow.getAttribute("aria-hidden")).toBe("true");
+      expect(downArrow.textContent).toBe("");
+    });
+
+    it("renders a sr-only Year label for screen readers inside the read view button", () => {
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
+      );
+      const srOnlyLabel = safeQuerySelector(
+        yearReadView,
+        ".react-datepicker__sr-only",
+      );
+
+      expect(srOnlyLabel.textContent).toBe("Year");
+      expect(srOnlyLabel.classList.contains("react-datepicker__sr-only")).toBe(
+        true,
+      );
+      expect(srOnlyLabel.getAttribute("aria-hidden")).not.toBe("true");
+    });
+
+    it("applies aria-selected to the selected year option in scroll dropdown", () => {
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
+      );
+      fireEvent.click(yearReadView);
+
+      const selectedYearOption = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-option--selected_year",
+      );
+      expect(selectedYearOption.getAttribute("aria-selected")).toBe("true");
+    });
+
+    it("applies aria-hidden to the selected year option's check mark in scroll dropdown", () => {
+      const yearReadView = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-read-view",
+      );
+      fireEvent.click(yearReadView);
+      const selectedYearOption = safeQuerySelector(
+        yearDropdown,
+        ".react-datepicker__year-option--selected_year",
+      );
+
+      const checkSpan = selectedYearOption?.querySelector<HTMLSpanElement>(
+        "span.react-datepicker__year-option--selected",
+      );
+      expect(checkSpan).not.toBeNull();
+      expect(checkSpan?.getAttribute("aria-hidden")).toBe("true");
     });
 
     it("opens a list when read view is clicked", () => {
