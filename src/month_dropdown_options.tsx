@@ -10,7 +10,7 @@ interface MonthDropdownOptionsProps {
 }
 
 export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
-  monthOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
+  monthOptionButtonsRef: Record<number, HTMLLIElement | null> = {};
 
   isSelectedMonth = (i: number): boolean => this.props.month === i;
 
@@ -42,14 +42,14 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
 
     return this.props.monthNames.map<React.ReactElement>(
       (month: string, i: number): React.ReactElement => (
-        <div
+        <li
           ref={(el) => {
             this.monthOptionButtonsRef[i] = el;
             if (this.isSelectedMonth(i)) {
               el?.focus();
             }
           }}
-          role="button"
+          role="option"
           tabIndex={0}
           className={
             this.isSelectedMonth(i)
@@ -59,15 +59,20 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
           key={month}
           onClick={this.onChange.bind(this, i)}
           onKeyDown={this.handleOptionKeyDown.bind(this, i)}
-          aria-selected={this.isSelectedMonth(i) ? "true" : undefined}
+          aria-selected={this.isSelectedMonth(i)}
         >
           {this.isSelectedMonth(i) ? (
-            <span className="react-datepicker__month-option--selected">✓</span>
+            <span
+              className="react-datepicker__month-option--selected"
+              aria-hidden="true"
+            >
+              ✓
+            </span>
           ) : (
             ""
           )}
           {month}
-        </div>
+        </li>
       ),
     );
   };
@@ -82,7 +87,7 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
         className="react-datepicker__month-dropdown"
         onClickOutside={this.handleClickOutside}
       >
-        {this.renderOptions()}
+        <div role="listbox">{this.renderOptions()}</div>
       </ClickOutsideWrapper>
     );
   }

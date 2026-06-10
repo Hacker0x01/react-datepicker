@@ -62,8 +62,14 @@ export default class MonthDropdown extends Component<
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__month-read-view"
       onClick={this.toggleDropdown}
+      aria-expanded={this.state.dropdownVisible}
+      aria-haspopup="listbox"
     >
-      <span className="react-datepicker__month-read-view--down-arrow" />
+      <span
+        className="react-datepicker__month-read-view--down-arrow"
+        aria-hidden="true"
+      />
+      <span className="react-datepicker__sr-only">Month</span>
       <span className="react-datepicker__month-read-view--selected-month">
         {monthNames[this.props.month]}
       </span>

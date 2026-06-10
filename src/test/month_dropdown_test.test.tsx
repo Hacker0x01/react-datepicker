@@ -40,12 +40,100 @@ describe("MonthDropdown", () => {
   });
 
   describe("scroll mode", () => {
+    const selectedMonthIndex = 11;
+
     beforeEach(() => {
-      monthDropdown = getMonthDropdown();
+      monthDropdown = getMonthDropdown({
+        month: selectedMonthIndex,
+      });
+    });
+
+    it("sets proper ARIA on read view button and toggles aria-expanded", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      expect(monthReadView.getAttribute("aria-haspopup")).toBe("listbox");
+      expect(monthReadView.getAttribute("aria-expanded")).toBe("false");
+
+      fireEvent.click(monthReadView);
+
+      const monthReadViewAfterOpen = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      expect(monthReadViewAfterOpen.getAttribute("aria-expanded")).toBe("true");
+    });
+
+    it("marks the down arrow as aria-hidden so it is excluded from the accessibility tree", () => {
+      const downArrow = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view--down-arrow",
+      );
+
+      expect(downArrow.getAttribute("aria-hidden")).toBe("true");
+      expect(downArrow.textContent).toBe("");
+    });
+
+    it("renders a sr-only Month label for screen readers inside the read view button", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      const srOnlyLabel = safeQuerySelector(
+        monthReadView,
+        ".react-datepicker__sr-only",
+      );
+
+      expect(srOnlyLabel.textContent).toBe("Month");
+      expect(srOnlyLabel.classList.contains("react-datepicker__sr-only")).toBe(
+        true,
+      );
+      expect(srOnlyLabel.getAttribute("aria-hidden")).not.toBe("true");
+    });
+
+    it("applies aria-selected to the selected month option in scroll dropdown", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const allMonthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+      allMonthOptions.forEach((option, idx) => {
+        expect(option.getAttribute("aria-selected")).toBe(
+          idx === selectedMonthIndex ? "true" : "false",
+        );
+      });
+    });
+
+    it("applies aria-hidden to the selected month option's check mark in scroll dropdown", () => {
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+      const allMonthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      const selectedMonthOption = allMonthOptions[selectedMonthIndex];
+      expect(selectedMonthOption).not.toBeNull();
+
+      const checkSpan = selectedMonthOption?.querySelector<HTMLSpanElement>(
+        "span.react-datepicker__month-option--selected",
+      );
+      expect(checkSpan).not.toBeNull();
+      expect(checkSpan?.getAttribute("aria-hidden")).toBe("true");
     });
 
     it("shows the selected month in the initial view", () => {
-      expect(monthDropdown?.textContent).toContain("December");
+      const expectedMonthName = getMonthInLocale(selectedMonthIndex);
+      expect(monthDropdown?.textContent).toContain(expectedMonthName);
     });
 
     it("opens a list when read view is clicked", () => {
@@ -102,9 +190,9 @@ describe("MonthDropdown", () => {
         expect(notSelectedMonth?.textContent).not.toContain("December");
       });
 
-      it("does not add aria-selected property to the selected month", () => {
+      it("should have aria-selected set to false", () => {
         const ariaSelected = notSelectedMonth?.getAttribute("aria-selected");
-        expect(ariaSelected).toBeNull();
+        expect(ariaSelected).toBe("false");
       });
     });
 
