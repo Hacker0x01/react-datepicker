@@ -71,8 +71,14 @@ export default class YearDropdown extends Component<
       style={{ visibility: visible ? "visible" : "hidden" }}
       className="react-datepicker__year-read-view"
       onClick={this.toggleDropdown}
+      aria-expanded={this.state.dropdownVisible}
+      aria-haspopup="listbox"
     >
-      <span className="react-datepicker__year-read-view--down-arrow" />
+      <span
+        className="react-datepicker__year-read-view--down-arrow"
+        aria-hidden="true"
+      />
+      <span className="react-datepicker__sr-only">Year</span>
       <span className="react-datepicker__year-read-view--selected-year">
         {this.props.year}
       </span>
