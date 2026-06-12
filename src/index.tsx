@@ -25,6 +25,7 @@ import {
   subYears,
   isDayDisabled,
   isDayInRange,
+  getEnabledDateInMonth,
   getEffectiveMinDate,
   getEffectiveMaxDate,
   parseDate,
@@ -496,6 +497,13 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           ? maxDate
           : defaultPreSelection;
 
+    // If the bounded date lands on a disabled day (e.g. openToDate points at a
+    // gap between includeDates), snap to the first enabled day in that month so
+    // a day stays keyboard-focusable. See issue #6286.
+    const safePreSelection =
+      getEnabledDateInMonth(boundedPreSelection, this.props) ??
+      boundedPreSelection;
+
     // Convert selected/startDate to zoned time for display if timezone is specified
     let initialPreSelection = this.props.selectsRange
       ? this.props.startDate
@@ -509,7 +517,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       open: this.props.startOpen || false,
       preventFocus: false,
       inputValue: null,
-      preSelection: initialPreSelection ?? boundedPreSelection,
+      preSelection: initialPreSelection ?? safePreSelection,
       // transforming highlighted days (perhaps nested array)
       // to flat Map for faster access in day.jsx
       highlightDates: getHighLightDaysMap(this.props.highlightDates),

@@ -1,5 +1,4 @@
 import { clsx } from "clsx";
-import { differenceInDays } from "date-fns";
 import React, { Component, createRef } from "react";
 
 import CalendarContainer from "./calendar_container";
@@ -41,9 +40,7 @@ import {
   DEFAULT_YEAR_ITEM_NUMBER,
   getMonthInLocale,
   type Locale,
-  getStartOfMonth,
-  getEndOfMonth,
-  isDayDisabled,
+  getEnabledDateInMonth,
 } from "./date_utils";
 import InputTime from "./input_time";
 import Month from "./month";
@@ -413,29 +410,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.props.setPreSelection && this.props.setPreSelection(date);
   };
 
-  getEnabledPreSelectionDateForMonth = (date: Date) => {
-    if (!isDayDisabled(date, this.props)) {
-      return date;
-    }
-
-    const startOfMonth = getStartOfMonth(date);
-    const endOfMonth = getEndOfMonth(date);
-
-    const totalDays = differenceInDays(endOfMonth, startOfMonth);
-
-    let preSelectedDate = null;
-
-    for (let dayIdx = 0; dayIdx <= totalDays; dayIdx++) {
-      const processingDate = addDays(startOfMonth, dayIdx);
-
-      if (!isDayDisabled(processingDate, this.props)) {
-        preSelectedDate = processingDate;
-        break;
-      }
-    }
-
-    return preSelectedDate;
-  };
+  getEnabledPreSelectionDateForMonth = (date: Date) =>
+    getEnabledDateInMonth(date, this.props);
 
   handleMonthChange = (date: Date): void => {
     const enabledPreSelectionDate =

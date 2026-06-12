@@ -19,7 +19,9 @@ import {
   isSameQuarter,
   isSameYear,
   isDayDisabled,
+  getEnabledDateInMonth,
   isDayExcluded,
+  formatDate,
   isMonthDisabled,
   isQuarterDisabled,
   isYearDisabled,
@@ -343,6 +345,28 @@ describe("date_utils", () => {
       };
       isDayDisabled(day, { filterDate });
       expect(isEqual(day, dayClone)).toBe(true);
+    });
+  });
+
+  describe("getEnabledDateInMonth", () => {
+    it("returns the date unchanged when it is enabled", () => {
+      const day = newDate("2024-06-15");
+      expect(getEnabledDateInMonth(day, {})).toBe(day);
+    });
+
+    it("returns the first enabled day in the month when the date is disabled", () => {
+      const includeDates = [newDate("2024-06-10"), newDate("2024-06-20")];
+      const result = getEnabledDateInMonth(newDate("2024-06-15"), {
+        includeDates,
+      });
+      expect(formatDate(result!, "yyyy-MM-dd")).toBe("2024-06-10");
+    });
+
+    it("returns null when no day in the month is enabled", () => {
+      const includeDates = [newDate("2024-07-01")];
+      expect(
+        getEnabledDateInMonth(newDate("2024-06-15"), { includeDates }),
+      ).toBe(null);
     });
   });
 

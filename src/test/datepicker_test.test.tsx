@@ -166,6 +166,42 @@ describe("DatePicker", () => {
     expect(instance?.state.preSelection).toBe(originalPreSelection);
   });
 
+  describe("initial preSelection when openToDate is a disabled day (issue #6286)", () => {
+    it("snaps preSelection to the first enabled day in the month so a day stays keyboard-focusable", () => {
+      const includeDates = [newDate("2024-06-10"), newDate("2024-06-20")];
+      const { instance, container } = renderDatePickerWithRef({
+        inline: true,
+        includeDates,
+        // a gap day: inside the available range but not itself selectable
+        openToDate: newDate("2024-06-15"),
+      });
+
+      // a roving-tabindex day must exist, otherwise keyboard and screen-reader
+      // users cannot move into the grid
+      expect(
+        container.querySelector('.react-datepicker__day[tabindex="0"]'),
+      ).toBeTruthy();
+
+      expect(instance?.state.preSelection).toBeTruthy();
+      expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
+        "2024-06-10",
+      );
+    });
+
+    it("keeps an enabled openToDate as the preSelection", () => {
+      const includeDates = [newDate("2024-06-10"), newDate("2024-06-20")];
+      const { instance } = renderDatePickerWithRef({
+        inline: true,
+        includeDates,
+        openToDate: newDate("2024-06-20"),
+      });
+
+      expect(formatDate(instance!.state.preSelection!, "yyyy-MM-dd")).toBe(
+        "2024-06-20",
+      );
+    });
+  });
+
   it("short-circuits day key navigation when keyboard navigation is disabled", () => {
     const onKeyDown = jest.fn();
     const preSelection = newDate("2024-06-15");

@@ -1037,6 +1037,41 @@ export function isDayDisabled(
 }
 
 /**
+ * Returns a selectable day in the same month as the given date.
+ *
+ * If the date itself is enabled it is returned unchanged. Otherwise the month
+ * is scanned from its first day and the first enabled day is returned. This
+ * keeps a day keyboard-focusable when the requested date (e.g. `openToDate`)
+ * falls on a disabled day, such as a gap between `includeDates`. Returns `null`
+ * when the month has no selectable day.
+ *
+ * @param date - The reference date whose month is searched.
+ * @param options - The options used to determine whether a day is disabled.
+ * @returns - The original date, the first enabled day in its month, or `null`.
+ */
+export function getEnabledDateInMonth(
+  date: Date,
+  options: DateFilterOptionsWithDisabled = {},
+): Date | null {
+  if (!isDayDisabled(date, options)) {
+    return date;
+  }
+
+  const startOfMonth = getStartOfMonth(date);
+  const endOfMonth = getEndOfMonth(date);
+  const totalDays = differenceInCalendarDays(endOfMonth, startOfMonth);
+
+  for (let dayIdx = 0; dayIdx <= totalDays; dayIdx++) {
+    const processingDate = addDays(startOfMonth, dayIdx);
+    if (!isDayDisabled(processingDate, options)) {
+      return processingDate;
+    }
+  }
+
+  return null;
+}
+
+/**
  * Checks if a day is excluded.
  *
  * @param day - The day to check.
