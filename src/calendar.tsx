@@ -438,8 +438,21 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   };
 
   handleMonthChange = (date: Date): void => {
-    const enabledPreSelectionDate =
+    let enabledPreSelectionDate =
       this.getEnabledPreSelectionDateForMonth(date) ?? date;
+
+    if (
+      this.props.maxDate &&
+      isAfter(enabledPreSelectionDate, this.props.maxDate)
+    ) {
+      enabledPreSelectionDate = this.props.maxDate;
+    }
+    if (
+      this.props.minDate &&
+      isBefore(enabledPreSelectionDate, this.props.minDate)
+    ) {
+      enabledPreSelectionDate = this.props.minDate;
+    }
 
     this.handleCustomMonthChange(enabledPreSelectionDate);
     if (this.props.adjustDateOnChange) {
