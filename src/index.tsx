@@ -894,7 +894,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     if (this.props.showDateSelect) {
       this.setState({ isRenderAriaLiveMessage: true });
     }
-    if (!this.props.shouldCloseOnSelect || this.props.showTimeSelect) {
+    if (
+      !this.props.shouldCloseOnSelect ||
+      this.props.inline ||
+      this.props.showTimeSelect
+    ) {
       this.setPreSelection(date);
     } else if (isDateSelectionComplete) {
       this.setOpen(false);
