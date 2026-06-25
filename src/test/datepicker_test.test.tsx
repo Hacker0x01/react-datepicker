@@ -3738,6 +3738,48 @@ describe("DatePicker", () => {
         formatDate(selected, "yyyy-MM-dd"),
       );
     });
+
+    it("should not reset the preSelectedDate to startDate after selecting the endDate", async () => {
+      const selectedDate = newDate("2026-06-01");
+      const selectedDay = selectedDate.getDate();
+      let startDate, endDate;
+      const onChange = (dates: [Date | null, Date | null]) => {
+        startDate = dates[0] ?? null;
+        endDate = dates[1] ?? null;
+      };
+
+      const { container } = render(
+        <DatePicker
+          selected={selectedDate}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />,
+      );
+
+      const startDayClassName = `.react-datepicker__day--0${selectedDay < 10 ? "0" + selectedDay : selectedDay}`;
+      const selectedDayEl = safeQuerySelector(
+        container,
+        `${startDayClassName}.react-datepicker__day--selected`,
+      );
+      await userEvent.click(selectedDayEl);
+
+      const expectedEndDate = selectedDay + 2;
+      await userEvent.keyboard(
+        `${Array(expectedEndDate - selectedDay).fill(`{${KeyType.ArrowRight}}`)}{${KeyType.Enter}}`,
+      );
+
+      const endDayEl = safeQuerySelector(
+        container,
+        ".react-datepicker__day--keyboard-selected",
+      );
+
+      const expectedEndDayClassName = `react-datepicker__day--0${expectedEndDate < 10 ? "0" + expectedEndDate : expectedEndDate}`;
+
+      expect(endDayEl.classList.contains(expectedEndDayClassName)).toBe(true);
+    });
   });
 
   describe("is-selecting-range", () => {
