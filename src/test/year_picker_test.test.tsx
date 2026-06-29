@@ -634,6 +634,20 @@ describe("YearPicker", () => {
       expect(selectedYear?.textContent).toBe(`${currentYear}`);
     });
 
+    it("should set the key-selected class (pre-select) automatically to the current year when there is no selected date passed - in the Inline Mode", () => {
+      const { container } = render(
+        <DatePicker showYearPicker dateFormat="yyyy" inline />,
+      );
+
+      const selectedYear = container.querySelector(
+        ".react-datepicker__year-text--keyboard-selected",
+      );
+      expect(selectedYear).toBeDefined();
+
+      const currentYear = new Date().getFullYear();
+      expect(selectedYear?.textContent).toBe(`${currentYear}`);
+    });
+
     it("should set the date to the selected year of the previous period when previous button clicked", () => {
       let date: Date | null;
       const expectedDate = getStartOfYear(setYear(newDate(), 2008));
