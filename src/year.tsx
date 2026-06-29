@@ -292,9 +292,6 @@ export default class Year extends Component<YearProps> {
     if (!this.props.disabledKeyboardNavigation) {
       switch (key) {
         case KeyType.Enter:
-          if (this.props.selected == null) {
-            break;
-          }
           this.onYearClick(event, y);
           this.props.setPreSelection?.(this.props.selected);
           break;
