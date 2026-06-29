@@ -910,6 +910,34 @@ describe("YearPicker", () => {
       expect(selectedDay ? getYear(selectedDay) : selectedDay).toBe(2021);
     });
 
+    it("should select 2021 when Enter key is pressed (in Inline Mode)", () => {
+      const onDayClickMock = jest.fn();
+      const { container } = render(
+        <DatePicker
+          selected={null}
+          onChange={() => {}}
+          onSelect={onDayClickMock}
+          showYearPicker
+        />,
+      );
+      openDateInput(container);
+
+      const currentYear = container.querySelector(
+        ".react-datepicker__year-text--today",
+      ) as HTMLElement;
+      fireEvent.keyDown(currentYear, getKey(KeyType.Enter));
+
+      expect(onDayClickMock).toHaveBeenCalledTimes(1);
+      const expectedSelectedDate = getStartOfYear(newDate());
+
+      expect(onDayClickMock).toHaveBeenCalledWith(
+        expectedSelectedDate,
+        expect.objectContaining({
+          key: KeyType.Enter,
+        }),
+      );
+    });
+
     it("should call onKeyDown handler on any key press", () => {
       const onKeyDownSpy = jest.fn();
 
@@ -1020,30 +1048,6 @@ describe("YearPicker", () => {
   });
 
   describe("edge cases for coverage", () => {
-    it("should handle keyboard navigation with null selected date (Enter key)", () => {
-      const onDayClickMock = jest.fn();
-      const { container } = render(
-        <DatePicker
-          selected={null}
-          onChange={() => {}}
-          onSelect={onDayClickMock}
-          showYearPicker
-        />,
-      );
-
-      openDateInput(container);
-
-      const currentYear = container.querySelector(
-        ".react-datepicker__year-text--today",
-      ) as HTMLElement;
-
-      fireEvent.keyDown(currentYear, getKey(KeyType.Enter));
-
-      // When selected is null and Enter is pressed, onDayClick should not be called
-      // because of the early return at line 297
-      expect(onDayClickMock).not.toHaveBeenCalled();
-    });
-
     it("should handle keyboard navigation with null preSelection (Arrow keys)", () => {
       const { container } = render(
         <DatePicker
