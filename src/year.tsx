@@ -250,12 +250,7 @@ export default class Year extends Component<YearProps> {
       getStartOfYear(this.props.preSelection),
     );
 
-    return (
-      !this.props.inline &&
-      !isSelectedDay &&
-      isKeyboardSelectedDay &&
-      !isDisabled
-    );
+    return !isSelectedDay && isKeyboardSelectedDay && !isDisabled;
   };
 
   isSelectedYear = (year: number) => {
