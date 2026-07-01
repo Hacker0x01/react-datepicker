@@ -23,7 +23,7 @@ Or via [yarn](https://github.com/yarnpkg/yarn):
 yarn add react-datepicker
 ```
 
-You’ll need to install React and PropTypes separately since those dependencies aren’t included in the package. If you need to use a locale other than the default en-US, you'll also need to import that into your project from date-fns (see Localization section below). Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
+You’ll need to install React and react-dom separately since those dependencies aren’t included in the package. If you need to use a locale other than the default en-US, you'll also need to import that into your project from date-fns (see Localization section below). Below is a simple example of how to use the Datepicker in a React view. You will also need to require the CSS file from this package (or provide your own). The example below shows how to include the CSS from this package if your build system supports requiring CSS files (Webpack is one that does).
 
 ```js
 import React, { useState } from "react";
@@ -45,7 +45,7 @@ const Example = () => {
 The most basic use of the DatePicker can be described with:
 
 ```js
-<DatePicker selected={startdate} onChange={(date) => setStartDate(date)} />
+<DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
 ```
 
 You can use `onSelect` event handler which fires each time some calendar date has been selected
