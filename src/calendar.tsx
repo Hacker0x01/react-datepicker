@@ -56,6 +56,18 @@ import YearDropdown from "./year_dropdown";
 import type { ClickOutsideHandler } from "./click_outside_wrapper";
 import type { Day } from "date-fns";
 
+const visuallyHiddenStyle: React.CSSProperties = {
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clipPath: "inset(50%)",
+  whiteSpace: "nowrap",
+  border: 0,
+};
+
 interface YearDropdownProps extends React.ComponentPropsWithoutRef<
   typeof YearDropdown
 > {}
@@ -517,7 +529,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           className={`react-datepicker__day-name ${disabled ? "react-datepicker__day-name--disabled" : ""}`}
           role="columnheader"
         >
-          <span className="react-datepicker__sr-only">Week number</span>
+          <span
+            className="react-datepicker__sr-only"
+            style={visuallyHiddenStyle}
+          >
+            Week number
+          </span>
           <span aria-hidden="true">{this.props.weekLabel || "#"}</span>
         </div>,
       );
@@ -568,7 +585,12 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
               disabled ? "react-datepicker__day-name--disabled" : "",
             )}
           >
-            <span className="react-datepicker__sr-only">{fullDayName}</span>
+            <span
+              className="react-datepicker__sr-only"
+              style={visuallyHiddenStyle}
+            >
+              {fullDayName}
+            </span>
             <span aria-hidden="true">{weekDayName}</span>
           </div>
         );

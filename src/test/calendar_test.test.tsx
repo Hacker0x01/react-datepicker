@@ -2446,6 +2446,35 @@ describe("Calendar", () => {
     });
   });
 
+  it("should keep sr-only day name and week number spans visually hidden via inline styles", () => {
+    const { container } = render(
+      <Calendar
+        dateFormat={DATE_FORMAT}
+        onSelect={() => {}}
+        onClickOutside={() => {}}
+        dropdownMode="scroll"
+        showWeekNumbers
+      />,
+    );
+
+    const srOnlySpans = container.querySelectorAll(
+      ".react-datepicker__day-name > span.react-datepicker__sr-only",
+    );
+    expect(srOnlySpans).toHaveLength(8);
+
+    srOnlySpans.forEach((span) => {
+      const { style } = span as HTMLElement;
+      expect(style.position).toBe("absolute");
+      expect(style.width).toBe("1px");
+      expect(style.height).toBe("1px");
+      expect(style.padding).toBe("0px");
+      expect(style.margin).toBe("-1px");
+      expect(style.overflow).toBe("hidden");
+      expect(style.clipPath).toBe("inset(50%)");
+      expect(style.whiteSpace).toBe("nowrap");
+    });
+  });
+
   it("should have a next-button with the provided aria-label for year", () => {
     const ariaLabel = "A label in my native language for next year";
     const { container } = render(
