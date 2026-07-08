@@ -21,14 +21,15 @@ describe("MonthDropdown", () => {
 
   function getMonthDropdown(
     overrideProps?: Partial<
-      Pick<MonthDropdownProps, "dropdownMode" | "month" | "onChange">
+      Pick<MonthDropdownProps, "dropdownMode" | "month" | "onChange" | "date">
     > &
-      Omit<MonthDropdownProps, "dropdownMode" | "month" | "onChange">,
+      Omit<MonthDropdownProps, "dropdownMode" | "month" | "onChange" | "date">,
   ) {
     return render(
       <MonthDropdown
         dropdownMode="scroll"
         month={11}
+        date={new Date(2025, 11, 1)}
         onChange={mockHandleChange}
         {...overrideProps}
       />,
@@ -138,6 +139,7 @@ describe("MonthDropdown", () => {
           onChange={onCancelSpy}
           month={11}
           monthNames={monthNames}
+          date={new Date(2025, 11, 1)}
         />,
       );
       fireEvent.mouseDown(document.body);
@@ -291,6 +293,58 @@ describe("MonthDropdown", () => {
       const firstMonthOption = monthOptions[0];
       expect(document.activeElement).toEqual(firstMonthOption);
     });
+
+    it("does not call onChange when clicking a month outside of minDate/maxDate range", () => {
+      monthDropdown = getMonthDropdown({
+        month: 3,
+        date: new Date(2025, 3, 1),
+        minDate: new Date(2025, 0, 1),
+        maxDate: new Date(2025, 5, 30),
+      });
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      // August (index 7) is outside the Jan-Jun 2025 range
+      const disabledMonthOption = monthOptions[7]!;
+      expect(disabledMonthOption.getAttribute("aria-disabled")).toEqual("true");
+
+      fireEvent.click(disabledMonthOption);
+      expect(handleChangeResult).toBeNull();
+    });
+
+    it("calls onChange when clicking a month inside of minDate/maxDate range", () => {
+      monthDropdown = getMonthDropdown({
+        month: 3,
+        date: new Date(2025, 3, 1),
+        minDate: new Date(2025, 0, 1),
+        maxDate: new Date(2025, 5, 30),
+      });
+      const monthReadView = safeQuerySelector(
+        monthDropdown,
+        ".react-datepicker__month-read-view",
+      );
+      fireEvent.click(monthReadView);
+
+      const monthOptions = safeQuerySelectorAll(
+        monthDropdown,
+        ".react-datepicker__month-option",
+      );
+
+      // May (index 4) is inside the Jan-Jun 2025 range
+      const enabledMonthOption = monthOptions[4]!;
+      expect(enabledMonthOption.getAttribute("aria-disabled")).toBeNull();
+
+      fireEvent.click(enabledMonthOption);
+      expect(handleChangeResult).toEqual(4);
+    });
   });
 
   describe("select mode", () => {
@@ -380,6 +434,33 @@ describe("MonthDropdown", () => {
         target: { value: 9 },
       });
       expect(handleChangeResult).toEqual(9);
+    });
+
+    it("disables options for months outside of minDate/maxDate range", () => {
+      monthDropdown = getMonthDropdown({
+        dropdownMode: "select",
+        month: 3,
+        date: new Date(2025, 3, 1),
+        minDate: new Date(2025, 0, 1),
+        maxDate: new Date(2025, 5, 30),
+      });
+      const options = Array.from(
+        monthDropdown.querySelectorAll<HTMLOptionElement>("option"),
+      );
+      expect(options.map((o) => o.disabled)).toEqual([
+        false, // Jan
+        false, // Feb
+        false, // Mar
+        false, // Apr
+        false, // May
+        false, // Jun
+        true, // Jul
+        true, // Aug
+        true, // Sep
+        true, // Oct
+        true, // Nov
+        true, // Dec
+      ]);
     });
   });
 });

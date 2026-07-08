@@ -1,18 +1,31 @@
+import { clsx } from "clsx";
 import React, { Component } from "react";
 
 import { ClickOutsideWrapper } from "./click_outside_wrapper";
+import {
+  isMonthDisabled,
+  setMonth,
+  type DateFilterOptions,
+} from "./date_utils";
 
-interface MonthDropdownOptionsProps {
+interface MonthDropdownOptionsProps extends Pick<
+  DateFilterOptions,
+  "minDate" | "maxDate" | "excludeDates" | "includeDates" | "filterDate"
+> {
   onCancel: VoidFunction;
   onChange: (month: number) => void;
   month: number;
   monthNames: string[];
+  date: Date;
 }
 
 export default class MonthDropdownOptions extends Component<MonthDropdownOptionsProps> {
   monthOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
 
   isSelectedMonth = (i: number): boolean => this.props.month === i;
+
+  isDisabledMonth = (i: number): boolean =>
+    isMonthDisabled(setMonth(this.props.date, i), this.props);
 
   handleOptionKeyDown = (i: number, e: React.KeyboardEvent): void => {
     switch (e.key) {
@@ -41,38 +54,49 @@ export default class MonthDropdownOptions extends Component<MonthDropdownOptions
     this.monthOptionButtonsRef = {};
 
     return this.props.monthNames.map<React.ReactElement>(
-      (month: string, i: number): React.ReactElement => (
-        <div
-          ref={(el) => {
-            this.monthOptionButtonsRef[i] = el;
-            if (this.isSelectedMonth(i)) {
-              el?.focus();
-            }
-          }}
-          role="button"
-          tabIndex={0}
-          className={
-            this.isSelectedMonth(i)
-              ? "react-datepicker__month-option react-datepicker__month-option--selected_month"
-              : "react-datepicker__month-option"
-          }
-          key={month}
-          onClick={this.onChange.bind(this, i)}
-          onKeyDown={this.handleOptionKeyDown.bind(this, i)}
-          aria-selected={this.isSelectedMonth(i) ? "true" : undefined}
-        >
-          {this.isSelectedMonth(i) ? (
-            <span className="react-datepicker__month-option--selected">✓</span>
-          ) : (
-            ""
-          )}
-          {month}
-        </div>
-      ),
+      (month: string, i: number): React.ReactElement => {
+        const isDisabled = this.isDisabledMonth(i);
+        return (
+          <div
+            ref={(el) => {
+              this.monthOptionButtonsRef[i] = el;
+              if (this.isSelectedMonth(i)) {
+                el?.focus();
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            className={clsx("react-datepicker__month-option", {
+              "react-datepicker__month-option--selected_month":
+                this.isSelectedMonth(i),
+              "react-datepicker__month-option--disabled": isDisabled,
+            })}
+            key={month}
+            onClick={this.onChange.bind(this, i)}
+            onKeyDown={this.handleOptionKeyDown.bind(this, i)}
+            aria-selected={this.isSelectedMonth(i) ? "true" : undefined}
+            aria-disabled={isDisabled ? "true" : undefined}
+          >
+            {this.isSelectedMonth(i) ? (
+              <span className="react-datepicker__month-option--selected">
+                ✓
+              </span>
+            ) : (
+              ""
+            )}
+            {month}
+          </div>
+        );
+      },
     );
   };
 
-  onChange = (month: number): void => this.props.onChange(month);
+  onChange = (month: number): void => {
+    if (this.isDisabledMonth(month)) {
+      return;
+    }
+    this.props.onChange(month);
+  };
 
   handleClickOutside = (): void => this.props.onCancel();
 

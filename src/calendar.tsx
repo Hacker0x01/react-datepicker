@@ -127,7 +127,7 @@ type CalendarProps = React.PropsWithChildren<
     YearDropdownProps,
     "date" | "onChange" | "year" | "minDate" | "maxDate"
   > &
-    Omit<MonthDropdownProps, "month" | "onChange"> &
+    Omit<MonthDropdownProps, "month" | "onChange" | "date"> &
     Omit<MonthYearDropdownProps, "date" | "onChange" | "minDate" | "maxDate"> &
     Omit<
       YearProps,
@@ -875,6 +875,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
         {...Calendar.defaultProps}
         {...this.props}
         month={getMonth(this.state.date)}
+        date={this.state.date}
         onChange={this.changeMonth}
       />
     );

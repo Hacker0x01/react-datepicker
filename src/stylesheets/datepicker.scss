@@ -723,6 +723,16 @@ h2.react-datepicker__current-month {
   }
 }
 
+.react-datepicker__month-option--disabled {
+  cursor: default;
+  color: $datepicker__muted-color;
+
+  &:hover {
+    cursor: default;
+    background-color: transparent;
+  }
+}
+
 .react-datepicker__close-icon {
   cursor: pointer;
   background-color: transparent;

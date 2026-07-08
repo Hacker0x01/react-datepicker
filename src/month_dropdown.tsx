@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import {
   getMonthShortInLocale,
   getMonthInLocale,
+  isMonthDisabled,
+  setMonth,
   type Locale,
 } from "./date_utils";
 import MonthDropdownOptions from "./month_dropdown_options";
@@ -36,7 +38,11 @@ export default class MonthDropdown extends Component<
   renderSelectOptions = (monthNames: string[]): React.ReactElement[] =>
     monthNames.map<React.ReactElement>(
       (m: string, i: number): React.ReactElement => (
-        <option key={m} value={i}>
+        <option
+          key={m}
+          value={i}
+          disabled={isMonthDisabled(setMonth(this.props.date, i), this.props)}
+        >
           {m}
         </option>
       ),
@@ -91,7 +97,10 @@ export default class MonthDropdown extends Component<
 
   onChange = (month: number): void => {
     this.toggleDropdown();
-    if (month !== this.props.month) {
+    if (
+      month !== this.props.month &&
+      !isMonthDisabled(setMonth(this.props.date, month), this.props)
+    ) {
       this.props.onChange(month);
     }
   };
