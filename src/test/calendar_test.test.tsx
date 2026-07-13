@@ -1226,6 +1226,50 @@ describe("Calendar", () => {
     expect(isSameDay(instance?.state.date, newDate())).toBeTruthy();
   });
 
+  it("should render the time container before the today button so the time panel stays in normal flow next to the month view", () => {
+    const { calendar } = getCalendar({
+      todayButton: "Vandaag",
+      showTimeSelect: true,
+    });
+    const todayButton = safeQuerySelector(
+      calendar,
+      ".react-datepicker__today-button",
+    );
+    const timeContainer = safeQuerySelector(
+      calendar,
+      ".react-datepicker__time-container",
+    );
+    expect(
+      todayButton.compareDocumentPosition(timeContainer) &
+        Node.DOCUMENT_POSITION_PRECEDING,
+    ).toBeTruthy();
+  });
+
+  it("should narrow the today button's width to leave room for the time panel when showTimeSelect is enabled", () => {
+    const { calendar } = getCalendar({
+      todayButton: "Vandaag",
+      showTimeSelect: true,
+    });
+    const todayButton = safeQuerySelector(
+      calendar,
+      ".react-datepicker__today-button",
+    );
+    expect(todayButton.classList).toContain(
+      "react-datepicker__today-button--with-time-select",
+    );
+  });
+
+  it("should not narrow the today button's width when showTimeSelect is disabled", () => {
+    const { calendar } = getCalendar({ todayButton: "Vandaag" });
+    const todayButton = safeQuerySelector(
+      calendar,
+      ".react-datepicker__today-button",
+    );
+    expect(todayButton.classList).not.toContain(
+      "react-datepicker__today-button--with-time-select",
+    );
+  });
+
   it("should use a hash for week label if weekLabel is NOT provided", () => {
     const { calendar } = getCalendar({ showWeekNumbers: true });
     const weekLabel = calendar.querySelectorAll(
