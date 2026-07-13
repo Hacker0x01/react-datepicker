@@ -132,9 +132,7 @@
 .react-datepicker__header-wrapper {
   position: relative;
 
-  .react-datepicker__navigation--next--with-time:not(
-    .react-datepicker__navigation--next--with-today-button
-  ) {
+  .react-datepicker__navigation--next--with-time {
     right: 2px;
   }
 }
@@ -211,8 +209,8 @@ h2.react-datepicker__current-month {
   &--next {
     right: 2px;
 
-    &--with-time:not(&--with-today-button) {
-      right: 85px;
+    &--with-time {
+      right: $datepicker__time-container-width;
     }
   }
 
@@ -344,16 +342,7 @@ h2.react-datepicker__current-month {
 .react-datepicker__time-container {
   float: right;
   border-left: $datepicker__border;
-  width: 85px;
-
-  &--with-today-button {
-    display: inline;
-    border: 1px solid #aeaeae;
-    border-radius: 0.375em;
-    position: absolute;
-    right: -87px;
-    top: 0;
-  }
+  width: $datepicker__time-container-width;
 
   .react-datepicker__time {
     position: relative;
@@ -361,7 +350,7 @@ h2.react-datepicker__current-month {
     border-bottom-right-radius: 0.375em;
 
     .react-datepicker__time-box {
-      width: 85px;
+      width: $datepicker__time-container-width;
       overflow-x: hidden;
       margin: 0 auto;
       text-align: center;
@@ -770,6 +759,13 @@ h2.react-datepicker__current-month {
   font-weight: bold;
   padding: 5px 0;
   clear: left;
+
+  // Leave room for the time panel so it isn't painted over by the
+  // time-container float, which stretches to cover this row's height.
+  // The extra 1px accounts for the time-container's border-left.
+  &--with-time-select {
+    width: calc(100% - #{$datepicker__time-container-width} - 1px);
+  }
 }
 
 .react-datepicker__portal {

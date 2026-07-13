@@ -1,5 +1,5 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import React from "react";
+import React, { act } from "react";
 
 import { formatDate, KeyType, newDate } from "../date_utils";
 import DatePicker from "../index";
@@ -117,6 +117,53 @@ describe("TimePicker", () => {
       // Height should remain stable (not grow infinitely)
       // The fix ensures setState is only called when height actually changes
       expect(timeList.style.height).toBe(initialHeight);
+    });
+
+    it("should grow the time list to also cover the today button's height", async () => {
+      const { container } = render(
+        <DatePicker
+          inline
+          selected={new Date()}
+          showTimeSelect
+          todayButton="Today"
+          timeIntervals={15}
+        />,
+      );
+
+      await waitFor(() => {
+        expect(mockObserve).toHaveBeenCalledTimes(2);
+      });
+
+      const monthContainer = safeQuerySelector(
+        container,
+        ".react-datepicker__month-container",
+      );
+      const timeHeader = safeQuerySelector(
+        container,
+        ".react-datepicker__header--time",
+      );
+      const todayButton = safeQuerySelector(
+        container,
+        ".react-datepicker__today-button",
+      );
+      const timeList = safeQuerySelector<HTMLElement>(
+        container,
+        ".react-datepicker__time-list",
+      );
+
+      Object.defineProperty(monthContainer, "clientHeight", { value: 300 });
+      Object.defineProperty(timeHeader, "clientHeight", { value: 30 });
+      Object.defineProperty(todayButton, "clientHeight", { value: 40 });
+
+      const resizeObserverCallback = getResizeObserverCallback();
+      expect(typeof resizeObserverCallback).toBe("function");
+      act(() => {
+        resizeObserverCallback?.([], mockObserve.mock.calls[0][0]);
+      });
+
+      await waitFor(() => {
+        expect(timeList.style.height).toBe("310px");
+      });
     });
   });
 

@@ -29,8 +29,8 @@ interface TimeProps extends Pick<
   openToDate?: Date;
   onChange?: (time: Date) => void;
   timeClassName?: (time: Date) => string;
-  todayButton?: React.ReactNode;
   monthRef?: HTMLDivElement;
+  todayButtonRef?: HTMLDivElement;
   timeCaption?: string;
   injectTimes?: Date[];
   handleOnKeyDown?: React.KeyboardEventHandler<HTMLLIElement>;
@@ -47,7 +47,6 @@ export default class Time extends Component<TimeProps, TimeState> {
   static get defaultProps() {
     return {
       intervals: 30,
-      todayButton: null,
       timeCaption: "Time",
       showTimeCaption: true,
     };
@@ -84,7 +83,7 @@ export default class Time extends Component<TimeProps, TimeState> {
   private centerLi?: HTMLLIElement;
 
   private observeDatePickerHeightChanges(): void {
-    const { monthRef } = this.props;
+    const { monthRef, todayButtonRef } = this.props;
     this.updateContainerHeight();
 
     if (monthRef) {
@@ -93,13 +92,24 @@ export default class Time extends Component<TimeProps, TimeState> {
       });
 
       this.resizeObserver.observe(monthRef);
+      if (todayButtonRef) {
+        this.resizeObserver.observe(todayButtonRef);
+      }
     }
+  }
+
+  // Height contributed by the today-button, so the time list can extend
+  // to cover the full height of the month view plus the button below it.
+  private getTodayButtonHeight(): number {
+    return this.props.todayButtonRef?.clientHeight ?? 0;
   }
 
   private updateContainerHeight(): void {
     if (this.props.monthRef && this.header) {
       const newHeight =
-        this.props.monthRef.clientHeight - this.header.clientHeight;
+        this.props.monthRef.clientHeight -
+        this.header.clientHeight +
+        this.getTodayButtonHeight();
       // Only update state if height actually changed to prevent infinite resize loops
       if (this.state.height !== newHeight) {
         this.setState({
@@ -118,7 +128,8 @@ export default class Time extends Component<TimeProps, TimeState> {
           Time.calcCenterPosition(
             this.props.monthRef
               ? this.props.monthRef.clientHeight -
-                  (this.header?.clientHeight ?? 0)
+                  (this.header?.clientHeight ?? 0) +
+                  this.getTodayButtonHeight()
               : this.list.clientHeight,
             this.centerLi,
           )) ??
@@ -311,13 +322,7 @@ export default class Time extends Component<TimeProps, TimeState> {
     const { height } = this.state;
 
     return (
-      <div
-        className={`react-datepicker__time-container ${
-          (this.props.todayButton ?? Time.defaultProps.todayButton)
-            ? "react-datepicker__time-container--with-today-button"
-            : ""
-        }`}
-      >
+      <div className="react-datepicker__time-container">
         {this.renderTimeCaption()}
         <div className="react-datepicker__time">
           <div className="react-datepicker__time-box">

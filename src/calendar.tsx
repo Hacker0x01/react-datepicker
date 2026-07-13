@@ -167,6 +167,7 @@ type CalendarProps = React.PropsWithChildren<
       showQuarterYearPicker?: boolean;
       showTimeSelect?: boolean;
       showTimeInput?: boolean;
+      todayButton?: React.ReactNode;
       showYearDropdown?: boolean;
       showMonthDropdown?: boolean;
       yearItemNumber?: number;
@@ -239,6 +240,7 @@ interface CalendarState
   extends Pick<YearProps, "selectingDate">, Pick<MonthProps, "selectingDate"> {
   date: Required<YearProps>["date"];
   monthContainer: TimeProps["monthRef"];
+  todayButtonContainer: TimeProps["todayButtonRef"];
   isRenderAriaLiveMessage: boolean;
 }
 
@@ -267,18 +269,22 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
       date: this.getDateInView(),
       selectingDate: undefined,
       monthContainer: undefined,
+      todayButtonContainer: undefined,
       isRenderAriaLiveMessage: false,
     };
   }
 
   componentDidMount() {
-    // monthContainer height is needed in time component
+    // monthContainer/todayButtonContainer height is needed in time component
     // to determine the height for the ul in the time component
     // setState here so height is given after final component
     // layout is rendered
     if (this.props.showTimeSelect) {
       this.assignMonthContainer = ((): void => {
-        this.setState({ monthContainer: this.monthContainer });
+        this.setState({
+          monthContainer: this.monthContainer,
+          todayButtonContainer: this.todayButtonContainer,
+        });
       })();
     }
   }
@@ -313,6 +319,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   containerRef: React.RefObject<HTMLDivElement | null>;
 
   monthContainer: CalendarState["monthContainer"] = undefined;
+
+  todayButtonContainer: CalendarState["todayButtonContainer"] = undefined;
 
   assignMonthContainer: void | undefined;
 
@@ -773,9 +781,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (this.props.showTimeSelect) {
       classes.push("react-datepicker__navigation--next--with-time");
     }
-    if (this.props.todayButton) {
-      classes.push("react-datepicker__navigation--next--with-today-button");
-    }
 
     let clickHandler: React.MouseEventHandler<HTMLButtonElement> | undefined =
       this.increaseMonth;
@@ -907,7 +912,13 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     }
     return (
       <div
-        className="react-datepicker__today-button"
+        ref={(div) => {
+          this.todayButtonContainer = div ?? undefined;
+        }}
+        className={clsx("react-datepicker__today-button", {
+          "react-datepicker__today-button--with-time-select":
+            this.props.showTimeSelect,
+        })}
         onClick={this.handleTodayButtonClick}
       >
         {this.props.todayButton}
@@ -1174,6 +1185,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           format={this.props.timeFormat}
           intervals={this.props.timeIntervals}
           monthRef={this.state.monthContainer}
+          todayButtonRef={this.state.todayButtonContainer}
         />
       );
     }
@@ -1327,8 +1339,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
               this.renderNextButton()}
             {this.renderMonths()}
             {this.renderYears()}
-            {this.renderTodayButton()}
             {this.renderTimeSection()}
+            {this.renderTodayButton()}
             {this.renderInputTimeSection()}
             {this.renderChildren()}
           </Container>
