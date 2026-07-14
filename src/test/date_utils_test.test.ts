@@ -1121,6 +1121,24 @@ describe("date_utils", () => {
       expect(actual).toEqual(expected);
     });
 
+    it("should not throw when dateFormat contains an unparseable timezone token (#6303)", () => {
+      // date-fns `parse` cannot consume the `z`/`zzz` timezone tokens and
+      // throws a RangeError ("Format string contains an unescaped latin
+      // alphabet character `z`"). parseDate must swallow that so typing an
+      // input does not crash handleChange and the user's value is not lost.
+      const value = "July 6, 2026 3:30 PM (GMT+0)";
+      const dateFormat = "MMMM d, yyyy h:mm aa (zzz)";
+
+      let actual: Date | null = null;
+      expect(() => {
+        actual = parseDate(value, dateFormat, undefined, false);
+      }).not.toThrow();
+
+      // The date/time portion still resolves via the native Date fallback.
+      expect(actual).not.toBeNull();
+      expect(actual).toEqual(new Date(2026, 6, 6, 15, 30, 0, 0));
+    });
+
     describe("native Date fallback when strictParsing is false (#6164)", () => {
       it("should parse date in different format using native Date fallback", () => {
         // User types MM/dd/yyyy but dateFormat is yyyy-MM-dd

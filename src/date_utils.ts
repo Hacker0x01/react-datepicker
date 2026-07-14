@@ -306,11 +306,20 @@ export function parseDate(
   const formats = Array.isArray(dateFormat) ? dateFormat : [dateFormat];
 
   for (const format of formats) {
-    const parsedDate = parse(value, format, refDate, {
-      locale: localeObject,
-      useAdditionalWeekYearTokens: true,
-      useAdditionalDayOfYearTokens: true,
-    });
+    // date-fns `parse` throws a RangeError for format tokens it cannot
+    // consume (e.g. the `z`/`zzz` timezone tokens, which are format-only).
+    // Guard against that so an unparseable token in `dateFormat` does not
+    // crash callers such as handleChange and discard the user's input.
+    let parsedDate: Date;
+    try {
+      parsedDate = parse(value, format, refDate, {
+        locale: localeObject,
+        useAdditionalWeekYearTokens: true,
+        useAdditionalDayOfYearTokens: true,
+      });
+    } catch {
+      continue;
+    }
     if (
       isValid(parsedDate) &&
       (!strictParsing || value === formatDate(parsedDate, format, locale))
