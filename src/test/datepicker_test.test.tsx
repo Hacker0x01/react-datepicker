@@ -2865,6 +2865,24 @@ describe("DatePicker", () => {
     expect(onClickOutsideSpy).toHaveBeenCalledTimes(1);
   });
 
+  it("should close when an outside element stops mousedown propagation", () => {
+    const { container, getByRole } = render(
+      <div>
+        <button onMouseDown={(event) => event.stopPropagation()}>
+          Outside
+        </button>
+        <DatePicker />
+      </div>,
+    );
+
+    fireEvent.focus(safeQuerySelector(container, "input"));
+    expect(container.querySelector(".react-datepicker")).not.toBeNull();
+
+    fireEvent.mouseDown(getByRole("button", { name: "Outside" }));
+
+    expect(container.querySelector(".react-datepicker")).toBeNull();
+  });
+
   it("should not close date picker when onClickOutside calls preventDefault", () => {
     const onClickOutside = (event: MouseEvent) => {
       event.preventDefault();

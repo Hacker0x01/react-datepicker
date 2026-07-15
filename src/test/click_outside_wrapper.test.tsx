@@ -42,6 +42,26 @@ describe("ClickOutsideWrapper", () => {
     expect(onClickOutsideMock).toHaveBeenCalledTimes(1);
   });
 
+  it("calls onClickOutside when an outside element stops mousedown propagation", () => {
+    const { getByTestId } = render(
+      <div>
+        <ClickOutsideWrapper onClickOutside={onClickOutsideMock}>
+          <div>Inside</div>
+        </ClickOutsideWrapper>
+        <button
+          data-testid="outside"
+          onMouseDown={(event) => event.stopPropagation()}
+        >
+          Outside
+        </button>
+      </div>,
+    );
+
+    fireEvent.mouseDown(getByTestId("outside"));
+
+    expect(onClickOutsideMock).toHaveBeenCalledTimes(1);
+  });
+
   it("does not call onClickOutside when clicking inside the wrapper", () => {
     const { container } = render(
       <ClickOutsideWrapper onClickOutside={onClickOutsideMock}>
@@ -190,6 +210,7 @@ describe("ClickOutsideWrapper", () => {
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       "mousedown",
       expect.any(Function),
+      true,
     );
 
     removeEventListenerSpy.mockRestore();
