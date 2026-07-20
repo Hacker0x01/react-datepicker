@@ -72,9 +72,38 @@ export default class MonthYearDropdownOptions extends Component<
     };
   }
 
+  monthYearOptionButtonsRef: Record<number, HTMLDivElement | null> = {};
+
+  handleOptionKeyDown = (
+    i: number,
+    monthYearPoint: number,
+    e: React.KeyboardEvent,
+  ): void => {
+    switch (e.key) {
+      case "Enter":
+        e.preventDefault();
+        this.onChange(monthYearPoint);
+        break;
+      case "Escape":
+        e.preventDefault();
+        this.props.onCancel();
+        break;
+      case "ArrowUp":
+      case "ArrowDown": {
+        e.preventDefault();
+        const newIndex = i + (e.key === "ArrowUp" ? -1 : 1);
+        this.monthYearOptionButtonsRef[newIndex]?.focus();
+        break;
+      }
+    }
+  };
+
   renderOptions = (): React.ReactElement[] => {
+    // Clear refs to prevent memory leaks on re-render
+    this.monthYearOptionButtonsRef = {};
+
     return this.state.monthYearsList.map<React.ReactElement>(
-      (monthYear: Date): React.ReactElement => {
+      (monthYear: Date, i: number): React.ReactElement => {
         const monthYearPoint = getTime(monthYear);
         const isSameMonthYear =
           isSameYear(this.props.date, monthYear) &&
@@ -82,6 +111,14 @@ export default class MonthYearDropdownOptions extends Component<
 
         return (
           <div
+            ref={(el) => {
+              this.monthYearOptionButtonsRef[i] = el;
+              if (isSameMonthYear) {
+                el?.focus();
+              }
+            }}
+            role="button"
+            tabIndex={0}
             className={
               isSameMonthYear
                 ? "react-datepicker__month-year-option--selected_month-year"
@@ -89,6 +126,7 @@ export default class MonthYearDropdownOptions extends Component<
             }
             key={monthYearPoint}
             onClick={this.onChange.bind(this, monthYearPoint)}
+            onKeyDown={this.handleOptionKeyDown.bind(this, i, monthYearPoint)}
             aria-selected={isSameMonthYear ? "true" : undefined}
           >
             {isSameMonthYear ? (

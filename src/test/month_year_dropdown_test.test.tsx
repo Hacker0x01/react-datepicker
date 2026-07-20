@@ -209,6 +209,128 @@ describe("MonthYearDropdown", () => {
       expect(handleChangeResult?.toString()).toBe(expected_date.toString());
     });
 
+    it("focuses the selected month year option when the dropdown opens", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const selectedOption = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-option--selected_month-year",
+      );
+      expect(document.activeElement).toEqual(selectedOption);
+    });
+
+    it("calls the supplied onChange function when a month year is selected using arrows and enter key", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        '.react-datepicker__month-year-dropdown [role="button"]',
+        12,
+      );
+
+      const selectedOption = monthYearOptions[6]!;
+      fireEvent.keyDown(selectedOption, { key: "ArrowDown" });
+
+      const nextOption = monthYearOptions[7];
+      expect(document.activeElement).toEqual(nextOption);
+
+      fireEvent.keyDown(document.activeElement!, { key: "Enter" });
+      expect(handleChangeResult?.toString()).toBe(
+        newDate("2018-02").toString(),
+      );
+    });
+
+    it("handles ArrowUp key navigation correctly", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        '.react-datepicker__month-year-dropdown [role="button"]',
+        12,
+      );
+
+      const selectedOption = monthYearOptions[6]!;
+      fireEvent.keyDown(selectedOption, { key: "ArrowUp" });
+
+      const prevOption = monthYearOptions[5];
+      expect(document.activeElement).toEqual(prevOption);
+    });
+
+    it("handles Escape key to cancel dropdown", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        '.react-datepicker__month-year-dropdown [role="button"]',
+        12,
+      );
+
+      const selectedOption = monthYearOptions[6]!;
+      fireEvent.keyDown(selectedOption, { key: "Escape" });
+
+      expect(
+        monthYearDropdown?.querySelectorAll(
+          ".react-datepicker__month-year-dropdown",
+        ),
+      ).toHaveLength(0);
+    });
+
+    it("does not move focus past the last option when pressing ArrowDown", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        '.react-datepicker__month-year-dropdown [role="button"]',
+        12,
+      );
+
+      const lastOption = monthYearOptions[11]!;
+      lastOption.focus();
+      fireEvent.keyDown(lastOption, { key: "ArrowDown" });
+
+      expect(document.activeElement).toEqual(lastOption);
+    });
+
+    it("does not move focus before the first option when pressing ArrowUp", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      fireEvent.click(monthYearReadView);
+
+      const monthYearOptions = safeQuerySelectorAll(
+        monthYearDropdown,
+        '.react-datepicker__month-year-dropdown [role="button"]',
+        12,
+      );
+
+      const firstOption = monthYearOptions[0]!;
+      firstOption.focus();
+      fireEvent.keyDown(firstOption, { key: "ArrowUp" });
+
+      expect(document.activeElement).toEqual(firstOption);
+    });
+
     it("should use dateFormat to display date in dropdown", () => {
       registerLocale("fi", fi);
       let dropdownDateFormat = getMonthYearDropdown({
