@@ -91,8 +91,9 @@ export default class MonthYearDropdown extends Component<
     );
 
     return (
-      <div
+      <button
         key="read"
+        type="button"
         style={{ visibility: visible ? "visible" : "hidden" }}
         className="react-datepicker__month-year-read-view"
         onClick={this.toggleDropdown}
@@ -101,7 +102,7 @@ export default class MonthYearDropdown extends Component<
         <span className="react-datepicker__month-year-read-view--selected-month-year">
           {yearMonth}
         </span>
-      </div>
+      </button>
     );
   };
 
