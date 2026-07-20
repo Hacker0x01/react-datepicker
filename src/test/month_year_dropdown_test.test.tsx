@@ -82,6 +82,14 @@ describe("MonthYearDropdown", () => {
       );
     });
 
+    it("renders the read view as a button so it is reachable via Tab, matching MonthDropdown/YearDropdown", () => {
+      const monthYearReadView = safeQuerySelector(
+        monthYearDropdown,
+        ".react-datepicker__month-year-read-view",
+      );
+      expect(monthYearReadView.tagName).toBe("BUTTON");
+    });
+
     it("opens a list when read view is clicked", () => {
       const monthYearReadView = safeQuerySelector(
         monthYearDropdown,
