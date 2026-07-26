@@ -910,6 +910,29 @@ describe("YearPicker", () => {
       expect(selectedDay ? getYear(selectedDay) : selectedDay).toBe(2021);
     });
 
+    it("should select a year when Enter is pressed without a selected date", () => {
+      const onDayClickMock = jest.fn();
+      const date = newDate("2024-01-01");
+      const { container } = render(
+        <Year
+          date={date}
+          preSelection={date}
+          onDayClick={onDayClickMock}
+          onYearMouseEnter={() => {}}
+          onYearMouseLeave={() => {}}
+        />,
+      );
+
+      const target = safeQuerySelector(
+        container,
+        ".react-datepicker__year-2024",
+      );
+      fireEvent.keyDown(target, getKey(KeyType.Enter));
+
+      expect(onDayClickMock).toHaveBeenCalledTimes(1);
+      expect(getYear(onDayClickMock.mock.calls[0][0])).toBe(2024);
+    });
+
     it("should call onKeyDown handler on any key press", () => {
       const onKeyDownSpy = jest.fn();
 
@@ -1039,9 +1062,7 @@ describe("YearPicker", () => {
 
       fireEvent.keyDown(currentYear, getKey(KeyType.Enter));
 
-      // When selected is null and Enter is pressed, onDayClick should not be called
-      // because of the early return at line 297
-      expect(onDayClickMock).not.toHaveBeenCalled();
+      expect(onDayClickMock).toHaveBeenCalledTimes(1);
     });
 
     it("should handle keyboard navigation with null preSelection (Arrow keys)", () => {
