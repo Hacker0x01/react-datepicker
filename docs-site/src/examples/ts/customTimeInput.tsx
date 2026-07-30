@@ -19,7 +19,7 @@ const CustomTimeInput = () => {
       onClick={(e: React.MouseEvent<HTMLInputElement>) =>
         (e.target as HTMLInputElement).focus()
       }
-      style={{ border: "solid 1px pink" }}
+      style={{ border: "solid 1px pink", width: "70px" }}
     />
   );
 
