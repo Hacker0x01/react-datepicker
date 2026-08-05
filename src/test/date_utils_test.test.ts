@@ -1591,6 +1591,20 @@ describe("date_utils", () => {
       expect(isMonthYearDisabled(date, props)).toBe(true);
     });
 
+    it("should return false if date is before a mid-month min date in the same month", () => {
+      const date = new Date(2023, 2, 1);
+      expect(
+        isMonthYearDisabled(date, { minDate: new Date(2023, 2, 15) }),
+      ).toBe(false);
+    });
+
+    it("should return false if date is after a mid-month max date in the same month", () => {
+      const date = new Date(2023, 2, 31);
+      expect(
+        isMonthYearDisabled(date, { maxDate: new Date(2023, 2, 15) }),
+      ).toBe(false);
+    });
+
     it("should return false if month is not disabled", () => {
       const date = new Date(new Date(2023, 3, 1));
       expect(isMonthYearDisabled(date, props)).toBe(false);

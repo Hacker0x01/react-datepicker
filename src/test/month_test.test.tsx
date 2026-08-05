@@ -1881,6 +1881,52 @@ describe("Month", () => {
         );
       });
 
+      it("should pre-select March when arrowLeft navigates to a month with a mid-month min date", () => {
+        let preSelected: Date | null | undefined = null;
+        const setPreSelection = (param?: Date | null) => {
+          preSelected = param;
+        };
+        const monthComponent = renderMonth({
+          selected: newDate("2015-04-01"),
+          day: newDate("2015-04-01"),
+          setPreSelection,
+          preSelection: newDate("2015-04-01"),
+          minDate: newDate("2015-03-15"),
+        });
+
+        fireEvent.keyDown(
+          monthComponent.querySelector(".react-datepicker__month-3") as Element,
+          getKey(KeyType.ArrowLeft),
+        );
+
+        expect((preSelected! as Date).toString()).toBe(
+          newDate("2015-03-01").toString(),
+        );
+      });
+
+      it("should pre-select June when arrowRight navigates to a month with a mid-month max date", () => {
+        let preSelected: Date | null | undefined = null;
+        const setPreSelection = (param?: Date | null) => {
+          preSelected = param;
+        };
+        const monthComponent = renderMonth({
+          selected: newDate("2015-05-31"),
+          day: newDate("2015-05-31"),
+          setPreSelection,
+          preSelection: newDate("2015-05-31"),
+          maxDate: newDate("2015-06-15"),
+        });
+
+        fireEvent.keyDown(
+          monthComponent.querySelector(".react-datepicker__month-4") as Element,
+          getKey(KeyType.ArrowRight),
+        );
+
+        expect((preSelected! as Date).toString()).toBe(
+          newDate("2015-06-30").toString(),
+        );
+      });
+
       it("should trigger setPreSelection and set May as pre-selected on arrowUp", () => {
         let preSelected: Date | null | undefined = null;
         const setPreSelection = (param?: Date | null) => {
