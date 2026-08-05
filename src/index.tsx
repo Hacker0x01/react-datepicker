@@ -43,6 +43,7 @@ import {
   DEFAULT_YEAR_ITEM_NUMBER,
   isSameDay,
   isMonthDisabled,
+  isMonthYearDisabled,
   isYearDisabled,
   safeMultipleDatesFormat,
   getHolidaysMap,
@@ -1054,15 +1055,19 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     }
   };
 
-  // When checking preSelection via min/maxDate, times need to be manipulated via getStartOfDay/getEndOfDay
+  // Validate pre-selection at the active picker's granularity: month or day.
   setPreSelection = (date?: Date | null): void => {
     if (this.props.readOnly) return;
     const hasMinDate = isDate(this.props.minDate);
     const hasMaxDate = isDate(this.props.maxDate);
     let isValidDateSelection = true;
     if (date) {
-      const dateStartOfDay = getStartOfDay(date);
-      if (hasMinDate && hasMaxDate) {
+      if (this.props.showMonthYearPicker) {
+        isValidDateSelection = !isMonthYearDisabled(date, {
+          minDate: this.props.minDate,
+          maxDate: this.props.maxDate,
+        });
+      } else if (hasMinDate && hasMaxDate) {
         // isDayInRange uses getStartOfDay internally, so not necessary to manipulate times here
         isValidDateSelection = isDayInRange(
           date,
@@ -1070,11 +1075,13 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           this.props.maxDate,
         );
       } else if (hasMinDate) {
+        const dateStartOfDay = getStartOfDay(date);
         const minDateStartOfDay = getStartOfDay(this.props.minDate);
         isValidDateSelection =
           isAfter(date, minDateStartOfDay) ||
           isEqual(dateStartOfDay, minDateStartOfDay);
       } else if (hasMaxDate) {
+        const dateStartOfDay = getStartOfDay(date);
         const maxDateEndOfDay = getEndOfDay(this.props.maxDate);
         isValidDateSelection =
           isBefore(date, maxDateEndOfDay) ||
