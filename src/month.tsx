@@ -11,6 +11,7 @@ import {
   getMonth,
   getMonthInLocale,
   getMonthShortInLocale,
+  getEndOfMonth,
   getQuarter,
   getQuarterShortInLocale,
   getStartOfMonth,
@@ -652,7 +653,7 @@ export default class Month extends Component<MonthProps> {
           break;
         }
         // if minDate exists and the new month is before the minimum month, it will try to find the next available month after
-        if (minDate && newCalculatedDate < minDate) {
+        if (minDate && newCalculatedDate < getStartOfMonth(minDate)) {
           eventKeyCopy = KeyType.ArrowRight;
           const obj = calculateNewDateAndMonth(
             eventKeyCopy,
@@ -664,7 +665,7 @@ export default class Month extends Component<MonthProps> {
         }
 
         // if maxDate exists and the new month is after the maximum month, it will try to find the next available month before
-        if (maxDate && newCalculatedDate > maxDate) {
+        if (maxDate && newCalculatedDate > getEndOfMonth(maxDate)) {
           eventKeyCopy = KeyType.ArrowLeft;
           const obj = calculateNewDateAndMonth(
             eventKeyCopy,

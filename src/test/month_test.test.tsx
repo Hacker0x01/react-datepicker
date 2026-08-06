@@ -1881,6 +1881,126 @@ describe("Month", () => {
         );
       });
 
+      it("should pre-select March when arrowLeft navigates to a month with a mid-month min date", () => {
+        let preSelected: Date | null | undefined = null;
+        const setPreSelection = (param?: Date | null) => {
+          preSelected = param;
+        };
+        const monthComponent = renderMonth({
+          selected: newDate("2015-04-01"),
+          day: newDate("2015-04-01"),
+          setPreSelection,
+          preSelection: newDate("2015-04-01"),
+          minDate: newDate("2015-03-15"),
+        });
+
+        fireEvent.keyDown(
+          monthComponent.querySelector(".react-datepicker__month-3") as Element,
+          getKey(KeyType.ArrowLeft),
+        );
+
+        expect((preSelected! as Date).toString()).toBe(
+          newDate("2015-03-01").toString(),
+        );
+      });
+
+      it("should pre-select June when arrowRight navigates to a month with a mid-month max date", () => {
+        let preSelected: Date | null | undefined = null;
+        const setPreSelection = (param?: Date | null) => {
+          preSelected = param;
+        };
+        const monthComponent = renderMonth({
+          selected: newDate("2015-05-31"),
+          day: newDate("2015-05-31"),
+          setPreSelection,
+          preSelection: newDate("2015-05-31"),
+          maxDate: newDate("2015-06-15"),
+        });
+
+        fireEvent.keyDown(
+          monthComponent.querySelector(".react-datepicker__month-4") as Element,
+          getKey(KeyType.ArrowRight),
+        );
+
+        expect((preSelected! as Date).toString()).toBe(
+          newDate("2015-06-30").toString(),
+        );
+      });
+
+      it("should keep keyboard pre-selection aligned after navigating through a min-date boundary month", () => {
+        let instance: DatePicker | null = null;
+        const { container } = render(
+          <DatePicker
+            ref={(node) => {
+              instance = node;
+            }}
+            inline
+            showMonthYearPicker
+            selected={newDate("2015-02-15")}
+            minDate={newDate("2015-01-31")}
+          />,
+        );
+        const january = container.querySelector(
+          ".react-datepicker__month-0",
+        ) as HTMLElement;
+        const february = container.querySelector(
+          ".react-datepicker__month-1",
+        ) as HTMLElement;
+        const march = container.querySelector(
+          ".react-datepicker__month-2",
+        ) as HTMLElement;
+
+        february.focus();
+        fireEvent.keyDown(february, getKey(KeyType.ArrowLeft));
+        fireEvent.keyDown(january, getKey(KeyType.ArrowRight));
+        fireEvent.keyDown(february, getKey(KeyType.ArrowRight));
+
+        expect(document.activeElement).toBe(march);
+        expect(instance!.state.preSelection).toEqual(newDate("2015-03-15"));
+        expect(
+          container.querySelector(
+            ".react-datepicker__month-text--keyboard-selected",
+          ),
+        ).toBe(march);
+      });
+
+      it("should keep keyboard pre-selection aligned after navigating through a max-date boundary month", () => {
+        let instance: DatePicker | null = null;
+        const { container } = render(
+          <DatePicker
+            ref={(node) => {
+              instance = node;
+            }}
+            inline
+            showMonthYearPicker
+            selected={newDate("2015-11-15")}
+            maxDate={newDate("2015-12-01")}
+          />,
+        );
+        const october = container.querySelector(
+          ".react-datepicker__month-9",
+        ) as HTMLElement;
+        const november = container.querySelector(
+          ".react-datepicker__month-10",
+        ) as HTMLElement;
+        const december = container.querySelector(
+          ".react-datepicker__month-11",
+        ) as HTMLElement;
+
+        november.focus();
+        fireEvent.keyDown(november, getKey(KeyType.ArrowRight));
+        fireEvent.keyDown(december, getKey(KeyType.ArrowLeft));
+        fireEvent.keyDown(november, getKey(KeyType.ArrowLeft));
+
+        expect(document.activeElement).toBe(october);
+        expect(instance!.state.preSelection).toEqual(newDate("2015-10-15"));
+        expect(
+          container.querySelector(
+            ".react-datepicker__month-text--keyboard-selected",
+          ),
+        ).toBe(october);
+      });
+
       it("should trigger setPreSelection and set May as pre-selected on arrowUp", () => {
         let preSelected: Date | null | undefined = null;
         const setPreSelection = (param?: Date | null) => {

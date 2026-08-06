@@ -1140,7 +1140,10 @@ export function isMonthYearDisabled(
   > = {},
 ): boolean {
   return (
-    isOutOfBounds(date, { minDate, maxDate }) ||
+    isOutOfBounds(date, {
+      minDate: minDate ? startOfMonth(minDate) : undefined,
+      maxDate: maxDate ? endOfMonth(maxDate) : undefined,
+    }) ||
     (excludeDates &&
       excludeDates.some((excludedDate) =>
         isSameMonth(
