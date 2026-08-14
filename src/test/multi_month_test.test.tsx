@@ -42,12 +42,34 @@ describe("Multi month calendar", function () {
     expect(months).toHaveLength(2);
   });
 
-  it("should render dropdown only on first month", () => {
+  it("should render an independent dropdown on every month (see #6320)", () => {
     const calendar = getCalendar({ monthsShown: 2, showYearDropdown: true });
     const datepickers = calendar.querySelectorAll(
       ".react-datepicker__year-dropdown-container",
     );
-    expect(datepickers).toHaveLength(1);
+    // Every month renders the same real dropdown, rather than one being
+    // reserved with a hardcoded/measured height, since native form controls
+    // render at different heights across browsers/operating systems (#6320).
+    expect(datepickers).toHaveLength(2);
+  });
+
+  it("should render the same header dropdown markup on every month, so header heights stay consistent (#6320)", () => {
+    const calendar = getCalendar({ monthsShown: 3, showYearDropdown: true });
+    const headerDropdowns = calendar.querySelectorAll(
+      ".react-datepicker__header__dropdown",
+    );
+    expect(headerDropdowns).toHaveLength(3);
+
+    // Every month's header dropdown wrapper renders the same
+    // year-dropdown-container control, so their layout boxes match exactly
+    // without reserving space via a hardcoded or measured height.
+    headerDropdowns.forEach((headerDropdown) => {
+      expect(
+        headerDropdown.querySelectorAll(
+          ".react-datepicker__year-dropdown-container",
+        ),
+      ).toHaveLength(1);
+    });
   });
 
   it("should render previous months", () => {

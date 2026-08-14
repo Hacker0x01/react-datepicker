@@ -461,35 +461,48 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.handleMonthChange(date);
   };
 
-  changeYear = (year: number): void => {
+  // `panelDate` is the month/year the panel that triggered this change was
+  // itself displaying; it defaults to the anchor date (`state.date`) for
+  // callers that don't track a specific panel, e.g. custom headers - which
+  // is what keeps their documented "always lands in the leftmost panel"
+  // behavior unchanged (see `renderCustomHeader`).
+  changeYear = (year: number, panelDate: Date = this.state.date): void => {
     this.setState(
-      ({ date }) => ({
-        date: setYear(date, Number(year)),
-      }),
+      // Shift the anchor by the picked delta rather than overwriting its
+      // year outright, so every panel keeps its own month and moves by the
+      // same amount instead of collapsing onto whichever panel is the anchor.
+      ({ date }) => ({ date: addYears(date, year - getYear(panelDate)) }),
       () => this.handleYearChange(this.state.date),
     );
   };
 
-  changeMonth = (month: number): void => {
-    this.setState(
-      ({ date }) => ({
-        date: setMonth(date, Number(month)),
-      }),
-      () => {
-        this.handleMonthChange(this.state.date);
-        // Reset monthSelectedIn to 0 so the target month appears in the leftmost position
-        // This ensures consistent behavior when using changeMonth in custom headers
-        this.props.onMonthSelectedInChange?.(0);
-      },
-    );
+  changeMonth = (
+    month: number,
+    panelDate: Date = this.state.date,
+    monthSelectedIn: number = 0,
+  ): void => {
+    this.setState({ date: setMonth(panelDate, month) }, () => {
+      this.handleMonthChange(this.state.date);
+      this.props.onMonthSelectedInChange?.(monthSelectedIn);
+    });
   };
 
-  changeMonthYear = (monthYear: Date): void => {
+  changeMonthYear = (
+    monthYear: Date,
+    panelDate: Date,
+    monthSelectedIn: number,
+  ): void => {
     this.setState(
-      ({ date }) => ({
-        date: setYear(setMonth(date, getMonth(monthYear)), getYear(monthYear)),
-      }),
-      () => this.handleMonthYearChange(this.state.date),
+      {
+        date: setYear(
+          setMonth(panelDate, getMonth(monthYear)),
+          getYear(monthYear),
+        ),
+      },
+      () => {
+        this.handleMonthYearChange(this.state.date);
+        this.props.onMonthSelectedInChange?.(monthSelectedIn);
+      },
     );
   };
 
@@ -847,51 +860,53 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     );
   };
 
-  renderYearDropdown = (
-    overrideHide: boolean = false,
-  ): React.ReactElement | undefined => {
-    if (!this.props.showYearDropdown || overrideHide) {
+  renderYearDropdown = (monthDate: Date): React.ReactElement | undefined => {
+    if (!this.props.showYearDropdown) {
       return;
     }
     return (
       <YearDropdown
         {...Calendar.defaultProps}
         {...this.props}
-        date={this.state.date}
-        onChange={this.changeYear}
-        year={getYear(this.state.date)}
+        date={monthDate}
+        onChange={(year: number) => this.changeYear(year, monthDate)}
+        year={getYear(monthDate)}
       />
     );
   };
 
   renderMonthDropdown = (
-    overrideHide: boolean = false,
+    monthDate: Date,
+    i: number,
   ): React.ReactElement | undefined => {
-    if (!this.props.showMonthDropdown || overrideHide) {
+    if (!this.props.showMonthDropdown) {
       return;
     }
     return (
       <MonthDropdown
         {...Calendar.defaultProps}
         {...this.props}
-        month={getMonth(this.state.date)}
-        onChange={this.changeMonth}
+        month={getMonth(monthDate)}
+        onChange={(month: number) => this.changeMonth(month, monthDate, i)}
       />
     );
   };
 
   renderMonthYearDropdown = (
-    overrideHide: boolean = false,
+    monthDate: Date,
+    i: number,
   ): React.ReactElement | undefined => {
-    if (!this.props.showMonthYearDropdown || overrideHide) {
+    if (!this.props.showMonthYearDropdown) {
       return;
     }
     return (
       <MonthYearDropdown
         {...Calendar.defaultProps}
         {...this.props}
-        date={this.state.date}
-        onChange={this.changeMonthYear}
+        date={monthDate}
+        onChange={(monthYear: Date) =>
+          this.changeMonthYear(monthYear, monthDate, i)
+        }
       />
     );
   };
@@ -922,6 +937,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   );
 
   renderDefaultHeader = ({ monthDate, i }: { monthDate: Date; i: number }) => {
+    // Every panel renders its own dropdown, bound to monthDate/i (see
+    // changeYear above) - keeps header heights equal by construction (#6320)
+    // and lets each panel be changed independently.
     const headerContent = (
       <div
         className={clsx("react-datepicker__header", {
@@ -938,9 +956,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           className={`react-datepicker__header__dropdown react-datepicker__header__dropdown--${this.props.dropdownMode}`}
           onFocus={this.handleDropdownFocus}
         >
-          {this.renderMonthDropdown(i !== 0)}
-          {this.renderMonthYearDropdown(i !== 0)}
-          {this.renderYearDropdown(i !== 0)}
+          {this.renderMonthDropdown(monthDate, i)}
+          {this.renderMonthYearDropdown(monthDate, i)}
+          {this.renderYearDropdown(monthDate)}
         </div>
       </div>
     );
