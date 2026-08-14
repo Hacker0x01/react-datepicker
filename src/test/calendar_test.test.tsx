@@ -324,15 +324,59 @@ describe("Calendar", () => {
     expect(yearReadView).toHaveLength(1);
   });
 
-  it("should show only one year dropdown menu if toggled on and multiple month mode on", () => {
+  it("should show an independent year dropdown on every month when toggled on in multiple month mode", () => {
     const { calendar } = getCalendar({
       showYearDropdown: true,
       monthsShown: 2,
     });
-    const monthReadView = calendar.querySelectorAll(
+    const yearDropdowns = calendar.querySelectorAll(
       ".react-datepicker__year-dropdown-container",
     );
-    expect(monthReadView).toHaveLength(1);
+    expect(yearDropdowns).toHaveLength(2);
+  });
+
+  it("should update only the month whose year dropdown was used, shifting the others by the same year delta", () => {
+    // Pinned to January so the three shown panels (Jan/Feb/Mar) never cross
+    // a year boundary - avoids flakiness depending on when the suite runs.
+    const { calendar, instance } = getCalendar({
+      selected: new Date(2023, 0, 15),
+      showYearDropdown: true,
+      monthsShown: 3,
+    });
+    const initialDate = instance!.state.date;
+
+    const readViews = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__year-read-view",
+    );
+    expect(readViews).toHaveLength(3);
+
+    // Open the *third* month's year dropdown and pick a different year.
+    fireEvent.click(readViews[2]!);
+    const options = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__year-option",
+    );
+    const targetYear = getYear(initialDate) + 5;
+    const targetOption = Array.from(options).find(
+      (option) => option.textContent === String(targetYear),
+    );
+    expect(targetOption).not.toBeUndefined();
+    fireEvent.click(targetOption!);
+
+    // The whole picker shifts by the same year delta - every month keeps its
+    // own relative offset, it doesn't jump to the leftmost panel.
+    const currentMonths = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__current-month",
+    );
+    expect(currentMonths).toHaveLength(3);
+    [0, 1, 2].forEach((i) => {
+      expect(currentMonths[i]?.textContent).toBe(
+        formatDate(addMonths(addYears(initialDate, 5), i), dateFormat),
+      );
+    });
+    expect(getYear(instance!.state.date)).toBe(getYear(initialDate) + 5);
   });
 
   it("should show month navigation if toggled on", () => {
@@ -1155,15 +1199,66 @@ describe("Calendar", () => {
     expect(monthReadView).toHaveLength(1);
   });
 
-  it("should show only one month dropdown menu if toggled on and multiple month mode on", () => {
+  it("should show an independent month dropdown on every month when toggled on in multiple month mode", () => {
     const { calendar } = getCalendar({
       showMonthDropdown: true,
       monthsShown: 2,
     });
-    const monthReadView = calendar.querySelectorAll(
+    const monthDropdowns = calendar.querySelectorAll(
       ".react-datepicker__month-dropdown-container",
     );
-    expect(monthReadView).toHaveLength(1);
+    expect(monthDropdowns).toHaveLength(2);
+  });
+
+  it("should land the picked month on the panel whose month dropdown was used, not the leftmost panel", () => {
+    const onMonthSelectedInChangeSpy = jest.fn();
+    // Pinned to January so the two shown panels (Jan/Feb) and the picked
+    // month (June) never cross a year boundary - avoids flakiness if the
+    // suite runs in November/December.
+    const { calendar, instance, rerender } = getCalendar({
+      selected: new Date(2023, 0, 15),
+      showMonthDropdown: true,
+      monthsShown: 2,
+      onMonthSelectedInChange: onMonthSelectedInChangeSpy,
+    });
+
+    const readViews = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__month-read-view",
+    );
+    expect(readViews).toHaveLength(2);
+
+    // Open the *second* month's month dropdown (currently February) and pick June.
+    fireEvent.click(readViews[1]!);
+    const options = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__month-option",
+    );
+    fireEvent.click(options[5]!); // June
+
+    expect(onMonthSelectedInChangeSpy).toHaveBeenCalledWith(1);
+    expect(getMonth(instance!.state.date)).toBe(5);
+    expect(getYear(instance!.state.date)).toBe(2023);
+
+    // Calendar itself is a controlled component for `monthSelectedIn` - a
+    // real parent (DatePicker) feeds the callback's value back in as a prop
+    // (see index.tsx's handleMonthSelectedInChange), which is what actually
+    // lands the result on the interacted-with panel. Simulate that here.
+    rerender({ monthSelectedIn: 1 });
+
+    const currentMonths = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__current-month",
+    );
+    expect(currentMonths).toHaveLength(2);
+    // The second panel (the one the user interacted with) now shows June...
+    expect(currentMonths[1]?.textContent).toBe(
+      formatDate(new Date(2023, 5), dateFormat),
+    );
+    // ...and the first panel shows the preceding month, May.
+    expect(currentMonths[0]?.textContent).toBe(
+      formatDate(new Date(2023, 4), dateFormat),
+    );
   });
 
   it("should not show the month-year dropdown menu by default", () => {
@@ -1186,17 +1281,74 @@ describe("Calendar", () => {
     expect(monthYearReadView).toHaveLength(1);
   });
 
-  it("should show only one month-year dropdown menu if toggled on and multiple month mode on", () => {
+  it("should show an independent month-year dropdown on every month when toggled on in multiple month mode", () => {
     const { calendar } = getCalendar({
       showMonthYearDropdown: true,
       minDate: subYears(newDate(), 1),
       maxDate: addYears(newDate(), 1),
       monthsShown: 2,
     });
-    const monthReadView = calendar.querySelectorAll(
+    const monthYearDropdowns = calendar.querySelectorAll(
       ".react-datepicker__month-year-dropdown-container",
     );
-    expect(monthReadView).toHaveLength(1);
+    expect(monthYearDropdowns).toHaveLength(2);
+  });
+
+  it("should land the picked month-year on the panel whose dropdown was used, not the leftmost panel", () => {
+    const onMonthSelectedInChangeSpy = jest.fn();
+    // Pinned to January so the two shown panels (Jan/Feb 2023) never cross a
+    // year boundary - avoids flakiness depending on when the suite runs.
+    const { calendar, instance, rerender } = getCalendar({
+      selected: new Date(2023, 0, 15),
+      showMonthYearDropdown: true,
+      minDate: new Date(2020, 0, 1),
+      maxDate: new Date(2026, 0, 1),
+      monthsShown: 2,
+      onMonthSelectedInChange: onMonthSelectedInChangeSpy,
+    });
+
+    const readViews = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__month-year-read-view",
+    );
+    expect(readViews).toHaveLength(2);
+
+    // Open the *second* month's month-year dropdown (currently February
+    // 2023) and pick "June 2024".
+    fireEvent.click(readViews[1]!);
+    const target = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__month-year-option",
+    ).find(
+      (option) =>
+        option.textContent === formatDate(new Date(2024, 5), dateFormat),
+    );
+    expect(target).not.toBeUndefined();
+    fireEvent.click(target!);
+
+    expect(onMonthSelectedInChangeSpy).toHaveBeenCalledWith(1);
+    expect(getMonth(instance!.state.date)).toBe(5);
+    expect(getYear(instance!.state.date)).toBe(2024);
+
+    // Calendar itself is a controlled component for `monthSelectedIn` - a
+    // real parent (DatePicker) feeds the callback's value back in as a prop
+    // (see index.tsx's handleMonthSelectedInChange), which is what actually
+    // lands the result on the interacted-with panel. Simulate that here.
+    rerender({ monthSelectedIn: 1 });
+
+    const currentMonths = safeQuerySelectorAll(
+      calendar,
+      ".react-datepicker__current-month",
+    );
+    expect(currentMonths).toHaveLength(2);
+    // The second panel (the one the user interacted with) now shows June 2024...
+    expect(currentMonths[1]?.textContent).toBe(
+      formatDate(new Date(2024, 5), dateFormat),
+    );
+    // ...and the first panel shows the preceding month, May 2024.
+    expect(currentMonths[0]?.textContent).toBe(
+      formatDate(new Date(2024, 4), dateFormat),
+    );
   });
 
   it("should not show the today button by default", () => {
