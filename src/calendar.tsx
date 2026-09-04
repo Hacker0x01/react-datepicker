@@ -223,6 +223,8 @@ type CalendarProps = React.PropsWithChildren<
       onTimeChange?: (time: Date, modifyDateType?: "start" | "end") => void;
       timeFormat?: TimeProps["format"];
       timeIntervals?: TimeProps["intervals"];
+      timeInputStartLabel?: string;
+      timeInputEndLabel?: string;
     } & (
       | ({
           showMonthYearDropdown: true;
@@ -1212,7 +1214,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             onChange={(time: Date) => {
               this.props.onTimeChange?.(time, "start");
             }}
-            timeInputLabel={(this.props.timeInputLabel ?? "Time") + " (Start)"}
+            timeInputLabel={
+              this.props.timeInputStartLabel ??
+              (this.props.timeInputLabel ?? "Time") + " (Start)"
+            }
           />
           <InputTime
             {...Calendar.defaultProps}
@@ -1222,7 +1227,10 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
             onChange={(time: Date) => {
               this.props.onTimeChange?.(time, "end");
             }}
-            timeInputLabel={(this.props.timeInputLabel ?? "Time") + " (End)"}
+            timeInputLabel={
+              this.props.timeInputEndLabel ??
+              (this.props.timeInputLabel ?? "Time") + " (End)"
+            }
           />
         </>
       );
