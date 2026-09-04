@@ -62,6 +62,7 @@ import Inline from "../../examples/ts/inline?raw";
 import InlineDisabled from "../../examples/ts/disabledInline?raw";
 import InlineVisible from "../../examples/ts/inlineVisible?raw";
 import TimeInput from "../../examples/ts/timeInput?raw";
+import RangeTimeInputLabels from "../../examples/ts/rangeTimeInputLabels?raw";
 import Locale from "../../examples/ts/locale?raw";
 import LocaleWithTime from "../../examples/ts/localeWithTime?raw";
 import LocaleWithoutGlobalVariable from "../../examples/ts/localeWithoutGlobalVariable?raw";
@@ -369,6 +370,10 @@ export const EXAMPLE_CONFIG: IExampleConfig[] = [
   {
     title: "Input Time",
     component: TimeInput,
+  },
+  {
+    title: "Input Time with Range (custom start/end labels)",
+    component: RangeTimeInputLabels,
   },
   {
     title: "Locale",

@@ -6821,6 +6821,124 @@ describe("DatePicker", () => {
       expect(timeInputs[0]?.value).toBe("");
       expect(timeInputs[1]?.value).toBe("");
     });
+
+    describe("timeInputStartLabel / timeInputEndLabel props (#6280)", () => {
+      const rangeStart = newDate("2024-01-15 09:00:00");
+      const rangeEnd = newDate("2024-01-20 14:30:00");
+
+      const captionsOf = (container: HTMLElement) =>
+        Array.from(
+          container.querySelectorAll(".react-datepicker-time__caption"),
+        ).map((n) => n.textContent);
+
+      it("defaults to the hardcoded English suffixes", () => {
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            inline
+          />,
+        );
+        expect(captionsOf(container)).toEqual(["Time (Start)", "Time (End)"]);
+      });
+
+      it("appends the suffixes to a custom timeInputLabel (existing behavior)", () => {
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputLabel="Uhrzeit"
+            inline
+          />,
+        );
+        expect(captionsOf(container)).toEqual([
+          "Uhrzeit (Start)",
+          "Uhrzeit (End)",
+        ]);
+      });
+
+      it("replaces each caption entirely when the new props are provided", () => {
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputStartLabel="Startzeit"
+            timeInputEndLabel="Endzeit"
+            inline
+          />,
+        );
+        expect(captionsOf(container)).toEqual(["Startzeit", "Endzeit"]);
+      });
+
+      it("overrides timeInputLabel + suffix when both are set", () => {
+        const { container } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputLabel="Uhrzeit"
+            timeInputStartLabel="Von"
+            timeInputEndLabel="Bis"
+            inline
+          />,
+        );
+        expect(captionsOf(container)).toEqual(["Von", "Bis"]);
+      });
+
+      it("falls back per-side when only one of the two props is set", () => {
+        const { container: c1 } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputStartLabel="Von"
+            inline
+          />,
+        );
+        expect(captionsOf(c1)).toEqual(["Von", "Time (End)"]);
+
+        const { container: c2 } = render(
+          <DatePicker
+            selectsRange
+            startDate={rangeStart}
+            endDate={rangeEnd}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputEndLabel="Bis"
+            inline
+          />,
+        );
+        expect(captionsOf(c2)).toEqual(["Time (Start)", "Bis"]);
+      });
+
+      it("does not affect single (non-range) mode", () => {
+        const { container } = render(
+          <DatePicker
+            selected={rangeStart}
+            onChange={jest.fn()}
+            showTimeInput
+            timeInputStartLabel="Startzeit"
+            timeInputEndLabel="Endzeit"
+            timeInputLabel="Uhrzeit"
+            inline
+          />,
+        );
+        expect(captionsOf(container)).toEqual(["Uhrzeit"]);
+      });
+    });
   });
 
   describe("Critical functions coverage - best in class", () => {
