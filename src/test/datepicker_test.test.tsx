@@ -1494,6 +1494,22 @@ describe("DatePicker", () => {
     );
   });
 
+  it("should handle onDayKeyDown End honoring calendarStartDay (#6326)", () => {
+    const data = getOnInputKeyDownStuff({
+      selected: newDate("2024-06-12"), // Wednesday
+      calendarStartDay: 1, // Monday-Sunday week
+    });
+    fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));
+    const selectedDayNode = getSelectedDayNode(data.container);
+    expect(selectedDayNode).toBeTruthy();
+    fireEvent.keyDown(selectedDayNode!, getKey(KeyType.End));
+    expect(data.instance.state.preSelection).toBeTruthy();
+    // last day of a Monday-Sunday week containing Wed 2024-06-12 is Sun 2024-06-16
+    expect(formatDate(data.instance.state.preSelection!, data.testFormat)).toBe(
+      "2024-06-16",
+    );
+  });
+
   it("should handle onDayKeyDown when the minDate is null", () => {
     const data = getOnInputKeyDownStuff({ minDate: null });
     fireEvent.keyDown(data.dateInput, getKey(KeyType.ArrowDown));

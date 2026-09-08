@@ -1566,7 +1566,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
           newCalculatedDate = getStartOfWeek(date, locale, calendarStartDay);
           break;
         case KeyType.End:
-          newCalculatedDate = getEndOfWeek(date);
+          newCalculatedDate = getEndOfWeek(date, locale, calendarStartDay);
           break;
       }
       return newCalculatedDate;

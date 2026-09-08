@@ -681,10 +681,22 @@ export function getEndOfDay(date: Date): Date {
  * Gets the end of the week for a given date.
  *
  * @param date - The date.
+ * @param locale - The locale.
+ * @param calendarStartDay - The day the calendar starts on.
  * @returns - The end of the week.
  */
-export function getEndOfWeek(date: Date): Date {
-  return endOfWeek(date);
+export function getEndOfWeek(
+  date: Date,
+  locale?: Locale,
+  calendarStartDay?: Day,
+): Date {
+  const localeObj = locale
+    ? getLocaleObject(locale)
+    : getLocaleObject(getDefaultLocale());
+  return endOfWeek(date, {
+    locale: localeObj,
+    weekStartsOn: calendarStartDay,
+  });
 }
 
 /**
