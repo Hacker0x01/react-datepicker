@@ -6,6 +6,7 @@ import {
   setMinutes,
 } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
+import { enGB } from "date-fns/locale/en-GB";
 
 import {
   newDate,
@@ -39,6 +40,8 @@ import {
   isQuarterInRange,
   isYearInRange,
   getStartOfYear,
+  getStartOfWeek,
+  getEndOfWeek,
   getYearsPeriod,
   setDefaultLocale,
   yearsDisabledAfter,
@@ -1379,6 +1382,39 @@ describe("date_utils", () => {
     it("should return the first 2022 year week", () => {
       const first2022Day = new Date("2022-01-01");
       expect(getWeek(first2022Day)).toEqual(52);
+    });
+  });
+
+  describe("getEndOfWeek", () => {
+    // 2024-06-12 is a Wednesday
+    const wednesday = new Date("2024-06-12T12:00:00");
+
+    it("defaults to a Sunday-Saturday week", () => {
+      // end of a Sunday-start week containing Wed 2024-06-12 is Sat 2024-06-15
+      expect(getEndOfWeek(wednesday).getDate()).toBe(15);
+    });
+
+    it("respects calendarStartDay for a Monday-Sunday week (#6326)", () => {
+      // end of a Monday-start week containing Wed 2024-06-12 is Sun 2024-06-16
+      expect(getEndOfWeek(wednesday, undefined, 1).getDate()).toBe(16);
+    });
+
+    it("stays symmetric with getStartOfWeek for the same calendarStartDay", () => {
+      const start = getStartOfWeek(wednesday, undefined, 1);
+      const end = getEndOfWeek(wednesday, undefined, 1);
+      expect(start.getDate()).toBe(10); // Mon 2024-06-10
+      expect(end.getDate()).toBe(16); // Sun 2024-06-16
+    });
+
+    it("uses the week start defined by a passed locale object", () => {
+      // enGB weeks start on Monday, so the week containing Wed 2024-06-12
+      // ends on Sun 2024-06-16
+      expect(getEndOfWeek(wednesday, enGB).getDate()).toBe(16);
+    });
+
+    it("uses the week start defined by a registered locale name", () => {
+      registerLocale("en-GB", enGB);
+      expect(getEndOfWeek(wednesday, "en-GB").getDate()).toBe(16);
     });
   });
 
