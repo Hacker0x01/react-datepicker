@@ -700,10 +700,7 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
 
   resetInputValue = () => {
-    this.setState({
-      ...this.state,
-      inputValue: null,
-    });
+    this.setState({ inputValue: null });
   };
 
   handleBlur = (event: React.FocusEvent<HTMLElement>) => {
